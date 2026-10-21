@@ -28,10 +28,8 @@ export type DataSourceType =
     | "ATHENA"
     | "SINGLESTORE"
     | "MOTHERDUCK"
-    | "MONGODB"
     | "FLEXCONNECT"
     | "AILAKEHOUSE"
-    | "DRILL"
     | "TRINO";
 
 /**

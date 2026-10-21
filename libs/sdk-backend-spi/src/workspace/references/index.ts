@@ -25,4 +25,13 @@ export interface IReferencesService {
         root: IdentifierRef | IdentifierRef[],
         opts?: IReferencesOption,
     ): Promise<IReferencesResult>;
+
+    /**
+     * Returns the references between all objects of the workspace.
+     *
+     * @remarks
+     * Each edge goes from the object that uses another object to the object that it uses.
+     * The result has no root nodes.
+     */
+    getAllReferences(): Promise<IReferencesResult>;
 }

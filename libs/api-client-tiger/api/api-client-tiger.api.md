@@ -78,6 +78,21 @@ export type AbsoluteGranularityDateFilterAbsoluteGranularityDateFilterEmptyValue
 export type AbsoluteGranularityDateFilterAbsoluteGranularityDateFilterGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 
 // @public
+export interface AbsolutePublisherDocumentPeriod {
+    'from': string;
+    'granularity': AbsolutePublisherDocumentPeriodGranularityEnum;
+    'to': string;
+    // (undocumented)
+    'type': AbsolutePublisherDocumentPeriodTypeEnum;
+}
+
+// @public (undocumented)
+export type AbsolutePublisherDocumentPeriodGranularityEnum = 'GDC.time.date';
+
+// @public (undocumented)
+export type AbsolutePublisherDocumentPeriodTypeEnum = 'absolute';
+
+// @public
 export type AbstractMeasureValueFilter = AfmComparisonMeasureValueFilter | AfmCompoundMeasureValueFilter | AfmRangeMeasureValueFilter | AfmRankingFilter;
 
 // @public
@@ -956,6 +971,7 @@ export interface ActionsApiMetricPermissionsRequest {
 
 // @public
 export interface ActionsApiOrganizationLocalizationUsageUsersRequest {
+    readonly name?: string;
     readonly page?: number;
     readonly setting?: 'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE';
     readonly size?: number;
@@ -965,6 +981,7 @@ export interface ActionsApiOrganizationLocalizationUsageUsersRequest {
 
 // @public
 export interface ActionsApiOrganizationLocalizationUsageWorkspacesRequest {
+    readonly name?: string;
     readonly page?: number;
     readonly setting?: 'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE';
     readonly size?: number;
@@ -1256,6 +1273,7 @@ export interface ActionsApiWorkspaceLocalizationUsageRequest {
 
 // @public
 export interface ActionsApiWorkspaceLocalizationUsageUsersRequest {
+    readonly name?: string;
     readonly page?: number;
     readonly setting?: 'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE';
     readonly size?: number;
@@ -6046,6 +6064,7 @@ export const AiObjectType: {
     readonly FILTER_CONTEXT: 'filter_context';
     readonly PARAMETER: 'parameter';
     readonly DOCUMENT: 'document';
+    readonly REPORT: 'report';
 };
 
 // @public (undocumented)
@@ -12673,7 +12692,7 @@ export interface AutomationIdentifierRefIdentifier {
 }
 
 // @public (undocumented)
-export type AutomationIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'reportPageLayout' | 'reportTemplate' | 'report' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
+export type AutomationIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'reportPageLayout' | 'reportTemplate' | 'report' | 'pageTemplate' | 'document' | 'documentTemplate' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
 
 // @public (undocumented)
 export interface AutomationImageExport {
@@ -17098,10 +17117,13 @@ export interface DeclarativeAnalyticsLayer {
     'attributeHierarchies'?: Array<DeclarativeAttributeHierarchy>;
     'computedAttributes'?: Array<DeclarativeComputedAttribute>;
     'dashboardPlugins'?: Array<DeclarativeDashboardPlugin>;
+    'documents'?: Array<DeclarativePublisherDocument>;
+    'documentTemplates'?: Array<DeclarativePublisherDocumentTemplate>;
     'exportDefinitions'?: Array<DeclarativeExportDefinition>;
     'filterContexts'?: Array<DeclarativeFilterContext>;
     'memoryItems'?: Array<DeclarativeMemoryItem>;
     'metrics'?: Array<DeclarativeMetric>;
+    'pageTemplates'?: Array<DeclarativePublisherDocumentPageTemplate>;
     'parameters'?: Array<DeclarativeParameter>;
     'reportPageLayouts'?: Array<DeclarativeReportPageLayout>;
     'reports'?: Array<DeclarativeReport>;
@@ -17429,7 +17451,7 @@ export interface DeclarativeDataSources {
 }
 
 // @public (undocumented)
-export type DeclarativeDataSourceTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO' | 'TRINO';
+export type DeclarativeDataSourceTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO' | 'TRINO';
 
 // @public
 export interface DeclarativeDateDataset {
@@ -17814,6 +17836,41 @@ export interface DeclarativeParameter {
     'modifiedBy'?: DeclarativeUserIdentifier;
     'tags'?: Array<string>;
     'title': string;
+}
+
+// @public (undocumented)
+export interface DeclarativePublisherDocument {
+    'content': object | null;
+    'description'?: string;
+    'id': string;
+    // (undocumented)
+    'period': PublisherDocumentPeriod;
+    // (undocumented)
+    'tags'?: Array<string>;
+    'title': string;
+    'version': string;
+}
+
+// @public (undocumented)
+export interface DeclarativePublisherDocumentPageTemplate {
+    'content': object | null;
+    'description'?: string;
+    'id': string;
+    // (undocumented)
+    'tags'?: Array<string>;
+    'title': string;
+    'version': string;
+}
+
+// @public (undocumented)
+export interface DeclarativePublisherDocumentTemplate {
+    'content': object | null;
+    'description'?: string;
+    'id': string;
+    // (undocumented)
+    'tags'?: Array<string>;
+    'title': string;
+    'version': string;
 }
 
 // @public
@@ -18453,6 +18510,8 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     createEntityCustomUserApplicationSettings(requestParameters: EntitiesApiCreateEntityCustomUserApplicationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCustomUserApplicationSettingOutDocument>;
     createEntityDashboardPlugins(requestParameters: EntitiesApiCreateEntityDashboardPluginsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDashboardPluginOutDocument>;
     createEntityDataSources(requestParameters: EntitiesApiCreateEntityDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceOutDocument>;
+    createEntityDocuments(requestParameters: EntitiesApiCreateEntityDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutDocument>;
+    createEntityDocumentTemplates(requestParameters: EntitiesApiCreateEntityDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument>;
     createEntityExportDefinitions(requestParameters: EntitiesApiCreateEntityExportDefinitionsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportDefinitionOutDocument>;
     createEntityExportTemplates(requestParameters: EntitiesApiCreateEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
     createEntityFilterContexts(requestParameters: EntitiesApiCreateEntityFilterContextsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFilterContextOutDocument>;
@@ -18467,6 +18526,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     createEntityNotificationChannels(requestParameters: EntitiesApiCreateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
     createEntityOrganizationSettings(requestParameters: EntitiesApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     createEntityOrgMemoryItems(requestParameters: EntitiesApiCreateEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
+    createEntityPageTemplates(requestParameters: EntitiesApiCreateEntityPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument>;
     createEntityParameters(requestParameters: EntitiesApiCreateEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutDocument>;
     createEntityReportPageLayouts(requestParameters: EntitiesApiCreateEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
     createEntityReports(requestParameters: EntitiesApiCreateEntityReportsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportOutDocument>;
@@ -18499,6 +18559,8 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     deleteEntityCustomUserApplicationSettings(requestParameters: EntitiesApiDeleteEntityCustomUserApplicationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityDashboardPlugins(requestParameters: EntitiesApiDeleteEntityDashboardPluginsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityDataSources(requestParameters: EntitiesApiDeleteEntityDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityDocuments(requestParameters: EntitiesApiDeleteEntityDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityDocumentTemplates(requestParameters: EntitiesApiDeleteEntityDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityExportDefinitions(requestParameters: EntitiesApiDeleteEntityExportDefinitionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityExportTemplates(requestParameters: EntitiesApiDeleteEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityFilterContexts(requestParameters: EntitiesApiDeleteEntityFilterContextsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -18513,6 +18575,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     deleteEntityNotificationChannels(requestParameters: EntitiesApiDeleteEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityOrganizationSettings(requestParameters: EntitiesApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityOrgMemoryItems(requestParameters: EntitiesApiDeleteEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityPageTemplates(requestParameters: EntitiesApiDeleteEntityPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityParameters(requestParameters: EntitiesApiDeleteEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityReportPageLayouts(requestParameters: EntitiesApiDeleteEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityReports(requestParameters: EntitiesApiDeleteEntityReportsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -18550,6 +18613,8 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     getAllEntitiesDatasets(requestParameters: EntitiesApiGetAllEntitiesDatasetsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDatasetOutList>;
     getAllEntitiesDataSourceIdentifiers(requestParameters?: EntitiesApiGetAllEntitiesDataSourceIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceIdentifierOutList>;
     getAllEntitiesDataSources(requestParameters?: EntitiesApiGetAllEntitiesDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceOutList>;
+    getAllEntitiesDocuments(requestParameters: EntitiesApiGetAllEntitiesDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutList>;
+    getAllEntitiesDocumentTemplates(requestParameters: EntitiesApiGetAllEntitiesDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentTemplateOutList>;
     getAllEntitiesEntitlements(requestParameters?: EntitiesApiGetAllEntitiesEntitlementsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiEntitlementOutList>;
     getAllEntitiesExportDefinitions(requestParameters: EntitiesApiGetAllEntitiesExportDefinitionsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportDefinitionOutList>;
     getAllEntitiesExportTemplates(requestParameters?: EntitiesApiGetAllEntitiesExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutList>;
@@ -18569,6 +18634,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     getAllEntitiesNotificationChannels(requestParameters?: EntitiesApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutList>;
     getAllEntitiesOrganizationSettings(requestParameters?: EntitiesApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutList>;
     getAllEntitiesOrgMemoryItems(requestParameters?: EntitiesApiGetAllEntitiesOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutList>;
+    getAllEntitiesPageTemplates(requestParameters: EntitiesApiGetAllEntitiesPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutList>;
     getAllEntitiesParameters(requestParameters: EntitiesApiGetAllEntitiesParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutList>;
     getAllEntitiesReportPageLayouts(requestParameters: EntitiesApiGetAllEntitiesReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutList>;
     getAllEntitiesReports(requestParameters: EntitiesApiGetAllEntitiesReportsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportOutList>;
@@ -18611,6 +18677,8 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     getEntityDatasets(requestParameters: EntitiesApiGetEntityDatasetsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDatasetOutDocument>;
     getEntityDataSourceIdentifiers(requestParameters: EntitiesApiGetEntityDataSourceIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceIdentifierOutDocument>;
     getEntityDataSources(requestParameters: EntitiesApiGetEntityDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceOutDocument>;
+    getEntityDocuments(requestParameters: EntitiesApiGetEntityDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutDocument>;
+    getEntityDocumentTemplates(requestParameters: EntitiesApiGetEntityDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument>;
     getEntityEntitlements(requestParameters: EntitiesApiGetEntityEntitlementsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiEntitlementOutDocument>;
     getEntityExportDefinitions(requestParameters: EntitiesApiGetEntityExportDefinitionsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportDefinitionOutDocument>;
     getEntityExportTemplates(requestParameters: EntitiesApiGetEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
@@ -18631,6 +18699,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     getEntityOrganizations(requestParameters: EntitiesApiGetEntityOrganizationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationOutDocument>;
     getEntityOrganizationSettings(requestParameters: EntitiesApiGetEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     getEntityOrgMemoryItems(requestParameters: EntitiesApiGetEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
+    getEntityPageTemplates(requestParameters: EntitiesApiGetEntityPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument>;
     getEntityParameters(requestParameters: EntitiesApiGetEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutDocument>;
     getEntityReportPageLayouts(requestParameters: EntitiesApiGetEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
     getEntityReports(requestParameters: EntitiesApiGetEntityReportsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportOutDocument>;
@@ -18666,6 +18735,8 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     patchEntityDashboardPlugins(requestParameters: EntitiesApiPatchEntityDashboardPluginsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDashboardPluginOutDocument>;
     patchEntityDatasets(requestParameters: EntitiesApiPatchEntityDatasetsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDatasetOutDocument>;
     patchEntityDataSources(requestParameters: EntitiesApiPatchEntityDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceOutDocument>;
+    patchEntityDocuments(requestParameters: EntitiesApiPatchEntityDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutDocument>;
+    patchEntityDocumentTemplates(requestParameters: EntitiesApiPatchEntityDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument>;
     patchEntityExportDefinitions(requestParameters: EntitiesApiPatchEntityExportDefinitionsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportDefinitionOutDocument>;
     patchEntityExportTemplates(requestParameters: EntitiesApiPatchEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
     patchEntityFacts(requestParameters: EntitiesApiPatchEntityFactsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFactOutDocument>;
@@ -18682,6 +18753,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     patchEntityOrganizations(requestParameters: EntitiesApiPatchEntityOrganizationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationOutDocument>;
     patchEntityOrganizationSettings(requestParameters: EntitiesApiPatchEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     patchEntityOrgMemoryItems(requestParameters: EntitiesApiPatchEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
+    patchEntityPageTemplates(requestParameters: EntitiesApiPatchEntityPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument>;
     patchEntityParameters(requestParameters: EntitiesApiPatchEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutDocument>;
     patchEntityReportPageLayouts(requestParameters: EntitiesApiPatchEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
     patchEntityReports(requestParameters: EntitiesApiPatchEntityReportsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportOutDocument>;
@@ -18737,6 +18809,8 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     updateEntityCustomUserApplicationSettings(requestParameters: EntitiesApiUpdateEntityCustomUserApplicationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCustomUserApplicationSettingOutDocument>;
     updateEntityDashboardPlugins(requestParameters: EntitiesApiUpdateEntityDashboardPluginsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDashboardPluginOutDocument>;
     updateEntityDataSources(requestParameters: EntitiesApiUpdateEntityDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceOutDocument>;
+    updateEntityDocuments(requestParameters: EntitiesApiUpdateEntityDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutDocument>;
+    updateEntityDocumentTemplates(requestParameters: EntitiesApiUpdateEntityDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument>;
     updateEntityExportDefinitions(requestParameters: EntitiesApiUpdateEntityExportDefinitionsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportDefinitionOutDocument>;
     updateEntityExportTemplates(requestParameters: EntitiesApiUpdateEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
     updateEntityFilterContexts(requestParameters: EntitiesApiUpdateEntityFilterContextsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFilterContextOutDocument>;
@@ -18752,6 +18826,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     updateEntityOrganizations(requestParameters: EntitiesApiUpdateEntityOrganizationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationOutDocument>;
     updateEntityOrganizationSettings(requestParameters: EntitiesApiUpdateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     updateEntityOrgMemoryItems(requestParameters: EntitiesApiUpdateEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
+    updateEntityPageTemplates(requestParameters: EntitiesApiUpdateEntityPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument>;
     updateEntityParameters(requestParameters: EntitiesApiUpdateEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutDocument>;
     updateEntityReportPageLayouts(requestParameters: EntitiesApiUpdateEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
     updateEntityReports(requestParameters: EntitiesApiUpdateEntityReportsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportOutDocument>;
@@ -20468,6 +20543,22 @@ export interface EntitiesApiCreateEntityDataSourcesRequest {
 }
 
 // @public
+export interface EntitiesApiCreateEntityDocumentsRequest {
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly jsonApiPublisherDocumentPostOptionalIdDocument: JsonApiPublisherDocumentPostOptionalIdDocument;
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface EntitiesApiCreateEntityDocumentTemplatesRequest {
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly jsonApiPublisherDocumentTemplatePostOptionalIdDocument: JsonApiPublisherDocumentTemplatePostOptionalIdDocument;
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface EntitiesApiCreateEntityExportDefinitionsRequest {
     readonly include?: Array<'visualizationObjects' | 'analyticalDashboards' | 'automations' | 'userIdentifiers' | 'visualizationObject' | 'analyticalDashboard' | 'automation' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly jsonApiExportDefinitionPostOptionalIdDocument: JsonApiExportDefinitionPostOptionalIdDocument;
@@ -20554,6 +20645,14 @@ export interface EntitiesApiCreateEntityOrganizationSettingsRequest {
 export interface EntitiesApiCreateEntityOrgMemoryItemsRequest {
     readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly jsonApiOrgMemoryItemInDocument: JsonApiOrgMemoryItemInDocument;
+}
+
+// @public
+export interface EntitiesApiCreateEntityPageTemplatesRequest {
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument: JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument;
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly workspaceId: string;
 }
 
 // @public
@@ -20752,6 +20851,18 @@ export interface EntitiesApiDeleteEntityDataSourcesRequest {
 }
 
 // @public
+export interface EntitiesApiDeleteEntityDocumentsRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface EntitiesApiDeleteEntityDocumentTemplatesRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface EntitiesApiDeleteEntityExportDefinitionsRequest {
     readonly objectId: string;
     readonly workspaceId: string;
@@ -20825,6 +20936,12 @@ export interface EntitiesApiDeleteEntityOrganizationSettingsRequest {
 // @public
 export interface EntitiesApiDeleteEntityOrgMemoryItemsRequest {
     readonly id: string;
+}
+
+// @public
+export interface EntitiesApiDeleteEntityPageTemplatesRequest {
+    readonly objectId: string;
+    readonly workspaceId: string;
 }
 
 // @public
@@ -21132,6 +21249,32 @@ export interface EntitiesApiGetAllEntitiesDataSourcesRequest {
 }
 
 // @public
+export interface EntitiesApiGetAllEntitiesDocumentsRequest {
+    readonly filter?: string;
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface EntitiesApiGetAllEntitiesDocumentTemplatesRequest {
+    readonly filter?: string;
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
 export interface EntitiesApiGetAllEntitiesEntitlementsRequest {
     readonly filter?: string;
     readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
@@ -21337,6 +21480,19 @@ export interface EntitiesApiGetAllEntitiesOrgMemoryItemsRequest {
     readonly page?: number;
     readonly size?: number;
     readonly sort?: Array<string>;
+}
+
+// @public
+export interface EntitiesApiGetAllEntitiesPageTemplatesRequest {
+    readonly filter?: string;
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
 }
 
 // @public
@@ -21698,6 +21854,26 @@ export interface EntitiesApiGetEntityDataSourcesRequest {
 }
 
 // @public
+export interface EntitiesApiGetEntityDocumentsRequest {
+    readonly filter?: string;
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface EntitiesApiGetEntityDocumentTemplatesRequest {
+    readonly filter?: string;
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
 export interface EntitiesApiGetEntityEntitlementsRequest {
     readonly filter?: string;
     readonly id: string;
@@ -21852,6 +22028,16 @@ export interface EntitiesApiGetEntityOrgMemoryItemsRequest {
     readonly filter?: string;
     readonly id: string;
     readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+}
+
+// @public
+export interface EntitiesApiGetEntityPageTemplatesRequest {
+    readonly filter?: string;
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
+    readonly objectId: string;
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
 }
 
 // @public
@@ -22038,6 +22224,8 @@ export interface EntitiesApiInterface {
     createEntityCustomUserApplicationSettings(requestParameters: EntitiesApiCreateEntityCustomUserApplicationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCustomUserApplicationSettingOutDocument>;
     createEntityDashboardPlugins(requestParameters: EntitiesApiCreateEntityDashboardPluginsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDashboardPluginOutDocument>;
     createEntityDataSources(requestParameters: EntitiesApiCreateEntityDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceOutDocument>;
+    createEntityDocuments(requestParameters: EntitiesApiCreateEntityDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutDocument>;
+    createEntityDocumentTemplates(requestParameters: EntitiesApiCreateEntityDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument>;
     createEntityExportDefinitions(requestParameters: EntitiesApiCreateEntityExportDefinitionsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportDefinitionOutDocument>;
     createEntityExportTemplates(requestParameters: EntitiesApiCreateEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
     createEntityFilterContexts(requestParameters: EntitiesApiCreateEntityFilterContextsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFilterContextOutDocument>;
@@ -22052,6 +22240,7 @@ export interface EntitiesApiInterface {
     createEntityNotificationChannels(requestParameters: EntitiesApiCreateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
     createEntityOrganizationSettings(requestParameters: EntitiesApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     createEntityOrgMemoryItems(requestParameters: EntitiesApiCreateEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
+    createEntityPageTemplates(requestParameters: EntitiesApiCreateEntityPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument>;
     createEntityParameters(requestParameters: EntitiesApiCreateEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutDocument>;
     createEntityReportPageLayouts(requestParameters: EntitiesApiCreateEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
     createEntityReports(requestParameters: EntitiesApiCreateEntityReportsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportOutDocument>;
@@ -22084,6 +22273,8 @@ export interface EntitiesApiInterface {
     deleteEntityCustomUserApplicationSettings(requestParameters: EntitiesApiDeleteEntityCustomUserApplicationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityDashboardPlugins(requestParameters: EntitiesApiDeleteEntityDashboardPluginsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityDataSources(requestParameters: EntitiesApiDeleteEntityDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityDocuments(requestParameters: EntitiesApiDeleteEntityDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityDocumentTemplates(requestParameters: EntitiesApiDeleteEntityDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityExportDefinitions(requestParameters: EntitiesApiDeleteEntityExportDefinitionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityExportTemplates(requestParameters: EntitiesApiDeleteEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityFilterContexts(requestParameters: EntitiesApiDeleteEntityFilterContextsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -22098,6 +22289,7 @@ export interface EntitiesApiInterface {
     deleteEntityNotificationChannels(requestParameters: EntitiesApiDeleteEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityOrganizationSettings(requestParameters: EntitiesApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityOrgMemoryItems(requestParameters: EntitiesApiDeleteEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityPageTemplates(requestParameters: EntitiesApiDeleteEntityPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityParameters(requestParameters: EntitiesApiDeleteEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityReportPageLayouts(requestParameters: EntitiesApiDeleteEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityReports(requestParameters: EntitiesApiDeleteEntityReportsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -22135,6 +22327,8 @@ export interface EntitiesApiInterface {
     getAllEntitiesDatasets(requestParameters: EntitiesApiGetAllEntitiesDatasetsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDatasetOutList>;
     getAllEntitiesDataSourceIdentifiers(requestParameters: EntitiesApiGetAllEntitiesDataSourceIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceIdentifierOutList>;
     getAllEntitiesDataSources(requestParameters: EntitiesApiGetAllEntitiesDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceOutList>;
+    getAllEntitiesDocuments(requestParameters: EntitiesApiGetAllEntitiesDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutList>;
+    getAllEntitiesDocumentTemplates(requestParameters: EntitiesApiGetAllEntitiesDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentTemplateOutList>;
     getAllEntitiesEntitlements(requestParameters: EntitiesApiGetAllEntitiesEntitlementsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiEntitlementOutList>;
     getAllEntitiesExportDefinitions(requestParameters: EntitiesApiGetAllEntitiesExportDefinitionsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportDefinitionOutList>;
     getAllEntitiesExportTemplates(requestParameters: EntitiesApiGetAllEntitiesExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutList>;
@@ -22154,6 +22348,7 @@ export interface EntitiesApiInterface {
     getAllEntitiesNotificationChannels(requestParameters: EntitiesApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutList>;
     getAllEntitiesOrganizationSettings(requestParameters: EntitiesApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutList>;
     getAllEntitiesOrgMemoryItems(requestParameters: EntitiesApiGetAllEntitiesOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutList>;
+    getAllEntitiesPageTemplates(requestParameters: EntitiesApiGetAllEntitiesPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutList>;
     getAllEntitiesParameters(requestParameters: EntitiesApiGetAllEntitiesParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutList>;
     getAllEntitiesReportPageLayouts(requestParameters: EntitiesApiGetAllEntitiesReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutList>;
     getAllEntitiesReports(requestParameters: EntitiesApiGetAllEntitiesReportsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportOutList>;
@@ -22196,6 +22391,8 @@ export interface EntitiesApiInterface {
     getEntityDatasets(requestParameters: EntitiesApiGetEntityDatasetsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDatasetOutDocument>;
     getEntityDataSourceIdentifiers(requestParameters: EntitiesApiGetEntityDataSourceIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceIdentifierOutDocument>;
     getEntityDataSources(requestParameters: EntitiesApiGetEntityDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceOutDocument>;
+    getEntityDocuments(requestParameters: EntitiesApiGetEntityDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutDocument>;
+    getEntityDocumentTemplates(requestParameters: EntitiesApiGetEntityDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument>;
     getEntityEntitlements(requestParameters: EntitiesApiGetEntityEntitlementsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiEntitlementOutDocument>;
     getEntityExportDefinitions(requestParameters: EntitiesApiGetEntityExportDefinitionsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportDefinitionOutDocument>;
     getEntityExportTemplates(requestParameters: EntitiesApiGetEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
@@ -22216,6 +22413,7 @@ export interface EntitiesApiInterface {
     getEntityOrganizations(requestParameters: EntitiesApiGetEntityOrganizationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationOutDocument>;
     getEntityOrganizationSettings(requestParameters: EntitiesApiGetEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     getEntityOrgMemoryItems(requestParameters: EntitiesApiGetEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
+    getEntityPageTemplates(requestParameters: EntitiesApiGetEntityPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument>;
     getEntityParameters(requestParameters: EntitiesApiGetEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutDocument>;
     getEntityReportPageLayouts(requestParameters: EntitiesApiGetEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
     getEntityReports(requestParameters: EntitiesApiGetEntityReportsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportOutDocument>;
@@ -22251,6 +22449,8 @@ export interface EntitiesApiInterface {
     patchEntityDashboardPlugins(requestParameters: EntitiesApiPatchEntityDashboardPluginsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDashboardPluginOutDocument>;
     patchEntityDatasets(requestParameters: EntitiesApiPatchEntityDatasetsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDatasetOutDocument>;
     patchEntityDataSources(requestParameters: EntitiesApiPatchEntityDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceOutDocument>;
+    patchEntityDocuments(requestParameters: EntitiesApiPatchEntityDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutDocument>;
+    patchEntityDocumentTemplates(requestParameters: EntitiesApiPatchEntityDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument>;
     patchEntityExportDefinitions(requestParameters: EntitiesApiPatchEntityExportDefinitionsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportDefinitionOutDocument>;
     patchEntityExportTemplates(requestParameters: EntitiesApiPatchEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
     patchEntityFacts(requestParameters: EntitiesApiPatchEntityFactsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFactOutDocument>;
@@ -22267,6 +22467,7 @@ export interface EntitiesApiInterface {
     patchEntityOrganizations(requestParameters: EntitiesApiPatchEntityOrganizationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationOutDocument>;
     patchEntityOrganizationSettings(requestParameters: EntitiesApiPatchEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     patchEntityOrgMemoryItems(requestParameters: EntitiesApiPatchEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
+    patchEntityPageTemplates(requestParameters: EntitiesApiPatchEntityPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument>;
     patchEntityParameters(requestParameters: EntitiesApiPatchEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutDocument>;
     patchEntityReportPageLayouts(requestParameters: EntitiesApiPatchEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
     patchEntityReports(requestParameters: EntitiesApiPatchEntityReportsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportOutDocument>;
@@ -22322,6 +22523,8 @@ export interface EntitiesApiInterface {
     updateEntityCustomUserApplicationSettings(requestParameters: EntitiesApiUpdateEntityCustomUserApplicationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCustomUserApplicationSettingOutDocument>;
     updateEntityDashboardPlugins(requestParameters: EntitiesApiUpdateEntityDashboardPluginsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDashboardPluginOutDocument>;
     updateEntityDataSources(requestParameters: EntitiesApiUpdateEntityDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceOutDocument>;
+    updateEntityDocuments(requestParameters: EntitiesApiUpdateEntityDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutDocument>;
+    updateEntityDocumentTemplates(requestParameters: EntitiesApiUpdateEntityDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument>;
     updateEntityExportDefinitions(requestParameters: EntitiesApiUpdateEntityExportDefinitionsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportDefinitionOutDocument>;
     updateEntityExportTemplates(requestParameters: EntitiesApiUpdateEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
     updateEntityFilterContexts(requestParameters: EntitiesApiUpdateEntityFilterContextsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFilterContextOutDocument>;
@@ -22337,6 +22540,7 @@ export interface EntitiesApiInterface {
     updateEntityOrganizations(requestParameters: EntitiesApiUpdateEntityOrganizationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationOutDocument>;
     updateEntityOrganizationSettings(requestParameters: EntitiesApiUpdateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     updateEntityOrgMemoryItems(requestParameters: EntitiesApiUpdateEntityOrgMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrgMemoryItemOutDocument>;
+    updateEntityPageTemplates(requestParameters: EntitiesApiUpdateEntityPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument>;
     updateEntityParameters(requestParameters: EntitiesApiUpdateEntityParametersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiParameterOutDocument>;
     updateEntityReportPageLayouts(requestParameters: EntitiesApiUpdateEntityReportPageLayoutsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportPageLayoutOutDocument>;
     updateEntityReports(requestParameters: EntitiesApiUpdateEntityReportsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiReportOutDocument>;
@@ -22471,6 +22675,24 @@ export interface EntitiesApiPatchEntityDataSourcesRequest {
 }
 
 // @public
+export interface EntitiesApiPatchEntityDocumentsRequest {
+    readonly filter?: string;
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly jsonApiPublisherDocumentPatchDocument: JsonApiPublisherDocumentPatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface EntitiesApiPatchEntityDocumentTemplatesRequest {
+    readonly filter?: string;
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly jsonApiPublisherDocumentTemplatePatchDocument: JsonApiPublisherDocumentTemplatePatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface EntitiesApiPatchEntityExportDefinitionsRequest {
     readonly filter?: string;
     readonly include?: Array<'visualizationObjects' | 'analyticalDashboards' | 'automations' | 'userIdentifiers' | 'visualizationObject' | 'analyticalDashboard' | 'automation' | 'createdBy' | 'modifiedBy' | 'ALL'>;
@@ -22598,6 +22820,15 @@ export interface EntitiesApiPatchEntityOrgMemoryItemsRequest {
     readonly id: string;
     readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly jsonApiOrgMemoryItemPatchDocument: JsonApiOrgMemoryItemPatchDocument;
+}
+
+// @public
+export interface EntitiesApiPatchEntityPageTemplatesRequest {
+    readonly filter?: string;
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly jsonApiPublisherDocumentPageTemplatePatchDocument: JsonApiPublisherDocumentPageTemplatePatchDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
 }
 
 // @public
@@ -23037,6 +23268,24 @@ export interface EntitiesApiUpdateEntityDataSourcesRequest {
 }
 
 // @public
+export interface EntitiesApiUpdateEntityDocumentsRequest {
+    readonly filter?: string;
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly jsonApiPublisherDocumentInDocument: JsonApiPublisherDocumentInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface EntitiesApiUpdateEntityDocumentTemplatesRequest {
+    readonly filter?: string;
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly jsonApiPublisherDocumentTemplateInDocument: JsonApiPublisherDocumentTemplateInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface EntitiesApiUpdateEntityExportDefinitionsRequest {
     readonly filter?: string;
     readonly include?: Array<'visualizationObjects' | 'analyticalDashboards' | 'automations' | 'userIdentifiers' | 'visualizationObject' | 'analyticalDashboard' | 'automation' | 'createdBy' | 'modifiedBy' | 'ALL'>;
@@ -23154,6 +23403,15 @@ export interface EntitiesApiUpdateEntityOrgMemoryItemsRequest {
     readonly id: string;
     readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly jsonApiOrgMemoryItemInDocument: JsonApiOrgMemoryItemInDocument;
+}
+
+// @public
+export interface EntitiesApiUpdateEntityPageTemplatesRequest {
+    readonly filter?: string;
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly jsonApiPublisherDocumentPageTemplateInDocument: JsonApiPublisherDocumentPageTemplateInDocument;
+    readonly objectId: string;
+    readonly workspaceId: string;
 }
 
 // @public
@@ -24656,7 +24914,7 @@ export interface ExportIdentifierRefIdentifier {
 }
 
 // @public (undocumented)
-export type ExportIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'reportPageLayout' | 'reportTemplate' | 'report' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
+export type ExportIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'reportPageLayout' | 'reportTemplate' | 'report' | 'pageTemplate' | 'document' | 'documentTemplate' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
 
 // @public
 export interface ExportImageExportRequest {
@@ -26936,7 +27194,7 @@ export interface IdentifierRefIdentifier {
 }
 
 // @public (undocumented)
-export type IdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'reportPageLayout' | 'reportTemplate' | 'report' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
+export type IdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'reportPageLayout' | 'reportTemplate' | 'report' | 'pageTemplate' | 'document' | 'documentTemplate' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
 
 // @public
 export class IdentityProviderControllerApi extends MetadataBaseApi implements IdentityProviderControllerApiInterface {
@@ -31889,7 +32147,7 @@ export interface JsonApiDataSourceIdentifierOutAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiDataSourceIdentifierOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO' | 'TRINO';
+export type JsonApiDataSourceIdentifierOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO' | 'TRINO';
 
 // @public (undocumented)
 export interface JsonApiDataSourceIdentifierOutDocument {
@@ -31994,7 +32252,7 @@ export interface JsonApiDataSourceInAttributesParametersInner {
 }
 
 // @public (undocumented)
-export type JsonApiDataSourceInAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO' | 'TRINO';
+export type JsonApiDataSourceInAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO' | 'TRINO';
 
 // @public (undocumented)
 export interface JsonApiDataSourceInDocument {
@@ -32065,7 +32323,7 @@ export interface JsonApiDataSourceOutAttributesParametersInner {
 }
 
 // @public (undocumented)
-export type JsonApiDataSourceOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO' | 'TRINO';
+export type JsonApiDataSourceOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO' | 'TRINO';
 
 // @public (undocumented)
 export interface JsonApiDataSourceOutDocument {
@@ -32170,7 +32428,7 @@ export interface JsonApiDataSourcePatchAttributesParametersInner {
 }
 
 // @public (undocumented)
-export type JsonApiDataSourcePatchAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO' | 'TRINO';
+export type JsonApiDataSourcePatchAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO' | 'TRINO';
 
 // @public (undocumented)
 export interface JsonApiDataSourcePatchDocument {
@@ -36181,6 +36439,672 @@ export interface JsonApiParameterPostOptionalIdDocument {
 
 // @public (undocumented)
 export type JsonApiParameterPostOptionalIdTypeEnum = 'parameter';
+
+// @public
+export interface JsonApiPublisherDocumentIn {
+    // (undocumented)
+    'attributes': JsonApiPublisherDocumentInAttributes;
+    'id': string;
+    'type': JsonApiPublisherDocumentInTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentInAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    'content': object;
+    // (undocumented)
+    'description'?: string;
+    // (undocumented)
+    'period': JsonApiPublisherDocumentInAttributesPeriod;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title': string;
+    'version': string;
+}
+
+// @public
+export type JsonApiPublisherDocumentInAttributesPeriod = ({
+    type: 'absolute';
+} & AbsolutePublisherDocumentPeriod) | ({
+    type: 'relative';
+} & RelativePublisherDocumentPeriod);
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentInDocument {
+    // (undocumented)
+    'data': JsonApiPublisherDocumentIn;
+}
+
+// @public (undocumented)
+export type JsonApiPublisherDocumentInTypeEnum = 'document';
+
+// @public
+export interface JsonApiPublisherDocumentOut {
+    // (undocumented)
+    'attributes': JsonApiPublisherDocumentOutAttributes;
+    'id': string;
+    // (undocumented)
+    'meta'?: JsonApiPublisherDocumentOutMeta;
+    // (undocumented)
+    'relationships'?: JsonApiPublisherDocumentOutRelationships;
+    'type': JsonApiPublisherDocumentOutTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentOutAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    'content': object;
+    'createdAt'?: string | null;
+    // (undocumented)
+    'description'?: string;
+    'modifiedAt'?: string | null;
+    // (undocumented)
+    'period': JsonApiPublisherDocumentOutAttributesPeriod;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title': string;
+    'version': string;
+}
+
+// @public
+export type JsonApiPublisherDocumentOutAttributesPeriod = ({
+    type: 'absolute';
+} & AbsolutePublisherDocumentPeriod) | ({
+    type: 'relative';
+} & RelativePublisherDocumentPeriod);
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentOutDocument {
+    // (undocumented)
+    'data': JsonApiPublisherDocumentOut;
+    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    // (undocumented)
+    'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiPublisherDocumentOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
+}
+
+// @public
+export interface JsonApiPublisherDocumentOutList {
+    // (undocumented)
+    'data': Array<JsonApiPublisherDocumentOutWithLinks>;
+    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    // (undocumented)
+    'links'?: ListLinks;
+    // (undocumented)
+    'meta'?: JsonApiPublisherDocumentOutListMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentOutListMeta {
+    // (undocumented)
+    'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentOutMeta {
+    // (undocumented)
+    'origin'?: JsonApiPublisherDocumentOutMetaOrigin;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentOutMetaOrigin {
+    'originId': string;
+    'originType': JsonApiPublisherDocumentOutMetaOriginOriginTypeEnum;
+}
+
+// @public (undocumented)
+export type JsonApiPublisherDocumentOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentOutRelationships {
+    // (undocumented)
+    'createdBy'?: JsonApiPublisherDocumentOutRelationshipsCreatedBy;
+    // (undocumented)
+    'modifiedBy'?: JsonApiPublisherDocumentOutRelationshipsModifiedBy;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentOutRelationshipsCreatedBy {
+    // (undocumented)
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentOutRelationshipsModifiedBy {
+    // (undocumented)
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+// @public (undocumented)
+export type JsonApiPublisherDocumentOutTypeEnum = 'document';
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentOutWithLinks {
+    // (undocumented)
+    'attributes': JsonApiPublisherDocumentOutAttributes;
+    'id': string;
+    // (undocumented)
+    'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiPublisherDocumentOutMeta;
+    // (undocumented)
+    'relationships'?: JsonApiPublisherDocumentOutRelationships;
+    'type': JsonApiPublisherDocumentOutWithLinksTypeEnum;
+}
+
+// @public (undocumented)
+export type JsonApiPublisherDocumentOutWithLinksTypeEnum = 'document';
+
+// @public
+export interface JsonApiPublisherDocumentPageTemplateIn {
+    // (undocumented)
+    'attributes': JsonApiPublisherDocumentPageTemplateInAttributes;
+    'id': string;
+    'type': JsonApiPublisherDocumentPageTemplateInTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentPageTemplateInAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    'content': object;
+    // (undocumented)
+    'description'?: string;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title': string;
+    'version': string;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentPageTemplateInDocument {
+    // (undocumented)
+    'data': JsonApiPublisherDocumentPageTemplateIn;
+}
+
+// @public (undocumented)
+export type JsonApiPublisherDocumentPageTemplateInTypeEnum = 'pageTemplate';
+
+// @public
+export interface JsonApiPublisherDocumentPageTemplateOut {
+    // (undocumented)
+    'attributes': JsonApiPublisherDocumentPageTemplateOutAttributes;
+    'id': string;
+    // (undocumented)
+    'meta'?: JsonApiPublisherDocumentPageTemplateOutMeta;
+    // (undocumented)
+    'relationships'?: JsonApiPublisherDocumentPageTemplateOutRelationships;
+    'type': JsonApiPublisherDocumentPageTemplateOutTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentPageTemplateOutAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    'content': object;
+    'createdAt'?: string | null;
+    // (undocumented)
+    'description'?: string;
+    'modifiedAt'?: string | null;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title': string;
+    'version': string;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentPageTemplateOutDocument {
+    // (undocumented)
+    'data': JsonApiPublisherDocumentPageTemplateOut;
+    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    // (undocumented)
+    'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiPublisherDocumentPageTemplateOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentPageTemplateOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
+}
+
+// @public
+export interface JsonApiPublisherDocumentPageTemplateOutList {
+    // (undocumented)
+    'data': Array<JsonApiPublisherDocumentPageTemplateOutWithLinks>;
+    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    // (undocumented)
+    'links'?: ListLinks;
+    // (undocumented)
+    'meta'?: JsonApiPublisherDocumentPageTemplateOutListMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentPageTemplateOutListMeta {
+    // (undocumented)
+    'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentPageTemplateOutMeta {
+    // (undocumented)
+    'origin'?: JsonApiPublisherDocumentPageTemplateOutMetaOrigin;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentPageTemplateOutMetaOrigin {
+    'originId': string;
+    'originType': JsonApiPublisherDocumentPageTemplateOutMetaOriginOriginTypeEnum;
+}
+
+// @public (undocumented)
+export type JsonApiPublisherDocumentPageTemplateOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentPageTemplateOutRelationships {
+    // (undocumented)
+    'createdBy'?: JsonApiPublisherDocumentPageTemplateOutRelationshipsCreatedBy;
+    // (undocumented)
+    'modifiedBy'?: JsonApiPublisherDocumentPageTemplateOutRelationshipsModifiedBy;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentPageTemplateOutRelationshipsCreatedBy {
+    // (undocumented)
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentPageTemplateOutRelationshipsModifiedBy {
+    // (undocumented)
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+// @public (undocumented)
+export type JsonApiPublisherDocumentPageTemplateOutTypeEnum = 'pageTemplate';
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentPageTemplateOutWithLinks {
+    // (undocumented)
+    'attributes': JsonApiPublisherDocumentPageTemplateOutAttributes;
+    'id': string;
+    // (undocumented)
+    'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiPublisherDocumentPageTemplateOutMeta;
+    // (undocumented)
+    'relationships'?: JsonApiPublisherDocumentPageTemplateOutRelationships;
+    'type': JsonApiPublisherDocumentPageTemplateOutWithLinksTypeEnum;
+}
+
+// @public (undocumented)
+export type JsonApiPublisherDocumentPageTemplateOutWithLinksTypeEnum = 'pageTemplate';
+
+// @public
+export interface JsonApiPublisherDocumentPageTemplatePatch {
+    // (undocumented)
+    'attributes': JsonApiPublisherDocumentPageTemplatePatchAttributes;
+    'id': string;
+    'type': JsonApiPublisherDocumentPageTemplatePatchTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentPageTemplatePatchAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    'content'?: object;
+    // (undocumented)
+    'description'?: string;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title'?: string;
+    'version'?: string;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentPageTemplatePatchDocument {
+    // (undocumented)
+    'data': JsonApiPublisherDocumentPageTemplatePatch;
+}
+
+// @public (undocumented)
+export type JsonApiPublisherDocumentPageTemplatePatchTypeEnum = 'pageTemplate';
+
+// @public
+export interface JsonApiPublisherDocumentPageTemplatePostOptionalId {
+    // (undocumented)
+    'attributes': JsonApiPublisherDocumentPageTemplatePostOptionalIdAttributes;
+    'id'?: string;
+    'type': JsonApiPublisherDocumentPageTemplatePostOptionalIdTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentPageTemplatePostOptionalIdAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    'content': object;
+    // (undocumented)
+    'description'?: string;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title': string;
+    'version': string;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument {
+    // (undocumented)
+    'data': JsonApiPublisherDocumentPageTemplatePostOptionalId;
+}
+
+// @public (undocumented)
+export type JsonApiPublisherDocumentPageTemplatePostOptionalIdTypeEnum = 'pageTemplate';
+
+// @public
+export interface JsonApiPublisherDocumentPatch {
+    // (undocumented)
+    'attributes': JsonApiPublisherDocumentPatchAttributes;
+    'id': string;
+    'type': JsonApiPublisherDocumentPatchTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentPatchAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    'content'?: object;
+    // (undocumented)
+    'description'?: string;
+    // (undocumented)
+    'period'?: JsonApiPublisherDocumentPatchAttributesPeriod;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title'?: string;
+    'version'?: string;
+}
+
+// @public
+export type JsonApiPublisherDocumentPatchAttributesPeriod = ({
+    type: 'absolute';
+} & AbsolutePublisherDocumentPeriod) | ({
+    type: 'relative';
+} & RelativePublisherDocumentPeriod);
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentPatchDocument {
+    // (undocumented)
+    'data': JsonApiPublisherDocumentPatch;
+}
+
+// @public (undocumented)
+export type JsonApiPublisherDocumentPatchTypeEnum = 'document';
+
+// @public
+export interface JsonApiPublisherDocumentPostOptionalId {
+    // (undocumented)
+    'attributes': JsonApiPublisherDocumentPostOptionalIdAttributes;
+    'id'?: string;
+    'type': JsonApiPublisherDocumentPostOptionalIdTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentPostOptionalIdAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    'content': object;
+    // (undocumented)
+    'description'?: string;
+    // (undocumented)
+    'period': JsonApiPublisherDocumentPostOptionalIdAttributesPeriod;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title': string;
+    'version': string;
+}
+
+// @public
+export type JsonApiPublisherDocumentPostOptionalIdAttributesPeriod = ({
+    type: 'absolute';
+} & AbsolutePublisherDocumentPeriod) | ({
+    type: 'relative';
+} & RelativePublisherDocumentPeriod);
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentPostOptionalIdDocument {
+    // (undocumented)
+    'data': JsonApiPublisherDocumentPostOptionalId;
+}
+
+// @public (undocumented)
+export type JsonApiPublisherDocumentPostOptionalIdTypeEnum = 'document';
+
+// @public
+export interface JsonApiPublisherDocumentTemplateIn {
+    // (undocumented)
+    'attributes': JsonApiPublisherDocumentTemplateInAttributes;
+    'id': string;
+    'type': JsonApiPublisherDocumentTemplateInTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentTemplateInAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    'content': object;
+    // (undocumented)
+    'description'?: string;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title': string;
+    'version': string;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentTemplateInDocument {
+    // (undocumented)
+    'data': JsonApiPublisherDocumentTemplateIn;
+}
+
+// @public (undocumented)
+export type JsonApiPublisherDocumentTemplateInTypeEnum = 'documentTemplate';
+
+// @public
+export interface JsonApiPublisherDocumentTemplateOut {
+    // (undocumented)
+    'attributes': JsonApiPublisherDocumentTemplateOutAttributes;
+    'id': string;
+    // (undocumented)
+    'meta'?: JsonApiPublisherDocumentTemplateOutMeta;
+    // (undocumented)
+    'relationships'?: JsonApiPublisherDocumentTemplateOutRelationships;
+    'type': JsonApiPublisherDocumentTemplateOutTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentTemplateOutAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    'content': object;
+    'createdAt'?: string | null;
+    // (undocumented)
+    'description'?: string;
+    'modifiedAt'?: string | null;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title': string;
+    'version': string;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentTemplateOutDocument {
+    // (undocumented)
+    'data': JsonApiPublisherDocumentTemplateOut;
+    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    // (undocumented)
+    'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiPublisherDocumentTemplateOutDocumentMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentTemplateOutDocumentMeta {
+    'restricted'?: Array<RestrictedObject>;
+}
+
+// @public
+export interface JsonApiPublisherDocumentTemplateOutList {
+    // (undocumented)
+    'data': Array<JsonApiPublisherDocumentTemplateOutWithLinks>;
+    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    // (undocumented)
+    'links'?: ListLinks;
+    // (undocumented)
+    'meta'?: JsonApiPublisherDocumentTemplateOutListMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentTemplateOutListMeta {
+    // (undocumented)
+    'page'?: PageMetadata;
+    'restricted'?: Array<RestrictedObject>;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentTemplateOutMeta {
+    // (undocumented)
+    'origin'?: JsonApiPublisherDocumentTemplateOutMetaOrigin;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentTemplateOutMetaOrigin {
+    'originId': string;
+    'originType': JsonApiPublisherDocumentTemplateOutMetaOriginOriginTypeEnum;
+}
+
+// @public (undocumented)
+export type JsonApiPublisherDocumentTemplateOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentTemplateOutRelationships {
+    // (undocumented)
+    'createdBy'?: JsonApiPublisherDocumentTemplateOutRelationshipsCreatedBy;
+    // (undocumented)
+    'modifiedBy'?: JsonApiPublisherDocumentTemplateOutRelationshipsModifiedBy;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentTemplateOutRelationshipsCreatedBy {
+    // (undocumented)
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentTemplateOutRelationshipsModifiedBy {
+    // (undocumented)
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+// @public (undocumented)
+export type JsonApiPublisherDocumentTemplateOutTypeEnum = 'documentTemplate';
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentTemplateOutWithLinks {
+    // (undocumented)
+    'attributes': JsonApiPublisherDocumentTemplateOutAttributes;
+    'id': string;
+    // (undocumented)
+    'links'?: ObjectLinks;
+    // (undocumented)
+    'meta'?: JsonApiPublisherDocumentTemplateOutMeta;
+    // (undocumented)
+    'relationships'?: JsonApiPublisherDocumentTemplateOutRelationships;
+    'type': JsonApiPublisherDocumentTemplateOutWithLinksTypeEnum;
+}
+
+// @public (undocumented)
+export type JsonApiPublisherDocumentTemplateOutWithLinksTypeEnum = 'documentTemplate';
+
+// @public
+export interface JsonApiPublisherDocumentTemplatePatch {
+    // (undocumented)
+    'attributes': JsonApiPublisherDocumentTemplatePatchAttributes;
+    'id': string;
+    'type': JsonApiPublisherDocumentTemplatePatchTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentTemplatePatchAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    'content'?: object;
+    // (undocumented)
+    'description'?: string;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title'?: string;
+    'version'?: string;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentTemplatePatchDocument {
+    // (undocumented)
+    'data': JsonApiPublisherDocumentTemplatePatch;
+}
+
+// @public (undocumented)
+export type JsonApiPublisherDocumentTemplatePatchTypeEnum = 'documentTemplate';
+
+// @public
+export interface JsonApiPublisherDocumentTemplatePostOptionalId {
+    // (undocumented)
+    'attributes': JsonApiPublisherDocumentTemplatePostOptionalIdAttributes;
+    'id'?: string;
+    'type': JsonApiPublisherDocumentTemplatePostOptionalIdTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentTemplatePostOptionalIdAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    'content': object;
+    // (undocumented)
+    'description'?: string;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title': string;
+    'version': string;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentTemplatePostOptionalIdDocument {
+    // (undocumented)
+    'data': JsonApiPublisherDocumentTemplatePostOptionalId;
+}
+
+// @public (undocumented)
+export type JsonApiPublisherDocumentTemplatePostOptionalIdTypeEnum = 'documentTemplate';
 
 // @public
 export interface JsonApiReportIn {
@@ -44338,6 +45262,13 @@ export type ProfileApiInterface = {
     getCurrentWithDetails: () => Promise<IUserProfile>;
 };
 
+// @public
+export type PublisherDocumentPeriod = ({
+    type: 'absolute';
+} & AbsolutePublisherDocumentPeriod) | ({
+    type: 'relative';
+} & RelativePublisherDocumentPeriod);
+
 // @public (undocumented)
 export type QualityIssueSeverityEnum = 'WARNING' | 'INFO';
 
@@ -44601,6 +45532,21 @@ export type RelativeDateFilterRelativeDateFilterGranularityEnum = 'SECOND' | 'SE
 
 // @public (undocumented)
 export type RelativeOperatorEnum = 'INCREASES_BY' | 'DECREASES_BY' | 'CHANGES_BY';
+
+// @public
+export interface RelativePublisherDocumentPeriod {
+    'from': number;
+    'granularity': RelativePublisherDocumentPeriodGranularityEnum;
+    'to': number;
+    // (undocumented)
+    'type': RelativePublisherDocumentPeriodTypeEnum;
+}
+
+// @public (undocumented)
+export type RelativePublisherDocumentPeriodGranularityEnum = 'GDC.time.second' | 'GDC.time.minute' | 'GDC.time.hour' | 'GDC.time.date' | 'GDC.time.week_us' | 'GDC.time.month' | 'GDC.time.fiscal_month' | 'GDC.time.quarter' | 'GDC.time.fiscal_quarter' | 'GDC.time.year' | 'GDC.time.fiscal_year';
+
+// @public (undocumented)
+export type RelativePublisherDocumentPeriodTypeEnum = 'relative';
 
 // @public (undocumented)
 export interface RelativeWrapper {
@@ -45565,7 +46511,7 @@ export interface TestDefinitionRequest {
 export type TestDefinitionRequestAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
 
 // @public (undocumented)
-export type TestDefinitionRequestTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO' | 'TRINO';
+export type TestDefinitionRequestTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO' | 'TRINO';
 
 // @public (undocumented)
 export interface TestLlmProviderByIdRequest {

@@ -206,6 +206,7 @@
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "Analyze에서 열기",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "시각화를 열기 전에 저장하라는 메시지가 표시됩니다.",
     "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "시각화 링크 복사",
+    "gd.gen-ai.messages.skills": "스킬 사용 중",
     "gd.gen-ai.messages.label": "채팅 메시지",
     "gd.gen-ai.message.label.user": "사용자:",
     "gd.gen-ai.message.label.assistant": "봇:",

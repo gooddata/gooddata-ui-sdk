@@ -14,6 +14,7 @@ vi.mock("@gooddata/api-client-tiger", async () => {
     const actual = await vi.importActual<typeof api>("@gooddata/api-client-tiger");
     return {
         ...actual,
+        ActionsApi_GetDependentEntitiesGraph: vi.fn(),
         ActionsApi_GetDependentEntitiesGraphFromEntryPoints: vi.fn(),
     };
 });
@@ -132,6 +133,17 @@ describe("TigerReferencesService", () => {
         expectGraphRequest([{ id: "m1", type: "metric" }], "DEPENDENTS");
     });
 
+    it("skips nodes outside the object types of the SDK references", async () => {
+        const automationNode = { id: "a1", type: "automation" };
+        mockGraph([metricNode, automationNode], [[metricNode, automationNode]]);
+        const service = makeService();
+
+        const result = await service.getReferences(metricRef, { direction: "up" });
+
+        expect(result.nodes).toEqual([{ ...metricRef, title: "M1", isRoot: true }]);
+        expect(result.edges).toEqual([]);
+    });
+
     it("orients both dependency and dependent graphs by their API relation", async () => {
         mockGraphOnce([metricNode, parameterNode], [metricDependencyEdge]);
         mockGraphOnce([metricNode, dashboardNode], [metricDependentEdge]);
@@ -168,5 +180,41 @@ describe("TigerReferencesService", () => {
 
         expect(result).toEqual({ nodes: [], edges: [] });
         expect(api.ActionsApi_GetDependentEntitiesGraphFromEntryPoints).not.toHaveBeenCalled();
+    });
+
+    it("returns all references of the workspace with edges from the user to the used object", async () => {
+        const automationNode = { id: "a1", type: "automation" };
+        const recommendationNode = { id: "r1", type: "knowledgeRecommendation" };
+        vi.mocked(api.ActionsApi_GetDependentEntitiesGraph).mockResolvedValue(
+            graphResponse(
+                [metricNode, parameterNode, dashboardNode, automationNode, recommendationNode],
+                [
+                    metricDependencyEdge,
+                    metricDependentEdge,
+                    [dashboardNode, automationNode],
+                    [metricNode, recommendationNode],
+                ],
+            ),
+        );
+
+        const result = await makeService().getAllReferences();
+
+        expect(api.ActionsApi_GetDependentEntitiesGraph).toHaveBeenCalledWith(
+            expect.anything(),
+            expect.anything(),
+            { workspaceId: "ws-1" },
+        );
+        const automationRef = idRef("a1", "automation");
+        expect(result.nodes).toEqual([
+            { ...metricRef, title: "M1", isRoot: false },
+            { ...parameterRef, title: "P1", isRoot: false },
+            { ...dashboardRef, title: "D1", isRoot: false },
+            { ...automationRef, title: "a1", isRoot: false },
+        ]);
+        expect(result.edges).toEqual([
+            { from: metricRef, to: parameterRef },
+            { from: dashboardRef, to: metricRef },
+            { from: automationRef, to: dashboardRef },
+        ]);
     });
 });

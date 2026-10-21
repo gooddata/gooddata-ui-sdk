@@ -6,7 +6,11 @@ import { isEqual, omit } from "lodash-es";
 import { type Root as ReactRoot, createRoot } from "react-dom/client";
 import { type NavigateFunction } from "react-router";
 
-import { type IGenAIUserContext, type PluggableApplicationRegistryItem } from "@gooddata/sdk-model";
+import {
+    type GenAIChatEffort,
+    type IGenAIUserContext,
+    type PluggableApplicationRegistryItem,
+} from "@gooddata/sdk-model";
 import {
     type IAppHeaderOptions,
     type IHostNavigationRequest,
@@ -139,6 +143,7 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate, onError }
             userContext?: IGenAIUserContext,
             appendToChat?: boolean,
             replaceUserContext?: boolean,
+            effort?: GenAIChatEffort,
         ) => {
             setAiVisibility({
                 kind: "open",
@@ -147,6 +152,7 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate, onError }
                 userContext,
                 appendToChat,
                 replaceUserContext,
+                effort,
                 seq: ++aiVisibilitySeqRef.current,
             });
         },

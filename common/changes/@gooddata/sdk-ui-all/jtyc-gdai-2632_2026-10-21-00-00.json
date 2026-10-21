@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-gen-ai, sdk-pluggable-application-model, sdk-ui-pluggable-host: The reasoning effort picked on the new-dashboard screen carries into the chat.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

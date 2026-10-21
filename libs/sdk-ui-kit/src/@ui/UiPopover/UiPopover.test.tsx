@@ -1,7 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
 import { FloatingPortal } from "@floating-ui/react";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
@@ -128,6 +128,92 @@ describe("UiPopover", () => {
             } finally {
                 outside.remove();
             }
+        });
+    });
+
+    describe("Escape inside a parent that closes on Escape", () => {
+        const renderInParent = (onParentEscape: () => void) =>
+            render(
+                <div
+                    onKeyDown={(event) => {
+                        if (event.key === "Escape") {
+                            event.stopPropagation();
+                            onParentEscape();
+                        }
+                    }}
+                >
+                    <UiPopover
+                        anchor={<button type="button">Anchor</button>}
+                        content={() => <button type="button">Inside</button>}
+                    />
+                </div>,
+            );
+
+        it("closes only the popover and returns focus to the anchor", async () => {
+            const onParentEscape = vi.fn();
+            renderInParent(onParentEscape);
+            fireEvent.click(screen.getByText("Anchor"));
+
+            fireEvent.keyDown(screen.getByText("Inside"), { key: "Escape" });
+
+            expect(screen.queryByText("Inside")).not.toBeInTheDocument();
+            expect(onParentEscape).not.toHaveBeenCalled();
+            await waitFor(() => expect(screen.getByText("Anchor")).toHaveFocus());
+        });
+
+        it("keeps the popover and the parent open when the content handles Escape itself", () => {
+            const onParentEscape = vi.fn();
+            render(
+                <div
+                    onKeyDown={(event) => {
+                        if (event.key === "Escape") {
+                            onParentEscape();
+                        }
+                    }}
+                >
+                    <UiPopover
+                        anchor={<button type="button">Anchor</button>}
+                        content={() => (
+                            <button
+                                type="button"
+                                onKeyDown={(event) => {
+                                    if (event.key === "Escape") {
+                                        event.preventDefault();
+                                    }
+                                }}
+                            >
+                                Inside
+                            </button>
+                        )}
+                    />
+                </div>,
+            );
+            fireEvent.click(screen.getByText("Anchor"));
+
+            fireEvent.keyDown(screen.getByText("Inside"), { key: "Escape" });
+
+            expect(screen.getByText("Inside")).toBeInTheDocument();
+            expect(onParentEscape).not.toHaveBeenCalled();
+        });
+
+        it("keeps the popover and the parent open on Escape during IME composition", () => {
+            const onParentEscape = vi.fn();
+            renderInParent(onParentEscape);
+            fireEvent.click(screen.getByText("Anchor"));
+
+            fireEvent.keyDown(screen.getByText("Inside"), { key: "Escape", isComposing: true });
+
+            expect(screen.getByText("Inside")).toBeInTheDocument();
+            expect(onParentEscape).not.toHaveBeenCalled();
+        });
+
+        it("lets the parent handle Escape once the popover is closed", () => {
+            const onParentEscape = vi.fn();
+            renderInParent(onParentEscape);
+
+            fireEvent.keyDown(screen.getByText("Anchor"), { key: "Escape" });
+
+            expect(onParentEscape).toHaveBeenCalledTimes(1);
         });
     });
 

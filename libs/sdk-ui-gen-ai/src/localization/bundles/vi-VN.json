@@ -206,6 +206,7 @@
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "Mở trong Analyze",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Thao tác này sẽ yêu cầu bạn lưu trực quan hóa trước khi có thể mở.",
     "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "Sao chép liên kết trực quan hóa",
+    "gd.gen-ai.messages.skills": "Đang sử dụng các kỹ năng",
     "gd.gen-ai.messages.label": "Tin nhắn trò chuyện",
     "gd.gen-ai.message.label.user": "Người dùng:",
     "gd.gen-ai.message.label.assistant": "Bot:",

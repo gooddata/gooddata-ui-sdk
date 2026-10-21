@@ -31,7 +31,7 @@ import {
     type LocalizationSettingType,
 } from "@gooddata/sdk-backend-spi";
 
-import { matches, page } from "./aggregate.js";
+import { matches, matchesName, page } from "./aggregate.js";
 
 const SETTINGS: LocalizationSettingType[] = ["LOCALE", "METADATA_LOCALE", "DATA_LOCALE"];
 
@@ -174,7 +174,7 @@ export function convertWorkspaceLocalizationUsageWorkspaces(
         const originName = resolved.originId ? originNames.get(resolved.originId) : undefined;
         return originName ? { ...resolved, originName } : resolved;
     });
-    const source = matches(bySetting, query);
+    const source = matchesName(query.name, [workspace.name]) ? matches(bySetting, query) : undefined;
     if (!source) {
         return { workspaces: [], totalCount: 0 };
     }

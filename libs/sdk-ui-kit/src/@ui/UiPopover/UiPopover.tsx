@@ -200,6 +200,17 @@ export function UiPopover({
                             id={id ?? currentId}
                             className={b()}
                             style={{ width: width === "default" ? undefined : width }}
+                            // A portalled popover's keydown still bubbles through the React tree.
+                            // Stop it here, so a parent dialog or drawer does not also close on Escape.
+                            onKeyDown={(event) => {
+                                if (event.key !== "Escape") {
+                                    return;
+                                }
+                                event.stopPropagation();
+                                if (!event.defaultPrevented && !event.nativeEvent.isComposing) {
+                                    onClose();
+                                }
+                            }}
                         >
                             {title || closeVisible ? (
                                 <div className={e("header")}>

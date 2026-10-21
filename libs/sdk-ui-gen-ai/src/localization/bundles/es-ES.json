@@ -206,6 +206,7 @@
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "Abrir en Analizar",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Se le pedirá que guarde la visualización antes de poder abrirla.",
     "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "Copiar enlace de Visualización",
+    "gd.gen-ai.messages.skills": "Usando habilidades",
     "gd.gen-ai.messages.label": "Mensajes de chat",
     "gd.gen-ai.message.label.user": "Usuario:",
     "gd.gen-ai.message.label.assistant": "Bot:",

@@ -10,13 +10,26 @@ import {
     type IUserLocalizationSettings,
     type LocalizationSettingType,
 } from "@gooddata/sdk-backend-spi";
-import { DropdownButton, type IUiListboxItem, Message, UiDropdown, UiListbox } from "@gooddata/sdk-ui-kit";
+import {
+    DropdownButton,
+    type IUiListboxItem,
+    Message,
+    type MessageType,
+    UiDropdown,
+    UiListbox,
+} from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../locales.js";
 import { type ListMode } from "../types.js";
 import { QuestionMarkIcon } from "../Workspace/WorkspaceItem/QuestionMarkIcon.js";
 
-import { USER_LANGUAGE_SETTINGS, languageName, languageNotice, languageOptions } from "./userLanguages.js";
+import {
+    type LanguageNotice,
+    USER_LANGUAGE_SETTINGS,
+    languageName,
+    languageNotice,
+    languageOptions,
+} from "./userLanguages.js";
 
 const NOT_SET_ID = "not-set";
 const LIST_MAX_HEIGHT = 250;
@@ -33,11 +46,49 @@ const NOT_SET_TOOLTIPS: Record<LocalizationSettingType, MessageDescriptor> = {
     DATA_LOCALE: messages.userDataLanguageNotSetTooltip,
 };
 
+const NOTICE_TYPES: Record<LanguageNotice["type"], MessageType> = {
+    notSupported: "error",
+    noTranslation: "warning",
+    noTranslationIn: "warning",
+    translationAvailable: "progress",
+};
+
+type NoticeLiveRole = "alert" | "status";
+
+const NOTICE_LIVE_ROLES: Record<LanguageNotice["type"], NoticeLiveRole | undefined> = {
+    notSupported: undefined,
+    noTranslation: "alert",
+    noTranslationIn: "alert",
+    translationAvailable: "status",
+};
+
+const LIVE_ROLES: NoticeLiveRole[] = ["alert", "status"];
+
+function noticeMessage(setting: LocalizationSettingType, notice: LanguageNotice): MessageDescriptor {
+    const isData = setting === "DATA_LOCALE";
+    switch (notice.type) {
+        case "notSupported":
+            return messages.userLanguageNotSupported;
+        case "noTranslation":
+            return isData
+                ? messages.userDataLanguageNoTranslation
+                : messages.userMetadataLanguageNoTranslation;
+        case "noTranslationIn":
+            return messages.userLanguageNoTranslationIn;
+        case "translationAvailable":
+            return isData
+                ? messages.userDataLanguageTranslationAvailable
+                : messages.userMetadataLanguageTranslationAvailable;
+    }
+}
+
 export interface IUserLanguagesSectionProps {
     languages: IUserLocalizationSettings | undefined;
     isError: boolean;
     mode: ListMode;
     statistics?: ILocalizationStatistics;
+    workspaceStatistics?: ILocalizationStatistics[];
+    organizationLanguages?: IUserLocalizationSettings;
     onChange?: (languages: IUserLocalizationSettings) => void;
 }
 
@@ -46,6 +97,8 @@ export function UserLanguagesSection({
     isError,
     mode,
     statistics,
+    workspaceStatistics,
+    organizationLanguages,
     onChange,
 }: IUserLanguagesSectionProps) {
     const intl = useIntl();
@@ -66,7 +119,10 @@ export function UserLanguagesSection({
                 </div>
             ) : (
                 USER_LANGUAGE_SETTINGS.map((type) => {
-                    const notice = mode === "VIEW" && languages ? languageNotice(type, languages) : undefined;
+                    const notice =
+                        mode === "VIEW" && languages
+                            ? languageNotice(type, languages, workspaceStatistics, organizationLanguages)
+                            : undefined;
                     return (
                         <Fragment key={type}>
                             <div
@@ -93,7 +149,24 @@ export function UserLanguagesSection({
                                     />
                                 )}
                             </div>
-                            {notice ? <LanguageNotSupportedMessage type={type} /> : null}
+                            {notice && !NOTICE_LIVE_ROLES[notice.type] ? (
+                                <div className="gd-user-management-dialog-detail-notice-region">
+                                    <LanguageNoticeMessage type={type} notice={notice} />
+                                </div>
+                            ) : null}
+                            {mode === "VIEW" && type !== "LOCALE"
+                                ? LIVE_ROLES.map((role) => (
+                                      <div
+                                          key={role}
+                                          role={role}
+                                          className="gd-user-management-dialog-detail-notice-region"
+                                      >
+                                          {notice && NOTICE_LIVE_ROLES[notice.type] === role ? (
+                                              <LanguageNoticeMessage type={type} notice={notice} />
+                                          ) : null}
+                                      </div>
+                                  ))
+                                : null}
                         </Fragment>
                     );
                 })
@@ -102,14 +175,15 @@ export function UserLanguagesSection({
     );
 }
 
-function LanguageNotSupportedMessage({ type }: { type: LocalizationSettingType }) {
+function LanguageNoticeMessage({ type, notice }: { type: LocalizationSettingType; notice: LanguageNotice }) {
     const intl = useIntl();
     return (
         <Message
-            type="error"
+            type={NOTICE_TYPES[notice.type]}
             className={cx("gd-user-management-dialog-detail-notice", `s-user-language-notice-${type}`)}
         >
-            {intl.formatMessage(messages.userLanguageNotSupported, {
+            {intl.formatMessage(noticeMessage(type, notice), {
+                count: notice.type === "noTranslationIn" ? notice.count : 0,
                 b: (chunks: ReactNode) => <b>{chunks}</b>,
             })}
         </Message>

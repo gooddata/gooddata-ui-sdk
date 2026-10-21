@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import {
     effectiveSettings,
+    matchesName,
     ownSettings,
     summarize,
     translatedLocalesOf,
@@ -76,6 +77,47 @@ describe("usage lists", () => {
         expect(totalCount).toBe(10);
         expect(users).toHaveLength(3);
         expect(users.every((user) => user.source === "USER")).toBe(true);
+    });
+});
+
+describe("usage lists by name", () => {
+    it("matches a part of the name in any letter case", () => {
+        expect(matchesName("BERG", ["Bergmann GmbH"])).toBe(true);
+        expect(matchesName("berg", ["Acme"])).toBe(false);
+    });
+
+    it("matches every candidate when the name is empty", () => {
+        expect(matchesName(undefined, ["Acme"])).toBe(true);
+        expect(matchesName("", ["Acme"])).toBe(true);
+    });
+
+    it("filters the people by name, email or ID before paging", () => {
+        const all = usageUsers(organizationScope, { setting: "LOCALE" });
+        const person = all.users[1];
+        const number = person.id.replace("user-", "");
+
+        const byNumber = usageUsers(organizationScope, { setting: "LOCALE", name: number, size: 1 });
+        const byEmail = usageUsers(organizationScope, { setting: "LOCALE", name: `${person.id}@` });
+
+        expect(byNumber.totalCount).toBeLessThan(all.totalCount);
+        expect(byNumber.users).toEqual([person]);
+        expect(byEmail.users).toEqual([person]);
+    });
+
+    it("filters the workspaces by name only", () => {
+        const all = usageWorkspaces(organizationScope, { value: "de-DE", setting: "LOCALE" });
+        const workspace = all.workspaces[1];
+        const query = { value: "de-DE", setting: "LOCALE" as const };
+
+        const byName = usageWorkspaces(organizationScope, { ...query, name: workspace.name.toUpperCase() });
+        const byId = usageWorkspaces(organizationScope, { ...query, name: workspace.id });
+
+        expect(byName.totalCount).toBeGreaterThan(0);
+        expect(byName.totalCount).toBeLessThan(all.totalCount);
+        expect(byName.workspaces.every((row) => row.name.includes(workspace.name))).toBe(true);
+        expect(
+            byId.workspaces.every((row) => row.name.toLowerCase().includes(workspace.id.toLowerCase())),
+        ).toBe(true);
     });
 });
 

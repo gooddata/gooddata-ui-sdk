@@ -136,6 +136,7 @@ export enum TigerFeaturesNames {
     EnableBusinessBriefingReportsApp = "enableBusinessBriefingReportsApp",
     EnableReportsSubsections = "enableReportsSubsections",
     EnablePublisherV2 = "enablePublisherV2",
+    EnableGenAiReportTakeaways = "enableGenAiReportTakeaways",
     EnableEmbeddingWriteCommands = "enableEmbeddingWriteCommands",
     EnableLocalizationOverview = "enableLocalizationOverview",
 }
@@ -269,6 +270,7 @@ export type ITigerFeatureFlags = {
     enableBusinessBriefingReportsApp: (typeof FeatureFlagsValues)["enableBusinessBriefingReportsApp"][number];
     enableReportsSubsections: (typeof FeatureFlagsValues)["enableReportsSubsections"][number];
     enablePublisherV2: (typeof FeatureFlagsValues)["enablePublisherV2"][number];
+    enableGenAiReportTakeaways: (typeof FeatureFlagsValues)["enableGenAiReportTakeaways"][number];
     enableEmbeddingWriteCommands: (typeof FeatureFlagsValues)["enableEmbeddingWriteCommands"][number];
     enableLocalizationOverview: (typeof FeatureFlagsValues)["enableLocalizationOverview"][number];
 };
@@ -402,6 +404,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableBusinessBriefingReportsApp: false,
     enableReportsSubsections: false,
     enablePublisherV2: false,
+    enableGenAiReportTakeaways: false,
     enableEmbeddingWriteCommands: false,
     enableLocalizationOverview: false,
 };
@@ -535,6 +538,7 @@ export const FeatureFlagsValues = {
     enableBusinessBriefingReportsApp: [false, true] as const,
     enableReportsSubsections: [false, true] as const,
     enablePublisherV2: [false, true] as const,
+    enableGenAiReportTakeaways: [false, true] as const,
     enableEmbeddingWriteCommands: [true, false] as const,
     enableLocalizationOverview: [false, true] as const,
 };

@@ -2915,7 +2915,8 @@ export const AiObjectType = {
     DASHBOARD: 'dashboard',
     FILTER_CONTEXT: 'filter_context',
     PARAMETER: 'parameter',
-    DOCUMENT: 'document'
+    DOCUMENT: 'document',
+    REPORT: 'report'
 } as const;
 
 export type AiObjectType = typeof AiObjectType[keyof typeof AiObjectType];

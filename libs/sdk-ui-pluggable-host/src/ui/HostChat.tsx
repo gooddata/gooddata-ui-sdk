@@ -2,7 +2,11 @@
 
 import { ReactNode, useCallback, useEffect, useMemo } from "react";
 
-import { type IGenAIUserContext, type PluggableApplicationRegistryItem } from "@gooddata/sdk-model";
+import {
+    type GenAIChatEffort,
+    type IGenAIUserContext,
+    type PluggableApplicationRegistryItem,
+} from "@gooddata/sdk-model";
 import { type IPlatformContext } from "@gooddata/sdk-pluggable-application-model";
 import { BackendProvider, resolveLocale } from "@gooddata/sdk-ui";
 import { GenAIAssistantMode } from "@gooddata/sdk-ui-gen-ai";
@@ -33,6 +37,7 @@ export interface IHostChatVisibility {
     userContext?: IGenAIUserContext;
     appendToChat?: boolean;
     replaceUserContext?: boolean;
+    effort?: GenAIChatEffort;
     seq: number;
 }
 
@@ -193,6 +198,7 @@ export function HostChat({
                 visibility.userContext,
                 visibility.appendToChat,
                 visibility.replaceUserContext,
+                visibility.effort,
             );
         } else if (visibility.userContext) {
             chatOpenAiAssistant(visibility.userContext, visibility.replaceUserContext, visibility.agentId);

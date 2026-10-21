@@ -500,7 +500,12 @@ export type {
 } from "./organization/notificationChannels/query.js";
 export type { IDataFiltersService } from "./workspace/dataFilter/index.js";
 
-export type { IWorkspaceLogicalModelService, IDateDataset } from "./workspace/ldm/model.js";
+export type {
+    IWorkspaceLogicalModelService,
+    IDateDataset,
+    IDeclarativeLogicalModelOptions,
+} from "./workspace/ldm/model.js";
+export type { IWorkspaceCustomApplicationSettingsService } from "./workspace/customApplicationSettings/index.js";
 
 export type {
     IWorkspaceAutomationService,

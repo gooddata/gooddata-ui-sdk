@@ -100,6 +100,15 @@ export const messages = defineMessages({
     userDataLanguageNotSetTooltip: { id: "userManagement.userDetail.dataLanguage.notSet.tooltip" },
     userLanguageOption: { id: "userManagement.userDetail.language.option" },
     userLanguageNotSupported: { id: "userManagement.userDetail.interfaceLanguage.notSupported" },
+    userMetadataLanguageNoTranslation: { id: "userManagement.userDetail.metadataLanguage.noTranslation" },
+    userDataLanguageNoTranslation: { id: "userManagement.userDetail.dataLanguage.noTranslation" },
+    userLanguageNoTranslationIn: { id: "userManagement.userDetail.language.noTranslationIn" },
+    userMetadataLanguageTranslationAvailable: {
+        id: "userManagement.userDetail.metadataLanguage.translationAvailable",
+    },
+    userDataLanguageTranslationAvailable: {
+        id: "userManagement.userDetail.dataLanguage.translationAvailable",
+    },
     userLanguagesLoadError: { id: "userManagement.userDetail.languages.loadError" },
     closeEditMode: { id: "userManagement.userDetail.cancelButton" },
     saveEditedDetails: { id: "userManagement.userDetail.saveButton" },

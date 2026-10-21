@@ -915,6 +915,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableGenAiReportTakeaways,
+            "enableGenAiReportTakeaways",
+            "BOOLEAN",
+            FeatureFlagsValues.enableGenAiReportTakeaways,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableEmbeddingWriteCommands,
             "enableEmbeddingWriteCommands",
             "BOOLEAN",

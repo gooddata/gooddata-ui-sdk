@@ -29867,6 +29867,16 @@
                         "example": "de-DE"
                     },
                     {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Filter by workspace name. Note that the filter is case insensitive.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "berg"
+                    },
+                    {
                         "name": "setting",
                         "in": "query",
                         "description": "One of LOCALE, METADATA_LOCALE and DATA_LOCALE.",
@@ -29993,6 +30003,16 @@
                             "type": "string"
                         },
                         "example": "de-DE"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Filter by user name, email or login (user ID). Note that the filter is case insensitive.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "ito"
                     },
                     {
                         "name": "setting",
@@ -30129,6 +30149,16 @@
                             "type": "string"
                         },
                         "example": "de-DE"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Filter by user name, email or login (user ID). Note that the filter is case insensitive.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "ito"
                     },
                     {
                         "name": "setting",
@@ -30284,6 +30314,1719 @@
                         "MANAGE"
                     ],
                     "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/entities/workspaces/{workspaceId}/documentTemplates": {
+            "get": {
+                "tags": [
+                    "Publisher Documents",
+                    "entities",
+                    "document-template-controller"
+                ],
+                "summary": "Get all Document Templates",
+                "operationId": "getAllEntities@DocumentTemplates",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "origin",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Defines scope of origin of objects. All by default.",
+                            "default": "ALL",
+                            "enum": [
+                                "ALL",
+                                "PARENTS",
+                                "NATIVE"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "version==someString;title==someString;createdBy.id==321;modifiedBy.id==321"
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Array of included collections or individual relationships. Includes are separated by commas (e.g. include=entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \"ALL\" is present, all possible includes are used (include=ALL).\n\n__WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "userIdentifiers",
+                                    "createdBy",
+                                    "modifiedBy",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "createdBy,modifiedBy"
+                    },
+                    {
+                        "$ref": "#/components/parameters/page"
+                    },
+                    {
+                        "$ref": "#/components/parameters/size"
+                    },
+                    {
+                        "$ref": "#/components/parameters/sort"
+                    },
+                    {
+                        "name": "X-GDC-VALIDATE-RELATIONS",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "description": "Include Meta objects.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "description": "Included meta objects",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "origin",
+                                    "page",
+                                    "all",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "metaInclude=origin,page,all"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentTemplateOutList"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentTemplateOutList"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "VIEW"
+                    ],
+                    "description": "Contains minimal permission level required to view this object type."
+                }
+            },
+            "post": {
+                "tags": [
+                    "Publisher Documents",
+                    "entities",
+                    "document-template-controller"
+                ],
+                "summary": "Post Document Template",
+                "operationId": "createEntity@DocumentTemplates",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Array of included collections or individual relationships. Includes are separated by commas (e.g. include=entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \"ALL\" is present, all possible includes are used (include=ALL).\n\n__WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "userIdentifiers",
+                                    "createdBy",
+                                    "modifiedBy",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "createdBy,modifiedBy"
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "description": "Include Meta objects.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "description": "Included meta objects",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "origin",
+                                    "all",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "metaInclude=origin,all"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiPublisherDocumentTemplatePostOptionalIdDocument"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiPublisherDocumentTemplatePostOptionalIdDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentTemplateOutDocument"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentTemplateOutDocument"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Contains minimal permission level required to manage this object type."
+                }
+            }
+        },
+        "/api/v1/entities/workspaces/{workspaceId}/documentTemplates/{objectId}": {
+            "get": {
+                "tags": [
+                    "Publisher Documents",
+                    "entities",
+                    "document-template-controller"
+                ],
+                "summary": "Get a Document Template",
+                "operationId": "getEntity@DocumentTemplates",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "version==someString;title==someString;createdBy.id==321;modifiedBy.id==321"
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Array of included collections or individual relationships. Includes are separated by commas (e.g. include=entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \"ALL\" is present, all possible includes are used (include=ALL).\n\n__WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "userIdentifiers",
+                                    "createdBy",
+                                    "modifiedBy",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "createdBy,modifiedBy"
+                    },
+                    {
+                        "name": "X-GDC-VALIDATE-RELATIONS",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "description": "Include Meta objects.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "description": "Included meta objects",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "origin",
+                                    "all",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "metaInclude=origin,all"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentTemplateOutDocument"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentTemplateOutDocument"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "VIEW"
+                    ],
+                    "description": "Contains minimal permission level required to view this object type."
+                }
+            },
+            "put": {
+                "tags": [
+                    "Publisher Documents",
+                    "entities",
+                    "document-template-controller"
+                ],
+                "summary": "Put a Document Template",
+                "operationId": "updateEntity@DocumentTemplates",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "version==someString;title==someString;createdBy.id==321;modifiedBy.id==321"
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Array of included collections or individual relationships. Includes are separated by commas (e.g. include=entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \"ALL\" is present, all possible includes are used (include=ALL).\n\n__WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "userIdentifiers",
+                                    "createdBy",
+                                    "modifiedBy",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "createdBy,modifiedBy"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiPublisherDocumentTemplateInDocument"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiPublisherDocumentTemplateInDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentTemplateOutDocument"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentTemplateOutDocument"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Contains minimal permission level required to manage this object type."
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Publisher Documents",
+                    "entities",
+                    "document-template-controller"
+                ],
+                "summary": "Delete a Document Template",
+                "operationId": "deleteEntity@DocumentTemplates",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "$ref": "#/components/responses/Deleted"
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Contains minimal permission level required to manage this object type."
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Publisher Documents",
+                    "entities",
+                    "document-template-controller"
+                ],
+                "summary": "Patch a Document Template",
+                "operationId": "patchEntity@DocumentTemplates",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "version==someString;title==someString;createdBy.id==321;modifiedBy.id==321"
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Array of included collections or individual relationships. Includes are separated by commas (e.g. include=entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \"ALL\" is present, all possible includes are used (include=ALL).\n\n__WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "userIdentifiers",
+                                    "createdBy",
+                                    "modifiedBy",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "createdBy,modifiedBy"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiPublisherDocumentTemplatePatchDocument"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiPublisherDocumentTemplatePatchDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentTemplateOutDocument"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentTemplateOutDocument"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Contains minimal permission level required to manage this object type."
+                }
+            }
+        },
+        "/api/v1/entities/workspaces/{workspaceId}/documents": {
+            "get": {
+                "tags": [
+                    "Publisher Documents",
+                    "entities",
+                    "document-controller"
+                ],
+                "summary": "Get all Documents",
+                "operationId": "getAllEntities@Documents",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "origin",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Defines scope of origin of objects. All by default.",
+                            "default": "ALL",
+                            "enum": [
+                                "ALL",
+                                "PARENTS",
+                                "NATIVE"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "version==someString;title==someString;createdBy.id==321;modifiedBy.id==321"
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Array of included collections or individual relationships. Includes are separated by commas (e.g. include=entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \"ALL\" is present, all possible includes are used (include=ALL).\n\n__WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "userIdentifiers",
+                                    "createdBy",
+                                    "modifiedBy",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "createdBy,modifiedBy"
+                    },
+                    {
+                        "$ref": "#/components/parameters/page"
+                    },
+                    {
+                        "$ref": "#/components/parameters/size"
+                    },
+                    {
+                        "$ref": "#/components/parameters/sort"
+                    },
+                    {
+                        "name": "X-GDC-VALIDATE-RELATIONS",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "description": "Include Meta objects.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "description": "Included meta objects",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "origin",
+                                    "page",
+                                    "all",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "metaInclude=origin,page,all"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentOutList"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentOutList"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "VIEW"
+                    ],
+                    "description": "Contains minimal permission level required to view this object type."
+                }
+            },
+            "post": {
+                "tags": [
+                    "Publisher Documents",
+                    "entities",
+                    "document-controller"
+                ],
+                "summary": "Post Document",
+                "operationId": "createEntity@Documents",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Array of included collections or individual relationships. Includes are separated by commas (e.g. include=entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \"ALL\" is present, all possible includes are used (include=ALL).\n\n__WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "userIdentifiers",
+                                    "createdBy",
+                                    "modifiedBy",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "createdBy,modifiedBy"
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "description": "Include Meta objects.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "description": "Included meta objects",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "origin",
+                                    "all",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "metaInclude=origin,all"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiPublisherDocumentPostOptionalIdDocument"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiPublisherDocumentPostOptionalIdDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentOutDocument"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentOutDocument"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Contains minimal permission level required to manage this object type."
+                }
+            }
+        },
+        "/api/v1/entities/workspaces/{workspaceId}/documents/{objectId}": {
+            "get": {
+                "tags": [
+                    "Publisher Documents",
+                    "entities",
+                    "document-controller"
+                ],
+                "summary": "Get a Document",
+                "operationId": "getEntity@Documents",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "version==someString;title==someString;createdBy.id==321;modifiedBy.id==321"
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Array of included collections or individual relationships. Includes are separated by commas (e.g. include=entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \"ALL\" is present, all possible includes are used (include=ALL).\n\n__WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "userIdentifiers",
+                                    "createdBy",
+                                    "modifiedBy",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "createdBy,modifiedBy"
+                    },
+                    {
+                        "name": "X-GDC-VALIDATE-RELATIONS",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "description": "Include Meta objects.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "description": "Included meta objects",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "origin",
+                                    "all",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "metaInclude=origin,all"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentOutDocument"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentOutDocument"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "VIEW"
+                    ],
+                    "description": "Contains minimal permission level required to view this object type."
+                }
+            },
+            "put": {
+                "tags": [
+                    "Publisher Documents",
+                    "entities",
+                    "document-controller"
+                ],
+                "summary": "Put a Document",
+                "operationId": "updateEntity@Documents",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "version==someString;title==someString;createdBy.id==321;modifiedBy.id==321"
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Array of included collections or individual relationships. Includes are separated by commas (e.g. include=entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \"ALL\" is present, all possible includes are used (include=ALL).\n\n__WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "userIdentifiers",
+                                    "createdBy",
+                                    "modifiedBy",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "createdBy,modifiedBy"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiPublisherDocumentInDocument"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiPublisherDocumentInDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentOutDocument"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentOutDocument"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Contains minimal permission level required to manage this object type."
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Publisher Documents",
+                    "entities",
+                    "document-controller"
+                ],
+                "summary": "Delete a Document",
+                "operationId": "deleteEntity@Documents",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "$ref": "#/components/responses/Deleted"
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Contains minimal permission level required to manage this object type."
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Publisher Documents",
+                    "entities",
+                    "document-controller"
+                ],
+                "summary": "Patch a Document",
+                "operationId": "patchEntity@Documents",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "version==someString;title==someString;createdBy.id==321;modifiedBy.id==321"
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Array of included collections or individual relationships. Includes are separated by commas (e.g. include=entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \"ALL\" is present, all possible includes are used (include=ALL).\n\n__WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "userIdentifiers",
+                                    "createdBy",
+                                    "modifiedBy",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "createdBy,modifiedBy"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiPublisherDocumentPatchDocument"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiPublisherDocumentPatchDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentOutDocument"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentOutDocument"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Contains minimal permission level required to manage this object type."
+                }
+            }
+        },
+        "/api/v1/entities/workspaces/{workspaceId}/pageTemplates": {
+            "get": {
+                "tags": [
+                    "Publisher Documents",
+                    "entities",
+                    "page-template-controller"
+                ],
+                "summary": "Get all Page Templates",
+                "operationId": "getAllEntities@PageTemplates",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "origin",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Defines scope of origin of objects. All by default.",
+                            "default": "ALL",
+                            "enum": [
+                                "ALL",
+                                "PARENTS",
+                                "NATIVE"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "version==someString;title==someString;createdBy.id==321;modifiedBy.id==321"
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Array of included collections or individual relationships. Includes are separated by commas (e.g. include=entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \"ALL\" is present, all possible includes are used (include=ALL).\n\n__WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "userIdentifiers",
+                                    "createdBy",
+                                    "modifiedBy",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "createdBy,modifiedBy"
+                    },
+                    {
+                        "$ref": "#/components/parameters/page"
+                    },
+                    {
+                        "$ref": "#/components/parameters/size"
+                    },
+                    {
+                        "$ref": "#/components/parameters/sort"
+                    },
+                    {
+                        "name": "X-GDC-VALIDATE-RELATIONS",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "description": "Include Meta objects.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "description": "Included meta objects",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "origin",
+                                    "page",
+                                    "all",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "metaInclude=origin,page,all"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentPageTemplateOutList"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentPageTemplateOutList"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "VIEW"
+                    ],
+                    "description": "Contains minimal permission level required to view this object type."
+                }
+            },
+            "post": {
+                "tags": [
+                    "Publisher Documents",
+                    "entities",
+                    "page-template-controller"
+                ],
+                "summary": "Post Page Template",
+                "operationId": "createEntity@PageTemplates",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Array of included collections or individual relationships. Includes are separated by commas (e.g. include=entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \"ALL\" is present, all possible includes are used (include=ALL).\n\n__WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "userIdentifiers",
+                                    "createdBy",
+                                    "modifiedBy",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "createdBy,modifiedBy"
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "description": "Include Meta objects.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "description": "Included meta objects",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "origin",
+                                    "all",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "metaInclude=origin,all"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentPageTemplateOutDocument"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentPageTemplateOutDocument"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Contains minimal permission level required to manage this object type."
+                }
+            }
+        },
+        "/api/v1/entities/workspaces/{workspaceId}/pageTemplates/{objectId}": {
+            "get": {
+                "tags": [
+                    "Publisher Documents",
+                    "entities",
+                    "page-template-controller"
+                ],
+                "summary": "Get a Page Template",
+                "operationId": "getEntity@PageTemplates",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "version==someString;title==someString;createdBy.id==321;modifiedBy.id==321"
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Array of included collections or individual relationships. Includes are separated by commas (e.g. include=entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \"ALL\" is present, all possible includes are used (include=ALL).\n\n__WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "userIdentifiers",
+                                    "createdBy",
+                                    "modifiedBy",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "createdBy,modifiedBy"
+                    },
+                    {
+                        "name": "X-GDC-VALIDATE-RELATIONS",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "description": "Include Meta objects.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "description": "Included meta objects",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "origin",
+                                    "all",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "metaInclude=origin,all"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentPageTemplateOutDocument"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentPageTemplateOutDocument"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "VIEW"
+                    ],
+                    "description": "Contains minimal permission level required to view this object type."
+                }
+            },
+            "put": {
+                "tags": [
+                    "Publisher Documents",
+                    "entities",
+                    "page-template-controller"
+                ],
+                "summary": "Put a Page Template",
+                "operationId": "updateEntity@PageTemplates",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "version==someString;title==someString;createdBy.id==321;modifiedBy.id==321"
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Array of included collections or individual relationships. Includes are separated by commas (e.g. include=entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \"ALL\" is present, all possible includes are used (include=ALL).\n\n__WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "userIdentifiers",
+                                    "createdBy",
+                                    "modifiedBy",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "createdBy,modifiedBy"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiPublisherDocumentPageTemplateInDocument"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiPublisherDocumentPageTemplateInDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentPageTemplateOutDocument"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentPageTemplateOutDocument"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Contains minimal permission level required to manage this object type."
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Publisher Documents",
+                    "entities",
+                    "page-template-controller"
+                ],
+                "summary": "Delete a Page Template",
+                "operationId": "deleteEntity@PageTemplates",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "$ref": "#/components/responses/Deleted"
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Contains minimal permission level required to manage this object type."
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Publisher Documents",
+                    "entities",
+                    "page-template-controller"
+                ],
+                "summary": "Patch a Page Template",
+                "operationId": "patchEntity@PageTemplates",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "version==someString;title==someString;createdBy.id==321;modifiedBy.id==321"
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Array of included collections or individual relationships. Includes are separated by commas (e.g. include=entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \"ALL\" is present, all possible includes are used (include=ALL).\n\n__WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.",
+                        "required": false,
+                        "style": "form",
+                        "explode": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "userIdentifiers",
+                                    "createdBy",
+                                    "modifiedBy",
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "example": "createdBy,modifiedBy"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiPublisherDocumentPageTemplatePatchDocument"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiPublisherDocumentPageTemplatePatchDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentPageTemplateOutDocument"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentPageTemplateOutDocument"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Contains minimal permission level required to manage this object type."
                 }
             }
         }
@@ -30486,6 +32229,58 @@
                     }
                 },
                 "description": "An absolute date range filter defined at a specific granularity. The 'from'/'to' literals must match the format of the chosen granularity (e.g. '2020' for YEAR, '2012-05' for MONTH, '2012-3' for QUARTER, '1996-01' for WEEK, '2010-10-30' for DAY, '2010-10-30 13' for HOUR, '2010-10-30 13:30' for MINUTE, '2010-10-30 13:30:45' for SECOND, or a plain ordinal like '6' for periodical granularities such as MONTH_OF_YEAR). At least one of 'from'/'to' must be provided; specifying only one yields an open-ended range."
+            },
+            "AbsolutePublisherDocumentPeriod": {
+                "required": [
+                    "from",
+                    "granularity",
+                    "to",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "absolute"
+                        ]
+                    }
+                },
+                "description": "A period between two dates.",
+                "allOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "from": {
+                                "type": "string",
+                                "description": "First day of the period, inclusive.",
+                                "format": "date",
+                                "example": "2026-01-01"
+                            },
+                            "granularity": {
+                                "type": "string",
+                                "description": "Date granularity of the period.",
+                                "example": "GDC.time.date",
+                                "enum": [
+                                    "GDC.time.date"
+                                ]
+                            },
+                            "to": {
+                                "type": "string",
+                                "description": "Last day of the period, inclusive.",
+                                "format": "date",
+                                "example": "2026-06-30"
+                            },
+                            "type": {
+                                "type": "string",
+                                "description": "Type of the period.",
+                                "enum": [
+                                    "absolute"
+                                ]
+                            }
+                        }
+                    }
+                ]
             },
             "AbstractMeasureValueFilter": {
                 "type": "object",
@@ -34129,6 +35924,20 @@
                             "$ref": "#/components/schemas/DeclarativeDashboardPlugin"
                         }
                     },
+                    "documentTemplates": {
+                        "type": "array",
+                        "description": "A list of document templates available in the model.",
+                        "items": {
+                            "$ref": "#/components/schemas/DeclarativePublisherDocumentTemplate"
+                        }
+                    },
+                    "documents": {
+                        "type": "array",
+                        "description": "A list of documents available in the model.",
+                        "items": {
+                            "$ref": "#/components/schemas/DeclarativePublisherDocument"
+                        }
+                    },
                     "exportDefinitions": {
                         "type": "array",
                         "description": "A list of export definitions.",
@@ -34155,6 +35964,13 @@
                         "description": "A list of metrics available in the model.",
                         "items": {
                             "$ref": "#/components/schemas/DeclarativeMetric"
+                        }
+                    },
+                    "pageTemplates": {
+                        "type": "array",
+                        "description": "A list of page templates available in the model.",
+                        "items": {
+                            "$ref": "#/components/schemas/DeclarativePublisherDocumentPageTemplate"
                         }
                     },
                     "parameters": {
@@ -35123,7 +36939,6 @@
                             "FLEXCONNECT",
                             "STARROCKS",
                             "ATHENA",
-                            "MONGODB",
                             "CRATEDB",
                             "AILAKEHOUSE",
                             "DENODO",
@@ -36750,6 +38565,142 @@
                         "type": "string",
                         "description": "Parameter title.",
                         "example": "Discount Rate"
+                    }
+                }
+            },
+            "DeclarativePublisherDocument": {
+                "required": [
+                    "content",
+                    "id",
+                    "period",
+                    "title",
+                    "version"
+                ],
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "$ref": "#/components/schemas/JsonNode"
+                    },
+                    "description": {
+                        "maxLength": 10000,
+                        "type": "string",
+                        "description": "Document description."
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "Document ID.",
+                        "example": "levis-h1-2026"
+                    },
+                    "period": {
+                        "$ref": "#/components/schemas/PublisherDocumentPeriod"
+                    },
+                    "tags": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "description": "A list of tags.",
+                            "example": "[\"brand\"]"
+                        }
+                    },
+                    "title": {
+                        "maxLength": 255,
+                        "type": "string",
+                        "description": "Document title."
+                    },
+                    "version": {
+                        "type": "string",
+                        "description": "Version of the content format.",
+                        "example": "2"
+                    }
+                }
+            },
+            "DeclarativePublisherDocumentPageTemplate": {
+                "required": [
+                    "content",
+                    "id",
+                    "title",
+                    "version"
+                ],
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "$ref": "#/components/schemas/JsonNode"
+                    },
+                    "description": {
+                        "maxLength": 10000,
+                        "type": "string",
+                        "description": "Page template description."
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "Page template ID.",
+                        "example": "brand-cover"
+                    },
+                    "tags": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "description": "A list of tags.",
+                            "example": "[\"brand\"]"
+                        }
+                    },
+                    "title": {
+                        "maxLength": 255,
+                        "type": "string",
+                        "description": "Page template title."
+                    },
+                    "version": {
+                        "type": "string",
+                        "description": "Version of the content format.",
+                        "example": "2"
+                    }
+                }
+            },
+            "DeclarativePublisherDocumentTemplate": {
+                "required": [
+                    "content",
+                    "id",
+                    "title",
+                    "version"
+                ],
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "$ref": "#/components/schemas/JsonNode"
+                    },
+                    "description": {
+                        "maxLength": 10000,
+                        "type": "string",
+                        "description": "Document template description."
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "Document template ID.",
+                        "example": "brand-review"
+                    },
+                    "tags": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "description": "A list of tags.",
+                            "example": "[\"brand\"]"
+                        }
+                    },
+                    "title": {
+                        "maxLength": 255,
+                        "type": "string",
+                        "description": "Document template title."
+                    },
+                    "version": {
+                        "type": "string",
+                        "description": "Version of the content format.",
+                        "example": "2"
                     }
                 }
             },
@@ -39201,6 +41152,9 @@
                                     "reportPageLayout",
                                     "reportTemplate",
                                     "report",
+                                    "pageTemplate",
+                                    "document",
+                                    "documentTemplate",
                                     "workspaceExportTemplate",
                                     "workspaceTheme",
                                     "workspaceColorPalette",
@@ -45900,7 +47854,6 @@
                                     "FLEXCONNECT",
                                     "STARROCKS",
                                     "ATHENA",
-                                    "MONGODB",
                                     "CRATEDB",
                                     "AILAKEHOUSE",
                                     "DENODO",
@@ -46164,7 +48117,6 @@
                                     "FLEXCONNECT",
                                     "STARROCKS",
                                     "ATHENA",
-                                    "MONGODB",
                                     "CRATEDB",
                                     "AILAKEHOUSE",
                                     "DENODO",
@@ -46378,7 +48330,6 @@
                                     "FLEXCONNECT",
                                     "STARROCKS",
                                     "ATHENA",
-                                    "MONGODB",
                                     "CRATEDB",
                                     "AILAKEHOUSE",
                                     "DENODO",
@@ -46649,7 +48600,6 @@
                                     "FLEXCONNECT",
                                     "STARROCKS",
                                     "ATHENA",
-                                    "MONGODB",
                                     "CRATEDB",
                                     "AILAKEHOUSE",
                                     "DENODO",
@@ -55568,6 +57518,1401 @@
                 "description": "References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
                 "items": {
                     "$ref": "#/components/schemas/JsonApiParameterLinkage"
+                }
+            },
+            "JsonApiPublisherDocumentIn": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "required": [
+                            "content",
+                            "period",
+                            "title",
+                            "version"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form document definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.",
+                                "example": {
+                                    "pages": []
+                                }
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "period": {
+                                "type": "object",
+                                "description": "The period the document covers, absolute or relative to today.",
+                                "discriminator": {
+                                    "propertyName": "type",
+                                    "mapping": {
+                                        "absolute": "#/components/schemas/AbsolutePublisherDocumentPeriod",
+                                        "relative": "#/components/schemas/RelativePublisherDocumentPeriod"
+                                    }
+                                },
+                                "oneOf": [
+                                    {
+                                        "$ref": "#/components/schemas/AbsolutePublisherDocumentPeriod"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/RelativePublisherDocumentPeriod"
+                                    }
+                                ]
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "version": {
+                                "type": "string",
+                                "description": "Version of the content format.",
+                                "example": "2"
+                            }
+                        }
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "document",
+                        "enum": [
+                            "document"
+                        ]
+                    }
+                },
+                "description": "JSON:API representation of document entity."
+            },
+            "JsonApiPublisherDocumentInDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiPublisherDocumentIn"
+                    }
+                }
+            },
+            "JsonApiPublisherDocumentOut": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "required": [
+                            "content",
+                            "period",
+                            "title",
+                            "version"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form document definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.",
+                                "example": {
+                                    "pages": []
+                                }
+                            },
+                            "createdAt": {
+                                "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}",
+                                "type": "string",
+                                "description": "Time of the entity creation.",
+                                "format": "date-time",
+                                "nullable": true,
+                                "example": "2023-07-20 12:30"
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "modifiedAt": {
+                                "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}",
+                                "type": "string",
+                                "description": "Time of the last entity modification.",
+                                "format": "date-time",
+                                "nullable": true,
+                                "example": "2023-07-20 12:30"
+                            },
+                            "period": {
+                                "type": "object",
+                                "description": "The period the document covers, absolute or relative to today.",
+                                "discriminator": {
+                                    "propertyName": "type",
+                                    "mapping": {
+                                        "absolute": "#/components/schemas/AbsolutePublisherDocumentPeriod",
+                                        "relative": "#/components/schemas/RelativePublisherDocumentPeriod"
+                                    }
+                                },
+                                "oneOf": [
+                                    {
+                                        "$ref": "#/components/schemas/AbsolutePublisherDocumentPeriod"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/RelativePublisherDocumentPeriod"
+                                    }
+                                ]
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "version": {
+                                "type": "string",
+                                "description": "Version of the content format.",
+                                "example": "2"
+                            }
+                        }
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "origin": {
+                                "required": [
+                                    "originId",
+                                    "originType"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "originId": {
+                                        "type": "string",
+                                        "description": "defines id of the workspace where the entity comes from"
+                                    },
+                                    "originType": {
+                                        "type": "string",
+                                        "description": "defines type of the origin of the entity",
+                                        "enum": [
+                                            "NATIVE",
+                                            "PARENT"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "createdBy": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiUserIdentifierToOneLinkage"
+                                    }
+                                }
+                            },
+                            "modifiedBy": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiUserIdentifierToOneLinkage"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "document",
+                        "enum": [
+                            "document"
+                        ]
+                    }
+                },
+                "description": "JSON:API representation of document entity."
+            },
+            "JsonApiPublisherDocumentOutDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiPublisherDocumentOut"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiUserIdentifierOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "JsonApiPublisherDocumentOutList": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiPublisherDocumentOutWithLinks"
+                        }
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiUserIdentifierOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "page": {
+                                "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiPublisherDocumentOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiPublisherDocumentOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiPublisherDocumentPageTemplateIn": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "required": [
+                            "content",
+                            "title",
+                            "version"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form page definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.",
+                                "example": {}
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "version": {
+                                "type": "string",
+                                "description": "Version of the content format.",
+                                "example": "2"
+                            }
+                        }
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "pageTemplate",
+                        "enum": [
+                            "pageTemplate"
+                        ]
+                    }
+                },
+                "description": "JSON:API representation of pageTemplate entity."
+            },
+            "JsonApiPublisherDocumentPageTemplateInDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiPublisherDocumentPageTemplateIn"
+                    }
+                }
+            },
+            "JsonApiPublisherDocumentPageTemplateOut": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "required": [
+                            "content",
+                            "title",
+                            "version"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form page definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.",
+                                "example": {}
+                            },
+                            "createdAt": {
+                                "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}",
+                                "type": "string",
+                                "description": "Time of the entity creation.",
+                                "format": "date-time",
+                                "nullable": true,
+                                "example": "2023-07-20 12:30"
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "modifiedAt": {
+                                "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}",
+                                "type": "string",
+                                "description": "Time of the last entity modification.",
+                                "format": "date-time",
+                                "nullable": true,
+                                "example": "2023-07-20 12:30"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "version": {
+                                "type": "string",
+                                "description": "Version of the content format.",
+                                "example": "2"
+                            }
+                        }
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "origin": {
+                                "required": [
+                                    "originId",
+                                    "originType"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "originId": {
+                                        "type": "string",
+                                        "description": "defines id of the workspace where the entity comes from"
+                                    },
+                                    "originType": {
+                                        "type": "string",
+                                        "description": "defines type of the origin of the entity",
+                                        "enum": [
+                                            "NATIVE",
+                                            "PARENT"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "createdBy": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiUserIdentifierToOneLinkage"
+                                    }
+                                }
+                            },
+                            "modifiedBy": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiUserIdentifierToOneLinkage"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "pageTemplate",
+                        "enum": [
+                            "pageTemplate"
+                        ]
+                    }
+                },
+                "description": "JSON:API representation of pageTemplate entity."
+            },
+            "JsonApiPublisherDocumentPageTemplateOutDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiPublisherDocumentPageTemplateOut"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiUserIdentifierOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "JsonApiPublisherDocumentPageTemplateOutList": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiPublisherDocumentPageTemplateOutWithLinks"
+                        }
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiUserIdentifierOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "page": {
+                                "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiPublisherDocumentPageTemplateOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiPublisherDocumentPageTemplateOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiPublisherDocumentPageTemplatePatch": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form page definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.",
+                                "example": {}
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "version": {
+                                "type": "string",
+                                "description": "Version of the content format.",
+                                "example": "2"
+                            }
+                        }
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "pageTemplate",
+                        "enum": [
+                            "pageTemplate"
+                        ]
+                    }
+                },
+                "description": "JSON:API representation of patching pageTemplate entity."
+            },
+            "JsonApiPublisherDocumentPageTemplatePatchDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiPublisherDocumentPageTemplatePatch"
+                    }
+                }
+            },
+            "JsonApiPublisherDocumentPageTemplatePostOptionalId": {
+                "required": [
+                    "attributes",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "required": [
+                            "content",
+                            "title",
+                            "version"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form page definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.",
+                                "example": {}
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "version": {
+                                "type": "string",
+                                "description": "Version of the content format.",
+                                "example": "2"
+                            }
+                        }
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "pageTemplate",
+                        "enum": [
+                            "pageTemplate"
+                        ]
+                    }
+                },
+                "description": "JSON:API representation of pageTemplate entity."
+            },
+            "JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiPublisherDocumentPageTemplatePostOptionalId"
+                    }
+                }
+            },
+            "JsonApiPublisherDocumentPatch": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form document definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.",
+                                "example": {
+                                    "pages": []
+                                }
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "period": {
+                                "type": "object",
+                                "description": "The period the document covers, absolute or relative to today.",
+                                "discriminator": {
+                                    "propertyName": "type",
+                                    "mapping": {
+                                        "absolute": "#/components/schemas/AbsolutePublisherDocumentPeriod",
+                                        "relative": "#/components/schemas/RelativePublisherDocumentPeriod"
+                                    }
+                                },
+                                "oneOf": [
+                                    {
+                                        "$ref": "#/components/schemas/AbsolutePublisherDocumentPeriod"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/RelativePublisherDocumentPeriod"
+                                    }
+                                ]
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "version": {
+                                "type": "string",
+                                "description": "Version of the content format.",
+                                "example": "2"
+                            }
+                        }
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "document",
+                        "enum": [
+                            "document"
+                        ]
+                    }
+                },
+                "description": "JSON:API representation of patching document entity."
+            },
+            "JsonApiPublisherDocumentPatchDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiPublisherDocumentPatch"
+                    }
+                }
+            },
+            "JsonApiPublisherDocumentPostOptionalId": {
+                "required": [
+                    "attributes",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "required": [
+                            "content",
+                            "period",
+                            "title",
+                            "version"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form document definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.",
+                                "example": {
+                                    "pages": []
+                                }
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "period": {
+                                "type": "object",
+                                "description": "The period the document covers, absolute or relative to today.",
+                                "discriminator": {
+                                    "propertyName": "type",
+                                    "mapping": {
+                                        "absolute": "#/components/schemas/AbsolutePublisherDocumentPeriod",
+                                        "relative": "#/components/schemas/RelativePublisherDocumentPeriod"
+                                    }
+                                },
+                                "oneOf": [
+                                    {
+                                        "$ref": "#/components/schemas/AbsolutePublisherDocumentPeriod"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/RelativePublisherDocumentPeriod"
+                                    }
+                                ]
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "version": {
+                                "type": "string",
+                                "description": "Version of the content format.",
+                                "example": "2"
+                            }
+                        }
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "document",
+                        "enum": [
+                            "document"
+                        ]
+                    }
+                },
+                "description": "JSON:API representation of document entity."
+            },
+            "JsonApiPublisherDocumentPostOptionalIdDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiPublisherDocumentPostOptionalId"
+                    }
+                }
+            },
+            "JsonApiPublisherDocumentTemplateIn": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "required": [
+                            "content",
+                            "title",
+                            "version"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form document template definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.",
+                                "example": {
+                                    "defaults": {},
+                                    "pages": []
+                                }
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "version": {
+                                "type": "string",
+                                "description": "Version of the content format.",
+                                "example": "2"
+                            }
+                        }
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "documentTemplate",
+                        "enum": [
+                            "documentTemplate"
+                        ]
+                    }
+                },
+                "description": "JSON:API representation of documentTemplate entity."
+            },
+            "JsonApiPublisherDocumentTemplateInDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiPublisherDocumentTemplateIn"
+                    }
+                }
+            },
+            "JsonApiPublisherDocumentTemplateOut": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "required": [
+                            "content",
+                            "title",
+                            "version"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form document template definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.",
+                                "example": {
+                                    "defaults": {},
+                                    "pages": []
+                                }
+                            },
+                            "createdAt": {
+                                "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}",
+                                "type": "string",
+                                "description": "Time of the entity creation.",
+                                "format": "date-time",
+                                "nullable": true,
+                                "example": "2023-07-20 12:30"
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "modifiedAt": {
+                                "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}",
+                                "type": "string",
+                                "description": "Time of the last entity modification.",
+                                "format": "date-time",
+                                "nullable": true,
+                                "example": "2023-07-20 12:30"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "version": {
+                                "type": "string",
+                                "description": "Version of the content format.",
+                                "example": "2"
+                            }
+                        }
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "origin": {
+                                "required": [
+                                    "originId",
+                                    "originType"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "originId": {
+                                        "type": "string",
+                                        "description": "defines id of the workspace where the entity comes from"
+                                    },
+                                    "originType": {
+                                        "type": "string",
+                                        "description": "defines type of the origin of the entity",
+                                        "enum": [
+                                            "NATIVE",
+                                            "PARENT"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "createdBy": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiUserIdentifierToOneLinkage"
+                                    }
+                                }
+                            },
+                            "modifiedBy": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiUserIdentifierToOneLinkage"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "documentTemplate",
+                        "enum": [
+                            "documentTemplate"
+                        ]
+                    }
+                },
+                "description": "JSON:API representation of documentTemplate entity."
+            },
+            "JsonApiPublisherDocumentTemplateOutDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiPublisherDocumentTemplateOut"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiUserIdentifierOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "JsonApiPublisherDocumentTemplateOutList": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiPublisherDocumentTemplateOutWithLinks"
+                        }
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiUserIdentifierOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "page": {
+                                "$ref": "#/components/schemas/PageMetadata"
+                            },
+                            "restricted": {
+                                "uniqueItems": true,
+                                "type": "array",
+                                "description": "References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.",
+                                "items": {
+                                    "$ref": "#/components/schemas/RestrictedObject"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiPublisherDocumentTemplateOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiPublisherDocumentTemplateOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiPublisherDocumentTemplatePatch": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form document template definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.",
+                                "example": {
+                                    "defaults": {},
+                                    "pages": []
+                                }
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "version": {
+                                "type": "string",
+                                "description": "Version of the content format.",
+                                "example": "2"
+                            }
+                        }
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "documentTemplate",
+                        "enum": [
+                            "documentTemplate"
+                        ]
+                    }
+                },
+                "description": "JSON:API representation of patching documentTemplate entity."
+            },
+            "JsonApiPublisherDocumentTemplatePatchDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiPublisherDocumentTemplatePatch"
+                    }
+                }
+            },
+            "JsonApiPublisherDocumentTemplatePostOptionalId": {
+                "required": [
+                    "attributes",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "required": [
+                            "content",
+                            "title",
+                            "version"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form document template definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.",
+                                "example": {
+                                    "defaults": {},
+                                    "pages": []
+                                }
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "version": {
+                                "type": "string",
+                                "description": "Version of the content format.",
+                                "example": "2"
+                            }
+                        }
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "documentTemplate",
+                        "enum": [
+                            "documentTemplate"
+                        ]
+                    }
+                },
+                "description": "JSON:API representation of documentTemplate entity."
+            },
+            "JsonApiPublisherDocumentTemplatePostOptionalIdDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiPublisherDocumentTemplatePostOptionalId"
+                    }
                 }
             },
             "JsonApiReportIn": {
@@ -66726,6 +70071,25 @@
                     }
                 }
             },
+            "PublisherDocumentPeriod": {
+                "type": "object",
+                "description": "The period the document covers, absolute or relative to today.",
+                "discriminator": {
+                    "propertyName": "type",
+                    "mapping": {
+                        "absolute": "#/components/schemas/AbsolutePublisherDocumentPeriod",
+                        "relative": "#/components/schemas/RelativePublisherDocumentPeriod"
+                    }
+                },
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/AbsolutePublisherDocumentPeriod"
+                    },
+                    {
+                        "$ref": "#/components/schemas/RelativePublisherDocumentPeriod"
+                    }
+                ]
+            },
             "Range": {
                 "required": [
                     "from",
@@ -67254,6 +70618,68 @@
                     }
                 },
                 "description": "A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension. The 'from' and 'to' properties mark the boundaries of the interval. If 'from' is omitted, all values earlier than 'to' are included. If 'to' is omitted, all values later than 'from' are included. It is not allowed to omit both."
+            },
+            "RelativePublisherDocumentPeriod": {
+                "required": [
+                    "from",
+                    "granularity",
+                    "to",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "relative"
+                        ]
+                    }
+                },
+                "description": "A period counted in granularity units from the current one, which is 0.",
+                "allOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "from": {
+                                "type": "integer",
+                                "description": "Start of the period, in units relative to the current one.",
+                                "format": "int32",
+                                "example": -1
+                            },
+                            "granularity": {
+                                "type": "string",
+                                "description": "Date granularity of the period.",
+                                "example": "GDC.time.month",
+                                "enum": [
+                                    "GDC.time.second",
+                                    "GDC.time.minute",
+                                    "GDC.time.hour",
+                                    "GDC.time.date",
+                                    "GDC.time.week_us",
+                                    "GDC.time.month",
+                                    "GDC.time.fiscal_month",
+                                    "GDC.time.quarter",
+                                    "GDC.time.fiscal_quarter",
+                                    "GDC.time.year",
+                                    "GDC.time.fiscal_year"
+                                ]
+                            },
+                            "to": {
+                                "type": "integer",
+                                "description": "End of the period, in units relative to the current one.",
+                                "format": "int32",
+                                "example": -1
+                            },
+                            "type": {
+                                "type": "string",
+                                "description": "Type of the period.",
+                                "enum": [
+                                    "relative"
+                                ]
+                            }
+                        }
+                    }
+                ]
             },
             "RelativeWrapper": {
                 "required": [

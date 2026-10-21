@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 import cx from "classnames";
 
-import { type IUserLocalizationSettings } from "@gooddata/sdk-backend-spi";
+import { type ILocalizationStatistics, type IUserLocalizationSettings } from "@gooddata/sdk-backend-spi";
 import {
     type IOrganizationDescriptor,
     type IUser,
@@ -126,6 +126,56 @@ export const useAnalyzeIncludesManageVisualizations = (
     );
 
     return result?.grantManageVisualizationsWithAnalyze ?? false;
+};
+
+export interface ILanguageNoticeData {
+    workspaceStatistics: ILocalizationStatistics[];
+    organizationLanguages: IUserLocalizationSettings;
+}
+
+export const LANGUAGE_NOTICE_WORKSPACE_LIMIT = 50;
+
+export const useLanguageNoticeData = (
+    organizationId: string,
+    grantedWorkspaces: IGrantedWorkspace[] | undefined,
+    isEnabled: boolean,
+) => {
+    const backend = useBackendStrict();
+    const workspaceIds = useMemo(
+        () => (grantedWorkspaces ? [...new Set(grantedWorkspaces.map(({ id }) => id))].sort() : undefined),
+        [grantedWorkspaces],
+    );
+    const workspaceIdsKey = workspaceIds?.join("\n");
+    const isWithinLimit = !!workspaceIds && workspaceIds.length <= LANGUAGE_NOTICE_WORKSPACE_LIMIT;
+
+    const { result } = useCancelablePromise<ILanguageNoticeData, Error>(
+        {
+            promise:
+                isEnabled && workspaceIds && isWithinLimit
+                    ? async () => {
+                          const [settings, workspaceStatistics] = await Promise.all([
+                              backend.organization(organizationId).settings().getSettings(),
+                              Promise.all(
+                                  workspaceIds.map((id) =>
+                                      backend.workspace(id).localization().getStatistics(),
+                                  ),
+                              ),
+                          ]);
+                          return {
+                              workspaceStatistics,
+                              organizationLanguages: {
+                                  METADATA_LOCALE: settings.metadataLocale,
+                                  DATA_LOCALE: settings.dataLocale,
+                              },
+                          };
+                      }
+                    : null,
+            onError: (error) => console.error("Loading of language notice data failed", error),
+        },
+        [backend, organizationId, workspaceIdsKey, isEnabled],
+    );
+
+    return result;
 };
 
 export const useUserGroup = (userGroupId: string, organizationId: string, onSuccess: () => void) => {

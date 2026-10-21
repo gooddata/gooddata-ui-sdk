@@ -2,6 +2,7 @@
 
 import { afterEach, describe, expect, it, vi } from "vitest";
 
+import { type ILocalizationStatistics } from "@gooddata/sdk-backend-spi";
 import { LOCALES } from "@gooddata/sdk-model";
 
 import { changedLanguageSettings, languageName, languageNotice, languageOptions } from "./userLanguages.js";
@@ -83,11 +84,96 @@ describe("languageNotice", () => {
         expect(languageNotice("LOCALE", { LOCALE: "es-ES" })).toBeUndefined();
     });
 
-    it("says nothing about the metadata and data languages", () => {
-        const languages = { LOCALE: "fr-FR", METADATA_LOCALE: "es-MX", DATA_LOCALE: "xx-YY" };
+    const translated = (metadata: string[], data: string[] = []): ILocalizationStatistics => ({
+        metadata: { locales: metadata.map((locale) => ({ locale })) },
+        data: { locales: data.map((locale) => ({ locale })) },
+    });
+
+    it("says when none of their workspaces has the translation", () => {
+        expect(
+            languageNotice("METADATA_LOCALE", { METADATA_LOCALE: "es-ES" }, [
+                translated(["de-DE"]),
+                translated([]),
+            ]),
+        ).toEqual({ type: "noTranslation" });
+    });
+
+    it("counts the workspaces without the translation", () => {
+        expect(
+            languageNotice("METADATA_LOCALE", { METADATA_LOCALE: "de-DE" }, [
+                translated(["de-DE"]),
+                translated([]),
+                translated(["fr-FR"]),
+            ]),
+        ).toEqual({ type: "noTranslationIn", count: 2 });
+    });
+
+    it("says nothing when all their workspaces have the translation", () => {
+        expect(
+            languageNotice("METADATA_LOCALE", { METADATA_LOCALE: "de-DE" }, [
+                translated(["de-DE"]),
+                translated(["de-DE", "fr-FR"]),
+            ]),
+        ).toBeUndefined();
+    });
+
+    it("checks data labels for the data language", () => {
+        expect(
+            languageNotice("DATA_LOCALE", { DATA_LOCALE: "de-DE" }, [
+                translated(["de-DE"], ["de-DE"]),
+                translated(["de-DE"], []),
+            ]),
+        ).toEqual({ type: "noTranslationIn", count: 1 });
+    });
+
+    it("notes a translation in their interface language when the language is not set", () => {
+        const workspaces = [translated(["fr-FR"]), translated([])];
+
+        expect(languageNotice("METADATA_LOCALE", { LOCALE: "fr-FR" }, workspaces)).toEqual({
+            type: "translationAvailable",
+        });
+        expect(languageNotice("DATA_LOCALE", { LOCALE: "fr-FR" }, workspaces)).toBeUndefined();
+    });
+
+    it("does not note a translation the organization default already uses", () => {
+        const workspaces = [translated(["fr-FR"])];
+        const organizationLanguages = { METADATA_LOCALE: "fr-FR", DATA_LOCALE: "de-DE" };
+
+        expect(
+            languageNotice("METADATA_LOCALE", { LOCALE: "fr-FR" }, workspaces, organizationLanguages),
+        ).toBeUndefined();
+        expect(
+            languageNotice("METADATA_LOCALE", { LOCALE: "fr-FR" }, workspaces, { METADATA_LOCALE: "de-DE" }),
+        ).toEqual({ type: "translationAvailable" });
+    });
+
+    it("matches language codes whatever their case", () => {
+        const workspaces = [translated(["de-DE", "fr-FR"])];
+
+        expect(languageNotice("METADATA_LOCALE", { METADATA_LOCALE: "de-de" }, workspaces)).toBeUndefined();
+        expect(
+            languageNotice("METADATA_LOCALE", { LOCALE: "fr-FR" }, workspaces, { METADATA_LOCALE: "fr-fr" }),
+        ).toBeUndefined();
+    });
+
+    it("says nothing about English", () => {
+        const workspaces = [translated([])];
+
+        expect(languageNotice("METADATA_LOCALE", { METADATA_LOCALE: "en-GB" }, workspaces)).toBeUndefined();
+        expect(languageNotice("METADATA_LOCALE", { LOCALE: "en-US" }, workspaces)).toBeUndefined();
+    });
+
+    it("does not note a translation for an interface language GoodData does not offer", () => {
+        expect(
+            languageNotice("METADATA_LOCALE", { LOCALE: "es-MX" }, [translated(["es-MX"])]),
+        ).toBeUndefined();
+    });
+
+    it("says nothing about the metadata and data languages without workspace statistics", () => {
+        const languages = { LOCALE: "fr-FR", METADATA_LOCALE: "es-ES", DATA_LOCALE: "es-ES" };
 
         expect(languageNotice("METADATA_LOCALE", languages)).toBeUndefined();
-        expect(languageNotice("DATA_LOCALE", languages)).toBeUndefined();
+        expect(languageNotice("DATA_LOCALE", languages, [])).toBeUndefined();
     });
 });
 

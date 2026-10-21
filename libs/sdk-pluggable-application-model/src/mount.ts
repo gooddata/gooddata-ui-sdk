@@ -1,6 +1,10 @@
 // (C) 2026 GoodData Corporation
 
-import { type IGenAIUserContext, type IPublisherDocumentDefinition } from "@gooddata/sdk-model";
+import {
+    type GenAIChatEffort,
+    type IGenAIUserContext,
+    type IPublisherDocumentDefinition,
+} from "@gooddata/sdk-model";
 
 import { type IPlatformContext } from "./platformContext.js";
 
@@ -176,6 +180,11 @@ export interface IOpenAiAssistantRequestedEvent extends IPluggableAppEvent {
          * When true, the userContext is replaced with the new one, otherwise it is merged with the existing one.
          */
         readonly replaceUserContext?: boolean;
+        /**
+         * Reasoning effort for the conversation the question starts. When omitted, the default is used.
+         * Ignored when the question is appended to the existing chat.
+         */
+        readonly effort?: GenAIChatEffort;
     };
 }
 
@@ -190,6 +199,7 @@ export function openAiAssistantRequested(payload?: {
     userContext?: IGenAIUserContext;
     appendToChat?: boolean;
     replaceUserContext?: boolean;
+    effort?: GenAIChatEffort;
 }): IOpenAiAssistantRequestedEvent {
     return { type: PluggableAppEventType.AI_ASSISTANT_OPEN_REQUESTED, payload: payload ?? {} };
 }

@@ -265,6 +265,11 @@ export function summarize(scope: IUsageScope, peopleWithoutValue: "own" | "effec
     return { defaults: FIXTURE_DEFAULTS, values: [...entries.values()] };
 }
 
+export function matchesName(name: string | undefined, candidates: Array<string | undefined>): boolean {
+    const term = name?.toLowerCase();
+    return !term || candidates.some((candidate) => candidate?.toLowerCase().includes(term));
+}
+
 export function matches(
     settings: ResolvedSettings,
     query: ILocalizationUsageListQuery,
@@ -323,6 +328,7 @@ export function usageWorkspaces(
         .filter(
             (row): row is { workspace: IFixtureWorkspace; source: LocalizationUsageSource } => !!row.source,
         )
+        .filter(({ workspace }) => matchesName(query.name, [workspace.name]))
         .map(({ workspace, source }): ILocalizationUsageWorkspace => ({
             id: workspace.id,
             name: workspace.name,
@@ -350,6 +356,7 @@ export function usageUsers(
         .filter((row): row is { person: IUsageScope["people"][number]; source: LocalizationUsageSource } =>
             Boolean(row.source),
         )
+        .filter(({ person }) => matchesName(query.name, [person.name, person.email, person.id]))
         .map(({ person, source }): ILocalizationUsageUser => ({
             id: person.id,
             name: person.name,

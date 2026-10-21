@@ -5,14 +5,16 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import type { EditorView } from "@codemirror/view";
 import cx from "classnames";
 import { defineMessages, useIntl } from "react-intl";
+import { useSelector } from "react-redux";
 
-import { type AgentCustomSkill } from "@gooddata/sdk-model";
+import { type AgentCustomSkill, type GenAIChatEffort } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { DefaultSyntaxHighlightingInput } from "@gooddata/sdk-ui-kit";
 
 import { useGenAIStandaloneInputData } from "../hooks/useGenAIStandaloneInputData.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
 import { type GenAIAgent } from "../model.js";
+import { selectedEffortSelector } from "../store/messages/messagesSelectors.js";
 
 import { useCompletion } from "./completion/useCompletion.js";
 import { CustomizationProvider } from "./CustomizationProvider.js";
@@ -39,9 +41,9 @@ export type GenAIStandaloneInputProps = Omit<GenAiStoreProps, "children"> & {
      */
     placeholder?: string;
     /**
-     * Callback called when the user submits a message.
+     * Callback called when the user submits a message, with the agent and effort picked in the input.
      */
-    onStart?: (prompt: string, agentId?: string) => void;
+    onStart?: (prompt: string, agentId?: string, effort?: GenAIChatEffort) => void;
     /**
      * Callback called when the user sets an agent.
      */
@@ -95,6 +97,8 @@ function StandaloneInputContent({
     const [value, setValue] = useState("");
     const [editorApi, setApi] = useState<EditorView | null>(null);
     const { selectedAgentId, agents } = useGenAIStandaloneInputData(requiredSkills);
+    // The input's store never has a current conversation, so the pick lives in the global selection.
+    const selectedEffort = useSelector(selectedEffortSelector);
 
     useDataLoad();
 
@@ -124,10 +128,10 @@ function StandaloneInputContent({
     const handleSubmit = useCallback(() => {
         const trimmed = value.trim();
         if (trimmed) {
-            onStart?.(trimmed, selectedAgentId);
+            onStart?.(trimmed, selectedAgentId, selectedEffort);
             setValue("");
         }
-    }, [value, selectedAgentId, onStart]);
+    }, [value, selectedAgentId, selectedEffort, onStart]);
 
     const handleKeyDown = (e: KeyboardEvent) => {
         if (e.key === "Enter" && !e.shiftKey) {

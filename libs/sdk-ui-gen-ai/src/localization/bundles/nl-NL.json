@@ -206,6 +206,7 @@
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "Openen in Analyseren",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Hierdoor wordt u gevraagd om de visualisatie op te slaan voordat u deze kunt openen.",
     "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "Link naar visualisatie kopiëren",
+    "gd.gen-ai.messages.skills": "Vaardigheden gebruiken",
     "gd.gen-ai.messages.label": "Chatberichten",
     "gd.gen-ai.message.label.user": "Gebruiker:",
     "gd.gen-ai.message.label.assistant": "Bot:",
