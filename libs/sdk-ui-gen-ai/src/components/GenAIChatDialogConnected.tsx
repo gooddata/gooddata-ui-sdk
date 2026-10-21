@@ -3,7 +3,7 @@
 import { type RefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { type IAnalyticalBackend, type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import type { GenAIObjectType, IColorPalette, IGenAIUserContext } from "@gooddata/sdk-model";
+import type { GenAIChatEffort, GenAIObjectType, IColorPalette, IGenAIUserContext } from "@gooddata/sdk-model";
 
 import { makeUserItem } from "../model.js";
 import { setAmbientUserContextAction, setUserContextAction } from "../store/chatWindow/chatWindowSlice.js";
@@ -40,6 +40,7 @@ import {
     clearThreadAction,
     newMessageAction,
     setSelectedAgentAction,
+    setSelectedEffortAction,
 } from "../store/messages/messagesSlice.js";
 
 import { type GenAIAssistantDisplayMode, type LinkHandlerEvent } from "./ConfigContext.js";
@@ -49,6 +50,7 @@ import {
     type IPublisherDocumentSaved,
     usePublisherDocumentSavedSync,
 } from "./hooks/usePublisherDocumentSavedSync.js";
+import { sanitizeEffort } from "./utils/effortSelection.js";
 
 /**
  * Discriminated union of GenAI chat events surfaced to a caller via {@link IGenAIChatDialogConnectedProps.onEvent}.
@@ -107,6 +109,61 @@ export function toGenAIChatConnectedEvent(event: ChatEvent): GenAIChatConnectedE
 }
 
 type Dispatch = Parameters<Required<GenAIChatDialogProps>["onDispatcher"]>[0];
+type SeedAction = Parameters<Dispatch>[0];
+
+/**
+ * What one ask seeds into the chat.
+ *
+ * @internal
+ */
+export type SeedInput = {
+    agentId?: string;
+    effort?: GenAIChatEffort;
+    askedQuestion?: string | null;
+    userContext?: IGenAIUserContext;
+    replaceUserContext?: boolean;
+    appendToChat?: boolean;
+};
+
+/**
+ * Actions that seed the chat for one ask, in dispatch order.
+ *
+ * @remarks
+ * The agent precedes the clear, because the clear saga reads the selection synchronously when it creates
+ * the new conversation. The effort applies only to that fresh conversation: it follows the clear and
+ * precedes the message, which reads it. Appending to an existing conversation keeps that conversation's
+ * own effort.
+ *
+ * @internal
+ */
+export function buildSeedActions({
+    agentId,
+    effort,
+    askedQuestion,
+    userContext,
+    replaceUserContext,
+    appendToChat,
+}: SeedInput): SeedAction[] {
+    const actions: SeedAction[] = [];
+    const seeding = Boolean(askedQuestion || userContext);
+    if (seeding) {
+        actions.push(setSelectedAgentAction({ agentId }));
+    }
+    if (seeding && !appendToChat) {
+        actions.push(clearThreadAction());
+        const supported = sanitizeEffort(effort);
+        if (supported) {
+            actions.push(setSelectedEffortAction({ effort: supported }));
+        }
+    }
+    // Always set (and thereby clear when undefined) so a follow-up ask without context does not
+    // inherit the previous ask's user context (LX-2544).
+    actions.push(setUserContextAction({ userContext, replaceUserContext }));
+    if (askedQuestion) {
+        actions.push(newMessageAction(makeUserItem({ type: "text", text: askedQuestion })));
+    }
+    return actions;
+}
 
 /**
  * Props for {@link GenAIChatDialogConnected}.
@@ -178,6 +235,10 @@ export interface IGenAIChatDialogConnectedProps {
      * Agent ID to use for the seeded question. If not provided, the default agent will be used.
      */
     agentId?: string;
+    /**
+     * Reasoning effort for the conversation the seeded question starts. Ignored when appending to the chat.
+     */
+    effort?: GenAIChatEffort;
     /** When true, the seeded question is appended to the existing thread instead of clearing it first. */
     appendToChat?: boolean;
     /** When true, the user context is replaced instead of merged with the existing one. */
@@ -223,6 +284,7 @@ export function GenAIChatDialogConnected({
     canFullControl,
     settings,
     agentId,
+    effort,
     isOpen,
     isDisabled = true,
     displayMode,
@@ -342,26 +404,18 @@ export function GenAIChatDialogConnected({
         }
         lastSeedTokenRef.current = seedToken;
 
-        // Agent id override. Must precede the clear so the new conversation is created with
-        // this agent - the clear saga reads the selection synchronously.
-        if (userContext || askedQuestion) {
-            chatDispatcher(setSelectedAgentAction({ agentId }));
-        }
-        // Check clean
-        const clear = (askedQuestion || userContext) && !appendToChat;
-        if (clear) {
-            chatDispatcher(clearThreadAction());
-        }
-        // Always set (and thereby clear when undefined) so a follow-up ask without context does not
-        // inherit the previous ask's user context (LX-2544).
-        chatDispatcher(setUserContextAction({ userContext, replaceUserContext }));
-        // Ask question
-        if (askedQuestion) {
-            chatDispatcher(newMessageAction(makeUserItem({ type: "text", text: askedQuestion })));
-        }
+        buildSeedActions({
+            agentId,
+            effort,
+            askedQuestion,
+            userContext,
+            replaceUserContext,
+            appendToChat,
+        }).forEach((action) => chatDispatcher(action));
     }, [
         isOpen,
         agentId,
+        effort,
         chatDispatcher,
         askedQuestion,
         askSeq,

@@ -235,6 +235,18 @@ describe("convertWorkspaceLocalizationUsageWorkspaces", () => {
         expect(originIdsOf(inherited)).toEqual(["emea", "retail"]);
     });
 
+    it("lists the workspace only when its name matches", () => {
+        const query = { value: "fr-FR", setting: "LOCALE" as const };
+        expect(
+            convertWorkspaceLocalizationUsageWorkspaces(usage, workspace, { ...query, name: "BERG" })
+                .totalCount,
+        ).toBe(1);
+        expect(
+            convertWorkspaceLocalizationUsageWorkspaces(usage, workspace, { ...query, name: "retail" })
+                .totalCount,
+        ).toBe(0);
+    });
+
     it("pages the workspace like the other lists", () => {
         const query = { value: "fr-FR", setting: "LOCALE" as const };
         expect(convertWorkspaceLocalizationUsageWorkspaces(usage, workspace, { ...query, size: 0 })).toEqual({

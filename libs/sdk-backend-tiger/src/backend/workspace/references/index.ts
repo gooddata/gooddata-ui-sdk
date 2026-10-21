@@ -3,8 +3,10 @@
 import { uniqBy } from "lodash-es";
 
 import {
+    ActionsApi_GetDependentEntitiesGraph,
     ActionsApi_GetDependentEntitiesGraphFromEntryPoints,
     type DependentEntitiesGraph,
+    type DependentEntitiesNodeTypeEnum,
     type DependentEntitiesRequestRelationEnum,
     type EntityIdentifier,
 } from "@gooddata/api-client-tiger";
@@ -16,13 +18,21 @@ import {
 import { type IdentifierRef, type ObjectType, serializeObjRef } from "@gooddata/sdk-model";
 
 import { type TigerAuthenticatedCallGuard, type TigerObjectType } from "../../../types/index.js";
-import {
-    isTigerType,
-    objectTypeToTigerIdType,
-    tigerIdTypeToObjectType,
-} from "../../../types/refTypeMapping.js";
+import { objectTypeToTigerIdType, tigerIdTypeToObjectType } from "../../../types/refTypeMapping.js";
 
 const sdkObjectTypeToTigerType: Partial<Record<ObjectType, TigerObjectType>> = objectTypeToTigerIdType;
+
+type NodeTypeMapping = Partial<Record<DependentEntitiesNodeTypeEnum, ObjectType>>;
+
+const referenceNodeTypeToObjectType: NodeTypeMapping = tigerIdTypeToObjectType;
+
+const workspaceGraphNodeTypeToObjectType: NodeTypeMapping = {
+    ...tigerIdTypeToObjectType,
+    automation: "automation",
+    filterView: "filterView",
+    userDataFilter: "userDataFilter",
+    memoryItem: "memoryItem",
+};
 
 export class TigerReferencesService implements IReferencesService {
     constructor(
@@ -51,6 +61,17 @@ export class TigerReferencesService implements IReferencesService {
             roots,
             direction === "up" ? "DEPENDENTS" : "DEPENDENCIES",
         );
+    }
+
+    public async getAllReferences(): Promise<IReferencesResult> {
+        const entitiesGraph = await this.authCall(async (client) => {
+            const response = await ActionsApi_GetDependentEntitiesGraph(client.axios, client.basePath, {
+                workspaceId: this.workspace,
+            });
+            return response.data.graph;
+        });
+        // The full graph has the same edge order as the graph of dependencies.
+        return createGraph(entitiesGraph, new Set(), "DEPENDENCIES", workspaceGraphNodeTypeToObjectType);
     }
 }
 
@@ -83,16 +104,17 @@ async function getGraph(
         return response.data.graph;
     });
 
-    return createGraph(entitiesGraph, rootKeys, relation);
+    return createGraph(entitiesGraph, rootKeys, relation, referenceNodeTypeToObjectType);
 }
 
 function createGraph(
     entitiesGraph: DependentEntitiesGraph,
     rootKeys: Set<string>,
     relation: DependentEntitiesRequestRelationEnum,
+    nodeTypes: NodeTypeMapping,
 ): IReferencesResult {
     const nodes: IReferencesResult["nodes"] = entitiesGraph.nodes.flatMap((node) => {
-        const ref = tigerNodeToRef(node);
+        const ref = tigerNodeToRef(node, nodeTypes);
         if (!ref) {
             return [];
         }
@@ -104,8 +126,8 @@ function createGraph(
         if (!from || !to) {
             return [];
         }
-        const fromRef = tigerNodeToRef(from);
-        const toRef = tigerNodeToRef(to);
+        const fromRef = tigerNodeToRef(from, nodeTypes);
+        const toRef = tigerNodeToRef(to, nodeTypes);
         if (!fromRef || !toRef) {
             return [];
         }
@@ -130,10 +152,12 @@ function refToEntityIdentifier(ref: IdentifierRef): EntityIdentifier[] {
     return isGraphSupportedType(tigerType) ? [{ id: ref.identifier, type: tigerType }] : [];
 }
 
-function tigerNodeToRef(node: { id: string; type: string }): IdentifierRef | undefined {
-    return isTigerType(node.type)
-        ? { identifier: node.id, type: tigerIdTypeToObjectType[node.type] }
-        : undefined;
+function tigerNodeToRef(
+    node: { id: string; type: DependentEntitiesNodeTypeEnum },
+    nodeTypes: NodeTypeMapping,
+): IdentifierRef | undefined {
+    const type = nodeTypes[node.type];
+    return type ? { identifier: node.id, type } : undefined;
 }
 
 // Prompt is not accepted by the dependency graph endpoint.

@@ -20,6 +20,7 @@ import {
     type IWorkspaceAutomationService,
     type IWorkspaceCatalogFactory,
     type IWorkspaceComputedAttributesService,
+    type IWorkspaceCustomApplicationSettingsService,
     type IWorkspaceDashboardsService,
     type IWorkspaceDatasetsService,
     type IWorkspaceDescriptor,
@@ -61,6 +62,7 @@ import { TigerWorkspaceAutomationService } from "./automations/index.js";
 import { TigerWorkspaceCatalogFactory } from "./catalog/factory.js";
 import { TigerWorkspaceComputedAttributes } from "./computedAttributes/index.js";
 import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "./constants.js";
+import { TigerWorkspaceCustomApplicationSettingsService } from "./customApplicationSettings/index.js";
 import { TigerWorkspaceDashboards } from "./dashboards/index.js";
 import { TigerDataFiltersService } from "./dataFilters/index.js";
 import { TigerWorkspaceDataSets } from "./datasets/index.js";
@@ -239,6 +241,10 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
 
     public logicalModel(): IWorkspaceLogicalModelService {
         return new TigerWorkspaceLogicalModelService(this.authCall, this.workspace);
+    }
+
+    public customApplicationSettings(): IWorkspaceCustomApplicationSettingsService {
+        return new TigerWorkspaceCustomApplicationSettingsService(this.authCall, this.workspace);
     }
 
     public automations(): IWorkspaceAutomationService {

@@ -8,18 +8,24 @@ import {
     OrganizationUtilities,
     type TestDefinitionRequest,
 } from "@gooddata/api-client-tiger";
-import { ActionsApi_RegisterUploadNotification } from "@gooddata/api-client-tiger/endpoints/actions";
+import {
+    ActionsApi_GenerateLogicalModel,
+    ActionsApi_RegisterUploadNotification,
+} from "@gooddata/api-client-tiger/endpoints/actions";
 import {
     EntitiesApi_CreateEntityDataSources,
     EntitiesApi_DeleteEntityDataSources,
     EntitiesApi_GetAllEntitiesDataSourceIdentifiers,
     EntitiesApi_GetAllEntitiesDataSources,
+    EntitiesApi_GetEntityDataSourceIdentifiers,
     EntitiesApi_GetEntityDataSources,
     EntitiesApi_PatchEntityDataSources,
     EntitiesApi_UpdateEntityDataSources,
 } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import {
     ScanModelApi_GetDataSourceSchemata,
+    ScanModelApi_ScanDataSource,
+    ScanModelApi_ScanSql,
     ScanModelApi_TestDataSource,
     ScanModelApi_TestDataSourceDefinition,
 } from "@gooddata/api-client-tiger/endpoints/scanModel";
@@ -35,8 +41,22 @@ import {
     type IDataSourceDescriptor,
     type IDataSourceIdentifierDescriptor,
     type IDataSourcePatch,
+    type IDataSourceScanRequest,
+    type IDataSourceScanResult,
+    type IDeclarativeLogicalModel,
+    type IGenerateLogicalModelRequest,
+    type ISqlScanResult,
 } from "@gooddata/sdk-model";
 
+import { convertDeclarativeLdm } from "../../convertors/fromBackend/DeclarativeModelConverter.js";
+import {
+    convertScanResult,
+    convertSqlScanResult,
+} from "../../convertors/fromBackend/PhysicalModelConverter.js";
+import {
+    convertGenerateLogicalModelRequest,
+    convertScanRequest,
+} from "../../convertors/toBackend/PhysicalModelConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { getDataSourceErrorMessage } from "../../utils/apiProblemDetail.js";
 
@@ -259,6 +279,49 @@ export class TigerDataSourcesService implements IDataSourcesService {
         await this.authCall((client) =>
             ActionsApi_RegisterUploadNotification(client.axios, client.basePath, { dataSourceId }),
         );
+    }
+
+    public async getDataSourceIdentifier(id: string): Promise<IDataSourceDescriptor> {
+        return this.authCall(async (client) => {
+            const response = await EntitiesApi_GetEntityDataSourceIdentifiers(client.axios, client.basePath, {
+                id,
+                metaInclude: ["permissions"],
+            });
+            return convertDataSourceIdentifierWithPermissions(response.data.data);
+        });
+    }
+
+    public async scan(dataSourceId: string, request: IDataSourceScanRequest): Promise<IDataSourceScanResult> {
+        return this.authCall(async (client) => {
+            const response = await ScanModelApi_ScanDataSource(client.axios, client.basePath, {
+                dataSourceId,
+                scanRequest: convertScanRequest(request),
+            });
+            return convertScanResult(response.data);
+        });
+    }
+
+    public async scanSql(dataSourceId: string, sql: string): Promise<ISqlScanResult> {
+        return this.authCall(async (client) => {
+            const response = await ScanModelApi_ScanSql(client.axios, client.basePath, {
+                dataSourceId,
+                scanSqlRequest: { sql },
+            });
+            return convertSqlScanResult(response.data);
+        });
+    }
+
+    public async generateLogicalModel(
+        dataSourceId: string,
+        request: IGenerateLogicalModelRequest,
+    ): Promise<IDeclarativeLogicalModel> {
+        return this.authCall(async (client) => {
+            const response = await ActionsApi_GenerateLogicalModel(client.axios, client.basePath, {
+                dataSourceId,
+                generateLdmRequest: convertGenerateLogicalModelRequest(request),
+            });
+            return convertDeclarativeLdm(response.data.ldm);
+        });
     }
 
     public files(): IDataSourceFilesService {

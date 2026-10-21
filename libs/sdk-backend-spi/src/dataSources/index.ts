@@ -7,6 +7,11 @@ import {
     type IDataSourceDescriptor,
     type IDataSourceIdentifierDescriptor,
     type IDataSourcePatch,
+    type IDataSourceScanRequest,
+    type IDataSourceScanResult,
+    type IDeclarativeLogicalModel,
+    type IGenerateLogicalModelRequest,
+    type ISqlScanResult,
 } from "@gooddata/sdk-model";
 
 import { type IDataSourceFilesService } from "./files.js";
@@ -101,6 +106,44 @@ export interface IDataSourcesService {
      * @param dataSourceId - identifier of the data source
      */
     registerUploadNotification(dataSourceId: string): Promise<void>;
+
+    /**
+     * Returns the identifier of one data source, with the permissions of the current user.
+     *
+     * @remarks
+     * Unlike {@link IDataSourcesService.getDataSource}, this needs only the permission to use the data source.
+     * The result has no connection details.
+     *
+     * @param id - identifier of the data source
+     */
+    getDataSourceIdentifier(id: string): Promise<IDataSourceDescriptor>;
+
+    /**
+     * Reads the physical data model of a data source.
+     *
+     * @param dataSourceId - identifier of the data source
+     * @param request - options of the scan
+     */
+    scan(dataSourceId: string, request: IDataSourceScanRequest): Promise<IDataSourceScanResult>;
+
+    /**
+     * Reads the columns of the result of an SQL statement and the first rows of the result.
+     *
+     * @param dataSourceId - identifier of the data source
+     * @param sql - the SQL statement
+     */
+    scanSql(dataSourceId: string, sql: string): Promise<ISqlScanResult>;
+
+    /**
+     * Generates a logical data model from the physical data model of a data source.
+     *
+     * @param dataSourceId - identifier of the data source
+     * @param request - options of the generation
+     */
+    generateLogicalModel(
+        dataSourceId: string,
+        request: IGenerateLogicalModelRequest,
+    ): Promise<IDeclarativeLogicalModel>;
 
     /**
      * Returns service that can be used to manage files of data sources that keep their data in files.

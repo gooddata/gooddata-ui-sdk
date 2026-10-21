@@ -18,6 +18,7 @@ vi.mock("@gooddata/api-client-tiger/endpoints/entitiesObjects", () => ({
     EntitiesApi_DeleteEntityDataSources: vi.fn(),
     EntitiesApi_GetAllEntitiesDataSourceIdentifiers: vi.fn(),
     EntitiesApi_GetAllEntitiesDataSources: vi.fn(),
+    EntitiesApi_GetEntityDataSourceIdentifiers: vi.fn(),
     EntitiesApi_GetEntityDataSources: vi.fn(),
     EntitiesApi_PatchEntityDataSources: vi.fn(),
     EntitiesApi_UpdateEntityDataSources: vi.fn(),
@@ -25,11 +26,14 @@ vi.mock("@gooddata/api-client-tiger/endpoints/entitiesObjects", () => ({
 
 vi.mock("@gooddata/api-client-tiger/endpoints/scanModel", () => ({
     ScanModelApi_GetDataSourceSchemata: vi.fn(),
+    ScanModelApi_ScanDataSource: vi.fn(),
+    ScanModelApi_ScanSql: vi.fn(),
     ScanModelApi_TestDataSource: vi.fn(),
     ScanModelApi_TestDataSourceDefinition: vi.fn(),
 }));
 
 vi.mock("@gooddata/api-client-tiger/endpoints/actions", () => ({
+    ActionsApi_GenerateLogicalModel: vi.fn(),
     ActionsApi_RegisterUploadNotification: vi.fn(),
 }));
 
@@ -218,5 +222,98 @@ describe("TigerDataSourcesService", () => {
         expect(actionsApi.ActionsApi_RegisterUploadNotification).toHaveBeenCalledWith({}, "", {
             dataSourceId: "ds1",
         });
+    });
+
+    it("should return the identifier of one data source", async () => {
+        vi.mocked(api.EntitiesApi_GetEntityDataSourceIdentifiers).mockResolvedValue({
+            data: {
+                data: {
+                    id: "ds1",
+                    type: "dataSourceIdentifier",
+                    attributes: { name: "Sales", schema: "public", type: "POSTGRESQL" },
+                    meta: { permissions: ["USE"] },
+                },
+            },
+        } as AxiosResponse);
+
+        expect(await service.getDataSourceIdentifier("ds1")).toEqual({
+            id: "ds1",
+            name: "Sales",
+            schema: "public",
+            type: "POSTGRESQL",
+            permissions: ["USE"],
+        });
+        expect(vi.mocked(api.EntitiesApi_GetEntityDataSourceIdentifiers).mock.calls[0][2]).toEqual({
+            id: "ds1",
+            metaInclude: ["permissions"],
+        });
+    });
+
+    it("should send the scan request and convert the physical model", async () => {
+        vi.mocked(scanApi.ScanModelApi_ScanDataSource).mockResolvedValue({
+            data: {
+                pdm: {
+                    tables: [
+                        {
+                            id: "orders",
+                            path: ["public", "orders"],
+                            type: "TABLE",
+                            columns: [{ name: "id", dataType: "INT" }],
+                        },
+                    ],
+                },
+                warnings: [],
+            },
+        } as AxiosResponse);
+
+        const result = await service.scan("ds1", {
+            scanTables: true,
+            scanViews: false,
+            separator: "__",
+            schemata: ["public"],
+        });
+
+        expect(scanApi.ScanModelApi_ScanDataSource).toHaveBeenCalledWith({}, "", {
+            dataSourceId: "ds1",
+            scanRequest: { scanTables: true, scanViews: false, separator: "__", schemata: ["public"] },
+        });
+        expect(result.pdm.tables[0].columns).toEqual([{ name: "id", dataType: "INT" }]);
+    });
+
+    it("should scan an SQL statement", async () => {
+        vi.mocked(scanApi.ScanModelApi_ScanSql).mockResolvedValue({
+            data: { columns: [{ name: "id", dataType: "INT" }], dataPreview: [["1"]] },
+        } as AxiosResponse);
+
+        expect(await service.scanSql("ds1", "SELECT 1 AS id")).toEqual({
+            columns: [{ name: "id", dataType: "INT" }],
+            dataPreview: [["1"]],
+        });
+        expect(scanApi.ScanModelApi_ScanSql).toHaveBeenCalledWith({}, "", {
+            dataSourceId: "ds1",
+            scanSqlRequest: { sql: "SELECT 1 AS id" },
+        });
+    });
+
+    it("should generate the logical model", async () => {
+        vi.mocked(actionsApi.ActionsApi_GenerateLogicalModel).mockResolvedValue({
+            data: { ldm: { datasets: [{ id: "orders", title: "Orders", grain: [], references: [] }] } },
+        } as AxiosResponse);
+
+        const result = await service.generateLogicalModel("ds1", { separator: "__", workspaceId: "ws" });
+
+        expect(actionsApi.ActionsApi_GenerateLogicalModel).toHaveBeenCalledWith({}, "", {
+            dataSourceId: "ds1",
+            generateLdmRequest: { separator: "__", workspaceId: "ws" },
+        });
+        expect(result).toEqual({ datasets: [{ id: "orders", title: "Orders", grain: [], references: [] }] });
+    });
+
+    it("should return an empty model when the generation returns no model", async () => {
+        vi.mocked(actionsApi.ActionsApi_GenerateLogicalModel).mockResolvedValue({
+            data: {},
+        } as AxiosResponse);
+
+        expect(await service.generateLogicalModel("ds1", {})).toEqual({});
     });
 });

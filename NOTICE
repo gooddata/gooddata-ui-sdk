@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2026-10-20
+Date generated: 2026-10-21
 
-Revision ID: d21eb1b2de9ed80b2ccce61994505620f011549a
+Revision ID: b7799622b04f3189b282918d18aa671aa5b8f42e
 
 ================================================================================
 ================================================================================
@@ -338,10 +338,6 @@ No first party licenses found in gooddata-ui-sdk
 - @vitest/utils (3.2.4) [MIT, Apache-2.0]
 - @vtaits/use-lazy-ref (0.1.4) [MIT]
 - acorn (8.19.0) [MIT]
-- ag-charts-community (13.1.0) [MIT]
-- ag-charts-core (13.1.0) [MIT]
-- ag-charts-enterprise (13.1.0) [Commercial, unknown]
-- ag-charts-locale (13.1.0) [MIT]
 - ag-charts-types (13.1.0) [MIT]
 - ag-grid-community (35.1.0) [MIT]
 - ag-grid-enterprise (35.1.0) [Commercial]
@@ -64950,277 +64946,6 @@ Dependency Path: @vitest/coverage-v8 > vitest > @vitest/mocker > vite > terser >
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
-Package Title: ag-charts-community (13.1.0)
-
-Package Locator: npm+ag-charts-community$13.1.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-Advanced Charting / Charts supporting Javascript / Typescript / React / Angular / Vue
-
-* Declared Licenses *
-MIT
---------------------------------------------------------------------------------
-File matches:
-- LICENSE.txt
-  - Copyright (c) 2015-2026 AG GRID LTD
-- package.json
---------------------------------------------------------------------------------
-
-The MIT License
-
-Copyright (c) 2015-2026 AG GRID LTD
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-* License Header *
-The MIT License
-
-Copyright (c) 2015-2026 AG GRID LTD
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-* Copyrights *
-MIT
-- Copyright (c) 2015-2026 AG GRID LTD
-
-* Package Info *
-
-Authors: sean@thelandsmans.com
-Package Manager: NPM
-Project URL: https://www.ag-grid.com/charts/
-Package Download URL: https://registry.npmjs.org/ag-charts-community/-/ag-charts-community-13.1.0.tgz
-Dependency Path: ag-grid-enterprise > ag-charts-community > ag-grid-enterprise > ag-charts-enterprise > ag-charts-community
-File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
-
---------------------------------------------------------------------------------
-Package Title: ag-charts-core (13.1.0)
-
-Package Locator: npm+ag-charts-core$13.1.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-Advanced Charting / Charts supporting Javascript / Typescript / React / Angular / Vue
-
-* Declared Licenses *
-MIT
---------------------------------------------------------------------------------
-File matches:
-- LICENSE.txt
-  - Copyright (c) 2015-2026 AG GRID LTD
-- package.json
---------------------------------------------------------------------------------
-
-The MIT License
-
-Copyright (c) 2015-2026 AG GRID LTD
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-* License Header *
-The MIT License
-
-Copyright (c) 2015-2026 AG GRID LTD
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-* Copyrights *
-MIT
-- Copyright (c) 2015-2026 AG GRID LTD
-
-* Package Info *
-
-Authors: sean@thelandsmans.com
-Package Manager: NPM
-Project URL: https://www.ag-grid.com/charts/
-Package Download URL: https://registry.npmjs.org/ag-charts-core/-/ag-charts-core-13.1.0.tgz
-Dependency Path: ag-grid-enterprise > ag-charts-community > ag-charts-core > ag-grid-enterprise > ag-charts-enterprise > ag-charts-community > ag-charts-core > ag-grid-enterprise > ag-charts-enterprise > ag-charts-core
-File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
-
---------------------------------------------------------------------------------
-Package Title: ag-charts-enterprise (13.1.0)
-
-Package Locator: npm+ag-charts-enterprise$13.1.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-Advanced Charting / Charts supporting Javascript / Typescript / React / Angular / Vue
-
-* Declared Licenses *
-Commercial
-
-Commercial License
-
-* License Header *
-Commercial License
-
-* Other Licenses *
-unknown
---------------------------------------------------------------------------------
-File matches:
-- LICENSE.html
---------------------------------------------------------------------------------
-
-* Package Info *
-
-Authors: sean@thelandsmans.com
-Package Manager: NPM
-Project URL: https://www.ag-grid.com/charts/
-Package Download URL: https://registry.npmjs.org/ag-charts-enterprise/-/ag-charts-enterprise-13.1.0.tgz
-Dependency Path: ag-grid-enterprise > ag-charts-enterprise
-File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
-
---------------------------------------------------------------------------------
-Package Title: ag-charts-locale (13.1.0)
-
-Package Locator: npm+ag-charts-locale$13.1.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-<div align="center">     <picture>       <source media="(prefers-color-scheme: dark)" srcset="https://github.com/ag-grid/ag-grid/blob/latest/documentation/ag-grid-docs/public/images/ag-logos/svg-logos/AG-Charts-Logo_Dark-Theme.svg?raw=true"/>       <sourc
-
-* Declared Licenses *
-MIT
---------------------------------------------------------------------------------
-File matches:
-- LICENSE.txt
-  - Copyright (c) 2015-2026 AG GRID LTD
-- package.json
---------------------------------------------------------------------------------
-
-The MIT License
-
-Copyright (c) 2015-2026 AG GRID LTD
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-* License Header *
-The MIT License
-
-Copyright (c) 2015-2026 AG GRID LTD
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-* Copyrights *
-MIT
-- Copyright (c) 2015-2026 AG GRID LTD
-
-* Package Info *
-
-Authors: sean@thelandsmans.com
-Package Manager: NPM
-Project URL: https://www.ag-grid.com/charts/
-Package Download URL: https://registry.npmjs.org/ag-charts-locale/-/ag-charts-locale-13.1.0.tgz
-Dependency Path: ag-grid-enterprise > ag-charts-community > ag-charts-locale > ag-grid-enterprise > ag-charts-enterprise > ag-charts-community > ag-charts-locale
-File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
-
---------------------------------------------------------------------------------
 Package Title: ag-charts-types (13.1.0)
 
 Package Locator: npm+ag-charts-types$13.1.0
@@ -65296,7 +65021,7 @@ Authors: sean@thelandsmans.com
 Package Manager: NPM
 Project URL: https://www.ag-grid.com/charts/
 Package Download URL: https://registry.npmjs.org/ag-charts-types/-/ag-charts-types-13.1.0.tgz
-Dependency Path: ag-grid-community > ag-charts-types > ag-grid-enterprise > ag-charts-community > ag-charts-core > ag-charts-types > ag-grid-enterprise > ag-charts-community > ag-charts-types > ag-grid-enterprise > ag-charts-enterprise > ag-charts-community > ag-charts-core > ag-charts-types > ag-grid-enterprise > ag-charts-enterprise > ag-charts-community > ag-charts-types > ag-grid-enterprise > ag-charts-enterprise > ag-charts-core > ag-charts-types > ag-grid-enterprise > ag-grid-community > ag-charts-types > ag-grid-react > ag-grid-community > ag-charts-types
+Dependency Path: ag-grid-community > ag-charts-types > ag-grid-enterprise > ag-grid-community > ag-charts-types > ag-grid-react > ag-grid-community > ag-charts-types
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 
 --------------------------------------------------------------------------------
@@ -81067,7 +80792,7 @@ MIT
 
 Authors: sindresorhus@gmail.com
 Package Manager: NPM
-Project URL: https://www.npmjs.com/package/html-tags
+Project URL: https://github.com/sindresorhus/html-tags#readme
 Package Download URL: https://registry.npmjs.org/html-tags/-/html-tags-3.3.1.tgz
 Dependency Path: stylelint > html-tags > stylelint-config-standard > stylelint > html-tags > stylelint-config-standard > stylelint-config-recommended > stylelint > html-tags > stylelint-order > stylelint > html-tags > stylelint-plugin-defensive-css > stylelint > html-tags > stylelint-scss > stylelint > html-tags
 File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
@@ -148153,4 +147878,4 @@ File Path(s): common/config/subspaces/sdk/pnpm-lock.yaml
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2026-10-20
+Report Generated by FOSSA on 2026-10-21

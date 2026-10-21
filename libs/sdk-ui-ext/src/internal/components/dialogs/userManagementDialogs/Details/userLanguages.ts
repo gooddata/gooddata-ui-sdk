@@ -16,7 +16,11 @@ const TRANSLATION_KINDS: Partial<Record<LocalizationSettingType, TranslationKind
     DATA_LOCALE: "data",
 };
 
-export type LanguageNotice = { type: "notSupported" };
+export type LanguageNotice =
+    | { type: "notSupported" }
+    | { type: "noTranslation" }
+    | { type: "noTranslationIn"; count: number }
+    | { type: "translationAvailable" };
 
 const displayNames = new Map<string, Intl.DisplayNames | undefined>();
 
@@ -65,12 +69,69 @@ export function languageOptions(
     );
 }
 
+function isEnglish(code: string): boolean {
+    return code.split("-")[0].toLowerCase() === "en";
+}
+
+function canonicalLocale(code: string): string {
+    try {
+        return Intl.getCanonicalLocales(code)[0] ?? code;
+    } catch {
+        return code;
+    }
+}
+
+function isSameLocale(a: string | undefined, b: string): boolean {
+    return a !== undefined && canonicalLocale(a) === canonicalLocale(b);
+}
+
+function translatedWorkspaceCount(
+    workspaceStatistics: ILocalizationStatistics[],
+    kind: TranslationKind,
+    code: string,
+): number {
+    return workspaceStatistics.filter((statistics) =>
+        statistics[kind].locales.some(({ locale }) => isSameLocale(locale, code)),
+    ).length;
+}
+
 export function languageNotice(
     setting: LocalizationSettingType,
     languages: IUserLocalizationSettings,
+    workspaceStatistics: ILocalizationStatistics[] = [],
+    organizationLanguages: IUserLocalizationSettings = {},
 ): LanguageNotice | undefined {
     const code = languages[setting];
-    return setting === "LOCALE" && code && !isInterfaceLanguage(code) ? { type: "notSupported" } : undefined;
+    const kind = TRANSLATION_KINDS[setting];
+    if (!kind) {
+        return code && !isInterfaceLanguage(code) ? { type: "notSupported" } : undefined;
+    }
+    const workspaceCount = workspaceStatistics.length;
+    if (workspaceCount === 0) {
+        return undefined;
+    }
+    if (code) {
+        if (isEnglish(code)) {
+            return undefined;
+        }
+        const missing = workspaceCount - translatedWorkspaceCount(workspaceStatistics, kind, code);
+        if (missing === workspaceCount) {
+            return { type: "noTranslation" };
+        }
+        return missing > 0 ? { type: "noTranslationIn", count: missing } : undefined;
+    }
+    const interfaceCode = languages.LOCALE;
+    if (
+        !interfaceCode ||
+        isEnglish(interfaceCode) ||
+        !isInterfaceLanguage(interfaceCode) ||
+        isSameLocale(organizationLanguages[setting], interfaceCode)
+    ) {
+        return undefined;
+    }
+    return translatedWorkspaceCount(workspaceStatistics, kind, interfaceCode) > 0
+        ? { type: "translationAvailable" }
+        : undefined;
 }
 
 export function changedLanguageSettings(

@@ -14,6 +14,7 @@ import {
     type IWorkspaceAutomationService,
     type IWorkspaceCatalogFactory,
     type IWorkspaceComputedAttributesService,
+    type IWorkspaceCustomApplicationSettingsService,
     type IWorkspaceDashboardsService,
     type IWorkspaceDatasetsService,
     type IWorkspaceDescriptor,
@@ -221,6 +222,10 @@ export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
 
     public logicalModel(): IWorkspaceLogicalModelService {
         return this.decorated.logicalModel();
+    }
+
+    public customApplicationSettings(): IWorkspaceCustomApplicationSettingsService {
+        return this.decorated.customApplicationSettings();
     }
 
     public automations(): IWorkspaceAutomationService {

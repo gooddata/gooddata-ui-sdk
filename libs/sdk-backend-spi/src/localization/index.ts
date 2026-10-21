@@ -122,6 +122,14 @@ export interface ILocalizationUsageListQuery extends ILocalizationPageQuery {
     setting?: LocalizationSettingType;
     source?: LocalizationUsageSource;
     /**
+     * Case-insensitive part of the name to list.
+     *
+     * @remarks
+     * Workspaces match by name. People match by name, email or user ID.
+     * The filter applies before paging, so `totalCount` is the filtered count.
+     */
+    name?: string;
+    /**
      * Lists the workspaces and people behind one count of {@link ILocalizationTranslationUsage}.
      * Use it together with `value` and a metadata or data `setting`.
      */

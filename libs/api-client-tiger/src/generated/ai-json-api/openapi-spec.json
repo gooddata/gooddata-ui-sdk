@@ -10659,7 +10659,8 @@
                     "dashboard",
                     "filter_context",
                     "parameter",
-                    "document"
+                    "document",
+                    "report"
                 ],
                 "title": "ObjectType"
             },

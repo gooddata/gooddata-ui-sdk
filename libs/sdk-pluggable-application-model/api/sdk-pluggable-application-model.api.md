@@ -5,6 +5,7 @@
 ```ts
 
 import { ApplicationScope } from '@gooddata/sdk-model';
+import { GenAIChatEffort } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IEntitlementDescriptor } from '@gooddata/sdk-model';
 import { IGenAIUserContext } from '@gooddata/sdk-model';
@@ -238,6 +239,7 @@ export interface IOpenAiAssistantRequestedEvent extends IPluggableAppEvent {
         readonly userContext?: IGenAIUserContext;
         readonly appendToChat?: boolean;
         readonly replaceUserContext?: boolean;
+        readonly effort?: GenAIChatEffort;
     };
     // (undocumented)
     readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.OPEN_REQUESTED";
@@ -458,6 +460,7 @@ export function openAiAssistantRequested(payload?: {
     userContext?: IGenAIUserContext;
     appendToChat?: boolean;
     replaceUserContext?: boolean;
+    effort?: GenAIChatEffort;
 }): IOpenAiAssistantRequestedEvent;
 
 // @alpha

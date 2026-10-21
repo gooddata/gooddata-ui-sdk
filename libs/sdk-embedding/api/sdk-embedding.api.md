@@ -22,6 +22,15 @@ export type AdAttributeHierarchyModifiedCommand = IGdcAdMessageEvent<GdcAdComman
 export type AdAttributeHierarchyModifiedCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.AttributeHierarchyModified, undefined>;
 
 // @public
+export type AdCatalogLoaded = IGdcAdMessageEvent<GdcAdEventType.CatalogLoaded, AdCatalogLoadedBody>;
+
+// @public
+export type AdCatalogLoadedBody = IAdAvailableCommands;
+
+// @public
+export type AdCatalogLoadedData = IGdcAdMessageEnvelope<GdcAdEventType.CatalogLoaded, AdCatalogLoadedBody>;
+
+// @public
 export type AdClearCommand = IGdcAdMessageEvent<GdcAdCommandType.Clear, undefined>;
 
 // @public
@@ -299,6 +308,7 @@ export enum GdcAdEventType {
     ApiTokenIsAboutToExpire = "apiTokenIsAboutToExpire",
     // @beta
     AttributeHierarchyModified = "attributeHierarchyModified",
+    CatalogLoaded = "catalogLoaded",
     ClearFinished = "clearFinished",
     ClearInsightFinished = "clearInsightFinished",
     Drill = "drill",
@@ -1084,6 +1094,9 @@ export interface IResolvedFilterValues {
 
 // @public (undocumented)
 export function isAbsoluteDateFilter(filter: unknown): filter is IAbsoluteDateFilter;
+
+// @public
+export function isAdCatalogLoadedData(obj: unknown): obj is AdCatalogLoadedData;
 
 // @public
 export function isAdClearCommandData(obj: unknown): obj is AdClearCommandData;

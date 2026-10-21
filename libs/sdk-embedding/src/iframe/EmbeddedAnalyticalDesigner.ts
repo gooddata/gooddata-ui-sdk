@@ -159,6 +159,11 @@ export enum GdcAdEventType {
     InsightRendered = "insightRendered",
 
     /**
+     * Type represent that the catalog (attributes, metrics, facts, dates) is loaded
+     */
+    CatalogLoaded = "catalogLoaded",
+
+    /**
      * Type represent that the insight editor is cleared
      */
     ClearFinished = "clearFinished",
@@ -1027,6 +1032,53 @@ export function isAdInsightRenderedData(obj: unknown): obj is AdInsightRenderedD
         obj !== null &&
         typeof obj === "object" &&
         getEventType(obj) === (GdcAdEventType.InsightRendered as string)
+    );
+}
+
+//
+// Catalog loaded
+//
+
+/**
+ * Main data of CatalogLoaded event
+ *
+ * @public
+ */
+export type AdCatalogLoadedBody = IAdAvailableCommands;
+
+/**
+ * This event is emitted when AD has loaded the workspace catalog (attributes, metrics, facts and
+ * dates) into its data panel. It is emitted on the initial load and on every reload (catalog
+ * refresh, dataset change, attribute hierarchy modification). Unlike {@link AdInsightRendered}, it
+ * is emitted also when no insight is open, so the host can send commands that need the catalog,
+ * such as `setFilterContext`, as soon as an empty AD is ready for them.
+ *
+ * @public
+ */
+export type AdCatalogLoaded = IGdcAdMessageEvent<GdcAdEventType.CatalogLoaded, AdCatalogLoadedBody>;
+
+/**
+ * Data type of event that was emitted when the catalog is loaded
+ *
+ * Note: The main event data was wrapped to application and product data structure
+ * @remarks See  {@link AdCatalogLoadedBody}
+ *
+ * @public
+ */
+export type AdCatalogLoadedData = IGdcAdMessageEnvelope<GdcAdEventType.CatalogLoaded, AdCatalogLoadedBody>;
+
+/**
+ * Type-guard checking whether an object is an instance of {@link AdCatalogLoadedData}
+ *
+ * @param obj - object to test
+ *
+ * @public
+ */
+export function isAdCatalogLoadedData(obj: unknown): obj is AdCatalogLoadedData {
+    return (
+        obj !== null &&
+        typeof obj === "object" &&
+        getEventType(obj) === (GdcAdEventType.CatalogLoaded as string)
     );
 }
 

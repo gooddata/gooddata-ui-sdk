@@ -16,10 +16,6 @@ import { type IPlatformContext } from "@gooddata/sdk-pluggable-application-model
  * using those credentials and produce an `IClientPlatformContext` which
  * includes the backend instance.
  *
- * The backend's `internal_backendSpecificFunctions` field carries any
- * backend-specific escape hatches (e.g., tiger-specific functions)
- * automatically.
- *
  * @alpha
  */
 export interface IClientPlatformContext extends IPlatformContext {

@@ -206,6 +206,7 @@
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "在分析中打开",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "这将要求您先保存可视化内容，然后才能打开它。",
     "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "复制可视化链接",
+    "gd.gen-ai.messages.skills": "正在使用技能",
     "gd.gen-ai.messages.label": "聊天消息",
     "gd.gen-ai.message.label.user": "用户：",
     "gd.gen-ai.message.label.assistant": "机器人：",

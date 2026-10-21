@@ -2,7 +2,7 @@
 
 import { type ReactNode, useCallback, useState } from "react";
 
-import { type IGenAIUserContext } from "@gooddata/sdk-model";
+import { type GenAIChatEffort, type IGenAIUserContext } from "@gooddata/sdk-model";
 import {
     type IPlatformContext,
     type IPluggableAppTelemetryCallbacks,
@@ -45,6 +45,7 @@ export interface IHostChromeChat {
         userContext?: IGenAIUserContext,
         appendToChat?: boolean,
         replaceUserContext?: boolean,
+        effort?: GenAIChatEffort,
     ) => void;
     /**
      * Open the chat dialog with a pre-seeded optional user-location context
@@ -117,6 +118,7 @@ export function useHostChromeChat({
     const [appendToChat, setAppendToChat] = useState(false);
     const [agentId, setAgentId] = useState<string | undefined>(undefined);
     const [replaceUserContext, setReplaceUserContext] = useState(false);
+    const [effort, setEffort] = useState<GenAIChatEffort | undefined>(undefined);
     const [mode, setMode] = useState<GenAIAssistantMode>("docked");
     // Bumped on every ask so the chat re-seeds (clears the thread + sends the message) even when the
     // same prompt is asked again — e.g. "Summarize" clicked twice, or repeated after a close (the
@@ -149,9 +151,11 @@ export function useHostChromeChat({
             questionUserContext?: IGenAIUserContext,
             appendToChat?: boolean,
             replaceUserContext?: boolean,
+            effort?: GenAIChatEffort,
         ) => {
             setAskedQuestion(question);
             setAgentId(agentId);
+            setEffort(effort);
             setUserContext(questionUserContext);
             setAskSeq((seq) => seq + 1);
             setAppendToChat(appendToChat ?? false);
@@ -164,6 +168,7 @@ export function useHostChromeChat({
     const openAiAssistant = useCallback(
         (questionUserContext?: IGenAIUserContext, replaceUserContext?: boolean, agentId?: string) => {
             setAskedQuestion(null);
+            setEffort(undefined);
             setAppendToChat(false);
             setAgentId(agentId);
             setUserContext(questionUserContext);
@@ -209,6 +214,7 @@ export function useHostChromeChat({
                 askedQuestion={askedQuestion}
                 appendToChat={appendToChat}
                 agentId={agentId}
+                effort={effort}
                 replaceUserContext={replaceUserContext}
                 askSeq={askSeq}
                 userContext={userContext}

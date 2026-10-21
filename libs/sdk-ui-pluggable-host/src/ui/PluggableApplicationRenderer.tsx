@@ -4,7 +4,11 @@ import { type RefObject, useCallback, useEffect, useLayoutEffect, useMemo, useRe
 
 import { FormattedMessage, type MessageDescriptor, defineMessage, useIntl } from "react-intl";
 
-import { type IGenAIUserContext, type PluggableApplicationRegistryItem } from "@gooddata/sdk-model";
+import {
+    type GenAIChatEffort,
+    type IGenAIUserContext,
+    type PluggableApplicationRegistryItem,
+} from "@gooddata/sdk-model";
 import {
     type IAppHeaderOptions,
     type IHostNavigationRequest,
@@ -67,6 +71,7 @@ export interface IPluggableApplicationRendererProps {
         userContext?: IGenAIUserContext,
         appendToChat?: boolean,
         replaceUserContext?: boolean,
+        effort?: GenAIChatEffort,
     ) => void;
     /** Close the host-owned chat, requested by the active app. */
     onCloseAiAssistant?: () => void;
@@ -182,6 +187,7 @@ export function PluggableApplicationRenderer({
                     event.payload.userContext,
                     event.payload.appendToChat,
                     event.payload.replaceUserContext,
+                    event.payload.effort,
                 );
                 return;
             }

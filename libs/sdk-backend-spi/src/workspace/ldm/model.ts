@@ -1,8 +1,10 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
+import { type IDeclarativeLogicalModel, type IDeclarativeWorkspaceLayout } from "@gooddata/sdk-model";
 
 /**
  * Interface that represents logical model date dataset.
- * @internal
+ * @alpha
  */
 export interface IDateDataset {
     id: string;
@@ -11,13 +13,22 @@ export interface IDateDataset {
 }
 
 /**
- * Service for querying information about logical data model.
+ * Options for reading the declarative logical data model.
  *
- * This is internal service that returns data for internal UI application. It will be refactored once more
- * methods are added. This method would live in TigerSpecificFunctions, as the interface is experimental,
- * but Meditor has an issue with injecting both analytical backend and tiger specific functions objects.
+ * @alpha
+ */
+export interface IDeclarativeLogicalModelOptions {
+    /**
+     * When true, the model also contains the datasets that the workspace inherits from its parents.
+     * Defaults to false.
+     */
+    includeParents?: boolean;
+}
+
+/**
+ * Service for querying and changing the logical data model of a workspace.
  *
- * @internal
+ * @alpha
  */
 export interface IWorkspaceLogicalModelService {
     /**
@@ -25,4 +36,28 @@ export interface IWorkspaceLogicalModelService {
      * @param includeParents - true if parents should be included/
      */
     getDatasets(includeParents: boolean): Promise<IDateDataset[]>;
+
+    /**
+     * Returns the logical data model of the workspace in the declarative form.
+     *
+     * @param options - options of the read
+     */
+    getDeclarativeModel(options?: IDeclarativeLogicalModelOptions): Promise<IDeclarativeLogicalModel>;
+
+    /**
+     * Replaces the logical data model of the workspace.
+     *
+     * @param model - the new logical data model
+     */
+    setDeclarativeModel(model: IDeclarativeLogicalModel): Promise<void>;
+
+    /**
+     * Replaces the logical data model and the analytical objects of the workspace in one request.
+     *
+     * @remarks
+     * Use this to provision a workspace from a layout that the backend exported, for example demo content.
+     *
+     * @param layout - the logical data model and the analytical objects
+     */
+    setDeclarativeLayout(layout: IDeclarativeWorkspaceLayout): Promise<void>;
 }

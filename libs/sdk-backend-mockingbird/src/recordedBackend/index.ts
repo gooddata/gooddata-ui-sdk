@@ -43,6 +43,7 @@ import {
     type IWorkspaceAutomationService,
     type IWorkspaceCatalogFactory,
     type IWorkspaceComputedAttributesService,
+    type IWorkspaceCustomApplicationSettingsService,
     type IWorkspaceDashboardsService,
     type IWorkspaceDatasetsService,
     type IWorkspaceDescriptor,
@@ -525,6 +526,9 @@ function recordedWorkspace(
         logicalModel(): IWorkspaceLogicalModelService {
             throw new NotSupported("not supported");
         },
+        customApplicationSettings(): IWorkspaceCustomApplicationSettingsService {
+            throw new NotSupported("not supported");
+        },
         automations(): IWorkspaceAutomationService {
             throw new NotSupported("not supported");
         },
@@ -562,6 +566,12 @@ function recordedWorkspace(
         references(): IReferencesService {
             return {
                 getReferences() {
+                    return Promise.resolve({
+                        nodes: [],
+                        edges: [],
+                    });
+                },
+                getAllReferences() {
                     return Promise.resolve({
                         nodes: [],
                         edges: [],
@@ -1010,6 +1020,11 @@ function recordedDataSourcesService(): IDataSourcesService {
         testConnection: () => Promise.resolve({ successful: true }),
         getSchemata: () => Promise.resolve([]),
         registerUploadNotification: () => Promise.resolve(),
+        getDataSourceIdentifier: (id) =>
+            Promise.resolve({ id, name: "", schema: "", type: "POSTGRESQL", permissions: [] }),
+        scan: () => Promise.resolve({ pdm: { tables: [] }, warnings: [] }),
+        scanSql: () => Promise.resolve({ columns: [] }),
+        generateLogicalModel: () => Promise.resolve({}),
         files: () => ({
             upload: () => Promise.resolve(""),
             analyzeCsv: () => Promise.resolve([]),

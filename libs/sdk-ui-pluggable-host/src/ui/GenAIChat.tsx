@@ -5,7 +5,7 @@ import { useCallback } from "react";
 import { defineMessage, useIntl } from "react-intl";
 
 import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import type { IGenAIUserContext } from "@gooddata/sdk-model";
+import type { GenAIChatEffort, IGenAIUserContext } from "@gooddata/sdk-model";
 import { useBackendStrict } from "@gooddata/sdk-ui";
 import {
     type ChatAssistantMessageEvent,
@@ -111,6 +111,10 @@ export interface IGenAIChatProps {
      */
     agentId?: string;
     /**
+     * Reasoning effort for the conversation the seeded question starts. If not provided, the default is used.
+     */
+    effort?: GenAIChatEffort;
+    /**
      * Ambient user context kept in sync by the active hosted application (e.g. the open dashboard
      * and its live filter state). Persists across messages and drives the chat's context indicator.
      */
@@ -161,6 +165,7 @@ export function GenAIChat({
     askSeq,
     appendToChat,
     agentId,
+    effort,
     userContext,
     replaceUserContext,
     ambientUserContext,
@@ -241,6 +246,7 @@ export function GenAIChat({
             userContext={userContext}
             appendToChat={appendToChat}
             agentId={agentId}
+            effort={effort}
             replaceUserContext={replaceUserContext}
             ambientUserContext={ambientUserContext}
             publisherDocumentSaved={publisherDocumentSaved}

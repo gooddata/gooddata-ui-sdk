@@ -9,6 +9,7 @@ import { type IAttributeHierarchiesService } from "./attributeHierarchies/index.
 import { type IWorkspaceAttributesService } from "./attributes/index.js";
 import { type IWorkspaceAutomationService } from "./automations/index.js";
 import { type IWorkspaceComputedAttributesService } from "./computedAttributes/index.js";
+import { type IWorkspaceCustomApplicationSettingsService } from "./customApplicationSettings/index.js";
 import { type IWorkspaceDashboardsService } from "./dashboards/index.js";
 import { type IDataFiltersService } from "./dataFilter/index.js";
 import { type IDateFilterConfigsQuery } from "./dateFilterConfigs/index.js";
@@ -197,10 +198,16 @@ export interface IAnalyticalWorkspace {
     dataFilters(): IDataFiltersService;
 
     /**
-     * Returns experimental service that operates over logical data model.
-     * @internal
+     * Returns service that reads and changes the logical data model.
+     * @alpha
      */
     logicalModel(): IWorkspaceLogicalModelService;
+
+    /**
+     * Returns service that manages the settings that applications store in the workspace.
+     * @alpha
+     */
+    customApplicationSettings(): IWorkspaceCustomApplicationSettingsService;
 
     /**
      * Returns service that can be used to access GenAI services.

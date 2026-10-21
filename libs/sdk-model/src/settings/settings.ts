@@ -1232,6 +1232,14 @@ export interface IFeatureFlags {
     enablePublisherV2?: boolean;
 
     /**
+     * Enable AI takeaways in the Business Briefing reports application: generating them and their instructions.
+     *
+     * @remarks
+     * Disabled by default.
+     */
+    enableGenAiReportTakeaways?: boolean;
+
+    /**
      * Enable the write and export postMessage commands for embedded dashboards and Analytical Designer.
      *
      * @remarks

@@ -1264,7 +1264,6 @@
                             "FLEXCONNECT",
                             "STARROCKS",
                             "ATHENA",
-                            "MONGODB",
                             "CRATEDB",
                             "AILAKEHOUSE",
                             "DENODO",

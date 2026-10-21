@@ -28,6 +28,8 @@ export interface IDetailsViewProps {
     languages?: IUserLocalizationSettings;
     isLanguagesError?: boolean;
     statistics?: ILocalizationStatistics;
+    workspaceStatistics?: ILocalizationStatistics[];
+    organizationLanguages?: IUserLocalizationSettings;
     onChange?: (user: IUser, isAdmin: boolean) => void;
     onLanguagesChange?: (languages: IUserLocalizationSettings) => void;
 }
@@ -42,6 +44,8 @@ export function UserDetailsView({
     languages,
     isLanguagesError = false,
     statistics,
+    workspaceStatistics,
+    organizationLanguages,
     onChange,
     onLanguagesChange,
 }: IDetailsViewProps) {
@@ -152,6 +156,8 @@ export function UserDetailsView({
                     isError={isLanguagesError}
                     mode={mode}
                     statistics={statistics}
+                    workspaceStatistics={workspaceStatistics}
+                    organizationLanguages={organizationLanguages}
                     onChange={onLanguagesChange}
                 />
             ) : null}

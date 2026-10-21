@@ -120,6 +120,7 @@ import {
     type IWorkspaceCatalogWithAvailableItems,
     type IWorkspaceCatalogWithAvailableItemsFactoryOptions,
     type IWorkspaceComputedAttributesService,
+    type IWorkspaceCustomApplicationSettingsService,
     type IWorkspaceDashboardsService,
     type IWorkspaceDatasetsService,
     type IWorkspaceDescriptor,
@@ -559,6 +560,9 @@ function dummyWorkspace(
         logicalModel(): IWorkspaceLogicalModelService {
             throw new NotSupported("not supported");
         },
+        customApplicationSettings(): IWorkspaceCustomApplicationSettingsService {
+            throw new NotSupported("not supported");
+        },
         automations(): IWorkspaceAutomationService {
             return new DummyWorkspaceAutomationService(workspace);
         },
@@ -601,6 +605,12 @@ function dummyWorkspace(
                         edges: [],
                     });
                 },
+                getAllReferences(): Promise<IReferencesResult> {
+                    return Promise.resolve({
+                        nodes: [],
+                        edges: [],
+                    });
+                },
             };
         },
         exportTemplates(): IWorkspaceExportTemplatesService {
@@ -638,6 +648,11 @@ function dummyDataSourcesService(): IDataSourcesService {
         testConnection: () => Promise.resolve({ successful: true }),
         getSchemata: () => Promise.resolve([]),
         registerUploadNotification: () => Promise.resolve(),
+        getDataSourceIdentifier: (id) =>
+            Promise.resolve({ id, name: "", schema: "", type: "POSTGRESQL", permissions: [] }),
+        scan: () => Promise.resolve({ pdm: { tables: [] }, warnings: [] }),
+        scanSql: () => Promise.resolve({ columns: [] }),
+        generateLogicalModel: () => Promise.resolve({}),
         files: () => ({
             upload: () => Promise.resolve(""),
             analyzeCsv: () => Promise.resolve([]),

@@ -17,6 +17,7 @@ function renderSection(
     onChange = vi.fn(),
     isError = false,
     statistics?: ILocalizationStatistics,
+    workspaceStatistics?: ILocalizationStatistics[],
 ) {
     render(
         <IntlWrapper>
@@ -25,6 +26,7 @@ function renderSection(
                 mode={mode}
                 isError={isError}
                 statistics={statistics}
+                workspaceStatistics={workspaceStatistics}
                 onChange={onChange}
             />
         </IntlWrapper>,
@@ -62,10 +64,81 @@ describe("UserLanguagesSection", () => {
         expect(screen.queryByText(/Language not supported/)).not.toBeInTheDocument();
     });
 
-    it("shows no notice under the metadata and data languages", () => {
+    it("warns about the workspaces without a translation", () => {
+        renderSection({ METADATA_LOCALE: "es-ES", DATA_LOCALE: "es-ES" }, "VIEW", vi.fn(), false, undefined, [
+            { metadata: { locales: [{ locale: "es-ES" }] }, data: { locales: [] } },
+            { metadata: { locales: [] }, data: { locales: [] } },
+            { metadata: { locales: [] }, data: { locales: [] } },
+        ]);
+
+        expect(screen.getByText(/No translation in/)).toHaveTextContent(
+            "Warning: No translation in 2 of their workspaces.",
+        );
+        expect(screen.getByText(/original values/)).toHaveTextContent(
+            "Warning: No translation – original values show instead.",
+        );
+    });
+
+    it("announces the translation notes, which arrive after the languages", () => {
+        const languages = { LOCALE: "fr-FR", METADATA_LOCALE: "es-ES" };
+        const section = (workspaceStatistics?: ILocalizationStatistics[]) => (
+            <IntlWrapper>
+                <UserLanguagesSection
+                    languages={languages}
+                    mode="VIEW"
+                    isError={false}
+                    workspaceStatistics={workspaceStatistics}
+                />
+            </IntlWrapper>
+        );
+        const { rerender } = render(section());
+        const alertRegions = screen.getAllByRole("alert");
+        const statusRegions = screen.getAllByRole("status");
+        expect(alertRegions).toHaveLength(2);
+        expect(statusRegions).toHaveLength(2);
+        [...alertRegions, ...statusRegions].forEach((region) => expect(region).toBeEmptyDOMElement());
+
+        rerender(
+            section([
+                { metadata: { locales: [{ locale: "fr-FR" }] }, data: { locales: [{ locale: "fr-FR" }] } },
+            ]),
+        );
+
+        expect(screen.getAllByRole("alert")).toEqual(alertRegions);
+        expect(screen.getAllByRole("status")).toEqual(statusRegions);
+        expect(alertRegions[0]).toHaveTextContent("No translation");
+        expect(statusRegions[0]).toBeEmptyDOMElement();
+        expect(alertRegions[1]).toBeEmptyDOMElement();
+        expect(statusRegions[1]).toHaveTextContent("Translation available");
+    });
+
+    it("notes no translation the organization default already uses", () => {
+        const { container } = render(
+            <IntlWrapper>
+                <UserLanguagesSection
+                    languages={{ LOCALE: "fr-FR" }}
+                    mode="VIEW"
+                    isError={false}
+                    workspaceStatistics={[
+                        {
+                            metadata: { locales: [{ locale: "fr-FR" }] },
+                            data: { locales: [{ locale: "fr-FR" }] },
+                        },
+                    ]}
+                    organizationLanguages={{ METADATA_LOCALE: "fr-FR" }}
+                />
+            </IntlWrapper>,
+        );
+
+        expect(container.querySelector(".s-user-language-notice-METADATA_LOCALE")).toBeNull();
+        expect(container.querySelector(".s-user-language-notice-DATA_LOCALE")).toHaveTextContent(
+            "Translation available",
+        );
+    });
+
+    it("shows no translation notice without workspace statistics", () => {
         renderSection({ LOCALE: "fr-FR", METADATA_LOCALE: "es-ES", DATA_LOCALE: "es-ES" });
 
-        expect(screen.queryByRole("alert")).not.toBeInTheDocument();
         expect(screen.queryByText(/Warning|Note/)).not.toBeInTheDocument();
     });
 

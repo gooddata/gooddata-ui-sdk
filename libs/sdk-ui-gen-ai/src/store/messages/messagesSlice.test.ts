@@ -11,7 +11,9 @@ import {
     makeConversationItem,
     makeUserItem,
 } from "../../model.js";
+import { type RootState } from "../types.js";
 
+import { conversationEffortSelector } from "./messagesSelectors.js";
 import {
     applyPendingAgentSwitchAction,
     cancelAsyncAction,
@@ -20,6 +22,7 @@ import {
     dashboardSavedAction,
     evaluateMessageErrorAction,
     loadConversationSuccessAction,
+    messagesSliceName,
     messagesSliceReducer,
     publisherDocumentSavedAction,
     setCurrentConversationAction,
@@ -301,6 +304,23 @@ describe("messagesSlice", () => {
             expect(newLocalId).not.toBe(conversation.localId);
             expect(state.conversationsData[newLocalId]?.reasoningEffort).toBeUndefined();
             expect(state.conversationsData[conversation.localId].reasoningEffort).toBe("LOW");
+        });
+
+        it("records an effort picked right after a new conversation starts on that conversation", () => {
+            const fresh = messagesSliceReducer(
+                messagesSliceReducer(undefined, { type: "test/init" }),
+                startNewConversationAction(),
+            );
+
+            const state = messagesSliceReducer(fresh, setSelectedEffortAction({ effort: "MEDIUM" }));
+
+            expect(
+                conversationEffortSelector(
+                    { [messagesSliceName]: state } as RootState,
+                    state.currentConversation!.localId,
+                ),
+            ).toBe("MEDIUM");
+            expect(state.selectedEffort).toBe("LOW");
         });
     });
 

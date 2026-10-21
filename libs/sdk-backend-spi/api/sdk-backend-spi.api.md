@@ -61,6 +61,7 @@ import { ICsvAnalysisRequest } from '@gooddata/sdk-model';
 import { ICsvFileManifest } from '@gooddata/sdk-model';
 import { ICsvImportResult } from '@gooddata/sdk-model';
 import { ICsvImportTable } from '@gooddata/sdk-model';
+import { ICustomApplicationSetting } from '@gooddata/sdk-model';
 import type { IDashboard } from '@gooddata/sdk-model';
 import type { IDashboardAttributeFilterConfig } from '@gooddata/sdk-model';
 import type { IDashboardBase } from '@gooddata/sdk-model';
@@ -86,9 +87,13 @@ import { IDataSourceFile } from '@gooddata/sdk-model';
 import { IDataSourceIdentifierDescriptor } from '@gooddata/sdk-model';
 import { IDataSourcePatch } from '@gooddata/sdk-model';
 import { IDataSourcePermissionAssignment } from '@gooddata/sdk-model';
+import { IDataSourceScanRequest } from '@gooddata/sdk-model';
+import { IDataSourceScanResult } from '@gooddata/sdk-model';
 import type { IDateFilter } from '@gooddata/sdk-model';
 import { IDateFilterConfig } from '@gooddata/sdk-model';
 import { IDateHierarchyTemplate } from '@gooddata/sdk-model';
+import { IDeclarativeLogicalModel } from '@gooddata/sdk-model';
+import { IDeclarativeWorkspaceLayout } from '@gooddata/sdk-model';
 import { IDefaultExportTemplate } from '@gooddata/sdk-model';
 import type { Identifier } from '@gooddata/sdk-model';
 import { IdentifierRef } from '@gooddata/sdk-model';
@@ -111,6 +116,7 @@ import { IFiscalYear } from '@gooddata/sdk-model';
 import type { IGenAiClarifyingAnswer } from '@gooddata/sdk-model';
 import type { IGenAiClarifyingQuestion } from '@gooddata/sdk-model';
 import type { IGenAIUserContext } from '@gooddata/sdk-model';
+import { IGenerateLogicalModelRequest } from '@gooddata/sdk-model';
 import { IGeoCollection } from '@gooddata/sdk-model';
 import { IGeoCollectionDefinition } from '@gooddata/sdk-model';
 import { IGeoCollectionFileUploadResult } from '@gooddata/sdk-model';
@@ -176,6 +182,7 @@ import type { ISemanticSearchResultItem } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
+import { ISqlScanResult } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { IThemeDefinition } from '@gooddata/sdk-model';
 import { IThemeMetadataObject } from '@gooddata/sdk-model';
@@ -421,6 +428,8 @@ export interface IAnalyticalWorkspace {
     automations(): IWorkspaceAutomationService;
     catalog(): IWorkspaceCatalogFactory;
     computedAttributes(): IWorkspaceComputedAttributesService;
+    // @alpha
+    customApplicationSettings(): IWorkspaceCustomApplicationSettingsService;
     dashboards(): IWorkspaceDashboardsService;
     // @alpha
     dataFilters(): IDataFiltersService;
@@ -442,7 +451,7 @@ export interface IAnalyticalWorkspace {
     keyDriverAnalysis(): IWorkspaceKeyDriverAnalysisService;
     // @alpha
     localization(): IWorkspaceLocalizationService;
-    // @internal
+    // @alpha
     logicalModel(): IWorkspaceLogicalModelService;
     measures(): IWorkspaceMeasuresService;
     // @alpha
@@ -1402,13 +1411,17 @@ export interface IDataSourcesService {
     createDataSource(definition: IDataSourceDefinition): Promise<IDataSourceDescriptor>;
     deleteDataSource(id: string): Promise<void>;
     files(): IDataSourceFilesService;
+    generateLogicalModel(dataSourceId: string, request: IGenerateLogicalModelRequest): Promise<IDeclarativeLogicalModel>;
     getDataSource(id: string): Promise<IDataSourceDescriptor>;
+    getDataSourceIdentifier(id: string): Promise<IDataSourceDescriptor>;
     getDataSourceIdentifiers(): Promise<IDataSourceIdentifierDescriptor[]>;
     getDataSources(): Promise<IDataSourceDescriptor[]>;
     getSchemata(dataSourceId: string): Promise<string[]>;
     hasDataSources(): Promise<boolean>;
     patchDataSource(id: string, patch: IDataSourcePatch): Promise<IDataSourceDescriptor>;
     registerUploadNotification(dataSourceId: string): Promise<void>;
+    scan(dataSourceId: string, request: IDataSourceScanRequest): Promise<IDataSourceScanResult>;
+    scanSql(dataSourceId: string, sql: string): Promise<ISqlScanResult>;
     testConnection(connection: IDataSourceConnectionTest, dataSourceId?: string): Promise<IDataSourceConnectionTestResult>;
     updateDataSource(id: string, definition: IDataSourceDefinition): Promise<IDataSourceDescriptor>;
 }
@@ -1475,7 +1488,7 @@ export interface IDataView {
     withOutliers(config?: IOutliersConfig, result?: IOutliersResult): IDataView;
 }
 
-// @internal
+// @alpha
 export interface IDateDataset {
     // (undocumented)
     description?: string;
@@ -1495,6 +1508,11 @@ export interface IDateFilterConfigsQuery {
 
 // @public
 export type IDateFilterConfigsQueryResult = IPagedResource<IDateFilterConfig>;
+
+// @alpha
+export interface IDeclarativeLogicalModelOptions {
+    includeParents?: boolean;
+}
 
 // @internal
 export interface IDeleteKnowledgeDocumentResponse {
@@ -2189,6 +2207,7 @@ export interface ILocalizationUsageCount {
 
 // @alpha
 export interface ILocalizationUsageListQuery extends ILocalizationPageQuery {
+    name?: string;
     // (undocumented)
     setting?: LocalizationSettingType;
     // (undocumented)
@@ -2902,6 +2921,7 @@ export interface IReferencesResult {
 
 // @alpha (undocumented)
 export interface IReferencesService {
+    getAllReferences(): Promise<IReferencesResult>;
     // (undocumented)
     getReferences(root: IdentifierRef | IdentifierRef[], opts?: IReferencesOption): Promise<IReferencesResult>;
 }
@@ -3307,6 +3327,14 @@ export interface IWorkspaceComputedAttributesService {
 }
 
 // @alpha
+export interface IWorkspaceCustomApplicationSettingsService {
+    createSetting(applicationName: string, content: object, id?: string): Promise<ICustomApplicationSetting>;
+    deleteSetting(id: string): Promise<void>;
+    getSetting(id: string): Promise<ICustomApplicationSetting>;
+    getSettings(applicationName?: string): Promise<ICustomApplicationSetting[]>;
+}
+
+// @alpha
 export interface IWorkspaceDashboardsService {
     createDashboard(dashboard: IDashboardDefinition, generateId?: boolean): Promise<IDashboard>;
     createDashboardPlugin(plugin: IDashboardPluginDefinition): Promise<IDashboardPlugin>;
@@ -3498,9 +3526,12 @@ export interface IWorkspaceLocalizationService {
     getUsageWorkspaces(query?: ILocalizationUsageListQuery): Promise<ILocalizationUsageWorkspacesPage>;
 }
 
-// @internal
+// @alpha
 export interface IWorkspaceLogicalModelService {
     getDatasets(includeParents: boolean): Promise<IDateDataset[]>;
+    getDeclarativeModel(options?: IDeclarativeLogicalModelOptions): Promise<IDeclarativeLogicalModel>;
+    setDeclarativeLayout(layout: IDeclarativeWorkspaceLayout): Promise<void>;
+    setDeclarativeModel(model: IDeclarativeLogicalModel): Promise<void>;
 }
 
 // @public

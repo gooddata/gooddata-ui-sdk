@@ -16,6 +16,7 @@ import { UserDetailsView } from "./Details/UserDetailsView.js";
 import {
     useDeleteDialog,
     useDeleteUser,
+    useLanguageNoticeData,
     useLanguageStatistics,
     useOrganizationDetails,
     useUser,
@@ -80,7 +81,7 @@ function UserEditDialogComponent({
     areComputedAttributesEnabled = false,
     areVisualizationPermissionsEnabled = false,
     isLocalizationEnabled = false,
-    selectedTab = undefined,
+    selectedTab,
 }: IUserEditDialogProps) {
     const intl = useIntl();
     const { dialogMode, setDialogMode } = useUserDialogMode(initialView);
@@ -131,6 +132,16 @@ function UserEditDialogComponent({
         grantedDataSources,
         isCurrentlyAdmin,
         selectedTab,
+    );
+    const isDetailsShown = dialogMode === "VIEW" && selectedTabId.id === userDialogTabsMessages.details.id;
+    const [hasShownDetails, setHasShownDetails] = useState(isDetailsShown);
+    if (isDetailsShown && !hasShownDetails) {
+        setHasShownDetails(true);
+    }
+    const languageNoticeData = useLanguageNoticeData(
+        organizationId,
+        grantedWorkspaces,
+        isLocalizationEnabled && hasShownDetails,
     );
     const {
         isConfirmDeleteOpened,
@@ -292,6 +303,8 @@ function UserEditDialogComponent({
                                             isLocalizationEnabled={isLocalizationEnabled}
                                             languages={languages}
                                             isLanguagesError={isLanguagesError}
+                                            workspaceStatistics={languageNoticeData?.workspaceStatistics}
+                                            organizationLanguages={languageNoticeData?.organizationLanguages}
                                         />
                                     )}
                                     {selectedTabId.id === userDialogTabsMessages.dataSources.id && (

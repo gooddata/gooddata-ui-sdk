@@ -104,6 +104,28 @@ export type AbsoluteGranularityDateFilterAbsoluteGranularityDateFilterEmptyValue
 export type AbsoluteGranularityDateFilterAbsoluteGranularityDateFilterGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 
 /**
+ * A period between two dates.
+ */
+export interface AbsolutePublisherDocumentPeriod {
+    'type': AbsolutePublisherDocumentPeriodTypeEnum;
+    /**
+     * First day of the period, inclusive.
+     */
+    'from': string;
+    /**
+     * Date granularity of the period.
+     */
+    'granularity': AbsolutePublisherDocumentPeriodGranularityEnum;
+    /**
+     * Last day of the period, inclusive.
+     */
+    'to': string;
+}
+
+export type AbsolutePublisherDocumentPeriodTypeEnum = 'absolute';
+export type AbsolutePublisherDocumentPeriodGranularityEnum = 'GDC.time.date';
+
+/**
  * @type AbstractMeasureValueFilter
  */
 export type AbstractMeasureValueFilter = ComparisonMeasureValueFilter | CompoundMeasureValueFilter | RangeMeasureValueFilter | RankingFilter;
@@ -1785,6 +1807,14 @@ export interface DeclarativeAnalyticsLayer {
      */
     'dashboardPlugins'?: Array<DeclarativeDashboardPlugin>;
     /**
+     * A list of document templates available in the model.
+     */
+    'documentTemplates'?: Array<DeclarativePublisherDocumentTemplate>;
+    /**
+     * A list of documents available in the model.
+     */
+    'documents'?: Array<DeclarativePublisherDocument>;
+    /**
      * A list of export definitions.
      */
     'exportDefinitions'?: Array<DeclarativeExportDefinition>;
@@ -1800,6 +1830,10 @@ export interface DeclarativeAnalyticsLayer {
      * A list of metrics available in the model.
      */
     'metrics'?: Array<DeclarativeMetric>;
+    /**
+     * A list of page templates available in the model.
+     */
+    'pageTemplates'?: Array<DeclarativePublisherDocumentPageTemplate>;
     /**
      * A list of parameters available in the model.
      */
@@ -2296,7 +2330,7 @@ export interface DeclarativeDataSource {
 export type DeclarativeDataSourceAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
 export type DeclarativeDataSourceCacheStrategyEnum = 'ALWAYS' | 'NEVER';
 export type DeclarativeDataSourceDateTimeSemanticsEnum = 'LOCAL' | 'UTC';
-export type DeclarativeDataSourceTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO' | 'TRINO';
+export type DeclarativeDataSourceTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO' | 'TRINO';
 
 export interface DeclarativeDataSourcePermission {
     'assignee': AssigneeIdentifier;
@@ -3130,6 +3164,79 @@ export interface DeclarativeParameter {
      * Parameter title.
      */
     'title': string;
+}
+
+export interface DeclarativePublisherDocument {
+    /**
+     * Free-form JSON object
+     */
+    'content': object | null;
+    /**
+     * Document description.
+     */
+    'description'?: string;
+    /**
+     * Document ID.
+     */
+    'id': string;
+    'period': PublisherDocumentPeriod;
+    'tags'?: Array<string>;
+    /**
+     * Document title.
+     */
+    'title': string;
+    /**
+     * Version of the content format.
+     */
+    'version': string;
+}
+
+export interface DeclarativePublisherDocumentPageTemplate {
+    /**
+     * Free-form JSON object
+     */
+    'content': object | null;
+    /**
+     * Page template description.
+     */
+    'description'?: string;
+    /**
+     * Page template ID.
+     */
+    'id': string;
+    'tags'?: Array<string>;
+    /**
+     * Page template title.
+     */
+    'title': string;
+    /**
+     * Version of the content format.
+     */
+    'version': string;
+}
+
+export interface DeclarativePublisherDocumentTemplate {
+    /**
+     * Free-form JSON object
+     */
+    'content': object | null;
+    /**
+     * Document template description.
+     */
+    'description'?: string;
+    /**
+     * Document template ID.
+     */
+    'id': string;
+    'tags'?: Array<string>;
+    /**
+     * Document template title.
+     */
+    'title': string;
+    /**
+     * Version of the content format.
+     */
+    'version': string;
 }
 
 /**
@@ -4296,7 +4403,7 @@ export interface IdentifierRefIdentifier {
     'type': IdentifierRefIdentifierTypeEnum;
 }
 
-export type IdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'reportPageLayout' | 'reportTemplate' | 'report' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
+export type IdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView' | 'reportPageLayout' | 'reportTemplate' | 'report' | 'pageTemplate' | 'document' | 'documentTemplate' | 'workspaceExportTemplate' | 'workspaceTheme' | 'workspaceColorPalette' | 'fiscalCalendar' | 'fiscalCalendarGranularity';
 
 /**
  * Export request object describing the export properties and metadata for image exports.
@@ -7839,7 +7946,7 @@ export interface JsonApiDataSourceIdentifierOutAttributes {
     'type': JsonApiDataSourceIdentifierOutAttributesTypeEnum;
 }
 
-export type JsonApiDataSourceIdentifierOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO' | 'TRINO';
+export type JsonApiDataSourceIdentifierOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO' | 'TRINO';
 
 export interface JsonApiDataSourceIdentifierOutDocument {
     'data': JsonApiDataSourceIdentifierOut;
@@ -7980,7 +8087,7 @@ export interface JsonApiDataSourceInAttributes {
 export type JsonApiDataSourceInAttributesAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
 export type JsonApiDataSourceInAttributesCacheStrategyEnum = 'ALWAYS' | 'NEVER';
 export type JsonApiDataSourceInAttributesDateTimeSemanticsEnum = 'LOCAL' | 'UTC';
-export type JsonApiDataSourceInAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO' | 'TRINO';
+export type JsonApiDataSourceInAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO' | 'TRINO';
 
 /**
  * @type JsonApiDataSourceInAttributesCacheRetention
@@ -8082,7 +8189,7 @@ export interface JsonApiDataSourceOutAttributes {
 export type JsonApiDataSourceOutAttributesAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
 export type JsonApiDataSourceOutAttributesCacheStrategyEnum = 'ALWAYS' | 'NEVER';
 export type JsonApiDataSourceOutAttributesDateTimeSemanticsEnum = 'LOCAL' | 'UTC';
-export type JsonApiDataSourceOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO' | 'TRINO';
+export type JsonApiDataSourceOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO' | 'TRINO';
 
 /**
  * @type JsonApiDataSourceOutAttributesCacheRetention
@@ -8239,7 +8346,7 @@ export interface JsonApiDataSourcePatchAttributes {
 export type JsonApiDataSourcePatchAttributesAuthenticationTypeEnum = 'USERNAME_PASSWORD' | 'TOKEN' | 'KEY_PAIR' | 'CLIENT_SECRET' | 'OIDC_PASSTHROUGH';
 export type JsonApiDataSourcePatchAttributesCacheStrategyEnum = 'ALWAYS' | 'NEVER';
 export type JsonApiDataSourcePatchAttributesDateTimeSemanticsEnum = 'LOCAL' | 'UTC';
-export type JsonApiDataSourcePatchAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO' | 'TRINO';
+export type JsonApiDataSourcePatchAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO' | 'TRINO';
 
 /**
  * @type JsonApiDataSourcePatchAttributesCacheRetention
@@ -13009,6 +13116,739 @@ export interface JsonApiParameterPostOptionalIdDocument {
 }
 
 /**
+ * JSON:API representation of document entity.
+ */
+export interface JsonApiPublisherDocumentIn {
+    'attributes': JsonApiPublisherDocumentInAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id': string;
+    /**
+     * Object type
+     */
+    'type': JsonApiPublisherDocumentInTypeEnum;
+}
+
+export type JsonApiPublisherDocumentInTypeEnum = 'document';
+
+export interface JsonApiPublisherDocumentInAttributes {
+    'areRelationsValid'?: boolean;
+    /**
+     * Free-form document definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
+     */
+    'content': object;
+    'description'?: string;
+    'period': JsonApiPublisherDocumentInAttributesPeriod;
+    'tags'?: Array<string>;
+    'title': string;
+    /**
+     * Version of the content format.
+     */
+    'version': string;
+}
+
+/**
+ * @type JsonApiPublisherDocumentInAttributesPeriod
+ * The period the document covers, absolute or relative to today.
+ */
+export type JsonApiPublisherDocumentInAttributesPeriod = { type: 'absolute' } & AbsolutePublisherDocumentPeriod | { type: 'relative' } & RelativePublisherDocumentPeriod;
+
+export interface JsonApiPublisherDocumentInDocument {
+    'data': JsonApiPublisherDocumentIn;
+}
+
+/**
+ * JSON:API representation of document entity.
+ */
+export interface JsonApiPublisherDocumentOut {
+    'attributes': JsonApiPublisherDocumentOutAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id': string;
+    'meta'?: JsonApiPublisherDocumentOutMeta;
+    'relationships'?: JsonApiPublisherDocumentOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiPublisherDocumentOutTypeEnum;
+}
+
+export type JsonApiPublisherDocumentOutTypeEnum = 'document';
+
+export interface JsonApiPublisherDocumentOutAttributes {
+    'areRelationsValid'?: boolean;
+    /**
+     * Free-form document definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
+     */
+    'content': object;
+    /**
+     * Time of the entity creation.
+     */
+    'createdAt'?: string | null;
+    'description'?: string;
+    /**
+     * Time of the last entity modification.
+     */
+    'modifiedAt'?: string | null;
+    'period': JsonApiPublisherDocumentOutAttributesPeriod;
+    'tags'?: Array<string>;
+    'title': string;
+    /**
+     * Version of the content format.
+     */
+    'version': string;
+}
+
+/**
+ * @type JsonApiPublisherDocumentOutAttributesPeriod
+ * The period the document covers, absolute or relative to today.
+ */
+export type JsonApiPublisherDocumentOutAttributesPeriod = { type: 'absolute' } & AbsolutePublisherDocumentPeriod | { type: 'relative' } & RelativePublisherDocumentPeriod;
+
+export interface JsonApiPublisherDocumentOutDocument {
+    'data': JsonApiPublisherDocumentOut;
+    /**
+     * Included resources
+     */
+    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    'links'?: ObjectLinks;
+    'meta'?: JsonApiPublisherDocumentOutDocumentMeta;
+}
+
+export interface JsonApiPublisherDocumentOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
+}
+
+/**
+ * A JSON:API document with a list of resources
+ */
+export interface JsonApiPublisherDocumentOutList {
+    'data': Array<JsonApiPublisherDocumentOutWithLinks>;
+    /**
+     * Included resources
+     */
+    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiPublisherDocumentOutListMeta;
+}
+
+export interface JsonApiPublisherDocumentOutListMeta {
+    'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
+}
+
+export interface JsonApiPublisherDocumentOutMeta {
+    'origin'?: JsonApiPublisherDocumentOutMetaOrigin;
+}
+
+export interface JsonApiPublisherDocumentOutMetaOrigin {
+    /**
+     * defines id of the workspace where the entity comes from
+     */
+    'originId': string;
+    /**
+     * defines type of the origin of the entity
+     */
+    'originType': JsonApiPublisherDocumentOutMetaOriginOriginTypeEnum;
+}
+
+export type JsonApiPublisherDocumentOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
+export interface JsonApiPublisherDocumentOutRelationships {
+    'createdBy'?: JsonApiPublisherDocumentOutRelationshipsCreatedBy;
+    'modifiedBy'?: JsonApiPublisherDocumentOutRelationshipsModifiedBy;
+}
+
+export interface JsonApiPublisherDocumentOutRelationshipsCreatedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiPublisherDocumentOutRelationshipsModifiedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiPublisherDocumentOutWithLinks {
+    'attributes': JsonApiPublisherDocumentOutAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id': string;
+    'meta'?: JsonApiPublisherDocumentOutMeta;
+    'relationships'?: JsonApiPublisherDocumentOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiPublisherDocumentOutWithLinksTypeEnum;
+    'links'?: ObjectLinks;
+}
+
+export type JsonApiPublisherDocumentOutWithLinksTypeEnum = 'document';
+
+/**
+ * JSON:API representation of pageTemplate entity.
+ */
+export interface JsonApiPublisherDocumentPageTemplateIn {
+    'attributes': JsonApiPublisherDocumentPageTemplateInAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id': string;
+    /**
+     * Object type
+     */
+    'type': JsonApiPublisherDocumentPageTemplateInTypeEnum;
+}
+
+export type JsonApiPublisherDocumentPageTemplateInTypeEnum = 'pageTemplate';
+
+export interface JsonApiPublisherDocumentPageTemplateInAttributes {
+    'areRelationsValid'?: boolean;
+    /**
+     * Free-form page definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
+     */
+    'content': object;
+    'description'?: string;
+    'tags'?: Array<string>;
+    'title': string;
+    /**
+     * Version of the content format.
+     */
+    'version': string;
+}
+
+export interface JsonApiPublisherDocumentPageTemplateInDocument {
+    'data': JsonApiPublisherDocumentPageTemplateIn;
+}
+
+/**
+ * JSON:API representation of pageTemplate entity.
+ */
+export interface JsonApiPublisherDocumentPageTemplateOut {
+    'attributes': JsonApiPublisherDocumentPageTemplateOutAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id': string;
+    'meta'?: JsonApiPublisherDocumentPageTemplateOutMeta;
+    'relationships'?: JsonApiPublisherDocumentPageTemplateOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiPublisherDocumentPageTemplateOutTypeEnum;
+}
+
+export type JsonApiPublisherDocumentPageTemplateOutTypeEnum = 'pageTemplate';
+
+export interface JsonApiPublisherDocumentPageTemplateOutAttributes {
+    'areRelationsValid'?: boolean;
+    /**
+     * Free-form page definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
+     */
+    'content': object;
+    /**
+     * Time of the entity creation.
+     */
+    'createdAt'?: string | null;
+    'description'?: string;
+    /**
+     * Time of the last entity modification.
+     */
+    'modifiedAt'?: string | null;
+    'tags'?: Array<string>;
+    'title': string;
+    /**
+     * Version of the content format.
+     */
+    'version': string;
+}
+
+export interface JsonApiPublisherDocumentPageTemplateOutDocument {
+    'data': JsonApiPublisherDocumentPageTemplateOut;
+    /**
+     * Included resources
+     */
+    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    'links'?: ObjectLinks;
+    'meta'?: JsonApiPublisherDocumentPageTemplateOutDocumentMeta;
+}
+
+export interface JsonApiPublisherDocumentPageTemplateOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
+}
+
+/**
+ * A JSON:API document with a list of resources
+ */
+export interface JsonApiPublisherDocumentPageTemplateOutList {
+    'data': Array<JsonApiPublisherDocumentPageTemplateOutWithLinks>;
+    /**
+     * Included resources
+     */
+    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiPublisherDocumentPageTemplateOutListMeta;
+}
+
+export interface JsonApiPublisherDocumentPageTemplateOutListMeta {
+    'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
+}
+
+export interface JsonApiPublisherDocumentPageTemplateOutMeta {
+    'origin'?: JsonApiPublisherDocumentPageTemplateOutMetaOrigin;
+}
+
+export interface JsonApiPublisherDocumentPageTemplateOutMetaOrigin {
+    /**
+     * defines id of the workspace where the entity comes from
+     */
+    'originId': string;
+    /**
+     * defines type of the origin of the entity
+     */
+    'originType': JsonApiPublisherDocumentPageTemplateOutMetaOriginOriginTypeEnum;
+}
+
+export type JsonApiPublisherDocumentPageTemplateOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
+export interface JsonApiPublisherDocumentPageTemplateOutRelationships {
+    'createdBy'?: JsonApiPublisherDocumentPageTemplateOutRelationshipsCreatedBy;
+    'modifiedBy'?: JsonApiPublisherDocumentPageTemplateOutRelationshipsModifiedBy;
+}
+
+export interface JsonApiPublisherDocumentPageTemplateOutRelationshipsCreatedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiPublisherDocumentPageTemplateOutRelationshipsModifiedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiPublisherDocumentPageTemplateOutWithLinks {
+    'attributes': JsonApiPublisherDocumentPageTemplateOutAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id': string;
+    'meta'?: JsonApiPublisherDocumentPageTemplateOutMeta;
+    'relationships'?: JsonApiPublisherDocumentPageTemplateOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiPublisherDocumentPageTemplateOutWithLinksTypeEnum;
+    'links'?: ObjectLinks;
+}
+
+export type JsonApiPublisherDocumentPageTemplateOutWithLinksTypeEnum = 'pageTemplate';
+
+/**
+ * JSON:API representation of patching pageTemplate entity.
+ */
+export interface JsonApiPublisherDocumentPageTemplatePatch {
+    'attributes': JsonApiPublisherDocumentPageTemplatePatchAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id': string;
+    /**
+     * Object type
+     */
+    'type': JsonApiPublisherDocumentPageTemplatePatchTypeEnum;
+}
+
+export type JsonApiPublisherDocumentPageTemplatePatchTypeEnum = 'pageTemplate';
+
+export interface JsonApiPublisherDocumentPageTemplatePatchAttributes {
+    'areRelationsValid'?: boolean;
+    /**
+     * Free-form page definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
+     */
+    'content'?: object;
+    'description'?: string;
+    'tags'?: Array<string>;
+    'title'?: string;
+    /**
+     * Version of the content format.
+     */
+    'version'?: string;
+}
+
+export interface JsonApiPublisherDocumentPageTemplatePatchDocument {
+    'data': JsonApiPublisherDocumentPageTemplatePatch;
+}
+
+/**
+ * JSON:API representation of pageTemplate entity.
+ */
+export interface JsonApiPublisherDocumentPageTemplatePostOptionalId {
+    'attributes': JsonApiPublisherDocumentPageTemplatePostOptionalIdAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id'?: string;
+    /**
+     * Object type
+     */
+    'type': JsonApiPublisherDocumentPageTemplatePostOptionalIdTypeEnum;
+}
+
+export type JsonApiPublisherDocumentPageTemplatePostOptionalIdTypeEnum = 'pageTemplate';
+
+export interface JsonApiPublisherDocumentPageTemplatePostOptionalIdAttributes {
+    'areRelationsValid'?: boolean;
+    /**
+     * Free-form page definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
+     */
+    'content': object;
+    'description'?: string;
+    'tags'?: Array<string>;
+    'title': string;
+    /**
+     * Version of the content format.
+     */
+    'version': string;
+}
+
+export interface JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument {
+    'data': JsonApiPublisherDocumentPageTemplatePostOptionalId;
+}
+
+/**
+ * JSON:API representation of patching document entity.
+ */
+export interface JsonApiPublisherDocumentPatch {
+    'attributes': JsonApiPublisherDocumentPatchAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id': string;
+    /**
+     * Object type
+     */
+    'type': JsonApiPublisherDocumentPatchTypeEnum;
+}
+
+export type JsonApiPublisherDocumentPatchTypeEnum = 'document';
+
+export interface JsonApiPublisherDocumentPatchAttributes {
+    'areRelationsValid'?: boolean;
+    /**
+     * Free-form document definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
+     */
+    'content'?: object;
+    'description'?: string;
+    'period'?: JsonApiPublisherDocumentPatchAttributesPeriod;
+    'tags'?: Array<string>;
+    'title'?: string;
+    /**
+     * Version of the content format.
+     */
+    'version'?: string;
+}
+
+/**
+ * @type JsonApiPublisherDocumentPatchAttributesPeriod
+ * The period the document covers, absolute or relative to today.
+ */
+export type JsonApiPublisherDocumentPatchAttributesPeriod = { type: 'absolute' } & AbsolutePublisherDocumentPeriod | { type: 'relative' } & RelativePublisherDocumentPeriod;
+
+export interface JsonApiPublisherDocumentPatchDocument {
+    'data': JsonApiPublisherDocumentPatch;
+}
+
+/**
+ * JSON:API representation of document entity.
+ */
+export interface JsonApiPublisherDocumentPostOptionalId {
+    'attributes': JsonApiPublisherDocumentPostOptionalIdAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id'?: string;
+    /**
+     * Object type
+     */
+    'type': JsonApiPublisherDocumentPostOptionalIdTypeEnum;
+}
+
+export type JsonApiPublisherDocumentPostOptionalIdTypeEnum = 'document';
+
+export interface JsonApiPublisherDocumentPostOptionalIdAttributes {
+    'areRelationsValid'?: boolean;
+    /**
+     * Free-form document definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
+     */
+    'content': object;
+    'description'?: string;
+    'period': JsonApiPublisherDocumentPostOptionalIdAttributesPeriod;
+    'tags'?: Array<string>;
+    'title': string;
+    /**
+     * Version of the content format.
+     */
+    'version': string;
+}
+
+/**
+ * @type JsonApiPublisherDocumentPostOptionalIdAttributesPeriod
+ * The period the document covers, absolute or relative to today.
+ */
+export type JsonApiPublisherDocumentPostOptionalIdAttributesPeriod = { type: 'absolute' } & AbsolutePublisherDocumentPeriod | { type: 'relative' } & RelativePublisherDocumentPeriod;
+
+export interface JsonApiPublisherDocumentPostOptionalIdDocument {
+    'data': JsonApiPublisherDocumentPostOptionalId;
+}
+
+/**
+ * JSON:API representation of documentTemplate entity.
+ */
+export interface JsonApiPublisherDocumentTemplateIn {
+    'attributes': JsonApiPublisherDocumentTemplateInAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id': string;
+    /**
+     * Object type
+     */
+    'type': JsonApiPublisherDocumentTemplateInTypeEnum;
+}
+
+export type JsonApiPublisherDocumentTemplateInTypeEnum = 'documentTemplate';
+
+export interface JsonApiPublisherDocumentTemplateInAttributes {
+    'areRelationsValid'?: boolean;
+    /**
+     * Free-form document template definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
+     */
+    'content': object;
+    'description'?: string;
+    'tags'?: Array<string>;
+    'title': string;
+    /**
+     * Version of the content format.
+     */
+    'version': string;
+}
+
+export interface JsonApiPublisherDocumentTemplateInDocument {
+    'data': JsonApiPublisherDocumentTemplateIn;
+}
+
+/**
+ * JSON:API representation of documentTemplate entity.
+ */
+export interface JsonApiPublisherDocumentTemplateOut {
+    'attributes': JsonApiPublisherDocumentTemplateOutAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id': string;
+    'meta'?: JsonApiPublisherDocumentTemplateOutMeta;
+    'relationships'?: JsonApiPublisherDocumentTemplateOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiPublisherDocumentTemplateOutTypeEnum;
+}
+
+export type JsonApiPublisherDocumentTemplateOutTypeEnum = 'documentTemplate';
+
+export interface JsonApiPublisherDocumentTemplateOutAttributes {
+    'areRelationsValid'?: boolean;
+    /**
+     * Free-form document template definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
+     */
+    'content': object;
+    /**
+     * Time of the entity creation.
+     */
+    'createdAt'?: string | null;
+    'description'?: string;
+    /**
+     * Time of the last entity modification.
+     */
+    'modifiedAt'?: string | null;
+    'tags'?: Array<string>;
+    'title': string;
+    /**
+     * Version of the content format.
+     */
+    'version': string;
+}
+
+export interface JsonApiPublisherDocumentTemplateOutDocument {
+    'data': JsonApiPublisherDocumentTemplateOut;
+    /**
+     * Included resources
+     */
+    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    'links'?: ObjectLinks;
+    'meta'?: JsonApiPublisherDocumentTemplateOutDocumentMeta;
+}
+
+export interface JsonApiPublisherDocumentTemplateOutDocumentMeta {
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
+}
+
+/**
+ * A JSON:API document with a list of resources
+ */
+export interface JsonApiPublisherDocumentTemplateOutList {
+    'data': Array<JsonApiPublisherDocumentTemplateOutWithLinks>;
+    /**
+     * Included resources
+     */
+    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    'links'?: ListLinks;
+    'meta'?: JsonApiPublisherDocumentTemplateOutListMeta;
+}
+
+export interface JsonApiPublisherDocumentTemplateOutListMeta {
+    'page'?: PageMetadata;
+    /**
+     * References withheld from `included` because the caller may not view them. Their `relationships` entries are kept, so a client can render a placeholder instead of treating the reference as missing. Empty when the caller may view every reference in the payload; absent entirely when no object-level permissions apply to the request.
+     */
+    'restricted'?: Array<RestrictedObject>;
+}
+
+export interface JsonApiPublisherDocumentTemplateOutMeta {
+    'origin'?: JsonApiPublisherDocumentTemplateOutMetaOrigin;
+}
+
+export interface JsonApiPublisherDocumentTemplateOutMetaOrigin {
+    /**
+     * defines id of the workspace where the entity comes from
+     */
+    'originId': string;
+    /**
+     * defines type of the origin of the entity
+     */
+    'originType': JsonApiPublisherDocumentTemplateOutMetaOriginOriginTypeEnum;
+}
+
+export type JsonApiPublisherDocumentTemplateOutMetaOriginOriginTypeEnum = 'NATIVE' | 'PARENT';
+
+export interface JsonApiPublisherDocumentTemplateOutRelationships {
+    'createdBy'?: JsonApiPublisherDocumentTemplateOutRelationshipsCreatedBy;
+    'modifiedBy'?: JsonApiPublisherDocumentTemplateOutRelationshipsModifiedBy;
+}
+
+export interface JsonApiPublisherDocumentTemplateOutRelationshipsCreatedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiPublisherDocumentTemplateOutRelationshipsModifiedBy {
+    'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiPublisherDocumentTemplateOutWithLinks {
+    'attributes': JsonApiPublisherDocumentTemplateOutAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id': string;
+    'meta'?: JsonApiPublisherDocumentTemplateOutMeta;
+    'relationships'?: JsonApiPublisherDocumentTemplateOutRelationships;
+    /**
+     * Object type
+     */
+    'type': JsonApiPublisherDocumentTemplateOutWithLinksTypeEnum;
+    'links'?: ObjectLinks;
+}
+
+export type JsonApiPublisherDocumentTemplateOutWithLinksTypeEnum = 'documentTemplate';
+
+/**
+ * JSON:API representation of patching documentTemplate entity.
+ */
+export interface JsonApiPublisherDocumentTemplatePatch {
+    'attributes': JsonApiPublisherDocumentTemplatePatchAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id': string;
+    /**
+     * Object type
+     */
+    'type': JsonApiPublisherDocumentTemplatePatchTypeEnum;
+}
+
+export type JsonApiPublisherDocumentTemplatePatchTypeEnum = 'documentTemplate';
+
+export interface JsonApiPublisherDocumentTemplatePatchAttributes {
+    'areRelationsValid'?: boolean;
+    /**
+     * Free-form document template definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
+     */
+    'content'?: object;
+    'description'?: string;
+    'tags'?: Array<string>;
+    'title'?: string;
+    /**
+     * Version of the content format.
+     */
+    'version'?: string;
+}
+
+export interface JsonApiPublisherDocumentTemplatePatchDocument {
+    'data': JsonApiPublisherDocumentTemplatePatch;
+}
+
+/**
+ * JSON:API representation of documentTemplate entity.
+ */
+export interface JsonApiPublisherDocumentTemplatePostOptionalId {
+    'attributes': JsonApiPublisherDocumentTemplatePostOptionalIdAttributes;
+    /**
+     * API identifier of an object
+     */
+    'id'?: string;
+    /**
+     * Object type
+     */
+    'type': JsonApiPublisherDocumentTemplatePostOptionalIdTypeEnum;
+}
+
+export type JsonApiPublisherDocumentTemplatePostOptionalIdTypeEnum = 'documentTemplate';
+
+export interface JsonApiPublisherDocumentTemplatePostOptionalIdAttributes {
+    'areRelationsValid'?: boolean;
+    /**
+     * Free-form document template definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
+     */
+    'content': object;
+    'description'?: string;
+    'tags'?: Array<string>;
+    'title': string;
+    /**
+     * Version of the content format.
+     */
+    'version': string;
+}
+
+export interface JsonApiPublisherDocumentTemplatePostOptionalIdDocument {
+    'data': JsonApiPublisherDocumentTemplatePostOptionalId;
+}
+
+/**
  * JSON:API representation of report entity.
  */
 export interface JsonApiReportIn {
@@ -17567,6 +18407,12 @@ export interface ProfileLinks {
     'user': string;
 }
 
+/**
+ * @type PublisherDocumentPeriod
+ * The period the document covers, absolute or relative to today.
+ */
+export type PublisherDocumentPeriod = { type: 'absolute' } & AbsolutePublisherDocumentPeriod | { type: 'relative' } & RelativePublisherDocumentPeriod;
+
 export interface Range {
     'from': Value;
     'measure': LocalIdentifier;
@@ -17793,6 +18639,28 @@ export interface RelativeDateFilterRelativeDateFilter {
 
 export type RelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
 export type RelativeDateFilterRelativeDateFilterGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
+
+/**
+ * A period counted in granularity units from the current one, which is 0.
+ */
+export interface RelativePublisherDocumentPeriod {
+    'type': RelativePublisherDocumentPeriodTypeEnum;
+    /**
+     * Start of the period, in units relative to the current one.
+     */
+    'from': number;
+    /**
+     * Date granularity of the period.
+     */
+    'granularity': RelativePublisherDocumentPeriodGranularityEnum;
+    /**
+     * End of the period, in units relative to the current one.
+     */
+    'to': number;
+}
+
+export type RelativePublisherDocumentPeriodTypeEnum = 'relative';
+export type RelativePublisherDocumentPeriodGranularityEnum = 'GDC.time.second' | 'GDC.time.minute' | 'GDC.time.hour' | 'GDC.time.date' | 'GDC.time.week_us' | 'GDC.time.month' | 'GDC.time.fiscal_month' | 'GDC.time.quarter' | 'GDC.time.fiscal_quarter' | 'GDC.time.year' | 'GDC.time.fiscal_year';
 
 export interface RelativeWrapper {
     'relative': Relative;
@@ -21221,6 +22089,7 @@ export async function ActionsApiAxiosParamCreator_OrganizationLocalizationUsage(
  * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.
  * @summary (BETA) Users who set a language themselves.
  * @param {string} [value] Language tag that the user sets.
+ * @param {string} [name] Filter by user name, email or login (user ID). Note that the filter is case insensitive.
  * @param {'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE'} [setting] One of LOCALE, METADATA_LOCALE and DATA_LOCALE.
  * @param {'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT'} [source] Where the value comes from.
  * @param {number} [page] Zero-based page index (0..N)
@@ -21230,7 +22099,7 @@ export async function ActionsApiAxiosParamCreator_OrganizationLocalizationUsage(
  * @throws {RequiredError}
  */
 export async function ActionsApiAxiosParamCreator_OrganizationLocalizationUsageUsers(
-    value?: string, setting?: 'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE', source?: 'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT', page?: number, size?: number, 
+    value?: string, name?: string, setting?: 'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE', source?: 'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT', page?: number, size?: number, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -21247,6 +22116,10 @@ export async function ActionsApiAxiosParamCreator_OrganizationLocalizationUsageU
 
     if (value !== undefined) {
         localVarQueryParameter['value'] = value;
+    }
+
+    if (name !== undefined) {
+        localVarQueryParameter['name'] = name;
     }
 
     if (setting !== undefined) {
@@ -21287,6 +22160,7 @@ export async function ActionsApiAxiosParamCreator_OrganizationLocalizationUsageU
  * (BETA) Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one.
  * @summary (BETA) Workspaces that use a language.
  * @param {string} [value] Language tag that the workspace gets.
+ * @param {string} [name] Filter by workspace name. Note that the filter is case insensitive.
  * @param {'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE'} [setting] One of LOCALE, METADATA_LOCALE and DATA_LOCALE.
  * @param {'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT'} [source] Where the value comes from.
  * @param {number} [page] Zero-based page index (0..N)
@@ -21296,7 +22170,7 @@ export async function ActionsApiAxiosParamCreator_OrganizationLocalizationUsageU
  * @throws {RequiredError}
  */
 export async function ActionsApiAxiosParamCreator_OrganizationLocalizationUsageWorkspaces(
-    value?: string, setting?: 'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE', source?: 'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT', page?: number, size?: number, 
+    value?: string, name?: string, setting?: 'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE', source?: 'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT', page?: number, size?: number, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -21313,6 +22187,10 @@ export async function ActionsApiAxiosParamCreator_OrganizationLocalizationUsageW
 
     if (value !== undefined) {
         localVarQueryParameter['value'] = value;
+    }
+
+    if (name !== undefined) {
+        localVarQueryParameter['name'] = name;
     }
 
     if (setting !== undefined) {
@@ -22880,6 +23758,7 @@ export async function ActionsApiAxiosParamCreator_WorkspaceLocalizationUsage(
  * @summary (BETA) Workspace members who get a language.
  * @param {string} workspaceId 
  * @param {string} [value] Language tag that the user gets.
+ * @param {string} [name] Filter by user name, email or login (user ID). Note that the filter is case insensitive.
  * @param {'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE'} [setting] One of LOCALE, METADATA_LOCALE and DATA_LOCALE.
  * @param {'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT'} [source] Where the value comes from.
  * @param {number} [page] Zero-based page index (0..N)
@@ -22889,7 +23768,7 @@ export async function ActionsApiAxiosParamCreator_WorkspaceLocalizationUsage(
  * @throws {RequiredError}
  */
 export async function ActionsApiAxiosParamCreator_WorkspaceLocalizationUsageUsers(
-    workspaceId: string, value?: string, setting?: 'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE', source?: 'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT', page?: number, size?: number, 
+    workspaceId: string, value?: string, name?: string, setting?: 'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE', source?: 'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT', page?: number, size?: number, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -22909,6 +23788,10 @@ export async function ActionsApiAxiosParamCreator_WorkspaceLocalizationUsageUser
 
     if (value !== undefined) {
         localVarQueryParameter['value'] = value;
+    }
+
+    if (name !== undefined) {
+        localVarQueryParameter['name'] = name;
     }
 
     if (setting !== undefined) {
@@ -23959,7 +24842,7 @@ export async function ActionsApi_OrganizationLocalizationUsageUsers(
     configuration?: Configuration,
 ): AxiosPromise<LocalizationUsageUsers> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_OrganizationLocalizationUsageUsers(
-        requestParameters.value, requestParameters.setting, requestParameters.source, requestParameters.page, requestParameters.size, 
+        requestParameters.value, requestParameters.name, requestParameters.setting, requestParameters.source, requestParameters.page, requestParameters.size, 
         options || {},
         configuration,
     );
@@ -23985,7 +24868,7 @@ export async function ActionsApi_OrganizationLocalizationUsageWorkspaces(
     configuration?: Configuration,
 ): AxiosPromise<LocalizationUsageWorkspaces> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_OrganizationLocalizationUsageWorkspaces(
-        requestParameters.value, requestParameters.setting, requestParameters.source, requestParameters.page, requestParameters.size, 
+        requestParameters.value, requestParameters.name, requestParameters.setting, requestParameters.source, requestParameters.page, requestParameters.size, 
         options || {},
         configuration,
     );
@@ -24761,7 +25644,7 @@ export async function ActionsApi_WorkspaceLocalizationUsageUsers(
     configuration?: Configuration,
 ): AxiosPromise<LocalizationUsageUsers> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_WorkspaceLocalizationUsageUsers(
-        requestParameters.workspaceId, requestParameters.value, requestParameters.setting, requestParameters.source, requestParameters.page, requestParameters.size, 
+        requestParameters.workspaceId, requestParameters.value, requestParameters.name, requestParameters.setting, requestParameters.source, requestParameters.page, requestParameters.size, 
         options || {},
         configuration,
     );
@@ -26193,6 +27076,13 @@ export interface ActionsApiOrganizationLocalizationUsageUsersRequest {
     readonly value?: string
 
     /**
+     * Filter by user name, email or login (user ID). Note that the filter is case insensitive.
+     * @type {string}
+     * @memberof ActionsApiOrganizationLocalizationUsageUsers
+     */
+    readonly name?: string
+
+    /**
      * One of LOCALE, METADATA_LOCALE and DATA_LOCALE.
      * @type {'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE'}
      * @memberof ActionsApiOrganizationLocalizationUsageUsers
@@ -26233,6 +27123,13 @@ export interface ActionsApiOrganizationLocalizationUsageWorkspacesRequest {
      * @memberof ActionsApiOrganizationLocalizationUsageWorkspaces
      */
     readonly value?: string
+
+    /**
+     * Filter by workspace name. Note that the filter is case insensitive.
+     * @type {string}
+     * @memberof ActionsApiOrganizationLocalizationUsageWorkspaces
+     */
+    readonly name?: string
 
     /**
      * One of LOCALE, METADATA_LOCALE and DATA_LOCALE.
@@ -26702,6 +27599,13 @@ export interface ActionsApiWorkspaceLocalizationUsageUsersRequest {
      * @memberof ActionsApiWorkspaceLocalizationUsageUsers
      */
     readonly value?: string
+
+    /**
+     * Filter by user name, email or login (user ID). Note that the filter is case insensitive.
+     * @type {string}
+     * @memberof ActionsApiWorkspaceLocalizationUsageUsers
+     */
+    readonly name?: string
 
     /**
      * One of LOCALE, METADATA_LOCALE and DATA_LOCALE.
@@ -62575,6 +63479,1996 @@ export class DependencyGraphApi extends BaseAPI implements DependencyGraphApiInt
 }
 
 
+// DocumentControllerApi FP - DocumentControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Post Document
+ * @param {string} workspaceId 
+ * @param {JsonApiPublisherDocumentPostOptionalIdDocument} jsonApiPublisherDocumentPostOptionalIdDocument 
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DocumentControllerApiAxiosParamCreator_CreateEntityDocuments(
+    workspaceId: string, jsonApiPublisherDocumentPostOptionalIdDocument: JsonApiPublisherDocumentPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('createEntityDocuments', 'workspaceId', workspaceId)
+    // verify required parameter 'jsonApiPublisherDocumentPostOptionalIdDocument' is not null or undefined
+    assertParamExists('createEntityDocuments', 'jsonApiPublisherDocumentPostOptionalIdDocument', jsonApiPublisherDocumentPostOptionalIdDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documents`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiPublisherDocumentPostOptionalIdDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiPublisherDocumentPostOptionalIdDocument !== undefined ? jsonApiPublisherDocumentPostOptionalIdDocument : {})
+        : jsonApiPublisherDocumentPostOptionalIdDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// DocumentControllerApi FP - DocumentControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Delete a Document
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DocumentControllerApiAxiosParamCreator_DeleteEntityDocuments(
+    workspaceId: string, objectId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('deleteEntityDocuments', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('deleteEntityDocuments', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documents/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// DocumentControllerApi FP - DocumentControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Get all Documents
+ * @param {string} workspaceId 
+ * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {number} [page] Zero-based page index (0..N)
+ * @param {number} [size] The size of the page to be returned
+ * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DocumentControllerApiAxiosParamCreator_GetAllEntitiesDocuments(
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getAllEntitiesDocuments', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documents`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (origin !== undefined) {
+        localVarQueryParameter['origin'] = origin;
+    }
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (sort) {
+        localVarQueryParameter['sort'] = sort;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// DocumentControllerApi FP - DocumentControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Get a Document
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DocumentControllerApiAxiosParamCreator_GetEntityDocuments(
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getEntityDocuments', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('getEntityDocuments', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documents/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// DocumentControllerApi FP - DocumentControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Patch a Document
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiPublisherDocumentPatchDocument} jsonApiPublisherDocumentPatchDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DocumentControllerApiAxiosParamCreator_PatchEntityDocuments(
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentPatchDocument: JsonApiPublisherDocumentPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('patchEntityDocuments', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('patchEntityDocuments', 'objectId', objectId)
+    // verify required parameter 'jsonApiPublisherDocumentPatchDocument' is not null or undefined
+    assertParamExists('patchEntityDocuments', 'jsonApiPublisherDocumentPatchDocument', jsonApiPublisherDocumentPatchDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documents/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiPublisherDocumentPatchDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiPublisherDocumentPatchDocument !== undefined ? jsonApiPublisherDocumentPatchDocument : {})
+        : jsonApiPublisherDocumentPatchDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// DocumentControllerApi FP - DocumentControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Put a Document
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiPublisherDocumentInDocument} jsonApiPublisherDocumentInDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DocumentControllerApiAxiosParamCreator_UpdateEntityDocuments(
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentInDocument: JsonApiPublisherDocumentInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('updateEntityDocuments', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('updateEntityDocuments', 'objectId', objectId)
+    // verify required parameter 'jsonApiPublisherDocumentInDocument' is not null or undefined
+    assertParamExists('updateEntityDocuments', 'jsonApiPublisherDocumentInDocument', jsonApiPublisherDocumentInDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documents/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiPublisherDocumentInDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiPublisherDocumentInDocument !== undefined ? jsonApiPublisherDocumentInDocument : {})
+        : jsonApiPublisherDocumentInDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// DocumentControllerApi Api FP
+/**
+ * 
+ * @summary Post Document
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {DocumentControllerApiCreateEntityDocumentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DocumentControllerApi_CreateEntityDocuments(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: DocumentControllerApiCreateEntityDocumentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentOutDocument> {
+    const localVarAxiosArgs = await DocumentControllerApiAxiosParamCreator_CreateEntityDocuments(
+        requestParameters.workspaceId, requestParameters.jsonApiPublisherDocumentPostOptionalIdDocument, requestParameters.include, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// DocumentControllerApi Api FP
+/**
+ * 
+ * @summary Delete a Document
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {DocumentControllerApiDeleteEntityDocumentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DocumentControllerApi_DeleteEntityDocuments(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: DocumentControllerApiDeleteEntityDocumentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await DocumentControllerApiAxiosParamCreator_DeleteEntityDocuments(
+        requestParameters.workspaceId, requestParameters.objectId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// DocumentControllerApi Api FP
+/**
+ * 
+ * @summary Get all Documents
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {DocumentControllerApiGetAllEntitiesDocumentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DocumentControllerApi_GetAllEntitiesDocuments(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: DocumentControllerApiGetAllEntitiesDocumentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentOutList> {
+    const localVarAxiosArgs = await DocumentControllerApiAxiosParamCreator_GetAllEntitiesDocuments(
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// DocumentControllerApi Api FP
+/**
+ * 
+ * @summary Get a Document
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {DocumentControllerApiGetEntityDocumentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DocumentControllerApi_GetEntityDocuments(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: DocumentControllerApiGetEntityDocumentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentOutDocument> {
+    const localVarAxiosArgs = await DocumentControllerApiAxiosParamCreator_GetEntityDocuments(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.include, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// DocumentControllerApi Api FP
+/**
+ * 
+ * @summary Patch a Document
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {DocumentControllerApiPatchEntityDocumentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DocumentControllerApi_PatchEntityDocuments(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: DocumentControllerApiPatchEntityDocumentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentOutDocument> {
+    const localVarAxiosArgs = await DocumentControllerApiAxiosParamCreator_PatchEntityDocuments(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiPublisherDocumentPatchDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// DocumentControllerApi Api FP
+/**
+ * 
+ * @summary Put a Document
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {DocumentControllerApiUpdateEntityDocumentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DocumentControllerApi_UpdateEntityDocuments(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: DocumentControllerApiUpdateEntityDocumentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentOutDocument> {
+    const localVarAxiosArgs = await DocumentControllerApiAxiosParamCreator_UpdateEntityDocuments(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiPublisherDocumentInDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * DocumentControllerApi - interface
+ * @export
+ * @interface DocumentControllerApi
+ */
+export interface DocumentControllerApiInterface {
+    /**
+     * 
+     * @summary Post Document
+     * @param {DocumentControllerApiCreateEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DocumentControllerApiInterface
+     */
+    createEntityDocuments(requestParameters: DocumentControllerApiCreateEntityDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutDocument>;
+
+    /**
+     * 
+     * @summary Delete a Document
+     * @param {DocumentControllerApiDeleteEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DocumentControllerApiInterface
+     */
+    deleteEntityDocuments(requestParameters: DocumentControllerApiDeleteEntityDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
+     * @summary Get all Documents
+     * @param {DocumentControllerApiGetAllEntitiesDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DocumentControllerApiInterface
+     */
+    getAllEntitiesDocuments(requestParameters: DocumentControllerApiGetAllEntitiesDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutList>;
+
+    /**
+     * 
+     * @summary Get a Document
+     * @param {DocumentControllerApiGetEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DocumentControllerApiInterface
+     */
+    getEntityDocuments(requestParameters: DocumentControllerApiGetEntityDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutDocument>;
+
+    /**
+     * 
+     * @summary Patch a Document
+     * @param {DocumentControllerApiPatchEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DocumentControllerApiInterface
+     */
+    patchEntityDocuments(requestParameters: DocumentControllerApiPatchEntityDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutDocument>;
+
+    /**
+     * 
+     * @summary Put a Document
+     * @param {DocumentControllerApiUpdateEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DocumentControllerApiInterface
+     */
+    updateEntityDocuments(requestParameters: DocumentControllerApiUpdateEntityDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutDocument>;
+
+}
+
+/**
+ * Request parameters for createEntityDocuments operation in DocumentControllerApi.
+ * @export
+ * @interface DocumentControllerApiCreateEntityDocumentsRequest
+ */
+export interface DocumentControllerApiCreateEntityDocumentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof DocumentControllerApiCreateEntityDocuments
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {JsonApiPublisherDocumentPostOptionalIdDocument}
+     * @memberof DocumentControllerApiCreateEntityDocuments
+     */
+    readonly jsonApiPublisherDocumentPostOptionalIdDocument: JsonApiPublisherDocumentPostOptionalIdDocument
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof DocumentControllerApiCreateEntityDocuments
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof DocumentControllerApiCreateEntityDocuments
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for deleteEntityDocuments operation in DocumentControllerApi.
+ * @export
+ * @interface DocumentControllerApiDeleteEntityDocumentsRequest
+ */
+export interface DocumentControllerApiDeleteEntityDocumentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof DocumentControllerApiDeleteEntityDocuments
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof DocumentControllerApiDeleteEntityDocuments
+     */
+    readonly objectId: string
+}
+
+/**
+ * Request parameters for getAllEntitiesDocuments operation in DocumentControllerApi.
+ * @export
+ * @interface DocumentControllerApiGetAllEntitiesDocumentsRequest
+ */
+export interface DocumentControllerApiGetAllEntitiesDocumentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof DocumentControllerApiGetAllEntitiesDocuments
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof DocumentControllerApiGetAllEntitiesDocuments
+     */
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof DocumentControllerApiGetAllEntitiesDocuments
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof DocumentControllerApiGetAllEntitiesDocuments
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof DocumentControllerApiGetAllEntitiesDocuments
+     */
+    readonly page?: number
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof DocumentControllerApiGetAllEntitiesDocuments
+     */
+    readonly size?: number
+
+    /**
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof DocumentControllerApiGetAllEntitiesDocuments
+     */
+    readonly sort?: Array<string>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DocumentControllerApiGetAllEntitiesDocuments
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'page' | 'all' | 'ALL'>}
+     * @memberof DocumentControllerApiGetAllEntitiesDocuments
+     */
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for getEntityDocuments operation in DocumentControllerApi.
+ * @export
+ * @interface DocumentControllerApiGetEntityDocumentsRequest
+ */
+export interface DocumentControllerApiGetEntityDocumentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof DocumentControllerApiGetEntityDocuments
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof DocumentControllerApiGetEntityDocuments
+     */
+    readonly objectId: string
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof DocumentControllerApiGetEntityDocuments
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof DocumentControllerApiGetEntityDocuments
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DocumentControllerApiGetEntityDocuments
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof DocumentControllerApiGetEntityDocuments
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for patchEntityDocuments operation in DocumentControllerApi.
+ * @export
+ * @interface DocumentControllerApiPatchEntityDocumentsRequest
+ */
+export interface DocumentControllerApiPatchEntityDocumentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof DocumentControllerApiPatchEntityDocuments
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof DocumentControllerApiPatchEntityDocuments
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiPublisherDocumentPatchDocument}
+     * @memberof DocumentControllerApiPatchEntityDocuments
+     */
+    readonly jsonApiPublisherDocumentPatchDocument: JsonApiPublisherDocumentPatchDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof DocumentControllerApiPatchEntityDocuments
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof DocumentControllerApiPatchEntityDocuments
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+}
+
+/**
+ * Request parameters for updateEntityDocuments operation in DocumentControllerApi.
+ * @export
+ * @interface DocumentControllerApiUpdateEntityDocumentsRequest
+ */
+export interface DocumentControllerApiUpdateEntityDocumentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof DocumentControllerApiUpdateEntityDocuments
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof DocumentControllerApiUpdateEntityDocuments
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiPublisherDocumentInDocument}
+     * @memberof DocumentControllerApiUpdateEntityDocuments
+     */
+    readonly jsonApiPublisherDocumentInDocument: JsonApiPublisherDocumentInDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof DocumentControllerApiUpdateEntityDocuments
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof DocumentControllerApiUpdateEntityDocuments
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+}
+
+/**
+ * DocumentControllerApi - object-oriented interface
+ * @export
+ * @class DocumentControllerApi
+ * @extends {BaseAPI}
+ */
+export class DocumentControllerApi extends BaseAPI implements DocumentControllerApiInterface {
+    /**
+     * 
+     * @summary Post Document
+     * @param {DocumentControllerApiCreateEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DocumentControllerApi
+     */
+    public createEntityDocuments(requestParameters: DocumentControllerApiCreateEntityDocumentsRequest, options?: AxiosRequestConfig) {
+        return DocumentControllerApi_CreateEntityDocuments(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Delete a Document
+     * @param {DocumentControllerApiDeleteEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DocumentControllerApi
+     */
+    public deleteEntityDocuments(requestParameters: DocumentControllerApiDeleteEntityDocumentsRequest, options?: AxiosRequestConfig) {
+        return DocumentControllerApi_DeleteEntityDocuments(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get all Documents
+     * @param {DocumentControllerApiGetAllEntitiesDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DocumentControllerApi
+     */
+    public getAllEntitiesDocuments(requestParameters: DocumentControllerApiGetAllEntitiesDocumentsRequest, options?: AxiosRequestConfig) {
+        return DocumentControllerApi_GetAllEntitiesDocuments(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get a Document
+     * @param {DocumentControllerApiGetEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DocumentControllerApi
+     */
+    public getEntityDocuments(requestParameters: DocumentControllerApiGetEntityDocumentsRequest, options?: AxiosRequestConfig) {
+        return DocumentControllerApi_GetEntityDocuments(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Patch a Document
+     * @param {DocumentControllerApiPatchEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DocumentControllerApi
+     */
+    public patchEntityDocuments(requestParameters: DocumentControllerApiPatchEntityDocumentsRequest, options?: AxiosRequestConfig) {
+        return DocumentControllerApi_PatchEntityDocuments(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Put a Document
+     * @param {DocumentControllerApiUpdateEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DocumentControllerApi
+     */
+    public updateEntityDocuments(requestParameters: DocumentControllerApiUpdateEntityDocumentsRequest, options?: AxiosRequestConfig) {
+        return DocumentControllerApi_UpdateEntityDocuments(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+}
+
+
+// DocumentTemplateControllerApi FP - DocumentTemplateControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Post Document Template
+ * @param {string} workspaceId 
+ * @param {JsonApiPublisherDocumentTemplatePostOptionalIdDocument} jsonApiPublisherDocumentTemplatePostOptionalIdDocument 
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DocumentTemplateControllerApiAxiosParamCreator_CreateEntityDocumentTemplates(
+    workspaceId: string, jsonApiPublisherDocumentTemplatePostOptionalIdDocument: JsonApiPublisherDocumentTemplatePostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('createEntityDocumentTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'jsonApiPublisherDocumentTemplatePostOptionalIdDocument' is not null or undefined
+    assertParamExists('createEntityDocumentTemplates', 'jsonApiPublisherDocumentTemplatePostOptionalIdDocument', jsonApiPublisherDocumentTemplatePostOptionalIdDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documentTemplates`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiPublisherDocumentTemplatePostOptionalIdDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiPublisherDocumentTemplatePostOptionalIdDocument !== undefined ? jsonApiPublisherDocumentTemplatePostOptionalIdDocument : {})
+        : jsonApiPublisherDocumentTemplatePostOptionalIdDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// DocumentTemplateControllerApi FP - DocumentTemplateControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Delete a Document Template
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DocumentTemplateControllerApiAxiosParamCreator_DeleteEntityDocumentTemplates(
+    workspaceId: string, objectId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('deleteEntityDocumentTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('deleteEntityDocumentTemplates', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documentTemplates/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// DocumentTemplateControllerApi FP - DocumentTemplateControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Get all Document Templates
+ * @param {string} workspaceId 
+ * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {number} [page] Zero-based page index (0..N)
+ * @param {number} [size] The size of the page to be returned
+ * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DocumentTemplateControllerApiAxiosParamCreator_GetAllEntitiesDocumentTemplates(
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getAllEntitiesDocumentTemplates', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documentTemplates`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (origin !== undefined) {
+        localVarQueryParameter['origin'] = origin;
+    }
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (sort) {
+        localVarQueryParameter['sort'] = sort;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// DocumentTemplateControllerApi FP - DocumentTemplateControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Get a Document Template
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DocumentTemplateControllerApiAxiosParamCreator_GetEntityDocumentTemplates(
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getEntityDocumentTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('getEntityDocumentTemplates', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documentTemplates/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// DocumentTemplateControllerApi FP - DocumentTemplateControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Patch a Document Template
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiPublisherDocumentTemplatePatchDocument} jsonApiPublisherDocumentTemplatePatchDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DocumentTemplateControllerApiAxiosParamCreator_PatchEntityDocumentTemplates(
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentTemplatePatchDocument: JsonApiPublisherDocumentTemplatePatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('patchEntityDocumentTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('patchEntityDocumentTemplates', 'objectId', objectId)
+    // verify required parameter 'jsonApiPublisherDocumentTemplatePatchDocument' is not null or undefined
+    assertParamExists('patchEntityDocumentTemplates', 'jsonApiPublisherDocumentTemplatePatchDocument', jsonApiPublisherDocumentTemplatePatchDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documentTemplates/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiPublisherDocumentTemplatePatchDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiPublisherDocumentTemplatePatchDocument !== undefined ? jsonApiPublisherDocumentTemplatePatchDocument : {})
+        : jsonApiPublisherDocumentTemplatePatchDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// DocumentTemplateControllerApi FP - DocumentTemplateControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Put a Document Template
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiPublisherDocumentTemplateInDocument} jsonApiPublisherDocumentTemplateInDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DocumentTemplateControllerApiAxiosParamCreator_UpdateEntityDocumentTemplates(
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentTemplateInDocument: JsonApiPublisherDocumentTemplateInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('updateEntityDocumentTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('updateEntityDocumentTemplates', 'objectId', objectId)
+    // verify required parameter 'jsonApiPublisherDocumentTemplateInDocument' is not null or undefined
+    assertParamExists('updateEntityDocumentTemplates', 'jsonApiPublisherDocumentTemplateInDocument', jsonApiPublisherDocumentTemplateInDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documentTemplates/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiPublisherDocumentTemplateInDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiPublisherDocumentTemplateInDocument !== undefined ? jsonApiPublisherDocumentTemplateInDocument : {})
+        : jsonApiPublisherDocumentTemplateInDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// DocumentTemplateControllerApi Api FP
+/**
+ * 
+ * @summary Post Document Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {DocumentTemplateControllerApiCreateEntityDocumentTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DocumentTemplateControllerApi_CreateEntityDocumentTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: DocumentTemplateControllerApiCreateEntityDocumentTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument> {
+    const localVarAxiosArgs = await DocumentTemplateControllerApiAxiosParamCreator_CreateEntityDocumentTemplates(
+        requestParameters.workspaceId, requestParameters.jsonApiPublisherDocumentTemplatePostOptionalIdDocument, requestParameters.include, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// DocumentTemplateControllerApi Api FP
+/**
+ * 
+ * @summary Delete a Document Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {DocumentTemplateControllerApiDeleteEntityDocumentTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DocumentTemplateControllerApi_DeleteEntityDocumentTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: DocumentTemplateControllerApiDeleteEntityDocumentTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await DocumentTemplateControllerApiAxiosParamCreator_DeleteEntityDocumentTemplates(
+        requestParameters.workspaceId, requestParameters.objectId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// DocumentTemplateControllerApi Api FP
+/**
+ * 
+ * @summary Get all Document Templates
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {DocumentTemplateControllerApiGetAllEntitiesDocumentTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DocumentTemplateControllerApi_GetAllEntitiesDocumentTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: DocumentTemplateControllerApiGetAllEntitiesDocumentTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentTemplateOutList> {
+    const localVarAxiosArgs = await DocumentTemplateControllerApiAxiosParamCreator_GetAllEntitiesDocumentTemplates(
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// DocumentTemplateControllerApi Api FP
+/**
+ * 
+ * @summary Get a Document Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {DocumentTemplateControllerApiGetEntityDocumentTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DocumentTemplateControllerApi_GetEntityDocumentTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: DocumentTemplateControllerApiGetEntityDocumentTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument> {
+    const localVarAxiosArgs = await DocumentTemplateControllerApiAxiosParamCreator_GetEntityDocumentTemplates(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.include, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// DocumentTemplateControllerApi Api FP
+/**
+ * 
+ * @summary Patch a Document Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {DocumentTemplateControllerApiPatchEntityDocumentTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DocumentTemplateControllerApi_PatchEntityDocumentTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: DocumentTemplateControllerApiPatchEntityDocumentTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument> {
+    const localVarAxiosArgs = await DocumentTemplateControllerApiAxiosParamCreator_PatchEntityDocumentTemplates(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiPublisherDocumentTemplatePatchDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// DocumentTemplateControllerApi Api FP
+/**
+ * 
+ * @summary Put a Document Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {DocumentTemplateControllerApiUpdateEntityDocumentTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DocumentTemplateControllerApi_UpdateEntityDocumentTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: DocumentTemplateControllerApiUpdateEntityDocumentTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument> {
+    const localVarAxiosArgs = await DocumentTemplateControllerApiAxiosParamCreator_UpdateEntityDocumentTemplates(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiPublisherDocumentTemplateInDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * DocumentTemplateControllerApi - interface
+ * @export
+ * @interface DocumentTemplateControllerApi
+ */
+export interface DocumentTemplateControllerApiInterface {
+    /**
+     * 
+     * @summary Post Document Template
+     * @param {DocumentTemplateControllerApiCreateEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DocumentTemplateControllerApiInterface
+     */
+    createEntityDocumentTemplates(requestParameters: DocumentTemplateControllerApiCreateEntityDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument>;
+
+    /**
+     * 
+     * @summary Delete a Document Template
+     * @param {DocumentTemplateControllerApiDeleteEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DocumentTemplateControllerApiInterface
+     */
+    deleteEntityDocumentTemplates(requestParameters: DocumentTemplateControllerApiDeleteEntityDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
+     * @summary Get all Document Templates
+     * @param {DocumentTemplateControllerApiGetAllEntitiesDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DocumentTemplateControllerApiInterface
+     */
+    getAllEntitiesDocumentTemplates(requestParameters: DocumentTemplateControllerApiGetAllEntitiesDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentTemplateOutList>;
+
+    /**
+     * 
+     * @summary Get a Document Template
+     * @param {DocumentTemplateControllerApiGetEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DocumentTemplateControllerApiInterface
+     */
+    getEntityDocumentTemplates(requestParameters: DocumentTemplateControllerApiGetEntityDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument>;
+
+    /**
+     * 
+     * @summary Patch a Document Template
+     * @param {DocumentTemplateControllerApiPatchEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DocumentTemplateControllerApiInterface
+     */
+    patchEntityDocumentTemplates(requestParameters: DocumentTemplateControllerApiPatchEntityDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument>;
+
+    /**
+     * 
+     * @summary Put a Document Template
+     * @param {DocumentTemplateControllerApiUpdateEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DocumentTemplateControllerApiInterface
+     */
+    updateEntityDocumentTemplates(requestParameters: DocumentTemplateControllerApiUpdateEntityDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument>;
+
+}
+
+/**
+ * Request parameters for createEntityDocumentTemplates operation in DocumentTemplateControllerApi.
+ * @export
+ * @interface DocumentTemplateControllerApiCreateEntityDocumentTemplatesRequest
+ */
+export interface DocumentTemplateControllerApiCreateEntityDocumentTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof DocumentTemplateControllerApiCreateEntityDocumentTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {JsonApiPublisherDocumentTemplatePostOptionalIdDocument}
+     * @memberof DocumentTemplateControllerApiCreateEntityDocumentTemplates
+     */
+    readonly jsonApiPublisherDocumentTemplatePostOptionalIdDocument: JsonApiPublisherDocumentTemplatePostOptionalIdDocument
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof DocumentTemplateControllerApiCreateEntityDocumentTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof DocumentTemplateControllerApiCreateEntityDocumentTemplates
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for deleteEntityDocumentTemplates operation in DocumentTemplateControllerApi.
+ * @export
+ * @interface DocumentTemplateControllerApiDeleteEntityDocumentTemplatesRequest
+ */
+export interface DocumentTemplateControllerApiDeleteEntityDocumentTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof DocumentTemplateControllerApiDeleteEntityDocumentTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof DocumentTemplateControllerApiDeleteEntityDocumentTemplates
+     */
+    readonly objectId: string
+}
+
+/**
+ * Request parameters for getAllEntitiesDocumentTemplates operation in DocumentTemplateControllerApi.
+ * @export
+ * @interface DocumentTemplateControllerApiGetAllEntitiesDocumentTemplatesRequest
+ */
+export interface DocumentTemplateControllerApiGetAllEntitiesDocumentTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof DocumentTemplateControllerApiGetAllEntitiesDocumentTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof DocumentTemplateControllerApiGetAllEntitiesDocumentTemplates
+     */
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof DocumentTemplateControllerApiGetAllEntitiesDocumentTemplates
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof DocumentTemplateControllerApiGetAllEntitiesDocumentTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof DocumentTemplateControllerApiGetAllEntitiesDocumentTemplates
+     */
+    readonly page?: number
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof DocumentTemplateControllerApiGetAllEntitiesDocumentTemplates
+     */
+    readonly size?: number
+
+    /**
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof DocumentTemplateControllerApiGetAllEntitiesDocumentTemplates
+     */
+    readonly sort?: Array<string>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DocumentTemplateControllerApiGetAllEntitiesDocumentTemplates
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'page' | 'all' | 'ALL'>}
+     * @memberof DocumentTemplateControllerApiGetAllEntitiesDocumentTemplates
+     */
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for getEntityDocumentTemplates operation in DocumentTemplateControllerApi.
+ * @export
+ * @interface DocumentTemplateControllerApiGetEntityDocumentTemplatesRequest
+ */
+export interface DocumentTemplateControllerApiGetEntityDocumentTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof DocumentTemplateControllerApiGetEntityDocumentTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof DocumentTemplateControllerApiGetEntityDocumentTemplates
+     */
+    readonly objectId: string
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof DocumentTemplateControllerApiGetEntityDocumentTemplates
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof DocumentTemplateControllerApiGetEntityDocumentTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DocumentTemplateControllerApiGetEntityDocumentTemplates
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof DocumentTemplateControllerApiGetEntityDocumentTemplates
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for patchEntityDocumentTemplates operation in DocumentTemplateControllerApi.
+ * @export
+ * @interface DocumentTemplateControllerApiPatchEntityDocumentTemplatesRequest
+ */
+export interface DocumentTemplateControllerApiPatchEntityDocumentTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof DocumentTemplateControllerApiPatchEntityDocumentTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof DocumentTemplateControllerApiPatchEntityDocumentTemplates
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiPublisherDocumentTemplatePatchDocument}
+     * @memberof DocumentTemplateControllerApiPatchEntityDocumentTemplates
+     */
+    readonly jsonApiPublisherDocumentTemplatePatchDocument: JsonApiPublisherDocumentTemplatePatchDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof DocumentTemplateControllerApiPatchEntityDocumentTemplates
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof DocumentTemplateControllerApiPatchEntityDocumentTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+}
+
+/**
+ * Request parameters for updateEntityDocumentTemplates operation in DocumentTemplateControllerApi.
+ * @export
+ * @interface DocumentTemplateControllerApiUpdateEntityDocumentTemplatesRequest
+ */
+export interface DocumentTemplateControllerApiUpdateEntityDocumentTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof DocumentTemplateControllerApiUpdateEntityDocumentTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof DocumentTemplateControllerApiUpdateEntityDocumentTemplates
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiPublisherDocumentTemplateInDocument}
+     * @memberof DocumentTemplateControllerApiUpdateEntityDocumentTemplates
+     */
+    readonly jsonApiPublisherDocumentTemplateInDocument: JsonApiPublisherDocumentTemplateInDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof DocumentTemplateControllerApiUpdateEntityDocumentTemplates
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof DocumentTemplateControllerApiUpdateEntityDocumentTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+}
+
+/**
+ * DocumentTemplateControllerApi - object-oriented interface
+ * @export
+ * @class DocumentTemplateControllerApi
+ * @extends {BaseAPI}
+ */
+export class DocumentTemplateControllerApi extends BaseAPI implements DocumentTemplateControllerApiInterface {
+    /**
+     * 
+     * @summary Post Document Template
+     * @param {DocumentTemplateControllerApiCreateEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DocumentTemplateControllerApi
+     */
+    public createEntityDocumentTemplates(requestParameters: DocumentTemplateControllerApiCreateEntityDocumentTemplatesRequest, options?: AxiosRequestConfig) {
+        return DocumentTemplateControllerApi_CreateEntityDocumentTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Delete a Document Template
+     * @param {DocumentTemplateControllerApiDeleteEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DocumentTemplateControllerApi
+     */
+    public deleteEntityDocumentTemplates(requestParameters: DocumentTemplateControllerApiDeleteEntityDocumentTemplatesRequest, options?: AxiosRequestConfig) {
+        return DocumentTemplateControllerApi_DeleteEntityDocumentTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get all Document Templates
+     * @param {DocumentTemplateControllerApiGetAllEntitiesDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DocumentTemplateControllerApi
+     */
+    public getAllEntitiesDocumentTemplates(requestParameters: DocumentTemplateControllerApiGetAllEntitiesDocumentTemplatesRequest, options?: AxiosRequestConfig) {
+        return DocumentTemplateControllerApi_GetAllEntitiesDocumentTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get a Document Template
+     * @param {DocumentTemplateControllerApiGetEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DocumentTemplateControllerApi
+     */
+    public getEntityDocumentTemplates(requestParameters: DocumentTemplateControllerApiGetEntityDocumentTemplatesRequest, options?: AxiosRequestConfig) {
+        return DocumentTemplateControllerApi_GetEntityDocumentTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Patch a Document Template
+     * @param {DocumentTemplateControllerApiPatchEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DocumentTemplateControllerApi
+     */
+    public patchEntityDocumentTemplates(requestParameters: DocumentTemplateControllerApiPatchEntityDocumentTemplatesRequest, options?: AxiosRequestConfig) {
+        return DocumentTemplateControllerApi_PatchEntityDocumentTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Put a Document Template
+     * @param {DocumentTemplateControllerApiUpdateEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DocumentTemplateControllerApi
+     */
+    public updateEntityDocumentTemplates(requestParameters: DocumentTemplateControllerApiUpdateEntityDocumentTemplatesRequest, options?: AxiosRequestConfig) {
+        return DocumentTemplateControllerApi_UpdateEntityDocumentTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+}
+
+
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * Permanently removed. Use /api/v1/entities/llmProviders instead. Always returns 410 Gone.
@@ -63472,6 +66366,152 @@ export async function EntitiesApiAxiosParamCreator_CreateEntityDataSources(
     localVarRequestOptions.data = needsSerialization
         ? JSON.stringify(jsonApiDataSourceInDocument !== undefined ? jsonApiDataSourceInDocument : {})
         : jsonApiDataSourceInDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
+ * @summary Post Document Template
+ * @param {string} workspaceId 
+ * @param {JsonApiPublisherDocumentTemplatePostOptionalIdDocument} jsonApiPublisherDocumentTemplatePostOptionalIdDocument 
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_CreateEntityDocumentTemplates(
+    workspaceId: string, jsonApiPublisherDocumentTemplatePostOptionalIdDocument: JsonApiPublisherDocumentTemplatePostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('createEntityDocumentTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'jsonApiPublisherDocumentTemplatePostOptionalIdDocument' is not null or undefined
+    assertParamExists('createEntityDocumentTemplates', 'jsonApiPublisherDocumentTemplatePostOptionalIdDocument', jsonApiPublisherDocumentTemplatePostOptionalIdDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documentTemplates`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiPublisherDocumentTemplatePostOptionalIdDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiPublisherDocumentTemplatePostOptionalIdDocument !== undefined ? jsonApiPublisherDocumentTemplatePostOptionalIdDocument : {})
+        : jsonApiPublisherDocumentTemplatePostOptionalIdDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
+ * @summary Post Document
+ * @param {string} workspaceId 
+ * @param {JsonApiPublisherDocumentPostOptionalIdDocument} jsonApiPublisherDocumentPostOptionalIdDocument 
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_CreateEntityDocuments(
+    workspaceId: string, jsonApiPublisherDocumentPostOptionalIdDocument: JsonApiPublisherDocumentPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('createEntityDocuments', 'workspaceId', workspaceId)
+    // verify required parameter 'jsonApiPublisherDocumentPostOptionalIdDocument' is not null or undefined
+    assertParamExists('createEntityDocuments', 'jsonApiPublisherDocumentPostOptionalIdDocument', jsonApiPublisherDocumentPostOptionalIdDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documents`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiPublisherDocumentPostOptionalIdDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiPublisherDocumentPostOptionalIdDocument !== undefined ? jsonApiPublisherDocumentPostOptionalIdDocument : {})
+        : jsonApiPublisherDocumentPostOptionalIdDocument || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -64387,6 +67427,79 @@ export async function EntitiesApiAxiosParamCreator_CreateEntityOrganizationSetti
     localVarRequestOptions.data = needsSerialization
         ? JSON.stringify(jsonApiOrganizationSettingInDocument !== undefined ? jsonApiOrganizationSettingInDocument : {})
         : jsonApiOrganizationSettingInDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
+ * @summary Post Page Template
+ * @param {string} workspaceId 
+ * @param {JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument} jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument 
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_CreateEntityPageTemplates(
+    workspaceId: string, jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument: JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('createEntityPageTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument' is not null or undefined
+    assertParamExists('createEntityPageTemplates', 'jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument', jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/pageTemplates`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument !== undefined ? jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument : {})
+        : jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -66235,6 +69348,104 @@ export async function EntitiesApiAxiosParamCreator_DeleteEntityDataSources(
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
+ * @summary Delete a Document Template
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_DeleteEntityDocumentTemplates(
+    workspaceId: string, objectId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('deleteEntityDocumentTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('deleteEntityDocumentTemplates', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documentTemplates/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
+ * @summary Delete a Document
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_DeleteEntityDocuments(
+    workspaceId: string, objectId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('deleteEntityDocuments', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('deleteEntityDocuments', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documents/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
  * @summary Delete an Export Definition
  * @param {string} workspaceId 
  * @param {string} objectId 
@@ -66859,6 +70070,55 @@ export async function EntitiesApiAxiosParamCreator_DeleteEntityOrganizationSetti
     assertParamExists('deleteEntityOrganizationSettings', 'id', id)
     const localVarPath = `/api/v1/entities/organizationSettings/{id}`
         .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
+ * @summary Delete a Page Template
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_DeleteEntityPageTemplates(
+    workspaceId: string, objectId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('deleteEntityPageTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('deleteEntityPageTemplates', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/pageTemplates/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
     const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
     let baseOptions;
@@ -69118,6 +72378,176 @@ export async function EntitiesApiAxiosParamCreator_GetAllEntitiesDatasets(
 
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
+ * 
+ * @summary Get all Document Templates
+ * @param {string} workspaceId 
+ * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {number} [page] Zero-based page index (0..N)
+ * @param {number} [size] The size of the page to be returned
+ * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_GetAllEntitiesDocumentTemplates(
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getAllEntitiesDocumentTemplates', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documentTemplates`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (origin !== undefined) {
+        localVarQueryParameter['origin'] = origin;
+    }
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (sort) {
+        localVarQueryParameter['sort'] = sort;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
+ * @summary Get all Documents
+ * @param {string} workspaceId 
+ * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {number} [page] Zero-based page index (0..N)
+ * @param {number} [size] The size of the page to be returned
+ * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_GetAllEntitiesDocuments(
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getAllEntitiesDocuments', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documents`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (origin !== undefined) {
+        localVarQueryParameter['origin'] = origin;
+    }
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (sort) {
+        localVarQueryParameter['sort'] = sort;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
  * Space of the shared interest
  * @summary Get Entitlements
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -70527,6 +73957,91 @@ export async function EntitiesApiAxiosParamCreator_GetAllEntitiesOrganizationSet
 
     if (metaInclude) {
         localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
+ * @summary Get all Page Templates
+ * @param {string} workspaceId 
+ * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {number} [page] Zero-based page index (0..N)
+ * @param {number} [size] The size of the page to be returned
+ * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_GetAllEntitiesPageTemplates(
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getAllEntitiesPageTemplates', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/pageTemplates`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (origin !== undefined) {
+        localVarQueryParameter['origin'] = origin;
+    }
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (sort) {
+        localVarQueryParameter['sort'] = sort;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
     }
 
 
@@ -73179,6 +76694,144 @@ export async function EntitiesApiAxiosParamCreator_GetEntityDatasets(
 
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
+ * 
+ * @summary Get a Document Template
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_GetEntityDocumentTemplates(
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getEntityDocumentTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('getEntityDocumentTemplates', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documentTemplates/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
+ * @summary Get a Document
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_GetEntityDocuments(
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getEntityDocuments', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('getEntityDocuments', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documents/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
  * Space of the shared interest
  * @summary Get Entitlement entity
  * @param {string} id 
@@ -74334,6 +77987,75 @@ export async function EntitiesApiAxiosParamCreator_GetEntityOrganizations(
 
     if (metaInclude) {
         localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
+ * @summary Get a Page Template
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_GetEntityPageTemplates(
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getEntityPageTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('getEntityPageTemplates', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/pageTemplates/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
     }
 
 
@@ -76603,6 +80325,160 @@ export async function EntitiesApiAxiosParamCreator_PatchEntityDatasets(
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
+ * @summary Patch a Document Template
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiPublisherDocumentTemplatePatchDocument} jsonApiPublisherDocumentTemplatePatchDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_PatchEntityDocumentTemplates(
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentTemplatePatchDocument: JsonApiPublisherDocumentTemplatePatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('patchEntityDocumentTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('patchEntityDocumentTemplates', 'objectId', objectId)
+    // verify required parameter 'jsonApiPublisherDocumentTemplatePatchDocument' is not null or undefined
+    assertParamExists('patchEntityDocumentTemplates', 'jsonApiPublisherDocumentTemplatePatchDocument', jsonApiPublisherDocumentTemplatePatchDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documentTemplates/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiPublisherDocumentTemplatePatchDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiPublisherDocumentTemplatePatchDocument !== undefined ? jsonApiPublisherDocumentTemplatePatchDocument : {})
+        : jsonApiPublisherDocumentTemplatePatchDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
+ * @summary Patch a Document
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiPublisherDocumentPatchDocument} jsonApiPublisherDocumentPatchDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_PatchEntityDocuments(
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentPatchDocument: JsonApiPublisherDocumentPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('patchEntityDocuments', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('patchEntityDocuments', 'objectId', objectId)
+    // verify required parameter 'jsonApiPublisherDocumentPatchDocument' is not null or undefined
+    assertParamExists('patchEntityDocuments', 'jsonApiPublisherDocumentPatchDocument', jsonApiPublisherDocumentPatchDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documents/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiPublisherDocumentPatchDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiPublisherDocumentPatchDocument !== undefined ? jsonApiPublisherDocumentPatchDocument : {})
+        : jsonApiPublisherDocumentPatchDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
  * @summary Patch an Export Definition
  * @param {string} workspaceId 
  * @param {string} objectId 
@@ -77762,6 +81638,83 @@ export async function EntitiesApiAxiosParamCreator_PatchEntityOrganizations(
     localVarRequestOptions.data = needsSerialization
         ? JSON.stringify(jsonApiOrganizationPatchDocument !== undefined ? jsonApiOrganizationPatchDocument : {})
         : jsonApiOrganizationPatchDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
+ * @summary Patch a Page Template
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiPublisherDocumentPageTemplatePatchDocument} jsonApiPublisherDocumentPageTemplatePatchDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_PatchEntityPageTemplates(
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentPageTemplatePatchDocument: JsonApiPublisherDocumentPageTemplatePatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('patchEntityPageTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('patchEntityPageTemplates', 'objectId', objectId)
+    // verify required parameter 'jsonApiPublisherDocumentPageTemplatePatchDocument' is not null or undefined
+    assertParamExists('patchEntityPageTemplates', 'jsonApiPublisherDocumentPageTemplatePatchDocument', jsonApiPublisherDocumentPageTemplatePatchDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/pageTemplates/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiPublisherDocumentPageTemplatePatchDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiPublisherDocumentPageTemplatePatchDocument !== undefined ? jsonApiPublisherDocumentPageTemplatePatchDocument : {})
+        : jsonApiPublisherDocumentPageTemplatePatchDocument || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -81679,6 +85632,160 @@ export async function EntitiesApiAxiosParamCreator_UpdateEntityDataSources(
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
+ * @summary Put a Document Template
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiPublisherDocumentTemplateInDocument} jsonApiPublisherDocumentTemplateInDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_UpdateEntityDocumentTemplates(
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentTemplateInDocument: JsonApiPublisherDocumentTemplateInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('updateEntityDocumentTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('updateEntityDocumentTemplates', 'objectId', objectId)
+    // verify required parameter 'jsonApiPublisherDocumentTemplateInDocument' is not null or undefined
+    assertParamExists('updateEntityDocumentTemplates', 'jsonApiPublisherDocumentTemplateInDocument', jsonApiPublisherDocumentTemplateInDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documentTemplates/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiPublisherDocumentTemplateInDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiPublisherDocumentTemplateInDocument !== undefined ? jsonApiPublisherDocumentTemplateInDocument : {})
+        : jsonApiPublisherDocumentTemplateInDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
+ * @summary Put a Document
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiPublisherDocumentInDocument} jsonApiPublisherDocumentInDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_UpdateEntityDocuments(
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentInDocument: JsonApiPublisherDocumentInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('updateEntityDocuments', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('updateEntityDocuments', 'objectId', objectId)
+    // verify required parameter 'jsonApiPublisherDocumentInDocument' is not null or undefined
+    assertParamExists('updateEntityDocuments', 'jsonApiPublisherDocumentInDocument', jsonApiPublisherDocumentInDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documents/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiPublisherDocumentInDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiPublisherDocumentInDocument !== undefined ? jsonApiPublisherDocumentInDocument : {})
+        : jsonApiPublisherDocumentInDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
  * @summary Put an Export Definition
  * @param {string} workspaceId 
  * @param {string} objectId 
@@ -82757,6 +86864,83 @@ export async function EntitiesApiAxiosParamCreator_UpdateEntityOrganizations(
     localVarRequestOptions.data = needsSerialization
         ? JSON.stringify(jsonApiOrganizationInDocument !== undefined ? jsonApiOrganizationInDocument : {})
         : jsonApiOrganizationInDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
+ * @summary Put a Page Template
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiPublisherDocumentPageTemplateInDocument} jsonApiPublisherDocumentPageTemplateInDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_UpdateEntityPageTemplates(
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentPageTemplateInDocument: JsonApiPublisherDocumentPageTemplateInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('updateEntityPageTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('updateEntityPageTemplates', 'objectId', objectId)
+    // verify required parameter 'jsonApiPublisherDocumentPageTemplateInDocument' is not null or undefined
+    assertParamExists('updateEntityPageTemplates', 'jsonApiPublisherDocumentPageTemplateInDocument', jsonApiPublisherDocumentPageTemplateInDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/pageTemplates/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiPublisherDocumentPageTemplateInDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiPublisherDocumentPageTemplateInDocument !== undefined ? jsonApiPublisherDocumentPageTemplateInDocument : {})
+        : jsonApiPublisherDocumentPageTemplateInDocument || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -84395,6 +88579,58 @@ export async function EntitiesApi_CreateEntityDataSources(
 // EntitiesApi Api FP
 /**
  * 
+ * @summary Post Document Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiCreateEntityDocumentTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_CreateEntityDocumentTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiCreateEntityDocumentTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_CreateEntityDocumentTemplates(
+        requestParameters.workspaceId, requestParameters.jsonApiPublisherDocumentTemplatePostOptionalIdDocument, requestParameters.include, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
+ * @summary Post Document
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiCreateEntityDocumentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_CreateEntityDocuments(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiCreateEntityDocumentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentOutDocument> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_CreateEntityDocuments(
+        requestParameters.workspaceId, requestParameters.jsonApiPublisherDocumentPostOptionalIdDocument, requestParameters.include, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
  * @summary Post Export Definitions
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -84749,6 +88985,32 @@ export async function EntitiesApi_CreateEntityOrganizationSettings(
 ): AxiosPromise<JsonApiOrganizationSettingOutDocument> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_CreateEntityOrganizationSettings(
         requestParameters.jsonApiOrganizationSettingInDocument, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
+ * @summary Post Page Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiCreateEntityPageTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_CreateEntityPageTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiCreateEntityPageTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_CreateEntityPageTemplates(
+        requestParameters.workspaceId, requestParameters.jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument, requestParameters.include, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -85565,6 +89827,58 @@ export async function EntitiesApi_DeleteEntityDataSources(
 // EntitiesApi Api FP
 /**
  * 
+ * @summary Delete a Document Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiDeleteEntityDocumentTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_DeleteEntityDocumentTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiDeleteEntityDocumentTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_DeleteEntityDocumentTemplates(
+        requestParameters.workspaceId, requestParameters.objectId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
+ * @summary Delete a Document
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiDeleteEntityDocumentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_DeleteEntityDocuments(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiDeleteEntityDocumentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_DeleteEntityDocuments(
+        requestParameters.workspaceId, requestParameters.objectId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
  * @summary Delete an Export Definition
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -85919,6 +90233,32 @@ export async function EntitiesApi_DeleteEntityOrganizationSettings(
 ): AxiosPromise<void> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_DeleteEntityOrganizationSettings(
         requestParameters.id, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
+ * @summary Delete a Page Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiDeleteEntityPageTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_DeleteEntityPageTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiDeleteEntityPageTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_DeleteEntityPageTemplates(
+        requestParameters.workspaceId, requestParameters.objectId, 
         options || {},
         configuration,
     );
@@ -86863,6 +91203,58 @@ export async function EntitiesApi_GetAllEntitiesDatasets(
 
 // EntitiesApi Api FP
 /**
+ * 
+ * @summary Get all Document Templates
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiGetAllEntitiesDocumentTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_GetAllEntitiesDocumentTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiGetAllEntitiesDocumentTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentTemplateOutList> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_GetAllEntitiesDocumentTemplates(
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
+ * @summary Get all Documents
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiGetAllEntitiesDocumentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_GetAllEntitiesDocuments(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiGetAllEntitiesDocumentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentOutList> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_GetAllEntitiesDocuments(
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
  * Space of the shared interest
  * @summary Get Entitlements
  * @param {AxiosInstance} axios Axios instance.
@@ -87348,6 +91740,32 @@ export async function EntitiesApi_GetAllEntitiesOrganizationSettings(
 ): AxiosPromise<JsonApiOrganizationSettingOutList> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_GetAllEntitiesOrganizationSettings(
         requestParameters.filter, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
+ * @summary Get all Page Templates
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiGetAllEntitiesPageTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_GetAllEntitiesPageTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiGetAllEntitiesPageTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutList> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_GetAllEntitiesPageTemplates(
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -88369,6 +92787,58 @@ export async function EntitiesApi_GetEntityDatasets(
 
 // EntitiesApi Api FP
 /**
+ * 
+ * @summary Get a Document Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiGetEntityDocumentTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_GetEntityDocumentTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiGetEntityDocumentTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_GetEntityDocumentTemplates(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.include, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
+ * @summary Get a Document
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiGetEntityDocumentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_GetEntityDocuments(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiGetEntityDocumentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentOutDocument> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_GetEntityDocuments(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.include, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
  * Space of the shared interest
  * @summary Get Entitlement entity
  * @param {AxiosInstance} axios Axios instance.
@@ -88880,6 +93350,32 @@ export async function EntitiesApi_GetEntityOrganizations(
 ): AxiosPromise<JsonApiOrganizationOutDocument> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_GetEntityOrganizations(
         requestParameters.id, requestParameters.filter, requestParameters.include, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
+ * @summary Get a Page Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiGetEntityPageTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_GetEntityPageTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiGetEntityPageTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_GetEntityPageTemplates(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.include, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -89774,6 +94270,58 @@ export async function EntitiesApi_PatchEntityDatasets(
 // EntitiesApi Api FP
 /**
  * 
+ * @summary Patch a Document Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiPatchEntityDocumentTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_PatchEntityDocumentTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiPatchEntityDocumentTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_PatchEntityDocumentTemplates(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiPublisherDocumentTemplatePatchDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
+ * @summary Patch a Document
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiPatchEntityDocumentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_PatchEntityDocuments(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiPatchEntityDocumentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentOutDocument> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_PatchEntityDocuments(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiPublisherDocumentPatchDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
  * @summary Patch an Export Definition
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -90180,6 +94728,32 @@ export async function EntitiesApi_PatchEntityOrganizations(
 ): AxiosPromise<JsonApiOrganizationOutDocument> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_PatchEntityOrganizations(
         requestParameters.id, requestParameters.jsonApiOrganizationPatchDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
+ * @summary Patch a Page Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiPatchEntityPageTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_PatchEntityPageTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiPatchEntityPageTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_PatchEntityPageTemplates(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiPublisherDocumentPageTemplatePatchDocument, requestParameters.filter, requestParameters.include, 
         options || {},
         configuration,
     );
@@ -91594,6 +96168,58 @@ export async function EntitiesApi_UpdateEntityDataSources(
 // EntitiesApi Api FP
 /**
  * 
+ * @summary Put a Document Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiUpdateEntityDocumentTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_UpdateEntityDocumentTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiUpdateEntityDocumentTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_UpdateEntityDocumentTemplates(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiPublisherDocumentTemplateInDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
+ * @summary Put a Document
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiUpdateEntityDocumentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_UpdateEntityDocuments(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiUpdateEntityDocumentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentOutDocument> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_UpdateEntityDocuments(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiPublisherDocumentInDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
  * @summary Put an Export Definition
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -91974,6 +96600,32 @@ export async function EntitiesApi_UpdateEntityOrganizations(
 ): AxiosPromise<JsonApiOrganizationOutDocument> {
     const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_UpdateEntityOrganizations(
         requestParameters.id, requestParameters.jsonApiOrganizationInDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
+ * @summary Put a Page Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiUpdateEntityPageTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_UpdateEntityPageTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiUpdateEntityPageTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_UpdateEntityPageTemplates(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiPublisherDocumentPageTemplateInDocument, requestParameters.filter, requestParameters.include, 
         options || {},
         configuration,
     );
@@ -92571,6 +97223,26 @@ export interface EntitiesApiInterface {
 
     /**
      * 
+     * @summary Post Document Template
+     * @param {EntitiesApiCreateEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    createEntityDocumentTemplates(requestParameters: EntitiesApiCreateEntityDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument>;
+
+    /**
+     * 
+     * @summary Post Document
+     * @param {EntitiesApiCreateEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    createEntityDocuments(requestParameters: EntitiesApiCreateEntityDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutDocument>;
+
+    /**
+     * 
      * @summary Post Export Definitions
      * @param {EntitiesApiCreateEntityExportDefinitionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -92708,6 +97380,16 @@ export interface EntitiesApiInterface {
      * @memberof EntitiesApiInterface
      */
     createEntityOrganizationSettings(requestParameters: EntitiesApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+
+    /**
+     * 
+     * @summary Post Page Template
+     * @param {EntitiesApiCreateEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    createEntityPageTemplates(requestParameters: EntitiesApiCreateEntityPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument>;
 
     /**
      * 
@@ -93022,6 +97704,26 @@ export interface EntitiesApiInterface {
 
     /**
      * 
+     * @summary Delete a Document Template
+     * @param {EntitiesApiDeleteEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    deleteEntityDocumentTemplates(requestParameters: EntitiesApiDeleteEntityDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
+     * @summary Delete a Document
+     * @param {EntitiesApiDeleteEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    deleteEntityDocuments(requestParameters: EntitiesApiDeleteEntityDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
      * @summary Delete an Export Definition
      * @param {EntitiesApiDeleteEntityExportDefinitionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -93159,6 +97861,16 @@ export interface EntitiesApiInterface {
      * @memberof EntitiesApiInterface
      */
     deleteEntityOrganizationSettings(requestParameters: EntitiesApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
+     * @summary Delete a Page Template
+     * @param {EntitiesApiDeleteEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    deleteEntityPageTemplates(requestParameters: EntitiesApiDeleteEntityPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
      * 
@@ -93521,6 +98233,26 @@ export interface EntitiesApiInterface {
     getAllEntitiesDatasets(requestParameters: EntitiesApiGetAllEntitiesDatasetsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDatasetOutList>;
 
     /**
+     * 
+     * @summary Get all Document Templates
+     * @param {EntitiesApiGetAllEntitiesDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    getAllEntitiesDocumentTemplates(requestParameters: EntitiesApiGetAllEntitiesDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentTemplateOutList>;
+
+    /**
+     * 
+     * @summary Get all Documents
+     * @param {EntitiesApiGetAllEntitiesDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    getAllEntitiesDocuments(requestParameters: EntitiesApiGetAllEntitiesDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutList>;
+
+    /**
      * Space of the shared interest
      * @summary Get Entitlements
      * @param {EntitiesApiGetAllEntitiesEntitlementsRequest} requestParameters Request parameters.
@@ -93709,6 +98441,16 @@ export interface EntitiesApiInterface {
      * @memberof EntitiesApiInterface
      */
     getAllEntitiesOrganizationSettings(requestParameters: EntitiesApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutList>;
+
+    /**
+     * 
+     * @summary Get all Page Templates
+     * @param {EntitiesApiGetAllEntitiesPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    getAllEntitiesPageTemplates(requestParameters: EntitiesApiGetAllEntitiesPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutList>;
 
     /**
      * 
@@ -94100,6 +98842,26 @@ export interface EntitiesApiInterface {
     getEntityDatasets(requestParameters: EntitiesApiGetEntityDatasetsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDatasetOutDocument>;
 
     /**
+     * 
+     * @summary Get a Document Template
+     * @param {EntitiesApiGetEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    getEntityDocumentTemplates(requestParameters: EntitiesApiGetEntityDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument>;
+
+    /**
+     * 
+     * @summary Get a Document
+     * @param {EntitiesApiGetEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    getEntityDocuments(requestParameters: EntitiesApiGetEntityDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutDocument>;
+
+    /**
      * Space of the shared interest
      * @summary Get Entitlement entity
      * @param {EntitiesApiGetEntityEntitlementsRequest} requestParameters Request parameters.
@@ -94298,6 +99060,16 @@ export interface EntitiesApiInterface {
      * @memberof EntitiesApiInterface
      */
     getEntityOrganizations(requestParameters: EntitiesApiGetEntityOrganizationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationOutDocument>;
+
+    /**
+     * 
+     * @summary Get a Page Template
+     * @param {EntitiesApiGetEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    getEntityPageTemplates(requestParameters: EntitiesApiGetEntityPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument>;
 
     /**
      * 
@@ -94642,6 +99414,26 @@ export interface EntitiesApiInterface {
 
     /**
      * 
+     * @summary Patch a Document Template
+     * @param {EntitiesApiPatchEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    patchEntityDocumentTemplates(requestParameters: EntitiesApiPatchEntityDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument>;
+
+    /**
+     * 
+     * @summary Patch a Document
+     * @param {EntitiesApiPatchEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    patchEntityDocuments(requestParameters: EntitiesApiPatchEntityDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutDocument>;
+
+    /**
+     * 
      * @summary Patch an Export Definition
      * @param {EntitiesApiPatchEntityExportDefinitionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -94799,6 +99591,16 @@ export interface EntitiesApiInterface {
      * @memberof EntitiesApiInterface
      */
     patchEntityOrganizations(requestParameters: EntitiesApiPatchEntityOrganizationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationOutDocument>;
+
+    /**
+     * 
+     * @summary Patch a Page Template
+     * @param {EntitiesApiPatchEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    patchEntityPageTemplates(requestParameters: EntitiesApiPatchEntityPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument>;
 
     /**
      * 
@@ -95343,6 +100145,26 @@ export interface EntitiesApiInterface {
 
     /**
      * 
+     * @summary Put a Document Template
+     * @param {EntitiesApiUpdateEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    updateEntityDocumentTemplates(requestParameters: EntitiesApiUpdateEntityDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument>;
+
+    /**
+     * 
+     * @summary Put a Document
+     * @param {EntitiesApiUpdateEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    updateEntityDocuments(requestParameters: EntitiesApiUpdateEntityDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutDocument>;
+
+    /**
+     * 
      * @summary Put an Export Definition
      * @param {EntitiesApiUpdateEntityExportDefinitionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -95490,6 +100312,16 @@ export interface EntitiesApiInterface {
      * @memberof EntitiesApiInterface
      */
     updateEntityOrganizations(requestParameters: EntitiesApiUpdateEntityOrganizationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationOutDocument>;
+
+    /**
+     * 
+     * @summary Put a Page Template
+     * @param {EntitiesApiUpdateEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    updateEntityPageTemplates(requestParameters: EntitiesApiUpdateEntityPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument>;
 
     /**
      * 
@@ -95993,6 +100825,76 @@ export interface EntitiesApiCreateEntityDataSourcesRequest {
 }
 
 /**
+ * Request parameters for createEntityDocumentTemplates operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiCreateEntityDocumentTemplatesRequest
+ */
+export interface EntitiesApiCreateEntityDocumentTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiCreateEntityDocumentTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {JsonApiPublisherDocumentTemplatePostOptionalIdDocument}
+     * @memberof EntitiesApiCreateEntityDocumentTemplates
+     */
+    readonly jsonApiPublisherDocumentTemplatePostOptionalIdDocument: JsonApiPublisherDocumentTemplatePostOptionalIdDocument
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiCreateEntityDocumentTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiCreateEntityDocumentTemplates
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for createEntityDocuments operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiCreateEntityDocumentsRequest
+ */
+export interface EntitiesApiCreateEntityDocumentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiCreateEntityDocuments
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {JsonApiPublisherDocumentPostOptionalIdDocument}
+     * @memberof EntitiesApiCreateEntityDocuments
+     */
+    readonly jsonApiPublisherDocumentPostOptionalIdDocument: JsonApiPublisherDocumentPostOptionalIdDocument
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiCreateEntityDocuments
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiCreateEntityDocuments
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
  * Request parameters for createEntityExportDefinitions operation in EntitiesApi.
  * @export
  * @interface EntitiesApiCreateEntityExportDefinitionsRequest
@@ -96319,6 +101221,41 @@ export interface EntitiesApiCreateEntityOrganizationSettingsRequest {
      * @memberof EntitiesApiCreateEntityOrganizationSettings
      */
     readonly jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument
+}
+
+/**
+ * Request parameters for createEntityPageTemplates operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiCreateEntityPageTemplatesRequest
+ */
+export interface EntitiesApiCreateEntityPageTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiCreateEntityPageTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument}
+     * @memberof EntitiesApiCreateEntityPageTemplates
+     */
+    readonly jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument: JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiCreateEntityPageTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiCreateEntityPageTemplates
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
 }
 
 /**
@@ -97071,6 +102008,48 @@ export interface EntitiesApiDeleteEntityDataSourcesRequest {
 }
 
 /**
+ * Request parameters for deleteEntityDocumentTemplates operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiDeleteEntityDocumentTemplatesRequest
+ */
+export interface EntitiesApiDeleteEntityDocumentTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiDeleteEntityDocumentTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiDeleteEntityDocumentTemplates
+     */
+    readonly objectId: string
+}
+
+/**
+ * Request parameters for deleteEntityDocuments operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiDeleteEntityDocumentsRequest
+ */
+export interface EntitiesApiDeleteEntityDocumentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiDeleteEntityDocuments
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiDeleteEntityDocuments
+     */
+    readonly objectId: string
+}
+
+/**
  * Request parameters for deleteEntityExportDefinitions operation in EntitiesApi.
  * @export
  * @interface EntitiesApiDeleteEntityExportDefinitionsRequest
@@ -97306,6 +102285,27 @@ export interface EntitiesApiDeleteEntityOrganizationSettingsRequest {
      * @memberof EntitiesApiDeleteEntityOrganizationSettings
      */
     readonly id: string
+}
+
+/**
+ * Request parameters for deleteEntityPageTemplates operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiDeleteEntityPageTemplatesRequest
+ */
+export interface EntitiesApiDeleteEntityPageTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiDeleteEntityPageTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiDeleteEntityPageTemplates
+     */
+    readonly objectId: string
 }
 
 /**
@@ -98667,6 +103667,146 @@ export interface EntitiesApiGetAllEntitiesDatasetsRequest {
 }
 
 /**
+ * Request parameters for getAllEntitiesDocumentTemplates operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiGetAllEntitiesDocumentTemplatesRequest
+ */
+export interface EntitiesApiGetAllEntitiesDocumentTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiGetAllEntitiesDocumentTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof EntitiesApiGetAllEntitiesDocumentTemplates
+     */
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiGetAllEntitiesDocumentTemplates
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiGetAllEntitiesDocumentTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof EntitiesApiGetAllEntitiesDocumentTemplates
+     */
+    readonly page?: number
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof EntitiesApiGetAllEntitiesDocumentTemplates
+     */
+    readonly size?: number
+
+    /**
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof EntitiesApiGetAllEntitiesDocumentTemplates
+     */
+    readonly sort?: Array<string>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EntitiesApiGetAllEntitiesDocumentTemplates
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'page' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetAllEntitiesDocumentTemplates
+     */
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for getAllEntitiesDocuments operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiGetAllEntitiesDocumentsRequest
+ */
+export interface EntitiesApiGetAllEntitiesDocumentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiGetAllEntitiesDocuments
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof EntitiesApiGetAllEntitiesDocuments
+     */
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiGetAllEntitiesDocuments
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiGetAllEntitiesDocuments
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof EntitiesApiGetAllEntitiesDocuments
+     */
+    readonly page?: number
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof EntitiesApiGetAllEntitiesDocuments
+     */
+    readonly size?: number
+
+    /**
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof EntitiesApiGetAllEntitiesDocuments
+     */
+    readonly sort?: Array<string>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EntitiesApiGetAllEntitiesDocuments
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'page' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetAllEntitiesDocuments
+     */
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>
+}
+
+/**
  * Request parameters for getAllEntitiesEntitlements operation in EntitiesApi.
  * @export
  * @interface EntitiesApiGetAllEntitiesEntitlementsRequest
@@ -99721,6 +104861,76 @@ export interface EntitiesApiGetAllEntitiesOrganizationSettingsRequest {
      * @memberof EntitiesApiGetAllEntitiesOrganizationSettings
      */
     readonly metaInclude?: Array<'page' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for getAllEntitiesPageTemplates operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiGetAllEntitiesPageTemplatesRequest
+ */
+export interface EntitiesApiGetAllEntitiesPageTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiGetAllEntitiesPageTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof EntitiesApiGetAllEntitiesPageTemplates
+     */
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiGetAllEntitiesPageTemplates
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiGetAllEntitiesPageTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof EntitiesApiGetAllEntitiesPageTemplates
+     */
+    readonly page?: number
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof EntitiesApiGetAllEntitiesPageTemplates
+     */
+    readonly size?: number
+
+    /**
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof EntitiesApiGetAllEntitiesPageTemplates
+     */
+    readonly sort?: Array<string>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EntitiesApiGetAllEntitiesPageTemplates
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'page' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetAllEntitiesPageTemplates
+     */
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>
 }
 
 /**
@@ -101488,6 +106698,104 @@ export interface EntitiesApiGetEntityDatasetsRequest {
 }
 
 /**
+ * Request parameters for getEntityDocumentTemplates operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiGetEntityDocumentTemplatesRequest
+ */
+export interface EntitiesApiGetEntityDocumentTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiGetEntityDocumentTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiGetEntityDocumentTemplates
+     */
+    readonly objectId: string
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiGetEntityDocumentTemplates
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiGetEntityDocumentTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EntitiesApiGetEntityDocumentTemplates
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetEntityDocumentTemplates
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for getEntityDocuments operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiGetEntityDocumentsRequest
+ */
+export interface EntitiesApiGetEntityDocumentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiGetEntityDocuments
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiGetEntityDocuments
+     */
+    readonly objectId: string
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiGetEntityDocuments
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiGetEntityDocuments
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EntitiesApiGetEntityDocuments
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetEntityDocuments
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
  * Request parameters for getEntityEntitlements operation in EntitiesApi.
  * @export
  * @interface EntitiesApiGetEntityEntitlementsRequest
@@ -102164,6 +107472,55 @@ export interface EntitiesApiGetEntityOrganizationsRequest {
      * @memberof EntitiesApiGetEntityOrganizations
      */
     readonly metaInclude?: Array<'permissions' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for getEntityPageTemplates operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiGetEntityPageTemplatesRequest
+ */
+export interface EntitiesApiGetEntityPageTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiGetEntityPageTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiGetEntityPageTemplates
+     */
+    readonly objectId: string
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiGetEntityPageTemplates
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiGetEntityPageTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EntitiesApiGetEntityPageTemplates
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof EntitiesApiGetEntityPageTemplates
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
 }
 
 /**
@@ -103420,6 +108777,90 @@ export interface EntitiesApiPatchEntityDatasetsRequest {
 }
 
 /**
+ * Request parameters for patchEntityDocumentTemplates operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiPatchEntityDocumentTemplatesRequest
+ */
+export interface EntitiesApiPatchEntityDocumentTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityDocumentTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityDocumentTemplates
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiPublisherDocumentTemplatePatchDocument}
+     * @memberof EntitiesApiPatchEntityDocumentTemplates
+     */
+    readonly jsonApiPublisherDocumentTemplatePatchDocument: JsonApiPublisherDocumentTemplatePatchDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityDocumentTemplates
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiPatchEntityDocumentTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+}
+
+/**
+ * Request parameters for patchEntityDocuments operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiPatchEntityDocumentsRequest
+ */
+export interface EntitiesApiPatchEntityDocumentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityDocuments
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityDocuments
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiPublisherDocumentPatchDocument}
+     * @memberof EntitiesApiPatchEntityDocuments
+     */
+    readonly jsonApiPublisherDocumentPatchDocument: JsonApiPublisherDocumentPatchDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityDocuments
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiPatchEntityDocuments
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+}
+
+/**
  * Request parameters for patchEntityExportDefinitions operation in EntitiesApi.
  * @export
  * @interface EntitiesApiPatchEntityExportDefinitionsRequest
@@ -103991,6 +109432,48 @@ export interface EntitiesApiPatchEntityOrganizationsRequest {
      * @memberof EntitiesApiPatchEntityOrganizations
      */
     readonly include?: Array<'users' | 'userGroups' | 'identityProviders' | 'bootstrapUser' | 'bootstrapUserGroup' | 'identityProvider' | 'ALL'>
+}
+
+/**
+ * Request parameters for patchEntityPageTemplates operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiPatchEntityPageTemplatesRequest
+ */
+export interface EntitiesApiPatchEntityPageTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityPageTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityPageTemplates
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiPublisherDocumentPageTemplatePatchDocument}
+     * @memberof EntitiesApiPatchEntityPageTemplates
+     */
+    readonly jsonApiPublisherDocumentPageTemplatePatchDocument: JsonApiPublisherDocumentPageTemplatePatchDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityPageTemplates
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiPatchEntityPageTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -105912,6 +111395,90 @@ export interface EntitiesApiUpdateEntityDataSourcesRequest {
 }
 
 /**
+ * Request parameters for updateEntityDocumentTemplates operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiUpdateEntityDocumentTemplatesRequest
+ */
+export interface EntitiesApiUpdateEntityDocumentTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityDocumentTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityDocumentTemplates
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiPublisherDocumentTemplateInDocument}
+     * @memberof EntitiesApiUpdateEntityDocumentTemplates
+     */
+    readonly jsonApiPublisherDocumentTemplateInDocument: JsonApiPublisherDocumentTemplateInDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityDocumentTemplates
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiUpdateEntityDocumentTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+}
+
+/**
+ * Request parameters for updateEntityDocuments operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiUpdateEntityDocumentsRequest
+ */
+export interface EntitiesApiUpdateEntityDocumentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityDocuments
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityDocuments
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiPublisherDocumentInDocument}
+     * @memberof EntitiesApiUpdateEntityDocuments
+     */
+    readonly jsonApiPublisherDocumentInDocument: JsonApiPublisherDocumentInDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityDocuments
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiUpdateEntityDocuments
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+}
+
+/**
  * Request parameters for updateEntityExportDefinitions operation in EntitiesApi.
  * @export
  * @interface EntitiesApiUpdateEntityExportDefinitionsRequest
@@ -106434,6 +112001,48 @@ export interface EntitiesApiUpdateEntityOrganizationsRequest {
      * @memberof EntitiesApiUpdateEntityOrganizations
      */
     readonly include?: Array<'users' | 'userGroups' | 'identityProviders' | 'bootstrapUser' | 'bootstrapUserGroup' | 'identityProvider' | 'ALL'>
+}
+
+/**
+ * Request parameters for updateEntityPageTemplates operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiUpdateEntityPageTemplatesRequest
+ */
+export interface EntitiesApiUpdateEntityPageTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityPageTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityPageTemplates
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiPublisherDocumentPageTemplateInDocument}
+     * @memberof EntitiesApiUpdateEntityPageTemplates
+     */
+    readonly jsonApiPublisherDocumentPageTemplateInDocument: JsonApiPublisherDocumentPageTemplateInDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiUpdateEntityPageTemplates
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof EntitiesApiUpdateEntityPageTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -107257,6 +112866,30 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
+     * @summary Post Document Template
+     * @param {EntitiesApiCreateEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public createEntityDocumentTemplates(requestParameters: EntitiesApiCreateEntityDocumentTemplatesRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_CreateEntityDocumentTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Post Document
+     * @param {EntitiesApiCreateEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public createEntityDocuments(requestParameters: EntitiesApiCreateEntityDocumentsRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_CreateEntityDocuments(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
      * @summary Post Export Definitions
      * @param {EntitiesApiCreateEntityExportDefinitionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -107421,6 +113054,18 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
      */
     public createEntityOrganizationSettings(requestParameters: EntitiesApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig) {
         return EntitiesApi_CreateEntityOrganizationSettings(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Post Page Template
+     * @param {EntitiesApiCreateEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public createEntityPageTemplates(requestParameters: EntitiesApiCreateEntityPageTemplatesRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_CreateEntityPageTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -107798,6 +113443,30 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
+     * @summary Delete a Document Template
+     * @param {EntitiesApiDeleteEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public deleteEntityDocumentTemplates(requestParameters: EntitiesApiDeleteEntityDocumentTemplatesRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_DeleteEntityDocumentTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Delete a Document
+     * @param {EntitiesApiDeleteEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public deleteEntityDocuments(requestParameters: EntitiesApiDeleteEntityDocumentsRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_DeleteEntityDocuments(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
      * @summary Delete an Export Definition
      * @param {EntitiesApiDeleteEntityExportDefinitionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -107962,6 +113631,18 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
      */
     public deleteEntityOrganizationSettings(requestParameters: EntitiesApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig) {
         return EntitiesApi_DeleteEntityOrganizationSettings(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Delete a Page Template
+     * @param {EntitiesApiDeleteEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public deleteEntityPageTemplates(requestParameters: EntitiesApiDeleteEntityPageTemplatesRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_DeleteEntityPageTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -108397,6 +114078,30 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
     }
 
     /**
+     * 
+     * @summary Get all Document Templates
+     * @param {EntitiesApiGetAllEntitiesDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public getAllEntitiesDocumentTemplates(requestParameters: EntitiesApiGetAllEntitiesDocumentTemplatesRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_GetAllEntitiesDocumentTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get all Documents
+     * @param {EntitiesApiGetAllEntitiesDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public getAllEntitiesDocuments(requestParameters: EntitiesApiGetAllEntitiesDocumentsRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_GetAllEntitiesDocuments(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * Space of the shared interest
      * @summary Get Entitlements
      * @param {EntitiesApiGetAllEntitiesEntitlementsRequest} requestParameters Request parameters.
@@ -108622,6 +114327,18 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
      */
     public getAllEntitiesOrganizationSettings(requestParameters: EntitiesApiGetAllEntitiesOrganizationSettingsRequest = {}, options?: AxiosRequestConfig) {
         return EntitiesApi_GetAllEntitiesOrganizationSettings(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get all Page Templates
+     * @param {EntitiesApiGetAllEntitiesPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public getAllEntitiesPageTemplates(requestParameters: EntitiesApiGetAllEntitiesPageTemplatesRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_GetAllEntitiesPageTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -109092,6 +114809,30 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
     }
 
     /**
+     * 
+     * @summary Get a Document Template
+     * @param {EntitiesApiGetEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public getEntityDocumentTemplates(requestParameters: EntitiesApiGetEntityDocumentTemplatesRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_GetEntityDocumentTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get a Document
+     * @param {EntitiesApiGetEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public getEntityDocuments(requestParameters: EntitiesApiGetEntityDocumentsRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_GetEntityDocuments(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * Space of the shared interest
      * @summary Get Entitlement entity
      * @param {EntitiesApiGetEntityEntitlementsRequest} requestParameters Request parameters.
@@ -109329,6 +115070,18 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
      */
     public getEntityOrganizations(requestParameters: EntitiesApiGetEntityOrganizationsRequest, options?: AxiosRequestConfig) {
         return EntitiesApi_GetEntityOrganizations(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get a Page Template
+     * @param {EntitiesApiGetEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public getEntityPageTemplates(requestParameters: EntitiesApiGetEntityPageTemplatesRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_GetEntityPageTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -109742,6 +115495,30 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
+     * @summary Patch a Document Template
+     * @param {EntitiesApiPatchEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public patchEntityDocumentTemplates(requestParameters: EntitiesApiPatchEntityDocumentTemplatesRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_PatchEntityDocumentTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Patch a Document
+     * @param {EntitiesApiPatchEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public patchEntityDocuments(requestParameters: EntitiesApiPatchEntityDocumentsRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_PatchEntityDocuments(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
      * @summary Patch an Export Definition
      * @param {EntitiesApiPatchEntityExportDefinitionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -109930,6 +115707,18 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
      */
     public patchEntityOrganizations(requestParameters: EntitiesApiPatchEntityOrganizationsRequest, options?: AxiosRequestConfig) {
         return EntitiesApi_PatchEntityOrganizations(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Patch a Page Template
+     * @param {EntitiesApiPatchEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public patchEntityPageTemplates(requestParameters: EntitiesApiPatchEntityPageTemplatesRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_PatchEntityPageTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -110583,6 +116372,30 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
+     * @summary Put a Document Template
+     * @param {EntitiesApiUpdateEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public updateEntityDocumentTemplates(requestParameters: EntitiesApiUpdateEntityDocumentTemplatesRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_UpdateEntityDocumentTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Put a Document
+     * @param {EntitiesApiUpdateEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public updateEntityDocuments(requestParameters: EntitiesApiUpdateEntityDocumentsRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_UpdateEntityDocuments(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
      * @summary Put an Export Definition
      * @param {EntitiesApiUpdateEntityExportDefinitionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -110759,6 +116572,18 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
      */
     public updateEntityOrganizations(requestParameters: EntitiesApiUpdateEntityOrganizationsRequest, options?: AxiosRequestConfig) {
         return EntitiesApi_UpdateEntityOrganizations(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Put a Page Template
+     * @param {EntitiesApiUpdateEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public updateEntityPageTemplates(requestParameters: EntitiesApiUpdateEntityPageTemplatesRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_UpdateEntityPageTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -141845,6 +147670,7 @@ export async function LocalizationApiAxiosParamCreator_OrganizationLocalizationU
  * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.
  * @summary (BETA) Users who set a language themselves.
  * @param {string} [value] Language tag that the user sets.
+ * @param {string} [name] Filter by user name, email or login (user ID). Note that the filter is case insensitive.
  * @param {'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE'} [setting] One of LOCALE, METADATA_LOCALE and DATA_LOCALE.
  * @param {'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT'} [source] Where the value comes from.
  * @param {number} [page] Zero-based page index (0..N)
@@ -141854,7 +147680,7 @@ export async function LocalizationApiAxiosParamCreator_OrganizationLocalizationU
  * @throws {RequiredError}
  */
 export async function LocalizationApiAxiosParamCreator_OrganizationLocalizationUsageUsers(
-    value?: string, setting?: 'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE', source?: 'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT', page?: number, size?: number, 
+    value?: string, name?: string, setting?: 'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE', source?: 'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT', page?: number, size?: number, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -141871,6 +147697,10 @@ export async function LocalizationApiAxiosParamCreator_OrganizationLocalizationU
 
     if (value !== undefined) {
         localVarQueryParameter['value'] = value;
+    }
+
+    if (name !== undefined) {
+        localVarQueryParameter['name'] = name;
     }
 
     if (setting !== undefined) {
@@ -141911,6 +147741,7 @@ export async function LocalizationApiAxiosParamCreator_OrganizationLocalizationU
  * (BETA) Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one.
  * @summary (BETA) Workspaces that use a language.
  * @param {string} [value] Language tag that the workspace gets.
+ * @param {string} [name] Filter by workspace name. Note that the filter is case insensitive.
  * @param {'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE'} [setting] One of LOCALE, METADATA_LOCALE and DATA_LOCALE.
  * @param {'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT'} [source] Where the value comes from.
  * @param {number} [page] Zero-based page index (0..N)
@@ -141920,7 +147751,7 @@ export async function LocalizationApiAxiosParamCreator_OrganizationLocalizationU
  * @throws {RequiredError}
  */
 export async function LocalizationApiAxiosParamCreator_OrganizationLocalizationUsageWorkspaces(
-    value?: string, setting?: 'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE', source?: 'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT', page?: number, size?: number, 
+    value?: string, name?: string, setting?: 'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE', source?: 'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT', page?: number, size?: number, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -141937,6 +147768,10 @@ export async function LocalizationApiAxiosParamCreator_OrganizationLocalizationU
 
     if (value !== undefined) {
         localVarQueryParameter['value'] = value;
+    }
+
+    if (name !== undefined) {
+        localVarQueryParameter['name'] = name;
     }
 
     if (setting !== undefined) {
@@ -142068,6 +147903,7 @@ export async function LocalizationApiAxiosParamCreator_WorkspaceLocalizationUsag
  * @summary (BETA) Workspace members who get a language.
  * @param {string} workspaceId 
  * @param {string} [value] Language tag that the user gets.
+ * @param {string} [name] Filter by user name, email or login (user ID). Note that the filter is case insensitive.
  * @param {'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE'} [setting] One of LOCALE, METADATA_LOCALE and DATA_LOCALE.
  * @param {'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT'} [source] Where the value comes from.
  * @param {number} [page] Zero-based page index (0..N)
@@ -142077,7 +147913,7 @@ export async function LocalizationApiAxiosParamCreator_WorkspaceLocalizationUsag
  * @throws {RequiredError}
  */
 export async function LocalizationApiAxiosParamCreator_WorkspaceLocalizationUsageUsers(
-    workspaceId: string, value?: string, setting?: 'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE', source?: 'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT', page?: number, size?: number, 
+    workspaceId: string, value?: string, name?: string, setting?: 'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE', source?: 'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT', page?: number, size?: number, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -142097,6 +147933,10 @@ export async function LocalizationApiAxiosParamCreator_WorkspaceLocalizationUsag
 
     if (value !== undefined) {
         localVarQueryParameter['value'] = value;
+    }
+
+    if (name !== undefined) {
+        localVarQueryParameter['name'] = name;
     }
 
     if (setting !== undefined) {
@@ -142201,7 +148041,7 @@ export async function LocalizationApi_OrganizationLocalizationUsageUsers(
     configuration?: Configuration,
 ): AxiosPromise<LocalizationUsageUsers> {
     const localVarAxiosArgs = await LocalizationApiAxiosParamCreator_OrganizationLocalizationUsageUsers(
-        requestParameters.value, requestParameters.setting, requestParameters.source, requestParameters.page, requestParameters.size, 
+        requestParameters.value, requestParameters.name, requestParameters.setting, requestParameters.source, requestParameters.page, requestParameters.size, 
         options || {},
         configuration,
     );
@@ -142227,7 +148067,7 @@ export async function LocalizationApi_OrganizationLocalizationUsageWorkspaces(
     configuration?: Configuration,
 ): AxiosPromise<LocalizationUsageWorkspaces> {
     const localVarAxiosArgs = await LocalizationApiAxiosParamCreator_OrganizationLocalizationUsageWorkspaces(
-        requestParameters.value, requestParameters.setting, requestParameters.source, requestParameters.page, requestParameters.size, 
+        requestParameters.value, requestParameters.name, requestParameters.setting, requestParameters.source, requestParameters.page, requestParameters.size, 
         options || {},
         configuration,
     );
@@ -142305,7 +148145,7 @@ export async function LocalizationApi_WorkspaceLocalizationUsageUsers(
     configuration?: Configuration,
 ): AxiosPromise<LocalizationUsageUsers> {
     const localVarAxiosArgs = await LocalizationApiAxiosParamCreator_WorkspaceLocalizationUsageUsers(
-        requestParameters.workspaceId, requestParameters.value, requestParameters.setting, requestParameters.source, requestParameters.page, requestParameters.size, 
+        requestParameters.workspaceId, requestParameters.value, requestParameters.name, requestParameters.setting, requestParameters.source, requestParameters.page, requestParameters.size, 
         options || {},
         configuration,
     );
@@ -142403,6 +148243,13 @@ export interface LocalizationApiOrganizationLocalizationUsageUsersRequest {
     readonly value?: string
 
     /**
+     * Filter by user name, email or login (user ID). Note that the filter is case insensitive.
+     * @type {string}
+     * @memberof LocalizationApiOrganizationLocalizationUsageUsers
+     */
+    readonly name?: string
+
+    /**
      * One of LOCALE, METADATA_LOCALE and DATA_LOCALE.
      * @type {'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE'}
      * @memberof LocalizationApiOrganizationLocalizationUsageUsers
@@ -142443,6 +148290,13 @@ export interface LocalizationApiOrganizationLocalizationUsageWorkspacesRequest {
      * @memberof LocalizationApiOrganizationLocalizationUsageWorkspaces
      */
     readonly value?: string
+
+    /**
+     * Filter by workspace name. Note that the filter is case insensitive.
+     * @type {string}
+     * @memberof LocalizationApiOrganizationLocalizationUsageWorkspaces
+     */
+    readonly name?: string
 
     /**
      * One of LOCALE, METADATA_LOCALE and DATA_LOCALE.
@@ -142520,6 +148374,13 @@ export interface LocalizationApiWorkspaceLocalizationUsageUsersRequest {
      * @memberof LocalizationApiWorkspaceLocalizationUsageUsers
      */
     readonly value?: string
+
+    /**
+     * Filter by user name, email or login (user ID). Note that the filter is case insensitive.
+     * @type {string}
+     * @memberof LocalizationApiWorkspaceLocalizationUsageUsers
+     */
+    readonly name?: string
 
     /**
      * One of LOCALE, METADATA_LOCALE and DATA_LOCALE.
@@ -156527,6 +162388,1001 @@ export class OrganizationSettingControllerApi extends BaseAPI implements Organiz
 }
 
 
+// PageTemplateControllerApi FP - PageTemplateControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Post Page Template
+ * @param {string} workspaceId 
+ * @param {JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument} jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument 
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PageTemplateControllerApiAxiosParamCreator_CreateEntityPageTemplates(
+    workspaceId: string, jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument: JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('createEntityPageTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument' is not null or undefined
+    assertParamExists('createEntityPageTemplates', 'jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument', jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/pageTemplates`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument !== undefined ? jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument : {})
+        : jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// PageTemplateControllerApi FP - PageTemplateControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Delete a Page Template
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PageTemplateControllerApiAxiosParamCreator_DeleteEntityPageTemplates(
+    workspaceId: string, objectId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('deleteEntityPageTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('deleteEntityPageTemplates', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/pageTemplates/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// PageTemplateControllerApi FP - PageTemplateControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Get all Page Templates
+ * @param {string} workspaceId 
+ * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {number} [page] Zero-based page index (0..N)
+ * @param {number} [size] The size of the page to be returned
+ * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PageTemplateControllerApiAxiosParamCreator_GetAllEntitiesPageTemplates(
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getAllEntitiesPageTemplates', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/pageTemplates`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (origin !== undefined) {
+        localVarQueryParameter['origin'] = origin;
+    }
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (sort) {
+        localVarQueryParameter['sort'] = sort;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// PageTemplateControllerApi FP - PageTemplateControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Get a Page Template
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PageTemplateControllerApiAxiosParamCreator_GetEntityPageTemplates(
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getEntityPageTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('getEntityPageTemplates', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/pageTemplates/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// PageTemplateControllerApi FP - PageTemplateControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Patch a Page Template
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiPublisherDocumentPageTemplatePatchDocument} jsonApiPublisherDocumentPageTemplatePatchDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PageTemplateControllerApiAxiosParamCreator_PatchEntityPageTemplates(
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentPageTemplatePatchDocument: JsonApiPublisherDocumentPageTemplatePatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('patchEntityPageTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('patchEntityPageTemplates', 'objectId', objectId)
+    // verify required parameter 'jsonApiPublisherDocumentPageTemplatePatchDocument' is not null or undefined
+    assertParamExists('patchEntityPageTemplates', 'jsonApiPublisherDocumentPageTemplatePatchDocument', jsonApiPublisherDocumentPageTemplatePatchDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/pageTemplates/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiPublisherDocumentPageTemplatePatchDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiPublisherDocumentPageTemplatePatchDocument !== undefined ? jsonApiPublisherDocumentPageTemplatePatchDocument : {})
+        : jsonApiPublisherDocumentPageTemplatePatchDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// PageTemplateControllerApi FP - PageTemplateControllerApiAxiosParamCreator
+/**
+ * 
+ * @summary Put a Page Template
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiPublisherDocumentPageTemplateInDocument} jsonApiPublisherDocumentPageTemplateInDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PageTemplateControllerApiAxiosParamCreator_UpdateEntityPageTemplates(
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentPageTemplateInDocument: JsonApiPublisherDocumentPageTemplateInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('updateEntityPageTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('updateEntityPageTemplates', 'objectId', objectId)
+    // verify required parameter 'jsonApiPublisherDocumentPageTemplateInDocument' is not null or undefined
+    assertParamExists('updateEntityPageTemplates', 'jsonApiPublisherDocumentPageTemplateInDocument', jsonApiPublisherDocumentPageTemplateInDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/pageTemplates/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiPublisherDocumentPageTemplateInDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiPublisherDocumentPageTemplateInDocument !== undefined ? jsonApiPublisherDocumentPageTemplateInDocument : {})
+        : jsonApiPublisherDocumentPageTemplateInDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// PageTemplateControllerApi Api FP
+/**
+ * 
+ * @summary Post Page Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PageTemplateControllerApiCreateEntityPageTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PageTemplateControllerApi_CreateEntityPageTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PageTemplateControllerApiCreateEntityPageTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument> {
+    const localVarAxiosArgs = await PageTemplateControllerApiAxiosParamCreator_CreateEntityPageTemplates(
+        requestParameters.workspaceId, requestParameters.jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument, requestParameters.include, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// PageTemplateControllerApi Api FP
+/**
+ * 
+ * @summary Delete a Page Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PageTemplateControllerApiDeleteEntityPageTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PageTemplateControllerApi_DeleteEntityPageTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PageTemplateControllerApiDeleteEntityPageTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await PageTemplateControllerApiAxiosParamCreator_DeleteEntityPageTemplates(
+        requestParameters.workspaceId, requestParameters.objectId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// PageTemplateControllerApi Api FP
+/**
+ * 
+ * @summary Get all Page Templates
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PageTemplateControllerApiGetAllEntitiesPageTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PageTemplateControllerApi_GetAllEntitiesPageTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PageTemplateControllerApiGetAllEntitiesPageTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutList> {
+    const localVarAxiosArgs = await PageTemplateControllerApiAxiosParamCreator_GetAllEntitiesPageTemplates(
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// PageTemplateControllerApi Api FP
+/**
+ * 
+ * @summary Get a Page Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PageTemplateControllerApiGetEntityPageTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PageTemplateControllerApi_GetEntityPageTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PageTemplateControllerApiGetEntityPageTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument> {
+    const localVarAxiosArgs = await PageTemplateControllerApiAxiosParamCreator_GetEntityPageTemplates(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.include, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// PageTemplateControllerApi Api FP
+/**
+ * 
+ * @summary Patch a Page Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PageTemplateControllerApiPatchEntityPageTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PageTemplateControllerApi_PatchEntityPageTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PageTemplateControllerApiPatchEntityPageTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument> {
+    const localVarAxiosArgs = await PageTemplateControllerApiAxiosParamCreator_PatchEntityPageTemplates(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiPublisherDocumentPageTemplatePatchDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// PageTemplateControllerApi Api FP
+/**
+ * 
+ * @summary Put a Page Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PageTemplateControllerApiUpdateEntityPageTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PageTemplateControllerApi_UpdateEntityPageTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PageTemplateControllerApiUpdateEntityPageTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument> {
+    const localVarAxiosArgs = await PageTemplateControllerApiAxiosParamCreator_UpdateEntityPageTemplates(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiPublisherDocumentPageTemplateInDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * PageTemplateControllerApi - interface
+ * @export
+ * @interface PageTemplateControllerApi
+ */
+export interface PageTemplateControllerApiInterface {
+    /**
+     * 
+     * @summary Post Page Template
+     * @param {PageTemplateControllerApiCreateEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PageTemplateControllerApiInterface
+     */
+    createEntityPageTemplates(requestParameters: PageTemplateControllerApiCreateEntityPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument>;
+
+    /**
+     * 
+     * @summary Delete a Page Template
+     * @param {PageTemplateControllerApiDeleteEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PageTemplateControllerApiInterface
+     */
+    deleteEntityPageTemplates(requestParameters: PageTemplateControllerApiDeleteEntityPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
+     * @summary Get all Page Templates
+     * @param {PageTemplateControllerApiGetAllEntitiesPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PageTemplateControllerApiInterface
+     */
+    getAllEntitiesPageTemplates(requestParameters: PageTemplateControllerApiGetAllEntitiesPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutList>;
+
+    /**
+     * 
+     * @summary Get a Page Template
+     * @param {PageTemplateControllerApiGetEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PageTemplateControllerApiInterface
+     */
+    getEntityPageTemplates(requestParameters: PageTemplateControllerApiGetEntityPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument>;
+
+    /**
+     * 
+     * @summary Patch a Page Template
+     * @param {PageTemplateControllerApiPatchEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PageTemplateControllerApiInterface
+     */
+    patchEntityPageTemplates(requestParameters: PageTemplateControllerApiPatchEntityPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument>;
+
+    /**
+     * 
+     * @summary Put a Page Template
+     * @param {PageTemplateControllerApiUpdateEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PageTemplateControllerApiInterface
+     */
+    updateEntityPageTemplates(requestParameters: PageTemplateControllerApiUpdateEntityPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument>;
+
+}
+
+/**
+ * Request parameters for createEntityPageTemplates operation in PageTemplateControllerApi.
+ * @export
+ * @interface PageTemplateControllerApiCreateEntityPageTemplatesRequest
+ */
+export interface PageTemplateControllerApiCreateEntityPageTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PageTemplateControllerApiCreateEntityPageTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument}
+     * @memberof PageTemplateControllerApiCreateEntityPageTemplates
+     */
+    readonly jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument: JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof PageTemplateControllerApiCreateEntityPageTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof PageTemplateControllerApiCreateEntityPageTemplates
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for deleteEntityPageTemplates operation in PageTemplateControllerApi.
+ * @export
+ * @interface PageTemplateControllerApiDeleteEntityPageTemplatesRequest
+ */
+export interface PageTemplateControllerApiDeleteEntityPageTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PageTemplateControllerApiDeleteEntityPageTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PageTemplateControllerApiDeleteEntityPageTemplates
+     */
+    readonly objectId: string
+}
+
+/**
+ * Request parameters for getAllEntitiesPageTemplates operation in PageTemplateControllerApi.
+ * @export
+ * @interface PageTemplateControllerApiGetAllEntitiesPageTemplatesRequest
+ */
+export interface PageTemplateControllerApiGetAllEntitiesPageTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PageTemplateControllerApiGetAllEntitiesPageTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof PageTemplateControllerApiGetAllEntitiesPageTemplates
+     */
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof PageTemplateControllerApiGetAllEntitiesPageTemplates
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof PageTemplateControllerApiGetAllEntitiesPageTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof PageTemplateControllerApiGetAllEntitiesPageTemplates
+     */
+    readonly page?: number
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof PageTemplateControllerApiGetAllEntitiesPageTemplates
+     */
+    readonly size?: number
+
+    /**
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof PageTemplateControllerApiGetAllEntitiesPageTemplates
+     */
+    readonly sort?: Array<string>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PageTemplateControllerApiGetAllEntitiesPageTemplates
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'page' | 'all' | 'ALL'>}
+     * @memberof PageTemplateControllerApiGetAllEntitiesPageTemplates
+     */
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for getEntityPageTemplates operation in PageTemplateControllerApi.
+ * @export
+ * @interface PageTemplateControllerApiGetEntityPageTemplatesRequest
+ */
+export interface PageTemplateControllerApiGetEntityPageTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PageTemplateControllerApiGetEntityPageTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PageTemplateControllerApiGetEntityPageTemplates
+     */
+    readonly objectId: string
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof PageTemplateControllerApiGetEntityPageTemplates
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof PageTemplateControllerApiGetEntityPageTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PageTemplateControllerApiGetEntityPageTemplates
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof PageTemplateControllerApiGetEntityPageTemplates
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for patchEntityPageTemplates operation in PageTemplateControllerApi.
+ * @export
+ * @interface PageTemplateControllerApiPatchEntityPageTemplatesRequest
+ */
+export interface PageTemplateControllerApiPatchEntityPageTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PageTemplateControllerApiPatchEntityPageTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PageTemplateControllerApiPatchEntityPageTemplates
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiPublisherDocumentPageTemplatePatchDocument}
+     * @memberof PageTemplateControllerApiPatchEntityPageTemplates
+     */
+    readonly jsonApiPublisherDocumentPageTemplatePatchDocument: JsonApiPublisherDocumentPageTemplatePatchDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof PageTemplateControllerApiPatchEntityPageTemplates
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof PageTemplateControllerApiPatchEntityPageTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+}
+
+/**
+ * Request parameters for updateEntityPageTemplates operation in PageTemplateControllerApi.
+ * @export
+ * @interface PageTemplateControllerApiUpdateEntityPageTemplatesRequest
+ */
+export interface PageTemplateControllerApiUpdateEntityPageTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PageTemplateControllerApiUpdateEntityPageTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PageTemplateControllerApiUpdateEntityPageTemplates
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiPublisherDocumentPageTemplateInDocument}
+     * @memberof PageTemplateControllerApiUpdateEntityPageTemplates
+     */
+    readonly jsonApiPublisherDocumentPageTemplateInDocument: JsonApiPublisherDocumentPageTemplateInDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof PageTemplateControllerApiUpdateEntityPageTemplates
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof PageTemplateControllerApiUpdateEntityPageTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+}
+
+/**
+ * PageTemplateControllerApi - object-oriented interface
+ * @export
+ * @class PageTemplateControllerApi
+ * @extends {BaseAPI}
+ */
+export class PageTemplateControllerApi extends BaseAPI implements PageTemplateControllerApiInterface {
+    /**
+     * 
+     * @summary Post Page Template
+     * @param {PageTemplateControllerApiCreateEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PageTemplateControllerApi
+     */
+    public createEntityPageTemplates(requestParameters: PageTemplateControllerApiCreateEntityPageTemplatesRequest, options?: AxiosRequestConfig) {
+        return PageTemplateControllerApi_CreateEntityPageTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Delete a Page Template
+     * @param {PageTemplateControllerApiDeleteEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PageTemplateControllerApi
+     */
+    public deleteEntityPageTemplates(requestParameters: PageTemplateControllerApiDeleteEntityPageTemplatesRequest, options?: AxiosRequestConfig) {
+        return PageTemplateControllerApi_DeleteEntityPageTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get all Page Templates
+     * @param {PageTemplateControllerApiGetAllEntitiesPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PageTemplateControllerApi
+     */
+    public getAllEntitiesPageTemplates(requestParameters: PageTemplateControllerApiGetAllEntitiesPageTemplatesRequest, options?: AxiosRequestConfig) {
+        return PageTemplateControllerApi_GetAllEntitiesPageTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get a Page Template
+     * @param {PageTemplateControllerApiGetEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PageTemplateControllerApi
+     */
+    public getEntityPageTemplates(requestParameters: PageTemplateControllerApiGetEntityPageTemplatesRequest, options?: AxiosRequestConfig) {
+        return PageTemplateControllerApi_GetEntityPageTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Patch a Page Template
+     * @param {PageTemplateControllerApiPatchEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PageTemplateControllerApi
+     */
+    public patchEntityPageTemplates(requestParameters: PageTemplateControllerApiPatchEntityPageTemplatesRequest, options?: AxiosRequestConfig) {
+        return PageTemplateControllerApi_PatchEntityPageTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Put a Page Template
+     * @param {PageTemplateControllerApiUpdateEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PageTemplateControllerApi
+     */
+    public updateEntityPageTemplates(requestParameters: PageTemplateControllerApiUpdateEntityPageTemplatesRequest, options?: AxiosRequestConfig) {
+        return PageTemplateControllerApi_UpdateEntityPageTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+}
+
+
 // ParameterControllerApi FP - ParameterControllerApiAxiosParamCreator
 /**
  * 
@@ -163231,6 +170087,2955 @@ export class PluginsApi extends BaseAPI implements PluginsApiInterface {
      */
     public updateEntityDashboardPlugins(requestParameters: PluginsApiUpdateEntityDashboardPluginsRequest, options?: AxiosRequestConfig) {
         return PluginsApi_UpdateEntityDashboardPlugins(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+}
+
+
+// PublisherDocumentsApi FP - PublisherDocumentsApiAxiosParamCreator
+/**
+ * 
+ * @summary Post Document Template
+ * @param {string} workspaceId 
+ * @param {JsonApiPublisherDocumentTemplatePostOptionalIdDocument} jsonApiPublisherDocumentTemplatePostOptionalIdDocument 
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApiAxiosParamCreator_CreateEntityDocumentTemplates(
+    workspaceId: string, jsonApiPublisherDocumentTemplatePostOptionalIdDocument: JsonApiPublisherDocumentTemplatePostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('createEntityDocumentTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'jsonApiPublisherDocumentTemplatePostOptionalIdDocument' is not null or undefined
+    assertParamExists('createEntityDocumentTemplates', 'jsonApiPublisherDocumentTemplatePostOptionalIdDocument', jsonApiPublisherDocumentTemplatePostOptionalIdDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documentTemplates`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiPublisherDocumentTemplatePostOptionalIdDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiPublisherDocumentTemplatePostOptionalIdDocument !== undefined ? jsonApiPublisherDocumentTemplatePostOptionalIdDocument : {})
+        : jsonApiPublisherDocumentTemplatePostOptionalIdDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// PublisherDocumentsApi FP - PublisherDocumentsApiAxiosParamCreator
+/**
+ * 
+ * @summary Post Document
+ * @param {string} workspaceId 
+ * @param {JsonApiPublisherDocumentPostOptionalIdDocument} jsonApiPublisherDocumentPostOptionalIdDocument 
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApiAxiosParamCreator_CreateEntityDocuments(
+    workspaceId: string, jsonApiPublisherDocumentPostOptionalIdDocument: JsonApiPublisherDocumentPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('createEntityDocuments', 'workspaceId', workspaceId)
+    // verify required parameter 'jsonApiPublisherDocumentPostOptionalIdDocument' is not null or undefined
+    assertParamExists('createEntityDocuments', 'jsonApiPublisherDocumentPostOptionalIdDocument', jsonApiPublisherDocumentPostOptionalIdDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documents`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiPublisherDocumentPostOptionalIdDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiPublisherDocumentPostOptionalIdDocument !== undefined ? jsonApiPublisherDocumentPostOptionalIdDocument : {})
+        : jsonApiPublisherDocumentPostOptionalIdDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// PublisherDocumentsApi FP - PublisherDocumentsApiAxiosParamCreator
+/**
+ * 
+ * @summary Post Page Template
+ * @param {string} workspaceId 
+ * @param {JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument} jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument 
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApiAxiosParamCreator_CreateEntityPageTemplates(
+    workspaceId: string, jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument: JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('createEntityPageTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument' is not null or undefined
+    assertParamExists('createEntityPageTemplates', 'jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument', jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/pageTemplates`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument !== undefined ? jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument : {})
+        : jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// PublisherDocumentsApi FP - PublisherDocumentsApiAxiosParamCreator
+/**
+ * 
+ * @summary Delete a Document Template
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApiAxiosParamCreator_DeleteEntityDocumentTemplates(
+    workspaceId: string, objectId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('deleteEntityDocumentTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('deleteEntityDocumentTemplates', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documentTemplates/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// PublisherDocumentsApi FP - PublisherDocumentsApiAxiosParamCreator
+/**
+ * 
+ * @summary Delete a Document
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApiAxiosParamCreator_DeleteEntityDocuments(
+    workspaceId: string, objectId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('deleteEntityDocuments', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('deleteEntityDocuments', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documents/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// PublisherDocumentsApi FP - PublisherDocumentsApiAxiosParamCreator
+/**
+ * 
+ * @summary Delete a Page Template
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApiAxiosParamCreator_DeleteEntityPageTemplates(
+    workspaceId: string, objectId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('deleteEntityPageTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('deleteEntityPageTemplates', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/pageTemplates/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// PublisherDocumentsApi FP - PublisherDocumentsApiAxiosParamCreator
+/**
+ * 
+ * @summary Get all Document Templates
+ * @param {string} workspaceId 
+ * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {number} [page] Zero-based page index (0..N)
+ * @param {number} [size] The size of the page to be returned
+ * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApiAxiosParamCreator_GetAllEntitiesDocumentTemplates(
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getAllEntitiesDocumentTemplates', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documentTemplates`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (origin !== undefined) {
+        localVarQueryParameter['origin'] = origin;
+    }
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (sort) {
+        localVarQueryParameter['sort'] = sort;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// PublisherDocumentsApi FP - PublisherDocumentsApiAxiosParamCreator
+/**
+ * 
+ * @summary Get all Documents
+ * @param {string} workspaceId 
+ * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {number} [page] Zero-based page index (0..N)
+ * @param {number} [size] The size of the page to be returned
+ * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApiAxiosParamCreator_GetAllEntitiesDocuments(
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getAllEntitiesDocuments', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documents`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (origin !== undefined) {
+        localVarQueryParameter['origin'] = origin;
+    }
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (sort) {
+        localVarQueryParameter['sort'] = sort;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// PublisherDocumentsApi FP - PublisherDocumentsApiAxiosParamCreator
+/**
+ * 
+ * @summary Get all Page Templates
+ * @param {string} workspaceId 
+ * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {number} [page] Zero-based page index (0..N)
+ * @param {number} [size] The size of the page to be returned
+ * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'page' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApiAxiosParamCreator_GetAllEntitiesPageTemplates(
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getAllEntitiesPageTemplates', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/pageTemplates`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (origin !== undefined) {
+        localVarQueryParameter['origin'] = origin;
+    }
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (sort) {
+        localVarQueryParameter['sort'] = sort;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// PublisherDocumentsApi FP - PublisherDocumentsApiAxiosParamCreator
+/**
+ * 
+ * @summary Get a Document Template
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApiAxiosParamCreator_GetEntityDocumentTemplates(
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getEntityDocumentTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('getEntityDocumentTemplates', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documentTemplates/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// PublisherDocumentsApi FP - PublisherDocumentsApiAxiosParamCreator
+/**
+ * 
+ * @summary Get a Document
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApiAxiosParamCreator_GetEntityDocuments(
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getEntityDocuments', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('getEntityDocuments', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documents/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// PublisherDocumentsApi FP - PublisherDocumentsApiAxiosParamCreator
+/**
+ * 
+ * @summary Get a Page Template
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApiAxiosParamCreator_GetEntityPageTemplates(
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getEntityPageTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('getEntityPageTemplates', 'objectId', objectId)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/pageTemplates/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// PublisherDocumentsApi FP - PublisherDocumentsApiAxiosParamCreator
+/**
+ * 
+ * @summary Patch a Document Template
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiPublisherDocumentTemplatePatchDocument} jsonApiPublisherDocumentTemplatePatchDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApiAxiosParamCreator_PatchEntityDocumentTemplates(
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentTemplatePatchDocument: JsonApiPublisherDocumentTemplatePatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('patchEntityDocumentTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('patchEntityDocumentTemplates', 'objectId', objectId)
+    // verify required parameter 'jsonApiPublisherDocumentTemplatePatchDocument' is not null or undefined
+    assertParamExists('patchEntityDocumentTemplates', 'jsonApiPublisherDocumentTemplatePatchDocument', jsonApiPublisherDocumentTemplatePatchDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documentTemplates/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiPublisherDocumentTemplatePatchDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiPublisherDocumentTemplatePatchDocument !== undefined ? jsonApiPublisherDocumentTemplatePatchDocument : {})
+        : jsonApiPublisherDocumentTemplatePatchDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// PublisherDocumentsApi FP - PublisherDocumentsApiAxiosParamCreator
+/**
+ * 
+ * @summary Patch a Document
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiPublisherDocumentPatchDocument} jsonApiPublisherDocumentPatchDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApiAxiosParamCreator_PatchEntityDocuments(
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentPatchDocument: JsonApiPublisherDocumentPatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('patchEntityDocuments', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('patchEntityDocuments', 'objectId', objectId)
+    // verify required parameter 'jsonApiPublisherDocumentPatchDocument' is not null or undefined
+    assertParamExists('patchEntityDocuments', 'jsonApiPublisherDocumentPatchDocument', jsonApiPublisherDocumentPatchDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documents/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiPublisherDocumentPatchDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiPublisherDocumentPatchDocument !== undefined ? jsonApiPublisherDocumentPatchDocument : {})
+        : jsonApiPublisherDocumentPatchDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// PublisherDocumentsApi FP - PublisherDocumentsApiAxiosParamCreator
+/**
+ * 
+ * @summary Patch a Page Template
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiPublisherDocumentPageTemplatePatchDocument} jsonApiPublisherDocumentPageTemplatePatchDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApiAxiosParamCreator_PatchEntityPageTemplates(
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentPageTemplatePatchDocument: JsonApiPublisherDocumentPageTemplatePatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('patchEntityPageTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('patchEntityPageTemplates', 'objectId', objectId)
+    // verify required parameter 'jsonApiPublisherDocumentPageTemplatePatchDocument' is not null or undefined
+    assertParamExists('patchEntityPageTemplates', 'jsonApiPublisherDocumentPageTemplatePatchDocument', jsonApiPublisherDocumentPageTemplatePatchDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/pageTemplates/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiPublisherDocumentPageTemplatePatchDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiPublisherDocumentPageTemplatePatchDocument !== undefined ? jsonApiPublisherDocumentPageTemplatePatchDocument : {})
+        : jsonApiPublisherDocumentPageTemplatePatchDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// PublisherDocumentsApi FP - PublisherDocumentsApiAxiosParamCreator
+/**
+ * 
+ * @summary Put a Document Template
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiPublisherDocumentTemplateInDocument} jsonApiPublisherDocumentTemplateInDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApiAxiosParamCreator_UpdateEntityDocumentTemplates(
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentTemplateInDocument: JsonApiPublisherDocumentTemplateInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('updateEntityDocumentTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('updateEntityDocumentTemplates', 'objectId', objectId)
+    // verify required parameter 'jsonApiPublisherDocumentTemplateInDocument' is not null or undefined
+    assertParamExists('updateEntityDocumentTemplates', 'jsonApiPublisherDocumentTemplateInDocument', jsonApiPublisherDocumentTemplateInDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documentTemplates/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiPublisherDocumentTemplateInDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiPublisherDocumentTemplateInDocument !== undefined ? jsonApiPublisherDocumentTemplateInDocument : {})
+        : jsonApiPublisherDocumentTemplateInDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// PublisherDocumentsApi FP - PublisherDocumentsApiAxiosParamCreator
+/**
+ * 
+ * @summary Put a Document
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiPublisherDocumentInDocument} jsonApiPublisherDocumentInDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApiAxiosParamCreator_UpdateEntityDocuments(
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentInDocument: JsonApiPublisherDocumentInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('updateEntityDocuments', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('updateEntityDocuments', 'objectId', objectId)
+    // verify required parameter 'jsonApiPublisherDocumentInDocument' is not null or undefined
+    assertParamExists('updateEntityDocuments', 'jsonApiPublisherDocumentInDocument', jsonApiPublisherDocumentInDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documents/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiPublisherDocumentInDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiPublisherDocumentInDocument !== undefined ? jsonApiPublisherDocumentInDocument : {})
+        : jsonApiPublisherDocumentInDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// PublisherDocumentsApi FP - PublisherDocumentsApiAxiosParamCreator
+/**
+ * 
+ * @summary Put a Page Template
+ * @param {string} workspaceId 
+ * @param {string} objectId 
+ * @param {JsonApiPublisherDocumentPageTemplateInDocument} jsonApiPublisherDocumentPageTemplateInDocument 
+ * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApiAxiosParamCreator_UpdateEntityPageTemplates(
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentPageTemplateInDocument: JsonApiPublisherDocumentPageTemplateInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('updateEntityPageTemplates', 'workspaceId', workspaceId)
+    // verify required parameter 'objectId' is not null or undefined
+    assertParamExists('updateEntityPageTemplates', 'objectId', objectId)
+    // verify required parameter 'jsonApiPublisherDocumentPageTemplateInDocument' is not null or undefined
+    assertParamExists('updateEntityPageTemplates', 'jsonApiPublisherDocumentPageTemplateInDocument', jsonApiPublisherDocumentPageTemplateInDocument)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/pageTemplates/{objectId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (filter !== undefined) {
+        localVarQueryParameter['filter'] = filter;
+    }
+
+    if (include) {
+        localVarQueryParameter['include'] = include.join(COLLECTION_FORMATS.csv);
+    }
+
+
+    
+    const consumes = [
+        'application/vnd.gooddata.api+json',
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof jsonApiPublisherDocumentPageTemplateInDocument !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(jsonApiPublisherDocumentPageTemplateInDocument !== undefined ? jsonApiPublisherDocumentPageTemplateInDocument : {})
+        : jsonApiPublisherDocumentPageTemplateInDocument || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// PublisherDocumentsApi Api FP
+/**
+ * 
+ * @summary Post Document Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PublisherDocumentsApiCreateEntityDocumentTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApi_CreateEntityDocumentTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PublisherDocumentsApiCreateEntityDocumentTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument> {
+    const localVarAxiosArgs = await PublisherDocumentsApiAxiosParamCreator_CreateEntityDocumentTemplates(
+        requestParameters.workspaceId, requestParameters.jsonApiPublisherDocumentTemplatePostOptionalIdDocument, requestParameters.include, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// PublisherDocumentsApi Api FP
+/**
+ * 
+ * @summary Post Document
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PublisherDocumentsApiCreateEntityDocumentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApi_CreateEntityDocuments(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PublisherDocumentsApiCreateEntityDocumentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentOutDocument> {
+    const localVarAxiosArgs = await PublisherDocumentsApiAxiosParamCreator_CreateEntityDocuments(
+        requestParameters.workspaceId, requestParameters.jsonApiPublisherDocumentPostOptionalIdDocument, requestParameters.include, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// PublisherDocumentsApi Api FP
+/**
+ * 
+ * @summary Post Page Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PublisherDocumentsApiCreateEntityPageTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApi_CreateEntityPageTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PublisherDocumentsApiCreateEntityPageTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument> {
+    const localVarAxiosArgs = await PublisherDocumentsApiAxiosParamCreator_CreateEntityPageTemplates(
+        requestParameters.workspaceId, requestParameters.jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument, requestParameters.include, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// PublisherDocumentsApi Api FP
+/**
+ * 
+ * @summary Delete a Document Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PublisherDocumentsApiDeleteEntityDocumentTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApi_DeleteEntityDocumentTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PublisherDocumentsApiDeleteEntityDocumentTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await PublisherDocumentsApiAxiosParamCreator_DeleteEntityDocumentTemplates(
+        requestParameters.workspaceId, requestParameters.objectId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// PublisherDocumentsApi Api FP
+/**
+ * 
+ * @summary Delete a Document
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PublisherDocumentsApiDeleteEntityDocumentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApi_DeleteEntityDocuments(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PublisherDocumentsApiDeleteEntityDocumentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await PublisherDocumentsApiAxiosParamCreator_DeleteEntityDocuments(
+        requestParameters.workspaceId, requestParameters.objectId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// PublisherDocumentsApi Api FP
+/**
+ * 
+ * @summary Delete a Page Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PublisherDocumentsApiDeleteEntityPageTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApi_DeleteEntityPageTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PublisherDocumentsApiDeleteEntityPageTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await PublisherDocumentsApiAxiosParamCreator_DeleteEntityPageTemplates(
+        requestParameters.workspaceId, requestParameters.objectId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// PublisherDocumentsApi Api FP
+/**
+ * 
+ * @summary Get all Document Templates
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PublisherDocumentsApiGetAllEntitiesDocumentTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApi_GetAllEntitiesDocumentTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PublisherDocumentsApiGetAllEntitiesDocumentTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentTemplateOutList> {
+    const localVarAxiosArgs = await PublisherDocumentsApiAxiosParamCreator_GetAllEntitiesDocumentTemplates(
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// PublisherDocumentsApi Api FP
+/**
+ * 
+ * @summary Get all Documents
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PublisherDocumentsApiGetAllEntitiesDocumentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApi_GetAllEntitiesDocuments(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PublisherDocumentsApiGetAllEntitiesDocumentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentOutList> {
+    const localVarAxiosArgs = await PublisherDocumentsApiAxiosParamCreator_GetAllEntitiesDocuments(
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// PublisherDocumentsApi Api FP
+/**
+ * 
+ * @summary Get all Page Templates
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PublisherDocumentsApiGetAllEntitiesPageTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApi_GetAllEntitiesPageTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PublisherDocumentsApiGetAllEntitiesPageTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutList> {
+    const localVarAxiosArgs = await PublisherDocumentsApiAxiosParamCreator_GetAllEntitiesPageTemplates(
+        requestParameters.workspaceId, requestParameters.origin, requestParameters.filter, requestParameters.include, requestParameters.page, requestParameters.size, requestParameters.sort, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// PublisherDocumentsApi Api FP
+/**
+ * 
+ * @summary Get a Document Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PublisherDocumentsApiGetEntityDocumentTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApi_GetEntityDocumentTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PublisherDocumentsApiGetEntityDocumentTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument> {
+    const localVarAxiosArgs = await PublisherDocumentsApiAxiosParamCreator_GetEntityDocumentTemplates(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.include, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// PublisherDocumentsApi Api FP
+/**
+ * 
+ * @summary Get a Document
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PublisherDocumentsApiGetEntityDocumentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApi_GetEntityDocuments(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PublisherDocumentsApiGetEntityDocumentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentOutDocument> {
+    const localVarAxiosArgs = await PublisherDocumentsApiAxiosParamCreator_GetEntityDocuments(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.include, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// PublisherDocumentsApi Api FP
+/**
+ * 
+ * @summary Get a Page Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PublisherDocumentsApiGetEntityPageTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApi_GetEntityPageTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PublisherDocumentsApiGetEntityPageTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument> {
+    const localVarAxiosArgs = await PublisherDocumentsApiAxiosParamCreator_GetEntityPageTemplates(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.filter, requestParameters.include, requestParameters.xGDCVALIDATERELATIONS, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// PublisherDocumentsApi Api FP
+/**
+ * 
+ * @summary Patch a Document Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PublisherDocumentsApiPatchEntityDocumentTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApi_PatchEntityDocumentTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PublisherDocumentsApiPatchEntityDocumentTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument> {
+    const localVarAxiosArgs = await PublisherDocumentsApiAxiosParamCreator_PatchEntityDocumentTemplates(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiPublisherDocumentTemplatePatchDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// PublisherDocumentsApi Api FP
+/**
+ * 
+ * @summary Patch a Document
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PublisherDocumentsApiPatchEntityDocumentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApi_PatchEntityDocuments(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PublisherDocumentsApiPatchEntityDocumentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentOutDocument> {
+    const localVarAxiosArgs = await PublisherDocumentsApiAxiosParamCreator_PatchEntityDocuments(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiPublisherDocumentPatchDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// PublisherDocumentsApi Api FP
+/**
+ * 
+ * @summary Patch a Page Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PublisherDocumentsApiPatchEntityPageTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApi_PatchEntityPageTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PublisherDocumentsApiPatchEntityPageTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument> {
+    const localVarAxiosArgs = await PublisherDocumentsApiAxiosParamCreator_PatchEntityPageTemplates(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiPublisherDocumentPageTemplatePatchDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// PublisherDocumentsApi Api FP
+/**
+ * 
+ * @summary Put a Document Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PublisherDocumentsApiUpdateEntityDocumentTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApi_UpdateEntityDocumentTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PublisherDocumentsApiUpdateEntityDocumentTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument> {
+    const localVarAxiosArgs = await PublisherDocumentsApiAxiosParamCreator_UpdateEntityDocumentTemplates(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiPublisherDocumentTemplateInDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// PublisherDocumentsApi Api FP
+/**
+ * 
+ * @summary Put a Document
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PublisherDocumentsApiUpdateEntityDocumentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApi_UpdateEntityDocuments(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PublisherDocumentsApiUpdateEntityDocumentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentOutDocument> {
+    const localVarAxiosArgs = await PublisherDocumentsApiAxiosParamCreator_UpdateEntityDocuments(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiPublisherDocumentInDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// PublisherDocumentsApi Api FP
+/**
+ * 
+ * @summary Put a Page Template
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PublisherDocumentsApiUpdateEntityPageTemplatesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApi_UpdateEntityPageTemplates(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PublisherDocumentsApiUpdateEntityPageTemplatesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument> {
+    const localVarAxiosArgs = await PublisherDocumentsApiAxiosParamCreator_UpdateEntityPageTemplates(
+        requestParameters.workspaceId, requestParameters.objectId, requestParameters.jsonApiPublisherDocumentPageTemplateInDocument, requestParameters.filter, requestParameters.include, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * PublisherDocumentsApi - interface
+ * @export
+ * @interface PublisherDocumentsApi
+ */
+export interface PublisherDocumentsApiInterface {
+    /**
+     * 
+     * @summary Post Document Template
+     * @param {PublisherDocumentsApiCreateEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApiInterface
+     */
+    createEntityDocumentTemplates(requestParameters: PublisherDocumentsApiCreateEntityDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument>;
+
+    /**
+     * 
+     * @summary Post Document
+     * @param {PublisherDocumentsApiCreateEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApiInterface
+     */
+    createEntityDocuments(requestParameters: PublisherDocumentsApiCreateEntityDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutDocument>;
+
+    /**
+     * 
+     * @summary Post Page Template
+     * @param {PublisherDocumentsApiCreateEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApiInterface
+     */
+    createEntityPageTemplates(requestParameters: PublisherDocumentsApiCreateEntityPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument>;
+
+    /**
+     * 
+     * @summary Delete a Document Template
+     * @param {PublisherDocumentsApiDeleteEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApiInterface
+     */
+    deleteEntityDocumentTemplates(requestParameters: PublisherDocumentsApiDeleteEntityDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
+     * @summary Delete a Document
+     * @param {PublisherDocumentsApiDeleteEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApiInterface
+     */
+    deleteEntityDocuments(requestParameters: PublisherDocumentsApiDeleteEntityDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
+     * @summary Delete a Page Template
+     * @param {PublisherDocumentsApiDeleteEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApiInterface
+     */
+    deleteEntityPageTemplates(requestParameters: PublisherDocumentsApiDeleteEntityPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
+     * @summary Get all Document Templates
+     * @param {PublisherDocumentsApiGetAllEntitiesDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApiInterface
+     */
+    getAllEntitiesDocumentTemplates(requestParameters: PublisherDocumentsApiGetAllEntitiesDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentTemplateOutList>;
+
+    /**
+     * 
+     * @summary Get all Documents
+     * @param {PublisherDocumentsApiGetAllEntitiesDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApiInterface
+     */
+    getAllEntitiesDocuments(requestParameters: PublisherDocumentsApiGetAllEntitiesDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutList>;
+
+    /**
+     * 
+     * @summary Get all Page Templates
+     * @param {PublisherDocumentsApiGetAllEntitiesPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApiInterface
+     */
+    getAllEntitiesPageTemplates(requestParameters: PublisherDocumentsApiGetAllEntitiesPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutList>;
+
+    /**
+     * 
+     * @summary Get a Document Template
+     * @param {PublisherDocumentsApiGetEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApiInterface
+     */
+    getEntityDocumentTemplates(requestParameters: PublisherDocumentsApiGetEntityDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument>;
+
+    /**
+     * 
+     * @summary Get a Document
+     * @param {PublisherDocumentsApiGetEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApiInterface
+     */
+    getEntityDocuments(requestParameters: PublisherDocumentsApiGetEntityDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutDocument>;
+
+    /**
+     * 
+     * @summary Get a Page Template
+     * @param {PublisherDocumentsApiGetEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApiInterface
+     */
+    getEntityPageTemplates(requestParameters: PublisherDocumentsApiGetEntityPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument>;
+
+    /**
+     * 
+     * @summary Patch a Document Template
+     * @param {PublisherDocumentsApiPatchEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApiInterface
+     */
+    patchEntityDocumentTemplates(requestParameters: PublisherDocumentsApiPatchEntityDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument>;
+
+    /**
+     * 
+     * @summary Patch a Document
+     * @param {PublisherDocumentsApiPatchEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApiInterface
+     */
+    patchEntityDocuments(requestParameters: PublisherDocumentsApiPatchEntityDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutDocument>;
+
+    /**
+     * 
+     * @summary Patch a Page Template
+     * @param {PublisherDocumentsApiPatchEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApiInterface
+     */
+    patchEntityPageTemplates(requestParameters: PublisherDocumentsApiPatchEntityPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument>;
+
+    /**
+     * 
+     * @summary Put a Document Template
+     * @param {PublisherDocumentsApiUpdateEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApiInterface
+     */
+    updateEntityDocumentTemplates(requestParameters: PublisherDocumentsApiUpdateEntityDocumentTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentTemplateOutDocument>;
+
+    /**
+     * 
+     * @summary Put a Document
+     * @param {PublisherDocumentsApiUpdateEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApiInterface
+     */
+    updateEntityDocuments(requestParameters: PublisherDocumentsApiUpdateEntityDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutDocument>;
+
+    /**
+     * 
+     * @summary Put a Page Template
+     * @param {PublisherDocumentsApiUpdateEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApiInterface
+     */
+    updateEntityPageTemplates(requestParameters: PublisherDocumentsApiUpdateEntityPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument>;
+
+}
+
+/**
+ * Request parameters for createEntityDocumentTemplates operation in PublisherDocumentsApi.
+ * @export
+ * @interface PublisherDocumentsApiCreateEntityDocumentTemplatesRequest
+ */
+export interface PublisherDocumentsApiCreateEntityDocumentTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiCreateEntityDocumentTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {JsonApiPublisherDocumentTemplatePostOptionalIdDocument}
+     * @memberof PublisherDocumentsApiCreateEntityDocumentTemplates
+     */
+    readonly jsonApiPublisherDocumentTemplatePostOptionalIdDocument: JsonApiPublisherDocumentTemplatePostOptionalIdDocument
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof PublisherDocumentsApiCreateEntityDocumentTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof PublisherDocumentsApiCreateEntityDocumentTemplates
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for createEntityDocuments operation in PublisherDocumentsApi.
+ * @export
+ * @interface PublisherDocumentsApiCreateEntityDocumentsRequest
+ */
+export interface PublisherDocumentsApiCreateEntityDocumentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiCreateEntityDocuments
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {JsonApiPublisherDocumentPostOptionalIdDocument}
+     * @memberof PublisherDocumentsApiCreateEntityDocuments
+     */
+    readonly jsonApiPublisherDocumentPostOptionalIdDocument: JsonApiPublisherDocumentPostOptionalIdDocument
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof PublisherDocumentsApiCreateEntityDocuments
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof PublisherDocumentsApiCreateEntityDocuments
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for createEntityPageTemplates operation in PublisherDocumentsApi.
+ * @export
+ * @interface PublisherDocumentsApiCreateEntityPageTemplatesRequest
+ */
+export interface PublisherDocumentsApiCreateEntityPageTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiCreateEntityPageTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument}
+     * @memberof PublisherDocumentsApiCreateEntityPageTemplates
+     */
+    readonly jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument: JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof PublisherDocumentsApiCreateEntityPageTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof PublisherDocumentsApiCreateEntityPageTemplates
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for deleteEntityDocumentTemplates operation in PublisherDocumentsApi.
+ * @export
+ * @interface PublisherDocumentsApiDeleteEntityDocumentTemplatesRequest
+ */
+export interface PublisherDocumentsApiDeleteEntityDocumentTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiDeleteEntityDocumentTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiDeleteEntityDocumentTemplates
+     */
+    readonly objectId: string
+}
+
+/**
+ * Request parameters for deleteEntityDocuments operation in PublisherDocumentsApi.
+ * @export
+ * @interface PublisherDocumentsApiDeleteEntityDocumentsRequest
+ */
+export interface PublisherDocumentsApiDeleteEntityDocumentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiDeleteEntityDocuments
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiDeleteEntityDocuments
+     */
+    readonly objectId: string
+}
+
+/**
+ * Request parameters for deleteEntityPageTemplates operation in PublisherDocumentsApi.
+ * @export
+ * @interface PublisherDocumentsApiDeleteEntityPageTemplatesRequest
+ */
+export interface PublisherDocumentsApiDeleteEntityPageTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiDeleteEntityPageTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiDeleteEntityPageTemplates
+     */
+    readonly objectId: string
+}
+
+/**
+ * Request parameters for getAllEntitiesDocumentTemplates operation in PublisherDocumentsApi.
+ * @export
+ * @interface PublisherDocumentsApiGetAllEntitiesDocumentTemplatesRequest
+ */
+export interface PublisherDocumentsApiGetAllEntitiesDocumentTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiGetAllEntitiesDocumentTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof PublisherDocumentsApiGetAllEntitiesDocumentTemplates
+     */
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof PublisherDocumentsApiGetAllEntitiesDocumentTemplates
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof PublisherDocumentsApiGetAllEntitiesDocumentTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof PublisherDocumentsApiGetAllEntitiesDocumentTemplates
+     */
+    readonly page?: number
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof PublisherDocumentsApiGetAllEntitiesDocumentTemplates
+     */
+    readonly size?: number
+
+    /**
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof PublisherDocumentsApiGetAllEntitiesDocumentTemplates
+     */
+    readonly sort?: Array<string>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PublisherDocumentsApiGetAllEntitiesDocumentTemplates
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'page' | 'all' | 'ALL'>}
+     * @memberof PublisherDocumentsApiGetAllEntitiesDocumentTemplates
+     */
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for getAllEntitiesDocuments operation in PublisherDocumentsApi.
+ * @export
+ * @interface PublisherDocumentsApiGetAllEntitiesDocumentsRequest
+ */
+export interface PublisherDocumentsApiGetAllEntitiesDocumentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiGetAllEntitiesDocuments
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof PublisherDocumentsApiGetAllEntitiesDocuments
+     */
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof PublisherDocumentsApiGetAllEntitiesDocuments
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof PublisherDocumentsApiGetAllEntitiesDocuments
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof PublisherDocumentsApiGetAllEntitiesDocuments
+     */
+    readonly page?: number
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof PublisherDocumentsApiGetAllEntitiesDocuments
+     */
+    readonly size?: number
+
+    /**
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof PublisherDocumentsApiGetAllEntitiesDocuments
+     */
+    readonly sort?: Array<string>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PublisherDocumentsApiGetAllEntitiesDocuments
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'page' | 'all' | 'ALL'>}
+     * @memberof PublisherDocumentsApiGetAllEntitiesDocuments
+     */
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for getAllEntitiesPageTemplates operation in PublisherDocumentsApi.
+ * @export
+ * @interface PublisherDocumentsApiGetAllEntitiesPageTemplatesRequest
+ */
+export interface PublisherDocumentsApiGetAllEntitiesPageTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiGetAllEntitiesPageTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof PublisherDocumentsApiGetAllEntitiesPageTemplates
+     */
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof PublisherDocumentsApiGetAllEntitiesPageTemplates
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof PublisherDocumentsApiGetAllEntitiesPageTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof PublisherDocumentsApiGetAllEntitiesPageTemplates
+     */
+    readonly page?: number
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof PublisherDocumentsApiGetAllEntitiesPageTemplates
+     */
+    readonly size?: number
+
+    /**
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof PublisherDocumentsApiGetAllEntitiesPageTemplates
+     */
+    readonly sort?: Array<string>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PublisherDocumentsApiGetAllEntitiesPageTemplates
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'page' | 'all' | 'ALL'>}
+     * @memberof PublisherDocumentsApiGetAllEntitiesPageTemplates
+     */
+    readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for getEntityDocumentTemplates operation in PublisherDocumentsApi.
+ * @export
+ * @interface PublisherDocumentsApiGetEntityDocumentTemplatesRequest
+ */
+export interface PublisherDocumentsApiGetEntityDocumentTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiGetEntityDocumentTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiGetEntityDocumentTemplates
+     */
+    readonly objectId: string
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof PublisherDocumentsApiGetEntityDocumentTemplates
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof PublisherDocumentsApiGetEntityDocumentTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PublisherDocumentsApiGetEntityDocumentTemplates
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof PublisherDocumentsApiGetEntityDocumentTemplates
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for getEntityDocuments operation in PublisherDocumentsApi.
+ * @export
+ * @interface PublisherDocumentsApiGetEntityDocumentsRequest
+ */
+export interface PublisherDocumentsApiGetEntityDocumentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiGetEntityDocuments
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiGetEntityDocuments
+     */
+    readonly objectId: string
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof PublisherDocumentsApiGetEntityDocuments
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof PublisherDocumentsApiGetEntityDocuments
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PublisherDocumentsApiGetEntityDocuments
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof PublisherDocumentsApiGetEntityDocuments
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for getEntityPageTemplates operation in PublisherDocumentsApi.
+ * @export
+ * @interface PublisherDocumentsApiGetEntityPageTemplatesRequest
+ */
+export interface PublisherDocumentsApiGetEntityPageTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiGetEntityPageTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiGetEntityPageTemplates
+     */
+    readonly objectId: string
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof PublisherDocumentsApiGetEntityPageTemplates
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof PublisherDocumentsApiGetEntityPageTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PublisherDocumentsApiGetEntityPageTemplates
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+
+    /**
+     * Include Meta objects.
+     * @type {Array<'origin' | 'all' | 'ALL'>}
+     * @memberof PublisherDocumentsApiGetEntityPageTemplates
+     */
+    readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>
+}
+
+/**
+ * Request parameters for patchEntityDocumentTemplates operation in PublisherDocumentsApi.
+ * @export
+ * @interface PublisherDocumentsApiPatchEntityDocumentTemplatesRequest
+ */
+export interface PublisherDocumentsApiPatchEntityDocumentTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiPatchEntityDocumentTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiPatchEntityDocumentTemplates
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiPublisherDocumentTemplatePatchDocument}
+     * @memberof PublisherDocumentsApiPatchEntityDocumentTemplates
+     */
+    readonly jsonApiPublisherDocumentTemplatePatchDocument: JsonApiPublisherDocumentTemplatePatchDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof PublisherDocumentsApiPatchEntityDocumentTemplates
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof PublisherDocumentsApiPatchEntityDocumentTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+}
+
+/**
+ * Request parameters for patchEntityDocuments operation in PublisherDocumentsApi.
+ * @export
+ * @interface PublisherDocumentsApiPatchEntityDocumentsRequest
+ */
+export interface PublisherDocumentsApiPatchEntityDocumentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiPatchEntityDocuments
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiPatchEntityDocuments
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiPublisherDocumentPatchDocument}
+     * @memberof PublisherDocumentsApiPatchEntityDocuments
+     */
+    readonly jsonApiPublisherDocumentPatchDocument: JsonApiPublisherDocumentPatchDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof PublisherDocumentsApiPatchEntityDocuments
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof PublisherDocumentsApiPatchEntityDocuments
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+}
+
+/**
+ * Request parameters for patchEntityPageTemplates operation in PublisherDocumentsApi.
+ * @export
+ * @interface PublisherDocumentsApiPatchEntityPageTemplatesRequest
+ */
+export interface PublisherDocumentsApiPatchEntityPageTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiPatchEntityPageTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiPatchEntityPageTemplates
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiPublisherDocumentPageTemplatePatchDocument}
+     * @memberof PublisherDocumentsApiPatchEntityPageTemplates
+     */
+    readonly jsonApiPublisherDocumentPageTemplatePatchDocument: JsonApiPublisherDocumentPageTemplatePatchDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof PublisherDocumentsApiPatchEntityPageTemplates
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof PublisherDocumentsApiPatchEntityPageTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+}
+
+/**
+ * Request parameters for updateEntityDocumentTemplates operation in PublisherDocumentsApi.
+ * @export
+ * @interface PublisherDocumentsApiUpdateEntityDocumentTemplatesRequest
+ */
+export interface PublisherDocumentsApiUpdateEntityDocumentTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiUpdateEntityDocumentTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiUpdateEntityDocumentTemplates
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiPublisherDocumentTemplateInDocument}
+     * @memberof PublisherDocumentsApiUpdateEntityDocumentTemplates
+     */
+    readonly jsonApiPublisherDocumentTemplateInDocument: JsonApiPublisherDocumentTemplateInDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof PublisherDocumentsApiUpdateEntityDocumentTemplates
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof PublisherDocumentsApiUpdateEntityDocumentTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+}
+
+/**
+ * Request parameters for updateEntityDocuments operation in PublisherDocumentsApi.
+ * @export
+ * @interface PublisherDocumentsApiUpdateEntityDocumentsRequest
+ */
+export interface PublisherDocumentsApiUpdateEntityDocumentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiUpdateEntityDocuments
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiUpdateEntityDocuments
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiPublisherDocumentInDocument}
+     * @memberof PublisherDocumentsApiUpdateEntityDocuments
+     */
+    readonly jsonApiPublisherDocumentInDocument: JsonApiPublisherDocumentInDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof PublisherDocumentsApiUpdateEntityDocuments
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof PublisherDocumentsApiUpdateEntityDocuments
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+}
+
+/**
+ * Request parameters for updateEntityPageTemplates operation in PublisherDocumentsApi.
+ * @export
+ * @interface PublisherDocumentsApiUpdateEntityPageTemplatesRequest
+ */
+export interface PublisherDocumentsApiUpdateEntityPageTemplatesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiUpdateEntityPageTemplates
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiUpdateEntityPageTemplates
+     */
+    readonly objectId: string
+
+    /**
+     * 
+     * @type {JsonApiPublisherDocumentPageTemplateInDocument}
+     * @memberof PublisherDocumentsApiUpdateEntityPageTemplates
+     */
+    readonly jsonApiPublisherDocumentPageTemplateInDocument: JsonApiPublisherDocumentPageTemplateInDocument
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof PublisherDocumentsApiUpdateEntityPageTemplates
+     */
+    readonly filter?: string
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @memberof PublisherDocumentsApiUpdateEntityPageTemplates
+     */
+    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+}
+
+/**
+ * PublisherDocumentsApi - object-oriented interface
+ * @export
+ * @class PublisherDocumentsApi
+ * @extends {BaseAPI}
+ */
+export class PublisherDocumentsApi extends BaseAPI implements PublisherDocumentsApiInterface {
+    /**
+     * 
+     * @summary Post Document Template
+     * @param {PublisherDocumentsApiCreateEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApi
+     */
+    public createEntityDocumentTemplates(requestParameters: PublisherDocumentsApiCreateEntityDocumentTemplatesRequest, options?: AxiosRequestConfig) {
+        return PublisherDocumentsApi_CreateEntityDocumentTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Post Document
+     * @param {PublisherDocumentsApiCreateEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApi
+     */
+    public createEntityDocuments(requestParameters: PublisherDocumentsApiCreateEntityDocumentsRequest, options?: AxiosRequestConfig) {
+        return PublisherDocumentsApi_CreateEntityDocuments(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Post Page Template
+     * @param {PublisherDocumentsApiCreateEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApi
+     */
+    public createEntityPageTemplates(requestParameters: PublisherDocumentsApiCreateEntityPageTemplatesRequest, options?: AxiosRequestConfig) {
+        return PublisherDocumentsApi_CreateEntityPageTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Delete a Document Template
+     * @param {PublisherDocumentsApiDeleteEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApi
+     */
+    public deleteEntityDocumentTemplates(requestParameters: PublisherDocumentsApiDeleteEntityDocumentTemplatesRequest, options?: AxiosRequestConfig) {
+        return PublisherDocumentsApi_DeleteEntityDocumentTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Delete a Document
+     * @param {PublisherDocumentsApiDeleteEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApi
+     */
+    public deleteEntityDocuments(requestParameters: PublisherDocumentsApiDeleteEntityDocumentsRequest, options?: AxiosRequestConfig) {
+        return PublisherDocumentsApi_DeleteEntityDocuments(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Delete a Page Template
+     * @param {PublisherDocumentsApiDeleteEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApi
+     */
+    public deleteEntityPageTemplates(requestParameters: PublisherDocumentsApiDeleteEntityPageTemplatesRequest, options?: AxiosRequestConfig) {
+        return PublisherDocumentsApi_DeleteEntityPageTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get all Document Templates
+     * @param {PublisherDocumentsApiGetAllEntitiesDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApi
+     */
+    public getAllEntitiesDocumentTemplates(requestParameters: PublisherDocumentsApiGetAllEntitiesDocumentTemplatesRequest, options?: AxiosRequestConfig) {
+        return PublisherDocumentsApi_GetAllEntitiesDocumentTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get all Documents
+     * @param {PublisherDocumentsApiGetAllEntitiesDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApi
+     */
+    public getAllEntitiesDocuments(requestParameters: PublisherDocumentsApiGetAllEntitiesDocumentsRequest, options?: AxiosRequestConfig) {
+        return PublisherDocumentsApi_GetAllEntitiesDocuments(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get all Page Templates
+     * @param {PublisherDocumentsApiGetAllEntitiesPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApi
+     */
+    public getAllEntitiesPageTemplates(requestParameters: PublisherDocumentsApiGetAllEntitiesPageTemplatesRequest, options?: AxiosRequestConfig) {
+        return PublisherDocumentsApi_GetAllEntitiesPageTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get a Document Template
+     * @param {PublisherDocumentsApiGetEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApi
+     */
+    public getEntityDocumentTemplates(requestParameters: PublisherDocumentsApiGetEntityDocumentTemplatesRequest, options?: AxiosRequestConfig) {
+        return PublisherDocumentsApi_GetEntityDocumentTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get a Document
+     * @param {PublisherDocumentsApiGetEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApi
+     */
+    public getEntityDocuments(requestParameters: PublisherDocumentsApiGetEntityDocumentsRequest, options?: AxiosRequestConfig) {
+        return PublisherDocumentsApi_GetEntityDocuments(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Get a Page Template
+     * @param {PublisherDocumentsApiGetEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApi
+     */
+    public getEntityPageTemplates(requestParameters: PublisherDocumentsApiGetEntityPageTemplatesRequest, options?: AxiosRequestConfig) {
+        return PublisherDocumentsApi_GetEntityPageTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Patch a Document Template
+     * @param {PublisherDocumentsApiPatchEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApi
+     */
+    public patchEntityDocumentTemplates(requestParameters: PublisherDocumentsApiPatchEntityDocumentTemplatesRequest, options?: AxiosRequestConfig) {
+        return PublisherDocumentsApi_PatchEntityDocumentTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Patch a Document
+     * @param {PublisherDocumentsApiPatchEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApi
+     */
+    public patchEntityDocuments(requestParameters: PublisherDocumentsApiPatchEntityDocumentsRequest, options?: AxiosRequestConfig) {
+        return PublisherDocumentsApi_PatchEntityDocuments(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Patch a Page Template
+     * @param {PublisherDocumentsApiPatchEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApi
+     */
+    public patchEntityPageTemplates(requestParameters: PublisherDocumentsApiPatchEntityPageTemplatesRequest, options?: AxiosRequestConfig) {
+        return PublisherDocumentsApi_PatchEntityPageTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Put a Document Template
+     * @param {PublisherDocumentsApiUpdateEntityDocumentTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApi
+     */
+    public updateEntityDocumentTemplates(requestParameters: PublisherDocumentsApiUpdateEntityDocumentTemplatesRequest, options?: AxiosRequestConfig) {
+        return PublisherDocumentsApi_UpdateEntityDocumentTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Put a Document
+     * @param {PublisherDocumentsApiUpdateEntityDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApi
+     */
+    public updateEntityDocuments(requestParameters: PublisherDocumentsApiUpdateEntityDocumentsRequest, options?: AxiosRequestConfig) {
+        return PublisherDocumentsApi_UpdateEntityDocuments(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Put a Page Template
+     * @param {PublisherDocumentsApiUpdateEntityPageTemplatesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApi
+     */
+    public updateEntityPageTemplates(requestParameters: PublisherDocumentsApiUpdateEntityPageTemplatesRequest, options?: AxiosRequestConfig) {
+        return PublisherDocumentsApi_UpdateEntityPageTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 

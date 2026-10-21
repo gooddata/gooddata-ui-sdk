@@ -602,7 +602,7 @@ export type DataSourceDateTimeSemantics = "LOCAL" | "UTC";
 export type DataSourceFileType = "CSV" | "SAV";
 
 // @alpha (undocumented)
-export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "CRATEDB" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "DENODO" | "STARROCKS" | "ATHENA" | "SINGLESTORE" | "MOTHERDUCK" | "MONGODB" | "FLEXCONNECT" | "AILAKEHOUSE" | "DRILL" | "TRINO";
+export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "CRATEDB" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "DENODO" | "STARROCKS" | "ATHENA" | "SINGLESTORE" | "MOTHERDUCK" | "FLEXCONNECT" | "AILAKEHOUSE" | "TRINO";
 
 // @alpha
 export type DataSourceUserPermission = "MANAGE" | "USE";
@@ -653,6 +653,51 @@ export const DateGranularity: {
 
 // @beta
 export type DateString = string;
+
+// @alpha
+export type DeclarativeAggregationOperation = "SUM" | "MIN" | "MAX" | "APPROXIMATE_COUNT";
+
+// @alpha
+export type DeclarativeAttributeSortDirection = "ASC" | "DESC";
+
+// @alpha
+export type DeclarativeCalendarDefinition = IDeclarativeCustomCalendarDefinition | IDeclarativeFiscalYearCalendarDefinition;
+
+// @alpha
+export type DeclarativeColumnDataType = "INT" | "STRING" | "DATE" | "NUMERIC" | "TIMESTAMP" | "TIMESTAMP_TZ" | "BOOLEAN" | "HLL";
+
+// @alpha
+export type DeclarativeConditionalFormattingValue = {
+    kind: "none";
+} | {
+    kind: "literal";
+    value: string | number;
+} | {
+    kind: "literalRange";
+    from: number;
+    to: number;
+} | {
+    kind: "absoluteDate";
+    from: string;
+    to: string;
+} | {
+    kind: "relativeDate";
+    granularity: DeclarativeDateGranularity;
+    from: number;
+    to: number;
+};
+
+// @alpha
+export type DeclarativeDatasetType = "NORMAL" | "AUXILIARY";
+
+// @alpha
+export type DeclarativeDateGranularity = "SECOND" | "SECOND_OF_MINUTE" | "SECOND_OF_DAY" | "MINUTE" | "MINUTE_OF_HOUR" | "MINUTE_OF_DAY" | "HOUR" | "HOUR_OF_DAY" | "DAY" | "DAY_OF_WEEK" | "DAY_OF_MONTH" | "DAY_OF_QUARTER" | "DAY_OF_YEAR" | "WEEK" | "WEEK_OF_YEAR" | "MONTH" | "MONTH_OF_YEAR" | "QUARTER" | "QUARTER_OF_YEAR" | "YEAR" | "FISCAL_DAY_OF_FISCAL_WEEK" | "FISCAL_DAY_OF_FISCAL_MONTH" | "FISCAL_DAY_OF_FISCAL_QUARTER" | "FISCAL_DAY_OF_FISCAL_SEMESTER" | "FISCAL_DAY_OF_FISCAL_YEAR" | "FISCAL_WEEK" | "FISCAL_WEEK_OF_FISCAL_MONTH" | "FISCAL_WEEK_OF_FISCAL_QUARTER" | "FISCAL_WEEK_OF_FISCAL_SEMESTER" | "FISCAL_WEEK_OF_FISCAL_YEAR" | "FISCAL_MONTH" | "FISCAL_MONTH_OF_FISCAL_QUARTER" | "FISCAL_MONTH_OF_FISCAL_SEMESTER" | "FISCAL_MONTH_OF_FISCAL_YEAR" | "FISCAL_QUARTER" | "FISCAL_QUARTER_OF_FISCAL_SEMESTER" | "FISCAL_QUARTER_OF_FISCAL_YEAR" | "FISCAL_SEMESTER" | "FISCAL_SEMESTER_OF_FISCAL_YEAR" | "FISCAL_YEAR";
+
+// @alpha
+export type DeclarativeGrainType = "attribute" | "date";
+
+// @alpha
+export type DeclarativeLabelValueType = "TEXT" | "HYPERLINK" | "GEO" | "GEO_LONGITUDE" | "GEO_LATITUDE" | "GEO_AREA" | "GEO_ICON" | "IMAGE" | "HYPERLOGLOG";
 
 // @alpha
 export const DEFAULT_ABSOLUTE_DATE_FILTER_GRANULARITIES: DateFilterGranularity[];
@@ -2240,6 +2285,16 @@ export interface ICsvReadOptions {
     useThreads?: boolean;
 }
 
+// @alpha
+export interface ICustomApplicationSetting {
+    applicationName: string;
+    content: {
+        [key: string]: unknown;
+    };
+    // (undocumented)
+    id: string;
+}
+
 // @beta (undocumented)
 export type ICustomSmtpDestinationConfiguration = {
     type: "customSmtp";
@@ -2949,6 +3004,46 @@ export interface IDataSourcePermissionAssignment {
 }
 
 // @alpha
+export interface IDataSourceScanColumnWarning {
+    // (undocumented)
+    message: string;
+    // (undocumented)
+    name: string;
+}
+
+// @alpha
+export interface IDataSourceScanRequest {
+    // (undocumented)
+    scanTables: boolean;
+    // (undocumented)
+    scanViews: boolean;
+    schemata?: string[];
+    separator: string;
+    // (undocumented)
+    tablePrefix?: string;
+    // (undocumented)
+    viewPrefix?: string;
+}
+
+// @alpha
+export interface IDataSourceScanResult {
+    // (undocumented)
+    pdm: IPhysicalDataModel;
+    // (undocumented)
+    warnings: IDataSourceScanTableWarning[];
+}
+
+// @alpha
+export interface IDataSourceScanTableWarning {
+    // (undocumented)
+    columns: IDataSourceScanColumnWarning[];
+    // (undocumented)
+    message?: string;
+    // (undocumented)
+    name: string;
+}
+
+// @alpha
 export interface IDataSourceScheduleCacheRetention {
     // (undocumented)
     schedule: {
@@ -3005,6 +3100,400 @@ export interface IDateHierarchyTemplate extends IMetadataObjectIdentity, IMetada
     granularities: DateAttributeGranularity[];
     // (undocumented)
     type: "dateHierarchyTemplate";
+}
+
+// @alpha
+export interface IDeclarativeAggregatedFact {
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    isNullable?: boolean;
+    // (undocumented)
+    nullValue?: string;
+    // (undocumented)
+    sourceColumn?: string;
+    // (undocumented)
+    sourceColumnDataType?: DeclarativeColumnDataType;
+    // (undocumented)
+    sourceFactReference: IDeclarativeSourceFactReference;
+    // (undocumented)
+    tags?: string[];
+}
+
+// @alpha
+export interface IDeclarativeAttribute {
+    // (undocumented)
+    conditionalFormatting?: IDeclarativeConditionalFormatting | null;
+    // (undocumented)
+    defaultView?: IDeclarativeLabelIdentifier;
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    isHidden?: boolean;
+    // (undocumented)
+    isNullable?: boolean;
+    // (undocumented)
+    labels: IDeclarativeLabel[];
+    // (undocumented)
+    locale?: string;
+    // (undocumented)
+    nullValue?: string;
+    // (undocumented)
+    sortColumn?: string;
+    // (undocumented)
+    sortDirection?: DeclarativeAttributeSortDirection;
+    // (undocumented)
+    sourceColumn?: string;
+    // (undocumented)
+    sourceColumnDataType?: DeclarativeColumnDataType;
+    // (undocumented)
+    tags?: string[];
+    // (undocumented)
+    title: string;
+}
+
+// @alpha
+export interface IDeclarativeCalendar {
+    // (undocumented)
+    definition: DeclarativeCalendarDefinition;
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    enabledGranularities: IDeclarativeCalendarGranularity[];
+    // (undocumented)
+    name: string;
+}
+
+// @alpha
+export interface IDeclarativeCalendarGranularity {
+    // (undocumented)
+    granularity: DeclarativeDateGranularity;
+    // (undocumented)
+    prefix: string;
+}
+
+// @alpha
+export interface IDeclarativeCalendarTableReference {
+    // (undocumented)
+    path: string[];
+    // (undocumented)
+    version: string;
+}
+
+// @alpha
+export interface IDeclarativeConditionalFormatting {
+    // (undocumented)
+    conditions: IDeclarativeConditionalFormattingCondition[];
+    // (undocumented)
+    enabled: boolean;
+}
+
+// @alpha
+export interface IDeclarativeConditionalFormattingCondition {
+    // (undocumented)
+    format: IConditionalFormattingFormat;
+    // (undocumented)
+    id?: string;
+    // (undocumented)
+    operator: ConditionalFormattingOperator;
+    // (undocumented)
+    value: DeclarativeConditionalFormattingValue;
+}
+
+// @alpha
+export interface IDeclarativeCustomCalendarDefinition {
+    // (undocumented)
+    dataSourceTables: {
+        [id: string]: IDeclarativeCalendarTableReference;
+    };
+    // (undocumented)
+    type: "custom";
+}
+
+// @alpha
+export interface IDeclarativeDataset {
+    // (undocumented)
+    aggregatedFacts?: IDeclarativeAggregatedFact[];
+    // (undocumented)
+    attributes?: IDeclarativeAttribute[];
+    dataSourceTableId?: IDeclarativeDataSourceTableIdentifier;
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    facts?: IDeclarativeFact[];
+    // (undocumented)
+    grain: IDeclarativeGrainIdentifier[];
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    precedence?: number;
+    // (undocumented)
+    references: IDeclarativeReference[];
+    sql?: IDeclarativeDatasetSql;
+    // (undocumented)
+    tags?: string[];
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    type?: DeclarativeDatasetType;
+    // (undocumented)
+    workspaceDataFilterColumns?: IDeclarativeWorkspaceDataFilterColumn[];
+    // (undocumented)
+    workspaceDataFilterReferences?: IDeclarativeWorkspaceDataFilterReference[];
+}
+
+// @alpha
+export interface IDeclarativeDatasetExtension {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    workspaceDataFilterReferences?: IDeclarativeWorkspaceDataFilterReference[];
+}
+
+// @alpha
+export interface IDeclarativeDatasetIdentifier {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    type: "dataset";
+}
+
+// @alpha
+export interface IDeclarativeDatasetSql {
+    // (undocumented)
+    dataSourceId: string;
+    // (undocumented)
+    statement: string;
+}
+
+// @alpha
+export interface IDeclarativeDataSourceTableIdentifier {
+    // (undocumented)
+    dataSourceId: string;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    path?: string[] | null;
+    // (undocumented)
+    type: "dataSource";
+}
+
+// @alpha
+export interface IDeclarativeDateDataset {
+    // (undocumented)
+    conditionalFormatting?: IDeclarativeConditionalFormatting | null;
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    granularities: DeclarativeDateGranularity[];
+    // (undocumented)
+    granularitiesFormatting: IDeclarativeGranularitiesFormatting;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    tags?: string[];
+    // (undocumented)
+    title: string;
+}
+
+// @alpha
+export interface IDeclarativeFact {
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    isHidden?: boolean;
+    // (undocumented)
+    isNullable?: boolean;
+    // (undocumented)
+    nullValue?: string;
+    // (undocumented)
+    sourceColumn?: string;
+    // (undocumented)
+    sourceColumnDataType?: DeclarativeColumnDataType;
+    // (undocumented)
+    tags?: string[];
+    // (undocumented)
+    title: string;
+}
+
+// @alpha
+export interface IDeclarativeFiscalYearCalendarDefinition {
+    // (undocumented)
+    monthOffset: number;
+    // (undocumented)
+    type: "fiscalYear";
+}
+
+// @alpha
+export interface IDeclarativeGeoAreaConfig {
+    // (undocumented)
+    collection: IDeclarativeGeoCollectionIdentifier;
+}
+
+// @alpha
+export interface IDeclarativeGeoCollectionIdentifier {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    kind?: "STATIC" | "CUSTOM";
+}
+
+// @alpha
+export interface IDeclarativeGrainIdentifier {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    type: DeclarativeGrainType;
+}
+
+// @alpha
+export interface IDeclarativeGranularitiesFormatting {
+    // (undocumented)
+    titleBase: string;
+    // (undocumented)
+    titlePattern: string;
+}
+
+// @alpha
+export interface IDeclarativeLabel {
+    // (undocumented)
+    conditionalFormatting?: IDeclarativeConditionalFormatting | null;
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    geoAreaConfig?: IDeclarativeGeoAreaConfig;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    isHidden?: boolean;
+    // (undocumented)
+    isNullable?: boolean;
+    // (undocumented)
+    locale?: string;
+    // (undocumented)
+    nullValue?: string;
+    // (undocumented)
+    sourceColumn?: string;
+    // (undocumented)
+    sourceColumnDataType?: DeclarativeColumnDataType;
+    // (undocumented)
+    tags?: string[];
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    translations?: IDeclarativeLabelTranslation[];
+    // (undocumented)
+    valueType?: DeclarativeLabelValueType;
+}
+
+// @alpha
+export interface IDeclarativeLabelIdentifier {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    type: "label";
+}
+
+// @alpha
+export interface IDeclarativeLabelTranslation {
+    // (undocumented)
+    locale: string;
+    // (undocumented)
+    sourceColumn: string;
+}
+
+// @alpha
+export interface IDeclarativeLogicalModel {
+    calendars?: {
+        [id: string]: IDeclarativeCalendar;
+    };
+    datasetExtensions?: IDeclarativeDatasetExtension[];
+    // (undocumented)
+    datasets?: IDeclarativeDataset[];
+    dateInstances?: IDeclarativeDateDataset[];
+}
+
+// @alpha
+export interface IDeclarativeReference {
+    // (undocumented)
+    identifier: IDeclarativeDatasetIdentifier;
+    // (undocumented)
+    multivalue: boolean;
+    // (undocumented)
+    sourceColumnDataTypes?: DeclarativeColumnDataType[];
+    // (undocumented)
+    sourceColumns?: string[];
+    // (undocumented)
+    sources?: IDeclarativeReferenceSource[];
+}
+
+// @alpha
+export interface IDeclarativeReferenceSource {
+    // (undocumented)
+    column?: string;
+    // (undocumented)
+    dataType?: DeclarativeColumnDataType;
+    // (undocumented)
+    isNullable?: boolean;
+    // (undocumented)
+    nullValue?: string;
+    // (undocumented)
+    target: IDeclarativeGrainIdentifier;
+}
+
+// @alpha
+export interface IDeclarativeSourceFactReference {
+    // (undocumented)
+    operation: DeclarativeAggregationOperation;
+    // (undocumented)
+    reference: IDeclarativeSourceReferenceIdentifier;
+}
+
+// @alpha
+export interface IDeclarativeSourceReferenceIdentifier {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    type: "fact" | "attribute";
+}
+
+// @alpha
+export interface IDeclarativeWorkspaceDataFilterColumn {
+    // (undocumented)
+    dataType: DeclarativeColumnDataType;
+    // (undocumented)
+    name: string;
+}
+
+// @alpha
+export interface IDeclarativeWorkspaceDataFilterIdentifier {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    type: "workspaceDataFilter";
+}
+
+// @alpha
+export interface IDeclarativeWorkspaceDataFilterReference {
+    // (undocumented)
+    filterColumn: string;
+    // (undocumented)
+    filterColumnDataType: DeclarativeColumnDataType;
+    // (undocumented)
+    filterId: IDeclarativeWorkspaceDataFilterIdentifier;
+}
+
+// @alpha
+export interface IDeclarativeWorkspaceLayout {
+    analytics: object;
+    // (undocumented)
+    ldm: IDeclarativeLogicalModel;
 }
 
 // @beta
@@ -3534,6 +4023,7 @@ export interface IFeatureFlags {
     enableGenAIMemory?: boolean;
     enableGenAiObservability?: boolean;
     enableGenAiReasoningEffort?: boolean;
+    enableGenAiReportTakeaways?: boolean;
     enableGenAiRightPanel?: boolean;
     enableGeoArea?: boolean;
     enableGeoBasemapConfig?: boolean;
@@ -3924,6 +4414,98 @@ export interface IGenAIWidgetDescriptor {
     visualizationUrl?: string;
     widgetRef: ObjRef;
     widgetType: "insight" | "visualizationSwitcher" | "richText";
+}
+
+// @alpha
+export interface IGenerateLogicalModelColumnOverride {
+    // (undocumented)
+    labelTargetColumn?: string;
+    // (undocumented)
+    labelType?: DeclarativeLabelValueType;
+    // (undocumented)
+    ldmTypeOverride?: "FACT" | "LABEL";
+    // (undocumented)
+    name: string;
+}
+
+// @alpha
+export interface IGenerateLogicalModelPdm {
+    // (undocumented)
+    sqls?: IGenerateLogicalModelSql[];
+    // (undocumented)
+    tableOverrides?: IGenerateLogicalModelTableOverride[];
+    // (undocumented)
+    tables?: IPhysicalTable[];
+}
+
+// @alpha
+export interface IGenerateLogicalModelRequest {
+    // (undocumented)
+    aggregatedFactPrefix?: string;
+    // (undocumented)
+    dateGranularities?: string;
+    // (undocumented)
+    dateReferencePrefix?: string;
+    // (undocumented)
+    denormPrefix?: string;
+    // (undocumented)
+    factPrefix?: string;
+    // (undocumented)
+    generateLongIds?: boolean;
+    // (undocumented)
+    grainMultivalueReferencePrefix?: string;
+    // (undocumented)
+    grainPrefix?: string;
+    // (undocumented)
+    grainReferencePrefix?: string;
+    // (undocumented)
+    multivalueReferencePrefix?: string;
+    pdm?: IGenerateLogicalModelPdm;
+    // (undocumented)
+    primaryLabelPrefix?: string;
+    // (undocumented)
+    referencePrefix?: string;
+    // (undocumented)
+    secondaryLabelPrefix?: string;
+    // (undocumented)
+    separator?: string;
+    // (undocumented)
+    tablePrefix?: string;
+    // (undocumented)
+    translationPrefix?: string;
+    // (undocumented)
+    viewPrefix?: string;
+    // (undocumented)
+    wdfPrefix?: string;
+    workspaceId?: string;
+}
+
+// @alpha
+export interface IGenerateLogicalModelSql {
+    // (undocumented)
+    columns?: IGenerateLogicalModelSqlColumn[];
+    // (undocumented)
+    statement: string;
+    // (undocumented)
+    title: string;
+}
+
+// @alpha
+export interface IGenerateLogicalModelSqlColumn {
+    // (undocumented)
+    dataType: DeclarativeColumnDataType;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    nullValue?: string;
+}
+
+// @alpha
+export interface IGenerateLogicalModelTableOverride {
+    // (undocumented)
+    columns: IGenerateLogicalModelColumnOverride[];
+    // (undocumented)
+    path: string[];
 }
 
 // @alpha
@@ -5147,6 +5729,45 @@ export interface IPermanentSettings {
     timezone?: string;
     weekStart?: WeekStart;
     whiteLabeling?: IWhiteLabeling;
+}
+
+// @alpha
+export interface IPhysicalColumn {
+    // (undocumented)
+    dataType: DeclarativeColumnDataType;
+    defaultLabelOf?: string;
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    isNullable?: boolean;
+    // (undocumented)
+    isPrimaryKey?: boolean;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    nullValue?: string;
+    // (undocumented)
+    referencedTableColumn?: string;
+    // (undocumented)
+    referencedTableId?: string;
+}
+
+// @alpha
+export interface IPhysicalDataModel {
+    // (undocumented)
+    tables: IPhysicalTable[];
+}
+
+// @alpha
+export interface IPhysicalTable {
+    // (undocumented)
+    columns: IPhysicalColumn[];
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    namePrefix?: string;
+    path: string[];
+    type: string;
 }
 
 // @alpha
@@ -7444,6 +8065,25 @@ export function isPublisherVisualizationWidgetV2(obj: unknown): obj is IPublishe
 
 // @alpha (undocumented)
 export function isPublisherWidgetV2(obj: unknown): obj is PublisherWidgetV2;
+
+// @alpha
+export interface ISqlScanColumn {
+    // (undocumented)
+    dataType: DeclarativeColumnDataType;
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    nullValue?: string;
+}
+
+// @alpha
+export interface ISqlScanResult {
+    // (undocumented)
+    columns: ISqlScanColumn[];
+    dataPreview?: (string | null)[][];
+}
 
 // @public
 export function isRangeCondition(obj: unknown): obj is IRangeCondition;

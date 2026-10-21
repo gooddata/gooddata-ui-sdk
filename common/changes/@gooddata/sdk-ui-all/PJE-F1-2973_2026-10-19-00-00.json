@@ -1,0 +1,15 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-model: Remove `MONGODB` and the stale `DRILL` from the `DataSourceType` union; neither is a supported data source type any more",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        },
+        {
+            "comment": "api-client-tiger: Remove `MONGODB` from the generated data source type enums",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

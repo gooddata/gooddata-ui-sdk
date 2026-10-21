@@ -206,6 +206,7 @@
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": "Avaa kohdassa Analysoi",
     "gd.gen-ai.visualisation.menu.button.open_in_analyze.description": "Tämä pyytää sinua tallentamaan visualisoinnin ennen kuin voit avata sen.",
     "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "Kopioi visualisointilinkki",
+    "gd.gen-ai.messages.skills": "Käytetään taitoja",
     "gd.gen-ai.messages.label": "Chat-viestit",
     "gd.gen-ai.message.label.user": "Käyttäjä:",
     "gd.gen-ai.message.label.assistant": "Bot:",

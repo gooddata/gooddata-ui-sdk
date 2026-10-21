@@ -4231,6 +4231,26 @@
         "text": "<b>Error:</b> Language not supported – English (United States) shows instead.",
         "crowdinContext": "Error under an interface language that GoodData does not offer. Keep the <b> tags around the label"
     },
+    "userManagement.userDetail.metadataLanguage.noTranslation": {
+        "text": "<b>Warning:</b> No translation – original names show instead.",
+        "crowdinContext": "Warning under the user's metadata language when none of their workspaces has a translation into it. Keep the <b> tags around the label"
+    },
+    "userManagement.userDetail.dataLanguage.noTranslation": {
+        "text": "<b>Warning:</b> No translation – original values show instead.",
+        "crowdinContext": "Warning under the user's data language when none of their workspaces has data labels translated into it. Keep the <b> tags around the label"
+    },
+    "userManagement.userDetail.language.noTranslationIn": {
+        "text": "<b>Warning:</b> No translation in {count} of their workspaces.",
+        "crowdinContext": "Warning under the user's metadata or data language when some of their workspaces have no translation into it. {count} is the number of those workspaces. Keep the <b> tags around the label"
+    },
+    "userManagement.userDetail.metadataLanguage.translationAvailable": {
+        "text": "<b>Note:</b> Translation available in their workspace – set their metadata language to use it.",
+        "crowdinContext": "Note under a metadata language that is not set, when the user's workspaces have a translation into their interface language. Keep the <b> tags around the label"
+    },
+    "userManagement.userDetail.dataLanguage.translationAvailable": {
+        "text": "<b>Note:</b> Translation available in their workspace – set their data language to use it.",
+        "crowdinContext": "Note under a data language that is not set, when the user's workspaces have data labels translated into their interface language. Keep the <b> tags around the label"
+    },
     "userManagement.userDetail.languages.loadError": {
         "text": "The languages could not be loaded.",
         "crowdinContext": "Error shown in the Languages section of the user detail dialog when the user's languages fail to load"
