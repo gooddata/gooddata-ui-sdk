@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactNode } from "react";
+
 import { type ObjRef } from "@gooddata/sdk-model";
 
 /**
@@ -74,4 +76,9 @@ export interface ICatalogItemPickerProps<TAttributePayload = unknown, TMetricPay
     onAdd?: (items: Array<TAttributePayload | TMetricPayload>) => void;
     onSelect?: (item: TAttributePayload | TMetricPayload) => void;
     variant?: "mvf" | "addFilter";
+    /**
+     * Renders extra content (e.g. a details bubble) at the end of every attribute and metric row.
+     * Date items are not affected.
+     */
+    renderItemDetails?: (item: ICatalogItemPickerItem<TAttributePayload | TMetricPayload>) => ReactNode;
 }

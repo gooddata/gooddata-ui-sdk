@@ -29,6 +29,8 @@
     "gd.gen-ai.visualization.unavailable": "Görselleştirme görüntülenemedi.",
     "gd.gen-ai.permission-error": "Yetersiz izinler",
     "gd.gen-ai.permission-error.description": "Sohbet botuna erişiminiz yok. Erişim talep etmek için yöneticinizle iletişime geçin.",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.missing-error": "<b>Netleştirici soru bulunamadı.</b> Tekrar sormayı deneyin.",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.skipped": "[Atlandı]",
     "gd.gen-ai.input-placeholder": "Buraya sorun…",
     "gd.gen-ai.input-label": "Sorunuzu sorun. Öneriler için @ yazın.",
     "gd.gen-ai.context.add_context": "Bağlam ekle",

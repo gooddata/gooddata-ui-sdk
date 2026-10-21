@@ -29,6 +29,8 @@
     "gd.gen-ai.visualization.unavailable": "Visualisation could not be displayed.",
     "gd.gen-ai.permission-error": "Insufficient permissions",
     "gd.gen-ai.permission-error.description": "You do not have access to the chatbot. Please contact your administrator to request access.",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.missing-error": "<b>No clarifying questions found.</b> Try asking again.",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.skipped": "[Skipped]",
     "gd.gen-ai.input-placeholder": "Ask here…",
     "gd.gen-ai.input-label": "Ask your question. Type @ for suggestions.",
     "gd.gen-ai.context.add_context": "Add context",

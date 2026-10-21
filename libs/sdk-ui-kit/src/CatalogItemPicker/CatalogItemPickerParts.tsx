@@ -22,7 +22,7 @@ import { Input } from "../Form/Input.js";
 
 import { type CatalogItemListboxItem, type ICatalogItemPickerListItemData } from "./listboxItemBuilders.js";
 import { testIds } from "./messages.js";
-import { type CatalogItemPickerType } from "./types.js";
+import { type CatalogItemPickerType, type ICatalogItemPickerItem } from "./types.js";
 
 const { e } = bem("gd-ui-kit-catalog-item-picker");
 
@@ -162,14 +162,33 @@ export function CatalogItemPickerTabs({
 // CatalogItemPickerList
 // ============================================================================
 
+type RenderItemDetails<TPayload> = (item: ICatalogItemPickerItem<TPayload>) => ReactNode;
+
+// The details sit inside a clickable row, so a click on them must not toggle the selection.
+function renderRowDetails<TPayload>(
+    item: ICatalogItemPickerItem<TPayload>,
+    renderItemDetails: RenderItemDetails<TPayload> | undefined,
+): ReactNode {
+    if (!renderItemDetails || item.type === "date") {
+        return null;
+    }
+    return (
+        <span className={e("item-details")} onClick={(event) => event.stopPropagation()}>
+            {renderItemDetails(item)}
+        </span>
+    );
+}
+
 function CatalogItemPickerItemComponent<TPayload>({
     item,
     isFocused,
     isCompact,
     onSelect,
     variant,
+    renderItemDetails,
 }: IUiListboxInteractiveItemProps<ICatalogItemPickerListItemData<TPayload>> & {
     variant: "mvf" | "addFilter";
+    renderItemDetails?: RenderItemDetails<TPayload>;
 }): ReactNode {
     const { item: pickerItem, isSelected } = item.data;
     const { icon } = getTypeIcon(pickerItem.type);
@@ -204,18 +223,21 @@ function CatalogItemPickerItemComponent<TPayload>({
             {pickerItem.sequenceNumber ? (
                 <span className={e("item-sequence")}>{pickerItem.sequenceNumber}</span>
             ) : null}
+            {renderRowDetails(pickerItem, renderItemDetails)}
         </div>
     );
 }
 
-function CatalogItemPickerSingleSelectItem({
+function CatalogItemPickerSingleSelectItem<TPayload>({
     item,
     isFocused,
     isCompact,
     onSelect,
     variant,
-}: IUiListboxInteractiveItemProps<ICatalogItemPickerListItemData> & {
+    renderItemDetails,
+}: IUiListboxInteractiveItemProps<ICatalogItemPickerListItemData<TPayload>> & {
     variant: "mvf" | "addFilter";
+    renderItemDetails?: RenderItemDetails<TPayload>;
 }): ReactNode {
     const { icon } = getTypeIcon(item.data.item.type);
     return (
@@ -233,23 +255,25 @@ function CatalogItemPickerSingleSelectItem({
             {item.data.item.sequenceNumber ? (
                 <span className={e("item-sequence")}>{item.data.item.sequenceNumber}</span>
             ) : null}
+            {renderRowDetails(item.data.item, renderItemDetails)}
         </div>
     );
 }
 
-interface ICatalogItemPickerListProps {
+interface ICatalogItemPickerListProps<TPayload> {
     variant: "mvf" | "addFilter";
-    listboxItems: CatalogItemListboxItem[];
+    listboxItems: CatalogItemListboxItem<TPayload>[];
     isMultiSelect: boolean;
     maxListHeight?: number;
     listboxId: string;
     ariaLabel: string;
     shouldShowEmptyStateMessage: boolean;
     emptyMessage: string;
-    onSelect: (item: IUiListboxInteractiveItem<ICatalogItemPickerListItemData>) => void;
+    onSelect: (item: IUiListboxInteractiveItem<ICatalogItemPickerListItemData<TPayload>>) => void;
+    renderItemDetails?: RenderItemDetails<TPayload>;
 }
 
-export function CatalogItemPickerList({
+export function CatalogItemPickerList<TPayload>({
     variant,
     listboxItems,
     isMultiSelect,
@@ -259,16 +283,25 @@ export function CatalogItemPickerList({
     shouldShowEmptyStateMessage,
     emptyMessage,
     onSelect,
-}: ICatalogItemPickerListProps): ReactNode {
+    renderItemDetails,
+}: ICatalogItemPickerListProps<TPayload>): ReactNode {
     const InteractiveItemComponent = useMemo(() => {
         return isMultiSelect
-            ? (props: IUiListboxInteractiveItemProps<ICatalogItemPickerListItemData>) => (
-                  <CatalogItemPickerItemComponent {...props} variant={variant} />
+            ? (props: IUiListboxInteractiveItemProps<ICatalogItemPickerListItemData<TPayload>>) => (
+                  <CatalogItemPickerItemComponent
+                      {...props}
+                      variant={variant}
+                      renderItemDetails={renderItemDetails}
+                  />
               )
-            : (props: IUiListboxInteractiveItemProps<ICatalogItemPickerListItemData>) => (
-                  <CatalogItemPickerSingleSelectItem {...props} variant={variant} />
+            : (props: IUiListboxInteractiveItemProps<ICatalogItemPickerListItemData<TPayload>>) => (
+                  <CatalogItemPickerSingleSelectItem
+                      {...props}
+                      variant={variant}
+                      renderItemDetails={renderItemDetails}
+                  />
               );
-    }, [isMultiSelect, variant]);
+    }, [isMultiSelect, variant, renderItemDetails]);
 
     return (
         <div className={e("list", { variant })}>

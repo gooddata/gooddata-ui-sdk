@@ -690,6 +690,12 @@
                             "HLL"
                         ]
                     },
+                    "defaultLabelOf": {
+                        "maxLength": 255,
+                        "type": "string",
+                        "description": "(EXPERIMENTAL) Name of the column whose values this column labels. Logical model generation makes this column the default label of the attribute on that column, sorted by that column.",
+                        "example": "gender"
+                    },
                     "description": {
                         "maxLength": 10000,
                         "type": "string",

@@ -61,7 +61,10 @@ import { type IDashboardWidgetProps } from "../widget/widget/types.js";
 import { DEFAULT_COLUMN_CLIENT_WIDTH, DEFAULT_WIDTH_RESIZER_HEIGHT } from "./constants.js";
 import { type IDashboardLayoutWidgetRenderProps } from "./DefaultDashboardLayoutRenderer/interfaces.js";
 import { useWidthValidation } from "./DefaultDashboardLayoutRenderer/useItemWidthValidation.js";
-import { getDashboardLayoutItemHeightForRatioAndScreen } from "./DefaultDashboardLayoutRenderer/utils/sizing.js";
+import {
+    getDashboardLayoutItemHeightForRatioAndScreen,
+    getDensityAdjustedMinHeight,
+} from "./DefaultDashboardLayoutRenderer/utils/sizing.js";
 import { Hotspot } from "./dragAndDrop/draggableWidget/Hotspot.js";
 import { useShouldShowRowEndHotspot } from "./dragAndDrop/draggableWidget/RowEndHotspot.js";
 import { HoverDetector } from "./dragAndDrop/Resize/HoverDetector.js";
@@ -167,7 +170,11 @@ export function DashboardLayoutWidget({
     const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext();
 
     const currentSize = item.size()[screen]!;
-    const minHeight = calculateWidgetMinHeight(item.raw(), currentSize, insights, settings, isExportMode);
+    const minHeight = getDensityAdjustedMinHeight(
+        calculateWidgetMinHeight(item.raw(), currentSize, insights, settings, isExportMode),
+        widget,
+        insights,
+    );
     const height = calculateHeight(currentSize, screen);
 
     const allowOverflow = !!currentSize.heightAsRatio;

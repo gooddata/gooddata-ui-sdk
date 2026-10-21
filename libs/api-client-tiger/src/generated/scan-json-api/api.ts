@@ -125,6 +125,10 @@ export interface DeclarativeColumn {
      */
     'dataType': DeclarativeColumnDataTypeEnum;
     /**
+     * (EXPERIMENTAL) Name of the column whose values this column labels. Logical model generation makes this column the default label of the attribute on that column, sorted by that column.
+     */
+    'defaultLabelOf'?: string;
+    /**
      * Column description/comment from database
      */
     'description'?: string;

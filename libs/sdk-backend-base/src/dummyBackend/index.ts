@@ -329,7 +329,7 @@ export function dummyBackend(config: DummyBackendConfig = defaultDummyBackendCon
             throw new NotSupported("not supported");
         },
         dataSources(): IDataSourcesService {
-            throw new NotSupported("not supported");
+            return dummyDataSourcesService();
         },
         geo(): IGeoService {
             return {
@@ -622,6 +622,32 @@ function dummyWorkspace(
         localization(): IWorkspaceLocalizationService {
             return dummyLocalizationService();
         },
+    };
+}
+
+function dummyDataSourcesService(): IDataSourcesService {
+    return {
+        getDataSourceIdentifiers: () => Promise.resolve([]),
+        getDataSources: () => Promise.resolve([]),
+        hasDataSources: () => Promise.resolve(false),
+        getDataSource: () => Promise.reject(new NotSupported("not supported")),
+        createDataSource: ({ id, name, schema, type }) => Promise.resolve({ id, name, schema, type }),
+        updateDataSource: (_id, { id, name, schema, type }) => Promise.resolve({ id, name, schema, type }),
+        patchDataSource: () => Promise.reject(new NotSupported("not supported")),
+        deleteDataSource: () => Promise.resolve(),
+        testConnection: () => Promise.resolve({ successful: true }),
+        getSchemata: () => Promise.resolve([]),
+        registerUploadNotification: () => Promise.resolve(),
+        files: () => ({
+            upload: () => Promise.resolve(""),
+            analyzeCsv: () => Promise.resolve([]),
+            importCsv: () => Promise.resolve([]),
+            analyzeSav: () => Promise.resolve([]),
+            importSav: () => Promise.resolve([]),
+            getFiles: () => Promise.resolve([]),
+            deleteFiles: () => Promise.resolve(),
+            getCsvManifests: () => Promise.resolve([]),
+        }),
     };
 }
 

@@ -29,6 +29,8 @@
     "gd.gen-ai.visualization.unavailable": "ไม่สามารถแสดงการแสดงภาพข้อมูลได้",
     "gd.gen-ai.permission-error": "สิทธิ์ไม่เพียงพอ",
     "gd.gen-ai.permission-error.description": "คุณไม่มีสิทธิ์เข้าถึงแชตบอต โปรดติดต่อผู้ดูแลระบบของคุณเพื่อขอสิทธิ์เข้าถึง",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.missing-error": "<b>ไม่พบคำถามเพื่อขอข้อมูลเพิ่มเติม</b> โปรดลองถามอีกครั้ง",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.skipped": "[ข้ามแล้ว]",
     "gd.gen-ai.input-placeholder": "ถามที่นี่…",
     "gd.gen-ai.input-label": "ถามคำถามของคุณ พิมพ์ @ เพื่อดูคำแนะนำ",
     "gd.gen-ai.context.add_context": "เพิ่มบริบท",

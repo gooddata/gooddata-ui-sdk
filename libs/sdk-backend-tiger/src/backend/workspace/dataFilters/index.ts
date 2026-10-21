@@ -30,6 +30,7 @@ import {
     type IWorkspaceDataFilter,
     type IWorkspaceDataFilterDefinition,
     type IWorkspaceDataFilterSetting,
+    type IWorkspaceDataFilterSettingDefinition,
     type ObjRef,
     type UserDataFilter,
     type UserDataFilterDefinition,
@@ -69,6 +70,7 @@ export class TigerDataFiltersService implements IDataFiltersService {
                         id: filter.id,
                         ref: idRef(filter.id, "workspaceDataFilter"),
                         title: filter.attributes?.title,
+                        description: filter.attributes?.description,
                         columnName: filter.attributes?.columnName,
                         settings: settingsMap[filter.id] || [],
                         isInherited: filter.meta?.origin?.originType === "PARENT",
@@ -95,6 +97,7 @@ export class TigerDataFiltersService implements IDataFiltersService {
                     id: setting.id,
                     ref: idRef(setting.id, "workspaceDataFilterSetting"),
                     title: setting.attributes?.title,
+                    description: setting.attributes?.description,
                     filterValues: setting.attributes?.filterValues || [],
                     isInherited: setting.meta?.origin?.originType === "PARENT",
                 });
@@ -115,6 +118,7 @@ export class TigerDataFiltersService implements IDataFiltersService {
                         type: "workspaceDataFilter",
                         attributes: {
                             title: newDataFilter.title,
+                            description: newDataFilter.description,
                             columnName: newDataFilter.columnName,
                         },
                     },
@@ -124,6 +128,7 @@ export class TigerDataFiltersService implements IDataFiltersService {
                 id: result.data.data.id,
                 ref: idRef(result.data.data.id, "workspaceDataFilter"),
                 title: result.data.data.attributes?.title,
+                description: result.data.data.attributes?.description,
                 columnName: result.data.data.attributes?.columnName,
                 settings: [],
                 isInherited: false,
@@ -145,6 +150,7 @@ export class TigerDataFiltersService implements IDataFiltersService {
                         type: "workspaceDataFilter",
                         attributes: {
                             title: updatedDataFilter.title,
+                            description: updatedDataFilter.description,
                             columnName: updatedDataFilter.columnName,
                         },
                     },
@@ -184,6 +190,46 @@ export class TigerDataFiltersService implements IDataFiltersService {
                     },
                 },
             });
+        });
+    };
+
+    public createDataFilterSetting = async ({
+        id,
+        dataFilter,
+        title,
+        description,
+        filterValues,
+    }: IWorkspaceDataFilterSettingDefinition): Promise<IWorkspaceDataFilterSetting> => {
+        return this.authCall(async (client) => {
+            const dataFilterId = objRefToIdentifier(dataFilter, this.authCall);
+            const result = await EntitiesApi_CreateEntityWorkspaceDataFilterSettings(
+                client.axios,
+                client.basePath,
+                {
+                    workspaceId: this.workspace,
+                    jsonApiWorkspaceDataFilterSettingInDocument: {
+                        data: {
+                            id: id ?? uuid(),
+                            type: "workspaceDataFilterSetting",
+                            attributes: { title, description, filterValues },
+                            relationships: {
+                                workspaceDataFilter: {
+                                    data: { id: dataFilterId, type: "workspaceDataFilter" },
+                                },
+                            },
+                        },
+                    },
+                },
+            );
+            const setting = result.data.data;
+            return {
+                id: setting.id,
+                ref: idRef(setting.id, "workspaceDataFilterSetting"),
+                title: setting.attributes?.title,
+                description: setting.attributes?.description,
+                filterValues: setting.attributes?.filterValues ?? [],
+                isInherited: false,
+            };
         });
     };
 

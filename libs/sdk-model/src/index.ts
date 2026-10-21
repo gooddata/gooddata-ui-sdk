@@ -1323,7 +1323,45 @@ export {
 export type { ICspDirective } from "./cspDirectives/index.js";
 export type { IApiToken, IApiTokenWithSecret } from "./apiTokens/index.js";
 export type { IEntitlementsName, IEntitlementDescriptor } from "./entitlements/index.js";
-export type { DataSourceType, IDataSourceIdentifierDescriptor } from "./dataSources/index.js";
+export type {
+    DataSourceType,
+    IDataSourceIdentifierDescriptor,
+    DataSourceUserPermission,
+    DataSourceCacheStrategy,
+    DataSourceDateTimeSemantics,
+    DataSourceAuthenticationType,
+    IDataSourceParameter,
+    IDataSourceIndefiniteCacheRetention,
+    IDataSourceScheduleCacheRetention,
+    IDataSourceValidityPeriodCacheRetention,
+    DataSourceCacheRetention,
+    IDataSourceDescriptor,
+    IDataSourceDefinition,
+    IDataSourcePatch,
+    IDataSourceConnectionTest,
+    IDataSourceConnectionTestResult,
+} from "./dataSources/index.js";
+export type {
+    DataSourceFileType,
+    IDataSourceFile,
+    ICsvColumnType,
+    ICsvConvertOptions,
+    ICsvParseOptions,
+    ICsvReadOptions,
+    ICsvFileConfig,
+    ICsvAnalysisRequest,
+    ICsvAnalysisColumn,
+    ICsvAnalysis,
+    ICsvImportTable,
+    ICsvImportResult,
+    ICsvFileManifest,
+    ISavAnalysisRequest,
+    ISavValueLabel,
+    ISavAnalysisColumn,
+    ISavAnalysis,
+    ISavImportTable,
+    ISavImportResult,
+} from "./dataSources/files.js";
 
 export {
     type IExportTemplate,
@@ -1374,6 +1412,7 @@ export {
     type IWorkspaceDataFilter,
     type IWorkspaceDataFilterDefinition,
     type IWorkspaceDataFilterSetting,
+    type IWorkspaceDataFilterSettingDefinition,
     type IUserDataFilterBase,
     type IUserDataFilter,
     type IUserGroupDataFilter,
@@ -1927,6 +1966,11 @@ export {
     getPublisherThemeReferencePathV2,
     publisherThemeReferenceV2,
 } from "./publisher/v2/themeReference.js";
+export {
+    type PublisherThemeImageReferenceV2,
+    getPublisherThemeImageReferenceV2,
+    resolvePublisherImageUrlV2,
+} from "./publisher/v2/imageSource.js";
 
 export {
     type ISemanticQualityReport,

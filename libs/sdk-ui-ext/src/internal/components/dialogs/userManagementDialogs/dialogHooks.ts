@@ -108,6 +108,26 @@ export const useLanguageStatistics = (organizationId: string, isEnabled: boolean
     };
 };
 
+export const useAnalyzeIncludesManageVisualizations = (
+    workspaceId: string | undefined,
+    isEnabled: boolean,
+) => {
+    const backend = useBackendStrict();
+
+    const { result } = useCancelablePromise(
+        {
+            promise:
+                isEnabled && workspaceId
+                    ? () => backend.workspace(workspaceId).settings().getSettings()
+                    : null,
+            onError: (error) => console.error("Loading of workspace settings failed", error),
+        },
+        [backend, workspaceId, isEnabled],
+    );
+
+    return result?.grantManageVisualizationsWithAnalyze ?? false;
+};
+
 export const useUserGroup = (userGroupId: string, organizationId: string, onSuccess: () => void) => {
     const [userGroup, setUserGroup] = useState<IUserGroup>();
     const backend = useBackendStrict();

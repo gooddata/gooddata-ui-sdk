@@ -29,6 +29,8 @@
     "gd.gen-ai.visualization.unavailable": "无法显示可视化。",
     "gd.gen-ai.permission-error": "权限不足",
     "gd.gen-ai.permission-error.description": "您无权访问聊天机器人。请联系您的管理员申请访问权限。",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.missing-error": "<b>未找到澄清问题。</b>请重新提问。",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.skipped": "[已跳过]",
     "gd.gen-ai.input-placeholder": "在这里询问…",
     "gd.gen-ai.input-label": "请输入您的问题。输入 @ 可查看建议。",
     "gd.gen-ai.context.add_context": "添加上下文",

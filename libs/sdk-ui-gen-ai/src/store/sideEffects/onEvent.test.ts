@@ -194,3 +194,42 @@ describe("clarification question events", () => {
         );
     });
 });
+
+describe("assistant message events", () => {
+    it("emits activated skills", async () => {
+        const dispatch = vi.fn<(event: ChatEvent) => void>();
+        const skills = [
+            { name: "create_visualization", title: "Create visualization" },
+            { name: "forecast", title: "Forecast" },
+        ];
+        const skillActivatedMessage = {
+            id: "interaction-id",
+            localId: "local-id",
+            role: "assistant",
+            content: {
+                type: "skillsActivated",
+                skills,
+            },
+        } as IChatConversationLocalItem;
+
+        await runSaga(
+            {
+                context: { eventDispatcher: { dispatch } },
+                getState: () => ({
+                    messages: [skillActivatedMessage],
+                    threadId: "thread-id",
+                }),
+            },
+            onEvaluateMessageComplete,
+            evaluateMessageCompleteAction({ assistantMessageId: skillActivatedMessage.localId }),
+        ).toPromise();
+
+        expect(dispatch).toHaveBeenCalledWith({
+            type: "chatAssistantMessage",
+            interactionId: "interaction-id",
+            useCase: "GENERAL",
+            threadId: "thread-id",
+            skills,
+        });
+    });
+});

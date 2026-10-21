@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-model: Add theme image references and image URL resolution for v2 Publisher documents.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

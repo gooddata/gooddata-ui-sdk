@@ -145,6 +145,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { type IUser } from "@gooddata/sdk-model";
 
+import { getApiProblemDetail, getDataSourceErrorMessage } from "../utils/apiProblemDetail.js";
 import { convertApiError } from "../utils/errorHandling.js";
 
 /**
@@ -737,24 +738,6 @@ export type TigerSpecificFunctions = {
         dataSourceId: string,
         fileNames: string[],
     ) => Promise<ReadCsvFileManifestsResponse[]>;
-};
-
-// An API rejection carries the actionable reason in the problem `detail` field, while the
-// surrounding AxiosError message only names the status code.
-const getApiProblemDetail = (error: unknown): string | undefined => {
-    const detail = (error as { response?: { data?: { detail?: unknown } } })?.response?.data?.detail;
-    return typeof detail === "string" && detail.trim() !== "" ? detail : undefined;
-};
-
-export const getDataSourceErrorMessage = (error: unknown) => {
-    const detail = getApiProblemDetail(error);
-    if (detail !== undefined) {
-        return detail;
-    }
-    if (error instanceof Error) {
-        return error.message;
-    }
-    return String(error);
 };
 
 const dataSourceResponseAsDataSourceConnectionInfo = (

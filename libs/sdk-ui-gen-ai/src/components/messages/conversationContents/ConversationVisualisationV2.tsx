@@ -47,6 +47,7 @@ import {
 import { storeKdaReturnFocusFromDrillContext } from "../../../utils/kdaReturnFocus.js";
 
 import { changeAnalysisDrills } from "./utils/changeAnalysisDrills.js";
+import { isViewableError } from "./utils/errors.js";
 
 const visualizationTooltipOptions = {
     tooltip: {
@@ -291,7 +292,7 @@ export function ConversationVisualisation({
     const locale = isLocale(intl.locale) ? intl.locale : DefaultLocale;
     const currentError = renderError?.insight === insight ? renderError.error : undefined;
 
-    if (currentError) {
+    if (currentError && !isViewableError(currentError)) {
         return <VisualizationError error={currentError} locale={locale} />;
     }
 

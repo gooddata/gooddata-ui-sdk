@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { RecommendedCachingConfiguration, withCaching } from "@gooddata/sdk-backend-base";
+import { type CacheControl, RecommendedCachingConfiguration, withCaching } from "@gooddata/sdk-backend-base";
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     ContextDeferredAuthProvider,
@@ -24,6 +24,12 @@ export interface ICreateBackendForModuleOptions {
      * Package version reported to the backend for telemetry.
      */
     packageVersion?: string;
+
+    /**
+     * Receives the cache control of the created backend, so the module can reset its caches, for
+     * example when an embedded editor changes a metric.
+     */
+    onCacheReady?: (cacheControl: CacheControl) => void;
 }
 
 /**
@@ -58,18 +64,13 @@ export function createBackendForModule(
         packageName: options.packageName,
         packageVersion: options.packageVersion ?? "unknown",
     });
+    const caching = { ...RecommendedCachingConfiguration, onCacheReady: options.onCacheReady };
     switch (auth.type) {
         case "apiToken":
         case "jwt":
-            return withCaching(
-                base.withAuthentication(new TigerTokenAuthProvider(auth.token)),
-                RecommendedCachingConfiguration,
-            );
+            return withCaching(base.withAuthentication(new TigerTokenAuthProvider(auth.token)), caching);
         case "contextDeferred":
-            return withCaching(
-                base.withAuthentication(new ContextDeferredAuthProvider()),
-                RecommendedCachingConfiguration,
-            );
+            return withCaching(base.withAuthentication(new ContextDeferredAuthProvider()), caching);
         default: {
             throw new Error(
                 `[sdk-ui-pluggable-application/backend] Unsupported auth type "${String((auth as { type?: unknown }).type)}".`,

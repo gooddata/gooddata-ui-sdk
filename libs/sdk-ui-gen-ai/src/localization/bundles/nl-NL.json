@@ -29,6 +29,8 @@
     "gd.gen-ai.visualization.unavailable": "Visualisatie kan niet worden weergegeven.",
     "gd.gen-ai.permission-error": "Onvoldoende machtigingen",
     "gd.gen-ai.permission-error.description": "Je hebt geen toegang tot de chatbot. Neem contact op met je beheerder om toegang aan te vragen.",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.missing-error": "<b>Geen verduidelijkingsvragen gevonden.</b> Probeer het opnieuw te vragen.",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.skipped": "[Overgeslagen]",
     "gd.gen-ai.input-placeholder": "Vraag het hier…",
     "gd.gen-ai.input-label": "Stel uw vraag. Typ @ voor suggesties.",
     "gd.gen-ai.context.add_context": "Context toevoegen",

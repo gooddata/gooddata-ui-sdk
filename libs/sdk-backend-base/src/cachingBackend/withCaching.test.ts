@@ -1996,6 +1996,22 @@ describe("withCaching", () => {
                 expect(second).toBe(first);
             });
 
+            it("does not conflate common attributes of refs that share an id but differ in type", async () => {
+                const counts = makeAttributeCallCounts();
+                const backend = withCachingForTests(makeCountingBackend(counts));
+
+                await backend
+                    .workspace("test")
+                    .attributes()
+                    .getCommonAttributes([idRef("shared.id", "displayForm")]);
+                await backend
+                    .workspace("test")
+                    .attributes()
+                    .getCommonAttributes([idRef("shared.id", "computedAttribute")]);
+
+                expect(counts.getCommonAttributes).toBe(2);
+            });
+
             it("collapses concurrent getCommonAttributesBatch calls to a single underlying call", async () => {
                 const counts = makeAttributeCallCounts();
                 const backend = withCachingForTests(makeCountingBackend(counts));
@@ -2265,6 +2281,65 @@ describe("withCaching", () => {
                 );
 
                 expect(second).not.toBe(first);
+            });
+
+            describe("refs sharing an identifier", () => {
+                const LABEL_REF = idRef("shared.id", "displayForm");
+                const COMPUTED_ATTRIBUTE_REF = idRef("shared.id", "computedAttribute");
+
+                const queryFor = (
+                    backend: IAnalyticalBackend,
+                    ref: ObjRef,
+                    options?: IElementsQueryOptions,
+                ) => {
+                    const query = backend
+                        .workspace("test")
+                        .attributes()
+                        .elements()
+                        .forDisplayForm(ref)
+                        .withLimit(500)
+                        .withOffset(0);
+
+                    return (options ? query.withOptions(options) : query).query();
+                };
+
+                it("does not serve a label's elements for a computed attribute with the same id", async () => {
+                    const calls: ElementsCall[] = [];
+                    const backend = withCachingForTests(makeElementsBackend(calls), undefined, {
+                        maxAttributeElementResultsPerWorkspace: 10,
+                    });
+
+                    await queryFor(backend, LABEL_REF);
+                    await queryFor(backend, COMPUTED_ATTRIBUTE_REF);
+
+                    expect(calls).toHaveLength(2);
+                });
+
+                it("still caches repeated queries of the same typed ref", async () => {
+                    const calls: ElementsCall[] = [];
+                    const backend = withCachingForTests(makeElementsBackend(calls), undefined, {
+                        maxAttributeElementResultsPerWorkspace: 10,
+                    });
+
+                    const first = await queryFor(backend, COMPUTED_ATTRIBUTE_REF);
+                    const second = await queryFor(backend, COMPUTED_ATTRIBUTE_REF);
+
+                    expect(calls).toHaveLength(1);
+                    expect(second).toBe(first);
+                });
+
+                it("does not answer a computed attribute's search from a label's complete list", async () => {
+                    const calls: ElementsCall[] = [];
+                    const backend = withCachingForTests(makeElementsBackend(calls), undefined, {
+                        maxAttributeElementResultsPerWorkspace: 10,
+                        maxAttributeElementsForLocalFiltering: 500,
+                    });
+
+                    await queryFor(backend, LABEL_REF);
+                    await queryFor(backend, COMPUTED_ATTRIBUTE_REF, { filter: "alpha" });
+
+                    expect(calls).toHaveLength(2);
+                });
             });
 
             describe("locally filtered search", () => {

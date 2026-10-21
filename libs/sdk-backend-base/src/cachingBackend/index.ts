@@ -105,7 +105,6 @@ import {
     idRef,
     isIdentifierRef,
     isUriRef,
-    objRefToString,
     serializeObjRef,
     uriRef,
 } from "@gooddata/sdk-model";
@@ -1105,7 +1104,9 @@ function elementsCacheKey(
     },
 ): string {
     const fingerprint = stringify(settings) || "undefined";
-    return new SparkMD5().append(objRefToString(ref)).append(fingerprint).end();
+    // The ref is serialized rather than reduced to its identifier: a computed attribute's display form
+    // and a label may share an id, and their element lists must not be conflated.
+    return new SparkMD5().append(serializeObjRef(ref)).append(fingerprint).end();
 }
 
 /**
@@ -1193,7 +1194,8 @@ function refCacheKeys(ref: ObjRef): { idCacheKey?: string; uriCacheKey?: string 
  * so callers requesting the same set in a different order share the same cache entry.
  */
 function refSetCacheKey(refs: ObjRef[]): string {
-    const serialized = refs.map(objRefToString).sort();
+    // serialized, not reduced to identifiers, so refs of different types sharing an id stay distinct
+    const serialized = refs.map(serializeObjRef).sort();
     return new SparkMD5().append(stringify(serialized) || "undefined").end();
 }
 
@@ -2329,7 +2331,7 @@ class WithAutomationsCaching extends DecoratedWorkspaceAutomationsService {
 
 function insightCacheKey(ref: ObjRef, options?: IGetInsightOptions): string {
     const fingerprint = stringify(options ?? {}) || "undefined";
-    return new SparkMD5().append(objRefToString(ref)).append(fingerprint).end();
+    return new SparkMD5().append(serializeObjRef(ref)).append(fingerprint).end();
 }
 
 function getOrCreateInsightsCache(ctx: CachingContext, workspace: string): InsightsCacheEntry {

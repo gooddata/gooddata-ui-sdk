@@ -827,6 +827,10 @@
         "text": "Copy visualization link",
         "crowdinContext": "Menu option to copy a shareable link to the visualization"
     },
+    "gd.gen-ai.messages.skills": {
+        "text": "Using skills",
+        "crowdinContext": "Text in reasoning section of the chat messages when skills are activated"
+    },
     "gd.gen-ai.messages.label": {
         "text": "Chat messages",
         "crowdinContext": "Label for the chat messages section in the AI chatbot interface"

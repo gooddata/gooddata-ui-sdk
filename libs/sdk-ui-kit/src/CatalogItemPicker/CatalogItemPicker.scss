@@ -218,6 +218,12 @@
         display: flex;
     }
 
+    &__item-details {
+        display: flex;
+        flex: 0 0 auto;
+        align-items: center;
+    }
+
     &__item-sequence {
         font-size: 10px;
         color: variables.$gd-color-state-blank;

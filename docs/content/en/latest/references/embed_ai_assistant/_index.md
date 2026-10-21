@@ -282,6 +282,19 @@ Here is a list of the relevant events:
 | `ChatClarificationQuestionsEvent`     | `isChatClarificationQuestionsEvent`     | Clarification questions presented or resolved  |
 | `ChatUserAnswersEvent`                | `isChatUserAnswersEvent`                | User submitted clarification answers           |
 
+#### chatAssistantMessage
+
+This event is triggered when the assistant completes a response. If the response activates any skills, the
+optional `skills` property contains their identifiers and display titles.
+
+| Property      | Type                                | Description                                     |
+| ------------- | ----------------------------------- | ----------------------------------------------- |
+| type          | `chatAssistantMessage`              | Event type identifier.                          |
+| interactionId | `string`                            | (Optional) The ID of the assistant interaction. |
+| threadId      | `string`                            | (Optional) The ID of the conversation thread.   |
+| useCase       | `string`                            | The routing use case for the response.          |
+| skills        | `{ name: string; title: string }[]` | (Optional) Skills activated for the response.   |
+
 #### onLinkClick
 
 Handle user clicks on the catalog items mentioned in chat. If not provided, catalog items will be rendered as plain text.

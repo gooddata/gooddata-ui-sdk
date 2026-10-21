@@ -6,21 +6,24 @@ import { objRefToString } from "@gooddata/sdk-model";
 
 import { type CatalogItemPickerType, type ICatalogItemPickerItem } from "./types.js";
 
-export type CatalogItemsByDataset = Map<string, { title: string; items: ICatalogItemPickerItem[] }>;
+export type CatalogItemsByDataset<TPayload = unknown> = Map<
+    string,
+    { title: string; items: ICatalogItemPickerItem<TPayload>[] }
+>;
 
 const isDateItem = (item: ICatalogItemPickerItem) => item.type === "date";
 
-function filterItemsByType(
-    items: ICatalogItemPickerItem[],
+function filterItemsByType<TPayload>(
+    items: ICatalogItemPickerItem<TPayload>[],
     activeType: Extract<CatalogItemPickerType, "attribute" | "date">,
-): ICatalogItemPickerItem[] {
+): ICatalogItemPickerItem<TPayload>[] {
     return items.filter((item) => (activeType === "date" ? isDateItem(item) : !isDateItem(item)));
 }
 
-function dedupeCatalogAgainstInsight(
-    insightItems: ICatalogItemPickerItem[],
-    catalogItems: ICatalogItemPickerItem[],
-): ICatalogItemPickerItem[] {
+function dedupeCatalogAgainstInsight<TPayload>(
+    insightItems: ICatalogItemPickerItem<TPayload>[],
+    catalogItems: ICatalogItemPickerItem<TPayload>[],
+): ICatalogItemPickerItem<TPayload>[] {
     const insightRefKeys = new Set(
         insightItems.map((i) => (i.ref ? objRefToString(i.ref) : undefined)).filter((x): x is string => !!x),
     );
@@ -35,11 +38,11 @@ function dedupeCatalogAgainstInsight(
     });
 }
 
-function filterCatalogBySelectedDateDataset(
-    catalogItems: ICatalogItemPickerItem[],
+function filterCatalogBySelectedDateDataset<TPayload>(
+    catalogItems: ICatalogItemPickerItem<TPayload>[],
     activeType: Extract<CatalogItemPickerType, "attribute" | "date">,
     selectedDateDatasetKey: string | undefined,
-): ICatalogItemPickerItem[] {
+): ICatalogItemPickerItem<TPayload>[] {
     if (activeType !== "date" || !selectedDateDatasetKey) {
         return catalogItems;
     }
@@ -52,10 +55,10 @@ function filterCatalogBySelectedDateDataset(
     });
 }
 
-function filterItemsBySearch(
-    items: ICatalogItemPickerItem[],
+function filterItemsBySearch<TPayload>(
+    items: ICatalogItemPickerItem<TPayload>[],
     searchString: string,
-): ICatalogItemPickerItem[] {
+): ICatalogItemPickerItem<TPayload>[] {
     if (!searchString.trim()) {
         return items;
     }
@@ -63,9 +66,9 @@ function filterItemsBySearch(
     return items.filter((item) => item.title.toLowerCase().includes(lowerSearch));
 }
 
-function groupCatalogItemsByDataset(catalogItems: ICatalogItemPickerItem[]) {
-    const grouped = new Map<string, { title: string; items: ICatalogItemPickerItem[] }>();
-    const ungroupedItems: ICatalogItemPickerItem[] = [];
+function groupCatalogItemsByDataset<TPayload>(catalogItems: ICatalogItemPickerItem<TPayload>[]) {
+    const grouped: CatalogItemsByDataset<TPayload> = new Map();
+    const ungroupedItems: ICatalogItemPickerItem<TPayload>[] = [];
     catalogItems.forEach((item) => {
         if (item.dataset) {
             const datasetKey = objRefToString(item.dataset.identifier);
@@ -80,31 +83,31 @@ function groupCatalogItemsByDataset(catalogItems: ICatalogItemPickerItem[]) {
     return { grouped, ungroupedItems };
 }
 
-interface IUseAttributeItemsDataParams {
-    availableInsightItems: ICatalogItemPickerItem[];
-    availableCatalogItems: ICatalogItemPickerItem[];
+interface IUseAttributeItemsDataParams<TPayload> {
+    availableInsightItems: ICatalogItemPickerItem<TPayload>[];
+    availableCatalogItems: ICatalogItemPickerItem<TPayload>[];
     searchString: string;
     activeType: Extract<CatalogItemPickerType, "attribute" | "date">;
     selectedDateDatasetKey: string | undefined;
 }
 
-interface IUseAttributeItemsDataResult {
-    filteredInsightItems: ICatalogItemPickerItem[];
-    filteredCatalogItems: ICatalogItemPickerItem[];
-    catalogItemsByDataset: CatalogItemsByDataset;
-    ungroupedCatalogItems: ICatalogItemPickerItem[];
+interface IUseAttributeItemsDataResult<TPayload> {
+    filteredInsightItems: ICatalogItemPickerItem<TPayload>[];
+    filteredCatalogItems: ICatalogItemPickerItem<TPayload>[];
+    catalogItemsByDataset: CatalogItemsByDataset<TPayload>;
+    ungroupedCatalogItems: ICatalogItemPickerItem<TPayload>[];
 }
 
 /**
  * @internal
  */
-export function useAttributeItemsData({
+export function useAttributeItemsData<TPayload>({
     availableInsightItems,
     availableCatalogItems,
     searchString,
     activeType,
     selectedDateDatasetKey,
-}: IUseAttributeItemsDataParams): IUseAttributeItemsDataResult {
+}: IUseAttributeItemsDataParams<TPayload>): IUseAttributeItemsDataResult<TPayload> {
     return useMemo(() => {
         const insightItemsAfterType = filterItemsByType(availableInsightItems, activeType);
         const catalogItemsAfterType = filterItemsByType(availableCatalogItems, activeType);
@@ -124,7 +127,10 @@ export function useAttributeItemsData({
             return {
                 filteredInsightItems,
                 filteredCatalogItems,
-                catalogItemsByDataset: new Map<string, { title: string; items: ICatalogItemPickerItem[] }>(),
+                catalogItemsByDataset: new Map<
+                    string,
+                    { title: string; items: ICatalogItemPickerItem<TPayload>[] }
+                >(),
                 ungroupedCatalogItems: [],
             };
         }

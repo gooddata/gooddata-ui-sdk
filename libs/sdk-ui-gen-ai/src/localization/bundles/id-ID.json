@@ -29,6 +29,8 @@
     "gd.gen-ai.visualization.unavailable": "Visualisasi tidak dapat ditampilkan.",
     "gd.gen-ai.permission-error": "Izin tidak memadai",
     "gd.gen-ai.permission-error.description": "Anda tidak memiliki akses ke chatbot. Hubungi administrator Anda untuk meminta akses.",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.missing-error": "<b>Tidak ditemukan pertanyaan klarifikasi.</b> Coba tanyakan lagi.",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.skipped": "[Dilewati]",
     "gd.gen-ai.input-placeholder": "Tanyakan di sini…",
     "gd.gen-ai.input-label": "Ajukan pertanyaan Anda. Ketik @ untuk saran.",
     "gd.gen-ai.context.add_context": "Tambahkan konteks",

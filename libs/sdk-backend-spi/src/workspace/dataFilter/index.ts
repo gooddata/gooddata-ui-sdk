@@ -3,6 +3,8 @@
 import {
     type IWorkspaceDataFilter,
     type IWorkspaceDataFilterDefinition,
+    type IWorkspaceDataFilterSetting,
+    type IWorkspaceDataFilterSettingDefinition,
     type ObjRef,
     type UserDataFilter,
     type UserDataFilterDefinition,
@@ -44,6 +46,16 @@ export interface IDataFiltersService {
      * Update value of existing data filter.
      */
     updateDataFilterValue(dataFilter: ObjRef, values: string[]): Promise<void>;
+
+    /**
+     * Create a new setting of a data filter. Unlike {@link IDataFiltersService#updateDataFilterValue},
+     * this does not remove the existing settings of the data filter.
+     *
+     * @param definition - data filter, values and optional id, title and description of the setting
+     */
+    createDataFilterSetting(
+        definition: IWorkspaceDataFilterSettingDefinition,
+    ): Promise<IWorkspaceDataFilterSetting>;
 
     /**
      * Delete an existing data filter.

@@ -1,5 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
+import { type CSSProperties } from "react";
+
 import { clamp, isEqual, round } from "lodash-es";
 import { invariant } from "ts-invariant";
 
@@ -10,9 +12,13 @@ import {
     type IDashboardLayoutSection,
     type IDashboardLayoutSize,
     type IDashboardLayoutSizeByScreenSize,
+    type IInsight,
+    type IInsightWidget,
     type ISettings,
     type ScreenSize,
+    insightVisualizationType,
     isDashboardLayout,
+    isInsightWidget,
     isWidget,
     isWidgetDefinition,
 } from "@gooddata/sdk-model";
@@ -34,12 +40,18 @@ import {
     implicitLayoutItemSizeFromXlSize,
     splitDashboardLayoutItemsAsRenderedGridRows,
 } from "../../../../_staging/layout/sizing.js";
+import { type ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
+import { type ExtendedDashboardWidget } from "../../../../model/types/layoutTypes.js";
 import { type ILayoutItemPath } from "../../../../types.js";
 import {
     ALL_SCREENS,
     DASHBOARD_LAYOUT_CONTAINER_WIDTHS,
     DASHBOARD_LAYOUT_MAX_HEIGHT_AS_RATIO_XS,
 } from "../../../constants/layout.js";
+import {
+    SMALLEST_WIDGET_HEIGHT,
+    SMALL_WIDGET_HEIGHT,
+} from "../../../presentationComponents/DashboardItems/DashboardItemHeadlineContainer.js";
 
 /**
  * Unify dashboard layout items height for all screens.
@@ -255,6 +267,36 @@ export const getResizedItemPositions = <TWidget>(
             }, acc);
         }, positions);
 };
+
+function getHeadlineTitleSize(minHeight: number, widget: IInsightWidget): string {
+    if (widget.configuration?.hideTitle) {
+        return "untitled";
+    }
+    if (minHeight < SMALLEST_WIDGET_HEIGHT) {
+        return "small";
+    }
+    return minHeight > SMALL_WIDGET_HEIGHT ? "large" : "medium";
+}
+
+/**
+ * Lowers the min height of a headline widget by the space compact density saves on its padding and title,
+ * so it keeps the visualization area it has in comfortable density. The saving is defined in dashboard.scss.
+ */
+export function getDensityAdjustedMinHeight(
+    minHeight: number | undefined,
+    widget: ExtendedDashboardWidget,
+    insights: ObjRefMap<IInsight>,
+): CSSProperties["minHeight"] {
+    if (minHeight === undefined || !isInsightWidget(widget)) {
+        return minHeight;
+    }
+    const insight = insights.get(widget.insight);
+    if (!insight || insightVisualizationType(insight) !== "headline") {
+        return minHeight;
+    }
+    const titleSize = getHeadlineTitleSize(minHeight, widget);
+    return `calc(${minHeight}px - var(--headline-density-saving-${titleSize}, 0px))`;
+}
 
 export const getDashboardLayoutItemHeightForRatioAndScreen = (
     size: IDashboardLayoutSize,

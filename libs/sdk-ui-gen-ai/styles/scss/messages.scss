@@ -1030,6 +1030,24 @@ $dataset_color: #952f8e;
         }
     }
 
+    &--skills {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gd-spacing-5px);
+
+        &--header {
+            font-weight: bold;
+        }
+
+        &--content {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-left: 5px;
+        }
+    }
+
     &--alertProposal,
     &--dashboard,
     &--publisherDocument {

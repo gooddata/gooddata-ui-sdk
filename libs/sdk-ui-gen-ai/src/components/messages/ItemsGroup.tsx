@@ -146,6 +146,7 @@ function useReasoningGroup(previousGroup: IChatMessagesGroup | undefined, group:
                 }
                 case "toolCall":
                 case "toolResult":
+                case "skillsActivated":
                 default:
                     break;
             }

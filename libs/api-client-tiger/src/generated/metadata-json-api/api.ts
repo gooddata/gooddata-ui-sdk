@@ -2007,6 +2007,10 @@ export interface DeclarativeColumn {
      */
     'dataType': DeclarativeColumnDataTypeEnum;
     /**
+     * (EXPERIMENTAL) Name of the column whose values this column labels. Logical model generation makes this column the default label of the attribute on that column, sorted by that column.
+     */
+    'defaultLabelOf'?: string;
+    /**
      * Column description/comment from database
      */
     'description'?: string;
@@ -16780,6 +16784,9 @@ export interface LocalizationDataStatistics {
     'locales': Array<LocalizationStatisticsLocale>;
 }
 
+/**
+ * The value a workspace gets for one setting when it and its parents set nothing, and where it comes from. Null when that value has no language.
+ */
 export interface LocalizationDefault {
     'content': LocalizationContent;
     /**
@@ -16790,9 +16797,6 @@ export interface LocalizationDefault {
 
 export type LocalizationDefaultSourceEnum = 'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT';
 
-/**
- * The value a workspace gets when it and its parents set nothing. Null when the setting has no value.
- */
 export interface LocalizationDefaults {
     'DATA_LOCALE'?: LocalizationDefault | null;
     'LOCALE'?: LocalizationDefault | null;
@@ -16806,6 +16810,9 @@ export interface LocalizationMetadataStatistics {
     'locales': Array<LocalizationStatisticsLocale>;
 }
 
+/**
+ * The value a workspace gets for one setting, and where it comes from. Never null. `content.value` is null when the workspace gets no language.
+ */
 export interface LocalizationResolvedValue {
     'content': LocalizationContent;
     /**
@@ -16821,7 +16828,7 @@ export interface LocalizationResolvedValue {
 export type LocalizationResolvedValueSourceEnum = 'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT';
 
 /**
- * The value the workspace gets for each setting.
+ * The value for each of the display, metadata and data language settings, with its source.
  */
 export interface LocalizationResolvedValues {
     'DATA_LOCALE': LocalizationResolvedValue;
@@ -16844,7 +16851,7 @@ export interface LocalizationSettingUsages {
 }
 
 /**
- * Counts per source. Sources without any count are left out. Users without their own setting have no source and are only in the total.
+ * Counts per source. Sources without any count are left out. In the organization, users without their own setting have no source and are only in the total.
  */
 export interface LocalizationSourceCounts {
     'DEFAULT'?: number;
@@ -16897,7 +16904,7 @@ export interface LocalizationUsageUsers {
 }
 
 /**
- * One language. `workspaces` counts the workspaces that get it in any of the settings, once each. `users` counts the users who set it themselves in any of the settings, once each. In the entry with a null value, `users` counts the users who set none of the three settings.
+ * One language. `workspaces` counts the workspaces that get it in any of the settings, once each. `users` counts the users who get it in any of the settings, once each. In the entry with a null value, `users` counts the users who get no language in any setting.
  */
 export interface LocalizationUsageValue {
     'bySetting': LocalizationSettingUsages;
@@ -16935,7 +16942,7 @@ export interface LocalizationUsageWorkspaces {
 }
 
 /**
- * Null when the user does not set the setting.
+ * The value a user gets for one setting, and where it comes from. In the organization users list, it is the value the user sets, with source USER. It is null when the user does not set the setting, because the value then depends on the workspace. In the workspace users list, it is never null. It is the value the user sets, with source USER. Otherwise it is the value the workspace gets, with the source of the workspace. For the origin of that value, see `originId` in the workspace usage. `content.value` is null when the user gets no language.
  */
 export interface LocalizationUserValue {
     'content': LocalizationContent;
@@ -16948,7 +16955,7 @@ export interface LocalizationUserValue {
 export type LocalizationUserValueSourceEnum = 'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT';
 
 /**
- * The value the user sets for each setting.
+ * The value the user gets for each setting.
  */
 export interface LocalizationUserValues {
     'DATA_LOCALE'?: LocalizationUserValue | null;
@@ -18677,6 +18684,11 @@ export interface WorkspaceIdentifier {
 }
 
 export type WorkspaceIdentifierTypeEnum = 'workspace';
+
+export interface WorkspaceLocalizationUsage {
+    'settings': LocalizationResolvedValues;
+    'values': Array<LocalizationUsageValue>;
+}
 
 /**
  * Workspace permission assignments
@@ -21165,7 +21177,7 @@ export async function ActionsApiAxiosParamCreator_OrganizationLocalizationStatis
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count only under the languages they set themselves.
+ * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves count. `defaults` holds the value a workspace gets when it and its parents set nothing.
  * @summary (BETA) Languages used in the organization.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
@@ -21206,7 +21218,7 @@ export async function ActionsApiAxiosParamCreator_OrganizationLocalizationUsage(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Only the settings that users set themselves match, so only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.
+ * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.
  * @summary (BETA) Users who set a language themselves.
  * @param {string} [value] Language tag that the user sets.
  * @param {'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE'} [setting] One of LOCALE, METADATA_LOCALE and DATA_LOCALE.
@@ -22774,6 +22786,166 @@ export async function ActionsApiAxiosParamCreator_VisualizationPermissions(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
+ * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list.
+ * @summary (BETA) Languages with translations in the workspace.
+ * @param {string} workspaceId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_WorkspaceLocalizationStatistics(
+    workspaceId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('workspaceLocalizationStatistics', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/localization/statistics`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * (BETA) Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
+ * @summary (BETA) Languages used in the workspace.
+ * @param {string} workspaceId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_WorkspaceLocalizationUsage(
+    workspaceId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('workspaceLocalizationUsage', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/localization/usage`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one.
+ * @summary (BETA) Workspace members who get a language.
+ * @param {string} workspaceId 
+ * @param {string} [value] Language tag that the user gets.
+ * @param {'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE'} [setting] One of LOCALE, METADATA_LOCALE and DATA_LOCALE.
+ * @param {'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT'} [source] Where the value comes from.
+ * @param {number} [page] Zero-based page index (0..N)
+ * @param {number} [size] The size of the page to be returned.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_WorkspaceLocalizationUsageUsers(
+    workspaceId: string, value?: string, setting?: 'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE', source?: 'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT', page?: number, size?: number, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('workspaceLocalizationUsageUsers', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/localization/usage/users`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (value !== undefined) {
+        localVarQueryParameter['value'] = value;
+    }
+
+    if (setting !== undefined) {
+        localVarQueryParameter['setting'] = setting;
+    }
+
+    if (source !== undefined) {
+        localVarQueryParameter['source'] = source;
+    }
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
  * Resolves values for all settings in a workspace by current user, workspace, organization, or default settings.
  * @summary Values for all settings.
  * @param {string} workspaceId 
@@ -23746,7 +23918,7 @@ export async function ActionsApi_OrganizationLocalizationStatistics(
 
 // ActionsApi Api FP
 /**
- * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count only under the languages they set themselves.
+ * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves count. `defaults` holds the value a workspace gets when it and its parents set nothing.
  * @summary (BETA) Languages used in the organization.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -23771,7 +23943,7 @@ export async function ActionsApi_OrganizationLocalizationUsage(
 
 // ActionsApi Api FP
 /**
- * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Only the settings that users set themselves match, so only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.
+ * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.
  * @summary (BETA) Users who set a language themselves.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -24521,6 +24693,84 @@ export async function ActionsApi_VisualizationPermissions(
 
 // ActionsApi Api FP
 /**
+ * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list.
+ * @summary (BETA) Languages with translations in the workspace.
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiWorkspaceLocalizationStatisticsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_WorkspaceLocalizationStatistics(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiWorkspaceLocalizationStatisticsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<LocalizationStatistics> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_WorkspaceLocalizationStatistics(
+        requestParameters.workspaceId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
+ * (BETA) Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
+ * @summary (BETA) Languages used in the workspace.
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiWorkspaceLocalizationUsageRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_WorkspaceLocalizationUsage(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiWorkspaceLocalizationUsageRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<WorkspaceLocalizationUsage> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_WorkspaceLocalizationUsage(
+        requestParameters.workspaceId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
+ * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one.
+ * @summary (BETA) Workspace members who get a language.
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiWorkspaceLocalizationUsageUsersRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_WorkspaceLocalizationUsageUsers(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiWorkspaceLocalizationUsageUsersRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<LocalizationUsageUsers> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_WorkspaceLocalizationUsageUsers(
+        requestParameters.workspaceId, requestParameters.value, requestParameters.setting, requestParameters.source, requestParameters.page, requestParameters.size, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
  * Resolves values for all settings in a workspace by current user, workspace, organization, or default settings.
  * @summary Values for all settings.
  * @param {AxiosInstance} axios Axios instance.
@@ -24904,7 +25154,7 @@ export interface ActionsApiInterface {
     organizationLocalizationStatistics(options?: AxiosRequestConfig): AxiosPromise<LocalizationStatistics>;
 
     /**
-     * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count only under the languages they set themselves.
+     * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves count. `defaults` holds the value a workspace gets when it and its parents set nothing.
      * @summary (BETA) Languages used in the organization.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -24913,7 +25163,7 @@ export interface ActionsApiInterface {
     organizationLocalizationUsage(options?: AxiosRequestConfig): AxiosPromise<LocalizationUsage>;
 
     /**
-     * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Only the settings that users set themselves match, so only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.
+     * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.
      * @summary (BETA) Users who set a language themselves.
      * @param {ActionsApiOrganizationLocalizationUsageUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -25197,6 +25447,36 @@ export interface ActionsApiInterface {
      * @memberof ActionsApiInterface
      */
     visualizationPermissions(requestParameters: ActionsApiVisualizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<VisualizationPermissions>;
+
+    /**
+     * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list.
+     * @summary (BETA) Languages with translations in the workspace.
+     * @param {ActionsApiWorkspaceLocalizationStatisticsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    workspaceLocalizationStatistics(requestParameters: ActionsApiWorkspaceLocalizationStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationStatistics>;
+
+    /**
+     * (BETA) Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
+     * @summary (BETA) Languages used in the workspace.
+     * @param {ActionsApiWorkspaceLocalizationUsageRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    workspaceLocalizationUsage(requestParameters: ActionsApiWorkspaceLocalizationUsageRequest, options?: AxiosRequestConfig): AxiosPromise<WorkspaceLocalizationUsage>;
+
+    /**
+     * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one.
+     * @summary (BETA) Workspace members who get a language.
+     * @param {ActionsApiWorkspaceLocalizationUsageUsersRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    workspaceLocalizationUsageUsers(requestParameters: ActionsApiWorkspaceLocalizationUsageUsersRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationUsageUsers>;
 
     /**
      * Resolves values for all settings in a workspace by current user, workspace, organization, or default settings.
@@ -26376,6 +26656,83 @@ export interface ActionsApiVisualizationPermissionsRequest {
 }
 
 /**
+ * Request parameters for workspaceLocalizationStatistics operation in ActionsApi.
+ * @export
+ * @interface ActionsApiWorkspaceLocalizationStatisticsRequest
+ */
+export interface ActionsApiWorkspaceLocalizationStatisticsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiWorkspaceLocalizationStatistics
+     */
+    readonly workspaceId: string
+}
+
+/**
+ * Request parameters for workspaceLocalizationUsage operation in ActionsApi.
+ * @export
+ * @interface ActionsApiWorkspaceLocalizationUsageRequest
+ */
+export interface ActionsApiWorkspaceLocalizationUsageRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiWorkspaceLocalizationUsage
+     */
+    readonly workspaceId: string
+}
+
+/**
+ * Request parameters for workspaceLocalizationUsageUsers operation in ActionsApi.
+ * @export
+ * @interface ActionsApiWorkspaceLocalizationUsageUsersRequest
+ */
+export interface ActionsApiWorkspaceLocalizationUsageUsersRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiWorkspaceLocalizationUsageUsers
+     */
+    readonly workspaceId: string
+
+    /**
+     * Language tag that the user gets.
+     * @type {string}
+     * @memberof ActionsApiWorkspaceLocalizationUsageUsers
+     */
+    readonly value?: string
+
+    /**
+     * One of LOCALE, METADATA_LOCALE and DATA_LOCALE.
+     * @type {'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE'}
+     * @memberof ActionsApiWorkspaceLocalizationUsageUsers
+     */
+    readonly setting?: 'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE'
+
+    /**
+     * Where the value comes from.
+     * @type {'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT'}
+     * @memberof ActionsApiWorkspaceLocalizationUsageUsers
+     */
+    readonly source?: 'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT'
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof ActionsApiWorkspaceLocalizationUsageUsers
+     */
+    readonly page?: number
+
+    /**
+     * The size of the page to be returned.
+     * @type {number}
+     * @memberof ActionsApiWorkspaceLocalizationUsageUsers
+     */
+    readonly size?: number
+}
+
+/**
  * Request parameters for workspaceResolveAllSettings operation in ActionsApi.
  * @export
  * @interface ActionsApiWorkspaceResolveAllSettingsRequest
@@ -26824,7 +27181,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count only under the languages they set themselves.
+     * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves count. `defaults` holds the value a workspace gets when it and its parents set nothing.
      * @summary (BETA) Languages used in the organization.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -26835,7 +27192,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Only the settings that users set themselves match, so only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.
+     * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.
      * @summary (BETA) Users who set a language themselves.
      * @param {ActionsApiOrganizationLocalizationUsageUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -27176,6 +27533,42 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public visualizationPermissions(requestParameters: ActionsApiVisualizationPermissionsRequest, options?: AxiosRequestConfig) {
         return ActionsApi_VisualizationPermissions(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list.
+     * @summary (BETA) Languages with translations in the workspace.
+     * @param {ActionsApiWorkspaceLocalizationStatisticsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public workspaceLocalizationStatistics(requestParameters: ActionsApiWorkspaceLocalizationStatisticsRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_WorkspaceLocalizationStatistics(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
+     * @summary (BETA) Languages used in the workspace.
+     * @param {ActionsApiWorkspaceLocalizationUsageRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public workspaceLocalizationUsage(requestParameters: ActionsApiWorkspaceLocalizationUsageRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_WorkspaceLocalizationUsage(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one.
+     * @summary (BETA) Workspace members who get a language.
+     * @param {ActionsApiWorkspaceLocalizationUsageUsersRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public workspaceLocalizationUsageUsers(requestParameters: ActionsApiWorkspaceLocalizationUsageUsersRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_WorkspaceLocalizationUsageUsers(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -141408,7 +141801,7 @@ export async function LocalizationApiAxiosParamCreator_OrganizationLocalizationS
 
 // LocalizationApi FP - LocalizationApiAxiosParamCreator
 /**
- * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count only under the languages they set themselves.
+ * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves count. `defaults` holds the value a workspace gets when it and its parents set nothing.
  * @summary (BETA) Languages used in the organization.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
@@ -141449,7 +141842,7 @@ export async function LocalizationApiAxiosParamCreator_OrganizationLocalizationU
 
 // LocalizationApi FP - LocalizationApiAxiosParamCreator
 /**
- * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Only the settings that users set themselves match, so only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.
+ * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.
  * @summary (BETA) Users who set a language themselves.
  * @param {string} [value] Language tag that the user sets.
  * @param {'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE'} [setting] One of LOCALE, METADATA_LOCALE and DATA_LOCALE.
@@ -141579,6 +141972,166 @@ export async function LocalizationApiAxiosParamCreator_OrganizationLocalizationU
 }
 
 
+// LocalizationApi FP - LocalizationApiAxiosParamCreator
+/**
+ * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list.
+ * @summary (BETA) Languages with translations in the workspace.
+ * @param {string} workspaceId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function LocalizationApiAxiosParamCreator_WorkspaceLocalizationStatistics(
+    workspaceId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('workspaceLocalizationStatistics', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/localization/statistics`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// LocalizationApi FP - LocalizationApiAxiosParamCreator
+/**
+ * (BETA) Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
+ * @summary (BETA) Languages used in the workspace.
+ * @param {string} workspaceId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function LocalizationApiAxiosParamCreator_WorkspaceLocalizationUsage(
+    workspaceId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('workspaceLocalizationUsage', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/localization/usage`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// LocalizationApi FP - LocalizationApiAxiosParamCreator
+/**
+ * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one.
+ * @summary (BETA) Workspace members who get a language.
+ * @param {string} workspaceId 
+ * @param {string} [value] Language tag that the user gets.
+ * @param {'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE'} [setting] One of LOCALE, METADATA_LOCALE and DATA_LOCALE.
+ * @param {'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT'} [source] Where the value comes from.
+ * @param {number} [page] Zero-based page index (0..N)
+ * @param {number} [size] The size of the page to be returned.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function LocalizationApiAxiosParamCreator_WorkspaceLocalizationUsageUsers(
+    workspaceId: string, value?: string, setting?: 'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE', source?: 'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT', page?: number, size?: number, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('workspaceLocalizationUsageUsers', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/localization/usage/users`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (value !== undefined) {
+        localVarQueryParameter['value'] = value;
+    }
+
+    if (setting !== undefined) {
+        localVarQueryParameter['setting'] = setting;
+    }
+
+    if (source !== undefined) {
+        localVarQueryParameter['source'] = source;
+    }
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
 
 // LocalizationApi Api FP
 /**
@@ -141607,7 +142160,7 @@ export async function LocalizationApi_OrganizationLocalizationStatistics(
 
 // LocalizationApi Api FP
 /**
- * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count only under the languages they set themselves.
+ * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves count. `defaults` holds the value a workspace gets when it and its parents set nothing.
  * @summary (BETA) Languages used in the organization.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -141632,7 +142185,7 @@ export async function LocalizationApi_OrganizationLocalizationUsage(
 
 // LocalizationApi Api FP
 /**
- * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Only the settings that users set themselves match, so only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.
+ * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.
  * @summary (BETA) Users who set a language themselves.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -141682,6 +142235,84 @@ export async function LocalizationApi_OrganizationLocalizationUsageWorkspaces(
 }
 
 
+// LocalizationApi Api FP
+/**
+ * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list.
+ * @summary (BETA) Languages with translations in the workspace.
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {LocalizationApiWorkspaceLocalizationStatisticsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function LocalizationApi_WorkspaceLocalizationStatistics(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: LocalizationApiWorkspaceLocalizationStatisticsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<LocalizationStatistics> {
+    const localVarAxiosArgs = await LocalizationApiAxiosParamCreator_WorkspaceLocalizationStatistics(
+        requestParameters.workspaceId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// LocalizationApi Api FP
+/**
+ * (BETA) Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
+ * @summary (BETA) Languages used in the workspace.
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {LocalizationApiWorkspaceLocalizationUsageRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function LocalizationApi_WorkspaceLocalizationUsage(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: LocalizationApiWorkspaceLocalizationUsageRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<WorkspaceLocalizationUsage> {
+    const localVarAxiosArgs = await LocalizationApiAxiosParamCreator_WorkspaceLocalizationUsage(
+        requestParameters.workspaceId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// LocalizationApi Api FP
+/**
+ * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one.
+ * @summary (BETA) Workspace members who get a language.
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {LocalizationApiWorkspaceLocalizationUsageUsersRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function LocalizationApi_WorkspaceLocalizationUsageUsers(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: LocalizationApiWorkspaceLocalizationUsageUsersRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<LocalizationUsageUsers> {
+    const localVarAxiosArgs = await LocalizationApiAxiosParamCreator_WorkspaceLocalizationUsageUsers(
+        requestParameters.workspaceId, requestParameters.value, requestParameters.setting, requestParameters.source, requestParameters.page, requestParameters.size, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
 /**
  * LocalizationApi - interface
  * @export
@@ -141698,7 +142329,7 @@ export interface LocalizationApiInterface {
     organizationLocalizationStatistics(options?: AxiosRequestConfig): AxiosPromise<LocalizationStatistics>;
 
     /**
-     * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count only under the languages they set themselves.
+     * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves count. `defaults` holds the value a workspace gets when it and its parents set nothing.
      * @summary (BETA) Languages used in the organization.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -141707,7 +142338,7 @@ export interface LocalizationApiInterface {
     organizationLocalizationUsage(options?: AxiosRequestConfig): AxiosPromise<LocalizationUsage>;
 
     /**
-     * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Only the settings that users set themselves match, so only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.
+     * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.
      * @summary (BETA) Users who set a language themselves.
      * @param {LocalizationApiOrganizationLocalizationUsageUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -141725,6 +142356,36 @@ export interface LocalizationApiInterface {
      * @memberof LocalizationApiInterface
      */
     organizationLocalizationUsageWorkspaces(requestParameters: LocalizationApiOrganizationLocalizationUsageWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationUsageWorkspaces>;
+
+    /**
+     * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list.
+     * @summary (BETA) Languages with translations in the workspace.
+     * @param {LocalizationApiWorkspaceLocalizationStatisticsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LocalizationApiInterface
+     */
+    workspaceLocalizationStatistics(requestParameters: LocalizationApiWorkspaceLocalizationStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationStatistics>;
+
+    /**
+     * (BETA) Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
+     * @summary (BETA) Languages used in the workspace.
+     * @param {LocalizationApiWorkspaceLocalizationUsageRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LocalizationApiInterface
+     */
+    workspaceLocalizationUsage(requestParameters: LocalizationApiWorkspaceLocalizationUsageRequest, options?: AxiosRequestConfig): AxiosPromise<WorkspaceLocalizationUsage>;
+
+    /**
+     * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one.
+     * @summary (BETA) Workspace members who get a language.
+     * @param {LocalizationApiWorkspaceLocalizationUsageUsersRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LocalizationApiInterface
+     */
+    workspaceLocalizationUsageUsers(requestParameters: LocalizationApiWorkspaceLocalizationUsageUsersRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationUsageUsers>;
 
 }
 
@@ -141813,6 +142474,83 @@ export interface LocalizationApiOrganizationLocalizationUsageWorkspacesRequest {
 }
 
 /**
+ * Request parameters for workspaceLocalizationStatistics operation in LocalizationApi.
+ * @export
+ * @interface LocalizationApiWorkspaceLocalizationStatisticsRequest
+ */
+export interface LocalizationApiWorkspaceLocalizationStatisticsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof LocalizationApiWorkspaceLocalizationStatistics
+     */
+    readonly workspaceId: string
+}
+
+/**
+ * Request parameters for workspaceLocalizationUsage operation in LocalizationApi.
+ * @export
+ * @interface LocalizationApiWorkspaceLocalizationUsageRequest
+ */
+export interface LocalizationApiWorkspaceLocalizationUsageRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof LocalizationApiWorkspaceLocalizationUsage
+     */
+    readonly workspaceId: string
+}
+
+/**
+ * Request parameters for workspaceLocalizationUsageUsers operation in LocalizationApi.
+ * @export
+ * @interface LocalizationApiWorkspaceLocalizationUsageUsersRequest
+ */
+export interface LocalizationApiWorkspaceLocalizationUsageUsersRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof LocalizationApiWorkspaceLocalizationUsageUsers
+     */
+    readonly workspaceId: string
+
+    /**
+     * Language tag that the user gets.
+     * @type {string}
+     * @memberof LocalizationApiWorkspaceLocalizationUsageUsers
+     */
+    readonly value?: string
+
+    /**
+     * One of LOCALE, METADATA_LOCALE and DATA_LOCALE.
+     * @type {'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE'}
+     * @memberof LocalizationApiWorkspaceLocalizationUsageUsers
+     */
+    readonly setting?: 'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE'
+
+    /**
+     * Where the value comes from.
+     * @type {'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT'}
+     * @memberof LocalizationApiWorkspaceLocalizationUsageUsers
+     */
+    readonly source?: 'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT'
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof LocalizationApiWorkspaceLocalizationUsageUsers
+     */
+    readonly page?: number
+
+    /**
+     * The size of the page to be returned.
+     * @type {number}
+     * @memberof LocalizationApiWorkspaceLocalizationUsageUsers
+     */
+    readonly size?: number
+}
+
+/**
  * LocalizationApi - object-oriented interface
  * @export
  * @class LocalizationApi
@@ -141831,7 +142569,7 @@ export class LocalizationApi extends BaseAPI implements LocalizationApiInterface
     }
 
     /**
-     * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count only under the languages they set themselves.
+     * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves count. `defaults` holds the value a workspace gets when it and its parents set nothing.
      * @summary (BETA) Languages used in the organization.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -141842,7 +142580,7 @@ export class LocalizationApi extends BaseAPI implements LocalizationApiInterface
     }
 
     /**
-     * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Only the settings that users set themselves match, so only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.
+     * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.
      * @summary (BETA) Users who set a language themselves.
      * @param {LocalizationApiOrganizationLocalizationUsageUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -141863,6 +142601,42 @@ export class LocalizationApi extends BaseAPI implements LocalizationApiInterface
      */
     public organizationLocalizationUsageWorkspaces(requestParameters: LocalizationApiOrganizationLocalizationUsageWorkspacesRequest = {}, options?: AxiosRequestConfig) {
         return LocalizationApi_OrganizationLocalizationUsageWorkspaces(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list.
+     * @summary (BETA) Languages with translations in the workspace.
+     * @param {LocalizationApiWorkspaceLocalizationStatisticsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LocalizationApi
+     */
+    public workspaceLocalizationStatistics(requestParameters: LocalizationApiWorkspaceLocalizationStatisticsRequest, options?: AxiosRequestConfig) {
+        return LocalizationApi_WorkspaceLocalizationStatistics(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
+     * @summary (BETA) Languages used in the workspace.
+     * @param {LocalizationApiWorkspaceLocalizationUsageRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LocalizationApi
+     */
+    public workspaceLocalizationUsage(requestParameters: LocalizationApiWorkspaceLocalizationUsageRequest, options?: AxiosRequestConfig) {
+        return LocalizationApi_WorkspaceLocalizationUsage(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one.
+     * @summary (BETA) Workspace members who get a language.
+     * @param {LocalizationApiWorkspaceLocalizationUsageUsersRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LocalizationApi
+     */
+    public workspaceLocalizationUsageUsers(requestParameters: LocalizationApiWorkspaceLocalizationUsageUsersRequest, options?: AxiosRequestConfig) {
+        return LocalizationApi_WorkspaceLocalizationUsageUsers(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 

@@ -265,7 +265,7 @@ export function summarize(scope: IUsageScope, peopleWithoutValue: "own" | "effec
     return { defaults: FIXTURE_DEFAULTS, values: [...entries.values()] };
 }
 
-function matches(
+export function matches(
     settings: ResolvedSettings,
     query: ILocalizationUsageListQuery,
 ): LocalizationUsageSource | undefined {
@@ -284,7 +284,7 @@ function matches(
     return query.source === undefined || query.source === source ? source : undefined;
 }
 
-function page<T>(items: T[], query: ILocalizationPageQuery): T[] {
+export function page<T>(items: T[], query: ILocalizationPageQuery): T[] {
     const size = query.size ?? DEFAULT_PAGE_SIZE;
     const start = (query.page ?? 0) * size;
     return items.slice(start, start + size);

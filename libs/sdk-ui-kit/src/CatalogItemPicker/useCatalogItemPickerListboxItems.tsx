@@ -5,7 +5,6 @@ import { useMemo } from "react";
 import { DateDatasetPickerItem } from "./DateDatasetPickerItem.js";
 import {
     type CatalogItemListboxItem,
-    type ICatalogItemPickerListItemData,
     buildAttributeListboxItems,
     buildLoadingRow,
     buildMetricListboxItems,
@@ -29,14 +28,14 @@ export interface ICatalogItemPickerLabels {
     ungroupedTitle: string;
 }
 
-export interface IUseCatalogItemPickerListboxItemsParams {
+export interface IUseCatalogItemPickerListboxItemsParams<TPayload = unknown> {
     effectiveType: CatalogItemPickerType;
-    metricInsightItems: ICatalogItemPickerItem[];
-    groupedMetricCatalogItems: Array<{ title: string; items: ICatalogItemPickerItem[] }>;
-    filteredInsightItems: ICatalogItemPickerItem[];
-    filteredCatalogItems: ICatalogItemPickerItem[];
-    catalogItemsByDataset: Map<string, { title: string; items: ICatalogItemPickerItem[] }>;
-    ungroupedCatalogItems: ICatalogItemPickerItem[];
+    metricInsightItems: ICatalogItemPickerItem<TPayload>[];
+    groupedMetricCatalogItems: Array<{ title: string; items: ICatalogItemPickerItem<TPayload>[] }>;
+    filteredInsightItems: ICatalogItemPickerItem<TPayload>[];
+    filteredCatalogItems: ICatalogItemPickerItem<TPayload>[];
+    catalogItemsByDataset: Map<string, { title: string; items: ICatalogItemPickerItem<TPayload>[] }>;
+    ungroupedCatalogItems: ICatalogItemPickerItem<TPayload>[];
     selectedIds: Set<string>;
     isLoading: boolean;
     shouldShowDateDatasetSelector: boolean;
@@ -50,9 +49,9 @@ export interface IUseCatalogItemPickerListboxItemsParams {
     setIsDateDatasetDropdownOpen: (open: boolean | ((prev: boolean) => boolean)) => void;
 }
 
-export function useCatalogItemPickerListboxItems(
-    params: IUseCatalogItemPickerListboxItemsParams,
-): CatalogItemListboxItem[] {
+export function useCatalogItemPickerListboxItems<TPayload>(
+    params: IUseCatalogItemPickerListboxItemsParams<TPayload>,
+): CatalogItemListboxItem<TPayload>[] {
     const {
         effectiveType,
         metricInsightItems,
@@ -75,14 +74,16 @@ export function useCatalogItemPickerListboxItems(
     } = params;
 
     return useMemo(() => {
-        const makeInteractiveItem = (item: ICatalogItemPickerItem): CatalogItemListboxItem => ({
+        const makeInteractiveItem = (
+            item: ICatalogItemPickerItem<TPayload>,
+        ): CatalogItemListboxItem<TPayload> => ({
             type: "interactive" as const,
             id: item.id,
             stringTitle: item.title,
             data: {
                 item,
                 isSelected: selectedIds.has(item.id),
-            } as ICatalogItemPickerListItemData,
+            },
         });
 
         if (effectiveType === "metric") {

@@ -4,6 +4,7 @@
 
 ```ts
 
+import { CacheControl } from '@gooddata/sdk-backend-base';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAuthCredentials } from '@gooddata/sdk-pluggable-application-model';
 import { IHostNavigationRequest } from '@gooddata/sdk-pluggable-application-model';
@@ -44,6 +45,7 @@ export interface IClientPlatformContext extends IPlatformContext {
 
 // @alpha
 export interface ICreateBackendForModuleOptions {
+    onCacheReady?: (cacheControl: CacheControl) => void;
     packageName: string;
     packageVersion?: string;
 }

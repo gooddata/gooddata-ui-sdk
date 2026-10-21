@@ -42,6 +42,7 @@ import {
     type IChatConversationItem,
     type IChatConversationItemDetail,
     type IChatConversationMultipartPart,
+    type IChatConversationSkillActivatedContent,
     type IChatKdaDefinition,
     type IChatSuggestions,
     type IChatWhatIfDefinition,
@@ -226,6 +227,11 @@ function convertChatConversationContentFromBackend(
                 callId: content.callId,
                 result: tryParseJson(content.result),
             };
+        case "skillsActivated":
+            return {
+                type: "skillsActivated",
+                skills: content.skills.map(({ name, title }) => ({ name, title })),
+            } as IChatConversationSkillActivatedContent;
         default:
             // Unknown content type (e.g. sent by a newer backend): log and drop the item,
             // do not fail the whole conversation stream.

@@ -1232,7 +1232,7 @@ export interface AiConfig {
  * @type AiContent
  * Conversation item content payload.
  */
-export type AiContent = { type: 'multipart' } & AiMultipartContent | { type: 'reasoning' } & AiReasoningContent | { type: 'text' } & AiTextMessageContent | { type: 'toolCall' } & AiFunctionCallContent | { type: 'toolResult' } & AiFunctionResultContent;
+export type AiContent = { type: 'multipart' } & AiMultipartContent | { type: 'reasoning' } & AiReasoningContent | { type: 'skillsActivated' } & AiSkillsActivatedContent | { type: 'text' } & AiTextMessageContent | { type: 'toolCall' } & AiFunctionCallContent | { type: 'toolResult' } & AiFunctionResultContent;
 
 /**
  * @type AiContent1
@@ -1271,7 +1271,7 @@ export interface AiConversationItemResponse {
     'createdAt': string;
     'detail'?: AiConversationItemResponseDetail | null;
     /**
-     * True for items streamed only as live progress and never persisted. Today that is each agent iteration\'s reasoning, which is folded at the end of the turn into a single merged reasoning item — the one that is persisted. Both carry the same text, so only one of them is ever delivered: the message stream carries the interim items as the turn runs, and replaying the conversation returns the merged item instead.
+     * True for items streamed only as live progress, never persisted. For reasoning items, replay returns one merged reasoning item instead. Replay never returns skillsActivated items.
      */
     'interim'?: boolean;
     /**
@@ -1291,6 +1291,7 @@ export interface AiConversationItemResponse {
      * Author role of the item.
      */
     'role': AiConversationItemResponseRoleEnum;
+    'skillsInUse'?: Array<AiSkillRef> | null;
     'stepId'?: string | null;
     'taskId'?: string | null;
     'trigger'?: AiConversationItemResponseTriggerEnum | null;
@@ -4546,6 +4547,20 @@ export type AiSkillName = typeof AiSkillName[keyof typeof AiSkillName];
 
 
 /**
+ * A skill as the UI names it.
+ */
+export interface AiSkillRef {
+    /**
+     * Skill name, as in the agent\'s skill list (e.g. dashboard_builder).
+     */
+    'name': string;
+    /**
+     * User-facing skill title (e.g. Dashboard creation).
+     */
+    'title': string;
+}
+
+/**
  * A single skill available to the organization.
  */
 export interface AiSkillResponse {
@@ -4576,6 +4591,22 @@ export interface AiSkillRoutingDetail {
 }
 
 export type AiSkillRoutingDetailCategoryEnum = 'skillRouting';
+
+/**
+ * Skills that became available to the agent before a model call. Streamed only.
+ */
+export interface AiSkillsActivatedContent {
+    /**
+     * Skills that turned on, sorted by name. Never empty: no change means no item. Each model call is compared with the previous call of the same turn. The first call of a turn is compared with the conversation\'s stored skills. Stored skills change only when the agent selects skills itself, never on a pinned turn. A pinned skill is reported on every turn that pins it. So is a skill added for the user\'s open dashboard or visualization. The turn after a pinned turn reports nothing for the stored skills it returns to.
+     */
+    'skills': Array<AiSkillRef>;
+    /**
+     * Type of item content.
+     */
+    'type'?: AiSkillsActivatedContentTypeEnum;
+}
+
+export type AiSkillsActivatedContentTypeEnum = 'skillsActivated';
 
 export interface AiState {
     'exclude'?: Array<AiStateExcludeInner> | null;

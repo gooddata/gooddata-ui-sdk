@@ -4,7 +4,12 @@ import {
     type IChatConversation,
     type IChatConversationVisualisationContent,
 } from "@gooddata/sdk-backend-spi";
-import { type IDashboard, type IGenAIUserContext, type IInsight } from "@gooddata/sdk-model";
+import {
+    type AgentCustomSkill,
+    type IDashboard,
+    type IGenAIUserContext,
+    type IInsight,
+} from "@gooddata/sdk-model";
 import { type IAiAssistantPublisherDocumentDefinition } from "@gooddata/sdk-pluggable-application-model";
 import { type SdkErrorType } from "@gooddata/sdk-ui";
 
@@ -295,6 +300,19 @@ export type ChatAssistantMessageEvent = BaseEvent & {
     type: "chatAssistantMessage";
     interactionId?: string;
     useCase: string;
+    /**
+     * Skills activated while processing the message.
+     */
+    skills?: {
+        /**
+         * Skill identifier.
+         */
+        name: AgentCustomSkill;
+        /**
+         * Skill display title.
+         */
+        title: string;
+    }[];
 };
 
 /**

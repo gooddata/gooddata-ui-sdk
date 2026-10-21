@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-backend-spi: Add data source management, data source files (CSV upload, analysis and import) and data filter settings to the backend SPI. sdk-model: Add data source and CSV file types.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

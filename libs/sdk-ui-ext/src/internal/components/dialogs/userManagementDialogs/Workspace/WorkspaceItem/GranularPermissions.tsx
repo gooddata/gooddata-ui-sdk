@@ -47,6 +47,7 @@ interface IGranularPermissionsProps {
     isCreateVisualizationWorkspacePermissionEnabled?: boolean;
     areComputedAttributesEnabled?: boolean;
     areVisualizationPermissionsEnabled?: boolean;
+    analyzeIncludesManageVisualizations?: boolean;
 }
 
 export function GranularPermissions({
@@ -58,6 +59,7 @@ export function GranularPermissions({
     isCreateVisualizationWorkspacePermissionEnabled = false,
     areComputedAttributesEnabled = false,
     areVisualizationPermissionsEnabled = false,
+    analyzeIncludesManageVisualizations = false,
 }: IGranularPermissionsProps) {
     const intl = useIntl();
 
@@ -71,7 +73,10 @@ export function GranularPermissions({
 
     const { permissions: selectedPermissions, isHierarchical } = workspace;
     const selectedWorkspacePermission = getWorkspacePermission(selectedPermissions);
-    const selectedGranularPermissions = getGranularPermissions(selectedPermissions);
+    const selectedGranularPermissions = getGranularPermissions(
+        selectedPermissions,
+        analyzeIncludesManageVisualizations,
+    );
     const chosenGranularPermissions = selectedPermissions.filter((p) => !workspacePermissions.includes(p));
 
     const granularItems = granularPermissions.filter(
@@ -181,6 +186,7 @@ export function GranularPermissions({
                                 granularPermission.id,
                                 selectedWorkspacePermission,
                                 selectedGranularPermissions,
+                                analyzeIncludesManageVisualizations,
                             )}
                             onChange={() => handleGranularPermissionChange(granularPermission.id)}
                         />

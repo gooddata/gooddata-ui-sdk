@@ -6309,6 +6309,9 @@
                             },
                             {
                                 "$ref": "#/components/schemas/FunctionResultContent"
+                            },
+                            {
+                                "$ref": "#/components/schemas/SkillsActivatedContent"
                             }
                         ],
                         "title": "Content",
@@ -6318,6 +6321,7 @@
                             "mapping": {
                                 "multipart": "#/components/schemas/MultipartContent",
                                 "reasoning": "#/components/schemas/ReasoningContent",
+                                "skillsActivated": "#/components/schemas/SkillsActivatedContent",
                                 "text": "#/components/schemas/TextMessageContent",
                                 "toolCall": "#/components/schemas/FunctionCallContent",
                                 "toolResult": "#/components/schemas/FunctionResultContent"
@@ -6380,7 +6384,7 @@
                     "interim": {
                         "type": "boolean",
                         "title": "Interim",
-                        "description": "True for items streamed only as live progress and never persisted. Today that is each agent iteration's reasoning, which is folded at the end of the turn into a single merged reasoning item — the one that is persisted. Both carry the same text, so only one of them is ever delivered: the message stream carries the interim items as the turn runs, and replaying the conversation returns the merged item instead.",
+                        "description": "True for items streamed only as live progress, never persisted. For reasoning items, replay returns one merged reasoning item instead. Replay never returns skillsActivated items.",
                         "default": false
                     },
                     "itemId": {
@@ -6462,6 +6466,21 @@
                         ],
                         "title": "Role",
                         "description": "Author role of the item."
+                    },
+                    "skillsInUse": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/SkillRef"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Skillsinuse",
+                        "description": "Skills whose tools this item's model call is using, sorted by name. On a toolCall item, the active skills that own that tool. On an interim reasoning item, the owners of all tools its model call used. A tool shared by several active skills lists all of them. Object search counts only for the search skill. Empty when only built-in tools such as set_skills ran. Null on every other item and on replay."
                     },
                     "stepId": {
                         "anyOf": [
@@ -15727,6 +15746,28 @@
                 "title": "SkillName",
                 "description": "Name of a skill an agent can be configured with."
             },
+            "SkillRef": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name",
+                        "description": "Skill name, as in the agent's skill list (e.g. dashboard_builder)."
+                    },
+                    "title": {
+                        "type": "string",
+                        "title": "Title",
+                        "description": "User-facing skill title (e.g. Dashboard creation)."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "name",
+                    "title"
+                ],
+                "title": "SkillRef",
+                "description": "A skill as the UI names it."
+            },
             "SkillResponse": {
                 "properties": {
                     "description": {
@@ -15796,6 +15837,32 @@
                 "type": "object",
                 "title": "SkillRoutingDetail",
                 "description": "Which skills the turn could reach for, and which this call left active."
+            },
+            "SkillsActivatedContent": {
+                "properties": {
+                    "skills": {
+                        "items": {
+                            "$ref": "#/components/schemas/SkillRef"
+                        },
+                        "type": "array",
+                        "title": "Skills",
+                        "description": "Skills that turned on, sorted by name. Never empty: no change means no item. Each model call is compared with the previous call of the same turn. The first call of a turn is compared with the conversation's stored skills. Stored skills change only when the agent selects skills itself, never on a pinned turn. A pinned skill is reported on every turn that pins it. So is a skill added for the user's open dashboard or visualization. The turn after a pinned turn reports nothing for the stored skills it returns to."
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "skillsActivated",
+                        "title": "Type",
+                        "description": "Type of item content.",
+                        "default": "skillsActivated"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "skills"
+                ],
+                "title": "SkillsActivatedContent",
+                "description": "Skills that became available to the agent before a model call. Streamed only."
             },
             "State": {
                 "properties": {

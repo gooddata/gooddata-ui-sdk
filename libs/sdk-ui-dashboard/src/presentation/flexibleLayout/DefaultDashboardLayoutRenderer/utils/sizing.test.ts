@@ -6,17 +6,26 @@ import { chunk } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { newKpiWidget } from "@gooddata/sdk-backend-base";
-import { type IDashboardLayoutSize, type ScreenSize, idRef, newInsightDefinition } from "@gooddata/sdk-model";
+import {
+    type IDashboardLayoutSize,
+    type IInsight,
+    type ScreenSize,
+    idRef,
+    newInsightDefinition,
+} from "@gooddata/sdk-model";
 import { type VisType } from "@gooddata/sdk-ui";
 
 import { DashboardLayoutBuilder } from "../../../../_staging/dashboard/flexibleLayout/builder/layout.js";
 import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../../_staging/dashboard/flexibleLayout/config.js";
+import { newInsightMap } from "../../../../_staging/metadata/objRefMap.js";
+import { type ExtendedDashboardWidget } from "../../../../model/types/layoutTypes.js";
 import { ALL_SCREENS } from "../../../constants/layout.js";
 
 import {
     getDashboardLayoutItemHeightForRatioAndScreen,
     getDashboardLayoutItemMaxGridWidth,
     getDashboardLayoutWidgetDefaultGridWidth,
+    getDensityAdjustedMinHeight,
     getLayoutWithoutGridHeights,
     unifyDashboardLayoutItemHeights,
     validateDashboardLayoutWidgetSize,
@@ -219,6 +228,74 @@ describe("sizing", () => {
                 validWidth: 2,
                 validHeight: 10,
             });
+        });
+    });
+
+    describe("getDensityAdjustedMinHeight", () => {
+        const createInsight = (visType: string, id: string): IInsight => ({
+            insight: {
+                buckets: [],
+                filters: [],
+                sorts: [],
+                properties: {},
+                visualizationUrl: `local:${visType}`,
+                title: id,
+                summary: "",
+                identifier: id,
+                uri: "dummy-url",
+                ref: { identifier: id, type: "insight" },
+                isLocked: false,
+            },
+        });
+
+        const createInsightWidget = (id: string, hideTitle = false): ExtendedDashboardWidget => ({
+            type: "insight",
+            insight: { identifier: id, type: "insight" },
+            ignoreDashboardFilters: [],
+            drills: [],
+            title: id,
+            description: "",
+            ref: { identifier: `widget_${id}` },
+            uri: "url",
+            identifier: `widget_${id}`,
+            properties: {},
+            configuration: { hideTitle },
+        });
+
+        const insights = newInsightMap([
+            createInsight("headline", "headline"),
+            createInsight("column", "column"),
+        ]);
+
+        it.each([
+            [100, "small"],
+            [120, "medium"],
+            [140, "medium"],
+            [180, "large"],
+        ])("should lower min height %i of a headline by the %s title saving", (minHeight, titleSize) => {
+            expect(getDensityAdjustedMinHeight(minHeight, createInsightWidget("headline"), insights)).toBe(
+                `calc(${minHeight}px - var(--headline-density-saving-${titleSize}, 0px))`,
+            );
+        });
+
+        it("should lower min height of a headline with hidden title by the untitled saving", () => {
+            expect(getDensityAdjustedMinHeight(180, createInsightWidget("headline", true), insights)).toBe(
+                "calc(180px - var(--headline-density-saving-untitled, 0px))",
+            );
+        });
+
+        it("should keep min height of other visualizations", () => {
+            expect(getDensityAdjustedMinHeight(180, createInsightWidget("column"), insights)).toBe(180);
+        });
+
+        it("should keep min height of an insight missing from the map", () => {
+            expect(getDensityAdjustedMinHeight(180, createInsightWidget("unknown"), insights)).toBe(180);
+        });
+
+        it("should keep undefined min height", () => {
+            expect(
+                getDensityAdjustedMinHeight(undefined, createInsightWidget("headline"), insights),
+            ).toBeUndefined();
         });
     });
 });

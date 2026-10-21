@@ -29,6 +29,8 @@
     "gd.gen-ai.visualization.unavailable": "Vizualizacije ni bilo mogoče prikazati.",
     "gd.gen-ai.permission-error": "Nezadostna dovoljenja",
     "gd.gen-ai.permission-error.description": "Nimate dostopa do klepetalnice. Obrnite se na skrbnika za zahtevo dostopa.",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.missing-error": "<b>Pojasnjevalnih vprašanj ni bilo mogoče najti.</b> Poskusite vprašati znova.",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.skipped": "[Preskočeno]",
     "gd.gen-ai.input-placeholder": "Vprašajte tukaj...",
     "gd.gen-ai.input-label": "Postavite svoje vprašanje. Vnesite @ za predloge.",
     "gd.gen-ai.context.add_context": "Dodaj kontekst",

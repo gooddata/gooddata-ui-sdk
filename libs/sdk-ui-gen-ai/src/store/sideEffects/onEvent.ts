@@ -18,7 +18,11 @@ import {
     setOpenAction,
     setUserContextAction,
 } from "../chatWindow/chatWindowSlice.js";
-import { type ChatClarificationQuestion, type EventDispatcher } from "../events.js";
+import {
+    type ChatAssistantMessageEvent,
+    type ChatClarificationQuestion,
+    type EventDispatcher,
+} from "../events.js";
 import { setIsOpened } from "../localStorage.js";
 import { conversationMessagesSelector, threadIdSelector } from "../messages/messagesSelectors.js";
 import {
@@ -329,6 +333,7 @@ export function* onEvaluateMessageComplete({
         type: "chatAssistantMessage",
         interactionId: message.id,
         useCase: message.useCase,
+        skills: message.skills,
         threadId,
     });
 }
@@ -480,6 +485,7 @@ type MessageInfo = {
     id: string;
     localId: string;
     useCase: GenAIChatRoutingUseCase | undefined;
+    skills?: ChatAssistantMessageEvent["skills"];
     clarificationQuestions?: ChatClarificationQuestion[];
     filled?: boolean;
 };
@@ -493,6 +499,7 @@ function* loadMessage(assistantMessageId: string): Generator<unknown, MessageInf
               id: message.id,
               localId: message.localId,
               useCase: convertMessageTypeTo(message?.content),
+              skills: message.content.type === "skillsActivated" ? message.content.skills : undefined,
               clarificationQuestions: convertToChatClarificationQuestions(message.content),
               filled: message.filled,
           }

@@ -17,9 +17,11 @@ let latest: IGrantedWorkspace | undefined;
 function Harness({
     permissions,
     areVisualizationPermissionsEnabled = true,
+    analyzeIncludesManageVisualizations = false,
 }: {
     permissions: WorkspacePermissions;
     areVisualizationPermissionsEnabled?: boolean;
+    analyzeIncludesManageVisualizations?: boolean;
 }) {
     const [workspace, setWorkspace] = useState<IGrantedWorkspace>({
         id: "ws",
@@ -37,12 +39,14 @@ function Harness({
                 showRedundancyWarningMessage={false}
                 isCreateVisualizationWorkspacePermissionEnabled
                 areVisualizationPermissionsEnabled={areVisualizationPermissionsEnabled}
+                analyzeIncludesManageVisualizations={analyzeIncludesManageVisualizations}
             />
         </IntlWrapper>
     );
 }
 
-const saved = () => removeRedundantPermissions(latest?.permissions ?? []);
+const saved = (analyzeIncludesManageVisualizations = false) =>
+    removeRedundantPermissions(latest?.permissions ?? [], analyzeIncludesManageVisualizations);
 const manageVisualizations = () => screen.getByLabelText<HTMLInputElement>("Manage all visualizations");
 const createVisualizations = () => screen.getByLabelText<HTMLInputElement>("Visualizations");
 const level = (name: "Manage" | "Analyze" | "View") => screen.getByLabelText(name);
@@ -164,6 +168,32 @@ describe("GranularPermissions with MANAGE_VISUALIZATIONS", () => {
 
         expect(saved()).toEqual(["VIEW"]);
         expect(manageVisualizations().checked).toBe(false);
+    });
+});
+
+describe("GranularPermissions where Analyze includes MANAGE_VISUALIZATIONS", () => {
+    it("shows the permission as included under Analyze and leaves it out of the save", () => {
+        render(<Harness permissions={["ANALYZE"]} analyzeIncludesManageVisualizations />);
+
+        expect(manageVisualizations().checked).toBe(true);
+        expect(manageVisualizations().disabled).toBe(true);
+        expect(saved(true)).toEqual(["ANALYZE"]);
+    });
+
+    it("lets View choose the permission and folds the choice back into Analyze", () => {
+        render(<Harness permissions={["ANALYZE"]} analyzeIncludesManageVisualizations />);
+
+        fireEvent.click(level("View"));
+        expect(manageVisualizations().checked).toBe(false);
+        expect(manageVisualizations().disabled).toBe(false);
+        expect(saved(true)).toEqual(["VIEW"]);
+
+        fireEvent.click(manageVisualizations());
+        expect(saved(true)).toEqual(["VIEW", "MANAGE_VISUALIZATIONS"]);
+
+        fireEvent.click(level("Analyze"));
+        expect(manageVisualizations().disabled).toBe(true);
+        expect(saved(true)).toEqual(["ANALYZE"]);
     });
 });
 

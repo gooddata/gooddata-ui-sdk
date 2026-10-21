@@ -29,6 +29,8 @@
     "gd.gen-ai.visualization.unavailable": "Visualisierung konnte nicht angezeigt werden.",
     "gd.gen-ai.permission-error": "Fehlende Berechtigungen",
     "gd.gen-ai.permission-error.description": "Sie haben keinen Zugriff auf den Chatbot. Wenden Sie sich an Ihren Administrator, um den Zugriff anzufordern.",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.missing-error": "<b>Keine klärenden Fragen gefunden.</b> Versuchen Sie, erneut zu fragen.",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.skipped": "[Übersprungen]",
     "gd.gen-ai.input-placeholder": "Fragen Sie hier…",
     "gd.gen-ai.input-label": "Stellen Sie Ihre Frage. Geben Sie @ ein, um Vorschläge anzuzeigen.",
     "gd.gen-ai.context.add_context": "Kontext hinzufügen",

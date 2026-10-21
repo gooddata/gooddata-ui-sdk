@@ -76,4 +76,28 @@ describe("TigerWorkspaceQueryFactory.createWorkspace", () => {
                 .relationships,
         ).toBeUndefined();
     });
+
+    it("should send the optional workspace attributes", async () => {
+        await factory.createWorkspace({
+            id: "demo",
+            title: "Demo",
+            description: "Sample data",
+            prefix: "demo_",
+            earlyAccessValues: ["beta"],
+            cacheExtraLimit: 10,
+            dataSource: { id: "ds1", schemaPath: ["demo"] },
+        });
+
+        expect(
+            vi.mocked(api.EntitiesApi_CreateEntityWorkspaces).mock.calls[0][2].jsonApiWorkspaceInDocument.data
+                .attributes,
+        ).toEqual({
+            name: "Demo",
+            description: "Sample data",
+            prefix: "demo_",
+            earlyAccessValues: ["beta"],
+            cacheExtraLimit: 10,
+            dataSource: { id: "ds1", schemaPath: ["demo"] },
+        });
+    });
 });

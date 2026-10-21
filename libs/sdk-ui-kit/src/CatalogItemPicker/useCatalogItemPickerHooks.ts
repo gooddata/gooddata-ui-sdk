@@ -35,14 +35,14 @@ export function useEnsureActiveType(
     }, [itemTypes, setActiveType, showTabs]);
 }
 
-export function useFilteredMetricItems(
-    metricItems: ICatalogItemPickerItems | undefined,
+export function useFilteredMetricItems<TPayload>(
+    metricItems: ICatalogItemPickerItems<TPayload> | undefined,
     searchString: string,
     effectiveType: CatalogItemPickerType,
     source: "insightItems" | "catalogItems",
-): ICatalogItemPickerItem[] {
+): ICatalogItemPickerItem<TPayload>[] {
     return useMemo(() => {
-        const items: ICatalogItemPickerItem[] = metricItems?.[source] ?? [];
+        const items: ICatalogItemPickerItem<TPayload>[] = metricItems?.[source] ?? [];
         if (!searchString.trim() || effectiveType !== "metric") {
             return items;
         }

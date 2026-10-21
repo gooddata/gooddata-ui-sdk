@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type WorkspacePermissions } from "../../types.js";
+import { type IGrantedWorkspace, type WorkspacePermissions } from "../../types.js";
 
 import {
     getGranularPermissions,
@@ -116,7 +116,7 @@ describe("granularPermissionUtils", () => {
     });
 
     describe("MANAGE_VISUALIZATIONS", () => {
-        it("is implied by MANAGE but not by ANALYZE", () => {
+        it("is implied by MANAGE but not by ANALYZE by default", () => {
             expect(getImplicitGranularPermissions("MANAGE")).toContain("MANAGE_VISUALIZATIONS");
             expect(isPermissionDisabled("MANAGE_VISUALIZATIONS", "ANALYZE", [])).toBe(false);
             expect(isPermissionDisabled("MANAGE_VISUALIZATIONS", "MANAGE", [])).toBe(true);
@@ -142,6 +142,19 @@ describe("granularPermissionUtils", () => {
         it("is collapsed into MANAGE", () => {
             expect(removeRedundantPermissions(["MANAGE", "MANAGE_VISUALIZATIONS"])).toEqual(["MANAGE"]);
         });
+
+        it("is implied by ANALYZE where the workspace grants it with ANALYZE", () => {
+            expect(getImplicitGranularPermissions("ANALYZE", true)).toContain("MANAGE_VISUALIZATIONS");
+            expect(isPermissionDisabled("MANAGE_VISUALIZATIONS", "ANALYZE", [], true)).toBe(true);
+            expect(isPermissionDisabled("MANAGE_VISUALIZATIONS", "VIEW", [], true)).toBe(false);
+            expect(removeRedundantPermissions(["ANALYZE", "MANAGE_VISUALIZATIONS"], true)).toEqual([
+                "ANALYZE",
+            ]);
+            expect(removeRedundantPermissions(["VIEW", "MANAGE_VISUALIZATIONS"], true)).toEqual([
+                "VIEW",
+                "MANAGE_VISUALIZATIONS",
+            ]);
+        });
     });
 
     describe("haveWorkspacePermissionsChanged", () => {
@@ -154,6 +167,19 @@ describe("granularPermissionUtils", () => {
                     { ...stored, permissions: ["VIEW", "EXPORT"] },
                 ),
             ).toBe(false);
+        });
+
+        it("ignores Manage all visualizations under Analyze where the workspace grants it with Analyze", () => {
+            const stored: IGrantedWorkspace = {
+                id: "ws",
+                title: "ws",
+                isHierarchical: false,
+                permissions: ["ANALYZE"],
+            };
+            const draft: IGrantedWorkspace = { ...stored, permissions: ["ANALYZE", "MANAGE_VISUALIZATIONS"] };
+
+            expect(haveWorkspacePermissionsChanged(draft, stored, true)).toBe(false);
+            expect(haveWorkspacePermissionsChanged(draft, stored)).toBe(true);
         });
     });
 
