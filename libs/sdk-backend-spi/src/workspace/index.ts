@@ -336,10 +336,31 @@ export interface IWorkspacesQueryFactory {
 export interface IWorkspaceDefinition {
     id: string;
     title: string;
+    description?: string;
     /**
      * Identifier of the parent workspace. The new workspace inherits its content.
      */
     parentWorkspace?: string;
+    prefix?: string;
+    earlyAccessValues?: string[];
+    cacheExtraLimit?: number;
+    /**
+     * Data source that the workspace uses instead of the data source of its model.
+     */
+    dataSource?: IWorkspaceDataSourceOverride;
+}
+
+/**
+ * Data source that a workspace uses instead of the data source of its model.
+ *
+ * @alpha
+ */
+export interface IWorkspaceDataSourceOverride {
+    id: string;
+    /**
+     * Path to the schema of the data source to use.
+     */
+    schemaPath?: string[];
 }
 
 /**

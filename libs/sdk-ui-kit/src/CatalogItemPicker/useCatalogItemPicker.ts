@@ -33,6 +33,7 @@ export function useCatalogItemPicker<TAttributePayload = unknown, TMetricPayload
     onAdd,
     onSelect,
     variant = "addFilter",
+    renderItemDetails,
 }: ICatalogItemPickerProps<TAttributePayload, TMetricPayload>) {
     const listboxId = useId();
 
@@ -123,12 +124,17 @@ export function useCatalogItemPicker<TAttributePayload = unknown, TMetricPayload
     );
 
     const groupedMetricCatalogItems = useMemo(
-        () => groupMetricCatalogItems(metricCatalogItems, groups, labels.ungroupedTitle),
+        () =>
+            groupMetricCatalogItems<TAttributePayload | TMetricPayload>(
+                metricCatalogItems,
+                groups,
+                labels.ungroupedTitle,
+            ),
         [labels.ungroupedTitle, metricCatalogItems, groups],
     );
 
     // Build listbox items
-    const listboxItems = useCatalogItemPickerListboxItems({
+    const listboxItems = useCatalogItemPickerListboxItems<TAttributePayload | TMetricPayload>({
         effectiveType,
         metricInsightItems,
         groupedMetricCatalogItems,
@@ -209,6 +215,7 @@ export function useCatalogItemPicker<TAttributePayload = unknown, TMetricPayload
         isLoading,
         selectionMode,
         variant,
+        renderItemDetails,
     };
 }
 
@@ -217,4 +224,6 @@ export function useCatalogItemPicker<TAttributePayload = unknown, TMetricPayload
  *
  * @internal
  */
-export type CatalogItemPickerController = ReturnType<typeof useCatalogItemPicker>;
+export type CatalogItemPickerController<TAttributePayload = unknown, TMetricPayload = unknown> = ReturnType<
+    typeof useCatalogItemPicker<TAttributePayload, TMetricPayload>
+>;

@@ -47,17 +47,31 @@ export function AddWorkspace({
     areVisualizationPermissionsEnabled,
 }: IAddWorkspaceProps) {
     const intl = useIntl();
-    const { addedWorkspaces, isProcessing, onAdd, onChange, onOverwriteSelect } = useAddWorkspace(
+    const {
+        addedWorkspaces,
+        isProcessing,
+        onAdd,
+        onChange,
+        onOverwriteSelect,
+        analyzeIncludesManageVisualizations,
+    } = useAddWorkspace(
         ids,
         subjectType,
         onSubmit,
         onCancel,
         editWorkspace,
+        areVisualizationPermissionsEnabled,
     );
 
     const isGranularPermissionsChanged = useMemo(() => {
-        return editWorkspace ? haveWorkspacePermissionsChanged(addedWorkspaces[0], editWorkspace) : true;
-    }, [addedWorkspaces, editWorkspace]);
+        return editWorkspace
+            ? haveWorkspacePermissionsChanged(
+                  addedWorkspaces[0],
+                  editWorkspace,
+                  analyzeIncludesManageVisualizations,
+              )
+            : true;
+    }, [addedWorkspaces, editWorkspace, analyzeIncludesManageVisualizations]);
 
     const showRedundancyWarningMessage = useMemo(() => {
         return editWorkspace ? areRedundantPermissionsPresent(editWorkspace.permissions) : false;
@@ -116,6 +130,7 @@ export function AddWorkspace({
                 }
                 areComputedAttributesEnabled={areComputedAttributesEnabled}
                 areVisualizationPermissionsEnabled={areVisualizationPermissionsEnabled}
+                analyzeIncludesManageVisualizations={analyzeIncludesManageVisualizations}
             />
         </ConfirmDialogBase>
     );

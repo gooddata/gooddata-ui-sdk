@@ -29,6 +29,8 @@
     "gd.gen-ai.visualization.unavailable": "Visualisointia ei voitu näyttää.",
     "gd.gen-ai.permission-error": "Riittämättömät käyttöoikeudet",
     "gd.gen-ai.permission-error.description": "Sinulla ei ole pääsyä chatbottiin. Ota yhteyttä järjestelmänvalvojaan pyytääksesi käyttöoikeutta.",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.missing-error": "<b>Tarkentavia kysymyksiä ei löytynyt.</b> Yritä kysyä uudelleen.",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.skipped": "[Ohitettu]",
     "gd.gen-ai.input-placeholder": "Kysy täältä…",
     "gd.gen-ai.input-label": "Esitä kysymyksesi. Saat ehdotuksia kirjoittamalla @.",
     "gd.gen-ai.context.add_context": "Lisää konteksti",

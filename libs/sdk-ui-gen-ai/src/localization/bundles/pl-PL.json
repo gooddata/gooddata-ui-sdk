@@ -29,6 +29,8 @@
     "gd.gen-ai.visualization.unavailable": "Nie można wyświetlić wizualizacji.",
     "gd.gen-ai.permission-error": "Niewystarczające uprawnienia",
     "gd.gen-ai.permission-error.description": "Nie masz dostępu do chatbota. Skontaktuj się z administratorem, aby uzyskać dostęp.",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.missing-error": "<b>Nie znaleziono pytań doprecyzowujących.</b> Spróbuj zapytać ponownie.",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.skipped": "[Pominięto]",
     "gd.gen-ai.input-placeholder": "Zapytaj tutaj…",
     "gd.gen-ai.input-label": "Zadaj pytanie. Wpisz @, aby wyświetlić sugestie.",
     "gd.gen-ai.context.add_context": "Dodaj kontekst",

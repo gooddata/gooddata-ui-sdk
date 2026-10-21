@@ -33,7 +33,11 @@ export interface ILocalizationValueContent {
 }
 
 /**
- * The value a workspace gets when neither it nor its ancestors set one.
+ * Default value of a setting, and where it comes from.
+ *
+ * @remarks
+ * At organization level, it is the value a workspace gets when neither it nor its ancestors set one.
+ * At workspace level, it is the value the workspace gets: set on it, inherited from a parent, or a default.
  *
  * @alpha
  */
@@ -88,7 +92,8 @@ export interface ILocalizationValueUsage {
  */
 export interface ILocalizationUsage {
     /**
-     * Defaults per setting. `null` when the setting has no default.
+     * Defaults per setting. `null` when the setting has no value.
+     * At workspace level, they are the values the workspace gets; see {@link ILocalizationDefault}.
      */
     defaults: Record<LocalizationSettingType, ILocalizationDefault | null>;
     /**

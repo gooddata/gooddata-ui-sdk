@@ -27,6 +27,13 @@ describe("RichText", () => {
         expect(await screen.findByRole("heading", { level: 1 })).toHaveTextContent("Heading");
     });
 
+    it("leaves strikethrough and highlight as typed by default", async () => {
+        const { container } = renderRichText({ value: "~~a~~ ==a==" });
+
+        expect(await screen.findByText("~~a~~ ==a==")).toBeInTheDocument();
+        expect(container.querySelector("del, mark")).toBeNull();
+    });
+
     it("narrowed to emphasis, leaves a heading as the characters that were typed", async () => {
         const { container } = renderRichText({ value: "# Heading", allowedMarkdown: ["emphasis"] });
 

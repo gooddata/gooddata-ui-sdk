@@ -6,6 +6,7 @@ import { type IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
 import { useBackendStrict } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
+import { useAnalyzeIncludesManageVisualizations } from "../dialogHooks.js";
 import { messages } from "../locales.js";
 import { useOrganizationId } from "../OrganizationIdContext.js";
 import { useTelemetry } from "../TelemetryContext.js";
@@ -20,6 +21,7 @@ export const useAddWorkspace = (
     onSubmit: (workspaces: IGrantedWorkspace[]) => void,
     onCancel: () => void,
     editWorkspace?: IGrantedWorkspace,
+    areVisualizationPermissionsEnabled = false,
 ) => {
     const { addSuccess, addError } = useToastMessage();
     const backend = useBackendStrict();
@@ -29,6 +31,11 @@ export const useAddWorkspace = (
     );
     const [isProcessing, setIsProcessing] = useState(false);
     const trackEvent = useTelemetry();
+
+    const analyzeIncludesManageVisualizations = useAnalyzeIncludesManageVisualizations(
+        addedWorkspaces[0]?.id,
+        areVisualizationPermissionsEnabled,
+    );
 
     const onDelete = (workspace: IGrantedWorkspace) => {
         setAddedWorkspaces(addedWorkspaces.filter((item) => item.id !== workspace.id));
@@ -45,7 +52,7 @@ export const useAddWorkspace = (
         // revokes also use and which must name the stored redundant levels.
         const savedWorkspaces = addedWorkspaces.map((w) => ({
             ...w,
-            permissions: removeRedundantPermissions(w.permissions),
+            permissions: removeRedundantPermissions(w.permissions, analyzeIncludesManageVisualizations),
         }));
 
         backend
@@ -110,6 +117,7 @@ export const useAddWorkspace = (
         onOverwriteSelect,
         onAdd,
         isProcessing,
+        analyzeIncludesManageVisualizations,
     };
 };
 

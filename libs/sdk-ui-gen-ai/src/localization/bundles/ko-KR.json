@@ -29,6 +29,8 @@
     "gd.gen-ai.visualization.unavailable": "시각화를 표시할 수 없습니다.",
     "gd.gen-ai.permission-error": "권한 부족",
     "gd.gen-ai.permission-error.description": "챗봇에 대한 접근 권한이 없습니다. 접근 권한 요청을 위해 관리자에게 문의하십시오.",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.missing-error": "<b>명확화 질문을 찾을 수 없습니다.</b> 다시 질문해 보십시오.",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.skipped": "[건너뜀]",
     "gd.gen-ai.input-placeholder": "여기에 질문하세요…",
     "gd.gen-ai.input-label": "질문을 입력하세요. 제안 사항을 보려면 @를 입력하세요.",
     "gd.gen-ai.context.add_context": "컨텍스트 추가",

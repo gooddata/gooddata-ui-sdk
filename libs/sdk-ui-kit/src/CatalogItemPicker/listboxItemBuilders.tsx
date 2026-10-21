@@ -1,7 +1,9 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactNode } from "react";
+
 import { bem } from "../@ui/@utils/bem.js";
-import { type IUiListboxItem } from "../@ui/UiListbox/types.js";
+import { type IUiListboxItem, type IUiListboxStaticItem } from "../@ui/UiListbox/types.js";
 import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner.js";
 
 import { type ICatalogItemPickerItem } from "./types.js";
@@ -13,13 +15,15 @@ export interface ICatalogItemPickerListItemData<TPayload = unknown> {
     isSelected: boolean;
 }
 
-export type CatalogItemListboxItem = IUiListboxItem<ICatalogItemPickerListItemData>;
+export type CatalogItemListboxItem<TPayload = unknown> = IUiListboxItem<
+    ICatalogItemPickerListItemData<TPayload>
+>;
 
 export function buildSectionHeader(
     id: string,
     title: string,
     variant: "mvf" | "addFilter",
-): CatalogItemListboxItem {
+): IUiListboxStaticItem<ReactNode> {
     return {
         type: "static",
         id,
@@ -27,7 +31,7 @@ export function buildSectionHeader(
     };
 }
 
-export function buildDivider(variant: "mvf" | "addFilter"): CatalogItemListboxItem {
+export function buildDivider(variant: "mvf" | "addFilter"): IUiListboxStaticItem<ReactNode> {
     return {
         type: "static",
         id: "divider-visualization-catalog",
@@ -35,7 +39,7 @@ export function buildDivider(variant: "mvf" | "addFilter"): CatalogItemListboxIt
     };
 }
 
-export function buildLoadingRow(variant: "mvf" | "addFilter"): CatalogItemListboxItem {
+export function buildLoadingRow(variant: "mvf" | "addFilter"): IUiListboxStaticItem<ReactNode> {
     return {
         type: "static",
         id: "catalog-loading-row",
@@ -47,16 +51,18 @@ export function buildLoadingRow(variant: "mvf" | "addFilter"): CatalogItemListbo
     };
 }
 
-export interface IBuildMetricListboxItemsParams {
-    metricInsightItems: ICatalogItemPickerItem[];
-    groupedMetricCatalogItems: Array<{ title: string; items: ICatalogItemPickerItem[] }>;
+export interface IBuildMetricListboxItemsParams<TPayload = unknown> {
+    metricInsightItems: ICatalogItemPickerItem<TPayload>[];
+    groupedMetricCatalogItems: Array<{ title: string; items: ICatalogItemPickerItem<TPayload>[] }>;
     fromVisualizationTitle: string | null;
     variant: "mvf" | "addFilter";
-    makeInteractiveItem: (item: ICatalogItemPickerItem) => CatalogItemListboxItem;
+    makeInteractiveItem: (item: ICatalogItemPickerItem<TPayload>) => CatalogItemListboxItem<TPayload>;
 }
 
-export function buildMetricListboxItems(params: IBuildMetricListboxItemsParams): CatalogItemListboxItem[] {
-    const items: CatalogItemListboxItem[] = [];
+export function buildMetricListboxItems<TPayload>(
+    params: IBuildMetricListboxItemsParams<TPayload>,
+): CatalogItemListboxItem<TPayload>[] {
+    const items: CatalogItemListboxItem<TPayload>[] = [];
     const {
         metricInsightItems,
         groupedMetricCatalogItems,
@@ -86,20 +92,22 @@ export function buildMetricListboxItems(params: IBuildMetricListboxItemsParams):
     return items;
 }
 
-export interface IBuildDateListboxItemsParams {
-    filteredInsightItems: ICatalogItemPickerItem[];
-    filteredCatalogItems: ICatalogItemPickerItem[];
+export interface IBuildDateListboxItemsParams<TPayload = unknown> {
+    filteredInsightItems: ICatalogItemPickerItem<TPayload>[];
+    filteredCatalogItems: ICatalogItemPickerItem<TPayload>[];
     shouldShowDateDatasetSelector: boolean;
     shouldShowCatalogLoadingRow: boolean;
     hasCatalogItems: boolean;
     fromVisualizationTitle: string | null;
     variant: "mvf" | "addFilter";
-    dateDatasetSelectorItem?: CatalogItemListboxItem;
-    makeInteractiveItem: (item: ICatalogItemPickerItem) => CatalogItemListboxItem;
+    dateDatasetSelectorItem?: CatalogItemListboxItem<TPayload>;
+    makeInteractiveItem: (item: ICatalogItemPickerItem<TPayload>) => CatalogItemListboxItem<TPayload>;
 }
 
-export function buildDateListboxItems(params: IBuildDateListboxItemsParams): CatalogItemListboxItem[] {
-    const items: CatalogItemListboxItem[] = [];
+export function buildDateListboxItems<TPayload>(
+    params: IBuildDateListboxItemsParams<TPayload>,
+): CatalogItemListboxItem<TPayload>[] {
+    const items: CatalogItemListboxItem<TPayload>[] = [];
     const {
         filteredInsightItems,
         filteredCatalogItems,
@@ -137,21 +145,21 @@ export function buildDateListboxItems(params: IBuildDateListboxItemsParams): Cat
     return items;
 }
 
-export interface IBuildAttributeOnlyListboxItemsParams {
-    filteredInsightItems: ICatalogItemPickerItem[];
-    catalogItemsByDataset: Map<string, { title: string; items: ICatalogItemPickerItem[] }>;
-    ungroupedCatalogItems: ICatalogItemPickerItem[];
+export interface IBuildAttributeOnlyListboxItemsParams<TPayload = unknown> {
+    filteredInsightItems: ICatalogItemPickerItem<TPayload>[];
+    catalogItemsByDataset: Map<string, { title: string; items: ICatalogItemPickerItem<TPayload>[] }>;
+    ungroupedCatalogItems: ICatalogItemPickerItem<TPayload>[];
     shouldShowCatalogLoadingRow: boolean;
     fromVisualizationTitle: string | null;
     ungroupedTitle: string;
     variant: "mvf" | "addFilter";
-    makeInteractiveItem: (item: ICatalogItemPickerItem) => CatalogItemListboxItem;
+    makeInteractiveItem: (item: ICatalogItemPickerItem<TPayload>) => CatalogItemListboxItem<TPayload>;
 }
 
-export function buildAttributeOnlyListboxItems(
-    params: IBuildAttributeOnlyListboxItemsParams,
-): CatalogItemListboxItem[] {
-    const items: CatalogItemListboxItem[] = [];
+export function buildAttributeOnlyListboxItems<TPayload>(
+    params: IBuildAttributeOnlyListboxItemsParams<TPayload>,
+): CatalogItemListboxItem<TPayload>[] {
+    const items: CatalogItemListboxItem<TPayload>[] = [];
     const {
         filteredInsightItems,
         catalogItemsByDataset,
@@ -195,17 +203,19 @@ export function buildAttributeOnlyListboxItems(
     return items;
 }
 
-export interface IBuildAttributeListboxItemsParams extends IBuildAttributeOnlyListboxItemsParams {
-    filteredCatalogItems: ICatalogItemPickerItem[]; // needed for date type (not grouped by dataset)
+export interface IBuildAttributeListboxItemsParams<
+    TPayload = unknown,
+> extends IBuildAttributeOnlyListboxItemsParams<TPayload> {
+    filteredCatalogItems: ICatalogItemPickerItem<TPayload>[]; // needed for date type (not grouped by dataset)
     shouldShowDateDatasetSelector: boolean;
     hasCatalogItems: boolean;
     effectiveType: "attribute" | "date";
-    dateDatasetSelectorItem?: CatalogItemListboxItem;
+    dateDatasetSelectorItem?: CatalogItemListboxItem<TPayload>;
 }
 
-export function buildAttributeListboxItems(
-    params: IBuildAttributeListboxItemsParams,
-): CatalogItemListboxItem[] {
+export function buildAttributeListboxItems<TPayload>(
+    params: IBuildAttributeListboxItemsParams<TPayload>,
+): CatalogItemListboxItem<TPayload>[] {
     if (params.effectiveType === "date") {
         return buildDateListboxItems(params);
     }

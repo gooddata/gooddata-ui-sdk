@@ -2,7 +2,7 @@
 
 import { type PropsWithChildren } from "react";
 
-import { act, renderHook } from "@testing-library/react";
+import { act, renderHook, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-base";
@@ -26,13 +26,30 @@ const WORKSPACE: IGrantedWorkspace = {
     isHierarchical: false,
 };
 
-function renderAddWorkspace(onSubmit: (workspaces: IGrantedWorkspace[]) => void) {
+function renderAddWorkspace(
+    onSubmit: (workspaces: IGrantedWorkspace[]) => void,
+    {
+        areVisualizationPermissionsEnabled = false,
+        grantManageVisualizationsWithAnalyze = false,
+        isSettingsLoadFailing = false,
+    } = {},
+) {
     const backend = dummyBackendEmptyData();
     const organization = backend.organization("org");
     const permissions = organization.permissions();
     const assignPermissions = vi.spyOn(permissions, "assignPermissions");
     vi.spyOn(organization, "permissions").mockReturnValue(permissions);
     vi.spyOn(backend, "organization").mockReturnValue(organization);
+    const workspace = backend.workspace("ws");
+    const settings = workspace.settings();
+    const getSettings = vi.spyOn(settings, "getSettings");
+    if (isSettingsLoadFailing) {
+        getSettings.mockRejectedValue(new Error("settings"));
+    } else {
+        getSettings.mockResolvedValue({ workspace: "ws", grantManageVisualizationsWithAnalyze });
+    }
+    vi.spyOn(workspace, "settings").mockReturnValue(settings);
+    const workspaceOf = vi.spyOn(backend, "workspace").mockReturnValue(workspace);
     const wrapper = ({ children }: PropsWithChildren) => (
         <BackendProvider backend={backend}>
             <OrganizationIdProvider organizationId="org">
@@ -40,10 +57,19 @@ function renderAddWorkspace(onSubmit: (workspaces: IGrantedWorkspace[]) => void)
             </OrganizationIdProvider>
         </BackendProvider>
     );
-    const hook = renderHook(() => useAddWorkspace(["user"], "user", onSubmit, vi.fn(), WORKSPACE), {
-        wrapper,
-    });
-    return { hook, assignPermissions };
+    const hook = renderHook(
+        () =>
+            useAddWorkspace(
+                ["user"],
+                "user",
+                onSubmit,
+                vi.fn(),
+                WORKSPACE,
+                areVisualizationPermissionsEnabled,
+            ),
+        { wrapper },
+    );
+    return { hook, assignPermissions, getSettings, workspaceOf };
 }
 
 describe("useAddWorkspace", () => {
@@ -75,5 +101,56 @@ describe("useAddWorkspace", () => {
         expect(onSubmit).toHaveBeenCalledWith([
             expect.objectContaining({ permissions: ["VIEW", "MANAGE_VISUALIZATIONS"] }),
         ]);
+    });
+
+    it("leaves Manage all visualizations out of an Analyze save where the workspace grants it with Analyze", async () => {
+        const onSubmit = vi.fn();
+        const { hook, assignPermissions, workspaceOf } = renderAddWorkspace(onSubmit, {
+            areVisualizationPermissionsEnabled: true,
+            grantManageVisualizationsWithAnalyze: true,
+        });
+        await waitFor(() => expect(hook.result.current.analyzeIncludesManageVisualizations).toBe(true));
+        expect(workspaceOf).toHaveBeenCalledWith("ws");
+
+        act(() => {
+            hook.result.current.onChange({ ...WORKSPACE, permissions: ["ANALYZE", "MANAGE_VISUALIZATIONS"] });
+        });
+        await act(async () => {
+            hook.result.current.onAdd();
+        });
+
+        expect(assignPermissions).toHaveBeenCalledWith(
+            expect.objectContaining({
+                workspaces: [expect.objectContaining({ permissions: ["ANALYZE"] })],
+            }),
+        );
+        expect(onSubmit).toHaveBeenCalledWith([expect.objectContaining({ permissions: ["ANALYZE"] })]);
+    });
+
+    it("keeps Manage all visualizations a choice under Analyze when the settings fail to load", async () => {
+        const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+        const { hook, getSettings } = renderAddWorkspace(vi.fn(), {
+            areVisualizationPermissionsEnabled: true,
+            isSettingsLoadFailing: true,
+        });
+
+        await waitFor(() =>
+            expect(consoleError).toHaveBeenCalledWith(
+                "Loading of workspace settings failed",
+                expect.any(Error),
+            ),
+        );
+        expect(getSettings).toHaveBeenCalled();
+        expect(hook.result.current.analyzeIncludesManageVisualizations).toBe(false);
+        consoleError.mockRestore();
+    });
+
+    it("does not read workspace settings while visualization permissions are off", () => {
+        const { hook, getSettings } = renderAddWorkspace(vi.fn(), {
+            grantManageVisualizationsWithAnalyze: true,
+        });
+
+        expect(getSettings).not.toHaveBeenCalled();
+        expect(hook.result.current.analyzeIncludesManageVisualizations).toBe(false);
     });
 });

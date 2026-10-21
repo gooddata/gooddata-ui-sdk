@@ -3,10 +3,10 @@
 "use strict";
 
 // baseline-browser-mapping needs to be updated to the latest version every 14 days
-const baselineBrowserMappingVersion = "2.11.28";
+const baselineBrowserMappingVersion = "2.11.29";
 
 // browserslist needs to be updated every 6 months
-const browserslistVersion = "4.29.3";
+const browserslistVersion = "4.29.4";
 
 // TS 7 moved the compiler API to typescript/unstable/*; require("typescript") now returns only
 // { version, versionMajorMinor }. Everything that consumes the API needs the classic package, so the

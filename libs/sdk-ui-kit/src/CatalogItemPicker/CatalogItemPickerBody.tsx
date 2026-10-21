@@ -19,8 +19,8 @@ const { b, e } = bem("gd-ui-kit-catalog-item-picker");
 /**
  * @internal
  */
-export interface ICatalogItemPickerBodyProps {
-    controller: CatalogItemPickerController;
+export interface ICatalogItemPickerBodyProps<TAttributePayload = unknown, TMetricPayload = unknown> {
+    controller: CatalogItemPickerController<TAttributePayload, TMetricPayload>;
     maxListHeight?: number;
     onClose: () => void;
     /**
@@ -39,12 +39,12 @@ export interface ICatalogItemPickerBodyProps {
  *
  * @internal
  */
-export function CatalogItemPickerBody({
+export function CatalogItemPickerBody<TAttributePayload = unknown, TMetricPayload = unknown>({
     controller,
     maxListHeight,
     onClose,
     header,
-}: ICatalogItemPickerBodyProps) {
+}: ICatalogItemPickerBodyProps<TAttributePayload, TMetricPayload>) {
     const {
         variant,
         selectionMode,
@@ -65,6 +65,7 @@ export function CatalogItemPickerBody({
         handleListboxSelect,
         isAddDisabled,
         handleAdd,
+        renderItemDetails,
     } = controller;
 
     return (
@@ -104,6 +105,7 @@ export function CatalogItemPickerBody({
                             shouldShowEmptyStateMessage={shouldShowEmptyStateMessage}
                             emptyMessage={emptyMessage}
                             onSelect={handleListboxSelect}
+                            renderItemDetails={renderItemDetails}
                         />
                     </>
                 )}

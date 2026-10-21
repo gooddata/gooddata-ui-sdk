@@ -6,8 +6,14 @@ import {
     ActionsApi_OrganizationLocalizationUsage,
     ActionsApi_OrganizationLocalizationUsageUsers,
     ActionsApi_OrganizationLocalizationUsageWorkspaces,
+    ActionsApi_WorkspaceLocalizationStatistics,
+    ActionsApi_WorkspaceLocalizationUsage,
+    ActionsApi_WorkspaceLocalizationUsageUsers,
 } from "@gooddata/api-client-tiger/endpoints/actions";
-import { EntitiesApi_GetAllEntitiesWorkspaces } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
+import {
+    EntitiesApi_GetAllEntitiesWorkspaces,
+    EntitiesApi_GetEntityWorkspaces,
+} from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import {
     type ILocalizationPageQuery,
     type ILocalizationStatistics,
@@ -23,14 +29,13 @@ import {
 } from "@gooddata/sdk-backend-spi";
 
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { buildListClause } from "../common/filtering.js";
 
 import {
     type IUsageScope,
     effectiveSettings,
     ownSettings,
     statisticsPage,
-    statisticsSummary,
-    summarize,
     translatedLocalesOf,
     translationUsage,
     usageUsers,
@@ -38,15 +43,18 @@ import {
 } from "./aggregate.js";
 import { type IFixtureWorkspace, acmePeople, acmeStatisticsWorkspaces, acmeWorkspaces } from "./fixture.js";
 import {
+    type IWorkspaceLocalizationDescriptor,
     convertLocalizationStatistics,
     convertLocalizationUsage,
     convertLocalizationUsageUsers,
     convertLocalizationUsageWorkspaces,
+    convertWorkspaceLocalizationUsage,
+    convertWorkspaceLocalizationUsageWorkspaces,
+    originIdsOf,
 } from "./fromBackend.js";
 
-// The organization usage summary, its workspaces and users lists and the statistics summary call the backend.
-// The other methods and the translation lists return the Acme fixture with the real workspace names and ids of the organization.
-// Fixture workspaces take the real ones in name order.
+// The usage summaries, the workspaces and users lists and the statistics summaries call the backend. The other methods and the translation lists return the Acme fixture with the real
+// workspace names and ids of the organization. Fixture workspaces take the real ones in name order.
 
 interface IFixtureData {
     workspaces: IFixtureWorkspace[];
@@ -226,24 +234,80 @@ export class TigerWorkspaceLocalizationService
         return statistics.filter((row) => lineage.has(row.id));
     }
 
+    private loadUsage() {
+        return this.authCall((client) =>
+            ActionsApi_WorkspaceLocalizationUsage(client.axios, client.basePath, {
+                workspaceId: this.workspaceId,
+            }),
+        ).then((result) => result.data);
+    }
+
+    private loadWorkspace(): Promise<IWorkspaceLocalizationDescriptor> {
+        return this.authCall((client) =>
+            EntitiesApi_GetEntityWorkspaces(client.axios, client.basePath, {
+                id: this.workspaceId,
+                include: ["parent"],
+                metaInclude: ["hierarchy"],
+            }),
+        ).then(({ data: document }) => {
+            const parentId = document.data.relationships?.parent?.data?.id ?? null;
+            const parent = document.included?.find((item) => item.id === parentId);
+            return {
+                id: document.data.id,
+                name: document.data.attributes?.name ?? document.data.id,
+                parentId,
+                parentName: parent?.attributes?.name ?? undefined,
+                childrenCount: document.data.meta?.hierarchy?.childrenCount ?? 0,
+            };
+        });
+    }
+
+    private async loadWorkspaceNames(ids: string[]): Promise<Map<string, string>> {
+        const filter = buildListClause("id", "in", ids);
+        if (!filter) {
+            return new Map();
+        }
+        const result = await this.authCall((client) =>
+            EntitiesApi_GetAllEntitiesWorkspaces(client.axios, client.basePath, { filter, size: ids.length }),
+        );
+        return new Map(result.data.data.map((item) => [item.id, item.attributes?.name ?? item.id]));
+    }
+
     public async getUsage(): Promise<ILocalizationUsage> {
-        return summarize(await this.scope(), "effective");
+        return convertWorkspaceLocalizationUsage(await this.loadUsage());
     }
 
     public async getUsageWorkspaces(
         query: ILocalizationUsageListQuery = {},
     ): Promise<ILocalizationUsageWorkspacesPage> {
-        return usageWorkspaces(await this.scope(), query);
+        if (query.translation) {
+            return usageWorkspaces(await this.scope(), query);
+        }
+        const [usage, workspace] = await Promise.all([this.loadUsage(), this.loadWorkspace()]);
+        const originNames = await this.loadWorkspaceNames(originIdsOf(usage));
+        return convertWorkspaceLocalizationUsageWorkspaces(usage, workspace, query, originNames);
     }
 
     public async getUsageUsers(
         query: ILocalizationUsageListQuery = {},
     ): Promise<ILocalizationUsageUsersPage> {
-        return usageUsers(await this.scope(), query);
+        if (query.translation) {
+            return usageUsers(await this.scope(), query);
+        }
+        return this.authCall((client) =>
+            ActionsApi_WorkspaceLocalizationUsageUsers(client.axios, client.basePath, {
+                ...query,
+                workspaceId: this.workspaceId,
+            }),
+        ).then((result) => convertLocalizationUsageUsers(result.data));
     }
 
     public async getStatistics(): Promise<ILocalizationStatistics> {
-        return statisticsSummary(await this.statisticsRows());
+        return this.authCall((client) =>
+            ActionsApi_WorkspaceLocalizationStatistics(client.axios, client.basePath, {
+                workspaceId: this.workspaceId,
+            }),
+        ).then((result) => convertLocalizationStatistics(result.data));
     }
 
     public async getTranslationUsage(): Promise<ILocalizationTranslationUsage> {

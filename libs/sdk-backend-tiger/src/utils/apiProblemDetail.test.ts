@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { getDataSourceErrorMessage } from "./tigerSpecificFunctions.js";
+import { getDataSourceErrorMessage } from "./apiProblemDetail.js";
 
 const axios400 = (detail?: unknown) =>
     Object.assign(new Error("Request failed with status code 400"), {
@@ -34,6 +34,14 @@ describe("getDataSourceErrorMessage", () => {
 
     it("treats a whitespace-only detail as absent", () => {
         expect(getDataSourceErrorMessage(axios400("   "))).toBe("Request failed with status code 400");
+    });
+
+    it("reads the detail from the cause of a converted backend error", () => {
+        const converted = Object.assign(new Error("Request failed with status code 400"), {
+            cause: axios400("name must not be blank"),
+        });
+
+        expect(getDataSourceErrorMessage(converted)).toBe("name must not be blank");
     });
 
     it("keeps plain errors and non-errors readable", () => {

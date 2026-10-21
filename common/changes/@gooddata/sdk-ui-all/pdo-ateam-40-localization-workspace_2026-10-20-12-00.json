@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "api-client-tiger, sdk-backend-tiger: The workspace localization usage, its workspaces and users lists and the workspace localization statistics come from the backend localization endpoints. The defaults of a workspace are the values it gets.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

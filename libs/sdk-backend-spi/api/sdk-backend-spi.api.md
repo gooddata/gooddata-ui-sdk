@@ -6,6 +6,7 @@
 
 import { AccessGranteeDetail } from '@gooddata/sdk-model';
 import { AccessGranularPermission } from '@gooddata/sdk-model';
+import type { AgentCustomSkill } from '@gooddata/sdk-model';
 import { CatalogItem } from '@gooddata/sdk-model';
 import { CatalogItemType } from '@gooddata/sdk-model';
 import { DashboardFiltersApplyMode } from '@gooddata/sdk-model';
@@ -55,6 +56,11 @@ import type { IComputedAttributeMetadataObject } from '@gooddata/sdk-model';
 import type { IComputedAttributeMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IConditionalFormatting } from '@gooddata/sdk-model';
 import { ICspDirective } from '@gooddata/sdk-model';
+import { ICsvAnalysis } from '@gooddata/sdk-model';
+import { ICsvAnalysisRequest } from '@gooddata/sdk-model';
+import { ICsvFileManifest } from '@gooddata/sdk-model';
+import { ICsvImportResult } from '@gooddata/sdk-model';
+import { ICsvImportTable } from '@gooddata/sdk-model';
 import type { IDashboard } from '@gooddata/sdk-model';
 import type { IDashboardAttributeFilterConfig } from '@gooddata/sdk-model';
 import type { IDashboardBase } from '@gooddata/sdk-model';
@@ -72,7 +78,13 @@ import type { IDashboardPluginDefinition } from '@gooddata/sdk-model';
 import { IDashboardWidget } from '@gooddata/sdk-model';
 import { IDataset } from '@gooddata/sdk-model';
 import { IDataSetMetadataObject } from '@gooddata/sdk-model';
+import { IDataSourceConnectionTest } from '@gooddata/sdk-model';
+import { IDataSourceConnectionTestResult } from '@gooddata/sdk-model';
+import { IDataSourceDefinition } from '@gooddata/sdk-model';
+import { IDataSourceDescriptor } from '@gooddata/sdk-model';
+import { IDataSourceFile } from '@gooddata/sdk-model';
 import { IDataSourceIdentifierDescriptor } from '@gooddata/sdk-model';
+import { IDataSourcePatch } from '@gooddata/sdk-model';
 import { IDataSourcePermissionAssignment } from '@gooddata/sdk-model';
 import type { IDateFilter } from '@gooddata/sdk-model';
 import { IDateFilterConfig } from '@gooddata/sdk-model';
@@ -149,6 +161,10 @@ import { IPublisherPageTemplateDefinition } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { IResultHeader } from '@gooddata/sdk-model';
 import { IResultWarning } from '@gooddata/sdk-model';
+import { ISavAnalysis } from '@gooddata/sdk-model';
+import { ISavAnalysisRequest } from '@gooddata/sdk-model';
+import { ISavImportResult } from '@gooddata/sdk-model';
+import { ISavImportTable } from '@gooddata/sdk-model';
 import type { IScheduledMail } from '@gooddata/sdk-model';
 import type { IScheduledMailDefinition } from '@gooddata/sdk-model';
 import type { ISemanticConditionalFormatting } from '@gooddata/sdk-model';
@@ -177,6 +193,8 @@ import type { IWidgetAlertDefinition } from '@gooddata/sdk-model';
 import { IWidgetDefinition } from '@gooddata/sdk-model';
 import { IWorkspaceDataFilter } from '@gooddata/sdk-model';
 import { IWorkspaceDataFilterDefinition } from '@gooddata/sdk-model';
+import { IWorkspaceDataFilterSetting } from '@gooddata/sdk-model';
+import { IWorkspaceDataFilterSettingDefinition } from '@gooddata/sdk-model';
 import { IWorkspacePermissionAssignment } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { IWorkspaceSettings } from '@gooddata/sdk-model';
@@ -800,7 +818,7 @@ export type IChatConversationComposeAnswerDetail = {
 };
 
 // @internal
-export type IChatConversationContent = IChatConversationTextContent | IChatConversationClarifyingAnswersContent | IChatConversationReasoningContent | IChatConversationMultipartContent | IChatConversationToolCallContent | IChatConversationToolResultContent;
+export type IChatConversationContent = IChatConversationTextContent | IChatConversationClarifyingAnswersContent | IChatConversationReasoningContent | IChatConversationMultipartContent | IChatConversationSkillActivatedContent | IChatConversationToolCallContent | IChatConversationToolResultContent;
 
 // @internal
 export type IChatConversationCreateOptions = {
@@ -970,6 +988,15 @@ export type IChatConversationSearchContent = {
 export type IChatConversationSearchedGroup = {
     objectType: string;
     titles: string[];
+};
+
+// @internal
+export type IChatConversationSkillActivatedContent = {
+    type: "skillsActivated";
+    skills: {
+        name: AgentCustomSkill;
+        title: string;
+    }[];
 };
 
 // @internal
@@ -1325,6 +1352,7 @@ export interface IDashboardWithReferences {
 // @alpha
 export interface IDataFiltersService {
     createDataFilter(newDataFilter: IWorkspaceDataFilterDefinition): Promise<IWorkspaceDataFilter>;
+    createDataFilterSetting(definition: IWorkspaceDataFilterSettingDefinition): Promise<IWorkspaceDataFilterSetting>;
     createUserDataFilter(newUserDataFilter: UserDataFilterDefinition): Promise<UserDataFilter>;
     deleteDataFilter(ref: ObjRef): Promise<void>;
     deleteUserDataFilter(ref: ObjRef): Promise<void>;
@@ -1358,8 +1386,31 @@ export interface IDatasetsQueryFilterOptions extends IFilterBaseOptions {
 export type IDatasetsQueryResult = IPagedResource<IDataSetMetadataObject>;
 
 // @alpha
+export interface IDataSourceFilesService {
+    analyzeCsv(requests: ICsvAnalysisRequest[]): Promise<ICsvAnalysis[]>;
+    analyzeSav(requests: ISavAnalysisRequest[]): Promise<ISavAnalysis[]>;
+    deleteFiles(dataSourceId: string, fileNames: string[]): Promise<void>;
+    getCsvManifests(dataSourceId: string, fileNames: string[]): Promise<ICsvFileManifest[]>;
+    getFiles(dataSourceId: string): Promise<IDataSourceFile[]>;
+    importCsv(dataSourceId: string, tables: ICsvImportTable[]): Promise<ICsvImportResult[]>;
+    importSav(dataSourceId: string, tables: ISavImportTable[]): Promise<ISavImportResult[]>;
+    upload(file: File): Promise<string>;
+}
+
+// @alpha
 export interface IDataSourcesService {
+    createDataSource(definition: IDataSourceDefinition): Promise<IDataSourceDescriptor>;
+    deleteDataSource(id: string): Promise<void>;
+    files(): IDataSourceFilesService;
+    getDataSource(id: string): Promise<IDataSourceDescriptor>;
     getDataSourceIdentifiers(): Promise<IDataSourceIdentifierDescriptor[]>;
+    getDataSources(): Promise<IDataSourceDescriptor[]>;
+    getSchemata(dataSourceId: string): Promise<string[]>;
+    hasDataSources(): Promise<boolean>;
+    patchDataSource(id: string, patch: IDataSourcePatch): Promise<IDataSourceDescriptor>;
+    registerUploadNotification(dataSourceId: string): Promise<void>;
+    testConnection(connection: IDataSourceConnectionTest, dataSourceId?: string): Promise<IDataSourceConnectionTestResult>;
+    updateDataSource(id: string, definition: IDataSourceDefinition): Promise<IDataSourceDescriptor>;
 }
 
 // @alpha
@@ -2908,6 +2959,9 @@ export function isChatConversationReasoningContent(content: IChatConversationCon
 export function isChatConversationSearchContent(content: IChatConversationMultipartPart): content is IChatConversationSearchContent;
 
 // @internal
+export function isChatConversationSkillActivatedContent(content: IChatConversationContent): content is IChatConversationSkillActivatedContent;
+
+// @internal
 export function isChatConversationTextContent(content: IChatConversationContent): content is IChatConversationTextContent;
 
 // @internal
@@ -3321,10 +3375,26 @@ export interface IWorkspaceDatasetsService {
 }
 
 // @alpha
+export interface IWorkspaceDataSourceOverride {
+    // (undocumented)
+    id: string;
+    schemaPath?: string[];
+}
+
+// @alpha
 export interface IWorkspaceDefinition {
+    // (undocumented)
+    cacheExtraLimit?: number;
+    dataSource?: IWorkspaceDataSourceOverride;
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    earlyAccessValues?: string[];
     // (undocumented)
     id: string;
     parentWorkspace?: string;
+    // (undocumented)
+    prefix?: string;
     // (undocumented)
     title: string;
 }

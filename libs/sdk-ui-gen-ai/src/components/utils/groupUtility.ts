@@ -73,8 +73,9 @@ function getMessageType(
         return "system";
     }
     if (
-        message.content.type === "reasoning" ||
         message.role === "tool" ||
+        message.content.type === "reasoning" ||
+        message.content.type === "skillsActivated" ||
         message.content.type === "toolCall" ||
         message.content.type === "toolResult"
     ) {

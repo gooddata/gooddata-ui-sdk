@@ -586,8 +586,26 @@ export const DataSourceAccessSourceValue: {
     readonly GROUP: "GROUP";
 };
 
+// @alpha
+export type DataSourceAuthenticationType = "USERNAME_PASSWORD" | "TOKEN" | "KEY_PAIR" | "CLIENT_SECRET" | "OIDC_PASSTHROUGH";
+
+// @alpha
+export type DataSourceCacheRetention = IDataSourceIndefiniteCacheRetention | IDataSourceScheduleCacheRetention | IDataSourceValidityPeriodCacheRetention;
+
+// @alpha
+export type DataSourceCacheStrategy = "ALWAYS" | "NEVER";
+
+// @alpha
+export type DataSourceDateTimeSemantics = "LOCAL" | "UTC";
+
+// @alpha
+export type DataSourceFileType = "CSV" | "SAV";
+
 // @alpha (undocumented)
 export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "CRATEDB" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "DENODO" | "STARROCKS" | "ATHENA" | "SINGLESTORE" | "MOTHERDUCK" | "MONGODB" | "FLEXCONNECT" | "AILAKEHOUSE" | "DRILL" | "TRINO";
+
+// @alpha
+export type DataSourceUserPermission = "MANAGE" | "USE";
 
 // @public
 export type DataValue = null | string | number;
@@ -1093,6 +1111,9 @@ export function getPublisherTextPlaceholdersV1(text: string): string[];
 
 // @alpha
 export function getPublisherTextPlaceholdersV2(text: string): string[];
+
+// @alpha
+export function getPublisherThemeImageReferenceV2(source: unknown): PublisherThemeImageReferenceV2 | undefined;
 
 // @alpha
 export function getPublisherThemeReferencePathV2(value: unknown): string[] | undefined;
@@ -2070,6 +2091,155 @@ export interface ICspDirective {
     sources: string[];
 }
 
+// @alpha
+export interface ICsvAnalysis {
+    // (undocumented)
+    columns: ICsvAnalysisColumn[];
+    config?: ICsvFileConfig;
+    // (undocumented)
+    location: string;
+    previewData: unknown[][];
+}
+
+// @alpha
+export interface ICsvAnalysisColumn {
+    // (undocumented)
+    detectedDateFormats?: string[];
+    // (undocumented)
+    name: string;
+    type: string;
+}
+
+// @alpha
+export interface ICsvAnalysisRequest {
+    // (undocumented)
+    config?: {
+        delimiters?: string[];
+        headerDetectMaxRows?: number;
+        headerRowCount?: number;
+        resultRows?: number;
+    };
+    location: string;
+}
+
+// @alpha
+export interface ICsvColumnType {
+    // (undocumented)
+    name?: string;
+    // (undocumented)
+    nullable?: boolean;
+    // (undocumented)
+    type?: string;
+}
+
+// @alpha
+export interface ICsvConvertOptions {
+    // (undocumented)
+    autoDictEncode?: boolean;
+    // (undocumented)
+    autoDictMaxCardinality?: number;
+    // (undocumented)
+    checkUtf8?: boolean;
+    // (undocumented)
+    columnTypes?: ICsvColumnType[];
+    // (undocumented)
+    decimalPoint?: string;
+    // (undocumented)
+    falseValues?: string[];
+    // (undocumented)
+    includeColumns?: string[];
+    // (undocumented)
+    includeMissingColumns?: boolean;
+    // (undocumented)
+    nullValues?: string[];
+    // (undocumented)
+    quotedStringsCanBeNull?: boolean;
+    // (undocumented)
+    stringsCanBeNull?: boolean;
+    // (undocumented)
+    timestampParsers?: string[];
+    // (undocumented)
+    trueValues?: string[];
+}
+
+// @alpha
+export interface ICsvFileConfig {
+    // (undocumented)
+    convertOptions?: ICsvConvertOptions;
+    // (undocumented)
+    parseOptions?: ICsvParseOptions;
+    // (undocumented)
+    readOptions?: ICsvReadOptions;
+}
+
+// @alpha
+export interface ICsvFileManifest {
+    columnDateFormats?: Record<string, string>;
+    // (undocumented)
+    convertOptions?: ICsvConvertOptions;
+    name: string;
+    // (undocumented)
+    parseOptions?: ICsvParseOptions;
+    // (undocumented)
+    readMethod?: string;
+    // (undocumented)
+    readOptions?: ICsvReadOptions;
+    // (undocumented)
+    version: number;
+}
+
+// @alpha
+export interface ICsvImportResult {
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    version: number;
+}
+
+// @alpha
+export interface ICsvImportTable {
+    name: string;
+    // (undocumented)
+    source: {
+        location: string;
+        config: ICsvFileConfig & {
+            columnDateFormats?: Record<string, string>;
+        };
+    };
+}
+
+// @alpha
+export interface ICsvParseOptions {
+    // (undocumented)
+    delimiter?: string;
+    // (undocumented)
+    doubleQuote?: boolean;
+    escapeChar?: string | false;
+    // (undocumented)
+    ignoreEmptyLines?: boolean;
+    // (undocumented)
+    newlinesInValues?: boolean;
+    quoteChar?: string | false;
+}
+
+// @alpha
+export interface ICsvReadOptions {
+    // (undocumented)
+    autoGenerateColumnNames?: boolean;
+    // (undocumented)
+    blockSize?: number;
+    // (undocumented)
+    columnNames?: string[];
+    // (undocumented)
+    encoding?: string;
+    // (undocumented)
+    skipRows?: number;
+    // (undocumented)
+    skipRowsAfterNames?: number;
+    // (undocumented)
+    useThreads?: boolean;
+}
+
 // @beta (undocumented)
 export type ICustomSmtpDestinationConfiguration = {
     type: "customSmtp";
@@ -2585,6 +2755,120 @@ export interface IDatasetUser {
     login: string;
 }
 
+// @alpha
+export interface IDataSourceConnectionTest {
+    // (undocumented)
+    authenticationType?: DataSourceAuthenticationType | null;
+    // (undocumented)
+    clientId?: string;
+    // (undocumented)
+    clientSecret?: string;
+    // (undocumented)
+    parameters?: IDataSourceParameter[];
+    // (undocumented)
+    password?: string;
+    // (undocumented)
+    privateKey?: string;
+    // (undocumented)
+    privateKeyPassphrase?: string;
+    // (undocumented)
+    schema: string;
+    // (undocumented)
+    token?: string;
+    // (undocumented)
+    type: DataSourceType;
+    // (undocumented)
+    url: string;
+    // (undocumented)
+    username?: string;
+}
+
+// @alpha
+export interface IDataSourceConnectionTestResult {
+    error?: string;
+    // (undocumented)
+    successful: boolean;
+}
+
+// @alpha
+export interface IDataSourceDefinition {
+    alternativeDataSourceId?: string | null;
+    // (undocumented)
+    authenticationType?: DataSourceAuthenticationType | null;
+    cacheRetention?: DataSourceCacheRetention | null;
+    // (undocumented)
+    cacheStrategy?: DataSourceCacheStrategy;
+    // (undocumented)
+    clientId?: string;
+    // (undocumented)
+    clientSecret?: string;
+    // (undocumented)
+    dateTimeSemantics?: DataSourceDateTimeSemantics | null;
+    // (undocumented)
+    disableStatistics?: boolean | null;
+    // (undocumented)
+    id: string;
+    ignoreJwtAud?: boolean | null;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    parameters?: IDataSourceParameter[];
+    // (undocumented)
+    password?: string;
+    // (undocumented)
+    privateKey?: string;
+    // (undocumented)
+    privateKeyPassphrase?: string;
+    // (undocumented)
+    schema: string;
+    // (undocumented)
+    token?: string;
+    // (undocumented)
+    type: DataSourceType;
+    // (undocumented)
+    url?: string;
+    // (undocumented)
+    username?: string;
+}
+
+// @alpha
+export interface IDataSourceDescriptor extends IDataSourceIdentifierDescriptor {
+    alternativeDataSourceId?: string | null;
+    // (undocumented)
+    authenticationType?: DataSourceAuthenticationType | null;
+    // (undocumented)
+    cacheRetention?: DataSourceCacheRetention | null;
+    // (undocumented)
+    cacheStrategy?: DataSourceCacheStrategy | null;
+    // (undocumented)
+    clientId?: string;
+    // (undocumented)
+    dateTimeSemantics?: DataSourceDateTimeSemantics | null;
+    // (undocumented)
+    decodedParameters?: IDataSourceParameter[] | null;
+    // (undocumented)
+    disableStatistics?: boolean | null;
+    ignoreJwtAud?: boolean | null;
+    // (undocumented)
+    parameters?: IDataSourceParameter[] | null;
+    // (undocumented)
+    permissions?: DataSourceUserPermission[];
+    // (undocumented)
+    url?: string | null;
+    // (undocumented)
+    username?: string;
+}
+
+// @alpha
+export interface IDataSourceFile {
+    modifiedAt: string;
+    // (undocumented)
+    name: string;
+    size: number;
+    // (undocumented)
+    type: DataSourceFileType;
+}
+
 // @alpha (undocumented)
 export interface IDataSourceIdentifierDescriptor {
     // (undocumented)
@@ -2598,6 +2882,62 @@ export interface IDataSourceIdentifierDescriptor {
 }
 
 // @alpha
+export interface IDataSourceIndefiniteCacheRetention {
+    // (undocumented)
+    type: "INDEFINITE";
+}
+
+// @alpha
+export interface IDataSourceParameter {
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    value: string;
+}
+
+// @alpha
+export interface IDataSourcePatch {
+    alternativeDataSourceId?: string | null;
+    // (undocumented)
+    authenticationType?: DataSourceAuthenticationType | null;
+    // (undocumented)
+    cacheRetention?: DataSourceCacheRetention | null;
+    // (undocumented)
+    cacheStrategy?: DataSourceCacheStrategy | null;
+    // (undocumented)
+    clientId?: string | null;
+    // (undocumented)
+    clientSecret?: string | null;
+    // (undocumented)
+    dateTimeSemantics?: DataSourceDateTimeSemantics | null;
+    // (undocumented)
+    disableStatistics?: boolean | null;
+    // (undocumented)
+    id: string;
+    ignoreJwtAud?: boolean | null;
+    // (undocumented)
+    name?: string;
+    // (undocumented)
+    parameters?: IDataSourceParameter[] | null;
+    // (undocumented)
+    password?: string | null;
+    // (undocumented)
+    privateKey?: string | null;
+    // (undocumented)
+    privateKeyPassphrase?: string | null;
+    // (undocumented)
+    schema?: string;
+    // (undocumented)
+    token?: string | null;
+    // (undocumented)
+    type?: DataSourceType;
+    // (undocumented)
+    url?: string | null;
+    // (undocumented)
+    username?: string | null;
+}
+
+// @alpha
 export interface IDataSourcePermissionAssignment {
     accessSource?: DataSourceAccessSource;
     // (undocumented)
@@ -2606,6 +2946,24 @@ export interface IDataSourcePermissionAssignment {
     dataSource: IAssignedDataSource;
     // (undocumented)
     permissions: AssignedDataSourcePermission[];
+}
+
+// @alpha
+export interface IDataSourceScheduleCacheRetention {
+    // (undocumented)
+    schedule: {
+        cron: string;
+        timezone?: string | null;
+    };
+    // (undocumented)
+    type: "SCHEDULE";
+}
+
+// @alpha
+export interface IDataSourceValidityPeriodCacheRetention {
+    // (undocumented)
+    type: "VALIDITY_PERIOD";
+    validityPeriod: string;
 }
 
 // @public
@@ -4772,6 +5130,8 @@ export interface IPermanentSettings {
     exportResultPollingTimeoutSeconds?: number;
     fiscalYear?: IFiscalYear;
     formatLocale?: string;
+    // @alpha
+    grantManageVisualizationsWithAnalyze?: boolean;
     llmEndpoint?: ILlmEndpoint;
     maxZoomLevel?: number | null;
     metadataLocale?: string;
@@ -6223,6 +6583,61 @@ export const isAvailableUserAccessGrantee: (obj: unknown) => obj is IAvailableUs
 
 // @alpha
 export const isAvailableUserGroupAccessGrantee: (obj: unknown) => obj is IAvailableUserGroupAccessGrantee;
+
+// @alpha
+export interface ISavAnalysis {
+    // (undocumented)
+    columns: ISavAnalysisColumn[];
+    // (undocumented)
+    location: string;
+    // (undocumented)
+    previewData: unknown[][];
+}
+
+// @alpha
+export interface ISavAnalysisColumn {
+    // (undocumented)
+    label?: string;
+    // (undocumented)
+    name: string;
+    type: string;
+    // (undocumented)
+    valueLabels?: ISavValueLabel[];
+}
+
+// @alpha
+export interface ISavAnalysisRequest {
+    // (undocumented)
+    config?: {
+        resultRows?: number;
+    };
+    location: string;
+}
+
+// @alpha
+export interface ISavImportResult {
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    version: number;
+}
+
+// @alpha
+export interface ISavImportTable {
+    name: string;
+    // (undocumented)
+    source: {
+        location: string;
+    };
+}
+
+// @alpha
+export interface ISavValueLabel {
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    value: unknown;
+}
 
 // @alpha
 export function isBrowserDetectedTimezone(timezoneId: DashboardTimezoneId | undefined): timezoneId is typeof BROWSER_DETECTED;
@@ -8302,6 +8717,8 @@ export interface IWorkspaceAccess {
 export interface IWorkspaceDataFilter {
     // (undocumented)
     columnName?: string;
+    // (undocumented)
+    description?: string;
     // @deprecated (undocumented)
     id: string;
     // (undocumented)
@@ -8319,6 +8736,8 @@ export interface IWorkspaceDataFilterDefinition {
     // (undocumented)
     columnName: string;
     // (undocumented)
+    description?: string;
+    // (undocumented)
     id?: string;
     // (undocumented)
     title: string;
@@ -8327,6 +8746,8 @@ export interface IWorkspaceDataFilterDefinition {
 // @alpha
 export interface IWorkspaceDataFilterSetting {
     // (undocumented)
+    description?: string;
+    // (undocumented)
     filterValues: string[];
     // @deprecated (undocumented)
     id: string;
@@ -8334,6 +8755,19 @@ export interface IWorkspaceDataFilterSetting {
     isInherited: boolean;
     // (undocumented)
     ref: ObjRef;
+    // (undocumented)
+    title?: string;
+}
+
+// @alpha
+export interface IWorkspaceDataFilterSettingDefinition {
+    // (undocumented)
+    dataFilter: ObjRef;
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    filterValues: string[];
+    id?: string;
     // (undocumented)
     title?: string;
 }
@@ -9219,6 +9653,17 @@ export const PublisherTextVariablesV2: readonly PublisherTextVariableV2[];
 export type PublisherTextVariableV2 = "documentName" | "documentDescription" | "documentDateRange" | "documentAttributeFilters" | "periodStart" | "periodEnd" | "lastModifiedAt" | "lastModifiedBy" | "exportedAt" | "exportedBy" | "workspaceName" | "workspaceId" | "currentPageNumber" | "totalPages";
 
 // @alpha
+export type PublisherThemeImageReferenceV2 = {
+    type: "logo";
+} | {
+    type: "coverImage";
+} | {
+    type: "asset";
+    list: "logos" | "images";
+    id: string;
+};
+
+// @alpha
 export function publisherThemeReferenceV2(path: readonly string[]): string;
 
 // @alpha (undocumented)
@@ -9264,6 +9709,9 @@ export type RequiredSettings = Condition<Partial<IPermanentSettings | IFeatureFl
 
 // @alpha
 export type RequiredWorkspacePermissions = Condition<Partial<IPluggableApplicationWorkspacePermissions>>;
+
+// @alpha
+export function resolvePublisherImageUrlV2(url: string, values: Partial<Record<PublisherTextVariableV2, string>>): string | undefined;
 
 // @alpha
 export const resolvePublisherTextPlaceholders: typeof resolvePublisherTextPlaceholdersV1;

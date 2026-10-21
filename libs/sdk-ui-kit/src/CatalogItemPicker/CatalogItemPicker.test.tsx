@@ -131,4 +131,55 @@ describe("CatalogItemPicker", () => {
         expect(screen.getByTestId("s-catalog-item-picker-tab-0")).toBeInTheDocument();
         expect(screen.getByTestId("s-catalog-item-picker-tab-1")).toBeInTheDocument();
     });
+
+    it("renders item details without toggling the selection", () => {
+        const onAdd = vi.fn();
+        renderWithIntl(
+            <CatalogItemPicker
+                itemTypes={["attribute"]}
+                selectionMode="multiple"
+                attributeItems={createAttributeItems()}
+                onClose={vi.fn()}
+                onAdd={onAdd}
+                renderItemDetails={(item) => <button data-testid="details">{item.id}</button>}
+            />,
+        );
+
+        fireEvent.click(screen.getByTestId("details"));
+        expect(screen.getByTestId("details")).toHaveTextContent("attr-1");
+        fireEvent.click(screen.getByTestId("s-catalog-item-picker-add"));
+        expect(onAdd).not.toHaveBeenCalled();
+    });
+
+    it("renders item details for metrics but not for dates", () => {
+        renderWithIntl(
+            <CatalogItemPicker
+                itemTypes={["metric"]}
+                selectionMode="multiple"
+                metricItems={createMetricItems()}
+                onClose={vi.fn()}
+                renderItemDetails={(item) => <span data-testid="details">{item.id}</span>}
+            />,
+        );
+
+        expect(screen.getAllByTestId("details").length).toBeGreaterThan(0);
+    });
+});
+
+describe("CatalogItemPicker item details for dates", () => {
+    it("does not render item details for date items", () => {
+        renderWithIntl(
+            <CatalogItemPicker
+                itemTypes={["attribute", "date"]}
+                selectionMode="single"
+                attributeItems={createAttributeItemsWithDate()}
+                onClose={vi.fn()}
+                variant="mvf"
+                renderItemDetails={(item) => <span data-testid="details">{item.id}</span>}
+            />,
+        );
+
+        fireEvent.click(screen.getByTestId("s-catalog-item-picker-tab-1"));
+        expect(screen.queryByTestId("details")).not.toBeInTheDocument();
+    });
 });

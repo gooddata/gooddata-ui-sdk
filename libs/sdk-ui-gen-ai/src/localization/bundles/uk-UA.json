@@ -29,6 +29,8 @@
     "gd.gen-ai.visualization.unavailable": "Не вдалося відобразити візуалізацію.",
     "gd.gen-ai.permission-error": "Недостатньо дозволів",
     "gd.gen-ai.permission-error.description": "Ви не маєте доступу до чат-бота. Зверніться до адміністратора, щоб надіслати запит на доступ.",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.missing-error": "<b>Уточнювальних запитань не знайдено.</b> Спробуйте запитати ще раз.",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.skipped": "[Пропущено]",
     "gd.gen-ai.input-placeholder": "Поставте запитання тут…",
     "gd.gen-ai.input-label": "Поставте своє запитання. Введіть @, щоб переглянути підказки.",
     "gd.gen-ai.context.add_context": "Додати контекст",

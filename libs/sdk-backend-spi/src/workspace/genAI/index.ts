@@ -1,6 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
 import type {
+    AgentCustomSkill,
     DateAttributeGranularity,
     FilterContextItem,
     GenAIChatEffort,
@@ -1165,6 +1166,7 @@ export type IChatConversationContent =
     | IChatConversationClarifyingAnswersContent
     | IChatConversationReasoningContent
     | IChatConversationMultipartContent
+    | IChatConversationSkillActivatedContent
     | IChatConversationToolCallContent
     | IChatConversationToolResultContent;
 
@@ -1290,6 +1292,28 @@ export function isChatConversationToolCallContent(
     content: IChatConversationContent,
 ): content is IChatConversationToolCallContent {
     return content.type === "toolCall";
+}
+
+/**
+ * GenAI Chat Conversation skill activated content
+ * @internal
+ */
+export type IChatConversationSkillActivatedContent = {
+    type: "skillsActivated";
+    skills: {
+        name: AgentCustomSkill;
+        title: string;
+    }[];
+};
+
+/**
+ * Is chat conversation skill activated content
+ * @internal
+ */
+export function isChatConversationSkillActivatedContent(
+    content: IChatConversationContent,
+): content is IChatConversationSkillActivatedContent {
+    return content.type === "skillsActivated";
 }
 
 /**

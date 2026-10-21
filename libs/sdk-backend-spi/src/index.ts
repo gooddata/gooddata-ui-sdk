@@ -214,6 +214,7 @@ export {
     type UserTextQuestionItem,
     type UserClarificationQuestionsItem,
     type UserQuestionItem,
+    type IChatConversationSkillActivatedContent,
     isChatConversationError,
     isChatConversationItem,
     isChatConversationCatalogSearchDetail,
@@ -222,6 +223,7 @@ export {
     isChatConversationReasoningContent,
     isChatConversationMultipartContent,
     isChatConversationToolCallContent,
+    isChatConversationSkillActivatedContent,
     isChatConversationToolResultContent,
     isChatConversationVisualisationContent,
     isChatConversationKeyDriverAnalysisContent,
@@ -296,6 +298,7 @@ export type {
     IWorkspacesQuery,
     IWorkspacesQueryFactory,
     IWorkspaceDefinition,
+    IWorkspaceDataSourceOverride,
     IWorkspacesQueryResult,
     IWorkspacesQueryFilter,
     IWorkspacesQueryOptions,
@@ -415,6 +418,7 @@ export type {
 export type { IOrganization, IOrganizations } from "./organization/index.js";
 export type { IEntitlements } from "./entitlements/index.js";
 export type { IDataSourcesService } from "./dataSources/index.js";
+export type { IDataSourceFilesService } from "./dataSources/files.js";
 export {
     GEO_ASSET_PATH,
     type GeoAssetResponseType,

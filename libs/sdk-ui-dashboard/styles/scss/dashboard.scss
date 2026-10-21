@@ -13,6 +13,14 @@
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
 $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b1c1d1);
+$headline-line-height: (variables.$item-headline-lineHeight + variables.$item-headline-padding-vertical) * 2;
+$headline-small-line-height: 36px;
+$headline-margin: 10px;
+$item-small-screen-padding-top: 10px;
+$item-small-screen-padding: 5px;
+$item-compact-padding: 3px;
+$headline-compact-height: 20px;
+$headline-compact-margin-bottom: 5px;
 
 // this must be used on the body element in gdc-dashboards
 .gd-dashboards-root {
@@ -384,7 +392,7 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     transition: variables.$transition-length;
 
     @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
-        padding: 10px 5px 5px;
+        padding: $item-small-screen-padding-top $item-small-screen-padding $item-small-screen-padding;
     }
 
     &::before {
@@ -455,8 +463,8 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     position: relative;
     z-index: 1;
     height: (variables.$item-headline-lineHeight + variables.$item-headline-padding-vertical) * 2 + 2; // relate SD-956: please update HEADLINE_OUTER_HEIGHT in widgetHeightUtil.ts when height is changed
-    margin-top: 10px;
-    line-height: (variables.$item-headline-lineHeight + variables.$item-headline-padding-vertical) * 2;
+    margin-top: $headline-margin;
+    line-height: $headline-line-height;
 
     @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
         margin-top: 0;
@@ -464,7 +472,20 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     }
 
     .visualization & {
-        margin-bottom: 10px;
+        margin-bottom: $headline-margin;
+    }
+
+    &--small {
+        height: 38px;
+        line-height: $headline-small-line-height;
+
+        .item-headline {
+            font-size: 15px;
+        }
+    }
+
+    &--no-top-margin {
+        margin-top: 0;
     }
 }
 
@@ -822,8 +843,29 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
 }
 
 .gd-dash-content--density-compact {
+    $padding-saving: 2 * (variables.$item-inner-padding - $item-compact-padding);
+    $small-screen-padding-saving: $item-small-screen-padding-top + $item-small-screen-padding - 2 *
+        $item-compact-padding;
+    $compact-title: $headline-compact-height + $headline-compact-margin-bottom;
+    // the comfortable title shrinks to its line height in the overfilled widget column
+    $title-saving: $headline-line-height + $headline-margin - $compact-title;
+    $small-title-saving: $headline-small-line-height + $headline-margin - $compact-title;
+
+    // space saved per headline title size, subtracted from the tile min height by getDensityAdjustedMinHeight
+    --headline-density-saving-untitled: #{$padding-saving};
+    --headline-density-saving-small: #{$padding-saving + $headline-margin + $small-title-saving};
+    --headline-density-saving-medium: #{$padding-saving + $title-saving};
+    --headline-density-saving-large: #{$padding-saving + $headline-margin + $title-saving};
+
+    @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
+        --headline-density-saving-untitled: #{$small-screen-padding-saving};
+        --headline-density-saving-small: #{$small-screen-padding-saving + $small-title-saving};
+        --headline-density-saving-medium: #{$small-screen-padding-saving + $title-saving};
+        --headline-density-saving-large: #{$small-screen-padding-saving + $title-saving};
+    }
+
     .dash-item-content {
-        padding: 3px;
+        padding: $item-compact-padding;
     }
 
     // override highcharts direct style
@@ -834,13 +876,13 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
 
     .item-headline-outer {
         margin-top: 0;
-        height: 20px;
-        line-height: 20px;
+        height: $headline-compact-height;
+        line-height: $headline-compact-height;
     }
 
     .visualization {
         .item-headline-outer {
-            margin-bottom: 5px;
+            margin-bottom: $headline-compact-margin-bottom;
         }
     }
 

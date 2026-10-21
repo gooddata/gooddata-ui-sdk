@@ -156,7 +156,7 @@ export function alignPointsToPlacement(alignPoints: ILegacyAlignPoint[]): Placem
 // @internal (undocumented)
 export function alignPointToPlacement(alignPoint: ILegacyAlignPoint): Placement;
 
-// @internal (undocumented)
+// @internal
 export const ALL_RICH_TEXT_FEATURES: readonly RichTextFeature[];
 
 // @internal (undocumented)
@@ -245,10 +245,10 @@ export class BubbleTrigger<P extends IBubbleTriggerProps> extends PureComponent<
 export const Button: ForwardRefExoticComponent<IButtonProps & RefAttributes<HTMLElement>>;
 
 // @internal (undocumented)
-export const CatalogItemPicker: NamedExoticComponent<ICatalogItemPickerProps<unknown, unknown>>;
+export const CatalogItemPicker: <TAttributePayload = unknown, TMetricPayload = unknown>(props: ICatalogItemPickerProps<TAttributePayload, TMetricPayload>) => ReactElement;
 
 // @internal
-export const CatalogItemPickerContent: NamedExoticComponent<ICatalogItemPickerProps<unknown, unknown>>;
+export const CatalogItemPickerContent: <TAttributePayload = unknown, TMetricPayload = unknown>(props: ICatalogItemPickerProps<TAttributePayload, TMetricPayload>) => ReactElement;
 
 // @internal
 export type CatalogItemPickerSelectionMode = "single" | "multiple";
@@ -1389,6 +1389,7 @@ export interface ICatalogItemPickerProps<TAttributePayload = unknown, TMetricPay
     onClose: () => void;
     // (undocumented)
     onSelect?: (item: TAttributePayload | TMetricPayload) => void;
+    renderItemDetails?: (item: ICatalogItemPickerItem<TAttributePayload | TMetricPayload>) => ReactNode;
     // (undocumented)
     selectionMode: CatalogItemPickerSelectionMode;
     // (undocumented)
@@ -9372,7 +9373,7 @@ export function ResponsiveText(input: IResponsiveTextProps): JSX.Element;
 export function RichText(props: IRichTextProps): JSX.Element;
 
 // @internal (undocumented)
-export type RichTextFeature = "emphasis" | "headings" | "lists" | "links" | "images" | "code" | "blockquotes" | "thematicBreaks" | "html" | "entities" | "backslashBreaks";
+export type RichTextFeature = "emphasis" | "headings" | "lists" | "links" | "images" | "code" | "blockquotes" | "thematicBreaks" | "html" | "entities" | "backslashBreaks" | "strikethrough" | "highlight";
 
 // @internal (undocumented)
 export function RichTextWithTooltip(props: IRichTextWithTooltipProps): JSX.Element;

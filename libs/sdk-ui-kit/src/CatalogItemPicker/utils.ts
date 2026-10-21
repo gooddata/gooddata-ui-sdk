@@ -17,8 +17,8 @@ export const getDateDatasetOptions = (items: ICatalogItemPickerItem[]) => {
         .sort((a, b) => a.title.localeCompare(b.title));
 };
 
-export const groupMetricCatalogItems = (
-    items: ICatalogItemPickerItem[],
+export const groupMetricCatalogItems = <TPayload>(
+    items: ICatalogItemPickerItem<TPayload>[],
     groups: ICatalogGroup[] | undefined,
     ungroupedTitle: string,
 ) => {
@@ -40,16 +40,19 @@ export const groupMetricCatalogItems = (
             return acc;
         },
         {
-            groupsById: new Map<string, { title: string; items: ICatalogItemPickerItem[] }>(),
-            ungrouped: [] as ICatalogItemPickerItem[],
+            groupsById: new Map<string, { title: string; items: ICatalogItemPickerItem<TPayload>[] }>(),
+            ungrouped: [] as ICatalogItemPickerItem<TPayload>[],
         },
     );
 
-    const orderedGroups: Array<{ title: string; items: ICatalogItemPickerItem[] }> =
+    const orderedGroups: Array<{ title: string; items: ICatalogItemPickerItem<TPayload>[] }> =
         groups && groups.length > 0
             ? groups
                   .map((group) => groupsById.get(group.id))
-                  .filter((group): group is { title: string; items: ICatalogItemPickerItem[] } => !!group)
+                  .filter(
+                      (group): group is { title: string; items: ICatalogItemPickerItem<TPayload>[] } =>
+                          !!group,
+                  )
             : Array.from(groupsById.values());
 
     if (ungrouped.length > 0) {

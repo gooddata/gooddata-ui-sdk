@@ -10,6 +10,7 @@ import { useCustomization } from "../CustomizationContext.js";
 import type { IChatMessagesGroup } from "../utils/groupUtility.js";
 
 import { ConversationClarifyingAnswersContent } from "./conversationContents/ConversationClarifyingAnswersContent.js";
+import { ConversationSkillActivatedContent } from "./conversationContents/ConversationSkillActivatedContent.js";
 import { ConversationToolCallContent } from "./conversationContents/ConversationToolCallContent.js";
 import { ConversationToolResultContent } from "./conversationContents/ConversationToolResultContent.js";
 
@@ -97,6 +98,10 @@ export function ConversationItemContents({
 
     if (content.type === "toolResult") {
         return <ConversationToolResultContent result={content.result} isLoading={isLoading} />;
+    }
+
+    if (content.type === "skillsActivated") {
+        return <ConversationSkillActivatedContent skills={content.skills} isLoading={isLoading} />;
     }
 
     return null;

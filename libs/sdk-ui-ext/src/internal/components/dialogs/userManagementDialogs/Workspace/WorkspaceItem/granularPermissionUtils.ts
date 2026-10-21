@@ -28,12 +28,15 @@ const includedBy = (permissions: WorkspacePermissions): WorkspacePermissions =>
  */
 export const getImplicitGranularPermissions = (
     workspacePermission: WorkspacePermission,
+    analyzeIncludesManageVisualizations = false,
 ): WorkspacePermissions => {
     switch (workspacePermission) {
         case "VIEW":
             return [];
         case "ANALYZE":
-            return ["CREATE_VISUALIZATION", "CREATE_FILTER_VIEW"];
+            return analyzeIncludesManageVisualizations
+                ? ["CREATE_VISUALIZATION", "CREATE_FILTER_VIEW", "MANAGE_VISUALIZATIONS"]
+                : ["CREATE_VISUALIZATION", "CREATE_FILTER_VIEW"];
         case "MANAGE":
             return [
                 "EXPORT",
@@ -67,9 +70,15 @@ export const getWorkspacePermission = (permissions: WorkspacePermissions): Works
 /**
  * Returns all granular permissions from a list, inluding implicit ones.
  */
-export const getGranularPermissions = (permissions: WorkspacePermissions): WorkspacePermissions => {
+export const getGranularPermissions = (
+    permissions: WorkspacePermissions,
+    analyzeIncludesManageVisualizations = false,
+): WorkspacePermissions => {
     const workspacePermission = getWorkspacePermission(permissions);
-    const implicitGranularPermissions = getImplicitGranularPermissions(workspacePermission);
+    const implicitGranularPermissions = getImplicitGranularPermissions(
+        workspacePermission,
+        analyzeIncludesManageVisualizations,
+    );
     const onlyGranularPermissions = permissions.filter((p) => !workspacePermissions.includes(p));
 
     return [
@@ -146,11 +155,12 @@ export const isPermissionDisabled = (
     permission: WorkspacePermission,
     selectedWorkspacePermission: WorkspacePermission,
     selectedGranularPermissions: WorkspacePermissions,
+    analyzeIncludesManageVisualizations = false,
 ) => {
     const isManageWithNoAi = selectedWorkspacePermission === "MANAGE" && permission !== "USE_AI_ASSISTANT";
     const isAnalyzeWithImpliedPermission =
         selectedWorkspacePermission === "ANALYZE" &&
-        (permission === "CREATE_FILTER_VIEW" || permission === "CREATE_VISUALIZATION");
+        getImplicitGranularPermissions("ANALYZE", analyzeIncludesManageVisualizations).includes(permission);
     const isIncluded = includedBy(selectedGranularPermissions).includes(permission);
 
     return isManageWithNoAi || isAnalyzeWithImpliedPermission || isIncluded;
@@ -161,7 +171,10 @@ export const isPermissionDisabled = (
  *
  * Returns the list of permissions without implicit ones.
  */
-export const removeRedundantPermissions = (permissions: WorkspacePermissions): WorkspacePermissions => {
+export const removeRedundantPermissions = (
+    permissions: WorkspacePermissions,
+    analyzeIncludesManageVisualizations = false,
+): WorkspacePermissions => {
     let sanitizedPermissions: WorkspacePermission[];
 
     if (permissions.includes("MANAGE")) {
@@ -174,9 +187,8 @@ export const removeRedundantPermissions = (permissions: WorkspacePermissions): W
 
     sanitizedPermissions = [...permissions];
     if (permissions.includes("ANALYZE")) {
-        sanitizedPermissions = sanitizedPermissions.filter((p) => p !== "VIEW");
-        sanitizedPermissions = sanitizedPermissions.filter((p) => p !== "CREATE_FILTER_VIEW");
-        sanitizedPermissions = sanitizedPermissions.filter((p) => p !== "CREATE_VISUALIZATION");
+        const implicit = getImplicitGranularPermissions("ANALYZE", analyzeIncludesManageVisualizations);
+        sanitizedPermissions = sanitizedPermissions.filter((p) => p !== "VIEW" && !implicit.includes(p));
     }
 
     const included = includedBy(permissions);
@@ -191,6 +203,7 @@ export const removeRedundantPermissions = (permissions: WorkspacePermissions): W
 export const haveWorkspacePermissionsChanged = (
     workspace1: IGrantedWorkspace,
     workspace2: IGrantedWorkspace,
+    analyzeIncludesManageVisualizations = false,
 ) => {
     if (workspace1 === undefined || workspace2 === undefined) {
         return false;
@@ -199,8 +212,8 @@ export const haveWorkspacePermissionsChanged = (
     return (
         workspace1.isHierarchical !== workspace2.isHierarchical ||
         !isEqual(
-            removeRedundantPermissions(workspace1.permissions).sort(),
-            removeRedundantPermissions(workspace2.permissions).sort(),
+            removeRedundantPermissions(workspace1.permissions, analyzeIncludesManageVisualizations).sort(),
+            removeRedundantPermissions(workspace2.permissions, analyzeIncludesManageVisualizations).sort(),
         )
     );
 };

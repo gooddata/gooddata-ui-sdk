@@ -29952,7 +29952,7 @@
                     "actions"
                 ],
                 "summary": "(BETA) Languages used in the organization.",
-                "description": "(BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count only under the languages they set themselves.",
+                "description": "(BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves count. `defaults` holds the value a workspace gets when it and its parents set nothing.",
                 "operationId": "organizationLocalizationUsage",
                 "responses": {
                     "200": {
@@ -29981,7 +29981,7 @@
                     "actions"
                 ],
                 "summary": "(BETA) Users who set a language themselves.",
-                "description": "(BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Only the settings that users set themselves match, so only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.",
+                "description": "(BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.",
                 "operationId": "organizationLocalizationUsageUsers",
                 "parameters": [
                     {
@@ -30082,6 +30082,191 @@
                 "summary": "(BETA) Languages with translations in the organization.",
                 "description": "(BETA) Lists the languages that have at least one translation, separately for each kind of translation.",
                 "operationId": "organizationLocalizationStatistics",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LocalizationStatistics"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/localization/usage/users": {
+            "get": {
+                "tags": [
+                    "Localization",
+                    "actions"
+                ],
+                "summary": "(BETA) Workspace members who get a language.",
+                "description": "(BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one.",
+                "operationId": "workspaceLocalizationUsageUsers",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "in": "query",
+                        "description": "Language tag that the user gets.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "de-DE"
+                    },
+                    {
+                        "name": "setting",
+                        "in": "query",
+                        "description": "One of LOCALE, METADATA_LOCALE and DATA_LOCALE.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "LOCALE",
+                                "METADATA_LOCALE",
+                                "DATA_LOCALE"
+                            ]
+                        },
+                        "example": "LOCALE"
+                    },
+                    {
+                        "name": "source",
+                        "in": "query",
+                        "description": "Where the value comes from.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Where the value comes from, from the strongest source to the weakest: USER - the user set it. WORKSPACE - the workspace sets it. PARENT - the workspace inherits it from a parent workspace. ORGANIZATION - the organization default. ENVIRONMENT - the default set for the whole deployment. DEFAULT - the built-in default.",
+                            "enum": [
+                                "USER",
+                                "WORKSPACE",
+                                "PARENT",
+                                "ORGANIZATION",
+                                "ENVIRONMENT",
+                                "DEFAULT"
+                            ]
+                        },
+                        "example": "WORKSPACE"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Zero-based page index (0..N)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 0
+                        },
+                        "example": 0
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "The size of the page to be returned.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 20
+                        },
+                        "example": 20
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LocalizationUsageUsers"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/localization/usage": {
+            "get": {
+                "tags": [
+                    "Localization",
+                    "actions"
+                ],
+                "summary": "(BETA) Languages used in the workspace.",
+                "description": "(BETA) Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.",
+                "operationId": "workspaceLocalizationUsage",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WorkspaceLocalizationUsage"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/localization/statistics": {
+            "get": {
+                "tags": [
+                    "Localization",
+                    "actions"
+                ],
+                "summary": "(BETA) Languages with translations in the workspace.",
+                "description": "(BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list.",
+                "operationId": "workspaceLocalizationStatistics",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -34416,6 +34601,12 @@
                             "BOOLEAN",
                             "HLL"
                         ]
+                    },
+                    "defaultLabelOf": {
+                        "maxLength": 255,
+                        "type": "string",
+                        "description": "(EXPERIMENTAL) Name of the column whose values this column labels. Logical model generation makes this column the default label of the attribute on that column, sorted by that column.",
+                        "example": "gender"
                     },
                     "description": {
                         "maxLength": 10000,
@@ -65030,6 +65221,7 @@
                         ]
                     }
                 },
+                "description": "The value a workspace gets for one setting when it and its parents set nothing, and where it comes from. Null when that value has no language.",
                 "nullable": true
             },
             "LocalizationDefaults": {
@@ -65044,8 +65236,7 @@
                     "METADATA_LOCALE": {
                         "$ref": "#/components/schemas/LocalizationDefault"
                     }
-                },
-                "description": "The value a workspace gets when it and its parents set nothing. Null when the setting has no value."
+                }
             },
             "LocalizationMetadataStatistics": {
                 "required": [
@@ -65089,7 +65280,8 @@
                             "DEFAULT"
                         ]
                     }
-                }
+                },
+                "description": "The value a workspace gets for one setting, and where it comes from. Never null. `content.value` is null when the workspace gets no language."
             },
             "LocalizationResolvedValues": {
                 "required": [
@@ -65109,7 +65301,7 @@
                         "$ref": "#/components/schemas/LocalizationResolvedValue"
                     }
                 },
-                "description": "The value the workspace gets for each setting."
+                "description": "The value for each of the display, metadata and data language settings, with its source."
             },
             "LocalizationSettingUsage": {
                 "required": [
@@ -65169,7 +65361,7 @@
                         "format": "int32"
                     }
                 },
-                "description": "Counts per source. Sources without any count are left out. Users without their own setting have no source and are only in the total."
+                "description": "Counts per source. Sources without any count are left out. In the organization, users without their own setting have no source and are only in the total."
             },
             "LocalizationStatistics": {
                 "required": [
@@ -65296,7 +65488,7 @@
                         "$ref": "#/components/schemas/LocalizationCount"
                     }
                 },
-                "description": "One language. `workspaces` counts the workspaces that get it in any of the settings, once each. `users` counts the users who set it themselves in any of the settings, once each. In the entry with a null value, `users` counts the users who set none of the three settings."
+                "description": "One language. `workspaces` counts the workspaces that get it in any of the settings, once each. `users` counts the users who get it in any of the settings, once each. In the entry with a null value, `users` counts the users who get no language in any setting."
             },
             "LocalizationUsageWorkspace": {
                 "required": [
@@ -65384,7 +65576,7 @@
                         ]
                     }
                 },
-                "description": "Null when the user does not set the setting.",
+                "description": "The value a user gets for one setting, and where it comes from. In the organization users list, it is the value the user sets, with source USER. It is null when the user does not set the setting, because the value then depends on the workspace. In the workspace users list, it is never null. It is the value the user sets, with source USER. Otherwise it is the value the workspace gets, with the source of the workspace. For the origin of that value, see `originId` in the workspace usage. `content.value` is null when the user gets no language.",
                 "nullable": true
             },
             "LocalizationUserValues": {
@@ -65400,7 +65592,7 @@
                         "$ref": "#/components/schemas/LocalizationUserValue"
                     }
                 },
-                "description": "The value the user sets for each setting."
+                "description": "The value the user gets for each setting."
             },
             "MatchAttributeFilter": {
                 "required": [
@@ -68808,6 +69000,24 @@
                 },
                 "description": "A workspace identifier.",
                 "example": "{ id: demo, type: workspace }"
+            },
+            "WorkspaceLocalizationUsage": {
+                "required": [
+                    "settings",
+                    "values"
+                ],
+                "type": "object",
+                "properties": {
+                    "settings": {
+                        "$ref": "#/components/schemas/LocalizationResolvedValues"
+                    },
+                    "values": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/LocalizationUsageValue"
+                        }
+                    }
+                }
             },
             "WorkspacePermissionAssignment": {
                 "required": [

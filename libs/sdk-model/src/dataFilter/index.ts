@@ -15,6 +15,7 @@ export interface IWorkspaceDataFilter {
     id: string;
     ref: ObjRef;
     title?: string;
+    description?: string;
     columnName?: string;
     settings: IWorkspaceDataFilterSetting[];
     isInherited: boolean;
@@ -32,8 +33,25 @@ export interface IWorkspaceDataFilterSetting {
     id: string;
     ref: ObjRef;
     title?: string;
+    description?: string;
     filterValues: string[];
     isInherited: boolean;
+}
+
+/**
+ * Entity that contains data necessary to create a new Workspace Data Filter setting
+ *
+ * @alpha
+ */
+export interface IWorkspaceDataFilterSettingDefinition {
+    /**
+     * Identifier of the new setting. A random identifier is used when it is not set.
+     */
+    id?: string;
+    dataFilter: ObjRef;
+    title?: string;
+    description?: string;
+    filterValues: string[];
 }
 
 /**
@@ -44,6 +62,7 @@ export interface IWorkspaceDataFilterSetting {
 export interface IWorkspaceDataFilterDefinition {
     id?: string;
     title: string;
+    description?: string;
     columnName: string;
 }
 

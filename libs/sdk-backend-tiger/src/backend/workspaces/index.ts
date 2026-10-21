@@ -64,7 +64,12 @@ export class TigerWorkspaceQueryFactory implements IWorkspacesQueryFactory {
     public async createWorkspace({
         id,
         title,
+        description,
         parentWorkspace,
+        prefix,
+        earlyAccessValues,
+        cacheExtraLimit,
+        dataSource,
     }: IWorkspaceDefinition): Promise<IWorkspaceDescriptor> {
         const result = await this.authCall((client) =>
             EntitiesApi_CreateEntityWorkspaces(client.axios, client.basePath, {
@@ -72,7 +77,14 @@ export class TigerWorkspaceQueryFactory implements IWorkspacesQueryFactory {
                     data: {
                         id,
                         type: "workspace",
-                        attributes: { name: title },
+                        attributes: {
+                            name: title,
+                            description,
+                            prefix,
+                            earlyAccessValues,
+                            cacheExtraLimit,
+                            dataSource,
+                        },
                         relationships: parentWorkspace
                             ? { parent: { data: { id: parentWorkspace, type: "workspace" } } }
                             : undefined,

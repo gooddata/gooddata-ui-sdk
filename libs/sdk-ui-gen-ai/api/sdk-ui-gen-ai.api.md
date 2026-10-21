@@ -59,6 +59,10 @@ export type ChatAssistantMessageEvent = BaseEvent & {
     type: "chatAssistantMessage";
     interactionId?: string;
     useCase: string;
+    skills?: {
+        name: AgentCustomSkill;
+        title: string;
+    }[];
 };
 
 // @public

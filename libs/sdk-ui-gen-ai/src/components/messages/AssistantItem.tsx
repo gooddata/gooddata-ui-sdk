@@ -91,6 +91,7 @@ export function AssistantItemComponent({ message, groups, isLast }: AssistantIte
             <div className="gd-gen-ai-chat__conversation__item__actions">
                 {group.type === "assistant" &&
                 message.content.type !== "reasoning" &&
+                message.content.type !== "skillsActivated" &&
                 !isFilledClarificationQuestion ? (
                     <FeedbackComponent
                         group={group}

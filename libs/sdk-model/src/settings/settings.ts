@@ -494,6 +494,13 @@ export interface IPermanentSettings {
     defaultVisualizationVisibility?: ObjectVisibility;
 
     /**
+     * When true, granting ANALYZE on the workspace also grants the MANAGE_VISUALIZATIONS workspace
+     * permission, and revoking ANALYZE revokes it. Changing the setting leaves stored grants as they are.
+     * @alpha
+     */
+    grantManageVisualizationsWithAnalyze?: boolean;
+
+    /**
      * Headline component will not be underlined when it is set up with drilling.
      */
     disableKpiDashboardHeadlineUnderline?: boolean;

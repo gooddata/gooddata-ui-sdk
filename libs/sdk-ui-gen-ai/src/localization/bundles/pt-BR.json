@@ -29,6 +29,8 @@
     "gd.gen-ai.visualization.unavailable": "A visualização não pôde ser exibida.",
     "gd.gen-ai.permission-error": "Permissões insuficientes",
     "gd.gen-ai.permission-error.description": "Você não tem acesso ao chatbot. Entre em contato com o administrador para solicitar acesso.",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.missing-error": "<b>Nenhuma pergunta de esclarecimento encontrada.</b> Tente perguntar novamente.",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.skipped": "[Pulada]",
     "gd.gen-ai.input-placeholder": "Perguntar aqui…",
     "gd.gen-ai.input-label": "Faça sua pergunta. Digite @ para ver sugestões.",
     "gd.gen-ai.context.add_context": "Adicionar contexto",

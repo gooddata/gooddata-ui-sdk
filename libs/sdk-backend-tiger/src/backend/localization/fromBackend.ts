@@ -10,8 +10,10 @@ import {
     type LocalizationStatisticsLocale,
     type LocalizationUsage,
     type LocalizationUsageUsers,
+    type LocalizationUsageValue,
     type LocalizationUsageWorkspaces,
     type LocalizationUserValue,
+    type WorkspaceLocalizationUsage,
 } from "@gooddata/api-client-tiger";
 import {
     type ILocalizationDefault,
@@ -21,11 +23,15 @@ import {
     type ILocalizationTranslatedLocale,
     type ILocalizationUsage,
     type ILocalizationUsageCount,
+    type ILocalizationUsageListQuery,
     type ILocalizationUsageUsersPage,
     type ILocalizationUsageWorkspacesPage,
     type ILocalizationValueContent,
+    type ILocalizationValueUsage,
     type LocalizationSettingType,
 } from "@gooddata/sdk-backend-spi";
+
+import { matches, page } from "./aggregate.js";
 
 const SETTINGS: LocalizationSettingType[] = ["LOCALE", "METADATA_LOCALE", "DATA_LOCALE"];
 
@@ -71,6 +77,20 @@ function convertBySetting<TIn, TOut>(
     return result;
 }
 
+function convertUsageValue(value: LocalizationUsageValue): ILocalizationValueUsage {
+    return {
+        content: convertContent(value.content),
+        workspaces: convertCount(value.workspaces),
+        users: convertCount(value.users),
+        bySetting: convertBySetting(value.bySetting, convertSettingUsage),
+    };
+}
+
+// A setting without a value has no default, like an organization setting that nothing sets.
+function convertWorkspaceSetting(value: LocalizationResolvedValue): ILocalizationDefault | null {
+    return value.content.value ? { content: convertContent(value.content), source: value.source } : null;
+}
+
 export function convertLocalizationUsage(usage: LocalizationUsage): ILocalizationUsage {
     return {
         defaults: {
@@ -78,12 +98,19 @@ export function convertLocalizationUsage(usage: LocalizationUsage): ILocalizatio
             METADATA_LOCALE: convertDefault(usage.defaults.METADATA_LOCALE),
             DATA_LOCALE: convertDefault(usage.defaults.DATA_LOCALE),
         },
-        values: usage.values.map((value) => ({
-            content: convertContent(value.content),
-            workspaces: convertCount(value.workspaces),
-            users: convertCount(value.users),
-            bySetting: convertBySetting(value.bySetting, convertSettingUsage),
-        })),
+        values: usage.values.map(convertUsageValue),
+    };
+}
+
+// The defaults of a workspace are the values it gets: set on it, inherited, or the organization defaults.
+export function convertWorkspaceLocalizationUsage(usage: WorkspaceLocalizationUsage): ILocalizationUsage {
+    return {
+        defaults: {
+            LOCALE: convertWorkspaceSetting(usage.settings.LOCALE),
+            METADATA_LOCALE: convertWorkspaceSetting(usage.settings.METADATA_LOCALE),
+            DATA_LOCALE: convertWorkspaceSetting(usage.settings.DATA_LOCALE),
+        },
+        values: usage.values.map(convertUsageValue),
     };
 }
 
@@ -125,4 +152,39 @@ export function convertLocalizationStatistics(statistics: LocalizationStatistics
         metadata: { locales: statistics.metadata.locales.map(convertTranslatedLocale) },
         data: { locales: statistics.data.locales.map(convertTranslatedLocale) },
     };
+}
+
+export interface IWorkspaceLocalizationDescriptor {
+    id: string;
+    name: string;
+    parentId: string | null;
+    parentName?: string;
+    childrenCount: number;
+}
+
+// The list of one workspace holds the workspace itself, when the query matches the values it gets.
+export function convertWorkspaceLocalizationUsageWorkspaces(
+    usage: WorkspaceLocalizationUsage,
+    workspace: IWorkspaceLocalizationDescriptor,
+    query: ILocalizationUsageListQuery,
+    originNames: ReadonlyMap<string, string> = new Map(),
+): ILocalizationUsageWorkspacesPage {
+    const bySetting = convertBySetting(usage.settings, (value: LocalizationResolvedValue) => {
+        const resolved = convertResolvedValue(value);
+        const originName = resolved.originId ? originNames.get(resolved.originId) : undefined;
+        return originName ? { ...resolved, originName } : resolved;
+    });
+    const source = matches(bySetting, query);
+    if (!source) {
+        return { workspaces: [], totalCount: 0 };
+    }
+    return {
+        totalCount: 1,
+        workspaces: page([{ ...workspace, source, bySetting }], query),
+    };
+}
+
+export function originIdsOf(usage: WorkspaceLocalizationUsage): string[] {
+    const ids = Object.values(usage.settings).flatMap((value) => (value?.originId ? [value.originId] : []));
+    return [...new Set(ids)];
 }

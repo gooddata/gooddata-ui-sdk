@@ -29,6 +29,8 @@
     "gd.gen-ai.visualization.unavailable": "Не удалось отобразить визуализацию.",
     "gd.gen-ai.permission-error": "Недостаточно прав",
     "gd.gen-ai.permission-error.description": "У вас нет доступа к чат-боту. Обратитесь к администратору, чтобы запросить доступ.",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.missing-error": "<b>Уточняющие вопросы не найдены.</b> Попробуйте задать вопрос еще раз.",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.skipped": "[Пропущено]",
     "gd.gen-ai.input-placeholder": "Задайте вопрос здесь…",
     "gd.gen-ai.input-label": "Задайте вопрос. Введите @ для просмотра подсказок.",
     "gd.gen-ai.context.add_context": "Добавить контекст",

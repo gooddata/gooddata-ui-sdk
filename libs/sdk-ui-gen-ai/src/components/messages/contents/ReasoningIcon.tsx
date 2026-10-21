@@ -24,6 +24,7 @@ export function ReasoningIcon({ content }: IReasoningIconProps) {
                                 <UiIcon type="code" size={12} />
                             </div>
                         );
+                    case "skillsActivated":
                     default:
                         return <div className="gd-gen-ai-chat__icon__point" />;
                 }

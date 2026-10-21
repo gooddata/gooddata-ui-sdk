@@ -77,6 +77,7 @@ import { SaveVisualizationDialog } from "./SaveVisualizationDialog.js";
 import { createKdaDefinitionFromDrill, getDashboardAttributeFilter } from "./useKdaDefinition.js";
 import { useKdaEnabled } from "./useKdaEnabled.js";
 import { useInsightSaveCheck } from "./useSaveCheck.js";
+import { isFatalError } from "./utils/errors.js";
 
 const MORE_MENU_BUTTON_ID = "gd-gen-ai-chat__conversation__visualization__save__more-menu-button";
 const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
@@ -190,14 +191,7 @@ export function ConversationVisualizationContent({
     const onVisualizationError = useCallback(
         (error: Error) => {
             // Ignore some specific errors
-            const isFatal = !(
-                isNegativeValues(error) ||
-                isNoDataSdkError(error) ||
-                isDataTooLargeToDisplay(error) ||
-                isDataTooLargeToCompute(error) ||
-                isForecastNotReceived(error) ||
-                isClusteringNotReceived(error)
-            );
+            const isFatal = isFatalError(error);
             setVisError({ error, isFatal, visualizationId, isTable });
         },
         [isTable, visualizationId],

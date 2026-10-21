@@ -147,6 +147,9 @@ export class ActionsApi extends MetadataBaseApi implements ActionsApiInterface {
     unsubscribeSelectedWorkspaceAutomations(requestParameters: ActionsApiUnsubscribeSelectedWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     unsubscribeWorkspaceAutomations(requestParameters: ActionsApiUnsubscribeWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     visualizationPermissions(requestParameters: ActionsApiVisualizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<VisualizationPermissions>;
+    workspaceLocalizationStatistics(requestParameters: ActionsApiWorkspaceLocalizationStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationStatistics>;
+    workspaceLocalizationUsage(requestParameters: ActionsApiWorkspaceLocalizationUsageRequest, options?: AxiosRequestConfig): AxiosPromise<WorkspaceLocalizationUsage>;
+    workspaceLocalizationUsageUsers(requestParameters: ActionsApiWorkspaceLocalizationUsageUsersRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationUsageUsers>;
     workspaceResolveAllSettings(requestParameters: ActionsApiWorkspaceResolveAllSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<ResolvedSetting[]>;
     workspaceResolveSettings(requestParameters: ActionsApiWorkspaceResolveSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<ResolvedSetting[]>;
 }
@@ -808,6 +811,9 @@ export interface ActionsApiInterface {
     unsubscribeSelectedWorkspaceAutomations(requestParameters: ActionsApiUnsubscribeSelectedWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     unsubscribeWorkspaceAutomations(requestParameters: ActionsApiUnsubscribeWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     visualizationPermissions(requestParameters: ActionsApiVisualizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<VisualizationPermissions>;
+    workspaceLocalizationStatistics(requestParameters: ActionsApiWorkspaceLocalizationStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationStatistics>;
+    workspaceLocalizationUsage(requestParameters: ActionsApiWorkspaceLocalizationUsageRequest, options?: AxiosRequestConfig): AxiosPromise<WorkspaceLocalizationUsage>;
+    workspaceLocalizationUsageUsers(requestParameters: ActionsApiWorkspaceLocalizationUsageUsersRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationUsageUsers>;
     workspaceResolveAllSettings(requestParameters: ActionsApiWorkspaceResolveAllSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ResolvedSetting>>;
     workspaceResolveSettings(requestParameters: ActionsApiWorkspaceResolveSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ResolvedSetting>>;
 }
@@ -1235,6 +1241,26 @@ export { ActionsApiValidateLLMEndpointByIdRequest as GenAiApiValidateLLMEndpoint
 // @public
 export interface ActionsApiVisualizationPermissionsRequest {
     readonly visualizationObjectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiWorkspaceLocalizationStatisticsRequest {
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiWorkspaceLocalizationUsageRequest {
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiWorkspaceLocalizationUsageUsersRequest {
+    readonly page?: number;
+    readonly setting?: 'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE';
+    readonly size?: number;
+    readonly source?: 'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT';
+    readonly value?: string;
     readonly workspaceId: string;
 }
 
@@ -4365,6 +4391,8 @@ export type AiContent = ({
 } & AiMultipartContent) | ({
     type: 'reasoning';
 } & AiReasoningContent) | ({
+    type: 'skillsActivated';
+} & AiSkillsActivatedContent) | ({
     type: 'text';
 } & AiTextMessageContent) | ({
     type: 'toolCall';
@@ -4418,6 +4446,8 @@ export interface AiConversationItemResponse {
     // (undocumented)
     'responseId'?: string | null;
     'role': AiConversationItemResponseRoleEnum;
+    // (undocumented)
+    'skillsInUse'?: Array<AiSkillRef> | null;
     // (undocumented)
     'stepId'?: string | null;
     // (undocumented)
@@ -7685,6 +7715,12 @@ export const AiSkillName: {
 export type AiSkillName = typeof AiSkillName[keyof typeof AiSkillName];
 
 // @public
+export interface AiSkillRef {
+    'name': string;
+    'title': string;
+}
+
+// @public
 export interface AiSkillResponse {
     // (undocumented)
     'description': string;
@@ -7707,6 +7743,15 @@ export interface AiSkillRoutingDetail {
 
 // @public (undocumented)
 export type AiSkillRoutingDetailCategoryEnum = 'skillRouting';
+
+// @public
+export interface AiSkillsActivatedContent {
+    'skills': Array<AiSkillRef>;
+    'type'?: AiSkillsActivatedContentTypeEnum;
+}
+
+// @public (undocumented)
+export type AiSkillsActivatedContentTypeEnum = 'skillsActivated';
 
 // @public (undocumented)
 export interface AiState {
@@ -17183,6 +17228,7 @@ export interface DeclarativeColorPalette {
 // @public
 export interface DeclarativeColumn {
     'dataType': DeclarativeColumnDataTypeEnum;
+    'defaultLabelOf'?: string;
     'description'?: string;
     'isNullable'?: boolean;
     'isPrimaryKey'?: boolean;
@@ -41422,14 +41468,14 @@ export interface LocalizationDataStatistics {
     'locales': Array<LocalizationStatisticsLocale>;
 }
 
-// @public (undocumented)
+// @public
 export interface LocalizationDefault {
     // (undocumented)
     'content': LocalizationContent;
     'source': LocalizationDefaultSourceEnum;
 }
 
-// @public
+// @public (undocumented)
 export interface LocalizationDefaults {
     // (undocumented)
     'DATA_LOCALE'?: LocalizationDefault | null;
@@ -41448,7 +41494,7 @@ export interface LocalizationMetadataStatistics {
     'locales': Array<LocalizationStatisticsLocale>;
 }
 
-// @public (undocumented)
+// @public
 export interface LocalizationResolvedValue {
     // (undocumented)
     'content': LocalizationContent;
@@ -44901,6 +44947,7 @@ export interface ScanModelConfigurationParameters {
 // @public
 export interface ScanModelDeclarativeColumn {
     'dataType': ScanModelDeclarativeColumnDataTypeEnum;
+    'defaultLabelOf'?: string;
     'description'?: string;
     'isNullable'?: boolean;
     'isPrimaryKey'?: boolean;
@@ -48226,6 +48273,14 @@ export interface WorkspaceIdentifier {
 
 // @public (undocumented)
 export type WorkspaceIdentifierTypeEnum = 'workspace';
+
+// @public (undocumented)
+export interface WorkspaceLocalizationUsage {
+    // (undocumented)
+    'settings': LocalizationResolvedValues;
+    // (undocumented)
+    'values': Array<LocalizationUsageValue>;
+}
 
 // @public
 export interface WorkspacePermissionAssignment {

@@ -15,7 +15,7 @@ interface IUseCatalogItemPickerHandlersParams<TAttributePayload, TMetricPayload>
     selectionMode: CatalogItemPickerSelectionMode;
     selectedIds: Set<string>;
     setSelectedIds: Dispatch<SetStateAction<Set<string>>>;
-    listboxItems: CatalogItemListboxItem[];
+    listboxItems: CatalogItemListboxItem<TAttributePayload | TMetricPayload>[];
     onClose: () => void;
     onAdd?: (items: Array<TAttributePayload | TMetricPayload>) => void;
     onSelect?: (item: TAttributePayload | TMetricPayload) => void;
@@ -24,9 +24,11 @@ interface IUseCatalogItemPickerHandlersParams<TAttributePayload, TMetricPayload>
     resetSelection: () => void;
 }
 
-interface ICatalogItemPickerHandlersResult<_TAttributePayload, _TMetricPayload> {
-    itemById: Map<string, ICatalogItemPickerItem>;
-    handleListboxSelect: (item: IUiListboxInteractiveItem<ICatalogItemPickerListItemData>) => void;
+interface ICatalogItemPickerHandlersResult<TAttributePayload, TMetricPayload> {
+    itemById: Map<string, ICatalogItemPickerItem<TAttributePayload | TMetricPayload>>;
+    handleListboxSelect: (
+        item: IUiListboxInteractiveItem<ICatalogItemPickerListItemData<TAttributePayload | TMetricPayload>>,
+    ) => void;
     handleAdd: () => void;
     handleTabChange: (type: CatalogItemPickerType) => void;
 }
@@ -53,11 +55,10 @@ export function useCatalogItemPickerHandlers<TAttributePayload = unknown, TMetri
 > {
     // Item lookup map
     const itemById = useMemo(() => {
-        const map = new Map<string, ICatalogItemPickerItem>();
+        const map = new Map<string, ICatalogItemPickerItem<TAttributePayload | TMetricPayload>>();
         listboxItems.forEach((item) => {
             if (item.type === "interactive") {
-                const interactiveItem = item as IUiListboxInteractiveItem<ICatalogItemPickerListItemData>;
-                map.set(interactiveItem.id, interactiveItem.data.item);
+                map.set(item.id, item.data.item);
             }
         });
         return map;
@@ -85,9 +86,13 @@ export function useCatalogItemPickerHandlers<TAttributePayload = unknown, TMetri
     }, [itemById, setSelectedIds]);
 
     const handleListboxSelect = useCallback(
-        (item: IUiListboxInteractiveItem<ICatalogItemPickerListItemData>) => {
+        (
+            item: IUiListboxInteractiveItem<
+                ICatalogItemPickerListItemData<TAttributePayload | TMetricPayload>
+            >,
+        ) => {
             if (selectionMode === "single") {
-                onSelect?.(item.data.item.payload as TAttributePayload | TMetricPayload);
+                onSelect?.(item.data.item.payload);
                 onClose();
                 return;
             }
@@ -99,8 +104,8 @@ export function useCatalogItemPickerHandlers<TAttributePayload = unknown, TMetri
     const handleAdd = useCallback(() => {
         const selectedItems = Array.from(selectedIds)
             .map((id) => itemById.get(id))
-            .filter((item): item is ICatalogItemPickerItem => !!item)
-            .map((item) => item.payload as TAttributePayload | TMetricPayload);
+            .filter((item) => !!item)
+            .map((item) => item.payload);
         onAdd?.(selectedItems);
     }, [itemById, onAdd, selectedIds]);
 

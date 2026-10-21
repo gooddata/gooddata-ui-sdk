@@ -29,6 +29,8 @@
     "gd.gen-ai.visualization.unavailable": "Không thể hiển thị trực quan hóa.",
     "gd.gen-ai.permission-error": "Không đủ quyền",
     "gd.gen-ai.permission-error.description": "Bạn không có quyền truy cập chatbot. Hãy liên hệ quản trị viên của bạn để yêu cầu quyền truy cập.",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.missing-error": "<b>Không tìm thấy câu hỏi làm rõ nào.</b> Hãy thử hỏi lại.",
+    "gd.gen-ai.conversationContents.clarifyingAnswers.skipped": "[Đã bỏ qua]",
     "gd.gen-ai.input-placeholder": "Hỏi tại đây…",
     "gd.gen-ai.input-label": "Hãy đặt câu hỏi của bạn. Nhập @ để xem gợi ý.",
     "gd.gen-ai.context.add_context": "Thêm ngữ cảnh",
