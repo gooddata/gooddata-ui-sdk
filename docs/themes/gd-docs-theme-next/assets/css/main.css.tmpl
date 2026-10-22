@@ -1,0 +1,643 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@source "hugo_stats.json";
+@import "./syntax.css";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+{{- range $k, $v := .colors }}
+  --color-{{ $k }}: {{ $v }};
+{{- end }}
+{{- range $k, $v := .syntax }}
+  --syntax-{{ $k }}: {{ $v }};
+{{- end }}
+  --font-heading: {{ .fonts.heading | safeCSS }};
+  --font-body: {{ .fonts.body | safeCSS }};
+}
+
+.dark {
+{{- range $k, $v := .darkColors }}
+  --color-{{ $k }}: {{ $v }};
+{{- end }}
+}
+
+/* Smooth in-page scrolling only for readers who haven't asked for reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer base {
+
+  body {
+    @apply bg-gd-bg text-gd-text font-body antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight;
+    text-wrap: balance;
+    /* Anchored headings land just below the sticky chrome. sidebar.js measures #site-chrome into
+       --gd-chrome-h; 9.5rem is the desktop chrome (~149px) for when nothing has measured it. */
+    scroll-margin-top: calc(var(--gd-chrome-h, 9.5rem) + 0.5rem);
+  }
+
+  a {
+    @apply text-gd-link transition-colors duration-150;
+  }
+
+  a:hover {
+    @apply no-underline text-gd-secondary;
+  }
+
+  a:focus-visible {
+    @apply rounded outline-none ring-2 ring-gd-secondary;
+  }
+
+  /* Tailwind v4's preflight gives buttons the default arrow cursor. Every button here does
+     something on click (theme, Ask AI, version menu, drawers, accordions), so show the hand. */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+
+  code {
+    @apply rounded bg-gd-surface px-1.5 py-0.5 text-sm text-gd-text;
+    overflow-wrap: break-word;
+  }
+
+  /* Code fences scroll sideways only. overflow-y must be stated: setting just
+     overflow-x makes the other axis compute to `auto` (CSS forbids `visible`
+     opposite a clipping value), and then a fence tall by a stray pixel gets a
+     vertical scrollbar. A generated one-line signature ending in a newline did
+     exactly that — 41px box, 44px content, scrollbar on a single line. Height is
+     unconstrained, so `hidden` clips nothing; the fence still grows to fit. */
+  pre {
+    @apply overflow-x-auto overflow-y-hidden rounded bg-gd-code-bg px-5 py-4 text-sm text-gd-on-code;
+  }
+
+  pre code {
+    @apply bg-transparent p-0;
+    color: inherit;
+    overflow-wrap: normal;
+  }
+
+  /* Rounded corners need border-separate: a collapsed border model ignores
+     border-radius. overflow-hidden clips the header background to the corners,
+     and the last row drops its bottom border so it doesn't double the table's. */
+  table {
+    @apply w-full border-separate border-spacing-0 overflow-hidden rounded-lg border border-gd-border bg-gd-card;
+  }
+
+  tbody tr:last-child td {
+    @apply border-b-0;
+  }
+
+  th {
+    @apply border-b border-gd-border bg-gd-surface px-5 py-4 text-left text-sm font-semibold text-gd-secondary;
+  }
+
+  td {
+    @apply border-b border-gd-border px-5 py-3 text-sm align-top;
+  }
+
+  blockquote {
+    @apply border-l-4 border-gd-primary bg-gd-surface px-5 py-4 text-gd-secondary;
+  }
+}
+
+/* Typography's colours, from the gd-* tokens instead of a Tailwind palette (prose-slate). The
+   dark values come along: .dark redefines the tokens, so no prose-invert is needed. Body text is
+   the text colour softened toward the background, a step below headings and bold as in
+   Typography's own scales. Unlayered, so it outranks the plugin's .prose defaults. */
+.prose {
+  --tw-prose-body: color-mix(in srgb, var(--color-gd-text) 80%, var(--color-gd-bg));
+  --tw-prose-headings: var(--color-gd-text);
+  --tw-prose-lead: var(--color-gd-text-secondary);
+  --tw-prose-links: var(--color-gd-link);
+  --tw-prose-bold: var(--color-gd-text);
+  --tw-prose-counters: var(--color-gd-text-secondary);
+  --tw-prose-bullets: var(--color-gd-border);
+  --tw-prose-hr: var(--color-gd-border);
+  --tw-prose-quotes: var(--color-gd-text);
+  --tw-prose-quote-borders: var(--color-gd-border);
+  --tw-prose-captions: var(--color-gd-text-secondary);
+  --tw-prose-kbd: var(--color-gd-text);
+  --tw-prose-kbd-shadows: color-mix(in srgb, var(--color-gd-text) 10%, transparent);
+  --tw-prose-code: var(--color-gd-secondary);
+  --tw-prose-pre-code: var(--syntax-text);
+  --tw-prose-pre-bg: var(--color-gd-code-bg);
+  --tw-prose-th-borders: var(--color-gd-border);
+  --tw-prose-td-borders: var(--color-gd-border);
+}
+
+/* Tailwind Typography wraps every inline code span in literal backticks via
+   ::before/::after. Inline code is already styled as a chip (rounded surface
+   background), so the quotes render inside the chip as noise — and they leak into
+   prop tables and auto-linked symbol names. Specificity beats the plugin's
+   zero-specificity :where() selector, so no !important is needed. */
+.prose code::before,
+.prose code::after {
+  content: none;
+}
+
+/* Block code must inherit the pre's light text. The prose-code:text-* utility
+   sets a dark colour on every <code>; this rule has to live OUTSIDE @layer base
+   because any layered rule loses to utilities regardless of specificity. Code
+   fences without a language have no token spans, so without this the text is
+   navy on navy. */
+.prose pre code {
+  color: inherit;
+}
+
+/* The auto-linker (guide-body.html) links the names inside a type expression
+   in place: <code><a>IBucket</a> | undefined</code>. The link keeps the chip's
+   colour and weight, like a linked single name (<a><code>…</code></a>), where
+   the code element sets them. Unlayered for the same reason as the rule above:
+   the prose-a:* utilities and Typography's lighter link weight would otherwise
+   win. */
+.prose code > a {
+  color: inherit;
+  font-weight: inherit;
+}
+
+/* Override Tailwind Typography prose resets that zero out table cell padding */
+.prose thead th:first-child,
+.prose tbody td:first-child {
+  padding-inline-start: 1.25rem;
+}
+
+.prose thead th:last-child,
+.prose tbody td:last-child {
+  padding-inline-end: 1.25rem;
+}
+
+/* Wide data tables on a phone. A five-column props table needs ~950px, so
+   inside a ~360px viewport the description column collapses to a sliver and
+   single rows grow past 250px tall — readable only by scrolling sideways cell
+   by cell. Below md, restack every row of a `table-stack` wrapper (3+ columns,
+   set by layouts/_markup/render-table.html) as a card whose cells carry their
+   column name from data-label. Selectors are written to outrank the .prose
+   cell-padding overrides above on specificity, so no !important is needed. */
+@media (width < 48rem) {
+  .table-stack table {
+    display: block;
+    border: 0;
+    background: transparent;
+  }
+
+  .table-stack thead {
+    display: none;
+  }
+
+  .table-stack tbody,
+  .table-stack tbody tr,
+  .table-stack tbody td {
+    display: block;
+    width: 100%;
+  }
+
+  .table-stack tbody tr {
+    @apply mb-3 rounded-xl border border-gd-border bg-gd-card px-4 py-2;
+  }
+
+  .table-stack tbody tr:last-child {
+    @apply mb-0;
+  }
+
+  .table-stack tbody td,
+  .table-stack tbody td:first-child,
+  .table-stack tbody td:last-child {
+    @apply border-0 py-1.5;
+    padding-inline: 0;
+    text-align: start;
+  }
+
+  .table-stack tbody td:not(:last-child) {
+    @apply border-b border-gd-border;
+  }
+
+  .table-stack tbody td[data-label]::before {
+    content: attr(data-label);
+    @apply mb-1 block text-[11px] font-semibold uppercase tracking-wide text-gd-text-secondary;
+  }
+
+  /* A blank cell contributes only a stray label, so drop it from the card. */
+  .table-stack tbody td:empty {
+    display: none;
+  }
+}
+
+/* Props tables at md and up. Auto table layout sizes columns to their widest
+   content, so a union type or a long inherited-interface name pushed the table
+   past 950px and the wrapper scrolled sideways — the reader had to drag the
+   table to read a description. A fixed layout with explicit column shares makes
+   the table fit its container at any width instead, and `overflow-wrap: anywhere`
+   lets long identifiers break rather than forcing the table wider. The column
+   shares themselves are emitted per header name by render-table.html, because
+   this table family comes in several column orders. Below md the rows are
+   stacked cards, where none of this applies. */
+@media (width >= 48rem) {
+  .props-table table {
+    table-layout: fixed;
+    width: 100%;
+  }
+
+  .props-table th,
+  .props-table td {
+    overflow-wrap: anywhere;
+  }
+}
+
+/* Readable line length for long-form prose. The prose containers use
+   max-w-none so the wide content column can host full-width code blocks,
+   tables and images; cap only the top-level text flow so body copy keeps a
+   comfortable ~70ch measure instead of running the whole column width
+   (over-long lines hurt readability). Direct-child scope leaves boxed
+   content — alerts, cards — to fill their own container. */
+.prose > p,
+.prose > ul,
+.prose > ol,
+.prose > dl,
+.prose > blockquote {
+  max-width: 70ch;
+}
+
+/* Code fences at one readable size. Tailwind Typography sizes `pre` off its
+   prose scale, so the same fence rendered 12px on a prose-sm reference page,
+   14px in a guide and ~16px in a prose-lg explanation. Pin 14px everywhere.
+   The rule is unlayered so it outranks the prose-* utilities, which is also
+   why the fenced `code` needs its own reset — it inherits the em-based size
+   the plugin puts on it otherwise. */
+.prose pre,
+.prose pre code {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* API reference members (api-member-sections.html): a type's properties and
+   methods as entries under "Property details" / "Method details". Each entry
+   gets a rule and more room above than inside it, so the eye sees where one
+   member ends; the first entry under a group heading needs neither. The
+   heading is the member's signature-like name in monospace, its owner muted,
+   kind and stability as pills. Unlayered, like the rules above, so it outranks
+   the prose-* utilities and Typography's heading margins. */
+.prose .api-member {
+  margin-top: 2.5rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--color-gd-border);
+}
+
+.prose h2 + .api-member {
+  margin-top: 1.25rem;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.prose .api-member > h3 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.375rem 0.5rem;
+  margin: 0 0 0.75rem;
+}
+
+.prose .api-member > h3 code {
+  @apply rounded-none bg-transparent p-0 text-[15px] font-semibold text-gd-secondary;
+  overflow-wrap: anywhere;
+}
+
+.prose .api-member-owner {
+  @apply font-normal text-gd-text-secondary;
+}
+
+.prose .api-member-pill {
+  @apply rounded-full border border-gd-border px-2 py-0.5 font-body text-[11px] font-semibold uppercase tracking-wide text-gd-text-secondary;
+}
+
+.prose .api-member-pill-beta,
+.prose .api-member-pill-alpha {
+  @apply text-gd-warning;
+  border-color: color-mix(in srgb, var(--color-gd-warning) 40%, var(--color-gd-bg));
+}
+
+.prose .api-member-pill-deprecated {
+  @apply text-gd-danger;
+  border-color: color-mix(in srgb, var(--color-gd-danger) 40%, var(--color-gd-bg));
+}
+
+.prose .api-member > :last-child {
+  margin-bottom: 0;
+}
+
+/* api-documenter's "Returns:" paragraph as a small label that sits on the block
+   it names instead of a bold line a full paragraph above it. ("Signature:" is
+   dropped in api-member-sections.html.) */
+.prose .api-signature-label {
+  @apply mt-5 mb-1.5 text-[11px] font-semibold uppercase tracking-wide text-gd-text-secondary;
+}
+
+.prose .api-signature-label + .highlight pre,
+.prose .api-signature-label + p {
+  margin-top: 0;
+}
+
+/* A member's own sections ("Parameters", "Remarks", "Example") are parts of
+   one entry, so they read as the same small label as "Returns", close to
+   the block below them. */
+.prose .api-member h4 {
+  @apply mt-6 mb-1.5 font-body text-[11px] font-semibold uppercase tracking-wide text-gd-text-secondary;
+}
+
+.prose .api-member h4 + *,
+.prose .api-member h4 + * table,
+.prose .api-member h4 + .highlight pre {
+  margin-top: 0;
+}
+
+/* Left nav scrollbar. On desktop the sidebar is transparent over the page
+   background, so the platform scrollbar painted a grey gutter down its edge —
+   a visible strip beside the links even when nothing was scrolling. Draw a
+   thin thumb on a transparent track instead. Chrome 121+/Firefox honour the
+   standard properties; the ::-webkit rules cover older WebKit. */
+#sidebar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gd-border) transparent;
+}
+
+#sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+#sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#sidebar::-webkit-scrollbar-thumb {
+  background-color: var(--color-gd-border);
+  border-radius: 9999px;
+}
+
+#sidebar:hover {
+  scrollbar-color: var(--color-gd-text-secondary) transparent;
+}
+
+#sidebar:hover::-webkit-scrollbar-thumb {
+  background-color: var(--color-gd-text-secondary);
+}
+
+.dark :not(pre) > code {
+  color: var(--color-gd-text);
+}
+
+/* Dark-mode link hover, deliberately inside @layer base so that a link which
+   carries its own colour utility keeps it. The landing-page CTA is
+   `bg-gd-primary text-gd-on-primary`; as an unlayered rule this outranked that
+   utility and repainted the label lime on a lime button — the text vanished on
+   hover. Utilities always beat base regardless of specificity, so buttons hold
+   their colour while plain prose links still pick the lime hover up. The
+   light-mode `a:hover` above never had the bug for exactly this reason. */
+@layer base {
+  .dark a:hover {
+    color: var(--color-gd-primary);
+  }
+}
+
+/* TOC active heading indicator. `a.toc-active` (element + class) outranks the
+   base `a { color }` rule, so the active colour wins on specificity — no
+   !important needed. */
+a.toc-active {
+  color: var(--color-gd-secondary);
+  background: var(--color-gd-surface);
+  font-weight: 500;
+}
+
+/* Tutorial step counter. The number sits in the brand pair, as the sidebar's section bar does:
+   ink with a white number on the light background, lime with an ink number on the dark one. */
+.tutorial-steps > h2 {
+  counter-increment: step;
+}
+
+.tutorial-steps > h2::before {
+  @apply bg-gd-secondary text-gd-on-secondary;
+}
+
+.dark .tutorial-steps > h2::before {
+  @apply bg-gd-primary text-gd-on-primary;
+}
+
+/* Copy button: visible on hover. Hover is tracked on the .code-block wrapper,
+   which is where code-enhance.js puts the button — the pre would clip it. */
+.code-block:hover .copy-btn,
+.code-block .copy-btn:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Header search (gooddata.ai's AddSearch quick-search, see partials/search.html).
+   Its stylesheet is loaded at runtime and sized for the marketing site's
+   header: a 37px input capped at 606px, and a results panel positioned with
+   viewport maths (`left: calc(100vw - 930px)`). These rules outrank it on
+   specificity alone (.gd-search adds a class to every selector), no !important.
+   The input matches the 44px header controls and takes the theme's tokens; the
+   panel hangs off the input on desktop and spans the viewport on phones, where
+   the search box itself is too narrow to hold a readable result list. */
+.gd-search .addsearch-searchfield {
+  max-width: none;
+  margin: 0;
+}
+
+.gd-search .addsearch-searchfield input[type="search"] {
+  height: 2.75rem;
+  border-radius: 0.75rem;
+  border-color: var(--color-gd-border);
+  font-family: inherit;
+  font-size: 0.875rem;
+}
+
+.gd-search .addsearch-searchfield input[type="search"]:focus {
+  border-color: var(--color-gd-secondary);
+}
+
+.gd-search .addsearch-searchfield input[type="search"]:focus-visible {
+  outline-color: var(--color-gd-secondary);
+}
+
+/* Below lg #adds-container is static, so the containing block is the header's
+   relative inner wrapper: 100% is the header's height and the panel opens
+   right under it, spanning the viewport minus the page gutter. At lg the
+   container itself is relative and the panel centres under the box. */
+.gd-search .c-search-dialog {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 1rem;
+  right: 1rem;
+  width: auto;
+  max-width: none;
+  transform: none;
+  z-index: 60;
+}
+
+@media (min-width: 64rem) {
+  .gd-search .c-search-dialog {
+    top: calc(100% + 0.8125rem);
+    left: 50%;
+    right: auto;
+    width: 606px;
+    max-width: calc(100vw - 2rem);
+    transform: translateX(-50%);
+  }
+}
+
+/* Respect reduced-motion preference. Unlayered, so it beats every Tailwind utility and every
+   @layer base/components rule without !important; the one unlayered rule with a transition
+   (.prose .gd-heading-anchor) turns its own off with motion-reduce:. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+    transition-duration: 0.01ms;
+  }
+}
+
+/* Repeated link styles, written once. The sidebar (~130 links) and the footer (~70) are on every
+   page, thousands of them, and each link used to carry its full utility list: ~30 KB of every
+   page's HTML. The templates now print one short class. @layer components keeps these below
+   utilities (a template can still add one) and above base, so, like the utilities they replace,
+   they outrank the base `a` colour and the dark `a:hover` lime. */
+@layer components {
+  /* Sidebar: a page link, and a section header (.gd-nav-group; its mt-3 mb-2 stay in the template,
+     see sidebar-tree.html). The current page (aria-current) gets the pill. */
+  /* Every link carries a 1px border, transparent until the link is current, so the hover
+     background and the current-page pill are the same box, the same height. */
+  .gd-nav-link {
+    @apply block truncate rounded-xl border border-transparent px-3 py-1 text-sm text-gd-text-secondary hover:bg-gd-surface hover:text-gd-secondary hover:no-underline;
+  }
+
+  /* relative: the section bar (::before, below) is positioned against the link. */
+  .gd-nav-link[aria-current="page"] {
+    @apply relative border-gd-border bg-gd-surface font-medium text-gd-secondary;
+  }
+
+  .gd-nav-link.gd-nav-group {
+    @apply font-semibold;
+  }
+
+  /* A section header that is the current page carries the pill AND the bar (below). Its pill
+     reaches 6px further left, the text stays put, so the bar has room inside the pill. */
+  .gd-nav-link.gd-nav-group[aria-current="page"] {
+    @apply -ml-1.5 pl-[18px];
+  }
+
+  /* The bar on a section header means "the page you are reading is in this section". It is there
+     on the section's own overview (aria-current="page", beside the pill) and on every page under
+     it (aria-current="location", sidebar-tree.html), so walking from the overview into a page only
+     moves the pill: the bar stays put, and it is still there once the section is folded and the
+     pill inside it is gone. Ink on the light background (the brand lime is near-invisible on
+     white), lime on the dark one. A pseudo-element rather than a border or an inset shadow: those
+     follow the row's rounded corner and come out as a crescent. Inset, inside the pill's rounded
+     end rather than on it (4px), and at the same spot on rows without the pill. */
+  .gd-nav-link[aria-current="location"] {
+    @apply relative text-gd-secondary;
+  }
+
+  .gd-nav-link[aria-current="location"]::before,
+  .gd-nav-link.gd-nav-group[aria-current="page"]::before {
+    content: "";
+    @apply absolute left-1 top-1/2 h-4 w-[3px] -translate-y-1/2 rounded-full bg-gd-secondary;
+  }
+
+  /* The wider pill (above) moved this row's left edge 6px out; move the bar back so it stays put
+     between the overview and the pages under it. */
+  .gd-nav-link.gd-nav-group[aria-current="page"]::before {
+    @apply left-2.5;
+  }
+
+  /* Spelled out: the dark variant is `&:where(.dark, .dark *)`, which cannot follow ::before. */
+  .dark .gd-nav-link[aria-current="location"]::before,
+  .dark .gd-nav-link.gd-nav-group[aria-current="page"]::before {
+    @apply bg-gd-primary;
+  }
+
+  .gd-nav-link[aria-current="location"] + .gd-nav-chevron {
+    @apply text-gd-secondary;
+  }
+
+  /* The group's fold chevron, laid over the right edge of the header pill (the row is
+     relative, the link has pr-8). Points down while the panel is open, right when folded;
+     aria-expanded is the one source of truth, set by sidebar-collapse.js. */
+  .gd-nav-chevron {
+    @apply absolute right-1 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-lg text-gd-text-secondary hover:bg-gd-border hover:text-gd-secondary focus-visible:ring-2 focus-visible:ring-gd-secondary focus-visible:outline-none;
+  }
+
+  .gd-nav-chevron svg {
+    @apply transition-transform duration-150;
+  }
+
+  .gd-nav-chevron[aria-expanded="false"] svg {
+    @apply -rotate-90;
+  }
+
+  /* Footer: text links (columns, legal line, GitHub · llms.txt), the CTA buttons, the icon buttons. */
+  .gd-footer-link {
+    @apply text-gd-text-secondary transition hover:text-gd-secondary hover:no-underline focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-gd-secondary focus-visible:outline-none dark:hover:text-gd-contrast;
+  }
+
+  .gd-footer-btn {
+    @apply inline-flex min-h-11 items-center rounded-md border border-gd-border bg-gd-card px-4 py-2 text-sm font-medium text-gd-text transition hover:border-gd-secondary hover:text-gd-secondary hover:no-underline focus-visible:ring-2 focus-visible:ring-gd-secondary focus-visible:outline-none dark:bg-gd-bg dark:hover:border-gd-contrast dark:hover:text-gd-contrast;
+  }
+
+  /* Footer icon buttons. The feed's social icons and the AI provider icons are
+     marketing's 48px tiles with a white glyph. footer-icon.html cuts the tile off
+     and publishes the glyph once as a file; the button holds an empty span that
+     paints currentColor through that file as a mask, so the icon takes the
+     bordered button's text and hover colours in both themes.
+     The glyph fills about a third of its 48px tile, so the span is drawn larger
+     than the 44px button and the button clips it; the glyph lands near 20px. */
+  .gd-footer-icon {
+    @apply inline-flex h-11 w-11 overflow-hidden items-center justify-center rounded-md border border-gd-border bg-gd-card text-gd-text-secondary transition hover:border-gd-secondary hover:text-gd-secondary focus-visible:ring-2 focus-visible:ring-gd-secondary focus-visible:outline-none dark:bg-gd-bg dark:hover:border-gd-contrast dark:hover:text-gd-contrast;
+  }
+}
+
+.gd-footer-glyph {
+  flex: none;
+  width: 3.75rem;
+  height: 3.75rem;
+  background-color: currentColor;
+  -webkit-mask: var(--gd-icon) center / contain no-repeat;
+  mask: var(--gd-icon) center / contain no-repeat;
+}
+
+/* The link icon after an anchored heading (heading-anchors.js): hidden until the heading is
+   hovered or the icon has keyboard focus; a click copies the section's URL. Always faintly there
+   on touch screens, which have no hover. Outside the layers, like the other .prose rules, so it
+   beats Typography's link colour and underline. */
+.prose .gd-heading-anchor {
+  @apply ml-1.5 inline-flex rounded p-0.5 align-middle text-gd-text-secondary no-underline opacity-0 transition-opacity duration-150 motion-reduce:transition-none;
+}
+
+.prose :is(h2, h3, h4, h5, h6):hover .gd-heading-anchor,
+.prose .gd-heading-anchor:focus-visible,
+.prose .gd-heading-anchor[data-copied] {
+  @apply opacity-100;
+}
+
+.prose .gd-heading-anchor:hover {
+  @apply text-gd-secondary;
+}
+
+.dark .prose .gd-heading-anchor:hover {
+  @apply text-gd-primary;
+}
+
+@media (hover: none) {
+  .prose .gd-heading-anchor {
+    @apply opacity-60;
+  }
+}
+
+/* The versions archive table (versions-archive.html): its wrapper owns the spacing, so the
+   table drops Typography's 2em margin. Unlayered, so it outranks the plugin's rule. */
+.prose .gd-versions-archive table {
+  margin: 0;
+}

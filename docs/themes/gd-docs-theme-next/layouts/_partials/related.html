@@ -1,0 +1,75 @@
+{{ $current := . }}
+{{ $related := slice }}
+
+{{/* related_pages: a `/docs/<path>` entry (the STYLE_GUIDE form) means <path> in this page's own
+     version, so one source works in latest and in every versioned copy. Any other entry
+     (generated reference pages write `/latest/api-reference/…`, rewritten per version)
+     is a content path as is. An entry that doesn't resolve is dropped. */}}
+{{ with $current.Params.related_pages }}
+  {{ range . }}
+    {{ $ref := . }}
+    {{ if strings.HasPrefix $ref "/docs/" }}
+      {{ $ref = printf "/%s/%s" $current.Section (strings.TrimPrefix "/docs/" $ref) }}
+    {{ end }}
+    {{ with site.GetPage $ref }}
+      {{ $related = $related | append . }}
+    {{ else }}
+      {{ warnf "related_pages: %s in %s does not resolve" . $current.File.Path }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{ if and (eq (len $related) 0) $current.Params.api_symbols }}
+  {{ $mySymbols := $current.Params.api_symbols }}
+  {{/* Scan current section first (fast), fall back to top-level section */}}
+  {{ $candidates := $current.CurrentSection.RegularPages }}
+  {{ if eq (len $candidates) 0 }}
+    {{ $candidates = $current.FirstSection.RegularPages }}
+  {{ end }}
+  {{ range $candidates }}
+    {{ $candidate := . }}
+    {{ if and (ne $candidate.RelPermalink $current.RelPermalink) $candidate.Params.api_symbols }}
+      {{ $matched := false }}
+      {{ range $candidate.Params.api_symbols }}
+        {{ if in $mySymbols . }}
+          {{ $matched = true }}
+        {{ end }}
+      {{ end }}
+      {{ if $matched }}
+        {{ $related = $related | append $candidate }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{/* Last-resort fallback: sibling pages. Skipped on a section landing, where the
+     "siblings" are the section's own children — a package overview already links
+     every symbol it owns, so 5 arbitrary ones add nothing. */}}
+{{ if and (eq (len $related) 0) (not $current.IsSection) }}
+  {{/* A folded API member is a section of its parent's page, not a page to recommend. */}}
+  {{ range first 5 (where $current.CurrentSection.RegularPages "Params.folded" "!=" true) }}
+    {{ if ne .RelPermalink $current.RelPermalink }}
+      {{ $related = $related | append . }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{ $related = uniq $related }}
+{{ if gt (len $related) 0 }}
+  <section class="mt-14 border-t border-gd-border pt-8">
+    <h2 class="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-gd-text-secondary">Related</h2>
+    <div class="divide-y divide-gd-border">
+      {{ range first 5 $related }}
+        <a href="{{ .RelPermalink }}" class="group flex items-baseline justify-between gap-4 py-3 hover:no-underline first:pt-0 last:pb-0">
+          <div class="min-w-0">
+            <div class="text-sm font-medium text-gd-text group-hover:text-gd-link truncate">{{ .Title }}</div>
+            {{ with .Params.description }}
+              <p class="mt-1 line-clamp-1 text-xs text-gd-text-secondary">{{ . }}</p>
+            {{ end }}
+          </div>
+          <span class="shrink-0 text-sm text-gd-text-secondary transition-transform group-hover:translate-x-0.5">→</span>
+        </a>
+      {{ end }}
+    </div>
+  </section>
+{{ end }}

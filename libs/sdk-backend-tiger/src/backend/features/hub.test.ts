@@ -6,14 +6,18 @@ import { type MockInstance, afterEach, beforeEach, describe, expect, it, vi } fr
 import { type ApiEntitlement, type ILiveFeatures } from "@gooddata/api-client-tiger";
 
 import { type FeatureDef } from "./feature.js";
-import { type FeatureHubResponse, getFeatureHubFeatures } from "./hub.js";
+import { type FeatureHubResponse, type getFeatureHubFeatures as GetFeatureHubFeatures } from "./hub.js";
 import { pickContext } from "./index.js";
 
 // The spy is installed per test and restored afterwards so that it does not leak into other
 // (non-isolated) test files sharing the same axios module instance.
 let axiosGetSpy: MockInstance;
+// hub.js caches the etag of the last response per key; a fresh module per test keeps tests independent.
+let getFeatureHubFeatures: typeof GetFeatureHubFeatures;
 
-beforeEach(() => {
+beforeEach(async () => {
+    vi.resetModules();
+    ({ getFeatureHubFeatures } = await import("./hub.js"));
     axiosGetSpy = vi.spyOn(axios, "get");
 });
 
@@ -106,7 +110,6 @@ describe("live features", () => {
             headers: {
                 "Content-type": "application/json",
                 "X-FeatureHub": "organizationId=test-org,earlyAccess=omega,jsSdkVersion=1.0.0",
-                "if-none-match": expect.anything(),
             },
             method: "GET",
             params: { sdkUrl: "" },
@@ -124,7 +127,6 @@ describe("live features", () => {
             headers: {
                 "Content-type": "application/json",
                 "X-FeatureHub": "organizationId=org,earlyAccess=beta,jsSdkVersion=1.0.0",
-                "if-none-match": expect.anything(),
             },
             method: "GET",
             params: { sdkUrl: "" },
@@ -145,7 +147,6 @@ describe("live features", () => {
             headers: {
                 "Content-type": "application/json",
                 "X-FeatureHub": "organizationId=test-org,earlyAccess=omega,tier=TRIAL,jsSdkVersion=1.0.0",
-                "if-none-match": expect.anything(),
             },
             method: "GET",
             params: { sdkUrl: "" },
@@ -163,7 +164,26 @@ describe("live features", () => {
             headers: {
                 "Content-type": "application/json",
                 "X-FeatureHub": "organizationId=org,region=eu-cluster-1,dataCenter=eu-west-1",
-                "if-none-match": expect.anything(),
+            },
+            method: "GET",
+            params: { sdkUrl: "" },
+            validateStatus: expect.anything(),
+            timeout: 30000,
+        });
+    });
+
+    it("sends the etag of the previous response as if-none-match", async () => {
+        mockReturn([], 200, "previous");
+        mockReturn([]);
+
+        await getFeatureHubFeatures(createFeatures());
+        await getFeatureHubFeatures(createFeatures());
+        expect(axiosGetSpy).toHaveBeenCalledWith("/features", {
+            baseURL: "/",
+            headers: {
+                "Content-type": "application/json",
+                "X-FeatureHub": "",
+                "if-none-match": "previous",
             },
             method: "GET",
             params: { sdkUrl: "" },

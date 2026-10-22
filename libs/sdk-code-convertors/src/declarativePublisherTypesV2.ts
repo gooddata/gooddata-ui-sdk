@@ -1,36 +1,56 @@
 // (C) 2026 GoodData Corporation
 
-// These types are a hand-written stand-in for the stored v2 Publisher entities. Replace them with the
-// api-client-tiger declarative types once the client is regenerated for the Document entities (LX-3296).
-
 import {
-    type IPublisherDocumentDefinitionV2,
-    type IPublisherDocumentTemplateDefinitionV2,
-    type IPublisherPageTemplateDefinitionV2,
+    type DeclarativePublisherDocument,
+    type DeclarativePublisherDocumentPageTemplate,
+    type DeclarativePublisherDocumentTemplate,
+} from "@gooddata/api-client-tiger";
+import {
+    type IPublisherPageBodyV2,
+    type PublisherContentVersionV2,
+    type PublisherDocumentContentV2,
 } from "@gooddata/sdk-model";
 
 /**
- * A document as the declarative API stores it: the model's definition named by a bare id.
+ * A v2 document as the declarative API stores it, with typed version and content.
  *
  * @alpha
  */
-export type DeclarativePublisherDocumentV2 = Omit<IPublisherDocumentDefinitionV2, "ref"> & { id: string };
-
-/**
- * A document template as the declarative API stores it.
- *
- * @alpha
- */
-export type DeclarativePublisherDocumentTemplateV2 = Omit<IPublisherDocumentTemplateDefinitionV2, "ref"> & {
-    id: string;
+export type DeclarativePublisherDocumentV2 = Omit<DeclarativePublisherDocument, "content" | "version"> & {
+    version: PublisherContentVersionV2;
+    content: PublisherDocumentContentV2;
 };
 
 /**
- * A page template as the declarative API stores it. The backend's default page templates are not
- * part of the declarative layout.
+ * A v2 document template as the declarative API stores it, with typed version and content.
  *
  * @alpha
  */
-export type DeclarativePublisherPageTemplateV2 = Omit<IPublisherPageTemplateDefinitionV2, "ref"> & {
-    id: string;
+export type DeclarativePublisherDocumentTemplateV2 = Omit<
+    DeclarativePublisherDocumentTemplate,
+    "content" | "version"
+> & {
+    version: PublisherContentVersionV2;
+    content: PublisherDocumentContentV2;
 };
+
+/**
+ * A v2 page template as the declarative API stores it, with typed version and content.
+ *
+ * @alpha
+ */
+export type DeclarativePublisherPageTemplateV2 = Omit<
+    DeclarativePublisherDocumentPageTemplate,
+    "content" | "version"
+> & {
+    version: PublisherContentVersionV2;
+    content: IPublisherPageBodyV2;
+};
+
+/**
+ * The kind of a stored v2 Publisher entity. The declarative API stores no `type` key, so the kind is
+ * passed next to the entity.
+ *
+ * @alpha
+ */
+export type DeclarativePublisherEntityKindV2 = "document" | "documentTemplate" | "pageTemplate";

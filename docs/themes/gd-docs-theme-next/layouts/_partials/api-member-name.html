@@ -1,0 +1,11 @@
+{{- /* A folded API member's title split into its owner and its own name, for the member's heading
+(api-member-sections.html: the owner muted, the name strong) and its table-of-contents entry
+(toc-html.html: the name alone, so a long owner does not truncate every entry).
+`DashboardStoreAccessor.getDashboardDispatch` -> owner `DashboardStoreAccessor.`, name
+`getDashboardDispatch`; `v1.IFoo.bar` -> `v1.IFoo.` and `bar`; `IFoo.run(x.y)` -> `IFoo.` and
+`run(x.y)` (a dot inside the parameters is not a separator).
+
+Expects: the member page. Returns dict "owner" "name". */ -}}
+{{- $head := index (split .Title "(") 0 -}}
+{{- $owner := replaceRE `[^.]*$` "" $head -}}
+{{- return dict "owner" $owner "name" (strings.TrimPrefix $owner .Title) -}}

@@ -39,11 +39,12 @@ describe("TigerOrganization", () => {
     const mockAuthCall = vi.fn((callback) => callback({ axios: {}, basePath: "" }));
     let organization: TigerOrganization;
 
+    // Loading every organization service takes seconds under parallel test load.
     beforeAll(async () => {
         vi.resetModules();
         const { TigerOrganization } = await import("./index.js");
         organization = new TigerOrganization(mockAuthCall as TigerAuthenticatedCallGuard, "org");
-    });
+    }, 30_000);
 
     beforeEach(() => {
         vi.clearAllMocks();

@@ -1,0 +1,15 @@
+{{- $target := printf "%s/" site.Params.homeSlug | relURL -}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{{ site.Title }}</title>
+  <link rel="canonical" href="{{ $target }}">
+  <meta http-equiv="refresh" content="0; url={{ $target }}">
+  <meta name="robots" content="noindex">
+  <script>location.replace("{{ $target }}");</script>
+</head>
+<body>
+  <p>Redirecting to <a href="{{ $target }}">{{ $target }}</a>…</p>
+</body>
+</html>

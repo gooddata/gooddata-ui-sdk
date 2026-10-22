@@ -1,0 +1,24 @@
+{{- /*
+  Bare-symbol-name -> reference path index, derived from a version's generated
+  api_refs lookup (keyed `<pkg>.<lowercase symbol>`), passed as the context.
+
+  Names that exist in more than one package are dropped rather than guessed, so
+  callers never link an ambiguous mention to the wrong package.
+
+  Call through partialCached with the version as the variant — this walks every
+  symbol and only needs to run once per version.
+*/ -}}
+{{- $index := dict -}}
+{{- $ambiguous := slice -}}
+{{- range $slug, $entry := . -}}
+  {{- $name := index (last 1 (split $slug ".")) 0 -}}
+  {{- if isset $index $name -}}
+    {{- $ambiguous = $ambiguous | append $name -}}
+  {{- else -}}
+    {{- $index = merge $index (dict $name $entry.path) -}}
+  {{- end -}}
+{{- end -}}
+{{- range $ambiguous -}}
+  {{- $index = merge $index (dict . "") -}}
+{{- end -}}
+{{- return $index -}}

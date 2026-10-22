@@ -1,0 +1,58 @@
+{{- /* llms.txt (https://llmstxt.org/): the index an agent reads first, one file like Anthropic's
+(platform.claude.com/llms.txt): every guide page by section in sidebar order, then every API
+reference package. Every entry links the page's Markdown version (index.md, the theme's
+*.markdown.md); drop the file name for the HTML page.
+
+The full text of the guides is llms-full.txt (content/en/llms-full.md), linked under
+## Optional. The API reference is listed by package (18 entries), not by symbol (~3,500 Markdown pages): a
+package's index.md lists its symbols, each linked to its own index.md, so an agent goes one level
+down only for the package it needs, and this file stays small enough to read at once.
+
+The docs tree the site lands on (params.homeSlug, latest/). When that section isn't built, the
+build fails rather than ship an empty index. */ -}}
+{{- $slug := site.Params.homeSlug -}}
+{{- $root := site.GetPage (printf "/%s" $slug) -}}
+{{- if not $root }}{{ errorf "llms.txt: params.homeSlug %q is not a section of this build" $slug }}{{ end -}}
+{{- $api := "" -}}
+{{- range $root.Sections }}{{ if strings.HasSuffix .RelPermalink "/api-reference/" }}{{ $api = . }}{{ end }}{{ end -}}
+{{- $blocks := slice "# GoodData.UI SDK Documentation" -}}
+{{- $blocks = $blocks | append (printf "> GoodData.UI: %s" ($root.Description | default site.Params.description)) -}}
+{{- $blocks = $blocks | append (printf "Every link below is a page as Markdown (index.md); the same URL without index.md is the HTML page. Each Markdown page starts with a link back to this file. The documentation home page: %s" $root.Permalink) -}}
+{{- range sort $root.Sections ".Weight" -}}
+  {{- if ne . $api -}}
+    {{- $blocks = $blocks | append (printf "## %s" (or .LinkTitle .Title .File.ContentBaseName)) (delimit (partial "llms-entries.html" .) "\n") -}}
+  {{- end -}}
+{{- end -}}
+{{- with $api -}}
+  {{- $lines := slice -}}
+  {{- with .OutputFormats.Get "markdown" -}}
+    {{- $lines = $lines | append (printf "- [%s](%s): every package of the reference, one page per exported symbol (@public and @beta). A package page lists its symbols by kind, each linked to its own Markdown page, which includes the symbol's members." $api.Title .Permalink) -}}
+  {{- end -}}
+  {{- range sort .Sections ".Weight" -}}
+    {{- $count := 0 -}}
+    {{- range .RegularPages }}{{ if .OutputFormats.Get "markdown" }}{{ $count = add $count 1 }}{{ end }}{{ end -}}
+    {{- $url := .Permalink -}}
+    {{- with .OutputFormats.Get "markdown" }}{{ $url = .Permalink }}{{ end -}}
+    {{- $summary := partial "llms-summary.html" . -}}
+    {{- $lines = $lines | append (printf "- [%s](%s): %s(%d symbols)" .Title $url (cond (ne $summary "") (printf "%s " $summary) "") $count) -}}
+  {{- end -}}
+  {{- $blocks = $blocks | append "## API reference" (delimit $lines "\n") -}}
+{{- end -}}
+{{- /* Secondary files, the spec's "Optional" section an agent may skip for a shorter context: the
+full text of the guides (llms-full.txt, content/en/llms-full.md) and the pages next to the API
+packages (the versions archive). */ -}}
+{{- $optional := slice -}}
+{{- with site.GetPage "/llms-full" -}}
+  {{- with .OutputFormats.Get "markdown" -}}
+    {{- $optional = $optional | append (printf "- [Full text of the guides](%s): every guide page above as Markdown in one file, for tools that load the whole documentation at once" .Permalink) -}}
+  {{- end -}}
+{{- end -}}
+{{- with $api -}}
+  {{- range sort .RegularPages ".Weight" -}}
+    {{- $url := .Permalink -}}
+    {{- with .OutputFormats.Get "markdown" }}{{ $url = .Permalink }}{{ end -}}
+    {{- $optional = $optional | append (printf "- [%s](%s): %s" .Title $url (partial "llms-summary.html" .)) -}}
+  {{- end -}}
+{{- end -}}
+{{- with $optional }}{{ $blocks = $blocks | append "## Optional" (delimit . "\n") }}{{ end -}}
+{{ delimit $blocks "\n\n" }}

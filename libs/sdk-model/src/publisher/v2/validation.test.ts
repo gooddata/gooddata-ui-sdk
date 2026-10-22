@@ -3,6 +3,7 @@
 import { describe, expect, it } from "vitest";
 
 import { type FilterContextItem, type IDashboardAttributeFilter } from "../../dashboard/filterContext.js";
+import { uriRef } from "../../objRef/factory.js";
 
 import { type PublisherDocumentContentV2 } from "./content.js";
 import {
@@ -13,6 +14,7 @@ import {
 } from "./document.js";
 import { type IPublisherDocumentPageV2, type IPublisherPageBodyV2 } from "./page.js";
 import {
+    validateLoadedPublisherEntityV2,
     validatePublisherDocumentContentV2,
     validatePublisherEntityV2,
     validatePublisherPageBodyV2,
@@ -374,31 +376,64 @@ describe("validatePublisherEntityV2", () => {
     });
 
     it.each([
-        ["a document", { ...document, ref: { identifier: "default.northwind" } }],
+        ["a document", document],
         [
-            "a page template that is not a default one",
-            { ...pageTemplate, ref: { identifier: "default.cover" } },
+            "a document template",
+            { type: "documentTemplate", title: "Quarterly", version: "2", content } as const,
         ],
-    ])("rejects a reserved id on %s", (_, entity) => {
-        expect(validatePublisherEntityV2(entity)).toEqual([
-            { path: "ref", message: expect.stringContaining("default.") },
+        ["a page template", pageTemplate],
+    ])("rejects a default. id on %s", (_, entity) => {
+        expect(validatePublisherEntityV2({ ...entity, ref: { identifier: "default.northwind" } })).toEqual([
+            {
+                path: "ref",
+                message: 'Ids starting with "default." are reserved for the backend\'s defaults.',
+            },
         ]);
     });
 
-    it("accepts a reserved id on a default page template", () => {
+    it("rejects a default. id on a page template flagged as a default", () => {
         const defaultTemplate: IPublisherPageTemplateV2 = {
             ...pageTemplate,
             ref: { identifier: "default.pageTemplate.cover" },
             isDefault: true,
         };
 
-        expect(validatePublisherEntityV2(defaultTemplate)).toEqual([]);
+        expect(paths(validatePublisherEntityV2(defaultTemplate))).toEqual(["ref"]);
     });
 
     it("accepts ids that only contain the reserved prefix later on", () => {
         expect(
             validatePublisherEntityV2({ ...document, ref: { identifier: "northwind.default.2026" } }),
         ).toEqual([]);
+    });
+
+    it("accepts an entity id of 255 characters", () => {
+        expect(validatePublisherEntityV2({ ...document, ref: { identifier: "a".repeat(255) } })).toEqual([]);
+    });
+
+    it.each([
+        ["256 characters", "a".repeat(256)],
+        ["a leading dot", ".northwind"],
+        ["a character outside the grammar", "north/wind"],
+    ])("rejects an entity id with %s", (_, identifier) => {
+        expect(paths(validatePublisherEntityV2({ ...document, ref: { identifier } }))).toEqual(["ref"]);
+    });
+
+    it.each([
+        ["a document", document],
+        ["a page template", pageTemplate],
+    ])("rejects %s named by a uri", (_, entity) => {
+        expect(paths(validatePublisherEntityV2({ ...entity, ref: uriRef("/x/doc") }))).toEqual(["ref"]);
+    });
+
+    it("explains the entity id grammar", () => {
+        expect(validatePublisherEntityV2({ ...document, ref: { identifier: ".northwind" } })).toEqual([
+            {
+                path: "ref",
+                message:
+                    'Expected an identifier reference whose id has 1 to 255 letters, digits, dots, underscores or hyphens and does not start with a dot, got {"identifier":".northwind"}.',
+            },
+        ]);
     });
 });
 
@@ -746,6 +781,99 @@ describe("document structure", () => {
         };
 
         expect(validatePublisherDocumentContentV2(content)).toEqual([]);
+    });
+});
+
+describe("entity text limits", () => {
+    const entities = [
+        ["document", document],
+        ["page template", pageTemplate],
+    ] as const;
+
+    it.each(entities)("accepts a %s with a 255-character title", (_, entity) => {
+        expect(validatePublisherEntityV2({ ...entity, title: "a".repeat(255) })).toEqual([]);
+    });
+
+    it.each(entities)("rejects a %s with a 256-character title", (_, entity) => {
+        const issues = validatePublisherEntityV2({ ...entity, title: "a".repeat(256) });
+
+        expect(paths(issues)).toEqual(["title"]);
+        expect(issues[0]?.message).toMatch(/^Expected a non-empty string of at most 255 characters, /);
+    });
+
+    it.each(entities)("accepts a %s with a 10000-character description", (_, entity) => {
+        expect(validatePublisherEntityV2({ ...entity, description: "a".repeat(10000) })).toEqual([]);
+    });
+
+    it.each(entities)("rejects a %s with a 10001-character description", (_, entity) => {
+        expect(paths(validatePublisherEntityV2({ ...entity, description: "a".repeat(10001) }))).toEqual([
+            "description",
+        ]);
+    });
+
+    it.each(entities)("accepts a %s with distinct tags", (_, entity) => {
+        expect(validatePublisherEntityV2({ ...entity, tags: ["a", "b"] })).toEqual([]);
+    });
+
+    it.each(entities)("rejects a %s with a repeated tag", (_, entity) => {
+        expect(validatePublisherEntityV2({ ...entity, tags: ["a", "b", "a"] })).toEqual([
+            { path: "tags[2]", message: 'Expected unique items, got "a" again.' },
+        ]);
+    });
+
+    it("reports a repeated tag that is not a string once, as not a string", () => {
+        expect(validatePublisherEntityV2({ ...document, tags: [1, 1] })).toEqual([
+            { path: "tags[0]", message: "Expected a non-empty string, got 1." },
+            { path: "tags[1]", message: "Expected a non-empty string, got 1." },
+        ]);
+    });
+});
+
+describe("entity text limits counted in characters", () => {
+    it("accepts a title of 255 emoji", () => {
+        expect(validatePublisherEntityV2({ ...document, title: "😀".repeat(255) })).toEqual([]);
+    });
+
+    it("rejects a title of 256 emoji", () => {
+        expect(paths(validatePublisherEntityV2({ ...document, title: "😀".repeat(256) }))).toEqual(["title"]);
+    });
+});
+
+describe("validateLoadedPublisherEntityV2", () => {
+    const documentTemplate: IPublisherDocumentTemplateDefinitionV2 = {
+        type: "documentTemplate",
+        title: "Quarterly",
+        version: "2",
+        content,
+    };
+
+    it.each([
+        ["a document", document],
+        ["a document template", documentTemplate],
+        ["a page template", pageTemplate],
+    ])("accepts %s stored with an empty title", (_, entity) => {
+        expect(validateLoadedPublisherEntityV2({ ...entity, title: "" })).toEqual([]);
+    });
+
+    it.each([
+        ["a document", document],
+        ["a document template", documentTemplate],
+        ["a page template", pageTemplate],
+    ])("accepts %s stored under a default. id", (_, entity) => {
+        expect(validateLoadedPublisherEntityV2({ ...entity, ref: { identifier: "default.x" } })).toEqual([]);
+    });
+
+    it.each([
+        ["an unknown version", { ...document, version: "3" }, "version"],
+        ["a repeated tag", { ...document, tags: ["a", "a"] }, "tags[1]"],
+        ["a title over 255 characters", { ...document, title: "a".repeat(256) }, "title"],
+        ["broken content", { ...document, content: { pages: [], sections: [] } }, "content"],
+    ])("still reports %s", (_, entity, path) => {
+        expect(paths(validateLoadedPublisherEntityV2(entity))).toEqual([path]);
+    });
+
+    it("leaves an empty title rejected on save", () => {
+        expect(paths(validatePublisherEntityV2({ ...document, title: "" }))).toEqual(["title"]);
     });
 });
 

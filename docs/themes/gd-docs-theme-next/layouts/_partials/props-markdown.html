@@ -1,0 +1,36 @@
+{{- /* A guide page's Props table as Markdown, from its version's api_props.json (api-data.html).
+
+generate-reference.ts writes one table per symbol the guides name, from the same model and in the
+same run as the API reference, so the table and the reference cannot disagree. Nothing is committed.
+
+The page's api_symbols are tried in order and the first with a table wins; props_interfaces only
+count when the page has no api_symbols (the rule refresh-props used). Links arrive as
+`[text](apiref:<page path>)`: each becomes the page's RelPermalink (a folded member's section on its
+parent's page, api-page-url.html), which holds under any baseURL, or plain text when the page
+doesn't exist.
+
+Used by the props shortcode ({{% props %}} in a page), in the HTML page and its Markdown version.
+
+Expects: the page. Returns the Markdown table, or "" when there is none. */ -}}
+{{- $out := "" -}}
+{{- with (partialCached "api-data.html" $ $.Section).props -}}
+  {{- $tables := . -}}
+  {{- $keys := slice -}}
+  {{- with $.Params.api_symbols -}}
+    {{- $keys = . -}}
+  {{- else -}}
+    {{- range $.Params.props_interfaces }}{{ $keys = $keys | append (printf "props_interfaces:%s" .) }}{{ end -}}
+  {{- end -}}
+  {{- range $keys -}}
+    {{- if not $out }}{{ with index $tables . }}{{ $out = . }}{{ end }}{{ end -}}
+  {{- end -}}
+  {{- range findRE `\[[^\]]*\]\(apiref:[^)\s]+\)` $out | uniq -}}
+    {{- $link := . -}}
+    {{- $text := replaceRE `^\[([^\]]*)\].*$` "$1" $link -}}
+    {{- $path := replaceRE `^.*\(apiref:([^)\s]+)\)$` "$1" $link -}}
+    {{- $to := $text -}}
+    {{- with site.GetPage $path }}{{ $to = printf "[%s](%s)" $text (partial "api-page-url.html" .) }}{{ end -}}
+    {{- $out = replace $out $link $to -}}
+  {{- end -}}
+{{- end -}}
+{{- return $out -}}

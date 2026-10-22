@@ -32,6 +32,8 @@ REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 pushd "$REPO_ROOT/docs"
 
 rm -rf ${content_dir:?Empty concent_dir variable}/*
+# The glob above leaves dotfiles: drop a marker left by an earlier keep_master run.
+rm -f "${content_dir}/.keep_master"
 
 # Add upstream if it doesn't exist
 if [ ${remote_name} == "upstream" ] ; then
@@ -76,13 +78,22 @@ for branch in "$remote_name/master" $(git branch -rl "$remote_name/rel/*") ; do
 done
 
 if [ "$keep_master" != "keep_master" ] ; then
+    # Production: /latest/ is the newest release, master's own tree is not published.
     echo "master docs will not be published, removing"
     rm -rf "${content_dir}/latest"
-  ## Moving the highest version to latest
-  highest_version=$(ls -vr1 ./versioned_docs/ | grep -E '^[0-9]+.[0-9]+$' | head -n 1)
-  if [ "$highest_version" != "" ];then
-    echo "Moving ${highest_version} to /latest"
-    mv -f ./versioned_docs/"$highest_version" ./versioned_docs/latest
-  fi
+    ## Moving the highest version to latest
+    highest_version=$(ls -vr1 ./versioned_docs/ | grep -E '^[0-9]+.[0-9]+$' | head -n 1)
+    if [ "$highest_version" != "" ];then
+        echo "Moving ${highest_version} to /latest"
+        mv -f ./versioned_docs/"$highest_version" ./versioned_docs/latest
+    fi
+else
+    # Preview: master's content/en/latest stays /latest/, so the newest release is not moved
+    # there and keeps its own x.y/ folder like every other release. config/public/params.toml
+    # still maps that release to dirpath "latest"; the marker tells
+    # build-api-reference-versions.sh that latest/ is master's tree, so it gives latest/ this
+    # checkout's API reference and builds the newest release's into its x.y/ folder.
+    echo "Keeping master docs as /latest"
+    touch "${content_dir}/.keep_master"
 fi
 popd

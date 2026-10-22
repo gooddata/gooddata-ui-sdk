@@ -1,0 +1,28 @@
+{{- /* The API reference page a symbol name in a guide resolves to, for the guide's code spans:
+`IMeasure` in the HTML page (guide-body.html) and in its Markdown version (md/code-links.html), so
+both link the same names to the same pages.
+
+The name is looked up in the page version's api_refs (api-data.html): first in the packages the
+page documents (its `api_symbols`), which win when a name exists in several packages, then in
+every package through api-name-index.html, which drops ambiguous names rather than guess.
+
+Expects: dict "page" (the guide) "name" (the symbol name, any case). Returns the reference page's
+RelPermalink, or "" when the name does not resolve (no data file, an internal or React type). */ -}}
+{{- $page := .page -}}
+{{- $key := lower .name -}}
+{{- $url := "" -}}
+{{- with (partialCached "api-data.html" $page $page.Section).refs -}}
+  {{- $refs := . -}}
+  {{- $path := "" -}}
+  {{- range $page.Params.api_symbols -}}
+    {{- $parts := split (strings.TrimPrefix "@gooddata/" .) ":" -}}
+    {{- if and (eq (len $parts) 2) (not $path) -}}
+      {{- with index $refs (printf "%s.%s" (index $parts 0) $key) }}{{ $path = .path }}{{ end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- if not $path -}}
+    {{- $path = index (partialCached "api-name-index.html" $refs $page.Section) $key | default "" -}}
+  {{- end -}}
+  {{- with $path }}{{ with site.GetPage . }}{{ $url = .RelPermalink }}{{ end }}{{ end -}}
+{{- end -}}
+{{- return $url -}}

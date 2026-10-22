@@ -4,16 +4,22 @@ import { useEffect, useMemo, useState } from "react";
 
 import stringify from "json-stable-stringify";
 
-import { type IUserLocalizationSettings } from "@gooddata/sdk-backend-spi";
+import { type IUserLocalizationSettings, type LocalizationSettingType } from "@gooddata/sdk-backend-spi";
 import { type IUser, type IUserGroup } from "@gooddata/sdk-model";
 import { useBackendStrict } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../locales.js";
 import { useOrganizationId } from "../OrganizationIdContext.js";
-import { useTelemetry } from "../TelemetryContext.js";
+import { type TelemetryEvent, useTelemetry } from "../TelemetryContext.js";
 
 import { changedLanguageSettings } from "./userLanguages.js";
+
+const LANGUAGE_SAVED_EVENTS: Record<LocalizationSettingType, TelemetryEvent> = {
+    LOCALE: "user-display-language-saved",
+    METADATA_LOCALE: "user-metadata-language-saved",
+    DATA_LOCALE: "user-data-language-saved",
+};
 
 export const useUserDetails = (
     user: IUser | undefined,
@@ -96,7 +102,8 @@ export const useUserDetails = (
                 backend
                     .organization(organizationId)
                     .users()
-                    .setUserLocalizationSetting(sanitizedUser.login, type, value),
+                    .setUserLocalizationSetting(sanitizedUser.login, type, value)
+                    .then(() => trackEvent(LANGUAGE_SAVED_EVENTS[type])),
             ),
         ])
             .then(() => {

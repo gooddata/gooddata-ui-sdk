@@ -1,0 +1,10 @@
+{{- /* One row of a Markdown table (md/tables.html): each cell's whitespace collapsed to one line,
+its pipes escaped, including the `&#124;` the generator writes for union types.
+
+Expects: the slice of cell strings. Returns the row, `| a | b |`. */ -}}
+{{- $cells := slice -}}
+{{- range . -}}
+  {{- $cell := trim (replaceRE `\s+` " " .) " " -}}
+  {{- $cells = $cells | append (replace (replace $cell "|" `\|`) "&#124;" `\|`) -}}
+{{- end -}}
+{{- return printf "| %s |" (delimit $cells " | ") -}}

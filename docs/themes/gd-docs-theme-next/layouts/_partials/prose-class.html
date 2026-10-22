@@ -1,0 +1,6 @@
+{{- /* The class list every prose container shares (page-shell.html, _default/list.html). The callers
+append their per-type extras after it. The Typography colours come from the gd-* tokens through the
+--tw-prose-* variables in main.css.tmpl, so there is no prose-slate / dark:prose-invert here.
+
+Returns a string. */ -}}
+{{- return "prose max-w-none prose-headings:font-heading prose-headings:text-gd-text prose-a:text-gd-link prose-a:underline prose-a:underline-offset-2 prose-a:decoration-1 prose-a:decoration-gd-link/50 prose-a:hover:text-gd-secondary dark:prose-a:hover:text-gd-primary prose-a:hover:decoration-gd-secondary prose-code:text-gd-secondary prose-pre:bg-gd-code-bg prose-pre:text-gd-on-code prose-img:rounded mt-8" -}}

@@ -1,0 +1,35 @@
+{{- /* The page's trail, from the site root down. params.breadcrumbs.root ({name, url} list) goes in
+front, for crumbs above this site (the live docs start with "All Products"); params.productName
+names the site root crumb, which is otherwise the site title. */ -}}
+{{- if (default true site.Params.features.breadcrumbs) -}}
+  {{- $ancestors := .Ancestors.Reverse -}}
+  {{- if $ancestors -}}
+  {{- $cfg := site.Params.breadcrumbs | default dict -}}
+  {{- /* A version's own home ("Home" under the site root) is what the site crumb already names, so
+  on that page the trail ends at the site crumb instead of adding "Home" after it. */ -}}
+  {{- $onContentHome := and .Parent .Parent.IsHome (eq .LinkTitle "Home") -}}
+  {{- $siteName := site.Params.productName -}}
+  <nav aria-label="Breadcrumb" class="mb-5 flex lg:px-2 flex-wrap items-center gap-1.5 text-sm text-gd-text-secondary">
+    {{- range $cfg.root -}}
+      <a href="{{ .url }}" class="hover:text-gd-secondary hover:no-underline">{{ .name }}</a>
+      <span class="opacity-50" aria-hidden="true">/</span>
+    {{- end -}}
+    {{- range $i, $a := $ancestors -}}
+      {{- $isContentHome := and $a.Parent $a.Parent.IsHome (eq $a.LinkTitle "Home") -}}
+      {{- if not $isContentHome -}}
+        {{- if $i }}<span class="opacity-50" aria-hidden="true">/</span>{{ end -}}
+        {{- $name := cond $a.IsHome ($siteName | default $a.LinkTitle) $a.LinkTitle -}}
+        {{- if and $onContentHome $a.IsHome -}}
+          <span class="font-medium text-gd-text" aria-current="page">{{ $name }}</span>
+        {{- else -}}
+          <a href="{{ $a.RelPermalink }}" class="hover:text-gd-secondary hover:no-underline">{{ $name }}</a>
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+    {{- if not $onContentHome -}}
+      <span class="opacity-50" aria-hidden="true">/</span>
+      <span class="font-medium text-gd-text" aria-current="page">{{ .LinkTitle }}</span>
+    {{- end -}}
+  </nav>
+  {{- end -}}
+{{- end -}}

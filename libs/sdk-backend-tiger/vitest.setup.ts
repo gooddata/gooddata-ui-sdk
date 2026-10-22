@@ -1,6 +1,6 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { afterEach, beforeEach } from "vitest";
+import { afterAll, afterEach, beforeEach, vi } from "vitest";
 
 // Tests run non-isolated, so this setup file is evaluated repeatedly within a single worker. Keep a
 // reference to the pristine console.error on globalThis so that repeated evaluations never wrap an
@@ -21,4 +21,10 @@ beforeEach(() => {
 
 afterEach(() => {
     console.error = consoleError;
+});
+
+// Without isolation, modules stay cached across the test files of a worker. A module evaluated under
+// one file's vi.mock would otherwise keep that mock for every later file that imports it.
+afterAll(() => {
+    vi.resetModules();
 });

@@ -10,11 +10,11 @@ import {
     type JsonApiUserIdentifierOutWithLinks,
 } from "@gooddata/api-client-tiger";
 import {
-    type IPublisherDocument,
-    type IPublisherDocumentContent,
-    type IPublisherDocumentTemplate,
-    type IPublisherPageTemplate,
-    type IPublisherPageTemplateContent,
+    type IPublisherDocumentContentV1,
+    type IPublisherDocumentTemplateV1,
+    type IPublisherDocumentV1,
+    type IPublisherPageTemplateContentV1,
+    type IPublisherPageTemplateV1,
     idRef,
 } from "@gooddata/sdk-model";
 
@@ -30,14 +30,14 @@ function asContent<T>(content: object): T {
 export function convertPublisherPageLayout(
     entity: JsonApiReportPageLayoutOut | JsonApiReportPageLayoutOutWithLinks,
     included: JsonApiUserIdentifierOutWithLinks[] = [],
-): IPublisherPageTemplate {
+): IPublisherPageTemplateV1 {
     return {
         type: "reportPageLayout",
         ref: idRef(entity.id, "reportPageLayout"),
         title: entity.attributes.title,
         description: entity.attributes.description,
         tags: entity.attributes.tags,
-        content: asContent<IPublisherPageTemplateContent>(entity.attributes.content),
+        content: asContent<IPublisherPageTemplateContentV1>(entity.attributes.content),
         isLocked: isInheritedObject(entity),
         created: entity.attributes.createdAt ?? undefined,
         updated: entity.attributes.modifiedAt ?? undefined,
@@ -49,14 +49,14 @@ export function convertPublisherPageLayout(
 export function convertPublisherDocumentTemplate(
     entity: JsonApiReportTemplateOut | JsonApiReportTemplateOutWithLinks,
     included: JsonApiUserIdentifierOutWithLinks[] = [],
-): IPublisherDocumentTemplate {
+): IPublisherDocumentTemplateV1 {
     return {
         type: "reportTemplate",
         ref: idRef(entity.id, "reportTemplate"),
         title: entity.attributes.title,
         description: entity.attributes.description,
         tags: entity.attributes.tags,
-        content: asContent<IPublisherDocumentContent>(entity.attributes.content),
+        content: asContent<IPublisherDocumentContentV1>(entity.attributes.content),
         isLocked: isInheritedObject(entity),
         created: entity.attributes.createdAt ?? undefined,
         updated: entity.attributes.modifiedAt ?? undefined,
@@ -68,7 +68,7 @@ export function convertPublisherDocumentTemplate(
 export function convertPublisherDocument(
     entity: JsonApiReportOut | JsonApiReportOutWithLinks,
     included: JsonApiUserIdentifierOutWithLinks[] = [],
-): IPublisherDocument {
+): IPublisherDocumentV1 {
     return {
         type: "report",
         ref: idRef(entity.id, "report"),
@@ -77,7 +77,7 @@ export function convertPublisherDocument(
         tags: entity.attributes.tags,
         periodStart: entity.attributes.periodStart,
         periodEnd: entity.attributes.periodEnd,
-        content: asContent<IPublisherDocumentContent>(entity.attributes.content),
+        content: asContent<IPublisherDocumentContentV1>(entity.attributes.content),
         variableValues: entity.attributes.variableValues ?? undefined,
         isLocked: isInheritedObject(entity),
         created: entity.attributes.createdAt ?? undefined,

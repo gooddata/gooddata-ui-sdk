@@ -1,118 +1,138 @@
 # Redirects
-/ {{ .Site.BaseURL }}/latest/ 301!
-/docs/ {{ .Site.BaseURL }}/latest/ 301!
-/11.63/ {{ .Site.BaseURL }}/latest/ 301!
-/11.63.0/ {{ .Site.BaseURL }}/latest/ 301!
-/11.62.0/ {{ .Site.BaseURL }}/11.62/ 301!
-/11.61.0/ {{ .Site.BaseURL }}/11.61/ 301!
-/11.60.0/ {{ .Site.BaseURL }}/11.60/ 301!
-/11.59.0/ {{ .Site.BaseURL }}/11.59/ 301!
-/11.58.0/ {{ .Site.BaseURL }}/11.58/ 301!
-/11.57.0/ {{ .Site.BaseURL }}/11.57/ 301!
-/11.56.0/ {{ .Site.BaseURL }}/11.56/ 301!
-/11.55.0/ {{ .Site.BaseURL }}/11.55/ 301!
-/11.54.0/ {{ .Site.BaseURL }}/11.54/ 301!
-/11.53.0/ {{ .Site.BaseURL }}/11.53/ 301!
-/11.52.0/ {{ .Site.BaseURL }}/11.52/ 301!
-/11.51.0/ {{ .Site.BaseURL }}/11.51/ 301!
-/11.50.0/ {{ .Site.BaseURL }}/11.50/ 301!
-/11.49.0/ {{ .Site.BaseURL }}/11.49/ 301!
-/11.48.0/ {{ .Site.BaseURL }}/11.48/ 301!
-/11.47.0/ {{ .Site.BaseURL }}/11.47/ 301!
-/11.46.0/ {{ .Site.BaseURL }}/11.46/ 301!
-/11.45.0/ {{ .Site.BaseURL }}/11.45/ 301!
-/11.44.0/ {{ .Site.BaseURL }}/11.44/ 301!
-/11.43.0/ {{ .Site.BaseURL }}/11.43/ 301!
-/11.42.0/ {{ .Site.BaseURL }}/11.42/ 301!
-/11.41.0/ {{ .Site.BaseURL }}/11.41/ 301!
-/11.40.0/ {{ .Site.BaseURL }}/11.40/ 301!
-/11.39.0/ {{ .Site.BaseURL }}/11.39/ 301!
-/11.38.0/ {{ .Site.BaseURL }}/11.38/ 301!
-/11.36.0/ {{ .Site.BaseURL }}/11.36/ 301!
-/11.35.0/ {{ .Site.BaseURL }}/11.35/ 301!
-/11.34.0/ {{ .Site.BaseURL }}/11.34/ 301!
-/11.32.0/ {{ .Site.BaseURL }}/11.32/ 301!
-/11.31.0/ {{ .Site.BaseURL }}/11.31/ 301!
-/11.30.0/ {{ .Site.BaseURL }}/11.30/ 301!
-/11.29.0/ {{ .Site.BaseURL }}/11.29/ 301!
-/11.28.0/ {{ .Site.BaseURL }}/11.28/ 301!
-/11.27.0/ {{ .Site.BaseURL }}/11.27/ 301!
-/11.26.0/ {{ .Site.BaseURL }}/11.26/ 301!
-/11.25.0/ {{ .Site.BaseURL }}/11.25/ 301!
-/11.24.0/ {{ .Site.BaseURL }}/11.24/ 301!
-/11.22.0/ {{ .Site.BaseURL }}/11.22/ 301!
-/11.21.0/ {{ .Site.BaseURL }}/11.21/ 301!
-/11.20.0/ {{ .Site.BaseURL }}/11.20/ 301!
-/11.19.0/ {{ .Site.BaseURL }}/11.19/ 301!
-/11.18.0/ {{ .Site.BaseURL }}/11.18/ 301!
-/11.17.0/ {{ .Site.BaseURL }}/11.17/ 301!
-/11.16.0/ {{ .Site.BaseURL }}/11.16/ 301!
-/11.15.0/ {{ .Site.BaseURL }}/11.15/ 301!
-/11.14.0/ {{ .Site.BaseURL }}/11.14/ 301!
-/11.13.0/ {{ .Site.BaseURL }}/11.13/ 301!
-/11.12.0/ {{ .Site.BaseURL }}/11.12/ 301!
-/11.11.0/ {{ .Site.BaseURL }}/11.11/ 301!
-/11.10.0/ {{ .Site.BaseURL }}/11.10/ 301!
-/11.9.0/ {{ .Site.BaseURL }}/11.9/ 301!
-/11.8.0/ {{ .Site.BaseURL }}/11.8/ 301!
-/11.7.0/ {{ .Site.BaseURL }}/11.7/ 301!
-/11.6.0/ {{ .Site.BaseURL }}/11.6/ 301!
-/11.5.0/ {{ .Site.BaseURL }}/11.5/ 301!
-/11.4.0/ {{ .Site.BaseURL }}/11.4/ 301!
-/11.3.0/ {{ .Site.BaseURL }}/11.3/ 301!
-/11.2.0/ {{ .Site.BaseURL }}/11.2/ 301!
-/11.1.0/ {{ .Site.BaseURL }}/11.1/ 301!
-/11.0.0/ {{ .Site.BaseURL }}/11.0/ 301!
-/10.43.0/ {{ .Site.BaseURL }}/10.43/ 301!
-/10.42.0/ {{ .Site.BaseURL }}/10.42/ 301!
-/10.41.0/ {{ .Site.BaseURL }}/10.41/ 301!
-/10.40.0/ {{ .Site.BaseURL }}/10.40/ 301!
-/10.39.0/ {{ .Site.BaseURL }}/10.39/ 301!
-/10.38.0/ {{ .Site.BaseURL }}/10.38/ 301!
-/10.37.0/ {{ .Site.BaseURL }}/10.37/ 301!
-/10.36.0/ {{ .Site.BaseURL }}/10.36/ 301!
-/10.35.0/ {{ .Site.BaseURL }}/10.35/ 301!
-/10.34.0/ {{ .Site.BaseURL }}/10.34/ 301!
-/10.33.0/ {{ .Site.BaseURL }}/10.33/ 301!
-/10.32.0/ {{ .Site.BaseURL }}/10.32/ 301!
-/10.31.0/ {{ .Site.BaseURL }}/10.31/ 301!
-/10.30.0/ {{ .Site.BaseURL }}/10.30/ 301!
-/10.29.0/ {{ .Site.BaseURL }}/10.29/ 301!
-/10.28.0/ {{ .Site.BaseURL }}/10.28/ 301!
-/10.27.0/ {{ .Site.BaseURL }}/10.27/ 301!
-/10.26.0/ {{ .Site.BaseURL }}/10.26/ 301!
-/10.25.0/ {{ .Site.BaseURL }}/10.25/ 301!
-/10.24.0/ {{ .Site.BaseURL }}/10.24/ 301!
-/10.23.0/ {{ .Site.BaseURL }}/10.23/ 301!
-/10.22.0/ {{ .Site.BaseURL }}/10.22/ 301!
-/10.20.0/ {{ .Site.BaseURL }}/10.20/ 301!
-/10.19.0/ {{ .Site.BaseURL }}/10.19/ 301!
-/10.18.0/ {{ .Site.BaseURL }}/10.18/ 301!
-/10.17.0/ {{ .Site.BaseURL }}/10.17/ 301!
-/10.16.0/ {{ .Site.BaseURL }}/10.16/ 301!
-/10.15.0/ {{ .Site.BaseURL }}/10.15/ 301!
-/10.14.0/ {{ .Site.BaseURL }}/10.14/ 301!
-/10.13.0/ {{ .Site.BaseURL }}/10.13/ 301!
-/10.12.0/ {{ .Site.BaseURL }}/10.12/ 301!
-/10.11.0/ {{ .Site.BaseURL }}/10.11/ 301!
-/10.10.0/ {{ .Site.BaseURL }}/10.10/ 301!
-/10.9.0/ {{ .Site.BaseURL }}/10.9/ 301!
-/10.8.0/ {{ .Site.BaseURL }}/10.8/ 301!
-/10.7.0/ {{ .Site.BaseURL }}/10.7/ 301!
-/10.6.0/ {{ .Site.BaseURL }}/10.6/ 301!
-/10.5.0/ {{ .Site.BaseURL }}/10.5/ 301!
-/10.4.0/ {{ .Site.BaseURL }}/10.4/ 301!
-/10.3.0/ {{ .Site.BaseURL }}/10.3/ 301!
-/10.2.0/ {{ .Site.BaseURL }}/10.2/ 301!
-/10.1.0/ {{ .Site.BaseURL }}/10.1/ 301!
-/10.0.0/ {{ .Site.BaseURL }}/10.0/ 301!
-/9.9.0/ {{ .Site.BaseURL }}/9.9/ 301!
-/9.8.0/ {{ .Site.BaseURL }}/9.8/ 301!
-/9.7.0/ {{ .Site.BaseURL }}/9.7/ 301!
-/9.6.0/ {{ .Site.BaseURL }}/9.6/ 301!
-/9.5.0/ {{ .Site.BaseURL }}/9.5/ 301!
-/9.4.0/ {{ .Site.BaseURL }}/9.4/ 301!
-/9.3.0/ {{ .Site.BaseURL }}/9.3/ 301!
-/9.2.0/ {{ .Site.BaseURL }}/9.2/ 301!
-/9.1.0/ {{ .Site.BaseURL }}/9.1/ 301!
-/9.0.0/ {{ .Site.BaseURL }}/9.0/ 301!
+# Root lands on params.homeSlug (/latest/).
+/ {{ printf "%s/" .Site.Params.homeSlug | absURL }} 301!
+/docs/ {{ printf "%s/" .Site.Params.homeSlug | absURL }} 301!
+# The versions archive moved from its own top-level section into the reference.
+{{ with index (where .Site.Pages "Params.versions_archive" true) 0 }}/versions/ {{ .Permalink }} 301!{{ end }}
+/11.63/ {{ "latest/" | absURL }} 301!
+/11.63.0/ {{ "latest/" | absURL }} 301!
+/11.62.0/ {{ "11.62/" | absURL }} 301!
+/11.61.0/ {{ "11.61/" | absURL }} 301!
+/11.60.0/ {{ "11.60/" | absURL }} 301!
+/11.59.0/ {{ "11.59/" | absURL }} 301!
+/11.58.0/ {{ "11.58/" | absURL }} 301!
+/11.57.0/ {{ "11.57/" | absURL }} 301!
+/11.56.0/ {{ "11.56/" | absURL }} 301!
+/11.55.0/ {{ "11.55/" | absURL }} 301!
+/11.54.0/ {{ "11.54/" | absURL }} 301!
+/11.53.0/ {{ "11.53/" | absURL }} 301!
+/11.52.0/ {{ "11.52/" | absURL }} 301!
+/11.51.0/ {{ "11.51/" | absURL }} 301!
+/11.50.0/ {{ "11.50/" | absURL }} 301!
+/11.49.0/ {{ "11.49/" | absURL }} 301!
+/11.48.0/ {{ "11.48/" | absURL }} 301!
+/11.47.0/ {{ "11.47/" | absURL }} 301!
+/11.46.0/ {{ "11.46/" | absURL }} 301!
+/11.45.0/ {{ "11.45/" | absURL }} 301!
+/11.44.0/ {{ "11.44/" | absURL }} 301!
+/11.43.0/ {{ "11.43/" | absURL }} 301!
+/11.42.0/ {{ "11.42/" | absURL }} 301!
+/11.41.0/ {{ "11.41/" | absURL }} 301!
+/11.40.0/ {{ "11.40/" | absURL }} 301!
+/11.39.0/ {{ "11.39/" | absURL }} 301!
+/11.38.0/ {{ "11.38/" | absURL }} 301!
+/11.36.0/ {{ "11.36/" | absURL }} 301!
+/11.35.0/ {{ "11.35/" | absURL }} 301!
+/11.34.0/ {{ "11.34/" | absURL }} 301!
+/11.32.0/ {{ "11.32/" | absURL }} 301!
+/11.31.0/ {{ "11.31/" | absURL }} 301!
+/11.30.0/ {{ "11.30/" | absURL }} 301!
+/11.29.0/ {{ "11.29/" | absURL }} 301!
+/11.28.0/ {{ "11.28/" | absURL }} 301!
+/11.27.0/ {{ "11.27/" | absURL }} 301!
+/11.26.0/ {{ "11.26/" | absURL }} 301!
+/11.25.0/ {{ "11.25/" | absURL }} 301!
+/11.24.0/ {{ "11.24/" | absURL }} 301!
+/11.22.0/ {{ "11.22/" | absURL }} 301!
+/11.21.0/ {{ "11.21/" | absURL }} 301!
+/11.20.0/ {{ "11.20/" | absURL }} 301!
+/11.19.0/ {{ "11.19/" | absURL }} 301!
+/11.18.0/ {{ "11.18/" | absURL }} 301!
+/11.17.0/ {{ "11.17/" | absURL }} 301!
+/11.16.0/ {{ "11.16/" | absURL }} 301!
+/11.15.0/ {{ "11.15/" | absURL }} 301!
+/11.14.0/ {{ "11.14/" | absURL }} 301!
+/11.13.0/ {{ "11.13/" | absURL }} 301!
+/11.12.0/ {{ "11.12/" | absURL }} 301!
+/11.11.0/ {{ "11.11/" | absURL }} 301!
+/11.10.0/ {{ "11.10/" | absURL }} 301!
+/11.9.0/ {{ "11.9/" | absURL }} 301!
+/11.8.0/ {{ "11.8/" | absURL }} 301!
+/11.7.0/ {{ "11.7/" | absURL }} 301!
+/11.6.0/ {{ "11.6/" | absURL }} 301!
+/11.5.0/ {{ "11.5/" | absURL }} 301!
+/11.4.0/ {{ "11.4/" | absURL }} 301!
+/11.3.0/ {{ "11.3/" | absURL }} 301!
+/11.2.0/ {{ "11.2/" | absURL }} 301!
+/11.1.0/ {{ "11.1/" | absURL }} 301!
+/11.0.0/ {{ "11.0/" | absURL }} 301!
+/10.43.0/ {{ "10.43/" | absURL }} 301!
+/10.42.0/ {{ "10.42/" | absURL }} 301!
+/10.41.0/ {{ "10.41/" | absURL }} 301!
+/10.40.0/ {{ "10.40/" | absURL }} 301!
+/10.39.0/ {{ "10.39/" | absURL }} 301!
+/10.38.0/ {{ "10.38/" | absURL }} 301!
+/10.37.0/ {{ "10.37/" | absURL }} 301!
+/10.36.0/ {{ "10.36/" | absURL }} 301!
+/10.35.0/ {{ "10.35/" | absURL }} 301!
+/10.34.0/ {{ "10.34/" | absURL }} 301!
+/10.33.0/ {{ "10.33/" | absURL }} 301!
+/10.32.0/ {{ "10.32/" | absURL }} 301!
+/10.31.0/ {{ "10.31/" | absURL }} 301!
+/10.30.0/ {{ "10.30/" | absURL }} 301!
+/10.29.0/ {{ "10.29/" | absURL }} 301!
+/10.28.0/ {{ "10.28/" | absURL }} 301!
+/10.27.0/ {{ "10.27/" | absURL }} 301!
+/10.26.0/ {{ "10.26/" | absURL }} 301!
+/10.25.0/ {{ "10.25/" | absURL }} 301!
+/10.24.0/ {{ "10.24/" | absURL }} 301!
+/10.23.0/ {{ "10.23/" | absURL }} 301!
+/10.22.0/ {{ "10.22/" | absURL }} 301!
+/10.20.0/ {{ "10.20/" | absURL }} 301!
+/10.19.0/ {{ "10.19/" | absURL }} 301!
+/10.18.0/ {{ "10.18/" | absURL }} 301!
+/10.17.0/ {{ "10.17/" | absURL }} 301!
+/10.16.0/ {{ "10.16/" | absURL }} 301!
+/10.15.0/ {{ "10.15/" | absURL }} 301!
+/10.14.0/ {{ "10.14/" | absURL }} 301!
+/10.13.0/ {{ "10.13/" | absURL }} 301!
+/10.12.0/ {{ "10.12/" | absURL }} 301!
+/10.11.0/ {{ "10.11/" | absURL }} 301!
+/10.10.0/ {{ "10.10/" | absURL }} 301!
+/10.9.0/ {{ "10.9/" | absURL }} 301!
+/10.8.0/ {{ "10.8/" | absURL }} 301!
+/10.7.0/ {{ "10.7/" | absURL }} 301!
+/10.6.0/ {{ "10.6/" | absURL }} 301!
+/10.5.0/ {{ "10.5/" | absURL }} 301!
+/10.4.0/ {{ "10.4/" | absURL }} 301!
+/10.3.0/ {{ "10.3/" | absURL }} 301!
+/10.2.0/ {{ "10.2/" | absURL }} 301!
+/10.1.0/ {{ "10.1/" | absURL }} 301!
+/10.0.0/ {{ "10.0/" | absURL }} 301!
+/9.9.0/ {{ "9.9/" | absURL }} 301!
+/9.8.0/ {{ "9.8/" | absURL }} 301!
+/9.7.0/ {{ "9.7/" | absURL }} 301!
+/9.6.0/ {{ "9.6/" | absURL }} 301!
+/9.5.0/ {{ "9.5/" | absURL }} 301!
+/9.4.0/ {{ "9.4/" | absURL }} 301!
+/9.3.0/ {{ "9.3/" | absURL }} 301!
+/9.2.0/ {{ "9.2/" | absURL }} 301!
+/9.1.0/ {{ "9.1/" | absURL }} 301!
+/9.0.0/ {{ "9.0/" | absURL }} 301!
+
+# Pre-reorg page URLs. Every reorganized page lists its old locations in
+# `aliases` (page-relative — see STYLE_GUIDE.md). Hugo writes a meta-refresh
+# HTML page at each alias path; a forced 301 here answers before that file is
+# served, so the redirect is a real 301 and keeps its link equity.
+# Resolved the way Hugo resolves a relative alias: against the directory the
+# page is written into, which for a section index is the section's parent.
+{{- $base := strings.TrimSuffix "/" (urls.Parse .Site.BaseURL).Path }}
+{{- range .Site.Pages }}
+{{- $target := .Permalink }}
+{{- $dir := path.Dir (strings.TrimSuffix "/" (strings.TrimPrefix $base .RelPermalink)) }}
+{{- range .Aliases }}
+{{- $from := . }}
+{{- if not (hasPrefix . "/") }}{{ $from = path.Join $dir . }}{{ end }}
+{{ printf "%s/ %s 301!" (strings.TrimSuffix "/" $from) $target }}
+{{- end }}
+{{- end }}

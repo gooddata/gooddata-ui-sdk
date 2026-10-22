@@ -1,0 +1,13 @@
+# Overrides config/_default for the "local" environment (`hugo server -e local`,
+# used by `make web-serve` and `npm start`).
+#
+# The generated API reference is the target of the relref links in the committed
+# guide pages (~140; the Props tables are generated at build time and don't use
+# relref). A laptop without a built SDK has no api model, so those links resolve
+# to nothing and a default Hugo build dies on the first one. Downgrading ref
+# errors to warnings lets the guides render and the theme be worked on without a
+# 20-minute rush build first.
+#
+# CI, previews and production do NOT use this environment: they generate the
+# reference, so a broken relref there is a real error and stays fatal.
+refLinksErrorLevel = "warning"

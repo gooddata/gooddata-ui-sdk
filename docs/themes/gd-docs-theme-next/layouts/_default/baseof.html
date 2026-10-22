@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>{{ partial "head.html" . }}</head>
+  <body>
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-60 focus:rounded-lg focus:bg-gd-secondary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-gd-on-secondary focus:shadow-lg focus:outline-none">Skip to content</a>
+    <div class="min-h-screen">
+      {{ partial "version-banner.html" . }}
+      {{/* Strip and header stick together, so the logo and the search box stay
+           on screen. sidebar.js measures this wrapper's bottom edge for the
+           sidebar's top; the CSS values on the sidebar are the no-JS fallback. */}}
+      <div id="site-chrome" class="sticky top-0 z-50">
+        {{ partial "topbar.html" . }}
+        {{ partial "header.html" . }}
+      </div>
+      <div class="mx-auto flex max-w-screen-2xl gap-6 px-4 py-6 lg:px-6 lg:py-10">
+        {{ partial "sidebar.html" . }}
+        <main id="main-content" class="min-w-0 flex-1 overflow-x-hidden">{{ partial "breadcrumbs.html" . }}{{ partial "toc-mobile.html" . }}{{ block "main" . }}{{ end }}</main>
+        <div class="hidden w-64 min-w-0 shrink-0 xl:block">{{ partial "toc.html" . }}</div>
+      </div>
+      {{ partial "footer.html" . }}
+    </div>
+    {{ partial "scripts.html" . }}
+  </body>
+</html>

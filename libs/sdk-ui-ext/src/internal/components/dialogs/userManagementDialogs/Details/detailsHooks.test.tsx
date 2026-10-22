@@ -34,10 +34,11 @@ function renderUserDetails(
     vi.spyOn(organization, "users").mockReturnValue(users);
     vi.spyOn(backend, "organization").mockReturnValue(organization);
     const onSubmit = vi.fn();
+    const trackEvent = vi.fn();
     const wrapper = ({ children }: PropsWithChildren) => (
         <BackendProvider backend={backend}>
             <OrganizationIdProvider organizationId="org">
-                <TelemetryProvider trackEvent={vi.fn()}>{children}</TelemetryProvider>
+                <TelemetryProvider trackEvent={trackEvent}>{children}</TelemetryProvider>
             </OrganizationIdProvider>
         </BackendProvider>
     );
@@ -55,7 +56,15 @@ function renderUserDetails(
             ),
         { wrapper, initialProps: { saved: languages } },
     );
-    return { result, rerender, onSubmit, setUserLocalizationSetting, updateUser, onLanguagesSaveFailed };
+    return {
+        result,
+        rerender,
+        onSubmit,
+        trackEvent,
+        setUserLocalizationSetting,
+        updateUser,
+        onLanguagesSaveFailed,
+    };
 }
 
 describe("useUserDetails languages", () => {
@@ -77,6 +86,35 @@ describe("useUserDetails languages", () => {
             LOCALE: "fr-FR",
             METADATA_LOCALE: undefined,
         });
+    });
+
+    it("reports one saved-language event per changed setting", async () => {
+        const { result, onSubmit, trackEvent } = renderUserDetails({ LOCALE: "ko-KR", DATA_LOCALE: "de-DE" });
+
+        act(() => result.current.onLanguagesChange({ LOCALE: "fr-FR", DATA_LOCALE: undefined }));
+        act(() => result.current.onSave());
+
+        await waitFor(() => expect(onSubmit).toHaveBeenCalled());
+        expect(trackEvent).toHaveBeenCalledTimes(3);
+        expect(trackEvent).toHaveBeenCalledWith("user-detail-updated");
+        expect(trackEvent).toHaveBeenCalledWith("user-display-language-saved");
+        expect(trackEvent).toHaveBeenCalledWith("user-data-language-saved");
+    });
+
+    it("reports only the languages whose write succeeded when another write fails", async () => {
+        const { result, trackEvent, setUserLocalizationSetting, onLanguagesSaveFailed } = renderUserDetails({
+            LOCALE: "ko-KR",
+        });
+        setUserLocalizationSetting.mockImplementation((_login, type) =>
+            type === "DATA_LOCALE" ? Promise.reject(new Error("failed")) : Promise.resolve(),
+        );
+        vi.spyOn(console, "error").mockImplementation(() => {});
+
+        act(() => result.current.onLanguagesChange({ LOCALE: "fr-FR", DATA_LOCALE: "es-ES" }));
+        act(() => result.current.onSave());
+
+        await waitFor(() => expect(onLanguagesSaveFailed).toHaveBeenCalled());
+        expect(trackEvent.mock.calls).toEqual([["user-display-language-saved"]]);
     });
 
     it("leaves the profile alone when only a language changed", async () => {

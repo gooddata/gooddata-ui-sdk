@@ -33,7 +33,9 @@ import {
     type Issues,
     type KeyTable,
     arrayOf,
+    characterCount,
     describeValue,
+    entityRef,
     finiteNumber,
     id,
     int32,
@@ -43,8 +45,8 @@ import {
     isPlainObject,
     joinPath,
     nonEmptyString,
+    nonEmptyStringOfAtMost,
     numberIn,
-    objRef,
     objectOf,
     oneKeyOf,
     oneOf,
@@ -56,6 +58,7 @@ import {
     requiredAllowingEmptyString,
     satisfying,
     trueOrFalse,
+    uniqueArrayOf,
 } from "./checks.js";
 import {
     type IPublisherAbsolutePeriodV2,
@@ -798,11 +801,13 @@ export const checkDocumentContent = objectOf<
     sections: optional(arrayOf(section)),
 });
 
+const maxTitleLength = 255;
+
 const entityKeys = {
-    ref: optional(objRef),
-    title: required(nonEmptyString),
-    description: optional(nonEmptyString),
-    tags: optional(arrayOf(nonEmptyString)),
+    ref: optional(entityRef),
+    title: required(nonEmptyStringOfAtMost(maxTitleLength)),
+    description: optional(nonEmptyStringOfAtMost(10000)),
+    tags: optional(uniqueArrayOf(nonEmptyString)),
     version: required(oneOf(["2"])),
     created: optional(nonEmptyString),
     updated: optional(nonEmptyString),
@@ -811,40 +816,56 @@ const entityKeys = {
     isLocked: optional(trueOrFalse),
 };
 
-const entities = {
-    document: objectOf<IPublisherDocumentDefinitionV2 & Partial<IPublisherEntityMetadataV2>>()({
-        ...entityKeys,
-        type: required(oneOf(["document"])),
-        period: required(period),
-        content: required(checkDocumentContent),
-    }),
-    documentTemplate: objectOf<
-        IPublisherDocumentTemplateDefinitionV2 & Partial<IPublisherEntityMetadataV2>
-    >()({
-        ...entityKeys,
-        type: required(oneOf(["documentTemplate"])),
-        content: required(checkDocumentContent),
-    }),
-    pageTemplate: objectOf<
-        IPublisherPageTemplateDefinitionV2 &
-            Partial<IPublisherEntityMetadataV2> &
-            Pick<IPublisherPageTemplateV2, "isDefault">
-    >()({
-        ...entityKeys,
-        type: required(oneOf(["pageTemplate"])),
-        content: required(checkPageBody),
-        isDefault: optional(trueOrFalse),
-    }),
+// What a backend stored is read even where a save would not write it: the title may be empty there.
+const loadedEntityKeys: typeof entityKeys = {
+    ...entityKeys,
+    title: requiredAllowingEmptyString(
+        satisfying(
+            (value) => typeof value === "string" && characterCount(value) <= maxTitleLength,
+            `a string of at most ${maxTitleLength} characters`,
+        ),
+    ),
 };
 
-export function checkEntity(value: unknown, path: string, issues: Issues): void {
-    const type = isPlainObject(value) ? value["type"] : undefined;
-    if (type === "document" || type === "documentTemplate" || type === "pageTemplate") {
-        entities[type](value, path, issues);
-    } else {
-        issues.push({
-            path: joinPath(path, "type"),
-            message: `Expected "document", "documentTemplate" or "pageTemplate", got ${describeValue(type)}.`,
-        });
-    }
+function entityChecker(keys: typeof entityKeys): Check {
+    const entities = {
+        document: objectOf<IPublisherDocumentDefinitionV2 & Partial<IPublisherEntityMetadataV2>>()({
+            ...keys,
+            type: required(oneOf(["document"])),
+            period: required(period),
+            content: required(checkDocumentContent),
+        }),
+        documentTemplate: objectOf<
+            IPublisherDocumentTemplateDefinitionV2 & Partial<IPublisherEntityMetadataV2>
+        >()({
+            ...keys,
+            type: required(oneOf(["documentTemplate"])),
+            content: required(checkDocumentContent),
+        }),
+        pageTemplate: objectOf<
+            IPublisherPageTemplateDefinitionV2 &
+                Partial<IPublisherEntityMetadataV2> &
+                Pick<IPublisherPageTemplateV2, "isDefault">
+        >()({
+            ...keys,
+            type: required(oneOf(["pageTemplate"])),
+            content: required(checkPageBody),
+            isDefault: optional(trueOrFalse),
+        }),
+    };
+    return (value, path, issues) => {
+        const type = isPlainObject(value) ? value["type"] : undefined;
+        if (type === "document" || type === "documentTemplate" || type === "pageTemplate") {
+            entities[type](value, path, issues);
+        } else {
+            issues.push({
+                path: joinPath(path, "type"),
+                message: `Expected "document", "documentTemplate" or "pageTemplate", got ${describeValue(type)}.`,
+            });
+        }
+    };
 }
+
+export const checkEntity = entityChecker(entityKeys);
+
+export const checkLoadedEntity = entityChecker(loadedEntityKeys);

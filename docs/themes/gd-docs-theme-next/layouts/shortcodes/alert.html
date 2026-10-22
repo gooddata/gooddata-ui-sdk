@@ -1,0 +1,39 @@
+{{- /*
+  Admonition. Icon and title share the top row; the body starts on its own line
+  underneath, flush with the icon, so the text gets the same padding on both
+  sides. A full 1px border in the alert's colour replaces the old thick left
+  bar, which pushed the content 4px further from the left edge than the right.
+*/ -}}
+{{- $color := .Get "color" | default "info" -}}
+{{- /* Every alert gets a title row. Without one the icon sat alone above the
+       body, which read as a different component from the titled alerts. */ -}}
+{{- $defaultTitle := "Note" -}}
+{{- if eq $color "warning" }}{{ $defaultTitle = "Warning" }}{{ else if eq $color "danger" }}{{ $defaultTitle = "Danger" }}{{ end -}}
+{{- $title := .Get "title" | default $defaultTitle -}}
+{{- /* Colours are the brand.json tokens (gd-warning, gd-danger; light and dark), as on the API pills. */ -}}
+{{- $borderClass := "border-gd-border" -}}
+{{- $iconSvg := "" -}}
+
+{{- if eq $color "warning" -}}
+  {{- $borderClass = "border-gd-warning/60" -}}
+  {{- $iconSvg = `<svg class="h-5 w-5 shrink-0 text-gd-warning" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>` -}}
+{{- else if eq $color "danger" -}}
+  {{- $borderClass = "border-gd-danger/60" -}}
+  {{- $iconSvg = `<svg class="h-5 w-5 shrink-0 text-gd-danger" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>` -}}
+{{- else -}}
+  {{- $iconSvg = `<svg class="h-5 w-5 shrink-0 text-gd-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>` -}}
+{{- end -}}
+
+<div class="my-6 rounded-lg border {{ $borderClass }} bg-gd-surface p-4">
+  {{- /* The title is a div, not a p: inside .prose a p picks up the typography
+         margins, and a my-0 utility only ties them on specificity. */}}
+  <div class="flex items-center gap-2 mb-2">
+    {{ $iconSvg | safeHTML }}
+    <div class="font-semibold text-gd-secondary">{{ $title }}</div>
+  </div>
+  {{- /* text-sm alone gives a 20px line height, cramped for multi-line notes and
+         bullet lists; leading-relaxed brings it close to the surrounding prose. */}}
+  <div class="text-sm leading-relaxed [&_p]:my-0 [&_p:not(:first-child)]:mt-2 [&_ul]:my-2 [&_ol]:my-2">
+    {{ .Inner | markdownify }}
+  </div>
+</div>

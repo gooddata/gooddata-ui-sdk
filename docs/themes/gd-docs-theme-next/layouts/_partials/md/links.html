@@ -1,0 +1,28 @@
+{{- /* Where a link to a docs page goes in the Markdown versions: the page's own index.md when it
+has one, so an agent that follows a link keeps reading Markdown instead of the HTML site (the
+docs are static files, so the server cannot pick Markdown for it). An API reference member page
+(a property, a method) has no index.md: its content is a section of its parent symbol's, so a
+link to it goes to that section, `<parent>/index.md#<member title, anchorized>`.
+
+Keys and values are the URL paths of the permalinks, base path included (/docs/gooddata-ui/...),
+which is what page-markdown.html resolves a link to. Not .RelPermalink: with canonifyURLs it
+leaves the base path out.
+
+Call it once per build: partialCached "md/links.html" site.
+Returns a dict: page path -> Markdown version path (with the fragment for a member). */ -}}
+{{- $s := newScratch -}}
+{{- range site.Pages -}}
+  {{- $page := . -}}
+  {{- with .OutputFormats.Get "markdown" -}}
+    {{- $s.SetInMap "links" (urls.Parse $page.Permalink).Path (urls.Parse .Permalink).Path -}}
+  {{- else -}}
+    {{- with $page.Params.parent_symbol -}}
+      {{- with $page.CurrentSection.GetPage . -}}
+        {{- with .OutputFormats.Get "markdown" -}}
+          {{- $s.SetInMap "links" (urls.Parse $page.Permalink).Path (printf "%s#%s" (urls.Parse .Permalink).Path (anchorize $page.Title)) -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return ($s.Get "links" | default dict) -}}

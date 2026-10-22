@@ -32,6 +32,9 @@ import { DeclarativeFilterContext } from '@gooddata/api-client-tiger';
 import { DeclarativeLabel } from '@gooddata/api-client-tiger';
 import { DeclarativeMetric } from '@gooddata/api-client-tiger';
 import { DeclarativeParameter } from '@gooddata/api-client-tiger';
+import { DeclarativePublisherDocument } from '@gooddata/api-client-tiger';
+import { DeclarativePublisherDocumentPageTemplate } from '@gooddata/api-client-tiger';
+import { DeclarativePublisherDocumentTemplate } from '@gooddata/api-client-tiger';
 import { DeclarativeReference } from '@gooddata/api-client-tiger';
 import { DeclarativeReport } from '@gooddata/api-client-tiger';
 import { DeclarativeReportPageLayout } from '@gooddata/api-client-tiger';
@@ -82,6 +85,7 @@ import { IPublisherDocumentPageV1 } from '@gooddata/sdk-model';
 import { IPublisherDocumentTemplateDefinitionV1 } from '@gooddata/sdk-model';
 import { IPublisherDocumentTemplateDefinitionV2 } from '@gooddata/sdk-model';
 import { IPublisherDocumentTemplateV1 } from '@gooddata/sdk-model';
+import { IPublisherPageBodyV2 } from '@gooddata/sdk-model';
 import { IPublisherPageTemplateDefinitionV1 } from '@gooddata/sdk-model';
 import { IPublisherPageTemplateDefinitionV2 } from '@gooddata/sdk-model';
 import { IPublisherPageTemplateV1 } from '@gooddata/sdk-model';
@@ -103,6 +107,8 @@ import type { Parameter } from '@gooddata/sdk-code-schemas/v1';
 import type { Plugin as Plugin_2 } from '@gooddata/sdk-code-schemas/v1';
 import type { PoPMetricField } from '@gooddata/sdk-code-schemas/v1';
 import type { PreviousPeriodMetricField } from '@gooddata/sdk-code-schemas/v1';
+import { PublisherContentVersionV2 } from '@gooddata/sdk-model';
+import { PublisherDocumentContentV2 } from '@gooddata/sdk-model';
 import type { PublisherDocumentTemplateV2 } from '@gooddata/sdk-code-schemas/v1';
 import type { PublisherDocumentV2 } from '@gooddata/sdk-code-schemas/v1';
 import type { PublisherPageTemplateV2 } from '@gooddata/sdk-code-schemas/v1';
@@ -170,6 +176,9 @@ export type AacPublisherDocumentTemplateV2 = PublisherDocumentTemplateV2;
 
 // @alpha (undocumented)
 export type AacPublisherDocumentV2 = PublisherDocumentV2;
+
+// @alpha
+export type AacPublisherEntityWithOptionalIdUnionV2 = AacPublisherEntityWithOptionalIdV2<AacPublisherDocumentV2> | AacPublisherEntityWithOptionalIdV2<AacPublisherDocumentTemplateV2> | AacPublisherEntityWithOptionalIdV2<AacPublisherPageTemplateV2>;
 
 // @alpha
 export type AacPublisherEntityWithOptionalIdV2<T extends {
@@ -1529,8 +1538,9 @@ export function declarativePublisherDocumentTemplateToYamlV2(template: Declarati
 };
 
 // @alpha
-export type DeclarativePublisherDocumentTemplateV2 = Omit<IPublisherDocumentTemplateDefinitionV2, "ref"> & {
-    id: string;
+export type DeclarativePublisherDocumentTemplateV2 = Omit<DeclarativePublisherDocumentTemplate, "content" | "version"> & {
+    version: PublisherContentVersionV2;
+    content: PublisherDocumentContentV2;
 };
 
 // @alpha (undocumented)
@@ -1546,9 +1556,13 @@ export function declarativePublisherDocumentToYamlV2(document: DeclarativePublis
 };
 
 // @alpha
-export type DeclarativePublisherDocumentV2 = Omit<IPublisherDocumentDefinitionV2, "ref"> & {
-    id: string;
+export type DeclarativePublisherDocumentV2 = Omit<DeclarativePublisherDocument, "content" | "version"> & {
+    version: PublisherContentVersionV2;
+    content: PublisherDocumentContentV2;
 };
+
+// @alpha
+export type DeclarativePublisherEntityKindV2 = "document" | "documentTemplate" | "pageTemplate";
 
 // @alpha (undocumented)
 export function declarativePublisherPageLayoutToYaml(layout: DeclarativeReportPageLayout): {
@@ -1563,8 +1577,9 @@ export function declarativePublisherPageTemplateToYamlV2(template: DeclarativePu
 };
 
 // @alpha
-export type DeclarativePublisherPageTemplateV2 = Omit<IPublisherPageTemplateDefinitionV2, "ref"> & {
-    id: string;
+export type DeclarativePublisherPageTemplateV2 = Omit<DeclarativePublisherDocumentPageTemplate, "content" | "version"> & {
+    version: PublisherContentVersionV2;
+    content: IPublisherPageBodyV2;
 };
 
 // @internal (undocumented)
@@ -1822,6 +1837,12 @@ export type FileNamesUsed = {
 
 // @public (undocumented)
 export type FilePath = string[] | string;
+
+// @alpha
+export function fillPublisherIdsInEntityV2<T extends AacPublisherEntityWithOptionalIdUnionV2>(entity: T): {
+    entity: T;
+    changed: boolean;
+};
 
 // @alpha
 export function fillPublisherIdsV2(content: string): {
@@ -3228,6 +3249,9 @@ export function publisherDocumentTemplateDefinitionToYamlV2(template: IPublisher
 };
 
 // @alpha
+export function publisherIssueToCodeV2(issue: IPublisherValidationIssueV2, entity: unknown): IPublisherValidationIssueV2;
+
+// @alpha
 export function publisherPageLayoutDefinitionToYaml(layout: IPublisherPageTemplateV1 | IPublisherPageTemplateDefinitionV1): {
     content: string;
     json: ReportPageLayout;
@@ -4181,7 +4205,7 @@ export function treemapChartSave(_fields: Visualisation["query"]["fields"] | und
 } | undefined;
 
 // @alpha
-export function validateDeclarativePublisherEntityV2(entity: unknown): IPublisherValidationIssueV2[];
+export function validateDeclarativePublisherEntityV2(entity: unknown, kind: DeclarativePublisherEntityKindV2): IPublisherValidationIssueV2[];
 
 // @public (undocumented)
 export type ValueType = "string" | "bool" | "number" | "bool_auto" | "array";

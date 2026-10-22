@@ -82,7 +82,7 @@ const listResponse = (data: unknown[]) => ({ data: { data } }) as unknown as Awa
 
 describe("TigerWorkspaceStyling active theme resolution", () => {
     beforeEach(() => {
-        vi.clearAllMocks();
+        vi.resetAllMocks();
     });
 
     it("resolves a workspace-scoped active theme from the workspace themes collection", async () => {
@@ -187,7 +187,7 @@ describe("TigerWorkspaceStyling active theme resolution", () => {
 
 describe("TigerWorkspaceStyling active color palette resolution", () => {
     beforeEach(() => {
-        vi.clearAllMocks();
+        vi.resetAllMocks();
     });
 
     it("resolves a workspace-scoped active color palette from the workspace collection", async () => {
@@ -278,7 +278,7 @@ describe("TigerWorkspaceStyling active color palette resolution", () => {
 
 describe("TigerWorkspaceStyling color palette by reference", () => {
     beforeEach(() => {
-        vi.clearAllMocks();
+        vi.resetAllMocks();
     });
 
     // Both scopes are read here: the reference type says which collection holds the palette. The
@@ -336,7 +336,7 @@ describe("TigerWorkspaceStyling color palette by reference", () => {
 
 describe("TigerWorkspaceStyling workspace object management", () => {
     beforeEach(() => {
-        vi.clearAllMocks();
+        vi.resetAllMocks();
     });
 
     it("creates a workspace theme carrying the workspaceTheme discriminator", async () => {
@@ -626,7 +626,7 @@ describe("TigerWorkspaceStyling workspace object management", () => {
 
 describe("TigerWorkspaceStyling scope-aware activation", () => {
     beforeEach(() => {
-        vi.clearAllMocks();
+        vi.resetAllMocks();
     });
 
     it("forwards a workspace-scoped theme reference to the settings service", async () => {

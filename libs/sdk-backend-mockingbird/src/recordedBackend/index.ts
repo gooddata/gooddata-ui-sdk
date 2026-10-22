@@ -59,6 +59,7 @@ import {
     type IWorkspaceParametersService,
     type IWorkspacePermissionsService,
     type IWorkspacePublisherService,
+    type IWorkspacePublisherServiceV2,
     type IWorkspaceSettings,
     type IWorkspaceSettingsService,
     type IWorkspaceStylingService,
@@ -70,7 +71,7 @@ import {
     type ValidationContext,
 } from "@gooddata/sdk-backend-spi";
 import {
-    DefaultPublisherPageTemplates,
+    DefaultPublisherPageTemplatesV1,
     type IColorPalette,
     type IColorPaletteDefinition,
     type IColorPaletteMetadataObject,
@@ -591,9 +592,9 @@ function recordedWorkspace(
         },
         publisher(): IWorkspacePublisherService {
             return {
-                getPageTemplates: () => Promise.resolve([...DefaultPublisherPageTemplates]),
+                getPageTemplates: () => Promise.resolve([...DefaultPublisherPageTemplatesV1]),
                 getPageTemplate: (ref) => {
-                    const page = DefaultPublisherPageTemplates.find((candidate) =>
+                    const page = DefaultPublisherPageTemplatesV1.find((candidate) =>
                         areObjRefsEqual(candidate.ref, ref),
                     );
                     if (!page) {
@@ -604,7 +605,7 @@ function recordedWorkspace(
                 createPageTemplate: (page) => Promise.resolve({ ...page, ref: idRef("recordedReportPage") }),
                 updatePageTemplate: (page) => {
                     if (
-                        DefaultPublisherPageTemplates.some((candidate) =>
+                        DefaultPublisherPageTemplatesV1.some((candidate) =>
                             areObjRefsEqual(candidate.ref, page.ref),
                         )
                     ) {
@@ -614,7 +615,9 @@ function recordedWorkspace(
                 },
                 deletePageTemplate: (ref) => {
                     if (
-                        DefaultPublisherPageTemplates.some((candidate) => areObjRefsEqual(candidate.ref, ref))
+                        DefaultPublisherPageTemplatesV1.some((candidate) =>
+                            areObjRefsEqual(candidate.ref, ref),
+                        )
                     ) {
                         throw new NotSupported("Default page templates cannot be deleted.");
                     }
@@ -629,11 +632,45 @@ function recordedWorkspace(
                 updateDocumentTemplate: (template) => Promise.resolve(template),
                 deleteDocumentTemplate: () => Promise.resolve(),
                 getDocuments: () => Promise.resolve([]),
+                hasDocuments: () => Promise.resolve(false),
                 getDocument: () => {
                     throw new UnexpectedResponseError("Report not found", 404, {});
                 },
                 createDocument: (publisherDocument) =>
                     Promise.resolve({ ...publisherDocument, ref: idRef("recordedReport") }),
+                updateDocument: (publisherDocument) => Promise.resolve(publisherDocument),
+                deleteDocument: () => Promise.resolve(),
+                exportDocumentToPdf: () =>
+                    Promise.resolve({
+                        uri: "/example/export.pdf",
+                        objectUrl: "blob:/01345454545454",
+                        fileName: "export.pdf",
+                    }),
+            };
+        },
+        publisherV2(): IWorkspacePublisherServiceV2 {
+            return {
+                getPageTemplates: () => Promise.resolve([]),
+                getPageTemplate: () =>
+                    Promise.reject(new UnexpectedResponseError("Page template not found", 404, {})),
+                createPageTemplate: (template) =>
+                    Promise.resolve({ ...template, ref: idRef("recordedPageTemplate", "pageTemplate") }),
+                updatePageTemplate: (template) => Promise.resolve(template),
+                deletePageTemplate: () => Promise.resolve(),
+                getDocumentTemplates: () => Promise.resolve([]),
+                getDocumentTemplate: () =>
+                    Promise.reject(new UnexpectedResponseError("Document template not found", 404, {})),
+                createDocumentTemplate: (template) =>
+                    Promise.resolve({
+                        ...template,
+                        ref: idRef("recordedDocumentTemplate", "documentTemplate"),
+                    }),
+                updateDocumentTemplate: (template) => Promise.resolve(template),
+                deleteDocumentTemplate: () => Promise.resolve(),
+                getDocuments: () => Promise.resolve([]),
+                getDocument: () => Promise.reject(new UnexpectedResponseError("Document not found", 404, {})),
+                createDocument: (publisherDocument) =>
+                    Promise.resolve({ ...publisherDocument, ref: idRef("recordedDocument", "document") }),
                 updateDocument: (publisherDocument) => Promise.resolve(publisherDocument),
                 deleteDocument: () => Promise.resolve(),
                 exportDocumentToPdf: () =>

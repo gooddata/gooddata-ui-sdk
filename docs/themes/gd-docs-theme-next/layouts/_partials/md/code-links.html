@@ -1,0 +1,51 @@
+{{- /* A guide's code spans that name an API symbol, linked to its reference page, for the guide's
+Markdown version: the counterpart of the links guide-body.html adds to the HTML page, through the
+same lookup (api-name-url.html). page-markdown.html then points the link to the symbol's index.md.
+
+Only a span that is a whole name or an array of it (`IMeasure`, `IMeasure[]`) links: Markdown
+cannot put a link inside a code span, so a union (`IBucket | undefined`) stays plain rather than
+sending `undefined` to the IBucket page. Lowercase names never link (`measures`, `onError` collide
+with symbol names). Left as written: code inside fences, a span that already is a link's text
+(the generated Props tables), headings, and lines with a double-backtick span.
+
+Expects: dict "page" (the guide) "text" (its Markdown). Returns the Markdown with the links. */ -}}
+{{- $page := .page -}}
+{{- $inFence := false -}}
+{{- $closer := "" -}}
+{{- $lines := slice -}}
+{{- range split .text "\n" -}}
+  {{- $line := . -}}
+  {{- with findRESubmatch "^[ \t]*(`{3,}|~{3,})(.*)$" $line 1 -}}
+    {{- $marker := index (index . 0) 1 -}}
+    {{- if $inFence -}}
+      {{- if and (eq (substr $marker 0 1) (substr $closer 0 1)) (ge (len $marker) (len $closer)) (eq (trim (index (index . 0) 2) " \t\r") "") -}}
+        {{- $inFence = false -}}
+      {{- end -}}
+    {{- else -}}
+      {{- $inFence = true -}}
+      {{- $closer = $marker -}}
+    {{- end -}}
+  {{- else -}}
+    {{- $parts := split $line "`" -}}
+    {{- if and (not $inFence) (gt (len $parts) 2) (modBool (len $parts) 2 | not) (not (strings.Contains $line "``")) (not (hasPrefix (trim $line " ") "#")) -}}
+      {{- $out := slice -}}
+      {{- range $i, $part := $parts -}}
+        {{- if modBool $i 2 -}}
+          {{- $out = $out | append $part -}}
+        {{- else -}}
+          {{- $code := printf "`%s`" $part -}}
+          {{- $isLinkText := and (hasSuffix (index $parts (sub $i 1)) "[") (hasPrefix (index $parts (add $i 1)) "]") -}}
+          {{- if and (findRE `^[A-Z][A-Za-z0-9_]*(\[\])?$` $part) (not $isLinkText) -}}
+            {{- with partial "api-name-url.html" (dict "page" $page "name" (strings.TrimSuffix "[]" $part)) -}}
+              {{- $code = printf "[%s](%s)" $code . -}}
+            {{- end -}}
+          {{- end -}}
+          {{- $out = $out | append $code -}}
+        {{- end -}}
+      {{- end -}}
+      {{- $line = delimit $out "" -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $lines = $lines | append $line -}}
+{{- end -}}
+{{- return delimit $lines "\n" -}}

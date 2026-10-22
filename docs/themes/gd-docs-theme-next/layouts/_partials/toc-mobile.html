@@ -1,0 +1,22 @@
+{{- /*
+  Below xl the right-hand TOC column is hidden, which left phones and tablets
+  with no in-page navigation at all on pages that are thousands of pixels long.
+  Same headings, collapsed into a disclosure above the article title.
+*/ -}}
+{{/* toc-html.html: the content headings, plus an API symbol's member sections. Cached per page:
+     toc.html prints the same list. Hugo wraps it in <nav id="TableOfContents">; the desktop copy
+     keeps that id, so here the inner nav becomes a plain div (one id per page, and no nav nested
+     in the "On this page" nav). */}}
+{{ with partialCached "toc-html.html" . .RelPermalink }}
+  {{ if ne (. | plainify | strings.TrimSpace) "" }}
+    <details class="group mb-6 rounded-xl lg:mx-2 border border-gd-border bg-gd-card xl:hidden">
+      <summary class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-2 rounded-xl px-4 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-gd-text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gd-secondary [&::-webkit-details-marker]:hidden">
+        On this page
+        <span aria-hidden="true" class="text-base leading-none transition-transform duration-150 group-open:rotate-90">›</span>
+      </summary>
+      <nav aria-label="On this page" class="border-t border-gd-border px-2 pb-3 pt-2 text-sm text-gd-text-secondary [&_a]:block [&_a]:min-h-11 [&_a]:content-center [&_a]:rounded-lg [&_a]:px-2 [&_a]:py-1 [&_a]:hover:bg-gd-surface [&_a]:hover:text-gd-secondary [&_a]:hover:no-underline [&_a]:focus-visible:outline-none [&_a]:focus-visible:ring-2 [&_a]:focus-visible:ring-gd-secondary dark:[&_a]:focus-visible:ring-gd-contrast [&_ul]:ml-3 [&_ul]:space-y-1">
+        {{ . | replaceRE `^\s*<nav id="TableOfContents">` "<div>" | replaceRE `</nav>\s*$` "</div>" | safeHTML }}
+      </nav>
+    </details>
+  {{ end }}
+{{ end }}

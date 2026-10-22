@@ -1,0 +1,17 @@
+{{- /* The pages of one docs section in sidebar order, for llms.txt (llms-entries.html) and
+llms-full.txt (layouts/llms-full.markdown.md), so both list the same pages in the same order: the
+section's landing page when it has a Markdown version, then its pages and subsections by weight,
+a subsection's own pages in place. A folded API member is a section of its parent's page, not a
+page here.
+
+Expects: the section. Returns a slice of pages. */ -}}
+{{- $pages := slice -}}
+{{- if .OutputFormats.Get "markdown" }}{{ $pages = $pages | append . }}{{ end -}}
+{{- range sort (where .Pages "Params.folded" "!=" true) ".Weight" -}}
+  {{- if .IsSection -}}
+    {{- $pages = $pages | append (partial "llms-pages.html" .) -}}
+  {{- else -}}
+    {{- $pages = $pages | append . -}}
+  {{- end -}}
+{{- end -}}
+{{- return $pages -}}

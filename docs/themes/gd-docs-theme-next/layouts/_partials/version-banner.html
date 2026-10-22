@@ -1,0 +1,21 @@
+{{- $versions := partialCached "versions.html" . -}}
+{{- if gt (len $versions) 1 -}}
+  {{- $cur := .Page.Section -}}
+  {{- $latest := index $versions 0 -}}
+  {{- $known := false -}}
+  {{- range $versions -}}{{ if eq $cur .dirpath }}{{ $known = true }}{{ end }}{{- end -}}
+  {{- if and $known (ne $cur $latest.dirpath) -}}
+  <div class="border-b border-gd-warning/40 bg-gd-warning/10 text-gd-text">
+    <div class="mx-auto max-w-screen-2xl px-4 py-2 text-sm lg:px-6">
+      You're viewing docs for an older version.
+      <a href="{{ $latest.url | relURL }}" class="font-semibold underline hover:no-underline">Go to the latest version ({{ $latest.version }}) →</a>
+      {{- /* Only the newest versions keep their own API reference (build-api-reference-versions.sh).
+           An older version's links into it were pointed at the newest one, and its symbol chips use
+           the newest version's data, so say so where the page actually links the reference. */ -}}
+      {{- if and (not (site.GetPage (printf "/%s/api-reference" $cur))) (or .Page.Params.api_symbols (strings.Contains .Page.Content (printf "/%s/api-reference/" $latest.dirpath))) }}
+      API reference links on this page open the latest version ({{ $latest.version }}).
+      {{- end }}
+    </div>
+  </div>
+  {{- end -}}
+{{- end -}}

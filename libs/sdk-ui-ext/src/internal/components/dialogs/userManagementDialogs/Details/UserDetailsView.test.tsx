@@ -6,11 +6,10 @@ import { describe, expect, it, vi } from "vitest";
 import { type IUser } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
+import { TelemetryProvider } from "../TelemetryContext.js";
 import { type ListMode } from "../types.js";
 
 import { UserDetailsView } from "./UserDetailsView.js";
-
-vi.mock("../TelemetryContext.js", () => ({ useTelemetry: () => vi.fn() }));
 
 const USER = {
     login: "ben",
@@ -22,15 +21,17 @@ const USER = {
 function renderView(isLocalizationEnabled: boolean, mode: ListMode = "VIEW") {
     const { container } = render(
         <IntlWrapper>
-            <UserDetailsView
-                user={USER}
-                isAdmin={false}
-                isBootstrapUser={false}
-                mode={mode}
-                isSystemAccountFilteringEnabled
-                isLocalizationEnabled={isLocalizationEnabled}
-                languages={{}}
-            />
+            <TelemetryProvider trackEvent={vi.fn()}>
+                <UserDetailsView
+                    user={USER}
+                    isAdmin={false}
+                    isBootstrapUser={false}
+                    mode={mode}
+                    isSystemAccountFilteringEnabled
+                    isLocalizationEnabled={isLocalizationEnabled}
+                    languages={{}}
+                />
+            </TelemetryProvider>
         </IntlWrapper>,
     );
     return container;

@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import {
-    type Document,
+    Document,
     LineCounter,
     Pair,
     Scalar,
@@ -14,6 +14,8 @@ import {
 } from "yaml";
 
 import { newPublisherPageIdV2, newPublisherSectionIdV2, newPublisherWidgetIdV2 } from "@gooddata/sdk-model";
+
+import { type AacPublisherEntityWithOptionalIdUnionV2 } from "./schemas/types.js";
 
 function isKey(pair: Pair, key: string): boolean {
     return isScalar(pair.key) ? pair.key.value === key : pair.key === key;
@@ -86,6 +88,10 @@ function fillWidgetIds(layout: unknown): boolean {
         taken: takenIds(widgets),
         after: "type",
     });
+}
+
+function fillEntityIds(entity: unknown): boolean {
+    return isMap(entity) && fillContentIds(entity.get("type"), entity.get("content"));
 }
 
 function fillContentIds(type: unknown, content: unknown): boolean {
@@ -174,7 +180,7 @@ export function fillPublisherIdsV2(content: string): { content: string; changed:
     if (document.errors.length > 0 || !isMap(document.contents)) {
         return { content, changed: false };
     }
-    if (!fillContentIds(document.contents.get("type"), document.contents.get("content"))) {
+    if (!fillEntityIds(document.contents)) {
         return { content, changed: false };
     }
     const written = document.toString({
@@ -183,4 +189,21 @@ export function fillPublisherIdsV2(content: string): { content: string; changed:
         lineWidth: 0,
     });
     return { content: usesCrlf(content) ? written.replace(/\n/g, "\r\n") : written, changed: true };
+}
+
+/**
+ * {@link fillPublisherIdsV2} for an entity already parsed: adds the same section, page and widget ids
+ * by the same rules, and returns a new entity. The entity passed in is not changed.
+ *
+ * @alpha
+ */
+export function fillPublisherIdsInEntityV2<T extends AacPublisherEntityWithOptionalIdUnionV2>(
+    entity: T,
+): { entity: T; changed: boolean } {
+    const document = new Document(entity, { aliasDuplicateObjects: false });
+    if (!fillEntityIds(document.contents)) {
+        return { entity, changed: false };
+    }
+    // Sound: the fill only adds or replaces id strings, so the entity keeps its shape.
+    return { entity: document.toJS() as T, changed: true };
 }

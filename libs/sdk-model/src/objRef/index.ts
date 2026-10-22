@@ -69,7 +69,10 @@ export type ObjectType =
     | "parameter"
     | "reportPageLayout"
     | "reportTemplate"
-    | "report";
+    | "report"
+    | "document"
+    | "documentTemplate"
+    | "pageTemplate";
 
 /**
  * Model object reference using object's unique identifier.

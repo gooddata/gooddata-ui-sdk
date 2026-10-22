@@ -125,6 +125,18 @@ describe("CustomHyperlinkComponent", () => {
             {},
             "/workspace/workspace_1/publisher/report/report%2F1",
         ],
+        [
+            "report without Publisher v2",
+            "gooddata://report?ws=workspace_1&id=report_1",
+            { enablePublisherV2: false },
+            "/workspace/workspace_1/publisher/report/report_1",
+        ],
+        [
+            "report with Publisher v2",
+            "gooddata://report?ws=workspace_1&id=report/1",
+            { enablePublisherV2: true },
+            "/workspace/workspace_1/publisher/report/report%2F1",
+        ],
     ])("renders native link for %s", (_description, href, settings, expectedHref) => {
         renderCustomHyperlinkComponent({
             href,

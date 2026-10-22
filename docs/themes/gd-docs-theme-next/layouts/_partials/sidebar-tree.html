@@ -1,0 +1,72 @@
+{{/*
+  Recursive sidebar walker over Hugo's NATIVE page tree.
+  Params: "pages" (Pages collection to render), "current" (the page being viewed).
+
+  Mirrors the structure the old site.Data.nav walk produced (byte/pixel parity):
+    - <hr> divider for leaves carrying Params.nav_divider
+    - section (not nav_leaf) with exactly one non-hidden child -> FLATTEN (lone child as flat link, no header)
+    - section (not nav_leaf) with >1 children -> group header LINK (to the section's own _index overview) + recurse
+    - leaf page OR nav_leaf section (e.g. a reference package) -> clickable link, NO recursion
+      (the nav_leaf guard stops descent into the thousands of reference symbol pages)
+*/}}
+{{/* Link styles are the .gd-nav-link / .gd-nav-group classes in main.css.tmpl, and the current
+     page's pill keys off aria-current="page". One short class instead of the ~130-character
+     utility list: a sidebar carries ~130 links, on every one of the thousands of pages. */}}
+{{ $current := .current }}
+{{/* listable-pages.html: no toc_hide pages, no folded API members, by weight. */}}
+{{ $items := partial "listable-pages.html" .pages }}
+{{ range $items }}
+  {{ if .Params.nav_divider }}<hr class="my-2 mx-3 border-gd-border">{{ end }}
+  {{ $active := or (eq $current.RelPermalink .RelPermalink) (.IsAncestor $current) }}
+  {{ if and .IsSection (ne .Params.nav_leaf true) }}
+    {{ $kids := partial "listable-pages.html" .Pages }}
+    {{ if eq (len $kids) 1 }}
+      {{/* single-child flatten: link points to the lone child, but the label stays the
+           subsection title (.LinkTitle) to preserve byte/pixel parity with the old nav.json
+           sidebar, which rendered the parent subsection's title here. */}}
+      {{ $c := index $kids 0 }}
+      {{ $ca := or (eq $current.RelPermalink $c.RelPermalink) ($c.IsAncestor $current) }}
+      <a href="{{ $c.RelPermalink }}" {{ if $ca }}aria-current="page"{{ end }} class="gd-nav-link">
+        {{ .LinkTitle }}
+      </a>
+    {{ else }}
+      {{ $onIndex := eq $current.RelPermalink .RelPermalink }}
+      {{/* The header of the section the current page sits in is marked aria-current="location"
+           (the pill, "page", stays on the page itself): the reader sees which section they are in
+           even with the section folded, and the mark is what sidebar-collapse.js does NOT treat as
+           "you are already here" — clicking it still opens the section's overview. */}}
+      {{ $ancestor := and (not $onIndex) (.IsAncestor $current) }}
+      {{/* A foldable group (sidebar-collapse.js): the header row holds the overview link
+           and the chevron that folds the panel below. The chevron is a sibling of the
+           link, not inside it (a button in an anchor is invalid HTML), laid over the
+           pill's right edge; pr-8 keeps the truncated title from running under it.
+           data-nav-section names the group for sidebar-collapse.js; the panel id is
+           what the chevron's aria-controls names, hashed so nested groups stay unique. */}}
+      {{ $panelId := printf "nav-%s" (substr (md5 .RelPermalink) 0 10) }}
+      <div data-nav-section="{{ .RelPermalink }}">
+        {{/* Same pill as a leaf when this is the current page (aria-current), so a selected
+             section overview and a selected nested page read as the same state. mt-3/mb-2 keep
+             sections close, as one list. They stay
+             utilities here: the list's space-y (a utility too) would outrank them in a component. */}}
+        <div class="relative mt-3 mb-2">
+          <a href="{{ .RelPermalink }}" data-nav-link {{ if $onIndex }}aria-current="page"{{ else if $ancestor }}aria-current="location"{{ end }} class="gd-nav-link gd-nav-group pr-8">{{ .LinkTitle }}</a>
+          <button type="button" data-nav-toggle class="gd-nav-chevron" aria-expanded="true" aria-controls="{{ $panelId }}" aria-label="{{ .LinkTitle }} pages">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+        </div>
+        {{/* Children of a group step in one level, so the page hierarchy reads at
+             a glance: a section header and a nested group header otherwise look
+             identical (same weight, same x). No guide line: the chevron and the
+             fold already mark the group. Kept to 12px per level: the sidebar is
+             18rem and titles already truncate. */}}
+        <div id="{{ $panelId }}" data-nav-panel class="pl-3">
+          {{ partial "sidebar-tree.html" (dict "pages" .Pages "current" $current) }}
+        </div>
+      </div>
+    {{ end }}
+  {{ else }}
+    <a href="{{ .RelPermalink }}" {{ if $active }}aria-current="page"{{ end }} class="gd-nav-link">
+      {{ .LinkTitle }}
+    </a>
+  {{ end }}
+{{ end }}

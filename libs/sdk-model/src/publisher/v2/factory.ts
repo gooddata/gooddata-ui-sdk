@@ -7,6 +7,34 @@ import { type ObjRef, isIdentifierRef } from "../../objRef/index.js";
 import { type IPublisherDocumentPageV2, type IPublisherPageBodyV2 } from "./page.js";
 
 /**
+ * A string that passed {@link isPublisherEntityIdV2}.
+ *
+ * @alpha
+ */
+export type PublisherEntityIdV2 = string & { readonly __publisherEntityIdV2: unique symbol };
+
+/**
+ * Tells whether a value is a valid id of a stored document, document template or page template:
+ * 1 to 255 letters, digits, dots, underscores or hyphens, not starting with a dot.
+ *
+ * @alpha
+ */
+export function isPublisherEntityIdV2(value: unknown): value is PublisherEntityIdV2 {
+    return typeof value === "string" && /^(?!\.)[.A-Za-z0-9_-]{1,255}$/.test(value);
+}
+
+export const reservedPublisherEntityIdPrefixV2 = "default.";
+
+/**
+ * Tells whether an id is reserved for the defaults the backend provides, such as its default page templates.
+ *
+ * @alpha
+ */
+export function isReservedPublisherEntityIdV2(id: string): boolean {
+    return id.startsWith(reservedPublisherEntityIdPrefixV2);
+}
+
+/**
  * Generates an id such as `widget_7f3a91c4`.
  *
  * @remarks

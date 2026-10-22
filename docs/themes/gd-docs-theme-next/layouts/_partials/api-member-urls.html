@@ -1,0 +1,11 @@
+{{- /* Every folded API reference member's URL -> its section on the parent symbol's page
+(api-page-url.html), for api-member-links.html: a link to a member, from a guide or from another
+symbol's page, goes to the section: the member has no page of its own (`build.render: link`).
+
+Call it once per build: partialCached "api-member-urls.html" site.
+Returns a dict: member RelPermalink -> section URL (RelPermalink#anchor). */ -}}
+{{- $s := newScratch -}}
+{{- range where site.RegularPages "Params.folded" true -}}
+  {{- $s.SetInMap "urls" .RelPermalink (partial "api-page-url.html" .) -}}
+{{- end -}}
+{{- return ($s.Get "urls" | default dict) -}}

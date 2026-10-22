@@ -1,0 +1,27 @@
+{{/* gd-docs-theme-next: the version list, for the selector, the banner and the archive table.
+     Returns site.Params.versions when the environment sets it (production: the release bot
+     keeps config/public/params.toml current).
+     Otherwise (dev server, PR previews) it reads params.versionsSource.file, the same list,
+     so there is no second copy to go stale. Relative urls become links on the live site
+     (params.versionsSource.liveURL), since those builds carry no versioned content, and
+     params.versionsSource.local heads the list as the version being built.
+     The file is read with os.ReadFile, which hugo server does not watch: restart it to pick
+     up a new release. */}}
+{{- $versions := site.Params.versions -}}
+{{- $src := site.Params.versionsSource -}}
+{{- if and (not $versions) $src $src.file -}}
+  {{- if fileExists $src.file -}}
+    {{- $versions = slice -}}
+    {{- with $src.local }}{{ $versions = $versions | append . }}{{ end -}}
+    {{- $live := strings.TrimSuffix "/" ($src.liveURL | default "") -}}
+    {{- /* Wrapped as a .toml resource: on a plain string Unmarshal guesses the format and reads TOML as YAML. */ -}}
+    {{- range (resources.FromString "versions-source.toml" (os.ReadFile $src.file) | transform.Unmarshal).versions -}}
+      {{- $v := . -}}
+      {{- if and $live (hasPrefix (.url | default "") "/") -}}{{ $v = merge . (dict "url" (print $live .url)) }}{{- end -}}
+      {{- $versions = $versions | append $v -}}
+    {{- end -}}
+  {{- else -}}
+    {{- warnf "versions: params.versionsSource.file %q not found; the version list is empty" $src.file -}}
+  {{- end -}}
+{{- end -}}
+{{- return ($versions | default slice) -}}

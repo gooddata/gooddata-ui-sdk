@@ -48,7 +48,10 @@ export type TelemetryEvent =
     | "user-role-changed-to-admin"
     | "user-role-changed-to-member"
     | "user-marked-system-account"
-    | "user-unmarked-system-account";
+    | "user-unmarked-system-account"
+    | "user-display-language-saved"
+    | "user-metadata-language-saved"
+    | "user-data-language-saved";
 
 /**
  * @internal

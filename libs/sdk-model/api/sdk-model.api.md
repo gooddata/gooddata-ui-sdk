@@ -7936,6 +7936,9 @@ export function isPublisherDocumentV1(obj: unknown): obj is IPublisherDocumentV1
 export function isPublisherDocumentV2(obj: unknown): obj is IPublisherDocumentV2;
 
 // @alpha
+export function isPublisherEntityIdV2(value: unknown): value is PublisherEntityIdV2;
+
+// @alpha
 export const isPublisherHeadingSlot: typeof isPublisherHeadingSlotV1;
 
 // @alpha
@@ -8140,6 +8143,9 @@ export function isRelativeUpperBoundedDateFilterBody(obj: unknown): obj is IRela
 
 // @alpha
 export function isRemotePluggableApplicationRegistryItem(app: PluggableApplicationRegistryItem): app is RemotePluggableApplicationRegistryItem;
+
+// @alpha
+export function isReservedPublisherEntityIdV2(id: string): boolean;
 
 // @public
 export function isResultAttributeHeader(obj: unknown): obj is IResultAttributeHeader;
@@ -9917,7 +9923,7 @@ export type ObjectOrigin = "ALL" | "PARENTS" | "NATIVE";
 export type ObjectPermissionsObjectKind = "attribute" | "fact" | "label" | "measure" | "computedAttribute" | "insight";
 
 // @public
-export type ObjectType = "measure" | "fact" | "attribute" | "computedAttribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "workspaceTheme" | "workspaceColorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView" | "workspaceDataFilter" | "workspaceDataFilterSetting" | "userDataFilter" | "notificationChannel" | "memoryItem" | "parameter" | "reportPageLayout" | "reportTemplate" | "report";
+export type ObjectType = "measure" | "fact" | "attribute" | "computedAttribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "workspaceTheme" | "workspaceColorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView" | "workspaceDataFilter" | "workspaceDataFilterSetting" | "userDataFilter" | "notificationChannel" | "memoryItem" | "parameter" | "reportPageLayout" | "reportTemplate" | "report" | "document" | "documentTemplate" | "pageTemplate";
 
 // @alpha
 export type ObjectVisibility = "RESTRICTED" | "WORKSPACE";
@@ -10123,6 +10129,11 @@ export const publisherDocumentPage: typeof publisherDocumentPageV1;
 
 // @alpha
 export function publisherDocumentPageV1(documentOrTemplate: IPublisherDocumentV1 | IPublisherDocumentDefinitionV1 | IPublisherDocumentTemplateV1 | IPublisherDocumentTemplateDefinitionV1, pageLocalIdentifier: string): IPublisherDocumentPageV1 | undefined;
+
+// @alpha
+export type PublisherEntityIdV2 = string & {
+    readonly __publisherEntityIdV2: unique symbol;
+};
 
 // @alpha (undocumented)
 export type PublisherGapValueV2 = PublisherPxV2 | "{theme.spacing.gap.compact}" | "{theme.spacing.gap.normal}" | "{theme.spacing.gap.spacious}";
@@ -10509,6 +10520,9 @@ export type UserDataFilterDefinition = IUserDataFilterDefinition | IUserGroupDat
 
 // @public
 export function userFullName(user: IUser): string | undefined;
+
+// @alpha
+export function validateLoadedPublisherEntityV2(entity: unknown): IPublisherValidationIssueV2[];
 
 // @alpha
 export function validatePublisherDocumentContentV2(content: unknown): IPublisherValidationIssueV2[];

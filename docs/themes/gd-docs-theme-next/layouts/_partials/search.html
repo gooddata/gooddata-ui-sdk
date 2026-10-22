@@ -1,0 +1,60 @@
+{{- /* Search is the exact stack the live docs run: jQuery + gooddata.ai's
+       search-common.js + quicksearch-plugin-v2.js, initialised with
+       $("#adds-container").gdQuickSearch({tab, version}). The plugin then pulls
+       in addsearch-js-client / addsearch-search-ui and gooddata.ai's
+       search-dialog.js + search-dialog.css, which render the input and the
+       autocomplete into #adds-container. There is no build-time index: results
+       come from the hosted AddSearch index and deep-link to the production
+       pages, so search works identically on dev servers, PR previews and prod.
+       The previous `https://addsearch.com/js/?key=` line was AddSearch's
+       generic hosted widget — a different UI from the one readers know.
+
+       `addSearchTab` is the Docsy-era param name the site already sets
+       ("gd-ui-doc"); `search.customFieldVersion` narrows results to one docs
+       version (live sets it to the current release; empty = latest). */ -}}
+{{- $s := site.Params.search -}}
+{{- if and $s (eq $s.provider "addsearch") -}}
+{{- $opts := dict "tab" (site.Params.addSearchTab | default "gd-ui-doc") -}}
+{{- with $s.customFieldVersion }}{{ $opts = merge $opts (dict "version" .) }}{{ end -}}
+{{- /* Positioned only at lg, so the results panel hangs off the box on desktop
+       but, on phones, off the header's own relative wrapper — the box there is
+       ~100px wide and the panel needs the full viewport. */ -}}
+<div id="adds-container" class="gd-search w-full max-w-xl lg:relative"></div>
+<script defer src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script defer src="https://www.gooddata.ai/js/modules/search-common.js"></script>
+<script defer src="https://www.gooddata.ai/learn-assets/js/quicksearch-plugin-v2.js"></script>
+<script>
+  // Deferred scripts run in order before DOMContentLoaded, so jQuery and the
+  // plugin are both defined by the time this fires.
+  document.addEventListener("DOMContentLoaded", function () {
+    if (!(window.jQuery && jQuery.fn.gdQuickSearch)) return;
+    var root = document.getElementById("adds-container");
+    jQuery(root).gdQuickSearch({{ $opts | jsonify | safeJS }});
+    // addsearch-search-ui focuses the field the moment it renders it. On the
+    // marketing header that is harmless; here the box is on every docs page,
+    // and a focused input on load pops the keyboard on phones and steals
+    // focus from the content. Hand focus back once, then get out of the way.
+    var observer = new MutationObserver(function () {
+      var input = root.querySelector("input");
+      if (!input) return;
+      observer.disconnect();
+      requestAnimationFrame(function () {
+        if (document.activeElement === input) input.blur();
+      });
+    });
+    observer.observe(root, { childList: true, subtree: true });
+    // The live stylesheet gives every result row a pointer cursor, but only
+    // the title is a link, so a click on the snippet did nothing. Forward it
+    // to the title link; a real click on it keeps AddSearch's click tracking
+    // and a modifier click still opens a new tab.
+    root.addEventListener("click", function (e) {
+      var row = e.target.closest("tr.c-search-dialog-result");
+      if (!row || e.target.closest("a")) return;
+      var link = row.querySelector(".c-search-dialog-result-title a");
+      if (!link) return;
+      if (e.metaKey || e.ctrlKey) window.open(link.href, "_blank", "noopener");
+      else link.click();
+    });
+  });
+</script>
+{{- end -}}

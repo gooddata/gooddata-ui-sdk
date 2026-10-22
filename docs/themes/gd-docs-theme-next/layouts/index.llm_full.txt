@@ -1,0 +1,9 @@
+# {{ .Site.Title }}
+{{ range .Site.RegularPages.ByWeight }}
+--- page: {{ .RelPermalink }} ---
+title: {{ .Title }}
+type: {{ .Params.diataxis_type }}
+
+{{ .RawContent }}
+
+{{ end }}

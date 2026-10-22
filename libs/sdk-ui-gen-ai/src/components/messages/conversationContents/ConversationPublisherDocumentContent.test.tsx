@@ -39,16 +39,22 @@ const MESSAGE: IChatConversationLocalItem = {
     responseId: "response-1",
 };
 
-const settings = (
-    isPublisherAppEnabled: boolean,
-    isContextSetupEnabled: boolean,
-): IUserWorkspaceSettings => ({
+const settings = ({
+    isPublisherAppEnabled,
+    isContextSetupEnabled,
+    isPublisherV2Enabled,
+}: {
+    isPublisherAppEnabled: boolean;
+    isContextSetupEnabled: boolean;
+    isPublisherV2Enabled?: boolean;
+}): IUserWorkspaceSettings => ({
     userId: "user-1",
     workspace: "ws-1",
     locale: "en-US",
     separators: { thousand: ",", decimal: "." },
     enableBusinessBriefingReportsApp: isPublisherAppEnabled,
     enableAiContextSetup: isContextSetupEnabled,
+    enablePublisherV2: isPublisherV2Enabled,
 });
 
 const PAGE: IPublisherDocumentPage = {
@@ -72,6 +78,7 @@ function renderCard({
     isPublisherAppEnabled = true,
     isPreview = false,
     isContextSetupEnabled = true,
+    isPublisherV2Enabled,
     conversationId = "conv-1",
     message = MESSAGE,
     allowNativeLinks,
@@ -85,6 +92,7 @@ function renderCard({
     isPublisherAppEnabled?: boolean;
     isPreview?: boolean;
     isContextSetupEnabled?: boolean;
+    isPublisherV2Enabled?: boolean;
     conversationId?: string | null;
     message?: IChatConversationLocalItem;
     allowNativeLinks?: boolean;
@@ -98,7 +106,11 @@ function renderCard({
             [messagesSliceName]: messagesSliceReducer,
         },
     });
-    store.dispatch(setSettingsAction({ settings: settings(isPublisherAppEnabled, isContextSetupEnabled) }));
+    store.dispatch(
+        setSettingsAction({
+            settings: settings({ isPublisherAppEnabled, isContextSetupEnabled, isPublisherV2Enabled }),
+        }),
+    );
     store.dispatch(setIsPreviewAction({ isPreview }));
     if (openDocumentId !== undefined || openDraftRef !== undefined) {
         store.dispatch(
@@ -219,6 +231,31 @@ describe("ConversationPublisherDocumentContent", () => {
 
         expect(linkHandler).toHaveBeenCalledWith(
             expect.objectContaining({ itemUrl: "/workspace/ws-1/publisher/report/r%2F1" }),
+        );
+    });
+
+    it.each([true, false])(
+        "opens a saved report on the report route with Publisher v2 %s, while the conversation is not saved",
+        (isPublisherV2Enabled) => {
+            const { linkHandler } = renderCard({ saved: "r/1", conversationId: "", isPublisherV2Enabled });
+
+            fireEvent.click(openButton());
+
+            expect(linkHandler).toHaveBeenCalledWith(
+                expect.objectContaining({ itemUrl: "/workspace/ws-1/publisher/report/r%2F1" }),
+            );
+        },
+    );
+
+    it("opens a saved document with the chat's version on the report route even with Publisher v2", () => {
+        const { linkHandler } = renderCard({ saved: "r/1", isPublisherV2Enabled: true });
+
+        fireEvent.click(openButton());
+
+        expect(linkHandler).toHaveBeenCalledWith(
+            expect.objectContaining({
+                itemUrl: "/workspace/ws-1/publisher/report/r%2F1?conversation=conv-1&item=item-1",
+            }),
         );
     });
 

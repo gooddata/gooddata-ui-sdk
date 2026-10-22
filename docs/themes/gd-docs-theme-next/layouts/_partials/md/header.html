@@ -1,0 +1,32 @@
+{{- /* The first lines of every Markdown version: a pointer to the docs index, the title, the
+description as a blockquote, and the API reference pages a guide documents (its `api_symbols`,
+the chip row above the HTML title), each linked to its Markdown version.
+
+The pointer is what Anthropic's Claude Code docs put on top of each page's Markdown: an agent
+that lands on one page (from a search, or a link someone pasted) learns where the index of all
+the others is. The index is the home page's llms.txt output, whatever the site named the format
+(gdc-ui `LLMS`, the theme's own `LLM_TXT`); with neither, the pointer is left out.
+
+Expects: the page. Returns the Markdown string. */ -}}
+{{- $index := "" -}}
+{{- range slice "llms" "llm_txt" -}}
+  {{- with site.Home.OutputFormats.Get . -}}
+    {{- if not $index }}{{ $index = .Permalink }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- $blocks := slice -}}
+{{- with $index }}{{ $blocks = $blocks | append (printf "> Documentation index: %s lists every page of these docs as Markdown." .) }}{{ end -}}
+{{- $blocks = $blocks | append (printf "# %s" .Title) -}}
+{{- with .Description }}{{ $blocks = $blocks | append (printf "> %s" .) }}{{ end -}}
+{{- $symbols := slice -}}
+{{- range partial "api-symbol-links.html" . -}}
+  {{- $url := .page.Permalink -}}
+  {{- with .page.OutputFormats.Get "markdown" }}{{ $url = .Permalink }}{{ end -}}
+  {{- $note := slice -}}
+  {{- with .entry.kind }}{{ $note = $note | append . }}{{ end -}}
+  {{- with .entry.stability }}{{ $note = $note | append . }}{{ end -}}
+  {{- if .entry.deprecated }}{{ $note = $note | append "deprecated" }}{{ end -}}
+  {{- $symbols = $symbols | append (printf "[%s](%s)%s" .entry.title $url (cond (gt (len $note) 0) (printf " (%s)" (delimit $note ", ")) "")) -}}
+{{- end -}}
+{{- with $symbols }}{{ $blocks = $blocks | append (printf "API reference: %s" (delimit . ", ")) }}{{ end -}}
+{{- return delimit $blocks "\n\n" -}}

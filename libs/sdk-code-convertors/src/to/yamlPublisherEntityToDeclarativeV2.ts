@@ -203,7 +203,6 @@ function documentBody(
 ): Omit<DeclarativePublisherDocumentV2, "id"> {
     assertPublisherContentVersionV2(input, errorContext);
     return {
-        type: "document",
         ...entityFields(input),
         period: periodToDeclarativeV2(input.period),
         content: contentToDeclarative(input.content, updateErrorContext(errorContext, { path: ["content"] })),
@@ -216,7 +215,6 @@ function documentTemplateBody(
 ): Omit<DeclarativePublisherDocumentTemplateV2, "id"> {
     assertPublisherContentVersionV2(input, errorContext);
     return {
-        type: "documentTemplate",
         ...entityFields(input),
         content: contentToDeclarative(input.content, updateErrorContext(errorContext, { path: ["content"] })),
     };
@@ -228,7 +226,6 @@ function pageTemplateBody(
 ): Omit<DeclarativePublisherPageTemplateV2, "id"> {
     assertPublisherContentVersionV2(input, errorContext);
     return {
-        type: "pageTemplate",
         ...entityFields(input),
         content: pageBodyToDeclarative(
             input.content,
@@ -288,7 +285,7 @@ export function yamlPublisherDocumentToDefinitionV2(
     input: AacPublisherEntityWithOptionalIdV2<AacPublisherDocumentV2>,
     errorContext?: IErrorContext,
 ): IPublisherDocumentDefinitionV2 {
-    return { ...documentBody(input, errorContext), ...refFromId(input.id) };
+    return { type: "document", ...documentBody(input, errorContext), ...refFromId(input.id) };
 }
 
 /** @alpha */
@@ -296,7 +293,7 @@ export function yamlPublisherDocumentTemplateToDefinitionV2(
     input: AacPublisherEntityWithOptionalIdV2<AacPublisherDocumentTemplateV2>,
     errorContext?: IErrorContext,
 ): IPublisherDocumentTemplateDefinitionV2 {
-    return { ...documentTemplateBody(input, errorContext), ...refFromId(input.id) };
+    return { type: "documentTemplate", ...documentTemplateBody(input, errorContext), ...refFromId(input.id) };
 }
 
 /** @alpha */
@@ -304,5 +301,5 @@ export function yamlPublisherPageTemplateToDefinitionV2(
     input: AacPublisherEntityWithOptionalIdV2<AacPublisherPageTemplateV2>,
     errorContext?: IErrorContext,
 ): IPublisherPageTemplateDefinitionV2 {
-    return { ...pageTemplateBody(input, errorContext), ...refFromId(input.id) };
+    return { type: "pageTemplate", ...pageTemplateBody(input, errorContext), ...refFromId(input.id) };
 }

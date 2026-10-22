@@ -1,0 +1,61 @@
+{
+    "colors": {
+        "gd-primary": "#dafe85",
+        "gd-secondary": "#1c0d3f",
+        "gd-text": "#09090c",
+        "gd-text-secondary": "#5e6a7a",
+        "gd-bg": "#ffffff",
+        "gd-surface": "#f4f6fb",
+        "gd-border": "#d7deea",
+        "gd-link": "#1c0d3f",
+        "gd-code-bg": "#1a1a2e",
+        "gd-card": "#ffffff",
+        "diataxis-tutorial": "#2563eb",
+        "diataxis-explanation": "#ea580c",
+        "gd-danger": "#b91c1c",
+        "gd-warning": "#b45309",
+        "gd-on-primary": "#1c0d3f",
+        "gd-on-secondary": "#ffffff",
+        "gd-on-code": "#ffffff",
+        "gd-contrast": "#1c0d3f"
+    },
+    "darkColors": {
+        "gd-bg": "#222224",
+        "gd-surface": "#2e2e30",
+        "gd-border": "#58585b",
+        "gd-text": "#f5f5f5",
+        "gd-secondary": "#f0f0f2",
+        "gd-text-secondary": "#b0b0b3",
+        "gd-link": "#f5f5f5",
+        "gd-card": "#2e2e30",
+        "gd-danger": "#fca5a5",
+        "gd-warning": "#fcd34d",
+        "gd-on-secondary": "#222224",
+        "gd-contrast": "#ffffff",
+        "gd-code-bg": "#161618"
+    },
+    "syntax": {
+        "text": "#e6edf3",
+        "keyword": "#ff7b72",
+        "constant": "#79c0ff",
+        "string": "#a5d6ff",
+        "function": "#d2a8ff",
+        "class": "#ffa657",
+        "entity": "#ffa657",
+        "tag": "#7ee787",
+        "comment": "#959eaa",
+        "line-nr": "#6e7681",
+        "error": "#ffa198",
+        "inserted": "#aff5b4",
+        "inserted-bg": "#033a16",
+        "deleted": "#ffdcd7",
+        "deleted-bg": "#67060c",
+        "highlight-bg": "#262c40"
+    },
+    "fonts": {
+        "heading": "\"Funnel Display\", \"Avenir Next\", sans-serif",
+        "body": "\"Inter\", \"Helvetica Neue\", Arial, sans-serif",
+        "headingFamily": "Funnel Display",
+        "bodyFamily": "Inter"
+    }
+}

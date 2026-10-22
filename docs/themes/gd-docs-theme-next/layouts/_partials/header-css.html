@@ -1,0 +1,11 @@
+{{- /* The first header row's stylesheet (gd-header.css, ported from GoodData Cloud; see its header).
+     Loaded after main.css, which defines the colour tokens (var(--color-gd-*)) this file uses. */ -}}
+{{- with resources.Get "css/gd-header.css" -}}
+  {{- if hugo.IsDevelopment -}}
+    <link rel="stylesheet" href="{{ .RelPermalink }}" />
+  {{- else -}}
+    {{- with . | minify | fingerprint -}}
+      <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" />
+    {{- end -}}
+  {{- end -}}
+{{- end -}}

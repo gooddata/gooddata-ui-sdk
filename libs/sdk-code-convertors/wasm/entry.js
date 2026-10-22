@@ -39,9 +39,9 @@ import {
     yamlPublisherDocumentToDeclarativeV2,
     yamlPublisherPageTemplateToDeclarativeV2,
     yamlVisualisationToDeclarative,
-    validateDeclarativePublisherEntityV2,
     fillPublisherIdsV2,
 } from "../esm/index.js";
+import { validateDeclarativePublisherEntityWithOptionalKindV2 } from "../esm/validateDeclarativePublisherEntityV2.js";
 
 const converters = {
     yamlDatasetToDeclarative,
@@ -68,7 +68,7 @@ const converters = {
     declarativePublisherDocumentToYamlV2,
     declarativePublisherDocumentTemplateToYamlV2,
     declarativePublisherPageTemplateToYamlV2,
-    validateDeclarativePublisherEntityV2,
+    validateDeclarativePublisherEntityV2: validateDeclarativePublisherEntityWithOptionalKindV2,
     fillPublisherIdsV2,
     buildAfmExecution,
 };

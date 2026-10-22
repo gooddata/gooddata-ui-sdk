@@ -1,0 +1,37 @@
+{{ define "main" }}
+  <section class="px-0 py-2 lg:px-2">
+    <div class="mb-6">
+      <h1 class="text-3xl font-bold text-gd-secondary">{{ .Title }}</h1>
+      {{ with .Params.description }}
+        <p class="mt-3 max-w-3xl text-gd-text-secondary">{{ . }}</p>
+      {{ end }}
+    </div>
+
+    {{ if .Content }}
+      <div class="{{ partial "prose-class.html" . }}">
+        {{/* guide-body.html, as on single pages: backticked symbols link to the API reference. */}}
+        {{ partial "guide-body.html" . | safeHTML }}
+      </div>
+    {{ end }}
+
+    {{/* Section-overview auto-grid: render this section's child pages as cards so a section
+         landing (e.g. Components) is a useful overview. Skipped by default for reference
+         sections (thousands of generated symbol pages already have their own indexes), but
+         hand-authored reference landings can explicitly opt in with section_overview: true. */}}
+    {{ $children := partial "listable-pages.html" .Pages }}
+    {{ $showSectionOverviewByDefault := and (ne .Params.diataxis_type "reference") (ne .Params.section_overview false) }}
+    {{ $showSectionOverview := or (eq .Params.section_overview true) $showSectionOverviewByDefault }}
+    {{ if and $children $showSectionOverview }}
+      <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {{ range $children }}
+          <a href="{{ .RelPermalink }}" class="group flex h-full flex-col rounded-xl border border-gd-border bg-gd-card p-5 no-underline transition hover:border-gd-secondary hover:shadow-sm hover:no-underline">
+            <h3 class="mb-2 font-heading text-base font-semibold text-gd-secondary">{{ .LinkTitle }}</h3>
+            {{ with .Description }}<p class="text-sm text-gd-text-secondary">{{ . }}</p>{{ end }}
+          </a>
+        {{ end }}
+      </div>
+    {{ end }}
+
+    {{ partial "related.html" . }}
+  </section>
+{{ end }}

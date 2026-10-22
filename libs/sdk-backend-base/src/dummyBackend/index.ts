@@ -136,6 +136,7 @@ import {
     type IWorkspaceParametersService,
     type IWorkspacePermissionsService,
     type IWorkspacePublisherService,
+    type IWorkspacePublisherServiceV2,
     type IWorkspaceSettings,
     type IWorkspaceSettingsService,
     type IWorkspaceStylingService,
@@ -244,6 +245,7 @@ import { DummyChatConversations } from "./DummyGenAIChatThread.js";
 import { DummySemanticQualityService } from "./DummySemanticQualityService.js";
 import { DummySemanticSearchQueryBuilder } from "./DummySemanticSearch.js";
 import { InMemoryWorkspacePublisherService } from "./InMemoryWorkspacePublisherService.js";
+import { InMemoryWorkspacePublisherServiceV2 } from "./InMemoryWorkspacePublisherServiceV2.js";
 
 /**
  * @internal
@@ -284,7 +286,7 @@ export const defaultDummyBackendConfig: DummyBackendConfig = {
  * @internal
  */
 export function dummyBackend(config: DummyBackendConfig = defaultDummyBackendConfig): IAnalyticalBackend {
-    const publisherServices = new Map<string, InMemoryWorkspacePublisherService>();
+    const publisherServicesByWorkspace = new Map<string, IDummyPublisherServices>();
     const noopBackend: IAnalyticalBackend = {
         capabilities: {
             canCalculateTotals: true,
@@ -319,12 +321,15 @@ export function dummyBackend(config: DummyBackendConfig = defaultDummyBackendCon
             throw new NotSupported("not supported");
         },
         workspace(id: string): IAnalyticalWorkspace {
-            let publisherService = publisherServices.get(id);
-            if (!publisherService) {
-                publisherService = new InMemoryWorkspacePublisherService();
-                publisherServices.set(id, publisherService);
+            let services = publisherServicesByWorkspace.get(id);
+            if (!services) {
+                services = {
+                    publisher: new InMemoryWorkspacePublisherService(),
+                    publisherV2: new InMemoryWorkspacePublisherServiceV2(),
+                };
+                publisherServicesByWorkspace.set(id, services);
             }
-            return dummyWorkspace(id, config, publisherService);
+            return dummyWorkspace(id, config, services);
         },
         entitlements(): IEntitlements {
             throw new NotSupported("not supported");
@@ -472,10 +477,15 @@ export function dummyDataView(
 // Internals
 //
 
+interface IDummyPublisherServices {
+    publisher: InMemoryWorkspacePublisherService;
+    publisherV2: InMemoryWorkspacePublisherServiceV2;
+}
+
 function dummyWorkspace(
     workspace: string,
     config: DummyBackendConfig,
-    publisherService: InMemoryWorkspacePublisherService,
+    publisherServices: IDummyPublisherServices,
 ): IAnalyticalWorkspace {
     return {
         workspace,
@@ -624,7 +634,10 @@ function dummyWorkspace(
             };
         },
         publisher(): IWorkspacePublisherService {
-            return publisherService;
+            return publisherServices.publisher;
+        },
+        publisherV2(): IWorkspacePublisherServiceV2 {
+            return publisherServices.publisherV2;
         },
         delete(): Promise<void> {
             return Promise.resolve();

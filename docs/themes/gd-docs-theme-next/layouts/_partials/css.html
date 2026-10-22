@@ -1,0 +1,16 @@
+{{- /* The theme stylesheet: main.css.tmpl filled with the brand.json tokens, then Tailwind.
+Development links it as is; a production build minifies it and adds an integrity hash.
+The first header row's own stylesheet (header-css.html) loads after it. */ -}}
+{{- $brand := hugo.Data.brand -}}
+{{- $css := resources.Get "css/main.css.tmpl" | resources.ExecuteAsTemplate "css/main.css" $brand -}}
+{{- $opts := dict "inlineImports" true -}}
+{{- if hugo.IsDevelopment -}}
+  {{- with $css | css.TailwindCSS $opts -}}
+    <link rel="stylesheet" href="{{ .RelPermalink }}" />
+  {{- end -}}
+{{- else -}}
+  {{- with $css | css.TailwindCSS (merge $opts (dict "optimize" true)) | fingerprint -}}
+    <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" />
+  {{- end -}}
+{{- end -}}
+{{ partial "header-css.html" . }}

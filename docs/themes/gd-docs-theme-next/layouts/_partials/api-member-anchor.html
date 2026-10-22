@@ -1,0 +1,10 @@
+{{- /* Where a folded API reference member lives: its section on the parent symbol's page.
+
+Expects: the member page. Returns dict "parent" (the parent symbol's page, nil when the member is
+not folded or its parent is missing) and "id" (the section's anchor, the member's title
+anchorized: `IChartConfig.colors` -> `ichartconfigcolors`, the same in HTML and Markdown). */ -}}
+{{- $parent := "" -}}
+{{- if .Params.folded -}}
+  {{- with .Params.parent_symbol }}{{ $parent = $.CurrentSection.GetPage . }}{{ end -}}
+{{- end -}}
+{{- return dict "parent" $parent "id" (anchorize .Title) -}}

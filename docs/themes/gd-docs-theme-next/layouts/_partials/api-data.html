@@ -1,0 +1,21 @@
+{{- /* The API reference data for a page's version: which symbols exist, their Props tables, and
+the git ref its "Source:" pills point at.
+
+A versioned build (build-api-reference-versions.sh) generates each of the newest versions from its
+own release branch and writes its data to data/api_versions/<version, dots as _>/: api_refs.json,
+api_props.json and source.json. A page uses the data of the version it sits in (its top-level
+section), so an 11.58 guide links the 11.58 reference and shows the 11.58 props. A version without
+its own data (an older one, or a build without versioned data) falls back to the site-wide
+data/api_refs.json and api_props.json, which are the newest version's.
+
+Call it as partialCached "api-data.html" . .Section: the result depends only on the section.
+Returns a dict: refs, props (either may be nil when the build has no API reference) and source. */ -}}
+{{- $refs := hugo.Data.api_refs -}}
+{{- $props := hugo.Data.api_props -}}
+{{- $source := site.Params.sourceRef | default "master" -}}
+{{- with index (hugo.Data.api_versions | default dict) (replace .Section "." "_") -}}
+  {{- with .api_refs }}{{ $refs = . }}{{ end -}}
+  {{- with .api_props }}{{ $props = . }}{{ end -}}
+  {{- with .source }}{{ $source = .ref }}{{ end -}}
+{{- end -}}
+{{- return (dict "refs" $refs "props" $props "source" $source) -}}

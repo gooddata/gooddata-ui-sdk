@@ -1,0 +1,21 @@
+{{- /* The folded members of an API reference symbol, in the order its page shows them, in HTML
+(api-member-sections.html, the table of contents) and in Markdown (reference/single.markdown.md):
+properties, then events, methods, the rest; by title within each.
+
+Expects: the symbol's page. Returns a slice of member pages, empty for any other page. */ -}}
+{{- $members := slice -}}
+{{- if and .IsPage .CurrentSection -}}
+  {{- with index (partialCached "api-members-by-parent.html" .CurrentSection .CurrentSection.Path) .Slug -}}
+    {{- $all := . -}}
+    {{- $kinds := slice "property" "event" "method" -}}
+    {{- range $kinds -}}
+      {{- range sort (where $all "Params.kind" .) "Title" -}}
+        {{- $members = $members | append . -}}
+      {{- end -}}
+    {{- end -}}
+    {{- range sort $all "Title" -}}
+      {{- if not (in $kinds .Params.kind) }}{{ $members = $members | append . }}{{ end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $members -}}

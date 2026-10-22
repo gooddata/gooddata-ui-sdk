@@ -1,0 +1,9 @@
+{
+ "compilerOptions": {
+  "paths": {
+   "*": [
+    "../themes/gd-docs-theme-next/assets/*"
+   ]
+  }
+ }
+}

@@ -1,0 +1,22 @@
+{{- /* The rows of the versions archive (shortcodes/versions-archive.html and its .markdown.md),
+one dict per version: version, url (its documentation), changelog, apiRef (its API reference
+page, or nil).
+
+A missing changelog falls back to the sdk-ui-all CHANGELOG heading for that release
+("## 11.27.0" -> #11270): the version bump job writes no changelog key. The API reference is
+only the one this theme builds (<dirpath>/api-reference/), and only when that section exists in
+the current build; the retired external gooddata-ui-apidocs site is never linked, even if a stale
+apiReference key is set.
+
+Expects: the shortcode context. Returns a slice of dicts, empty when no versions are set. */ -}}
+{{- $rows := slice -}}
+{{- range partialCached "versions.html" . -}}
+  {{- $changelog := .changelog -}}
+  {{- if and (not $changelog) (findRE `^\d+\.\d+$` .version) -}}
+    {{- $changelog = printf "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#%s0" (replace .version "." "") -}}
+  {{- end -}}
+  {{- $apiRef := "" -}}
+  {{- with .dirpath }}{{ $apiRef = site.GetPage (printf "/%s/api-reference" .) }}{{ end -}}
+  {{- $rows = $rows | append (dict "version" .version "url" .url "changelog" $changelog "apiRef" $apiRef) -}}
+{{- end -}}
+{{- return $rows -}}

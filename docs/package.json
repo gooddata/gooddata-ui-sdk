@@ -8,19 +8,30 @@
         "type": "git",
         "url": "git+ssh://git@github.com/gooddata/gooddata-ui-sdk.git"
     },
+    "type": "module",
     "scripts": {
+        "api-reference:build": "../scripts/build-api-reference.sh content/en",
+        "api-reference:generate": "node --import tsx scripts/generate-reference.ts",
         "build": "hugo",
-        "production": "../scripts/generate.sh upstream master && hugo server -e public",
-        "start": "hugo server",
-        "test": "rm -rf public && ../scripts/generate.sh upstream master && hugo -e public --minify && ../scripts/htmltest.sh -c .htmltest.yml public",
-        "test_local": "rm -rf public && hugo --minify && ../scripts/htmltest.sh -c .htmltest.yml public"
-    },
-    "dependencies": {
-        "autoprefixer": "^10.2.4",
-        "postcss": "8.5.26",
-        "postcss-cli": "^8.3.1"
+        "production": "../scripts/generate.sh upstream master && ../scripts/build-api-reference-versions.sh versioned_docs && hugo server -e public",
+        "start": "API_REFERENCE_OPTIONAL=1 ../scripts/build-api-reference.sh content/en && hugo server -e local",
+        "test": "node --import tsx --test scripts/tests/*.test.ts themes/gd-docs-theme-next/tests/*.test.mjs",
+        "test_local": "rm -rf public && ../scripts/build-api-reference.sh content/en && hugo --minify"
     },
     "devDependencies": {
-        "hugo-extended": "^0.115.4"
+        "@microsoft/api-documenter": "^7.30.18",
+        "@tailwindcss/cli": "^4.0.0",
+        "@tailwindcss/typography": "^0.5.0",
+        "@types/node": "^24.19.2",
+        "hugo-extended": "^0.167.0",
+        "jsdom": "^29.1.1",
+        "tailwindcss": "^4.0.0",
+        "tsx": "^4.23.15",
+        "yaml": "^2.9.1"
+    },
+    "overrides": {
+        "@tailwindcss/typography": {
+            "postcss-selector-parser": "^7.1.6"
+        }
     }
 }

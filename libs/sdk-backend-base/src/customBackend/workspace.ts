@@ -30,6 +30,7 @@ import {
     type IWorkspaceParametersService,
     type IWorkspacePermissionsService,
     type IWorkspacePublisherService,
+    type IWorkspacePublisherServiceV2,
     type IWorkspaceSettingsService,
     type IWorkspaceStylingService,
     type IWorkspaceUserGroupsQuery,
@@ -190,6 +191,10 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
 
     public publisher(): IWorkspacePublisherService {
         throw new NotSupported("reports are not supported");
+    }
+
+    public publisherV2(): IWorkspacePublisherServiceV2 {
+        throw new NotSupported("publisher is not supported");
     }
 
     public localization(): IWorkspaceLocalizationService {

@@ -1,0 +1,35 @@
+{{- /* The "Ask AI for a quick overview" provider buttons in the footer banner — a port of the
+`ai-buttons` define the shared gooddata-docs-theme added under WEB-4512 (Footer AI provider links).
+
+Everything here is marketing's, verbatim: the provider list and order, each provider's deep-link
+base, the prompt (which names www.gooddata.ai and docs/cloud, because that is the estate-wide text
+every property emits), and the 48px icons, which live in assets/icons/ as copies of the theme's.
+The prompt is URL-encoded with urlquery, so spaces become `+` exactly as in production markup.
+
+The icons are dark tiles like the feed's social icons; footer-icon.html keeps only the glyph, as a
+shared file painted in currentColor. A missing icon warns and renders an empty button rather than failing the build: the link still
+works, and the warning is what the build log needs to point at the file. */ -}}
+{{- $query := "I want to understand how GoodData helps build secure, scalable, and knowledgeable AI-powered analytics agents. Summarize the key highlights from GoodData's website (https://www.gooddata.ai/ ) and the developer documentation (https://www.gooddata.ai/docs/cloud/ ). Then share the best way to contact GoodData or request a demo." -}}
+{{- $providers := slice
+    (dict "label" "ChatGPT" "icon" "icons/chatgpt.svg" "base" "https://chat.openai.com/?q=")
+    (dict "label" "Claude" "icon" "icons/claude.svg" "base" "https://claude.ai/new?q=")
+    (dict "label" "Gemini" "icon" "icons/gemini.svg" "base" "https://gemini.google.com/?q=")
+    (dict "label" "Grok" "icon" "icons/grok.svg" "base" "https://grok.com/?q=")
+    (dict "label" "Perplexity" "icon" "icons/perplexity.svg" "base" "https://www.perplexity.ai/?q=")
+-}}
+<ul class="flex flex-wrap gap-2">
+    {{- range $providers }}
+    {{- $icon := .icon }}
+    <li>
+        <a
+            class="gd-footer-icon"
+            href="{{ printf "%s%s" .base (urlquery $query) | safeURL }}"
+            aria-label="{{ .label }}"
+            target="_blank"
+            rel="noreferrer noopener"
+        >
+            {{- with resources.Get $icon }}{{ partial "footer-icon.html" .Content }}{{ else }}{{ warnf "footer: AI provider icon %q is missing from assets/" $icon }}{{ end -}}
+        </a>
+    </li>
+    {{- end }}
+</ul>

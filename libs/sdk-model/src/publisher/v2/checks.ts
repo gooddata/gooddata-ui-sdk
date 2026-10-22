@@ -1,6 +1,8 @@
 // (C) 2026 GoodData Corporation
 
-import { isObjRef } from "../../objRef/index.js";
+import { isIdentifierRef } from "../../objRef/index.js";
+
+import { isPublisherEntityIdV2 } from "./factory.js";
 
 /**
  * @alpha
@@ -145,6 +147,40 @@ export function arrayOf(item: Check): Check {
     };
 }
 
+// The backend's JSON Schema `maxLength` counts code points, so an emoji counts once.
+export function characterCount(value: string): number {
+    return Array.from(value).length;
+}
+
+export function nonEmptyStringOfAtMost(maxLength: number): Check {
+    return satisfying(
+        (value) => isNonEmptyString(value) && characterCount(value) <= maxLength,
+        `a non-empty string of at most ${maxLength} characters`,
+    );
+}
+
+/** Compares items by identity, so it only finds repeated primitives, never repeated objects. */
+export function uniqueArrayOf(item: Check): Check {
+    const items = arrayOf(item);
+    return (value, path, issues) => {
+        const issueCount = issues.length;
+        items(value, path, issues);
+        if (issues.length > issueCount || !Array.isArray(value)) {
+            return;
+        }
+        const seen = new Set<unknown>();
+        value.forEach((element: unknown, i) => {
+            if (seen.has(element)) {
+                issues.push({
+                    path: joinPath(path, i),
+                    message: `Expected unique items, got ${describeValue(element)} again.`,
+                });
+            }
+            seen.add(element);
+        });
+    };
+}
+
 export function satisfying(predicate: (value: unknown) => boolean, expected: string): Check {
     return (value, path, issues) => {
         if (!predicate(value)) {
@@ -194,5 +230,8 @@ export const int32 = satisfying(isInt32, `an integer from ${minInt32} to ${maxIn
 export const px = satisfying(isLength, "a length of 0 or more");
 export const opacity = numberIn(0, 1);
 export const positive = satisfying((value) => isFiniteNumber(value) && value > 0, "a number greater than 0");
-export const objRef = satisfying(isObjRef, "an object reference");
+export const entityRef = satisfying(
+    (value) => isIdentifierRef(value) && isPublisherEntityIdV2(value.identifier),
+    "an identifier reference whose id has 1 to 255 letters, digits, dots, underscores or hyphens and does not start with a dot",
+);
 export const id = matching(/^[A-Za-z0-9_.-]{1,64}$/, "an id matching [A-Za-z0-9_.-]{1,64}");

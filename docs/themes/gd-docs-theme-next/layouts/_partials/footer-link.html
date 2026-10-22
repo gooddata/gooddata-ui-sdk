@@ -1,0 +1,24 @@
+{{- /* One footer link, a port of the shared theme's `absolute-link` define.
+
+The feed gives paths as root-relative ("/pricing/") because it is authored for www.gooddata.ai,
+while these docs are served from a sub-path of that host in production and from localhost in
+development — so a bare href would resolve against the docs, not the marketing site.
+
+`aria-label` and `rel` are emitted only when passed, as production does: the social buttons carry
+both (their content is an SVG, so the label is their accessible name) and nothing else does.
+target="_blank" implies noopener in current browsers anyway.
+
+Expects: item ({title, link}), class, idPrefix; optional icon (raw SVG), ariaLabel, rel. */ -}}
+{{- $item := .item -}}
+{{- with $item.link -}}
+{{- $href := cond (hasPrefix . "http") . (printf "https://www.gooddata.ai%s" .) -}}
+{{- $id := printf "%s%s" $.idPrefix (replace (lower $item.title) " " "-") -}}
+<a
+    href="{{ $href }}"
+    class="{{ $.class }}"
+    id="{{ $id }}"
+    target="_blank"
+    {{- with $.ariaLabel }} aria-label="{{ . }}"{{ end }}
+    {{- with $.rel }} rel="{{ . }}"{{ end }}
+>{{ with $.icon }}{{ . | safeHTML }}{{ else }}{{ $item.title }}{{ end }}</a>
+{{- end -}}

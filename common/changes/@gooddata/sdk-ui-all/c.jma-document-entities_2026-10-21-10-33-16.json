@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "api-client-tiger, sdk-model, sdk-backend-spi, sdk-backend-base, sdk-backend-tiger, sdk-code-convertors, sdk-ui-gen-ai: Add the v2 Publisher service on the Document entities.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

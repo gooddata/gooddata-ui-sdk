@@ -1,0 +1,33 @@
+{{/* gd-docs-theme-next: Tailwind port of the versions archive table.
+     The rows (and their changelog / API reference fallbacks) come from versions-archive-rows.html,
+     shared with the Markdown version (versions-archive.markdown.md); renders a note when unset.
+     The wrapper owns the spacing; .gd-versions-archive (main.css.tmpl) drops the prose table margin. */}}
+{{ $rows := partial "versions-archive-rows.html" . }}
+{{ if $rows }}
+<div class="gd-versions-archive my-6 overflow-x-auto rounded-lg border border-gd-border">
+  <table class="w-full border-collapse text-sm">
+    <thead>
+      <tr class="bg-gd-surface text-left">
+        <th class="px-4 py-3 font-semibold text-gd-secondary">Version</th>
+        <th class="px-4 py-3 font-semibold text-gd-secondary">Documentation</th>
+        <th class="px-4 py-3 font-semibold text-gd-secondary">Changelog</th>
+        <th class="px-4 py-3 font-semibold text-gd-secondary">API Reference</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{ range $rows }}
+      <tr class="border-t border-gd-border">
+        <td class="px-4 py-3 font-medium text-gd-text">{{ .version }}</td>
+        <td class="px-4 py-3">{{ with .url }}<a href="{{ . }}">View documentation</a>{{ end }}</td>
+        <td class="px-4 py-3">{{ with .changelog }}<a href="{{ . }}" target="_blank" rel="noopener">View changelog</a>{{ end }}</td>
+        <td class="px-4 py-3">{{ with .apiRef }}<a href="{{ .RelPermalink }}">View API reference</a>{{ end }}</td>
+      </tr>
+      {{ end }}
+    </tbody>
+  </table>
+</div>
+{{ else }}
+<div class="my-6 rounded-lg border border-gd-border bg-gd-surface p-4 text-sm text-gd-text-secondary">
+  No documentation versions are currently configured.
+</div>
+{{ end }}

@@ -1,0 +1,25 @@
+{{- /* The page's table of contents (toc.html, toc-mobile.html): Hugo's, from the content headings,
+plus an API symbol's member groups (api-member-groups.html), whose sections the template renders
+after the content, where .TableOfContents does not see them. Each group lists its members by
+their own name (api-member-name.html), not `Owner.name`: the owner is the page itself, and
+repeated it truncated every entry in the narrow column.
+
+Expects: the page. Returns the HTML string, "" when there is nothing to list. */ -}}
+{{- $toc := string .TableOfContents -}}
+{{- if eq (trim ($toc | plainify) " \n") "" }}{{ $toc = "" }}{{ end -}}
+{{- with partial "api-member-groups.html" . -}}
+  {{- $items := "" -}}
+  {{- range . -}}
+    {{- $members := "" -}}
+    {{- range .members -}}
+      {{- $members = printf "%s<li><a href=\"#%s\">%s</a></li>\n" $members (anchorize .Title) ((partial "api-member-name.html" .).name | htmlEscape) -}}
+    {{- end -}}
+    {{- $items = printf "%s<li><a href=\"#%s\">%s</a>\n<ul>\n%s</ul>\n</li>\n" $items .id .title $members -}}
+  {{- end -}}
+  {{- if $toc -}}
+    {{- $toc = replaceRE `(?s)</ul>\s*</nav>\s*$` (printf "%s</ul>\n</nav>" $items) $toc -}}
+  {{- else -}}
+    {{- $toc = printf "<nav id=\"TableOfContents\">\n<ul>\n%s</ul>\n</nav>" $items -}}
+  {{- end -}}
+{{- end -}}
+{{- return $toc -}}

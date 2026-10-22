@@ -1,0 +1,25 @@
+{{- /* The social row under the legal line, rendered once, as the rebranded footer does. (The pre-rebrand
+footer rendered it twice with display utilities to move it around the copyright; `flex-column` on
+.gd-footer-bottom made that unnecessary and the theme dropped it.)
+
+The type branches are production's. The feed currently carries four `social` entries and nothing
+else — "Subscribe for updates" moved into the banner links as an `action: subscribe` item, which
+footer.html filters out — so only the four icons render. Keeping the `secondary` branch means we
+follow suit if marketing ever emits it again. Social icons get an aria-label from the feed's `text`,
+as production does, because the link's only content is an SVG.
+
+The feed's icons are dark 48px tiles; footer-icon.html cuts the tile off, publishes the glyph as a
+shared file, and paints it in currentColor so the button follows the theme.
+
+Expects: buttons (the feed's array); optional class. */ -}}
+{{- with .buttons }}
+<div class="flex flex-wrap items-center gap-2{{ with $.class }} {{ . }}{{ end }}">
+    {{- range . }}
+    {{- if eq .type "social" }}
+    {{- partial "footer-link.html" (dict "item" (dict "title" .text "link" .link) "class" "gd-footer-icon" "idPrefix" "footer-btn-" "icon" (partial "footer-icon.html" .icon) "ariaLabel" .text "rel" "noreferrer noopener") }}
+    {{- else if eq .type "secondary" }}
+    {{- partial "footer-link.html" (dict "item" (dict "title" .text "link" .link) "class" "gd-footer-btn" "idPrefix" "footer-btn-") }}
+    {{- end }}
+    {{- end }}
+</div>
+{{- end }}

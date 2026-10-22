@@ -1,0 +1,8 @@
+{{ $opts := dict "minify" true "target" "es2018" }}
+{{ with resources.Get "js/main.js" | js.Build $opts }}
+  {{ if hugo.IsDevelopment }}
+    <script defer src="{{ .RelPermalink }}"></script>
+  {{ else }}
+    {{ with . | fingerprint }}<script defer src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous"></script>{{ end }}
+  {{ end }}
+{{ end }}

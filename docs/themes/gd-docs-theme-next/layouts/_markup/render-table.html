@@ -1,0 +1,89 @@
+{{- /*
+  Wrap tables so wide ones scroll horizontally on mobile instead of being clipped
+  by main's overflow-x-hidden.
+
+  Sideways scrolling is a poor answer for wide data tables though: a five-column
+  props table forces ~950px of content through a ~360px viewport, so the
+  description column collapses to a sliver and rows grow hundreds of pixels tall.
+  Tables with three or more columns therefore also get `table-stack`, which
+  restacks each row as a labelled card below the md breakpoint (see main.css) —
+  the header text rides along on each cell as `data-label`. Narrow tables read
+  fine as tables at any width and are left alone.
+
+  API member tables get `props-table` on top of that: main.css gives them a fixed
+  layout so they always fit their container instead of scrolling sideways, and the
+  toggle below collapses them to the first few rows.
+
+  This family is not one shape. Across the site the same kind of table appears as
+  `Parameter | Type | Description`, `Property | Modifiers | Type | Description`,
+  `Name | Required? | Type | Description` (the legacy /latest/ props tables),
+  `Prop | Type | Required | Description | Inherited from` (generated) and several
+  more, so matching on the first header missed most of them. The one thing they
+  all share is a `Type` column, and no ordinary content table on the site has
+  one — that is the test. The generated dashboard event and command tables
+  (dashboard-catalog-markdown.html) join by their `Type guard` / `Create with`
+  column instead. Column order varies between the shapes, so widths are
+  emitted per header name rather than by position; an unrecognised header is left
+  to size itself from whatever share is left.
+
+  The button ships hidden and is enabled by initPropsTable, so with no JS every
+  row stays visible rather than being locked away behind dead UI.
+*/ -}}
+{{- $headers := slice -}}
+{{- with .THead -}}
+  {{- range index . 0 -}}
+    {{- $headers = $headers | append (.Text | plainify | strings.TrimSpace) -}}
+  {{- end -}}
+{{- end -}}
+{{- $isApi := false -}}
+{{- if ge (len $headers) 3 -}}
+  {{- if or (in $headers "Type") (in $headers "Type guard") (in $headers "Create with") -}}{{- $isApi = true -}}{{- end -}}
+{{- end -}}
+{{- $widths := dict
+  "Prop" "18%" "Name" "18%" "Parameter" "18%" "Property" "18%" "Field" "18%"
+  "Member" "16%" "Method" "18%" "Type" "24%" "Required" "9%" "Required?" "9%"
+  "Modifiers" "11%" "Default" "12%" "Description" "34%" "Notes" "34%"
+  "Inherited from" "15%" "Value" "14%"
+  "Event" "36%" "Command" "36%" "Type guard" "30%" "Create with" "30%" -}}
+{{- $noun := "rows" -}}
+{{- if $isApi -}}
+  {{- $nouns := dict "Prop" "props" "Name" "props" "Parameter" "parameters" "Property" "properties" "Field" "fields" "Member" "members" "Event" "events" "Command" "commands" -}}
+  {{- with index $nouns (index $headers 0) }}{{ $noun = . }}{{ end -}}
+{{- end -}}
+<div class="overflow-x-auto{{ if ge (len $headers) 3 }} table-stack{{ end }}{{ if $isApi }} props-table{{ end }}">
+  <table{{ with .Attributes }}{{ range $k, $v := . }}{{ with $v }} {{ $k }}="{{ $v }}"{{ end }}{{ end }}{{ end }}>
+    <thead>
+      {{- range .THead }}
+      <tr>
+        {{- range $i, $cell := . }}
+        {{- $style := "" }}
+        {{- with $cell.Alignment }}{{ $style = printf "text-align: %s;" . }}{{ end }}
+        {{- if $isApi }}{{ with index $widths (index $headers $i) }}{{ $style = printf "%s width: %s;" $style . }}{{ end }}{{ end }}
+        {{- /* The whole attribute is emitted via safeHTMLAttr: composing the value in
+               a variable first makes Go's contextual escaper give up and write
+               ZgotmplZ, and safeCSS alone does not satisfy it here. Both halves are
+               ours — Goldmark's left/center/right, and the width table above. */}}
+        <th{{ with $style }}{{ printf " style=%q" . | safeHTMLAttr }}{{ end }}>{{ $cell.Text }}</th>
+        {{- end }}
+      </tr>
+      {{- end }}
+    </thead>
+    <tbody>
+      {{- range .TBody }}
+      <tr>
+        {{- range $i, $cell := . }}
+        {{- $label := "" }}
+        {{- if lt $i (len $headers) }}{{ $label = index $headers $i }}{{ end }}
+        <td{{ with $cell.Alignment }} style="text-align: {{ . }}"{{ end }}{{ with $label }} data-label="{{ . }}"{{ end }}>{{ $cell.Text }}</td>
+        {{- end }}
+      </tr>
+      {{- end }}
+    </tbody>
+  </table>
+</div>
+{{- if $isApi }}
+<button type="button" data-props-toggle data-props-noun="{{ $noun }}" hidden aria-expanded="false" class="group mt-3 inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gd-border px-4 text-sm font-medium text-gd-text-secondary transition hover:border-gd-secondary hover:text-gd-secondary focus-visible:ring-2 focus-visible:ring-gd-secondary focus-visible:outline-none dark:hover:border-gd-primary dark:hover:text-gd-primary">
+  <span data-props-toggle-label>Show all</span>
+  <span aria-hidden="true" class="text-xs transition-transform duration-150 group-aria-expanded:rotate-180">▾</span>
+</button>
+{{- end }}
