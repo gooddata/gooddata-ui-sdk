@@ -1,6 +1,8 @@
 // (C) 2026 GoodData Corporation
 
 .gd-ui-kit-text-input {
+    $root: &;
+
     display: flex;
     flex-direction: column;
     gap: var(--gd-spacing-5px);
@@ -12,17 +14,42 @@
     }
 
     &__field {
+        --gd-icon-fill-color: var(--gd-palette-complementary-6);
+
         display: flex;
         align-items: center;
+        box-sizing: border-box;
         height: 32px;
         padding: 0 var(--gd-spacing-7px);
         border: 1px solid var(--gd-palette-complementary-4);
         border-radius: 3px;
         background-color: var(--gd-palette-complementary-0);
         box-shadow: inset 0 1px 2px var(--gd-shadow-color);
+        transition: var(--gd-transition-all);
+        // Only outline-style changes on focus, and it is not animatable, so the focus indicator shows at
+        // once despite the transition.
+        outline: 2px none var(--gd-palette-primary-base);
+        outline-offset: -1px;
+
+        &:hover:not(&--disabled):not(&--error) {
+            border-color: var(--gd-palette-complementary-5);
+        }
 
         &:focus-within {
-            border-color: var(--gd-palette-primary-base);
+            outline-style: solid;
+        }
+
+        &:hover:not(&--disabled),
+        &:focus-within {
+            --gd-icon-fill-color: var(--gd-palette-complementary-7);
+        }
+
+        &--size-small {
+            height: var(--gd-button-S);
+
+            #{$root}__input {
+                font-size: 13px;
+            }
         }
 
         &--disabled {
@@ -30,11 +57,10 @@
             cursor: not-allowed;
         }
 
-        // Repeated with :focus-within to outweigh the focus rule above, so the border stays error-colored
-        // while the field is being corrected.
-        &--error,
-        &--error:focus-within {
+        // The focus outline is error-colored too, so the field stays red while it is being corrected.
+        &--error {
             border-color: var(--gd-palette-error-base);
+            outline-color: var(--gd-palette-error-base);
         }
     }
 
@@ -65,6 +91,11 @@
         line-height: 22px;
         color: var(--gd-palette-complementary-8);
         outline: none;
+
+        // We are setting focus on the outer div, so disable here
+        &:focus-visible {
+            outline: none;
+        }
 
         &::placeholder {
             // `opacity` not `rgba(var(...))` so theme overrides of complementary-7 still apply.

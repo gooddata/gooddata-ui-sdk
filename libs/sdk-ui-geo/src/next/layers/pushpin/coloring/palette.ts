@@ -146,10 +146,10 @@ export function getColorIndexInPalette(value: number | null, min: number, max: n
 type ColorPaletteMapping = { [itemName: string]: string[] };
 
 /**
- * Creates a mapping of segment names to color palettes
+ * Creates a mapping of segment element URIs to color palettes
  *
  * @param colorStrategy - Color strategy from visualization
- * @returns Map of segment names to color palettes
+ * @returns Map of segment element URIs to color palettes
  *
  * @internal
  */
@@ -167,12 +167,14 @@ export function getColorPaletteMapping(colorStrategy: IColorStrategy): ColorPale
             };
         }
 
-        // Color based on SegmentBy
-        const name = isResultAttributeHeader(item.headerItem)
-            ? item.headerItem.attributeHeaderItem.name
+        // Color based on SegmentBy, keyed by the raw element identity: formatted names of distinct
+        // elements can be equal (e.g. two numbers rounded by the number format). The null element
+        // provides the fallback palette that segments without an identity get.
+        const key = isResultAttributeHeader(item.headerItem)
+            ? (item.headerItem.attributeHeaderItem.uri ?? DEFAULT_SEGMENT_ITEM)
             : DEFAULT_SEGMENT_ITEM;
 
-        result[name ?? DEFAULT_SEGMENT_ITEM] = colorPalette;
+        result[key] = colorPalette;
         return result;
     }, {});
 }
@@ -187,7 +189,7 @@ export function getColorPaletteMapping(colorStrategy: IColorStrategy): ColorPale
  * - Color strategy
  *
  * @param colorValues - Array of color measure values (can be null)
- * @param segmentValues - Array of segment names
+ * @param segmentValues - Array of segment element URIs
  * @param colorStrategy - Color strategy for palette generation
  * @returns Array of pushpin color configurations
  *
@@ -220,7 +222,7 @@ export function getPushpinColors(
     // Only segment data, no color measure
     if (colorValues.length === 0) {
         return segmentNames.map((name: string): IPushpinColor => {
-            const palette = colorPaletteMapping[name] ?? fallbackPalette;
+            const palette = colorPaletteMapping[name || DEFAULT_SEGMENT_ITEM] ?? fallbackPalette;
             return {
                 border: DEFAULT_PUSHPIN_BORDER_COLOR_VALUE,
                 background: palette?.[DEFAULT_COLOR_INDEX_IN_PALETTE] ?? defaultColor,

@@ -49,6 +49,17 @@ $headline-compact-margin-bottom: 5px;
     }
 }
 
+// Edit mode keeps the desktop grid on narrow windows and scrolls horizontally instead.
+.sdk-edit-mode-on > .gd-dashboards-root {
+    min-width: kit-variables.$large-breakpoint;
+
+    .dash-header,
+    .gd-dash-tabs,
+    .dash-section-kpis {
+        max-width: none;
+    }
+}
+
 .gd-dashboard-contract-expired {
     display: flex;
     flex: 1 0 auto;

@@ -33,5 +33,11 @@
     "messages.genAi.visualisation.link.copied": "Görselleştirme bağlantısı panonuza kopyalandı.",
     "messages.showMore": "Daha fazla göster",
     "messages.showLess": "Daha az göster",
-    "gen-ai.ask-assistant.search": "Yeni görselleştirme oluştur: {question}"
+    "gen-ai.ask-assistant.search": "Yeni görselleştirme oluştur: {question}",
+    "languageDialog.title": "Dili değiştir",
+    "languageDialog.default": "Varsayılan ({language})",
+    "languageDialog.description": "<b>Not:</b> Yalnızca arayüzü değiştirir, gösterge tablosu içeriğini değiştirmez.",
+    "languageDialog.select.searchLabel": "Dil ara",
+    "languageDialog.select.searchPlaceholder": "Ara…",
+    "languageDialog.select.noMatch": "Eşleşen dil yok."
 }

@@ -5,7 +5,6 @@
 
 .gd-ui-kit-listbox {
     $root: &;
-
     max-height: 300px;
     overflow-y: auto;
     overflow-x: hidden;
@@ -13,6 +12,10 @@
     width: 100%;
     min-width: 200px;
     padding: 6px 0;
+
+    &--padding-none {
+        padding: 0;
+    }
 
     &--mobile {
         // !important to override inline style from maxWidth prop
@@ -32,6 +35,12 @@
             background-color: variables.$is-focused-background;
             @include mixins.focus-ring;
         }
+
+        // the list is never focused itself, so the highlight shows without :focus-visible
+        // (a selected highlighted item is styled by --isSelected--isFocused below)
+        &--virtualFocus #{$root}__item--isFocused:not(#{$root}__item--isSelected) {
+            background-color: variables.$is-focused-background;
+        }
     }
 
     &__item {
@@ -42,10 +51,11 @@
         font-size: 14px;
         line-height: 20px;
         color: variables.$gd-color-text;
-        transition: background-color 0.2s;
         gap: 10px;
 
-        &:hover:not(&--isDisabled):not(&--isSelected) {
+        // With virtual focus, hovering moves the highlight itself (onFocusedItemIdChange), so painting :hover
+        // too would show a second highlight on the item under a resting mouse
+        #{$root}__items:not(#{$root}__items--virtualFocus) &:hover:not(&--isDisabled):not(&--isSelected) {
             background-color: variables.$is-focused-background;
             color: variables.$is-focused-color;
         }
@@ -63,7 +73,7 @@
         }
 
         &--isSelected#{&}--isFocused,
-        &:hover#{&}--isSelected {
+        #{$root}__items:not(#{$root}__items--virtualFocus) &:hover#{&}--isSelected {
             font-weight: bold;
             background-color: variables.$is-selected-focused-background;
             color: variables.$is-selected-focused-color;
@@ -76,6 +86,7 @@
 
         &--isCompact {
             font-size: 12px;
+            line-height: 18px;
             padding: 5px 10px;
         }
     }

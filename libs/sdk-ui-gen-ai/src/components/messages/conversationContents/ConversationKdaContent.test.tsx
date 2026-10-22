@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import { describe, expect, it, vi } from "vitest";
 
 import type { IChatKdaDefinition, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { newAttribute, newMeasure } from "@gooddata/sdk-model";
 
 import {
     chatWindowSliceName,
@@ -26,6 +27,15 @@ vi.mock("./useKdaDefinition.js", () => ({
 vi.mock("../contents/Markdown.js", () => ({
     MarkdownComponent: ({ children }: { children: ReactNode }) => children,
 }));
+
+const kda: IChatKdaDefinition = {
+    measure: newMeasure("revenue"),
+    dateAttribute: newAttribute("date.month"),
+    dateGranularity: "GDC.time.month",
+    filters: [],
+    referencePeriod: "2025-01",
+    analyzedPeriod: "2025-02",
+};
 
 const messages = {
     "gd.gen-ai.changeAnalysis.splitter": " – ",
@@ -55,10 +65,7 @@ function renderComponent(
     return render(
         <Provider store={store}>
             <IntlProvider locale="en-US" messages={messages}>
-                <ConversationKdaContent
-                    kda={{} as IChatKdaDefinition}
-                    enableKeyDriverAnalysis={enableKeyDriverAnalysis}
-                />
+                <ConversationKdaContent kda={kda} enableKeyDriverAnalysis={enableKeyDriverAnalysis} />
             </IntlProvider>
         </Provider>,
     );

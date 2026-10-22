@@ -197,6 +197,11 @@ type AttributeCacheEntry = {
 type CompleteAttributeElements = {
     items: IAttributeElement[];
     cacheId?: string;
+    /**
+     * Number format of the element values the backend stated for the result, kept so that a locally
+     * answered query carries it the same way a backend-answered one does.
+     */
+    numberFormat?: string;
 };
 
 type AutomationCacheEntry = {
@@ -1151,6 +1156,7 @@ class LocallyFilteredElements extends InMemoryPaging<IAttributeElement> {
         limit: number,
         offset: number,
         public readonly cacheId?: string,
+        public readonly numberFormat?: string,
     ) {
         super(allItems, limit, offset);
     }
@@ -1165,6 +1171,7 @@ class LocallyFilteredElements extends InMemoryPaging<IAttributeElement> {
             this.limit,
             this.offset + this.items.length,
             this.cacheId,
+            this.numberFormat,
         );
     }
 
@@ -1175,7 +1182,13 @@ class LocallyFilteredElements extends InMemoryPaging<IAttributeElement> {
 
         // Paged by the requested limit, the way a server-backed result pages, rather than by how full the
         // current page happens to be.
-        return new LocallyFilteredElements(this.allItems, this.limit, pageIndex * this.limit, this.cacheId);
+        return new LocallyFilteredElements(
+            this.allItems,
+            this.limit,
+            pageIndex * this.limit,
+            this.cacheId,
+            this.numberFormat,
+        );
     }
 }
 
@@ -1332,7 +1345,13 @@ class CachedElementsQuery extends DecoratedElementsQuery {
             return undefined;
         }
 
-        return new LocallyFilteredElements(this.matching(complete.items), limit, offset, complete.cacheId);
+        return new LocallyFilteredElements(
+            this.matching(complete.items),
+            limit,
+            offset,
+            complete.cacheId,
+            complete.numberFormat,
+        );
     }
 
     private matching(elements: IAttributeElement[]): IAttributeElement[] {
@@ -1373,6 +1392,7 @@ class CachedElementsQuery extends DecoratedElementsQuery {
         cache?.set(completeElementsCacheKey(this.ref, this.settings), {
             items: result.items,
             cacheId: result.cacheId,
+            numberFormat: result.numberFormat,
         });
     }
 

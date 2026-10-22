@@ -1,65 +1,8 @@
 // (C) 2026 GoodData Corporation
 
-import { type ReactNode } from "react";
-
 import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 import { describe, expect, it, vi } from "vitest";
-
-vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
-    const kit = (await importOriginal()) as Record<string, unknown>;
-
-    function MockUiPagedVirtualList<T>({
-        items,
-        children,
-        listboxProps,
-        onKeyDownConfirm,
-        isLoading,
-        hasNextPage,
-        skeletonItemsCount,
-    }: {
-        items?: T[];
-        children: (item: T, index?: number) => ReactNode;
-        listboxProps?: Record<string, unknown>;
-        onKeyDownConfirm?: (item: T) => void;
-        isLoading?: boolean;
-        hasNextPage?: boolean;
-        skeletonItemsCount?: number;
-    }) {
-        if (isLoading) {
-            return <div data-testid="context-chooser-loading" />;
-        }
-
-        return (
-            <ul
-                role="listbox"
-                data-testid="context-chooser-paged-list"
-                data-has-next-page={hasNextPage}
-                data-skeleton-count={skeletonItemsCount}
-                {...listboxProps}
-            >
-                {items?.map((item, index) => (
-                    <li
-                        key={index}
-                        role="option"
-                        onKeyDown={(event) => {
-                            if (event.key === "Enter") {
-                                onKeyDownConfirm?.(item);
-                            }
-                        }}
-                    >
-                        {children(item, index)}
-                    </li>
-                ))}
-            </ul>
-        );
-    }
-
-    return {
-        ...kit,
-        UiPagedVirtualList: MockUiPagedVirtualList,
-    };
-});
 
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../localization/translations.js";
 import { type IGenAIContextObject } from "../types.js";
@@ -69,6 +12,7 @@ import { GenAiChatContextChooserBody } from "./GenAiChatContextChooserBody.js";
 const SEARCH_FIELD_VISIBILITY_THRESHOLD = 7;
 const SEARCH_DEBOUNCE_MS = 300;
 const ANNOUNCEMENT_DEBOUNCE_MS = 1000;
+const LOADING_SKELETON_ITEMS_COUNT = 7;
 
 const messages = {
     ...DEFAULT_MESSAGES[DEFAULT_LANGUAGE],
@@ -94,6 +38,14 @@ function createItem(
         type,
         where: type === "dashboard" ? "view.dashboard" : "referencedObjects",
     };
+}
+
+function getSkeletonItems() {
+    const listbox = screen.getByRole("listbox", { name: "Available context items" });
+
+    return within(listbox)
+        .getAllByRole("option")
+        .filter((option) => option.querySelector(".gd-ui-kit-skeleton"));
 }
 
 function renderBody(
@@ -193,14 +145,14 @@ describe("GenAiChatContextChooserBody", () => {
         );
 
         expect(screen.getByRole("searchbox", { name: "Search context items" })).toBeInTheDocument();
-        expect(screen.getByTestId("context-chooser-loading")).toBeInTheDocument();
+        expect(screen.getByRole("listbox", { name: "Available context items" })).toBeInTheDocument();
     });
 
     it("does not render search while the initial load has produced no items yet", () => {
         renderBody([], vi.fn(), { isLoading: true });
 
         expect(screen.queryByRole("searchbox")).not.toBeInTheDocument();
-        expect(screen.getByTestId("context-chooser-loading")).toBeInTheDocument();
+        expect(getSkeletonItems()).toHaveLength(LOADING_SKELETON_ITEMS_COUNT);
     });
 
     it("hands the typed title over once the typing pauses", () => {
@@ -241,15 +193,12 @@ describe("GenAiChatContextChooserBody", () => {
     });
 
     it("keeps paging while a search is on", () => {
-        renderBody([createItem("target", "Unique Target Widget")], vi.fn(), {
+        const { loadNextPage } = renderBody([createItem("target", "Unique Target Widget")], vi.fn(), {
             search: "unique",
             hasNextPage: true,
         });
 
-        expect(screen.getByTestId("context-chooser-paged-list")).toHaveAttribute(
-            "data-has-next-page",
-            "true",
-        );
+        expect(loadNextPage).toHaveBeenCalled();
     });
 
     it("offers the search field while more objects are waiting on the next page", () => {
@@ -273,11 +222,7 @@ describe("GenAiChatContextChooserBody", () => {
         renderBody([], vi.fn(), { hasNextPage: true });
 
         expect(screen.queryByText("No items available")).not.toBeInTheDocument();
-        expect(screen.getByTestId("context-chooser-paged-list")).toHaveAttribute(
-            "data-has-next-page",
-            "true",
-        );
-        expect(screen.getByTestId("context-chooser-paged-list")).toHaveAttribute("data-skeleton-count", "7");
+        expect(getSkeletonItems()).toHaveLength(LOADING_SKELETON_ITEMS_COUNT);
     });
 
     it("announces the search outcome as a sentence, not as a message id", () => {
@@ -300,6 +245,6 @@ describe("GenAiChatContextChooserBody", () => {
         renderBody([], vi.fn(), { hasNextPage: false });
 
         expect(screen.getByText("No items available")).toBeInTheDocument();
-        expect(screen.queryByTestId("context-chooser-paged-list")).not.toBeInTheDocument();
+        expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
     });
 });

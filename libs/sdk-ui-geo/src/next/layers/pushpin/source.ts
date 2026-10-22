@@ -208,6 +208,7 @@ function createPushpinFeatures({
     const fallbackLocationNameData = buildFallbackLocationLabels(location.data);
     const locationNameData = tooltipText?.data?.length ? tooltipText.data : fallbackLocationNameData;
     const locationNameUris = tooltipText?.uris ?? [];
+    const segmentUris = (segment?.uris ?? []).map((uri) => uri ?? EMPTY_SEGMENT_VALUE);
     const selectedIntersections = getSelectedIntersections(config?.selectedPoints);
 
     const ctx: IPushpinFeatureContext = {
@@ -223,11 +224,11 @@ function createPushpinFeatures({
         measures: measuresCtx,
         locationNameData,
         segmentData: segment?.data ?? [],
-        segmentUris: (segment?.uris ?? []).map((uri) => uri ?? EMPTY_SEGMENT_VALUE),
+        segmentUris,
         sizeData,
         colorData,
         geoIconData,
-        pushpinColors: getPushpinColors(colorData, segment?.data ?? [], colorStrategy),
+        pushpinColors: getPushpinColors(colorData, segmentUris, colorStrategy),
         geoPointsConfig,
         minSizeFromData,
         maxSizeFromData,

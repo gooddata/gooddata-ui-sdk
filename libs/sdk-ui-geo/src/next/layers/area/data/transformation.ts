@@ -195,11 +195,13 @@ function processAreaBucket(ctx: IAreaBucketProcessingContext): IGeoAreaItem | un
         return undefined;
     }
 
+    // area identifiers are matched against map features, so they keep the raw element value
     const { data, uris } = getAttributeDataAndUris(
         attributeHeaderItems,
         areaIndex,
         emptyHeaderString,
         nullHeaderString,
+        false,
     );
 
     return {

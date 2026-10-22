@@ -59,13 +59,17 @@ async function loadElementsAsExecution(
 
     const dataViewFacade = DataViewFacade.for(executionDataView);
     const [headers] = dataViewFacade.meta().attributeHeaders();
+    const [descriptor] = dataViewFacade.meta().attributeDescriptors();
 
-    return headers.map(([header]): IAttributeElement => {
-        return {
-            title: header.attributeHeaderItem.name,
-            uri: header.attributeHeaderItem.uri,
-        };
-    });
+    return {
+        elements: headers.map(([header]): IAttributeElement => {
+            return {
+                title: header.attributeHeaderItem.name,
+                uri: header.attributeHeaderItem.uri,
+            };
+        }),
+        numberFormat: descriptor?.attributeHeader.numberFormat,
+    };
 }
 
 /**
@@ -120,7 +124,7 @@ export async function loadElementsFromBackend(
             hiddenElementsInfo,
         );
 
-        return new InMemoryPaging(resolvedElements, limit, offset);
+        return new InMemoryPaging(resolvedElements.elements, limit, offset, resolvedElements.numberFormat);
     }
 
     let loader = backend.workspace(workspace).attributes().elements().forDisplayForm(displayFormRef);

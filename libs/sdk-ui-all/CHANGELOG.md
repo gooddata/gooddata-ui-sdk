@@ -1,6 +1,60 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Mon, 19 Oct 2026 10:58:30 GMT and should not be manually modified.
+This log was last generated on Thu, 22 Oct 2026 10:09:35 GMT and should not be manually modified.
+
+## 11.64.0
+
+Thu, 22 Oct 2026 10:09:35 GMT
+
+### Updates
+
+- sdk-ui-kit: UiListbox has a new `shouldSelectOnOptionClick` prop that selects an item on a click anywhere in its option.
+- sdk-ui-kit: Compact UiListbox rows are 28px high. UiTextInput is 32px high including its border, shows a border on hover and a 2px outline on focus, and its icons darken on hover and focus. UiFloatingPanel has a border.
+- sdk-ui-kit: UiTextInput no longer shows the browser focus ring on its inner input.
+- sdk-ui-kit: UiListbox highlights rows without a transition, so the highlight no longer flickers when moving between items.
+- sdk-ui-kit: UiSearchResultsAnnouncement accepts a custom `noResultsText`.
+- sdk-ui-kit: UiTextInput has a new `small` size.
+- sdk-ui-kit: UiListbox has a new `padding` prop; `"none"` removes the vertical padding of the list.
+- sdk-ui-kit: UiListbox items accept a `lang` attribute, which is set on their option.
+- sdk-ui-kit: UiListbox supports virtual focus with the new `focusedItemId` and `onFocusedItemIdChange` props.
+- sdk-ui-all: Add the UiSearchableSelect component, a select with a search field in its popup.
+- sdk-ui-kit: Header tests pass workspace permissions as named parameters.
+- sdk-ui-all: `generateHeaderAccountMenuItems()` takes the workspace ID and feature flags in an options parameter.
+- sdk-ui-kit: User menu items without a link render as buttons.
+- sdk-ui-pluggable-host: Add a shared `render()` helper for tests.
+- sdk-ui-all: Users can change their interface language from the user menu, also in the mobile menu, behind the new `enableUserLanguageChange` feature flag. Add `IUserSettingsService.deleteLocale()` and the `globe` icon of UiIcon.
+- sdk-ui-kit: UiModalDialog is never wider than the screen, so it fits small screens too.
+- sdk-model: Remove `MONGODB` and the stale `DRILL` from the `DataSourceType` union; neither is a supported data source type any more
+- api-client-tiger: Remove `MONGODB` from the generated data source type enums
+- api-client-tiger, sdk-model, sdk-backend-spi, sdk-backend-base, sdk-backend-tiger, sdk-code-convertors, sdk-ui-gen-ai: Add the v2 Publisher service on the Document entities.
+- sdk-ui: Visualizations display a localized access error instead of the internal PROTECTED_REPORT code when execution references restricted data.
+- sdk-ui-kit: UiIcon has new columnGroup, visualizationStack and richText icons.
+- sdk-ui-pluggable-application: createBackendForModule takes an onCacheReady option that receives the cache control of the created backend, so a module can reset its caches.
+- sdk-ui-kit: Add renderItemDetails to the internal CatalogItemPicker and make it generic over its payload types.
+- sdk-backend-base: The caching backend no longer serves cached attribute elements of a label for a computed attribute sharing its id.
+- sdk-embedding: Add the catalogLoaded Analytical Designer event, emitted after every successful catalog load so the host can set filters in an empty AD.
+- sdk-ui-dashboard: Alerting and scheduled email management dialogs accept a dashboardUrlBuilder prop.
+- sdk-ui-gen-ai, sdk-pluggable-application-model, sdk-ui-pluggable-host: The reasoning effort picked on the new-dashboard screen carries into the chat.
+- sdk-backend-tiger: The collapsible, resizable left sidebar is on by default; `enableCollapsibleLeftSidebar` now defaults to `true` when the backend does not set it.
+- sdk-ui-dashboard: In compact content density, headline widgets no longer leave empty space below their content and keep the font size they have in comfortable density.
+- sdk-ui-kit: Chip labels in dialogs, such as the alert list filters, show in Safari without needing a hover.
+- api-client-tiger, sdk-backend-tiger: The workspace localization usage, its workspaces and users lists and the workspace localization statistics come from the backend localization endpoints. The defaults of a workspace are the values it gets.
+- sdk-backend-spi, sdk-backend-tiger: The localization usage lists accept a name filter, which the backend applies before paging.
+- sdk-ui-kit: Escape in a UiPopover closes only the popover, not a parent drawer or dialog.
+- sdk-ui-ext: Report which language settings the user detail saved through `onEvent`
+- sdk-ui-kit, sdk-ui-filters, sdk-ui-pluggable-host: Native buttons and inputs in overlays use the page font instead of the browser default font.
+- sdk-backend-spi: Add data source management, data source files (CSV upload, analysis and import) and data filter settings to the backend SPI. sdk-model: Add data source and CSV file types.
+- sdk-ui-pluggable-application: Remove the mention of backend-specific functions from the client platform context documentation.
+- sdk-backend-spi: Add reading and writing of the declarative logical data model, the workspace layout import, data source scans and logical model generation, workspace custom application settings and all workspace references. sdk-model: Add declarative logical data model, physical data model and custom application setting types.
+- sdk-backend-spi: Add organization CSP directives, platform usage, user invitations, current user API tokens, workspace creation and deletion. sdk-backend-tiger: Deprecate TigerSpecificFunctions; it will be removed in the next major version.
+- sdk-backend-tiger: The workspace search test loads its own module copy, so it passes in any test file order.
+- sdk-ui-pluggable-host: In export mode, users without the BASE_UI_ACCESS permission keep the Dashboards and Publisher applications, so the exports they request render as they did in the standalone Dashboards application, which never checked this permission.
+- sdk-ui-kit: Add opt-in highlight and strikethrough markdown to RichText.
+- sdk-model: Add theme image references and image URL resolution for v2 Publisher documents.
+- sdk-ui-ext: The user detail dialog notes whether the user's workspaces have a translation into their metadata and data language.
+- sdk-model, sdk-backend-tiger: Add the `enableGenAiReportTakeaways` feature flag
+- sdk-ui-ext: Keep the date icon on a conditional formatting date rule whose column was removed.
+- sdk-ui-ext: The workspace permission dialog shows Manage all visualizations as included in Analyze where the workspace grants it with Analyze.
 
 ## 11.63.0
 

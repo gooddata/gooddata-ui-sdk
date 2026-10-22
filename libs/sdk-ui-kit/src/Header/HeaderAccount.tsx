@@ -113,12 +113,10 @@ function MenuItem({
 }: {
     item: IHeaderMenuItem;
     toggleMenu: (isOpen: boolean) => void;
-    onMenuItemClick: (item: IHeaderMenuItem, e: MouseEvent<HTMLAnchorElement> | KeyboardEvent) => void;
+    onMenuItemClick: (item: IHeaderMenuItem, e: MouseEvent<HTMLElement> | KeyboardEvent) => void;
 }) {
-    const tabIndexProp = item.href ? {} : { tabIndex: 0 };
-
     const handleClick = useCallback(
-        (e: MouseEvent<HTMLAnchorElement>): void => {
+        (e: MouseEvent<HTMLElement>): void => {
             toggleMenu(false);
             onMenuItemClick(item, e);
         },
@@ -136,14 +134,18 @@ function MenuItem({
         [item, toggleMenu, onMenuItemClick],
     );
 
+    const className = `gd-list-item ${item.className ?? ""}`;
+
+    if (!item.href) {
+        return (
+            <button type="button" onClick={handleClick} className={className}>
+                <FormattedMessage id={item.key} />
+            </button>
+        );
+    }
+
     return (
-        <a
-            href={item.href}
-            onClick={handleClick}
-            className={`gd-list-item ${item.className}`}
-            onKeyDown={handleKeyDown}
-            {...tabIndexProp}
-        >
+        <a href={item.href} onClick={handleClick} className={className} onKeyDown={handleKeyDown}>
             <FormattedMessage id={item.key} />
         </a>
     );

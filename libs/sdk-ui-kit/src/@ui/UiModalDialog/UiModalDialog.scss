@@ -19,6 +19,7 @@
         position: relative;
         display: flex;
         flex-direction: column;
+        max-width: calc(100vw - 2 * var(--gd-spacing-20px));
         max-height: calc(100vh - 80px);
         overflow-y: auto;
         overscroll-behavior: contain;

@@ -10,6 +10,7 @@ import {
     type IAttributeMetadataObject,
     type IDashboardDateFilter,
     type ILocale,
+    type ISeparators,
     type ObjRef,
 } from "@gooddata/sdk-model";
 import {
@@ -241,6 +242,15 @@ export interface IAttributeFilterCoreProps {
      * Locale to use for localization of appearing texts.
      */
     locale?: ILocale;
+
+    /**
+     * Number separators used when formatting element values of numeric computed attributes.
+     *
+     * @remarks
+     * Element titles of attributes whose values carry a number format are shown formatted the same way
+     * measures are; the separators come from the workspace settings of the hosting application.
+     */
+    separators?: ISeparators;
 
     /**
      * If specified, these will be excluded from the elements available for selection and will also be removed from the resulting filter.

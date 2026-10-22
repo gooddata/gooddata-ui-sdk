@@ -40,6 +40,7 @@ export interface IUseAttributeFilterHandlerStateResult {
         data?: IAttributeElement[];
         totalCount?: number;
         totalCountWithCurrentSettings?: number;
+        numberFormat?: string;
         initialPageLoad: {
             status: AsyncOperationStatus;
             error?: GoodDataSdkError;
@@ -107,6 +108,7 @@ export const useAttributeFilterHandlerState = (
             data: handler.getAllElements(),
             totalCount: handler.getTotalElementsCount(),
             totalCountWithCurrentSettings: handler.getTotalElementsCountWithCurrentSettings(),
+            numberFormat: handler.getElementsNumberFormat?.(),
             initialPageLoad: {
                 status: handler.getInitialElementsPageStatus(),
                 error: handler.getInitialElementsPageError(),

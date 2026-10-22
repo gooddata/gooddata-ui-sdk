@@ -79,8 +79,8 @@ export function DashboardAttachments({
             );
         });
 
-        // Focus management: if items remain, focus the group; otherwise focus add button
-        if (newAttachments.length > 0) {
+        // Hidden formats are preserved, but only visible chips can receive focus.
+        if (visibleSelectedAttachments.some((att) => att !== attachment)) {
             focusAttachmentGroup();
         } else {
             requestAnimationFrame(() => {
@@ -136,6 +136,15 @@ export function DashboardAttachments({
                             addButtonRef.current = ref;
                         }}
                     />
+                    {visibleSelectedAttachments.length === 0 && selectedAttachments.length > 0 ? (
+                        <Message
+                            type="progress"
+                            className="gd-attachment-list-message"
+                            accessibilityConfig={{ role: "status" }}
+                        >
+                            <FormattedMessage id="scheduledEmail.attachments.noVisibleAttachments" />
+                        </Message>
+                    ) : null}
                     {isCrossFiltering && selectedAttachments.length > 0 ? (
                         <Message type="progress" className="gd-attachment-list-message">
                             <FormattedMessage

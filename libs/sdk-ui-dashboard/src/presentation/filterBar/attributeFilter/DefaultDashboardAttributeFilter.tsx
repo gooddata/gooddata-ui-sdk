@@ -45,6 +45,7 @@ import {
     selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectLocale,
+    selectSeparators,
 } from "../../../model/store/config/configSelectors.js";
 import { selectIsFilterFromCrossFilteringByLocalIdentifier } from "../../../model/store/drill/drillSelectors.js";
 import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
@@ -127,6 +128,7 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
     const locale = useDashboardSelector(selectLocale);
     const isEditMode = useDashboardSelector(selectIsInEditMode);
     const capabilities = useDashboardSelector(selectBackendCapabilities);
+    const separators = useDashboardSelector(selectSeparators);
 
     // Extract common properties using wide utilities; narrow props only for standard filters
     const filterLocalId = dashboardAttributeFilterItemLocalIdentifier(filter)!;
@@ -658,6 +660,7 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
     const filterContent = (
         <AttributeFilterComponent
             title={filterTitle}
+            separators={separators}
             resetOnParentFilterChange={false}
             filter={isApplyAllAtOnceEnabledAndSet ? workingAttributeFilter : attributeFilter}
             displayAsLabel={displayAsLabel}

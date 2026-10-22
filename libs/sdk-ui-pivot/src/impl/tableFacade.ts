@@ -11,7 +11,9 @@ import {
     type IAvailableDrillTargets,
     type IExportFunction,
     createExportFunction,
+    createNumberFormatter,
     emptyHeaderTitleFromIntl,
+    formatAttributeHeaderValues,
 } from "@gooddata/sdk-ui";
 
 import { type IResizedColumns, UIClick } from "../columnWidths.js";
@@ -127,6 +129,11 @@ export class TableFacade {
     private destroyed: boolean = false;
 
     private onPageLoadedCallback: ((dv: DataViewFacade, newResult: boolean) => void) | undefined;
+    /**
+     * Gives element values of attributes with a number format their formatted name; applied to the
+     * initial data view and to every page loaded later so the table shows them consistently.
+     */
+    private readonly formatDataView: (view: IDataView) => IDataView;
     private onExecutionTransformedCallback: OnExecutionTransformed | undefined;
 
     constructor(
@@ -139,7 +146,9 @@ export class TableFacade {
         this.intl = props.intl;
 
         this.currentResult = result;
-        this.visibleData = DataViewFacade.for(dataView);
+        this.formatDataView = (view: IDataView) =>
+            formatAttributeHeaderValues(view, createNumberFormatter(props.config?.separators));
+        this.visibleData = DataViewFacade.for(this.formatDataView(dataView));
         this.currentFingerprint = defFingerprint(this.currentResult.definition);
         this.tableDescriptor = TableDescriptor.for(
             this.visibleData,
@@ -265,7 +274,7 @@ export class TableFacade {
                 onPageLoaded: this.onPageLoaded,
                 onExecutionTransformed: this.onExecutionTransformed,
                 onTransformedExecutionFailed: this.onTransformedExecutionFailed,
-                dataViewTransform: (v) => v,
+                dataViewTransform: this.formatDataView,
             },
             this.visibleData,
             this.gridApiGuard,

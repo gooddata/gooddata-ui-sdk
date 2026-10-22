@@ -256,6 +256,17 @@ export interface IAttributeDescriptorBody {
     };
 
     /**
+     * Number format to apply to the attribute's element values.
+     *
+     * @remarks
+     * Uses the same format specification as measure formats. Present for numeric computed attributes;
+     * element values of a header without it are displayed as they come from the backend. Consumers must
+     * display the formatted value only and keep the raw element name for drilling, sorting and grouping,
+     * the same way date attributes' `formattedName` is treated.
+     */
+    numberFormat?: string;
+
+    /**
      * Primary label of the attribute from formOf
      */
     primaryLabel: ObjRef;

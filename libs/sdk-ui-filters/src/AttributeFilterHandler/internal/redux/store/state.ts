@@ -6,6 +6,7 @@ import {
     type IAttributeElement,
     type IAttributeFilter,
     type IAttributeMetadataObject,
+    type ISeparators,
     type ObjRef,
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
@@ -39,6 +40,11 @@ export interface IAttributeFilterState {
         };
         totalCountWithCurrentSettings?: number;
         cache: Record<string, IAttributeElement>;
+        /**
+         * Number format of the loaded element values (numeric computed attributes); the element titles
+         * are formatted with it and the separators when read from the cache.
+         */
+        numberFormat?: string;
         initialPageLoad: {
             status: AsyncOperationStatus;
             error?: GoodDataSdkError;
@@ -68,6 +74,10 @@ export interface IAttributeFilterState {
         hiddenElements?: string[];
         staticElements?: IAttributeElement[];
         withoutApply?: boolean;
+        /**
+         * Number separators used when formatting element values of numeric computed attributes.
+         */
+        separators?: ISeparators;
     };
     originalFilter?: IAttributeFilter;
 }

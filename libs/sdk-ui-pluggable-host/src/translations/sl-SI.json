@@ -33,5 +33,11 @@
     "messages.genAi.visualisation.link.copied": "Povezava vizualizacije je bila kopirana v vašo odlagališče.",
     "messages.showMore": "Prikaži več",
     "messages.showLess": "Prikaži manj",
-    "gen-ai.ask-assistant.search": "Ustvarite novo vizualizacijo na osnovi: {question}"
+    "gen-ai.ask-assistant.search": "Ustvarite novo vizualizacijo na osnovi: {question}",
+    "languageDialog.title": "Spremeni jezik",
+    "languageDialog.default": "Privzeto ({language})",
+    "languageDialog.description": "<b>Opomba:</b> Spremeni se samo jezik vmesnika, ne pa vsebina nadzorne plošče.",
+    "languageDialog.select.searchLabel": "Iskanje jezikov",
+    "languageDialog.select.searchPlaceholder": "Iskanje…",
+    "languageDialog.select.noMatch": "Ni ujemajočega se jezika."
 }

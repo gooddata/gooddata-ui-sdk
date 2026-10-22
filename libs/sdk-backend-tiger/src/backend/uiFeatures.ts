@@ -139,6 +139,7 @@ export enum TigerFeaturesNames {
     EnableGenAiReportTakeaways = "enableGenAiReportTakeaways",
     EnableEmbeddingWriteCommands = "enableEmbeddingWriteCommands",
     EnableLocalizationOverview = "enableLocalizationOverview",
+    EnableUserLanguageChange = "enableUserLanguageChange",
 }
 
 export type ITigerFeatureFlags = {
@@ -273,6 +274,7 @@ export type ITigerFeatureFlags = {
     enableGenAiReportTakeaways: (typeof FeatureFlagsValues)["enableGenAiReportTakeaways"][number];
     enableEmbeddingWriteCommands: (typeof FeatureFlagsValues)["enableEmbeddingWriteCommands"][number];
     enableLocalizationOverview: (typeof FeatureFlagsValues)["enableLocalizationOverview"][number];
+    enableUserLanguageChange: (typeof FeatureFlagsValues)["enableUserLanguageChange"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -396,7 +398,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDashboardVisualizationDelete: false,
     enableAiLlmAnthropicProvider: false,
     enableDashboardSidebarResize: true,
-    enableCollapsibleLeftSidebar: false,
+    enableCollapsibleLeftSidebar: true,
     enableExportTimeoutFix: false,
     enableDashboardPersistentFiltersAcrossTabs: false,
     enableAbsoluteDateFilterGranularity: false,
@@ -407,6 +409,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGenAiReportTakeaways: false,
     enableEmbeddingWriteCommands: false,
     enableLocalizationOverview: false,
+    enableUserLanguageChange: true,
 };
 
 export const FeatureFlagsValues = {
@@ -541,4 +544,5 @@ export const FeatureFlagsValues = {
     enableGenAiReportTakeaways: [false, true] as const,
     enableEmbeddingWriteCommands: [true, false] as const,
     enableLocalizationOverview: [false, true] as const,
+    enableUserLanguageChange: [true, false] as const,
 };

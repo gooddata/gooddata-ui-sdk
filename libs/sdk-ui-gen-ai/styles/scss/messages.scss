@@ -1453,12 +1453,6 @@ $dataset_color: #952f8e;
         flex-direction: row;
         gap: 5px;
 
-        &.active {
-            .gd-gen-ai-chat__conversation__visualization__save button:not(:focus):not(:focus-visible) {
-                opacity: 1;
-            }
-        }
-
         &:empty {
             display: none;
         }
@@ -1493,6 +1487,10 @@ $dataset_color: #952f8e;
     //BUTTONS
     &__save button:not(:focus):not(:focus-visible) {
         opacity: 0;
+    }
+
+    &__save.active button:not(:focus):not(:focus-visible) {
+        opacity: 1;
     }
 
     &__table button:not(:focus):not(:focus-visible) {

@@ -349,6 +349,7 @@ function elementsPage(
     limit: number,
     offset: number,
     cacheId?: string,
+    numberFormat?: string,
 ): IElementsQueryResult {
     return {
         items: all.slice(offset, offset + limit),
@@ -356,8 +357,10 @@ function elementsPage(
         offset,
         totalCount: all.length,
         cacheId,
-        next: () => Promise.resolve(elementsPage(all, limit, offset + limit, cacheId)),
-        goTo: (pageIndex: number) => Promise.resolve(elementsPage(all, limit, pageIndex * limit, cacheId)),
+        numberFormat,
+        next: () => Promise.resolve(elementsPage(all, limit, offset + limit, cacheId, numberFormat)),
+        goTo: (pageIndex: number) =>
+            Promise.resolve(elementsPage(all, limit, pageIndex * limit, cacheId, numberFormat)),
         all: () => Promise.resolve(all),
         allSorted: (compareFn) => Promise.resolve([...all].sort(compareFn)),
     };
@@ -376,6 +379,7 @@ class RecordingElementsQuery implements IElementsQuery {
         private readonly allElements: IAttributeElement[],
         private readonly calls: ElementsCall[],
         private readonly cacheId: string | undefined,
+        private readonly numberFormat?: string,
     ) {}
 
     public withLimit(limit: number): IElementsQuery {
@@ -426,7 +430,7 @@ class RecordingElementsQuery implements IElementsQuery {
               )
             : this.allElements;
 
-        return elementsPage(matching, this.limit, this.offset, this.cacheId);
+        return elementsPage(matching, this.limit, this.offset, this.cacheId, this.numberFormat);
     };
 }
 
@@ -436,13 +440,15 @@ class RecordingElementsService extends DecoratedWorkspaceAttributesService {
         private readonly allElements: IAttributeElement[],
         private readonly calls: ElementsCall[],
         private readonly cacheId?: string,
+        private readonly numberFormat?: string,
     ) {
         super(decorated);
     }
 
     public override elements(): IElementsQueryFactory {
         return {
-            forDisplayForm: () => new RecordingElementsQuery(this.allElements, this.calls, this.cacheId),
+            forDisplayForm: () =>
+                new RecordingElementsQuery(this.allElements, this.calls, this.cacheId, this.numberFormat),
             forFilter: () => {
                 throw new Error("not supported");
             },
@@ -454,9 +460,11 @@ function makeElementsBackend(
     calls: ElementsCall[],
     allElements: IAttributeElement[] = ELEMENTS,
     cacheId?: string,
+    numberFormat?: string,
 ): IAnalyticalBackend {
     return decoratedBackend(dummyBackendEmptyData(), {
-        attributes: (attributes) => new RecordingElementsService(attributes, allElements, calls, cacheId),
+        attributes: (attributes) =>
+            new RecordingElementsService(attributes, allElements, calls, cacheId, numberFormat),
     });
 }
 
@@ -2533,6 +2541,26 @@ describe("withCaching", () => {
                     const search = await queryElements(backend, 500, 0, { filter: "alpha" });
 
                     expect(search.cacheId).toBe("result-1");
+                    expect(calls).toHaveLength(1);
+                });
+
+                it("carries the number format of the result the list came from, on every page", async () => {
+                    const calls: ElementsCall[] = [];
+                    const backend = withCachingForTests(
+                        makeElementsBackend(calls, ELEMENTS, "result-1", "#,##0"),
+                        undefined,
+                        localFilteringConfig,
+                    );
+
+                    await queryElements(backend, 500, 0);
+                    const search = await queryElements(backend, 1, 0, { filter: "a" });
+                    const nextPage = await search.next();
+                    const secondPage = await search.goTo(1);
+
+                    expect(search.numberFormat).toBe("#,##0");
+                    expect(nextPage.numberFormat).toBe("#,##0");
+                    expect(secondPage.numberFormat).toBe("#,##0");
+                    expect(secondPage.offset).toBe(1);
                     expect(calls).toHaveLength(1);
                 });
 

@@ -33,5 +33,11 @@
     "messages.genAi.visualisation.link.copied": "Visualisointilinkki on kopioitu leikepöydällesi.",
     "messages.showMore": "Näytä lisää",
     "messages.showLess": "Näytä vähemmän",
-    "gen-ai.ask-assistant.search": "Luo uusi visualisointi, joka perustuu: {question}"
+    "gen-ai.ask-assistant.search": "Luo uusi visualisointi, joka perustuu: {question}",
+    "languageDialog.title": "Vaihda kieltä",
+    "languageDialog.default": "Oletus ({language})",
+    "languageDialog.description": "<b>Huomautus:</b> Muuttaa vain käyttöliittymän kieltä, ei koontinäytön sisältöä.",
+    "languageDialog.select.searchLabel": "Etsi kieliä",
+    "languageDialog.select.searchPlaceholder": "Hae…",
+    "languageDialog.select.noMatch": "Vastaavaa kieltä ei löytynyt."
 }

@@ -111,6 +111,10 @@
         "text": "Notifications",
         "crowdinContext": "A global notifications button label in the main menu"
     },
+    "userMenu.language": {
+        "text": "Language",
+        "crowdinContext": "Label for the language option in the user menu. Clicking this lets the user change the language of the user interface."
+    },
     "gs.header.logout": {
         "text": "Logout",
         "crowdinContext": "Label for the logout button in the user menu. Clicking this signs the user out of their current session."
@@ -542,6 +546,14 @@
     "visualization.ErrorMessageNotFound": {
         "text": "Sorry, we can't find this visualization",
         "crowdinContext": "Error message shown when the requested visualization cannot be found, typically because it has been deleted or the URL is incorrect."
+    },
+    "visualization.ErrorMessageProtectedReport": {
+        "text": "You don't have access",
+        "crowdinContext": "Error heading shown when executing a visualization is denied because it references restricted data."
+    },
+    "visualization.ErrorDescriptionProtectedReport": {
+        "text": "Contact your administrator to request access.",
+        "crowdinContext": "Instructions below the restricted-data error in a visualization, directing the user to their administrator."
     },
     "visualization.ErrorDescriptionNotFound": {
         "text": "The visualization with this URL does not exist.",
@@ -3158,6 +3170,18 @@
     "uiKit.autocomplete.loadMore": {
         "text": "Load more",
         "crowdinContext": "Label of the interactive row at the bottom of the autocomplete dropdown that loads the next page of results. Sentence case."
+    },
+    "uiKit.searchableSelect.searchPlaceholder": {
+        "text": "Search...",
+        "crowdinContext": "Default placeholder text in the search input inside the popup of the searchable select component."
+    },
+    "uiKit.searchableSelect.searchAriaLabel": {
+        "text": "Search items",
+        "crowdinContext": "Default accessibility label for the search input inside the popup of the searchable select component. Used by screen readers."
+    },
+    "uiKit.searchableSelect.noItems": {
+        "text": "No items found.",
+        "crowdinContext": "Default text in the popup of the searchable select component when there is no item to show: the list is empty, or no item matches the search."
     },
     "uiKit.certification.tooltip.title": {
         "text": "Certified",

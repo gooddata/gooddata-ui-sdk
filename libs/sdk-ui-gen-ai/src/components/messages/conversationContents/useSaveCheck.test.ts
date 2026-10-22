@@ -1,9 +1,13 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactNode, createElement } from "react";
+
 import { renderHook, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type IInsight } from "@gooddata/sdk-model";
+import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 
 import type { IChatConversationMultipartLocalPart } from "../../../model.js";
 
@@ -31,11 +35,13 @@ const backend = {
     }),
 };
 
-vi.mock("@gooddata/sdk-ui", async (importOriginal) => ({
-    ...(await importOriginal<object>()),
-    useBackendStrict: () => backend,
-    useWorkspaceStrict: () => "workspace",
-}));
+function wrapper({ children }: { children: ReactNode }) {
+    return createElement(
+        BackendProvider,
+        { backend: backend as unknown as IAnalyticalBackend },
+        createElement(WorkspaceProvider, { workspace: "workspace" }, children),
+    );
+}
 
 const visualization = { insight: { identifier: "revenue_by_product_ce8a580d" } } as IInsight;
 
@@ -54,7 +60,7 @@ describe("useSaveCheck", () => {
     it("reports an unsaved chart without requesting it by id", async () => {
         query.mockResolvedValue({ items: [] });
 
-        const { result } = renderHook(() => useInsightSaveCheck(part(), visualization, true));
+        const { result } = renderHook(() => useInsightSaveCheck(part(), visualization, true), { wrapper });
 
         await waitFor(() => expect(result.current.visualisationCheckLoading).toBe(false));
         expect(result.current.visualisationSaved).toBe(false);
@@ -65,7 +71,7 @@ describe("useSaveCheck", () => {
     it("reports a saved chart when the query returns it", async () => {
         query.mockResolvedValue({ items: [visualization] });
 
-        const { result } = renderHook(() => useInsightSaveCheck(part(), visualization, true));
+        const { result } = renderHook(() => useInsightSaveCheck(part(), visualization, true), { wrapper });
 
         await waitFor(() => expect(result.current.visualisationSaved).toBe(true));
     });
@@ -73,15 +79,16 @@ describe("useSaveCheck", () => {
     it("reports not saved when the query fails", async () => {
         query.mockRejectedValue(new Error("500"));
 
-        const { result } = renderHook(() => useInsightSaveCheck(part(), visualization, true));
+        const { result } = renderHook(() => useInsightSaveCheck(part(), visualization, true), { wrapper });
 
         await waitFor(() => expect(result.current.visualisationCheckLoading).toBe(false));
         expect(result.current.visualisationSaved).toBe(false);
     });
 
     it("does not check while a save is in progress", async () => {
-        const { result } = renderHook(() =>
-            useInsightSaveCheck(part({ started: true, completed: false }), visualization, true),
+        const { result } = renderHook(
+            () => useInsightSaveCheck(part({ started: true, completed: false }), visualization, true),
+            { wrapper },
         );
 
         await waitFor(() => expect(result.current.visualisationCheckLoading).toBe(false));
@@ -91,8 +98,8 @@ describe("useSaveCheck", () => {
     });
 
     it("does not check when disabled or without a visualization", async () => {
-        const disabled = renderHook(() => useInsightSaveCheck(part(), visualization, false));
-        const missing = renderHook(() => useInsightSaveCheck(part(), undefined, true));
+        const disabled = renderHook(() => useInsightSaveCheck(part(), visualization, false), { wrapper });
+        const missing = renderHook(() => useInsightSaveCheck(part(), undefined, true), { wrapper });
 
         await waitFor(() => expect(disabled.result.current.visualisationCheckLoading).toBe(false));
         await waitFor(() => expect(missing.result.current.visualisationCheckLoading).toBe(false));

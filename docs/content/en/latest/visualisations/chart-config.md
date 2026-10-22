@@ -61,7 +61,7 @@ const config: IChartConfig = {
     },
     legend: {
         enabled: true, // boolean
-        position: "bottom", // "top" | "left" | "right" | "bottom"
+        position: "bottom", // "top" | "left" | "right" | "bottom" | "auto"
         responsive: "autoPositionWithPopup" // "autoPositionWithPopup" | true | false
     },
     dataLabels: {
@@ -262,7 +262,7 @@ Within one visualization, the `colorMapping` property overrides the `colorPalett
 
 ## Change legend properties
 
-* To change the legend position, set the `config.legend.position` property to one of the possible values: `"left"`, `"right"`, `"top"`, or `"bottom"`.
+* To change the legend position, set the `config.legend.position` property to one of the possible values: `"left"`, `"right"`, `"top"`, `"bottom"`, or `"auto"`. `"auto"` works like leaving the position unset: the chart picks its default for its type.
 * To make the legend responsive, set `config.legend.responsive` to `true`.
 * To make the legend appear as a popup in too small containers, set `config.legend.responsive` to `"autoPositionWithPopup"`.
 
@@ -283,7 +283,7 @@ import { InsightView } from "@gooddata/sdk-ui-ext";
     config={{
         legend: {
             enabled: true,
-            position: "bottom", // "left", "right", "top"
+            position: "bottom", // "left", "right", "top", "auto"
             responsive: "autoPositionWithPopup", // true, false
         }
     }}

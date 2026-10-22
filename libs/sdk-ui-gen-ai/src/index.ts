@@ -172,6 +172,8 @@ export {
     type IGenAIAssistantAgentChooserProps,
     type IGenAIAssistantConversationVisualizationContentProps,
     type IGenAIAssistantConversationKdaContentProps,
+    type IGenAIAssistantVisualizationMenuProps,
+    type IGenAIAssistantVisualizationMenuItem,
 } from "./components/customized/types.js";
 
 export { type IWhatIfRenderableScenario } from "./whatIf/whatIfMapping.js";
@@ -179,6 +181,7 @@ export { type IWhatIfRenderableScenario } from "./whatIf/whatIfMapping.js";
 export { DefaultAssistantMessage } from "./components/customized/AssistantMessage.js";
 export { DefaultMessageErrorContent } from "./components/customized/MessageErrorContent.js";
 export { DefaultConversationVisualizationContent } from "./components/customized/ConversationVisualizationContent.js";
+export { DefaultVisualizationMenu } from "./components/customized/VisualizationMenu.js";
 export { DefaultConversationKdaContent } from "./components/customized/ConversationKdaContent.js";
 export { DefaultMessageMultipartContent } from "./components/customized/MessageMultipartContent.js";
 export { DefaultMessageReasoningContent } from "./components/customized/MessageReasoningContent.js";

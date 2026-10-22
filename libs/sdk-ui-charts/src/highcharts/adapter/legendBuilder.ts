@@ -133,7 +133,7 @@ export function getLegendItems(
     if (isSankeyOrDependencyWheel(type)) {
         return (chartOptions.data?.series?.[0]?.nodes ?? []).map((it: ISeriesNodeItem, index: number) => {
             return {
-                name: it.id,
+                name: it.name ?? it.id,
                 color: it.color,
                 legendIndex: index,
             };

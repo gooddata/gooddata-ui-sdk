@@ -14,14 +14,18 @@ import {
     isRgbColor,
     isUriRef,
 } from "@gooddata/sdk-model";
-import { type IColorAssignment, type IMappingHeader, getMappingHeaderName } from "@gooddata/sdk-ui";
+import { type IColorAssignment, type IMappingHeader, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { ColorUtils, type ILineStyleMappingItem } from "@gooddata/sdk-ui-charts";
 
 import { type IColorConfiguration, type IColoredItem } from "../interfaces/Colors.js";
 import { type IVisualizationProperties } from "../interfaces/Visualization.js";
 
+/**
+ * Name of the colored item as the list displays it, so that searching matches what the user sees: the
+ * formatted element value for dates and number-formatted attributes, the raw name otherwise.
+ */
 function getItemName(item: IColoredItem): string {
-    return getMappingHeaderName(item.mappingHeader) || "";
+    return getMappingHeaderFormattedName(item.mappingHeader) || "";
 }
 
 export function getSearchedItems(inputItems: IColoredItem[], searchString: string): IColoredItem[] {

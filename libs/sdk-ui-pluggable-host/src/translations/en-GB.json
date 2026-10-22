@@ -33,5 +33,11 @@
     "messages.genAi.visualisation.link.copied": "The visualisation link has been copied to your clipboard.",
     "messages.showMore": "Show more",
     "messages.showLess": "Show less",
-    "gen-ai.ask-assistant.search": "Build new visualisation based on: {question}"
+    "gen-ai.ask-assistant.search": "Build new visualisation based on: {question}",
+    "languageDialog.title": "Change language",
+    "languageDialog.default": "Default ({language})",
+    "languageDialog.description": "<b>Note:</b> Changes the interface only, not dashboard content.",
+    "languageDialog.select.searchLabel": "Search languages",
+    "languageDialog.select.searchPlaceholder": "Search…",
+    "languageDialog.select.noMatch": "No matching language."
 }

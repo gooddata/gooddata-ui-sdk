@@ -61,6 +61,62 @@ describe("TigerWorkspaceElementsQuery", () => {
         });
     });
 
+    describe("number format", () => {
+        const respond = (data: Record<string, unknown>) =>
+            vi.mocked(ActionsApi_ComputeLabelElementsPost).mockResolvedValueOnce({
+                data: {
+                    paging: { total: 1 },
+                    elements: [{ title: "1234.5", primaryTitle: "1234.5" }],
+                    ...data,
+                },
+            } as any);
+
+        it("carries the number format the backend states for a computed attribute", async () => {
+            respond({ dataType: "NUMERIC", numberFormat: "[>=1000]#,.0 K;#,##0" });
+
+            const result = await factory.forDisplayForm(idRef("ca", "computedAttribute")).query();
+
+            expect(result.numberFormat).toBe("[>=1000]#,.0 K;#,##0");
+            // the backend applies no formatting itself, the raw title stays for the client to format
+            expect(result.items).toEqual([{ title: "1234.5", uri: "1234.5" }]);
+        });
+
+        it("defaults the number format of a numeric computed attribute without one", async () => {
+            respond({ dataType: "INT" });
+
+            const result = await factory.forDisplayForm(idRef("ca", "computedAttribute")).query();
+
+            expect(result.numberFormat).toBe("#,##0.##");
+        });
+
+        it("has no number format for non-numeric computed attributes and regular labels", async () => {
+            respond({ dataType: "STRING", numberFormat: "#,##0" });
+            expect(
+                (await factory.forDisplayForm(idRef("ca", "computedAttribute")).query()).numberFormat,
+            ).toBeUndefined();
+
+            respond({});
+            expect(
+                (await factory.forDisplayForm(idRef("some_label", "displayForm")).query()).numberFormat,
+            ).toBeUndefined();
+        });
+
+        it("keeps the number format on the next page", async () => {
+            respond({ dataType: "NUMERIC", numberFormat: "#,##0", paging: { total: 2 } });
+            const first = await factory.forDisplayForm(idRef("ca", "computedAttribute")).withLimit(1).query();
+            const callsAfterFirstPage = vi.mocked(ActionsApi_ComputeLabelElementsPost).mock.calls.length;
+
+            respond({ dataType: "NUMERIC", numberFormat: "#,##0", paging: { total: 2 } });
+            const second = await first.next();
+
+            // the second page really comes from the backend
+            expect(vi.mocked(ActionsApi_ComputeLabelElementsPost).mock.calls.length).toBe(
+                callsAfterFirstPage + 1,
+            );
+            expect(second.numberFormat).toBe("#,##0");
+        });
+    });
+
     describe("dependsOn type", () => {
         it("sends type of parent filters based on their refs", async () => {
             await factory

@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import {
     type IAbsoluteDateFilter,
     type IAttributeElement,
@@ -345,4 +346,24 @@ export interface IFilterElementsQuery {
  *
  * @public
  */
-export type IElementsQueryResult = IPagedResource<IAttributeElement>;
+export interface IElementsQueryResult extends IPagedResource<IAttributeElement> {
+    /**
+     * Number format to apply to the element values.
+     *
+     * @remarks
+     * Uses the same format specification as measure formats. Present for numeric computed attributes;
+     * the backend applies no formatting itself, the client formats the element titles with it and the
+     * workspace separators, the same way it formats measure values. Absent for every other attribute.
+     */
+    readonly numberFormat?: string;
+
+    /**
+     * Next page of the elements; carries the same number format.
+     */
+    next(): Promise<IElementsQueryResult>;
+
+    /**
+     * Requested page of the elements; carries the same number format.
+     */
+    goTo(pageIndex: number): Promise<IElementsQueryResult>;
+}

@@ -33,5 +33,11 @@
     "messages.genAi.visualisation.link.copied": "O link de visualização foi copiado para a área de transferência.",
     "messages.showMore": "Exibir mais",
     "messages.showLess": "Exibir menos",
-    "gen-ai.ask-assistant.search": "Crie uma nova visualização com base em: {question}"
+    "gen-ai.ask-assistant.search": "Crie uma nova visualização com base em: {question}",
+    "languageDialog.title": "Alterar idioma",
+    "languageDialog.default": "Padrão ({language})",
+    "languageDialog.description": "<b>Observação:</b> Altera apenas a interface, não o conteúdo do painel.",
+    "languageDialog.select.searchLabel": "Pesquisar idiomas",
+    "languageDialog.select.searchPlaceholder": "Pesquisar…",
+    "languageDialog.select.noMatch": "Nenhum idioma correspondente."
 }

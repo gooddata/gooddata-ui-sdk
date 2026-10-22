@@ -33,5 +33,11 @@
     "messages.genAi.visualisation.link.copied": "Liên kết trực quan hóa đã được sao chép vào bảng nhớ tạm của bạn.",
     "messages.showMore": "Hiện thêm",
     "messages.showLess": "Hiện ít",
-    "gen-ai.ask-assistant.search": "Tạo trực quan hóa mới dựa trên: {question}"
+    "gen-ai.ask-assistant.search": "Tạo trực quan hóa mới dựa trên: {question}",
+    "languageDialog.title": "Thay đổi ngôn ngữ",
+    "languageDialog.default": "Mặc định ({language})",
+    "languageDialog.description": "<b>Lưu ý:</b> Chỉ thay đổi giao diện, không thay đổi nội dung bảng điều khiển.",
+    "languageDialog.select.searchLabel": "Tìm kiếm ngôn ngữ",
+    "languageDialog.select.searchPlaceholder": "Tìm kiếm…",
+    "languageDialog.select.noMatch": "Không có ngôn ngữ khớp."
 }

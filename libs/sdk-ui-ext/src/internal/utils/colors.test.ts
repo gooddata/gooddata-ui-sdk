@@ -592,6 +592,17 @@ describe("color utils", () => {
             expect(searchedItems).toEqual([]);
         });
 
+        it("should match the displayed formatted value of a number-formatted attribute element", () => {
+            const formattedItem: IColoredItem = {
+                ...colorItems[0],
+                mappingHeader: {
+                    attributeHeaderItem: { uri: "1234.5", name: "1234.5", formattedName: "1,234.5" },
+                },
+            };
+
+            expect(getSearchedItems([formattedItem], "1,234")).toEqual([formattedItem]);
+        });
+
         it("should return all input items when called with empty string", () => {
             const searchedItems = getSearchedItems(colorItems, "");
             expect(searchedItems).toEqual(colorItems);

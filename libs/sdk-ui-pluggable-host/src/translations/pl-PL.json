@@ -33,5 +33,11 @@
     "messages.genAi.visualisation.link.copied": "Link do Wizualizacji został skopiowany do schowka.",
     "messages.showMore": "Pokaż więcej",
     "messages.showLess": "Pokaż mniej",
-    "gen-ai.ask-assistant.search": "Utwórz nową wizualizację na podstawie: {question}"
+    "gen-ai.ask-assistant.search": "Utwórz nową wizualizację na podstawie: {question}",
+    "languageDialog.title": "Zmień język",
+    "languageDialog.default": "Domyślny ({language})",
+    "languageDialog.description": "<b>Uwaga:</b> Zmienia tylko język interfejsu, a nie zawartość pulpitu.",
+    "languageDialog.select.searchLabel": "Wyszukaj języki",
+    "languageDialog.select.searchPlaceholder": "Szukaj…",
+    "languageDialog.select.noMatch": "Brak pasującego języka."
 }

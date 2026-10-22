@@ -1,18 +1,24 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
-import { type IResultAttributeHeader } from "@gooddata/sdk-model";
+import { type IAttributeDescriptor, type IResultAttributeHeader } from "@gooddata/sdk-model";
+
+import { attributeHeaderDisplayValue } from "../../../attributeNumberFormat.js";
+import { type ValueFormatter } from "../../../dataAccessConfig.js";
 
 /**
  * Gets the display value from an attribute header.
  *
  * @remarks
- * Uses formattedName (for dates) with fallback to name (labelValue).
- * Does NOT fall back to uri since that contains primaryLabelValue, not the display value.
+ * Uses formattedName (for dates) with fallback to name (labelValue); when the attribute descriptor carries
+ * a number format, the name is formatted with it. Does NOT fall back to uri since that contains
+ * primaryLabelValue, not the display value.
  *
  * @internal
  */
-export function getAttributeHeaderValue(attributeHeader: IResultAttributeHeader): string | null {
-    return (
-        attributeHeader.attributeHeaderItem.formattedName ?? attributeHeader.attributeHeaderItem.name ?? null
-    );
+export function getAttributeHeaderValue(
+    attributeHeader: IResultAttributeHeader,
+    descriptor?: IAttributeDescriptor,
+    valueFormatter?: ValueFormatter,
+): string | null {
+    return attributeHeaderDisplayValue(attributeHeader, descriptor, valueFormatter);
 }

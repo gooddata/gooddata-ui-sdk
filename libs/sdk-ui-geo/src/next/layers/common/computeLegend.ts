@@ -8,9 +8,19 @@ import type { IGeoCommonData } from "../../types/geoData/common.js";
 import { compareAlphabetically, compareLexicographically } from "../../utils/alphabeticalSorting.js";
 import type { IGeoLegendResult } from "../registry/adapterTypes.js";
 
-function sortLegendItemsAlphabetically(items: IGeoLegendItem[]): IGeoLegendItem[] {
+/**
+ * Sorts legend items by their raw element value: the displayed name can be number-formatted, and such
+ * values do not sort as numbers ("1,000" would go before "200").
+ */
+function sortLegendItemsAlphabetically(
+    items: IGeoLegendItem[],
+    rawNameByUri: Map<string, string | null>,
+): IGeoLegendItem[] {
+    // empty and null elements have no raw value to sort by, they sort by their displayed placeholder
+    const sortName = (item: IGeoLegendItem) => rawNameByUri.get(item.uri) || item.name;
+
     return [...items].sort((left, right) => {
-        const nameComparison = compareAlphabetically(left.name, right.name);
+        const nameComparison = compareAlphabetically(sortName(left), sortName(right));
         if (nameComparison !== 0) {
             return nameComparison;
         }
@@ -65,11 +75,13 @@ export function computeLegend(
 
     if (geoData.segment) {
         const assignmentIndexByUri = new Map<string, number>();
+        const rawNameByUri = new Map<string, string | null>();
         colorStrategy.getColorAssignment().forEach((assignment, assignmentIndex) => {
             if (isResultAttributeHeader(assignment.headerItem)) {
-                const uri = assignment.headerItem.attributeHeaderItem.uri;
+                const { uri, name } = assignment.headerItem.attributeHeaderItem;
                 if (uri && !assignmentIndexByUri.has(uri)) {
                     assignmentIndexByUri.set(uri, assignmentIndex);
+                    rawNameByUri.set(uri, name);
                 }
             }
         });
@@ -92,7 +104,7 @@ export function computeLegend(
                 isVisible: true,
             };
         });
-        items = sortLegendItemsAlphabetically(items);
+        items = sortLegendItemsAlphabetically(items, rawNameByUri);
     }
 
     const available: IAvailableLegends = {

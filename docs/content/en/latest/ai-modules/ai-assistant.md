@@ -530,6 +530,7 @@ in `@gooddata/sdk-ui-gen-ai` and may change or be removed without a major versio
 | `MessageReasoningContent` | Alpha | Custom rendering for assistant reasoning content. |
 | `MessageMultipartContent` | Alpha | Custom rendering for complex messages with multiple parts. |
 | `ConversationVisualizationContent` | Alpha | Custom rendering for visualization parts in multipart messages, including visualization menu item visibility. |
+| `VisualizationMenu` | Alpha | Custom items of the visualization menu (the `...` button on visualizations in messages). |
 | `ConversationKdaContent` | Alpha | Custom rendering for Key Driver Analysis parts in multipart messages. |
 | `FollowUpButtons` | Alpha | Custom wrapper for the list of follow-up buttons. |
 | `Feedback` | Alpha | Custom rendering for message feedback buttons. |

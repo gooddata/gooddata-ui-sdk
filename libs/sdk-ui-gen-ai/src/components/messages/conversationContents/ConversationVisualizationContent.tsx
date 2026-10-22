@@ -1,7 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
 import {
-    type AriaAttributes,
     type KeyboardEvent,
     type MouseEvent,
     type ReactNode,
@@ -34,14 +33,10 @@ import { type IDashboardKeyDriverCombinationItem } from "@gooddata/sdk-ui-dashbo
 import { canConvertToTable } from "@gooddata/sdk-ui-ext";
 import {
     Dropdown,
-    type IAlignPoint,
     IconCopy,
     IconExternalLink,
     IconSave,
-    Overlay,
-    UiFocusManager,
     UiIconButton,
-    UiMenu,
     UiTooltip,
 } from "@gooddata/sdk-ui-kit";
 
@@ -60,7 +55,11 @@ import { type RootState } from "../../../store/types.js";
 import { getAbsoluteVisualizationHref, getVisualizationHref } from "../../../utils.js";
 import { type IWhatIfRenderableScenario } from "../../../whatIf/whatIfMapping.js";
 import { useConfig } from "../../ConfigContext.js";
-import { type IGenAIAssistantConversationVisualizationContentProps } from "../../customized/types.js";
+import { useCustomization } from "../../CustomizationContext.js";
+import {
+    type IGenAIAssistantConversationVisualizationContentProps,
+    type IGenAIAssistantVisualizationMenuItem,
+} from "../../customized/types.js";
 import { convertIntersectionToAttributeFilters, mergeFilters } from "../../utils/intersectionUtils.js";
 import { VisualizationErrorBoundary } from "../components/VisualizationErrorBoundary.js";
 import { DrillSelectDropdownMenu } from "../contents/drill/DrillSelectDropdownMenu.js";
@@ -78,16 +77,6 @@ import { createKdaDefinitionFromDrill, getDashboardAttributeFilter } from "./use
 import { useKdaEnabled } from "./useKdaEnabled.js";
 import { useInsightSaveCheck } from "./useSaveCheck.js";
 import { isFatalError } from "./utils/errors.js";
-
-const MORE_MENU_BUTTON_ID = "gd-gen-ai-chat__conversation__visualization__save__more-menu-button";
-const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
-
-interface IMenuButtonItem {
-    id: string;
-    title: string;
-    icon: ReactNode;
-    ariaAttributes?: AriaAttributes;
-}
 
 type IVisualisationMenuItemId = "button-save" | "button-open" | "button-copy";
 
@@ -222,6 +211,8 @@ export function ConversationVisualizationContent({
             >
                 <Wrapper containerRef={containerRef} visualization={visualization}>
                     <VisualisationMenu
+                        message={message}
+                        part={part}
                         visualization={visualization}
                         scenario={scenario}
                         isVisualisationSaved={visualisationSaved || !!part.saved}
@@ -323,6 +314,8 @@ function Title({ id, visualization, scenario }: ITitleProps) {
 }
 
 interface IVisualisationMenuProps {
+    message: IChatConversationLocalItem;
+    part: IChatConversationMultipartLocalPart;
     visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>;
     scenario?: IWhatIfRenderableScenario;
     hasError: boolean;
@@ -344,6 +337,8 @@ interface IVisualisationMenuProps {
 }
 
 function VisualisationMenu({
+    message,
+    part,
     visualization,
     scenario,
     isVisualisationSaved,
@@ -358,22 +353,20 @@ function VisualisationMenu({
     onCopy,
     menuItems,
 }: IVisualisationMenuProps) {
-    const [isMenuButtonOpen, setMenuButtonOpen] = useState(false);
     const type = insightVisualizationType(visualization);
 
     const config = useConfig();
     const intl = useIntl();
+    const { VisualizationMenuComponent } = useCustomization();
 
-    // generate unique IDs for accessibility and dropdown positioning
-    const id = useId();
-    const menuId = `menu-${id}`;
-    const classes = `${MORE_MENU_BUTTON_ID}-${id}`;
-
-    const moreLabel = intl.formatMessage({ id: "gd.gen-ai.visualisation.menu" });
     const toggleTableLabel = intl.formatMessage({ id: "gd.gen-ai.visualisation.toggle.table" });
     const toggleTableOrig = intl.formatMessage({ id: "gd.gen-ai.visualisation.toggle.original" });
 
-    const menuItemsList = useMemo(() => {
+    const items = useMemo((): IGenAIAssistantVisualizationMenuItem[] => {
+        if (!config.canAnalyze) {
+            return [];
+        }
+
         const itemIds = getVisibleVisualisationMenuItemIds({
             scenario,
             isVisualisationSaved,
@@ -381,7 +374,7 @@ function VisualisationMenu({
             menuItems,
         });
 
-        return itemIds.map((id): IMenuButtonItem => {
+        return itemIds.map((id): IGenAIAssistantVisualizationMenuItem => {
             switch (id) {
                 case "button-save":
                     return {
@@ -397,6 +390,7 @@ function VisualisationMenu({
                         ariaAttributes: {
                             "aria-haspopup": "dialog",
                         },
+                        onSelect: onSave,
                     };
                 case "button-open":
                     return {
@@ -410,6 +404,7 @@ function VisualisationMenu({
                                 id: "gd.gen-ai.visualisation.menu.button.open_in_analyze.description",
                             }),
                         },
+                        onSelect: (e) => onOpen(e, isVisualisationSaved),
                     };
                 case "button-copy":
                     return {
@@ -418,89 +413,33 @@ function VisualisationMenu({
                             id: "gd.gen-ai.visualisation.menu.button.copy_visualisation_link",
                         }),
                         icon: <IconCopy width={16} height={16} ariaHidden color="currentColor" />,
-                    };
-                default:
-                    return {
-                        id,
-                        title: "",
-                        icon: null,
+                        onSelect: (e) => {
+                            if (isVisualisationSaved) {
+                                onCopy(e);
+                            }
+                        },
                     };
             }
         });
-    }, [intl, isVisualisationSaved, scenario, menuItems, hasError]);
+    }, [
+        config.canAnalyze,
+        intl,
+        isVisualisationSaved,
+        scenario,
+        menuItems,
+        hasError,
+        onSave,
+        onOpen,
+        onCopy,
+    ]);
 
-    const handleButtonClick = useCallback(
-        (e: MouseEvent | KeyboardEvent, item: IMenuButtonItem) => {
-            switch (item.id) {
-                case "button-save":
-                    onSave(e);
-                    setMenuButtonOpen(false);
-                    break;
-                case "button-open":
-                    onOpen(e, isVisualisationSaved);
-                    setMenuButtonOpen(false);
-                    break;
-                case "button-copy":
-                    if (isVisualisationSaved) {
-                        onCopy(e);
-                    }
-                    setMenuButtonOpen(false);
-                    break;
-                default:
-                    // No action needed for other items
-                    break;
-            }
-        },
-        [onCopy, setMenuButtonOpen, onOpen, onSave, isVisualisationSaved],
-    );
-
-    const renderMenuItems = useCallback(() => {
-        return (
-            <Overlay
-                closeOnMouseDrag
-                closeOnOutsideClick
-                alignTo={`.${classes}`}
-                alignPoints={overlayAlignPoints}
-                key="saveVisualisationMenuButton"
-                onClose={() => setMenuButtonOpen(false)}
-                className="gd-gen-ai-chat__conversation__visualization__menu_overlay"
-            >
-                <UiFocusManager enableAutofocus enableReturnFocusOnUnmount enableFocusTrap>
-                    <UiMenu
-                        dataTestId="gen-ai-visualization-menu-list"
-                        items={menuItemsList.map((item) => ({
-                            type: "interactive",
-                            stringTitle: item.title,
-                            data: item,
-                            iconLeft: item.icon,
-                            id: item.id,
-                            isDisabled: false,
-                            ariaAttributes: item.ariaAttributes,
-                        }))}
-                        ariaAttributes={{
-                            id: menuId,
-                        }}
-                        onSelect={(item, e) => {
-                            handleButtonClick(e, item.data as IMenuButtonItem);
-                        }}
-                        onClose={() => setMenuButtonOpen(false)}
-                    />
-                </UiFocusManager>
-            </Overlay>
-        );
-    }, [classes, handleButtonClick, menuId, menuItemsList, setMenuButtonOpen]);
-
-    if (!config.canAnalyze || hasError) {
+    if (hasError) {
         return null;
     }
 
     return (
-        <div
-            className={cx("gd-gen-ai-chat__conversation__visualization__buttons", {
-                active: isMenuButtonOpen,
-            })}
-        >
-            {!hasError && !canConvertToTable(type) ? null : (
+        <div className="gd-gen-ai-chat__conversation__visualization__buttons">
+            {config.canAnalyze && canConvertToTable(type) ? (
                 <div className={cx("gd-gen-ai-chat__conversation__visualization__table")}>
                     <UiTooltip
                         triggerBy={["focus", "hover"]}
@@ -521,38 +460,17 @@ function VisualisationMenu({
                         content={isTable ? toggleTableOrig : toggleTableLabel}
                     />
                 </div>
-            )}
-            {menuItemsList.length > 0 ? (
-                <div
-                    id={MORE_MENU_BUTTON_ID}
-                    className={cx("gd-gen-ai-chat__conversation__visualization__save", classes)}
-                >
-                    <UiTooltip
-                        disabled={!moreLabel}
-                        triggerBy={["focus", "hover"]}
-                        arrowPlacement="bottom"
-                        anchor={
-                            <UiIconButton
-                                dataTestId="gen-ai-visualization-menu-button"
-                                onClick={() => setMenuButtonOpen(!isMenuButtonOpen)}
-                                icon="ellipsis"
-                                isDisabled={isLoading || isVisualisationCheckLoading}
-                                accessibilityConfig={{
-                                    role: "button",
-                                    ariaLabel: moreLabel,
-                                    ariaDescribedBy: moreButtonId,
-                                    isExpanded: isMenuButtonOpen,
-                                    popupId: menuId,
-                                    ariaHaspopup: "menu",
-                                }}
-                                isActive={isMenuButtonOpen}
-                            />
-                        }
-                        content={moreLabel}
-                    />
-                    {isMenuButtonOpen ? renderMenuItems() : null}
-                </div>
             ) : null}
+            <VisualizationMenuComponent
+                message={message}
+                part={part}
+                scenario={scenario}
+                visualization={visualization}
+                items={items}
+                isVisualizationSaved={isVisualisationSaved}
+                isDisabled={isLoading || isVisualisationCheckLoading}
+                ariaDescribedBy={moreButtonId}
+            />
         </div>
     );
 }

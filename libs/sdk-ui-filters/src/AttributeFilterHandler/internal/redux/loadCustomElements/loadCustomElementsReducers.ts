@@ -52,6 +52,11 @@ const loadCustomElementsSuccess: AttributeFilterReducer<
 
     const shouldOverrideKeys =
         state.initialization.status === "loading" && correlation?.startsWith(INIT_SELECTION_PREFIX);
+    // Both the selected elements resolved at init and any other custom load carry the format, so the
+    // selection is formatted even when the initial page load fails or comes without one.
+    if (action.payload.numberFormat !== undefined) {
+        state.elements.numberFormat = action.payload.numberFormat;
+    }
     if (elements) {
         const originalElements = getElementValues(elements);
         // iterate over original elements to keep the order in selection,

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import {
     type FilterWithResolvableElements,
@@ -8,7 +8,6 @@ import {
     type IElementsQueryOptions,
     type IElementsQueryResult,
     type IFilterElementsQuery,
-    type IPagedResource,
 } from "@gooddata/sdk-backend-spi";
 import {
     type IAbsoluteDateFilter,
@@ -139,11 +138,15 @@ export abstract class DecoratedElementsQueryResult implements IElementsQueryResu
         public readonly totalCount: number,
     ) {}
 
-    public async next(): Promise<IPagedResource<IAttributeElement>> {
+    public get numberFormat(): string | undefined {
+        return this.decorated.numberFormat;
+    }
+
+    public async next(): Promise<IElementsQueryResult> {
         const result = await this.decorated.next();
         return this.createNew(result, result.items, result.limit, result.offset, result.totalCount);
     }
-    public async goTo(pageIndex: number): Promise<IPagedResource<IAttributeElement>> {
+    public async goTo(pageIndex: number): Promise<IElementsQueryResult> {
         const result = await this.decorated.goTo(pageIndex);
         return this.createNew(result, result.items, result.limit, result.offset, result.totalCount);
     }

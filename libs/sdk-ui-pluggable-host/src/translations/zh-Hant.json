@@ -33,5 +33,11 @@
     "messages.genAi.visualisation.link.copied": "視覺化連結已複製到您的剪貼簿。",
     "messages.showMore": "展示更多",
     "messages.showLess": "顯示較少",
-    "gen-ai.ask-assistant.search": "根據以下內容建立新的視覺化：{question}"
+    "gen-ai.ask-assistant.search": "根據以下內容建立新的視覺化：{question}",
+    "languageDialog.title": "改變語言",
+    "languageDialog.default": "預設值 ({language})",
+    "languageDialog.description": "<b>注意：</b>只會變更介面，不會變更儀表板內容。",
+    "languageDialog.select.searchLabel": "搜尋語言",
+    "languageDialog.select.searchPlaceholder": "搜尋…",
+    "languageDialog.select.noMatch": "沒有相符的語言。"
 }

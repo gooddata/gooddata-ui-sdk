@@ -2,7 +2,7 @@
 
 // @vitest-environment node
 
-import { type MouseEvent } from "react";
+import { type KeyboardEvent, type MouseEvent } from "react";
 
 import { describe, expect, it } from "vitest";
 
@@ -11,8 +11,14 @@ import {
     type PluggableApplicationRegistryItem,
 } from "@gooddata/sdk-model";
 import { type EmbeddingMode, type IPlatformContext } from "@gooddata/sdk-pluggable-application-model";
+import { type IHeaderMenuItem } from "@gooddata/sdk-ui-kit";
 
-import { getWorkspaceSwitchPath, isPlainLeftClick } from "./chromeHelpers.js";
+import {
+    getWorkspaceSwitchPath,
+    isBrowserHandledMenuClick,
+    isModifiedClick,
+    isPlainLeftClick,
+} from "./chromeHelpers.js";
 
 function clickEvent(overrides: Partial<MouseEvent<Element>> = {}): MouseEvent<Element> {
     return {
@@ -41,6 +47,66 @@ describe("isPlainLeftClick", () => {
         ["Alt was held", { altKey: true }],
     ])("returns false when %s", (_case, overrides) => {
         expect(isPlainLeftClick(clickEvent(overrides))).toBe(false);
+    });
+});
+
+describe("isModifiedClick", () => {
+    it("is false for a left click with no modifier held", () => {
+        expect(isModifiedClick(clickEvent())).toBe(false);
+    });
+
+    it("ignores whether another handler already took the click", () => {
+        expect(isModifiedClick(clickEvent({ defaultPrevented: true }))).toBe(false);
+    });
+
+    it.each([
+        ["the middle button was used", { button: 1 }],
+        ["the right button was used", { button: 2 }],
+        ["Cmd was held", { metaKey: true }],
+        ["Ctrl was held", { ctrlKey: true }],
+        ["Shift was held", { shiftKey: true }],
+        ["Alt was held", { altKey: true }],
+    ])("is true when %s", (_case, overrides) => {
+        expect(isModifiedClick(clickEvent(overrides))).toBe(true);
+    });
+});
+
+describe("isBrowserHandledMenuClick", () => {
+    const link: IHeaderMenuItem = { key: "dashboards", href: "/workspace/ws-1/dashboards" };
+    const action: IHeaderMenuItem = { key: "logout" };
+
+    function keyboardActivation(): KeyboardEvent<Element> {
+        // HeaderAccount prevents the default before it reports the activation.
+        return { key: "Enter", defaultPrevented: true } as KeyboardEvent<Element>;
+    }
+
+    it("leaves a Cmd-click on a link to the browser", () => {
+        expect(isBrowserHandledMenuClick(link, clickEvent({ metaKey: true }))).toBe(true);
+    });
+
+    it("leaves a middle-button click on a link to the browser", () => {
+        expect(isBrowserHandledMenuClick(link, clickEvent({ button: 1 }))).toBe(true);
+    });
+
+    it("leaves a Cmd-click to the browser even when another handler already took the click", () => {
+        const event = clickEvent({ metaKey: true, defaultPrevented: true });
+        expect(isBrowserHandledMenuClick(link, event)).toBe(true);
+    });
+
+    it("keeps a plain click on a link for the host", () => {
+        expect(isBrowserHandledMenuClick(link, clickEvent())).toBe(false);
+    });
+
+    it("keeps a Cmd-click on an item without href for the host", () => {
+        expect(isBrowserHandledMenuClick(action, clickEvent({ metaKey: true }))).toBe(false);
+    });
+
+    it("keeps keyboard activation for the host", () => {
+        expect(isBrowserHandledMenuClick(link, keyboardActivation())).toBe(false);
+    });
+
+    it("keeps a call without an event for the host", () => {
+        expect(isBrowserHandledMenuClick(link, undefined)).toBe(false);
     });
 });
 

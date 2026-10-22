@@ -108,7 +108,7 @@ function DeleteButton({
         <div className="gd-filter-view__item__delete-button-wrapper" role={"gridcell"}>
             <UiTooltip
                 arrowPlacement="top-end"
-                triggerBy={isFocused ? [] : ["hover"]}
+                triggerBy={["hover", "focus"]}
                 content={formatMessage({ id: "filters.filterViews.add.deleteTooltip" })}
                 anchor={
                     <div
@@ -269,21 +269,21 @@ export function FilterViewsList({
         [createSetAsDefaultHandler, onClose],
     );
 
-    const createDeleteHandler = useCallback(
-        (filterView: IDashboardFilterView) => {
-            if (!canCreateFilterView) {
-                return undefined;
-            }
-            return () => {
-                setFilterViewToDelete(filterView);
-            };
-        },
-        [canCreateFilterView],
-    );
+    function createDeleteHandler(filterView: IDashboardFilterView) {
+        if (!canCreateFilterView) {
+            return undefined;
+        }
+        return () => {
+            // Screen-reader activation can click an action without moving DOM focus.
+            setFocusedIndex(filterViews.indexOf(filterView));
+            setFocusedAction("delete");
+            setFilterViewToDelete(filterView);
+        };
+    }
 
     const refocusKey = `${isLoading}`;
 
-    const { onKeyboardNavigation, focusedItem, focusedAction, setFocusedAction } =
+    const { onKeyboardNavigation, focusedItem, focusedAction, setFocusedAction, setFocusedIndex } =
         useListWithActionsKeyboardNavigation({
             items: filterViews,
             getItemAdditionalActions,
@@ -331,6 +331,10 @@ export function FilterViewsList({
             {filterViewToDelete ? (
                 <FilterViewDeleteConfirm
                     filterView={filterViewToDelete}
+                    returnFocusTo={scopedIdStoreValue.makeId({
+                        item: filterViewToDelete,
+                        specifier: "delete",
+                    })}
                     onConfirm={() => {
                         dispatch(deleteFilterView(filterViewToDelete.ref));
                         setFilterViewToDelete(undefined);

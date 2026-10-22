@@ -33,5 +33,11 @@
     "messages.genAi.visualisation.link.copied": "Le lien de visualisation a été copié dans votre presse-papiers.",
     "messages.showMore": "Montrer plus",
     "messages.showLess": "Montrer moins",
-    "gen-ai.ask-assistant.search": "Construire une nouvelle visualisation basée sur: {question}"
+    "gen-ai.ask-assistant.search": "Construire une nouvelle visualisation basée sur: {question}",
+    "languageDialog.title": "Modifier la langue",
+    "languageDialog.default": "Par défaut ({language})",
+    "languageDialog.description": "<b>Remarque :</b> Modifie uniquement l’interface, et non le contenu des tableaux de bord.",
+    "languageDialog.select.searchLabel": "Rechercher des langues",
+    "languageDialog.select.searchPlaceholder": "Rechercher…",
+    "languageDialog.select.noMatch": "Aucune langue correspondante."
 }

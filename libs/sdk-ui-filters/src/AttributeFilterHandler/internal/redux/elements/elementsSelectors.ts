@@ -11,6 +11,7 @@ import {
     type IMeasure,
     type IMeasureDefinitionType,
     type IRelativeDateFilter,
+    type ISeparators,
     type ObjRef,
     type SortDirection,
 } from "@gooddata/sdk-model";
@@ -20,6 +21,9 @@ import { type AsyncOperationStatus, type AttributeElementKey } from "../../../ty
 import { type ILoadElementsOptions } from "../../../types/elementsLoader.js";
 import { selectState, toCacheKey } from "../common/selectors.js";
 import { type FilterSelector } from "../common/types.js";
+
+import { formatElementTitlesMap } from "./formatElementTitles.js";
+import { toRawValueSearch } from "./numericElementValues.js";
 
 /**
  * Get the elements specified by the keys.
@@ -49,9 +53,33 @@ export const selectElementKeys: FilterSelector<AttributeElementKey[]> = createSe
 /**
  * @internal
  */
-export const selectElementsCache: FilterSelector<Record<string, IAttributeElement>> = createSelector(
+const selectRawElementsCache: FilterSelector<Record<string, IAttributeElement>> = createSelector(
     selectState,
     (state) => state.elements.cache,
+);
+
+export const selectElementsSeparators: FilterSelector<ISeparators | undefined> = createSelector(
+    selectState,
+    (state) => state.config.separators,
+);
+
+export const selectElementsNumberFormat: FilterSelector<string | undefined> = createSelector(
+    selectState,
+    (state) => state.elements.numberFormat,
+);
+
+/**
+ * Loaded elements, with a formatted title added to the values of a numeric computed attribute.
+ *
+ * @remarks
+ * The number format comes with the loaded elements; the titles are formatted when read so that the raw
+ * titles in the cache stay untouched for selection and filter definitions.
+ */
+export const selectElementsCache: FilterSelector<Record<string, IAttributeElement>> = createSelector(
+    selectRawElementsCache,
+    selectElementsNumberFormat,
+    selectElementsSeparators,
+    formatElementTitlesMap,
 );
 
 /**
@@ -185,6 +213,8 @@ export const selectLoadElementsOptions: FilterSelector<ILoadElementsOptions> = c
     selectLimitingMeasures,
     selectLimitingDateFilters,
     selectLimitingValidationItems,
+    selectElementsNumberFormat,
+    selectElementsSeparators,
     (
         offset,
         limit,
@@ -194,6 +224,8 @@ export const selectLoadElementsOptions: FilterSelector<ILoadElementsOptions> = c
         limitingMeasures,
         limitingDateFilters,
         limitingValidationItems,
+        numberFormat,
+        separators,
     ): ILoadElementsOptions => {
         return {
             limit,
@@ -203,7 +235,8 @@ export const selectLoadElementsOptions: FilterSelector<ILoadElementsOptions> = c
             limitingValidationItems,
             offset,
             order,
-            search,
+            // number-formatted values are matched by their raw value, see toRawValueSearch
+            search: toRawValueSearch(search, numberFormat, separators),
         };
     },
 );

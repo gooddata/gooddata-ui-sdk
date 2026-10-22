@@ -33,5 +33,11 @@
     "messages.genAi.visualisation.link.copied": "Tautan visualisasi telah disalin ke clipboard Anda.",
     "messages.showMore": "Tampilkan lebih banyak",
     "messages.showLess": "Tampilkan lebih sedikit",
-    "gen-ai.ask-assistant.search": "Bangun visualisasi baru berdasarkan: {question}"
+    "gen-ai.ask-assistant.search": "Bangun visualisasi baru berdasarkan: {question}",
+    "languageDialog.title": "Ubah bahasa",
+    "languageDialog.default": "Bawaan ({language})",
+    "languageDialog.description": "<b>Catatan:</b> Hanya mengubah antarmuka, bukan konten dasbor.",
+    "languageDialog.select.searchLabel": "Cari bahasa",
+    "languageDialog.select.searchPlaceholder": "Cari…",
+    "languageDialog.select.noMatch": "Tidak ada bahasa yang cocok."
 }

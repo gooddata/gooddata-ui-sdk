@@ -2,8 +2,9 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type ResultDimension } from "@gooddata/api-client-tiger";
+import { type AttributeHeaderAttributeHeader, type ResultDimension } from "@gooddata/api-client-tiger";
 import {
+    type IAttributeDescriptor,
     MeasureGroupIdentifier,
     defWithDimensions,
     emptyDef,
@@ -81,7 +82,10 @@ describe("transformResultDimensions", () => {
         },
     };
 
-    function computedAttributeDimensions(identifierType: string): ResultDimension[] {
+    function computedAttributeDimensions(
+        identifierType: string,
+        header: Partial<AttributeHeaderAttributeHeader> = {},
+    ): ResultDimension[] {
         return [
             {
                 headers: [
@@ -94,6 +98,7 @@ describe("transformResultDimensions", () => {
                             attribute: { id: "ca_1", type: identifierType },
                             attributeName: "Computed",
                             valueType: "TEXT",
+                            ...header,
                         },
                     },
                 ],
@@ -101,6 +106,46 @@ describe("transformResultDimensions", () => {
             },
         ];
     }
+
+    const numberFormatOf = (dimensions: ResultDimension[]) => {
+        const def = newDefForItems("test", [newAttribute("ca_1", (a) => a.localId("caLocal"))]);
+        const [dimension] = transformResultDimensions(dimensions, def);
+        return (dimension.headers[0] as IAttributeDescriptor).attributeHeader.numberFormat;
+    };
+
+    it("should take the number format the backend states for a computed attribute", () => {
+        expect(
+            numberFormatOf(
+                computedAttributeDimensions("computedAttribute", {
+                    dataType: "NUMERIC",
+                    numberFormat: "[>=1000]#,.0 K;#,##0",
+                }),
+            ),
+        ).toBe("[>=1000]#,.0 K;#,##0");
+    });
+
+    it("should default the number format of a numeric computed attribute without one to keep a digit", () => {
+        expect(numberFormatOf(computedAttributeDimensions("computedAttribute", { dataType: "INT" }))).toBe(
+            "#,##0.##",
+        );
+    });
+
+    it("should leave non-numeric computed attributes and regular labels without a number format", () => {
+        expect(
+            numberFormatOf(computedAttributeDimensions("computedAttribute", { dataType: "STRING" })),
+        ).toBeUndefined();
+        // a stated format is ignored on text values, it would mangle them
+        expect(
+            numberFormatOf(
+                computedAttributeDimensions("computedAttribute", {
+                    dataType: "STRING",
+                    numberFormat: "#,##0",
+                }),
+            ),
+        ).toBeUndefined();
+        expect(numberFormatOf(computedAttributeDimensions("computedAttribute"))).toBeUndefined();
+        expect(numberFormatOf(computedAttributeDimensions("label"))).toBeUndefined();
+    });
 
     it("should keep the computedAttribute ref type when the backend states it on the header", () => {
         // the execution definition does not know the attribute is computed; the header alone decides

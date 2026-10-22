@@ -25,6 +25,7 @@ export function SingleSelectionAttributeFilterElementsSelectItem({
     focusedAction,
     fullscreenOnMobile = false,
     primaryLabelTitle,
+    rawValueTitle,
 }: IAttributeFilterElementsSelectItemProps) {
     const intl = useIntl();
 
@@ -40,7 +41,8 @@ export function SingleSelectionAttributeFilterElementsSelectItem({
     );
 
     const itemTitle = useMemo(() => getElementTitle(item, intl), [item, intl]);
-    const itemPrimaryTitle = getElementPrimaryTitle(item);
+    // a number-formatted value whose raw value differs shows that instead, in the same way
+    const itemPrimaryTitle = getElementPrimaryTitle(item) || rawValueTitle;
 
     const isMobile = useMediaQuery("mobileDevice");
 

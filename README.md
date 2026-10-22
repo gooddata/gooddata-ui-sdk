@@ -24,9 +24,9 @@ GoodData.UI consists of multiple libraries with clear-cut responsibilities rangi
 Learn about GoodData.UI:
 
 - [📚 Official documentation](https://gooddata.com/docs/gooddata-ui)
-- [🚀 Quick start](https://www.gooddata.com/docs/gooddata-ui/latest/quick_start/)
+- [🚀 Quick start](https://www.gooddata.com/docs/gooddata-ui/latest/getting-started/quickstart/)
 - [📊 Examples Gallery](https://gdui-examples.herokuapp.com)
-- [⚙️ API reference](https://sdk.gooddata.com/gooddata-ui-apidocs/docs/index.html)
+- [⚙️ API reference](https://www.gooddata.com/docs/gooddata-ui/latest/api-reference/)
 
 ## Package overview
 

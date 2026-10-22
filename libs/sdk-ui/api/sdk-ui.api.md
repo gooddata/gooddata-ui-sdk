@@ -121,6 +121,9 @@ export type AttributeFilterOrPlaceholder = ValueOrPlaceholder<IAttributeFilter> 
 // @public
 export type AttributeFiltersOrPlaceholders = Array<ValueOrMultiValuePlaceholder<IAttributeFilter> | ValueOrMultiValuePlaceholder<IPositiveAttributeFilter> | ValueOrMultiValuePlaceholder<INegativeAttributeFilter>>;
 
+// @internal
+export function attributeHeaderDisplayValue(header: IResultAttributeHeader, descriptor?: IAttributeDescriptor, valueFormatter?: ValueFormatter): string | null;
+
 // @public
 export function attributeItemNameMatch(name: string): IHeaderPredicate;
 
@@ -291,6 +294,9 @@ export function createInvalidNode<T extends Record<string, IInvalidNode<any>>>(i
 
 // @internal (undocumented)
 export function createInvalidNode<T extends Record<string, IInvalidNode<any>> = Record<string, never>>(input?: Partial<IInvalidNode<T>>): IInvalidNode<T>;
+
+// @internal
+export function createNumberFormatter(separators?: ISeparators): ValueFormatter;
 
 // @public
 export function createNumberJsFormatter(separators?: ISeparators): ValueFormatter;
@@ -534,6 +540,12 @@ export const FOCUS_HIGHCHARTS_DATAPOINT_EVENT = "gd:chart:focusDatapoint";
 export class ForecastNotReceivedSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error);
 }
+
+// @internal
+export function formatAttributeHeaderValues(dataView: IDataView, valueFormatter: ValueFormatter): IDataView;
+
+// @internal
+export function formatAttributeValue(name: string | null, format: string, valueFormatter: ValueFormatter): string | null;
 
 // @internal
 export function forwardRefWithGenerics<T, P>(render: (props: PropsWithoutRef<P>, ref: Ref<T>) => ReactNode): (props: PropsWithoutRef<P> & RefAttributes<T>) => ReactNode;

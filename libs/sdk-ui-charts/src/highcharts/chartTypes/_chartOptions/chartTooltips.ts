@@ -618,8 +618,9 @@ export function generateTooltipSankeyChartFn(
             textData.push([measure.measureHeaderItem.name, formattedValue]);
         } else {
             const formattedValue = formatValueForTooltip(point.weight, format, separators);
-            textData.push([viewByParentAttribute?.formOf?.name, point.from]);
-            textData.push([viewByAttribute?.formOf?.name, point.to]);
+            // link ends are node ids; the nodes carry the values to show
+            textData.push([viewByParentAttribute?.formOf?.name, point.fromNode?.name ?? point.from]);
+            textData.push([viewByAttribute?.formOf?.name, point.toNode?.name ?? point.to]);
             textData.push([measure.measureHeaderItem.name, formattedValue]);
         }
 

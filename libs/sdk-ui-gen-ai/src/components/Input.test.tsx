@@ -2,12 +2,23 @@
 
 import { useEffect } from "react";
 
+import { configureStore } from "@reduxjs/toolkit";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { createPortal } from "react-dom";
 import { IntlProvider } from "react-intl";
+import { Provider } from "react-redux";
 import { describe, expect, it, vi } from "vitest";
 
-import { type RootState } from "../store/types.js";
+import {
+    chatWindowSliceName,
+    chatWindowSliceReducer,
+    getInitialChatWindowState,
+} from "../store/chatWindow/chatWindowSlice.js";
+import {
+    loadConversationsSuccessAction,
+    messagesSliceName,
+    messagesSliceReducer,
+} from "../store/messages/messagesSlice.js";
 
 import { Input } from "./Input.js";
 
@@ -15,16 +26,6 @@ const { focus } = vi.hoisted(() => {
     vi.resetModules();
     return { focus: vi.fn() };
 });
-
-const state = {
-    chatWindow: { inputValue: "" },
-    messages: { conversationsData: {}, conversationsLoaded: true, refocus: 0 },
-} as unknown as RootState;
-
-vi.mock("react-redux", () => ({
-    useDispatch: () => vi.fn(),
-    useSelector: (selector: (state: RootState) => unknown) => selector(state),
-}));
 
 vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => ({
     ...(await importOriginal<Record<string, unknown>>()),
@@ -46,10 +47,23 @@ vi.mock("./GenAiChatAgentSwitching.js", () => ({ GenAiChatAgentSwitching: () => 
 
 describe("Input", () => {
     it("keeps focus in a portaled context dialog on mousedown", () => {
+        const store = configureStore({
+            reducer: {
+                [chatWindowSliceName]: chatWindowSliceReducer,
+                [messagesSliceName]: messagesSliceReducer,
+            },
+            preloadedState: {
+                [chatWindowSliceName]: getInitialChatWindowState(),
+            },
+        });
+        store.dispatch(loadConversationsSuccessAction({ conversations: [] }));
+
         render(
-            <IntlProvider locale="en" messages={{}} onError={() => {}}>
-                <Input />
-            </IntlProvider>,
+            <Provider store={store}>
+                <IntlProvider locale="en" messages={{}} onError={() => {}}>
+                    <Input />
+                </IntlProvider>
+            </Provider>,
         );
 
         const notPrevented = fireEvent.mouseDown(screen.getByRole("textbox", { name: "Search" }));

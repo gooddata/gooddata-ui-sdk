@@ -1,8 +1,10 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ComponentType, type MouseEvent, type ReactNode } from "react";
 
 import { type IntlShape } from "react-intl";
+
+import { type IAccessibilityConfigBase } from "../typings/accessibility.js";
 
 /**
  * @internal
@@ -57,4 +59,6 @@ export interface IMessageProps {
     intensive?: boolean;
     children?: ReactNode;
     dataTestId?: string;
+    /** Accessibility attributes applied to the message container. */
+    accessibilityConfig?: IAccessibilityConfigBase;
 }

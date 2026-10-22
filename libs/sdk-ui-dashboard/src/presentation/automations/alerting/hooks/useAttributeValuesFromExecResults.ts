@@ -7,10 +7,25 @@ import {
     type IAttribute,
     type IAttributeDescriptor,
     type IMeasure,
+    type ISeparators,
     areObjRefsEqual,
     isResultAttributeHeader,
 } from "@gooddata/sdk-model";
-import { DataViewFacade, type IDataSeries } from "@gooddata/sdk-ui";
+import {
+    DataViewFacade,
+    type IDataSeries,
+    createNumberFormatter,
+    formatAttributeHeaderValues,
+} from "@gooddata/sdk-ui";
+
+/**
+ * Formatting applied to attribute element values read from the execution result.
+ *
+ * @internal
+ */
+export interface IAttributeValuesFormatting {
+    separators?: ISeparators;
+}
 
 type IExecutionResultEnvelope = { isLoading?: boolean; executionResult?: IExecutionResult };
 
@@ -40,7 +55,11 @@ export type AttributeValue = {
  *
  * @internal
  */
-export function useAttributeValuesFromExecResults(execResult: IExecutionResultEnvelope | undefined) {
+export function useAttributeValuesFromExecResults(
+    execResult: IExecutionResultEnvelope | undefined,
+    formatting?: IAttributeValuesFormatting,
+) {
+    const separators = formatting?.separators;
     // Derive loading from the envelope's own isLoading flag, not from the
     // presence of executionResult: an errored execution has no executionResult
     // but is no longer loading, and there is no readAll() promise to clear the
@@ -57,7 +76,11 @@ export function useAttributeValuesFromExecResults(execResult: IExecutionResultEn
                 .readAll()
                 .then((data) => {
                     if (!cancelled) {
-                        setDataView(DataViewFacade.for(data));
+                        setDataView(
+                            DataViewFacade.for(
+                                formatAttributeHeaderValues(data, createNumberFormatter(separators)),
+                            ),
+                        );
                         setIsResultLoading(false);
                     }
                 })
@@ -76,7 +99,7 @@ export function useAttributeValuesFromExecResults(execResult: IExecutionResultEn
         return () => {
             cancelled = true;
         };
-    }, [execResult]);
+    }, [execResult, separators]);
 
     const getAttributeValues = useCallback(
         (attr: IAttribute): AttributeValue[] => {
@@ -115,7 +138,16 @@ export function useAttributeValuesFromExecResults(execResult: IExecutionResultEn
     };
 }
 
-function calculatePredictedValue(data: IDataSeries[], values?: string[] | null) {
+/**
+ * Sums the measure values of the series scoped by the given raw attribute values.
+ *
+ * @remarks
+ * Matching works on raw element names: `scopeTitles()` return raw names, so the values passed in must be
+ * raw too, never the formatted titles shown in the UI.
+ *
+ * @internal exported for tests
+ */
+export function calculatePredictedValue(data: IDataSeries[], values?: string[] | null) {
     return data.reduce((total, series) => {
         return (
             total +
@@ -135,15 +167,25 @@ function calculatePredictedValue(data: IDataSeries[], values?: string[] | null) 
     }, 0);
 }
 
-function calculateValues(dataView: DataViewFacade | null, indexes: [number, number], value?: string | null) {
+/**
+ * Raw names of the attribute elements to predict the value for: the element the filter value names, or
+ * every element when there is none.
+ *
+ * @remarks
+ * The filter value is a raw element value, so it is matched against the raw name and uri, not against the
+ * formatted title (dates, numeric computed attributes) shown in the UI; the raw names are returned to match
+ * the raw scope titles in {@link calculatePredictedValue}.
+ *
+ * @internal exported for tests
+ */
+export function calculateValues(
+    dataView: DataViewFacade | null,
+    indexes: [number, number],
+    value?: string | null,
+): string[] {
     return findAttributeValues(dataView, indexes)
-        .map((v) => v.title)
-        .filter((v) => {
-            if (value) {
-                return v === value;
-            }
-            return true;
-        });
+        .filter((v) => !value || v.name === value || v.value === value)
+        .map((v) => v.name);
 }
 
 // By display form, not catalog attribute: two display forms of one attribute are two descriptors.

@@ -8,6 +8,7 @@ import { useParameterToastMessages } from "../../filterBar/parameterFilter/usePa
 
 import { useCrossFilteringMessages } from "./useCrossFilteringMessages.js";
 import { useDrillValidationMessages } from "./useDrillValidationMessages.js";
+import { useEditModeLayoutNoteMessages } from "./useEditModeLayoutNoteMessages.js";
 import { useFilterContextValidationMessages } from "./useFilterContextValidationMessages.js";
 
 /**
@@ -18,22 +19,25 @@ export function ToastMessages() {
         useDrillValidationMessages();
     const { messages: filterContextValidationMessages, removeMessage: removeFilterContextValidationMessage } =
         useFilterContextValidationMessages();
+    const { messages: editModeLayoutNoteMessages, removeMessage: removeEditModeLayoutNoteMessage } =
+        useEditModeLayoutNoteMessages();
 
     useCrossFilteringMessages();
     useParameterToastMessages();
 
     const messages = useMemo(
-        () => [...drillValidationMessages, ...filterContextValidationMessages],
-        [drillValidationMessages, filterContextValidationMessages],
+        () => [...drillValidationMessages, ...filterContextValidationMessages, ...editModeLayoutNoteMessages],
+        [drillValidationMessages, filterContextValidationMessages, editModeLayoutNoteMessages],
     );
 
     const removeMessage = useCallback(
-        // try removing the id from both collections
+        // try removing the id from all collections
         (id: string) => {
             removeDrillValidationMessage(id);
             removeFilterContextValidationMessage(id);
+            removeEditModeLayoutNoteMessage(id);
         },
-        [removeDrillValidationMessage, removeFilterContextValidationMessage],
+        [removeDrillValidationMessage, removeFilterContextValidationMessage, removeEditModeLayoutNoteMessage],
     );
 
     return <NonContextToastsInterop messages={messages} onDismissMessage={removeMessage} />;

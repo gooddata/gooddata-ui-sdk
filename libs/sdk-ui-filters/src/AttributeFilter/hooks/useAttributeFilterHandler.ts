@@ -8,6 +8,7 @@ import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     type IAttributeElement,
     type IAttributeFilter,
+    type ISeparators,
     type ObjRef,
     filterObjRef,
     isArbitraryAttributeFilter,
@@ -32,6 +33,7 @@ export interface IUseAttributeFilterHandlerProps {
     hiddenElements?: string[];
     staticElements?: IAttributeElement[];
     withoutApply?: boolean;
+    separators?: ISeparators;
 }
 
 /**
@@ -50,6 +52,7 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
         hiddenElements,
         staticElements,
         withoutApply = false,
+        separators,
     } = props;
 
     const [, setInvalidate] = useState(0);
@@ -82,9 +85,19 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
                 staticElements,
                 displayAsLabel,
                 withoutApply,
+                separators,
             },
         );
-    }, [backend, workspace, filter, hiddenElements, staticElements, displayAsLabel, withoutApply]);
+    }, [
+        backend,
+        workspace,
+        filter,
+        hiddenElements,
+        staticElements,
+        displayAsLabel,
+        withoutApply,
+        separators,
+    ]);
 
     if (!handlerRef.current) {
         createNewHandler();
@@ -119,7 +132,8 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
             workspace !== prevProps?.workspace ||
             filterChanged(filter, handler) ||
             !isEqual(staticElements, prevProps?.staticElements) ||
-            !isEqual(hiddenElements, prevProps?.hiddenElements)
+            !isEqual(hiddenElements, prevProps?.hiddenElements) ||
+            !isEqual(separators, prevProps?.separators)
         ) {
             createNewHandler();
             invalidate();
@@ -127,7 +141,17 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
         return () => {
             unsubscribe();
         };
-    }, [backend, workspace, filter, staticElements, hiddenElements, prevProps, handler, createNewHandler]);
+    }, [
+        backend,
+        workspace,
+        filter,
+        staticElements,
+        hiddenElements,
+        separators,
+        prevProps,
+        handler,
+        createNewHandler,
+    ]);
 
     return handler;
 };

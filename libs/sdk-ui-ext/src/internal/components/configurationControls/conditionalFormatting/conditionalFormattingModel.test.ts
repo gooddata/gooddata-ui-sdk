@@ -157,6 +157,41 @@ describe("buildCfTargetData", () => {
         expect(new Set(productElements).size).toBe(productElements.length);
     });
 
+    it("collects raw element names even when the elements carry a formatted name", () => {
+        // the rule evaluator matches attribute conditions on raw names, so suggestions must stay raw
+        const recorded = recordedDataView(
+            ReferenceRecordings.Scenarios.PivotTable.SingleAttribute as ScenarioRecording,
+            DataViewFirstPage,
+        );
+        const withFormattedNames: IDataView = Object.assign(
+            Object.create(Object.getPrototypeOf(recorded)),
+            recorded,
+            {
+                headerItems: recorded.headerItems.map((dim) =>
+                    dim.map((headers) =>
+                        headers.map((h) =>
+                            "attributeHeaderItem" in h
+                                ? {
+                                      attributeHeaderItem: {
+                                          ...h.attributeHeaderItem,
+                                          formattedName: "formatted",
+                                      },
+                                  }
+                                : h,
+                        ),
+                    ),
+                ),
+            },
+        );
+
+        const productElements = buildCfTargetData(DataViewFacade.for(withFormattedNames)).elements[
+            "a_label.f_product.product.name"
+        ];
+
+        expect(productElements).toContain("CompuSci");
+        expect(productElements).not.toContain("formatted");
+    });
+
     it("skips total headers riding in attribute header groups (totals are not element values)", () => {
         const dataView = DataViewFacade.for(
             recordedDataView(

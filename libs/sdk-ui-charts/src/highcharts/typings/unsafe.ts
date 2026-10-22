@@ -101,6 +101,10 @@ export interface ISeriesDataItem {
 
 export interface ISeriesNodeItem {
     id?: string;
+    /**
+     * Shown instead of the id when it differs from it.
+     */
+    name?: string;
     color?: string;
 }
 
@@ -312,6 +316,8 @@ export interface IUnsafeHighchartsTooltipPoint {
     isNode?: boolean;
     from?: string;
     to?: string;
+    fromNode?: { name?: string };
+    toNode?: { name?: string };
     weight?: number;
     sum?: number;
     low?: number;

@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { escape, unescape } from "lodash-es";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
@@ -32,6 +33,25 @@ export function createNumberJsFormatter(separators?: ISeparators): ValueFormatte
         const valueToFormat = ClientFormatterFacade.convertValue(value);
         const { formattedValue } = ClientFormatterFacade.formatValue(valueToFormat, format, separators);
         return customEscape(formattedValue);
+    };
+}
+
+/**
+ * Creates value formatter that uses `@gooddata/number-formatter` to format raw values according to the
+ * format string, without escaping HTML in the result.
+ *
+ * @remarks
+ * Use where the display site escapes the value on its own (cells, tooltips) so that the value is not
+ * escaped twice. Coloring information is stripped away; only the formatted value is returned.
+ *
+ * @param separators - number separators to use. if not specified then `numberjs` defaults will be used
+ * @internal
+ */
+export function createNumberFormatter(separators?: ISeparators): ValueFormatter {
+    return (value: DataValue, format: string) => {
+        const valueToFormat = ClientFormatterFacade.convertValue(value);
+        const { formattedValue } = ClientFormatterFacade.formatValue(valueToFormat, format, separators);
+        return formattedValue;
     };
 }
 

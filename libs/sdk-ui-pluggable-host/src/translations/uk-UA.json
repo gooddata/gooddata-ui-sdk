@@ -33,5 +33,11 @@
     "messages.genAi.visualisation.link.copied": "Посилання на візуалізацію скопійовано до буфера обміну.",
     "messages.showMore": "Показати більше",
     "messages.showLess": "Показати менше",
-    "gen-ai.ask-assistant.search": "Створити нову візуалізацію на основі: {question}"
+    "gen-ai.ask-assistant.search": "Створити нову візуалізацію на основі: {question}",
+    "languageDialog.title": "Змінити мову",
+    "languageDialog.default": "За замовчуванням ({language})",
+    "languageDialog.description": "<b>Примітка:</b> Змінюється лише мова інтерфейсу, а не вміст інформаційних панелей.",
+    "languageDialog.select.searchLabel": "Пошук мов",
+    "languageDialog.select.searchPlaceholder": "Пошук…",
+    "languageDialog.select.noMatch": "Відповідної мови не знайдено."
 }

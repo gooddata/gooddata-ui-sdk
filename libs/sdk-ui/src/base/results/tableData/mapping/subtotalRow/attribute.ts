@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { UnexpectedSdkError } from "../../../../errors/GoodDataSdkError.js";
 import { type ITableDataValue } from "../../interfaces/cells.js";
 import { type ITableAttributeColumnDefinition } from "../../interfaces/columns.js";
@@ -13,7 +14,7 @@ import { getTotalHeaderValue } from "../getValue/totalHeader.js";
 export function mapSubtotalRowAttributeColumn(
     rowDefinition: ITableSubtotalRowDefinition,
     columnDefinition: ITableAttributeColumnDefinition,
-    _options: IMappingOptions,
+    options: IMappingOptions,
 ): ITableDataValue {
     const { rowIndex, rowScope } = rowDefinition;
     const { columnIndex, rowHeaderIndex } = columnDefinition;
@@ -27,7 +28,11 @@ export function mapSubtotalRowAttributeColumn(
     }
 
     if (attributeScope.type === "attributeScope") {
-        const formattedValue = getAttributeHeaderValue(attributeScope.header);
+        const formattedValue = getAttributeHeaderValue(
+            attributeScope.header,
+            attributeScope.descriptor,
+            options.config.valueFormatter,
+        );
 
         return {
             type: "attributeHeader",

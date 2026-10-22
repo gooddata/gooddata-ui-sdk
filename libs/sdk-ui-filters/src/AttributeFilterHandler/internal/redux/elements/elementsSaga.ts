@@ -82,5 +82,8 @@ export function* elementsSaga(
         totalCount: elementsQueryResult.totalCount,
         options: omit(allOptions, "signal"),
         cacheId: elementsQueryResult.cacheId,
+        ...(elementsQueryResult.numberFormat === undefined
+            ? {}
+            : { numberFormat: elementsQueryResult.numberFormat }),
     };
 }

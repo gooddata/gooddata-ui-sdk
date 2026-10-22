@@ -7,6 +7,7 @@
 import { ActionCreatorWithoutPayload } from '@reduxjs/toolkit';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { AgentCustomSkill } from '@gooddata/sdk-model';
+import { AriaAttributes } from 'react';
 import { CatalogItem } from '@gooddata/sdk-model';
 import { ComponentType } from 'react';
 import { DashboardSelectorEvaluator } from '@gooddata/sdk-ui-dashboard';
@@ -38,6 +39,8 @@ import { IUiMenuInteractiveItemWrapperProps } from '@gooddata/sdk-ui-kit';
 import { IUiMenuItem } from '@gooddata/sdk-ui-kit';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { JSX } from 'react/jsx-runtime';
+import { KeyboardEvent as KeyboardEvent_2 } from 'react';
+import { MouseEvent as MouseEvent_2 } from 'react';
 import { ReactNode } from 'react';
 import { SdkErrorType } from '@gooddata/sdk-ui';
 import { Store } from '@reduxjs/toolkit';
@@ -349,6 +352,9 @@ export function DefaultMessageTextContent(props: IGenAIAssistantMessageTextConte
 
 // @alpha
 export function DefaultUserMessage(props: IGenAIAssistantUserMessageProps): JSX.Element;
+
+// @alpha
+export function DefaultVisualizationMenu(input: IGenAIAssistantVisualizationMenuProps): JSX.Element | null;
 
 // @public (undocumented)
 export const deleteConversationAction: ActionCreatorWithPayload<    {
@@ -684,6 +690,8 @@ export interface IGenAIAssistantSlots {
     MessageTextContent?: ComponentType<ISlotProps<IGenAIAssistantMessageTextContentProps>>;
     // @alpha
     UserMessage?: ComponentType<ISlotProps<IGenAIAssistantUserMessageProps>>;
+    // @alpha
+    VisualizationMenu?: ComponentType<ISlotProps<IGenAIAssistantVisualizationMenuProps>>;
 }
 
 // @alpha
@@ -691,6 +699,28 @@ export type IGenAIAssistantUserMessageProps = {
     message: IChatConversationLocalItem;
     groups: IChatMessagesGroup[];
     isLast?: boolean;
+};
+
+// @alpha
+export type IGenAIAssistantVisualizationMenuItem = {
+    id: string;
+    title: string;
+    icon?: ReactNode;
+    isDisabled?: boolean;
+    ariaAttributes?: AriaAttributes;
+    onSelect: (event: MouseEvent_2 | KeyboardEvent_2) => void;
+};
+
+// @alpha
+export type IGenAIAssistantVisualizationMenuProps = {
+    message: IChatConversationLocalItem;
+    part: IChatConversationMultipartLocalPart;
+    scenario?: IWhatIfRenderableScenario;
+    visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>;
+    items: IGenAIAssistantVisualizationMenuItem[];
+    isVisualizationSaved: boolean;
+    isDisabled?: boolean;
+    ariaDescribedBy?: string;
 };
 
 // @public

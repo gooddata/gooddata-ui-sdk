@@ -3,13 +3,13 @@
 import { describe, expect, it } from "vitest";
 
 import { generateHeaderMenuItemsGroups } from "./generateHeaderMenuItemsGroups.js";
-import { getAccountMenuFeatureFlagsMock, getWorkspacePermissionsMock } from "./Header.test.helpers.js";
+import { getAccountMenuFeatureFlagsMock, makeFullWorkspacePermissions } from "./Header.test.helpers.js";
 
 describe("generateHeaderMenuItemsGroups", () => {
     it("should not return dashboards and report item", () => {
         const items = generateHeaderMenuItemsGroups(
             getAccountMenuFeatureFlagsMock(true, "enterprise"),
-            getWorkspacePermissionsMock(true, true),
+            makeFullWorkspacePermissions(),
             false,
             "TestWorkspaceId",
             false,
@@ -46,7 +46,7 @@ describe("generateHeaderMenuItemsGroups", () => {
     it("should not return dashboards and report item with workspace in uri", () => {
         const items = generateHeaderMenuItemsGroups(
             getAccountMenuFeatureFlagsMock(true, "enterprise"),
-            getWorkspacePermissionsMock(true, true),
+            makeFullWorkspacePermissions(),
             false,
             "TestWorkspaceId",
             false,
@@ -83,7 +83,7 @@ describe("generateHeaderMenuItemsGroups", () => {
     it("should return data item if platformEdition is free and hasNoDataSet is false", () => {
         const items = generateHeaderMenuItemsGroups(
             getAccountMenuFeatureFlagsMock(true, "free"),
-            getWorkspacePermissionsMock(true, true),
+            makeFullWorkspacePermissions(),
             false,
             "TestWorkspaceId",
             false,
@@ -119,7 +119,7 @@ describe("generateHeaderMenuItemsGroups", () => {
     it("should return data item with workspace in uri if platformEdition is free, hasNoDataSet is false", () => {
         const items = generateHeaderMenuItemsGroups(
             getAccountMenuFeatureFlagsMock(true, "free"),
-            getWorkspacePermissionsMock(true, true),
+            makeFullWorkspacePermissions(),
             false,
             "TestWorkspaceId",
             false,
@@ -155,7 +155,7 @@ describe("generateHeaderMenuItemsGroups", () => {
     it("should return data item with datasource href if platformEdition is free and hasNoDataSet is true", () => {
         const items = generateHeaderMenuItemsGroups(
             getAccountMenuFeatureFlagsMock(true, "free"),
-            getWorkspacePermissionsMock(true, true),
+            makeFullWorkspacePermissions(),
             true,
             "TestWorkspaceId",
             true,
@@ -191,7 +191,7 @@ describe("generateHeaderMenuItemsGroups", () => {
     it("should return data item with datasource href and workspace in uri if platformEdition is free, hasNoDataSet is true", () => {
         const items = generateHeaderMenuItemsGroups(
             getAccountMenuFeatureFlagsMock(true, "free"),
-            getWorkspacePermissionsMock(true, true),
+            makeFullWorkspacePermissions(),
             true,
             "TestWorkspaceId",
             true,
@@ -227,7 +227,7 @@ describe("generateHeaderMenuItemsGroups", () => {
     it("should not return manage item if canManageMetric is false", () => {
         const items = generateHeaderMenuItemsGroups(
             getAccountMenuFeatureFlagsMock(true, "free"),
-            getWorkspacePermissionsMock(true, false),
+            makeFullWorkspacePermissions({ canManageMetric: false }),
             false,
             "TestWorkspaceId",
             false,
@@ -256,7 +256,7 @@ describe("generateHeaderMenuItemsGroups", () => {
     it("should not return manage item with workspace in uri if canManageMetric is false", () => {
         const items = generateHeaderMenuItemsGroups(
             getAccountMenuFeatureFlagsMock(true, "free"),
-            getWorkspacePermissionsMock(true, false),
+            makeFullWorkspacePermissions({ canManageMetric: false }),
             false,
             "TestWorkspaceId",
             false,
@@ -285,7 +285,7 @@ describe("generateHeaderMenuItemsGroups", () => {
     it("should not return data item if backendSupportsDataItem is false and platform edition is not free", () => {
         const items = generateHeaderMenuItemsGroups(
             getAccountMenuFeatureFlagsMock(true, "enterprise"),
-            getWorkspacePermissionsMock(true, false),
+            makeFullWorkspacePermissions({ canManageMetric: false }),
             false,
             "TestWorkspaceId",
             false,
@@ -315,7 +315,7 @@ describe("generateHeaderMenuItemsGroups", () => {
     it("should not return data item with workspace in uri if backendSupportsDataItem is false, platform edition is not free", () => {
         const items = generateHeaderMenuItemsGroups(
             getAccountMenuFeatureFlagsMock(true, "enterprise"),
-            getWorkspacePermissionsMock(true, false),
+            makeFullWorkspacePermissions({ canManageMetric: false }),
             false,
             "TestWorkspaceId",
             false,
@@ -345,7 +345,7 @@ describe("generateHeaderMenuItemsGroups", () => {
     it("should not return dashboards if feature flags are empty", () => {
         const items = generateHeaderMenuItemsGroups(
             {},
-            getWorkspacePermissionsMock(true, true),
+            makeFullWorkspacePermissions(),
             true,
             "TestWorkspaceId",
             false,
@@ -378,7 +378,7 @@ describe("generateHeaderMenuItemsGroups", () => {
     it("should return relative paths for Panther", () => {
         const items = generateHeaderMenuItemsGroups(
             { enableDataSection: true },
-            getWorkspacePermissionsMock(true, true),
+            makeFullWorkspacePermissions(),
             true,
             "TestWorkspaceId",
             false,
@@ -393,7 +393,7 @@ describe("generateHeaderMenuItemsGroups", () => {
     it("should return absolute paths for Panther", () => {
         const items = generateHeaderMenuItemsGroups(
             { enableDataSection: true },
-            getWorkspacePermissionsMock(true, true),
+            makeFullWorkspacePermissions(),
             true,
             "TestWorkspaceId",
             false,
@@ -409,7 +409,7 @@ describe("generateHeaderMenuItemsGroups", () => {
     it("should return correct absolute paths for Panther when baseUrl ends with slash", () => {
         const items = generateHeaderMenuItemsGroups(
             { enableDataSection: true },
-            getWorkspacePermissionsMock(true, true),
+            makeFullWorkspacePermissions(),
             true,
             "TestWorkspaceId",
             false,

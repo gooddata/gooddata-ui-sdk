@@ -1,33 +1,36 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { render, screen, waitFor } from "@testing-library/react";
-import { userEvent } from "@testing-library/user-event";
+import { screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { type ITranslations, withIntlForTest } from "@gooddata/sdk-ui";
+import { render } from "../../test/render.js";
 
+import { generateHeaderAccountMenuItems } from "./generateHeaderAccountMenuItems.js";
+import { makeFullWorkspacePermissions, makeWorkspacePermissions } from "./Header.test.helpers.js";
 import { HeaderAccount } from "./HeaderAccount.js";
-import { type IHeaderMenuItem } from "./typings.js";
+import { type IHeaderAccountProps } from "./typings.js";
 
-const menuItems: IHeaderMenuItem[] = [
-    { isActive: true, key: "gs.header.account", href: "https://example.com" },
-    { isActive: false, key: "gs.header.dic", href: "" },
-    { isActive: false, key: "gs.header.logout", href: "" },
-];
+const menuItems = generateHeaderAccountMenuItems(makeFullWorkspacePermissions(), {
+    workspaceId: "test-workspace-id",
+});
 
-const mockTranslation: ITranslations = {
-    "gs.header.account": "Account",
-    "gs.header.dic": "Dictionary",
-    "gs.header.logout": "Logout",
-};
-
-const Wrapper = withIntlForTest(HeaderAccount, "en-US", mockTranslation);
+const requiredProps = {
+    onMenuItemClick: () => {},
+} satisfies IHeaderAccountProps;
 
 describe("HeaderAccount", () => {
     it("should render username", () => {
         const userName = "John Doe";
-        render(<Wrapper items={menuItems} onMenuItemClick={() => {}} userName={userName} />);
-        expect(screen.getByText(`${userName}`)).toBeInTheDocument();
+        render(
+            <HeaderAccount
+                {...requiredProps}
+                items={menuItems}
+                onMenuItemClick={() => {}}
+                userName={userName}
+            />,
+        );
+
+        expect(screen.getByRole("button", { name: "John Doe" })).toBeVisible();
     });
 
     it("should open menu on click", async () => {
@@ -35,10 +38,44 @@ describe("HeaderAccount", () => {
         // navigation to the browser, so clicking one that points somewhere would send the test
         // environment's window off to that address — where every later test would then find itself.
         const clickSpy = vi.fn();
-        render(<Wrapper items={[{ isActive: true, key: "gs.header.account" }]} onMenuItemClick={clickSpy} />);
-        await userEvent.click(document.querySelector(".gd-header-account")!);
-        await userEvent.click(screen.getByText("Account"));
+        const userName = "John Doe";
+        const { user } = render(
+            <HeaderAccount
+                {...requiredProps}
+                items={menuItems}
+                userName={userName}
+                onMenuItemClick={clickSpy}
+            />,
+        );
 
-        await waitFor(() => expect(clickSpy).toHaveBeenCalledTimes(1));
+        await user.click(screen.getByRole("button", { name: "John Doe" }));
+        await user.click(await screen.findByRole("button", { name: "Logout" }));
+
+        expect(clickSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it("should show language if the `enableUserLanguageChange` feature flag is on", async () => {
+        const items = generateHeaderAccountMenuItems(makeWorkspacePermissions(), {
+            featureFlags: { enableUserLanguageChange: true },
+        });
+        const userName = "John Doe";
+        const { user } = render(<HeaderAccount {...requiredProps} items={items} userName={userName} />);
+
+        await user.click(screen.getByRole("button", { name: "John Doe" }));
+
+        expect(await screen.findByRole("button", { name: "Language" })).toBeVisible();
+    });
+
+    it("should not show language if the `enableUserLanguageChange` feature flag is off", async () => {
+        const items = generateHeaderAccountMenuItems(makeWorkspacePermissions(), {
+            featureFlags: { enableUserLanguageChange: false },
+        });
+        const userName = "John Doe";
+        const { user } = render(<HeaderAccount {...requiredProps} items={items} userName={userName} />);
+
+        await user.click(screen.getByRole("button", { name: "John Doe" }));
+
+        expect(await screen.findByRole("button", { name: "Logout" })).toBeVisible();
+        expect(screen.queryByRole("button", { name: "Language" })).not.toBeInTheDocument();
     });
 });

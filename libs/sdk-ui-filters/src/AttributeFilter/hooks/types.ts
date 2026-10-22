@@ -5,6 +5,7 @@ import {
     type IAttributeElement,
     type IAttributeFilter,
     type IAttributeMetadataObject,
+    type ISeparators,
     type ObjRef,
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
@@ -155,6 +156,20 @@ export type ElementsFilterControllerData = {
      * Current search string.
      */
     searchString: string;
+
+    /**
+     * Number format of the element values, if they have one (numeric computed attributes).
+     *
+     * @beta
+     */
+    elementsNumberFormat?: string;
+
+    /**
+     * Separators the number-formatted element values are displayed with.
+     *
+     * @beta
+     */
+    separators?: ISeparators;
 
     /**
      * If true, AttributeFilter is filtering elements by parent filters.

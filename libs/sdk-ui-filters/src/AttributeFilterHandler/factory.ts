@@ -1,7 +1,12 @@
 // (C) 2022-2026 GoodData Corporation
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { type IAttributeElement, type IAttributeFilter, type ObjRef } from "@gooddata/sdk-model";
+import {
+    type IAttributeElement,
+    type IAttributeFilter,
+    type ISeparators,
+    type ObjRef,
+} from "@gooddata/sdk-model";
 
 import { MultiSelectAttributeFilterHandler } from "./internal/multiSelectHandler.js";
 import { SingleSelectAttributeFilterHandler } from "./internal/singleSelectHandler.js";
@@ -60,6 +65,15 @@ export interface IAttributeFilterHandlerOptionsBase {
      * Several other behaviours are also affected by this option like dependent filters
      */
     withoutApply?: boolean;
+
+    /**
+     * Number separators used when formatting element values of numeric computed attributes.
+     *
+     * @remarks
+     * Element titles of attributes whose values carry a number format are shown formatted the same way
+     * measures are; the separators come from the workspace settings of the hosting application.
+     */
+    separators?: ISeparators;
 }
 
 /**
@@ -120,7 +134,8 @@ export function newAttributeFilterHandler(
         withoutApply: false,
     },
 ): IAttributeFilterHandler {
-    const { selectionMode, hiddenElements, staticElements, displayAsLabel, withoutApply } = options;
+    const { selectionMode, hiddenElements, staticElements, displayAsLabel, withoutApply, separators } =
+        options;
 
     if (selectionMode === "multi") {
         return new MultiSelectAttributeFilterHandler({
@@ -131,6 +146,7 @@ export function newAttributeFilterHandler(
             staticElements,
             displayAsLabel,
             withoutApply,
+            separators,
         });
     }
 
@@ -142,5 +158,6 @@ export function newAttributeFilterHandler(
         staticElements,
         displayAsLabel,
         withoutApply,
+        separators,
     });
 }

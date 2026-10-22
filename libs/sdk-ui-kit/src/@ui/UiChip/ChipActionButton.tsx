@@ -61,6 +61,7 @@ export function ChipActionButton({
                 anchor={button}
                 content={tooltip}
                 hoverOpenDelay={500}
+                inlineAnchor
                 triggerBy={["hover", "focus"]}
             />
         );

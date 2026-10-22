@@ -33,5 +33,11 @@
     "messages.genAi.visualisation.link.copied": "El enlace de visualización se ha copiado en el portapapeles.",
     "messages.showMore": "Mostrar más",
     "messages.showLess": "Mostrar menos",
-    "gen-ai.ask-assistant.search": "Crear una nueva visualización basada en: {question}"
+    "gen-ai.ask-assistant.search": "Crear una nueva visualización basada en: {question}",
+    "languageDialog.title": "Cambiar idioma",
+    "languageDialog.default": "Predeterminado ({language})",
+    "languageDialog.description": "<b>Nota:</b> Solo cambia la interfaz, no el contenido del panel.",
+    "languageDialog.select.searchLabel": "Buscar idiomas",
+    "languageDialog.select.searchPlaceholder": "Buscar…",
+    "languageDialog.select.noMatch": "Ningún idioma coincide."
 }

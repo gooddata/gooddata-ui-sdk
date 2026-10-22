@@ -16,6 +16,7 @@ export class InMemoryPaging implements IElementsQueryResult {
         protected readonly allItems: IAttributeElement[],
         limit = 50,
         offset = 0,
+        public readonly numberFormat?: string,
     ) {
         invariant(offset >= 0, `paging offset must be non-negative, got: ${offset}`);
         invariant(limit > 0, `limit must be a positive number, got: ${limit}`);
@@ -36,7 +37,7 @@ export class InMemoryPaging implements IElementsQueryResult {
         }
 
         return Promise.resolve(
-            new InMemoryPaging(this.allItems, this.limit, this.offset + this.items.length),
+            new InMemoryPaging(this.allItems, this.limit, this.offset + this.items.length, this.numberFormat),
         );
     }
 
@@ -45,7 +46,9 @@ export class InMemoryPaging implements IElementsQueryResult {
             return this;
         }
 
-        return Promise.resolve(new InMemoryPaging(this.allItems, this.limit, pageIndex * this.items.length));
+        return Promise.resolve(
+            new InMemoryPaging(this.allItems, this.limit, pageIndex * this.limit, this.numberFormat),
+        );
     }
 
     public async all(): Promise<IAttributeElement[]> {

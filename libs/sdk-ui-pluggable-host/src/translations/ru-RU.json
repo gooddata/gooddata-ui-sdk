@@ -33,5 +33,11 @@
     "messages.genAi.visualisation.link.copied": "Ссылка на визуализацию скопирована в буфер обмена.",
     "messages.showMore": "Раскрыть",
     "messages.showLess": "Скрыть",
-    "gen-ai.ask-assistant.search": "Создайте новую визуализацию на основе: {question}"
+    "gen-ai.ask-assistant.search": "Создайте новую визуализацию на основе: {question}",
+    "languageDialog.title": "Изменить язык",
+    "languageDialog.default": "По умолчанию ({language})",
+    "languageDialog.description": "<b>Примечание:</b> Изменяется только язык интерфейса, но не содержимое дашбордов.",
+    "languageDialog.select.searchLabel": "Поиск языков",
+    "languageDialog.select.searchPlaceholder": "Поиск…",
+    "languageDialog.select.noMatch": "Подходящий язык не найден."
 }

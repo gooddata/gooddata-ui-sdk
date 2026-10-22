@@ -1,8 +1,9 @@
 // (C) 2026 GoodData Corporation
 
-import { type ComponentProps } from "react";
+import { type ComponentProps, useState } from "react";
 
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 import { IntlWrapper } from "../../../../localization/IntlWrapper.js";
@@ -19,11 +20,24 @@ function renderComponent(customProps: Partial<ComponentProps<typeof DashboardAtt
         isSlidesExportEnabled: true,
     };
 
-    return render(
-        <IntlWrapper>
-            <DashboardAttachments {...defaultProps} {...customProps} />
-        </IntlWrapper>,
-    );
+    function StatefulAttachments() {
+        const props = { ...defaultProps, ...customProps };
+        const [selectedAttachments, setSelectedAttachments] = useState(props.selectedAttachments);
+        return (
+            <IntlWrapper>
+                <DashboardAttachments
+                    {...props}
+                    selectedAttachments={selectedAttachments}
+                    onDashboardAttachmentsChange={(attachments, filters) => {
+                        setSelectedAttachments(attachments);
+                        props.onDashboardAttachmentsChange(attachments, filters);
+                    }}
+                />
+            </IntlWrapper>
+        );
+    }
+
+    return render(<StatefulAttachments />);
 }
 
 function openAddAttachments() {
@@ -37,6 +51,43 @@ function toggleFormat(label: string) {
 }
 
 describe("DashboardAttachments", () => {
+    it("leaves the genuinely empty selection to the dialog validation message", () => {
+        renderComponent({ selectedAttachments: [] });
+
+        expect(screen.queryByText("No attachments to display.")).not.toBeInTheDocument();
+    });
+
+    it.each([{ hidden: "PDF_SLIDES" as const }, { hidden: "PPTX" as const }])(
+        "focuses Add and announces the empty list while preserving $hidden",
+        async (options) => {
+            const user = userEvent.setup();
+            const onDashboardAttachmentsChange = vi.fn();
+            renderComponent({
+                isSlidesExportEnabled: false,
+                isCrossFiltering: true,
+                ...options,
+                selectedAttachments: [options.hidden, "PDF"],
+                onDashboardAttachmentsChange,
+            });
+
+            const deleteButton = screen.getByRole("button", { name: "Delete PDF attachment" });
+            deleteButton.focus();
+            await user.keyboard("{Enter}");
+
+            await waitFor(() =>
+                expect(screen.getByRole("button", { name: "Add attachments" })).toHaveFocus(),
+            );
+            expect(
+                screen.getByText("No attachments to display.").closest('[role="status"]'),
+            ).toBeInTheDocument();
+            expect(
+                screen.getByText(/Cross-filtering will not be applied in the scheduled export/),
+            ).toBeInTheDocument();
+            expect(onDashboardAttachmentsChange).toHaveBeenCalledWith([options.hidden], undefined);
+            expect(screen.queryByRole("button", { name: "Delete PDF attachment" })).not.toBeInTheDocument();
+        },
+    );
+
     it("does not offer slide deck formats when slide exports are disabled", () => {
         renderComponent({ isSlidesExportEnabled: false });
 

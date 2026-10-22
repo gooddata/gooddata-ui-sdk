@@ -67,6 +67,7 @@ import {
     getElementsByKeys,
     selectElements,
     selectElementsCache,
+    selectElementsNumberFormat,
     selectElementsTotalCount,
     selectElementsTotalCountWithCurrentSettings,
     selectInitTotalCountError,
@@ -437,6 +438,10 @@ export class AttributeFilterReduxBridge {
 
     getSearch = (): string => {
         return this.redux.select(selectSearch);
+    };
+
+    getElementsNumberFormat = (): string | undefined => {
+        return this.redux.select(selectElementsNumberFormat);
     };
 
     setLimit = (limit: number): void => {

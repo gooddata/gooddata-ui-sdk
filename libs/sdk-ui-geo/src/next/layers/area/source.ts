@@ -315,9 +315,9 @@ export function applyCurrentColorsToAreaOutputSource(
 
     const areaIdentifiers = output.geoData.area?.data ?? [];
     const areaUris = output.geoData.area?.uris ?? [];
-    const segmentData = output.geoData.segment?.data ?? [];
+    const segmentUris = (output.geoData.segment?.uris ?? []).map((uri) => uri ?? EMPTY_SEGMENT_VALUE);
     const colorData = output.geoData.color?.data ?? [];
-    const areaColors = getAreaAreaColors(colorData, segmentData, colorStrategy);
+    const areaColors = getAreaAreaColors(colorData, segmentUris, colorStrategy);
 
     const fillByKey = new Map<string, string>();
     for (let i = 0; i < areaIdentifiers.length; i++) {
@@ -403,7 +403,7 @@ function createAreaFeatures({
     const colorData = color?.data ?? [];
     const colorFormat = color?.format ?? "";
 
-    const areaColors = getAreaAreaColors(colorData, segmentData, colorStrategy);
+    const areaColors = getAreaAreaColors(colorData, segmentUris, colorStrategy);
     const featureIndex = buildFeatureIndex(features);
 
     // Aggregate by unique area to prevent geometry duplication

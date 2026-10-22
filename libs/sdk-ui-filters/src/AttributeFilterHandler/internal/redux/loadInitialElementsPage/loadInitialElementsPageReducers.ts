@@ -34,6 +34,10 @@ const loadInitialElementsPageSuccess: AttributeFilterReducer<
 > = (state, action) => {
     state.elements.initialPageLoad.status = "success";
     state.elements.totalCountWithCurrentSettings = action.payload.totalCount;
+    // a source without a format (static elements) must not drop the one already known
+    if (action.payload.numberFormat !== undefined) {
+        state.elements.numberFormat = action.payload.numberFormat;
+    }
     action.payload.elements.forEach((el) => {
         const cacheKey = getElementCacheKey(el);
         if (!state.elements.cache[cacheKey]) {

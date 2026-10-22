@@ -102,6 +102,7 @@ export const useAttributeFilterController = (
         selectFirst = false,
         enableImmediateAttributeFilterDisplayAsLabelMigration = false,
         withoutApply = false,
+        separators,
         menuConfig,
     } = props;
 
@@ -256,6 +257,7 @@ export const useAttributeFilterController = (
         selectionMode,
         selectFirst,
         withoutApply,
+        separators,
         enableImmediateAttributeFilterDisplayAsLabelMigration,
         supportsKeepingDependentFiltersSelection: supportsKeepingDependentFiltersSelection ?? false,
         supportsCircularDependencyInFilters: supportsCircularDependencyInFilters ?? false,
