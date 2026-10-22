@@ -49,11 +49,6 @@ import {
 } from "../utils/texts.js";
 import { getIdentifier } from "../utils/yamlUtils.js";
 
-type PublisherEntityV2 =
-    | Omit<IPublisherDocumentDefinitionV2, "ref">
-    | Omit<IPublisherDocumentTemplateDefinitionV2, "ref">
-    | Omit<IPublisherPageTemplateDefinitionV2, "ref">;
-
 function visualizationToYaml(
     widget: IPublisherVisualizationWidgetV2,
     errorContext: IErrorContext | undefined,
@@ -182,7 +177,7 @@ function contentToYaml(
     return { ...base, pages: held.pages.map((page) => documentPageToYaml(page, pagesContext)) };
 }
 
-function entityFields(entity: PublisherEntityV2) {
+function entityFields(entity: Pick<IPublisherDocumentDefinitionV2, "title" | "description" | "tags">) {
     return {
         version: publisherContentVersionV2,
         title: entity.title,
@@ -232,7 +227,7 @@ function toYaml(json: object, comment: string): string {
 }
 
 function documentToYaml(
-    document: Omit<IPublisherDocumentDefinitionV2, "ref">,
+    document: Omit<IPublisherDocumentDefinitionV2, "ref" | "type">,
     errorContext: IErrorContext | undefined,
 ): Omit<AacPublisherDocumentV2, "id"> {
     assertPublisherContentVersionV2(document, errorContext);
@@ -245,7 +240,7 @@ function documentToYaml(
 }
 
 function documentTemplateToYaml(
-    template: Omit<IPublisherDocumentTemplateDefinitionV2, "ref">,
+    template: Omit<IPublisherDocumentTemplateDefinitionV2, "ref" | "type">,
     errorContext: IErrorContext | undefined,
 ): Omit<AacPublisherDocumentTemplateV2, "id"> {
     assertPublisherContentVersionV2(template, errorContext);
@@ -257,7 +252,7 @@ function documentTemplateToYaml(
 }
 
 function pageTemplateToYaml(
-    template: Omit<IPublisherPageTemplateDefinitionV2, "ref">,
+    template: Omit<IPublisherPageTemplateDefinitionV2, "ref" | "type">,
     errorContext: IErrorContext | undefined,
 ): Omit<AacPublisherPageTemplateV2, "id"> {
     assertPublisherContentVersionV2(template, errorContext);

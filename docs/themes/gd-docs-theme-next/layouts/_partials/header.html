@@ -1,0 +1,56 @@
+<header class="border-b border-gd-border bg-gd-card text-gd-text dark:text-gd-text">
+  <div class="relative mx-auto flex max-w-screen-2xl items-center gap-3 px-4 py-3 lg:gap-6 lg:px-6">
+    {{/* At lg this slot is empty (the hamburger is gone) but keeps the sidebar's
+         width, so with the shared gap-6 the search box starts exactly where the
+         main column starts below it and sits centred over that column. */}}
+    <div class="flex shrink-0 items-center gap-3 lg:w-72">
+      <button id="sidebar-toggle" class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-gd-border text-gd-text touch-manipulation focus-visible:ring-2 focus-visible:ring-gd-secondary focus-visible:outline-none dark:text-gd-contrast dark:focus-visible:ring-gd-contrast lg:hidden" type="button" aria-label="Toggle navigation">
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16" />
+        </svg>
+      </button>
+      {{/* No logo or title here: the GoodData logo lives in the strip above
+           (topbar.html), as on the live docs, and the docs home is the first
+           sidebar link. That leaves the row to the search box. */}}
+    </div>
+
+    {{/* Search sits in the middle and is always visible — the one header control
+         a reader reaches for on every screen size. The old section tabs
+         (one per docs tree, plus Versions) lived here; the site now has a
+         single docs section and the archive moved into the version menu. */}}
+    {{/* xl:pl-28: the tools on the right (~390px) are wider than the TOC column
+         the main content leaves free below them (16rem + gap = 280px), so a box
+         centred in the leftover space sits ~55px left of the main column's
+         centre. Padding the region by that difference re-centres it over the
+         column (1440px: box centre 725 vs column centre 724). Below xl there is
+         no TOC and the tools simply take what they need. */}}
+    <div class="flex min-w-0 flex-1 justify-center xl:pl-28">
+      {{ partial "search.html" . }}
+    </div>
+
+    <div class="flex shrink-0 items-center gap-2">
+      <button id="header-tools-toggle" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="header-tools" aria-label="More options" class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-gd-border text-gd-text touch-manipulation focus-visible:ring-2 focus-visible:ring-gd-secondary focus-visible:outline-none dark:text-gd-contrast dark:focus-visible:ring-gd-contrast lg:hidden">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+      </button>
+      <div id="header-tools" class="absolute right-4 top-full z-50 mt-2 hidden w-60 flex-col items-stretch gap-2 rounded-xl border border-gd-border bg-gd-card p-3 shadow-lg lg:static lg:right-auto lg:top-auto lg:z-auto lg:mt-0 lg:flex lg:w-auto lg:flex-row lg:items-center lg:gap-2 lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none">
+        {{ partial "version-selector.html" . }}
+        {{ partial "ask-ai.html" . }}
+        <a href="{{ .Site.Params.repoURL }}" rel="noopener" class="inline-flex min-h-11 items-center gap-1.5 rounded-md border border-gd-border px-3 py-1.5 text-sm font-medium text-gd-text-secondary transition hover:border-gd-secondary hover:text-gd-secondary hover:no-underline focus-visible:ring-2 focus-visible:ring-gd-secondary focus-visible:outline-none dark:border-gd-border dark:text-gd-text-secondary dark:hover:border-gd-contrast dark:hover:text-gd-contrast">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          GitHub
+        </a>
+        {{/* In the stacked mobile menu an icon-only square reads as an unfinished
+             control next to the labelled Version and GitHub rows, so it gets a
+             label there and collapses back to the bare square at lg. */}}
+        <button id="theme-toggle" type="button" aria-label="Toggle dark mode" class="inline-flex h-11 w-full items-center justify-start gap-1.5 rounded-md border border-gd-border px-3 text-sm font-medium text-gd-text-secondary transition hover:border-gd-secondary hover:text-gd-secondary touch-manipulation focus-visible:ring-2 focus-visible:ring-gd-secondary focus-visible:outline-none dark:border-gd-border dark:text-gd-text-secondary dark:hover:border-gd-contrast dark:hover:text-gd-contrast dark:focus-visible:ring-gd-contrast lg:w-11 lg:justify-center lg:gap-0 lg:px-0">
+          {{/* Cloud's moon and sun (gd-docs-theme-switcher). Like the label, the icon names the
+               mode a click switches to: moon in light, sun in dark. CSS picks it, so it is right
+               before any script runs. */}}
+          <svg class="h-5 w-5 shrink-0 dark:hidden" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          <svg class="hidden h-5 w-5 shrink-0 dark:block" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <span id="theme-toggle-label" class="lg:hidden">Dark mode</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>

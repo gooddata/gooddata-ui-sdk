@@ -1,0 +1,15 @@
+# {{ .Site.Title }}
+> {{ .Site.Params.description }}
+
+Base URL: {{ .Site.BaseURL }}
+
+## Pages
+{{ range .Site.RegularPages.ByWeight -}}
+- [{{ .Title }}]({{ .Permalink }}) — {{ with .Params.description }}{{ . }}{{ else }}{{ .Summary }}{{ end }} ({{ .Params.diataxis_type }})
+{{ end }}
+
+## LLM Endpoints
+{{ $self := .RelPermalink -}}
+{{ range .OutputFormats -}}
+{{ if and (eq .MediaType.Type "text/plain") (ne .RelPermalink $self) }}- {{ path.Base .RelPermalink }}: {{ .Permalink }}
+{{ end }}{{- end }}

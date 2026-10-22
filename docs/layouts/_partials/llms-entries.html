@@ -1,0 +1,14 @@
+{{- /* The llms.txt entries of one docs section, in sidebar order (llms-pages.html). Each entry links
+the page's Markdown version (index.md) and ends with its Diátaxis type; a section landing page
+shows its type only when it sets one.
+
+Expects: the section. Returns a slice of lines. */ -}}
+{{- $lines := slice -}}
+{{- range partial "llms-pages.html" . -}}
+  {{- $url := .Permalink -}}
+  {{- with .OutputFormats.Get "markdown" }}{{ $url = .Permalink }}{{ end -}}
+  {{- $type := .Params.diataxis_type | default "" -}}
+  {{- if and (not $type) (not .IsSection) }}{{ $type = "howto" }}{{ end -}}
+  {{- $lines = $lines | append (printf "- [%s](%s): %s%s" (or .Title .LinkTitle .File.ContentBaseName) $url (partial "llms-summary.html" .) (cond (ne $type "") (printf " (%s)" $type) "")) -}}
+{{- end -}}
+{{- return $lines -}}

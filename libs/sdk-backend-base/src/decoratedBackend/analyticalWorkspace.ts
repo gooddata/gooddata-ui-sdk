@@ -31,6 +31,7 @@ import {
     type IWorkspaceParametersService,
     type IWorkspacePermissionsService,
     type IWorkspacePublisherService,
+    type IWorkspacePublisherServiceV2,
     type IWorkspaceSettingsService,
     type IWorkspaceStylingService,
     type IWorkspaceUserGroupsQuery,
@@ -264,6 +265,16 @@ export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
         }
 
         return this.decorated.publisher();
+    }
+
+    public publisherV2(): IWorkspacePublisherServiceV2 {
+        const { workspacePublisherV2 } = this.factories;
+
+        if (workspacePublisherV2) {
+            return workspacePublisherV2(this.decorated.publisherV2(), this.workspace);
+        }
+
+        return this.decorated.publisherV2();
     }
 
     public localization(): IWorkspaceLocalizationService {

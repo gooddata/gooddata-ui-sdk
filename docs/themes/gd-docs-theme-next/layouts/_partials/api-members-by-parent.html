@@ -1,0 +1,14 @@
+{{- /* An API reference package's folded member pages (properties, methods, ...) by the symbol they
+belong to. The generator marks a member `folded` when its content belongs on its parent symbol's
+page (scripts/generate-reference.ts); a namespace's members are not folded, they are symbols with
+pages of their own.
+
+Call it as partialCached "api-members-by-parent.html" .CurrentSection .CurrentSection.Path.
+Returns a dict: parent slug (the members' parent_symbol) -> slice of member pages. */ -}}
+{{- $s := newScratch -}}
+{{- range .RegularPages -}}
+  {{- if and .Params.folded .Params.parent_symbol -}}
+    {{- $s.Add .Params.parent_symbol (slice .) -}}
+  {{- end -}}
+{{- end -}}
+{{- return $s.Values -}}

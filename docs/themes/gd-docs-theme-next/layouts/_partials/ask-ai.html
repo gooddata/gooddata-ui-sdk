@@ -1,0 +1,20 @@
+{{- $ai := site.Params.askAI -}}
+{{- if and $ai $ai.enable $ai.websiteId -}}
+<button id="ask-ai-button" type="button" aria-expanded="false" aria-haspopup="dialog" aria-controls="kapa-modal-content"
+  class="open-kapa-widget ask-ai-button inline-flex min-h-11 items-center gap-1.5 rounded-md border border-gd-border px-3 py-1.5 text-sm font-medium text-gd-text-secondary transition hover:border-gd-secondary hover:text-gd-secondary focus-visible:ring-2 focus-visible:ring-gd-secondary focus-visible:outline-none dark:hover:border-gd-contrast dark:hover:text-gd-contrast">
+  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.9 5.1L19 9l-5.1 1.9L12 16l-1.9-5.1L5 9l5.1-1.9L12 2zm6 12l.9 2.4L21 17l-2.1.6L18 20l-.9-2.4L15 17l2.1-.6L18 14z"/></svg>
+  Ask AI
+</button>
+<script async src="https://widget.kapa.ai/kapa-widget.bundle.js"
+  data-website-id="{{ $ai.websiteId }}"
+  data-project-name="{{ $ai.projectName }}"
+  data-project-color="{{ $ai.projectColor }}"
+  {{ with $ai.projectLogo }}data-project-logo="{{ . }}"{{ end }}
+  data-button-hide="true"
+  data-modal-override-open-class="open-kapa-widget"
+  data-modal-title-color="{{ $ai.modalTitleColor }}"
+  data-modal-open-on-command-k="true"
+  {{ with $ai.modalDisclaimer }}data-modal-disclaimer="{{ . }}"{{ end }}
+  {{- range $k, $v := $ai.extraAttrs }} {{ printf "data-%s=%q" $k $v | safeHTMLAttr }}{{ end -}}
+></script>
+{{- end -}}

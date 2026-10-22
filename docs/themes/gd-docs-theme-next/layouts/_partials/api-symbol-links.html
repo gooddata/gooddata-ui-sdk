@@ -1,0 +1,27 @@
+{{- /* A guide page's `api_symbols` frontmatter ("@gooddata/sdk-ui-charts:Headline") resolved to
+their API reference pages, for the chip row above the title (api-reference-panel.html) and the
+"API reference:" line of the page's Markdown version (md/header.html).
+
+Symbols resolve through the page version's api_refs (api-data.html), so slug rules stay
+single-source with the generator. Every hit is re-checked with site.GetPage — a missing data file
+(clean clone, no SDK build), a known-miss symbol, or a stale entry all degrade to nothing.
+
+Expects: the page. Returns a slice of dicts: page (the reference page) and entry (its api_refs
+entry: title, kind, deprecated, stability). */ -}}
+{{- $links := slice -}}
+{{- with (partialCached "api-data.html" . .Section).refs -}}
+  {{- $refs := . -}}
+  {{- range $.Params.api_symbols -}}
+    {{- $parts := split (strings.TrimPrefix "@gooddata/" .) ":" -}}
+    {{- if eq (len $parts) 2 -}}
+      {{- $slug := printf "%s.%s" (index $parts 0) (lower (index $parts 1)) -}}
+      {{- with index $refs $slug -}}
+        {{- $entry := . -}}
+        {{- with site.GetPage .path -}}
+          {{- $links = $links | append (dict "page" . "entry" $entry) -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $links -}}

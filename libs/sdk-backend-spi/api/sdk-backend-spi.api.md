@@ -35,6 +35,8 @@ import { IAttributeElement } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
+import { IAuditableDates } from '@gooddata/sdk-model';
+import { IAuditableUsers } from '@gooddata/sdk-model';
 import type { IAutomationAlert } from '@gooddata/sdk-model';
 import { IAutomationMetadataObject } from '@gooddata/sdk-model';
 import { IAutomationMetadataObjectDefinition } from '@gooddata/sdk-model';
@@ -158,12 +160,19 @@ import { IOrganizationUserGroup } from '@gooddata/sdk-model';
 import { IParameterMetadataObject } from '@gooddata/sdk-model';
 import { IParameterMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IPlatformUsage } from '@gooddata/sdk-model';
-import { IPublisherDocument } from '@gooddata/sdk-model';
-import { IPublisherDocumentDefinition } from '@gooddata/sdk-model';
-import { IPublisherDocumentTemplate } from '@gooddata/sdk-model';
-import { IPublisherDocumentTemplateDefinition } from '@gooddata/sdk-model';
-import { IPublisherPageTemplate } from '@gooddata/sdk-model';
-import { IPublisherPageTemplateDefinition } from '@gooddata/sdk-model';
+import { IPublisherDocumentDefinitionV1 } from '@gooddata/sdk-model';
+import { IPublisherDocumentDefinitionV2 } from '@gooddata/sdk-model';
+import { IPublisherDocumentTemplateDefinitionV1 } from '@gooddata/sdk-model';
+import { IPublisherDocumentTemplateDefinitionV2 } from '@gooddata/sdk-model';
+import { IPublisherDocumentTemplateV1 } from '@gooddata/sdk-model';
+import { IPublisherDocumentTemplateV2 } from '@gooddata/sdk-model';
+import { IPublisherDocumentV1 } from '@gooddata/sdk-model';
+import { IPublisherDocumentV2 } from '@gooddata/sdk-model';
+import { IPublisherPageTemplateDefinitionV1 } from '@gooddata/sdk-model';
+import { IPublisherPageTemplateDefinitionV2 } from '@gooddata/sdk-model';
+import { IPublisherPageTemplateV1 } from '@gooddata/sdk-model';
+import { IPublisherPageTemplateV2 } from '@gooddata/sdk-model';
+import { IPublisherValidationIssueV2 } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { IResultHeader } from '@gooddata/sdk-model';
 import { IResultWarning } from '@gooddata/sdk-model';
@@ -251,6 +260,7 @@ export const AnalyticalBackendErrorTypes: {
     PERMISSION_ESCALATION_REFUSED: string;
     TIMEOUT_ERROR: string;
     ABORT: string;
+    PUBLISHER_CONTENT_NOT_SUPPORTED: string;
 };
 
 // @public
@@ -261,6 +271,9 @@ export type AnalyticsCatalogGenerateDescriptionObjectType = Extract<ObjectType, 
 
 // @internal
 export type AnalyticsCatalogGenerateTitleObjectType = AnalyticsCatalogGenerateDescriptionObjectType;
+
+// @alpha
+export function assertPublisherEntitySupportedV2(entity: IPublisherDocumentDefinitionV2 | IPublisherDocumentTemplateDefinitionV2 | IPublisherPageTemplateDefinitionV2): void;
 
 // @public
 export type AuthenticationFlow = {
@@ -460,6 +473,8 @@ export interface IAnalyticalWorkspace {
     permissions(): IWorkspacePermissionsService;
     // @alpha
     publisher(): IWorkspacePublisherService;
+    // @alpha
+    publisherV2(): IWorkspacePublisherServiceV2;
     references(): IReferencesService;
     settings(): IWorkspaceSettingsService;
     styling(): IWorkspaceStylingService;
@@ -959,7 +974,7 @@ export type IChatConversationMultipartPart = IChatConversationTextContent | ICha
 // @internal
 export type IChatConversationPublisherDocumentContent = {
     type: "publisherDocument";
-    publisherDocument: IPublisherDocumentDefinition | null;
+    publisherDocument: IPublisherDocumentDefinitionV1 | null;
     saved?: string | null;
     ref?: string | null;
     baseDocumentId?: string | null;
@@ -2883,9 +2898,35 @@ export interface IPreparedExecutionOptions {
 }
 
 // @alpha
+export interface IPublisherContentNotSupportedDetails {
+    // (undocumented)
+    issues: IPublisherValidationIssueV2[];
+    ref?: ObjRef;
+    // (undocumented)
+    title?: string;
+    version: string;
+}
+
+// @alpha
 export interface IPublisherDocumentExportPdfOptions {
     filename?: string;
     timeout?: number;
+}
+
+// @alpha
+export interface IPublisherDocumentSummaryV2 extends IAuditableDates, IAuditableUsers {
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    isLocked?: boolean;
+    // (undocumented)
+    ref: ObjRef;
+    // (undocumented)
+    tags?: string[];
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    version: string;
 }
 
 // @alpha
@@ -3083,6 +3124,9 @@ export function isPermissionEscalationRefused(obj: unknown): obj is PermissionEs
 
 // @public
 export function isProtectedDataError(obj: unknown): obj is ProtectedDataError;
+
+// @alpha
+export function isPublisherContentNotSupportedError(obj: unknown): obj is PublisherContentNotSupportedError;
 
 // @public
 export function isTimeoutError(obj: unknown): obj is TimeoutError;
@@ -3578,22 +3622,58 @@ export interface IWorkspacePermissionsService {
 
 // @alpha
 export interface IWorkspacePublisherService {
-    createDocument(publisherDocument: IPublisherDocumentDefinition): Promise<IPublisherDocument>;
-    createDocumentTemplate(template: IPublisherDocumentTemplateDefinition): Promise<IPublisherDocumentTemplate>;
-    createPageTemplate(page: IPublisherPageTemplateDefinition): Promise<IPublisherPageTemplate>;
+    createDocument(publisherDocument: IPublisherDocumentDefinitionV1): Promise<IPublisherDocumentV1>;
+    createDocumentTemplate(template: IPublisherDocumentTemplateDefinitionV1): Promise<IPublisherDocumentTemplateV1>;
+    createPageTemplate(page: IPublisherPageTemplateDefinitionV1): Promise<IPublisherPageTemplateV1>;
     deleteDocument(ref: ObjRef): Promise<void>;
     deleteDocumentTemplate(ref: ObjRef): Promise<void>;
     deletePageTemplate(ref: ObjRef): Promise<void>;
     exportDocumentToPdf(ref: ObjRef, options?: IPublisherDocumentExportPdfOptions): Promise<IExportResult>;
-    getDocument(ref: ObjRef): Promise<IPublisherDocument>;
-    getDocuments(): Promise<IPublisherDocument[]>;
-    getDocumentTemplate(ref: ObjRef): Promise<IPublisherDocumentTemplate>;
-    getDocumentTemplates(): Promise<IPublisherDocumentTemplate[]>;
-    getPageTemplate(ref: ObjRef): Promise<IPublisherPageTemplate>;
-    getPageTemplates(): Promise<IPublisherPageTemplate[]>;
-    updateDocument(publisherDocument: IPublisherDocument): Promise<IPublisherDocument>;
-    updateDocumentTemplate(template: IPublisherDocumentTemplate): Promise<IPublisherDocumentTemplate>;
-    updatePageTemplate(page: IPublisherPageTemplate): Promise<IPublisherPageTemplate>;
+    getDocument(ref: ObjRef): Promise<IPublisherDocumentV1>;
+    getDocuments(): Promise<IPublisherDocumentV1[]>;
+    getDocumentTemplate(ref: ObjRef): Promise<IPublisherDocumentTemplateV1>;
+    getDocumentTemplates(): Promise<IPublisherDocumentTemplateV1[]>;
+    getPageTemplate(ref: ObjRef): Promise<IPublisherPageTemplateV1>;
+    getPageTemplates(): Promise<IPublisherPageTemplateV1[]>;
+    hasDocuments(): Promise<boolean>;
+    updateDocument(publisherDocument: IPublisherDocumentV1): Promise<IPublisherDocumentV1>;
+    updateDocumentTemplate(template: IPublisherDocumentTemplateV1): Promise<IPublisherDocumentTemplateV1>;
+    updatePageTemplate(page: IPublisherPageTemplateV1): Promise<IPublisherPageTemplateV1>;
+}
+
+// @alpha
+export interface IWorkspacePublisherServiceV2 {
+    // (undocumented)
+    createDocument(publisherDocument: IPublisherDocumentDefinitionV2): Promise<IPublisherDocumentV2>;
+    // (undocumented)
+    createDocumentTemplate(template: IPublisherDocumentTemplateDefinitionV2): Promise<IPublisherDocumentTemplateV2>;
+    // (undocumented)
+    createPageTemplate(template: IPublisherPageTemplateDefinitionV2): Promise<IPublisherPageTemplateV2>;
+    // (undocumented)
+    deleteDocument(ref: ObjRef): Promise<void>;
+    // (undocumented)
+    deleteDocumentTemplate(ref: ObjRef): Promise<void>;
+    // (undocumented)
+    deletePageTemplate(ref: ObjRef): Promise<void>;
+    exportDocumentToPdf(ref: ObjRef, options?: IPublisherDocumentExportPdfOptions): Promise<IExportResult>;
+    // (undocumented)
+    getDocument(ref: ObjRef): Promise<IPublisherDocumentV2>;
+    // (undocumented)
+    getDocuments(): Promise<PublisherDocumentListItemV2[]>;
+    // (undocumented)
+    getDocumentTemplate(ref: ObjRef): Promise<IPublisherDocumentTemplateV2>;
+    // (undocumented)
+    getDocumentTemplates(): Promise<IPublisherDocumentTemplateV2[]>;
+    // (undocumented)
+    getPageTemplate(ref: ObjRef): Promise<IPublisherPageTemplateV2>;
+    // (undocumented)
+    getPageTemplates(): Promise<IPublisherPageTemplateV2[]>;
+    // (undocumented)
+    updateDocument(publisherDocument: IPublisherDocumentV2): Promise<IPublisherDocumentV2>;
+    // (undocumented)
+    updateDocumentTemplate(template: IPublisherDocumentTemplateV2): Promise<IPublisherDocumentTemplateV2>;
+    // (undocumented)
+    updatePageTemplate(template: IPublisherPageTemplateV2): Promise<IPublisherPageTemplateV2>;
 }
 
 export { IWorkspaceSettings }
@@ -3820,6 +3900,23 @@ export function prepareExecution(backend: IAnalyticalBackend, definition: IExecu
 export class ProtectedDataError extends AnalyticalBackendError {
     constructor(message: string, cause?: Error);
 }
+
+// @alpha
+export class PublisherContentNotSupportedError extends AnalyticalBackendError {
+    constructor(message: string, details: IPublisherContentNotSupportedDetails, cause?: Error);
+    // (undocumented)
+    readonly details: IPublisherContentNotSupportedDetails;
+}
+
+// @alpha
+export type PublisherDocumentListItemV2 = {
+    supported: true;
+    document: IPublisherDocumentV2;
+} | {
+    supported: false;
+    summary: IPublisherDocumentSummaryV2;
+    error: PublisherContentNotSupportedError;
+};
 
 // @beta
 export type QueryMethod = "GET" | "POST";

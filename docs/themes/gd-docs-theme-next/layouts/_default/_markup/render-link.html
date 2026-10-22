@@ -1,0 +1,14 @@
+{{- $destination := .Destination -}}
+{{- $isAbsolute := or (strings.HasPrefix $destination "http://") (strings.HasPrefix $destination "https://") (strings.HasPrefix $destination "mailto:") (strings.HasPrefix $destination "tel:") (strings.HasPrefix $destination "//") -}}
+{{- if and (strings.HasPrefix $destination "/") (not $isAbsolute) -}}
+  {{- $destination = relURL (strings.TrimPrefix "/" $destination) -}}
+{{- end -}}
+{{- $target := "" -}}
+{{- $rel := "" -}}
+{{- if $isAbsolute -}}
+  {{- $target = " target=\"_blank\"" -}}
+  {{- $rel = " rel=\"noopener noreferrer\"" -}}
+{{- end -}}
+<a href="{{ $destination | safeURL }}"{{ with .Title}} title="{{ . | safeHTML }}"{{ end }}{{ $target | safeHTMLAttr }}{{ $rel | safeHTMLAttr }}>{{ .Text | safeHTML }}</a>
+{{- /* The trim above swallows this file's trailing newline. Left in, it renders as a
+       space between a link and the punctuation that follows it: "see Filters ." */ -}}

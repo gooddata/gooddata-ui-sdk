@@ -1,0 +1,18 @@
+{{- /* "Page not found", in the site's chrome so search and the nav stay at hand. Netlify serves it for
+any unknown URL. The links come from params.404 (title + link relative to the docs home, e.g.
+"getting-started/") and are prefixed with params.homeSlug, so they open the docs home (gdc-ui: latest/)
+in every build. */ -}}
+{{ define "main" }}
+{{- $cfg := index site.Params "404" | default dict -}}
+<article class="px-0 py-2 lg:px-2">
+  <h1 class="text-3xl font-bold text-gd-secondary">{{ $cfg.title | default "Page not found" }}</h1>
+  <p class="mt-3 max-w-3xl text-gd-text-secondary">This page doesn't exist or has moved. Search the docs, or start from one of these pages:</p>
+  {{- with $cfg.links }}
+  <ul class="mt-6 space-y-2">
+    {{- range . }}
+    <li><a class="text-gd-link underline underline-offset-2" href="{{ printf "%s/%s" site.Params.homeSlug .link | relURL }}">{{ .title }}</a></li>
+    {{- end }}
+  </ul>
+  {{- end }}
+</article>
+{{ end }}

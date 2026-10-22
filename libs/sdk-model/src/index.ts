@@ -1993,6 +1993,9 @@ export {
 } from "./publisher/v2/document.js";
 
 export {
+    type PublisherEntityIdV2,
+    isPublisherEntityIdV2,
+    isReservedPublisherEntityIdV2,
     newPublisherIdV2,
     newPublisherPageIdV2,
     newPublisherSectionIdV2,
@@ -2013,6 +2016,7 @@ export { type IPublisherValidationIssueV2 } from "./publisher/v2/checks.js";
 export {
     validatePublisherPageBodyV2,
     validatePublisherDocumentContentV2,
+    validateLoadedPublisherEntityV2,
     validatePublisherEntityV2,
 } from "./publisher/v2/validation.js";
 

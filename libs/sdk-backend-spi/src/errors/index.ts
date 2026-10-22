@@ -2,6 +2,15 @@
 
 import { isEmpty } from "lodash-es";
 
+import {
+    type IPublisherDocumentDefinitionV2,
+    type IPublisherDocumentTemplateDefinitionV2,
+    type IPublisherPageTemplateDefinitionV2,
+    type IPublisherValidationIssueV2,
+    type ObjRef,
+    validatePublisherEntityV2,
+} from "@gooddata/sdk-model";
+
 import { type IDataView } from "../workspace/execution/index.js";
 
 /**
@@ -23,6 +32,7 @@ export const AnalyticalBackendErrorTypes = {
     PERMISSION_ESCALATION_REFUSED: "PE",
     TIMEOUT_ERROR: "TE",
     ABORT: "AB",
+    PUBLISHER_CONTENT_NOT_SUPPORTED: "PCNS",
 };
 
 /**
@@ -277,6 +287,40 @@ export class LimitReached extends AnalyticalBackendError {
 }
 
 /**
+ * What made a stored Publisher entity unreadable.
+ *
+ * @alpha
+ */
+export interface IPublisherContentNotSupportedDetails {
+    /**
+     * Absent for a new entity rejected before its first save.
+     */
+    ref?: ObjRef;
+    title?: string;
+    /**
+     * As stored, so an unknown version can be told apart from broken content.
+     */
+    version: string;
+    issues: IPublisherValidationIssueV2[];
+}
+
+/**
+ * This exception is thrown when a Publisher document, document template or page template fails the
+ * content validation, on load or before save, or has a version the frontend does not read.
+ *
+ * @alpha
+ */
+export class PublisherContentNotSupportedError extends AnalyticalBackendError {
+    public readonly details: IPublisherContentNotSupportedDetails;
+
+    constructor(message: string, details: IPublisherContentNotSupportedDetails, cause?: Error) {
+        super(message, AnalyticalBackendErrorTypes.PUBLISHER_CONTENT_NOT_SUPPORTED, cause);
+
+        this.details = details;
+    }
+}
+
+/**
  * This exception is thrown when a contract has expired, for example if a plan's trial period has ended
  *
  * @public
@@ -434,4 +478,62 @@ export function isPermissionEscalationRefused(obj: unknown): obj is PermissionEs
  */
 export function isAbortError(obj: unknown): obj is AbortError {
     return isAnalyticalBackendError(obj) && obj.abeType === AnalyticalBackendErrorTypes.ABORT;
+}
+
+/**
+ * Type guard checking whether input is an instance of {@link PublisherContentNotSupportedError}
+ *
+ * @alpha
+ */
+export function isPublisherContentNotSupportedError(obj: unknown): obj is PublisherContentNotSupportedError {
+    return (
+        isAnalyticalBackendError(obj) &&
+        obj.abeType === AnalyticalBackendErrorTypes.PUBLISHER_CONTENT_NOT_SUPPORTED
+    );
+}
+
+type PublisherEntityDefinitionV2 =
+    | IPublisherDocumentDefinitionV2
+    | IPublisherDocumentTemplateDefinitionV2
+    | IPublisherPageTemplateDefinitionV2;
+
+const publisherEntityKinds: Record<PublisherEntityDefinitionV2["type"], string> = {
+    document: "document",
+    documentTemplate: "document template",
+    pageTemplate: "page template",
+};
+
+// A loaded default page template carries isDefault; leaving it out makes the reserved-id rule reject saving one.
+function savedShape(entity: PublisherEntityDefinitionV2): PublisherEntityDefinitionV2 {
+    if (!("isDefault" in entity)) {
+        return entity;
+    }
+    const { isDefault: _isDefault, ...saved } = entity;
+    return saved;
+}
+
+/**
+ * Throws {@link PublisherContentNotSupportedError} when a Publisher document, document template or page
+ * template fails the content validation and must not be saved. A save under a `default.` id always fails.
+ *
+ * @alpha
+ */
+export function assertPublisherEntitySupportedV2(
+    entity:
+        | IPublisherDocumentDefinitionV2
+        | IPublisherDocumentTemplateDefinitionV2
+        | IPublisherPageTemplateDefinitionV2,
+): void {
+    const issues = validatePublisherEntityV2(savedShape(entity));
+    if (issues.length === 0) {
+        return;
+    }
+    const kind = publisherEntityKinds[entity.type];
+    const subject = entity.title ? `The ${kind} "${entity.title}"` : `The ${kind}`;
+    throw new PublisherContentNotSupportedError(`${subject} could not be saved: it fails the validation.`, {
+        ref: entity.ref,
+        title: entity.title,
+        version: entity.version,
+        issues,
+    });
 }

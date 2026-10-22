@@ -1,108 +1,43 @@
 ---
-title: "Home"
+title: "GoodData.UI"
 linkTitle: "Home"
+description: "A React SDK, Web Components, and REST API clients for building analytics into your application."
 weight: 10
+diataxis_type: reference
 sectionIndex: false
+section_overview: false
 cascade:
     - type: "docs"
-      toc_root: true
-      _target:
+      target:
           path: "/*/**"
 ---
 
----
+{{< home/actions primary="Start with the React quick start" primaryHref="./getting-started/quickstart/" secondary="Browse the visual components" secondaryHref="./visualisations/" >}}
 
-Start your GoodData.UI journey with hands-on experience:
+## Build with GoodData.UI
 
-{{< blocks/cards-container maxRow="2" aligned="true" >}}
-{{< blocks/card sectionLink="/learn/integrate_and_authenticate" description="Integrate GoodData into your application!" >}}
-{{< /blocks/card >}}
+{{< home/links >}}
+{{< home/link title="Integrate and authenticate" href="./integrations/" >}}Connect your application to GoodData Cloud or GoodData.CN.{{< /home/link >}}
+{{< home/link title="Visualize data" href="./visualisations/" >}}Render charts, tables, and headlines with React components.{{< /home/link >}}
+{{< home/link title="Embed dashboards" href="./integrations/embedding/embed-dashboards/" >}}Embed full interactive dashboards in your product.{{< /home/link >}}
+{{< home/link title="Apply theming" href="./integrations/embedding/apply-theming/" >}}Match the analytics to your product's look and feel.{{< /home/link >}}
+{{< home/link title="Manage analytics as code" href="./integrations/platform/analytics-as-code/" >}}Keep metrics, visualizations, and dashboards in Git, and connect them to your app.{{< /home/link >}}
+{{< /home/links >}}
 
-{{< blocks/card sectionLink="/learn/visualize_data" description="Visualize your data ">}}
-{{< /blocks/card >}}
+## Frameworks and clients
 
-{{< blocks/card sectionLink="/learn/embed_dashboards" description="Embed dashboards and visualizations in minutes!">}}
-{{< /blocks/card >}}
+{{< home/clients >}}
+{{< home/client title="React" href="./getting-started/quickstart/" >}}React components for every visualization, filter, and dashboard.{{< /home/client >}}
+{{< home/client title="Web Components" href="./integrations/web-components/" >}}Framework-agnostic embedding of visualizations and dashboards.{{< /home/client >}}
+{{< home/client title="Data layer" href="./data-layer/" >}}Run executions and load raw analytical data into a browser or Node.js application.{{< /home/client >}}
+{{< /home/clients >}}
 
-{{< blocks/card sectionLink="/learn/apply_theming" description="Personalize your experience with theming!">}}
-{{< /blocks/card >}}
+{{% home/note %}}
+Not on React? See the integration guides for [Angular](./integrations/framework-integrations/angular-integration/), [Next.js](./integrations/framework-integrations/nextjs-integration/), and [Vue.js](./integrations/framework-integrations/vue-integration/), or read the [SvelteKit walkthrough](https://www.gooddata.ai/blog/frontend-integration-series-sveltekit/).
+{{% /home/note %}}
 
-{{< /blocks/cards-container >}}
-
-## Supported Frameworks and APIs
-
-As a developer, make use of our development kits and API:
-
-{{< blocks/cards-container aligned="true">}}
-
-{{< blocks/card title="Web Components" icon="webcomponents-logo.svg" iconPosition="top" extLink="./learn/web_components/">}}
-Embed GoodData visualizations and dashboards into a web application in a framework agnostic way.
-{{< /blocks/card >}}
-
-{{< blocks/card icon="react-logo.svg" title="React" iconPosition="top" extLink="./quick_start/">}}
-Embed GoodData analytics into a React web application and customize how they are displayed.
-{{< /blocks/card >}}
-
-{{< blocks/card icon="javascript-logo.svg" title="REST API Clients" iconPosition="top" extLink="./learn/get_raw_data/">}}
-Load raw analytical data into your browser or NodeJS application using Custom Executions.
-{{< /blocks/card >}}
-
-{{< /blocks/cards-container >}}
-
-## Other Integrations
-
-The following frameworks are not natively supported, but you can still use them work with GoodData.UI to embed GoodData content into your web applications:
-
-<style>
-.image-link {
-    display: inline-block; /* Make each div behave like an inline block */
-    margin-right: 20px; /* Optional: Adds some space between each item */
-}
-
-/* Optional: Ensure images and links align vertically */
-.image-link img, .image-link a {
-    vertical-align: middle;
-}
-</style>
-
-<div class="image-link">
-    <img alt="angular_logo" src="../angular.png" width="60px" />
-    <a href="https://www.gooddata.ai/blog/frontend-integration-series-angular/" target="_blank">Angular</a>
-</div>
-<div class="image-link">
-    <img alt="nextjs_logo" src="../nextjs.png" width="60px" />
-    <a href="https://www.gooddata.ai/blog/frontend-integration-series-nextjs/" target="_blank">Next.js</a>
-</div>
-<div class="image-link">
-    <img alt="vuejs_logo" src="../vuejs.png" width="60px" />
-    <a href="https://www.gooddata.ai/blog/frontend-integration-series-vue-js/" target="_blank">Vue.js</a>
-</div>
-<div class="image-link">
-    <img alt="svelte_logo" src="../svelte.png" width="60px" />
-    <a href="https://www.gooddata.ai/blog/frontend-integration-series-sveltekit/" target="_blank">SvelteKit</a>
-</div>
-
-## Join & Learn
-
-Meet other GoodData developers, talk with us and learn:
-
-{{< blocks/cards-container aligned="true">}}
-{{< blocks/card title="Slack Channel" icon="icon-slack.svg" iconPosition="top" >}}
-Meet other GoodData developers. Search our knowledge base.
-
-[Join us on Slack](https://join.slack.com/t/gooddataconnect/shared_invite/zt-mkqhg6bm-omgjndejTlTyB3wgaVkkGQ)
-{{< /blocks/card >}}
-
-{{< blocks/card title="Community" icon="icon-community.svg" iconPosition="top" >}}
-Find answers, share ideas, be inspired and inspire others!
-
-[Check community](https://community.gooddata.com/)
-{{< /blocks/card >}}
-
-{{< blocks/card title="University" icon="icon-university.svg" iconPosition="top" >}}
-Learn how to use GoodData with our hands-on tutorials.
-
-[Do our courses](https://university.gooddata.com/)
-{{< /blocks/card >}}
-
-{{< /blocks/cards-container >}}
+{{< home/community title="Join & learn" >}}
+{{< home/community-link label="Slack" href="https://join.slack.com/t/gooddataconnect/shared_invite/zt-mkqhg6bm-omgjndejTlTyB3wgaVkkGQ" >}}
+{{< home/community-link label="Community" href="https://community.gooddata.com/" >}}
+{{< home/community-link label="University" href="https://university.gooddata.com/" >}}
+{{< /home/community >}}

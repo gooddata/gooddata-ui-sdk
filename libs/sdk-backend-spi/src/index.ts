@@ -104,6 +104,9 @@ export type { IWorkspaceExportTemplatesService } from "./workspace/exportTemplat
 export type {
     IPublisherDocumentExportPdfOptions,
     IWorkspacePublisherService,
+    IWorkspacePublisherServiceV2,
+    IPublisherDocumentSummaryV2,
+    PublisherDocumentListItemV2,
 } from "./workspace/publisher/index.js";
 
 export {
@@ -286,6 +289,10 @@ export {
     isContractExpired,
     AnalyticalBackendErrorTypes,
     isAbortError,
+    PublisherContentNotSupportedError,
+    type IPublisherContentNotSupportedDetails,
+    isPublisherContentNotSupportedError,
+    assertPublisherEntitySupportedV2,
 } from "./errors/index.js";
 
 export type { IPagedResource } from "./common/paging.js";

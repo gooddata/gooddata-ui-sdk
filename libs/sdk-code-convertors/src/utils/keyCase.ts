@@ -40,10 +40,13 @@ function mapKeys(value: unknown, rename: (key: string) => string): unknown {
  * @internal
  */
 export function snakeKeys<T>(value: T): SnakeKeys<T> {
-    // Sound only while the regex renames exactly as the SnakeCase type does.
-    return mapKeys(value, (key) =>
-        key.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`),
-    ) as SnakeKeys<T>;
+    // Sound only while snakeKey renames exactly as the SnakeCase type does.
+    return mapKeys(value, snakeKey) as SnakeKeys<T>;
+}
+
+/** @internal */
+export function snakeKey(key: string): string {
+    return key.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);
 }
 
 /**

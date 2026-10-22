@@ -1,0 +1,18 @@
+{{- /* Old URL -> permalink of the page that now answers it, for one version
+       folder (the argument is its dirpath). Aliases resolve the way Hugo and
+       index.redir resolve them: page-relative, against the directory the page is
+       written into, which for a section index is the section's parent.
+       Built once per build via partialCached. */ -}}
+{{- $dirpath := . -}}
+{{- $base := strings.TrimSuffix "/" (urls.Parse site.BaseURL).Path -}}
+{{- $map := dict -}}
+{{- range where site.Pages "Section" $dirpath -}}
+  {{- $dir := path.Dir (strings.TrimSuffix "/" (strings.TrimPrefix $base .RelPermalink)) -}}
+  {{- $target := .Permalink -}}
+  {{- range .Aliases -}}
+    {{- $from := . -}}
+    {{- if not (hasPrefix . "/") }}{{ $from = path.Join $dir . }}{{ end -}}
+    {{- $map = merge $map (dict (printf "%s/" (strings.TrimSuffix "/" $from)) $target) -}}
+  {{- end -}}
+{{- end -}}
+{{- return $map -}}

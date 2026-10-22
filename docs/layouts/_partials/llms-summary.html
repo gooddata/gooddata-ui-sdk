@@ -1,0 +1,20 @@
+{{- /* One line about a page for llms.txt: its description, or else the first paragraph of prose in
+its content before the first heading (an API reference package page has no description; its
+first paragraph is the package summary, and a package without one has only its symbol tables,
+which are not a summary). Links in it are reduced to their text: the line is a note, not
+navigation.
+
+Expects: the page. Returns the line, "" when the page has neither. */ -}}
+{{- $text := .Description -}}
+{{- if not $text -}}
+  {{- $raw := replace (replaceRE `(?s)<!--.*?-->` "" .RawContent) "\r\n" "\n" -}}
+  {{- $raw = replaceRE `(?s)(^|\n)#{1,6} .*` "" $raw -}}
+  {{- range split $raw "\n\n" -}}
+    {{- $p := trim . " \t\n" -}}
+    {{- if and $p (not $text) (not (findRE "^(#|<|\\{\\{|>|\\||!\\[|```|~~~|[-*+] |\\d+\\. )" $p)) -}}
+      {{- $text = $p -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $text = replaceRE `\[([^\]]*)\]\([^)]*\)` "$1" $text -}}
+{{- return trim (replaceRE `\s+` " " $text) " " -}}

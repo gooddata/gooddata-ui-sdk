@@ -8,32 +8,20 @@ import {
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
 import {
-    DefaultPublisherPageTemplates,
-    type IPublisherDocument,
-    type IPublisherDocumentDefinition,
-    type IPublisherDocumentTemplate,
-    type IPublisherDocumentTemplateDefinition,
-    type IPublisherPageTemplate,
-    type IPublisherPageTemplateDefinition,
+    DefaultPublisherPageTemplatesV1,
+    type IPublisherDocumentDefinitionV1,
+    type IPublisherDocumentTemplateDefinitionV1,
+    type IPublisherDocumentTemplateV1,
+    type IPublisherDocumentV1,
+    type IPublisherPageTemplateDefinitionV1,
+    type IPublisherPageTemplateV1,
     type ObjRef,
     areObjRefsEqual,
     idRef,
-    isIdentifierRef,
     objRefToString,
 } from "@gooddata/sdk-model";
 
-// Key ignores the identifier ref's optional object type (typed and untyped identifier
-// refs are equivalent under areObjRefsEqual) but keeps the ref kind, so an identifier
-// and a URI with the same string stay distinct.
-function refKey(ref: ObjRef): string {
-    return isIdentifierRef(ref) ? `id:${ref.identifier}` : `uri:${ref.uri}`;
-}
-
-// JSON round-trip detaches stored state from caller-held objects on both the
-// write and the read side, the way a real backend's serialization does.
-function deepClone<T>(value: T): T {
-    return JSON.parse(JSON.stringify(value)) as T;
-}
+import { deepClone, refKey } from "./inMemoryPublisherStore.js";
 
 /**
  * In-memory implementation of the publisher service.
@@ -45,9 +33,9 @@ function deepClone<T>(value: T): T {
  * @alpha
  */
 export class InMemoryWorkspacePublisherService implements IWorkspacePublisherService {
-    private readonly pageTemplates = new Map<string, IPublisherPageTemplate>();
-    private readonly templates = new Map<string, IPublisherDocumentTemplate>();
-    private readonly documents = new Map<string, IPublisherDocument>();
+    private readonly pageTemplates = new Map<string, IPublisherPageTemplateV1>();
+    private readonly templates = new Map<string, IPublisherDocumentTemplateV1>();
+    private readonly documents = new Map<string, IPublisherDocumentV1>();
     private sequence = 0;
 
     private newRef(
@@ -62,18 +50,18 @@ export class InMemoryWorkspacePublisherService implements IWorkspacePublisherSer
         return ref;
     }
 
-    private findDefaultPageTemplate(ref: ObjRef): IPublisherPageTemplate | undefined {
-        return DefaultPublisherPageTemplates.find((layout) => areObjRefsEqual(layout.ref, ref));
+    private findDefaultPageTemplate(ref: ObjRef): IPublisherPageTemplateV1 | undefined {
+        return DefaultPublisherPageTemplatesV1.find((layout) => areObjRefsEqual(layout.ref, ref));
     }
 
-    public getPageTemplates(): Promise<IPublisherPageTemplate[]> {
+    public getPageTemplates(): Promise<IPublisherPageTemplateV1[]> {
         return Promise.resolve([
-            ...DefaultPublisherPageTemplates,
+            ...DefaultPublisherPageTemplatesV1,
             ...deepClone([...this.pageTemplates.values()]),
         ]);
     }
 
-    public getPageTemplate(ref: ObjRef): Promise<IPublisherPageTemplate> {
+    public getPageTemplate(ref: ObjRef): Promise<IPublisherPageTemplateV1> {
         const defaultTemplate = this.findDefaultPageTemplate(ref);
         if (defaultTemplate) {
             return Promise.resolve(defaultTemplate);
@@ -85,13 +73,13 @@ export class InMemoryWorkspacePublisherService implements IWorkspacePublisherSer
         return Promise.resolve(deepClone(layout));
     }
 
-    public createPageTemplate(layout: IPublisherPageTemplateDefinition): Promise<IPublisherPageTemplate> {
+    public createPageTemplate(layout: IPublisherPageTemplateDefinitionV1): Promise<IPublisherPageTemplateV1> {
         if (layout.ref && this.findDefaultPageTemplate(layout.ref)) {
             throw new UnexpectedError(
                 `Default page template "${objRefToString(layout.ref)}" cannot be replaced.`,
             );
         }
-        const created: IPublisherPageTemplate = {
+        const created: IPublisherPageTemplateV1 = {
             ...deepClone(layout),
             ref: layout.ref ?? this.newRef("reportPageLayout", this.pageTemplates),
         };
@@ -99,9 +87,9 @@ export class InMemoryWorkspacePublisherService implements IWorkspacePublisherSer
         return Promise.resolve(deepClone(created));
     }
 
-    public updatePageTemplate(layout: IPublisherPageTemplate): Promise<IPublisherPageTemplate> {
+    public updatePageTemplate(layout: IPublisherPageTemplateV1): Promise<IPublisherPageTemplateV1> {
         this.assertPageTemplateEditable(layout.ref);
-        const updated: IPublisherPageTemplate = { ...deepClone(layout), isDefault: undefined };
+        const updated: IPublisherPageTemplateV1 = { ...deepClone(layout), isDefault: undefined };
         this.pageTemplates.set(refKey(layout.ref), updated);
         return Promise.resolve(deepClone(updated));
     }
@@ -119,11 +107,11 @@ export class InMemoryWorkspacePublisherService implements IWorkspacePublisherSer
         this.assertExistsAndUnlocked(this.pageTemplates, ref, "Page template");
     }
 
-    public getDocumentTemplates(): Promise<IPublisherDocumentTemplate[]> {
+    public getDocumentTemplates(): Promise<IPublisherDocumentTemplateV1[]> {
         return Promise.resolve(deepClone([...this.templates.values()]));
     }
 
-    public getDocumentTemplate(ref: ObjRef): Promise<IPublisherDocumentTemplate> {
+    public getDocumentTemplate(ref: ObjRef): Promise<IPublisherDocumentTemplateV1> {
         const template = this.templates.get(refKey(ref));
         if (!template) {
             throw new UnexpectedError(`Document template "${objRefToString(ref)}" does not exist.`);
@@ -132,9 +120,9 @@ export class InMemoryWorkspacePublisherService implements IWorkspacePublisherSer
     }
 
     public createDocumentTemplate(
-        template: IPublisherDocumentTemplateDefinition,
-    ): Promise<IPublisherDocumentTemplate> {
-        const created: IPublisherDocumentTemplate = {
+        template: IPublisherDocumentTemplateDefinitionV1,
+    ): Promise<IPublisherDocumentTemplateV1> {
+        const created: IPublisherDocumentTemplateV1 = {
             ...deepClone(template),
             ref: template.ref ?? this.newRef("reportTemplate", this.templates),
         };
@@ -142,7 +130,9 @@ export class InMemoryWorkspacePublisherService implements IWorkspacePublisherSer
         return Promise.resolve(deepClone(created));
     }
 
-    public updateDocumentTemplate(template: IPublisherDocumentTemplate): Promise<IPublisherDocumentTemplate> {
+    public updateDocumentTemplate(
+        template: IPublisherDocumentTemplateV1,
+    ): Promise<IPublisherDocumentTemplateV1> {
         this.assertExistsAndUnlocked(this.templates, template.ref, "Document template");
         const updated = deepClone(template);
         this.templates.set(refKey(template.ref), updated);
@@ -155,11 +145,15 @@ export class InMemoryWorkspacePublisherService implements IWorkspacePublisherSer
         return Promise.resolve();
     }
 
-    public getDocuments(): Promise<IPublisherDocument[]> {
+    public getDocuments(): Promise<IPublisherDocumentV1[]> {
         return Promise.resolve(deepClone([...this.documents.values()]));
     }
 
-    public getDocument(ref: ObjRef): Promise<IPublisherDocument> {
+    public hasDocuments(): Promise<boolean> {
+        return Promise.resolve(this.documents.size > 0);
+    }
+
+    public getDocument(ref: ObjRef): Promise<IPublisherDocumentV1> {
         const publisherDocument = this.documents.get(refKey(ref));
         if (!publisherDocument) {
             throw new UnexpectedError(`Document "${objRefToString(ref)}" does not exist.`);
@@ -167,8 +161,8 @@ export class InMemoryWorkspacePublisherService implements IWorkspacePublisherSer
         return Promise.resolve(deepClone(publisherDocument));
     }
 
-    public createDocument(publisherDocument: IPublisherDocumentDefinition): Promise<IPublisherDocument> {
-        const created: IPublisherDocument = {
+    public createDocument(publisherDocument: IPublisherDocumentDefinitionV1): Promise<IPublisherDocumentV1> {
+        const created: IPublisherDocumentV1 = {
             ...deepClone(publisherDocument),
             ref: publisherDocument.ref ?? this.newRef("report", this.documents),
         };
@@ -176,7 +170,7 @@ export class InMemoryWorkspacePublisherService implements IWorkspacePublisherSer
         return Promise.resolve(deepClone(created));
     }
 
-    public updateDocument(publisherDocument: IPublisherDocument): Promise<IPublisherDocument> {
+    public updateDocument(publisherDocument: IPublisherDocumentV1): Promise<IPublisherDocumentV1> {
         this.assertExistsAndUnlocked(this.documents, publisherDocument.ref, "Document");
         const updated = deepClone(publisherDocument);
         this.documents.set(refKey(publisherDocument.ref), updated);

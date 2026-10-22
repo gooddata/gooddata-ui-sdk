@@ -1,0 +1,343 @@
+/* (C) 2026 GoodData Corporation */
+
+/*
+ * The first header row of the GoodData Cloud docs (www.gooddata.ai/docs/cloud/): logo + "Learn",
+ * the cross-product links, and the "Request a demo" button.
+ *
+ * Ported, not linked. Cloud takes these rules from two stylesheets, and neither can load here whole:
+ *   - https://www.gooddata.ai/learn-assets/css/Header.css (marketing) also sets body, h1, h2, b,
+ *     strong and Docsy .td-* rules, which would restyle every docs page;
+ *   - gooddata-docs-theme assets/scss/header.scss (at bd04776, the pin gdc-cloud-docs builds with)
+ *     makes the row position: fixed, while here it sits in the sticky #site-chrome wrapper.
+ * So this file keeps only the first-row rules, values copied verbatim. Deliberate differences are
+ * marked "(local)". To resync, diff against those two sources, not against this file's history.
+ *
+ * (local) Colours are the theme's tokens (data/brand.json, var(--color-gd-*)), not Cloud's hex
+ * values, so the row matches the search row below it and flips with dark mode by itself. The only
+ * dark-mode rule left is the accent: the active link's underline is lime in dark, as on Cloud.
+ *
+ * The faces (Switzer Variable, Funnel Display SemiBold) are declared by
+ * www.gooddata.ai/css/search-dialog.css, which the search box (search.html) loads on every page. tests/header-css.test.mjs keeps every selector
+ * under .gd-.
+ */
+
+.gd-docs-header-nav__first {
+    position: relative; /* (local) Cloud: fixed */
+    z-index: 2; /* (local) the open mobile panel must cover the search row below */
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    /* header.scss says min-height: 64px, but Header.css loads after it and sets the height outright:
+       80px at every width, 100px from 1800px (below). */
+    height: 80px;
+    padding: 0 20px;
+    border-bottom: 1px solid var(--color-gd-border);
+    background-color: var(--color-gd-card);
+    --gd-header-accent: var(--color-gd-secondary);
+    font-family: "Switzer Variable", Helvetica, Arial, "Helvetica Neue", arial, sans-serif;
+}
+
+.gd-docs-header-nav__first .gd-docs-header-nav__left {
+    display: flex;
+    height: 100%;
+}
+
+.gd-docs-header-nav__first .gd-docs-header-nav__right {
+    display: none;
+    text-align: right;
+}
+
+@media (min-width: 1200px) {
+    .gd-docs-header-nav__first .gd-docs-header-nav__right {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+}
+
+@media (min-width: 1800px) {
+    .gd-docs-header-nav__first {
+        height: 100px;
+    }
+
+    .gd-docs-header-nav__first .gd-docs-header-nav__left,
+    .gd-docs-header-nav__first .gd-docs-header-nav__right {
+        min-width: 380px;
+    }
+}
+
+/* Logo + "Learn" */
+
+.gd-docs-header-nav__logo,
+.gd-header-nav__logo-glyph {
+    height: 100%; /* (local) Cloud: the inline svg; here the glyph span, see below */
+}
+
+.gd-header-nav__logo {
+    display: flex; /* (local) no inline-box gap under the svg */
+    align-self: center;
+}
+
+/* (local) Cloud inlines the logo svg. Here it is a published file (topbar.html) painted through a
+   mask with the text token: the same box (182px wide, the row's height, logo centred), ~9 KB less
+   per page, and dark mode needs no rule. A mask keeps only the shapes, so the logo must stay one
+   colour; tests/header-css.test.mjs checks that. */
+.gd-header-nav__logo-glyph {
+    display: block;
+    width: 182px;
+    background-color: var(--color-gd-text);
+    -webkit-mask: var(--gd-logo) center / contain no-repeat;
+    mask: var(--gd-logo) center / contain no-repeat;
+}
+
+.gd-header-nav__logo-text {
+    display: none;
+    align-self: center;
+    margin-left: 16px;
+    padding: 0 16px;
+    border-left: 2px solid var(--color-gd-border);
+    color: var(--color-gd-secondary);
+    font-family: "Funnel Display SemiBold", Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.25;
+}
+
+/* Links */
+
+.gd-header {
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: flex-end;
+    align-items: center;
+    font-family: "Switzer Variable", Helvetica, Arial, "Helvetica Neue", arial, sans-serif;
+}
+
+.gd-header-links {
+    position: absolute; /* (local) Cloud: fixed; top: 79px; bottom: 0 */
+    top: 100%;
+    right: 0;
+    left: 0;
+    z-index: 100;
+    display: none;
+    height: calc(100dvh - 100%); /* (local) fills the viewport below the row, like Cloud's bottom: 0 */
+    max-width: 100%;
+    margin: 0;
+    padding: 30px 20px 0;
+    flex-direction: column;
+    overflow-y: auto;
+    list-style-type: none;
+    background-color: var(--color-gd-card);
+}
+
+.gd-header-links.is-open {
+    display: flex; /* (local) Cloud: .gd-header-mobile-menu-trigger-input:checked ~ .gd-header-links */
+}
+
+.gd-header-link-item {
+    padding: 0;
+    border-top: 1px solid var(--color-gd-border);
+}
+
+.gd-header-link-item:first-child {
+    border-top: none;
+}
+
+.gd-header a.gd-header-link {
+    display: block;
+    padding: 8px 0;
+    color: var(--color-gd-text);
+    font-family: "Switzer Variable", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 48px;
+    text-align: left;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: border-color 0.15s;
+}
+
+.gd-header a.gd-header-link:hover,
+.gd-header a.gd-header-link:focus,
+.gd-header a.gd-header-link:active {
+    color: var(--color-gd-secondary);
+    text-decoration: none;
+    border-bottom-color: var(--color-gd-secondary);
+}
+
+.gd-header a.gd-header-link__main {
+    font-size: 24px;
+}
+
+/* Hamburger (below lg) */
+
+.gd-header-mobile-menu-trigger {
+    position: relative;
+    display: block;
+    width: 44px; /* (local) Cloud: 40px; 44px is the theme's touch-target floor */
+    height: 44px;
+    margin-right: -10px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font-size: 0;
+    cursor: pointer;
+}
+
+.gd-header-mobile-menu-trigger::before,
+.gd-header-mobile-menu-trigger::after {
+    content: "";
+    display: block;
+}
+
+.gd-header-mobile-menu-trigger::before,
+.gd-header-mobile-menu-trigger::after,
+.gd-header-mobile-menu-trigger span {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    left: 10px;
+    height: 0;
+    border-top: 2px solid var(--color-gd-secondary);
+    transition: all 0.5s;
+}
+
+.gd-header-mobile-menu-trigger::before {
+    margin-top: -7px;
+}
+
+.gd-header-mobile-menu-trigger::after {
+    margin-top: 5px;
+}
+
+.gd-header-mobile-menu-trigger span {
+    margin-top: -1px;
+    opacity: 1;
+}
+
+.gd-header-mobile-menu-trigger[aria-expanded="true"]::before,
+.gd-header-mobile-menu-trigger[aria-expanded="true"]::after {
+    margin-top: -1px;
+}
+
+.gd-header-mobile-menu-trigger[aria-expanded="true"]::before {
+    transform: rotate(45deg);
+}
+
+.gd-header-mobile-menu-trigger[aria-expanded="true"]::after {
+    transform: rotate(-45deg);
+}
+
+.gd-header-mobile-menu-trigger[aria-expanded="true"] span {
+    opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gd-header-mobile-menu-trigger::before,
+    .gd-header-mobile-menu-trigger::after,
+    .gd-header-mobile-menu-trigger span {
+        transition: none; /* (local) */
+    }
+}
+
+/* Desktop (lg). (local) Cloud switches at 1025px. */
+
+@media (min-width: 1024px) {
+    .gd-header-nav__logo-text {
+        display: block;
+    }
+
+    .gd-header {
+        justify-content: center;
+    }
+
+    .gd-header-mobile {
+        display: none;
+    }
+
+    .gd-header-links {
+        position: static;
+        display: flex;
+        flex-direction: row;
+        width: auto;
+        height: auto;
+        max-width: none;
+        padding: 0;
+        overflow: visible;
+        background-color: transparent;
+    }
+
+    .gd-header-link-item {
+        border-top: none;
+    }
+
+    .gd-header-link-item:nth-child(2) {
+        padding-left: 5px;
+    }
+
+    .gd-header-link-item:nth-child(5) {
+        padding-right: 5px;
+    }
+
+    .gd-header-link-item-mobile-only {
+        display: none;
+    }
+
+    .gd-header a.gd-header-link {
+        padding: 20px 15px 16px;
+        border-bottom: 3px solid transparent;
+        line-height: 40px;
+        text-align: center;
+    }
+
+    /* After the hover rule on purpose: the active item keeps its accent underline on hover, as on Cloud. */
+    .gd-header a.gd-header-link__active,
+    .gd-header a.gd-header-link__active:hover,
+    .gd-header a.gd-header-link__active:focus {
+        border-bottom-color: var(--gd-header-accent);
+    }
+
+    .gd-header a.gd-header-link__main {
+        display: none;
+    }
+}
+
+@media (min-width: 1800px) {
+    .gd-header a.gd-header-link {
+        line-height: 60px;
+    }
+}
+
+/* "Request a demo" (gd-docs-header-nav__cta + __secondary merged; only the secondary variant is used) */
+
+.gd-docs-header-nav__cta {
+    display: flex;
+    align-items: center;
+    height: 2.5rem;
+    padding: 0.56rem 1.25rem;
+    border: 1px solid var(--color-gd-border); /* (local) the footer's and search row's button look */
+    border-radius: 8px;
+    color: var(--color-gd-text);
+    background-color: transparent;
+    font-family: var(--font-body); /* (local) the theme's button text, as on the search row's controls. Cloud: Switzer Semibold 18px */
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: 0.15s ease-in-out;
+}
+
+.gd-docs-header-nav__cta:hover,
+.gd-docs-header-nav__cta:focus,
+.gd-docs-header-nav__cta:active {
+    color: var(--color-gd-secondary);
+    border-color: var(--color-gd-secondary);
+    text-decoration: none;
+}
+
+/* Dark: the only colour that isn't a token. head.html and theme-toggle.js set .dark on <html>. */
+
+.dark .gd-docs-header-nav__first {
+    --gd-header-accent: var(--color-gd-primary);
+}

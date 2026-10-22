@@ -46,11 +46,26 @@ export interface IAutomationDialogCallbacks {
 }
 
 /**
+ * Builds the URL of a dashboard link in the automation management dialogs. Return `undefined` for no link.
+ *
+ * @beta
+ */
+export type AutomationDashboardUrlBuilder = (params: {
+    workspaceId: string;
+    dashboardId: string;
+    tabId?: string;
+}) => string | undefined;
+
+/**
  * Callbacks shared by the alerting and scheduled email management dialogs.
  *
  * @beta
  */
 export interface IAutomationManagementDialogCallbacks {
+    /**
+     * Overrides the URL of the dashboard links. Defaults to the GoodData dashboard application.
+     */
+    dashboardUrlBuilder?: AutomationDashboardUrlBuilder;
     /**
      * Called when the user asks to create a new automation from the management dialog.
      */

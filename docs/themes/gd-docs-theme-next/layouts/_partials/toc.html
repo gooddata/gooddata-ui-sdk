@@ -1,0 +1,20 @@
+{{/* toc-html.html: the content headings, plus an API symbol's member sections. Cached per page:
+     toc-mobile.html prints the same list. This copy keeps Hugo's <nav id="TableOfContents">;
+     data-toc marks it for toc-scrollspy.js. */}}
+{{ with partialCached "toc-html.html" . .RelPermalink }}
+  {{ if ne (. | plainify | strings.TrimSpace) "" }}
+    {{/* Sticks 2.5rem under the sticky #site-chrome — where it starts (the page wrapper's py-10), so
+         it holds still on scroll like the sidebar. pt-0.5 (not py-2) centres the "On this page"
+         label on the line shared by the breadcrumb and the sidebar's first link.
+         Its height comes from --gd-chrome-h (measured by
+         sidebar.js: 149px, 169px from 1800px where the first row grows); 9.5rem is the fallback
+         before it is measured. A fixed top-32 (128px) sat under the chrome once the first header
+         row arrived, so the TOC's top slid behind the header on scroll. */}}
+    <div data-toc class="sticky top-[calc(var(--gd-chrome-h,9.5rem)_+_2.5rem)] hidden max-h-[calc(100vh_-_var(--gd-chrome-h,9.5rem)_-_3.5rem)] overflow-y-auto pt-0.5 pb-2 xl:block">
+      <div class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-gd-text-secondary">On this page</div>
+      <div class="text-sm text-gd-text-secondary [&_a]:block [&_a]:rounded-lg [&_a]:px-2 [&_a]:py-1 [&_a]:hover:bg-gd-surface [&_a]:hover:text-gd-secondary [&_a]:hover:no-underline [&_a]:focus-visible:outline-none [&_a]:focus-visible:ring-2 [&_a]:focus-visible:ring-gd-secondary dark:[&_a]:focus-visible:ring-gd-contrast [&_ul]:ml-3 [&_ul]:space-y-1">
+        {{ . | safeHTML }}
+      </div>
+    </div>
+  {{ end }}
+{{ end }}

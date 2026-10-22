@@ -1,0 +1,13 @@
+{{/* gd-docs-theme-next: Tailwind card, with the gooddata-docs-theme blocks/card params:
+     title (or header), link (or url), icon, eyebrow; the body is the inner Markdown.
+     The card is emitted on a SINGLE LINE whose outer element is a <div> (a CommonMark
+     type-6 HTML tag): goldmark then renders it raw. A leading <a> would be treated as
+     inline text and escaped, and any newline inside lets a blank line break the block —
+     hence one line, div-first. When a link is set, a stretched overlay <a> makes the
+     whole card clickable. `eyebrow` is a short uppercase label above the title
+     ("New project"), used by section landings to name the reader the card is for. */}}
+{{- $title := or (.Get "title") (.Get "header") -}}
+{{- $href := or (.Get "link") (.Get "url") (.Get "extLink") -}}
+{{- $icon := .Get "icon" -}}
+{{- $eyebrow := .Get "eyebrow" -}}
+<div class="group relative flex h-full flex-col rounded-xl border border-gd-border bg-gd-card p-5 transition hover:border-gd-secondary hover:shadow-sm">{{ with $href }}<a href="{{ . }}" class="absolute inset-0 rounded-xl no-underline"{{ with $title }} aria-label="{{ . }}"{{ end }}></a>{{ end }}{{ with $icon }}<img src="{{ (printf "/%s" .) | relURL }}" alt="" aria-hidden="true" loading="lazy" decoding="async" class="mb-3 h-10 w-10 object-contain dark:invert">{{ end }}{{ with $eyebrow }}<div class="mb-2 text-xs font-semibold uppercase tracking-[0.15em] text-gd-text-secondary">{{ . }}</div>{{ end }}{{ with $title }}<h3 class="mt-0 mb-2 font-heading text-base font-semibold text-gd-secondary">{{ . }}</h3>{{ end }}<div class="prose prose-sm max-w-none text-gd-text-secondary">{{ .Inner | .Page.RenderString }}</div></div>

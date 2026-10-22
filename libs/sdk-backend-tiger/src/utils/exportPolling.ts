@@ -4,6 +4,7 @@ import { type AxiosError, type AxiosPromise, type AxiosRequestConfig } from "axi
 
 import { type ITigerClientBase } from "@gooddata/api-client-tiger";
 import {
+    ExportApi_GetDocumentExport,
     ExportApi_GetExportedFile,
     ExportApi_GetImageExport,
     ExportApi_GetRawExport,
@@ -43,6 +44,8 @@ const EXPORT_GETTERS: Record<
     string,
     (client: ITigerClientBase, payload: IPayloadBase, options?: AxiosRequestConfig) => AxiosPromise<File>
 > = {
+    getDocumentExport: (client, payload, options) =>
+        ExportApi_GetDocumentExport(client.axios, client.basePath, payload, options),
     getExportedFile: (client, payload, options) =>
         ExportApi_GetExportedFile(client.axios, client.basePath, payload, options),
     getImageExport: (client, payload, options) =>

@@ -15,6 +15,7 @@ export function DefaultAlertingManagementDialogNew({
     onEdit,
     onAdd,
     onClose,
+    dashboardUrlBuilder,
 }: IAlertingManagementDialogProps) {
     const handleAlertEdit = useCallback(
         (alert: IAutomationMetadataObject) => {
@@ -24,6 +25,11 @@ export function DefaultAlertingManagementDialogNew({
     );
 
     return (
-        <DefaultAlertingManagementDialogContent onAdd={onAdd} onClose={onClose} onEdit={handleAlertEdit} />
+        <DefaultAlertingManagementDialogContent
+            onAdd={onAdd}
+            onClose={onClose}
+            onEdit={handleAlertEdit}
+            dashboardUrlBuilder={dashboardUrlBuilder}
+        />
     );
 }

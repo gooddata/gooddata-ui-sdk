@@ -2504,6 +2504,7 @@ export type {
     IAutomationDialogRecipientsProps,
 } from "./presentation/automations/shared/slots/types.js";
 export type {
+    AutomationDashboardUrlBuilder,
     IAutomationDialogCallbacks,
     IAutomationManagementDialogCallbacks,
 } from "./presentation/automations/shared/types.js";

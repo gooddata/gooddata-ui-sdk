@@ -491,6 +491,13 @@ export type AttributeValue = {
 };
 
 // @beta
+export type AutomationDashboardUrlBuilder = (params: {
+    workspaceId: string;
+    dashboardId: string;
+    tabId?: string;
+}) => string | undefined;
+
+// @beta
 export function AutomationDialogFormField(input: IAutomationDialogFormFieldProps): ReactElement;
 
 // @alpha (undocumented)
@@ -3013,6 +3020,7 @@ export interface IAutomationFiltersTab {
 
 // @beta
 export interface IAutomationManagementDialogCallbacks {
+    dashboardUrlBuilder?: AutomationDashboardUrlBuilder;
     onAdd?: () => void;
     onClose?: () => void;
     onEdit?: (automation: IAutomationMetadataObject) => void;

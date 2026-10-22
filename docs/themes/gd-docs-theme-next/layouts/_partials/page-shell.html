@@ -1,0 +1,117 @@
+{{- /*
+  Shared single-page body for all diataxis singles.
+  Branches on diataxis_type to reproduce each type's existing body verbatim
+  (visual parity is the binding acceptance bar). Default = generic single body.
+  Future plans (breadcrumb, prev/next) extend from here.
+*/ -}}
+{{- $type := .Params.diataxis_type -}}
+{{- if eq $type "tutorial" -}}
+  <article class="px-0 py-2 lg:px-2">
+    {{ partial "api-reference-panel.html" . }}
+    <h1 class="text-3xl font-bold text-gd-secondary">{{ .Title }}</h1>
+    {{ with .Params.description }}
+      <p class="mt-3 max-w-3xl text-gd-text-secondary">{{ . }}</p>
+    {{ end }}
+
+    <div class="{{ partial "prose-class.html" . }} [&>h2]:mt-12 [&>h2]:flex [&>h2]:items-center [&>h2]:gap-4 [&>h2]:text-2xl [&>h2]:before:flex [&>h2]:before:h-10 [&>h2]:before:w-10 [&>h2]:before:items-center [&>h2]:before:justify-center [&>h2]:before:rounded-full [&>h2]:before:text-sm [&>h2]:before:font-semibold tutorial-steps [&>h2]:before:content-[counter(step)]" style="counter-reset: step">
+      {{ partial "guide-body.html" . | safeHTML }}
+    </div>
+
+    {{ partial "related.html" . }}
+  </article>
+{{- else if eq $type "howto" -}}
+  <article class="px-0 py-2 lg:px-2">
+    {{ partial "api-reference-panel.html" . }}
+    <h1 class="text-3xl font-bold text-gd-secondary">{{ .Title }}</h1>
+
+    <div class="{{ partial "prose-class.html" . }}">
+      {{ partial "guide-body.html" . | safeHTML }}
+    </div>
+
+    {{ partial "related.html" . }}
+  </article>
+{{- else if eq $type "explanation" -}}
+  <article class="px-0 py-2 lg:px-2">
+    {{ partial "api-reference-panel.html" . }}
+    <h1 class="max-w-4xl text-3xl font-bold text-gd-secondary">{{ .Title }}</h1>
+    {{ with .Params.description }}
+      <p class="mt-3 max-w-3xl text-gd-text-secondary">{{ . }}</p>
+    {{ end }}
+
+    <div class="{{ partial "prose-class.html" . }} [&>blockquote]:rounded-r-3xl [&>blockquote]:border-l-(--color-diataxis-explanation) [&>blockquote]:bg-[color-mix(in_srgb,var(--color-diataxis-explanation)_8%,var(--color-gd-bg))] dark:[&>blockquote]:bg-[color-mix(in_srgb,var(--color-diataxis-explanation)_12%,var(--color-gd-surface))] [&>img]:w-full">
+      {{ partial "guide-body.html" . | safeHTML }}
+    </div>
+
+    {{ partial "related.html" . }}
+  </article>
+{{- else if eq $type "reference" -}}
+  <article class="px-0 py-2 lg:px-2">
+    {{ partial "api-reference-panel.html" . }}
+    {{ if or .Params.kind .Params.stability .Params.deprecated .Params.usage_pages .Params.source_path }}
+    <div data-pill-row class="mb-5 flex flex-wrap items-center gap-2">
+      {{ with .Params.kind }}
+        <span class="inline-flex items-center rounded-full border border-gd-border bg-gd-surface px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-gd-text-secondary">{{ . }}</span>
+      {{ end }}
+      {{/* @beta / @alpha API: published, may still change. The generator sets stability from
+           api-documenter's beta notice and from the api model's releaseTag (alpha). */}}
+      {{ if eq .Params.stability "beta" }}
+        <span title="Beta: this API may change in a future release" class="inline-flex items-center rounded-full border border-[color-mix(in_srgb,var(--color-gd-warning)_40%,var(--color-gd-bg))] bg-[color-mix(in_srgb,var(--color-gd-warning)_8%,var(--color-gd-bg))] px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-gd-warning">Beta</span>
+      {{ else if eq .Params.stability "alpha" }}
+        <span title="Alpha: this API is highly likely to change in any release" class="inline-flex items-center rounded-full border border-[color-mix(in_srgb,var(--color-gd-warning)_40%,var(--color-gd-bg))] bg-[color-mix(in_srgb,var(--color-gd-warning)_8%,var(--color-gd-bg))] px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-gd-warning">Alpha</span>
+      {{ end }}
+      {{ if .Params.deprecated }}
+        <span class="inline-flex items-center rounded-full border border-[color-mix(in_srgb,var(--color-gd-danger)_40%,var(--color-gd-bg))] bg-[color-mix(in_srgb,var(--color-gd-danger)_8%,var(--color-gd-bg))] px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-gd-danger">Deprecated</span>
+      {{ end }}
+      {{ range .Params.usage_pages }}
+        {{ with site.GetPage .path }}
+          <a data-pill href="{{ .RelPermalink }}" class="inline-flex items-center gap-1 rounded-full border border-gd-border px-2.5 py-0.5 text-xs font-medium text-gd-link transition hover:border-gd-secondary hover:text-gd-secondary hover:no-underline focus-visible:ring-2 focus-visible:ring-gd-secondary focus-visible:outline-none">
+            <span class="text-gd-text-secondary">Guide:</span> {{ .Title }}
+          </a>
+        {{ end }}
+      {{ end }}
+      {{ if gt (len (.Params.usage_pages | default slice)) 3 }}<button type="button" data-pill-toggle hidden aria-expanded="false" class="inline-flex items-center rounded-full border border-dashed border-gd-border px-2.5 py-0.5 text-xs font-medium text-gd-text-secondary transition hover:border-gd-secondary hover:text-gd-secondary focus-visible:ring-2 focus-visible:ring-gd-secondary focus-visible:outline-none dark:hover:border-gd-primary dark:hover:text-gd-primary">Show all</button>{{ end }}
+      {{ if and .Params.source_path site.Params.repoURL }}
+        <a href="{{ site.Params.repoURL }}/blob/{{ (partialCached "api-data.html" . .Section).source }}/{{ .Params.source_path }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 rounded-full border border-gd-border px-2.5 py-0.5 text-xs font-medium text-gd-link transition hover:border-gd-secondary hover:text-gd-secondary hover:no-underline focus-visible:ring-2 focus-visible:ring-gd-secondary focus-visible:outline-none">
+          <span class="text-gd-text-secondary">Source:</span> {{ path.Base .Params.source_path }} ↗
+        </a>
+      {{ end }}
+    </div>
+    {{ end }}
+    <h1 class="text-3xl font-bold text-gd-secondary">{{ .Title }}</h1>
+    {{ with .Params.description }}
+      <p class="mt-3 max-w-3xl text-gd-text-secondary">{{ . }}</p>
+    {{ end }}
+
+    {{/* $generated marks the api-documenter output, whose own h1 duplicates the
+         page title below. Its h3 sections render as plain headings, same as a
+         hand-written reference page. Only the generated pages get the compact
+         14px body (prose-sm, xs code): they are dense symbol listings. A
+         hand-written reference page reads at the same 16px as every other guide. */}}
+    {{- $generated := eq .Params.source "api-documenter" -}}
+    <div class="{{ partial "prose-class.html" . }} {{ if $generated }}prose-sm [&_code]:text-xs{{ end }} leading-relaxed [&>h2]:border-b [&>h2]:border-gd-border [&>h2]:pb-2 [&>h3]:mt-8">
+      {{/* Generated api-documenter pages already carry their own reference
+           links; only hand-authored reference pages go through the linker. */}}
+      {{ if $generated }}
+        {{/* The symbol's content, then its members' (properties, methods): one page per symbol. */}}
+        {{ partial "api-member-sections.html" . | safeHTML }}
+      {{ else }}
+        {{ partial "guide-body.html" . | safeHTML }}
+      {{ end }}
+    </div>
+
+    {{ partial "related.html" . }}
+  </article>
+{{- else -}}
+  <article class="px-0 py-2 lg:px-2">
+    {{ partial "api-reference-panel.html" . }}
+    <h1 class="text-3xl font-bold text-gd-secondary">{{ .Title }}</h1>
+    {{ with .Params.description }}
+      <p class="mt-3 max-w-3xl text-gd-text-secondary">{{ . }}</p>
+    {{ end }}
+    <div class="{{ partial "prose-class.html" . }}">
+      {{ partial "guide-body.html" . | safeHTML }}
+    </div>
+    {{ partial "api-reference-panel.html" . }}
+    {{ partial "related.html" . }}
+  </article>
+{{- end -}}

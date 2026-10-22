@@ -26,6 +26,7 @@ import { AUTOMATIONS_COLUMN_CONFIG, AUTOMATIONS_MAX_HEIGHT } from "../../../cons
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../constants/zIndex.js";
 import { useAlertingManagementDialogContext } from "../../contexts/AlertingManagementDialogContext.js";
 import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
+import { type AutomationDashboardUrlBuilder } from "../../shared/types.js";
 import { computeUseHostRoute } from "../../shared/utils/automationUtils.js";
 import { ALERTING_DIALOG_ID } from "../DefaultAlertingDialog/constants.js";
 import { useAlertingDialogAccessibility } from "../hooks/useAlertingDialogAccessibility.js";
@@ -38,6 +39,7 @@ interface IDefaultAlertingManagementDialogContentProps {
     onAdd?: () => void;
     onClose?: () => void;
     onEdit: (alert: IAutomationMetadataObject) => void;
+    dashboardUrlBuilder?: AutomationDashboardUrlBuilder;
 }
 
 /**
@@ -47,6 +49,7 @@ export function DefaultAlertingManagementDialogContent({
     onAdd,
     onClose,
     onEdit,
+    dashboardUrlBuilder: customDashboardUrlBuilder,
 }: IDefaultAlertingManagementDialogContentProps) {
     const intl = useIntl();
     const workspace = useWorkspace();
@@ -93,15 +96,19 @@ export function DefaultAlertingManagementDialogContent({
 
     const dashboardUrlBuilder: IDashboardUrlBuilder = useCallback(
         ({ workspaceId, dashboardId, tabId }) =>
-            buildDashboardUrl({
-                workspaceId,
-                dashboardId,
-                tabId,
-                isEmbedded,
-                useHostRoute,
-                queryParams: externalRecipientOverride ? { recipient: externalRecipientOverride } : undefined,
-            }),
-        [isEmbedded, useHostRoute, externalRecipientOverride],
+            customDashboardUrlBuilder && workspaceId && dashboardId
+                ? customDashboardUrlBuilder({ workspaceId, dashboardId, tabId })
+                : buildDashboardUrl({
+                      workspaceId,
+                      dashboardId,
+                      tabId,
+                      isEmbedded,
+                      useHostRoute,
+                      queryParams: externalRecipientOverride
+                          ? { recipient: externalRecipientOverride }
+                          : undefined,
+                  }),
+        [customDashboardUrlBuilder, isEmbedded, useHostRoute, externalRecipientOverride],
     );
 
     const titleElementId = useId();

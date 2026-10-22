@@ -1,0 +1,21 @@
+{{- /* figure: an image with an optional caption. `alt` is required (STYLE_GUIDE.md "Images"):
+without it the caption stands in as the alt text, or alt="" as a last resort, and the build
+warns (warning id figure-no-alt; silence it with ignoreLogs if an old version floods the log).
+The alt is attribute-escaped by the template, so quotes, & and < in it are safe in the HTML. A
+double quote inside a "…" shortcode argument still ends the argument: write such alt text in
+backticks (alt=`The "Sales" bar chart`). */ -}}
+{{- $src := .Get "src" -}}
+{{- if and $src (not (urls.Parse $src).Scheme) -}}
+  {{- $src = strings.TrimPrefix "/" $src | relURL -}}
+{{- end -}}
+{{- $alt := .Get "alt" -}}
+{{- if not $alt -}}
+  {{- warnidf "figure-no-alt" "figure %q has no alt text: add alt=\"…\" (%s)" (.Get "src") .Position -}}
+  {{- with .Get "caption" }}{{ $alt = . | markdownify | plainify }}{{ end -}}
+{{- end -}}
+<figure{{ with .Get "class" }} class="{{ . }}"{{ end }}>
+  <img src="{{ $src | safeURL }}" alt="{{ $alt }}"{{ with .Get "width" }} width="{{ . }}"{{ end }}{{ with .Get "height" }} height="{{ . }}"{{ end }} loading="lazy">
+  {{- with .Get "caption" -}}
+    <figcaption>{{ . | markdownify }}</figcaption>
+  {{- end -}}
+</figure>

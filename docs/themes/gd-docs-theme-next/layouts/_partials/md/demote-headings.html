@@ -1,0 +1,28 @@
+{{- /* Moves every heading of a Markdown string one level down (`## Remarks` -> `### Remarks`), for
+a member's content placed under its own `##` heading in its parent symbol's Markdown version.
+Lines inside code fences are content, not headings, and stay as written.
+
+Expects: the Markdown string. Returns it with the headings demoted. */ -}}
+{{- $inFence := false -}}
+{{- $closer := "" -}}
+{{- $lines := slice -}}
+{{- range split . "\n" -}}
+  {{- $line := . -}}
+  {{- with findRESubmatch "^[ \t]*(`{3,}|~{3,})(.*)$" $line 1 -}}
+    {{- $marker := index (index . 0) 1 -}}
+    {{- if $inFence -}}
+      {{- if and (eq (substr $marker 0 1) (substr $closer 0 1)) (ge (len $marker) (len $closer)) (eq (trim (index (index . 0) 2) " \t\r") "") -}}
+        {{- $inFence = false -}}
+      {{- end -}}
+    {{- else -}}
+      {{- $inFence = true -}}
+      {{- $closer = $marker -}}
+    {{- end -}}
+  {{- else -}}
+    {{- if and (not $inFence) (findRE `^#{1,5} ` $line) -}}
+      {{- $line = printf "#%s" $line -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $lines = $lines | append $line -}}
+{{- end -}}
+{{- return delimit $lines "\n" -}}

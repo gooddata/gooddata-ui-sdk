@@ -1,0 +1,23 @@
+{{- /* api-documenter's HTML tables as Markdown tables, for the Markdown version of a page.
+
+api-documenter writes every table (a package's symbols, an interface's properties, a function's
+parameters) as HTML, `<table><thead><tr><th>`, with Markdown inside the cells. Only that exact
+shape is converted: hand-written HTML in a guide (or a `<table>` in a JSX example) is left as
+written. Each cell's whitespace collapses to one line, because a Markdown table row is one line;
+a pipe in a cell, including the `&#124;` the generator writes for union types, is escaped.
+
+Expects: the Markdown string. Returns it with the tables converted. */ -}}
+{{- $out := . -}}
+{{- range findRE `(?s)<table><thead><tr><th>.*?</tbody></table>` $out -}}
+  {{- $table := . -}}
+  {{- $head := slice -}}
+  {{- range findRESubmatch `(?s)<th>(.*?)</th>` $table -}}
+    {{- $head = $head | append (index . 1) -}}
+  {{- end -}}
+  {{- $lines := slice (partial "md/table-row.html" $head) (printf "|%s" (strings.Repeat (len $head) " --- |")) -}}
+  {{- range findRESubmatch `(?s)<tr><td>(.*?)</td></tr>` $table -}}
+    {{- $lines = $lines | append (partial "md/table-row.html" (split (index . 1) "</td><td>")) -}}
+  {{- end -}}
+  {{- $out = replace $out $table (delimit $lines "\n") -}}
+{{- end -}}
+{{- return $out -}}

@@ -1,0 +1,5 @@
+{{- /* One client in a home/clients list. Params: title, href; the inner text describes it. */ -}}
+<div class="flex flex-col gap-1 sm:flex-row sm:gap-6">
+    <dt class="w-40 shrink-0 font-heading font-semibold text-gd-secondary"><a href="{{ .Get "href" }}">{{ .Get "title" }}</a></dt>
+    <dd class="text-sm text-gd-text-secondary">{{ trim .Inner " \r\n" }}</dd>
+</div>

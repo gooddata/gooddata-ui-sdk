@@ -1,0 +1,10 @@
+{{- /* The URL a link to an API reference page should use: the page's own, or for a folded member,
+its section on the parent symbol's page (api-member-anchor.html), since it has no page of its own.
+
+Expects: the page. Returns a RelPermalink, with a fragment for a member. */ -}}
+{{- $url := .RelPermalink -}}
+{{- with partial "api-member-anchor.html" . -}}
+  {{- $id := .id -}}
+  {{- with .parent }}{{ $url = printf "%s#%s" .RelPermalink $id }}{{ end -}}
+{{- end -}}
+{{- return $url -}}

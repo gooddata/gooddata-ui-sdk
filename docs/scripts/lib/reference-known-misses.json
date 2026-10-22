@@ -1,0 +1,19 @@
+{
+    "known_misses": [
+        "@gooddata/sdk-ui-gen-ai:useGenAiChatAvailability",
+        "@gooddata/sdk-ui-semantic-search:useHybridSearch",
+        "@gooddata/sdk-ui-dashboard:useDashboardScheduledEmails",
+        "@gooddata/sdk-ui-dashboard:useDashboardAlerts",
+        "@gooddata/sdk-ui-dashboard:useDashboardAutomations",
+        "@gooddata/sdk-ui-dashboard:useDashboardDispatch",
+        "@gooddata/sdk-ui-dashboard:useDashboardEventDispatch",
+        "@gooddata/sdk-ui-loaders:useDashboardLoaderWithPluginManipulation",
+        "@gooddata/sdk-ui-dashboard:exportDashboardToPdf",
+        "@gooddata/sdk-ui-dashboard:exportDashboardToExcel",
+        "@gooddata/sdk-ui-dashboard:exportDashboardToPdfPresentation",
+        "@gooddata/sdk-ui-dashboard:exportDashboardToPptPresentation",
+        "@gooddata/sdk-ui-web-components:setContext",
+        "@gooddata/sdk-ui-charts:RadarChart",
+        "@gooddata/sdk-ui-charts:IRadarChartProps"
+    ]
+}

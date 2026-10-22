@@ -38,7 +38,6 @@ REGION_FILTER = {
 
 DOCUMENT = {
     "id": "northwind-h1-2026",
-    "type": "document",
     "version": "2",
     "title": "Northwind, H1 2026",
     "tags": ["revenue"],
@@ -93,7 +92,6 @@ DOCUMENT = {
 
 DOCUMENT_TEMPLATE = {
     "id": "quarterly_review",
-    "type": "documentTemplate",
     "version": "2",
     "title": "Quarterly review",
     "content": {
@@ -104,7 +102,6 @@ DOCUMENT_TEMPLATE = {
 
 PAGE_TEMPLATE = {
     "id": "two_charts",
-    "type": "pageTemplate",
     "version": "2",
     "title": "Two charts",
     "content": {
@@ -160,15 +157,61 @@ def test_written_yaml_states_its_version_and_quotes_what_yaml_1_1_would_retype()
     assert 'markdown: "no"' in content
 
 
-@pytest.mark.parametrize("stored", [DOCUMENT, DOCUMENT_TEMPLATE, PAGE_TEMPLATE])
-def test_validator_accepts_a_valid_entity(stored):
-    assert validate_publisher_entity_v2(stored) == []
+@pytest.mark.parametrize(
+    ("stored", "kind"),
+    [(DOCUMENT, "document"), (DOCUMENT_TEMPLATE, "documentTemplate"), (PAGE_TEMPLATE, "pageTemplate")],
+)
+def test_validator_accepts_a_valid_entity(stored, kind):
+    assert validate_publisher_entity_v2(stored, kind) == []
+
+
+def test_validator_reads_the_kind_from_the_type_key_when_none_is_given():
+    assert validate_publisher_entity_v2({**PAGE_TEMPLATE, "type": "pageTemplate"}) == []
+
+
+def test_validator_accepts_a_default_page_template_under_its_reserved_id():
+    default_template = {**PAGE_TEMPLATE, "id": "default.cover", "isDefault": True}
+
+    assert validate_publisher_entity_v2(default_template, "pageTemplate") == []
+
+
+@pytest.mark.parametrize(
+    ("stored", "kind"),
+    [({**DOCUMENT, "id": "default.x"}, "document"), ({**PAGE_TEMPLATE, "id": "default.x"}, "pageTemplate")],
+)
+def test_validator_reports_a_default_id_on_anything_but_a_flagged_page_template(stored, kind):
+    assert [issue["path"] for issue in validate_publisher_entity_v2(stored, kind)] == ["id"]
+
+
+def test_validator_reports_a_kind_written_the_way_the_code_names_it():
+    assert validate_publisher_entity_v2(PAGE_TEMPLATE, "page_template") == [
+        {
+            "path": "type",
+            "message": 'Unknown kind "page_template"; expected document, documentTemplate or pageTemplate.',
+        }
+    ]
+
+
+def test_validator_asks_for_the_kind_for_converted_output_without_one():
+    stored = yaml_publisher_page_template_to_declarative_v2(
+        declarative_publisher_page_template_to_yaml_v2(PAGE_TEMPLATE)["json"]
+    )
+
+    assert validate_publisher_entity_v2(stored) == [
+        {
+            "path": "type",
+            "message": 'The stored shape has no "type" key; pass the kind ("document", '
+            '"documentTemplate" or "pageTemplate") to the validator.',
+        }
+    ]
 
 
 def test_validator_reports_content_issues_with_their_paths():
     invalid = {**PAGE_TEMPLATE, "content": {"layout": {"type": "spacer"}}}
 
-    assert [issue["path"] for issue in validate_publisher_entity_v2(invalid)] == ["content.layout.type"]
+    assert [issue["path"] for issue in validate_publisher_entity_v2(invalid, "pageTemplate")] == [
+        "content.layout.type"
+    ]
 
 
 def with_document_filter(attribute_filter: dict) -> dict:
@@ -189,7 +232,7 @@ def with_document_filter(attribute_filter: dict) -> dict:
     ],
 )
 def test_validator_holds_filters_to_the_backend_grammar(changed, path):
-    issues = validate_publisher_entity_v2(with_document_filter(changed))
+    issues = validate_publisher_entity_v2(with_document_filter(changed), "document")
 
     assert [issue["path"] for issue in issues] == [f"content.filters[0].attributeFilter.{path}"]
 
@@ -198,7 +241,7 @@ def test_validator_requires_a_local_identifier_on_a_document_filter():
     unnamed = with_document_filter({})
     del unnamed["content"]["filters"][0]["attributeFilter"]["localIdentifier"]
 
-    assert [issue["path"] for issue in validate_publisher_entity_v2(unnamed)] == [
+    assert [issue["path"] for issue in validate_publisher_entity_v2(unnamed, "document")] == [
         "content.filters[0].attributeFilter.localIdentifier"
     ]
 
@@ -206,7 +249,7 @@ def test_validator_requires_a_local_identifier_on_a_document_filter():
 def test_validator_reports_an_issue_on_the_reference_on_the_id():
     reserved = {**PAGE_TEMPLATE, "id": "default.cover"}
 
-    assert [issue["path"] for issue in validate_publisher_entity_v2(reserved)] == ["id"]
+    assert [issue["path"] for issue in validate_publisher_entity_v2(reserved, "pageTemplate")] == ["id"]
 
 
 def test_rejects_a_yaml_version_it_does_not_know():

@@ -1,0 +1,29 @@
+{{- /* The page's canonical URL, after the pre-reorg theme's meta-version.html: a
+       page in an archived version (any [[params.versions]] entry past the first
+       params.activeVersions) points at its counterpart in the newest active
+       version; everything else points at itself.
+
+       Archived copies keep the flat pre-reorg tree, so the counterpart is looked
+       up as a real page first (same path) and then through the redirect map the
+       reorganized pages declare in `aliases` (the same map index.redir turns into
+       301s), so the URL names a page that answers 200. A dropped page with no
+       counterpart keeps its own URL rather than pointing at a 404.
+
+       Returned as a string: head.html prints the <link> and reuses it for og:url,
+       so the social card names the same page the link does. */ -}}
+{{- $canonical := .Permalink -}}
+{{- $versions := site.Params.versions -}}
+{{- $active := site.Params.activeVersions | default 1 -}}
+{{- if and $versions .Section -}}
+  {{- if where (after $active $versions) "dirpath" .Section -}}
+    {{- $target := index $versions (sub $active 1) -}}
+    {{- $rest := strings.TrimPrefix (printf "/%s" .Section) .Path -}}
+    {{- with site.GetPage (printf "/%s%s" $target.dirpath $rest) -}}
+      {{- $canonical = .Permalink -}}
+    {{- else -}}
+      {{- $map := partialCached "canonical-alias-map.html" $target.dirpath $target.dirpath -}}
+      {{- with index $map (printf "/%s%s/" $target.dirpath $rest) -}}{{ $canonical = . }}{{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $canonical -}}

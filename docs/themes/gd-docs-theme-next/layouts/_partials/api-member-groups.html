@@ -1,0 +1,31 @@
+{{- /* An API reference symbol's folded members (api-members.html) in groups by kind, the way TypeDoc
+and Office.js lay out a type's members: "Property details", then events, methods, the rest. The
+symbol's own summary tables ("Properties", "Methods") come first on the page; these are the
+entries they link to. Shared by the HTML page (api-member-sections.html), its table of contents
+(toc-html.html) and its Markdown version (reference/single.markdown.md), so all three show the
+same groups under the same anchors.
+
+Expects: the symbol's page. Returns a slice of dicts: id (the group heading's anchor), title,
+members (pages); empty for a page without folded members. */ -}}
+{{- $members := partial "api-members.html" . -}}
+{{- $groups := slice -}}
+{{- $known := slice "property" "event" "method" -}}
+{{- $defs := slice
+  (dict "kind" "property" "id" "property-details" "title" "Property details")
+  (dict "kind" "event" "id" "event-details" "title" "Event details")
+  (dict "kind" "method" "id" "method-details" "title" "Method details")
+-}}
+{{- range $defs -}}
+  {{- $def := . -}}
+  {{- with where $members "Params.kind" $def.kind -}}
+    {{- $groups = $groups | append (dict "id" $def.id "title" $def.title "members" .) -}}
+  {{- end -}}
+{{- end -}}
+{{- $rest := slice -}}
+{{- range $members -}}
+  {{- if not (in $known .Params.kind) }}{{ $rest = $rest | append . }}{{ end -}}
+{{- end -}}
+{{- with $rest -}}
+  {{- $groups = $groups | append (dict "id" "member-details" "title" "Member details" "members" .) -}}
+{{- end -}}
+{{- return $groups -}}

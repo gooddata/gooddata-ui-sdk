@@ -1,0 +1,4 @@
+{{- /* {{% dashboard-catalog "event" %}} / {{% dashboard-catalog "command" %}}: the generated table of
+every published dashboard event or command (dashboard-catalog-markdown.html). Call it with %
+delimiters so the table goes through render-table.html like any authored table. */ -}}
+{{ partial "dashboard-catalog-markdown.html" (dict "page" .Page "kind" (.Get 0)) | safeHTML }}

@@ -17,6 +17,7 @@ import {
     type IWorkspaceMeasuresService,
     type IWorkspaceObjectPermissionsService,
     type IWorkspacePublisherService,
+    type IWorkspacePublisherServiceV2,
     type IWorkspaceSettingsService,
 } from "@gooddata/sdk-backend-spi";
 
@@ -141,6 +142,14 @@ export type WorkspacePublisherDecoratorFactory = (
 /**
  * @alpha
  */
+export type WorkspacePublisherV2DecoratorFactory = (
+    publisher: IWorkspacePublisherServiceV2,
+    workspace: string,
+) => IWorkspacePublisherServiceV2;
+
+/**
+ * @alpha
+ */
 export type ObjectPermissionsDecoratorFactory = (
     objectPermissions: IWorkspaceObjectPermissionsService,
     workspace: string,
@@ -170,5 +179,6 @@ export type DecoratorFactories = {
     organizationExportTemplates?: OrganizationExportTemplatesDecoratorFactory;
     workspaceExportTemplates?: WorkspaceExportTemplatesDecoratorFactory;
     workspacePublisher?: WorkspacePublisherDecoratorFactory;
+    workspacePublisherV2?: WorkspacePublisherV2DecoratorFactory;
     objectPermissions?: ObjectPermissionsDecoratorFactory;
 };

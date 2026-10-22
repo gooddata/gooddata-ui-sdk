@@ -15,9 +15,10 @@ import {
     type IPublisherDocumentTemplateDefinitionV2,
     type IPublisherPageTemplateDefinitionV2,
 } from "./document.js";
+import { isReservedPublisherEntityIdV2, reservedPublisherEntityIdPrefixV2 } from "./factory.js";
 import { type PublisherLayoutNodeV2, isPublisherContainerV2 } from "./layout.js";
 import { type IPublisherDocumentPageV2, type IPublisherPageBodyV2 } from "./page.js";
-import { checkDocumentContent, checkEntity, checkPageBody } from "./structure.js";
+import { checkDocumentContent, checkEntity, checkLoadedEntity, checkPageBody } from "./structure.js";
 import { type PublisherWidgetV2, isPublisherTitleWidgetV2 } from "./widget.js";
 
 type PublisherEntityDefinitionV2 =
@@ -54,14 +55,31 @@ export function validatePublisherDocumentContentV2(content: unknown): IPublisher
 }
 
 /**
- * Validates a document, document template or page template, as a definition or as a persisted
- * object: everything its content validator checks, `version` `"2"`, `defaults.period` set on document
- * templates only, and the `default.` id prefix left to the backend's default page templates.
+ * Validates a document, document template or page template as it is saved: everything its content
+ * validator checks, `version` `"2"`, `defaults.period` set on document templates only, and no id
+ * starting with `default.`, which the backend keeps for its own defaults.
  *
  * @alpha
  */
 export function validatePublisherEntityV2(entity: unknown): IPublisherValidationIssueV2[] {
-    return validate(entity, { structure: checkEntity, rules: entityIssues });
+    return validate(entity, {
+        structure: checkEntity,
+        rules: (value: PublisherEntityDefinitionV2) => [...reservedIdIssues(value), ...entityIssues(value)],
+    });
+}
+
+/**
+ * Validates a document, document template or page template as loaded from the backend. It reads what
+ * {@link validatePublisherEntityV2} would not save but the backend stores: an empty title, and an id
+ * starting with `default.`. Everything else is checked as for a save.
+ *
+ * @alpha
+ */
+export function validateLoadedPublisherEntityV2(entity: unknown): IPublisherValidationIssueV2[] {
+    return validate(entity, {
+        structure: checkLoadedEntity,
+        rules: entityIssues,
+    });
 }
 
 function validate<T>(
@@ -75,16 +93,10 @@ function validate<T>(
 }
 
 function entityIssues(entity: PublisherEntityDefinitionV2): IPublisherValidationIssueV2[] {
-    const issues: IPublisherValidationIssueV2[] = [];
-    if (isReservedRef(entity)) {
-        issues.push({
-            path: "ref",
-            message: `Ids starting with "${reservedIdPrefix}" are reserved for the default page templates.`,
-        });
-    }
     if (entity.type === "pageTemplate") {
-        return [...issues, ...pageIssues(entity.content, "content")];
+        return pageIssues(entity.content, "content");
     }
+    const issues: IPublisherValidationIssueV2[] = [];
     if (entity.type === "document" && entity.content.defaults?.period !== undefined) {
         issues.push({
             path: "content.defaults.period",
@@ -94,16 +106,17 @@ function entityIssues(entity: PublisherEntityDefinitionV2): IPublisherValidation
     return [...issues, ...contentIssues(entity.content, "content")];
 }
 
-const reservedIdPrefix = "default.";
-
 type WithPath<T> = [value: T, path: string];
 
-function isReservedRef(entity: PublisherEntityDefinitionV2): boolean {
-    const { ref } = entity;
-    if (!isIdentifierRef(ref) || !ref.identifier.startsWith(reservedIdPrefix)) {
-        return false;
-    }
-    return !(entity.type === "pageTemplate" && "isDefault" in entity && entity.isDefault === true);
+function reservedIdIssues({ ref }: PublisherEntityDefinitionV2): IPublisherValidationIssueV2[] {
+    return isIdentifierRef(ref) && isReservedPublisherEntityIdV2(ref.identifier)
+        ? [
+              {
+                  path: "ref",
+                  message: `Ids starting with "${reservedPublisherEntityIdPrefixV2}" are reserved for the backend's defaults.`,
+              },
+          ]
+        : [];
 }
 
 function contentIssues(content: PublisherDocumentContentV2, path: string): IPublisherValidationIssueV2[] {

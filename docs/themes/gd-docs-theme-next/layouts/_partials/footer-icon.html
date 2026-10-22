@@ -1,0 +1,23 @@
+{{- /* One footer icon as a shared file instead of inline SVG.
+
+The footer's icons (the feed's social buttons, the AI providers) are 48px dark tiles with a white
+glyph, 2–6 KB each. Inlined, they were about 35 KB of every page, the same bytes on each of the
+thousands of API reference pages. Here the tile (the first two paths: the gradient square and its
+outline) is cut off at build time, and the glyph is published once as a fingerprinted .svg.
+
+The page gets an empty span that paints currentColor through the file as a CSS mask
+(.gd-footer-glyph in main.css.tmpl), so the icon still follows the theme and the hover colour.
+A mask uses only the glyph's alpha, so its own fills (white, Perplexity's inner mask) don't matter.
+tests/footer-data.test.mjs pins the tile-then-glyph shape this relies on.
+
+Expects: the raw SVG string. Returns the span, or "" for an empty icon. */ -}}
+{{- $out := "" -}}
+{{- with . -}}
+  {{- $glyph := replaceRE `^\s*(<svg[^>]*>)\s*<path\b[^>]*/>\s*<path\b[^>]*/>` "$1" . 1 -}}
+  {{- if eq $glyph . -}}
+    {{- warnf "footer: an icon doesn't start with the two tile paths; publishing it whole" -}}
+  {{- end -}}
+  {{- $file := resources.FromString (printf "footer-icons/%s.svg" (md5 $glyph)) $glyph | minify | fingerprint -}}
+  {{- $out = printf `<span class="gd-footer-glyph" style="--gd-icon:url(%s)" aria-hidden="true"></span>` $file.RelPermalink -}}
+{{- end -}}
+{{- return ($out | safeHTML) -}}

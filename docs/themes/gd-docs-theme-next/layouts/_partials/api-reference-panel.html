@@ -1,0 +1,28 @@
+{{- /*
+  Guide-side counterpart of the reference pages' "Guide:" chips: renders this
+  page's `api_symbols` frontmatter as links into the /reference/ section.
+
+  Sits above the H1 in the same chip row position/styling the reference singles
+  use, so both directions of the guide↔reference link read identically.
+
+  The symbols resolve in api-symbol-links.html, shared with the page's
+  Markdown version (md/header.html), which lists the same links.
+
+  A tutorial's or explanation's type pill (diataxis-badge.html) leads the
+  row, so such a page without api_symbols still gets one.
+*/ -}}
+{{ $links := partial "api-symbol-links.html" . }}
+{{ $badge := partial "diataxis-badge.html" $ }}
+{{ if or $badge (gt (len $links) 0) }}
+  <div data-pill-row class="mb-5 flex flex-wrap items-center gap-2">
+    {{ $badge }}
+    {{ range $links }}
+      <a data-pill href="{{ .page.RelPermalink }}" class="inline-flex items-center gap-1 rounded-full border border-gd-border px-2.5 py-0.5 text-xs font-medium text-gd-link transition hover:border-gd-secondary hover:text-gd-secondary hover:no-underline focus-visible:ring-2 focus-visible:ring-gd-secondary focus-visible:outline-none">
+        {{ with .entry.kind }}<span class="text-gd-text-secondary">{{ strings.FirstUpper . }}:</span>{{ end }}
+        <span{{ if .entry.deprecated }} class="line-through"{{ end }}>{{ .entry.title }}</span>
+        {{ with .entry.stability }}<span class="text-[0.625rem] font-semibold uppercase tracking-wide text-gd-warning">{{ strings.FirstUpper . }}</span>{{ end }}
+      </a>
+    {{ end }}
+    {{ if gt (len $links) 3 }}<button type="button" data-pill-toggle hidden aria-expanded="false" class="inline-flex items-center rounded-full border border-dashed border-gd-border px-2.5 py-0.5 text-xs font-medium text-gd-text-secondary transition hover:border-gd-secondary hover:text-gd-secondary focus-visible:ring-2 focus-visible:ring-gd-secondary focus-visible:outline-none dark:hover:border-gd-primary dark:hover:text-gd-primary">Show all</button>{{ end }}
+  </div>
+{{ end }}

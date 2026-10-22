@@ -1,0 +1,8 @@
+{{- /* Docs home: the closing row of community links. Param: title. Inner: home/community-link
+     shortcodes, each printing its own leading separator. */ -}}
+<div class="not-prose mt-14 border-t border-gd-border pt-6">
+    <p class="text-sm text-gd-text-secondary">
+        <span class="font-semibold uppercase tracking-[0.2em]">{{ .Get "title" }}</span>
+        {{- .Inner }}
+    </p>
+</div>

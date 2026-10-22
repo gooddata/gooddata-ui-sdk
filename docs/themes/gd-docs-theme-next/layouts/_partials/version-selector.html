@@ -1,0 +1,38 @@
+{{- $versions := partialCached "versions.html" . -}}
+{{- if gt (len $versions) 1 -}}
+  {{- $cur := .Page.Section -}}
+  {{- $active := (index $versions 0).version -}}
+  {{- $label := "Version" -}}
+  {{- /* The first entry whose dirpath is this section wins. In a dev or preview build the list
+         is "local" (this build) followed by the live versions, and the newest live one has the
+         same dirpath (gdc-ui: latest), so a later match would label this build with it. */ -}}
+  {{- range $versions -}}
+    {{- if eq $cur .dirpath -}}{{ $active = .version }}{{ $label = printf "Version (%s)" .version }}{{ break }}{{- end -}}
+  {{- end -}}
+  {{/* Every archived version still ships the pre-reorg flat structure, and the
+       reorganized pages have no 1:1 path parity with it. A page can name its
+       old location in `legacy_path` front matter (its `aliases` list the same
+       old URLs); the menu then deep-links each version to that page. No
+       legacy_path -> link to that version's homepage instead of guessing. */}}
+  {{- $legacyPath := "" -}}
+  {{- with .Page.Params.legacy_path -}}{{ $legacyPath = strings.Trim . "/" }}{{- end -}}
+  <div class="relative" data-version-menu>
+    <button type="button" data-version-toggle aria-haspopup="true" aria-expanded="false" class="inline-flex min-h-11 w-full items-center justify-between gap-1 rounded-md border border-gd-border px-3 py-1.5 text-sm font-medium text-gd-text-secondary transition hover:border-gd-secondary hover:text-gd-secondary focus-visible:ring-2 focus-visible:ring-gd-secondary focus-visible:outline-none dark:hover:border-gd-contrast dark:hover:text-gd-contrast lg:w-auto lg:justify-start">
+      {{ $label }} <span class="text-xs" aria-hidden="true">▾</span>
+    </button>
+    <div data-version-list class="absolute left-0 right-0 z-50 mt-1 hidden min-w-[9rem] lg:left-auto rounded-md border border-gd-border bg-gd-card py-1 shadow-lg">
+      {{- /* The archive page lists every version with changelog and API links;
+             it used to be a top-level tab, now it heads this menu. It is found
+             by its `versions_archive: true` front matter, so it can live
+             wherever the sidebar makes most sense (today: API Reference). */ -}}
+      {{- with index (where site.Pages "Params.versions_archive" true) 0 -}}
+      <a href="{{ .RelPermalink }}" class="mb-1 block border-b border-gd-border px-3 py-2.5 text-sm font-medium text-gd-text hover:bg-gd-surface hover:no-underline">All versions</a>
+      {{- end -}}
+      {{- range first 4 $versions -}}
+      {{- $href := .url -}}
+      {{- if $legacyPath -}}{{ $href = printf "%s/%s/" (strings.TrimSuffix "/" .url) $legacyPath }}{{- end -}}
+      <a href="{{ if findRE "^https?://" $href }}{{ $href }}{{ else }}{{ $href | relURL }}{{ end }}" class="block px-3 py-2.5 text-sm hover:bg-gd-surface hover:no-underline {{ if eq $active .version }}font-semibold text-gd-secondary{{ else }}text-gd-text-secondary{{ end }}">{{ .version }}</a>
+      {{- end -}}
+    </div>
+  </div>
+{{- end -}}

@@ -74,7 +74,6 @@ const shipDateFilter: FilterContextItem = {
 
 const northwind: DeclarativePublisherDocumentV2 = {
     id: "northwind-h1-2026",
-    type: "document",
     version: "2",
     title: "Northwind, H1 2026",
     description: "Half-year revenue review",
@@ -183,7 +182,6 @@ const northwind: DeclarativePublisherDocumentV2 = {
 
 const monthlyReview: DeclarativePublisherDocumentV2 = {
     id: "monthly_review",
-    type: "document",
     version: "2",
     title: "Monthly review",
     period: { type: "relative", granularity: "GDC.time.month", from: -1, to: -1 },
@@ -204,7 +202,6 @@ const monthlyReview: DeclarativePublisherDocumentV2 = {
 
 const quarterlyTemplate: DeclarativePublisherDocumentTemplateV2 = {
     id: "quarterly_review",
-    type: "documentTemplate",
     version: "2",
     title: "Quarterly review",
     content: {
@@ -224,7 +221,6 @@ const quarterlyTemplate: DeclarativePublisherDocumentTemplateV2 = {
 
 const everyWidget: DeclarativePublisherPageTemplateV2 = {
     id: "every_widget",
-    type: "pageTemplate",
     version: "2",
     title: "Every widget",
     content: {
@@ -305,12 +301,18 @@ function thrown(convert: () => unknown): ICoreError | undefined {
     return undefined;
 }
 
-function withoutId<T extends { id: string }>({ id: _, ...stored }: T): Omit<T, "id"> {
-    return stored;
+function asDefinition<T extends { id: string }, K extends string>(
+    { id: _, ...stored }: T,
+    type: K,
+): Omit<T, "id"> & { type: K } {
+    return { type, ...stored };
 }
 
-function namedByUri<T extends { id: string }>({ id: _, ...stored }: T): Omit<T, "id"> & { ref: ObjRef } {
-    return { ...stored, ref: uriRef("/gdc/md/workspace/obj/1") };
+function namedByUri<T extends { id: string }, K extends string>(
+    stored: T,
+    type: K,
+): Omit<T, "id"> & { type: K; ref: ObjRef } {
+    return { ...asDefinition(stored, type), ref: uriRef("/gdc/md/workspace/obj/1") };
 }
 
 const orderAmountFilter = {
@@ -335,18 +337,18 @@ function fixture(file: string): AacPublisherEntityV2 {
     return parse(readFileSync(join(fixturesDir, file), "utf8")) as AacPublisherEntityV2;
 }
 
-function storedFrom(
-    written: AacPublisherEntityV2,
-):
-    | DeclarativePublisherDocumentV2
-    | DeclarativePublisherDocumentTemplateV2
-    | DeclarativePublisherPageTemplateV2 {
+type StoredEntityV2 =
+    | { kind: "document"; stored: DeclarativePublisherDocumentV2 }
+    | { kind: "documentTemplate"; stored: DeclarativePublisherDocumentTemplateV2 }
+    | { kind: "pageTemplate"; stored: DeclarativePublisherPageTemplateV2 };
+
+function storedFrom(written: AacPublisherEntityV2): StoredEntityV2 {
     if (written.type === "document") {
-        return yamlPublisherDocumentToDeclarativeV2(written);
+        return { kind: "document", stored: yamlPublisherDocumentToDeclarativeV2(written) };
     }
     return written.type === "document_template"
-        ? yamlPublisherDocumentTemplateToDeclarativeV2(written)
-        : yamlPublisherPageTemplateToDeclarativeV2(written);
+        ? { kind: "documentTemplate", stored: yamlPublisherDocumentTemplateToDeclarativeV2(written) }
+        : { kind: "pageTemplate", stored: yamlPublisherPageTemplateToDeclarativeV2(written) };
 }
 
 function thrownCode(convert: () => unknown): CoreErrorCode | undefined {
@@ -387,14 +389,14 @@ describe("v2 Publisher entities as code", () => {
 
     it.each(readdirSync(fixturesDir))("writes back what it reads: %s", (file) => {
         const written = fixture(file);
-        const stored = storedFrom(written);
+        const entity = storedFrom(written);
 
         const { json, content } =
-            stored.type === "document"
-                ? declarativePublisherDocumentToYamlV2(stored)
-                : stored.type === "documentTemplate"
-                  ? declarativePublisherDocumentTemplateToYamlV2(stored)
-                  : declarativePublisherPageTemplateToYamlV2(stored);
+            entity.kind === "document"
+                ? declarativePublisherDocumentToYamlV2(entity.stored)
+                : entity.kind === "documentTemplate"
+                  ? declarativePublisherDocumentTemplateToYamlV2(entity.stored)
+                  : declarativePublisherPageTemplateToYamlV2(entity.stored);
 
         expect(json).toEqual(written);
         expect(Object.keys(json)).toEqual(Object.keys(written));
@@ -403,7 +405,9 @@ describe("v2 Publisher entities as code", () => {
     });
 
     it.each(readdirSync(fixturesDir))("reads %s into an entity the stored validator accepts", (file) => {
-        expect(validateDeclarativePublisherEntityV2(storedFrom(fixture(file)))).toEqual([]);
+        const { kind, stored } = storedFrom(fixture(file));
+
+        expect(validateDeclarativePublisherEntityV2(stored, kind)).toEqual([]);
     });
 
     it("writes strings that YAML 1.1 or 1.2 would read as another type quoted", () => {
@@ -478,7 +482,7 @@ describe("v2 Publisher entities as code", () => {
     });
 
     it("writes a definition without a reference without an id", () => {
-        const definition: IPublisherDocumentDefinitionV2 = withoutId(northwind);
+        const definition: IPublisherDocumentDefinitionV2 = asDefinition(northwind, "document");
 
         expect(publisherDocumentDefinitionToYamlV2(definition).json).not.toHaveProperty("id");
     });
@@ -486,31 +490,34 @@ describe("v2 Publisher entities as code", () => {
     it.each([
         [
             "document",
-            withoutId(northwind),
+            asDefinition(northwind, "document"),
             () =>
                 yamlPublisherDocumentToDefinitionV2(
                     viaText<AacPublisherEntityWithOptionalIdV2<AacPublisherDocumentV2>>(
-                        publisherDocumentDefinitionToYamlV2(withoutId(northwind)).content,
+                        publisherDocumentDefinitionToYamlV2(asDefinition(northwind, "document")).content,
                     ),
                 ),
         ],
         [
             "document template",
-            withoutId(quarterlyTemplate),
+            asDefinition(quarterlyTemplate, "documentTemplate"),
             () =>
                 yamlPublisherDocumentTemplateToDefinitionV2(
                     viaText<AacPublisherEntityWithOptionalIdV2<AacPublisherDocumentTemplateV2>>(
-                        publisherDocumentTemplateDefinitionToYamlV2(withoutId(quarterlyTemplate)).content,
+                        publisherDocumentTemplateDefinitionToYamlV2(
+                            asDefinition(quarterlyTemplate, "documentTemplate"),
+                        ).content,
                     ),
                 ),
         ],
         [
             "page template",
-            withoutId(everyWidget),
+            asDefinition(everyWidget, "pageTemplate"),
             () =>
                 yamlPublisherPageTemplateToDefinitionV2(
                     viaText<AacPublisherEntityWithOptionalIdV2<AacPublisherPageTemplateV2>>(
-                        publisherPageTemplateDefinitionToYamlV2(withoutId(everyWidget)).content,
+                        publisherPageTemplateDefinitionToYamlV2(asDefinition(everyWidget, "pageTemplate"))
+                            .content,
                     ),
                 ),
         ],
@@ -531,12 +538,18 @@ describe("v2 Publisher entities as code", () => {
 
 describe("v2 Publisher entities as code: what the convertor rejects", () => {
     it.each([
-        ["document", () => publisherDocumentDefinitionToYamlV2(namedByUri(northwind))],
+        ["document", () => publisherDocumentDefinitionToYamlV2(namedByUri(northwind, "document"))],
         [
             "document template",
-            () => publisherDocumentTemplateDefinitionToYamlV2(namedByUri(quarterlyTemplate)),
+            () =>
+                publisherDocumentTemplateDefinitionToYamlV2(
+                    namedByUri(quarterlyTemplate, "documentTemplate"),
+                ),
         ],
-        ["page template", () => publisherPageTemplateDefinitionToYamlV2(namedByUri(everyWidget))],
+        [
+            "page template",
+            () => publisherPageTemplateDefinitionToYamlV2(namedByUri(everyWidget, "pageTemplate")),
+        ],
     ])("rejects a %s definition named by a uri", (_, write) => {
         expect(thrownCode(write)).toBe(CoreErrorCode.ReferenceTypeNotSupported);
     });

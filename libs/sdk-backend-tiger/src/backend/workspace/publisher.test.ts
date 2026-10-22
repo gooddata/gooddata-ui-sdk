@@ -2,7 +2,7 @@
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { DefaultPublisherPageTemplates, idRef } from "@gooddata/sdk-model";
+import { DefaultPublisherPageTemplatesV1, idRef } from "@gooddata/sdk-model";
 
 const getAllPageLayouts = vi.fn();
 const getPageLayoutEntity = vi.fn();
@@ -37,7 +37,7 @@ function newService() {
     return new TigerWorkspacePublisherService(authCall, "ws1");
 }
 
-const builtInRef = DefaultPublisherPageTemplates[0]!.ref;
+const builtInRef = DefaultPublisherPageTemplatesV1[0]!.ref;
 
 beforeEach(() => {
     vi.clearAllMocks();
@@ -62,23 +62,23 @@ describe("TigerWorkspacePublisherService page templates", () => {
 
         const layouts = await newService().getPageTemplates();
 
-        expect(layouts).toHaveLength(DefaultPublisherPageTemplates.length + 1);
-        expect(layouts.slice(0, DefaultPublisherPageTemplates.length)).toEqual([
-            ...DefaultPublisherPageTemplates,
+        expect(layouts).toHaveLength(DefaultPublisherPageTemplatesV1.length + 1);
+        expect(layouts.slice(0, DefaultPublisherPageTemplatesV1.length)).toEqual([
+            ...DefaultPublisherPageTemplatesV1,
         ]);
         expect(layouts.at(-1)!.title).toBe("Mine");
     });
 
     it("resolves a default page template without calling the backend", async () => {
         await expect(newService().getPageTemplate(builtInRef)).resolves.toEqual(
-            DefaultPublisherPageTemplates[0],
+            DefaultPublisherPageTemplatesV1[0],
         );
         expect(getPageLayoutEntity).not.toHaveBeenCalled();
     });
 
     it("refuses to update or delete a default page template", async () => {
         const service = newService();
-        const builtIn = DefaultPublisherPageTemplates[0]!;
+        const builtIn = DefaultPublisherPageTemplatesV1[0]!;
 
         await expect(service.updatePageTemplate(builtIn)).rejects.toThrow(/one of the defaults/);
         await expect(service.deletePageTemplate(builtInRef)).rejects.toThrow(/one of the defaults/);
@@ -143,5 +143,28 @@ describe("TigerWorkspacePublisherService listings", () => {
             expect.anything(),
             expect.objectContaining({ sort: ["modifiedAt,desc"] }),
         );
+    });
+});
+
+describe("TigerWorkspacePublisherService hasDocuments", () => {
+    it("asks the backend for a single document", async () => {
+        await newService().hasDocuments();
+
+        expect(getAllDocuments).toHaveBeenCalledTimes(1);
+        expect(getAllDocuments).toHaveBeenCalledWith(
+            expect.anything(),
+            expect.anything(),
+            expect.objectContaining({ workspaceId: "ws1", page: 0, size: 1 }),
+        );
+    });
+
+    it("is true when the workspace has a document", async () => {
+        getAllDocuments.mockResolvedValueOnce({ data: { data: [{ id: "report1", type: "report" }] } });
+
+        await expect(newService().hasDocuments()).resolves.toBe(true);
+    });
+
+    it("is false when the workspace has no document", async () => {
+        await expect(newService().hasDocuments()).resolves.toBe(false);
     });
 });

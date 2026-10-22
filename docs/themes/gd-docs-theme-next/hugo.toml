@@ -1,0 +1,53 @@
+[params]
+  description = "GoodData documentation"
+  homeSlug    = "getting-started"
+  # Build-time source for the corporate footer. Set it to "" to render only the
+  # committed data/footer.json snapshot and make the build fully offline.
+  # The site must allowlist this host under [security.http] urls.
+  footerDefinitionURL = "https://www.gooddata.ai/learn-assets/js/footer-definition-new.json"
+
+  [params.features]
+    breadcrumbs = true
+
+  [params.search]
+    provider           = "none"   # "none" | "addsearch"
+    addSearchKey       = ""       # AddSearch site key (addsearch.com/js/?key=…)
+    customFieldVersion = ""       # emits <meta name="addsearch-custom-field" content="version=…">
+
+  [params.askAI]
+    enable          = false
+    websiteId       = ""
+    projectName     = "GoodData"
+    projectColor    = "#ED26B7"
+    projectLogo     = ""
+    modalTitleColor = "#1c0d3f"
+    modalDisclaimer = ""
+
+[module]
+  [module.hugoVersion]
+    extended = true
+    min = "0.156.0"
+
+# A clean Markdown copy of a page at <page URL>index.md, for agents (https://llmstxt.org/). A site
+# turns it on for all pages with `[outputs] page = ["HTML", "MARKDOWN"]` (and `section`), or a single
+# page with `outputs: [HTML, MARKDOWN]` in its frontmatter. Templates: _default/*.markdown.md and
+# reference/*.markdown.md (body in _partials/page-markdown.html; docs/site-config.md §3).
+# head.html links it as rel="alternate".
+[outputFormats.MARKDOWN]
+  mediaType   = "text/markdown"
+  baseName    = "index"
+  isPlainText = true
+
+# llms.txt and llms-full.txt for the home page (templates: index.llm_txt.txt, index.llm_full.txt).
+# Defined here, off until a site lists them: `[outputs] home = ["HTML", "LLM_TXT", "LLM_FULL"]`.
+# gdc-ui uses its own LLMS format instead (docs/site-config.md §3).
+[outputFormats.LLM_TXT]
+  mediaType      = "text/plain"
+  baseName       = "llms"
+  isPlainText    = true
+  notAlternative = true
+[outputFormats.LLM_FULL]
+  mediaType      = "text/plain"
+  baseName       = "llms-full"
+  isPlainText    = true
+  notAlternative = true

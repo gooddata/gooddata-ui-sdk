@@ -1,0 +1,42 @@
+{{- /* Every published dashboard event or command as a Markdown table, sorted by its type string so
+each area (FILTER_CONTEXT, LAYOUT, …) reads as one block.
+
+The rows come from the `catalog` fields generate-reference.ts (lib/dashboard-catalog.ts) merges into
+the page version's api_refs.json, so the list follows the SDK and nothing is committed. The
+"Type guard" / "Create with" header makes render-table.html treat it as an API table: fixed column
+shares, wrapping identifiers, and collapsed to the first rows behind a "Show all" button.
+
+Each row's type string sits under the name, not in its own column: four columns of long code
+identifiers overflow the content width.
+
+Used by the dashboard-catalog shortcode, in the HTML page and in its Markdown copy.
+
+Expects: dict "page" "kind" ("event" | "command"), optional "plain" (true: Beta / Alpha as text, not an
+HTML pill, for the Markdown copy). Returns the table, or a note when the build has
+no API reference (a local build without the SDK api model). */ -}}
+{{- $kind := .kind -}}
+{{- $plain := .plain | default false -}}
+{{- $refs := (partialCached "api-data.html" .page .page.Section).refs | default dict -}}
+{{- $rows := slice -}}
+{{- range $refs -}}
+  {{- if eq (index . "catalog") $kind }}{{ $rows = $rows | append . }}{{ end -}}
+{{- end -}}
+{{- $out := printf "_The %s list is generated with the API reference, which this build doesn't include._" $kind -}}
+{{- if $rows -}}
+  {{- $label := cond (eq $kind "event") "Event" "Command" -}}
+  {{- $out = printf "| %s | %s | Description |\n| --- | --- | --- |\n" $label (cond (eq $kind "event") "Type guard" "Create with") -}}
+  {{- range sort $rows "event_type" -}}
+    {{- $name := printf "`%s`" .title -}}
+    {{- with site.GetPage .path }}{{ $name = printf "[%s](%s)" $name .RelPermalink }}{{ end -}}
+    {{- with .stability }}{{ $name = cond $plain (printf "%s (%s)" $name .) (printf `%s <span class="text-[0.625rem] font-semibold uppercase tracking-wide text-gd-warning">%s</span>` $name (strings.FirstUpper .)) }}{{ end -}}
+    {{- $helpers := slice -}}
+    {{- range .helpers -}}
+      {{- $h := printf "`%s`" .title -}}
+      {{- with .slug }}{{ with index $refs . }}{{ with site.GetPage .path }}{{ $h = printf "[%s](%s)" $h .RelPermalink }}{{ end }}{{ end }}{{ end -}}
+      {{- $helpers = $helpers | append $h -}}
+    {{- end -}}
+    {{- with .event_type }}{{ $name = printf "%s<br>`%s`" $name . }}{{ end -}}
+    {{- $out = printf "%s| %s | %s | %s |\n" $out $name (delimit $helpers ", " | default "—") (replace (.summary | default "—") "|" "\\|") -}}
+  {{- end -}}
+{{- end -}}
+{{- return $out -}}

@@ -1,0 +1,8 @@
+{{/* gd-docs-theme-next: responsive grid wrapper for blocks/card.
+     .Inner already holds the rendered nested blocks/card shortcodes — do NOT re-run it
+     through RenderString (a second markdown pass escapes the cards' HTML). Each card is a
+     single-line <div> (a type-6 HTML tag) so goldmark renders it raw regardless of the
+     blank lines the source puts between cards. */}}
+<div class="my-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+{{ .Inner }}
+</div>

@@ -1,0 +1,15 @@
+{{- /* Rendered page HTML with every link to a folded API reference member (a relref to its page,
+from a guide or from another symbol's page) pointed straight at the member's section on its
+parent's page (api-member-urls.html): the member has no page of its own. A post-render pass, like guide-body.html's: a link render hook only sees
+a relref as a placeholder, before Hugo resolves it.
+
+Expects: the HTML string. Returns it with the links rewritten. */ -}}
+{{- $out := . -}}
+{{- $urls := partialCached "api-member-urls.html" site -}}
+{{- range findRESubmatch `href="([^"#]*/api-reference/[^"#]*)"` $out | uniq -}}
+  {{- $href := index . 1 -}}
+  {{- with index $urls $href -}}
+    {{- $out = replace $out (printf `href="%s"` $href) (printf `href="%s"` .) -}}
+  {{- end -}}
+{{- end -}}
+{{- return $out -}}

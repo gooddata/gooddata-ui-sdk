@@ -1,0 +1,73 @@
+{
+    // oxfmt settings for sdk/docs. Everything above ignorePatterns is a verbatim
+    // copy of sdk/.oxfmtrc.json: a nested config REPLACES its parent rather than
+    // merging with it, so dropping a key here silently falls back to oxfmt's own
+    // defaults (80 columns, 2-space indent) instead of the repo's. Keep the two in
+    // step; only ignorePatterns is meant to differ.
+    //
+    // Patterns resolve relative to THIS directory, so a repo-root-style path such
+    // as "sdk/docs/themes/**" matches nothing and silently does nothing.
+    //
+    //   **/*.html  Every .html file here is a Go template for Hugo, not HTML. oxfmt
+    //              reflows them to printWidth, and a reflow turns the space inside a
+    //              template string literal into a newline. Go templates forbid that,
+    //              so the file stops parsing and the site no longer builds:
+    //              "unterminated quoted string". That already shipped once, in the
+    //              corporate-footer restore, and left the branch unbuildable. `npm
+    //              test` does not catch it; only a real hugo build does. No .html
+    //              file under sdk/docs is hand-written HTML, so nothing is lost.
+    //   **/*.md    Authored documentation, including the pages under content/. oxfmt
+    //              rewrites the fenced samples inside it -- adding trailing commas
+    //              and semicolons, so `</div>` becomes `</div>;` -- which changes
+    //              the code we publish to readers. It reindents the YAML examples in
+    //              STYLE_GUIDE.md to 4 spaces while every page it documents uses 2,
+    //              so the guide would contradict the corpus. It also rewrites the
+    //              generated `## Props` tables that CONTENT_PIPELINE.md says are
+    //              produced by scripts/generate-reference.ts and never hand-edited.
+    //   assets/jsconfig.json  Written by Hugo on every build in its own layout; formatting it
+    //              makes every later build show it as modified.
+    //   the rest   Build output and generated trees, none of it in git.
+    "$schema": "../../common/autoinstallers/lint-staged/node_modules/oxfmt/configuration_schema.json",
+    "printWidth": 110,
+    "tabWidth": 4,
+    "trailingComma": "all",
+    "sortImports": {
+        "order": "asc",
+        "ignoreCase": true,
+        "newlinesBetween": true,
+        "internalPattern": [],
+        "groups": [
+            "builtin",
+            "react-group",
+            "external",
+            "gooddata-group",
+            "internal",
+            "parent",
+            ["sibling", "index"],
+            "unknown"
+        ],
+        "customGroups": [
+            {
+                "groupName": "react-group",
+                "elementNamePattern": ["react"],
+                "modifiers": ["value"]
+            },
+            {
+                "groupName": "gooddata-group",
+                "elementNamePattern": ["@gooddata/**", "gdc-*"]
+            }
+        ]
+    },
+    "sortPackageJson": {
+        "sortScripts": true
+    },
+    "ignorePatterns": [
+        "**/*.html",
+        "**/*.md",
+        "assets/jsconfig.json",
+        "public/**",
+        "resources/**",
+        "versioned_docs/**",
+        "**/node_modules/**"
+    ]
+}

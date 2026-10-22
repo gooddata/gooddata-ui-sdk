@@ -1,12 +1,16 @@
 // (C) 2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
-import { parse } from "yaml";
+import { parse, stringify } from "yaml";
 
 import type { PublisherLayoutNodeV2 } from "@gooddata/sdk-code-schemas/v1";
 
-import { fillPublisherIdsV2 } from "./fillPublisherIdsV2.js";
-import { type AacPublisherDocumentV2, type AacPublisherPageTemplateV2 } from "./schemas/types.js";
+import { fillPublisherIdsInEntityV2, fillPublisherIdsV2 } from "./fillPublisherIdsV2.js";
+import {
+    type AacPublisherDocumentV2,
+    type AacPublisherEntityWithOptionalIdUnionV2,
+    type AacPublisherPageTemplateV2,
+} from "./schemas/types.js";
 
 function filledDocument(content: string): AacPublisherDocumentV2 {
     return parse(fillPublisherIdsV2(content).content) as AacPublisherDocumentV2;
@@ -213,5 +217,100 @@ content:
         ["another kind of entity", "type: metric\nid: m\nmaql: SELECT 1\n"],
     ])("leaves %s as it is", (_, content) => {
         expect(fillPublisherIdsV2(content)).toEqual({ content, changed: false });
+    });
+});
+
+// The ids are drawn at random, so the paths compare by what was filled: the kind of id at each place.
+const GENERATED_ID = /^(section|page|widget)_[0-9a-f]+$/;
+
+function generatedIds(value: unknown): string[] {
+    if (Array.isArray(value)) {
+        return value.flatMap(generatedIds);
+    }
+    if (typeof value === "object" && value !== null) {
+        return Object.values(value).flatMap(generatedIds);
+    }
+    return typeof value === "string" && GENERATED_ID.test(value) ? [value] : [];
+}
+
+function withIdKinds(value: unknown): unknown {
+    return JSON.parse(JSON.stringify(value), (_key, item: unknown) =>
+        typeof item === "string" && GENERATED_ID.test(item) ? item.replace(GENERATED_ID, "$1_*") : item,
+    );
+}
+
+describe("fillPublisherIdsInEntityV2", () => {
+    const pageTemplate = parse(`type: page_template
+id: two
+version: "2"
+title: Two
+content:
+  layout:
+    type: column
+    children:
+      - type: text
+      - type: image
+        id: logo
+`) as AacPublisherEntityWithOptionalIdUnionV2;
+
+    it.each([
+        [
+            "a document with sections, pages and widgets missing ids",
+            parse(document) as AacPublisherEntityWithOptionalIdUnionV2,
+        ],
+        ["a page template", pageTemplate],
+        [
+            "an entity with every id",
+            parse(fillPublisherIdsV2(document).content) as AacPublisherEntityWithOptionalIdUnionV2,
+        ],
+    ])("fills %s as the text path does", (_, entity) => {
+        const fromObject = fillPublisherIdsInEntityV2(entity);
+        const fromText = fillPublisherIdsV2(stringify(entity));
+
+        expect(fromObject.changed).toBe(fromText.changed);
+        expect(withIdKinds(fromObject.entity)).toEqual(withIdKinds(parse(fromText.content)));
+        expect(generatedIds(fromObject.entity)).toHaveLength(generatedIds(parse(fromText.content)).length);
+        expect(new Set(generatedIds(fromObject.entity)).size).toBe(generatedIds(fromObject.entity).length);
+    });
+
+    it("leaves the entity passed in unchanged", () => {
+        const entity = parse(document) as AacPublisherEntityWithOptionalIdUnionV2;
+        const before = structuredClone(entity);
+
+        const { entity: filled, changed } = fillPublisherIdsInEntityV2(entity);
+
+        expect(changed).toBe(true);
+        expect(entity).toEqual(before);
+        expect(filled).not.toBe(entity);
+    });
+
+    it("gives a widget object shared by two places an id in each", () => {
+        const entity = parse(`type: page_template
+id: two
+version: "2"
+title: Two
+content:
+  layout:
+    type: row
+    children:
+      - &shared
+        type: text
+        markdown: a
+      - *shared
+`) as AacPublisherEntityWithOptionalIdUnionV2;
+        const before = structuredClone(entity);
+
+        const { entity: filled } = fillPublisherIdsInEntityV2(entity);
+
+        const ids = generatedIds(filled);
+        expect(ids).toHaveLength(2);
+        expect(new Set(ids).size).toBe(2);
+        expect(entity).toEqual(before);
+    });
+
+    it("returns the entity itself when nothing is missing", () => {
+        const entity = parse(fillPublisherIdsV2(document).content) as AacPublisherEntityWithOptionalIdUnionV2;
+
+        expect(fillPublisherIdsInEntityV2(entity)).toEqual({ entity, changed: false });
     });
 });

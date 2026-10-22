@@ -21,7 +21,7 @@ import type {
     IMeasure,
     IMemoryItemDefinition,
     IMemoryItemMetadataObject,
-    IPublisherDocumentDefinition,
+    IPublisherDocumentDefinitionV1,
     ISemanticQualityIssuesCalculation,
     ISemanticQualityReport,
     ISemanticSearchRelationship,
@@ -1590,7 +1590,7 @@ export type IChatConversationPublisherDocumentContent = {
     /**
      * Snapshot of the whole document, not a change to apply to an earlier one.
      */
-    publisherDocument: IPublisherDocumentDefinition | null;
+    publisherDocument: IPublisherDocumentDefinitionV1 | null;
     /**
      * Id of the document this version of the draft was saved as. Absent until it is saved.
      */

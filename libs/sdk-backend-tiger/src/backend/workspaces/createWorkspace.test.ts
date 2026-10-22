@@ -20,6 +20,10 @@ vi.mock("@gooddata/api-client-tiger/endpoints/entitiesObjects", () => ({
     EntitiesApi_GetAllEntitiesWorkspaces: vi.fn(),
 }));
 
+// createWorkspace never builds a TigerWorkspace, and loading its module graph in the beforeAll below
+// takes seconds under parallel test load.
+vi.mock("../workspace/index.js", () => ({ TigerWorkspace: vi.fn() }));
+
 describe("TigerWorkspaceQueryFactory.createWorkspace", () => {
     const mockAuthCall = vi.fn((callback) => callback({ axios: {}, basePath: "" }));
     let factory: TigerWorkspaceQueryFactory;

@@ -1,0 +1,71 @@
+{{- /*
+  Guide page body: drops the duplicate H1 that Hugo renders from the title, then
+  turns inline code that names a public SDK symbol into a link to its API
+  reference page.
+
+  Why a post-render pass and not a render hook: Hugo has no render hook for
+  inline code (only link/image/heading/codeblock/table/blockquote), and the most
+  valuable mentions live in hand-authored Props tables — whose Type and
+  "Inherited from" columns are plain code spans today.
+
+  Only spans that are a type expression are rewritten: a name, an array of it, or
+  a union of those (`<code>IMeasure</code>`, `<code>IMeasure[]</code>`,
+  `<code>IBucket | undefined</code>`). A bare name keeps the whole chip as the link
+  (`<a><code>IInsight</code></a>`). In an array or union the chip stays one piece
+  and only the names inside it link (`<code><a>IBucket</a> | undefined</code>`):
+  splitting it into several chips would leave visible gaps between them, and
+  linking the whole chip would send `undefined` to the IBucket page. The chip
+  colour for those inner links comes from `.prose code > a` in main.css.tmpl.
+    - lowercase names (`measures`, `onError`, `undefined`) collide with symbol
+      names and must never link
+    - fenced code blocks render as `<code class="language-...">`, so they cannot match
+    - names that do not resolve (React types like `ComponentType`, internal
+      symbols, or a missing data file) stay plain code
+    - code already inside an anchor (generated Props tables emit real links) is
+      never rewritten, so links cannot nest
+*/ -}}
+{{- $content := replaceRE `<h1[^>]*>.*?</h1>\n?` "" .Content 1 -}}
+{{- $refs := (partialCached "api-data.html" . .Section).refs -}}
+{{- if $refs -}}
+  {{- $content = replaceRE `(<a\b[^>]*>)<code>` "${1}<code data-linked>" $content -}}
+  {{- /* lowercase name -> permalink, or "" when it does not resolve */ -}}
+  {{- $urls := dict -}}
+  {{- range findRE `<code>[A-Za-z][A-Za-z0-9_]*(\[\])?( ?\| ?[A-Za-z][A-Za-z0-9_]*(\[\])?)*</code>` $content | uniq -}}
+    {{- $span := . -}}
+    {{- $expr := replaceRE `</?code>` "" $span -}}
+    {{- $pieces := slice -}}
+    {{- $linked := false -}}
+    {{- range split $expr "|" -}}
+      {{- $piece := . -}}
+      {{- $member := trim $piece " " -}}
+      {{- $name := strings.TrimSuffix "[]" $member -}}
+      {{- $url := "" -}}
+      {{- if findRE `^[A-Z]` $name -}}
+        {{- $key := lower $name -}}
+        {{- if isset $urls $key -}}
+          {{- $url = index $urls $key -}}
+        {{- else -}}
+          {{- $url = partial "api-name-url.html" (dict "page" $ "name" $name) -}}
+          {{- $urls = merge $urls (dict $key $url) -}}
+        {{- end -}}
+      {{- end -}}
+      {{- with $url -}}
+        {{- $linked = true -}}
+        {{- $piece = replace $piece $name (printf `<a href="%s" class="no-underline hover:underline">%s</a>` . $name) -}}
+      {{- end -}}
+      {{- $pieces = $pieces | append $piece -}}
+    {{- end -}}
+    {{- /* Inserted code is marked data-linked so a later, shorter span cannot match inside it. */ -}}
+    {{- if $linked -}}
+      {{- if findRE `^[A-Za-z0-9_]+$` $expr -}}
+        {{- /* A bare name keeps the original shape: the whole chip is the link. */ -}}
+        {{- $content = replace $content $span (printf `<a href="%s" class="no-underline hover:underline"><code data-linked>%s</code></a>` (index $urls (lower $expr)) $expr) -}}
+      {{- else -}}
+        {{- $content = replace $content $span (printf "<code data-linked>%s</code>" (delimit $pieces "|")) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $content = replace $content "<code data-linked>" "<code>" -}}
+{{- end -}}
+{{- /* Links to folded API members go straight to their section on the parent's page. */ -}}
+{{- return partial "api-member-links.html" $content -}}

@@ -1,0 +1,19 @@
+{{- /* {{% props %}}: the page's Props table, generated at build time (see props-markdown.html).
+Call it with % delimiters so the table goes through the Markdown renderer and render-table.html,
+like any authored table.
+
+With no data file (a local build without the SDK api model) it prints a note, and warns once per build. In CI the
+generator fails first when a page's symbols have no public props. */ -}}
+{{- with partial "props-markdown.html" .Page -}}
+{{ . | safeHTML }}
+{{- else -}}
+  {{- if (partialCached "api-data.html" .Page .Page.Section).props -}}
+    {{- errorf "props: %s has {{%% props %%}} but none of its api_symbols has a Props table" .Page.File.Path -}}
+  {{- else -}}
+    {{- if not (hugo.Store.Get "propsNoDataWarned") -}}
+      {{- hugo.Store.Set "propsNoDataWarned" true -}}
+      {{- warnf "props: no data/api_props.json, so {{%% props %%}} pages show a note instead of their table. Build the API reference first (make api-reference)." -}}
+    {{- end -}}
+_The props table is generated with the API reference, which this build doesn't include._
+  {{- end -}}
+{{- end -}}

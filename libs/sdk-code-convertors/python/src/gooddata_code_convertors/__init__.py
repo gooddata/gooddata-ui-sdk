@@ -9,6 +9,8 @@ YAML-to-Declarative functions accept parsed YAML dicts (e.g. from yaml.safe_load
 not raw YAML strings. Declarative-to-YAML functions accept Declarative API dicts.
 """
 
+from typing import Literal
+
 from gooddata_code_convertors._types import *  # noqa: F401,F403 — generated TypedDict types
 from gooddata_code_convertors._types import __all__ as _types_all
 
@@ -193,12 +195,20 @@ declarative_report_to_yaml = declarative_publisher_document_to_yaml
 # Validation
 
 
-def validate_publisher_entity_v2(entity: dict) -> list[dict]:
+def validate_publisher_entity_v2(
+    entity: dict,
+    kind: Literal["document", "documentTemplate", "pageTemplate"] | None = None,
+) -> list[dict]:
     """Validate a stored v2 publisher document, document template or page template dict.
+
+    The stored shape has no "type" key, so pass the kind; without it, the kind is read from the
+    entity's own "type" key.
 
     Returns the issues as [{"path": ..., "message": ...}]; an empty list means the entity is valid.
     """
-    return _call("validateDeclarativePublisherEntityV2", entity)
+    if kind is None:
+        return _call("validateDeclarativePublisherEntityV2", entity)
+    return _call("validateDeclarativePublisherEntityV2", entity, kind)
 
 
 def fill_publisher_ids_v2(content: str) -> dict:

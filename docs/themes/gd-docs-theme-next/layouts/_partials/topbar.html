@@ -1,0 +1,43 @@
+{{- /*
+  First header row, matched to the GoodData Cloud docs (DP-3706): the GoodData Learn logo and label on
+  the left, the cross-product links from [menu.main] in the middle, the "Request a demo" button
+  ([params.headerCTA]) on the right. Markup and class names follow Cloud's navbar.html
+  (gdc-cloud-docs) and gooddata-docs-theme at bd04776 (header-menu.html, header-right.html); styles
+  are in assets/css/gd-header.css. Cloud's links are static config too, not a feed.
+
+  The logo goes where the menu's isHome entry (Documentation) goes, as on Cloud, falling back to this
+  site's docs home; the SDK docs home is the first sidebar link.
+
+  Below lg only the logo and a hamburger show. Cloud opens its menu with a hidden checkbox; here it is
+  a button with aria-expanded, wired by disclosure.js (main.js), and the panel opens with .is-open.
+*/ -}}
+{{- $menu := site.Menus.main -}}
+{{- $homeURL := printf "%s/" site.Params.homeSlug | relURL -}}
+{{- range $menu }}{{ if .Params.isHome }}{{ $homeURL = .URL }}{{ end }}{{ end -}}
+<div class="gd-docs-header-nav__first">
+  <nav class="gd-docs-header-nav__left" aria-label="Homepage">
+    <a class="gd-docs-header-nav__logo gd-header-nav__logo" href="{{ $homeURL }}" aria-label="Go to documentation homepage">
+      {{- /* Published once as a file (~9 KB inline on every page before) and painted with the text
+           token through a CSS mask (.gd-header-nav__logo-glyph), so it still follows dark mode. */ -}}
+      {{- with resources.Get "icons/GoodDataLearn.svg" | minify | fingerprint }}<span class="gd-header-nav__logo-glyph" style="--gd-logo:url({{ .RelPermalink }})" aria-hidden="true"></span>{{ end -}}
+    </a>
+    <span class="gd-header-nav__logo-text">Learn</span>
+  </nav>
+  {{- with $menu }}
+  <nav class="gd-header" aria-label="GoodData">
+    <button id="gd-header-menu-toggle" type="button" class="gd-header-mobile gd-header-mobile-menu-trigger" aria-controls="gd-header-menu" aria-expanded="false" aria-label="GoodData menu"><span aria-hidden="true"></span></button>
+    <ul id="gd-header-menu" class="gd-header-links">
+      {{- range . }}
+      <li class="gd-header-link-item{{ if .Params.mobileOnly }} gd-header-link-item-mobile-only{{ end }}">
+        <a href="{{ .URL }}"{{ if not (hasPrefix .URL "/") }} rel="noopener"{{ end }} class="gd-header-link{{ if .Params.isMobileTitle }} gd-header-link__main{{ end }}{{ if .Params.isHome }} gd-header-link__active{{ end }}">{{ .Name }}</a>
+      </li>
+      {{- end }}
+    </ul>
+  </nav>
+  {{- end }}
+  {{- with site.Params.headerCTA }}
+  <div class="gd-docs-header-nav__right">
+    <a href="{{ .url }}" rel="noopener" class="gd-docs-header-nav__cta gd-docs-header-nav__secondary">{{ .name }}</a>
+  </div>
+  {{- end }}
+</div>

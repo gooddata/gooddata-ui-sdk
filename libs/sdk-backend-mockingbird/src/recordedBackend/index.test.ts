@@ -3,7 +3,8 @@
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { type IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
+import { type IWorkspaceDescriptor, UnexpectedResponseError } from "@gooddata/sdk-backend-spi";
+import { idRef } from "@gooddata/sdk-model";
 
 import { recordedBackend } from "./index.js";
 
@@ -111,6 +112,22 @@ describe("recordedBackend", () => {
                     id: WORKSPACE_ID,
                     ...config.workspaceDescriptor,
                 } as IWorkspaceDescriptor);
+            });
+        });
+
+        describe("publisherV2", () => {
+            const publisher = () =>
+                recordedBackend(ReferenceRecordings.Recordings).workspace("ws").publisherV2();
+
+            it.each<[string, () => Promise<unknown>]>([
+                ["getPageTemplate", () => publisher().getPageTemplate(idRef("layout", "pageTemplate"))],
+                [
+                    "getDocumentTemplate",
+                    () => publisher().getDocumentTemplate(idRef("template", "documentTemplate")),
+                ],
+                ["getDocument", () => publisher().getDocument(idRef("doc", "document"))],
+            ])("%s rejects with a not found error", async (_, load) => {
+                await expect(load()).rejects.toBeInstanceOf(UnexpectedResponseError);
             });
         });
     });

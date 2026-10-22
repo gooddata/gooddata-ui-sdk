@@ -73,6 +73,23 @@ describe("InMemoryWorkspacePublisherService", () => {
         await expect(service.getDocuments()).resolves.toEqual([]);
     });
 
+    it("tells whether it has documents", async () => {
+        const service = new InMemoryWorkspacePublisherService();
+        await expect(service.hasDocuments()).resolves.toBe(false);
+
+        const publisherDocument = await service.createDocument(
+            newAdHocPublisherDocumentDefinition({
+                title: "Report",
+                periodStart: "2026-01-01",
+                periodEnd: "2026-03-31",
+            }),
+        );
+        await expect(service.hasDocuments()).resolves.toBe(true);
+
+        await service.deleteDocument(publisherDocument.ref);
+        await expect(service.hasDocuments()).resolves.toBe(false);
+    });
+
     it("resolves typed and untyped identifier refs to the same object", async () => {
         const service = new InMemoryWorkspacePublisherService();
 

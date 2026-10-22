@@ -1,0 +1,93 @@
+<meta charset="utf-8">
+{{- /* The browser chrome takes the page background, from the brand tokens (data/brand.json). */}}
+<meta name="theme-color" content="{{ index hugo.Data.brand.colors "gd-bg" }}" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="{{ index hugo.Data.brand.darkColors "gd-bg" }}" media="(prefers-color-scheme: dark)">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{{/* A page without a title breaks tab titles, sidebar rows, related links and landing cards, so it
+     fails the build in the params.homeSlug section, the docs written today. Released versions are frozen rel/*
+     branches (the versioned build publishes every one), and some predate this check: their
+     untitled CodeMirror6_GenAI_Integration.md would fail every production build. There it only
+     warns, and the tab falls back to the page's first "# " heading. */}}
+{{ $title := .Title }}
+{{ if and (not $title) (not .IsHome) }}
+  {{ with findRESubmatch `(?m)^#\s+(.+?)\s*$` .RawContent 1 }}{{ $title = index (index . 0) 1 }}{{ end }}
+  {{ $msg := "Page %q has an empty title — add `title` to its frontmatter (breaks tab titles, sidebar rows, related links, and landing cards)" }}
+  {{ if eq .Section site.Params.homeSlug }}{{ errorf $msg .Path }}{{ else }}{{ warnf $msg .Path }}{{ end }}
+{{ end }}
+{{ $pageTitle := cond .IsHome .Site.Title $title }}
+{{ $description := .Params.description | default site.Params.description }}
+<title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ $title }} | {{ .Site.Title }}{{ end }}</title>
+<meta name="description" content="{{ $description }}">
+{{ $canonical := partial "canonical-url.html" . }}
+<link rel="canonical" href="{{ $canonical }}">
+{{/* llms.txt (https://llmstxt.org/): the index that covers this page, and the page's own Markdown
+     copy when it has one (MARKDOWN output format; the API reference pages do). */}}
+{{ with site.Home.OutputFormats.Get "LLMS" }}<link rel="describedby" href="{{ .Permalink }}">{{ end }}
+{{ with .OutputFormats.Get "MARKDOWN" }}<link rel="alternate" type="text/markdown" href="{{ .Permalink }}">{{ end }}
+{{/* Social cards, the same set the GoodData Cloud docs emit (Docsy's opengraph and twitter_cards
+     partials), so a shared link renders the same card from either site. og:url is the canonical
+     URL, not .Permalink: an archived copy of a page then shares as the latest one, which is also
+     where the canonical sends crawlers. The card image is a site param (params.seo.image) because
+     this theme serves more than one site; without it the card is text-only. */}}
+<meta property="og:title" content="{{ $pageTitle }}">
+<meta property="og:description" content="{{ $description }}">
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:url" content="{{ $canonical }}">
+<meta property="og:site_name" content="{{ .Site.Title }}">
+{{- /* A site-relative image (static/og/…) becomes an absolute URL: crawlers need one. */ -}}
+{{ $seoImage := "" }}{{ with site.Params.seo.image }}{{ $seoImage = cond (hasPrefix . "http") . (absURL .) }}{{ end }}
+{{ with $seoImage }}<meta property="og:image" content="{{ . }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">{{ end }}
+<meta name="twitter:card" content="{{ if site.Params.seo.image }}summary_large_image{{ else }}summary{{ end }}">
+<meta name="twitter:title" content="{{ $pageTitle }}">
+<meta name="twitter:description" content="{{ $description }}">
+{{ with $seoImage }}<meta name="twitter:image" content="{{ . }}">{{ end }}
+{{/* The same two icons as the GoodData Cloud docs (copied from www.gooddata.ai), shipped in the
+     theme's static/ so the site serves its own /favicon.ico and /apple-touch-icon.png. */}}
+<link rel="icon" href="{{ "favicon.ico" | relURL }}" sizes="16x16 32x32">
+<link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | relURL }}" sizes="180x180">
+<meta name="color-scheme" content="light dark">
+{{ with site.Params.search }}{{ with .customFieldVersion }}<meta name="addsearch-custom-field" content="version={{ . }}">{{ end }}{{ end }}
+{{ $b := hugo.Data.brand.fonts }}
+{{ $fams := slice (printf "%s:wght@600;700" (replace $b.headingFamily " " "+")) (printf "%s:ital,wght@0,400;0,500;0,600;0,700" (replace $b.bodyFamily " " "+")) }}
+{{ $fontsURL := printf "https://fonts.googleapis.com/css2?family=%s&display=swap" (delimit $fams "&family=") | safeURL }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="{{ $fontsURL }}" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{{ $fontsURL }}"></noscript>
+<script>
+  (function () {
+    var media = window.matchMedia('(prefers-color-scheme: dark)');
+    // Storage can throw (blocked cookies, some private modes); the theme then just follows the OS.
+    function stored() {
+      try { return localStorage.getItem('theme'); } catch (e) { return null; }
+    }
+    function apply(dark) {
+      document.documentElement.classList.toggle('dark', dark);
+      document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+      // gooddata.ai's search-dialog.css keys its dark palette off this attribute.
+      if (dark) document.documentElement.setAttribute('data-theme', 'dark');
+      else document.documentElement.removeAttribute('data-theme');
+    }
+    // theme-toggle.js applies and remembers the reader's pick through this, so the two agree.
+    window.gdTheme = {
+      apply: apply,
+      remember: function (dark) {
+        try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) {}
+      },
+    };
+    var theme = stored();
+    if (theme) {
+      apply(theme === 'dark');
+    } else if (media.matches) {
+      apply(true);
+    }
+    // Follow live OS theme changes (sunset schedules) while the tab is open,
+    // unless the user has picked a theme explicitly via the toggle.
+    media.addEventListener('change', function (e) {
+      if (!stored()) apply(e.matches);
+    });
+  })();
+</script>
+{{ partial "css.html" . }}

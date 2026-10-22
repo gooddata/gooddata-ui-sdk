@@ -1,0 +1,7 @@
+{{- /* The pages a listing shows (sidebar-tree.html, the section overview cards in
+_default/list.html): everything but toc_hide pages and folded API members (a folded member is a
+section of its parent's page, not an entry), by weight. A nav_divider page stays listed: the
+marker only draws a rule above it in the sidebar.
+
+Expects: a Pages collection. Returns the filtered, sorted Pages. */ -}}
+{{- return sort (where (where . "Params.toc_hide" "!=" true) "Params.folded" "!=" true) "Weight" -}}

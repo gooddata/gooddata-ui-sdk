@@ -69,6 +69,16 @@ export type AacPublisherPageTemplateV2 = PublisherPageTemplateV2;
  * @alpha
  */
 export type AacPublisherEntityWithOptionalIdV2<T extends { id: string }> = Omit<T, "id"> & { id?: string };
+
+/**
+ * A v2 document, document template or page template as code, as its YAML parses: the id may be left out.
+ *
+ * @alpha
+ */
+export type AacPublisherEntityWithOptionalIdUnionV2 =
+    | AacPublisherEntityWithOptionalIdV2<AacPublisherDocumentV2>
+    | AacPublisherEntityWithOptionalIdV2<AacPublisherDocumentTemplateV2>
+    | AacPublisherEntityWithOptionalIdV2<AacPublisherPageTemplateV2>;
 /** @public */
 export type AacSection = Section;
 /** @public */

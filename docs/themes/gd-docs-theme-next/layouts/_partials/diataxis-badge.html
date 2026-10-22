@@ -1,0 +1,13 @@
+{{- /* Type pill at the start of the chip row above the H1 (api-reference-panel.html).
+Only the rare "read to learn" types carry one: tutorials (learn by doing) and explanations
+(understand a topic). They set them apart from the how-tos and reference pages that make up
+most of the site, which stay unlabeled, so the pill keeps its signal. Same shape as the API
+chips, tinted with the type's token. Class strings stay literal so Tailwind compiles them.
+Renders nothing for any other diataxis_type. */ -}}
+{{- $pills := dict
+  "tutorial" (dict "label" "Tutorial" "class" "border-[color-mix(in_srgb,var(--color-diataxis-tutorial)_40%,var(--color-gd-bg))] bg-[color-mix(in_srgb,var(--color-diataxis-tutorial)_8%,var(--color-gd-bg))] text-[color-mix(in_srgb,var(--color-diataxis-tutorial)_60%,var(--color-gd-text))]")
+  "explanation" (dict "label" "Explanation" "class" "border-[color-mix(in_srgb,var(--color-diataxis-explanation)_40%,var(--color-gd-bg))] bg-[color-mix(in_srgb,var(--color-diataxis-explanation)_8%,var(--color-gd-bg))] text-[color-mix(in_srgb,var(--color-diataxis-explanation)_60%,var(--color-gd-text))]")
+-}}
+{{- with index $pills (.Params.diataxis_type | default "") -}}
+<span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold {{ .class }}">{{ .label }}</span>
+{{- end -}}

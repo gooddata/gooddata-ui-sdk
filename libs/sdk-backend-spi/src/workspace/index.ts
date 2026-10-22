@@ -27,7 +27,7 @@ import { type IWorkspaceMeasuresService } from "./measures/index.js";
 import { type IWorkspaceObjectPermissionsService } from "./objectPermissions/index.js";
 import { type IWorkspaceParametersService } from "./parameters/index.js";
 import { type IWorkspacePermissionsService } from "./permissions/index.js";
-import { type IWorkspacePublisherService } from "./publisher/index.js";
+import { type IWorkspacePublisherService, type IWorkspacePublisherServiceV2 } from "./publisher/index.js";
 import { type IReferencesService } from "./references/index.js";
 import { type IWorkspaceSettingsService } from "./settings/index.js";
 import { type IWorkspaceStylingService } from "./styling/index.js";
@@ -233,6 +233,14 @@ export interface IAnalyticalWorkspace {
      * @alpha
      */
     publisher(): IWorkspacePublisherService;
+
+    /**
+     * Returns service that can be used to manage page templates, document templates and documents in
+     * content version 2.
+     *
+     * @alpha
+     */
+    publisherV2(): IWorkspacePublisherServiceV2;
 
     /**
      * Returns service that reports how languages and translations are used in the workspace.

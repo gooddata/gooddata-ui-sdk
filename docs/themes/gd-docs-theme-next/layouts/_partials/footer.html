@@ -1,0 +1,158 @@
+{{- /* The corporate footer: marketing's content, this theme's look.
+
+Content is marketing's and is not authored here. The structure comes from the same
+footer-definition-new.json feed that www.gooddata.ai, docs/cloud and the shared
+gooddata-docs-theme render (ported from gooddata/gooddata-docs-theme@bd047764d2c1, WEB-4512):
+the banner with its "Ask AI" caption, provider buttons and CTA links, the six link columns, the
+legal line and the social row. As upstream does, the `subscribe` banner action is dropped,
+because the newsletter modal it opens belongs to the marketing site.
+
+The look is ours. Marketing's Footer.css is not loaded: every element here uses the theme's
+Tailwind tokens (bg-gd-surface, border-gd-border, text-gd-text-secondary, ...), so the footer
+follows light and dark mode like the header strip above the page. The feed's social icons and
+the provider icons are marketing's dark 48px tiles; .gd-footer-icon in main.css.tmpl hides the
+tile and paints the glyph in currentColor, so they sit in the same bordered boxes as the header
+controls.
+
+Below lg each link column is a disclosure: a button (aria-expanded) and a list that
+footer-accordion.js shows and hides. At lg every list is shown by `lg:block` whatever the
+button says, so with JS off a desktop reader loses nothing and a phone shows the headings.
+
+The banner title is emitted with safeHTML because the feed carries a `<br>` in it, as the
+upstream theme does. The snapshot test pins that titles hold no other markup. The <br> carries
+Bootstrap classes (d-none d-md-block) that mean nothing here; it is a plain line break.
+
+Content sources, in order:
+  1. `site.Params.footerDefinitionURL`, fetched at build time.
+  2. `data/footer.json` in this theme — a committed snapshot of that feed.
+The snapshot is what makes the fetch safe to depend on. A marketing-side outage, a runner with no
+egress, a 404 or a schema change that fails to unmarshal all fall back to it with a warning
+instead of failing the build. Refresh it with:
+  curl -sSL https://www.gooddata.ai/learn-assets/js/footer-definition-new.json \
+    | python3 -m json.tool --no-ensure-ascii > themes/gd-docs-theme-next/data/footer.json
+The feed is served from gooddata.ai; the old .com URL 301s there, so pointing at .com costs every
+build a redirect for the same bytes. */ -}}
+{{- $def := dict -}}
+{{- with hugo.Data.footer }}{{ $def = .footer }}{{ end -}}
+{{- with site.Params.footerDefinitionURL -}}
+    {{- $url := . -}}
+    {{- $fetch := try (resources.GetRemote $url) -}}
+    {{- with $fetch.Err -}}
+        {{- warnf "footer: %q could not be fetched (%s); falling back to the vendored snapshot" $url . -}}
+    {{- else -}}
+        {{- /* try owns the error path: a non-200, a DNS failure and a timeout all land in $fetch.Err,
+        and the resource it yields has no .Err of its own to consult. */ -}}
+        {{- with $fetch.Value -}}
+            {{- $parse := try (transform.Unmarshal .) -}}
+            {{- with $parse.Err -}}
+                {{- warnf "footer: %q is not valid JSON (%s); falling back to the vendored snapshot" $url . -}}
+            {{- else -}}
+                {{- with $parse.Value.footer -}}{{ $def = . }}{{- end -}}
+            {{- end -}}
+        {{- else -}}
+            {{- /* A 404 yields no error and no resource, just nil — so without this branch a feed that
+            has been dead for months falls back silently and the footer quietly ages. */ -}}
+            {{- warnf "footer: %q returned no content (404 or empty body); falling back to the vendored snapshot" $url -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+
+<footer id="gd-footer" class="gd-footer border-t border-gd-border bg-gd-surface text-sm" aria-label="Page footer">
+    {{- /* href="#top" needs no #top element: the HTML spec special-cases that fragment to mean the top
+    of the document. */}}
+    <a href="#top" class="sr-only focus:not-sr-only focus:absolute focus:m-4 focus:rounded-lg focus:bg-gd-secondary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-gd-on-secondary">Skip footer content</a>
+
+    <div class="mx-auto max-w-screen-2xl px-4 py-10 lg:px-6 lg:py-14">
+        {{- with $def.bannerLinks }}
+        {{- range . }}
+        <div class="flex flex-col gap-8 border-b border-gd-border pb-10 lg:flex-row lg:items-start lg:justify-between">
+            <div class="flex flex-col gap-4">
+                {{- /* As upstream: the logo at lg, the feed's banner title in its place below it.
+                     The header now inlines the GoodData Learn logo, so this plain GoodData logo is
+                     the footer's own asset, published once as a fingerprinted file. */}}
+                {{- with resources.Get "icons/gooddata-logo.svg" | minify | fingerprint }}
+                <img src="{{ .RelPermalink }}" alt="GoodData" class="hidden h-8 w-auto self-start lg:block dark:invert" width="179" height="32">
+                {{- end }}
+                {{- with .title }}
+                <h2 class="font-heading text-2xl font-bold text-gd-secondary lg:hidden">{{ . | safeHTML }}</h2>
+                {{- end }}
+                {{- with .subtitle }}
+                <p class="text-gd-text-secondary">{{ . }}</p>
+                {{- end }}
+                {{- partial "footer-ai-buttons.html" $ }}
+            </div>
+            {{- with .items }}
+            <ul class="flex flex-wrap gap-3">
+                {{- range . }}
+                {{- if and (ne .action "subscribe") .link .title }}
+                <li>
+                    {{- partial "footer-link.html" (dict "item" . "class" "gd-footer-btn" "idPrefix" "footer-sublink-") }}
+                </li>
+                {{- end }}
+                {{- end }}
+            </ul>
+            {{- end }}
+        </div>
+        {{- end }}
+        {{- end }}
+
+        {{- with $def.links }}
+        <div class="grid grid-cols-1 border-b border-gd-border py-4 lg:grid-cols-6 lg:gap-6 lg:py-10">
+            {{- range $i, $group := . }}
+            {{- $id := printf "gd-footer-links-%d" $i }}
+            <div class="border-b border-gd-border last:border-b-0 lg:border-b-0">
+                <h2 class="hidden font-heading text-sm font-semibold text-gd-text lg:mb-4 lg:block">{{ $group.title }}</h2>
+                <button
+                    type="button"
+                    class="group flex min-h-11 w-full items-center justify-between py-2 text-left font-heading text-sm font-semibold text-gd-text focus-visible:ring-2 focus-visible:ring-gd-secondary focus-visible:outline-none lg:hidden"
+                    data-footer-toggle="{{ $id }}"
+                    aria-expanded="false"
+                    aria-controls="{{ $id }}"
+                >
+                    {{ $group.title }}
+                    <svg class="h-4 w-4 shrink-0 text-gd-text-secondary transition-transform group-aria-expanded:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                {{- with $group.items }}
+                <ul id="{{ $id }}" class="hidden space-y-2.5 pb-4 lg:block lg:pb-0">
+                    {{- range . }}
+                    {{- if and .link .title }}
+                    <li>{{ partial "footer-link.html" (dict "item" . "class" "gd-footer-link" "idPrefix" "footer-link-") }}</li>
+                    {{- end }}
+                    {{- end }}
+                </ul>
+                {{- end }}
+            </div>
+            {{- end }}
+        </div>
+        {{- end }}
+
+        {{- /* Docs-only row: GitHub and the plain-text exports. Marketing's footer has no equivalent. The
+        exports are linked from the output formats the home page actually emits, whatever the site
+        named them (theme default LLM_TXT/LLM_FULL, gdc-ui LLMS); hardcoding llm.txt is what
+        404'd before. */}}
+        <div class="flex flex-col gap-6 pt-8 lg:flex-row lg:items-center lg:justify-between">
+            <div class="flex flex-col gap-3">
+                <ul class="flex flex-wrap items-center gap-x-4 gap-y-2">
+                    <li><a href="{{ site.Params.repoURL }}" class="gd-footer-link" target="_blank" rel="noopener">GitHub</a></li>
+                    {{- range site.Home.OutputFormats }}
+                    {{- if eq .MediaType.Type "text/plain" }}
+                    <li><a href="{{ .RelPermalink }}" class="gd-footer-link">{{ path.Base .RelPermalink }}</a></li>
+                    {{- end }}
+                    {{- end }}
+                </ul>
+                {{- with $def.copyright }}
+                <ul class="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-gd-text-secondary">
+                    {{- range . }}
+                    <li>
+                        {{- if .link }}
+                        {{- partial "footer-link.html" (dict "item" (dict "title" .text "link" .link) "class" "gd-footer-link" "idPrefix" "footer-copyright-") }}
+                        {{- else }}{{ .text }}{{ end }}
+                    </li>
+                    {{- end }}
+                </ul>
+                {{- end }}
+            </div>
+            {{- partial "footer-buttons.html" (dict "buttons" $def.buttons) }}
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,14 @@
+{{/* gd-docs-theme-next: image with optional caption + width, styled to the theme. Kept for the
+     older versioned docs (rel/* content uses it); new pages use figure (STYLE_GUIDE.md "Images").
+     The src resolves like figure.html's, so a root-relative path works under any baseURL. */}}
+{{ $src := .Get "src" }}
+{{ if and $src (not (urls.Parse $src).Scheme) }}{{ $src = strings.TrimPrefix "/" $src | relURL }}{{ end }}
+{{ $alt := or (.Get "alt") "" }}
+{{ $caption := .Get "caption" }}
+{{ $width := .Get "width" }}
+<figure class="my-6">
+  <img src="{{ $src | safeURL }}" alt="{{ $alt }}" loading="lazy"
+    class="mx-auto max-w-full rounded-lg border border-gd-border"
+    {{ with $width }}style="width: {{ . }};"{{ end }}>
+  {{ with $caption }}<figcaption class="mt-2 text-center text-sm text-gd-text-secondary">{{ . | markdownify }}</figcaption>{{ end }}
+</figure>

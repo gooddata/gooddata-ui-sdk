@@ -1,8 +1,10 @@
 // (C) 2026 GoodData Corporation
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, expectTypeOf, it } from "vitest";
 
 import {
+    type PublisherEntityIdV2,
+    isPublisherEntityIdV2,
     newPublisherDocumentFilterIdV2,
     newPublisherDocumentPageFromTemplateV2,
     newPublisherIdV2,
@@ -330,5 +332,19 @@ describe("newPublisherDocumentFilterIdV2", () => {
         expect(() =>
             newPublisherDocumentFilterIdV2({ target: { uri: "/gdc/md/project/obj/1" }, usedIds: noIds }),
         ).toThrow("identifier ref");
+    });
+});
+
+describe("isPublisherEntityIdV2", () => {
+    it("narrows a string to an entity id, and keeps a string that fails as a string", () => {
+        const id: string = "quarterly";
+
+        if (isPublisherEntityIdV2(id)) {
+            expectTypeOf(id).toEqualTypeOf<PublisherEntityIdV2>();
+            expectTypeOf(id).toExtend<string>();
+        } else {
+            expectTypeOf(id).toEqualTypeOf<string>();
+        }
+        expect(isPublisherEntityIdV2(id)).toBe(true);
     });
 });

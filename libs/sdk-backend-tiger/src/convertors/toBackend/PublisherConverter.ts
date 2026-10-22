@@ -6,13 +6,13 @@ import {
     type JsonApiReportTemplateInAttributes,
 } from "@gooddata/api-client-tiger";
 import {
-    type IPublisherDocumentDefinition,
-    type IPublisherDocumentTemplateDefinition,
-    type IPublisherPageTemplateDefinition,
+    type IPublisherDocumentDefinitionV1,
+    type IPublisherDocumentTemplateDefinitionV1,
+    type IPublisherPageTemplateDefinitionV1,
 } from "@gooddata/sdk-model";
 
 export function convertPublisherPageLayoutToBackend(
-    layout: IPublisherPageTemplateDefinition,
+    layout: IPublisherPageTemplateDefinitionV1,
 ): JsonApiReportPageLayoutInAttributes {
     return {
         title: layout.title,
@@ -23,7 +23,7 @@ export function convertPublisherPageLayoutToBackend(
 }
 
 export function convertPublisherDocumentTemplateToBackend(
-    template: IPublisherDocumentTemplateDefinition,
+    template: IPublisherDocumentTemplateDefinitionV1,
 ): JsonApiReportTemplateInAttributes {
     return {
         title: template.title,
@@ -34,7 +34,7 @@ export function convertPublisherDocumentTemplateToBackend(
 }
 
 export function convertPublisherDocumentToBackend(
-    publisherDocument: IPublisherDocumentDefinition,
+    publisherDocument: IPublisherDocumentDefinitionV1,
 ): JsonApiReportInAttributes {
     return {
         title: publisherDocument.title,

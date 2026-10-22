@@ -1,0 +1,38 @@
+{{- /* An API reference symbol's page body with its folded members as sections, grouped by kind
+(api-member-groups.html: "Property details", "Method details", ...). Each member is a
+`<section class="api-member">` (main.css.tmpl: a rule and room above, so one entry ends visibly
+before the next) under an `<h3>` anchored by api-member-anchor.html: the owner muted, the member's
+own name strong (api-member-name.html), then its kind and stability as pills. The member's own
+headings go two levels down and their ids get the member's as a prefix (every member has a
+"Remarks"). api-documenter's "Signature:" paragraph is dropped: the declaration's code block
+speaks for itself. Its "Returns:" paragraph becomes a small label that sits on the block it names. A link to one of these members, in the symbol's own content or a member's,
+is an in-page link to its section.
+
+Expects: the symbol's page. Returns the HTML string: the body (without api-documenter's h1) and
+the member sections. */ -}}
+{{- $out := replaceRE `<h1[^>]*>.*?</h1>\n?` "" (string .Content) 1 -}}
+{{- range partial "api-member-groups.html" . -}}
+  {{- $out = printf "%s\n<h2 id=\"%s\">%s</h2>" $out .id .title -}}
+  {{- range .members -}}
+    {{- $id := anchorize .Title -}}
+    {{- $name := partial "api-member-name.html" . -}}
+    {{- $pills := "" -}}
+    {{- with .Params.kind }}{{ $pills = printf `%s<span class="api-member-pill">%s</span>` $pills . }}{{ end -}}
+    {{- with .Params.stability }}{{ $pills = printf `%s<span class="api-member-pill api-member-pill-%s">%s</span>` $pills . (strings.FirstUpper .) }}{{ end -}}
+    {{- if .Params.deprecated }}{{ $pills = printf `%s<span class="api-member-pill api-member-pill-deprecated">Deprecated</span>` $pills }}{{ end -}}
+    {{- $body := replaceRE `<h1[^>]*>.*?</h1>\n?` "" (string .Content) 1 -}}
+    {{- range slice 4 3 2 -}}
+      {{- $body = replaceRE (printf `<(/?)h%d\b` .) (printf "<${1}h%d" (add . 2)) $body -}}
+    {{- end -}}
+    {{- $body = replaceRE ` id="([^"]+)"` (printf ` id="%s-${1}"` $id) $body -}}
+    {{- $out = printf "%s\n<section class=\"api-member\">\n<h3 id=\"%s\"><code><span class=\"api-member-owner\">%s</span>%s</code>%s</h3>\n%s\n</section>" $out $id ($name.owner | htmlEscape) ($name.name | htmlEscape) $pills $body -}}
+  {{- end -}}
+{{- end -}}
+{{- $out = replaceRE `<p><strong>Signature:</strong></p>\n?` "" $out -}}
+{{- $out = replaceRE `<p><strong>Returns:</strong></p>` `<p class="api-signature-label">Returns</p>` $out -}}
+{{- $out = replaceRE `(?s)<!--.*?-->\n?` "" $out -}}
+{{- /* Member links go to `<this page>#<member>` (api-member-links.html); on this page that is an
+in-page link. */ -}}
+{{- $out = partial "api-member-links.html" $out -}}
+{{- $out = replace $out (printf `href="%s#` .RelPermalink) `href="#` -}}
+{{- return $out -}}

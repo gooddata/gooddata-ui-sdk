@@ -1,12 +1,110 @@
-# Put document versions here for every major or minor release
-# Every TOML list item contains the following properties:
-# - "version"   - text that appears in versions menu
-# - "dirpath"   - directory name (relative to contentDir) where documentation
-#                 for given version resides
-# - "url"       - url for link in version menu. May be absolute URL.
-# - "latestTag" - docker image tag for the latest patch version. Must be changed
-#                 on every patch release of respective branch
-[[versions]]
-    version = "local"
-    dirpath = "latest"
-    url = "/latest/"
+# Site params (site.Params). Scalars first: TOML puts every key after a [table] header into that
+# table.
+
+# The product's name in the docs chrome: the heading on top of the sidebar and the site's
+# breadcrumb crumb. The site title (tab title, og:site_name) stays "GoodData.UI SDK", as live.
+productName = "GoodData.UI"
+# Site-wide meta description, the fallback for a page without `description`
+# in its frontmatter (head.html). Also the og:/twitter: description of the home page.
+description = "GoodData.UI SDK documentation"
+# Landing section the site root redirects to (gd-docs-theme-next; theme default
+# "getting-started" does not exist here). Required — see theme INTEGRATION.md §3.
+# Every build lands on /latest/: content/en/latest here, and in production
+# (config/public) the copy generate.sh assembles from the newest rel/* branch.
+homeSlug = "latest"
+# Source-link chips on /reference/ pages (gd-docs-theme-next):
+# repoURL + sourceRef build "View source" GitHub links from source_path frontmatter.
+# Pin sourceRef to a vX.Y.0 tag to make links immune to upstream refactors.
+repoURL = "https://github.com/gooddata/gooddata-ui-sdk"
+sourceRef = "master"
+# How many leading [[versions]] entries are active. Pages in every later
+# (archived) version carry a canonical link to their counterpart in the newest
+# active one — see the theme's canonical-url.html.
+activeVersions = 1
+
+# AddSearch config
+addSearchTab = "gd-ui-doc"
+
+# The version list lives in one place: config/public/params.toml, which the
+# release bot updates on every minor release. Production (`--environment public`)
+# reads it as params.versions.
+#
+# Every other build (dev server, PR previews) has no versioned_docs/ content, so
+# the theme's versions partial reads that same file and:
+# - puts "local" (this build) first
+# - turns relative urls ("/11.58/") into live-site links under liveURL
+# Hugo doesn't watch this file in `hugo server`: restart it after a release.
+[versionsSource]
+    file    = "config/public/params.toml"
+    liveURL = "https://www.gooddata.ai/docs/gooddata-ui"
+    [versionsSource.local]
+        version = "local"
+        dirpath = "latest"
+        url     = "/latest/"
+
+[search]
+    # Portal AddSearch — the same hosted index and key the live docs use, in
+    # every environment. Previously this said pagefind, but nothing ever ran
+    # `npx pagefind` after the build, so dev servers and PR previews shipped no
+    # search box at all. AddSearch results deep-link to the production page
+    # rather than the preview copy; that is the accepted trade-off for having
+    # search work everywhere. The tab id "gd-ui-doc" (addSearchTab) is not the key.
+    # Before relying on reference search in production, verify in the AddSearch
+    # dashboard that the crawl scope includes /latest/api-reference/** (~12k pages
+    # against the plan quota) — see theme INTEGRATION.md.
+    provider           = "addsearch"
+    addSearchKey       = "2651a9f9545535cb82cf902c4727759e"
+    customFieldVersion = ""
+
+[askAI]
+    # Kapa widget — same website id the live docs embed. Without this the
+    # theme's "Ask AI" button never renders.
+    enable          = true
+    websiteId       = "321ae018-8175-44b4-b907-18d793521ab4"
+    projectName     = "GoodData"
+    projectColor    = "#ED26B7"
+    projectLogo     = "https://www.gooddata.ai/img/generic/logo-g.svg"
+    modalTitleColor = "#1c0d3f"
+
+# gd-docs-theme-next feature switches. Breadcrumbs are wanted on; the theme defaults
+# them on, and this states it where the switch really lives.
+[features]
+breadcrumbs = true
+
+# Off-site sections at the bottom of the sidebar (gd-docs-theme-next sidebar.html).
+[[sidebarLinks]]
+name = "Release notes"
+url = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md"
+
+# The breadcrumb starts above this site, as on the live docs: All Products / GoodData.UI / …
+[breadcrumbs]
+[[breadcrumbs.root]]
+name = "All Products"
+url = "https://www.gooddata.ai/docs/"
+
+# Social card image for og:image / twitter:image (head.html): GoodData.UI's own 1200x630 card in
+# the brand colors and fonts, served from static/og/. A site-relative path is made absolute
+# against baseURL. Without it the theme emits a text-only card.
+[seo]
+image = "og/gooddata-ui-docs.png"
+
+# The 404 page (gd-docs-theme-next layouts/404.html). Links are relative to the docs home: the
+# theme prefixes them with homeSlug, so they open /latest/.
+[404]
+title = "Page not found"
+[[404.links]]
+title = "Home"
+link = ""
+[[404.links]]
+title = "Getting started"
+link = "getting-started/"
+[[404.links]]
+title = "Quick start"
+link = "getting-started/quickstart/"
+
+
+# First header row, right side (gd-docs-theme-next topbar.html), as on the GoodData Cloud docs.
+# Delete this table to drop the button.
+[headerCTA]
+name = "Request a demo"
+url = "https://www.gooddata.ai/request-a-demo/"

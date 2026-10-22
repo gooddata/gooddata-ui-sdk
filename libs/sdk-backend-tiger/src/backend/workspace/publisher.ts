@@ -28,13 +28,13 @@ import {
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
 import {
-    DefaultPublisherPageTemplates,
-    type IPublisherDocument,
-    type IPublisherDocumentDefinition,
-    type IPublisherDocumentTemplate,
-    type IPublisherDocumentTemplateDefinition,
-    type IPublisherPageTemplate,
-    type IPublisherPageTemplateDefinition,
+    DefaultPublisherPageTemplatesV1,
+    type IPublisherDocumentDefinitionV1,
+    type IPublisherDocumentTemplateDefinitionV1,
+    type IPublisherDocumentTemplateV1,
+    type IPublisherDocumentV1,
+    type IPublisherPageTemplateDefinitionV1,
+    type IPublisherPageTemplateV1,
     type ObjRef,
     areObjRefsEqual,
     objRefToString,
@@ -59,8 +59,8 @@ const auditInclude = ["createdBy" as const, "modifiedBy" as const];
 // The backend orders a never-modified object by its creation time.
 const byLastChange = ["modifiedAt,desc"];
 
-function findDefaultPageTemplate(ref: ObjRef): IPublisherPageTemplate | undefined {
-    return DefaultPublisherPageTemplates.find((layout) => areObjRefsEqual(layout.ref, ref));
+function findDefaultPageTemplate(ref: ObjRef): IPublisherPageTemplateV1 | undefined {
+    return DefaultPublisherPageTemplatesV1.find((layout) => areObjRefsEqual(layout.ref, ref));
 }
 
 export class TigerWorkspacePublisherService implements IWorkspacePublisherService {
@@ -69,7 +69,7 @@ export class TigerWorkspacePublisherService implements IWorkspacePublisherServic
         private readonly workspace: string,
     ) {}
 
-    public getPageTemplates = async (): Promise<IPublisherPageTemplate[]> => {
+    public getPageTemplates = async (): Promise<IPublisherPageTemplateV1[]> => {
         const layouts = await this.authCall((client) =>
             ActionsUtilities.loadAllPages(({ page, size }) =>
                 EntitiesApi_GetAllEntitiesReportPageLayouts(client.axios, client.basePath, {
@@ -85,10 +85,10 @@ export class TigerWorkspacePublisherService implements IWorkspacePublisherServic
                 ),
             ),
         );
-        return [...DefaultPublisherPageTemplates, ...layouts];
+        return [...DefaultPublisherPageTemplatesV1, ...layouts];
     };
 
-    public getPageTemplate = async (ref: ObjRef): Promise<IPublisherPageTemplate> => {
+    public getPageTemplate = async (ref: ObjRef): Promise<IPublisherPageTemplateV1> => {
         const defaultTemplate = findDefaultPageTemplate(ref);
         if (defaultTemplate) {
             return defaultTemplate;
@@ -106,8 +106,8 @@ export class TigerWorkspacePublisherService implements IWorkspacePublisherServic
     };
 
     public createPageTemplate = async (
-        layout: IPublisherPageTemplateDefinition,
-    ): Promise<IPublisherPageTemplate> => {
+        layout: IPublisherPageTemplateDefinitionV1,
+    ): Promise<IPublisherPageTemplateV1> => {
         const id = this.newObjectId(layout.ref, "Page template");
         return this.authCall(async (client) => {
             const response = await EntitiesApi_CreateEntityReportPageLayouts(client.axios, client.basePath, {
@@ -125,7 +125,9 @@ export class TigerWorkspacePublisherService implements IWorkspacePublisherServic
         });
     };
 
-    public updatePageTemplate = async (layout: IPublisherPageTemplate): Promise<IPublisherPageTemplate> => {
+    public updatePageTemplate = async (
+        layout: IPublisherPageTemplateV1,
+    ): Promise<IPublisherPageTemplateV1> => {
         const objectId = this.editableObjectId(layout.ref, "Page template");
         return this.authCall(async (client) => {
             const response = await EntitiesApi_UpdateEntityReportPageLayouts(client.axios, client.basePath, {
@@ -154,7 +156,7 @@ export class TigerWorkspacePublisherService implements IWorkspacePublisherServic
         );
     };
 
-    public getDocumentTemplates = async (): Promise<IPublisherDocumentTemplate[]> => {
+    public getDocumentTemplates = async (): Promise<IPublisherDocumentTemplateV1[]> => {
         return this.authCall((client) =>
             ActionsUtilities.loadAllPages(({ page, size }) =>
                 EntitiesApi_GetAllEntitiesReportTemplates(client.axios, client.basePath, {
@@ -173,7 +175,7 @@ export class TigerWorkspacePublisherService implements IWorkspacePublisherServic
         );
     };
 
-    public getDocumentTemplate = async (ref: ObjRef): Promise<IPublisherDocumentTemplate> => {
+    public getDocumentTemplate = async (ref: ObjRef): Promise<IPublisherDocumentTemplateV1> => {
         const objectId = objRefToIdentifier(ref, this.authCall);
         return this.authCall(async (client) => {
             const response = await EntitiesApi_GetEntityReportTemplates(client.axios, client.basePath, {
@@ -187,8 +189,8 @@ export class TigerWorkspacePublisherService implements IWorkspacePublisherServic
     };
 
     public createDocumentTemplate = async (
-        template: IPublisherDocumentTemplateDefinition,
-    ): Promise<IPublisherDocumentTemplate> => {
+        template: IPublisherDocumentTemplateDefinitionV1,
+    ): Promise<IPublisherDocumentTemplateV1> => {
         const id = template.ref ? objRefToIdentifier(template.ref, this.authCall) : uuidv4();
         return this.authCall(async (client) => {
             const response = await EntitiesApi_CreateEntityReportTemplates(client.axios, client.basePath, {
@@ -207,8 +209,8 @@ export class TigerWorkspacePublisherService implements IWorkspacePublisherServic
     };
 
     public updateDocumentTemplate = async (
-        template: IPublisherDocumentTemplate,
-    ): Promise<IPublisherDocumentTemplate> => {
+        template: IPublisherDocumentTemplateV1,
+    ): Promise<IPublisherDocumentTemplateV1> => {
         const objectId = objRefToIdentifier(template.ref, this.authCall);
         return this.authCall(async (client) => {
             const response = await EntitiesApi_UpdateEntityReportTemplates(client.axios, client.basePath, {
@@ -237,7 +239,7 @@ export class TigerWorkspacePublisherService implements IWorkspacePublisherServic
         );
     };
 
-    public getDocuments = async (): Promise<IPublisherDocument[]> => {
+    public getDocuments = async (): Promise<IPublisherDocumentV1[]> => {
         return this.authCall((client) =>
             ActionsUtilities.loadAllPages(({ page, size }) =>
                 EntitiesApi_GetAllEntitiesReports(client.axios, client.basePath, {
@@ -256,7 +258,18 @@ export class TigerWorkspacePublisherService implements IWorkspacePublisherServic
         );
     };
 
-    public getDocument = async (ref: ObjRef): Promise<IPublisherDocument> => {
+    public hasDocuments = async (): Promise<boolean> => {
+        const response = await this.authCall((client) =>
+            EntitiesApi_GetAllEntitiesReports(client.axios, client.basePath, {
+                workspaceId: this.workspace,
+                page: 0,
+                size: 1,
+            }),
+        );
+        return response.data.data.length > 0;
+    };
+
+    public getDocument = async (ref: ObjRef): Promise<IPublisherDocumentV1> => {
         const objectId = objRefToIdentifier(ref, this.authCall);
         return this.authCall(async (client) => {
             const response = await EntitiesApi_GetEntityReports(client.axios, client.basePath, {
@@ -270,8 +283,8 @@ export class TigerWorkspacePublisherService implements IWorkspacePublisherServic
     };
 
     public createDocument = async (
-        publisherDocument: IPublisherDocumentDefinition,
-    ): Promise<IPublisherDocument> => {
+        publisherDocument: IPublisherDocumentDefinitionV1,
+    ): Promise<IPublisherDocumentV1> => {
         const id = publisherDocument.ref
             ? objRefToIdentifier(publisherDocument.ref, this.authCall)
             : uuidv4();
@@ -291,7 +304,9 @@ export class TigerWorkspacePublisherService implements IWorkspacePublisherServic
         });
     };
 
-    public updateDocument = async (publisherDocument: IPublisherDocument): Promise<IPublisherDocument> => {
+    public updateDocument = async (
+        publisherDocument: IPublisherDocumentV1,
+    ): Promise<IPublisherDocumentV1> => {
         const objectId = objRefToIdentifier(publisherDocument.ref, this.authCall);
         return this.authCall(async (client) => {
             const response = await EntitiesApi_UpdateEntityReports(client.axios, client.basePath, {
