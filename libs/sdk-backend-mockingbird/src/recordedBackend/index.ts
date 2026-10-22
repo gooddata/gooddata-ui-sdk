@@ -1142,6 +1142,7 @@ function recordedUserService(implConfig: RecordedBackendConfig): IUserService {
                         ...implConfig.globalSettings,
                     }),
                 setLocale: () => Promise.resolve(),
+                deleteLocale: () => Promise.resolve(),
                 setMetadataLocale: () => Promise.resolve(),
                 setFormatLocale: () => Promise.resolve(),
                 setSeparators: () => Promise.resolve(),

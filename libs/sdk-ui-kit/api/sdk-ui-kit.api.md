@@ -50,6 +50,7 @@ import { IColorPaletteDefinition } from '@gooddata/sdk-model';
 import { IContextStore } from '@gooddata/sdk-ui';
 import { IDashboardParameter } from '@gooddata/sdk-model';
 import { IExecutionConfig } from '@gooddata/sdk-model';
+import { IFeatureFlags } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { ILocale } from '@gooddata/sdk-ui';
 import { IMeasureSortTarget } from '@gooddata/sdk-model';
@@ -668,7 +669,7 @@ export const GD_COLOR_WHITE = "#fff";
 export type GeneralAccessValue = "RESTRICTED" | "WORKSPACE";
 
 // @internal (undocumented)
-export function generateHeaderAccountMenuItems(workspacePermissions: IWorkspacePermissions, workspaceId?: string, featureFlags?: ISettings): IHeaderMenuItem[];
+export function generateHeaderAccountMenuItems(workspacePermissions: IWorkspacePermissions, input?: IGenerateHeaderAccountMenuItemsOptions): IHeaderMenuItem[];
 
 // @internal
 export function generateHeaderCommonHelpMenuItems(): IHeaderMenuItem[];
@@ -1930,7 +1931,7 @@ export function IconTrash(input: IIconProps): JSX.Element;
 export function IconTreeMap(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "infoCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderSmall" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "levelUp" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "building" | "printer" | "picture" | "visualization" | "columnGroup" | "visualizationStack" | "richText" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "ldmKey" | "ldmLabel" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "alignLeft" | "alignCenter" | "alignRight" | "alignTop" | "alignMiddle" | "alignBottom" | "bold" | "italic" | "imageContain" | "imageCover" | "imageFill" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin" | "speechBubble" | "pieChart" | "timezone" | "sidePanelCollapse" | "sidePanel" | "sidePanelExpand" | "lineStyle" | "lineStyleSolid" | "lineStyleDashed" | "lineStyleDotted" | "lineWidth1" | "lineWidth2" | "lineWidth3" | "lineWidth4" | "linear" | "spline" | "stepped";
+export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "infoCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "globe" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderSmall" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "levelUp" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "building" | "printer" | "picture" | "visualization" | "columnGroup" | "visualizationStack" | "richText" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "ldmKey" | "ldmLabel" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "alignLeft" | "alignCenter" | "alignRight" | "alignTop" | "alignMiddle" | "alignBottom" | "bold" | "italic" | "imageContain" | "imageCover" | "imageFill" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin" | "speechBubble" | "pieChart" | "timezone" | "sidePanelCollapse" | "sidePanel" | "sidePanelExpand" | "lineStyle" | "lineStyleSolid" | "lineStyleDashed" | "lineStyleDotted" | "lineWidth1" | "lineWidth2" | "lineWidth3" | "lineWidth4" | "linear" | "spline" | "stepped";
 
 // @internal (undocumented)
 export function IconUndo(input: IIconProps): JSX.Element;
@@ -2972,6 +2973,14 @@ export interface IFormatTemplate {
     localIdentifier: string;
     // (undocumented)
     name: string;
+}
+
+// @internal (undocumented)
+export interface IGenerateHeaderAccountMenuItemsOptions {
+    // (undocumented)
+    featureFlags?: IFeatureFlags;
+    // (undocumented)
+    workspaceId?: string;
 }
 
 // @internal (undocumented)
@@ -5065,6 +5074,7 @@ export const isDateDatasetHeader: (obj: unknown) => obj is IDateDatasetHeader;
 // @internal
 export interface ISearchResultsAnnouncementProps {
     announcementDelay?: number;
+    noResultsText?: string;
     resultValues?: string[];
     totalResults: number | undefined;
 }
@@ -7217,6 +7227,7 @@ export interface IUiListboxInteractiveItem<T> {
     id: string;
     // (undocumented)
     isDisabled?: boolean;
+    lang?: string;
     // (undocumented)
     stringTitle: string;
     tooltip?: string;
@@ -7248,6 +7259,7 @@ export interface IUiListboxProps<InteractiveItemData, StaticItemData = ReactNode
     ariaAttributes: UiListboxAriaAttributes;
     // (undocumented)
     dataTestId?: string;
+    focusedItemId?: string | null;
     // (undocumented)
     InteractiveItemComponent?: ComponentType<IUiListboxInteractiveItemProps<InteractiveItemData>>;
     // (undocumented)
@@ -7264,6 +7276,7 @@ export interface IUiListboxProps<InteractiveItemData, StaticItemData = ReactNode
     maxWidth?: number;
     // (undocumented)
     onClose?: () => void;
+    onFocusedItemIdChange?: (itemId: string) => void;
     // (undocumented)
     onSelect?: (item: IUiListboxInteractiveItem<InteractiveItemData>, mods: {
         type?: "mouse" | "keyboard";
@@ -7271,6 +7284,7 @@ export interface IUiListboxProps<InteractiveItemData, StaticItemData = ReactNode
     }) => void;
     // (undocumented)
     onUnhandledKeyDown?: (event: KeyboardEvent_2, context: IUiListboxContext<InteractiveItemData, StaticItemData>) => void;
+    padding?: "default" | "none";
     // (undocumented)
     reference?: RefObject<HTMLUListElement | null>;
     // (undocumented)
@@ -7281,6 +7295,7 @@ export interface IUiListboxProps<InteractiveItemData, StaticItemData = ReactNode
     shouldKeyboardActionPreventDefault?: boolean;
     // (undocumented)
     shouldKeyboardActionStopPropagation?: boolean;
+    shouldSelectOnOptionClick?: boolean;
     // (undocumented)
     StaticItemComponent?: ComponentType<IUiListboxStaticItemProps<StaticItemData>>;
     // (undocumented)
@@ -7988,6 +8003,48 @@ export interface IUiReturnFocusOnUnmountOptions {
 }
 
 // @internal (undocumented)
+export interface IUiSearchableSelectItemProps {
+    children: string;
+    // (undocumented)
+    id: string;
+    lang?: string;
+}
+
+// @internal (undocumented)
+export interface IUiSearchableSelectListProps<T> {
+    // (undocumented)
+    children: (item: T) => ReactNode;
+    // (undocumented)
+    noItemsText?: string;
+}
+
+// @internal (undocumented)
+export interface IUiSearchableSelectProps<T> {
+    // (undocumented)
+    accessibilityConfig: IAccessibilityConfigBase;
+    // (undocumented)
+    children: ReactNode;
+    defaultOpen?: boolean;
+    filter?: (item: T, query: string) => boolean;
+    // (undocumented)
+    items: T[];
+    // (undocumented)
+    onChange: (value: string) => void;
+    // (undocumented)
+    placeholder: string;
+    // (undocumented)
+    value: string | null;
+}
+
+// @internal (undocumented)
+export interface IUiSearchableSelectSearchProps {
+    // (undocumented)
+    accessibilityConfig?: IAccessibilityConfigBase;
+    // (undocumented)
+    placeholder?: string;
+}
+
+// @internal (undocumented)
 export interface IUiSectionHeadingProps {
     action?: ReactNode;
     label: string;
@@ -8251,6 +8308,7 @@ export interface IUiTextInputProps {
     onIconAfter?: IUiTextInputIconAfterButton;
     onKeyDown?: KeyboardEventHandler<HTMLInputElement>;
     placeholder?: string;
+    size?: SizeSmall | SizeMedium;
     type?: "text" | "search" | "email" | "url";
     value: string;
     wrapperRef?: Ref<HTMLDivElement>;
@@ -9120,6 +9178,9 @@ export const makeTabsKeyboardNavigation: <T extends KeyboardEvent_2 = KeyboardEv
     onUnhandledKeyDown?: ((event: T) => void) | undefined;
 }, options?: IHandleActionOptions) => (event: T) => void;
 
+// @internal
+export function matchesSearchQuery(textValue: string, query: string): boolean;
+
 // @internal (undocumented)
 export const MeasureNumberFormat: NamedExoticComponent<IMeasureNumberFormatOwnProps>;
 
@@ -9972,6 +10033,21 @@ export type UiRestrictedPlaceholderSize = "default" | "compact";
 export function UiReturnFocusOnUnmount(input: IUiReturnFocusOnUnmountOptions & {
     children: ReactNode;
 }): JSX.Element;
+
+// @internal (undocumented)
+export function UiSearchableSelect<T>(input: IUiSearchableSelectProps<T>): JSX.Element;
+
+// @internal
+export function UiSearchableSelectDivider(): null;
+
+// @internal
+export function UiSearchableSelectItem(_props: IUiSearchableSelectItemProps): null;
+
+// @internal (undocumented)
+export function UiSearchableSelectList<T>(input: IUiSearchableSelectListProps<T>): JSX.Element;
+
+// @internal (undocumented)
+export function UiSearchableSelectSearch(input: IUiSearchableSelectSearchProps): JSX.Element;
 
 // @internal
 export function UiSearchResultsAnnouncement(input: ISearchResultsAnnouncementProps): JSX.Element;

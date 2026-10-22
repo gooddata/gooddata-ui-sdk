@@ -68,6 +68,7 @@ export type IconType =
     | "copy"
     | "rain"
     | "earth"
+    | "globe"
     | "geoCollection"
     | "geoCollectionUpload"
     | "minimize"

@@ -27,6 +27,13 @@ export interface IUserSettingsService {
     setLocale(locale: string): Promise<void>;
 
     /**
+     * Delete the locale of the current user, returning to the locale of the workspace or organization.
+     *
+     * @returns promise
+     */
+    deleteLocale(): Promise<void>;
+
+    /**
      * Set metadata locale for the current user
      *
      * @param locale - IETF BCP 47 Code locale ID, for example "en-US", "cs-CZ", etc.

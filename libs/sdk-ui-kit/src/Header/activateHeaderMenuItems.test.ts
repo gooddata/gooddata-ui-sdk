@@ -4,7 +4,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 
 import { activateHeaderMenuItems } from "./activateHeaderMenuItems.js";
 import { HEADER_ITEM_ID_KPIS_NEW, generateHeaderMenuItemsGroups } from "./generateHeaderMenuItemsGroups.js";
-import { getAccountMenuFeatureFlagsMock, getWorkspacePermissionsMock } from "./Header.test.helpers.js";
+import { getAccountMenuFeatureFlagsMock, makeWorkspacePermissions } from "./Header.test.helpers.js";
 import { type IHeaderMenuItem } from "./typings.js";
 
 describe("activateHeaderMenuItems", () => {
@@ -20,7 +20,7 @@ describe("activateHeaderMenuItems", () => {
     beforeAll(() => {
         items = generateHeaderMenuItemsGroups(
             getAccountMenuFeatureFlagsMock(true, "enterprise"),
-            getWorkspacePermissionsMock(true, true),
+            makeWorkspacePermissions(),
             true,
             "TestWorkspaceId",
             false,

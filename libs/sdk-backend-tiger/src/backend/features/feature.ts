@@ -934,6 +934,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableLocalizationOverview,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableUserLanguageChange,
+            "enableUserLanguageChange",
+            "BOOLEAN",
+            FeatureFlagsValues.enableUserLanguageChange,
+        ),
     };
 }
 

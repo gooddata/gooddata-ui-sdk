@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type KeyboardEvent, type MouseEvent, type ReactNode, useCallback, useMemo } from "react";
+import { type KeyboardEvent, type MouseEvent, type ReactNode, useCallback, useMemo, useState } from "react";
 
 import {
     type IGenAIUserContext,
@@ -38,10 +38,12 @@ import { getUserDisplayName, getWorkspaceSwitchPath, isPlainLeftClick } from "./
 import { b, e } from "./hostChromeBem.js";
 import { HostIntlProvider } from "./HostIntlProvider.js";
 import { HostNotificationDispatcher } from "./HostNotificationDispatcher.js";
+import { LanguageDialog } from "./LanguageDialog.js";
 import { useAppPreloadOnHover } from "./useAppPreloadOnHover.js";
 import { useGenAiRightPanel } from "./useGenAiRightPanel.js";
 import { useHostChromePricing } from "./useHostChromePricing.js";
 import { useHostChromeSearch } from "./useHostChromeSearch.js";
+import { useHostChromeWorkspaceFeatures } from "./useHostChromeWorkspaceFeatures.js";
 import "./HostChrome.scss";
 // SDK packages with side-effecting CSS (declared in their own `sideEffects`)
 // must be imported explicitly by consumers; tree-shakers won't grab them otherwise.
@@ -52,7 +54,7 @@ import "@gooddata/sdk-ui-gen-ai/styles/css/main.css";
 import "@gooddata/sdk-ui-semantic-search/styles/css/main.css";
 import "@gooddata/sdk-ui-semantic-search/styles/css/internal.css";
 
-import { useHostChromeWorkspaceFeatures } from "./useHostChromeWorkspaceFeatures.js";
+import { useLanguages } from "./useLanguages.js";
 import { AppHeaderWorkspacePicker } from "./WorkspacePicker.js";
 
 const LOGOUT_MENU_ITEM_KEY = "gs.header.logout";
@@ -130,6 +132,7 @@ export function HostChrome({
     );
 
     const pricing = useHostChromePricing(ctx, locale);
+    const [isLanguageDialogOpen, setIsLanguageDialogOpen] = useState(false);
 
     // The host's single GenAI chat is owned by the runtime (HostChat), not the chrome — so it survives
     // a custom UI module and stays mounted when the chrome is hidden (embedded/export). The chrome only
@@ -170,11 +173,10 @@ export function HostChrome({
 
     const accountMenuItems = useMemo<IHeaderMenuItem[]>(
         () =>
-            generateHeaderAccountMenuItems(
-                ctx.workspacePermissions ?? ({} as IWorkspacePermissions),
-                features.workspaceId,
-                ctx.settings,
-            ),
+            generateHeaderAccountMenuItems(ctx.workspacePermissions ?? ({} as IWorkspacePermissions), {
+                workspaceId: features.workspaceId,
+                featureFlags: ctx.settings,
+            }),
         [ctx.workspacePermissions, features.workspaceId, ctx.settings],
     );
 
@@ -183,6 +185,10 @@ export function HostChrome({
             e?.preventDefault();
             if (item.onClick) {
                 item.onClick(e ?? null);
+                return;
+            }
+            if (item.key === "userMenu.language") {
+                setIsLanguageDialogOpen(true);
                 return;
             }
             if (item.key === LOGOUT_MENU_ITEM_KEY) {
@@ -369,10 +375,20 @@ export function HostChrome({
                             {children}
                         </Wrapper>
                         {pricing.element}
+                        {isLanguageDialogOpen ? (
+                            <HostLanguageDialog ctx={ctx} onClose={() => setIsLanguageDialogOpen(false)} />
+                        ) : null}
                         <HostNotificationDispatcher notification={notification} />
                     </div>
                 </ToastsCenterContextProvider>
             </BackendProvider>
         </HostIntlProvider>
     );
+}
+
+// the languages, and so the default one, load only once the dialog opens
+function HostLanguageDialog({ ctx, onClose }: { ctx: IPlatformContext; onClose: () => void }) {
+    const languages = useLanguages(ctx);
+
+    return languages ? <LanguageDialog {...languages} onClose={onClose} /> : null;
 }

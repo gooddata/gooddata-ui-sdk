@@ -43,6 +43,10 @@ export interface IUiListboxInteractiveItem<T> {
      * `tooltip` still provides the plain text for screen readers.
      */
     tooltipContent?: ReactNode;
+    /**
+     * The language of the title when it differs from the page, rendered as the option's `lang` attribute.
+     */
+    lang?: string;
 }
 
 /**
@@ -145,8 +149,36 @@ export interface IUiListboxProps<InteractiveItemData, StaticItemData = ReactNode
     shouldKeyboardActionPreventDefault?: boolean;
     shouldKeyboardActionStopPropagation?: boolean;
     shouldCloseOnSelect?: boolean;
+    /**
+     * Selects an item on a click anywhere in its option (`<li role="option">`), including the option element
+     * itself, so that clicks dispatched on the option (tests, assistive technologies) select it too. The listbox
+     * handles the click; the `onSelect` passed to `InteractiveItemComponent` then does nothing, so item
+     * components that still attach it don't select twice. Controls nested in an option (buttons, links) select
+     * the item too unless they stop the click from propagating.
+     *
+     * Defaults to `false`: the item component attaches `onSelect` itself.
+     */
+    shouldSelectOnOptionClick?: boolean;
     isDisabledFocusable?: boolean;
+    /**
+     * The following option enables highlighting items by parent (such as when pressing arrow down and arrow up).
+     * Listbox manages (real) focus itself only if the list is focused also. Sometimes though, we need for real focus
+     * to stay at a different place (like a search bar above the list), but still have the ability to highlight elements
+     * using "virtual focus" and aria attributes like `aria-activedescendant` on the element outside of listbox component.
+     */
+    focusedItemId?: string | null;
+    /**
+     * When using virtual focus (`focusedItemId`), there can be a double highlight if the arrow keys and hover
+     * are used at the same time. Reports the id of the hovered item, so that the parent can resolve the double
+     * highlight.
+     */
+    onFocusedItemIdChange?: (itemId: string) => void;
     isCompact?: boolean;
+    /**
+     * Vertical padding of the list: `"default"` is `6px 0`, `"none"` lets the surrounding popup own the spacing.
+     * Defaults to `"default"`.
+     */
+    padding?: "default" | "none";
     supportedViews?: UiListboxView[];
 
     ariaAttributes: UiListboxAriaAttributes;

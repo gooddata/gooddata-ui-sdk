@@ -2,10 +2,12 @@
 
 import { defineMessage } from "react-intl";
 
-import { type ISettings, type IWorkspacePermissions } from "@gooddata/sdk-model";
+import { type IFeatureFlags, type IWorkspacePermissions } from "@gooddata/sdk-model";
 
 import { type IHeaderMenuItem } from "./typings.js";
 
+// Use a constant with defineMessage so that i18n validation does not mark it as unused
+export const LANGUAGE_MENU_ITEM_ID = defineMessage({ id: "userMenu.language" }).id;
 const WORKSPACE_SETTINGS_MENU_ITEM_ID = defineMessage({ id: "gs.header.workspaceSettings" }).id;
 /**
  * @internal
@@ -22,10 +24,17 @@ export interface IUiSettings {
 /**
  * @internal
  */
+export interface IGenerateHeaderAccountMenuItemsOptions {
+    workspaceId?: string;
+    featureFlags?: IFeatureFlags;
+}
+
+/**
+ * @internal
+ */
 export function generateHeaderAccountMenuItems(
     workspacePermissions: IWorkspacePermissions,
-    workspaceId?: string,
-    featureFlags?: ISettings,
+    { workspaceId, featureFlags }: IGenerateHeaderAccountMenuItemsOptions = {},
 ): IHeaderMenuItem[] {
     const { canManageProject } = workspacePermissions;
     const accountMenuItems: IHeaderMenuItem[] = [];
@@ -46,6 +55,9 @@ export function generateHeaderAccountMenuItems(
         className: "s-logout",
     };
 
+    if (featureFlags?.enableUserLanguageChange) {
+        accountMenuItems.push({ key: LANGUAGE_MENU_ITEM_ID });
+    }
     if (canManageProject && featureFlags?.enableWorkspaceSettingsAppHeaderMenuItem) {
         accountMenuItems.push(workspaceSettingsItem);
     }

@@ -3184,6 +3184,7 @@ export { IUserSettings }
 // @public
 export interface IUserSettingsService {
     deleteColorPalette(): Promise<void>;
+    deleteLocale(): Promise<void>;
     deleteTheme(): Promise<void>;
     getSettings(): Promise<IUserSettings>;
     setColorPalette(colorPalette: string | ObjRef): Promise<void>;

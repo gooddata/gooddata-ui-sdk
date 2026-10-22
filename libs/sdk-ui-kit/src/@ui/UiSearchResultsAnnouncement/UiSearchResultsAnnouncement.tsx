@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useEffect } from "react";
 
@@ -30,6 +30,11 @@ export interface ISearchResultsAnnouncementProps {
      * Announcement delay in milliseconds.
      */
     announcementDelay?: number;
+
+    /**
+     * Text to announce when there are no results. Defaults to a translated "No results match.".
+     */
+    noResultsText?: string;
 }
 
 /**
@@ -50,6 +55,7 @@ export function UiSearchResultsAnnouncement({
     totalResults,
     resultValues = EMPTY_RESULT_VALUES,
     announcementDelay = DEBOUNCE_DELAY,
+    noResultsText,
 }: ISearchResultsAnnouncementProps) {
     const intl = useIntl();
 
@@ -62,7 +68,7 @@ export function UiSearchResultsAnnouncement({
         }
 
         if (totalResults === 0) {
-            setMessage(intl.formatMessage(messages["searchResultsNone"]));
+            setMessage(noResultsText ?? intl.formatMessage(messages["searchResultsNone"]));
             return;
         }
 
@@ -77,7 +83,7 @@ export function UiSearchResultsAnnouncement({
         }
 
         setMessage(intl.formatMessage(messages["searchResultsMany"], { count: totalResults }));
-    }, [totalResults, resultValues, intl, setMessage]);
+    }, [totalResults, resultValues, noResultsText, intl, setMessage]);
 
     return (
         <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">

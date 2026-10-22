@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-all: Users can change their interface language from the user menu, also in the mobile menu, behind the new `enableUserLanguageChange` feature flag. Add `IUserSettingsService.deleteLocale()` and the `globe` icon of UiIcon.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

@@ -2,19 +2,26 @@
 
 import { type ReactNode } from "react";
 
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, screen } from "@testing-library/react";
 import cx from "classnames";
 import { describe, expect, it, vi } from "vitest";
 
+import { render } from "../../../test/render.js";
 import { useMediaQuery } from "../../responsive/useMediaQuery.js";
 
 import { b, e } from "./listboxBem.js";
 import {
     type IUiListboxInteractiveItemProps,
     type IUiListboxItem,
+    type IUiListboxProps,
     type IUiListboxStaticItemProps,
 } from "./types.js";
-import { UiListbox } from "./UiListbox.js";
+import { UiListbox, getNextFocusableItemId } from "./UiListbox.js";
+
+const requiredProps = {
+    items: [],
+    ariaAttributes: { id: "listbox" },
+} satisfies IUiListboxProps<string>;
 
 vi.mock("../../responsive/useMediaQuery.js", () => ({
     useMediaQuery: vi.fn(() => false),
@@ -542,5 +549,228 @@ describe("UiListbox", () => {
 
         const items = screen.getByRole("listbox").querySelectorAll("[data-testid]");
         expect(items).toHaveLength(2);
+    });
+
+    it("should not select an item when the option element itself is clicked by default (shouldSelectOnOptionClick = false)", async () => {
+        const items: IUiListboxItem<string>[] = [
+            { type: "interactive", id: "item-1", stringTitle: "Item #1", data: "data-1" },
+        ];
+        const onSelect = vi.fn();
+        const { user } = render(<UiListbox {...requiredProps} items={items} onSelect={onSelect} />);
+
+        await user.click(screen.getByRole("option", { name: "Item #1" }));
+
+        expect(onSelect).not.toHaveBeenCalled();
+    });
+
+    it("should select an item when the option element itself is clicked", async () => {
+        const items: IUiListboxItem<string>[] = [
+            { type: "interactive", id: "item-1", stringTitle: "Item #1", data: "data-1" },
+        ];
+        const onSelect = vi.fn();
+        const { user } = render(
+            <UiListbox {...requiredProps} items={items} onSelect={onSelect} shouldSelectOnOptionClick />,
+        );
+
+        /**
+         * UiListbox by default attaches click event listener to a `<div>` inside of `<li>` (DefaultUiListboxInteractiveItemComponent),
+         * not on the <li> option itself. However, Testing Library, unlike real browser (e.g. via Vitest Browser Mode), dispatches click
+         * event on the <li> itself (and does not do hit testing on children elements) and then the clicking on the option does nothing in tests.
+         * So change this behavior with the `shouldSelectOnOptionClick` and apply click listener to `<li>` instead.
+         */
+        await user.click(screen.getByRole("option", { name: "Item #1" }));
+
+        expect(onSelect.mock.calls).toEqual([[items[0], { type: "mouse", newTab: false }]]);
+    });
+
+    it("should select an item once when an item component calls onSelect too", async () => {
+        const items: IUiListboxItem<string>[] = [
+            { type: "interactive", id: "item-1", stringTitle: "Item #1", data: "data-1" },
+        ];
+        const onSelect = vi.fn();
+        const { user } = render(
+            <UiListbox
+                {...requiredProps}
+                items={items}
+                onSelect={onSelect}
+                shouldSelectOnOptionClick
+                // NOTE: Like existing custom item components, which attach `onSelect` themselves
+                InteractiveItemComponent={({ item, onSelect }: IUiListboxInteractiveItemProps<string>) => (
+                    <div onClick={onSelect}>{item.stringTitle}</div>
+                )}
+            />,
+        );
+
+        await user.click(screen.getByText("Item #1"));
+
+        expect(onSelect.mock.calls).toEqual([[items[0], { type: "mouse", newTab: false }]]);
+    });
+
+    it("should not select a disabled item", async () => {
+        const items: IUiListboxItem<string>[] = [
+            {
+                type: "interactive",
+                id: "item-1",
+                stringTitle: "Item #1",
+                isDisabled: true,
+                data: "data-1",
+            },
+        ];
+        const onSelect = vi.fn();
+        const { user } = render(
+            <UiListbox {...requiredProps} items={items} onSelect={onSelect} shouldSelectOnOptionClick />,
+        );
+
+        await user.click(screen.getByRole("option", { name: "Item #1" }));
+
+        expect(onSelect).not.toHaveBeenCalled();
+    });
+
+    it("should not be reachable by tab when virtual focus is enabled", async () => {
+        const items: IUiListboxItem<string>[] = [
+            { type: "interactive", id: "item-1", stringTitle: "Item #1", data: "data-1" },
+        ];
+        const focusedItemId = "item-1";
+        const { user } = render(<UiListbox {...requiredProps} items={items} focusedItemId={focusedItemId} />);
+
+        await user.tab();
+
+        expect(screen.getByRole("listbox")).not.toHaveFocus();
+    });
+
+    it("should not apply aria-activedescendant on list when virtual focus is enabled", () => {
+        const items: IUiListboxItem<string>[] = [
+            { type: "interactive", id: "item-1", stringTitle: "Item #1", data: "data-1" },
+        ];
+        const focusedItemId = "item-1";
+        render(<UiListbox {...requiredProps} items={items} focusedItemId={focusedItemId} />);
+
+        expect(screen.getByRole("listbox")).not.toHaveAttribute("aria-activedescendant");
+    });
+
+    it("should report the hovered item when virtual focus is enabled", async () => {
+        const items: IUiListboxItem<string>[] = [
+            { type: "interactive", id: "item-1", stringTitle: "Item #1", data: "data-1" },
+            { type: "interactive", id: "item-2", stringTitle: "Item #2", data: "data-2" },
+            { type: "interactive", id: "item-3", stringTitle: "Item #3", isDisabled: true, data: "data-3" },
+        ];
+        const focusedItemId = "item-1";
+        const onFocusedItemIdChange = vi.fn<(itemId: string) => void>();
+        const { user } = render(
+            <UiListbox
+                {...requiredProps}
+                items={items}
+                focusedItemId={focusedItemId}
+                onFocusedItemIdChange={onFocusedItemIdChange}
+            />,
+        );
+
+        // NOTE: Like the arrow keys, hovering skips disabled items. Each move has its own position, as
+        // `user.hover` moves to 0,0 every time, and a move to the same position (content moving under a resting
+        // mouse) is ignored
+        await user.pointer({
+            target: screen.getByRole("option", { name: "Item #2" }),
+            coords: { clientX: 10, clientY: 40 },
+        });
+        await user.pointer({
+            target: screen.getByRole("option", { name: "Item #3" }),
+            coords: { clientX: 10, clientY: 70 },
+        });
+
+        expect(onFocusedItemIdChange.mock.calls).toEqual([["item-2"]]);
+    });
+
+    it("should set the language of an item on its option", () => {
+        const items: IUiListboxItem<string>[] = [
+            { type: "interactive", id: "item-1", stringTitle: "Item #1", lang: "de", data: "data-1" },
+        ];
+        render(<UiListbox {...requiredProps} items={items} />);
+
+        expect(screen.getByRole("option", { name: "Item #1" })).toHaveAttribute("lang", "de");
+    });
+});
+
+describe("getNextFocusableItemId", () => {
+    it("should move to the next item", () => {
+        const items: IUiListboxItem<string>[] = [
+            { type: "interactive", id: "item-1", stringTitle: "Item #1", data: "data-1" },
+            { type: "interactive", id: "item-2", stringTitle: "Item #2", data: "data-2" },
+        ];
+        const expected = "item-2";
+
+        const actual = getNextFocusableItemId({ items, focusedItemId: "item-1", direction: "down" });
+
+        expect(actual).toEqual(expected);
+    });
+
+    it("should move to the previous item", () => {
+        const items: IUiListboxItem<string>[] = [
+            { type: "interactive", id: "item-1", stringTitle: "Item #1", data: "data-1" },
+            { type: "interactive", id: "item-2", stringTitle: "Item #2", data: "data-2" },
+        ];
+        const expected = "item-1";
+
+        const actual = getNextFocusableItemId({ items, focusedItemId: "item-2", direction: "up" });
+
+        expect(actual).toEqual(expected);
+    });
+
+    it("should stay at the last item", () => {
+        const items: IUiListboxItem<string>[] = [
+            { type: "interactive", id: "item-1", stringTitle: "Item #1", data: "data-1" },
+            { type: "interactive", id: "item-2", stringTitle: "Item #2", data: "data-2" },
+        ];
+        const expected = "item-2";
+
+        const actual = getNextFocusableItemId({ items, focusedItemId: "item-2", direction: "down" });
+
+        expect(actual).toEqual(expected);
+    });
+
+    it("should start at the first item when moving down without a focused item", () => {
+        const items: IUiListboxItem<string>[] = [
+            { type: "interactive", id: "item-1", stringTitle: "Item #1", data: "data-1" },
+            { type: "interactive", id: "item-2", stringTitle: "Item #2", data: "data-2" },
+        ];
+        const expected = "item-1";
+
+        const actual = getNextFocusableItemId({ items, focusedItemId: null, direction: "down" });
+
+        expect(actual).toEqual(expected);
+    });
+
+    it("should start at the last item when moving up without a focused item", () => {
+        const items: IUiListboxItem<string>[] = [
+            { type: "interactive", id: "item-1", stringTitle: "Item #1", data: "data-1" },
+            { type: "interactive", id: "item-2", stringTitle: "Item #2", data: "data-2" },
+        ];
+        const expected = "item-2";
+
+        const actual = getNextFocusableItemId({ items, focusedItemId: null, direction: "up" });
+
+        expect(actual).toEqual(expected);
+    });
+
+    it("should skip separators and disabled items", () => {
+        const items: IUiListboxItem<string>[] = [
+            { type: "interactive", id: "item-1", stringTitle: "Item #1", data: "data-1" },
+            { type: "separator" },
+            { type: "interactive", id: "item-2", stringTitle: "Item #2", isDisabled: true, data: "data-2" },
+            { type: "interactive", id: "item-3", stringTitle: "Item #3", data: "data-3" },
+        ];
+        const expected = "item-3";
+
+        const actual = getNextFocusableItemId({ items, focusedItemId: "item-1", direction: "down" });
+
+        expect(actual).toEqual(expected);
+    });
+
+    it("should return null when no item can be focused", () => {
+        const items: IUiListboxItem<string>[] = [];
+        const expected = null;
+
+        const actual = getNextFocusableItemId({ items, focusedItemId: null, direction: "down" });
+
+        expect(actual).toEqual(expected);
     });
 });
