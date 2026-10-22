@@ -1268,4 +1268,9 @@ export interface IFeatureFlags {
      * Disabled by default.
      */
     enableAiAssistantChartsV2?: boolean;
+
+    /**
+     * Enable the option of setting user language in the user menu.
+     */
+    enableUserLanguageChange?: boolean;
 }

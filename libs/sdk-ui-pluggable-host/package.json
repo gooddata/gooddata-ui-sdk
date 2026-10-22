@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-pluggable-host",
-    "version": "11.64.0-alpha.6",
+    "version": "11.64.0",
     "description": "GoodData SDK runtime for hosting pluggable applications — registry, loader, routing, platform context, default UI chrome",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -70,6 +70,7 @@
         "@testing-library/dom": "10.4.2",
         "@testing-library/jest-dom": "7.0.1",
         "@testing-library/react": "16.3.0",
+        "@testing-library/user-event": "14.6.7",
         "@types/lodash-es": "4.17.12",
         "@types/node": "24.12.0",
         "@types/react": "19.1.11",

@@ -138,5 +138,29 @@
     "gen-ai.ask-assistant.search": {
         "text": "Build new visualization based on: {question}",
         "crowdinContext": "This is used as prefix for the search term when the user starts a new conversation related to a requested term. For example: \"I want to show more about: <term>\"."
+    },
+    "languageDialog.title": {
+        "text": "Change language",
+        "crowdinContext": "Headline of the dialog where users change the language of the interface for themselves. Also the accessible name of the language select in it."
+    },
+    "languageDialog.default": {
+        "text": "Default ({language})",
+        "crowdinContext": "Option of the language select in the change language dialog that removes the user's own language, so that the default one of the workspace or organization applies again. {language} is the name of that default language, in that language, e.g. English US."
+    },
+    "languageDialog.description": {
+        "text": "<b>Note:</b> Changes the interface only, not dashboard content.",
+        "crowdinContext": "Note in the change language dialog explaining that only menus, buttons and labels change, not the titles and data of dashboards. Keep the <b></b> tags around the word Note."
+    },
+    "languageDialog.select.searchLabel": {
+        "text": "Search languages",
+        "crowdinContext": "Accessible name of the search field in the language select of the change language dialog. Read by screen readers."
+    },
+    "languageDialog.select.searchPlaceholder": {
+        "text": "Search…",
+        "crowdinContext": "Placeholder of the search field in the language select of the change language dialog."
+    },
+    "languageDialog.select.noMatch": {
+        "text": "No matching language.",
+        "crowdinContext": "Shown in the language select of the change language dialog when no language matches the search. Also read by screen readers."
     }
 }

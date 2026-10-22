@@ -2,6 +2,7 @@
 
 // @vitest-environment node
 
+import { createIntl } from "react-intl";
 import { describe, expect, it } from "vitest";
 
 import {
@@ -14,7 +15,9 @@ import {
     UnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 
-import { convertError } from "./errorHandling.js";
+import { DEFAULT_MESSAGES } from "../localization/messagesMap.js";
+
+import { convertError, newErrorMapping } from "./errorHandling.js";
 import {
     CancelledSdkError,
     type ContractExpiredSdkError,
@@ -61,5 +64,18 @@ describe("convertErrors", () => {
         const error = new UnexpectedSdkError("test");
 
         expect(convertError(error)).toBe(error);
+    });
+});
+
+describe("newErrorMapping", () => {
+    it("describes protected data without displaying the internal error code", () => {
+        const intl = createIntl({ locale: "en-US", messages: DEFAULT_MESSAGES["en-US"] });
+        const error = convertError(new ProtectedDataError("access denied"));
+
+        expect(newErrorMapping(intl)[error.getMessage()]).toEqual({
+            icon: "gd-icon-lock",
+            message: "You don't have access",
+            description: "Contact your administrator to request access.",
+        });
     });
 });

@@ -2,6 +2,156 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.64.0",
+            "tag": "@gooddata/sdk-ui-all_v11.64.0",
+            "date": "Thu, 22 Oct 2026 10:09:35 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-ui-kit: UiListbox has a new `shouldSelectOnOptionClick` prop that selects an item on a click anywhere in its option."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Compact UiListbox rows are 28px high. UiTextInput is 32px high including its border, shows a border on hover and a 2px outline on focus, and its icons darken on hover and focus. UiFloatingPanel has a border."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: UiTextInput no longer shows the browser focus ring on its inner input."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: UiListbox highlights rows without a transition, so the highlight no longer flickers when moving between items."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: UiSearchResultsAnnouncement accepts a custom `noResultsText`."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: UiTextInput has a new `small` size."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: UiListbox has a new `padding` prop; `\"none\"` removes the vertical padding of the list."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: UiListbox items accept a `lang` attribute, which is set on their option."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: UiListbox supports virtual focus with the new `focusedItemId` and `onFocusedItemIdChange` props."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Add the UiSearchableSelect component, a select with a search field in its popup."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Header tests pass workspace permissions as named parameters."
+                    },
+                    {
+                        "comment": "sdk-ui-all: `generateHeaderAccountMenuItems()` takes the workspace ID and feature flags in an options parameter."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: User menu items without a link render as buttons."
+                    },
+                    {
+                        "comment": "sdk-ui-pluggable-host: Add a shared `render()` helper for tests."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Users can change their interface language from the user menu, also in the mobile menu, behind the new `enableUserLanguageChange` feature flag. Add `IUserSettingsService.deleteLocale()` and the `globe` icon of UiIcon."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: UiModalDialog is never wider than the screen, so it fits small screens too."
+                    },
+                    {
+                        "comment": "sdk-model: Remove `MONGODB` and the stale `DRILL` from the `DataSourceType` union; neither is a supported data source type any more"
+                    },
+                    {
+                        "comment": "api-client-tiger: Remove `MONGODB` from the generated data source type enums"
+                    },
+                    {
+                        "comment": "api-client-tiger, sdk-model, sdk-backend-spi, sdk-backend-base, sdk-backend-tiger, sdk-code-convertors, sdk-ui-gen-ai: Add the v2 Publisher service on the Document entities."
+                    },
+                    {
+                        "comment": "sdk-ui: Visualizations display a localized access error instead of the internal PROTECTED_REPORT code when execution references restricted data."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: UiIcon has new columnGroup, visualizationStack and richText icons."
+                    },
+                    {
+                        "comment": "sdk-ui-pluggable-application: createBackendForModule takes an onCacheReady option that receives the cache control of the created backend, so a module can reset its caches."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Add renderItemDetails to the internal CatalogItemPicker and make it generic over its payload types."
+                    },
+                    {
+                        "comment": "sdk-backend-base: The caching backend no longer serves cached attribute elements of a label for a computed attribute sharing its id."
+                    },
+                    {
+                        "comment": "sdk-embedding: Add the catalogLoaded Analytical Designer event, emitted after every successful catalog load so the host can set filters in an empty AD."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Alerting and scheduled email management dialogs accept a dashboardUrlBuilder prop."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai, sdk-pluggable-application-model, sdk-ui-pluggable-host: The reasoning effort picked on the new-dashboard screen carries into the chat."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: The collapsible, resizable left sidebar is on by default; `enableCollapsibleLeftSidebar` now defaults to `true` when the backend does not set it."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: In compact content density, headline widgets no longer leave empty space below their content and keep the font size they have in comfortable density."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Chip labels in dialogs, such as the alert list filters, show in Safari without needing a hover."
+                    },
+                    {
+                        "comment": "api-client-tiger, sdk-backend-tiger: The workspace localization usage, its workspaces and users lists and the workspace localization statistics come from the backend localization endpoints. The defaults of a workspace are the values it gets."
+                    },
+                    {
+                        "comment": "sdk-backend-spi, sdk-backend-tiger: The localization usage lists accept a name filter, which the backend applies before paging."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Escape in a UiPopover closes only the popover, not a parent drawer or dialog."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: Report which language settings the user detail saved through `onEvent`"
+                    },
+                    {
+                        "comment": "sdk-ui-kit, sdk-ui-filters, sdk-ui-pluggable-host: Native buttons and inputs in overlays use the page font instead of the browser default font."
+                    },
+                    {
+                        "comment": "sdk-backend-spi: Add data source management, data source files (CSV upload, analysis and import) and data filter settings to the backend SPI. sdk-model: Add data source and CSV file types."
+                    },
+                    {
+                        "comment": "sdk-ui-pluggable-application: Remove the mention of backend-specific functions from the client platform context documentation."
+                    },
+                    {
+                        "comment": "sdk-backend-spi: Add reading and writing of the declarative logical data model, the workspace layout import, data source scans and logical model generation, workspace custom application settings and all workspace references. sdk-model: Add declarative logical data model, physical data model and custom application setting types."
+                    },
+                    {
+                        "comment": "sdk-backend-spi: Add organization CSP directives, platform usage, user invitations, current user API tokens, workspace creation and deletion. sdk-backend-tiger: Deprecate TigerSpecificFunctions; it will be removed in the next major version."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: The workspace search test loads its own module copy, so it passes in any test file order."
+                    },
+                    {
+                        "comment": "sdk-ui-pluggable-host: In export mode, users without the BASE_UI_ACCESS permission keep the Dashboards and Publisher applications, so the exports they request render as they did in the standalone Dashboards application, which never checked this permission."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Add opt-in highlight and strikethrough markdown to RichText."
+                    },
+                    {
+                        "comment": "sdk-model: Add theme image references and image URL resolution for v2 Publisher documents."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: The user detail dialog notes whether the user's workspaces have a translation into their metadata and data language."
+                    },
+                    {
+                        "comment": "sdk-model, sdk-backend-tiger: Add the `enableGenAiReportTakeaways` feature flag"
+                    },
+                    {
+                        "comment": "sdk-ui-ext: Keep the date icon on a conditional formatting date rule whose column was removed."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: The workspace permission dialog shows Manage all visualizations as included in Analyze where the workspace grants it with Analyze."
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.63.0",
             "tag": "@gooddata/sdk-ui-all_v11.63.0",
             "date": "Mon, 19 Oct 2026 10:58:30 GMT",

@@ -73,6 +73,11 @@ export function newErrorMapping(intl: IntlShape): IErrorDescriptors {
             message: intl.formatMessage({ id: "visualization.ErrorMessageUnauthorized" }),
             description: intl.formatMessage({ id: "visualization.ErrorDescriptionUnauthorized" }),
         },
+        [ErrorCodes.PROTECTED_REPORT]: {
+            icon: "gd-icon-lock",
+            message: intl.formatMessage({ id: "visualization.ErrorMessageProtectedReport" }),
+            description: intl.formatMessage({ id: "visualization.ErrorDescriptionProtectedReport" }),
+        },
         [ErrorCodes.NO_DATA]: {
             icon: "gd-icon-filter",
             message: intl.formatMessage({ id: "visualization.ErrorMessageNoData" }),

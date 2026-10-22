@@ -1,0 +1,118 @@
+// (C) 2026 GoodData Corporation
+
+@use "../../../styles/scss/variables";
+@use "../../../styles/scss/mixins";
+@use "../../../styles/scss/Button/variables" as button-variables;
+
+/**
+ * Custom properties are needed to animate the linear-gradient background image in the pressed dropdown button
+ * state. See the comment in `__button` below for more details.
+ */
+@property --searchable-select-background-top {
+    syntax: "<color>";
+    inherits: false;
+    initial-value: transparent;
+}
+
+@property --searchable-select-background-bottom {
+    syntax: "<color>";
+    inherits: false;
+    initial-value: transparent;
+}
+
+.gd-ui-kit-searchable-select {
+    &__button,
+    &__button-icon {
+        display: flex;
+        align-items: center;
+    }
+
+    &__button {
+        --gd-icon-fill-color: var(--gd-palette-complementary-6);
+        --searchable-select-background-top: var(--gd-palette-complementary-0);
+        --searchable-select-background-bottom: var(--gd-palette-complementary-0);
+        color: var(--gd-palette-complementary-7);
+        cursor: pointer;
+        font-size: 14px;
+        height: var(--gd-button-M);
+        width: 100%;
+        gap: 5px;
+        padding: 6.5px 10px;
+        border-radius: 3px;
+        border: 1px solid var(--gd-palette-complementary-4);
+        // "Shadow selectbox default" of the Select in Figma; hover and pressed have their own
+        box-shadow: 0 1px 1px 0 rgba(48, 52, 66, 0.05);
+
+        /**
+         * The pressed state uses a gradient from `--gd-palette-complementary-3` to
+         * `--gd-palette-complementary-2`. The problem is that background-image (linear-gradient) is not
+         * properly animatable (animation type = discrete). The browser by default excludes discrete animation
+         * from transitioning, resulting in immediate change without transition. Even with
+         * `transition-behavior: allow-discrete;` it would not work properly and would immediately flip it on
+         * the 50% time stop of the transition duration (or more precisely easing progress).
+         *
+         * Therefore to animate the linear-gradient properly, we introduce a shared background rule here in
+         * `__button` and we introduce custom properties of type `<color>`, which in this combination allows
+         * us to transition the linear gradient in pressed state properly.
+         */
+        background: linear-gradient(
+            to bottom,
+            var(--searchable-select-background-top),
+            var(--searchable-select-background-bottom)
+        );
+
+        /**
+         * Transition properties are not part of transition "all", so custom gradient properties are also
+         * listed here. See https://github.com/w3c/csswg-drafts/issues/8456 for more details.
+         */
+        transition:
+            var(--gd-transition-all),
+            --searchable-select-background-top 0.25s ease-in-out,
+            --searchable-select-background-bottom 0.25s ease-in-out;
+
+        &:hover,
+        &:focus-visible {
+            --gd-icon-fill-color: var(--gd-palette-complementary-7);
+            --searchable-select-background-top: var(--gd-palette-complementary-1);
+            --searchable-select-background-bottom: var(--gd-palette-complementary-1);
+            color: var(--gd-palette-complementary-8);
+            border-color: var(--gd-palette-complementary-5);
+            box-shadow: 0 -1px 0 0 var(--gd-palette-complementary-5-t40) inset;
+        }
+
+        &:active,
+        &[aria-expanded="true"] {
+            --gd-icon-fill-color: var(--gd-palette-complementary-7);
+            --searchable-select-background-top: var(--gd-palette-complementary-3);
+            --searchable-select-background-bottom: var(--gd-palette-complementary-2);
+            color: var(--gd-palette-complementary-8);
+            border-color: var(--gd-palette-complementary-5);
+            box-shadow: 0 1px 0 0 var(--gd-palette-complementary-5-t40) inset;
+        }
+    }
+
+    // long values are cut off, so that the icon stays visible
+    &__button-title {
+        @include mixins.text-overflow;
+    }
+
+    &__button-icon {
+        flex-shrink: 0;
+        margin-left: auto;
+    }
+
+    &__body {
+        padding: 4px 0;
+    }
+
+    &__search {
+        padding: 10px;
+    }
+
+    &__no-items {
+        padding: 10px;
+        font-size: 12px;
+        line-height: 145%;
+        color: var(--gd-palette-complementary-7);
+    }
+}

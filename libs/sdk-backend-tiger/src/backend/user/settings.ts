@@ -68,6 +68,10 @@ export class TigerUserSettingsService
         );
     }
 
+    public async deleteLocale(): Promise<void> {
+        return this.deleteSettingByType("LOCALE");
+    }
+
     public async deleteTheme(): Promise<void> {
         return this.deleteSettingByType("ACTIVE_THEME");
     }

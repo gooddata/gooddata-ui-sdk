@@ -128,6 +128,46 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
     text-overflow: ellipsis;
 }
 
+// The Language row of the mobile menu footer, between the user name and Logout (Figma M1)
+.gd-header-language-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-sizing: border-box;
+    width: 100%;
+    // 42px as in Figma, overriding the 43px of the user name row it shares the class with
+    height: 42px;
+    margin-bottom: 8px;
+    border: 0;
+    background: none;
+    font-family: inherit;
+    line-height: 42px;
+    text-align: left;
+    cursor: pointer;
+    transition: var(--gd-transition-all);
+
+    // as in Figma; no theme variable gives a hover background for the menu
+    &:hover {
+        background-color: #343c4a;
+    }
+
+    .gd-header-language-label {
+        flex: 1 1 auto;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .gd-ui-kit-icon {
+        flex: none;
+
+        // the globe is drawn 18px wide in its 20px box, so it overlaps its 16px slot by 1px on each side,
+        // as in the design
+        &:first-child {
+            margin: -2px;
+        }
+    }
+}
+
 .gd-header-menu-vertical {
     .gd-header-menu-item {
         margin: 0;
@@ -951,6 +991,11 @@ a.gd-list-help-menu-item.gd-list-item {
             &:focus {
                 text-decoration: none;
             }
+        }
+
+        button.gd-list-item {
+            border: 0;
+            line-height: inherit;
         }
     }
 }

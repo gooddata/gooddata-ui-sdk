@@ -10,13 +10,14 @@ import { v4 as uuid } from "uuid";
 
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
+import { UiIcon } from "../@ui/UiIcon/UiIcon.js";
 import { Icon } from "../Icon/Icon.js";
 import { Overlay } from "../Overlay/Overlay.js";
 import { Typography } from "../Typography/Typography.js";
 import { removeFromDom } from "../utils/domUtilities.js";
 
 import { addCssToStylesheet } from "./addCssToStylesheet.js";
-import { LOGOUT_MENU_ITEM_ID } from "./generateHeaderAccountMenuItems.js";
+import { LANGUAGE_MENU_ITEM_ID, LOGOUT_MENU_ITEM_ID } from "./generateHeaderAccountMenuItems.js";
 import { HeaderAccount } from "./HeaderAccount.js";
 import { HeaderChatButton } from "./HeaderChatButton.js";
 import { createHeaderCssRules } from "./headerCss.js";
@@ -470,6 +471,28 @@ export function AppHeader({
         );
     };
 
+    const renderLanguageButton = () => {
+        const languageMenuItem = accountMenuItems.find((item) => item.key === LANGUAGE_MENU_ITEM_ID);
+        return languageMenuItem ? (
+            <button
+                type="button"
+                className="gd-header-menu-vertical-bottom-item gd-header-language-button s-language"
+                aria-haspopup="dialog"
+                onClick={(e: MouseEvent) => {
+                    // the menu closes first, so that the dialog the item opens isn't under it
+                    setOverlayMenu(false);
+                    onMenuItemClick?.(languageMenuItem, e);
+                }}
+            >
+                <UiIcon type="globe" size={20} color="currentColor" />
+                <span className="gd-header-language-label">
+                    <FormattedMessage id={languageMenuItem.key} />
+                </span>
+                <UiIcon type="navigateRight" size={12} color="currentColor" />
+            </button>
+        ) : null;
+    };
+
     const renderVerticalMenu = () => {
         const menuItemsGroupsToRender = state.isHelpMenuOpen
             ? [[getHelpMenuLink("gd-icon-header-help-back"), ...helpMenuItems]]
@@ -495,6 +518,7 @@ export function AppHeader({
                     <div className="gd-header-menu-vertical-bottom-item">
                         <span className="gd-header-username gd-icon-user">{userName}</span>
                     </div>
+                    {renderLanguageButton()}
                     <div>{renderLogoutButton()}</div>
                 </div>
             </div>

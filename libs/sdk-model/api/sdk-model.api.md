@@ -4092,6 +4092,7 @@ export interface IFeatureFlags {
     // (undocumented)
     enableTrinoDataSource?: boolean;
     enableUserDataFiltersUi?: boolean;
+    enableUserLanguageChange?: boolean;
     enableVisualizationFilteringByTags?: boolean;
     enableVisualizationFineTuning?: boolean;
     enableVisualizationPermissions?: boolean;

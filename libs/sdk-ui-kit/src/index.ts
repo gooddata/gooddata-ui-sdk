@@ -287,7 +287,11 @@ export {
     type IHeaderDataMenuItem,
     type IHeaderDataMenuProps,
 } from "./Header/HeaderDataMenu.js";
-export { generateHeaderAccountMenuItems, type IUiSettings } from "./Header/generateHeaderAccountMenuItems.js";
+export {
+    generateHeaderAccountMenuItems,
+    type IGenerateHeaderAccountMenuItemsOptions,
+    type IUiSettings,
+} from "./Header/generateHeaderAccountMenuItems.js";
 export { generateHeaderHelpMenuItems } from "./Header/generateHeaderHelpMenuItems.js";
 export { generateHeaderCommonHelpMenuItems } from "./Header/generateHeaderCommonHelpMenuItems.js";
 export { generateHeaderStaticHelpMenuItems } from "./Header/generateHeaderStaticHelpMenuItems.js";
@@ -1137,6 +1141,7 @@ export {
     useKeyboardNavigationTarget,
     type IUseKeyboardNavigationTargetProps,
 } from "./@ui/@utils/useKeyboardNavigationTarget.js";
+export { matchesSearchQuery } from "./@ui/@utils/matchesSearchQuery.js";
 
 export {
     useListWithActionsKeyboardNavigation,
@@ -1339,6 +1344,23 @@ export {
     type ConfirmDialogVariant,
 } from "./@ui/UiConfirmDialog/UiConfirmDialogCard.js";
 export { UiModalDialog, type IUiModalDialogProps } from "./@ui/UiModalDialog/UiModalDialog.js";
+export {
+    UiSearchableSelect,
+    type IUiSearchableSelectProps,
+} from "./@ui/UiSearchableSelect/UiSearchableSelect.js";
+export { UiSearchableSelectDivider } from "./@ui/UiSearchableSelect/UiSearchableSelectDivider.js";
+export {
+    UiSearchableSelectItem,
+    type IUiSearchableSelectItemProps,
+} from "./@ui/UiSearchableSelect/UiSearchableSelectItem.js";
+export {
+    UiSearchableSelectList,
+    type IUiSearchableSelectListProps,
+} from "./@ui/UiSearchableSelect/UiSearchableSelectList.js";
+export {
+    UiSearchableSelectSearch,
+    type IUiSearchableSelectSearchProps,
+} from "./@ui/UiSearchableSelect/UiSearchableSelectSearch.js";
 export { UiDialogBody, type IUiDialogBodyProps } from "./@ui/UiModalDialog/UiDialogBody.js";
 export {
     UiTextInput,

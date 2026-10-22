@@ -12,6 +12,7 @@ import {
 import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { accessibilityConfigToAttributes } from "../../typings/utilities.js";
 import { type IconType } from "../@types/icon.js";
+import { type SizeMedium, type SizeSmall } from "../@types/size.js";
 import { bem } from "../@utils/bem.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
 import { UiIconButton } from "../UiIconButton/UiIconButton.js";
@@ -45,6 +46,11 @@ export interface IUiTextInputProps {
     onChange: (next: string) => void;
     /** Optional label rendered above the input. */
     label?: string;
+    /**
+     * Height of the field: `"medium"` is 32px, `"small"` is 27px with smaller text.
+     * Defaults to `"medium"`.
+     */
+    size?: SizeSmall | SizeMedium;
     /** Placeholder shown when the input is empty. */
     placeholder?: string;
     /** Optional icon rendered inside the input at the start. */
@@ -88,7 +94,7 @@ export interface IUiTextInputProps {
 
 /**
  * Single-line text input with optional label and leading / trailing icons.
- * The kit's canonical text-field rendering: 32px height, 1px
+ * The kit's canonical text-field rendering: 32px height (27px when `size` is `"small"`), 1px
  * complementary-4 border, inset shadow, primary-blue focus state.
  *
  * @internal
@@ -98,6 +104,7 @@ export function UiTextInput({
     value,
     onChange,
     label,
+    size = "medium",
     placeholder,
     iconBefore,
     iconAfter,
@@ -130,10 +137,10 @@ export function UiTextInput({
                     {label}
                 </label>
             ) : null}
-            <div className={e("field", { disabled, error: isError })}>
+            <div className={e("field", { disabled, error: isError, size })}>
                 {iconBefore ? (
                     <span className={e("icon-before")}>
-                        <UiIcon type={iconBefore} size={14} color="complementary-6" />
+                        <UiIcon type={iconBefore} size={14} />
                     </span>
                 ) : null}
                 <input
@@ -172,7 +179,7 @@ export function UiTextInput({
                     </span>
                 ) : iconAfter ? (
                     <span className={e("icon-after")}>
-                        <UiIcon type={iconAfter} size={14} color="complementary-6" />
+                        <UiIcon type={iconAfter} size={14} />
                     </span>
                 ) : null}
             </div>
