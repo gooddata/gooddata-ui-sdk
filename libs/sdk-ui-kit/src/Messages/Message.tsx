@@ -4,6 +4,7 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { Button } from "../Button/Button.js";
+import { accessibilityConfigToAttributes } from "../typings/utilities.js";
 
 import { type IMessageProps } from "./typings.js";
 
@@ -19,6 +20,7 @@ export function Message({
     contrast,
     intensive,
     dataTestId,
+    accessibilityConfig,
 }: IMessageProps) {
     const intl = useIntl();
 
@@ -35,7 +37,12 @@ export function Message({
         id: "message.accessibility.dismiss.notification",
     });
     return (
-        <div id={id} className={classes} data-testid={dataTestId}>
+        <div
+            id={id}
+            className={classes}
+            data-testid={dataTestId}
+            {...accessibilityConfigToAttributes(accessibilityConfig)}
+        >
             <div className="gd-message-text">
                 {children}
                 {onClose ? (

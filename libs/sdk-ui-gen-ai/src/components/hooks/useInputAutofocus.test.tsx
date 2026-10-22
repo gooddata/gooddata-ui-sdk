@@ -1,23 +1,45 @@
 // (C) 2026 GoodData Corporation
 
 import { type EditorView } from "@codemirror/view";
-import { render } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { configureStore } from "@reduxjs/toolkit";
+import { act, render } from "@testing-library/react";
+import { Provider } from "react-redux";
+import { afterEach, describe, expect, it } from "vitest";
 
-import { type RootState } from "../../store/types.js";
+import { type IChatConversationLocal } from "../../model.js";
+import {
+    chatWindowSliceName,
+    chatWindowSliceReducer,
+    getInitialChatWindowState,
+} from "../../store/chatWindow/chatWindowSlice.js";
+import {
+    clearConversationSuccessAction,
+    messagesSliceName,
+    messagesSliceReducer,
+} from "../../store/messages/messagesSlice.js";
 
 import { useInputAutofocus } from "./useInputAutofocus.js";
 
-let conversationLocalId: string | undefined;
+function createStore() {
+    return configureStore({
+        reducer: {
+            [chatWindowSliceName]: chatWindowSliceReducer,
+            [messagesSliceName]: messagesSliceReducer,
+        },
+        preloadedState: {
+            [chatWindowSliceName]: getInitialChatWindowState(),
+        },
+    });
+}
 
-vi.mock("react-redux", () => ({
-    useSelector: (selector: (state: RootState) => unknown) =>
-        selector({
-            messages: {
-                currentConversation: conversationLocalId ? { localId: conversationLocalId } : undefined,
-            },
-        } as unknown as RootState),
-}));
+function switchConversation(store: ReturnType<typeof createStore>, localId: string) {
+    store.dispatch(
+        clearConversationSuccessAction({
+            conversation: { localId } as IChatConversationLocal,
+            threadId: localId,
+        }),
+    );
+}
 
 const nextFrame = () => new Promise((resolve) => requestAnimationFrame(resolve));
 
@@ -39,35 +61,48 @@ afterEach(() => {
     document.body.innerHTML = "";
 });
 
+function renderInput(store: ReturnType<typeof createStore>, editorApi: EditorView) {
+    return render(
+        <Provider store={store}>
+            <TestInput editorApi={editorApi} />
+        </Provider>,
+    );
+}
+
 describe("useInputAutofocus", () => {
     it("focuses the editor when the chat lands in another conversation", async () => {
-        conversationLocalId = "conversation-1";
+        const store = createStore();
+        switchConversation(store, "conversation-1");
         const { contentDOM, editorApi } = mountEditor();
-        const { rerender } = render(<TestInput editorApi={editorApi} />);
+        renderInput(store, editorApi);
         await nextFrame();
 
         const elsewhere = document.createElement("button");
         document.body.appendChild(elsewhere);
         elsewhere.focus();
 
-        conversationLocalId = "conversation-2";
-        rerender(<TestInput editorApi={editorApi} />);
+        act(() => switchConversation(store, "conversation-2"));
         await nextFrame();
 
         expect(contentDOM).toHaveFocus();
     });
 
     it("leaves focus alone while the conversation stays the same", async () => {
-        conversationLocalId = "conversation-1";
+        const store = createStore();
+        switchConversation(store, "conversation-1");
         const { editorApi } = mountEditor();
-        const { rerender } = render(<TestInput editorApi={editorApi} />);
+        const { rerender } = renderInput(store, editorApi);
         await nextFrame();
 
         const elsewhere = document.createElement("button");
         document.body.appendChild(elsewhere);
         elsewhere.focus();
 
-        rerender(<TestInput editorApi={editorApi} />);
+        rerender(
+            <Provider store={store}>
+                <TestInput editorApi={editorApi} />
+            </Provider>,
+        );
         await nextFrame();
 
         expect(elsewhere).toHaveFocus();

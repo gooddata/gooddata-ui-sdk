@@ -12,6 +12,7 @@ import { DEFAULT_LEGEND_CONFIG } from "@gooddata/sdk-ui-vis-commons";
 
 import { recordedDataFacade } from "../../testUtils/recordings.fixture.js";
 import { generateChartOptions } from "../chartTypes/_util/helper.js";
+import { type IChartOptions } from "../typings/unsafe.js";
 
 import { buildLegendOptions, getLegendItems, shouldLegendBeEnabled } from "./legendBuilder.js";
 
@@ -136,6 +137,27 @@ describe("shouldLegendBeEnabled", () => {
 });
 
 describe("getLegendItems", () => {
+    it("should name sankey legend items by the node name, falling back to the node id", () => {
+        const chartOptions = {
+            type: "sankey",
+            data: {
+                series: [
+                    {
+                        nodes: [
+                            { id: "1.234", name: "1.23", color: "red" },
+                            { id: "A", color: "blue" },
+                        ],
+                    },
+                ],
+            },
+        } as unknown as IChartOptions;
+
+        expect(getLegendItems(chartOptions, undefined)).toEqual([
+            { name: "1.23", color: "red", legendIndex: 0 },
+            { name: "A", color: "blue", legendIndex: 1 },
+        ]);
+    });
+
     it("should return correct legend items for regular charts", () => {
         const chartOptions = generateChartOptions(
             rec(ReferenceRecordings.Scenarios.BarChart.TwoMeasuresWithViewBy as unknown as ScenarioRecording),

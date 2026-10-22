@@ -33,5 +33,11 @@
     "messages.genAi.visualisation.link.copied": "คัดลอกลิงก์การแสดงภาพข้อมูลไปยังคลิปบอร์ดของคุณแล้ว",
     "messages.showMore": "แสดงเพิ่มเติม",
     "messages.showLess": "แสดงน้อยลง",
-    "gen-ai.ask-assistant.search": "สร้างการแสดงภาพข้อมูลใหม่โดยอิงตาม: {question}"
+    "gen-ai.ask-assistant.search": "สร้างการแสดงภาพข้อมูลใหม่โดยอิงตาม: {question}",
+    "languageDialog.title": "เปลี่ยนภาษา",
+    "languageDialog.default": "ค่าเริ่มต้น ({language})",
+    "languageDialog.description": "<b>หมายเหตุ:</b> การเปลี่ยนแปลงนี้มีผลเฉพาะกับอินเทอร์เฟซเท่านั้น ไม่รวมเนื้อหาในแดชบอร์ด",
+    "languageDialog.select.searchLabel": "ค้นหาภาษา",
+    "languageDialog.select.searchPlaceholder": "ค้นหา…",
+    "languageDialog.select.noMatch": "ไม่พบภาษาที่ตรงกัน"
 }

@@ -327,6 +327,8 @@ export type ElementsFilterControllerData = {
     isCommittedSelectionInverted: boolean;
     committedSelectionElements: IAttributeElement[];
     searchString: string;
+    elementsNumberFormat?: string;
+    separators?: ISeparators_2;
     isFilteredByParentFilters: boolean;
     parentFilterAttributes: IAttributeMetadataObject[];
     enableShowingFilteredElements?: boolean;
@@ -512,6 +514,8 @@ export interface IAttributeElementLoader {
     getAllElements(): IAttributeElement[];
     getDisplayAsLabel(): ObjRef | undefined;
     getElementsByKey(keys: AttributeElementKey[]): IAttributeElement[];
+    // @beta
+    getElementsNumberFormat?(): string | undefined;
     getInitialElementsPageError(): GoodDataSdkError | undefined;
     getInitialElementsPageStatus(): AsyncOperationStatus;
     getInitTotalCountError(): GoodDataSdkError | undefined;
@@ -628,6 +632,7 @@ export interface IAttributeFilterCoreProps {
     resetOnParentFilterChange?: boolean;
     selectFirst?: boolean;
     selectionMode?: DashboardAttributeFilterSelectionMode;
+    separators?: ISeparators_2;
     // @alpha
     showHeader?: boolean;
     staticElements?: IAttributeElement[];
@@ -782,6 +787,7 @@ export interface IAttributeFilterElementsSelectItemProps {
     onSelect: () => void;
     onSelectOnly: () => void;
     primaryLabelTitle?: string;
+    rawValueTitle?: string;
 }
 
 // @beta
@@ -855,6 +861,7 @@ export type IAttributeFilterHandlerOptions = ISingleSelectAttributeFilterHandler
 export interface IAttributeFilterHandlerOptionsBase {
     displayAsLabel?: ObjRef;
     hiddenElements?: string[];
+    separators?: ISeparators_2;
     staticElements?: IAttributeElement[];
     withoutApply?: boolean;
 }
@@ -1243,6 +1250,7 @@ export interface ILoadElementsResult {
     cacheId?: string;
     // (undocumented)
     elements: IAttributeElement[];
+    numberFormat?: string;
     // (undocumented)
     options: ILoadElementsOptions;
     // (undocumented)
@@ -1677,6 +1685,8 @@ export interface IUseAttributeFilterHandlerProps {
     filter: IAttributeFilter;
     // (undocumented)
     hiddenElements?: string[];
+    // (undocumented)
+    separators?: ISeparators_2;
     // (undocumented)
     staticElements?: IAttributeElement[];
     // (undocumented)

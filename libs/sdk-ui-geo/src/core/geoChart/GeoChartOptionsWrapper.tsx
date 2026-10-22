@@ -12,6 +12,9 @@ import {
     ErrorCodes,
     type IErrorProps,
     VisualizationTypes,
+    createNumberFormatter,
+    formatAttributeHeaderValues,
+    getAttributeHeaderItemName,
     newErrorMapping,
 } from "@gooddata/sdk-ui";
 import {
@@ -80,6 +83,15 @@ export function GeoChartOptionsWrapper(props: IGeoChartInnerProps) {
         [props.intl],
     );
     const errorMap = useMemo(() => newErrorMapping(props.intl), [props.intl]);
+    // element values of attributes with a number format get their formatted name once, here, so the
+    // location, segment, tooltip and legend texts built below all show it
+    const { dataView: rawDataView, config } = props;
+    const formattedDataView = useMemo(
+        () =>
+            rawDataView &&
+            formatAttributeHeaderValues(rawDataView, createNumberFormatter(config?.separators)),
+        [rawDataView, config?.separators],
+    );
 
     const getCategoryLegendItems = useCallback(
         (colorStrategy: IColorStrategy): IPushpinCategoryLegendItem[] => {
@@ -91,9 +103,9 @@ export function GeoChartOptionsWrapper(props: IGeoChartInnerProps) {
     const buildGeoChartOptions = useCallback(
         (geoData: Readonly<IGeoData>, props: IGeoChartInnerProps): IGeoChartInnerOptions => {
             const { segment } = geoData;
-            const { config: { colors = [], colorPalette = [], colorMapping = [] } = {}, dataView } = props;
+            const { config: { colors = [], colorPalette = [], colorMapping = [] } = {} } = props;
 
-            const dv = DataViewFacade.for(dataView!);
+            const dv = DataViewFacade.for(formattedDataView!);
             const palette = getValidColorPalette(colors, colorPalette);
             const colorStrategy = getColorStrategy(palette, colorMapping, geoData, dv);
 
@@ -106,13 +118,11 @@ export function GeoChartOptionsWrapper(props: IGeoChartInnerProps) {
                 colorPalette: palette,
             };
         },
-        [getCategoryLegendItems],
+        [getCategoryLegendItems, formattedDataView],
     );
 
     const renderVisualization = useCallback(() => {
-        const { dataView } = props;
-
-        const dv = DataViewFacade.for(dataView!);
+        const dv = DataViewFacade.for(formattedDataView!);
         const geoData = getGeoData(dv, emptyHeaderString, nullHeaderString);
         const validationResult = validateGeoData(geoData, props);
 
@@ -123,7 +133,7 @@ export function GeoChartOptionsWrapper(props: IGeoChartInnerProps) {
 
         const geoChartOptions = buildGeoChartOptions(geoData, props);
         return <GeoChartInner {...props} geoChartOptions={geoChartOptions} />;
-    }, [buildGeoChartOptions, emptyHeaderString, nullHeaderString, props]);
+    }, [formattedDataView, buildGeoChartOptions, emptyHeaderString, nullHeaderString, props]);
 
     const { dataView, error, isLoading } = props;
 
@@ -150,7 +160,10 @@ export function createCategoryLegendItems(
     const colorAssignment = colorStrategy.getColorAssignment();
     return colorAssignment.map((item, legendIndex): IPushpinCategoryLegendItem => {
         const { name, uri } = isResultAttributeHeader(item.headerItem)
-            ? item.headerItem.attributeHeaderItem
+            ? {
+                  name: getAttributeHeaderItemName(item.headerItem.attributeHeaderItem),
+                  uri: item.headerItem.attributeHeaderItem.uri,
+              }
             : { name: emptyHeaderString, uri: emptyHeaderString };
         const color = colorStrategy.getColorByIndex(legendIndex);
         return {

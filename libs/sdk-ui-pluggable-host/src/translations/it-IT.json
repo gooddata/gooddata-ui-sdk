@@ -33,5 +33,11 @@
     "messages.genAi.visualisation.link.copied": "Il link di visualizzazione è stato copiato negli appunti.",
     "messages.showMore": "Mostra di più",
     "messages.showLess": "Mostra di meno",
-    "gen-ai.ask-assistant.search": "Costruire nuove visualizzazioni basate su: {question}"
+    "gen-ai.ask-assistant.search": "Costruire nuove visualizzazioni basate su: {question}",
+    "languageDialog.title": "Cambia lingua",
+    "languageDialog.default": "Predefinito ({language})",
+    "languageDialog.description": "<b>Nota:</b> Modifica solo l'interfaccia, non il contenuto del cruscotto.",
+    "languageDialog.select.searchLabel": "Cerca lingue",
+    "languageDialog.select.searchPlaceholder": "Cerca…",
+    "languageDialog.select.noMatch": "Nessuna lingua corrispondente."
 }

@@ -51,6 +51,7 @@ export function sortColorAssignmentsAlphabetically(colorAssignments: IColorAssig
         .map((assignment, index) => ({
             assignment,
             index,
+            // sorted by the raw element value, number-formatted values do not sort as numbers
             name: getMappingHeaderName(assignment.headerItem) ?? "",
         }))
         .sort((left, right) => {

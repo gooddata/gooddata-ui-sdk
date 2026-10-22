@@ -22,6 +22,7 @@ import {
     type IGenAIAssistantMessageTextContentProps,
     type IGenAIAssistantSlots,
     type IGenAIAssistantUserMessageProps,
+    type IGenAIAssistantVisualizationMenuProps,
 } from "./customized/types.js";
 
 /**
@@ -43,6 +44,7 @@ export interface IGenAIAssistantComponents {
     MessageReasoningContentComponent: ComponentType<IGenAIAssistantMessageReasoningContentProps>;
     MessageMultipartContentComponent: ComponentType<IGenAIAssistantMessageMultipartContentProps>;
     ConversationVisualizationContentComponent: ComponentType<IGenAIAssistantConversationVisualizationContentProps>;
+    VisualizationMenuComponent: ComponentType<IGenAIAssistantVisualizationMenuProps>;
     ConversationKdaContentComponent: ComponentType<IGenAIAssistantConversationKdaContentProps>;
     FollowUpButtonsComponent: ComponentType<IGenAIAssistantFollowUpButtonsProps>;
     FollowUpQuestionComponent: ComponentType<IGenAIAssistantFollowUpQuestionProps>;

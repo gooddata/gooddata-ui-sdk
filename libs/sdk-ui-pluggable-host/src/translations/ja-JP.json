@@ -33,5 +33,11 @@
     "messages.genAi.visualisation.link.copied": "ビジュアライゼーションリンクがクリップボードにコピーされました。",
     "messages.showMore": "もっと表示",
     "messages.showLess": "表示を減らす",
-    "gen-ai.ask-assistant.search": "新しいビジュアライゼーションを構築する：{question}"
+    "gen-ai.ask-assistant.search": "新しいビジュアライゼーションを構築する：{question}",
+    "languageDialog.title": "言語変更",
+    "languageDialog.default": "デフォルト ({language})",
+    "languageDialog.description": "<b>注:</b> 変更されるのはインターフェースのみで、ダッシュボードのコンテンツは変更されません。",
+    "languageDialog.select.searchLabel": "言語を検索",
+    "languageDialog.select.searchPlaceholder": "検索…",
+    "languageDialog.select.noMatch": "一致する言語がありません。"
 }

@@ -19,6 +19,7 @@ import {
     type IElementsQueryOptions,
     type IElementsQueryResult,
     type IFilterElementsQuery,
+    type IPagedResource,
     NotSupported,
     UnexpectedError,
     isElementsQueryOptionsElementsByValue,
@@ -47,6 +48,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { TigerCancellationConverter } from "../../../../cancelation/index.js";
+import { attributeNumberFormat } from "../../../../convertors/fromBackend/attributeNumberFormat.js";
 import { createDateValueFormatter } from "../../../../convertors/fromBackend/dateFormatting/dateValueFormatter.js";
 import { createDateValueNormalizer } from "../../../../convertors/fromBackend/dateFormatting/dateValueNormalizer.js";
 import { type FormattingLocale } from "../../../../convertors/fromBackend/dateFormatting/defaultDateFormatter.js";
@@ -73,6 +75,44 @@ const MATCH_OPERATOR_TO_TIGER: Record<MatchFilterOperator, "STARTS_WITH" | "ENDS
  */
 function toElementsLabelType(ref: ObjRef): "computedAttribute" | undefined {
     return isIdentifierRef(ref) && ref.type === "computedAttribute" ? "computedAttribute" : undefined;
+}
+
+/**
+ * Elements query result that carries the number format of the element values on every page.
+ */
+class TigerElementsQueryResult implements IElementsQueryResult {
+    constructor(
+        private readonly page: IPagedResource<IAttributeElement>,
+        public readonly numberFormat: string | undefined,
+    ) {}
+
+    get items(): IAttributeElement[] {
+        return this.page.items;
+    }
+    get limit(): number {
+        return this.page.limit;
+    }
+    get offset(): number {
+        return this.page.offset;
+    }
+    get totalCount(): number {
+        return this.page.totalCount;
+    }
+    get cacheId(): string | undefined {
+        return this.page.cacheId;
+    }
+
+    next = async (): Promise<IElementsQueryResult> =>
+        new TigerElementsQueryResult(await this.page.next(), this.numberFormat);
+
+    goTo = async (pageIndex: number): Promise<IElementsQueryResult> =>
+        new TigerElementsQueryResult(await this.page.goTo(pageIndex), this.numberFormat);
+
+    all = (): Promise<IAttributeElement[]> => this.page.all();
+
+    allSorted = (
+        compareFn: (a: IAttributeElement, b: IAttributeElement) => number,
+    ): Promise<IAttributeElement[]> => this.page.allSorted(compareFn);
 }
 
 export class TigerWorkspaceElements implements IElementsQueryFactory {
@@ -336,7 +376,10 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
             throw new UnexpectedError("Tiger backend does not allow referencing objects by URI");
         }
 
-        return ServerPaging.for(
+        // resolved from the first response; the same for every page of the query
+        let numberFormat: string | undefined;
+
+        const paging = await ServerPaging.for(
             async ({ offset, limit, cacheId }) => {
                 const elementsRequest = this.buildElementsRequest(options, ref.identifier, cacheId);
 
@@ -356,7 +399,17 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                     );
                 });
 
-                const { paging, elements, format, granularity, cacheId: responseCacheId } = response.data;
+                const {
+                    paging,
+                    elements,
+                    format,
+                    granularity,
+                    cacheId: responseCacheId,
+                    numberFormat: responseNumberFormat,
+                    dataType,
+                } = response.data;
+
+                numberFormat = attributeNumberFormat(responseNumberFormat, dataType);
 
                 // Only date attributes carry a granularity; for the rest it is absent, so convert only when
                 // present (passing undefined into the strict converter is what previously threw).
@@ -389,6 +442,10 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
             this.offset,
             this.options?.cacheId,
         );
+
+        // Only results that have a number format to carry get the elements-specific page object; every other
+        // result stays the plain server paging, the same as the results of every other query service.
+        return numberFormat === undefined ? paging : new TigerElementsQueryResult(paging, numberFormat);
     }
 
     private mapValidationItems(item: ObjRef) {

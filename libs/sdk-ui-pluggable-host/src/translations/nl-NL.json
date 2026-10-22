@@ -33,5 +33,11 @@
     "messages.genAi.visualisation.link.copied": "De visualisatielink is gekopieerd naar je klembord.",
     "messages.showMore": "Meer tonen",
     "messages.showLess": "Minder tonen",
-    "gen-ai.ask-assistant.search": "Bouw nieuwe visualisatie gebaseerd op: {question}"
+    "gen-ai.ask-assistant.search": "Bouw nieuwe visualisatie gebaseerd op: {question}",
+    "languageDialog.title": "Taal wijzigen",
+    "languageDialog.default": "Standaard ({language})",
+    "languageDialog.description": "<b>Opmerking:</b> Hiermee wijzigt u alleen de interface, niet de dashboardinhoud.",
+    "languageDialog.select.searchLabel": "Talen zoeken",
+    "languageDialog.select.searchPlaceholder": "Bezig met zoeken…",
+    "languageDialog.select.noMatch": "Geen overeenkomende taal."
 }

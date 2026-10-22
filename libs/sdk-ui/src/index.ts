@@ -512,9 +512,15 @@ export {
     type ValueFormatter,
     type HeaderTranslator,
     createNumberJsFormatter,
+    createNumberFormatter,
     DefaultDataAccessConfig,
 } from "./base/results/dataAccessConfig.js";
 export { getTotalInfo } from "./base/results/internal/utils.js";
+export {
+    attributeHeaderDisplayValue,
+    formatAttributeHeaderValues,
+    formatAttributeValue,
+} from "./base/results/attributeNumberFormat.js";
 
 // URL utilities
 export {

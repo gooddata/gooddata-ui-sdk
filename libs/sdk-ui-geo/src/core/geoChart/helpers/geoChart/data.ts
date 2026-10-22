@@ -16,7 +16,7 @@ import {
     measureLocalId,
     resultHeaderName,
 } from "@gooddata/sdk-model";
-import { BucketNames, type DataViewFacade } from "@gooddata/sdk-ui";
+import { BucketNames, type DataViewFacade, getAttributeHeaderItemName } from "@gooddata/sdk-ui";
 import { type IPushpinCategoryLegendItem } from "@gooddata/sdk-ui-vis-commons";
 
 import {
@@ -152,6 +152,7 @@ export function getGeoData(
             tooltipTextIndex,
             emptyHeaderString,
             nullHeaderString,
+            true,
         );
     }
 
@@ -177,7 +178,8 @@ function getSegmentDataAndUris(
     return headerItems.reduce<ISegmentData>(
         (result: ISegmentData, headerItem: IResultHeader): ISegmentData => {
             if (headerItem && isResultAttributeHeader(headerItem)) {
-                const { uri, name } = headerItem.attributeHeaderItem;
+                const { uri } = headerItem.attributeHeaderItem;
+                const name = getAttributeHeaderItemName(headerItem.attributeHeaderItem);
                 return { uris: [...result.uris, uri], data: [...result.data, name ?? nullHeaderString] };
             }
             return result;
@@ -193,15 +195,23 @@ function getMeasureData(dv: DataViewFacade, dataIndex: number): number[] {
     return measureValues.map(dataValueAsFloat);
 }
 
+/**
+ * @param useFormattedName - read the formatted element value (for values shown to the user); pass false
+ *  for values that get parsed, e.g. coordinates
+ */
 function getAttributeData(
     attributeHeaderItems: IResultHeader[][],
     dataIndex: number,
     emptyHeaderString: string,
     nullHeaderString: string,
+    useFormattedName = false,
 ): string[] {
     const headerItems = attributeHeaderItems[dataIndex];
     return headerItems.map((i) => {
-        const name = resultHeaderName(i);
+        const name =
+            useFormattedName && isResultAttributeHeader(i)
+                ? getAttributeHeaderItemName(i.attributeHeaderItem)
+                : resultHeaderName(i);
         if (name) {
             return name;
         }

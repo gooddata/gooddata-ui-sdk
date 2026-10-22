@@ -51,18 +51,19 @@ export function getColorPaletteMapping(colorStrategy: IColorStrategy): ColorPale
                 [DEFAULT_SEGMENT_ITEM]: colorPalette,
             };
         }
-        // color base on SegmentBy
-        const name = isResultAttributeHeader(item.headerItem)
-            ? item.headerItem.attributeHeaderItem.name
+        // color base on SegmentBy, keyed by the raw element identity: formatted names of distinct
+        // elements can be equal (e.g. two numbers rounded by the number format)
+        const key = isResultAttributeHeader(item.headerItem)
+            ? (item.headerItem.attributeHeaderItem.uri ?? DEFAULT_SEGMENT_ITEM)
             : DEFAULT_SEGMENT_ITEM;
 
-        result[name ?? DEFAULT_SEGMENT_ITEM] = colorPalette;
+        result[key] = colorPalette;
         return result;
     }, {});
 }
 
 /**
- * Return RGB border and background colors base on color and segment values
+ * Return RGB border and background colors base on color and segment element URIs
  *
  * Example:
  * ```
@@ -74,7 +75,7 @@ export function getColorPaletteMapping(colorStrategy: IColorStrategy): ColorPale
  */
 export function getPushpinColors(
     colorValues: Array<number | null>,
-    segmentValues: string[] = [],
+    segmentValues: Array<string | null> = [],
     colorStrategy: IColorStrategy,
 ): IPushpinColor[] {
     const defaultColorValue = colorStrategy.getColorByIndex(0);
@@ -89,11 +90,11 @@ export function getPushpinColors(
         ];
     }
 
-    const segmentNames: string[] = [...segmentValues];
+    const segmentNames: Array<string | null> = [...segmentValues];
     const colorPaletteMapping: ColorPaletteMapping = getColorPaletteMapping(colorStrategy);
     if (!colorValues.length) {
-        return segmentNames.map((name: string): IPushpinColor => {
-            const palette = colorPaletteMapping[name];
+        return segmentNames.map((name): IPushpinColor => {
+            const palette = colorPaletteMapping[name ?? DEFAULT_SEGMENT_ITEM];
             return {
                 border: DEFAULT_PUSHPIN_BORDER_COLOR_VALUE,
                 background: palette[DEFAULT_COLOR_INDEX_IN_PALETTE],

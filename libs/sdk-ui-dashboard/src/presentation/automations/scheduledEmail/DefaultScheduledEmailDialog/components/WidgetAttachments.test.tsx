@@ -1,8 +1,9 @@
 // (C) 2026 GoodData Corporation
 
-import { type ComponentProps } from "react";
+import { type ComponentProps, useState } from "react";
 
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 import { IntlWrapper } from "../../../../localization/IntlWrapper.js";
@@ -25,11 +26,24 @@ function renderComponent(customProps: Partial<ComponentProps<typeof WidgetAttach
         isAccessibilityModeEnabled: false,
     };
 
-    return render(
-        <IntlWrapper>
-            <WidgetAttachments {...defaultProps} {...customProps} />
-        </IntlWrapper>,
-    );
+    function StatefulAttachments() {
+        const props = { ...defaultProps, ...customProps };
+        const [selectedAttachments, setSelectedAttachments] = useState(props.selectedAttachments);
+        return (
+            <IntlWrapper>
+                <WidgetAttachments
+                    {...props}
+                    selectedAttachments={selectedAttachments}
+                    onWidgetAttachmentsChange={(attachments) => {
+                        setSelectedAttachments(attachments);
+                        props.onWidgetAttachmentsChange(attachments);
+                    }}
+                />
+            </IntlWrapper>
+        );
+    }
+
+    return render(<StatefulAttachments />);
 }
 
 function openAddAttachments() {
@@ -51,6 +65,34 @@ function toggleFormat(label: string) {
 }
 
 describe("WidgetAttachments", () => {
+    it("leaves the genuinely empty selection to the dialog validation message", () => {
+        renderComponent({ selectedAttachments: [] });
+
+        expect(screen.queryByText("No attachments to display.")).not.toBeInTheDocument();
+    });
+
+    it.each([
+        { hidden: "PDF_TABULAR" as const, isAccessibilityModeEnabled: true, isSlidesExportEnabled: true },
+        { hidden: "PPTX" as const, isAccessibilityModeEnabled: false, isSlidesExportEnabled: false },
+    ])("focuses Add and announces the empty list while preserving $hidden", async (options) => {
+        const user = userEvent.setup();
+        const onWidgetAttachmentsChange = vi.fn();
+        renderComponent({
+            ...options,
+            selectedAttachments: [options.hidden, "PNG"],
+            onWidgetAttachmentsChange,
+        });
+
+        const deleteButton = screen.getByRole("button", { name: "Delete PNG attachment" });
+        deleteButton.focus();
+        await user.keyboard("{Enter}");
+
+        await waitFor(() => expect(screen.getByRole("button", { name: "Add attachments" })).toHaveFocus());
+        expect(screen.getByText("No attachments to display.").closest('[role="status"]')).toBeInTheDocument();
+        expect(onWidgetAttachmentsChange).toHaveBeenCalledWith([options.hidden]);
+        expect(screen.queryByRole("button", { name: "Delete PNG attachment" })).not.toBeInTheDocument();
+    });
+
     it("does not offer slide (single slide) formats when slide exports are disabled", () => {
         renderComponent({ isSlidesExportEnabled: false });
 

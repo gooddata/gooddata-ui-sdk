@@ -23,6 +23,7 @@ const setDisplayAsLabel: AttributeFilterReducer<
 > = (state, action) => {
     if (!areObjRefsEqual(state.displayAsLabelRef, action.payload.displayAsLabel)) {
         state.elements.cache = {};
+        state.elements.numberFormat = undefined;
     }
     state.displayAsLabelRef = action.payload.displayAsLabel;
 };

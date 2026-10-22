@@ -105,7 +105,11 @@ function getMeasureData(dv: DataViewFacade, dataIndex: number): number[] {
 }
 
 /**
- * Extracts attribute data from attribute header items
+ * Extracts raw attribute data from attribute header items.
+ *
+ * @remarks
+ * Reads the raw element value, not the number-formatted one: the data is parsed (coordinates) or used
+ * as an identifier (icon names).
  */
 function getAttributeData(
     attributeHeaderItems: IResultHeader[][],

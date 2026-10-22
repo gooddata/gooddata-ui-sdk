@@ -241,6 +241,14 @@ export interface IAttributeFilterElementsSelectItemProps {
     primaryLabelTitle?: string;
 
     /**
+     * Raw value of a number-formatted element, when its displayed value says more than the raw value with
+     * separators (e.g. it is rounded or scaled). Shown in the item tooltip, like the primary label value.
+     *
+     * @beta
+     */
+    rawValueTitle?: string;
+
+    /**
      * Indicates which element of the list item is focused by keyboard.
      *
      * @beta

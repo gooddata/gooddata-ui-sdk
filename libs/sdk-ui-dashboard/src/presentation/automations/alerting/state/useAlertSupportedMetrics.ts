@@ -37,7 +37,7 @@ export function useAlertSupportedMetrics({
     widget,
     alertToEdit,
 }: IUseAlertSupportedMetricsProps): IAlertSupportedMetrics {
-    const { locale, catalogDateDatasets, catalogAttributes } = useAutomationsContext();
+    const { locale, separators, catalogDateDatasets, catalogAttributes } = useAutomationsContext();
 
     const { executionResultByRef } = useAlertingDialogContext();
 
@@ -71,8 +71,11 @@ export function useAlertSupportedMetrics({
         [insight, catalogDateDatasets, catalogAttributes, alertToEdit],
     );
 
-    const { isResultLoading, getAttributeValues, getMetricValue } =
-        useAttributeValuesFromExecResults(execResult);
+    // element values of numeric computed attributes are offered formatted, as the widget shows them
+    const { isResultLoading, getAttributeValues, getMetricValue } = useAttributeValuesFromExecResults(
+        execResult,
+        { separators },
+    );
 
     return {
         measureFormatMap,

@@ -1,6 +1,12 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type ComponentType } from "react";
+import {
+    type AriaAttributes,
+    type ComponentType,
+    type KeyboardEvent,
+    type MouseEvent,
+    type ReactNode,
+} from "react";
 
 import {
     type IChatConversationVisualisationContent,
@@ -302,6 +308,77 @@ export type IGenAIAssistantConversationVisualizationContentProps = {
 };
 
 /**
+ * Item of the visualization menu.
+ * @alpha
+ */
+export type IGenAIAssistantVisualizationMenuItem = {
+    /**
+     * Unique identifier of the item.
+     * Built-in items use the ids "button-save", "button-open" and "button-copy".
+     */
+    id: string;
+    /**
+     * Title displayed in the menu.
+     */
+    title: string;
+    /**
+     * Icon displayed before the title.
+     */
+    icon?: ReactNode;
+    /**
+     * Whether the item is disabled.
+     */
+    isDisabled?: boolean;
+    /**
+     * Additional ARIA attributes of the item.
+     */
+    ariaAttributes?: AriaAttributes;
+    /**
+     * Callback when the item is selected. The menu closes after the callback.
+     */
+    onSelect: (event: MouseEvent | KeyboardEvent) => void;
+};
+
+/**
+ * Properties for the VisualizationMenu slot.
+ * @alpha
+ */
+export type IGenAIAssistantVisualizationMenuProps = {
+    /**
+     * The message containing the visualization content.
+     */
+    message: IChatConversationLocalItem;
+    /**
+     * The multipart part containing the visualization.
+     */
+    part: IChatConversationMultipartLocalPart;
+    /**
+     * The what-if scenario context for this visualization.
+     */
+    scenario?: IWhatIfRenderableScenario;
+    /**
+     * The visualization the menu belongs to.
+     */
+    visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>;
+    /**
+     * Items of the menu. The menu button is hidden when the list is empty.
+     */
+    items: IGenAIAssistantVisualizationMenuItem[];
+    /**
+     * Whether the visualization is saved in the workspace.
+     */
+    isVisualizationSaved: boolean;
+    /**
+     * Whether the menu button is disabled.
+     */
+    isDisabled?: boolean;
+    /**
+     * Id of the element that describes the menu button.
+     */
+    ariaDescribedBy?: string;
+};
+
+/**
  * Properties for the ConversationKdaContent slot.
  * @alpha
  */
@@ -523,6 +600,13 @@ export interface IGenAIAssistantSlots {
     ConversationVisualizationContent?: ComponentType<
         ISlotProps<IGenAIAssistantConversationVisualizationContentProps>
     >;
+
+    /**
+     * @alpha
+     * Custom React component rendered for the menu of a visualization in multipart content.
+     * Change the `items` of `defaultProps` to add, remove or reorder the menu items.
+     */
+    VisualizationMenu?: ComponentType<ISlotProps<IGenAIAssistantVisualizationMenuProps>>;
 
     /**
      * @alpha

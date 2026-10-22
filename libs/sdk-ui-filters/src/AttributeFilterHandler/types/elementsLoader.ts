@@ -33,6 +33,11 @@ export interface ILoadElementsResult {
     totalCount: number;
     options: ILoadElementsOptions;
     cacheId?: string;
+    /**
+     * Number format of the element values (numeric computed attributes), see
+     * {@link @gooddata/sdk-backend-spi#IElementsQueryResult.numberFormat}.
+     */
+    numberFormat?: string;
 }
 
 /**
@@ -269,6 +274,17 @@ export interface IAttributeElementLoader {
      * Returns the current search string used to filter the attribute element loads.
      */
     getSearch(): string;
+
+    /**
+     * Returns the number format of the loaded element values, if they have one.
+     *
+     * @remarks
+     * Element values of numeric computed attributes carry a number format; their raw titles are displayed
+     * formatted with it. The method is optional so that existing implementations stay valid.
+     *
+     * @beta
+     */
+    getElementsNumberFormat?(): string | undefined;
 
     /**
      * Returns the current measures used to filter the attribute element loads.

@@ -18,6 +18,7 @@ import {
     measureLocalId,
 } from "@gooddata/sdk-model";
 
+import { attributeNumberFormat } from "../attributeNumberFormat.js";
 import { convertLabelType } from "../LabelTypeConverter.js";
 
 const DEFAULT_FORMAT = "#,#.##";
@@ -51,6 +52,10 @@ function transformDimension(
                 // them through the computedAttributes service instead of labels. The backend states
                 // the type on the header identifiers.
                 const isComputedAttributeHeader = isComputedAttributeIdentifier(h.attributeHeader.label);
+                const numberFormat = attributeNumberFormat(
+                    h.attributeHeader.numberFormat,
+                    h.attributeHeader.dataType,
+                );
                 const labelRefType = isComputedAttributeHeader ? "computedAttribute" : "displayForm";
                 const attributeRefType = isComputedAttributeHeader ? "computedAttribute" : "attribute";
 
@@ -75,6 +80,7 @@ function transformDimension(
                         labelType: convertLabelType(h.attributeHeader.valueType),
                         primaryLabel: idRef(h.attributeHeader.primaryLabel.id, labelRefType),
                         geoAreaConfig,
+                        ...(numberFormat ? { numberFormat } : {}),
                     },
                 };
             } else {

@@ -127,6 +127,10 @@
         "text": "Show less",
         "crowdinContext": "Title of the link to collapse text of a notification message."
     },
+    "messages.dashboard.editModeDesktopLayout.note": {
+        "text": "<b>Note:</b> Your screen is narrower than edit mode. To see all of the dashboard, scroll horizontally. View mode fits any screen.",
+        "crowdinContext": "Dismissable informational message shown while a user edits a dashboard in a browser window narrower than the desktop layout. The edit mode keeps the desktop layout and scrolls horizontally, while view mode reflows the dashboard for small screens. Keep the <b> tags around the translation of Note."
+    },
     "messages.drill.InteractionConfiguredSuccess": {
         "text": "Interaction configured.",
         "crowdinContext": "Success message shown after creating a new drill interaction"
@@ -1218,6 +1222,10 @@
     "scheduledEmail.attachmentFormat.dashboard.pdfSlides": {
         "text": "Slide Deck (.pdf)",
         "crowdinContext": "Attachment format for slide deck in scheduled export"
+    },
+    "scheduledEmail.attachments.noVisibleAttachments": {
+        "text": "No attachments to display.",
+        "crowdinContext": "Neutral empty state in the scheduled export attachment list. Previously selected formats can be hidden by workspace settings, so this does not indicate whether the schedule is valid."
     },
     "scheduledEmail.attachments.warning.noAttachmentsSelected": {
         "text": "<strong>Warning:</strong> Scheduled exports require at least one attachment — select an option to continue.",

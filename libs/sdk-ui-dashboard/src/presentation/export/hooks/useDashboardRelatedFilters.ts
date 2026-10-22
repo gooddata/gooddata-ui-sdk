@@ -7,14 +7,22 @@ import {
     type FilterContextItem,
     type IAttributeElement,
     type IDashboardAttributeFilterConfig,
+    type ISeparators,
     areObjRefsEqual,
     getAttributeElementsItems,
     isDashboardAttributeFilter,
 } from "@gooddata/sdk-model";
-import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import {
+    createNumberFormatter,
+    formatAttributeValue,
+    useBackendStrict,
+    useCancelablePromise,
+    useWorkspaceStrict,
+} from "@gooddata/sdk-ui";
 
 import { type FilterNaming, useFiltersNamings } from "../../../_staging/sharedHooks/useFiltersNamings.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectSeparators } from "../../../model/store/config/configSelectors.js";
 import { selectExecutableDashboardFilters } from "../../../model/store/filtering/dashboardFilterSelectors.js";
 import { selectAttributeFilterConfigsOverrides } from "../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectDateFilterConfigOverrides } from "../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
@@ -50,6 +58,7 @@ export function useDashboardRelatedFilters(run: boolean): {
     const dateFiltersConfig = useDashboardSelector(selectDateFilterConfigsOverrides);
     const attributeFiltersConfig = useDashboardSelector(selectAttributeFilterConfigsOverrides);
     const measureValueFiltersConfig = useDashboardSelector(selectMeasureValueFilterConfigsOverrides);
+    const separators = useDashboardSelector(selectSeparators);
 
     const { result, status } = useCancelablePromise(
         {
@@ -59,12 +68,12 @@ export function useDashboardRelatedFilters(run: boolean): {
                 }
                 return Promise.all(
                     dashboardFilters.map((f) =>
-                        updateLabelElements(backend, workspaceId, attributeFiltersConfig, f),
+                        updateLabelElements(backend, workspaceId, attributeFiltersConfig, separators, f),
                     ),
                 );
             },
         },
-        [run, dashboardFilters],
+        [run, dashboardFilters, separators],
     );
 
     const filters = useFiltersNamings(result ?? []);
@@ -106,6 +115,7 @@ async function updateLabelElements(
     backend: IAnalyticalBackend,
     workspaceId: string,
     attributeFiltersConfig: IDashboardAttributeFilterConfig[],
+    separators: ISeparators,
     dashboardFilter: FilterContextItem,
 ): Promise<FilterContextItem> {
     // Skip filters that are not attribute filters
@@ -129,15 +139,36 @@ async function updateLabelElements(
         const data = await query.query();
         const all: IAttributeElement[] = await data.all();
 
+        // the filter is only described to the user from here on, so it carries the titles to display
         return {
             ...dashboardFilter,
             attributeFilter: {
                 ...dashboardFilter.attributeFilter,
                 attributeElements: {
-                    values: all.map((a) => a.title),
+                    values: elementsDisplayTitles(all, data.numberFormat, separators),
                 },
             },
         };
     }
     return dashboardFilter;
+}
+
+/**
+ * Titles to display for the elements: the raw titles, with the values of a numeric computed attribute
+ * formatted by the number format of the elements query result.
+ *
+ * @internal exported for tests
+ */
+export function elementsDisplayTitles(
+    elements: IAttributeElement[],
+    numberFormat: string | undefined,
+    separators: ISeparators | undefined,
+): Array<string | null> {
+    if (!numberFormat) {
+        return elements.map((element) => element.title);
+    }
+
+    const formatter = createNumberFormatter(separators);
+
+    return elements.map((element) => formatAttributeValue(element.title, numberFormat, formatter));
 }

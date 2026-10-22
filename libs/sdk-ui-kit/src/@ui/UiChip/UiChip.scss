@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 $border-radius: 20px;
 $background-color: var(--gd-palette-complementary-0);
@@ -274,15 +274,14 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-com
         }
     }
 
+    // No transition on the text spans: Safari leaves them unpainted when an overlay reveals them.
     &__label {
-        transition: var(--gd-transition-all);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
 
     &__tag {
-        transition: var(--gd-transition-all);
         margin-left: 2px;
     }
 

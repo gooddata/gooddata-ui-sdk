@@ -391,6 +391,10 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
         return this.bridge.getSearch();
     };
 
+    getElementsNumberFormat = (): string | undefined => {
+        return this.bridge.getElementsNumberFormat();
+    };
+
     setLimit = (limit: number): void => {
         this.bridge.setLimit(limit);
     };

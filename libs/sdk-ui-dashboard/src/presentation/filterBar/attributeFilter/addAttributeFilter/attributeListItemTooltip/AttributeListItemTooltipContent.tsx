@@ -3,7 +3,8 @@
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { type IMeasureExpressionToken } from "@gooddata/sdk-backend-spi";
-import { type ICatalogAttribute, type IDataSetMetadataObject } from "@gooddata/sdk-model";
+import { type ICatalogAttribute, type IDataSetMetadataObject, type ISeparators } from "@gooddata/sdk-model";
+import { createNumberFormatter, formatAttributeValue } from "@gooddata/sdk-ui";
 
 import type { IUseAttributeElements } from "../../../../../model/types/attributeFilterTypes.js";
 
@@ -40,16 +41,25 @@ function AttrTooltipExpression({ tokens }: { tokens: IMeasureExpressionToken[] }
     );
 }
 
-function AttrTooltipElements({ elements, totalCount }: IUseAttributeElements) {
+function AttrTooltipElements({
+    elements,
+    totalCount,
+    numberFormat,
+    separators,
+}: IUseAttributeElements & { separators?: ISeparators }) {
     const intl = useIntl();
 
     const remainingElementsCount = totalCount - elements.length;
+    // the values of a numeric computed attribute are displayed formatted, like the filter displays them
+    const formatter = createNumberFormatter(separators);
+    const displayTitle = (title: string | null) =>
+        numberFormat ? formatAttributeValue(title, numberFormat, formatter) : title;
 
     return (
         <>
             {elements.map((element, idx) => (
                 <span key={idx} className="gd-attribute-element s-attribute-element">
-                    {element.title || `(${intl.formatMessage({ id: "empty_value" })})`}
+                    {displayTitle(element.title) || `(${intl.formatMessage({ id: "empty_value" })})`}
                     <br />
                 </span>
             ))}
@@ -76,6 +86,10 @@ interface IAttributeListItemTooltipContentProps {
     attributeDataSet?: IDataSetMetadataObject;
     attributeElements?: IUseAttributeElements;
     /**
+     * Separators to format the values of a numeric computed attribute with.
+     */
+    separators?: ISeparators;
+    /**
      * Tokenized MAQL expression; provided only for computed attributes, rendered after the values
      * with the referenced objects resolved to their titles.
      */
@@ -93,6 +107,7 @@ export function AttributeListItemTooltipContent({
     attributesElementsLoading,
     attributeDataSet,
     attributeElements,
+    separators,
     expressionTokens,
     expressionTokensLoading,
 }: IAttributeListItemTooltipContentProps) {
@@ -125,6 +140,8 @@ export function AttributeListItemTooltipContent({
                     <AttrTooltipElements
                         elements={attributeElements.elements}
                         totalCount={attributeElements.totalCount}
+                        numberFormat={attributeElements.numberFormat}
+                        separators={separators}
                     />
                 ) : null}
             </p>

@@ -14,6 +14,7 @@ import {
     useCancelablePromise,
 } from "@gooddata/sdk-ui";
 
+import { formatAttributeValues } from "../../layers/common/formatAttributeValues.js";
 import { getLayerAdapter } from "../../layers/registry/adapterRegistry.js";
 import type { IGeoAdapterContext, IGeoLayerOutput } from "../../layers/registry/adapterTypes.js";
 import type { IGeoChartConfig } from "../../types/config/unified.js";
@@ -96,18 +97,23 @@ export interface ILayersPrepareContext {
  *
  * @internal
  */
-async function prepareSingleLayer(
+export async function prepareSingleLayer(
     layerExecution: ILayerExecutionRecord,
     layerDataViews: Map<string, DataViewFacade>,
     adapterContext: IGeoAdapterContext,
 ): Promise<ILayerPreparedData> {
     const { layerId, layer } = layerExecution;
-    const dataView = layerDataViews.get(layerId);
+    const rawDataView = layerDataViews.get(layerId);
 
-    if (!dataView) {
+    if (!rawDataView) {
         throw new UnexpectedSdkError(`No dataView found for layer ${layerId}`);
     }
 
+    // Element values of attributes with a number format get their formatted name here, once, and the
+    // formatted view is the one every later step reads (geo data, color strategy, legend, pushed color
+    // assignments, map sync and click handling), so all of them display the same formatted text. Segments
+    // are still keyed, sorted and drilled by their raw name and uri, which the formatted view keeps.
+    const dataView = formatAttributeValues(rawDataView, adapterContext);
     const adapter = getLayerAdapter(layer);
     const output = await adapter.prepareLayer(layer, dataView, adapterContext);
 
@@ -217,7 +223,16 @@ export function useLayersPrepare(
                           prepareAllLayers(layerExecutionsWithDataViews, layerDataViews, createAdapterContext)
                     : undefined,
         },
-        [backend, workspace, dataViewsFingerprint, layersStructureFingerprint, intl],
+        [
+            backend,
+            workspace,
+            dataViewsFingerprint,
+            layersStructureFingerprint,
+            intl,
+            // element values are number-formatted with the separators while preparing
+            config?.separators?.thousand,
+            config?.separators?.decimal,
+        ],
     );
 
     const layerOutputs = useMemo(() => {

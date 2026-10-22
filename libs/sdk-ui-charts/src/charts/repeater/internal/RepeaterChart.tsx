@@ -44,6 +44,7 @@ import { useRenderWatcher } from "../hooks/useRenderWatcher.js";
 import { MANUALLY_SIZED_MIN_WIDTH, useResizing } from "../hooks/useResizing.js";
 import { type IRepeaterChartProps } from "../publicTypes.js";
 
+import { attributeHeaderItemDisplayName } from "./attributeHeaderItemDisplayName.js";
 import { type RepeaterInlineVisualizationDataPoint } from "./dataViewToRepeaterData.js";
 import { InlineColumnChart } from "./InlineColumnChart.js";
 import { InlineLineChart } from "./InlineLineChart.js";
@@ -146,7 +147,9 @@ export function RepeaterChart(props: IRepeaterChartProps) {
                     valueGetter: (params): IAttributeColumnData => {
                         return {
                             attributeLocalId: localIdentifier,
-                            value: params.data?.[localIdentifier]?.name,
+                            value: params.data?.[localIdentifier]?.name ?? null,
+                            formattedValue:
+                                attributeHeaderItemDisplayName(params.data?.[localIdentifier]) ?? null,
                             config,
                             renderingType,
                         };
@@ -356,21 +359,32 @@ function MeasureCellRenderer({
     );
 }
 
-interface IAttributeColumnData {
+export interface IAttributeColumnData {
+    /**
+     * Raw element value; the hyperlink target and the image source.
+     */
     value: string | null;
+    /**
+     * Element value as displayed in a text cell: the formatted name when the element has one (dates,
+     * numeric computed attributes), the raw value otherwise.
+     */
+    formattedValue: string | null;
     attributeLocalId: string;
     renderingType: "image" | "hyperlink" | "text";
     config: IChartConfig | undefined;
 }
 
-function AttributeCellRenderer({
+/**
+ * @internal exported for tests
+ */
+export function AttributeCellRenderer({
     attributeColumnData,
     isLoading,
 }: {
     attributeColumnData: IAttributeColumnData;
     isLoading: boolean;
 }) {
-    const { config, attributeLocalId, value, renderingType } = attributeColumnData;
+    const { config, attributeLocalId, value, formattedValue, renderingType } = attributeColumnData;
     const rowHeight = getRowHeight(config);
     const intl = useIntl();
     const theme = useTheme();
@@ -379,7 +393,7 @@ function AttributeCellRenderer({
         return <LoadingComponent color={color} width={36} imageHeight={8} height={rowHeight} speed={2} />;
     }
 
-    let renderValue: ReactNode = value || emptyHeaderTitleFromIntl(intl);
+    let renderValue: ReactNode = formattedValue || emptyHeaderTitleFromIntl(intl);
     if (renderingType === "text") {
         renderValue = <span>{renderValue}</span>;
     } else if (renderingType === "hyperlink") {

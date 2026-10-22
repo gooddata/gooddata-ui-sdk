@@ -8,6 +8,7 @@ import { type IAttributeElement } from "@gooddata/sdk-model";
 import { usePrevious } from "@gooddata/sdk-ui";
 import { InvertableSelectVirtualised, UiAutofocus, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
+import { getNumberFormattedElementRawTitle } from "../../../AttributeFilterHandler/internal/redux/elements/numericElementValues.js";
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
 import { BACKEND_PAGE_SIZE, MAX_SELECTION_SIZE } from "../../hooks/constants.js";
@@ -70,7 +71,8 @@ export function AttributeFilterElementsSelect({
 }: IAttributeFilterElementsSelectProps) {
     const intl = useIntl();
     const isMobile = useMediaQuery("mobileDevice");
-    const { fullscreenOnMobile, selectionMode, attribute, menuConfig } = useAttributeFilterContext();
+    const { fullscreenOnMobile, selectionMode, attribute, menuConfig, elementsNumberFormat, separators } =
+        useAttributeFilterContext();
     const { showFilterHeader, headerProps } = useAttributeFilterDropdownHeader();
     const {
         ElementsSelectLoadingComponent,
@@ -105,6 +107,13 @@ export function AttributeFilterElementsSelect({
         return primaryLabel?.title;
     }, [attribute]);
 
+    // Number-formatted values may be rounded or scaled; the tooltip then tells the raw value users search by.
+    const getRawValueTitle = useCallback(
+        (item: IAttributeElement) =>
+            elementsNumberFormat ? getNumberFormattedElementRawTitle(item, separators) : undefined,
+        [elementsNumberFormat, separators],
+    );
+
     const handleShowFilteredElements = useCallback(() => {
         setRefocusKey("show");
         onShowFilteredElements?.();
@@ -132,7 +141,9 @@ export function AttributeFilterElementsSelect({
             itemHeight={itemHeight}
             getItemKey={getElementKey}
             getItemTitle={(item) => getElementTitle(item, intl)}
-            isItemQuestionMarkEnabled={(item) => !!primaryLabelTitle && !!getElementPrimaryTitle(item)}
+            isItemQuestionMarkEnabled={(item) =>
+                !!primaryLabelTitle && (!!getElementPrimaryTitle(item) || !!getRawValueTitle(item))
+            }
             isInverted={isInverted}
             selectedItems={selectedItems}
             selectedItemsLimit={MAX_SELECTION_SIZE}
@@ -151,6 +162,7 @@ export function AttributeFilterElementsSelect({
                 <ElementsSelectItemComponent
                     {...props}
                     primaryLabelTitle={primaryLabelTitle ?? undefined}
+                    rawValueTitle={getRawValueTitle(props.item)}
                     fullscreenOnMobile={fullscreenOnMobile}
                 />
             )}

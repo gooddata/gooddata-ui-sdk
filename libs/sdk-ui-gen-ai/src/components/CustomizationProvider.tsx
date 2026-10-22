@@ -42,8 +42,10 @@ import {
     type IGenAIAssistantMessageTextContentProps,
     type IGenAIAssistantSlots,
     type IGenAIAssistantUserMessageProps,
+    type IGenAIAssistantVisualizationMenuProps,
 } from "./customized/types.js";
 import { DefaultUserMessage } from "./customized/UserMessage.js";
+import { DefaultVisualizationMenu } from "./customized/VisualizationMenu.js";
 import { useFullscreenCheck } from "./hooks/useFullscreenCheck.js";
 
 export type CustomizationProviderProps = {
@@ -217,6 +219,16 @@ function ConversationVisualizationContentSlotRenderer(
     return <DefaultConversationVisualizationContent {...props} />;
 }
 
+function VisualizationMenuSlotRenderer(props: IGenAIAssistantVisualizationMenuProps) {
+    const { slots } = useContext(customizationContext);
+    const VisualizationMenuSlot = slots?.VisualizationMenu;
+
+    if (VisualizationMenuSlot) {
+        return <VisualizationMenuSlot Default={DefaultVisualizationMenu} defaultProps={props} />;
+    }
+    return <DefaultVisualizationMenu {...props} />;
+}
+
 function ConversationKdaContentSlotRenderer(props: IGenAIAssistantConversationKdaContentProps) {
     const { slots } = useContext(customizationContext);
     const ConversationKdaContentSlot = slots?.ConversationKdaContent;
@@ -285,6 +297,7 @@ export function CustomizationProvider({ children, slots }: PropsWithChildren<Cus
             MessageReasoningContentComponent: MessageReasoningContentSlotRenderer,
             MessageMultipartContentComponent: MessageMultipartContentSlotRenderer,
             ConversationVisualizationContentComponent: ConversationVisualizationContentSlotRenderer,
+            VisualizationMenuComponent: VisualizationMenuSlotRenderer,
             ConversationKdaContentComponent: ConversationKdaContentSlotRenderer,
             FollowUpButtonsComponent: FollowUpButtonsSlotRenderer,
             FollowUpQuestionComponent: FollowUpQuestionSlotRenderer,

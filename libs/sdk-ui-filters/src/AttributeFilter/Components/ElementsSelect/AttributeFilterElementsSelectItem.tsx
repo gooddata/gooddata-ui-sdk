@@ -38,6 +38,7 @@ export function AttributeFilterElementsSelectItem({
     onSelectOnly,
     onDeselect,
     primaryLabelTitle,
+    rawValueTitle,
     index,
 }: IAttributeFilterElementsSelectItemProps) {
     const intl = useIntl();
@@ -83,7 +84,8 @@ export function AttributeFilterElementsSelectItem({
     });
 
     const itemTitle = getElementTitle(item, intl);
-    const itemPrimaryTitle = getElementPrimaryTitle(item);
+    // a number-formatted value whose raw value differs shows that instead, in the same way
+    const itemPrimaryTitle = getElementPrimaryTitle(item) || rawValueTitle;
 
     const makeId = ScopedIdStore.useContextStoreOptional((ctx) => ctx.makeId);
 

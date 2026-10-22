@@ -1,11 +1,12 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type MouseEvent, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
 
 import { useMediaQuery } from "../../responsive/useMediaQuery.js";
 import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
+import { scrollIntoView } from "../@utils/scrollIntoView.js";
 import { MenuDivider } from "../UiMenu/components/MenuDivider.js";
 import { collapseSeparators } from "../UiMenu/itemUtils.js";
 
@@ -50,8 +51,12 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
     shouldKeyboardActionPreventDefault,
     shouldKeyboardActionStopPropagation,
     shouldCloseOnSelect = true,
+    shouldSelectOnOptionClick = false,
     isDisabledFocusable = false,
+    focusedItemId,
+    onFocusedItemIdChange,
     isCompact = false,
+    padding = "default",
     supportedViews = DEFAULT_SUPPORTED_VIEWS,
 
     reference,
@@ -90,17 +95,56 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
         itemRefs.current = itemRefs.current.slice(0, items.length);
     }, [items]);
 
+    // with virtual focus, the highlight comes from the focusedItemId prop instead of the list's own focus
+    const isVirtualFocus = focusedItemId !== undefined;
+    const virtualFocusedIndex = items.findIndex(
+        (item) => item.type === "interactive" && item.id === focusedItemId,
+    );
+    const shownFocusedIndex = isVirtualFocus
+        ? virtualFocusedIndex >= 0
+            ? virtualFocusedIndex
+            : undefined
+        : focusedIndex;
     const focusedItem = focusedIndex == null ? undefined : items[focusedIndex];
     const focusedItemNode = focusedIndex == null ? undefined : itemRefs.current[focusedIndex];
 
-    // Scroll focused item into view
+    // where the mouse last moved over the list, and the item it reported there
+    const lastMouseRef = useRef({ x: NaN, y: NaN });
+    const hoveredItemIdRef = useRef<string | null>(null);
+    // Browsers also report mouse events when the items move under a resting mouse, e.g. when the arrow keys
+    // scroll the list or a search filters it; such an event, at the same position, must not take the
+    // highlight from the keyboard
+    const handleItemMouseMove = (event: MouseEvent, itemId: string) => {
+        const { x, y } = lastMouseRef.current;
+        if (event.clientX !== x || event.clientY !== y) {
+            lastMouseRef.current = { x: event.clientX, y: event.clientY };
+            hoveredItemIdRef.current = itemId;
+            onFocusedItemIdChange?.(itemId);
+        }
+    };
+
+    // With virtual focus, scroll to the highlight, also when the list mounts; only the list scrolls, see
+    // scrollIntoView. A highlight moved by the mouse is under the mouse already, so it isn't scrolled to,
+    // like in React Aria.
+    const listRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
-        if (!focusedItemNode) {
+        const isHovered = focusedItemId === hoveredItemIdRef.current;
+        hoveredItemIdRef.current = null;
+        const list = listRef.current;
+        const item = shownFocusedIndex === undefined ? null : itemRefs.current[shownFocusedIndex];
+        if (isVirtualFocus && list && item && !isHovered) {
+            scrollIntoView(list, item);
+        }
+    }, [isVirtualFocus, shownFocusedIndex, focusedItemId]);
+
+    // Scroll focused item into view (with virtual focus, the effect above scrolls to the outside highlight instead)
+    useEffect(() => {
+        if (isVirtualFocus || !focusedItemNode) {
             return;
         }
 
         focusedItemNode.scrollIntoView({ block: "nearest" });
-    }, [focusedItemNode]);
+    }, [isVirtualFocus, focusedItemNode]);
 
     const handleSelectItem = useCallback(
         (
@@ -200,16 +244,20 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
 
     return (
         <div
-            className={b({ mobile: isMobile })}
+            className={b({ mobile: isMobile, padding: padding === "none" && "none" })}
             style={{ width, maxWidth, maxHeight }}
             data-testid={dataTestId}
+            ref={listRef}
         >
             <ul
-                className={e("items")}
+                className={e("items", { virtualFocus: isVirtualFocus })}
                 ref={reference}
-                tabIndex={0}
-                onKeyDown={handleKeyDown}
-                aria-activedescendant={makeItemId(ariaAttributes.id, focusedItem)}
+                // with virtual focus, the focus and the keys stay with the outside owner
+                tabIndex={isVirtualFocus ? undefined : 0}
+                onKeyDown={isVirtualFocus ? undefined : handleKeyDown}
+                aria-activedescendant={
+                    isVirtualFocus ? undefined : makeItemId(ariaAttributes.id, focusedItem)
+                }
                 {...ariaAttributes}
                 role="listbox"
             >
@@ -229,20 +277,42 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
                             }}
                             id={makeItemId(ariaAttributes.id, item)}
                             role="option"
+                            lang={item.lang}
                             aria-selected={item.id === selectedItemId}
                             aria-disabled={item.isDisabled}
                             data-testid={testId}
                             aria-controls={ariaAttributes["aria-controls"]}
+                            onMouseMove={
+                                isVirtualFocus && isItemFocusable(item)
+                                    ? (event) => handleItemMouseMove(event, item.id)
+                                    : undefined
+                            }
+                            // clicks anywhere in the option, also those dispatched on the option element itself
+                            onClick={
+                                shouldSelectOnOptionClick
+                                    ? (event) => {
+                                          handleSelectItem(item, {
+                                              type: "mouse",
+                                              newTab: event.ctrlKey || event.metaKey || event.button === 1,
+                                          });
+                                      }
+                                    : undefined
+                            }
                         >
                             <InteractiveItemComponent
-                                onSelect={(e) => {
-                                    handleSelectItem(item, {
-                                        type: "mouse",
-                                        newTab: e.ctrlKey || e.metaKey || e.button === 1,
-                                    });
-                                }}
+                                onSelect={
+                                    shouldSelectOnOptionClick
+                                        ? // the click bubbles to the listbox, which selects the item
+                                          () => {}
+                                        : (e) => {
+                                              handleSelectItem(item, {
+                                                  type: "mouse",
+                                                  newTab: e.ctrlKey || e.metaKey || e.button === 1,
+                                              });
+                                          }
+                                }
                                 item={item}
-                                isFocused={index === focusedIndex}
+                                isFocused={index === shownFocusedIndex}
                                 isSelected={item.id === selectedItemId}
                                 isCompact={isCompact}
                             />
@@ -272,5 +342,31 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
     );
 }
 
-const makeItemId = (listboxId: string, item?: IUiListboxItem<unknown, unknown>) =>
+export const makeItemId = (listboxId: string, item?: IUiListboxItem<unknown, unknown>) =>
     item?.type === "interactive" ? `item-${listboxId}-${item.id}` : undefined;
+
+/**
+ * The next focusable item of the list in a direction; at the first and the last item, it stays there. Without
+ * a current item, down starts at the first item and up at the last. Dividers, static and disabled items are
+ * skipped. For moving the focusedItemId of a list with virtual focus.
+ *
+ * @internal
+ */
+export function getNextFocusableItemId({
+    items,
+    focusedItemId,
+    direction,
+}: {
+    items: IUiListboxItem<unknown, unknown>[];
+    focusedItemId: string | null;
+    direction: "down" | "up";
+}): string | null {
+    const itemIds = items.flatMap((item) =>
+        item.type === "interactive" && !item.isDisabled ? [item.id] : [],
+    );
+    const index = focusedItemId === null ? -1 : itemIds.indexOf(focusedItemId);
+    if (index < 0) {
+        return (direction === "down" ? itemIds[0] : itemIds.at(-1)) ?? null;
+    }
+    return itemIds[direction === "down" ? index + 1 : index - 1] ?? focusedItemId;
+}

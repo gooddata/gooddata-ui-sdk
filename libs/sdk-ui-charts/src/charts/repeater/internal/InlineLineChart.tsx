@@ -7,6 +7,7 @@ import { type IResultAttributeHeaderItem } from "@gooddata/sdk-model";
 
 import { type HighchartsOptions } from "../../../highcharts/lib/index.js";
 
+import { attributeHeaderItemDisplayName } from "./attributeHeaderItemDisplayName.js";
 import { type RepeaterInlineVisualizationDataPoint } from "./dataViewToRepeaterData.js";
 import { getTooltipHtml } from "./highcharts.js";
 
@@ -68,7 +69,7 @@ function createOptions({
             useHTML: true,
             style: { zIndex: tooltipZIndex },
             formatter: function () {
-                const sliceValue = headerItems[this.x]?.name;
+                const sliceValue = attributeHeaderItemDisplayName(headerItems[this.x]);
                 const metricValue = data[this.x]?.formattedValue;
                 return getTooltipHtml({
                     metricTitle,

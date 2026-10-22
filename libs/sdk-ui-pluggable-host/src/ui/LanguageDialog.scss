@@ -1,0 +1,20 @@
+// (C) 2026 GoodData Corporation
+
+.gd-language-dialog {
+    .gd-ui-kit-searchable-select__button {
+        width: 300px;
+    }
+
+    .gd-language-dialog-note {
+        display: block;
+        margin-top: 20px;
+        padding: 4px 10px;
+        line-height: 20px;
+        background-color: var(--gd-palette-primary-dimmed, #e8f7fc);
+    }
+
+    .gd-ui-kit-dialog-footer--divider {
+        margin-top: 20px;
+        padding-top: 20px;
+    }
+}

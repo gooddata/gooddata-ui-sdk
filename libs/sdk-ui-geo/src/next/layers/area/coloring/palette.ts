@@ -36,7 +36,7 @@ function mapPushpinColorsToAreas(pushpinColors: IPushpinColor[]): IAreaAreaColor
  * If segments exist, uses segment-based coloring. Otherwise, uses color measure values for gradients.
  *
  * @param colorData - Array of color measure values
- * @param segmentData - Array of segment values
+ * @param segmentUris - Array of segment element URIs
  * @param colorStrategy - Color strategy to use
  * @returns Array of area colors matching the data
  *
@@ -44,16 +44,16 @@ function mapPushpinColorsToAreas(pushpinColors: IPushpinColor[]): IAreaAreaColor
  */
 export function getAreaAreaColors(
     colorData: number[],
-    segmentData: string[],
+    segmentUris: string[],
     colorStrategy: IColorStrategy | null,
 ): IAreaAreaColor[] {
     if (!colorStrategy) {
         return [{ fill: DEFAULT_AREA_FILL_COLOR }];
     }
 
-    if (segmentData.length > 0) {
+    if (segmentUris.length > 0) {
         // Segment-based coloring should provide a stable color per category.
-        const pushpinColors = getPushpinColors([], segmentData, colorStrategy);
+        const pushpinColors = getPushpinColors([], segmentUris, colorStrategy);
         return mapPushpinColorsToAreas(pushpinColors);
     }
 

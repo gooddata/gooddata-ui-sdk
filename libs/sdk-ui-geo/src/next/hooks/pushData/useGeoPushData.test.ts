@@ -8,12 +8,13 @@ import { type IColorAssignment } from "@gooddata/sdk-ui";
 
 import { sortColorAssignmentsAlphabetically } from "./useGeoPushData.js";
 
-function createAssignment(name: string, uri: string): IColorAssignment {
+function createAssignment(name: string, uri: string, formattedName?: string): IColorAssignment {
     return {
         headerItem: {
             attributeHeaderItem: {
                 name,
                 uri,
+                ...(formattedName === undefined ? {} : { formattedName }),
             },
         },
         color: {
@@ -38,5 +39,13 @@ describe("sortColorAssignmentsAlphabetically", () => {
         const sorted = sortColorAssignmentsAlphabetically([betaUpper, betaLower]);
 
         expect(sorted).toEqual([betaUpper, betaLower]);
+    });
+
+    it("sorts number-formatted values by their raw values", () => {
+        const thousand = createAssignment("1000", "1000", "1,000");
+        const twoHundred = createAssignment("200", "200", "200");
+        const sorted = sortColorAssignmentsAlphabetically([thousand, twoHundred]);
+
+        expect(sorted).toEqual([twoHundred, thousand]);
     });
 });

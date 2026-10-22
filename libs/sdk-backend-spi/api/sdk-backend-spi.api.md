@@ -1591,7 +1591,11 @@ export interface IElementsQueryOptionsElementsByValue {
 }
 
 // @public
-export type IElementsQueryResult = IPagedResource<IAttributeElement>;
+export interface IElementsQueryResult extends IPagedResource<IAttributeElement> {
+    goTo(pageIndex: number): Promise<IElementsQueryResult>;
+    next(): Promise<IElementsQueryResult>;
+    readonly numberFormat?: string;
+}
 
 // @public
 export interface IEntitlements {
@@ -3184,6 +3188,7 @@ export { IUserSettings }
 // @public
 export interface IUserSettingsService {
     deleteColorPalette(): Promise<void>;
+    deleteLocale(): Promise<void>;
     deleteTheme(): Promise<void>;
     getSettings(): Promise<IUserSettings>;
     setColorPalette(colorPalette: string | ObjRef): Promise<void>;

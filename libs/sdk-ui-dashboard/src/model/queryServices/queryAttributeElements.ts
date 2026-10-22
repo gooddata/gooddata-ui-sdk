@@ -66,5 +66,6 @@ function* queryService(
     return {
         elements: attributeElements.items,
         totalCount: attributeElements.totalCount,
+        numberFormat: attributeElements.numberFormat,
     };
 }

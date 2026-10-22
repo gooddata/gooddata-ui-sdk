@@ -10299,6 +10299,7 @@ export type IUseAlertSubmitCallbacks = Pick<IAlertingDialogProps, "onCreateSucce
 export interface IUseAttributeElements {
     // (undocumented)
     elements: IAttributeElement[];
+    numberFormat?: string;
     // (undocumented)
     totalCount: number;
 }

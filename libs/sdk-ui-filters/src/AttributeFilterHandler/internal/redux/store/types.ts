@@ -3,7 +3,12 @@
 import { type Action, type AnyAction } from "@reduxjs/toolkit";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { type IAttributeElement, type IAttributeFilter, type ObjRef } from "@gooddata/sdk-model";
+import {
+    type IAttributeElement,
+    type IAttributeFilter,
+    type ISeparators,
+    type ObjRef,
+} from "@gooddata/sdk-model";
 
 import { type IAttributeFilterState } from "./state.js";
 
@@ -44,4 +49,8 @@ export interface IAttributeFilterHandlerStoreContext {
     staticElements?: IAttributeElement[];
     eventListener: AttributeFilterHandlerEventListener;
     withoutApply?: boolean;
+    /**
+     * Number separators used when formatting element values of numeric computed attributes.
+     */
+    separators?: ISeparators;
 }

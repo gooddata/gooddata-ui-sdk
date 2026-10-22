@@ -1,8 +1,6 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
-import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import {
-    type DataValue,
     type IResultAttributeHeader,
     type IResultAttributeHeaderItem,
     type ISeparators,
@@ -10,7 +8,12 @@ import {
     isAttributeDescriptor,
     isMeasureGroupDescriptor,
 } from "@gooddata/sdk-model";
-import { type DataPoint, type DataViewFacade } from "@gooddata/sdk-ui";
+import {
+    type DataPoint,
+    DataViewFacade,
+    createNumberFormatter,
+    formatAttributeHeaderValues,
+} from "@gooddata/sdk-ui";
 
 /**
  * Key is the localId of the attribute or measure.
@@ -42,10 +45,15 @@ export type RepeaterInlineVisualizationDataPoint = {
  *  - It can contain 0 or 1 slicing attribute.
  */
 export function dataViewToRepeaterData(
-    dataViewFacade: DataViewFacade,
+    rawDataViewFacade: DataViewFacade,
     separators?: ISeparators,
 ): IRepeaterRow[] {
     const rows: IRepeaterRow[] = [];
+    const valueFormatter = createNumberFormatter(separators);
+    // element values of attributes with a number format get their formatted name once, here
+    const dataViewFacade = DataViewFacade.for(
+        formatAttributeHeaderValues(rawDataViewFacade.dataView, valueFormatter),
+    );
     const [firstDimDescriptors, secondDimDescriptors] = [
         dataViewFacade.meta().dimensionItemDescriptors(0),
         dataViewFacade.meta().dimensionItemDescriptors(1),
@@ -82,7 +90,7 @@ export function dataViewToRepeaterData(
             // Map each measure to rows
             dimDescriptor.measureGroupHeader.items.forEach((measureDescriptor) => {
                 const allSeries = dataViewFacade
-                    .data({ valueFormatter: createFormatter(separators) })
+                    .data({ valueFormatter })
                     .series()
                     .allForMeasure(measureDescriptor.measureHeaderItem.localIdentifier);
                 // Map each measure series to rows
@@ -107,13 +115,5 @@ function newRepeaterInlineVisualizationDataPoint(dataPoint: DataPoint): Repeater
     return {
         formattedValue: dataPoint.formattedValue(),
         value: typeof dataPoint.rawValue === "string" ? parseInt(dataPoint.rawValue, 10) : dataPoint.rawValue,
-    };
-}
-
-function createFormatter(separators?: ISeparators) {
-    return function numberFormatter(value: DataValue, format?: string): string {
-        const parsedNumber = ClientFormatterFacade.convertValue(value);
-        const { formattedValue } = ClientFormatterFacade.formatValue(parsedNumber, format, separators);
-        return formattedValue;
     };
 }

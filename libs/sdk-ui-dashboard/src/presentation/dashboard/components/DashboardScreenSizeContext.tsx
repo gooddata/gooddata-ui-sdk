@@ -16,10 +16,11 @@ import { type ScreenSize } from "@gooddata/sdk-model";
 
 import { setScreenSize as setScreenSizeAction } from "../../../model/commands/layout.js";
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 import { selectScreen } from "../../../model/store/tabs/layout/layoutSelectors.js";
 import { DASHBOARD_LAYOUT_BREAK_POINTS } from "../../constants/layout.js";
 
-const getCurrentScreenSize = (): ScreenSize | undefined => {
+const getCurrentScreenSize = (isEditMode: boolean): ScreenSize | undefined => {
     let viewportWidth = 0;
     if (window?.innerWidth) {
         viewportWidth = window.innerWidth;
@@ -32,7 +33,8 @@ const getCurrentScreenSize = (): ScreenSize | undefined => {
     if (viewportWidth >= DASHBOARD_LAYOUT_BREAK_POINTS[3]) {
         return "xl";
     }
-    if (viewportWidth >= DASHBOARD_LAYOUT_BREAK_POINTS[2]) {
+    // Only xl sizes are saved, so edit mode keeps the desktop grid instead of reflowing it.
+    if (isEditMode || viewportWidth >= DASHBOARD_LAYOUT_BREAK_POINTS[2]) {
         return "lg";
     }
     if (viewportWidth >= DASHBOARD_LAYOUT_BREAK_POINTS[1]) {
@@ -46,10 +48,11 @@ const getCurrentScreenSize = (): ScreenSize | undefined => {
 
 function setNewSize(
     prevSize: ScreenSize | undefined,
+    isEditMode: boolean,
     setScreenSize: Dispatch<SetStateAction<ScreenSize | undefined>>,
     dispatch: Dispatch<AnyAction>,
 ) {
-    const newSize = getCurrentScreenSize();
+    const newSize = getCurrentScreenSize(isEditMode);
 
     if (newSize && newSize !== prevSize) {
         // prevent unnecessary re-renders
@@ -70,20 +73,21 @@ export function DashboardScreenSizeProvider({ children }: IDashboardSizeContextP
     const dispatch = useDashboardDispatch();
 
     const appStateScreenSize = useDashboardSelector(selectScreen);
+    const isEditMode = useDashboardSelector(selectIsInEditMode);
 
     useEffect(() => {
         // set initial screen size to app state for usage in sagas
-        setNewSize(screenSize, setScreenSize, dispatch);
+        setNewSize(screenSize, isEditMode, setScreenSize, dispatch);
 
         // register event listener for window resize
         const handleWindowResized = () => {
-            setNewSize(screenSize, setScreenSize, dispatch);
+            setNewSize(screenSize, isEditMode, setScreenSize, dispatch);
         };
         window.addEventListener("resize", handleWindowResized, false);
         return () => {
             window.removeEventListener("resize", handleWindowResized, false);
         };
-    }, [screenSize, dispatch]);
+    }, [screenSize, isEditMode, dispatch]);
 
     return (
         <div className="s-screen-size-container">

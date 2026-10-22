@@ -90,4 +90,30 @@ describe("computeLegend", () => {
         expect(result.items.map((item) => item.name)).toEqual(["Czech", "French"]);
         expect(result.items.map((item) => item.type)).toEqual(["area", "area"]);
     });
+
+    it("sorts number-formatted segments by their raw values and shows the formatted ones", () => {
+        const headers = [
+            { name: "1000", formattedName: "1,000" },
+            { name: "200", formattedName: "200" },
+            { name: "", formattedName: undefined },
+        ].map(({ name, formattedName }) => ({
+            headerItem: { attributeHeaderItem: { name, uri: name, formattedName } },
+        }));
+        const colorStrategy: IColorStrategy = {
+            ...createColorStrategy(),
+            getColorAssignment: () => headers as ReturnType<IColorStrategy["getColorAssignment"]>,
+        };
+        const geoData: IGeoCommonData = {
+            segment: {
+                name: "Amount",
+                index: 0,
+                data: ["1,000", "200", "(empty value)"],
+                uris: ["1000", "200", ""],
+            },
+        };
+
+        const result = computeLegend(geoData, colorStrategy, { layerType: "pushpin", hasSizeData: false });
+
+        expect(result.items.map((item) => item.name)).toEqual(["200", "1,000"]);
+    });
 });

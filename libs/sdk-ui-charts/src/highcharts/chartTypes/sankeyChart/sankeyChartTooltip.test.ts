@@ -81,6 +81,35 @@ describe("SankeyChart tooltip", () => {
         expect(tooltip).toMatchSnapshot();
     });
 
+    it("should show the node names, not the node ids, in the tooltip for connection", () => {
+        const dv = recordedDataFacade(
+            ReferenceRecordings.Scenarios.SankeyChart
+                .MeasureAttributeFromAndAttributeTo as unknown as ScenarioRecording,
+        );
+        const { measureGroup, viewByAttribute, viewByParentAttribute } = getMVSForViewByTwoAttributes(dv);
+        const tooltipFn = generateTooltipSankeyChartFn(
+            viewByAttribute,
+            viewByParentAttribute,
+            measureGroup.items[0],
+        );
+
+        const tooltip = tooltipFn(
+            {
+                isNode: false,
+                weight: 12,
+                from: "1.234",
+                to: "1.2349",
+                fromNode: { name: "1.23 from" },
+                toNode: { name: "1.23 to" },
+            },
+            DEFAULT_TOOLTIP_CONTENT_WIDTH,
+        );
+
+        expect(tooltip).toContain("1.23 from");
+        expect(tooltip).toContain("1.23 to");
+        expect(tooltip).not.toContain("1.234");
+    });
+
     it("should render tooltip for connection correctly ( show in percent )", () => {
         const dv = recordedDataFacade(
             ReferenceRecordings.Scenarios.SankeyChart

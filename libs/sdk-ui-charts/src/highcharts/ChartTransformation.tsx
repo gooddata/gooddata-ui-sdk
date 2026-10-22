@@ -17,7 +17,9 @@ import {
     anomaliesTitleFromIntl,
     clusterTitleFromIntl,
     convertDrillableItemsToPredicates,
+    createNumberFormatter,
     emptyHeaderTitleFromIntl,
+    formatAttributeHeaderValues,
     totalColumnTitleFromIntl,
 } from "@gooddata/sdk-ui";
 import { useContainingOverlayZIndex } from "@gooddata/sdk-ui-kit";
@@ -97,7 +99,7 @@ export const ChartTransformation = memo(
     function ChartTransformation({
         config: configProp,
         renderer = renderHighCharts,
-        dataView,
+        dataView: dataViewProp,
         height,
         width,
         afterRender = () => {},
@@ -118,6 +120,13 @@ export const ChartTransformation = memo(
         const referenceTheme = referenceThemeProp ?? referenceThemeFromContext;
 
         const containingOverlayZIndex = useContainingOverlayZIndex();
+
+        // element values of attributes with a number format (numeric computed attributes) get their
+        // formatted name here, once, so every consumer below (categories, series, tooltips, legend) shows it
+        const dataView = useMemo(
+            () => formatAttributeHeaderValues(dataViewProp, createNumberFormatter(configProp.separators)),
+            [dataViewProp, configProp.separators],
+        );
 
         // mekko stacking is bucket-driven — sanitize stackMeasures* once for every config consumer below
         const config = useMemo(() => {

@@ -1490,6 +1490,7 @@ export interface IAttributeDescriptorBody {
     labelType?: AttributeDisplayFormType;
     localIdentifier: string;
     name: string;
+    numberFormat?: string;
     primaryLabel: ObjRef;
     ref: ObjRef;
     // (undocumented)
@@ -4092,6 +4093,7 @@ export interface IFeatureFlags {
     // (undocumented)
     enableTrinoDataSource?: boolean;
     enableUserDataFiltersUi?: boolean;
+    enableUserLanguageChange?: boolean;
     enableVisualizationFilteringByTags?: boolean;
     enableVisualizationFineTuning?: boolean;
     enableVisualizationPermissions?: boolean;

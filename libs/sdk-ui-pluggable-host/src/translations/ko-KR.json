@@ -33,5 +33,11 @@
     "messages.genAi.visualisation.link.copied": "시각화 링크가 클립보드에 복사되었습니다.",
     "messages.showMore": "더 보기",
     "messages.showLess": "간단히 보기",
-    "gen-ai.ask-assistant.search": "새 시각화 생성 기준: {question}"
+    "gen-ai.ask-assistant.search": "새 시각화 생성 기준: {question}",
+    "languageDialog.title": "언어 변경",
+    "languageDialog.default": "기본값({language})",
+    "languageDialog.description": "<b>참고:</b> 대시보드 콘텐츠가 아닌 인터페이스에만 변경 사항이 적용됩니다.",
+    "languageDialog.select.searchLabel": "언어 검색",
+    "languageDialog.select.searchPlaceholder": "검색…",
+    "languageDialog.select.noMatch": "일치하는 언어가 없습니다."
 }

@@ -517,6 +517,54 @@ export const App = () => (
 );
 ```
 
+## Customize the visualization menu
+
+Use the `VisualizationMenu` slot (`@alpha`) to change the menu that opens from the `...` button on a visualization in a message. The slot gets the built-in items in `defaultProps.items`. Pass a different list to `Default` to add, remove, or reorder the items.
+
+The built-in items have the ids `button-save`, `button-open`, and `button-copy`. The menu closes after the user selects an item. When the list is empty, the menu button is hidden. Users without permission to use Analytical Designer get no built-in items, but your own items still show.
+
+The slot gets these props in `defaultProps`: the `message`, the `part`, the `visualization`, an optional what-if `scenario`, the menu `items`, `isVisualizationSaved`, `isDisabled`, and `ariaDescribedBy`. Each item (`IGenAIAssistantVisualizationMenuItem`) has these properties:
+
+| Property         | Type                                          | Description                                                            |
+| ---------------- | --------------------------------------------- | ---------------------------------------------------------------------- |
+| `id`             | `string`                                      | Unique identifier of the item.                                         |
+| `title`          | `string`                                      | Title displayed in the menu.                                           |
+| `icon`           | `ReactNode`                                   | (Optional) Icon displayed before the title.                            |
+| `isDisabled`     | `boolean`                                     | (Optional) Whether the item is disabled.                               |
+| `ariaAttributes` | `AriaAttributes`                              | (Optional) Additional ARIA attributes of the item.                     |
+| `onSelect`       | `(event: MouseEvent \| KeyboardEvent) => void` | Called when the user selects the item. The menu closes after the call. |
+
+```tsx
+import { GenAIAssistant, type IGenAIAssistantVisualizationMenuProps } from "@gooddata/sdk-ui-gen-ai";
+import { type ISlotProps } from "@gooddata/sdk-ui-kit";
+
+const CustomVisualizationMenu = ({
+    Default,
+    defaultProps,
+}: ISlotProps<IGenAIAssistantVisualizationMenuProps>) => (
+    <Default
+        {...defaultProps}
+        items={[
+            // Remove the built-in "Open in Analyze" item.
+            ...defaultProps.items.filter((item) => item.id !== "button-open"),
+            {
+                id: "share-to-slack",
+                title: "Share to Slack",
+                onSelect: () => shareToSlack(defaultProps.visualization),
+            },
+        ]}
+    />
+);
+
+export const App = () => (
+    <GenAIAssistant
+        slots={{
+            VisualizationMenu: CustomVisualizationMenu,
+        }}
+    />
+);
+```
+
 ## Customize follow-up questions and feedback
 
 You can customize the interactive elements that appear after assistant messages, such as follow-up question buttons and feedback options.

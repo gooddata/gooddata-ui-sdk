@@ -11,14 +11,21 @@ export interface IFilterViewDeleteConfirmProps {
     filterView: IDashboardFilterView;
     onConfirm: () => void;
     onCancel: () => void;
+    returnFocusTo?: string;
 }
 
-export function FilterViewDeleteConfirm({ filterView, onConfirm, onCancel }: IFilterViewDeleteConfirmProps) {
+export function FilterViewDeleteConfirm({
+    filterView,
+    onConfirm,
+    onCancel,
+    returnFocusTo,
+}: IFilterViewDeleteConfirmProps) {
     const intl = useIntl();
     return (
         <ConfirmDialog
             onSubmit={onConfirm}
             onCancel={onCancel}
+            returnFocusTo={returnFocusTo}
             isPositive={false}
             className="gd-filter-view__delete-dialog s-gd-filter-view__delete-dialog"
             headline={intl.formatMessage({ id: "filters.filterViews.delete.title" })}

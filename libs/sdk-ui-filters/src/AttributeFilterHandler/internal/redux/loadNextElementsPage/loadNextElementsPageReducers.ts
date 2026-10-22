@@ -28,6 +28,9 @@ const loadNextElementsPageSuccess: AttributeFilterReducer<
     >
 > = (state, action) => {
     state.elements.nextPageLoad.status = "success";
+    if (action.payload.numberFormat !== undefined) {
+        state.elements.numberFormat = action.payload.numberFormat;
+    }
     action.payload.elements.forEach((el) => {
         const cacheKey = getElementCacheKey(el);
         if (!state.elements.cache[cacheKey]) {

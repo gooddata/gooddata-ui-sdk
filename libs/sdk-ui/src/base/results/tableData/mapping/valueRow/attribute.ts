@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { UnexpectedSdkError } from "../../../../errors/GoodDataSdkError.js";
 import { type ITableDataValue } from "../../interfaces/cells.js";
 import { type ITableAttributeColumnDefinition } from "../../interfaces/columns.js";
@@ -12,7 +13,7 @@ import { getAttributeHeaderValue } from "../getValue/attributeHeader.js";
 export function mapValueRowAttributeColumn(
     rowDefinition: ITableValueRowDefinition,
     columnDefinition: ITableAttributeColumnDefinition,
-    _options: IMappingOptions,
+    options: IMappingOptions,
 ): ITableDataValue {
     const { rowIndex, rowScope } = rowDefinition;
     const { columnIndex, rowHeaderIndex } = columnDefinition;
@@ -23,7 +24,11 @@ export function mapValueRowAttributeColumn(
         throw new UnexpectedSdkError("mapValueRowAttributeColumn: attribute scope expected");
     }
 
-    const formattedValue = getAttributeHeaderValue(attributeScope.header);
+    const formattedValue = getAttributeHeaderValue(
+        attributeScope.header,
+        attributeScope.descriptor,
+        options.config.valueFormatter,
+    );
 
     return {
         type: "attributeHeader",

@@ -58,7 +58,7 @@ function transformPushpinDataSource({
     const sizeFormat = size?.format ?? "";
     const colorFormat = color?.format ?? "";
 
-    const pushpinColors: IPushpinColor[] = getPushpinColors(colorData, segmentData, colorStrategy);
+    const pushpinColors: IPushpinColor[] = getPushpinColors(colorData, segmentUris, colorStrategy);
 
     return locationData.reduce(
         (result: IGeoDataSourceFeatures, coordinates: IGeoLngLat, index: number): IGeoDataSourceFeatures => {

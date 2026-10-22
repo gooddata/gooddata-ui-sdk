@@ -5,6 +5,8 @@ import { type ReactNode, useState } from "react";
 import { type ICatalogAttribute, isComputedAttributeRef } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, type IAlignPoint } from "@gooddata/sdk-ui-kit";
 
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
+import { selectSeparators } from "../../../../../model/store/config/configSelectors.js";
 import { useAttributeDataSet } from "../../dashboardDropdownBody/configuration/hooks/useAttributeDataSet.js";
 import { useAttributeElements } from "../../dashboardDropdownBody/configuration/hooks/useAttributeElements.js";
 import { useComputedAttributeExpression } from "../../dashboardDropdownBody/configuration/hooks/useComputedAttributeExpression.js";
@@ -27,6 +29,7 @@ interface IAttributeListItemTooltipProps {
  */
 export function AttributeListItemTooltip({ item }: IAttributeListItemTooltipProps): ReactNode {
     const [isHover, setIsHover] = useState<boolean>(false);
+    const separators = useDashboardSelector(selectSeparators);
     const { attributeElements, attributesElementsLoading } = useAttributeElements(
         item.defaultDisplayForm.ref,
         ATTR_ELEMENTS_LIMIT,
@@ -68,6 +71,7 @@ export function AttributeListItemTooltip({ item }: IAttributeListItemTooltipProp
                         attributesElementsLoading={attributesElementsLoading}
                         attributeDataSet={attributeDataSet}
                         attributeElements={attributeElements}
+                        separators={separators}
                         expressionTokens={isComputedAttribute ? expressionTokens : undefined}
                         expressionTokensLoading={isComputedAttribute ? expressionTokensLoading : undefined}
                     />

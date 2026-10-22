@@ -1,8 +1,8 @@
 # GoodData.UI SDK - Developer's Guide for TSDoc
 
 For documentation of the code, [TSDoc](https://tsdoc.org/) is used. Interfaces, types, classes and variables marked as `@public` or `@beta` are processed by the [api-extractor](https://api-extractor.com/)
-and [api-documenter](https://api-extractor.com/pages/commands/api-documenter_markdown/) tools. These tools are providing an input for the [docusaurus v1](https://v1.docusaurus.io/), which creates pages
-with [api reference](https://sdk.gooddata.com/gooddata-ui-apidocs/vNext/docs/index.html).
+and [api-documenter](https://api-extractor.com/pages/commands/api-documenter_markdown/) tools. Their output is turned into the
+[API reference](https://www.gooddata.com/docs/gooddata-ui/latest/api-reference/) of the GoodData.UI docs on every docs build (see `sdk/docs/CONTENT_PIPELINE.md`).
 
 To keep the generated API reference simple and readable, follow the rules listed below
 
@@ -18,20 +18,17 @@ To keep the generated API reference simple and readable, follow the rules listed
 
 ### Known issues
 
--   TSDoc does not support MD bullet lists as there is no support for `DocSoftBreaks`. See [TSDoc github issue](https://github.com/microsoft/tsdoc/issues/178) and [Rushstack github issue](https://github.com/microsoft/rushstack/issues/1441). The bullet list is resolved as a list with a single value (all bullet list items are squashed into single line). There is no other way to avoid this than to have a empty line between each list item until TSDoc and api-extractor have this feature implemented.
-
+- TSDoc does not support MD bullet lists as there is no support for `DocSoftBreaks`. See [TSDoc github issue](https://github.com/microsoft/tsdoc/issues/178) and [Rushstack github issue](https://github.com/microsoft/rushstack/issues/1441). The bullet list is resolved as a list with a single value (all bullet list items are squashed into single line). There is no other way to avoid this than to have a empty line between each list item until TSDoc and api-extractor have this feature implemented.
 
 ## General Documentation
 
 For the general documentation, [Hugo](../) is used. It is written in simple `.md` with the exception of hugo scripts ([shortcodes](https://gohugo.io/content-management/shortcodes/) and [partials](https://gohugo.io/templates/partials/)), which are written in this notation:
 
 ```markdown
-
 {{% shortcode_name param1="param" param2="param %}}
 Inner text, usually a note, or something like that.
 {{% /shortcode_name %}}
 ```
-
 
 ### Images
 
@@ -42,7 +39,6 @@ When working with images, use this convention:
 ```
 
 When using the `embedded-image` shortcode, put the image into the `/docs/static/gd-ui/` directory first.
-
 
 ### Deployment
 

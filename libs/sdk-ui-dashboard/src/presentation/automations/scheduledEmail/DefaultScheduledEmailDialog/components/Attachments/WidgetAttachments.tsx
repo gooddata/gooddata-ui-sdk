@@ -2,9 +2,10 @@
 
 import { useCallback, useRef, useState } from "react";
 
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { type WidgetAttachmentType } from "@gooddata/sdk-model";
+import { Message } from "@gooddata/sdk-ui-kit";
 
 import { AUTOMATION_ATTACHMENTS_GROUP_LABEL_ID } from "../../../../../constants/automations.js";
 import { type IScheduledEmailDialogWidgetAttachmentsProps } from "../../../types.js";
@@ -95,8 +96,8 @@ export function WidgetAttachments({
             );
         });
 
-        // Focus management: if items remain, focus the group; otherwise focus add button
-        if (newAttachments.length > 0) {
+        // Hidden formats are preserved, but only visible chips can receive focus.
+        if (visibleSelectedAttachments.some((att) => att !== attachment)) {
             focusAttachmentGroup();
         } else {
             requestAnimationFrame(() => {
@@ -159,6 +160,15 @@ export function WidgetAttachments({
                             addButtonRef.current = ref;
                         }}
                     />
+                    {visibleSelectedAttachments.length === 0 && selectedAttachments.length > 0 ? (
+                        <Message
+                            type="progress"
+                            className="gd-attachment-list-message"
+                            accessibilityConfig={{ role: "status" }}
+                        >
+                            <FormattedMessage id="scheduledEmail.attachments.noVisibleAttachments" />
+                        </Message>
+                    ) : null}
                 </div>
             </AttachmentsWrapper>
             <div className="sr-only" aria-live="polite" aria-atomic="true" role="status">

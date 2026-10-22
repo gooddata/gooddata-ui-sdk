@@ -1,8 +1,12 @@
 // (C) 2026 GoodData Corporation
 
+import { type ReactNode, createElement } from "react";
+
+import { configureStore } from "@reduxjs/toolkit";
 import { renderHook } from "@testing-library/react";
-import { useSelector } from "react-redux";
-import { describe, expect, it, vi } from "vitest";
+import { IntlProvider } from "react-intl";
+import { Provider } from "react-redux";
+import { describe, expect, it } from "vitest";
 
 import { type IChatKdaDefinition } from "@gooddata/sdk-backend-spi";
 import { type CatalogItem, type IAttribute, newMeasure } from "@gooddata/sdk-model";
@@ -10,19 +14,18 @@ import { type IDrillEvent } from "@gooddata/sdk-ui";
 import { type IDashboardKeyDriverCombinationItem } from "@gooddata/sdk-ui-dashboard";
 
 import {
+    chatWindowSliceName,
+    chatWindowSliceReducer,
+    getInitialChatWindowState,
+} from "../../../store/chatWindow/chatWindowSlice.js";
+import { messagesSliceName, messagesSliceReducer } from "../../../store/messages/messagesSlice.js";
+
+import {
     createKdaDefinition,
     createKdaDefinitionFromDrill,
     useKdaDefinition,
     useKdaInfo,
 } from "./useKdaDefinition.js";
-
-vi.mock("react-redux", () => ({
-    useSelector: vi.fn(),
-}));
-
-vi.mock("react-intl", () => ({
-    useIntl: () => ({ locale: "en-US" }),
-}));
 
 const measureRef1 = { uri: "/gdc/md/project/obj/1" };
 const measureRef2 = { uri: "/gdc/md/project/obj/2" };
@@ -192,7 +195,20 @@ describe("useKdaDefinition", () => {
 
     describe("useKdaDefinition hook", () => {
         it("should return KDA definition using catalogItems from selector", () => {
-            vi.mocked(useSelector).mockReturnValue(catalogItems);
+            const store = configureStore({
+                reducer: {
+                    [chatWindowSliceName]: chatWindowSliceReducer,
+                    [messagesSliceName]: messagesSliceReducer,
+                },
+                preloadedState: {
+                    [chatWindowSliceName]: { ...getInitialChatWindowState(), catalogItems },
+                },
+            });
+            const wrapper = ({ children }: { children: ReactNode }) =>
+                createElement(Provider, {
+                    store,
+                    children: createElement(IntlProvider, { locale: "en-US", messages: {} }, children),
+                });
 
             const content: IChatKdaDefinition = {
                 measure: measure1,
@@ -203,10 +219,9 @@ describe("useKdaDefinition", () => {
                 dateGranularity: "GDC.time.date",
             };
 
-            const { result } = renderHook(() => useKdaDefinition(content));
+            const { result } = renderHook(() => useKdaDefinition(content), { wrapper });
 
             expect(result.current.metric.measure.title).toBe("Measure 1 Title");
-            expect(useSelector).toHaveBeenCalled();
         });
     });
 });

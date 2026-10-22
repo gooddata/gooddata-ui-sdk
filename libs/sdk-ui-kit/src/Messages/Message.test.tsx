@@ -45,6 +45,17 @@ function renderMessageComponent(options = {}) {
 }
 
 describe("Message", () => {
+    it("can expose an informational message as a named status region", () => {
+        renderMessage(
+            { type: "progress", accessibilityConfig: { role: "status", ariaLabel: "Attachments" } },
+            <span>No attachments to display.</span>,
+        );
+
+        expect(screen.getByRole("status", { name: "Attachments" })).toHaveTextContent(
+            "No attachments to display.",
+        );
+    });
+
     it("should show message with custom component", () => {
         renderMessage(
             {

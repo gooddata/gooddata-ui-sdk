@@ -33,5 +33,11 @@
     "messages.genAi.visualisation.link.copied": "Der Visualisierungslink wurde in Ihre Zwischenablage kopiert.",
     "messages.showMore": "Mehr anzeigen",
     "messages.showLess": "Weniger anzeigen",
-    "gen-ai.ask-assistant.search": "Erstellen Sie eine neue Visualisierung basierend auf: {question}"
+    "gen-ai.ask-assistant.search": "Erstellen Sie eine neue Visualisierung basierend auf: {question}",
+    "languageDialog.title": "Sprache ändern",
+    "languageDialog.default": "Standard ({language})",
+    "languageDialog.description": "<b>Hinweis:</b> Ändert nur die Benutzeroberfläche, nicht die Dashboard-Inhalte.",
+    "languageDialog.select.searchLabel": "Sprachen suchen",
+    "languageDialog.select.searchPlaceholder": "Suchen…",
+    "languageDialog.select.noMatch": "Keine übereinstimmende Sprache."
 }

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { isEmpty } from "lodash-es";
 
-import { filterObjRef } from "@gooddata/sdk-model";
+import { type ISeparators, filterObjRef } from "@gooddata/sdk-model";
 
 import { type IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler/types/attributeFilterHandler.js";
 import { isLimitingAttributeFiltersEmpty } from "../../AttributeFilterHandler/utils.js";
@@ -20,6 +20,7 @@ export function useAttributeFilterControllerData(
     handler: IMultiSelectAttributeFilterHandler,
     supportsShowingFilteredElements: boolean,
     shouldIncludeLimitingFilters: boolean,
+    separators?: ISeparators,
 ): AttributeFilterControllerData {
     const handlerState = useAttributeFilterHandlerState(handler);
 
@@ -51,6 +52,7 @@ export function useAttributeFilterControllerData(
     const committedSelectionElements = handlerState.selection.committed.elements;
 
     const searchString = handlerState.elements.options?.search ?? "";
+    const elementsNumberFormat = handlerState.elements.numberFormat;
     const limit = handlerState.elements.options?.limit ?? 0;
     const limitingAttributeFilters = handlerState.elements.options?.limitingAttributeFilters ?? [];
     const limitingDateFilters = handlerState.elements.options?.limitingDateFilters ?? [];
@@ -130,6 +132,8 @@ export function useAttributeFilterControllerData(
         committedSelectionElements: committedSelectionElements ?? [],
 
         searchString,
+        elementsNumberFormat,
+        separators,
 
         isFilteredByParentFilters,
         parentFilterAttributes,

@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Element values of numeric computed attributes are formatted with the attribute's number format. In the attribute filter, a number typed with the display separators searches by the raw value, and an item tooltip shows the raw value when the displayed one is rounded or scaled. Date values in the repeater and in geo chart tooltips and legends now display formatted, consistent with other visualizations.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "ivan.nejezchleb@gooddata.com"
+}

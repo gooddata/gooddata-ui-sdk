@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { compact, isEqual, uniqWith } from "lodash-es";
 
@@ -62,7 +62,11 @@ export function getDrillOriginAttributeElementTitle(
             (intersectionAttributeItem) =>
                 intersectionAttributeItem.attributeHeader.localIdentifier === drillOriginLocalId,
         )
-        .map((intersectionAttributeItem) => intersectionAttributeItem.attributeHeaderItem.name)[0];
+        .map(
+            (intersectionAttributeItem) =>
+                intersectionAttributeItem.attributeHeaderItem.formattedName ??
+                intersectionAttributeItem.attributeHeaderItem.name,
+        )[0];
 }
 
 /**

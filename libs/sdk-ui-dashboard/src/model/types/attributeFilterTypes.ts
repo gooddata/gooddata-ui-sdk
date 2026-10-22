@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import {
     type IAttributeDisplayFormMetadataObject,
@@ -55,4 +55,9 @@ export interface IParentWithConnectingAttributes {
 export interface IUseAttributeElements {
     elements: IAttributeElement[];
     totalCount: number;
+    /**
+     * Number format of the element values, see
+     * {@link @gooddata/sdk-backend-spi#IElementsQueryResult.numberFormat}; the element titles stay raw.
+     */
+    numberFormat?: string;
 }

@@ -2,7 +2,11 @@
 
 import { omit, without } from "lodash-es";
 
-import { type IAttributeDescriptor, type IResultAttributeHeader } from "@gooddata/sdk-model";
+import {
+    type IAttributeDescriptor,
+    type IResultAttributeHeader,
+    isResultAttributeHeader,
+} from "@gooddata/sdk-model";
 import {
     type DataViewFacade,
     type IDrillConfig,
@@ -92,6 +96,20 @@ function getAttributeHeader(
     };
 }
 
+/**
+ * The drill event carries the raw element value, while the pin properties hold the value shown in the
+ * tooltip, which can be number-formatted. Empty and null elements keep the placeholder from the properties.
+ */
+function getRawDrillValue(
+    attribute: AttributeInfo | undefined,
+    dataIndex: number,
+    shownValue: string | undefined,
+): string | undefined {
+    const item = attribute?.items[dataIndex];
+    const rawValue = item && isResultAttributeHeader(item) ? item.attributeHeaderItem.name : undefined;
+    return rawValue || shownValue;
+}
+
 export function handleGeoPushpinDrillEvent(
     drillableItems: IHeaderPredicate[],
     drillConfig: IDrillConfig,
@@ -122,6 +140,7 @@ export function handleGeoPushpinDrillEvent(
         segment: { value: segmentByValue },
         size: { value: sizeValue },
     } = parseGeoProperties(pinProperties) || {};
+    const { segmentByAttribute, tooltipTextAttribute } = findGeoAttributesInDimension(dv, geoData);
 
     const drillContext: IGeoDrillEvent = {
         element: "pushpin",
@@ -129,8 +148,8 @@ export function handleGeoPushpinDrillEvent(
         type: "pushpin",
         color: colorValue,
         location: { lat, lng },
-        locationName: locationNameValue,
-        segmentBy: segmentByValue,
+        locationName: getRawDrillValue(tooltipTextAttribute, locationIndex, locationNameValue),
+        segmentBy: getRawDrillValue(segmentByAttribute, locationIndex, segmentByValue),
         size: sizeValue,
     };
     const drillEventExtended: IDrillEvent = {

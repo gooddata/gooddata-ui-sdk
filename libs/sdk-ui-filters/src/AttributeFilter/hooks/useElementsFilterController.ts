@@ -17,6 +17,7 @@ import {
     type IAttributeFilter,
     type IAttributeMetadataObject,
     type IRelativeDateFilter,
+    type ISeparators,
     type ObjRef,
     areObjRefsEqual,
     filterAttributeElements,
@@ -1027,6 +1028,7 @@ export interface IElementsFilterControllerProps {
     selectionMode: DashboardAttributeFilterSelectionMode;
     selectFirst?: boolean;
     withoutApply?: boolean;
+    separators?: ISeparators;
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     supportsKeepingDependentFiltersSelection: boolean;
     supportsCircularDependencyInFilters: boolean;
@@ -1065,6 +1067,7 @@ export function useElementsFilterController(props: IElementsFilterControllerProp
         selectionMode,
         selectFirst = false,
         withoutApply = false,
+        separators,
         enableImmediateAttributeFilterDisplayAsLabelMigration = false,
         supportsKeepingDependentFiltersSelection,
         supportsCircularDependencyInFilters,
@@ -1099,12 +1102,14 @@ export function useElementsFilterController(props: IElementsFilterControllerProp
         staticElements,
         displayAsLabel,
         withoutApply,
+        separators,
     });
 
     const attributeFilterControllerData = useAttributeFilterControllerData(
         handler!,
         supportsShowingFilteredElements!,
         shouldIncludeLimitingFilters,
+        separators,
     );
 
     const isWorkingSelectionChanged =
