@@ -1,6 +1,5 @@
 ---
-title: Customize the date filter presets
-linkTitle: Date filter presets
+title: Customize date filter presets
 category: Filters
 diataxis_type: howto
 api_symbols:

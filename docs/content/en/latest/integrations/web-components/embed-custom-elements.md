@@ -1,6 +1,5 @@
 ---
-title: Dashboard and visualization embed elements
-linkTitle: "Embed elements"
+title: Embed custom elements
 category: Integrations / Web Components
 diataxis_type: reference
 source_files:

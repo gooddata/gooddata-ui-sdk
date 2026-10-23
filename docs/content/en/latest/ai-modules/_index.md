@@ -1,6 +1,5 @@
 ---
 title: AI & modules
-linkTitle: "AI & modules"
 weight: 50
 description: AI features and high-level UI modules that you embed as React components.
 diataxis_type: explanation

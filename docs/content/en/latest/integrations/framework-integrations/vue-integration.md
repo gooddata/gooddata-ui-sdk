@@ -1,7 +1,6 @@
 ---
 legacy_path: learn/web_components/vue
-title: Embed GoodData in a Vue app
-linkTitle: Vue
+title: Vue integration
 category: Integrations / Framework guides
 diataxis_type: howto
 related_pages:

@@ -1,6 +1,15 @@
 // (C) 2026 GoodData Corporation
 
-import { type KeyboardEvent, type MouseEvent, type ReactNode, useCallback, useMemo, useState } from "react";
+import {
+    type KeyboardEvent,
+    type MouseEvent,
+    type ReactNode,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 
 import {
     type IGenAIUserContext,
@@ -12,6 +21,7 @@ import {
     type IAppHeaderOptions,
     type IHostUiNotification,
     type IPlatformContext,
+    type IPluggableAppTelemetryCallbacks,
 } from "@gooddata/sdk-pluggable-application-model";
 import { BackendProvider, resolveLocale } from "@gooddata/sdk-ui";
 import { AppHeaderNotifications } from "@gooddata/sdk-ui-application-header";
@@ -44,6 +54,7 @@ import { b, e } from "./hostChromeBem.js";
 import { HostIntlProvider } from "./HostIntlProvider.js";
 import { HostNotificationDispatcher } from "./HostNotificationDispatcher.js";
 import { LanguageDialog } from "./LanguageDialog.js";
+import { trackLanguageSettingsOpen } from "./languageTelemetry.js";
 import { useAppPreloadOnHover } from "./useAppPreloadOnHover.js";
 import { useGenAiRightPanel } from "./useGenAiRightPanel.js";
 import { useHostChromePricing } from "./useHostChromePricing.js";
@@ -385,7 +396,11 @@ export function HostChrome({
                         </Wrapper>
                         {pricing.element}
                         {isLanguageDialogOpen ? (
-                            <HostLanguageDialog ctx={ctx} onClose={() => setIsLanguageDialogOpen(false)} />
+                            <HostLanguageDialog
+                                ctx={ctx}
+                                telemetry={shellTelemetry}
+                                onClose={() => setIsLanguageDialogOpen(false)}
+                            />
                         ) : null}
                         <HostNotificationDispatcher notification={notification} />
                     </div>
@@ -395,9 +410,35 @@ export function HostChrome({
     );
 }
 
+interface IHostLanguageDialogProps {
+    ctx: IPlatformContext;
+    telemetry: IPluggableAppTelemetryCallbacks | undefined;
+    onClose: () => void;
+}
+
 // the languages, and so the default one, load only once the dialog opens
-function HostLanguageDialog({ ctx, onClose }: { ctx: IPlatformContext; onClose: () => void }) {
-    const languages = useLanguages(ctx);
+function HostLanguageDialog({ ctx, telemetry, onClose }: IHostLanguageDialogProps) {
+    const languages = useLanguages(ctx, telemetry);
+    const isOpenTracked = useRef(false);
+
+    // The open is tracked once the default language loads, as the event names the language the user sees.
+    useEffect(() => {
+        if (!languages || isOpenTracked.current) {
+            return;
+        }
+        isOpenTracked.current = true;
+        const context = languages.currentLanguage
+            ? "own"
+            : ctx.currentWorkspaceId
+              ? "workspaceRoute"
+              : "orgRoute";
+        trackLanguageSettingsOpen(
+            telemetry,
+            "userMenu",
+            languages.currentLanguage ?? languages.defaultLanguage,
+            context,
+        );
+    }, [languages, telemetry, ctx.currentWorkspaceId]);
 
     return languages ? <LanguageDialog {...languages} onClose={onClose} /> : null;
 }

@@ -1,6 +1,5 @@
 ---
 title: Visualizations
-linkTitle: "Visualizations"
 weight: 20
 description: Chart and table components for rendering analytics data.
 diataxis_type: reference

@@ -5,9 +5,10 @@ names the site root crumb, which is otherwise the site title. */ -}}
   {{- $ancestors := .Ancestors.Reverse -}}
   {{- if $ancestors -}}
   {{- $cfg := site.Params.breadcrumbs | default dict -}}
-  {{- /* A version's own home ("Home" under the site root) is what the site crumb already names, so
-  on that page the trail ends at the site crumb instead of adding "Home" after it. */ -}}
-  {{- $onContentHome := and .Parent .Parent.IsHome (eq .LinkTitle "Home") -}}
+  {{- /* A version's own home (a section right under the site root: latest/, 11.xx/) is what the
+  site crumb already names, so on that page the trail ends at the site crumb instead of adding a
+  second crumb after it. */ -}}
+  {{- $onContentHome := and .Parent .Parent.IsHome -}}
   {{- $siteName := site.Params.productName -}}
   <nav aria-label="Breadcrumb" class="mb-5 flex lg:px-2 flex-wrap items-center gap-1.5 text-sm text-gd-text-secondary">
     {{- range $cfg.root -}}
@@ -15,7 +16,7 @@ names the site root crumb, which is otherwise the site title. */ -}}
       <span class="opacity-50" aria-hidden="true">/</span>
     {{- end -}}
     {{- range $i, $a := $ancestors -}}
-      {{- $isContentHome := and $a.Parent $a.Parent.IsHome (eq $a.LinkTitle "Home") -}}
+      {{- $isContentHome := and $a.Parent $a.Parent.IsHome -}}
       {{- if not $isContentHome -}}
         {{- if $i }}<span class="opacity-50" aria-hidden="true">/</span>{{ end -}}
         {{- $name := cond $a.IsHome ($siteName | default $a.LinkTitle) $a.LinkTitle -}}

@@ -802,7 +802,7 @@ export interface AiCertificationInfo {
 
 export interface AiChartFill {
     'pattern_name_mapping'?: { [key: string]: AiPatternNameMapping; } | null;
-    'type'?: AiType57 | null;
+    'type'?: AiType67 | null;
 }
 
 
@@ -1162,6 +1162,7 @@ export interface AiConfig {
     'label_positive'?: string | null;
     'legend_enabled'?: boolean | null;
     'legend_position'?: string | null;
+    'line_shape'?: AiLineShape | null;
     'line_style_control_metrics'?: Array<string> | null;
     'line_style_excluded_metrics'?: Array<string> | null;
     'line_style_mapping'?: { [key: string]: AiLineStyleMapping1; };
@@ -1271,7 +1272,7 @@ export interface AiConversationItemResponse {
     'createdAt': string;
     'detail'?: AiConversationItemResponseDetail | null;
     /**
-     * True for items streamed only as live progress, never persisted. For reasoning items, replay returns one merged reasoning item instead. Replay never returns skillsActivated items.
+     * True for items streamed as live progress. For reasoning items, replay returns one merged reasoning item instead. Replay returns a skillsActivated item as interim, at the itemIndex it streamed at.
      */
     'interim'?: boolean;
     /**
@@ -1552,10 +1553,10 @@ export interface AiDashboardInput {
     'tags'?: Array<string>;
     'timezone_config'?: AiTimezoneConfig | null;
     'title'?: string;
-    'type': AiType58;
+    'type': AiType68;
     'user_filters_reset'?: boolean | null;
     'user_filters_save'?: boolean | null;
-    'version'?: AiVersion | null;
+    'version'?: AiVersion4 | null;
 }
 
 
@@ -1596,10 +1597,10 @@ export interface AiDashboardOutput {
     'tags'?: Array<string>;
     'timezone_config'?: AiTimezoneConfig | null;
     'title'?: string;
-    'type': AiType58;
+    'type': AiType68;
     'user_filters_reset'?: boolean | null;
     'user_filters_save'?: boolean | null;
-    'version'?: AiVersion | null;
+    'version'?: AiVersion4 | null;
 }
 
 
@@ -1965,6 +1966,22 @@ export interface AiDocumentMetadataResponse {
     'updatedAt': string;
     'updatedBy': string;
     'workspaceId'?: string | null;
+}
+
+/**
+ * A rework of the saved document open in the editor, as RFC 6902 operations.
+ */
+export interface AiDocumentPatch {
+    [key: string]: any;
+
+    /**
+     * Id of the saved document the operations apply to.
+     */
+    'document_id': string;
+    /**
+     * RFC 6902 operations turning the document the client sent with the message into `report`. A `test` operation guards each one that overwrites, moves or removes a page or field. A failing `test` means the client copy differs from the one sent. In that case, use `report`.
+     */
+    'operations': Array<object>;
 }
 
 
@@ -2512,7 +2529,7 @@ export interface AiLayerItem {
     'metrics'?: Array<AiBucketItem>;
     'segment_by'?: Array<AiBucketItem>;
     'title'?: string;
-    'type': AiType54;
+    'type': AiType64;
     'view_by'?: Array<string>;
 }
 
@@ -2537,7 +2554,7 @@ export interface AiLayerItemBase {
     'metrics'?: Array<AiBucketItem> | null;
     'segment_by'?: Array<AiBucketItem> | null;
     'title'?: string;
-    'type'?: AiType54 | null;
+    'type'?: AiType64 | null;
     'view_by'?: Array<string> | null;
 }
 
@@ -2549,6 +2566,16 @@ export const AiLayoutDirection = {
 } as const;
 
 export type AiLayoutDirection = typeof AiLayoutDirection[keyof typeof AiLayoutDirection];
+
+
+
+export const AiLineShape = {
+    LINEAR: 'linear',
+    SPLINE: 'spline',
+    STEPPED: 'stepped'
+} as const;
+
+export type AiLineShape = typeof AiLineShape[keyof typeof AiLineShape];
 
 
 export interface AiLineStyleMapping1 {
@@ -2834,7 +2861,7 @@ export type AiMultipartContentTypeEnum = 'multipart';
 /**
  * @type AiMultipartContentPartsInner
  */
-export type AiMultipartContentPartsInner = { type: 'alertProposal' } & AiAlertProposalPart | { type: 'clarifyingQuestions' } & AiClarifyingQuestionsPart | { type: 'dashboard' } & AiDashboardPart | { type: 'dashboardPatch' } & AiDashboardPatchPart | { type: 'kda' } & AiKeyDriverAnalysisPart | { type: 'report' } & AiReportPart | { type: 'searchResults' } & AiSearchResults | { type: 'text' } & AiTextPart | { type: 'visualization' } & AiVisualizationPart | { type: 'whatIf' } & AiWhatIfAnalysisPart;
+export type AiMultipartContentPartsInner = { type: 'alertProposal' } & AiAlertProposalPart | { type: 'clarifyingQuestions' } & AiClarifyingQuestionsPart | { type: 'dashboard' } & AiDashboardPart | { type: 'dashboardPatch' } & AiDashboardPatchPart | { type: 'document' } & AiPublisherDocumentPart | { type: 'kda' } & AiKeyDriverAnalysisPart | { type: 'report' } & AiReportPart | { type: 'searchResults' } & AiSearchResults | { type: 'text' } & AiTextPart | { type: 'visualization' } & AiVisualizationPart | { type: 'whatIf' } & AiWhatIfAnalysisPart;
 
 export interface AiMvfCondition {
     'condition': AiCondition4;
@@ -3283,6 +3310,33 @@ export interface AiPublisherDocumentIdUpdateRequest {
     'id': string;
 }
 
+/**
+ * A document draft in Publisher content v2 that the assistant composed.  The service resolves it from conversation state. The service does not persist it until the user saves it. Every refinement is a new version with a new ``document_ref``. An earlier card keeps its version.
+ */
+export interface AiPublisherDocumentPart {
+    'base_document_id'?: string | null;
+    'document'?: object | null;
+    'document_ref'?: string | null;
+    /**
+     * Publisher content version of `document`: `aac-v2`.
+     */
+    'format'?: AiPublisherDocumentPartFormatEnum;
+    'page_count'?: number | null;
+    'refines_ref'?: string | null;
+    /**
+     * True when the assistant wrote this version from the document open in the editor (`view.document`). A client that still shows that document unchanged since the message was sent can apply it there. This applies only to the answer to a message just sent. Do not apply a part replayed from history again.
+     */
+    'reworks_open_document'?: boolean;
+    'saved_document_id'?: string | null;
+    /**
+     * Type of multipart part.
+     */
+    'type'?: AiPublisherDocumentPartTypeEnum;
+}
+
+export type AiPublisherDocumentPartFormatEnum = 'aac-v2';
+export type AiPublisherDocumentPartTypeEnum = 'document';
+
 export interface AiQuery {
     'fields': object;
     'filter_by'?: object;
@@ -3304,7 +3358,7 @@ export interface AiQueryAttributeSort {
      * Sort direction.
      */
     'direction': AiDirection;
-    'type': AiType48;
+    'type': AiType58;
 }
 
 
@@ -3362,7 +3416,7 @@ export interface AiQueryField {
     'operator': AiOperator13;
     'show_all_values'?: boolean;
     'title'?: string;
-    'type': AiType47;
+    'type': AiType57;
     'using': AiUsing11 | null;
     'compute_ratio'?: boolean;
     'filter_by'?: object;
@@ -3377,7 +3431,7 @@ export interface AiQueryField1 {
     'operator'?: AiOperator | null;
     'show_all_values'?: boolean | null;
     'title'?: string;
-    'type'?: AiType34 | null;
+    'type'?: AiType44 | null;
     'using': AiUsing6;
 }
 
@@ -3387,7 +3441,7 @@ export interface AiQueryField10 {
     'date_filter'?: string | null;
     'maql'?: string | null;
     'operator'?: AiOperator7 | null;
-    'type'?: AiType43 | null;
+    'type'?: AiType53 | null;
     'using'?: AiUsing7 | null;
 }
 
@@ -3404,7 +3458,7 @@ export interface AiQueryField11 {
     /**
      * Type of relative period metric related to another metric in list.
      */
-    'type': AiType44;
+    'type': AiType54;
     'using': AiUsing8;
 }
 
@@ -3414,7 +3468,7 @@ export interface AiQueryField12 {
     'date_filter'?: string | null;
     'maql'?: string | null;
     'operator'?: AiOperator11 | null;
-    'type'?: AiType45 | null;
+    'type'?: AiType55 | null;
     'using'?: AiUsing9 | null;
 }
 
@@ -3432,7 +3486,7 @@ export interface AiQueryField13 {
     /**
      * Type of relative period metric related to another metric in list.
      */
-    'type': AiType46;
+    'type': AiType56;
     'using': AiUsing10;
 }
 
@@ -3442,7 +3496,7 @@ export interface AiQueryField14 {
     'date_filter'?: string | null;
     'maql'?: string | null;
     'operator'?: AiOperator13 | null;
-    'type'?: AiType47 | null;
+    'type'?: AiType57 | null;
     'using'?: AiUsing11 | null;
 }
 
@@ -3452,7 +3506,7 @@ export interface AiQueryField2 {
     'date_filter'?: string | null;
     'maql'?: string | null;
     'operator'?: AiOperator1 | null;
-    'type'?: AiType35 | null;
+    'type'?: AiType45 | null;
     'using'?: AiUsing12 | null;
 }
 
@@ -3465,7 +3519,7 @@ export interface AiQueryField3 {
     'maql'?: string | null;
     'operator'?: AiOperator2 | null;
     'title'?: string;
-    'type'?: AiType36 | null;
+    'type'?: AiType46 | null;
     'using': AiMetricIdentifier;
 }
 
@@ -3475,7 +3529,7 @@ export interface AiQueryField4 {
     'date_filter'?: string | null;
     'maql'?: string | null;
     'operator'?: AiOperator3 | null;
-    'type'?: AiType37 | null;
+    'type'?: AiType47 | null;
     'using'?: AiUsing13 | null;
 }
 
@@ -3491,7 +3545,7 @@ export interface AiQueryField5 {
     'maql'?: string | null;
     'operator'?: AiOperator4 | null;
     'title'?: string;
-    'type'?: AiType38 | null;
+    'type'?: AiType48 | null;
     'using': AiUsing14;
 }
 
@@ -3501,7 +3555,7 @@ export interface AiQueryField6 {
     'date_filter'?: string | null;
     'maql'?: string | null;
     'operator'?: AiOperator5 | null;
-    'type'?: AiType39 | null;
+    'type'?: AiType49 | null;
     'using'?: AiUsing15 | null;
 }
 
@@ -3515,7 +3569,7 @@ export interface AiQueryField7 {
     'maql': string;
     'operator'?: AiOperator6 | null;
     'title'?: string;
-    'type'?: AiType40 | null;
+    'type'?: AiType50 | null;
     'using'?: AiUsing16 | null;
 }
 
@@ -3525,7 +3579,7 @@ export interface AiQueryField8 {
     'date_filter'?: string | null;
     'maql'?: string | null;
     'operator'?: AiOperator7 | null;
-    'type'?: AiType41 | null;
+    'type'?: AiType51 | null;
     'using'?: AiUsing17 | null;
 }
 
@@ -3539,7 +3593,7 @@ export interface AiQueryField9 {
      */
     'operator': AiOperator7;
     'title'?: string;
-    'type'?: AiType42 | null;
+    'type'?: AiType52 | null;
     'using': Array<string>;
 }
 
@@ -3592,7 +3646,7 @@ export interface AiQueryMetricSort {
      */
     'direction': AiDirection;
     'metrics': Array<AiQueryMetricSortMetricsInner>;
-    'type': AiType49;
+    'type': AiType59;
 }
 
 
@@ -3739,7 +3793,7 @@ export interface AiQuerySort {
      * Sort direction.
      */
     'direction': AiDirection;
-    'type': AiType49;
+    'type': AiType59;
     'metrics': Array<AiQueryMetricSortMetricsInner>;
 }
 
@@ -3974,10 +4028,11 @@ export interface AiReportIdUpdateRequest {
 export interface AiReportPart {
     'base_report_id'?: string | null;
     /**
-     * Shape of `report`: the Analytics-as-Code report document, v1.
+     * Publisher content version of the draft. It is always `aac-v1`. `report` is the Analytics-as-Code document of Publisher content v1. A draft in `aac-v2` comes as a `document` part instead.
      */
     'format'?: AiReportPartFormatEnum;
     'page_count'?: number | null;
+    'patch'?: AiDocumentPatch | null;
     'refines_ref'?: string | null;
     'report'?: object | null;
     'report_ref'?: string | null;
@@ -4416,7 +4471,7 @@ export interface AiSendClarifyingAnswer {
  */
 export interface AiSendClarifyingAnswersContent {
     /**
-     * One entry per answered question. Skipping every question sends no message.
+     * One entry per answered question. Empty when the user skipped every question.
      */
     'answers': Array<AiSendClarifyingAnswer>;
     /**
@@ -4443,11 +4498,13 @@ export interface AiSendMessageItem {
 export type AiSendMessageItemRoleEnum = 'user';
 
 export interface AiSendMessageOptions {
+    'documentFormat'?: AiSendMessageOptionsDocumentFormatEnum | null;
     'pinnedSkills'?: Array<string> | null;
     'reasoningEffort'?: AiRequestedReasoningEffort | null;
     'search'?: AiSendMessageSearchOptions | null;
 }
 
+export type AiSendMessageOptionsDocumentFormatEnum = 'aac-v1' | 'aac-v2';
 
 /**
  * POST /conversations/{conversationId}/messages body.
@@ -4594,7 +4651,7 @@ export interface AiSkillRoutingDetail {
 export type AiSkillRoutingDetailCategoryEnum = 'skillRouting';
 
 /**
- * Skills that became available to the agent before a model call. Streamed only.
+ * Skills that became available to the agent before a model call.  Replay returns it with the itemId, itemIndex and createdAt it streamed with. Replay omits it for a failed model call and for turns stored without skill data.
  */
 export interface AiSkillsActivatedContent {
     /**
@@ -4760,6 +4817,62 @@ export interface AiTabOutput {
     'title': string;
 }
 
+export interface AiTakeawayDataRequest {
+    /**
+     * AFM filters in the same shape consumed by the AFM execute endpoint, applied to every visualization on top of its stored filters. Send `[]` to apply no request filters. Each layer is merged on top of the one below it: attribute, ranking and inline filters are added and all apply together; a date filter replaces the lower layer\'s date filter on the same date dataset; a measure value filter replaces the lower layer\'s measure value filter on the same measure.
+     */
+    'filterContext': Array<AiTakeawayDataRequestFilterContextInner>;
+    /**
+     * Visualizations the takeaway is based on. Every one must load, or the request fails. An item is a visualization ID or an object with `visualizationId` and its own `filters`. A visualization ID gets its stored filters and `filterContext` only.
+     */
+    'visualizations': Array<AiTakeawayDataRequestVisualizationsInner>;
+}
+
+/**
+ * @type AiTakeawayDataRequestFilterContextInner
+ */
+export type AiTakeawayDataRequestFilterContextInner = AiAbsoluteDateFilter | AiAllTimeDateFilter | AiComparisonMeasureValueFilter | AiCompoundMeasureValueFilter | AiInlineFilterDefinition | AiMatchAttributeFilterInput | AiNegativeAttributeFilter | AiPositiveAttributeFilter | AiRangeMeasureValueFilter | AiRankingFilter | AiRelativeDateFilter;
+
+export interface AiTakeawayDataRequestVisualizationsInner {
+    /**
+     * AFM filters for this placement only. Layers, lowest first: the visualization\'s stored filters, `filterContext`, then these filters. Send `[]` to apply no own filters. Each layer is merged on top of the one below it: attribute, ranking and inline filters are added and all apply together; a date filter replaces the lower layer\'s date filter on the same date dataset; a measure value filter replaces the lower layer\'s measure value filter on the same measure.
+     */
+    'filters': Array<AiVisualizationPlacementRequestFiltersInner>;
+    'visualizationId': string;
+}
+
+export interface AiTakeawayInstructionsRequest {
+    'document'?: string | null;
+    'formatHint'?: string | null;
+    'slot'?: string | null;
+}
+
+export interface AiTakeawayRequest {
+    'agentId'?: string | null;
+    'data': AiTakeawayDataRequest;
+    'instructions'?: AiTakeawayInstructionsRequest;
+    'maxCharacters'?: number | null;
+}
+
+export interface AiTakeawayResponse {
+    /**
+     * The AI Hub agent that the takeaway is written as.
+     */
+    'agentId': string;
+    /**
+     * The context parts that did not fully load because a lookup failed or timed out, wholly or partly. The takeaway uses what did load. A part that configuration switches off is never listed.
+     */
+    'contextOmitted': Array<AiTakeawayResponseContextOmittedEnum>;
+    'generatedAt': string;
+    /**
+     * `true` when no visualization has data for the filters. Then no text is written and nothing is charged.
+     */
+    'noData': boolean;
+    'takeaway': string | null;
+}
+
+export type AiTakeawayResponseContextOmittedEnum = 'memory' | 'knowledge';
+
 export interface AiTarget {
     /**
      * Local identifier of the targeted measure.
@@ -4844,7 +4957,7 @@ export interface AiTo {
 
 export interface AiTotalItem {
     'title'?: string;
-    'type': AiType53;
+    'type': AiType63;
     /**
      * Local metric identifier to use for this total.
      */
@@ -4858,6 +4971,46 @@ export const AiType1 = {
 } as const;
 
 export type AiType1 = typeof AiType1[keyof typeof AiType1];
+
+
+
+export const AiType100 = {
+    COMBO_CHART: 'combo_chart'
+} as const;
+
+export type AiType100 = typeof AiType100[keyof typeof AiType100];
+
+
+
+export const AiType101 = {
+    GEO_CHART: 'geo_chart'
+} as const;
+
+export type AiType101 = typeof AiType101[keyof typeof AiType101];
+
+
+
+export const AiType102 = {
+    GEO_AREA_CHART: 'geo_area_chart'
+} as const;
+
+export type AiType102 = typeof AiType102[keyof typeof AiType102];
+
+
+
+export const AiType103 = {
+    REPEATER_CHART: 'repeater_chart'
+} as const;
+
+export type AiType103 = typeof AiType103[keyof typeof AiType103];
+
+
+
+export const AiType104 = {
+    RADAR_CHART: 'radar_chart'
+} as const;
+
+export type AiType104 = typeof AiType104[keyof typeof AiType104];
 
 
 
@@ -4904,110 +5057,9 @@ export type AiType3 = typeof AiType3[keyof typeof AiType3];
 
 
 
-export const AiType34 = {
-    PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD'
-} as const;
-
-export type AiType34 = typeof AiType34[keyof typeof AiType34];
-
-
-
-export const AiType35 = {
-    PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
-} as const;
-
-export type AiType35 = typeof AiType35[keyof typeof AiType35];
-
-
-
-export const AiType36 = {
-    PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD'
-} as const;
-
-export type AiType36 = typeof AiType36[keyof typeof AiType36];
-
-
-
-export const AiType37 = {
-    PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
-} as const;
-
-export type AiType37 = typeof AiType37[keyof typeof AiType37];
-
-
-
-export const AiType38 = {
-    PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD'
-} as const;
-
-export type AiType38 = typeof AiType38[keyof typeof AiType38];
-
-
-
-export const AiType39 = {
-    PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
-} as const;
-
-export type AiType39 = typeof AiType39[keyof typeof AiType39];
-
-
-
-export const AiType40 = {
-    PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD'
-} as const;
-
-export type AiType40 = typeof AiType40[keyof typeof AiType40];
-
-
-
-export const AiType41 = {
-    PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
-} as const;
-
-export type AiType41 = typeof AiType41[keyof typeof AiType41];
-
-
-
-export const AiType42 = {
-    PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD'
-} as const;
-
-export type AiType42 = typeof AiType42[keyof typeof AiType42];
-
-
-
-export const AiType43 = {
-    PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
-} as const;
-
-export type AiType43 = typeof AiType43[keyof typeof AiType43];
-
-
-
 export const AiType44 = {
     PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
-    PREVIOUS_YEAR2: 'PREVIOUS_YEAR'
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD'
 } as const;
 
 export type AiType44 = typeof AiType44[keyof typeof AiType44];
@@ -5027,8 +5079,7 @@ export type AiType45 = typeof AiType45[keyof typeof AiType45];
 
 export const AiType46 = {
     PREVIOUS_YEAR: 'PREVIOUS_YEAR',
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
-    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD'
 } as const;
 
 export type AiType46 = typeof AiType46[keyof typeof AiType46];
@@ -5047,7 +5098,8 @@ export type AiType47 = typeof AiType47[keyof typeof AiType47];
 
 
 export const AiType48 = {
-    ATTRIBUTE_SORT: 'attribute_sort'
+    PREVIOUS_YEAR: 'PREVIOUS_YEAR',
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD'
 } as const;
 
 export type AiType48 = typeof AiType48[keyof typeof AiType48];
@@ -5055,7 +5107,10 @@ export type AiType48 = typeof AiType48[keyof typeof AiType48];
 
 
 export const AiType49 = {
-    METRIC_SORT: 'metric_sort'
+    PREVIOUS_YEAR: 'PREVIOUS_YEAR',
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
+    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
+    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
 } as const;
 
 export type AiType49 = typeof AiType49[keyof typeof AiType49];
@@ -5070,7 +5125,105 @@ export type AiType5 = typeof AiType5[keyof typeof AiType5];
 
 
 
+export const AiType50 = {
+    PREVIOUS_YEAR: 'PREVIOUS_YEAR',
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD'
+} as const;
+
+export type AiType50 = typeof AiType50[keyof typeof AiType50];
+
+
+
+export const AiType51 = {
+    PREVIOUS_YEAR: 'PREVIOUS_YEAR',
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
+    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
+    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
+} as const;
+
+export type AiType51 = typeof AiType51[keyof typeof AiType51];
+
+
+
+export const AiType52 = {
+    PREVIOUS_YEAR: 'PREVIOUS_YEAR',
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD'
+} as const;
+
+export type AiType52 = typeof AiType52[keyof typeof AiType52];
+
+
+
 export const AiType53 = {
+    PREVIOUS_YEAR: 'PREVIOUS_YEAR',
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
+    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
+    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
+} as const;
+
+export type AiType53 = typeof AiType53[keyof typeof AiType53];
+
+
+
+export const AiType54 = {
+    PREVIOUS_YEAR: 'PREVIOUS_YEAR',
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
+    PREVIOUS_YEAR2: 'PREVIOUS_YEAR'
+} as const;
+
+export type AiType54 = typeof AiType54[keyof typeof AiType54];
+
+
+
+export const AiType55 = {
+    PREVIOUS_YEAR: 'PREVIOUS_YEAR',
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
+    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
+    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
+} as const;
+
+export type AiType55 = typeof AiType55[keyof typeof AiType55];
+
+
+
+export const AiType56 = {
+    PREVIOUS_YEAR: 'PREVIOUS_YEAR',
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
+    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
+} as const;
+
+export type AiType56 = typeof AiType56[keyof typeof AiType56];
+
+
+
+export const AiType57 = {
+    PREVIOUS_YEAR: 'PREVIOUS_YEAR',
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD',
+    PREVIOUS_YEAR2: 'PREVIOUS_YEAR',
+    PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD'
+} as const;
+
+export type AiType57 = typeof AiType57[keyof typeof AiType57];
+
+
+
+export const AiType58 = {
+    ATTRIBUTE_SORT: 'attribute_sort'
+} as const;
+
+export type AiType58 = typeof AiType58[keyof typeof AiType58];
+
+
+
+export const AiType59 = {
+    METRIC_SORT: 'metric_sort'
+} as const;
+
+export type AiType59 = typeof AiType59[keyof typeof AiType59];
+
+
+
+export const AiType63 = {
     SUM: 'SUM',
     AVG: 'AVG',
     MAX: 'MAX',
@@ -5079,42 +5232,34 @@ export const AiType53 = {
     NAT: 'NAT'
 } as const;
 
-export type AiType53 = typeof AiType53[keyof typeof AiType53];
+export type AiType63 = typeof AiType63[keyof typeof AiType63];
 
 
 
-export const AiType54 = {
+export const AiType64 = {
     PUSHPIN: 'pushpin',
     AREA: 'area'
 } as const;
 
-export type AiType54 = typeof AiType54[keyof typeof AiType54];
+export type AiType64 = typeof AiType64[keyof typeof AiType64];
 
 
 
-export const AiType57 = {
+export const AiType67 = {
     SOLID: 'solid',
     PATTERN: 'pattern',
     OUTLINE: 'outline'
 } as const;
 
-export type AiType57 = typeof AiType57[keyof typeof AiType57];
+export type AiType67 = typeof AiType67[keyof typeof AiType67];
 
 
 
-export const AiType58 = {
+export const AiType68 = {
     DASHBOARD: 'dashboard'
 } as const;
 
-export type AiType58 = typeof AiType58[keyof typeof AiType58];
-
-
-
-export const AiType69 = {
-    TABLE: 'table'
-} as const;
-
-export type AiType69 = typeof AiType69[keyof typeof AiType69];
+export type AiType68 = typeof AiType68[keyof typeof AiType68];
 
 
 
@@ -5126,86 +5271,6 @@ export type AiType7 = typeof AiType7[keyof typeof AiType7];
 
 
 
-export const AiType70 = {
-    BAR_CHART: 'bar_chart'
-} as const;
-
-export type AiType70 = typeof AiType70[keyof typeof AiType70];
-
-
-
-export const AiType71 = {
-    COLUMN_CHART: 'column_chart'
-} as const;
-
-export type AiType71 = typeof AiType71[keyof typeof AiType71];
-
-
-
-export const AiType72 = {
-    LINE_CHART: 'line_chart'
-} as const;
-
-export type AiType72 = typeof AiType72[keyof typeof AiType72];
-
-
-
-export const AiType73 = {
-    AREA_CHART: 'area_chart'
-} as const;
-
-export type AiType73 = typeof AiType73[keyof typeof AiType73];
-
-
-
-export const AiType74 = {
-    SCATTER_CHART: 'scatter_chart'
-} as const;
-
-export type AiType74 = typeof AiType74[keyof typeof AiType74];
-
-
-
-export const AiType75 = {
-    BUBBLE_CHART: 'bubble_chart'
-} as const;
-
-export type AiType75 = typeof AiType75[keyof typeof AiType75];
-
-
-
-export const AiType76 = {
-    PIE_CHART: 'pie_chart'
-} as const;
-
-export type AiType76 = typeof AiType76[keyof typeof AiType76];
-
-
-
-export const AiType77 = {
-    DONUT_CHART: 'donut_chart'
-} as const;
-
-export type AiType77 = typeof AiType77[keyof typeof AiType77];
-
-
-
-export const AiType78 = {
-    TREEMAP_CHART: 'treemap_chart'
-} as const;
-
-export type AiType78 = typeof AiType78[keyof typeof AiType78];
-
-
-
-export const AiType79 = {
-    PYRAMID_CHART: 'pyramid_chart'
-} as const;
-
-export type AiType79 = typeof AiType79[keyof typeof AiType79];
-
-
-
 export const AiType8 = {
     FILTER_GROUP: 'filter_group'
 } as const;
@@ -5214,24 +5279,8 @@ export type AiType8 = typeof AiType8[keyof typeof AiType8];
 
 
 
-export const AiType80 = {
-    FUNNEL_CHART: 'funnel_chart'
-} as const;
-
-export type AiType80 = typeof AiType80[keyof typeof AiType80];
-
-
-
-export const AiType81 = {
-    HEATMAP_CHART: 'heatmap_chart'
-} as const;
-
-export type AiType81 = typeof AiType81[keyof typeof AiType81];
-
-
-
 export const AiType82 = {
-    BULLET_CHART: 'bullet_chart'
+    TABLE: 'table'
 } as const;
 
 export type AiType82 = typeof AiType82[keyof typeof AiType82];
@@ -5239,7 +5288,7 @@ export type AiType82 = typeof AiType82[keyof typeof AiType82];
 
 
 export const AiType83 = {
-    WATERFALL_CHART: 'waterfall_chart'
+    BAR_CHART: 'bar_chart'
 } as const;
 
 export type AiType83 = typeof AiType83[keyof typeof AiType83];
@@ -5247,7 +5296,7 @@ export type AiType83 = typeof AiType83[keyof typeof AiType83];
 
 
 export const AiType84 = {
-    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart'
+    COLUMN_CHART: 'column_chart'
 } as const;
 
 export type AiType84 = typeof AiType84[keyof typeof AiType84];
@@ -5255,7 +5304,7 @@ export type AiType84 = typeof AiType84[keyof typeof AiType84];
 
 
 export const AiType85 = {
-    SANKEY_CHART: 'sankey_chart'
+    LINE_CHART: 'line_chart'
 } as const;
 
 export type AiType85 = typeof AiType85[keyof typeof AiType85];
@@ -5263,7 +5312,7 @@ export type AiType85 = typeof AiType85[keyof typeof AiType85];
 
 
 export const AiType86 = {
-    HEADLINE_CHART: 'headline_chart'
+    AREA_CHART: 'area_chart'
 } as const;
 
 export type AiType86 = typeof AiType86[keyof typeof AiType86];
@@ -5271,7 +5320,7 @@ export type AiType86 = typeof AiType86[keyof typeof AiType86];
 
 
 export const AiType87 = {
-    COMBO_CHART: 'combo_chart'
+    SCATTER_CHART: 'scatter_chart'
 } as const;
 
 export type AiType87 = typeof AiType87[keyof typeof AiType87];
@@ -5279,7 +5328,7 @@ export type AiType87 = typeof AiType87[keyof typeof AiType87];
 
 
 export const AiType88 = {
-    GEO_CHART: 'geo_chart'
+    BUBBLE_CHART: 'bubble_chart'
 } as const;
 
 export type AiType88 = typeof AiType88[keyof typeof AiType88];
@@ -5287,7 +5336,7 @@ export type AiType88 = typeof AiType88[keyof typeof AiType88];
 
 
 export const AiType89 = {
-    GEO_AREA_CHART: 'geo_area_chart'
+    PIE_CHART: 'pie_chart'
 } as const;
 
 export type AiType89 = typeof AiType89[keyof typeof AiType89];
@@ -5303,7 +5352,7 @@ export type AiType9 = typeof AiType9[keyof typeof AiType9];
 
 
 export const AiType90 = {
-    REPEATER_CHART: 'repeater_chart'
+    DONUT_CHART: 'donut_chart'
 } as const;
 
 export type AiType90 = typeof AiType90[keyof typeof AiType90];
@@ -5311,10 +5360,74 @@ export type AiType90 = typeof AiType90[keyof typeof AiType90];
 
 
 export const AiType91 = {
-    RADAR_CHART: 'radar_chart'
+    TREEMAP_CHART: 'treemap_chart'
 } as const;
 
 export type AiType91 = typeof AiType91[keyof typeof AiType91];
+
+
+
+export const AiType92 = {
+    PYRAMID_CHART: 'pyramid_chart'
+} as const;
+
+export type AiType92 = typeof AiType92[keyof typeof AiType92];
+
+
+
+export const AiType93 = {
+    FUNNEL_CHART: 'funnel_chart'
+} as const;
+
+export type AiType93 = typeof AiType93[keyof typeof AiType93];
+
+
+
+export const AiType94 = {
+    HEATMAP_CHART: 'heatmap_chart'
+} as const;
+
+export type AiType94 = typeof AiType94[keyof typeof AiType94];
+
+
+
+export const AiType95 = {
+    BULLET_CHART: 'bullet_chart'
+} as const;
+
+export type AiType95 = typeof AiType95[keyof typeof AiType95];
+
+
+
+export const AiType96 = {
+    WATERFALL_CHART: 'waterfall_chart'
+} as const;
+
+export type AiType96 = typeof AiType96[keyof typeof AiType96];
+
+
+
+export const AiType97 = {
+    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart'
+} as const;
+
+export type AiType97 = typeof AiType97[keyof typeof AiType97];
+
+
+
+export const AiType98 = {
+    SANKEY_CHART: 'sankey_chart'
+} as const;
+
+export type AiType98 = typeof AiType98[keyof typeof AiType98];
+
+
+
+export const AiType99 = {
+    HEADLINE_CHART: 'headline_chart'
+} as const;
+
+export type AiType99 = typeof AiType99[keyof typeof AiType99];
 
 
 /**
@@ -5634,12 +5747,12 @@ export interface AiValueOperand {
 }
 
 
-export const AiVersion = {
+export const AiVersion4 = {
     _2: '2',
     _3: '3'
 } as const;
 
-export type AiVersion = typeof AiVersion[keyof typeof AiVersion];
+export type AiVersion4 = typeof AiVersion4[keyof typeof AiVersion4];
 
 
 
@@ -5680,7 +5793,7 @@ export interface AiVisualisation {
     /**
      * Type of visualisation.
      */
-    'type': AiType91;
+    'type': AiType104;
     'view_by'?: Array<AiBucketItem>;
     'stack_by'?: Array<AiBucketItem>;
     'trend_by'?: Array<AiBucketItem>;
@@ -5711,7 +5824,7 @@ export interface AiVisualisation1 {
     /**
      * Type of visualisation.
      */
-    'type': AiType69;
+    'type': AiType82;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5733,7 +5846,7 @@ export interface AiVisualisation10 {
     /**
      * Type of visualisation.
      */
-    'type': AiType78;
+    'type': AiType91;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5755,7 +5868,7 @@ export interface AiVisualisation11 {
     /**
      * Type of visualisation.
      */
-    'type': AiType79;
+    'type': AiType92;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5777,7 +5890,7 @@ export interface AiVisualisation12 {
     /**
      * Type of visualisation.
      */
-    'type': AiType80;
+    'type': AiType93;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5801,7 +5914,7 @@ export interface AiVisualisation13 {
     /**
      * Type of visualisation.
      */
-    'type': AiType81;
+    'type': AiType94;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5823,7 +5936,7 @@ export interface AiVisualisation14 {
     /**
      * Type of visualisation.
      */
-    'type': AiType82;
+    'type': AiType95;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5845,7 +5958,7 @@ export interface AiVisualisation15 {
     /**
      * Type of visualisation.
      */
-    'type': AiType83;
+    'type': AiType96;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5869,7 +5982,7 @@ export interface AiVisualisation16 {
     /**
      * Type of visualisation.
      */
-    'type': AiType84;
+    'type': AiType97;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5893,7 +6006,7 @@ export interface AiVisualisation17 {
     /**
      * Type of visualisation.
      */
-    'type': AiType85;
+    'type': AiType98;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5915,7 +6028,7 @@ export interface AiVisualisation18 {
     /**
      * Type of visualisation.
      */
-    'type': AiType86;
+    'type': AiType99;
     'view_by'?: Array<any> | null;
 }
 
@@ -5937,7 +6050,7 @@ export interface AiVisualisation19 {
     /**
      * Type of visualisation.
      */
-    'type': AiType87;
+    'type': AiType100;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5960,7 +6073,7 @@ export interface AiVisualisation2 {
     /**
      * Type of visualisation.
      */
-    'type': AiType70;
+    'type': AiType83;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5983,7 +6096,7 @@ export interface AiVisualisation20 {
     /**
      * Type of visualisation.
      */
-    'type': AiType88;
+    'type': AiType101;
     'view_by'?: Array<string> | null;
 }
 
@@ -6006,7 +6119,7 @@ export interface AiVisualisation21 {
     /**
      * Type of visualisation.
      */
-    'type': AiType89;
+    'type': AiType102;
     'view_by'?: Array<string> | null;
 }
 
@@ -6030,7 +6143,7 @@ export interface AiVisualisation22 {
     /**
      * Type of visualisation.
      */
-    'type': AiType90;
+    'type': AiType103;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -6052,7 +6165,7 @@ export interface AiVisualisation23 {
     /**
      * Type of visualisation.
      */
-    'type': AiType91;
+    'type': AiType104;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -6075,7 +6188,7 @@ export interface AiVisualisation3 {
     /**
      * Type of visualisation.
      */
-    'type': AiType71;
+    'type': AiType84;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -6098,7 +6211,7 @@ export interface AiVisualisation4 {
     /**
      * Type of visualisation.
      */
-    'type': AiType72;
+    'type': AiType85;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -6121,7 +6234,7 @@ export interface AiVisualisation5 {
     /**
      * Type of visualisation.
      */
-    'type': AiType73;
+    'type': AiType86;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -6144,7 +6257,7 @@ export interface AiVisualisation6 {
     /**
      * Type of visualisation.
      */
-    'type': AiType74;
+    'type': AiType87;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -6167,7 +6280,7 @@ export interface AiVisualisation7 {
     /**
      * Type of visualisation.
      */
-    'type': AiType75;
+    'type': AiType88;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -6189,7 +6302,7 @@ export interface AiVisualisation8 {
     /**
      * Type of visualisation.
      */
-    'type': AiType76;
+    'type': AiType89;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -6211,7 +6324,7 @@ export interface AiVisualisation9 {
     /**
      * Type of visualisation.
      */
-    'type': AiType77;
+    'type': AiType90;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -9570,6 +9683,155 @@ export class DashboardSummaryAi extends BaseAPI implements DashboardSummaryAiInt
      */
     public summarizeVisualizations(requestParameters: DashboardSummaryAiSummarizeVisualizationsRequest, options?: AxiosRequestConfig) {
         return DashboardSummaryAi_SummarizeVisualizations(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+}
+
+
+// DocumentTakeawayAi FP - DocumentTakeawayAiAxiosParamCreator
+/**
+ * Note: This API is an experimental and is going to change. Please, use it accordingly. Writes a short takeaway for one slot of a document, based on the data of the given visualizations. The text is written as the given AI Hub agent, or as the user\'s default agent. Without either agent, the request fails. When no visualization has data, the response sets `noData`, carries no text and no model is called.
+ * @summary (EXPERIMENTAL) Generate a document takeaway
+ * @param {string} workspaceId 
+ * @param {AiTakeawayRequest} aiTakeawayRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DocumentTakeawayAiAxiosParamCreator_GenerateTakeaway(
+    workspaceId: string, aiTakeawayRequest: AiTakeawayRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('generateTakeaway', 'workspaceId', workspaceId)
+    // verify required parameter 'aiTakeawayRequest' is not null or undefined
+    assertParamExists('generateTakeaway', 'aiTakeawayRequest', aiTakeawayRequest)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/takeaway`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof aiTakeawayRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(aiTakeawayRequest !== undefined ? aiTakeawayRequest : {})
+        : aiTakeawayRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// DocumentTakeawayAi Api FP
+/**
+ * Note: This API is an experimental and is going to change. Please, use it accordingly. Writes a short takeaway for one slot of a document, based on the data of the given visualizations. The text is written as the given AI Hub agent, or as the user\'s default agent. Without either agent, the request fails. When no visualization has data, the response sets `noData`, carries no text and no model is called.
+ * @summary (EXPERIMENTAL) Generate a document takeaway
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {DocumentTakeawayAiGenerateTakeawayRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DocumentTakeawayAi_GenerateTakeaway(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: DocumentTakeawayAiGenerateTakeawayRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiTakeawayResponse> {
+    const localVarAxiosArgs = await DocumentTakeawayAiAxiosParamCreator_GenerateTakeaway(
+        requestParameters.workspaceId, requestParameters.aiTakeawayRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * DocumentTakeawayAi - interface
+ * @export
+ * @interface DocumentTakeawayAi
+ */
+export interface DocumentTakeawayAiInterface {
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. Writes a short takeaway for one slot of a document, based on the data of the given visualizations. The text is written as the given AI Hub agent, or as the user\'s default agent. Without either agent, the request fails. When no visualization has data, the response sets `noData`, carries no text and no model is called.
+     * @summary (EXPERIMENTAL) Generate a document takeaway
+     * @param {DocumentTakeawayAiGenerateTakeawayRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DocumentTakeawayAiInterface
+     */
+    generateTakeaway(requestParameters: DocumentTakeawayAiGenerateTakeawayRequest, options?: AxiosRequestConfig): AxiosPromise<AiTakeawayResponse>;
+
+}
+
+/**
+ * Request parameters for generateTakeaway operation in DocumentTakeawayAi.
+ * @export
+ * @interface DocumentTakeawayAiGenerateTakeawayRequest
+ */
+export interface DocumentTakeawayAiGenerateTakeawayRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof DocumentTakeawayAiGenerateTakeaway
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {AiTakeawayRequest}
+     * @memberof DocumentTakeawayAiGenerateTakeaway
+     */
+    readonly aiTakeawayRequest: AiTakeawayRequest
+}
+
+/**
+ * DocumentTakeawayAi - object-oriented interface
+ * @export
+ * @class DocumentTakeawayAi
+ * @extends {BaseAPI}
+ */
+export class DocumentTakeawayAi extends BaseAPI implements DocumentTakeawayAiInterface {
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. Writes a short takeaway for one slot of a document, based on the data of the given visualizations. The text is written as the given AI Hub agent, or as the user\'s default agent. Without either agent, the request fails. When no visualization has data, the response sets `noData`, carries no text and no model is called.
+     * @summary (EXPERIMENTAL) Generate a document takeaway
+     * @param {DocumentTakeawayAiGenerateTakeawayRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DocumentTakeawayAi
+     */
+    public generateTakeaway(requestParameters: DocumentTakeawayAiGenerateTakeawayRequest, options?: AxiosRequestConfig) {
+        return DocumentTakeawayAi_GenerateTakeaway(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 

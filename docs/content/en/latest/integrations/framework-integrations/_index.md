@@ -1,6 +1,5 @@
 ---
 title: Framework guides
-linkTitle: "Framework guides"
 weight: 40
 description: Use GoodData.UI in Angular, Next.js, and Vue apps — framework-specific setup via React components or the Web Components wrapper.
 diataxis_type: reference

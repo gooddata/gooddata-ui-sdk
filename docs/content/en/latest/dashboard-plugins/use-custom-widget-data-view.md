@@ -1,6 +1,5 @@
 ---
-title: useCustomWidgetExecutionDataView and useCustomWidgetInsightDataView
-linkTitle: Custom widget data view hooks
+title: Custom widget data hooks
 description: Load execution or visualization data inside a custom dashboard widget with the dashboard filters applied automatically.
 category: Dashboard & plugins
 diataxis_type: reference

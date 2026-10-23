@@ -2,9 +2,12 @@
 
 import { SmartFunctionsAi_ResolveLlmProviders } from "@gooddata/api-client-tiger";
 import {
+    type GenAiApiGenerateTakeawayRequest,
+    type GenAiApiGenerateTakeawayResponse,
     type GenAiApiSummarizeRequest,
     type GenAiApiSummarizeResponse,
     type GenAiApiSummarizeVisualizationsRequest,
+    GenAiApi_GenerateTakeaway,
     GenAiApi_SummarizeDashboard,
     GenAiApi_SummarizeVisualizations,
 } from "@gooddata/api-client-tiger/endpoints/genAI";
@@ -18,6 +21,8 @@ import type {
     IMemoryItemsService,
     ISemanticQualityService,
     ISemanticSearchQuery,
+    ITakeawayRequest,
+    ITakeawayResult,
     IVisualizationsSummaryRequest,
 } from "@gooddata/sdk-backend-spi";
 import { type IFilter } from "@gooddata/sdk-model";
@@ -145,6 +150,44 @@ export class GenAIService implements IGenAIService {
 
         return convertSummaryResponse(response.data);
     }
+
+    async generateTakeaway(
+        request: ITakeawayRequest,
+        options?: { signal?: AbortSignal },
+    ): Promise<ITakeawayResult> {
+        const aiTakeawayRequest: GenAiApiGenerateTakeawayRequest = {
+            data: {
+                visualizations: request.visualizations.map((placement) => ({
+                    visualizationId: placement.visualizationId,
+                    filters: convertSummaryFilters(placement.filters),
+                })),
+                filterContext: convertSummaryFilters(request.filters),
+            },
+        };
+        if (request.instructions !== undefined) {
+            aiTakeawayRequest.instructions = request.instructions;
+        }
+        if (request.maxCharacters !== undefined) {
+            aiTakeawayRequest.maxCharacters = request.maxCharacters;
+        }
+        if (request.agentId !== undefined) {
+            aiTakeawayRequest.agentId = request.agentId;
+        }
+
+        const response = await this.authCall((client) =>
+            GenAiApi_GenerateTakeaway(
+                client.axios,
+                client.basePath,
+                {
+                    workspaceId: this.workspaceId,
+                    aiTakeawayRequest,
+                },
+                { signal: options?.signal },
+            ),
+        );
+
+        return convertTakeawayResponse(response.data);
+    }
 }
 
 // Cast bridges the AFM filter definitions to the generated union type of the AI API.
@@ -169,5 +212,15 @@ function convertSummaryResponse(data: GenAiApiSummarizeResponse): IDashboardSumm
         })),
         generatedAt: data.generatedAt,
         tabId: data.tabId ?? undefined,
+    };
+}
+
+function convertTakeawayResponse(data: GenAiApiGenerateTakeawayResponse): ITakeawayResult {
+    return {
+        takeaway: data.takeaway,
+        noData: data.noData,
+        generatedAt: data.generatedAt,
+        agentId: data.agentId,
+        contextOmitted: data.contextOmitted,
     };
 }

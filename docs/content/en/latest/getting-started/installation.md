@@ -1,6 +1,5 @@
 ---
-title: Add GoodData.UI to an existing React app
-linkTitle: Installation
+title: Install GoodData.UI
 description: Add GoodData.UI to an existing React application by installing the
   packages, importing the styles, connecting the analytical backend, and
   rendering a dashboard your users pick from a list.

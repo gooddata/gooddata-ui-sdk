@@ -1,7 +1,6 @@
 ---
 legacy_path: learn/add_interactivity/time_over_time
-title: Compare a measure with a previous period
-linkTitle: Time-over-time comparison
+title: Compare to a previous period
 category: Data layer / Execution
 diataxis_type: howto
 api_symbols:

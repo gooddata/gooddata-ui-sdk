@@ -1,7 +1,6 @@
 ---
 legacy_path: learn/web_components/authentication
 title: Authenticate Web Components
-linkTitle: Web Components authentication
 category: Integrations / Web Components
 diataxis_type: howto
 source_files:

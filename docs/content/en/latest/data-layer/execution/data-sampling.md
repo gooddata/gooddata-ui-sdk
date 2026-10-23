@@ -1,7 +1,6 @@
 ---
 legacy_path: learn/get_raw_data/data_sampling
-title: Sample data to speed up executions
-linkTitle: Data sampling
+title: Sample data
 category: Data layer / Execution
 diataxis_type: howto
 api_symbols:

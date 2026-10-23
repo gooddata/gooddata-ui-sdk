@@ -63,7 +63,7 @@ The saved types `tablenext` and `pushpinnext` render the new pivot table and the
 | Loading the color palette or the settings fails | `ErrorComponent` | None |
 | The visualization fails to render or execute | `ErrorComponent` | `onError`, then `onLoadingChanged` with `{ isLoading: false }` |
 
-- The error component shows only when none of the visualization, color palette, settings, or permissions is still loading. Errors with a known error code get a localized message and description. Errors that aren't GoodData.UI SDK errors show the generic unknown-error message. SDK errors with no mapped code show the error code as the message.
+- The error component shows only when none of the visualization, color palette, settings, or permissions is still loading. Errors with a known error code get a localized message and description. Errors that aren't GoodData.UI errors (`GoodDataSdkError`) show the generic unknown-error message. GoodData.UI errors with no mapped code show the error code as the message.
 - A visualization error is cleared as soon as the visualization starts loading again.
 - The function passed to `onExportReady` uses the saved visualization's title as the export title when you don't set `title` in the export config.
 - You can replace `onDrill`, `onError`, `onLoadingChanged`, `onExportReady`, `onDataView`, and `pushData` between renders. The visualization always calls the latest one. Replacing `onInsightLoaded` loads the visualization again.

@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "api-client-tiger, sdk-backend-spi, sdk-backend-tiger: Add IGenAIService.generateTakeaway (beta) for the AI takeaway endpoint",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

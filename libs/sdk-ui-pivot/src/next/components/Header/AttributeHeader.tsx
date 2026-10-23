@@ -23,7 +23,6 @@ import { SortIndicator } from "./SortIndicator.js";
  */
 export function AttributeHeader(params: AgGridHeaderParams) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isKeyboardTriggered, setIsKeyboardTriggered] = useState(false);
     const colDef = params.column.getColDef() as AgGridColumnDef;
     const columnDefinition = colDef.context?.columnDefinition;
 
@@ -67,7 +66,6 @@ export function AttributeHeader(params: AgGridHeaderParams) {
     useHeaderMenuKeyboard(
         params,
         () => {
-            setIsKeyboardTriggered(true);
             setIsMenuOpen(true);
         },
         hasMenuItems,
@@ -113,13 +111,7 @@ export function AttributeHeader(params: AgGridHeaderParams) {
                         onTextWrappingItemClick={handleTextWrappingItemClick}
                         onSortingItemClick={handleSortingItemClick}
                         isMenuOpened={isMenuOpen}
-                        onMenuOpenedChange={(opened) => {
-                            setIsMenuOpen(opened);
-                            if (!opened) {
-                                setIsKeyboardTriggered(false);
-                            }
-                        }}
-                        isKeyboardTriggered={isKeyboardTriggered}
+                        onMenuOpenedChange={setIsMenuOpen}
                     />
                 ) : null}
             </div>

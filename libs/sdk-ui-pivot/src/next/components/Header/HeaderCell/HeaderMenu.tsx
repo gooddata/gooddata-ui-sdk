@@ -38,11 +38,6 @@ export interface IHeaderMenuProps {
     onSortingItemClick: (item: ISortingMenuItem) => void;
     isMenuOpened: boolean;
     onMenuOpenedChange: (opened: boolean) => void;
-    /**
-     * Whether the menu was opened via keyboard (Alt + Down Arrow).
-     * When true, the menu will autofocus on open.
-     */
-    isKeyboardTriggered?: boolean;
 }
 
 function MenuToggler({ onClick }: { onClick: MouseEventHandler<HTMLButtonElement> }) {
@@ -53,6 +48,12 @@ function MenuToggler({ onClick }: { onClick: MouseEventHandler<HTMLButtonElement
             type="button"
             className={e("header-cell-menu-button")}
             onClick={onClick}
+            onKeyDownCapture={(event) => {
+                // Keep AG Grid's native header listener from sorting when activating this button.
+                if (event.key === "Enter" || event.key === " ") {
+                    event.stopPropagation();
+                }
+            }}
             aria-label={intl.formatMessage(messages["openHeaderMenuAria"])}
             {...getPivotHeaderMenuButtonTestIdProps()}
         >
@@ -71,7 +72,6 @@ export function HeaderMenu({
     onSortingItemClick,
     isMenuOpened,
     onMenuOpenedChange,
-    isKeyboardTriggered = false,
 }: IHeaderMenuProps) {
     const intl = useIntl();
     const toggleDropdownRef = useRef<((desired?: boolean) => void) | null>(null);
@@ -151,7 +151,7 @@ export function HeaderMenu({
                 ]}
                 accessibilityConfig={{ triggerRole: "button", popupRole: "dialog" }}
                 overlayZIndex={overlayZIndex}
-                autofocusOnOpen={isKeyboardTriggered}
+                autofocusOnOpen
                 renderButton={({ toggleDropdown }) => {
                     toggleDropdownRef.current = toggleDropdown;
                     return <MenuToggler onClick={handleButtonClick} />;

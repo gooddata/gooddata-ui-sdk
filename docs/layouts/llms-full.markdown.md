@@ -8,7 +8,7 @@ The docs root is params.homeSlug; see index.llms.txt. */ -}}
 {{- $slug := site.Params.homeSlug -}}
 {{- $root := site.GetPage (printf "/%s" $slug) -}}
 {{- if not $root }}{{ errorf "llms-full.txt: params.homeSlug %q is not a section of this build" $slug }}{{ end -}}
-{{- $blocks := slice "# GoodData.UI SDK Documentation (full text)" -}}
+{{- $blocks := slice "# GoodData.UI Documentation (full text)" -}}
 {{- $blocks = $blocks | append (printf "> GoodData.UI: %s" ($root.Description | default site.Params.description)) -}}
 {{- with site.Home.OutputFormats.Get "LLMS" -}}
   {{- $blocks = $blocks | append (printf "Every guide page of the documentation, in sidebar order, as Markdown. The index of all pages, including the API reference (one Markdown page per package and per symbol), is %s." .Permalink) -}}

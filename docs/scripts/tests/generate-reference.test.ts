@@ -209,7 +209,8 @@ test("mergeSectionFrontmatter: site-owned nav keys survive regen, generated keys
         type: "docs",
     });
     assert.equal(merged.title, "API Reference");
-    assert.equal(merged.linkTitle, "API Reference");
+    // linkTitle is not ours to keep: the nav shows the title, like every page
+    assert.equal(merged.linkTitle, undefined);
     assert.equal(merged.weight, 80);
     assert.equal(merged.legacy_path, "references/api_references");
     // generated keys are authoritative

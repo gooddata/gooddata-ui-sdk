@@ -342,6 +342,9 @@ function convertMultipartPart(
         }
         case "report":
             return convertPublisherDocumentPart(part);
+        case "document":
+            // A Publisher v2 document has no chat rendering yet: drop it, as before it had a type.
+            return undefined;
         case "kda":
             if (!part.kda) {
                 return undefined;

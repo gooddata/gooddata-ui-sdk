@@ -1,7 +1,6 @@
 ---
 legacy_path: architecture/architecture_overview/compatibility
-title: Version lifecycle and compatibility
-linkTitle: Compatibility
+title: Version compatibility
 description: Check the lifecycle phase and support dates of each GoodData.UI major version for GoodData Cloud, GoodData.CN, and GoodData Legacy.
 category: Integrations / Platform
 diataxis_type: reference

@@ -49,12 +49,12 @@ Copy the template for your type from [TEMPLATES.md](TEMPLATES.md). The fields th
 
 | Field | What it does | Rule |
 | --- | --- | --- |
-| `title` | H1, nav label, `<title>` | Sentence case, except the feature names in the style guide (AI Assistant, Analytics Catalog, Semantic Search, Key Driver Analysis). A how-to title is a verb phrase that names the goal ("Add totals to a table"). Change the title, never the file name. An empty title fails the build. |
+| `title` | H1, nav label, `<title>` | Sentence case, except the feature names in the style guide (AI Assistant, Analytics Catalog, Semantic Search, Key Driver Analysis). About five words, so the sidebar row does not wrap. A how-to title is a verb phrase that names the goal ("Add totals to a table"); reference and explanation titles are a noun phrase ("Version compatibility"). Change the title, never the file name. An empty title fails the build. |
 | `description` | Line under the H1 (not on howto), section cards, SEO, `llms.txt`, the quote under the title in the Markdown copy | One sentence. It must not repeat the first paragraph. |
 | `api_symbols` | **API chips** above the title. Adds a **Guide:** chip on each symbol's reference page. Picks the Props table. Steers inline auto-links. | `"@gooddata/<package>:<Symbol>"`. Only `@public` / `@beta` symbols have pages. Put the main symbol first, for example the component before its props interface. |
 | `related_pages` | The **Related** box at the bottom (first 5 entries) | Absolute `/docs/<path>` with no version. Choose them by hand: the next step, the sibling task, the concept behind it. An entry that doesn't resolve is dropped with a build warning. |
 | `aliases` + `legacy_path` | 301 redirect from an old URL. Version-menu deep links. | Only when the page replaces an old one. Aliases are page-relative, lowercase, with a trailing slash. |
-| `linkTitle` | Shorter sidebar and breadcrumb label | Optional. Use it when a goal-phrase title is too long for the sidebar. Don't repeat the title. |
+| `linkTitle` | Don't set it | The sidebar must show the same words as the H1, so shorten `title` instead. `scripts/tests/nav-titles.test.ts` fails on it. |
 | `ai_generated_body` / `ai_generated_description` | Marks AI-written text | Set to `true` when you wrote the text. |
 | `source_files` | SDK source paths behind the page. The `docs-changelog-drift` skill uses them to match SDK changes to pages. | Paths relative to the package, for example `src/charts/barChart/BarChart.tsx`. |
 | `section`, `category`, `subsection` | Nothing reads them today | Copy them from a sibling page so the files stay consistent. |

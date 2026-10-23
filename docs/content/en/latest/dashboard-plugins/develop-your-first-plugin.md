@@ -1,6 +1,5 @@
 ---
-title: Develop your first dashboard plugin
-linkTitle: Develop your first plugin
+title: Develop your first plugin
 description: Scaffold a dashboard plugin, run it against a live dashboard, then build, host, register, and link it.
 category: Dashboard & plugins
 diataxis_type: tutorial

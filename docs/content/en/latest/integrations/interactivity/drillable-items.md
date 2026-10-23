@@ -1,7 +1,6 @@
 ---
 legacy_path: learn/add_interactivity/drillable_items
 title: Make visualizations drillable
-linkTitle: Drillable items
 category: Integrations / Interactivity
 diataxis_type: howto
 api_symbols:

@@ -1,7 +1,6 @@
 ---
 legacy_path: learn/visualize_data/export_catalog
-title: Generate a typed catalog
-linkTitle: Export catalog
+title: Export the catalog to code
 category: Data layer / Data model
 diataxis_type: howto
 related_pages:

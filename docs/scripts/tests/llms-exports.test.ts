@@ -334,7 +334,7 @@ const INDEX_NOTE = `> Documentation index: ${BASE_URL}llms.txt lists every page 
 test("llms.txt: spec shape, guides in sidebar order, then the API reference by package", () => {
     const txt = read("llms.txt");
     const lines = txt.split("\n");
-    assert.equal(lines[0], "# GoodData.UI SDK Documentation");
+    assert.equal(lines[0], "# GoodData.UI Documentation");
     assert.equal(lines[2], "> GoodData.UI: Docs root description.");
     assert.ok(txt.includes(`The documentation home page: ${DOCS}\n`));
     const guides = [
@@ -635,9 +635,7 @@ test("HTML: a folded member has no page of its own; links to it go to its sectio
 test("llms-full.txt: every guide page of llms.txt in the same order, as Markdown, without the API reference", () => {
     const full = read("llms-full.txt");
     assert.ok(
-        full.startsWith(
-            "# GoodData.UI SDK Documentation (full text)\n\n> GoodData.UI: Docs root description.\n",
-        ),
+        full.startsWith("# GoodData.UI Documentation (full text)\n\n> GoodData.UI: Docs root description.\n"),
     );
     assert.ok(
         full.includes(

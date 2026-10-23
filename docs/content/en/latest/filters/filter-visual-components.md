@@ -1,7 +1,6 @@
 ---
 legacy_path: learn/visualize_data/filter_visual_components
-title: Apply filters to visualizations
-linkTitle: Filter visualizations
+title: Filter visualizations
 category: Filters
 diataxis_type: howto
 api_symbols:

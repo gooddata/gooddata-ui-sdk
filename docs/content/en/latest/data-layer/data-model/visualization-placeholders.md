@@ -1,7 +1,6 @@
 ---
 legacy_path: learn/visualize_data/visualization_placeholders
-title: Swap visualization inputs with placeholders
-linkTitle: Visualization placeholders
+title: Use visualization placeholders
 category: Data layer / Data model
 diataxis_type: howto
 api_symbols:

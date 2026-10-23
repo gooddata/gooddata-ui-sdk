@@ -1,7 +1,6 @@
 ---
 legacy_path: learn/get_raw_data/table_totals
 title: Add totals to a table
-linkTitle: Table totals
 category: Data layer / Execution
 diataxis_type: howto
 api_symbols:

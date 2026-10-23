@@ -1,6 +1,5 @@
 ---
 title: Data model
-linkTitle: "Data model"
 weight: 70
 description: "Build and inspect the SDK model objects that describe what to compute: references, attributes, measures, hierarchies, and placeholders."
 diataxis_type: reference

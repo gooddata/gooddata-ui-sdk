@@ -4,7 +4,7 @@
 # layouts/llms-full.markdown.md in the MARKDOWN output format, so shortcodes come out through the
 # same *.markdown.md templates as each page's own index.md. Not a page of the site: no HTML, no
 # listing, no sitemap entry; llms.txt links it under ## Optional.
-title: GoodData.UI SDK Documentation (full text)
+title: GoodData.UI Documentation (full text)
 outputs: [MARKDOWN]
 url: /llms-full.txt
 layout: llms-full

@@ -1,7 +1,7 @@
 ## gd-docs-theme-next
 
 Hugo theme for GoodData documentation. Provides the base layouts, styles, and components
-for the GoodData.UI SDK docs site.
+for the GoodData.UI docs site.
 
 **This directory is the theme's only copy — edit it here.** gdc-ui ships it, so `sdk/docs`
 picks it up through classic `theme = ["gd-docs-theme-next"]` with no module wiring, and a

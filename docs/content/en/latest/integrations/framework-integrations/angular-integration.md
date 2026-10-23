@@ -1,7 +1,6 @@
 ---
 legacy_path: learn/web_components/angular
-title: Embed GoodData in an Angular app
-linkTitle: Angular (Web Components)
+title: Angular integration (Web Components)
 category: Integrations / Framework guides
 diataxis_type: howto
 related_pages:

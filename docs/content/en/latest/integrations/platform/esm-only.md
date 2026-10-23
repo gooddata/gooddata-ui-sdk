@@ -1,6 +1,5 @@
 ---
 title: ESM-only distribution
-linkTitle: "ESM only"
 description: The entry points GoodData.UI's ESM-only packages expose, the bundler, TypeScript, Node, and test runner requirements, and fixes for the common CommonJS errors.
 category: Integrations / Platform
 diataxis_type: reference

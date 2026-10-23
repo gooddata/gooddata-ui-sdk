@@ -3,12 +3,16 @@
 import { useCallback, useEffect, useState } from "react";
 
 import { type ILocale, isLocale } from "@gooddata/sdk-model";
-import { type IPlatformContext } from "@gooddata/sdk-pluggable-application-model";
+import {
+    type IPlatformContext,
+    type IPluggableAppTelemetryCallbacks,
+} from "@gooddata/sdk-pluggable-application-model";
 import { DEFAULT_LANGUAGE } from "@gooddata/sdk-ui";
 
 import { getBackend } from "../platformContext/backend.js";
 
 import { LANGUAGES } from "./languages.js";
+import { trackOwnLanguageSave } from "./languageTelemetry.js";
 
 /**
  * @internal
@@ -32,29 +36,47 @@ export interface ILanguages {
  *
  * @internal
  */
-export function useLanguages(ctx: IPlatformContext): ILanguages | undefined {
+export function useLanguages(
+    ctx: IPlatformContext,
+    telemetry?: IPluggableAppTelemetryCallbacks,
+): ILanguages | undefined {
     const defaultLanguage = useDefaultLanguage(ctx.currentWorkspaceId);
-
-    const setLanguage = useCallback(async (language: ILocale) => {
-        await getBackend().currentUser().settings().setLocale(language);
-        // A page reload, as reloading the platform context isn't enough: on workspace routes, the language comes
-        // from the workspace settings, which the backend's caching keeps until the page reloads.
-        window.location.reload();
-    }, []);
-
-    const deleteLanguage = useCallback(async () => {
-        await getBackend().currentUser().settings().deleteLocale();
-        window.location.reload();
-    }, []);
-
-    if (!defaultLanguage) {
-        return undefined;
-    }
 
     // The SPI can't tell whether the user has a LOCALE of their own, so a language different from the default one
     // counts as theirs. One they picked although it's the default one shows as Default, which reads the same.
     const resolvedLanguage = isLocale(ctx.preferredLocale) ? ctx.preferredLocale : undefined;
     const currentLanguage = resolvedLanguage === defaultLanguage ? undefined : resolvedLanguage;
+
+    const saveLanguage = useCallback(
+        async (save: () => Promise<void>, language: ILocale | undefined) => {
+            try {
+                await save();
+            } catch (error) {
+                trackOwnLanguageSave(telemetry, currentLanguage, language, "error");
+                throw error;
+            }
+            trackOwnLanguageSave(telemetry, currentLanguage, language, "success");
+            // A page reload, as reloading the platform context isn't enough: on workspace routes, the language comes
+            // from the workspace settings, which the backend's caching keeps until the page reloads.
+            window.location.reload();
+        },
+        [telemetry, currentLanguage],
+    );
+
+    const setLanguage = useCallback(
+        (language: ILocale) =>
+            saveLanguage(() => getBackend().currentUser().settings().setLocale(language), language),
+        [saveLanguage],
+    );
+
+    const deleteLanguage = useCallback(
+        () => saveLanguage(() => getBackend().currentUser().settings().deleteLocale(), undefined),
+        [saveLanguage],
+    );
+
+    if (!defaultLanguage) {
+        return undefined;
+    }
 
     return { currentLanguage, defaultLanguage, languages: LANGUAGES, setLanguage, deleteLanguage };
 }

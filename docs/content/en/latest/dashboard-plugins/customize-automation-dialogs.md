@@ -1,7 +1,6 @@
 ---
 legacy_path: references/dashboard_component/automation_dialogs_customization
-title: Customize the alert and scheduled email dialogs
-linkTitle: Customize automation dialogs
+title: Customize alert and email dialogs
 category: Dashboard & plugins
 diataxis_type: howto
 api_symbols:

@@ -605,6 +605,9 @@ function dummyWorkspace(
                 summarizeVisualizations() {
                     throw new NotSupported("not supported");
                 },
+                generateTakeaway() {
+                    throw new NotSupported("not supported");
+                },
             };
         },
         references(): IReferencesService {

@@ -1823,6 +1823,9 @@ export interface IForecastView {
 
 // @beta
 export interface IGenAIService {
+    generateTakeaway(request: ITakeawayRequest, options?: {
+        signal?: AbortSignal;
+    }): Promise<ITakeawayResult>;
     // @internal
     getAnalyticsCatalog(): IAnalyticsCatalogService;
     // @internal
@@ -3144,6 +3147,31 @@ export function isUnexpectedResponseError(obj: unknown): obj is UnexpectedRespon
 // @public
 export function isValueBasedElementsQueryOptionsElements(obj: unknown): obj is IElementsQueryOptionsElementsByValue | IElementsQueryOptionsElementsByPrimaryDisplayFormValue;
 
+// @beta
+export interface ITakeawayInstructions {
+    document?: string;
+    formatHint?: string;
+    slot?: string;
+}
+
+// @beta
+export interface ITakeawayRequest {
+    agentId?: string;
+    filters: IFilter[];
+    instructions?: ITakeawayInstructions;
+    maxCharacters?: number;
+    visualizations: IVisualizationSummaryPlacement[];
+}
+
+// @beta
+export interface ITakeawayResult {
+    agentId: string;
+    contextOmitted: TakeawayContextPart[];
+    generatedAt: string;
+    noData: boolean;
+    takeaway: string | null;
+}
+
 // @public
 export interface ITextExpressionToken {
     type: "text" | "quoted_text" | "number";
@@ -3934,6 +3962,9 @@ export type SupportedInsightReferenceTypes = Exclude<InsightReferenceTypes, "dis
 
 // @alpha
 export type SupportedWidgetReferenceTypes = Exclude<ObjectType, "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "colorPalette" | "attributeHierarchy">;
+
+// @beta
+export type TakeawayContextPart = "memory" | "knowledge";
 
 // @public
 export class TimeoutError extends AnalyticalBackendError {

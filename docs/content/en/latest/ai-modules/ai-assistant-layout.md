@@ -1,6 +1,5 @@
 ---
-title: Combine the AI Assistant with your app
-linkTitle: AI Assistant layouts
+title: Place and connect the AI Assistant
 category: AI & Modules
 diataxis_type: howto
 api_symbols:

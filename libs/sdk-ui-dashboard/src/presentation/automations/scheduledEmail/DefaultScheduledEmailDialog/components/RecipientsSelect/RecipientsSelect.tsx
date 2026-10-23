@@ -13,7 +13,7 @@ import { DETAILED_ANNOUNCEMENT_THRESHOLD, UiSearchResultsAnnouncement } from "@g
 
 import { useWorkspaceUsersSearch } from "../../../../shared/hooks/useWorkspaceUsersSearch.js";
 import { convertUserToAutomationRecipient } from "../../../../shared/utils/automationUtils.js";
-import { createUser, matchRecipient } from "../../../utils/users.js";
+import { createUser, getRecipientLabel, matchRecipient } from "../../../utils/users.js";
 import { isEmail } from "../../../utils/validate.js";
 
 import { RecipientsSelectRenderer } from "./RecipientsSelectRenderer.js";
@@ -141,16 +141,12 @@ export function RecipientsSelect({
     const hasSettledResults = !isLoading && (isServerSearch ? users !== undefined : Boolean(search));
 
     const announcedResultValues = useMemo(
-        () => options.slice(0, DETAILED_ANNOUNCEMENT_THRESHOLD).map((option) => option.name ?? option.id),
+        () => options.slice(0, DETAILED_ANNOUNCEMENT_THRESHOLD).map(getRecipientLabel),
         [options],
     );
 
     return (
         <>
-            <UiSearchResultsAnnouncement
-                totalResults={hasSettledResults ? options.length : undefined}
-                resultValues={announcedResultValues}
-            />
             <RecipientsSelectRenderer
                 id={id}
                 canListUsersInProject
@@ -172,6 +168,11 @@ export function RecipientsSelect({
                 showLabel={showLabel}
                 onKeyDownSubmit={onKeyDownSubmit}
                 externalRecipientOverride={externalRecipientOverride}
+            />
+            {/* After the field, so screen readers do not stop on it between the label and the recipients. */}
+            <UiSearchResultsAnnouncement
+                totalResults={hasSettledResults ? options.length : undefined}
+                resultValues={announcedResultValues}
             />
         </>
     );

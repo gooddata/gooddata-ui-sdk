@@ -2,11 +2,11 @@
 # table.
 
 # The product's name in the docs chrome: the heading on top of the sidebar and the site's
-# breadcrumb crumb. The site title (tab title, og:site_name) stays "GoodData.UI SDK", as live.
+# breadcrumb crumb.
 productName = "GoodData.UI"
 # Site-wide meta description, the fallback for a page without `description`
 # in its frontmatter (head.html). Also the og:/twitter: description of the home page.
-description = "GoodData.UI SDK documentation"
+description = "GoodData.UI documentation"
 # Landing section the site root redirects to (gd-docs-theme-next; theme default
 # "getting-started" does not exist here). Required — see theme INTEGRATION.md §3.
 # Every build lands on /latest/: content/en/latest here, and in production

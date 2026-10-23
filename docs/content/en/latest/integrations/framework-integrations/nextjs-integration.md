@@ -1,7 +1,6 @@
 ---
 legacy_path: architecture/supported_frameworks/nextjs
-title: Add GoodData.UI to a Next.js app
-linkTitle: Next.js
+title: Next.js integration
 description: Render GoodData.UI charts in a Next.js App Router application with a client-side backend, the generated catalog, and the GoodData session cookie.
 category: Integrations / Framework guides
 diataxis_type: howto

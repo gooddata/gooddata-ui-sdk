@@ -1,7 +1,6 @@
 ---
 legacy_path: learn/get_raw_data/custom_executions
 title: Run a custom execution
-linkTitle: Custom executions
 category: Data layer / Execution
 diataxis_type: howto
 api_symbols:

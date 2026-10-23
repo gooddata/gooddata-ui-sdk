@@ -639,7 +639,7 @@ function writePackageIndex(referenceDir: string, bucket: PackageBucket, weight: 
 // Section-index keys the host site owns (nav placement, legacy redirects). The
 // generator wipes and rewrites its whole tree, so these are read before the wipe
 // and merged back — otherwise every regen resets the section's nav metadata.
-const PRESERVED_SECTION_KEYS = ["title", "linkTitle", "weight", "legacy_path", "aliases"];
+const PRESERVED_SECTION_KEYS = ["title", "weight", "legacy_path", "aliases"];
 
 export function mergeSectionFrontmatter(
     existing: Record<string, unknown> | undefined,

@@ -1,6 +1,5 @@
 ---
 title: Read attribute hierarchies
-linkTitle: Attribute hierarchies
 category: Data layer / Data model
 diataxis_type: howto
 api_symbols:

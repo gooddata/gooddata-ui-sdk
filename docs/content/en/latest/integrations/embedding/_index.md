@@ -1,6 +1,5 @@
 ---
 title: Embedding
-linkTitle: "Embedding"
 weight: 20
 description: Embed GoodData content at different levels — full dashboards, individual visualizations, or custom visualizations using your own charting library — and apply theming.
 diataxis_type: reference
