@@ -1,0 +1,9 @@
+{
+    "extends": ["../tsconfig.react.json"],
+    "compilerOptions": {
+        "tsBuildInfoFile": "./tsconfig.check.tsbuildinfo",
+        "noEmit": true,
+        "noImplicitAny": false,
+        "skipLibCheck": true
+    }
+}

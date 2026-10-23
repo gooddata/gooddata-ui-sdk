@@ -1,0 +1,518 @@
+{
+    "metricEditor.status.lotsOfItemsInSuggestionResults": {
+        "text": "Only the first 100 values that match are listed",
+        "crowdinContext": "Status message when search results are truncated to 100 items"
+    },
+    "metricComponent.deleteMetricConfirmDialog.cancel": {
+        "text": "Cancel",
+        "crowdinContext": "Cancel button in delete metric confirmation dialog"
+    },
+    "metricComponent.deleteMetricConfirmDialog.delete": {
+        "text": "Delete",
+        "crowdinContext": "Delete button in delete metric confirmation dialog"
+    },
+    "metricComponent.deleteMetricConfirmDialog.headline": {
+        "text": "Delete metric?",
+        "crowdinContext": "Title of delete metric confirmation dialog"
+    },
+    "metricComponent.deleteMetricConfirmDialog.content.line1": {
+        "text": "Metric will be removed from the list.",
+        "crowdinContext": "First line of delete metric confirmation dialog content"
+    },
+    "metricComponent.deleteMetricConfirmDialog.content.line2": {
+        "text": "Dashboards, visualizations and other metrics that use this metric will become inaccessible.",
+        "crowdinContext": "Second line of delete metric confirmation dialog content"
+    },
+    "metricComponent.createMetric.title": {
+        "text": "Create metric",
+        "crowdinContext": "Title for create metric dialog"
+    },
+    "metricComponent.editMetric.autoFormat": {
+        "text": "Auto-format",
+        "crowdinContext": "Text on a button to automatically apply formatting rules on a MAQL metric"
+    },
+    "metricComponent.editMetric.autoFormatBubble": {
+        "text": "Format metric expression (Shift+CTRL+I)",
+        "crowdinContext": "Tooltip for auto-format button with keyboard shortcut"
+    },
+    "metricComponent.editMetric.autoFormatBubbleMac": {
+        "text": "Format metric expression (⇧+⌥+F)",
+        "crowdinContext": "Tooltip for auto-format button with Mac keyboard shortcut"
+    },
+    "metricComponent.editMetric.sql": {
+        "text": "Show SQL",
+        "crowdinContext": "Button to show SQL representation of metric"
+    },
+    "metricComponent.editMetric.sql.disabled": {
+        "text": "The metric definition is incomplete or invalid.",
+        "crowdinContext": "Tooltip when Show SQL button is disabled"
+    },
+    "metricComponent.editMetric.run": {
+        "text": "Run",
+        "crowdinContext": "Text on a button to run MAQL sql and data preview"
+    },
+    "metricComponent.editMetric.run.success": {
+        "text": "Computing of result is running. If there are no changes, results will be same.",
+        "crowdinContext": "Text that show in bubble message after shortcut is used"
+    },
+    "metricComponent.editMetric.runBubble": {
+        "text": "Run metric preview (CTRL+R)",
+        "crowdinContext": "Tooltip for run button with keyboard shortcut"
+    },
+    "metricComponent.editMetric.runBubbleMac": {
+        "text": "Run metric preview (⌥+R)",
+        "crowdinContext": "Tooltip for run button with Mac keyboard shortcut"
+    },
+    "metricComponent.editMetric.runBubble.disabled": {
+        "text": "The metric definition is incomplete or invalid.",
+        "crowdinContext": "Tooltip when run button is disabled"
+    },
+    "metricComponent.editMetric.decoratorsShow": {
+        "text": "Show names",
+        "crowdinContext": "Button to show element names in metric editor"
+    },
+    "metricComponent.editMetric.decoratorsHide": {
+        "text": "Hide names",
+        "crowdinContext": "Button to hide element names in metric editor"
+    },
+    "metricComponent.editMetric.descriptionPlaceholder": {
+        "text": "Add description here...",
+        "crowdinContext": "Placeholder text for metric description field"
+    },
+    "metricComponent.editMetric.placeholder": {
+        "text": "Start by typing <placeholder>SELECT</placeholder> or open code completion (CTRL+space or CTRL+I) ...",
+        "crowdinContext": "String is placeholder in the maql editor."
+    },
+    "metricComponent.editMetric.placeholderMac": {
+        "text": "Start by typing <placeholder>SELECT</placeholder> or open code completion (⌃+space or ⌘+I) ...",
+        "crowdinContext": "String is placeholder in the maql editor."
+    },
+    "metricComponent.editMetric.placeholder.readOnly": {
+        "text": "This MAQL expression is empty",
+        "crowdinContext": "Placeholder text shown when MAQL expression field is empty and read-only"
+    },
+    "metricComponent.editMetric.helpText": {
+        "text": "How to create metrics?",
+        "crowdinContext": "Link text for help documentation about creating metrics"
+    },
+    "metricComponent.editMetric.cancel": {
+        "text": "Cancel",
+        "crowdinContext": "Cancel button in metric editor"
+    },
+    "metricComponent.editMetric.close": {
+        "text": "Close",
+        "crowdinContext": "Close button in metric editor"
+    },
+    "metricComponent.editMetric.delete": {
+        "text": "Delete",
+        "crowdinContext": "Delete button in metric editor"
+    },
+    "metricComponent.editMetric.save": {
+        "text": "Save",
+        "crowdinContext": "Save button in metric editor"
+    },
+    "metricComponent.editMetric.share": {
+        "text": "Share",
+        "crowdinContext": "Button in the metric editor header that opens the dialog for managing who can access the metric"
+    },
+    "metricComponent.editMetric.shareFailed": {
+        "text": "The metric was saved, but its access could not be applied.",
+        "crowdinContext": "Error toast shown when a metric saved successfully but the separate call applying its drafted access was refused"
+    },
+    "metricComponent.editMetric.accessNotCopied": {
+        "text": "The metric was saved under the new ID, but its sharing could not be carried over. The metric with the old ID was kept, so nobody loses access.",
+        "crowdinContext": "Warning toast shown when a metric ID change went through but the metric's sharing could not be transferred. The metric under the old ID is left in place, so both exist"
+    },
+    "metricComponent.editMetric.access.private": {
+        "text": "Private",
+        "crowdinContext": "Label on the chip in the metric editor header shown when nobody but the metric's owner has access."
+    },
+    "metricComponent.editMetric.access.private.tooltip": {
+        "text": "Only you have access.",
+        "crowdinContext": "Tooltip on the access chip when the metric has no grantees and is not shared with the workspace."
+    },
+    "metricComponent.editMetric.access.shared": {
+        "text": "Shared",
+        "crowdinContext": "Label on the chip in the metric editor header shown when named users or groups have been granted access."
+    },
+    "metricComponent.editMetric.access.shared.tooltip": {
+        "text": "You and the people or groups added have access.",
+        "crowdinContext": "Tooltip on the access chip when the metric is shared with named users or groups."
+    },
+    "metricComponent.editMetric.access.workspace": {
+        "text": "Workspace",
+        "crowdinContext": "Label on the chip in the metric editor header shown when every workspace member has access."
+    },
+    "metricComponent.editMetric.access.workspace.tooltip": {
+        "text": "All workspace members have access to the object.",
+        "crowdinContext": "Tooltip on the access chip when the metric is shared with all workspace members."
+    },
+    "metricComponent.editMetric.access.ariaLabel": {
+        "text": "Access level: {level}. Click to manage sharing.",
+        "crowdinContext": "Screen reader label for the access chip. {level} is the current level, e.g. Private."
+    },
+    "metricComponent.editMetric.name.ariaLabel": {
+        "text": "Metric name",
+        "crowdinContext": "Screen reader label for the editable metric name field in the metric editor header."
+    },
+    "metricComponent.editMetric.id.ariaLabel": {
+        "text": "Metric ID",
+        "crowdinContext": "Screen reader label for the editable metric ID field in the metric editor header."
+    },
+    "metricComponent.editMetric.saveAsNew": {
+        "text": "Save as new",
+        "crowdinContext": "Button to save metric as a new copy in metric editor"
+    },
+    "loading": {
+        "text": "Loading…",
+        "crowdinContext": "Text shown during content loading operations"
+    },
+    "metricComponent.editMetric.protectedMetric": {
+        "text": "You cannot edit or delete this metric because it was created in the parent workspace. To edit or delete the metric, do so from the parent workspace.",
+        "crowdinContext": "Warning message for protected metrics inherited from parent workspace"
+    },
+    "metricComponent.editMetric.hover.more": {
+        "text": "More",
+        "crowdinContext": "Button to expand and show more content in metric editor"
+    },
+    "metricComponent.editMetric.hover.less": {
+        "text": "Less",
+        "crowdinContext": "Button to collapse and show less content in metric editor"
+    },
+    "metricComponent.editMetric.metric.definition": {
+        "text": "Metric definition",
+        "crowdinContext": "Section title for metric definition area"
+    },
+    "metricComponent.editMetric.metric.definition.tooltip": {
+        "text": "Create a MAQL statement to query your data.",
+        "crowdinContext": "Tooltip explaining metric definition functionality"
+    },
+    "metricComponent.editMetric.metric.result.context": {
+        "text": "View by",
+        "crowdinContext": "Label for result context section"
+    },
+    "metricComponent.editMetric.metric.result.context.unrelated": {
+        "text": "{unrelated} unrelated attributes hidden",
+        "crowdinContext": "Status message about hidden unrelated attributes"
+    },
+    "metricComponent.editMetric.metric.result.context.displayTitle": {
+        "text": "Display",
+        "crowdinContext": "Title for display options section"
+    },
+    "metricComponent.editMetric.metric.result.context.display": {
+        "text": "{ranking} {limit} rows",
+        "crowdinContext": "Display format for ranking and row limit"
+    },
+    "metricComponent.editMetric.metric.result.context.displayRows": {
+        "text": "rows",
+        "crowdinContext": "Label for rows in display options"
+    },
+    "metricComponent.editMetric.metric.result.context.display.explain": {
+        "text": "based on this metric value",
+        "crowdinContext": "Explanation text for ranking based on metric value"
+    },
+    "metricComponent.editMetric.metric.result.context.displayTop": {
+        "text": "Top",
+        "crowdinContext": "Option to display top ranking results"
+    },
+    "metricComponent.editMetric.metric.result.context.displayBottom": {
+        "text": "Bottom",
+        "crowdinContext": "Option to display bottom ranking results"
+    },
+    "metricComponent.editMetric.metric.result": {
+        "text": "Result",
+        "crowdinContext": "Section title for metric result area"
+    },
+    "metricComponent.editMetric.metric.result.tooltip": {
+        "text": "Metric return a number and can be reused when combined with attributes and filters to create a report. Add View by to create preview report.",
+        "crowdinContext": "Tooltip explaining metric result functionality"
+    },
+    "metricComponent.editMetric.metric.result.computing": {
+        "text": "Computing ...",
+        "crowdinContext": "Status message while metric result is being calculated"
+    },
+    "metricComponent.editMetric.metric.result.error.title": {
+        "text": "Cannot compute result",
+        "crowdinContext": "Error title when metric computation fails"
+    },
+    "metricComponent.editMetric.metric.result.error": {
+        "text": "Cannot compute result, because the metric definition is incomplete or invalid.",
+        "crowdinContext": "Error message when metric computation fails"
+    },
+    "metricComponent.editMetric.metric.context.search": {
+        "text": "Search ...",
+        "crowdinContext": "Placeholder text for search field"
+    },
+    "metricComponent.editMetric.metric.context.cancel": {
+        "text": "Cancel",
+        "crowdinContext": "Cancel button in metric context"
+    },
+    "metricComponent.editMetric.metric.context.apply": {
+        "text": "Apply",
+        "crowdinContext": "Apply button in metric context dialog"
+    },
+    "metricComponent.editMetric.metric.sql": {
+        "text": "SQL",
+        "crowdinContext": "Tab label for SQL view in metric editor"
+    },
+    "metricComponent.editMetric.metric.sql.tooltip": {
+        "text": "Metric definition is transformed to SQL before execution.",
+        "crowdinContext": "Tooltip explaining SQL transformation process"
+    },
+    "metricComponent.editMetric.metric.sql.close": {
+        "text": "Close",
+        "crowdinContext": "Close button in SQL view dialog"
+    },
+    "metricComponent.editMetric.metric.sql.copy_to_clipboard": {
+        "text": "Copy to clipboard",
+        "crowdinContext": "Button to copy SQL statement to clipboard"
+    },
+    "metricComponent.editMetric.metric.sql.copy_to_clipboard.ok": {
+        "text": "SQL was successfully copied into system clipboard.",
+        "crowdinContext": "Success message when SQL is copied to clipboard"
+    },
+    "metricComponent.editMetric.metric.sql.copy_to_clipboard.error": {
+        "text": "SQL was not copied into system clipboard. Please copy it manually.",
+        "crowdinContext": "Error message when SQL copy to clipboard fails"
+    },
+    "metricComponent.editMetric.metric.sql.error": {
+        "text": "Cannot create SQL statement, because the metric definition is incomplete or invalid.",
+        "crowdinContext": "Error message when SQL cannot be generated from metric definition"
+    },
+    "metricComponent.numberFormat.label": {
+        "text": "Number format",
+        "crowdinContext": "Label for number format section in metric editor"
+    },
+    "metricComponent.metricType.label": {
+        "text": "Type",
+        "crowdinContext": "Label for metric type selector in metric editor"
+    },
+    "metricComponent.tags.label": {
+        "text": "Tags",
+        "crowdinContext": "Label for tags section in metric editor"
+    },
+    "metricComponent.metricType.unspecified": {
+        "text": "Unspecified",
+        "crowdinContext": "Option for unspecified metric type"
+    },
+    "metricComponent.metricType.currency": {
+        "text": "Currency",
+        "crowdinContext": "Option for currency metric type"
+    },
+    "metricComponent.objectUsage.usedIn": {
+        "text": "used in:",
+        "crowdinContext": "Label before the list of objects using the metric, e.g. used in: 8 metrics. Pairs with the ID label on the same row."
+    },
+    "metricComponent.objectUsage.metricsCount": {
+        "text": "{count, plural, one {# metric} other {# metrics}}",
+        "crowdinContext": "Count of metrics in object usage display. Example: if count is 1, output is '1 metric'; if count is 5, output is '5 metrics'"
+    },
+    "metricComponent.objectUsage.metrics": {
+        "text": "Metrics",
+        "crowdinContext": "Label for metrics section in object usage display"
+    },
+    "metricComponent.objectUsage.insightsCount": {
+        "text": "{count, plural, one {# visualization} other {# visualizations}}",
+        "crowdinContext": "Count of visualizations in object usage display. Example: if count is 1, output is '1 visualization'; if count is 3, output is '3 visualizations'"
+    },
+    "metricComponent.objectUsage.insights": {
+        "text": "Visualizations",
+        "crowdinContext": "Label for visualizations section in object usage display"
+    },
+    "metricComponent.objectUsage.usedIn.title": {
+        "text": "Metric used in",
+        "crowdinContext": "Title for metric usage information section"
+    },
+    "metricComponent.objectUsage.usedIn.titleTooltip": {
+        "text": "This list includes only objects in the current workspace that use the metric.",
+        "crowdinContext": "Tooltip explaining scope of usage list"
+    },
+    "metricComponent.editMetricForm.idInvalid": {
+        "text": "This ID is not valid.",
+        "crowdinContext": "Validation error for invalid metric ID"
+    },
+    "metricComponent.editMetricForm.idExists": {
+        "text": "This ID already exists.",
+        "crowdinContext": "Validation error for duplicate metric ID"
+    },
+    "metricComponent.editMetricForm.idMatchParentPrefixName": {
+        "text": "This ID starts with some parent workspace prefix \"{conflict}\" and can not be used.",
+        "crowdinContext": "Validation error for ID with parent workspace prefix. Example: This ID starts with some parent workspace prefix \"parent_ws_\" and can not be used."
+    },
+    "metricComponent.editMetricForm.titleEmpty": {
+        "text": "Name is required.",
+        "crowdinContext": "Validation error for empty metric name"
+    },
+    "metricComponent.editMetricForm.titleExists": {
+        "text": "This name already exists.",
+        "crowdinContext": "Validation error for duplicate metric name"
+    },
+    "metricComponent.editMetricForm.expressionEmpty": {
+        "text": "MAQL expression is empty.",
+        "crowdinContext": "Validation error for empty MAQL expression"
+    },
+    "metricComponent.editMetricForm.expressionInvalid": {
+        "text": "MAQL expression is invalid.",
+        "crowdinContext": "Validation error for invalid MAQL expression"
+    },
+    "metricComponent.editMetricForm.formatNotCurrency": {
+        "text": "Format must be a currency format when metric type is Currency.",
+        "crowdinContext": "Validation error when metric type is Currency but format is not a currency format"
+    },
+    "metricComponent.editMetricForm.metricTypeNotCurrency": {
+        "text": "Metric type must be Currency when using a currency format.",
+        "crowdinContext": "Validation error when format is a currency format but metric type is not Currency"
+    },
+    "metricComponent.editMetricForm.formatRequiredForCurrency": {
+        "text": "Format is required for Currency metric type. Empty format cannot be used for currency metrics.",
+        "crowdinContext": "Validation error when metric type is Currency but format is empty"
+    },
+    "metricComponent.editMetricForm.namePlaceholder": {
+        "text": "Untitled metric",
+        "crowdinContext": "Default placeholder name for new metric"
+    },
+    "metricComponent.editMetricForm.errorsOnSave.start": {
+        "text": "Cannot {save} because the metric contains",
+        "crowdinContext": "Start of error message when saving fails. Example: Cannot save because the metric contains"
+    },
+    "metricComponent.editMetricForm.errorsOnSave.count": {
+        "text": "{count, plural, one {# error} other {# errors}}",
+        "crowdinContext": "Count of validation errors. Example: if count is 1, output is '1 error'; if count is 3, output is '3 errors'"
+    },
+    "metricComponent.editMetricForm.errorsOnSave.empty": {
+        "text": "Cannot {save} an empty metric.",
+        "crowdinContext": "Error message for saving empty metric. Example: Cannot save an empty metric."
+    },
+    "metricComponent.idChangeConfirmDialog.headline": {
+        "text": "Change metric ID?",
+        "crowdinContext": "Title of dialog confirming metric ID change"
+    },
+    "metricComponent.idChangeConfirmDialog.headlineOverwrite": {
+        "text": "Overwrite metric in a child workspace?",
+        "crowdinContext": "Title of dialog warning about overwriting metric in child workspace"
+    },
+    "metricComponent.idChangeConfirmDialog.changeTitle": {
+        "text": "Other analytical objects will become inaccessible",
+        "crowdinContext": "Warning title about impact of metric ID change on other objects"
+    },
+    "metricComponent.idChangeConfirmDialog.change": {
+        "text": "If you save this metric with a new ID, other metrics, visualizations, and dashboards that reference this metric using the original ID of <b>{metricId}</b> will become inaccessible.",
+        "crowdinContext": "Warning text about impact of metric ID change. Placeholder {metricId} will be replaces by alphanumeric ID."
+    },
+    "metricComponent.idChangeConfirmDialog.conflictsTitle": {
+        "text": "Metric in child workspace will be overwritten",
+        "crowdinContext": "Warning title about overwriting metric in child workspace"
+    },
+    "metricComponent.idChangeConfirmDialog.conflicts": {
+        "text": "If you save this metric, another metric with the same ID <b>{metricId}</b> in a child workspace will be overwritten. Overwritten metrics cannot be restored.",
+        "crowdinContext": "Warning text about overwriting existing metric. Placeholder {metricId} will be replaces by alphanumeric ID."
+    },
+    "metricComponent.idChangeConfirmDialog.conflicts.footer": {
+        "text": "Generate different metric ID to avoid overwriting.",
+        "crowdinContext": "Suggestion text to avoid overwriting conflict"
+    },
+    "metricComponent.idChangeConfirmDialog.generated": {
+        "text": "Generate different ID & Save",
+        "crowdinContext": "Button to generate different ID and save metric"
+    },
+    "metricComponent.idChangeConfirmDialog.keep": {
+        "text": "Keep original ID & Save",
+        "crowdinContext": "Button to keep original ID and save metric"
+    },
+    "metricComponent.idChangeConfirmDialog.submitChange": {
+        "text": "Change & Save",
+        "crowdinContext": "Button to confirm ID change and save metric"
+    },
+    "metricComponent.idChangeConfirmDialog.submitOverwrite": {
+        "text": "Overwrite & Save",
+        "crowdinContext": "Button to overwrite existing metric and save"
+    },
+    "metricComponent.unsavedChangesConfirmDialog.metric.headline": {
+        "text": "Your changes in metric are not saved",
+        "crowdinContext": "Title of dialog warning about unsaved changes in metric"
+    },
+    "metricComponent.unsavedChangesConfirmDialog.metric.content": {
+        "text": "If you continue, all changes will be lost",
+        "crowdinContext": "Warning text about losing unsaved changes in metric"
+    },
+    "metricComponent.unsavedChangesConfirmDialog.metrics.headline": {
+        "text": "Your changes in metrics are not saved",
+        "crowdinContext": "Title of dialog warning about unsaved changes in multiple metrics"
+    },
+    "metricComponent.unsavedChangesConfirmDialog.metrics.content": {
+        "text": "If you continue, all changes in {count, plural, one {# metric} other {# metrics}} will be lost",
+        "crowdinContext": "Warning content about losing unsaved changes in multiple metrics. Example: If you continue, all changes in 1 metric will be lost; if count is 3, output is 'all changes in 3 metrics will be lost'"
+    },
+    "metricComponent.unsavedChangesConfirmDialog.cancel": {
+        "text": "Continue",
+        "crowdinContext": "Button to continue without saving changes"
+    },
+    "metricComponent.unsavedChangesConfirmDialog.submit": {
+        "text": "Save",
+        "crowdinContext": "Button to save changes in unsaved changes dialog"
+    },
+    "metricComponent.unsavedChangesConfirmDialog.submitAsNew": {
+        "text": "Save as new",
+        "crowdinContext": "Button to save changes as new metric"
+    },
+    "metricComponent.unsavedChangesConfirmDialog.submitAll": {
+        "text": "Save all",
+        "crowdinContext": "Button to save all unsaved changes"
+    },
+    "metricComponent.minimize.editing": {
+        "text": "Editing:",
+        "crowdinContext": "Status label when metric is in editing mode"
+    },
+    "metricComponent.minimize.viewing": {
+        "text": "Viewing",
+        "crowdinContext": "Status label when metric is in viewing mode"
+    },
+    "metricComponent.minimize.metrics": {
+        "text": "{edited, plural, one {# metric} other {# metrics}}",
+        "crowdinContext": "Count of edited metrics for minimized view. Example: if edited is 1, output is '1 metric'; if edited is 3, output is '3 metrics'"
+    },
+    "metricComponent.tags.manager.label.more": {
+        "text": "More tags",
+        "crowdinContext": "Label for button to show more tags in tag manager"
+    },
+    "metricComponent.tags.manager.label.noTags": {
+        "text": "No tags",
+        "crowdinContext": "Label shown when there are no tags"
+    },
+    "metricComponent.tags.manager.label.close": {
+        "text": "Close",
+        "crowdinContext": "Label for close button in tag manager"
+    },
+    "metricComponent.tags.manager.label.addLabel": {
+        "text": "Add",
+        "crowdinContext": "Label for button to add a new tag"
+    },
+    "metricComponent.tags.manager.label.nameLabel": {
+        "text": "Name",
+        "crowdinContext": "Label for tag name input field"
+    },
+    "metricComponent.tags.manager.label.cancelLabel": {
+        "text": "Cancel",
+        "crowdinContext": "Label for cancel button in tag manager"
+    },
+    "metricComponent.tags.manager.label.saveLabel": {
+        "text": "Save",
+        "crowdinContext": "Label for save button in tag manager"
+    },
+    "metricComponent.tags.manager.label.removeLabel": {
+        "text": "Remove",
+        "crowdinContext": "Label for remove button in tag manager"
+    },
+    "metricList.metricListItemTooltip.defined": {
+        "text": "defined as",
+        "crowdinContext": "Label in metric tooltip showing metric definition"
+    },
+    "metricList.tooltip.deleted_value": {
+        "text": "deleted attribute",
+        "crowdinContext": "Tooltip text for metric using deleted attribute"
+    },
+    "metricList.tooltip.empty_value": {
+        "text": "empty value",
+        "crowdinContext": "Tooltip text for metric with empty value"
+    }
+}
