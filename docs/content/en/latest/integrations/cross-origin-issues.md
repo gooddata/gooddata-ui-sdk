@@ -1,7 +1,6 @@
 ---
 legacy_path: learn/integrate_and_authenticate/cross_origin_issues
 title: Resolve cross-origin errors
-linkTitle: Cross-origin issues
 description: Resolve CORS errors between your app and GoodData Cloud or GoodData.CN by proxying the API through your dev server or allowing your origin in production.
 category: Integrations
 diataxis_type: howto

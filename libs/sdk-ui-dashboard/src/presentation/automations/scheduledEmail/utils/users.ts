@@ -21,6 +21,10 @@ export function matchRecipient(user: IAutomationRecipient, search: string) {
     );
 }
 
+export function getRecipientLabel(recipient: IAutomationRecipient): string {
+    return recipient.name || recipient.id;
+}
+
 export function createUser(search: string): IAutomationRecipient {
     const hasEmail = isEmail(search);
     return {

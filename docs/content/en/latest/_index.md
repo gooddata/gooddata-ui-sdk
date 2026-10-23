@@ -1,6 +1,5 @@
 ---
 title: "GoodData.UI"
-linkTitle: "Home"
 description: "A React SDK, Web Components, and REST API clients for building analytics into your application."
 weight: 10
 diataxis_type: reference

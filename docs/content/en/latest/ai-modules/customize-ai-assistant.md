@@ -1,6 +1,5 @@
 ---
 title: Customize the AI Assistant
-linkTitle: Customize the assistant
 category: AI & Modules
 diataxis_type: howto
 api_symbols:

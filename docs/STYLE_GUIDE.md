@@ -209,8 +209,7 @@ Model new pages on [getting-started/_index.md](content/en/latest/getting-started
 
 ```yaml
 ---
-title: Charts and plots
-linkTitle: "Charts and plots"        # optional: shorter nav label
+title: Charts and plots              # H1, browser tab, and nav label
 weight: 1                             # sort order within the section
 description: Shared behavior of GoodData.UI visual components.  # one sentence; used for SEO
 diataxis_type: explanation            # tutorial | howto | reference | explanation
@@ -251,12 +250,12 @@ forced rule outranks a real file, so an alias that collides with a live page wou
 
 | Field | Required | Notes |
 | --- | --- | --- |
-| `title` | yes | Display title. Sentence case. |
+| `title` | yes | The H1, browser tab, and nav label in one. Sentence case, about five words at most so the nav row does not wrap. How-to pages start with a verb ("Run a custom execution"), reference and explanation pages are a noun phrase ("Version compatibility"). Put the longer wording in `description` and the first sentence. |
 | `description` | yes | One sentence; powers SEO and section overviews. |
 | `weight` | yes | Lower sorts earlier. |
 | `type: docs` | yes | Hugo content type. The docs home (`_index.md` of the version folder) gets it from the config cascade. |
 | `diataxis_type` | yes | Drives the tone you should write in. |
-| `linkTitle` | no | Shorter nav/breadcrumb label. |
+| `linkTitle` | no | Don't set it. A nav label that differs from the H1 makes readers think they landed on the wrong page, and `scripts/tests/nav-titles.test.ts` fails on it. |
 | `related_pages` | no | Absolute `/docs/...` paths. |
 | `legacy_path` | no | The old page this one replaces, 1:1. Drives the version menu's deep links. |
 | `aliases` | no | Old URLs to redirect from. Page-relative, lowercase, trailing slash — see above. |

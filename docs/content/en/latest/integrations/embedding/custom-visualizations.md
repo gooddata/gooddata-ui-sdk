@@ -1,7 +1,6 @@
 ---
 legacy_path: learn/visualize_data/create_custom_visualizations
 title: How custom visualizations get data
-linkTitle: Custom visualizations
 category: Integrations / Embedding
 diataxis_type: explanation
 api_symbols:

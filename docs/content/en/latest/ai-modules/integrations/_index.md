@@ -1,6 +1,5 @@
 ---
 title: Build tool integrations
-linkTitle: Integrations
 weight: 60
 description: Bundler and editor setup that the AI Assistant components need.
 diataxis_type: explanation

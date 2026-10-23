@@ -34,7 +34,6 @@ import {
  */
 export function MeasureGroupHeader(params: AgGridCellRendererParams | AgGridHeaderParams) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isKeyboardTriggered, setIsKeyboardTriggered] = useState(false);
     const { isPivoted } = useColumnDefs();
     const { config } = usePivotTableProps();
     const { columnHeadersPosition } = config;
@@ -86,7 +85,6 @@ export function MeasureGroupHeader(params: AgGridCellRendererParams | AgGridHead
     useHeaderMenuKeyboard(
         isHeader ? params : ({ eGridHeader: undefined } as unknown as AgGridHeaderParams),
         () => {
-            setIsKeyboardTriggered(true);
             setIsMenuOpen(true);
         },
         isHeader && hasMenuItems,
@@ -124,13 +122,7 @@ export function MeasureGroupHeader(params: AgGridCellRendererParams | AgGridHead
                         onTextWrappingItemClick={handleTextWrappingItemClick}
                         onSortingItemClick={handleSortingItemClick}
                         isMenuOpened={isMenuOpen}
-                        onMenuOpenedChange={(opened) => {
-                            setIsMenuOpen(opened);
-                            if (!opened) {
-                                setIsKeyboardTriggered(false);
-                            }
-                        }}
-                        isKeyboardTriggered={isKeyboardTriggered}
+                        onMenuOpenedChange={setIsMenuOpen}
                     />
                 ) : null}
             </div>

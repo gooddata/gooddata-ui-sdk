@@ -863,6 +863,22 @@
         "text": "Recipients",
         "crowdinContext": "Label for recipients field in scheduled email form"
     },
+    "dialogs.schedule.email.recipients.selected.none": {
+        "text": "No recipients selected.",
+        "crowdinContext": "Screen reader description of the recipients field in the scheduled export and alert dialogs, read when the field gets focus and it holds no recipients."
+    },
+    "dialogs.schedule.email.recipients.selected.few": {
+        "text": "{count, plural, one {# recipient selected} other {# recipients selected}}: {names}.",
+        "crowdinContext": "Screen reader description of the recipients field in the scheduled export and alert dialogs, read when the field gets focus. {names} is a list of up to three recipient names."
+    },
+    "dialogs.schedule.email.recipients.selected.many": {
+        "text": "{count, plural, one {# recipient selected} other {# recipients selected}}.",
+        "crowdinContext": "Screen reader description of the recipients field in the scheduled export and alert dialogs, read when the field gets focus and it holds more than three recipients."
+    },
+    "dialogs.schedule.email.recipients.navigationHint": {
+        "text": "Use the left and right arrow keys to move between recipients.",
+        "crowdinContext": "Screen reader hint of the recipients field in the scheduled export and alert dialogs. Selected recipients are shown as removable chips before the text input; the arrow keys move focus across them."
+    },
     "dialogs.schedule.email.filters": {
         "text": "Filters ({count})",
         "crowdinContext": "Label for filters selection in scheduled email form, with count of active filters"

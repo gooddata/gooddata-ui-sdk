@@ -35,7 +35,6 @@ import {
  */
 export function MeasureHeader(params: AgGridHeaderParams) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isKeyboardTriggered, setIsKeyboardTriggered] = useState(false);
     const isTransposed = useIsTransposed();
     const { isPivoted } = useColumnDefs();
 
@@ -104,7 +103,6 @@ export function MeasureHeader(params: AgGridHeaderParams) {
     useHeaderMenuKeyboard(
         params,
         () => {
-            setIsKeyboardTriggered(true);
             setIsMenuOpen(true);
         },
         hasMenuItems,
@@ -150,13 +148,7 @@ export function MeasureHeader(params: AgGridHeaderParams) {
                         onTextWrappingItemClick={handleTextWrappingItemClick}
                         onSortingItemClick={handleSortingItemClick}
                         isMenuOpened={isMenuOpen}
-                        onMenuOpenedChange={(opened) => {
-                            setIsMenuOpen(opened);
-                            if (!opened) {
-                                setIsKeyboardTriggered(false);
-                            }
-                        }}
-                        isKeyboardTriggered={isKeyboardTriggered}
+                        onMenuOpenedChange={setIsMenuOpen}
                     />
                 ) : null}
             </div>

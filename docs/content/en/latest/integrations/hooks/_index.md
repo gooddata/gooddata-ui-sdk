@@ -1,6 +1,5 @@
 ---
 title: Hooks
-linkTitle: "Hooks"
 weight: 60
 description: Choose the matching React hook to read an SDK provider context or load a plugin-enhanced dashboard.
 diataxis_type: reference

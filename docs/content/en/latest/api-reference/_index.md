@@ -1,6 +1,5 @@
 ---
 title: API Reference
-linkTitle: API Reference
 weight: 80
 legacy_path: references/api_references
 description: Per-symbol API reference generated via api-extractor + api-documenter (upstream SDK pipeline).

@@ -1,6 +1,5 @@
 ---
 title: Filters
-linkTitle: "Filters"
 weight: 40
 description: Filter components and hooks for building interactive analytics UIs.
 diataxis_type: explanation

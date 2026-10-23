@@ -1,6 +1,5 @@
 ---
 title: Data layer
-linkTitle: "Data layer"
 weight: 60
 description: Execute analytics queries, work with the data model, and consume results programmatically.
 diataxis_type: reference

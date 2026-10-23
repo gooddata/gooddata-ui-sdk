@@ -6,13 +6,6 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type IPlatformContext } from "@gooddata/sdk-pluggable-application-model";
 
-import { getBackend } from "./backend.js";
-import { BackendPlatformContextProvider, useLoadPlatformContext } from "./useLoadPlatformContext.js";
-import { useWorkspaceColorPalette } from "./useWorkspaceColorPalette.js";
-import { useWorkspacePermissions } from "./useWorkspacePermissions.js";
-import { useWorkspaceSettings } from "./useWorkspaceSettings.js";
-import { useWorkspaceTheme } from "./useWorkspaceTheme.js";
-
 vi.mock("react-router", () => ({
     useLocation: vi.fn(() => ({ pathname: "/workspace/ws-1/dashboards/" })),
 }));
@@ -25,6 +18,17 @@ vi.mock("./useWorkspacePermissions.js", () => ({ useWorkspacePermissions: vi.fn(
 vi.mock("./useWorkspaceSettings.js", () => ({ useWorkspaceSettings: vi.fn() }));
 vi.mock("./useWorkspaceColorPalette.js", () => ({ useWorkspaceColorPalette: vi.fn() }));
 vi.mock("./useWorkspaceTheme.js", () => ({ useWorkspaceTheme: vi.fn() }));
+
+// With isolation off, a file that rendered the host earlier leaves this hook cached with the real router and
+// workspace hooks. Drop the cached graph so that the imports below go through the mocks above.
+vi.resetModules();
+const { getBackend } = await import("./backend.js");
+const { BackendPlatformContextProvider, useLoadPlatformContext } =
+    await import("./useLoadPlatformContext.js");
+const { useWorkspaceColorPalette } = await import("./useWorkspaceColorPalette.js");
+const { useWorkspacePermissions } = await import("./useWorkspacePermissions.js");
+const { useWorkspaceSettings } = await import("./useWorkspaceSettings.js");
+const { useWorkspaceTheme } = await import("./useWorkspaceTheme.js");
 
 const ctx = {
     userSettings: { locale: "en-US" },

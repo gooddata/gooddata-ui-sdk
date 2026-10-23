@@ -27,6 +27,8 @@ const DEFAULT_ITEM = "default";
 
 type LanguageItem = ILocale | typeof DEFAULT_ITEM;
 
+const keepOpen = () => {};
+
 /**
  * @internal
  */
@@ -65,9 +67,9 @@ export function LanguageDialog({
         if (selectedItem === currentItem) {
             onClose();
         } else if (selectedItem === DEFAULT_ITEM) {
-            void deleteLanguage().then(onClose);
+            void deleteLanguage().then(onClose, keepOpen);
         } else if (isLocale(selectedItem)) {
-            void setLanguage(selectedItem).then(onClose);
+            void setLanguage(selectedItem).then(onClose, keepOpen);
         }
     };
 

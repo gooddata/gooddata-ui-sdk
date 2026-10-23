@@ -1,6 +1,5 @@
 ---
 title: Integrations
-linkTitle: "Integrations"
 weight: 70
 description: "Connect GoodData.UI to your application environment: authentication, embedding, theming, and framework support."
 diataxis_type: reference

@@ -73,7 +73,7 @@ quality = 75
 
 [languages]
 [languages.en]
-title = "GoodData.UI SDK"
+title = "GoodData.UI"
 label = "English"
 # Weight used for sorting.
 weight = 1

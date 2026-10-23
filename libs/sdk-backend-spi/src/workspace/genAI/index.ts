@@ -106,6 +106,95 @@ export interface IGenAIService {
         request: IVisualizationsSummaryRequest,
         options?: { signal?: AbortSignal },
     ): Promise<IDashboardSummary>;
+
+    /**
+     * Generate an AI takeaway of a set of visualizations: what their data means, written by an AI Hub
+     * agent to fit a text box of a given size.
+     * @beta
+     */
+    generateTakeaway(request: ITakeawayRequest, options?: { signal?: AbortSignal }): Promise<ITakeawayResult>;
+}
+
+/**
+ * Request payload for an AI takeaway of a set of visualizations.
+ * @beta
+ */
+export interface ITakeawayRequest {
+    /**
+     * The visualizations the takeaway is based on, at least one, each under filters of its own. Every
+     * one must load, or the request fails.
+     */
+    visualizations: IVisualizationSummaryPlacement[];
+    /**
+     * Filters merged over each visualization's own, below the filters of its placement. An empty list
+     * adds none.
+     */
+    filters: IFilter[];
+    /**
+     * What the takeaway should say. Omit to leave it to the agent.
+     */
+    instructions?: ITakeawayInstructions;
+    /**
+     * Most characters the takeaway may take, spaces included: 50 to 10000. The text is cut at the last
+     * sentence that fits. Omit for no limit.
+     */
+    maxCharacters?: number;
+    /**
+     * The AI Hub agent that writes the takeaway. Omit for the user's default agent.
+     */
+    agentId?: string;
+}
+
+/**
+ * Instructions an AI takeaway is written with, each at most 2000 characters.
+ * @beta
+ */
+export interface ITakeawayInstructions {
+    /**
+     * What the whole document is for.
+     */
+    document?: string;
+    /**
+     * What this takeaway must say. Wins over `document` and `formatHint` where they disagree.
+     */
+    slot?: string;
+    /**
+     * The preferred shape of the text. Yields to `document` and `slot`.
+     */
+    formatHint?: string;
+}
+
+/**
+ * Context of an AI takeaway that may fail to load.
+ * @beta
+ */
+export type TakeawayContextPart = "memory" | "knowledge";
+
+/**
+ * Response payload for an AI takeaway.
+ * @beta
+ */
+export interface ITakeawayResult {
+    /**
+     * The takeaway text, or null when `noData` is true.
+     */
+    takeaway: string | null;
+    /**
+     * True when no visualization has data for the filters. No text is written then.
+     */
+    noData: boolean;
+    /**
+     * When the takeaway was generated, as an ISO 8601 timestamp.
+     */
+    generatedAt: string;
+    /**
+     * The AI Hub agent the takeaway was written as.
+     */
+    agentId: string;
+    /**
+     * Context that did not fully load. The takeaway is written from what did load.
+     */
+    contextOmitted: TakeawayContextPart[];
 }
 
 /**

@@ -1,6 +1,5 @@
 ---
 title: Platform
-linkTitle: "Platform"
 weight: 70
 description: Evaluate whether a GoodData.UI version and integration approach are suitable for your application and production environment.
 diataxis_type: reference

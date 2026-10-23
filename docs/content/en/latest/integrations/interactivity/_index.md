@@ -1,6 +1,5 @@
 ---
 title: Interactivity
-linkTitle: "Interactivity"
 weight: 50
 description: Handle user interactions with visualizations, from drill events to loading and error states.
 diataxis_type: reference

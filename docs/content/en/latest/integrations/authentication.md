@@ -1,7 +1,6 @@
 ---
 legacy_path: learn/integrate_and_authenticate/cn_and_cloud_authentication
 title: Authenticate to the backend
-linkTitle: Authentication
 description: Pick how your GoodData.UI application authenticates against GoodData Cloud or GoodData.CN — the GoodData session cookie, a JWT from your own portal, or an API token — and set it up.
 category: Integrations
 diataxis_type: howto

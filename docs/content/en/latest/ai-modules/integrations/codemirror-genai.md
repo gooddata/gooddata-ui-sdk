@@ -1,7 +1,6 @@
 ---
 legacy_path: codemirror6_genai_integration
-title: Deduplicate CodeMirror 6 for the AI Assistant
-linkTitle: CodeMirror 6 setup
+title: Deduplicate CodeMirror 6
 category: AI & Modules / Integrations
 diataxis_type: howto
 description: Configure webpack or Vite to dedupe the CodeMirror 6 packages so the AI Assistant chat input works.

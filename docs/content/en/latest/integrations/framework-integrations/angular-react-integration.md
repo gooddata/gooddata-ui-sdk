@@ -1,6 +1,5 @@
 ---
-title: Render GoodData.UI React components in Angular
-linkTitle: Angular (React components)
+title: Angular integration (React)
 legacy_path: architecture/supported_frameworks/angular
 description: Wrap GoodData.UI React components in Angular components with createRoot, import their styles, and bind their props from Angular templates.
 category: Integrations / Framework guides

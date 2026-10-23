@@ -66,8 +66,7 @@ reader will have done by the end.
 
 ````markdown
 ---
-title: <Verb phrase that names the goal: "Apply filters to visualizations", "Customize the automation dialogs">
-linkTitle: <Optional short sidebar label, e.g. "Filter visualizations">
+title: <Short verb phrase that names the goal, about five words: "Filter visualizations", "Add totals to a table">
 description: <One sentence: the task and its result.>
 diataxis_type: howto
 type: docs
@@ -160,7 +159,6 @@ Model: `data-layer/_index.md` (reference) or `filters/_index.md` (explanation).
 ````markdown
 ---
 title: <Section name>
-linkTitle: "<Section name>"
 weight: <position among sections>
 description: <One sentence.>
 diataxis_type: reference

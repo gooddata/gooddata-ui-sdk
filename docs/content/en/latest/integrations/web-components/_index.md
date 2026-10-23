@@ -1,6 +1,5 @@
 ---
 title: Web Components
-linkTitle: "Web Components"
 weight: 30
 description: Custom HTML elements that embed GoodData dashboards, visualizations, and the AI assistant in any framework or vanilla HTML, without a direct React dependency.
 diataxis_type: reference

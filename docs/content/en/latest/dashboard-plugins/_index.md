@@ -1,6 +1,5 @@
 ---
 title: Dashboard & plugins
-linkTitle: "Dashboard & plugins"
 weight: 30
 description: Find components and hooks for embedding dashboards, building plugins, dispatching commands and events, reading widget data, and managing automations.
 diataxis_type: reference

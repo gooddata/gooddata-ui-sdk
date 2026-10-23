@@ -1,6 +1,5 @@
 ---
 title: Execution
-linkTitle: "Execution"
 weight: 80
 description: "Define what the backend computes and how the result is shaped: dimensions, sorting, totals, derived measures, and data sampling."
 diataxis_type: reference

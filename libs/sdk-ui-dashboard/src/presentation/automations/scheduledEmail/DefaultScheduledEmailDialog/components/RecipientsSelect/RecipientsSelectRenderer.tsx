@@ -43,7 +43,11 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../../../constants/zIndex.js";
+import { getRecipientLabel } from "../../../utils/users.js";
 import { isEmail } from "../../../utils/validate.js";
+
+import { LiveRegionLastSelectContainer } from "./LiveRegionLastSelectContainer.js";
+import { RecipientsSelectionDescription } from "./RecipientsSelectionDescription.js";
 
 const MAXIMUM_RECIPIENTS_RECEIVE = 60;
 const PADDING = 16;
@@ -320,7 +324,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
         const invalidUnknownError = !!invalidUnknownRecipients.length;
 
         const invalidRecipientsValues = [...invalidExternalRecipients, ...invalidUnknownRecipients]
-            .map((v) => v.name || v.id)
+            .map(getRecipientLabel)
             .join(", ");
 
         const authorOnlyError =
@@ -328,7 +332,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
             ((value.length === 1 && value[0].id !== loggedUser?.id) || value.length > 1);
 
         const missingEmailRecipients = value.filter((v) => !getHasEmail(v));
-        const missingEmailRecipientsValues = missingEmailRecipients.map((v) => v.name || v.id).join(", ");
+        const missingEmailRecipientsValues = missingEmailRecipients.map(getRecipientLabel).join(", ");
         const missingEmailError = !!missingEmailRecipients.length;
 
         return {
@@ -545,7 +549,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
 
             // MultiValueRemove component from react-select
             const removeIcon: ReactElement | null = (children as any)![1];
-            const name = data.name || data.id;
+            const name = getRecipientLabel(data);
             const hasEmail = getHasEmail(data);
             const noExternal = data.type === "externalUser" && !allowExternalRecipients;
             const invalidExternal = data.type === "unknownUser";
@@ -592,7 +596,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
 
     const renderOptionLabel = useCallback(
         (recipient: IAutomationRecipient): ReactElement | null => {
-            const displayName = recipient.name || recipient.id;
+            const displayName = getRecipientLabel(recipient);
             const email = isAutomationUserRecipient(recipient) ? (recipient.email ?? "") : "";
 
             const renderValue = renderRecipientValue(recipient);
@@ -636,6 +640,10 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
         [allowExternalRecipients, externalRecipientOverride, renderRecipientValue],
     );
 
+    const descriptionId = `${id}-description`;
+    const errorId = `${id}-error`;
+    const ariaDescribedBy = isValid ? descriptionId : `${descriptionId} ${errorId}`;
+
     const renderInputContainer = useCallback(
         (inputProps: InputProps<IAutomationRecipient>): ReactElement | null => {
             if (!isMulti) {
@@ -665,12 +673,12 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
                         }}
                         autoComplete="new-password" // common hack for Safari to not autocomplete
                         aria-invalid={!isValid}
-                        aria-describedby={isValid ? undefined : "gd-recipients-field-error"}
+                        aria-describedby={ariaDescribedBy}
                     />
                 </div>
             );
         },
-        [isMulti, id, isValid, renderEmptyContainer],
+        [isMulti, id, isValid, ariaDescribedBy, renderEmptyContainer],
     );
 
     const handleKeyboardRecipientRemove = useCallback(
@@ -852,6 +860,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
         GroupBase<IAutomationRecipient>
     > = {
         ...ReactSelectComponents,
+        SelectContainer: LiveRegionLastSelectContainer,
         IndicatorsContainer: renderEmptyContainer,
         Input: renderInputContainer,
         MultiValueContainer: renderMultiValueContainer,
@@ -967,10 +976,10 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
                         onBlur={onBlur}
                         value={value}
                         getOptionValue={(o) => o.id}
-                        getOptionLabel={(o) => o.name || o.id}
-                        aria-describedby={isValid ? undefined : "gd-recipients-field-error"}
+                        getOptionLabel={getRecipientLabel}
                         aria-invalid={!isValid}
                     />
+                    <RecipientsSelectionDescription id={descriptionId} recipients={value} />
                     {isValid ? (
                         renderExternalRecipientsNote ? (
                             <div className="gd-recipients-field-note">
@@ -982,7 +991,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
                             </div>
                         ) : null
                     ) : (
-                        <div id="gd-recipients-field-error" className="gd-recipients-field-error">
+                        <div id={errorId} className="gd-recipients-field-error">
                             {getInvalidDatapoints().map((invalidDatapoint) => (
                                 <div
                                     key={invalidDatapoint.id}

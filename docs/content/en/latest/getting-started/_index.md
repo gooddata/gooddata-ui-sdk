@@ -1,7 +1,6 @@
 ---
 legacy_path: introduction
 title: Getting started
-linkTitle: "Getting started"
 weight: 10
 description: GoodData.UI is the official React SDK for embedding GoodData
   analytics, from single charts and filters to whole dashboards and the AI

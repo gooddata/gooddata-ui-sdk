@@ -90,7 +90,7 @@ From `output/site/hugo.toml` (the canonical consuming site):
 ```toml
 baseURL = "https://davidzoufaly.github.io/gd-ui-docs-beast-moded/"
 languageCode = "en-us"
-title = "GoodData.UI SDK Documentation"
+title = "GoodData.UI Documentation"
 enableRobotsTXT = true
 
 theme = "gd-docs-theme-next"
@@ -103,7 +103,7 @@ theme = "gd-docs-theme-next"
     target = "css"
 
 [params]
-  description = "Documentation for GoodData.UI SDK, organized around tutorials, how-to guides, reference, and explanations."
+  description = "Documentation for GoodData.UI, organized around tutorials, how-to guides, reference, and explanations."
   repoURL = "https://github.com/gooddata/gooddata-ui-sdk"
   homeSlug = "getting-started"
 

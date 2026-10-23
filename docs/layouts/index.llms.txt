@@ -15,7 +15,7 @@ build fails rather than ship an empty index. */ -}}
 {{- if not $root }}{{ errorf "llms.txt: params.homeSlug %q is not a section of this build" $slug }}{{ end -}}
 {{- $api := "" -}}
 {{- range $root.Sections }}{{ if strings.HasSuffix .RelPermalink "/api-reference/" }}{{ $api = . }}{{ end }}{{ end -}}
-{{- $blocks := slice "# GoodData.UI SDK Documentation" -}}
+{{- $blocks := slice "# GoodData.UI Documentation" -}}
 {{- $blocks = $blocks | append (printf "> GoodData.UI: %s" ($root.Description | default site.Params.description)) -}}
 {{- $blocks = $blocks | append (printf "Every link below is a page as Markdown (index.md); the same URL without index.md is the HTML page. Each Markdown page starts with a link back to this file. The documentation home page: %s" $root.Permalink) -}}
 {{- range sort $root.Sections ".Weight" -}}

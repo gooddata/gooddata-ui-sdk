@@ -1,6 +1,5 @@
 ---
-title: Control the AI Assistant from your code
-linkTitle: Control the assistant
+title: Control the AI Assistant
 category: AI & Modules
 diataxis_type: howto
 api_symbols:

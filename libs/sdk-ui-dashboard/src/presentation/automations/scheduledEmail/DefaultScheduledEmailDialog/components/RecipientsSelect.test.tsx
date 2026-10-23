@@ -99,7 +99,7 @@ function renderComponent(
  *
  * Role queries in this file pass `hidden: true`: otherwise `getByRole` filters candidates through
  * happy-dom's `getComputedStyle`, which walks the whole tree and dominated this file's runtime.
- * Nothing rendered here is hidden from the accessibility tree, so the filter only ever cost time.
+ * No queried element is hidden from the accessibility tree, so the filter only ever cost time.
  */
 function combobox() {
     return screen.getByRole("combobox", { hidden: true });
@@ -111,6 +111,14 @@ function combobox() {
  */
 function openMenu() {
     fireEvent.keyDown(combobox(), { key: "ArrowDown", code: "ArrowDown" });
+}
+
+/**
+ * Focuses the search input. React-select sets its own `aria-describedby` on focus, so description
+ * assertions run after it to prove ours wins.
+ */
+function focusInput() {
+    fireEvent.focus(combobox());
 }
 
 /**
@@ -429,6 +437,74 @@ describe("RecipientsSelect", () => {
 
         await advance(ANNOUNCEMENT_DEBOUNCE);
         expect(screen.getByRole("status", { hidden: true })).toHaveTextContent("1 result: John Doe");
+    });
+
+    it("describes the selected recipients and how to reach them with the keyboard", () => {
+        const { query } = createUsersQueryStub(async () => []);
+        renderComponent(createBackend(query), {
+            value: [
+                userRecipient("john.id", "john@example.com", "John Doe"),
+                userRecipient("jane.id", "jane@example.com", "Jane Roe"),
+            ],
+        });
+        focusInput();
+
+        expect(combobox()).toHaveAccessibleDescription(
+            "2 recipients selected: John Doe, Jane Roe. Use the left and right arrow keys to move between recipients.",
+        );
+    });
+
+    it("describes more than three selected recipients by their count only", () => {
+        const { query } = createUsersQueryStub(async () => []);
+        renderComponent(createBackend(query), {
+            value: ["a", "b", "c", "d"].map((id) => userRecipient(id, `${id}@example.com`, `User ${id}`)),
+        });
+        focusInput();
+
+        expect(combobox()).toHaveAccessibleDescription(
+            "4 recipients selected. Use the left and right arrow keys to move between recipients.",
+        );
+    });
+
+    it("describes an empty selection", () => {
+        const { query } = createUsersQueryStub(async () => []);
+        renderComponent(createBackend(query));
+        focusInput();
+
+        expect(combobox()).toHaveAccessibleDescription("No recipients selected.");
+    });
+
+    it("keeps the selection description alongside a validation error", () => {
+        const { query } = createUsersQueryStub(async () => []);
+        renderComponent(createBackend(query), {
+            value: [
+                userRecipient("john.id", "john@example.com", "John Doe"),
+                userRecipient("jane.id", "jane@example.com", "Jane Roe"),
+            ],
+            maxRecipients: 1,
+        });
+        focusInput();
+
+        expect(combobox()).toHaveAttribute("aria-invalid", "true");
+        expect(combobox()).toHaveAccessibleDescription(
+            "2 recipients selected: John Doe, Jane Roe. Use the left and right arrow keys to move between recipients. Error: Too many recipients — you can add up to 1.",
+        );
+    });
+
+    it("renders the screen reader live regions after the input, not between the label and the recipients", () => {
+        const { query } = createUsersQueryStub(async () => []);
+        renderComponent(createBackend(query), {
+            value: [userRecipient("john.id", "john@example.com", "John Doe")],
+        });
+
+        const regions = [
+            screen.getByRole("log", { hidden: true }),
+            screen.getByRole("status", { hidden: true }),
+        ];
+
+        for (const region of regions) {
+            expect(combobox().compareDocumentPosition(region)).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
+        }
     });
 
     it("discards a stale response resolving after a newer search", async () => {
