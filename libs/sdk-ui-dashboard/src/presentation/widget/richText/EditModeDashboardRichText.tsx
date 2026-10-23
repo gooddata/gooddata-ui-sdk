@@ -72,7 +72,7 @@ export function EditModeDashboardRichText({ widget, clientWidth, clientHeight }:
     const [isConfirmDeleteDialogVisible, setIsConfirmDeleteDialogVisible] = useState(false);
     const theme = useTheme();
 
-    const emptyContentIconColor = theme?.palette?.complementary?.c7 ?? "#6D7680";
+    const emptyContentIconColor = theme?.palette?.complementary?.c7 ?? "#6A737D";
     const EmptyElement = useMemo(() => {
         return (
             <div className="gd-rich-text-widget-empty-content">

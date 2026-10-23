@@ -350,8 +350,18 @@ export const selectAllowCreateInsightRequest: DashboardSelector<boolean> = creat
  * @internal
  */
 export const selectIsAiMode: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
-    return state.isAiMode ?? false;
+    return !!state.aiMode;
 });
+
+/**
+ * Returns the current AI reasoning title, if provided.
+ *
+ * @internal
+ */
+export const selectAiReasoningTitle: DashboardSelector<string | undefined> = createSelector(
+    selectConfig,
+    (state) => state.aiReasoningTitle,
+);
 
 /**
  * Returns whether AI generates the dashboard.
@@ -359,7 +369,7 @@ export const selectIsAiMode: DashboardSelector<boolean> = createSelector(selectC
  * @internal
  */
 export const selectIsAiGenerating: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
-    return state.isAiGenerating ?? false;
+    return state.aiMode === "generating";
 });
 
 /**
@@ -368,7 +378,16 @@ export const selectIsAiGenerating: DashboardSelector<boolean> = createSelector(s
  * @internal
  */
 export const selectIsAiWaiting: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
-    return state.isAiWaiting ?? false;
+    return state.aiMode === "waiting";
+});
+
+/**
+ * Returns whether AI is building the dashboard with dashboard interaction disabled.
+ *
+ * @internal
+ */
+export const selectIsAiBuilding: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
+    return state.aiMode === "building";
 });
 
 /**
@@ -379,7 +398,8 @@ export const selectIsAiWaiting: DashboardSelector<boolean> = createSelector(sele
 export const selectIsAiLoading: DashboardSelector<boolean> = createSelector(
     selectIsAiGenerating,
     selectIsAiWaiting,
-    (isAiGenerating, isAiWaiting) => isAiGenerating || isAiWaiting,
+    selectIsAiBuilding,
+    (isAiGenerating, isAiWaiting, isAiBuilding) => isAiGenerating || isAiWaiting || isAiBuilding,
 );
 
 /**

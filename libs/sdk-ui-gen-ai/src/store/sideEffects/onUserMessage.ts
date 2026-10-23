@@ -20,11 +20,13 @@ import {
     type IAllowedRelationshipType,
 } from "@gooddata/sdk-model";
 
+import { extractHeading } from "../../components/utils/markdownUtils.js";
 import {
     type IChatConversationLocal,
     type IChatConversationLocalItem,
     makeAssistantItem,
 } from "../../model.js";
+import { publisherDocumentFormatOf } from "../../publisherDocumentPart.js";
 import { generateTitleFromQuestion } from "../../utils.js";
 import {
     agentSwitchingActiveSelector,
@@ -34,6 +36,7 @@ import {
     tagsSelector,
     userContextSelector,
 } from "../chatWindow/chatWindowSelectors.js";
+import { type EventDispatcher } from "../events.js";
 import {
     conversationEffortSelector,
     conversationMessagesByIdSelector,
@@ -80,6 +83,7 @@ export function* onUserMessage({ payload }: ReturnType<typeof newMessageAction>)
 function* conversationUserMessage(message: IChatConversationLocalItem) {
     let initialAssistantMessage: IChatConversationLocalItem | undefined = undefined;
     let lastAssistantMessage: IChatConversationLocalItem | undefined = undefined;
+    let eventDispatcher: EventDispatcher | undefined = undefined;
 
     // Check current conversation
     const conversationState: IChatConversationLocal | undefined = yield select(conversationSelector);
@@ -98,6 +102,7 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
         const backend: IAnalyticalBackend = yield getContext("backend");
         const workspace: string = yield getContext("workspace");
         const isPreview: boolean | undefined = yield getContext("isPreview");
+        eventDispatcher = yield getContext("eventDispatcher");
 
         // Check state
         if (!conversationState?.localId) {
@@ -154,6 +159,8 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
         if (!conversation) {
             throw new Error("Conversation is not available.");
         }
+
+        eventDispatcher?.dispatch({ type: "chatReasoning", threadId: conversation.id, title: undefined });
 
         // Flush any pending agent switch before sending the message so that the
         // "Switched to X" item and the switchAgent API call happen together with
@@ -243,6 +250,10 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
             );
         }
     } finally {
+        if (conversation) {
+            eventDispatcher?.dispatch({ type: "chatReasoning", threadId: conversation.id, title: undefined });
+        }
+
         const wasCanceled: boolean = yield cancelled();
 
         // Mark the last assistant message as complete
@@ -260,7 +271,7 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
                 yield put(
                     evaluateMessageCompleteAction({
                         assistantMessageId: messageToComplete.localId,
-                        conversationId: conversation?.localId ?? conversationState?.localId,
+                        conversationId: conversation?.localId ?? conversationState?.localId ?? "",
                         cancelled: wasCanceled,
                     }),
                 );
@@ -292,6 +303,8 @@ function* evaluateUserConversationMessage(
               IChatConversationItem | IChatConversationError | IChatConversationInteractionStep
           >
         | undefined = undefined;
+    const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
+    let reasoningTitle: string | undefined = undefined;
     const settings: IUserWorkspaceSettings | undefined = yield select(settingsSelector);
     const objectTypes: GenAIObjectType[] | undefined = yield select(objectTypesSelector);
     const { includeTags, excludeTags }: ReturnType<typeof tagsSelector> = yield select(tagsSelector);
@@ -312,7 +325,8 @@ function* evaluateUserConversationMessage(
     let queryBuilder = preparedChatThread
         .withSearchLimit(Number(settings?.["aiChatSearchLimit"]) || 10)
         .withObjectTypes(objectTypes)
-        .withEffort(selectedEffort);
+        .withEffort(selectedEffort)
+        .withPublisherDocumentFormat(publisherDocumentFormatOf(settings));
 
     if (excludeTags) {
         queryBuilder = queryBuilder.withExcludeTags(excludeTags);
@@ -491,6 +505,25 @@ function* evaluateUserConversationMessage(
                             item: value,
                         }),
                     );
+                    if (value.role === "assistant" && localContent.type === "reasoning") {
+                        const messages: IChatConversationLocalItem[] = yield select(
+                            conversationMessagesByIdSelector,
+                            conversation.localId,
+                        );
+                        const content = messages.find(
+                            (item) => item.localId === currentAssistantMessage.localId,
+                        )?.content;
+                        const title = content?.type === "reasoning" ? extractHeading(content.summary) : null;
+                        if (title && title !== reasoningTitle) {
+                            reasoningTitle = title;
+                            eventDispatcher.dispatch({
+                                type: "chatReasoning",
+                                threadId: conversation.id,
+                                interactionId: chunkInteractionId,
+                                title,
+                            });
+                        }
+                    }
                     yield call(
                         notifyDefinitionReceived,
                         {

@@ -4,6 +4,10 @@ legacy_path: architecture/supported_frameworks/angular
 description: Wrap GoodData.UI React components in Angular components with createRoot, import their styles, and bind their props from Angular templates.
 category: Integrations / Framework guides
 diataxis_type: howto
+api_symbols:
+  - "@gooddata/sdk-backend-tiger:tigerFactory"
+  - "@gooddata/sdk-backend-tiger:ContextDeferredAuthProvider"
+  - "@gooddata/sdk-ui:Kpi"
 related_pages:
   - /docs/integrations/framework-integrations/angular-integration
   - /docs/integrations/backend-setup

@@ -1559,6 +1559,7 @@ export type {
     IGenAIUIContext,
     IGenAIDashboardContext,
     IGenAIPublisherDocumentContext,
+    IGenAIPublisherDocumentContextV2,
     IGenAIWidgetDescriptor,
     GenAIUserContextFilter,
     IGenAIUserContextAttributeFilter,

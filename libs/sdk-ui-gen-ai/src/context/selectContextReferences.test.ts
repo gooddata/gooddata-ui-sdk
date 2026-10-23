@@ -702,6 +702,20 @@ describe("updateAmbientContext with a document", () => {
         expect(result.ambientSelected?.publisherDocument?.title).toBe("Q1 draft");
     });
 
+    it("should select and activate a v2 document the first time it is reported", () => {
+        const ambient: IGenAIUserContext = {
+            view: { publisherDocumentV2: { ref: idRef("d1"), title: "D1" } },
+        };
+
+        const result = updateAmbientContext({}, ambient);
+
+        expect(result.ambientSelected).toMatchObject({
+            activated: true,
+            publisherDocument: { id: "d1", ref: idRef("d1"), where: "view.publisherDocument", title: "D1" },
+        });
+        expect(result.active?.view).toEqual(ambient.view);
+    });
+
     it("should drop the document once it is no longer reported", () => {
         const first = updateAmbientContext({}, documentAmbient("Q1"));
         const result = updateAmbientContext(first, undefined);

@@ -1,13 +1,21 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type ReactElement, useState } from "react";
+import { type ReactElement, type ReactNode, type RefObject, useState } from "react";
 
 import { useIntl } from "react-intl";
 
-import { EditableLabel, UiButton, UiCheckbox, UiPopover, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import {
+    EditableLabel,
+    UiButton,
+    UiCheckbox,
+    UiPopover,
+    useCloseOnParentScroll,
+    useIdPrefixed,
+} from "@gooddata/sdk-ui-kit";
 
 export interface IFeedbackPopupProps {
     anchor: (opened: boolean) => ReactElement<any>;
+    containerRef: RefObject<HTMLElement | null>;
     onSubmit?: (feedback: IFeedbackData) => void;
 }
 
@@ -19,7 +27,7 @@ export interface IFeedbackData {
 /**
  * @internal
  */
-export function FeedbackPopup({ anchor, onSubmit }: IFeedbackPopupProps) {
+export function FeedbackPopup({ anchor, containerRef, onSubmit }: IFeedbackPopupProps) {
     const intl = useIntl();
     const [opened, setOpened] = useState(false);
     const [selectedReasons, setSelectedReasons] = useState<string[]>([]);
@@ -91,8 +99,8 @@ export function FeedbackPopup({ anchor, onSubmit }: IFeedbackPopupProps) {
             onOpen={() => {
                 setOpened(true);
             }}
-            content={() => (
-                <div className="gd-gen-ai-feedback-popup__body">
+            content={({ onClose }) => (
+                <FeedbackPopupBody containerRef={containerRef} onClose={() => handleCancel(onClose)}>
                     <div className="gd-gen-ai-feedback-popup__section">
                         <fieldset>
                             <legend className="gd-label gd-gen-ai-feedback-popup__legend">
@@ -139,7 +147,7 @@ export function FeedbackPopup({ anchor, onSubmit }: IFeedbackPopupProps) {
                             />
                         </div>
                     )}
-                </div>
+                </FeedbackPopupBody>
             )}
             footer={({ onClose }) => (
                 <>
@@ -160,4 +168,16 @@ export function FeedbackPopup({ anchor, onSubmit }: IFeedbackPopupProps) {
             )}
         />
     );
+}
+
+interface IFeedbackPopupBodyProps {
+    containerRef: RefObject<HTMLElement | null>;
+    onClose: () => void;
+    children: ReactNode;
+}
+
+function FeedbackPopupBody({ containerRef, onClose, children }: IFeedbackPopupBodyProps) {
+    useCloseOnParentScroll(true, onClose, containerRef);
+
+    return <div className="gd-gen-ai-feedback-popup__body">{children}</div>;
 }

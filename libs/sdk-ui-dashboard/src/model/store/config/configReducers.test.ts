@@ -10,99 +10,64 @@ import { configReducers } from "./configReducers.js";
 import { type ConfigState } from "./configState.js";
 
 describe("configReducers", () => {
-    describe("setIsAiGenerating", () => {
-        it("should set isAiGenerating to true", () => {
-            const initialState: ConfigState = {
-                config: {
-                    isAiGenerating: false,
-                } as ResolvedDashboardConfig,
-            };
+    describe("setAiReasoningTitle", () => {
+        it.each(["Choosing charts", "", undefined])(
+            "should replace or clear the title with %s",
+            (aiReasoningTitle) => {
+                const initialState: ConfigState = {
+                    config: {
+                        aiMode: "building",
+                        aiReasoningTitle: "Exploring data",
+                        locale: "en-US",
+                    } as ResolvedDashboardConfig,
+                };
 
-            const action = { type: "config/setIsAiGenerating", payload: true };
-            configReducers.setIsAiGenerating(initialState, action as any);
+                configReducers.setAiReasoningTitle(initialState, {
+                    type: "config/setAiReasoningTitle",
+                    payload: aiReasoningTitle,
+                });
 
-            expect(initialState.config?.isAiGenerating).toBe(true);
-        });
-
-        it("should set isAiGenerating to false", () => {
-            const initialState: ConfigState = {
-                config: {
-                    isAiGenerating: true,
-                } as ResolvedDashboardConfig,
-            };
-
-            const action = { type: "config/setIsAiGenerating", payload: false };
-            configReducers.setIsAiGenerating(initialState, action as any);
-
-            expect(initialState.config?.isAiGenerating).toBe(false);
-        });
+                expect(initialState.config).toEqual({
+                    aiMode: "building",
+                    aiReasoningTitle,
+                    locale: "en-US",
+                });
+            },
+        );
 
         it("should do nothing if config is not initialized", () => {
             const initialState: ConfigState = { config: undefined };
 
-            const action = { type: "config/setIsAiGenerating", payload: true };
-            configReducers.setIsAiGenerating(initialState, action as any);
+            configReducers.setAiReasoningTitle(initialState, {
+                type: "config/setAiReasoningTitle",
+                payload: "Exploring data",
+            });
 
             expect(initialState.config).toBeUndefined();
         });
     });
 
-    describe("setIsAiWaiting", () => {
-        it("should set isAiWaiting", () => {
-            const initialState: ConfigState = {
-                config: {
-                    isAiWaiting: false,
-                } as ResolvedDashboardConfig,
-            };
+    describe("setAiMode", () => {
+        it.each(["active", "generating", "waiting", "building", null, undefined] as const)(
+            "should replace the AI mode with %s",
+            (aiMode) => {
+                const initialState: ConfigState = {
+                    config: {
+                        aiMode: "building",
+                        locale: "en-US",
+                    } as ResolvedDashboardConfig,
+                };
 
-            const action = { type: "config/setIsAiWaiting", payload: true };
-            configReducers.setIsAiWaiting(initialState, action as any);
+                configReducers.setAiMode(initialState, { type: "config/setAiMode", payload: aiMode });
 
-            expect(initialState.config?.isAiWaiting).toBe(true);
-        });
-
-        it("should do nothing if config is not initialized", () => {
-            const initialState: ConfigState = { config: undefined };
-
-            const action = { type: "config/setIsAiWaiting", payload: true };
-            configReducers.setIsAiWaiting(initialState, action as any);
-
-            expect(initialState.config).toBeUndefined();
-        });
-    });
-
-    describe("setIsAiMode", () => {
-        it("should set isAiMode to true", () => {
-            const initialState: ConfigState = {
-                config: {
-                    isAiMode: false,
-                } as ResolvedDashboardConfig,
-            };
-
-            const action = { type: "config/setIsAiMode", payload: true };
-            configReducers.setIsAiMode(initialState, action as any);
-
-            expect(initialState.config?.isAiMode).toBe(true);
-        });
-
-        it("should set isAiMode to false", () => {
-            const initialState: ConfigState = {
-                config: {
-                    isAiMode: true,
-                } as ResolvedDashboardConfig,
-            };
-
-            const action = { type: "config/setIsAiMode", payload: false };
-            configReducers.setIsAiMode(initialState, action as any);
-
-            expect(initialState.config?.isAiMode).toBe(false);
-        });
+                expect(initialState.config).toEqual({ aiMode, locale: "en-US" });
+            },
+        );
 
         it("should do nothing if config is not initialized", () => {
             const initialState: ConfigState = { config: undefined };
 
-            const action = { type: "config/setIsAiMode", payload: true };
-            configReducers.setIsAiMode(initialState, action as any);
+            configReducers.setAiMode(initialState, { type: "config/setAiMode", payload: "active" });
 
             expect(initialState.config).toBeUndefined();
         });

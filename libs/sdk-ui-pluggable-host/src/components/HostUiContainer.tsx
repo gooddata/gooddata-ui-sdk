@@ -144,6 +144,7 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate, onError }
             appendToChat?: boolean,
             replaceUserContext?: boolean,
             effort?: GenAIChatEffort,
+            conversationId?: string,
         ) => {
             setAiVisibility({
                 kind: "open",
@@ -153,6 +154,7 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate, onError }
                 appendToChat,
                 replaceUserContext,
                 effort,
+                conversationId,
                 seq: ++aiVisibilitySeqRef.current,
             });
         },

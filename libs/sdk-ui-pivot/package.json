@@ -1,8 +1,8 @@
 {
     "name": "@gooddata/sdk-ui-pivot",
-    "version": "11.65.0-alpha.2",
+    "version": "11.65.0-alpha.3",
     "description": "GoodData.UI SDK - Pivot Table",
-    "license": "MIT",
+    "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
     "repository": {
         "type": "git",
@@ -15,7 +15,8 @@
         "esm/**/*.d.ts",
         "esm/**/*.map",
         "esm/**/*.svg",
-        "styles"
+        "styles",
+        "NOTICE"
     ],
     "type": "module",
     "sideEffects": [
@@ -45,6 +46,7 @@
         "format-write": "oxfmt .",
         "lint": "oxlint . --quiet && eslint .",
         "lint-fix": "oxlint . --quiet --fix && eslint . --fix",
+        "prepack": "cp -f ../../NOTICE ./NOTICE",
         "scss": "sass --quiet-deps --load-path=node_modules styles/scss:styles/css",
         "stylelint": "stylelint '**/*.scss'",
         "stylelint-fix": "stylelint '**/*.scss' --fix",

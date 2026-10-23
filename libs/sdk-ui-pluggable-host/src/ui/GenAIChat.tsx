@@ -11,9 +11,11 @@ import {
     type ChatAssistantMessageEvent,
     type ChatClarificationQuestionsEvent,
     type ChatClosedEvent,
+    type ChatConversationChangedEvent,
     type ChatDefinitionReceivedEvent,
     type ChatFeedbackEvent,
     type ChatOpenedEvent,
+    type ChatReasoningEvent,
     type ChatResetEvent,
     type ChatUserMessageEvent,
     type LinkHandlerEvent,
@@ -49,11 +51,13 @@ export type GenAIChatEvent =
     | { name: "chat.opened"; payload: ChatOpenedEvent }
     | { name: "chat.closed"; payload: ChatClosedEvent }
     | { name: "chat.reset"; payload: ChatResetEvent }
+    | { name: "chat.conversation-changed"; payload: ChatConversationChangedEvent }
     | { name: "chat.feedback"; payload: ChatFeedbackEvent }
     | { name: "chat.user-message"; payload: ChatUserMessageEvent }
     | { name: "chat.mode-changed"; payload: ChatModeChangeEvent }
     | { name: "chat.definition-received"; payload: ChatDefinitionReceivedEvent }
     | { name: "chat.clarification-questions"; payload: ChatClarificationQuestionsEvent }
+    | { name: "chat.reasoning"; payload: ChatReasoningEvent }
     | { name: "chat.assistant-message"; payload: ChatAssistantMessageEvent };
 
 export function toHostGenAIChatEvent(event: GenAIChatConnectedEvent): GenAIChatEvent | undefined {
@@ -64,12 +68,16 @@ export function toHostGenAIChatEvent(event: GenAIChatConnectedEvent): GenAIChatE
             return { name: "chat.closed", payload: event.payload };
         case "reset":
             return { name: "chat.reset", payload: event.payload };
+        case "conversation-changed":
+            return { name: "chat.conversation-changed", payload: event.payload };
         case "feedback":
             return { name: "chat.feedback", payload: event.payload };
         case "user-message":
             return { name: "chat.user-message", payload: event.payload };
         case "assistant-message":
             return { name: "chat.assistant-message", payload: event.payload };
+        case "reasoning":
+            return { name: "chat.reasoning", payload: event.payload };
         case "definition-received":
             return { name: "chat.definition-received", payload: event.payload };
         case "clarification-questions":
@@ -89,8 +97,8 @@ export interface IGenAIChatProps {
     onClose: () => void;
     askedQuestion?: string | null;
     /**
-     * Monotonic counter bumped on every ask. Keying the seeding effect on it re-seeds the chat
-     * (clear thread + send message) even when `askedQuestion` is identical to the previous ask.
+     * Monotonic counter bumped on every ask or conversation selection request. Repeated identical
+     * requests still re-seed the chat or select the requested conversation.
      */
     askSeq?: number;
     /**
@@ -110,6 +118,8 @@ export interface IGenAIChatProps {
      * Agent ID to use for the seeded question. If not provided, the default agent will be used.
      */
     agentId?: string;
+    /** Existing conversation to select for the explicit request identified by `askSeq`. */
+    conversationId?: string;
     /**
      * Reasoning effort for the conversation the seeded question starts. If not provided, the default is used.
      */
@@ -165,6 +175,7 @@ export function GenAIChat({
     askSeq,
     appendToChat,
     agentId,
+    conversationId,
     effort,
     userContext,
     replaceUserContext,
@@ -246,6 +257,7 @@ export function GenAIChat({
             userContext={userContext}
             appendToChat={appendToChat}
             agentId={agentId}
+            conversationId={conversationId}
             effort={effort}
             replaceUserContext={replaceUserContext}
             ambientUserContext={ambientUserContext}

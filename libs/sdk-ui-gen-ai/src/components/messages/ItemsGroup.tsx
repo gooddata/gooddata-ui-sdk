@@ -70,9 +70,11 @@ function ReasoningItemsGroup({ classNames, group, previousGroup, children }: IRe
                     "gd-gen-ai-chat__messages__conversation-group--header--completed": isCompleted,
                 })}
             >
-                <span className="gd-gen-ai-chat__visually__hidden" aria-live="polite" aria-atomic="true">
-                    {headings[headings.length - 1]}
-                </span>
+                {isCompleted ? null : (
+                    <span className="gd-gen-ai-chat__visually__hidden" aria-live="polite" aria-atomic="true">
+                        {headings[headings.length - 1]}
+                    </span>
+                )}
                 {isCompleted ? (
                     <UiButton
                         label={intl.formatMessage({ id: "gd.gen-ai.routing.thinking-process" })}
@@ -87,6 +89,7 @@ function ReasoningItemsGroup({ classNames, group, previousGroup, children }: IRe
                     <div
                         className="gd-gen-ai-chat__messages__conversation-group--header--thinking"
                         data-testid="reasoning"
+                        aria-hidden="true"
                     >
                         <AIThinkingLoader size={30} />
                         <AIThinkingSummary headings={headings} />

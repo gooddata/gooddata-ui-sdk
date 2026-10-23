@@ -10,7 +10,10 @@ import {
     type IGenAIUserContext,
     type IInsight,
 } from "@gooddata/sdk-model";
-import { type IAiAssistantPublisherDocumentDefinition } from "@gooddata/sdk-pluggable-application-model";
+import {
+    type IAiAssistantPublisherDocumentDefinition,
+    type IAiAssistantPublisherDocumentDefinitionV2,
+} from "@gooddata/sdk-pluggable-application-model";
 import { type SdkErrorType } from "@gooddata/sdk-ui";
 
 import { type GenAIAssistantMode } from "../components/ConfigContext.js";
@@ -301,6 +304,10 @@ export type ChatAssistantMessageEvent = BaseEvent & {
     interactionId?: string;
     useCase: string;
     /**
+     * Whether processing was cancelled before the message completed.
+     */
+    cancelled?: boolean;
+    /**
      * Skills activated while processing the message.
      */
     skills?: {
@@ -321,6 +328,36 @@ export type ChatAssistantMessageEvent = BaseEvent & {
  */
 export const isChatAssistantMessageEvent = (event: ChatEvent): event is ChatAssistantMessageEvent => {
     return event.type === "chatAssistantMessage";
+};
+
+/**
+ * An update to the current reasoning display title during a streamed response.
+ *
+ * @remarks
+ * Carries the same plain-text heading used by the chat's thinking indicator, not the reasoning body.
+ * Repeated titles are omitted. An undefined title clears the indicator when a response starts or
+ * finishes, including errors and cancellation. Intermediate assistant messages do not clear it.
+ *
+ * @public
+ */
+export type ChatReasoningEvent = BaseEvent & {
+    type: "chatReasoning";
+    /**
+     * Interaction that supplied the title, when available.
+     */
+    interactionId?: string;
+    /**
+     * Current display title, or undefined to clear the previous title.
+     */
+    title?: string;
+};
+
+/**
+ * Type guard for the ChatReasoningEvent.
+ * @public
+ */
+export const isChatReasoningEvent = (event: ChatEvent): event is ChatReasoningEvent => {
+    return event.type === "chatReasoning";
 };
 
 /**
@@ -457,14 +494,15 @@ export const isChatConversationChangedEvent = (event: ChatEvent): event is ChatC
  */
 export type ChatDefinitionReceivedEvent = BaseEvent & {
     type: "onDefinitionReceived";
-    definitionType: "dashboard" | "visualization" | "publisherDocument";
+    definitionType: "dashboard" | "visualization" | "publisherDocument" | "publisherDocumentV2";
     itemId: string;
     conversationId: string;
     interactionId?: string;
     dashboard?: IDashboard;
     insights?: IInsight[];
     visualization?: NonNullable<IChatConversationVisualisationContent["visualization"]>;
-} & Partial<IAiAssistantPublisherDocumentDefinition>;
+} & Partial<IAiAssistantPublisherDocumentDefinition> &
+    Partial<Pick<IAiAssistantPublisherDocumentDefinitionV2, "publisherDocumentV2">>;
 
 /**
  * Type guard for the ChatDefinitionReceivedEvent.
@@ -606,6 +644,7 @@ export type ChatEvent =
     | ChatUserAnswersEvent
     | ChatAgentChangeEvent
     | ChatAssistantMessageEvent
+    | ChatReasoningEvent
     | ChatFeedbackEvent
     | ChatFeedbackErrorEvent
     | ChatContextChangeEvent

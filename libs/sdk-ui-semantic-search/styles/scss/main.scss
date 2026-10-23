@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 @use "sass:color";
 @use "sass:meta";
 @use "@gooddata/sdk-ui-kit/src/@ui/defaultTheme.scss";
@@ -129,6 +129,9 @@
 
         &__details__contents {
             width: 190px;
+            max-height: min(510px, calc(100vh - 16px));
+            overflow-y: auto;
+            overscroll-behavior: contain;
             padding: 5px;
             box-sizing: border-box;
             display: flex;
@@ -139,7 +142,17 @@
                 margin: 0;
             }
 
+            .gd-ellipsis-text {
+                min-height: 0;
+            }
+
             .gd-ellipsis-text-content {
+                width: auto;
+                min-height: 0;
+                margin-right: -5px;
+                padding-right: 10px;
+                overflow-y: auto;
+                overscroll-behavior: contain;
                 font-size: 12px;
             }
 

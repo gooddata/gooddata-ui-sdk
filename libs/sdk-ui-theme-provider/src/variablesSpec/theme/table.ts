@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type ThemeDefinedCssVariable } from "../types.js";
 
@@ -33,7 +33,7 @@ export const tableThemeVariables: ThemeDefinedCssVariable[] = [
         type: "theme",
         themePath: ["table", "hoverBackgroundColor"],
         variableName: "--gd-table-hoverBackgroundColor",
-        defaultValue: "var(--gd-palette-complementary-1-from-theme, rgba(109, 118, 128, 0.1))",
+        defaultValue: "var(--gd-palette-complementary-1-from-theme, rgba(106, 115, 125, 0.1))",
     },
     {
         type: "theme",

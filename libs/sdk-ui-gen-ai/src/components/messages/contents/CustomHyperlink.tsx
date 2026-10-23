@@ -139,7 +139,7 @@ const getItemUrl = (
         case "metric":
             return `/workspace/${workspaceId}/metrics/metric/${id}`;
         case "report":
-            return getPublisherDocumentHref(workspaceId, id);
+            return getPublisherDocumentHref(workspaceId, id, "aac-v1");
         default:
             return null;
     }

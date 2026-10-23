@@ -7,11 +7,18 @@ import { Provider } from "react-redux";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import type { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { type IPublisherDocumentDefinition, type IPublisherDocumentPage, idRef } from "@gooddata/sdk-model";
+import {
+    type IPublisherDocumentDefinition,
+    type IPublisherDocumentDefinitionV2,
+    type IPublisherDocumentPage,
+    type IPublisherDocumentPageV2,
+    idRef,
+} from "@gooddata/sdk-model";
 import { WorkspaceProvider } from "@gooddata/sdk-ui";
 
 import { DEFAULT_MESSAGES } from "../../../localization/translations.js";
 import type { IChatConversationLocalItem } from "../../../model.js";
+import { type PublisherDocumentPart } from "../../../publisherDocumentPart.js";
 import {
     chatWindowSliceName,
     chatWindowSliceReducer,
@@ -71,10 +78,26 @@ const DOCUMENT: IPublisherDocumentDefinition = {
     content: { version: "1", pages: [PAGE, PAGE] },
 };
 
+const PAGE_V2: IPublisherDocumentPageV2 = { id: "p1", layout: { type: "column", children: [] } };
+
+const DOCUMENT_V2: IPublisherDocumentDefinitionV2 = {
+    type: "document",
+    version: "2",
+    title: "Northwind H1",
+    period: { type: "absolute", granularity: "GDC.time.date", from: "2026-01-01", to: "2026-06-30" },
+    content: {
+        sections: [
+            { id: "s1", pages: [PAGE_V2, { ...PAGE_V2, id: "p2", visible: false }] },
+            { id: "s2", pages: [{ ...PAGE_V2, id: "p3" }] },
+        ],
+    },
+};
+
 function renderCard({
     saved,
     baseDocumentId,
     publisherDocument: publisherDocument = DOCUMENT,
+    documentV2,
     isPublisherAppEnabled = true,
     isPreview = false,
     isContextSetupEnabled = true,
@@ -89,6 +112,7 @@ function renderCard({
     saved?: string | null;
     baseDocumentId?: string | null;
     publisherDocument?: IPublisherDocumentDefinition | null;
+    documentV2?: IPublisherDocumentDefinitionV2 | null;
     isPublisherAppEnabled?: boolean;
     isPreview?: boolean;
     isContextSetupEnabled?: boolean;
@@ -136,17 +160,17 @@ function renderCard({
         );
     }
 
+    const part: PublisherDocumentPart =
+        documentV2 === undefined
+            ? { type: "publisherDocument", publisherDocument, saved, baseDocumentId }
+            : { type: "publisherDocumentV2", publisherDocument: documentV2, saved, baseDocumentId };
+
     const view = render(
         <Provider store={store}>
             <IntlProvider locale="en-US" messages={DEFAULT_MESSAGES["en-US"]}>
                 <WorkspaceProvider workspace="ws-1">
                     <ConfigProvider linkHandler={linkHandler} allowNativeLinks={allowNativeLinks} canManage>
-                        <ConversationPublisherDocumentContent
-                            message={message}
-                            publisherDocument={publisherDocument}
-                            saved={saved}
-                            baseDocumentId={baseDocumentId}
-                        />
+                        <ConversationPublisherDocumentContent message={message} part={part} />
                     </ConfigProvider>
                 </WorkspaceProvider>
             </IntlProvider>
@@ -234,29 +258,105 @@ describe("ConversationPublisherDocumentContent", () => {
         );
     });
 
-    it.each([true, false])(
-        "opens a saved report on the report route with Publisher v2 %s, while the conversation is not saved",
-        (isPublisherV2Enabled) => {
-            const { linkHandler } = renderCard({ saved: "r/1", conversationId: "", isPublisherV2Enabled });
+    it("says a draft that no longer resolves is unavailable whatever version its empty part names", () => {
+        renderCard({ publisherDocument: null, isPublisherV2Enabled: true });
+
+        expect(screen.getByText("The document is unavailable.")).toBeTruthy();
+    });
+
+    it("shows a notice instead of a v1 document when Publisher v2 is on", () => {
+        renderCard({ saved: "r/1", isPublisherV2Enabled: true });
+
+        expect(
+            screen.getByText(
+                "This document was made in the previous version of Publisher and can't be opened here.",
+            ),
+        ).toBeTruthy();
+        expect(screen.queryByRole("button", { name: "Open" })).toBeNull();
+    });
+
+    describe("a v2 document", () => {
+        it("shows a notice instead of the document when Publisher v2 is off", () => {
+            renderCard({ documentV2: DOCUMENT_V2, isPublisherV2Enabled: false });
+
+            expect(
+                screen.getByText(
+                    "This document was made in a newer version of Publisher and can't be opened here.",
+                ),
+            ).toBeTruthy();
+            expect(screen.queryByRole("button", { name: "Open" })).toBeNull();
+        });
+
+        it("names the document, its period and how many visible pages its sections hold", () => {
+            renderCard({ documentV2: DOCUMENT_V2, isPublisherV2Enabled: true });
+
+            expect(screen.getByText("Northwind H1")).toBeTruthy();
+            expect(screen.getByText(/^Jan 1\s*–\s*Jun 30, 2026 · 2 pages$/)).toBeTruthy();
+        });
+
+        it("shows only the page count for a period counted from today", () => {
+            renderCard({
+                documentV2: {
+                    ...DOCUMENT_V2,
+                    period: { type: "relative", granularity: "GDC.time.month", from: -6, to: -1 },
+                    content: { pages: [PAGE_V2] },
+                },
+                isPublisherV2Enabled: true,
+            });
+
+            expect(screen.getByText("1 page")).toBeTruthy();
+        });
+
+        it("says the document is unavailable when the part carries none", () => {
+            renderCard({ documentV2: null, isPublisherV2Enabled: true });
+
+            expect(screen.getByText("The document is unavailable.")).toBeTruthy();
+        });
+
+        it("opens a saved document on the document route, with the chat's version", () => {
+            const { linkHandler } = renderCard({
+                documentV2: DOCUMENT_V2,
+                saved: "d/1",
+                isPublisherV2Enabled: true,
+            });
 
             fireEvent.click(openButton());
 
             expect(linkHandler).toHaveBeenCalledWith(
-                expect.objectContaining({ itemUrl: "/workspace/ws-1/publisher/report/r%2F1" }),
+                expect.objectContaining({
+                    type: "report",
+                    id: "d/1",
+                    itemUrl: "/workspace/ws-1/publisher/document/d%2F1?conversation=conv-1&item=item-1",
+                }),
             );
-        },
-    );
+        });
 
-    it("opens a saved document with the chat's version on the report route even with Publisher v2", () => {
-        const { linkHandler } = renderCard({ saved: "r/1", isPublisherV2Enabled: true });
+        it("opens a saved document on the document route while the conversation is not saved", () => {
+            const { linkHandler } = renderCard({
+                documentV2: DOCUMENT_V2,
+                saved: "d/1",
+                conversationId: "",
+                isPublisherV2Enabled: true,
+            });
 
-        fireEvent.click(openButton());
+            fireEvent.click(openButton());
 
-        expect(linkHandler).toHaveBeenCalledWith(
-            expect.objectContaining({
-                itemUrl: "/workspace/ws-1/publisher/report/r%2F1?conversation=conv-1&item=item-1",
-            }),
-        );
+            expect(linkHandler).toHaveBeenCalledWith(
+                expect.objectContaining({ itemUrl: "/workspace/ws-1/publisher/document/d%2F1" }),
+            );
+        });
+
+        it("opens a new draft that names its conversation and message", () => {
+            const { linkHandler } = renderCard({ documentV2: DOCUMENT_V2, isPublisherV2Enabled: true });
+
+            fireEvent.click(openButton());
+
+            expect(linkHandler).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    itemUrl: "/workspace/ws-1/publisher/new?conversation=conv-1&item=item-1",
+                }),
+            );
+        });
     });
 
     it("offers to open the saved document with the draft when that document is not the one open", () => {

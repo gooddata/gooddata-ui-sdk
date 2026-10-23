@@ -657,7 +657,7 @@ export class FullScreenOverlay extends Overlay<IOverlayState> {
 export const GD_COLOR_HIGHLIGHT = "#14b2e2";
 
 // @internal (undocumented)
-export const GD_COLOR_STATE_BLANK = "#6d7680";
+export const GD_COLOR_STATE_BLANK = "#6a737d";
 
 // @internal (undocumented)
 export const GD_COLOR_STATE_HOVER = "#94a1ad";
@@ -1218,6 +1218,8 @@ export interface IBubbleProps {
     // (undocumented)
     ignoreClicksOnByClass?: string[];
     // (undocumented)
+    keepBottomOnResize?: boolean;
+    // (undocumented)
     onClose?: () => void;
     // (undocumented)
     onKeyDown?: () => void;
@@ -1229,6 +1231,8 @@ export interface IBubbleProps {
     overlayClassName?: string;
     // (undocumented)
     overlayPositionType?: OverlayPositionType;
+    // (undocumented)
+    resizeObserverThreshold?: number;
 }
 
 // @internal (undocumented)
@@ -4614,6 +4618,7 @@ export interface IOverlayProps<T> {
     ignoreClicksOnByClass?: string[];
     // (undocumented)
     isModal?: boolean;
+    keepBottomOnResize?: boolean;
     // (undocumented)
     maxWidth?: number | string;
     // (undocumented)

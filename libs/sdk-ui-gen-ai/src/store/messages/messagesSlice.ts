@@ -2,7 +2,11 @@
 
 import { type PayloadAction, type Reducer, createSlice } from "@reduxjs/toolkit";
 
-import { type IChatConversationInteractionStep, type IChatConversationItem } from "@gooddata/sdk-backend-spi";
+import {
+    type GenAIPublisherDocumentFormat,
+    type IChatConversationInteractionStep,
+    type IChatConversationItem,
+} from "@gooddata/sdk-backend-spi";
 import { type GenAIChatEffort, type GenAIChatInteractionUserFeedback } from "@gooddata/sdk-model";
 import { type SdkErrorType } from "@gooddata/sdk-ui";
 
@@ -17,6 +21,7 @@ import {
     type IChatConversationMultipartLocalPart,
     makeAgentChangeItem,
 } from "../../model.js";
+import { findPublisherDocumentPart } from "../../publisherDocumentPart.js";
 import {
     type IChatConversationResponseTrace,
     type IChatConversationTracedAction,
@@ -432,11 +437,11 @@ const messagesSlice = createSlice({
             {
                 payload,
             }: PayloadAction<{
+                conversationId: string;
                 item?: IChatConversationItem;
                 content?: IChatConversationLocalContent | IChatConversationErrorContent;
                 assistantMessageId: string;
                 interactionId?: string;
-                conversationId?: string;
             }>,
         ) => {
             //NOTE: During streaming a message, user can choose to close or reset a chat
@@ -532,7 +537,7 @@ const messagesSlice = createSlice({
                 payload,
             }: PayloadAction<{
                 assistantMessageId: string;
-                conversationId?: string;
+                conversationId: string;
                 cancelled?: boolean;
             }>,
         ) => {
@@ -607,6 +612,23 @@ const messagesSlice = createSlice({
             }
             state.selectedAgentId = payload.conversation.agentId ?? state.selectedAgentId;
             seedConversationEffort(state, state.currentConversation?.localId);
+        },
+        activateConversationAction: (
+            state,
+            { payload: { conversationId } }: PayloadAction<{ conversationId: string }>,
+        ) => {
+            const conversation = [state.currentConversation, ...(state.conversations ?? [])].find(
+                (candidate) => candidate?.id === conversationId || candidate?.localId === conversationId,
+            );
+            if (!conversation || conversation.localId === state.currentConversation?.localId) {
+                return;
+            }
+
+            state.currentConversation = conversation;
+            state.threadId = conversation.id;
+            state.loaded = !!state.conversationsData[conversation.localId]?.order.length;
+            state.selectedAgentId = conversation.agentId ?? state.selectedAgentId;
+            seedConversationEffort(state, conversation.localId);
         },
         setSelectedAgentAction: (
             state,
@@ -1066,6 +1088,7 @@ const messagesSlice = createSlice({
                 itemId: string;
                 documentRef?: string;
                 savedDocumentId: string;
+                format?: GenAIPublisherDocumentFormat;
             }>,
         ) => {
             const conversation = [state.currentConversation, ...(state.conversations ?? [])].find(
@@ -1079,11 +1102,7 @@ const messagesSlice = createSlice({
             if (item?.content.type !== "multipart") {
                 return;
             }
-            const documents = item.content.parts.filter((part) => part.type === "publisherDocument");
-            const target =
-                payload.documentRef === undefined
-                    ? documents[0]
-                    : documents.find((part) => part.ref === payload.documentRef);
+            const target = findPublisherDocumentPart(item.content.parts, payload.documentRef);
             if (target) {
                 target.saved = payload.savedDocumentId;
             }
@@ -1311,6 +1330,7 @@ const errorToObject = (error: Error) =>
 
 export const messagesSliceReducer: Reducer<MessagesSliceState> = messagesSlice.reducer;
 export const {
+    activateConversationAction,
     loadThreadAction,
     loadThreadErrorAction,
     loadConversationsSuccessAction,

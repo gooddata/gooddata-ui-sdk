@@ -38,6 +38,7 @@ export interface IHostChatVisibility {
     appendToChat?: boolean;
     replaceUserContext?: boolean;
     effort?: GenAIChatEffort;
+    conversationId?: string;
     seq: number;
 }
 
@@ -191,6 +192,13 @@ export function HostChat({
             chatClose();
         } else if (visibility.kind === "toggle") {
             chatToggle();
+        } else if (visibility.conversationId) {
+            chatOpenAiAssistant(
+                visibility.userContext,
+                visibility.replaceUserContext,
+                visibility.agentId,
+                visibility.conversationId,
+            );
         } else if (visibility.question) {
             chatAskAiAssistant(
                 visibility.question,

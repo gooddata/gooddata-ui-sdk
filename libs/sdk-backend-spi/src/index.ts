@@ -211,6 +211,9 @@ export {
     type IChatConversationSearchContent,
     type IChatConversationDashboardContent,
     type IChatConversationPublisherDocumentContent,
+    type IChatConversationPublisherDocumentContentV2,
+    type IChatConversationResavePublisherDocumentOptions,
+    type GenAIPublisherDocumentFormat,
     type IChatKdaDefinition,
     type IChatWhatIfDefinition,
     type IChatWhatIfAdjustment,
@@ -239,6 +242,7 @@ export {
     isChatConversationAlertProposalContent,
     isChatConversationDashboardContent,
     isChatConversationPublisherDocumentContent,
+    isChatConversationPublisherDocumentContentV2,
     isChatConversationClarifyingQuestionsContent,
 } from "./workspace/genAI/index.js";
 

@@ -7,6 +7,7 @@ import { useIntl } from "react-intl";
 import { useSelector } from "react-redux";
 
 import { type CatalogItem } from "@gooddata/sdk-model";
+import { GOODSTRAP_SCROLLED_EVENT } from "@gooddata/sdk-ui-kit";
 
 import {
     agentSwitchingActiveSelector,
@@ -57,6 +58,11 @@ export function Messages({ initializing }: MessagesComponentProps) {
                 "gd-gen-ai-chat__messages--agent-switching": agentSwitchingActive,
             })}
             ref={scrollerRef}
+            onScroll={(event) => {
+                event.currentTarget.dispatchEvent(
+                    new CustomEvent(GOODSTRAP_SCROLLED_EVENT, { bubbles: true }),
+                );
+            }}
         >
             <div
                 className="gd-gen-ai-chat__messages__scroll"

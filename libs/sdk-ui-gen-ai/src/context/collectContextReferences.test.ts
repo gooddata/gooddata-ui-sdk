@@ -170,6 +170,23 @@ describe("collectContextReferences", () => {
         ]);
     });
 
+    it("should collect a v2 document as the viewed document", () => {
+        const context: IGenAIUserContext = {
+            view: { publisherDocumentV2: { ref: idRef("d1"), title: "D1" } },
+        };
+
+        expect(collectContextReferences(context, undefined)).toEqual([
+            {
+                id: "d1",
+                ref: idRef("d1"),
+                type: "publisherDocument",
+                where: "view.publisherDocument",
+                title: "D1",
+                nesting: 0,
+            },
+        ]);
+    });
+
     it("should collect a document that is not saved yet", () => {
         const context: IGenAIUserContext = { view: { publisherDocument: { title: "Draft" } } };
 

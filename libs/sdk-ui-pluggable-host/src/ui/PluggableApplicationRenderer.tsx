@@ -11,6 +11,7 @@ import {
 } from "@gooddata/sdk-model";
 import {
     type IAppHeaderOptions,
+    type IAiAssistantPublisherDocumentSavedEvent,
     type IHostNavigationRequest,
     type IPlatformContext,
     type IPluggableApp,
@@ -72,6 +73,7 @@ export interface IPluggableApplicationRendererProps {
         appendToChat?: boolean,
         replaceUserContext?: boolean,
         effort?: GenAIChatEffort,
+        conversationId?: string,
     ) => void;
     /** Close the host-owned chat, requested by the active app. */
     onCloseAiAssistant?: () => void;
@@ -86,12 +88,7 @@ export interface IPluggableApplicationRendererProps {
         userContextLoading?: boolean;
     }) => void;
     /** Tell the host-owned chat that the active app saved a document the chat had drafted. */
-    onAiAssistantPublisherDocumentSaved?: (saved: {
-        conversationId: string;
-        itemId: string;
-        documentRef?: string;
-        savedDocumentId: string;
-    }) => void;
+    onAiAssistantPublisherDocumentSaved?: (saved: IAiAssistantPublisherDocumentSavedEvent["payload"]) => void;
     /** Tell the host-owned chat that the active app saved a dashboard the chat had drafted. */
     onAiAssistantDashboardSaved?: (saved: {
         conversationId: string;
@@ -188,6 +185,7 @@ export function PluggableApplicationRenderer({
                     event.payload.appendToChat,
                     event.payload.replaceUserContext,
                     event.payload.effort,
+                    event.payload.conversationId,
                 );
                 return;
             }

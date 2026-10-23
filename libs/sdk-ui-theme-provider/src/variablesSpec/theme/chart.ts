@@ -1,4 +1,5 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
 import { type ThemeDefinedCssVariable } from "../types.js";
 
 export const chartThemeVariables: ThemeDefinedCssVariable[] = [
@@ -12,7 +13,7 @@ export const chartThemeVariables: ThemeDefinedCssVariable[] = [
         type: "theme",
         themePath: ["chart", "axis", "labelColor"],
         variableName: "--gd-chart-axis-labelColor",
-        defaultValue: "var(--gd-palette-complementary-7, #6d7680)",
+        defaultValue: "var(--gd-palette-complementary-7)",
     },
     {
         type: "theme",
@@ -36,7 +37,7 @@ export const chartThemeVariables: ThemeDefinedCssVariable[] = [
         type: "theme",
         themePath: ["chart", "legendValueColor"],
         variableName: "--gd-chart-legendValueColor",
-        defaultValue: "var(--gd-palette-complementary-7, #6d7680)",
+        defaultValue: "var(--gd-palette-complementary-7)",
     },
 
     {

@@ -11,7 +11,7 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../../model/react/DashboardStoreProvider.js";
-import { selectIsAiLoading } from "../../../../../model/store/config/configSelectors.js";
+import { selectIsAiBuilding, selectIsAiLoading } from "../../../../../model/store/config/configSelectors.js";
 import { selectIsInEditMode } from "../../../../../model/store/renderMode/renderModeSelectors.js";
 import { selectIsDashboardSaving } from "../../../../../model/store/saving/savingSelectors.js";
 import { uiActions } from "../../../../../model/store/ui/index.js";
@@ -29,9 +29,10 @@ export function useSettingButtonProps(): ISettingButtonProps {
     const isEditing = useDashboardSelector(selectIsInEditMode);
     const isSaving = useDashboardSelector(selectIsDashboardSaving);
     const isAiLoading = useDashboardSelector(selectIsAiLoading);
+    const isAiBuilding = useDashboardSelector(selectIsAiBuilding);
 
     const isVisible = isEditing && !isSmall;
-    const isEnabled = !isAiLoading;
+    const isEnabled = !isAiLoading && !isAiBuilding;
 
     const buttonValue = messages.controlButtonsSettingValue;
     const buttonTitle = messages.controlButtonsSettingTitle;

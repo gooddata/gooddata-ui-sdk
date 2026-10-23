@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "api-client-tiger, sdk-model, sdk-backend-spi, sdk-backend-tiger, sdk-pluggable-application-model, sdk-ui-gen-ai: The Publisher copilot reads and writes v2 documents behind `enablePublisherV2`.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

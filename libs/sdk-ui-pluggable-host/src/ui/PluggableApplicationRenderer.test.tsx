@@ -17,6 +17,7 @@ import {
     type IPluggableApplicationMountHandle,
     aiAssistantContextChanged,
     aiAssistantPublisherDocumentSaved,
+    openAiAssistantRequested,
 } from "@gooddata/sdk-pluggable-application-model";
 
 import { type AppSecurityFailure } from "../loader/appSecurityValidation.js";
@@ -124,6 +125,7 @@ function renderer(options: {
     ctx: IPlatformContext;
     navigationRequestRef: NavigationGuardRef;
     app?: PluggableApplicationRegistryItem;
+    onOpenAiAssistant?: ComponentProps<typeof PluggableApplicationRenderer>["onOpenAiAssistant"];
     onAiAssistantContext?: ComponentProps<typeof PluggableApplicationRenderer>["onAiAssistantContext"];
     onAiAssistantPublisherDocumentSaved?: ComponentProps<
         typeof PluggableApplicationRenderer
@@ -136,6 +138,7 @@ function renderer(options: {
                 ctx={options.ctx}
                 pathname={options.pathname}
                 navigationRequestRef={options.navigationRequestRef}
+                onOpenAiAssistant={options.onOpenAiAssistant}
                 onAiAssistantContext={options.onAiAssistantContext}
                 onAiAssistantPublisherDocumentSaved={options.onAiAssistantPublisherDocumentSaved}
             />
@@ -187,6 +190,40 @@ describe("PluggableApplicationRenderer", () => {
 
         expect(navigationRequestRef.current?.(request)).toBe(true);
         expect(onHostNavigationRequested).toHaveBeenCalledWith(request);
+    });
+
+    it("forwards the conversation ID as the final open-assistant argument", async () => {
+        const emitted: { onEvent?: (event: IPluggableAppEvent) => void } = {};
+        mocks.loadPluggableApplication.mockResolvedValue({
+            mount: (options): IPluggableApplicationMountHandle => {
+                emitted.onEvent = options.onEvent;
+                return { unmount: vi.fn(), onHostNavigationRequested };
+            },
+        });
+        const onOpenAiAssistant = vi.fn();
+        render(renderer({ pathname: WS1_PATHNAME, ctx: context(), navigationRequestRef, onOpenAiAssistant }));
+        await flushMount();
+        const payload = {
+            question: "Summarize",
+            agentId: "agent-1",
+            userContext: { view: { publisherDocument: { title: "Draft" } } },
+            appendToChat: true,
+            replaceUserContext: true,
+            effort: "HIGH" as const,
+            conversationId: "conversation-1",
+        };
+
+        emitted.onEvent?.(openAiAssistantRequested(payload));
+
+        expect(onOpenAiAssistant).toHaveBeenCalledExactlyOnceWith(
+            payload.question,
+            payload.agentId,
+            payload.userContext,
+            payload.appendToChat,
+            payload.replaceUserContext,
+            payload.effort,
+            payload.conversationId,
+        );
     });
 
     it("forwards every AI assistant context field unchanged", async () => {

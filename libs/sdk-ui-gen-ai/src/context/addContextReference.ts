@@ -5,6 +5,8 @@ import { type IGenAIObjectReferenceGroup, areObjRefsEqual } from "@gooddata/sdk-
 import { type IGenAIContextObject, type StoreContext } from "../types.js";
 import { convertGenAiTypeToReferenceType } from "../utils.js";
 
+import { publisherDocumentViews } from "./viewedPublisherDocument.js";
+
 export function addContextReference(context: StoreContext, reference?: IGenAIContextObject): StoreContext {
     const { active } = context;
 
@@ -32,7 +34,7 @@ export function addContextReference(context: StoreContext, reference?: IGenAICon
                 ...active,
                 view: {
                     ...active?.view,
-                    publisherDocument: context.ambient?.view?.publisherDocument,
+                    ...publisherDocumentViews(context.ambient?.view),
                 },
             },
         };

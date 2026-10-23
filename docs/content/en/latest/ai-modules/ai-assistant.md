@@ -10,6 +10,8 @@ api_symbols:
   - "@gooddata/sdk-ui-gen-ai:IGenAIAssistantSlots"
   - "@gooddata/sdk-ui-gen-ai:useGenAiDispatcher"
   - "@gooddata/sdk-ui-gen-ai:GenAiInteractionIntelligence"
+  - "@gooddata/sdk-ui-gen-ai:ChatReasoningEvent"
+  - "@gooddata/sdk-ui-gen-ai:isChatReasoningEvent"
 source_files:
   - src/components/GenAIChat.tsx
   - src/components/GenAiConversations.tsx
@@ -181,6 +183,7 @@ export interface ChatEventHandler<TEvent extends ChatEvent = any> {
 | `ChatResetEvent` | `isChatResetEvent` | Chat history was reset |
 | `ChatUserMessageEvent` | `isChatUserMessageEvent` | User sent a message |
 | `ChatAssistantMessageEvent` | `isChatAssistantMessageEvent` | Assistant responded with a message |
+| `ChatReasoningEvent` | `isChatReasoningEvent` | Current reasoning display title changed or cleared |
 | `ChatFeedbackEvent` | `isChatFeedbackEvent` | User gave a feedback |
 | `ChatFeedbackErrorEvent` | `isChatFeedbackErrorEvent` | Saving the feedback failed |
 | `ChatVisualizationErrorEvent` | `isChatVisualizationErrorEvent` | Visualization failed to render |
@@ -216,6 +219,43 @@ This event is triggered when the assistant completes a response. If the response
 | threadId      | `string`                                      | (Optional) The ID of the conversation thread.   |
 | useCase       | `string`                                      | The routing use case for the response.          |
 | skills        | `{ name: AgentCustomSkill; title: string }[]` | (Optional) Skills activated for the response.   |
+
+### ChatReasoningEvent
+
+This event reports the current reasoning display title while the assistant streams a response. It carries the same plain-text heading as the chat's thinking indicator, never the reasoning body. Render `title` as plain text, not Markdown or HTML.
+
+| Property      | Type             | Description                                                    |
+| ------------- | ---------------- | -------------------------------------------------------------- |
+| type          | `chatReasoning`  | Event type identifier.                                         |
+| threadId      | `string`         | (Optional) ID of the conversation thread.                       |
+| interactionId | `string`         | (Optional) ID of the interaction that supplied the title.       |
+| title         | `string`         | (Optional) Current display title; `undefined` clears the title. |
+
+The assistant emits an update when the title changes and omits repeated titles. Intermediate assistant messages and tool results do not clear the title. At the start and end of a response, including errors and cancellation, it emits `title: undefined` to clear the previous title.
+
+If you keep a status outside the chat, clear it on chat reset or conversation changes. Use `threadId` to ignore late updates from a conversation that is no longer active.
+
+Example usage:
+
+```tsx
+import {
+    GenAIAssistant,
+    type ChatReasoningEvent,
+    isChatReasoningEvent,
+} from "@gooddata/sdk-ui-gen-ai";
+
+<GenAIAssistant
+    eventHandlers={[
+        {
+            eval: isChatReasoningEvent,
+            handler: (event: ChatReasoningEvent) => {
+                // An undefined title signals that your status should be cleared.
+                console.log("Current reasoning title:", event.title);
+            },
+        },
+    ]}
+/>;
+```
 
 ### ChatDefinitionReceivedEvent
 

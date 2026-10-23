@@ -39,7 +39,7 @@ export function EditModeDashboardVisualizationSwitcher({
 
     const theme = useTheme();
     const intl = useIntl();
-    const emptyContentIconColor = theme?.palette?.complementary?.c7 ?? "#6D7680";
+    const emptyContentIconColor = theme?.palette?.complementary?.c7 ?? "#6A737D";
 
     const insights = useDashboardSelector(selectInsightsMap);
     const insight = activeVisualization ? insights.get(activeVisualization.insight) : undefined;

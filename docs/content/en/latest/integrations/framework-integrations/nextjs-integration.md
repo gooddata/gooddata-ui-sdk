@@ -4,6 +4,12 @@ title: Next.js integration
 description: Render GoodData.UI charts in a Next.js App Router application with a client-side backend, the generated catalog, and the GoodData session cookie.
 category: Integrations / Framework guides
 diataxis_type: howto
+api_symbols:
+  - "@gooddata/sdk-backend-tiger:tigerFactory"
+  - "@gooddata/sdk-backend-tiger:ContextDeferredAuthProvider"
+  - "@gooddata/sdk-ui:BackendProvider"
+  - "@gooddata/sdk-ui:WorkspaceProvider"
+  - "@gooddata/sdk-ui-charts:BarChart"
 related_pages:
   - /docs/data-layer/data-model/export-catalog
   - /docs/integrations/cross-origin-issues

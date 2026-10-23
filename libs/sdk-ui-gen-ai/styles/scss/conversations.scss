@@ -45,8 +45,8 @@
 
     &#{$root}--isSmallScreen,
     &#{$root}--isSmallScreen#{$root}--isFullscreen {
-        width: 300px;
-        min-width: 300px;
+        width: auto;
+        min-width: 0;
     }
 
     &__divider {

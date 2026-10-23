@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { Fragment, useState } from "react";
 
@@ -21,7 +21,10 @@ const MAX_LINES = 7;
 const BUBBLE_ALIGN_POINTS = [
     { align: "tr tl", offset: { x: 4, y: 4 } },
     { align: "tl tr", offset: { x: 4, y: 4 } },
+    { align: "br bl", offset: { x: 4, y: -4 } },
+    { align: "bl br", offset: { x: 4, y: -4 } },
 ];
+const BUBBLE_RESIZE_OBSERVER_THRESHOLD = 0.01;
 /**
  * Arrow style for the details bubble.
  */
@@ -55,6 +58,8 @@ export function SearchItemDetails({ item }: Props) {
                     className="bubble-light gd-semantic-search__bubble"
                     alignPoints={BUBBLE_ALIGN_POINTS}
                     arrowStyle={ARROW_STYLE}
+                    resizeObserverThreshold={BUBBLE_RESIZE_OBSERVER_THRESHOLD}
+                    keepBottomOnResize
                 >
                     {/* It's OK to have div inline, as this chunk is rendered through portal */}
                     <div className="gd-semantic-search__results-item__details__contents">

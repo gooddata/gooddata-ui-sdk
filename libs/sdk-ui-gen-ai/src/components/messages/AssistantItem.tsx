@@ -6,15 +6,23 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 import { useSelector } from "react-redux";
 
-import { type IChatConversationLocalItem } from "../../model.js";
+import { insightTitle } from "@gooddata/sdk-model";
+
+import {
+    type IChatConversationLocalItem,
+    type IChatConversationMultipartLocalPart,
+    type TextContentObject,
+} from "../../model.js";
 import { interactionIntelligenceEnabledSelector } from "../../store/chatWindow/chatWindowSelectors.js";
 import { isClarificationQuestionsItem } from "../../utils.js";
+import { replaceReferences } from "../completion/references.js";
 import { useToolsReferences } from "../completion/useToolsReferences.js";
 import { useCustomization } from "../CustomizationContext.js";
 import { useInteractionIntelligenceTotals } from "../intelligence/data/useInteractionIntelligenceTotals.js";
 import { GenAiInteractionIntelligence } from "../intelligence/GenAiInteractionIntelligence.js";
 import { InteractionIntelligenceTrigger } from "../intelligence/InteractionIntelligenceTrigger.js";
 import { type IChatMessagesGroup } from "../utils/groupUtility.js";
+import { removeMarkdown } from "../utils/markdownUtils.js";
 
 import { AssistantItemSuggestions } from "./AssistantItemSuggestions.js";
 import { ReasoningIcon } from "./contents/ReasoningIcon.js";
@@ -116,6 +124,44 @@ export function AssistantItemComponent({ message, groups, isLast }: AssistantIte
                 />
             ) : null}
             <AssistantItemSuggestions type="actions" message={message} showSuggestions={isLast} />
+            <AssistantItemAnnouncement message={message} references={references} isLast={isLast} />
         </div>
     );
+}
+
+type AssistantItemAnnouncementProps = {
+    message: IChatConversationLocalItem;
+    references: TextContentObject[];
+    isLast?: boolean;
+};
+
+function AssistantItemAnnouncement({ message, references, isLast }: AssistantItemAnnouncementProps) {
+    if (!isLast) {
+        return null;
+    }
+
+    const isStreamedAnswer = getItemState(message) === "complete" && message.streaming === false;
+
+    return (
+        <span className="gd-gen-ai-chat__visually__hidden" aria-live="polite" aria-atomic="true">
+            {isStreamedAnswer ? getAnswerText(message.content, references) : ""}
+        </span>
+    );
+}
+
+function getAnswerText(content: IChatConversationLocalItem["content"], references: TextContentObject[]) {
+    const parts: (IChatConversationMultipartLocalPart | typeof content)[] =
+        content.type === "multipart" ? (content.parts ?? []) : [content];
+    return parts
+        .map((part) => {
+            if (part.type === "text") {
+                return removeMarkdown(replaceReferences(part.text, [...(part.objects ?? []), ...references]));
+            }
+            if (part.type === "visualization" && part.visualization) {
+                return insightTitle(part.visualization);
+            }
+            return undefined;
+        })
+        .filter(Boolean)
+        .join(" ");
 }

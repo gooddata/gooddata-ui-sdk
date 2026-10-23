@@ -181,7 +181,7 @@ describe("save dashboard handler", () => {
                 existingDashboardTester = tester;
             }, SimpleDashboardIdentifier);
 
-            existingDashboardTester!.dispatch(configActions.setIsAiMode(true));
+            existingDashboardTester!.dispatch(configActions.setAiMode("active"));
 
             const event: DashboardSaved = await existingDashboardTester!.dispatchAndWaitFor(
                 saveDashboard(),

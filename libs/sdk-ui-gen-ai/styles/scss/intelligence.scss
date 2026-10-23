@@ -215,7 +215,7 @@
 
     &__footer {
         font-size: 12px;
-        color: var(--gd-palette-complementary-7, #6d7680);
+        color: var(--gd-palette-complementary-7);
     }
 }
 
@@ -325,7 +325,7 @@
     justify-content: center;
     gap: 8px;
     font-size: 12px;
-    color: var(--gd-palette-complementary-7, #6d7680);
+    color: var(--gd-palette-complementary-7);
 
     &__label b {
         color: #000;

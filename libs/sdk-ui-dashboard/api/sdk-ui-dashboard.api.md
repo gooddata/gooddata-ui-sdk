@@ -1158,9 +1158,8 @@ export type DashboardConfig = {
     hideShareButton?: boolean;
     hideWidgetTitles?: boolean;
     widgetsOverlay?: Record<string, IDashboardWidgetOverlay>;
-    isAiMode?: boolean;
-    isAiGenerating?: boolean;
-    isAiWaiting?: boolean;
+    aiMode?: "active" | "generating" | "waiting" | "building" | null;
+    aiReasoningTitle?: string;
     exportId?: string;
     exportType?: "visual" | "slides";
     exportMetadata?: Record<string, string>;
@@ -11453,7 +11452,7 @@ export type ResolveAsyncRenderPayload = {
 export function resolveDashboardTimezoneInfo(timezoneConfig: IDashboardTimezoneConfig | undefined, defaultTimezone?: string, effectiveTimezoneId?: string): IDashboardTimezoneInfo | undefined;
 
 // @public
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "agGridToken" | "maxZoomLevel" | "exportId" | "exportType" | "exportMetadata" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "user" | "overrideDefaultFilters" | "overrideDefaultParameters" | "overrideTitle" | "hideWidgetTitles" | "workspaceDescriptor" | "evaluationFrequency" | "externalRecipient" | "openAutomationOnLoad" | "hideAddTabButton"> & DashboardConfig;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "agGridToken" | "maxZoomLevel" | "exportId" | "exportType" | "exportMetadata" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "user" | "overrideDefaultFilters" | "overrideDefaultParameters" | "overrideTitle" | "hideWidgetTitles" | "workspaceDescriptor" | "evaluationFrequency" | "externalRecipient" | "openAutomationOnLoad" | "hideAddTabButton" | "aiMode" | "aiReasoningTitle"> & DashboardConfig;
 
 // @alpha (undocumented)
 export type ResolvedDateFilterValues = IResolvedDateFilterValue[];
@@ -11691,6 +11690,9 @@ export const selectAdhocDateHierarchies: DashboardSelector<ICatalogDateAttribute
 
 // @internal
 export const selectAgGridToken: DashboardSelector<string | undefined>;
+
+// @internal
+export const selectAiReasoningTitle: DashboardSelector<string | undefined>;
 
 // @internal (undocumented)
 export const selectAlertingDialogReturnFocusTo: DashboardSelector<string | undefined>;
@@ -12663,6 +12665,9 @@ export const selectIsAddTabButtonHidden: DashboardSelector<boolean>;
 
 // @internal
 export const selectIsAiGenerating: DashboardSelector<boolean>;
+
+// @internal
+export const selectIsAiLoading: DashboardSelector<boolean>;
 
 // @internal
 export const selectIsAiMode: DashboardSelector<boolean>;

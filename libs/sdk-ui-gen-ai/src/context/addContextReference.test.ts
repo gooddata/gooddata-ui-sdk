@@ -37,6 +37,23 @@ describe("addContextReference", () => {
         expect(result.active?.view?.publisherDocument).toEqual({ title: "Draft" });
     });
 
+    it("should add the open v2 document to the active context, without a v1 one", () => {
+        const context: StoreContext = {
+            ambient: { view: { publisherDocumentV2: { ref: idRef("d1"), title: "D1" } } },
+        };
+
+        const result = addContextReference(context, {
+            id: "d1",
+            ref: idRef("d1"),
+            title: "D1",
+            nesting: 0,
+            type: "publisherDocument",
+            where: "view.publisherDocument",
+        });
+
+        expect(result.active?.view).toEqual({ publisherDocumentV2: { ref: idRef("d1"), title: "D1" } });
+    });
+
     it("should leave the context alone for a referenced object without a reference", () => {
         const result = addContextReference(ambientContext, {
             id: "orphan",

@@ -8,6 +8,7 @@ import {
     type AiInteractionStepResponse,
     type AiSendMessageItem,
     type AiSendMessageRequest,
+    type AiUserContextPublisherDocument,
     type AiUserContextReport,
     type AiUserContextWidgetDescriptor,
     type AiUserContextWidgetDescriptorWidgetTypeEnum,
@@ -20,6 +21,7 @@ import {
     GenAiApi_GetConversations,
     GenAiApi_PatchConversation,
     GenAiApi_PatchDashboard,
+    GenAiApi_PatchPublisherDocument,
     GenAiApi_PatchReport,
     GenAiApi_PatchVisualization,
     GenAiApi_PostConversationFeedback,
@@ -30,6 +32,7 @@ import {
 } from "@gooddata/api-client-tiger/endpoints/genAI";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import {
+    type GenAIPublisherDocumentFormat,
     type IChatConversation,
     type IChatConversationCreateOptions,
     type IChatConversationError,
@@ -37,12 +40,17 @@ import {
     type IChatConversationItem,
     type IChatConversationItemsQuery,
     type IChatConversationItemsQueryResult,
+    type IChatConversationResavePublisherDocumentOptions,
     type IChatConversationThread,
     type IChatConversationThreadQuery,
     type IChatConversations,
     type UserQuestionItem,
 } from "@gooddata/sdk-backend-spi";
-import { declarativeDashboardToYaml, publisherDocumentDefinitionToYaml } from "@gooddata/sdk-code-convertors";
+import {
+    declarativeDashboardToYaml,
+    publisherDocumentDefinitionToYaml,
+    publisherDocumentDefinitionToYamlV2,
+} from "@gooddata/sdk-code-convertors";
 import {
     type GenAIChatEffort,
     type GenAIChatInteractionUserFeedback,
@@ -53,9 +61,11 @@ import {
     type IFilterContextDefinition,
     type IGenAIDashboardContext,
     type IGenAIPublisherDocumentContext,
+    type IGenAIPublisherDocumentContextV2,
     type IGenAIUserContext,
     type IGenAIWidgetDescriptor,
     type IPublisherDocumentDefinition,
+    type IPublisherDocumentDefinitionV2,
     type ITempFilterContext,
     isIdentifierRef,
     isTempFilterContext,
@@ -351,13 +361,25 @@ export class ConversationThread implements IChatConversationThread {
     /**
      * Records the saved document that a document drafted in the conversation became.
      */
-    async resavePublisherDocument(documentRef: string, savedDocumentId: string): Promise<void> {
+    async resavePublisherDocument(
+        documentRef: string,
+        savedDocumentId: string,
+        options?: IChatConversationResavePublisherDocumentOptions,
+    ): Promise<void> {
         const conversationId = this.conversationId;
         if (!conversationId) {
             throw new Error("Conversation ID is not set");
         }
 
         await this.authCall((client) => {
+            if (options?.format === "aac-v2") {
+                return GenAiApi_PatchPublisherDocument(client.axios, client.basePath, {
+                    workspaceId: this.workspaceId,
+                    conversationId,
+                    documentRef,
+                    aiPublisherDocumentIdUpdateRequest: { id: savedDocumentId },
+                });
+            }
             return GenAiApi_PatchReport(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
                 conversationId,
@@ -380,6 +402,7 @@ export class ConversationThread implements IChatConversationThread {
             workspaceId: this.workspaceId,
             userQuestion: userMessage,
             conversationId,
+            documentFormat: "aac-v1",
         });
     }
 }
@@ -400,6 +423,7 @@ export type ChatConversationThreadQueryConfig = {
     objectTypes?: GenAIObjectType[];
     allowedRelationshipTypes?: IAllowedRelationshipType[];
     effort?: GenAIChatEffort;
+    documentFormat: GenAIPublisherDocumentFormat;
 };
 
 /**
@@ -463,6 +487,12 @@ export class ChatConversationThreadQuery implements IChatConversationThreadQuery
             effort,
         });
     }
+    withPublisherDocumentFormat(documentFormat: GenAIPublisherDocumentFormat): IChatConversationThreadQuery {
+        return new ChatConversationThreadQuery(this.authCall, this.dateNormalizer, {
+            ...this.requestParameters,
+            documentFormat,
+        });
+    }
     stream(
         history: IChatConversationItem[],
     ): ReadableStream<IChatConversationItem | IChatConversationError | IChatConversationInteractionStep> {
@@ -500,8 +530,12 @@ export class ChatConversationThreadQuery implements IChatConversationThreadQuery
                                         includeTags: requestParameters.includeTags,
                                     },
                                     reasoningEffort: requestParameters.effort,
+                                    documentFormat: requestParameters.documentFormat,
                                 },
-                                userContext: convertUserContext(requestParameters.userContext),
+                                userContext: convertUserContext(
+                                    requestParameters.userContext,
+                                    requestParameters.documentFormat,
+                                ),
                             },
                         },
                         {
@@ -656,7 +690,10 @@ class ServerSentEventsDataConverter extends TransformStream<
 /**
  * Convert SDK model user context (with ObjRef) to the API user context (with plain string IDs).
  */
-function convertUserContext(userContext: IGenAIUserContext | undefined): AiSendMessageRequest["userContext"] {
+function convertUserContext(
+    userContext: IGenAIUserContext | undefined,
+    documentFormat: GenAIPublisherDocumentFormat,
+): AiSendMessageRequest["userContext"] {
     if (!userContext) {
         return undefined;
     }
@@ -665,9 +702,7 @@ function convertUserContext(userContext: IGenAIUserContext | undefined): AiSendM
         ...(userContext.view?.dashboard
             ? { dashboard: convertDashboardView(userContext.view.dashboard) }
             : {}),
-        ...(userContext.view?.publisherDocument
-            ? { report: convertPublisherDocumentView(userContext.view.publisherDocument) }
-            : {}),
+        ...convertPublisherDocumentViewOfFormat(userContext, documentFormat),
     };
 
     return {
@@ -675,6 +710,41 @@ function convertUserContext(userContext: IGenAIUserContext | undefined): AiSendM
         ...(Object.keys(view).length > 0 ? { view } : {}),
         ...convertReferencedObjects(userContext),
     } as AiSendMessageRequest["userContext"];
+}
+
+function convertPublisherDocumentViewOfFormat(
+    { view }: IGenAIUserContext,
+    documentFormat: GenAIPublisherDocumentFormat,
+): { report?: AiUserContextReport; document?: AiUserContextPublisherDocument } {
+    if (documentFormat === "aac-v2") {
+        return view?.publisherDocumentV2
+            ? { document: convertPublisherDocumentViewV2(view.publisherDocumentV2) }
+            : {};
+    }
+    return view?.publisherDocument ? { report: convertPublisherDocumentView(view.publisherDocument) } : {};
+}
+
+function convertPublisherDocumentViewV2({
+    ref,
+    title,
+    definition,
+}: IGenAIPublisherDocumentContextV2): AiUserContextPublisherDocument {
+    return {
+        id: ref ? objRefToString(ref) : null,
+        ...(title ? { title } : {}),
+        ...(definition ? convertPublisherDocumentDefinitionV2({ ...definition, ref }) : {}),
+    };
+}
+
+function convertPublisherDocumentDefinitionV2(
+    definition: IPublisherDocumentDefinitionV2,
+): Pick<AiUserContextPublisherDocument, "definition"> {
+    try {
+        return { definition: publisherDocumentDefinitionToYamlV2(definition).json };
+    } catch (error) {
+        console.warn("Document cannot be written as code, sending the AI assistant only its id: ", error);
+        return {};
+    }
 }
 
 function convertPublisherDocumentView({

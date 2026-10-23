@@ -92,6 +92,7 @@ import { type DateNormalizer } from "./dateFormatting/types.js";
 import { cloneWithSanitizedIds } from "./IdSanitization.js";
 import { visualizationObjectsItemToInsight } from "./InsightConverter.js";
 import { convertPublisherDocumentPart } from "./publisherDocumentPartConvertor.js";
+import { convertPublisherDocumentPartV2 } from "./publisherDocumentPartConvertorV2.js";
 
 export function convertChatConversationFromBackend(conversation: AiConversationResponse): IChatConversation {
     return {
@@ -343,8 +344,7 @@ function convertMultipartPart(
         case "report":
             return convertPublisherDocumentPart(part);
         case "document":
-            // A Publisher v2 document has no chat rendering yet: drop it, as before it had a type.
-            return undefined;
+            return convertPublisherDocumentPartV2(part);
         case "kda":
             if (!part.kda) {
                 return undefined;

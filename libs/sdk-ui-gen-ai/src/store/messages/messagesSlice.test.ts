@@ -15,6 +15,7 @@ import { type RootState } from "../types.js";
 
 import { conversationEffortSelector } from "./messagesSelectors.js";
 import {
+    activateConversationAction,
     applyPendingAgentSwitchAction,
     cancelAsyncAction,
     clearConversationLoadingAction,
@@ -41,6 +42,34 @@ const makeConversation = (id: string): IChatConversationLocal => ({
 });
 
 describe("messagesSlice", () => {
+    it.each(["server-id", "local-id"])("activates a cached conversation by %s", (conversationId) => {
+        const conversation = { ...makeConversation("server-id"), localId: "local-id" };
+        const item = makeUserItem({ type: "text", text: "Build a dashboard" });
+        const cached = messagesSliceReducer(
+            messagesSliceReducer(undefined, setCurrentConversationAction({ conversation })),
+            loadConversationSuccessAction({
+                currentConversation: conversation,
+                conversationItems: [item],
+                threadId: conversation.id,
+            }),
+        );
+        const away = messagesSliceReducer(cached, startNewConversationAction());
+        const selected = messagesSliceReducer(away, activateConversationAction({ conversationId }));
+
+        expect(selected.currentConversation).toEqual(conversation);
+        expect(selected.threadId).toBe("server-id");
+        expect(selected.loaded).toBe(true);
+        expect(selected.conversationsData).toEqual(away.conversationsData);
+    });
+
+    it("ignores an unknown conversation activation", () => {
+        const state = messagesSliceReducer(undefined, { type: "test/init" });
+
+        expect(messagesSliceReducer(state, activateConversationAction({ conversationId: "missing" }))).toBe(
+            state,
+        );
+    });
+
     it("should store a pending agent switch without adding an item or blocking input", () => {
         const conversation: IChatConversationLocal = {
             id: "conversation-1",

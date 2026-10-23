@@ -6,6 +6,7 @@ import { type GenAIChatRoutingUseCase } from "@gooddata/sdk-model";
 
 import {
     type IChatConversationErrorContent,
+    type IChatConversationLocal,
     type IChatConversationLocalContent,
     type IChatConversationLocalItem,
     type IChatConversationMultipartLocalPart,
@@ -24,7 +25,12 @@ import {
     type EventDispatcher,
 } from "../events.js";
 import { setIsOpened } from "../localStorage.js";
-import { conversationMessagesSelector, threadIdSelector } from "../messages/messagesSelectors.js";
+import {
+    conversationByIdOrLocalIdSelector,
+    conversationMessagesByIdSelector,
+    conversationMessagesSelector,
+    threadIdSelector,
+} from "../messages/messagesSelectors.js";
 import {
     clearThreadAction,
     deleteConversationAction,
@@ -318,16 +324,19 @@ export function* onNewMessage({ payload: message }: ReturnType<typeof newMessage
 }
 
 export function* onEvaluateMessageComplete({
-    payload: { assistantMessageId },
+    payload: { assistantMessageId, cancelled, conversationId },
 }: ReturnType<typeof evaluateMessageCompleteAction>) {
-    const message: MessageInfo | null = yield call(loadMessage, assistantMessageId);
+    const message: MessageInfo | null = yield call(loadMessage, assistantMessageId, conversationId);
 
     if (!message?.useCase) {
         return;
     }
 
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield select(threadIdSelector);
+    const conversation: IChatConversationLocal | undefined = conversationId
+        ? yield select(conversationByIdOrLocalIdSelector, conversationId)
+        : undefined;
+    const threadId: string | undefined = conversation?.id || conversationId;
 
     eventDispatcher.dispatch({
         type: "chatAssistantMessage",
@@ -335,20 +344,24 @@ export function* onEvaluateMessageComplete({
         useCase: message.useCase,
         skills: message.skills,
         threadId,
+        ...(cancelled ? { cancelled: true } : {}),
     });
 }
 
 export function* onEvaluateMessageStreaming({
-    payload: { assistantMessageId },
+    payload: { assistantMessageId, conversationId },
 }: ReturnType<typeof evaluateMessageStreamingAction>) {
-    const message: MessageInfo | null = yield call(loadMessage, assistantMessageId);
+    const message: MessageInfo | null = yield call(loadMessage, assistantMessageId, conversationId);
 
     if (!message?.clarificationQuestions?.length || message.filled) {
         return;
     }
 
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield select(threadIdSelector);
+    const conversation: IChatConversationLocal | undefined = conversationId
+        ? yield select(conversationByIdOrLocalIdSelector, conversationId)
+        : undefined;
+    const threadId: string | undefined = conversation?.id || conversationId;
 
     eventDispatcher.dispatch({
         type: "chatClarificationQuestions",
@@ -490,8 +503,13 @@ type MessageInfo = {
     filled?: boolean;
 };
 
-function* loadMessage(assistantMessageId: string): Generator<unknown, MessageInfo | null> {
-    const allMessages: IChatConversationLocalItem[] = yield select(conversationMessagesSelector);
+function* loadMessage(
+    assistantMessageId: string,
+    conversationId?: string,
+): Generator<unknown, MessageInfo | null> {
+    const allMessages: IChatConversationLocalItem[] = conversationId
+        ? yield select(conversationMessagesByIdSelector, conversationId)
+        : yield select(conversationMessagesSelector);
     const message = allMessages.find((m) => m.localId === assistantMessageId);
 
     return message

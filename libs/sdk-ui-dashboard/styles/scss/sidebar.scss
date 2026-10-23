@@ -11,13 +11,15 @@ $sidebar-collapsed-width: 48px;
 $sidebar-icon-size: 18px;
 $sidebar-header-height: 48px;
 $sidebar-item-size: 32px;
-$sidebar-item-inset: ($sidebar-collapsed-width - $sidebar-item-size) * 0.5;
+// Shared by the collapse toggle, the palette items and the rail search, so their icons line up.
+$sidebar-item-inset: 10px;
 $sidebar-rail-divider-offset: 10px;
 $sidebar-rail-search-gap: 10px;
 $sidebar-rail-search-offset: $sidebar-rail-divider-offset + variables.$nav-border-size +
     $sidebar-rail-search-gap;
 $sidebar-fade-length: 0.2s;
-$sidebar-fade-delay: 0.3s;
+// Delayed fades end together with the slide.
+$sidebar-fade-delay: variables.$sidebar-transition-length - $sidebar-fade-length;
 
 .gd-sidebar-container {
     --sidebar-fade-duration: #{$sidebar-fade-length};
@@ -71,7 +73,7 @@ $sidebar-fade-delay: 0.3s;
 
 .gd-sidebar-collapse-toggle {
     display: flex;
-    margin: 0 10px;
+    margin: 0 $sidebar-item-inset;
 }
 
 // Restore control in the top bar while the sidebar is hidden, placed right before the title.
@@ -99,6 +101,12 @@ $sidebar-fade-delay: 0.3s;
 
         .add-item-placeholder::before {
             background-size: $sidebar-icon-size auto;
+        }
+
+        // The icon cell fills the 32px item box inside its 1px border.
+        .add-item-placeholder__icon {
+            width: $sidebar-item-size - 2px;
+            margin-right: 6px;
         }
 
         .configuration-panel {
@@ -133,10 +141,9 @@ $sidebar-fade-delay: 0.3s;
             flex: 0 0 auto;
         }
 
-        // Hidden mode: the whole content fades out at the start of the collapse and back in once the
-        // expand slide has nearly finished, so it never overlaps the dashboard mid-slide. Opacity only:
-        // the collapsed wrapper is already inert and clipped, and the toggle must stay focusable for the
-        // focus hand-off.
+        // Hidden mode: the whole content fades out at the start of the collapse and back in to end together
+        // with the expand slide, clipped by the panel meanwhile. Opacity only: the collapsed wrapper is
+        // already inert and clipped, and the toggle must stay focusable for the focus hand-off.
         .gd-sidebar-container--hidden & .flex-panel-full-height {
             transition: opacity var(--sidebar-fade-duration) var(--sidebar-fade-delay);
         }
@@ -150,10 +157,10 @@ $sidebar-fade-delay: 0.3s;
         // which stay in place in the 48px rail together with the toggle in front of the headline.
         .gd-sidebar-container--rail & {
             .add-item-placeholder {
-                transition: color var(--sidebar-fade-duration) var(--sidebar-fade-delay);
+                transition: color var(--sidebar-fade-duration);
             }
 
-            .add-item-placeholder svg {
+            .add-item-placeholder svg:not(.add-item-placeholder__icon svg) {
                 transition: transform var(--sidebar-slide-duration);
             }
 
@@ -167,7 +174,7 @@ $sidebar-fade-delay: 0.3s;
 
             .gd-creation-panel-header h2,
             .gd-visualizations-list {
-                transition: opacity var(--sidebar-fade-duration) var(--sidebar-fade-delay);
+                transition: opacity var(--sidebar-fade-duration);
             }
 
             .configuration-category-vis {
@@ -213,12 +220,16 @@ $sidebar-fade-delay: 0.3s;
                     padding 0s linear var(--sidebar-fade-duration);
             }
 
-            .add-item-placeholder.add-panel-item svg {
+            .add-item-placeholder.add-panel-item svg:not(.add-item-placeholder__icon svg) {
                 transform: translateX(calc(-50% + 1px));
             }
 
             .add-item-placeholder::before {
                 width: $sidebar-collapsed-width - 16px;
+            }
+
+            .add-item-placeholder:not(.disabled) .add-item-placeholder__icon {
+                --gd-icon-fill-color: var(--gd-palette-complementary-7);
             }
 
             .add-item-placeholder.add-panel-item .gd-add-item-placeholder-help-trigger {
@@ -337,7 +348,8 @@ $sidebar-fade-delay: 0.3s;
             justify-content: space-between;
         }
 
-        svg {
+        // Svg icons of custom items; the kit icon cell centers its own icon.
+        svg:not(.add-item-placeholder__icon svg) {
             margin: 0 14px;
         }
 
@@ -368,6 +380,29 @@ $sidebar-fade-delay: 0.3s;
     span {
         flex: 1 1 auto;
     }
+
+    // Items with an icon cell drop the background icon column.
+    &:has(> .add-item-placeholder__icon) {
+        padding-left: 0;
+
+        &::before {
+            content: none;
+        }
+    }
+
+    &.disabled .add-item-placeholder__icon {
+        --gd-icon-fill-color: var(--gd-palette-complementary-5, #b0beca);
+    }
+}
+
+.add-item-placeholder__icon {
+    --gd-icon-fill-color: var(--gd-palette-complementary-6, #94a1ad);
+
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
 }
 
 .gd-visualizations-related-header {

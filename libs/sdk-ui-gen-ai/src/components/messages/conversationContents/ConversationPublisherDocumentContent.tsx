@@ -6,11 +6,16 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 import { useSelector } from "react-redux";
 
-import { type IPublisherDocumentDefinition } from "@gooddata/sdk-model";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { UiButton, UiIcon } from "@gooddata/sdk-ui-kit";
 
 import type { IChatConversationLocalItem } from "../../../model.js";
+import {
+    type PublisherDocumentPart,
+    publisherDocumentFormatOf,
+    publisherDocumentPartFormat,
+    summarizePublisherDocument,
+} from "../../../publisherDocumentPart.js";
 import { isPreviewSelector, settingsSelector } from "../../../store/chatWindow/chatWindowSelectors.js";
 import { conversationSelector } from "../../../store/messages/messagesSelectors.js";
 import { formatPublisherDocumentPeriod, getPublisherDocumentItemUrl } from "../../../utils.js";
@@ -18,37 +23,47 @@ import { useConfig } from "../../ConfigContext.js";
 
 export type ConversationPublisherDocumentContentProps = {
     message: IChatConversationLocalItem;
-    publisherDocument: IPublisherDocumentDefinition | null;
-    saved?: string | null;
-    baseDocumentId?: string | null;
+    part: PublisherDocumentPart;
     className?: string;
 };
 
 export function ConversationPublisherDocumentContent({
     message,
-    publisherDocument,
-    saved,
-    baseDocumentId,
+    part,
     className,
 }: ConversationPublisherDocumentContentProps) {
     const intl = useIntl();
     const config = useConfig();
     const workspaceId = useWorkspaceStrict();
     const conversationId = useSelector(conversationSelector)?.id;
-    const isPublisherAppEnabled = Boolean(useSelector(settingsSelector)?.enableBusinessBriefingReportsApp);
+    const settings = useSelector(settingsSelector);
     const isPreview = useSelector(isPreviewSelector);
 
-    if (!isPublisherAppEnabled || isPreview) {
+    if (!settings?.enableBusinessBriefingReportsApp || isPreview) {
         return null;
     }
 
-    if (!publisherDocument) {
+    // gen-ai answers a draft that no longer resolves with an empty report part, whatever its version.
+    const summary = summarizePublisherDocument(part);
+    if (!summary) {
         return (
             <div className="gd-gen-ai-chat__conversation__item__content--error">
                 {intl.formatMessage({ id: "gd.gen-ai.publisherDocument.unavailable" })}
             </div>
         );
     }
+    const format = publisherDocumentPartFormat(part);
+    if (format !== publisherDocumentFormatOf(settings)) {
+        return (
+            <div className="gd-gen-ai-chat__conversation__item__content--error">
+                {format === "aac-v1"
+                    ? intl.formatMessage({ id: "gd.gen-ai.publisherDocument.previousVersion" })
+                    : intl.formatMessage({ id: "gd.gen-ai.publisherDocument.newerVersion" })}
+            </div>
+        );
+    }
+
+    const { saved, baseDocumentId } = part;
 
     // The Publisher app needs workspace manage; a user who has lost it gets a disabled Open button.
     const itemUrl = config.canManage
@@ -58,6 +73,7 @@ export function ConversationPublisherDocumentContent({
               baseDocumentId,
               conversationId,
               itemId: message.id,
+              format,
           })
         : undefined;
     // The card only opens the version: a change to the document in the editor is applied there by the editor.
@@ -82,12 +98,9 @@ export function ConversationPublisherDocumentContent({
           }
         : undefined;
 
-    const period = formatPublisherDocumentPeriod(
-        publisherDocument.periodStart,
-        publisherDocument.periodEnd,
-        intl,
-    );
-    const count = publisherDocument.content.pages.length;
+    const period =
+        summary.period && formatPublisherDocumentPeriod(summary.period.from, summary.period.to, intl);
+    const count = summary.pageCount;
     const details = period
         ? intl.formatMessage({ id: "gd.gen-ai.publisherDocument.details" }, { period, count })
         : intl.formatMessage({ id: "gd.gen-ai.publisherDocument.page-count" }, { count });
@@ -112,7 +125,7 @@ export function ConversationPublisherDocumentContent({
                 </div>
                 <div className="gd-gen-ai-chat__conversation__item__content-publisherDocument-content">
                     <div className="gd-gen-ai-chat__conversation__item__content-publisherDocument-content-title">
-                        {publisherDocument.title}
+                        {summary.title}
                     </div>
                     <div className="gd-gen-ai-chat__conversation__item__content-publisherDocument-content-details">
                         {details}

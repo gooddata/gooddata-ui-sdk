@@ -11,6 +11,8 @@ everything Hugo-specific resolved.
   (md/tables.html). Hand-written HTML in guides is left as written.
 - In a guide, a code span naming an API symbol (`IMeasure`) links to its reference page, as on
   the HTML page (md/code-links.html). Generated reference pages carry their own links.
+- In a guide, each `##`–`######` heading links to its own section on the web page, with the id
+  Hugo rendered, so a reader (or an agent) can cite the section by copying the link.
 - Every page-relative (`../quickstart/`) and root-relative (`/latest/api-reference/...`, which
   is also what relref returns) link or image becomes an absolute URL, because the file is read
   outside the site or pasted into a prompt, where a relative path has no base. A link to a page
@@ -59,6 +61,78 @@ printing from it would HTML-escape the text). */ -}}
     {{- end -}}
     {{- $out = replace $out (printf "](%s%s)" $href $title) (printf "](%s%s%s)" $origin $target $title) -}}
   {{- end -}}
+{{- end -}}
+{{- /* In a guide, each `##`–`######` heading becomes a link to its section on the web page
+(`## [Title](https://…/page/#id)`), so an agent can cite a section by copying the link instead of
+guessing its anchor. The id is the one Hugo rendered (.Fragments), so it matches the HTML exactly.
+A heading is linked only when its text (md/heading-key.html) occurs once among the rendered
+headings and once among the heading lines here, so a heading-looking line that isn't one (inside
+raw HTML, say) never takes a real heading's link; a heading that already holds a link is left
+alone. `{#custom-id}` links to that id, and the attribute is dropped. Fenced code is skipped the
+way CommonMark reads fences: up to 3 spaces of indent, closed by the same character, at least as
+long, alone on its line. Runs after the link pass above, which would otherwise turn the link into
+the Markdown copy's. */ -}}
+{{- if ne .Params.source "api-documenter" -}}
+  {{- $idByKey := dict -}}
+  {{- $rendered := dict -}}
+  {{- range $id, $h := .Fragments.HeadingsMap -}}
+    {{- $key := partial "md/heading-key.html" (dict "text" $h.Title "html" true) -}}
+    {{- $rendered = merge $rendered (dict $key (add (index $rendered $key | default 0) 1)) -}}
+    {{- $idByKey = merge $idByKey (dict $key $id) -}}
+  {{- end -}}
+  {{- /* Pass 1: the heading lines outside fenced code, and how often each key occurs. */ -}}
+  {{- $rows := slice -}}
+  {{- $written := dict -}}
+  {{- $fenceChar := "" -}}
+  {{- $fenceLen := 0 -}}
+  {{- range split $out "\n" -}}
+    {{- $row := dict "line" . -}}
+    {{- $fenceLine := findRESubmatch `^ {0,3}(\x60{3,}|~{3,})(.*)$` . 1 -}}
+    {{- if $fenceLine -}}
+      {{- $run := index (index $fenceLine 0) 1 -}}
+      {{- $rest := index (index $fenceLine 0) 2 -}}
+      {{- $char := substr $run 0 1 -}}
+      {{- if eq $fenceChar "" -}}
+        {{- if not (and (eq $char "`") (strings.Contains $rest "`")) -}}
+          {{- $fenceChar = $char -}}
+          {{- $fenceLen = len $run -}}
+        {{- end -}}
+      {{- else if and (eq $char $fenceChar) (ge (len $run) $fenceLen) (eq (strings.TrimSpace $rest) "") -}}
+        {{- $fenceChar = "" -}}
+      {{- end -}}
+    {{- else if eq $fenceChar "" -}}
+      {{- with findRESubmatch `^(#{2,6})\s+(.+?)(?:\s+#+)?\s*$` . 1 -}}
+        {{- $text := index (index . 0) 2 -}}
+        {{- $custom := "" -}}
+        {{- with findRESubmatch `^(.*?)\s*\{#([A-Za-z0-9_-]+)\}$` $text 1 -}}
+          {{- $text = index (index . 0) 1 -}}
+          {{- $custom = index (index . 0) 2 -}}
+        {{- end -}}
+        {{- $key := partial "md/heading-key.html" (dict "text" $text "html" false) -}}
+        {{- $written = merge $written (dict $key (add (index $written $key | default 0) 1)) -}}
+        {{- $row = dict "line" $row.line "hashes" (index (index . 0) 1) "text" $text "custom" $custom "key" $key -}}
+      {{- end -}}
+    {{- end -}}
+    {{- $rows = $rows | append $row -}}
+  {{- end -}}
+  {{- /* Pass 2: link the headings that match exactly one rendered heading. */ -}}
+  {{- $lines := slice -}}
+  {{- range $row := $rows -}}
+    {{- $line := $row.line -}}
+    {{- if and $row.hashes (not (strings.Contains $row.text "](")) -}}
+      {{- $id := "" -}}
+      {{- if $row.custom -}}
+        {{- if index $.Fragments.HeadingsMap $row.custom }}{{ $id = $row.custom }}{{ end -}}
+      {{- else if and (eq (index $rendered $row.key) 1) (eq (index $written $row.key) 1) -}}
+        {{- $id = index $idByKey $row.key -}}
+      {{- end -}}
+      {{- if $id -}}
+        {{- $line = printf "%s [%s](%s#%s)" $row.hashes $row.text $.Permalink $id -}}
+      {{- end -}}
+    {{- end -}}
+    {{- $lines = $lines | append $line -}}
+  {{- end -}}
+  {{- $out = delimit $lines "\n" -}}
 {{- end -}}
 {{- /* Removed comments and shortcodes leave runs of blank lines; one is enough. */ -}}
 {{- return trim (replaceRE `\n[ \t]*(\n[ \t]*)+\n` "\n\n" $out) " \n" -}}

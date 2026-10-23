@@ -312,37 +312,34 @@ export type DashboardConfig = {
     widgetsOverlay?: Record<string, IDashboardWidgetOverlay>;
 
     /**
-     * @internal
-     * Specifies if the dashboard is in AI mode.
+     * Specifies the dashboard's AI mode.
      *
      * @remarks
-     * AI mode is active when the dashboard is being controlled or managed by AI capabilities.
-     * When enabled, the dashboard may exhibit specialized behaviors, such as enabling new
-     * AI-driven features or disabling certain standard functions to ensure a consistent
-     * AI-assisted experience.
+     * Any defined, non-null mode enables the AI-assisted dashboard experience.
+     * `"active"` enables AI mode without loading or blocking dashboard interaction.
+     * `"generating"` shows loading content while AI generates the dashboard.
+     * `"waiting"` shows loading content while AI waits for user input.
+     * `"building"` keeps dashboard tabs, filters, and visualizations visible beneath an overlay
+     * and blocks their mouse and keyboard interaction without loading skeletons. The top bar,
+     * sidebar, and external assistant panels remain interactive.
+     * `undefined` or `null` disables AI mode.
+     *
+     * @internal
      */
-    isAiMode?: boolean;
+    aiMode?: "active" | "generating" | "waiting" | "building" | null;
 
     /**
-     * @internal
-     * Specifies if ai now generates the dashboard
+     * Current AI reasoning title shown while the dashboard is generating or building.
      *
      * @remarks
-     * This flag indicates that an AI process has started generating the dashboard content but
-     * has not yet finished. It can be used to trigger loading states (like skeletons or progress
-     * indicators) and to allow users to cancel the generation process before it completes.
-     */
-    isAiGenerating?: boolean;
-
-    /**
-     * @internal
-     * Specifies if AI is waiting for user input before it can continue.
+     * Provide only the title, not the reasoning body. The title is rendered as plain text,
+     * without interpreting HTML or Markdown. The waiting-for-input message takes precedence
+     * while AI is waiting. Updating this value updates the status without reinitializing the
+     * dashboard; setting it to `undefined` clears the title.
      *
-     * @remarks
-     * This flag can be used to replace the dashboard content with a loading state while the AI
-     * process is blocked waiting for the user to respond.
+     * @public
      */
-    isAiWaiting?: boolean;
+    aiReasoningTitle?: string;
 
     /**
      * @internal
@@ -576,6 +573,8 @@ export type ResolvedDashboardConfig = Omit<
     | "externalRecipient"
     | "openAutomationOnLoad"
     | "hideAddTabButton"
+    | "aiMode"
+    | "aiReasoningTitle"
 > &
     DashboardConfig;
 

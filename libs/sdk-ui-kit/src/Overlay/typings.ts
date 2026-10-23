@@ -41,6 +41,13 @@ export interface IOverlayProps<T> {
     resizeObserverThreshold?: number;
 
     /**
+     * Keeps the align point chosen on open. When the overlay height changes, its bottom edge stays in place
+     * and the overlay moves only to stay within the viewport, so a control clicked near the bottom stays under
+     * the pointer. Requires resizeObserverThreshold lower than 1. Not meant to be combined with ensureVisibility.
+     */
+    keepBottomOnResize?: boolean;
+
+    /**
      * Array of refs where user clicks should be ignored
      * and overlay should not be closed by clicking on them
      */

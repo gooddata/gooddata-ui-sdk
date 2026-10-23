@@ -203,6 +203,10 @@ describe("initialize dashboard handler", () => {
 
             expect(persistedDashboard).toBeUndefined();
         });
+
+        it("should leave AI mode disabled by default", () => {
+            expect(selectConfig(Tester.state()).aiMode).toBeUndefined();
+        });
     });
 
     describe("isWhiteLabeled config resolution", () => {
@@ -261,6 +265,22 @@ describe("initialize dashboard handler", () => {
             expect(config.isWhiteLabeled).toBe(false);
         });
     });
+
+    it.each(["active", "generating", "waiting", "building", null, undefined] as const)(
+        "should preserve aiMode set to %s during initialization",
+        async (aiMode) => {
+            let tester: DashboardTester;
+            await preloadedTesterFactory(
+                (initializedTester) => {
+                    tester = initializedTester;
+                },
+                undefined,
+                { initCommand: initializeDashboard({ aiMode }) },
+            );
+
+            expect(selectConfig(tester!.state()).aiMode).toBe(aiMode);
+        },
+    );
 
     describe("absolute date filter granularity derivation for a new dashboard", () => {
         const dateFilterConfig = {

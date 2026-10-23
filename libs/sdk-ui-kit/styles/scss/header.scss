@@ -399,7 +399,7 @@ a.gd-list-help-menu-item.gd-list-item {
     }
 
     &:hover,
-    &:focus,
+    &:focus-visible,
     &:active,
     &.active {
         border-bottom-width: 3px;

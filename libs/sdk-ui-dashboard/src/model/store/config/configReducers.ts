@@ -12,27 +12,23 @@ const setConfig: ConfigReducer<PayloadAction<ResolvedDashboardConfig>> = (state,
     state.config = action.payload;
 };
 
-const setIsAiGenerating: ConfigReducer<PayloadAction<boolean>> = (state, action) => {
+const setAiMode: ConfigReducer<PayloadAction<ResolvedDashboardConfig["aiMode"]>> = (state, action) => {
     if (state.config) {
-        state.config.isAiGenerating = action.payload;
+        state.config.aiMode = action.payload;
     }
 };
 
-const setIsAiWaiting: ConfigReducer<PayloadAction<boolean>> = (state, action) => {
+const setAiReasoningTitle: ConfigReducer<PayloadAction<ResolvedDashboardConfig["aiReasoningTitle"]>> = (
+    state,
+    action,
+) => {
     if (state.config) {
-        state.config.isAiWaiting = action.payload;
-    }
-};
-
-const setIsAiMode: ConfigReducer<PayloadAction<boolean>> = (state, action) => {
-    if (state.config) {
-        state.config.isAiMode = action.payload;
+        state.config.aiReasoningTitle = action.payload;
     }
 };
 
 export const configReducers = {
     setConfig,
-    setIsAiGenerating,
-    setIsAiWaiting,
-    setIsAiMode,
+    setAiMode,
+    setAiReasoningTitle,
 };

@@ -11,7 +11,11 @@ import {
 import { type IGenAIContextObject, type SelectedContext } from "../types.js";
 import { convertReferenceTypeToGenAiType } from "../utils.js";
 
-import { isSameViewedPublisherDocument, viewObjectId } from "./viewedPublisherDocument.js";
+import {
+    isSameViewedPublisherDocument,
+    viewObjectId,
+    viewedPublisherDocument,
+} from "./viewedPublisherDocument.js";
 
 export function collectContextReferences(
     userContext: IGenAIUserContext | undefined,
@@ -39,7 +43,7 @@ export function collectContextReferences(
     }
 
     // document
-    const userDocument = userContext?.view?.publisherDocument;
+    const userDocument = viewedPublisherDocument(userContext?.view);
     if (userDocument) {
         const ref = userDocument.ref;
         const id = viewObjectId(ref);

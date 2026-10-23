@@ -27,6 +27,7 @@ import { useTopBarProps } from "../../topBar/topBar/DefaultTopBar.js";
 import { TopBar } from "../../topBar/topBar/TopBar.js";
 import { useWidgetDeleteDialogProps } from "../../widgetDeleteDialog/DefaultWidgetDeleteDialog.js";
 import { WidgetDeleteDialog } from "../../widgetDeleteDialog/WidgetDeleteDialog.js";
+import { DashboardInteractionLock } from "../components/DashboardInteractionLock.js";
 import { ToastMessages } from "../components/ToastMessages.js";
 
 import { AlertingDialogProvider } from "./AlertingDialogProvider.js";
@@ -114,8 +115,10 @@ export function DashboardHeader(): ReactElement {
             <SaveAsDialogWrapper />
             <InsightNotSavedDialogWrapper />
             <TopBarWrapper />
-            <DashboardTabsWrapper />
-            <FilterBarWrapper />
+            <DashboardInteractionLock>
+                <DashboardTabsWrapper />
+                <FilterBarWrapper />
+            </DashboardInteractionLock>
             <CancelEditDialogWrapper />
         </>
     );

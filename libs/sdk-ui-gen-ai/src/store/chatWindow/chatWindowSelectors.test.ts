@@ -315,6 +315,17 @@ describe("hasPinnedContextSelector", () => {
             expect(hasPinnedContextSelector(state)).toBe(false);
         });
 
+        it("should be false for the ambient v2 document alone", () => {
+            const state = stateWith(
+                { enableAiContextSetup: true },
+                setAmbientUserContextAction({
+                    userContext: { view: { publisherDocumentV2: { ref: idRef("d1"), title: "D1" } } },
+                }),
+            );
+
+            expect(hasPinnedContextSelector(state)).toBe(false);
+        });
+
         it("should be true for a document other than the ambient one", () => {
             const state = stateWith(
                 { enableAiContextSetup: true },

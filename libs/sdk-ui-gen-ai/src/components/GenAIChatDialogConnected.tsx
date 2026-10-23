@@ -6,11 +6,16 @@ import { type IAnalyticalBackend, type IUserWorkspaceSettings } from "@gooddata/
 import type { GenAIChatEffort, GenAIObjectType, IColorPalette, IGenAIUserContext } from "@gooddata/sdk-model";
 
 import { makeUserItem } from "../model.js";
-import { setAmbientUserContextAction, setUserContextAction } from "../store/chatWindow/chatWindowSlice.js";
+import {
+    setAmbientUserContextAction,
+    setHistoryAction,
+    setUserContextAction,
+} from "../store/chatWindow/chatWindowSlice.js";
 import {
     type ChatAssistantMessageEvent,
     type ChatClarificationQuestionsEvent,
     type ChatClosedEvent,
+    type ChatConversationChangedEvent,
     type ChatCopyToClipboardEvent,
     type ChatDefinitionReceivedEvent,
     type ChatEvent,
@@ -18,6 +23,7 @@ import {
     type ChatFeedbackEvent,
     type ChatModeChangeEvent,
     type ChatOpenedEvent,
+    type ChatReasoningEvent,
     type ChatResetEvent,
     type ChatSaveVisualizationErrorEvent,
     type ChatSaveVisualizationSuccessEvent,
@@ -25,18 +31,21 @@ import {
     isChatAssistantMessageEvent,
     isChatClarificationQuestionsEvent,
     isChatClosedEvent,
+    isChatConversationChangedEvent,
     isChatCopyToClipboardEvent,
     isChatDefinitionReceivedEvent,
     isChatFeedbackErrorEvent,
     isChatFeedbackEvent,
     isChatModeChangeEvent,
     isChatOpenedEvent,
+    isChatReasoningEvent,
     isChatResetEvent,
     isChatSaveVisualizationErrorEvent,
     isChatSaveVisualizationSuccessEvent,
     isChatUserMessageEvent,
 } from "../store/events.js";
 import {
+    activateConversationAction,
     clearThreadAction,
     newMessageAction,
     setSelectedAgentAction,
@@ -66,8 +75,10 @@ export type GenAIChatConnectedEvent =
     | { name: "opened"; payload: ChatOpenedEvent }
     | { name: "closed"; payload: ChatClosedEvent }
     | { name: "reset"; payload: ChatResetEvent }
+    | { name: "conversation-changed"; payload: ChatConversationChangedEvent }
     | { name: "user-message"; payload: ChatUserMessageEvent }
     | { name: "assistant-message"; payload: ChatAssistantMessageEvent }
+    | { name: "reasoning"; payload: ChatReasoningEvent }
     | { name: "feedback"; payload: ChatFeedbackEvent }
     | { name: "feedback-error"; payload: ChatFeedbackErrorEvent }
     | { name: "mode-changed"; payload: ChatModeChangeEvent }
@@ -84,10 +95,14 @@ export function toGenAIChatConnectedEvent(event: ChatEvent): GenAIChatConnectedE
         return { name: "closed", payload: event };
     } else if (isChatResetEvent(event)) {
         return { name: "reset", payload: event };
+    } else if (isChatConversationChangedEvent(event)) {
+        return { name: "conversation-changed", payload: event };
     } else if (isChatUserMessageEvent(event)) {
         return { name: "user-message", payload: event };
     } else if (isChatAssistantMessageEvent(event)) {
         return { name: "assistant-message", payload: event };
+    } else if (isChatReasoningEvent(event)) {
+        return { name: "reasoning", payload: event };
     } else if (isChatFeedbackEvent(event)) {
         return { name: "feedback", payload: event };
     } else if (isChatFeedbackErrorEvent(event)) {
@@ -117,6 +132,7 @@ type SeedAction = Parameters<Dispatch>[0];
  * @internal
  */
 export type SeedInput = {
+    conversationId?: string;
     agentId?: string;
     effort?: GenAIChatEffort;
     askedQuestion?: string | null;
@@ -137,6 +153,7 @@ export type SeedInput = {
  * @internal
  */
 export function buildSeedActions({
+    conversationId,
     agentId,
     effort,
     askedQuestion,
@@ -144,6 +161,10 @@ export function buildSeedActions({
     replaceUserContext,
     appendToChat,
 }: SeedInput): SeedAction[] {
+    if (conversationId) {
+        return [activateConversationAction({ conversationId }), setHistoryAction({ isHistory: false })];
+    }
+
     const actions: SeedAction[] = [];
     const seeding = Boolean(askedQuestion || userContext);
     if (seeding) {
@@ -206,6 +227,8 @@ export interface IGenAIChatDialogConnectedProps {
 
     /** A question to seed into the chat when it opens. */
     askedQuestion?: string | null;
+    /** Existing conversation to activate for this request, without clearing or seeding it. */
+    conversationId?: string;
     /**
      * Monotonic counter bumped on every ask. Keying the seeding effect on it re-seeds the chat
      * (clear thread + send message) even when `askedQuestion` is identical to the previous ask.
@@ -291,6 +314,7 @@ export function GenAIChatDialogConnected({
     onOpen,
     onClose,
     askedQuestion,
+    conversationId,
     askSeq,
     userContext,
     ambientUserContext,
@@ -398,13 +422,14 @@ export function GenAIChatDialogConnected({
             return;
         }
 
-        const seedToken = askSeq ?? askedQuestion ?? JSON.stringify(userContext ?? {});
+        const seedToken = askSeq ?? conversationId ?? askedQuestion ?? JSON.stringify(userContext ?? {});
         if (lastSeedTokenRef.current === seedToken) {
             return;
         }
         lastSeedTokenRef.current = seedToken;
 
         buildSeedActions({
+            conversationId,
             agentId,
             effort,
             askedQuestion,
@@ -418,6 +443,7 @@ export function GenAIChatDialogConnected({
         effort,
         chatDispatcher,
         askedQuestion,
+        conversationId,
         askSeq,
         userContext,
         appendToChat,

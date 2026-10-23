@@ -2,7 +2,7 @@
 
 import { type IntlShape } from "react-intl";
 
-import { type IChatConversationItem } from "@gooddata/sdk-backend-spi";
+import { type GenAIPublisherDocumentFormat, type IChatConversationItem } from "@gooddata/sdk-backend-spi";
 import {
     type GenAIObjectReferenceType,
     type IAttributeOrMeasure,
@@ -51,8 +51,13 @@ export function getDashboardHref(
 }
 
 // Encoded like the Publisher app's own route builder, so an id with a slash stays one segment.
-export function getPublisherDocumentHref(wsId: string, documentId: string) {
-    return `/workspace/${wsId}/publisher/report/${encodeURIComponent(documentId)}`;
+export function getPublisherDocumentHref(
+    wsId: string,
+    documentId: string,
+    format: GenAIPublisherDocumentFormat,
+) {
+    const route = format === "aac-v2" ? "document" : "report";
+    return `/workspace/${wsId}/publisher/${route}/${encodeURIComponent(documentId)}`;
 }
 
 function getPublisherDocumentDraftParams(conversationId: string, itemId: string) {
@@ -69,13 +74,15 @@ export function getPublisherDocumentModifyHref({
     documentId,
     conversationId,
     itemId,
+    format,
 }: {
     workspaceId: string;
     documentId: string;
     conversationId: string;
     itemId: string;
+    format: GenAIPublisherDocumentFormat;
 }) {
-    return `${getPublisherDocumentHref(workspaceId, documentId)}?${getPublisherDocumentDraftParams(conversationId, itemId)}`;
+    return `${getPublisherDocumentHref(workspaceId, documentId, format)}?${getPublisherDocumentDraftParams(conversationId, itemId)}`;
 }
 
 export function getPublisherDocumentItemUrl({
@@ -84,19 +91,21 @@ export function getPublisherDocumentItemUrl({
     baseDocumentId,
     conversationId,
     itemId,
+    format,
 }: {
     workspaceId: string;
     saved?: string | null;
     baseDocumentId?: string | null;
     conversationId?: string;
     itemId?: string;
+    format: GenAIPublisherDocumentFormat;
 }) {
     if (!conversationId || !itemId) {
-        return saved ? getPublisherDocumentHref(workspaceId, saved) : undefined;
+        return saved ? getPublisherDocumentHref(workspaceId, saved, format) : undefined;
     }
     const documentId = saved || baseDocumentId;
     return documentId
-        ? getPublisherDocumentModifyHref({ workspaceId, documentId, conversationId, itemId })
+        ? getPublisherDocumentModifyHref({ workspaceId, documentId, conversationId, itemId, format })
         : getPublisherDocumentDraftHref(workspaceId, conversationId, itemId);
 }
 

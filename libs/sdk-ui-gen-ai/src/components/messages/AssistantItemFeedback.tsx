@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -31,6 +31,7 @@ export function AssistantItemFeedback({
 }: IAssistantItemFeedbackProps) {
     const intl = useIntl();
     const dispatch = useDispatch();
+    const containerRef = useRef<HTMLDivElement>(null);
 
     const setUserFeedbackAction = useCallback<SetUserFeedbackHandler>(
         (payload) => {
@@ -57,6 +58,7 @@ export function AssistantItemFeedback({
 
     return (
         <div
+            ref={containerRef}
             className={cx({
                 "gd-gen-ai-chat__conversation__item__feedback": true,
                 "gd-gen-ai-chat__conversation__item__feedback--assigned": isAssigned,
@@ -82,6 +84,7 @@ export function AssistantItemFeedback({
                 content={thumbsUpLabel}
             />
             <FeedbackPopup
+                containerRef={containerRef}
                 anchor={(opened) => {
                     return (
                         <UiTooltip

@@ -4,6 +4,9 @@ title: Resolve cross-origin errors
 description: Resolve CORS errors between your app and GoodData Cloud or GoodData.CN by proxying the API through your dev server or allowing your origin in production.
 category: Integrations
 diataxis_type: howto
+api_symbols:
+  - "@gooddata/sdk-backend-tiger:tigerFactory"
+  - "@gooddata/sdk-backend-tiger:ContextDeferredAuthProvider"
 related_pages:
   - /docs/integrations/backend-setup
   - /docs/integrations/authentication

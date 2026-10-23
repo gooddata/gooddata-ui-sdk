@@ -417,7 +417,7 @@ describe("getCustomizedConfiguration", () => {
             const result = getCustomizedConfiguration(makeCtx({ chartOptions }));
             assertArray(result.xAxis);
             expect(result.xAxis[0].title?.style).toEqual({
-                color: "#6d7680",
+                color: "#6a737d",
                 font: '14px gdcustomfont, Avenir, "Helvetica Neue", Arial, sans-serif',
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",

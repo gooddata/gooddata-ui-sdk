@@ -3,6 +3,11 @@ legacy_path: learn/integrate_and_authenticate/cn_and_cloud_integration
 title: Integrate into an existing application
 category: Integrations
 diataxis_type: howto
+api_symbols:
+  - "@gooddata/sdk-backend-tiger:tigerFactory"
+  - "@gooddata/sdk-backend-tiger:ContextDeferredAuthProvider"
+  - "@gooddata/sdk-ui:BackendProvider"
+  - "@gooddata/sdk-ui:WorkspaceProvider"
 related_pages:
   - /docs/getting-started/installation
   - /docs/integrations/authentication

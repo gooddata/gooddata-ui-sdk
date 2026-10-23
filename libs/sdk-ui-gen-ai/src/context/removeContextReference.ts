@@ -9,7 +9,7 @@ import {
 import { type IGenAIContextObject, type StoreContext } from "../types.js";
 
 import { undefinedIfEmpty } from "./build.js";
-import { isSameViewedPublisherDocument } from "./viewedPublisherDocument.js";
+import { isSameViewedPublisherDocument, viewedPublisherDocument } from "./viewedPublisherDocument.js";
 
 export function removeContextReference(context: StoreContext, reference?: IGenAIContextObject): StoreContext {
     if (!context) {
@@ -34,10 +34,11 @@ export function removeContextReference(context: StoreContext, reference?: IGenAI
 
     if (
         reference.where === "view.publisherDocument" &&
-        isSameViewedPublisherDocument(newContext.view?.publisherDocument, reference)
+        isSameViewedPublisherDocument(viewedPublisherDocument(newContext.view), reference)
     ) {
         newContext.view = { ...newContext.view };
         delete newContext.view.publisherDocument;
+        delete newContext.view.publisherDocumentV2;
     }
 
     // remove reference

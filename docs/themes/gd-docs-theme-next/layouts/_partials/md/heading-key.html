@@ -1,0 +1,18 @@
+{{- /* The comparison key of a heading's text, so a Markdown source heading and its rendered title
+(.Fragments) can be matched (page-markdown.html). Expects dict "text" (the heading text) and "html"
+(true when it is a rendered title: inline HTML such as <code>, entities). Returns the text in plain,
+lowercase ASCII: links reduced to their text, inline code ticks and emphasis markers dropped
+(underscores and asterisks inside words stay, as in `use_foo`), and the typographer's quotes, dashes
+and ellipsis written the way an author types them. */ -}}
+{{- $s := .text -}}
+{{- if .html -}}
+  {{- $s = htmlUnescape (plainify $s) -}}
+{{- else -}}
+  {{- $s = replaceRE `\[([^\]]*)\]\([^)]*\)` "$1" $s -}}
+  {{- $s = replace $s "`" "" -}}
+  {{- $s = replaceRE `(^|[\s(])[*_]+` "$1" $s -}}
+  {{- $s = replaceRE `[*_]+([\s).,:;!?]|$)` "$1" $s -}}
+{{- end -}}
+{{- $typographic := dict "’" "'" "‘" "'" "“" "\"" "”" "\"" "«" "<<" "»" ">>" "–" "--" "—" "---" "…" "..." -}}
+{{- range $from, $to := $typographic }}{{ $s = replace $s $from $to }}{{ end -}}
+{{- return lower (strings.TrimSpace (replaceRE `\s+` " " $s)) -}}

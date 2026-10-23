@@ -8,6 +8,7 @@ import { type Root, createRoot } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { registerFloatingAnchor } from "../@ui/hooks/useCloseOnOutsideClick.js";
+import { type OverlayPositionType } from "../typings/overlay.js";
 
 import { Overlay } from "./Overlay.js";
 import { OverlayAlignOnParentScrollProvider } from "./OverlayAlignOnParentScroll.js";
@@ -697,6 +698,125 @@ describe("Overlay", () => {
 
                 expect(observedElements).toEqual([]);
             });
+        });
+    });
+
+    describe("keep bottom on resize", () => {
+        let overlayHeight: number;
+        let viewportWidth: number;
+        let notifyResize: (height: number) => void;
+
+        beforeEach(() => {
+            overlayHeight = 100;
+            viewportWidth = 1000;
+            vi.stubGlobal(
+                "ResizeObserver",
+                class {
+                    constructor(callback: ResizeObserverCallback) {
+                        notifyResize = (height) => {
+                            overlayHeight = height;
+                            callback(
+                                [{ contentRect: { height } } as ResizeObserverEntry],
+                                this as unknown as ResizeObserver,
+                            );
+                        };
+                    }
+                    observe() {}
+                    disconnect() {}
+                },
+            );
+            vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockImplementation(function (
+                this: HTMLElement,
+            ) {
+                const isOverlay = this.classList.contains("overlay-wrapper");
+                const isAnchor = this.classList.contains("anchor");
+                const isBody = this === document.body;
+                const height = isOverlay ? overlayHeight : isBody ? window.innerHeight : 0;
+                const width = isOverlay ? 212 : isAnchor ? 16 : isBody ? viewportWidth : 0;
+                const top = isAnchor ? 300 : -window.scrollY;
+                const left = isAnchor ? 450 : 0;
+                return { top, left, right: left + width, bottom: top + height, width, height } as DOMRect;
+            });
+        });
+
+        afterEach(() => {
+            vi.unstubAllGlobals();
+            vi.restoreAllMocks();
+        });
+
+        const renderAlignedOverlay = async (align: string | string[], positionType?: OverlayPositionType) => {
+            render(
+                <div>
+                    <button className="anchor" />
+                    <Overlay
+                        alignTo=".anchor"
+                        alignPoints={[align].flat().map((point) => ({ align: point }))}
+                        positionType={positionType}
+                        resizeObserverThreshold={0.01}
+                        keepBottomOnResize
+                    >
+                        <div />
+                    </Overlay>
+                </div>,
+            );
+            await act(() => new Promise((resolve) => setTimeout(resolve, 50)));
+            return document.querySelector<HTMLElement>(".overlay-wrapper")!;
+        };
+
+        it.each([
+            ["below", "bl tl", "300px", "340px"],
+            ["above", "tl bl", "200px", "240px"],
+        ])(
+            "should keep the bottom edge in place when the overlay %s the anchor shrinks",
+            async (_position, align, initialTop, shrunkTop) => {
+                const overlay = await renderAlignedOverlay(align);
+                expect(overlay.style.top).toBe(initialTop);
+
+                act(() => notifyResize(60));
+
+                expect(overlay.style.top).toBe(shrunkTop);
+            },
+        );
+
+        it("should keep the overlay within the viewport only while it does not fit", async () => {
+            const overlay = await renderAlignedOverlay("tl bl");
+
+            act(() => notifyResize(400));
+            expect(overlay.style.top).toBe("0px");
+
+            act(() => notifyResize(100));
+            expect(overlay.style.top).toBe("200px");
+        });
+
+        it("should keep a fixed overlay within the viewport when the page is scrolled", async () => {
+            const setPageScroll = (value: number) => {
+                for (const property of ["scrollY", "pageYOffset"]) {
+                    Object.defineProperty(window, property, { value, configurable: true, writable: true });
+                }
+            };
+            setPageScroll(1000);
+            try {
+                const overlay = await renderAlignedOverlay("tl bl", "fixed");
+
+                act(() => notifyResize(400));
+
+                expect(overlay.style.top).toBe(`${window.innerHeight - 400}px`);
+            } finally {
+                setPageScroll(0);
+            }
+        });
+
+        it("should align to the other side when the viewport gets narrower", async () => {
+            const overlay = await renderAlignedOverlay(["tr tl", "tl tr"]);
+            expect(overlay.style.left).toBe("466px");
+
+            viewportWidth = 600;
+            await act(async () => {
+                window.dispatchEvent(new Event("resize"));
+                await new Promise((resolve) => setTimeout(resolve, 150));
+            });
+
+            expect(overlay.style.left).toBe("238px");
         });
     });
 });

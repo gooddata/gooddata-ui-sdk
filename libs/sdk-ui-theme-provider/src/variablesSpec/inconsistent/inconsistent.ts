@@ -6,13 +6,13 @@ export const inconsistentVariables: ThemeInconsistentCssVariable[] = [
     {
         type: "inconsistent",
         variableName: "--gd-chart-tooltipLabelColor-from-theme",
-        inconsistentDefaults: ["var(--gd-palette-complementary-7, #6d7680)"],
+        inconsistentDefaults: ["var(--gd-palette-complementary-7)"],
     },
     {
         type: "inconsistent",
         variableName: "--gd-chart-tooltip-labelColor-from-theme",
         inconsistentDefaults: [
-            "var(--gd-chart-tooltipLabelColor-from-theme, var(--gd-palette-complementary-7, #6d7680))",
+            "var(--gd-chart-tooltipLabelColor-from-theme, var(--gd-palette-complementary-7))",
         ],
     },
     {
@@ -25,7 +25,7 @@ export const inconsistentVariables: ThemeInconsistentCssVariable[] = [
         variableName: "--gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor-from-theme",
         inconsistentDefaults: [
             "var(--gd-palette-complementary-8, #464e56)",
-            "var(--gd-palette-complementary-7, #6d7680)",
+            "var(--gd-palette-complementary-7)",
             "var(--gd-palette-complementary-9, #000)",
         ],
     },
@@ -78,7 +78,7 @@ export const inconsistentVariables: ThemeInconsistentCssVariable[] = [
         type: "inconsistent",
         variableName: "--gd-palette-complementary-1-from-theme",
         inconsistentDefaults: [
-            "rgba(109, 118, 128, 0.1)",
+            "rgba(106, 115, 125, 0.1)",
             "#fcfcfd",
             "#eff2f4",
             "#f5f7f9",
@@ -176,7 +176,7 @@ export const inconsistentVariables: ThemeInconsistentCssVariable[] = [
         type: "inconsistent",
         variableName: "--gd-palette-complementary-6-from-theme",
         inconsistentDefaults: [
-            "rgba(109, 118, 128, 0.75)",
+            "rgba(106, 115, 125, 0.75)",
             "#b0beca",
             "#bbb",
             "inherit",
@@ -185,7 +185,7 @@ export const inconsistentVariables: ThemeInconsistentCssVariable[] = [
             "#909293",
             "#acaeae",
             "#808080",
-            "#6d7680",
+            "#6a737d",
             "#94a1ad",
         ],
     },
@@ -216,7 +216,7 @@ export const inconsistentVariables: ThemeInconsistentCssVariable[] = [
             "#94a1ad",
             "initial",
             "#687581",
-            "#6d7680",
+            "#6a737d",
             "inherit",
             "#454e56",
             "#313441",
@@ -227,7 +227,7 @@ export const inconsistentVariables: ThemeInconsistentCssVariable[] = [
     {
         type: "inconsistent",
         variableName: "--gd-palette-complementary-9-from-theme",
-        inconsistentDefaults: ["#fff", "initial", "inherit", "#6d7680", "#464e56"],
+        inconsistentDefaults: ["#fff", "initial", "inherit", "#6a737d", "#464e56"],
     },
     {
         type: "inconsistent",

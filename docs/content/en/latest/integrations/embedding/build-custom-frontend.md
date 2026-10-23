@@ -2,6 +2,12 @@
 title: Build a fully custom frontend
 category: Integrations / Embedding
 diataxis_type: tutorial
+api_symbols:
+  - "@gooddata/sdk-ui:useExecutionDataView"
+  - "@gooddata/sdk-ui-filters:useAttributeFilterController"
+  - "@gooddata/sdk-ui:useDataExport"
+  - "@gooddata/sdk-ui-ext:InsightView"
+  - "@gooddata/sdk-ui:BackendProvider"
 related_pages:
   - /docs/integrations/embedding/custom-visualizations
   - /docs/data-layer/use-execution-data-view
