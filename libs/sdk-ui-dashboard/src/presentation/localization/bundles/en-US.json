@@ -1,4 +1,8 @@
 {
+    "dashboard.ai.composing.waiting": {
+        "text": "Reply in chat to continue.",
+        "crowdinContext": "Status notice above the dashboard while the AI assistant waits for the user to answer a clarification question in chat before continuing to build or edit the dashboard."
+    },
     "dashboard.contractExpired.trial.title": {
         "text": "Your trial has ended.",
         "crowdinContext": "Title of the lock shown in place of a dashboard when a trial organization's contract has expired."

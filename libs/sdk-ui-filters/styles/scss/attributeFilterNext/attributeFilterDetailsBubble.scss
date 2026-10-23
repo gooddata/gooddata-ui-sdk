@@ -45,7 +45,7 @@
     margin: 0;
     font-size: 12px;
     line-height: 1.4;
-    color: var(--gd-palette-complementary-7, #6d7680);
+    color: var(--gd-palette-complementary-7);
     font-family: variables.$gd-font-primary;
 }
 
@@ -96,7 +96,7 @@
 .gd-attribute-filter-details-bubble__loading {
     margin: 0;
     font-size: 12px;
-    color: var(--gd-palette-complementary-7, #6d7680);
+    color: var(--gd-palette-complementary-7);
 }
 
 .gd-attribute-filter-details-bubble__error {

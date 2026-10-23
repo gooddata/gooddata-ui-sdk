@@ -4,6 +4,7 @@ import {
     type GenAIChatEffort,
     type IGenAIUserContext,
     type IPublisherDocumentDefinition,
+    type IPublisherDocumentDefinitionV2,
 } from "@gooddata/sdk-model";
 
 import { type IPlatformContext } from "./platformContext.js";
@@ -185,6 +186,11 @@ export interface IOpenAiAssistantRequestedEvent extends IPluggableAppEvent {
          * Ignored when the question is appended to the existing chat.
          */
         readonly effort?: GenAIChatEffort;
+        /**
+         * Existing conversation to select when opening the chat. When provided, takes precedence over
+         * the seeded question and user context. When omitted, the current open/ask behavior is preserved.
+         */
+        readonly conversationId?: string;
     };
 }
 
@@ -200,6 +206,7 @@ export function openAiAssistantRequested(payload?: {
     appendToChat?: boolean;
     replaceUserContext?: boolean;
     effort?: GenAIChatEffort;
+    conversationId?: string;
 }): IOpenAiAssistantRequestedEvent {
     return { type: PluggableAppEventType.AI_ASSISTANT_OPEN_REQUESTED, payload: payload ?? {} };
 }
@@ -226,13 +233,18 @@ export function isOpenAiAssistantRequestedEvent(obj: unknown): obj is IOpenAiAss
     if (typeof payload !== "object" || payload === null || Array.isArray(payload)) {
         return false;
     }
-    const { question, userContext } = payload as { question?: unknown; userContext?: unknown };
+    const { question, userContext, conversationId } = payload as {
+        question?: unknown;
+        userContext?: unknown;
+        conversationId?: unknown;
+    };
     const questionOk = typeof question === "string" || question === undefined;
+    const conversationIdOk = typeof conversationId === "string" || conversationId === undefined;
     // userContext is an opaque structured object; validate only that it is an object when present
     // so a later property read on the host side cannot throw.
     const userContextOk =
         userContext === undefined || (typeof userContext === "object" && userContext !== null);
-    return questionOk && userContextOk;
+    return questionOk && userContextOk && conversationIdOk;
 }
 
 /**
@@ -412,6 +424,11 @@ export interface IAiAssistantPublisherDocumentSavedEvent extends IPluggableAppEv
          * Identifier of the document the draft was saved as.
          */
         readonly savedDocumentId: string;
+        /**
+         * Publisher content version of the saved draft, which decides where the conversation records the
+         * save. Omitted by applications that predate it.
+         */
+        readonly format?: "aac-v1" | "aac-v2";
     };
 }
 
@@ -449,17 +466,19 @@ export function isAiAssistantPublisherDocumentSavedEvent(
     if (typeof payload !== "object" || payload === null || Array.isArray(payload)) {
         return false;
     }
-    const { conversationId, itemId, documentRef, savedDocumentId } = payload as {
+    const { conversationId, itemId, documentRef, savedDocumentId, format } = payload as {
         conversationId?: unknown;
         itemId?: unknown;
         documentRef?: unknown;
         savedDocumentId?: unknown;
+        format?: unknown;
     };
     return (
         typeof conversationId === "string" &&
         typeof itemId === "string" &&
         (documentRef === undefined || typeof documentRef === "string") &&
-        typeof savedDocumentId === "string"
+        typeof savedDocumentId === "string" &&
+        (format === undefined || format === "aac-v1" || format === "aac-v2")
     );
 }
 
@@ -524,6 +543,75 @@ export function isAiAssistantPublisherDocumentDefinition(obj: unknown): obj is O
         typeof publisherDocument === "object" &&
         publisherDocument !== null &&
         !Array.isArray(publisherDocument) &&
+        (documentRef === undefined || typeof documentRef === "string") &&
+        (refines === undefined || typeof refines === "string") &&
+        (reworksOpenDocument === undefined || typeof reworksOpenDocument === "boolean") &&
+        (baseDocumentId === undefined || typeof baseDocumentId === "string")
+    );
+}
+
+/**
+ * A document version of Publisher content v2 the host assistant drafted, carried by the
+ * `chat.definition-received` event an application receives through
+ * {@link IPluggableApplicationMountHandle.onAiAssistantEventReceive}.
+ *
+ * @remarks
+ * The document is in `publisherDocumentV2`, not `publisherDocument`, so one event can type both
+ * versions' fields.
+ *
+ * @alpha
+ */
+export interface IAiAssistantPublisherDocumentDefinitionV2 {
+    /**
+     * The whole document version.
+     */
+    readonly publisherDocumentV2: IPublisherDocumentDefinitionV2;
+
+    /**
+     * Name of the document version in the conversation, the one its save is recorded under.
+     */
+    readonly documentRef?: string;
+
+    /**
+     * Name of the document version this one reworks.
+     */
+    readonly refines?: string;
+
+    /**
+     * Whether the version was written from the document open in the editor.
+     */
+    readonly reworksOpenDocument?: boolean;
+
+    /**
+     * Identifier of the saved document this version edits.
+     */
+    readonly baseDocumentId?: string;
+}
+
+/**
+ * Type guard for the fields of {@link IAiAssistantPublisherDocumentDefinitionV2}.
+ *
+ * @remarks
+ * The document itself stays `unknown`: whoever applies it validates it.
+ *
+ * @alpha
+ */
+export function isAiAssistantPublisherDocumentDefinitionV2(obj: unknown): obj is Omit<
+    IAiAssistantPublisherDocumentDefinitionV2,
+    "publisherDocumentV2"
+> & {
+    readonly publisherDocumentV2: unknown;
+} {
+    if (typeof obj !== "object" || obj === null) {
+        return false;
+    }
+    const { publisherDocumentV2, documentRef, refines, reworksOpenDocument, baseDocumentId } = obj as {
+        [key in keyof IAiAssistantPublisherDocumentDefinitionV2]?: unknown;
+    };
+    return (
+        typeof publisherDocumentV2 === "object" &&
+        publisherDocumentV2 !== null &&
+        !Array.isArray(publisherDocumentV2) &&
         (documentRef === undefined || typeof documentRef === "string") &&
         (refines === undefined || typeof refines === "string") &&
         (reworksOpenDocument === undefined || typeof reworksOpenDocument === "boolean") &&

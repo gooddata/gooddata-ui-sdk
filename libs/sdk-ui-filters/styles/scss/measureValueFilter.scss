@@ -35,7 +35,7 @@ $mvf-condition-action-gap: 10px;
         .gd-mvf-operator-dropdown-label {
             font-size: 14px;
             line-height: 20px;
-            color: var(--gd-palette-complementary-7, #6d7680);
+            color: var(--gd-palette-complementary-7);
         }
 
         .gd-mvf-operator-dropdown-button {
@@ -409,7 +409,7 @@ $mvf-condition-action-gap: 10px;
     text-align: left;
 
     &__label {
-        color: var(--gd-palette-complementary-7, #6d7680);
+        color: var(--gd-palette-complementary-7);
         font-size: 14px;
         line-height: 20px;
         font-weight: 400;
@@ -428,7 +428,7 @@ $mvf-condition-action-gap: 10px;
 
     &__chevron {
         flex: 0 0 auto;
-        color: var(--gd-palette-complementary-7, #6d7680);
+        color: var(--gd-palette-complementary-7);
         font-size: 16px;
     }
 }
@@ -569,7 +569,7 @@ $mvf-condition-action-gap: 10px;
     gap: 5px;
     min-width: 0;
     overflow: hidden;
-    color: var(--gd-palette-complementary-7, #6d7680);
+    color: var(--gd-palette-complementary-7);
     font-size: 11px;
     font-weight: 800;
     text-transform: uppercase;
@@ -637,7 +637,7 @@ $mvf-condition-action-gap: 10px;
     margin: 0;
     font-size: 12px;
     line-height: 1.4;
-    color: var(--gd-palette-complementary-7, #6d7680);
+    color: var(--gd-palette-complementary-7);
     font-family: variables.$gd-font-primary;
 }
 
@@ -675,7 +675,7 @@ $mvf-condition-action-gap: 10px;
 .gd-mvf-details-bubble__loading {
     margin: 0;
     font-size: 12px;
-    color: var(--gd-palette-complementary-7, #6d7680);
+    color: var(--gd-palette-complementary-7);
 }
 
 .gd-mvf-details-bubble__error {

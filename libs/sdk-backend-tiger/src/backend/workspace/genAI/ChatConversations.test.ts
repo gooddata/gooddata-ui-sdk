@@ -8,7 +8,14 @@ import {
     GenAiApi_PostMessages,
     GenAiApi_SwitchAgent,
 } from "@gooddata/api-client-tiger/endpoints/genAI";
-import { publisherDocumentDefinitionToYaml } from "@gooddata/sdk-code-convertors";
+import {
+    type GenAIPublisherDocumentFormat,
+    type IChatConversationThreadQuery,
+} from "@gooddata/sdk-backend-spi";
+import {
+    publisherDocumentDefinitionToYaml,
+    publisherDocumentDefinitionToYamlV2,
+} from "@gooddata/sdk-code-convertors";
 import {
     type IDashboardDefinition,
     type IFilterContext,
@@ -22,6 +29,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import type { DateNormalizer } from "../../../convertors/fromBackend/dateFormatting/types.js";
+import { absolutePeriodDocumentV2 } from "../../../convertors/fromBackend/publisherV2.fixture.js";
 import type { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 import {
@@ -153,6 +161,7 @@ describe("ChatConversationThreadQuery.stream", () => {
         const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
             workspaceId: "workspace",
             conversationId: "conversation",
+            documentFormat: "aac-v1",
             userQuestion: clarifyingAnswers,
         });
 
@@ -186,6 +195,7 @@ describe("ChatConversationThreadQuery.stream", () => {
         const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
             workspaceId: "workspace",
             conversationId: "conversation",
+            documentFormat: "aac-v1",
             userQuestion: "Hello",
         });
 
@@ -308,6 +318,7 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
         const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
             workspaceId: "workspace",
             conversationId: "conversation",
+            documentFormat: "aac-v1",
             userQuestion: "Summarize",
             userContext: {
                 view: {
@@ -344,6 +355,7 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
         const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
             workspaceId: "workspace",
             conversationId: "conversation",
+            documentFormat: "aac-v1",
             userQuestion: "Summarize",
             userContext: {
                 view: {
@@ -395,6 +407,7 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
         const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
             workspaceId: "workspace",
             conversationId: "conversation",
+            documentFormat: "aac-v1",
             userQuestion: "Summarize",
             userContext: {
                 view: {
@@ -424,6 +437,7 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
         const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
             workspaceId: "workspace",
             conversationId: "conversation",
+            documentFormat: "aac-v1",
             userQuestion: "Summarize",
             userContext: {
                 view: {
@@ -447,6 +461,7 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
         const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
             workspaceId: "workspace",
             conversationId: "conversation",
+            documentFormat: "aac-v1",
             userQuestion: "Summarize",
             userContext: {
                 view: {
@@ -471,6 +486,7 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
         const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
             workspaceId: "workspace",
             conversationId: "conversation",
+            documentFormat: "aac-v1",
             userQuestion: "Summarize",
             userContext: {
                 view: {
@@ -503,6 +519,7 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
         const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
             workspaceId: "workspace",
             conversationId: "conversation",
+            documentFormat: "aac-v1",
             userQuestion: "Summarize",
             userContext: {
                 view: {
@@ -537,6 +554,7 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
         const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
             workspaceId: "workspace",
             conversationId: "conversation",
+            documentFormat: "aac-v1",
             userQuestion: "Summarize",
             userContext: {
                 view: {
@@ -569,6 +587,7 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
         const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
             workspaceId: "workspace",
             conversationId: "conversation",
+            documentFormat: "aac-v1",
             userQuestion: "Summarize",
             userContext: {
                 view: {
@@ -599,6 +618,7 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
         const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
             workspaceId: "workspace",
             conversationId: "conversation",
+            documentFormat: "aac-v1",
             userQuestion: "Summarize",
             userContext: {
                 view: {
@@ -632,6 +652,7 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
         const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
             workspaceId: "workspace",
             conversationId: "conversation",
+            documentFormat: "aac-v1",
             userQuestion: "Summarize",
             userContext: {
                 view: {
@@ -663,6 +684,7 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
         const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
             workspaceId: "workspace",
             conversationId: "conversation",
+            documentFormat: "aac-v1",
             userQuestion: "Summarize",
             userContext: {
                 view: {
@@ -710,6 +732,7 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
             const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
                 workspaceId: "workspace",
                 conversationId: "conversation",
+                documentFormat: "aac-v1",
                 userQuestion: "Summarize",
                 userContext,
             });
@@ -825,5 +848,129 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
 
             expect(userContext).not.toHaveProperty("view");
         });
+
+        it("should not send a v2 document in the v1 format", async () => {
+            const userContext = await sentUserContext({
+                view: { publisherDocumentV2: { ref: idRef("northwind_h1"), title: "Northwind H1" } },
+            });
+
+            expect(userContext).not.toHaveProperty("view");
+        });
+    });
+
+    describe("document view of Publisher content v2", () => {
+        async function sentUserContextV2(userContext: IGenAIUserContext) {
+            const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
+                workspaceId: "workspace",
+                conversationId: "conversation",
+                documentFormat: "aac-v2",
+                userQuestion: "Summarize",
+                userContext,
+            });
+
+            query.stream([]);
+
+            return vi.mocked(GenAiApi_PostMessages).mock.calls[0][2].aiSendMessageRequest.userContext;
+        }
+
+        it("should send the document as AaC v2, identified by its ref", async () => {
+            const userContext = await sentUserContextV2({
+                view: {
+                    publisherDocumentV2: {
+                        ref: idRef("northwind_h1"),
+                        title: "Northwind H1",
+                        definition: absolutePeriodDocumentV2,
+                    },
+                },
+            });
+
+            expect(userContext?.view).toEqual({
+                document: {
+                    id: "northwind_h1",
+                    title: "Northwind H1",
+                    definition: publisherDocumentDefinitionToYamlV2({
+                        ...absolutePeriodDocumentV2,
+                        ref: idRef("northwind_h1"),
+                    }).json,
+                },
+            });
+        });
+
+        it("should send a document that is not saved yet with no id", async () => {
+            const userContext = await sentUserContextV2({
+                view: { publisherDocumentV2: { definition: absolutePeriodDocumentV2 } },
+            });
+
+            expect(userContext?.view?.document).toEqual({
+                id: null,
+                definition: publisherDocumentDefinitionToYamlV2(absolutePeriodDocumentV2).json,
+            });
+        });
+
+        it("should never send the v1 report view", async () => {
+            const userContext = await sentUserContextV2({
+                view: {
+                    publisherDocument: { ref: idRef("q1", "report"), draftRef: "report_1" },
+                    publisherDocumentV2: { ref: idRef("northwind_h1") },
+                },
+            });
+
+            expect(userContext?.view).toEqual({ document: { id: "northwind_h1" } });
+        });
+
+        it("should send no view for a v1 document alone", async () => {
+            const userContext = await sentUserContextV2({
+                view: { publisherDocument: { ref: idRef("q1", "report") } },
+            });
+
+            expect(userContext).not.toHaveProperty("view");
+        });
+    });
+});
+
+describe("ChatConversationThreadQuery document format", () => {
+    const dateNormalizer: DateNormalizer = (value) => value ?? "";
+    const authCall = vi.fn(async (callback) =>
+        callback({
+            axios: {},
+            basePath: "",
+        }),
+    ) as TigerAuthenticatedCallGuard;
+
+    beforeEach(() => {
+        vi.clearAllMocks();
+        vi.mocked(GenAiApi_PostMessages).mockResolvedValue({
+            data: { items: [] },
+        } as unknown as Awaited<AxiosPromise>);
+    });
+
+    const sentOptions = (query: IChatConversationThreadQuery) => {
+        query.stream([]);
+        return vi.mocked(GenAiApi_PostMessages).mock.calls[0][2].aiSendMessageRequest.options;
+    };
+
+    const thread = () =>
+        new ChatConversationsService(authCall, "workspace", dateNormalizer).getConversationThread(
+            "conversation",
+        );
+
+    it("should ask for aac-v1 when the caller names no format", () => {
+        expect(sentOptions(thread().query("Summarize"))).toMatchObject({ documentFormat: "aac-v1" });
+    });
+
+    it.each<GenAIPublisherDocumentFormat>(["aac-v1", "aac-v2"])("should ask for %s when named", (format) => {
+        const query = thread().query("Summarize").withPublisherDocumentFormat(format);
+
+        expect(sentOptions(query)).toMatchObject({ documentFormat: format });
+    });
+
+    it("should keep the format through later builder calls", () => {
+        const query = thread()
+            .query("Summarize")
+            .withPublisherDocumentFormat("aac-v2")
+            .withEffort("LOW")
+            .withSearchLimit(5);
+
+        expect(sentOptions(query)).toMatchObject({ documentFormat: "aac-v2", reasoningEffort: "LOW" });
     });
 });

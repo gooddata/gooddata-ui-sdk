@@ -13,7 +13,11 @@ import {
     useDashboardSelector,
 } from "../../../../../model/react/DashboardStoreProvider.js";
 import { dispatchAndWaitFor } from "../../../../../model/store/_infra/dispatchAndWaitFor.js";
-import { selectIsAiLoading, selectIsAiMode } from "../../../../../model/store/config/configSelectors.js";
+import {
+    selectIsAiBuilding,
+    selectIsAiLoading,
+    selectIsAiMode,
+} from "../../../../../model/store/config/configSelectors.js";
 import { selectIsDashboardDirty } from "../../../../../model/store/meta/metaSelectors.js";
 import { selectIsInEditMode } from "../../../../../model/store/renderMode/renderModeSelectors.js";
 import { selectIsDashboardSaving } from "../../../../../model/store/saving/savingSelectors.js";
@@ -51,6 +55,7 @@ export function useSaveButtonProps(): ISaveButtonProps {
 
     const isEditing = useDashboardSelector(selectIsInEditMode);
     const isAiLoading = useDashboardSelector(selectIsAiLoading);
+    const isAiBuilding = useDashboardSelector(selectIsAiBuilding);
     const isAiMode = useDashboardSelector(selectIsAiMode);
     const isSavingDashboard = useDashboardSelector(selectIsDashboardSaving);
     const isPrivateDashboard = useDashboardSelector(selectIsPrivateDashboard);
@@ -60,7 +65,8 @@ export function useSaveButtonProps(): ISaveButtonProps {
     const isSaving = isSavingDashboard || optimisticIsSaving;
 
     const isVisible = isEditing;
-    const isEnabled = isDashboardDirty && !isEmptyDashboard && canSaveDashboard && !isAiLoading;
+    const isEnabled =
+        isDashboardDirty && !isEmptyDashboard && canSaveDashboard && !isAiLoading && !isAiBuilding;
 
     let buttonTitle = messages.controlButtonsSaveAndPublishTitle;
     if (isPrivateDashboard) {

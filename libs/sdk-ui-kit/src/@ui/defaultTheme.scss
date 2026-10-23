@@ -16,7 +16,7 @@
     --gd-palette-complementary-4: #ccd8e2;
     --gd-palette-complementary-5: #b0beca;
     --gd-palette-complementary-6: #94a1ad;
-    --gd-palette-complementary-7: #6d7680;
+    --gd-palette-complementary-7: #6a737d;
     --gd-palette-complementary-8: #464e56;
     --gd-palette-complementary-9: #000;
 
@@ -115,11 +115,11 @@
 
     // Chart
     --gd-chart-axis-color: var(--gd-palette-complementary-4-from-theme, #ccd6eb);
-    --gd-chart-axis-labelColor: var(--gd-palette-complementary-7, #6d7680);
+    --gd-chart-axis-labelColor: var(--gd-palette-complementary-7);
     --gd-chart-axis-valueColor: var(--gd-palette-complementary-6, #94a1ad);
     --gd-chart-backgroundColor: var(--gd-palette-complementary-0, #fff);
     --gd-chart-gridColor: var(--gd-palette-complementary-3-from-theme, #ebebeb);
-    --gd-chart-legendValueColor: var(--gd-palette-complementary-7, #6d7680);
+    --gd-chart-legendValueColor: var(--gd-palette-complementary-7);
     --gd-chart-tooltip-backgroundColor: var(
         --gd-chart-tooltipBackgroundColor,
         var(--gd-palette-complementary-0-from-theme, rgba(255, 255, 255, 0.95))
@@ -139,7 +139,7 @@
     --gd-chart-dataLabel-backplateBorderColor: var(--gd-palette-complementary-3-from-theme, #dde4eb);
     --gd-chart-dataLabel-backplateBorderRadius: 2px;
     --gd-chart-axisColor: var(--gd-palette-complementary-4-from-theme, #ccd6eb);
-    --gd-chart-axisLabelColor: var(--gd-palette-complementary-7, #6d7680);
+    --gd-chart-axisLabelColor: var(--gd-palette-complementary-7);
     --gd-chart-axisValueColor: var(--gd-palette-complementary-6, #94a1ad);
     --gd-chart-tooltipBackgroundColor: var(
         --gd-palette-complementary-0-from-theme,
@@ -163,7 +163,7 @@
         --gd-palette-complementary-7-from-theme,
         var(--gd-palette-complementary-8, #464e56)
     );
-    --gd-table-hoverBackgroundColor: var(--gd-palette-complementary-1-from-theme, rgba(109, 118, 128, 0.1));
+    --gd-table-hoverBackgroundColor: var(--gd-palette-complementary-1-from-theme, rgba(106, 115, 125, 0.1));
     --gd-table-loadingIconColor: var(--gd-palette-complementary-6, #94a1ad);
     --gd-table-nullValueColor: var(--gd-palette-complementary-6, #94a1ad);
     --gd-table-subtotalBackgroundColor: var(
@@ -197,7 +197,7 @@
     --gd-dashboards-content-kpiWidget-dropShadow: var(--gd-dashboards-content-widget-dropShadow, none);
     --gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor: var(
         --gd-palette-complementary-9-from-theme,
-        #6d7680
+        #6a737d
     );
     --gd-dashboards-content-kpiWidget-kpi-secondaryInfoColor: var(--gd-palette-complementary-6, #94a1ad);
     --gd-dashboards-content-kpiWidget-title-color: var(

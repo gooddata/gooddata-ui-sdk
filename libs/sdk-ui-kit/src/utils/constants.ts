@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 /**
  * @internal
@@ -28,4 +28,4 @@ export const GD_COLOR_STATE_HOVER = "#94a1ad";
  * @internal
  */
 
-export const GD_COLOR_STATE_BLANK = "#6d7680";
+export const GD_COLOR_STATE_BLANK = "#6a737d";

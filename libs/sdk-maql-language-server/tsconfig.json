@@ -1,0 +1,9 @@
+{
+    "extends": ["../tsconfig.base.json"],
+    "compilerOptions": {
+        "tsBuildInfoFile": "./tsconfig.check.tsbuildinfo",
+        "noEmit": true,
+        "isolatedModules": true,
+        "skipLibCheck": true
+    }
+}

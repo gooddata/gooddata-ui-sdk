@@ -35,7 +35,16 @@ function setup(state: SetupState) {
 describe("DashboardTabsWrapper", () => {
     it("should hide tabs while AI is waiting for user input", () => {
         setup({
-            config: { config: { isAiWaiting: true } },
+            config: { config: { aiMode: "waiting" } },
+            tabs: tabsState(),
+        });
+
+        expect(screen.queryByRole("tab")).not.toBeInTheDocument();
+    });
+
+    it("should hide tabs while AI is building", () => {
+        setup({
+            config: { config: { aiMode: "building" } },
             tabs: tabsState(),
         });
 

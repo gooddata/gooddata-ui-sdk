@@ -77,6 +77,17 @@ describe("mergeContexts", () => {
         ).toEqual({ view: { publisherDocument: { title: "Draft 2" } } });
     });
 
+    it("should let the later context of the same v2 document win", () => {
+        const ref = idRef("d1");
+
+        expect(
+            mergeContexts(
+                { view: { publisherDocumentV2: { ref, title: "D1" } } },
+                { view: { publisherDocumentV2: { ref, title: "D1 draft" } } },
+            ),
+        ).toEqual({ view: { publisherDocumentV2: { ref, title: "D1 draft" } } });
+    });
+
     it("should let the later context of the same document win", () => {
         const ref = idRef("q1", "report");
 

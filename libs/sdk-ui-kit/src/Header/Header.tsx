@@ -619,7 +619,7 @@ export function AppHeader({
 
                 {helpMenuItems.length ? (
                     <HeaderHelp
-                        onMenuItemClick={onMenuItemClick as any}
+                        onMenuItemClick={onMenuItemClick}
                         className="gd-header-measure"
                         helpMenuDropdownAlignPoints={helpDropdownAlign}
                         items={helpMenuItems}

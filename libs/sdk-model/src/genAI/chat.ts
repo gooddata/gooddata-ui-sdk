@@ -7,6 +7,7 @@ import type { IFilter } from "../execution/filter/index.js";
 import type { IMeasure } from "../execution/measure/index.js";
 import type { ObjRef } from "../objRef/index.js";
 import type { IPublisherDocumentDefinitionV1 } from "../publisher/v1/document.js";
+import type { IPublisherDocumentDefinitionV2 } from "../publisher/v2/document.js";
 
 import type { GenAIObjectType } from "./common.js";
 import type { ISemanticSearchResult, ISemanticSearchResultItem } from "./semanticSearch.js";
@@ -150,6 +151,10 @@ export interface IGenAIUIContext {
      * Document the user is currently viewing or editing.
      */
     publisherDocument?: IGenAIPublisherDocumentContext;
+    /**
+     * Document of Publisher content v2 the user is currently viewing or editing.
+     */
+    publisherDocumentV2?: IGenAIPublisherDocumentContextV2;
 }
 
 /**
@@ -174,6 +179,25 @@ export interface IGenAIPublisherDocumentContext {
      * Name of the conversation draft the editor shows, while that draft is not saved yet.
      */
     draftRef?: string;
+}
+
+/**
+ * Publisher document context of Publisher content v2 for GenAI.
+ * @internal
+ */
+export interface IGenAIPublisherDocumentContextV2 {
+    /**
+     * Document object reference. Absent while the document is not saved yet.
+     */
+    ref?: ObjRef;
+    /**
+     * Document title.
+     */
+    title?: string;
+    /**
+     * Document definition as the user sees it, including edits that are not saved yet.
+     */
+    definition?: IPublisherDocumentDefinitionV2;
 }
 
 /**

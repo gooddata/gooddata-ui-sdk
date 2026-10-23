@@ -1,0 +1,12 @@
+# Ignore files generated from ANTLR v4 grammar
+src/antlr4/*
+gen
+MaqlLexer.tokens
+# Ignore IDEA module file
+*.iml
+
+yarn-error.log
+.eslintcache
+lib
+build
+esm

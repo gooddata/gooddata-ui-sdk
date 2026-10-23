@@ -48,13 +48,14 @@ export interface IHostChromeChat {
         effort?: GenAIChatEffort,
     ) => void;
     /**
-     * Open the chat dialog with a pre-seeded optional user-location context
-     * (e.g. the active dashboard a hosted application forwards alongside the question).
+     * Open the chat dialog with optional user-location context (e.g. the active dashboard),
+     * or select an existing conversation by ID.
      */
     openAiAssistant: (
         userContext?: IGenAIUserContext,
         replaceUserContext?: boolean,
         agentId?: string,
+        conversationId?: string,
     ) => void;
     /**
      * Set the assistant's object-search tag scope, reflecting the active hosted application's
@@ -117,6 +118,7 @@ export function useHostChromeChat({
     const [askedQuestion, setAskedQuestion] = useState<string | null>(null);
     const [appendToChat, setAppendToChat] = useState(false);
     const [agentId, setAgentId] = useState<string | undefined>(undefined);
+    const [conversationId, setConversationId] = useState<string | undefined>(undefined);
     const [replaceUserContext, setReplaceUserContext] = useState(false);
     const [effort, setEffort] = useState<GenAIChatEffort | undefined>(undefined);
     const [mode, setMode] = useState<GenAIAssistantMode>("docked");
@@ -155,6 +157,7 @@ export function useHostChromeChat({
         ) => {
             setAskedQuestion(question);
             setAgentId(agentId);
+            setConversationId(undefined);
             setEffort(effort);
             setUserContext(questionUserContext);
             setAskSeq((seq) => seq + 1);
@@ -166,11 +169,17 @@ export function useHostChromeChat({
     );
 
     const openAiAssistant = useCallback(
-        (questionUserContext?: IGenAIUserContext, replaceUserContext?: boolean, agentId?: string) => {
+        (
+            questionUserContext?: IGenAIUserContext,
+            replaceUserContext?: boolean,
+            agentId?: string,
+            conversationId?: string,
+        ) => {
             setAskedQuestion(null);
             setEffort(undefined);
             setAppendToChat(false);
             setAgentId(agentId);
+            setConversationId(conversationId);
             setUserContext(questionUserContext);
             setReplaceUserContext(replaceUserContext ?? false);
             setAskSeq((seq) => seq + 1);
@@ -214,6 +223,7 @@ export function useHostChromeChat({
                 askedQuestion={askedQuestion}
                 appendToChat={appendToChat}
                 agentId={agentId}
+                conversationId={conversationId}
                 effort={effort}
                 replaceUserContext={replaceUserContext}
                 askSeq={askSeq}

@@ -119,6 +119,24 @@ describe("removeContextReference", () => {
         expect(result.active).toEqual({ view: { publisherDocument: { ref: idRef("q1", "report") } } });
     });
 
+    it("should remove the open v2 document", () => {
+        const dashboard = { ref: idRef("dashboard-1", "analyticalDashboard"), widgets: [] };
+        const context: StoreContext = {
+            active: { view: { dashboard, publisherDocumentV2: { ref: idRef("d1") } } },
+        };
+
+        const result = removeContextReference(context, {
+            id: "d1",
+            ref: idRef("d1"),
+            title: "D1",
+            nesting: 0,
+            type: "publisherDocument",
+            where: "view.publisherDocument",
+        });
+
+        expect(result.active).toEqual({ view: { dashboard } });
+    });
+
     it("should remove document reference and keep the dashboard", () => {
         const dashboard = { ref: idRef("dashboard-1", "analyticalDashboard"), widgets: [] };
         const context: StoreContext = {

@@ -3,8 +3,8 @@
 import {
     type IGenAIActiveObject,
     type IGenAIDashboardContext,
-    type IGenAIPublisherDocumentContext,
     type IGenAIUserContext,
+    type ObjRef,
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
 
@@ -35,9 +35,14 @@ export function mergeContexts(...contexts: (IGenAIUserContext | undefined)[]): I
             context.view?.publisherDocument,
             acc.view?.publisherDocument,
         );
+        const publisherDocumentV2 = mergePublisherDocument(
+            context.view?.publisherDocumentV2,
+            acc.view?.publisherDocumentV2,
+        );
         const view = {
             ...(dashboard ? { dashboard } : {}),
             ...(publisherDocument ? { publisherDocument } : {}),
+            ...(publisherDocumentV2 ? { publisherDocumentV2 } : {}),
         };
 
         const activeObject = mergeActiveObject(context.activeObject, acc.activeObject);
@@ -68,10 +73,10 @@ function mergeDashboard(
     return dashboard ?? existingDashboard;
 }
 
-function mergePublisherDocument(
-    publisherDocument?: IGenAIPublisherDocumentContext,
-    existingDocument?: IGenAIPublisherDocumentContext,
-): IGenAIPublisherDocumentContext | undefined {
+function mergePublisherDocument<T extends { ref?: ObjRef }>(
+    publisherDocument?: T,
+    existingDocument?: T,
+): T | undefined {
     if (
         publisherDocument &&
         existingDocument &&

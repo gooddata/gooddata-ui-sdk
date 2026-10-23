@@ -357,6 +357,9 @@ export type GenAIAppliedMemoryStrategy = "always" | "auto";
 // @internal
 export type GenAIInteractionStepCategory = "applyMemory" | "skillRouting" | "knowledgeSearch" | "catalogSearch" | "metricQuery" | "composeAnswer";
 
+// @internal
+export type GenAIPublisherDocumentFormat = "aac-v1" | "aac-v2";
+
 // @alpha
 export const GEO_ASSET_PATH = "/api/v1/location/";
 
@@ -969,7 +972,7 @@ export type IChatConversationMultipartContent = {
 };
 
 // @internal
-export type IChatConversationMultipartPart = IChatConversationTextContent | IChatConversationVisualisationContent | IChatConversationAlertProposalContent | IChatConversationKeyDriverAnalysisContent | IChatConversationClarifyingQuestionsContent | IChatConversationWhatIfContent | IChatConversationSearchContent | IChatConversationDashboardContent | IChatConversationPublisherDocumentContent;
+export type IChatConversationMultipartPart = IChatConversationTextContent | IChatConversationVisualisationContent | IChatConversationAlertProposalContent | IChatConversationKeyDriverAnalysisContent | IChatConversationClarifyingQuestionsContent | IChatConversationWhatIfContent | IChatConversationSearchContent | IChatConversationDashboardContent | IChatConversationPublisherDocumentContent | IChatConversationPublisherDocumentContentV2;
 
 // @internal
 export type IChatConversationPublisherDocumentContent = {
@@ -983,9 +986,20 @@ export type IChatConversationPublisherDocumentContent = {
 };
 
 // @internal
+export type IChatConversationPublisherDocumentContentV2 = Omit<IChatConversationPublisherDocumentContent, "type" | "publisherDocument"> & {
+    type: "publisherDocumentV2";
+    publisherDocument: IPublisherDocumentDefinitionV2 | null;
+};
+
+// @internal
 export type IChatConversationReasoningContent = {
     type: "reasoning";
     summary: string;
+};
+
+// @internal
+export type IChatConversationResavePublisherDocumentOptions = {
+    format?: GenAIPublisherDocumentFormat;
 };
 
 // @internal
@@ -1043,7 +1057,7 @@ export interface IChatConversationThread {
     }): Promise<IChatConversationItem[]>;
     query(userMessage: UserQuestionItem): IChatConversationThreadQuery;
     resaveDashboard(dashboardId: string, newDashboardId: string): Promise<void>;
-    resavePublisherDocument(documentRef: string, savedDocumentId: string): Promise<void>;
+    resavePublisherDocument(documentRef: string, savedDocumentId: string, options?: IChatConversationResavePublisherDocumentOptions): Promise<void>;
     resaveVisualisation(oldVisualizationId: string, newVisualizationId: string): Promise<void>;
     reset(options?: IChatConversationCreateOptions): Promise<IChatConversation>;
     saveFeedback(responseId: string, feedback: GenAIChatInteractionUserFeedback, userTextFeedback?: string): Promise<void>;
@@ -1058,6 +1072,7 @@ export interface IChatConversationThreadQuery {
     withExcludeTags(excludeTags?: string[]): IChatConversationThreadQuery;
     withIncludeTags(includeTags?: string[]): IChatConversationThreadQuery;
     withObjectTypes(objectTypes?: GenAIObjectType[]): IChatConversationThreadQuery;
+    withPublisherDocumentFormat(format: GenAIPublisherDocumentFormat): IChatConversationThreadQuery;
     withSearchLimit(searchLimit: number): IChatConversationThreadQuery;
     withUserContext(userContext: IGenAIUserContext): IChatConversationThreadQuery;
 }
@@ -3019,6 +3034,9 @@ export function isChatConversationMultipartContent(content: IChatConversationCon
 
 // @internal
 export function isChatConversationPublisherDocumentContent(content: IChatConversationMultipartPart): content is IChatConversationPublisherDocumentContent;
+
+// @internal
+export function isChatConversationPublisherDocumentContentV2(content: IChatConversationMultipartPart): content is IChatConversationPublisherDocumentContentV2;
 
 // @internal
 export function isChatConversationReasoningContent(content: IChatConversationContent): content is IChatConversationReasoningContent;

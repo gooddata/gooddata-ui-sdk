@@ -6,6 +6,12 @@ description: Scaffold a GoodData.UI React app with app-toolkit, render a
 category: Getting Started
 diataxis_type: tutorial
 legacy_path: quick_start
+api_symbols:
+  - "@gooddata/sdk-ui-dashboard:Dashboard"
+  - "@gooddata/sdk-ui-ext:InsightView"
+  - "@gooddata/sdk-ui-charts:PieChart"
+  - "@gooddata/sdk-ui:useInsightDataView"
+  - "@gooddata/sdk-ui-theme-provider:ThemeProvider"
 related_pages:
   - /docs/getting-started/installation
   - /docs/dashboard-plugins/dashboard

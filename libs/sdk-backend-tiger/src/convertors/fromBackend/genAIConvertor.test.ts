@@ -11,6 +11,7 @@ import {
     type IChatConversationWhatIfContent,
     isChatConversationSearchContent,
 } from "@gooddata/sdk-backend-spi";
+import { publisherDocumentDefinitionToYamlV2 } from "@gooddata/sdk-code-convertors";
 import { type IInsightWidget, type IdentifierRef } from "@gooddata/sdk-model";
 
 import {
@@ -23,6 +24,7 @@ import {
     convertChatSuggestionItemFromBackend,
 } from "./genAIConvertor.js";
 import { PUBLISHER_DOCUMENT_COPILOT_SAMPLE_PART } from "./publisherDocumentCopilotSample.fixture.js";
+import { absolutePeriodDocumentV2 } from "./publisherV2.fixture.js";
 
 describe("genAIConvertor", () => {
     const dateNormalizer = vi.fn((val) => val);
@@ -340,6 +342,37 @@ describe("genAIConvertor", () => {
             expect(parts[1]).toMatchObject({
                 type: "publisherDocument",
                 publisherDocument: { title: "Top Customers — H2 2025" },
+            });
+        });
+
+        it("converts a v1 report part and a v2 document part of one message, each in its own format", () => {
+            const item = {
+                conversationId: "conv-1",
+                itemIndex: 0,
+                itemId: "item-id",
+                role: "assistant",
+                createdAt: "2024-01-01T00:00:00Z",
+                content: {
+                    type: "multipart",
+                    parts: [
+                        PUBLISHER_DOCUMENT_COPILOT_SAMPLE_PART,
+                        {
+                            type: "document",
+                            format: "aac-v2",
+                            document_ref: "report_2",
+                            document: publisherDocumentDefinitionToYamlV2(absolutePeriodDocumentV2).json,
+                        },
+                    ],
+                },
+            } as unknown as AiConversationItemResponse;
+
+            const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+
+            const parts = (converted.content as IChatConversationMultipartContent).parts;
+            expect(parts.map((part) => part.type)).toEqual(["publisherDocument", "publisherDocumentV2"]);
+            expect(parts[1]).toMatchObject({
+                ref: "report_2",
+                publisherDocument: { type: "document", title: "Northwind H1" },
             });
         });
     });

@@ -1,4 +1,5 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
 import { type ThemeDefinedCssVariable } from "../types.js";
 
 export const paletteComplementaryThemeVariables: ThemeDefinedCssVariable[] = [
@@ -48,7 +49,7 @@ export const paletteComplementaryThemeVariables: ThemeDefinedCssVariable[] = [
         type: "theme",
         variableName: "--gd-palette-complementary-7",
         themePath: ["palette", "complementary", "c7"],
-        defaultValue: "#6d7680",
+        defaultValue: "#6a737d",
     },
     {
         type: "theme",

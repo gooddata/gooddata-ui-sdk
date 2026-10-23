@@ -4,6 +4,12 @@ title: Authenticate to the backend
 description: Pick how your GoodData.UI application authenticates against GoodData Cloud or GoodData.CN — the GoodData session cookie, a JWT from your own portal, or an API token — and set it up.
 category: Integrations
 diataxis_type: howto
+api_symbols:
+  - "@gooddata/sdk-backend-tiger:tigerFactory"
+  - "@gooddata/sdk-backend-tiger:ContextDeferredAuthProvider"
+  - "@gooddata/sdk-backend-tiger:TigerJwtAuthProvider"
+  - "@gooddata/sdk-backend-tiger:TigerTokenAuthProvider"
+  - "@gooddata/sdk-backend-spi:NotAuthenticated"
 related_pages:
   - /docs/integrations/cross-origin-issues
   - /docs/integrations/renew-session-silently

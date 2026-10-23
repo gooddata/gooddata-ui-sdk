@@ -1,0 +1,14 @@
+{
+    "targets": [
+        {
+            "targetName": "gdc-maql-language-server-unit-tests",
+            "changeDirs": [
+                {
+                    "glob": "**/*",
+                    "type": "fine-grained",
+                    "filter": "**/*.test.ts*"
+                }
+            ]
+        }
+    ]
+}

@@ -14,7 +14,9 @@ import { DashboardSelectorEvaluator } from '@gooddata/sdk-ui-dashboard';
 import { EnhancedStore } from '@reduxjs/toolkit';
 import { GenAIChatEffort } from '@gooddata/sdk-model';
 import { GenAIObjectType } from '@gooddata/sdk-model';
+import { GenAIPublisherDocumentFormat } from '@gooddata/sdk-backend-spi';
 import { IAiAssistantPublisherDocumentDefinition } from '@gooddata/sdk-pluggable-application-model';
+import { IAiAssistantPublisherDocumentDefinitionV2 } from '@gooddata/sdk-pluggable-application-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IChatConversation } from '@gooddata/sdk-backend-spi';
 import { IChatConversationContent } from '@gooddata/sdk-backend-spi';
@@ -62,6 +64,7 @@ export type ChatAssistantMessageEvent = BaseEvent & {
     type: "chatAssistantMessage";
     interactionId?: string;
     useCase: string;
+    cancelled?: boolean;
     skills?: {
         name: AgentCustomSkill;
         title: string;
@@ -181,17 +184,17 @@ export type ChatCopyToClipboardEvent = BaseEvent & {
 // @public
 export type ChatDefinitionReceivedEvent = BaseEvent & {
     type: "onDefinitionReceived";
-    definitionType: "dashboard" | "visualization" | "publisherDocument";
+    definitionType: "dashboard" | "visualization" | "publisherDocument" | "publisherDocumentV2";
     itemId: string;
     conversationId: string;
     interactionId?: string;
     dashboard?: IDashboard;
     insights?: IInsight[];
     visualization?: NonNullable<IChatConversationVisualisationContent["visualization"]>;
-} & Partial<IAiAssistantPublisherDocumentDefinition>;
+} & Partial<IAiAssistantPublisherDocumentDefinition> & Partial<Pick<IAiAssistantPublisherDocumentDefinitionV2, "publisherDocumentV2">>;
 
 // @public
-export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatModeChangeEvent | ChatConversationPinnedEvent | ChatConversationPinErrorEvent | ChatConversationDeleteEvent | ChatConversationDeletedSuccessEvent | ChatConversationDeletedErrorEvent | ChatConversationRenameEvent | ChatConversationRenamedSuccessEvent | ChatConversationRenamedErrorEvent | ChatUserMessageEvent | ChatUserAnswersEvent | ChatAgentChangeEvent | ChatAssistantMessageEvent | ChatFeedbackEvent | ChatFeedbackErrorEvent | ChatContextChangeEvent | ChatCopyToClipboardEvent | ChatVisualizationErrorEvent | ChatSaveVisualizationErrorEvent | ChatSaveVisualizationSuccessEvent | ChatConversationChangedEvent | ChatDefinitionReceivedEvent | ChatClarificationQuestionsEvent;
+export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatModeChangeEvent | ChatConversationPinnedEvent | ChatConversationPinErrorEvent | ChatConversationDeleteEvent | ChatConversationDeletedSuccessEvent | ChatConversationDeletedErrorEvent | ChatConversationRenameEvent | ChatConversationRenamedSuccessEvent | ChatConversationRenamedErrorEvent | ChatUserMessageEvent | ChatUserAnswersEvent | ChatAgentChangeEvent | ChatAssistantMessageEvent | ChatReasoningEvent | ChatFeedbackEvent | ChatFeedbackErrorEvent | ChatContextChangeEvent | ChatCopyToClipboardEvent | ChatVisualizationErrorEvent | ChatSaveVisualizationErrorEvent | ChatSaveVisualizationSuccessEvent | ChatConversationChangedEvent | ChatDefinitionReceivedEvent | ChatClarificationQuestionsEvent;
 
 // @public
 export type ChatEventHandler<TEvent extends ChatEvent = any> = {
@@ -223,6 +226,13 @@ export type ChatModeChangeEvent = BaseEvent & {
 // @public
 export type ChatOpenedEvent = BaseEvent & {
     type: "chatOpened";
+};
+
+// @public
+export type ChatReasoningEvent = BaseEvent & {
+    type: "chatReasoning";
+    interactionId?: string;
+    title?: string;
 };
 
 // @public
@@ -827,6 +837,9 @@ export const isChatModeChangeEvent: (event: ChatEvent) => event is ChatModeChang
 export const isChatOpenedEvent: (event: ChatEvent) => event is ChatOpenedEvent;
 
 // @public
+export const isChatReasoningEvent: (event: ChatEvent) => event is ChatReasoningEvent;
+
+// @public
 export const isChatResetEvent: (event: ChatEvent) => event is ChatResetEvent;
 
 // @public
@@ -895,6 +908,7 @@ conversationId: string;
 itemId: string;
 documentRef?: string;
 savedDocumentId: string;
+format?: GenAIPublisherDocumentFormat;
 }, "messages/publisherDocumentSavedAction">;
 
 // @public (undocumented)

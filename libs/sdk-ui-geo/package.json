@@ -1,8 +1,8 @@
 {
     "name": "@gooddata/sdk-ui-geo",
-    "version": "11.65.0-alpha.2",
+    "version": "11.65.0-alpha.3",
     "description": "GoodData.UI SDK - Geo Charts",
-    "license": "MIT",
+    "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
     "repository": {
         "type": "git",
@@ -16,7 +16,8 @@
         "esm/**/*.map",
         "esm/**/*.svg",
         "styles",
-        "worker/*.js"
+        "worker/*.js",
+        "NOTICE"
     ],
     "type": "module",
     "sideEffects": [
@@ -46,6 +47,7 @@
         "format-write": "oxfmt .",
         "lint": "oxlint . --quiet && eslint .",
         "lint-fix": "oxlint . --quiet --fix && eslint . --fix",
+        "prepack": "cp -f ../../NOTICE ./NOTICE",
         "scss": "sass --load-path=node_modules --load-path=node_modules/mapbox-gl/dist --load-path=node_modules/maplibre-gl/dist styles/scss/main.scss:styles/css/main.css",
         "stylelint": "stylelint '**/*.scss'",
         "stylelint-fix": "stylelint '**/*.scss' --fix",

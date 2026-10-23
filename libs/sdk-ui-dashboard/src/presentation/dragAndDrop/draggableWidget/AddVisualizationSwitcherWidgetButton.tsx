@@ -7,12 +7,11 @@ import {
     Bubble,
     BubbleHoverTrigger,
     type IAlignPoint,
-    IconVisualizationSwitcher,
     OverlayController,
     OverlayControllerProvider,
+    UiIcon,
     useMediaQuery,
 } from "@gooddata/sdk-ui-kit";
-import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/zIndex.js";
 
@@ -21,10 +20,11 @@ const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z
 
 export function AddVisualizationSwitcherWidgetButton() {
     const isMobileDevice = useMediaQuery("mobileDevice");
-    const theme = useTheme();
     return (
         <div className="add-item-placeholder add-panel-item s-add-visualization-switcher">
-            <IconVisualizationSwitcher color={theme?.palette?.complementary?.c6 ?? "#94a1ad"} />
+            <div className="add-item-placeholder__icon">
+                <UiIcon type="visualizationStack" size={18} layout="block" />
+            </div>
             <FormattedMessage id="addPanel.visualizationSwitcher" />
             <OverlayControllerProvider overlayController={overlayController}>
                 <BubbleHoverTrigger

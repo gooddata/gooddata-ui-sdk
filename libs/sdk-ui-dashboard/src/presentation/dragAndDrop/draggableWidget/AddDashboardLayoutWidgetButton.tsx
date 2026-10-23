@@ -4,15 +4,14 @@ import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
 import {
-    IconColumnContainer,
     OverlayController,
     OverlayControllerProvider,
+    UiIcon,
     UiLink,
     UiTooltip,
     bemFactory,
     useMediaQuery,
 } from "@gooddata/sdk-ui-kit";
-import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectIsWhiteLabeled } from "../../../model/store/config/configSelectors.js";
@@ -25,11 +24,12 @@ const tooltipBem = bemFactory("gd-container-tooltip");
 export function AddDashboardLayoutWidgetButton() {
     const isMobileDevice = useMediaQuery("mobileDevice");
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
-    const theme = useTheme();
 
     return (
         <div className="add-item-placeholder add-panel-item s-add-dashboard-layout">
-            <IconColumnContainer color={theme?.palette?.complementary?.c6 ?? "#94a1ad"} />
+            <div className="add-item-placeholder__icon">
+                <UiIcon type="columnGroup" size={18} layout="block" />
+            </div>
             <div className="add-panel-item__text">
                 <FormattedMessage id="addPanel.dashboardLayout" />
                 <OverlayControllerProvider overlayController={overlayController}>

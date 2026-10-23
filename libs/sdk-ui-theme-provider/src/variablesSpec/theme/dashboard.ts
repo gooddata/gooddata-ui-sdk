@@ -1,4 +1,5 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
 import { type ThemeDefinedCssVariable } from "../types.js";
 
 export const dashboardThemeVariables: ThemeDefinedCssVariable[] = [
@@ -44,7 +45,7 @@ export const dashboardThemeVariables: ThemeDefinedCssVariable[] = [
         type: "theme",
         themePath: ["dashboards", "content", "kpiWidget", "kpi", "primaryMeasureColor"],
         variableName: "--gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor",
-        defaultValue: "var(--gd-palette-complementary-9-from-theme, #6d7680)",
+        defaultValue: "var(--gd-palette-complementary-9-from-theme, #6a737d)",
     },
     {
         type: "theme",

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type IIconProps } from "../typings.js";
 import { combineIconClasses } from "../utils.js";
@@ -6,7 +6,7 @@ import { combineIconClasses } from "../utils.js";
 /**
  * @internal
  */
-export function ArrowRight({ color = "#6D7680", className, width = 11, height = 19 }: IIconProps) {
+export function ArrowRight({ color = "#6A737D", className, width = 11, height = 19 }: IIconProps) {
     return (
         <svg
             className={combineIconClasses(className)}

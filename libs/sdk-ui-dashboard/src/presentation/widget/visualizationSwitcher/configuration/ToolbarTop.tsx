@@ -46,9 +46,9 @@ export function ToolbarTop({
 
     const iconColor = visualizationsListShown
         ? (theme?.palette?.primary?.base ?? GD_COLOR_HIGHLIGHT)
-        : (theme?.palette?.complementary?.c7 ?? "#6D7680");
+        : (theme?.palette?.complementary?.c7 ?? "#6A737D");
 
-    const enabledColor = theme?.palette?.complementary?.c7 ?? "#6D7680";
+    const enabledColor = theme?.palette?.complementary?.c7 ?? "#6A737D";
     const disabledColor = theme?.palette?.complementary?.c5 ?? "#B0BECA";
 
     const prevColor = prevDisabled ? disabledColor : enabledColor;

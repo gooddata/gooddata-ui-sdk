@@ -25,12 +25,18 @@ import {
 
 vi.mock("../messages/messagesSelectors.js", () => ({
     conversationMessagesSelector: (state: TestState) => state.messages,
+    conversationMessagesByIdSelector: (state: TestState, conversationId: string) =>
+        state.messagesByConversation?.[conversationId] ?? [],
+    conversationByIdOrLocalIdSelector: (state: TestState, conversationId: string) =>
+        state.conversations?.find((conversation) => conversation.localId === conversationId),
     threadIdSelector: (state: TestState) => state.threadId,
 }));
 
 type TestState = {
     messages: IChatConversationLocalItem[];
     threadId: string;
+    messagesByConversation?: Record<string, IChatConversationLocalItem[]>;
+    conversations?: { id: string; localId: string }[];
 };
 
 const clarificationMessage = {
@@ -58,9 +64,40 @@ const clarificationMessage = {
 const state: TestState = {
     messages: [clarificationMessage],
     threadId: "thread-id",
+    messagesByConversation: { "thread-id": [clarificationMessage] },
 };
 
 describe("clarification question events", () => {
+    it("reports questions from the originating conversation even when another one is active", async () => {
+        const dispatch = vi.fn<(event: ChatEvent) => void>();
+        const backgroundState: TestState = {
+            messages: [],
+            threadId: "unrelated-thread",
+            messagesByConversation: { "local-conversation": [clarificationMessage] },
+            conversations: [{ id: "origin-thread", localId: "local-conversation" }],
+        };
+
+        await runSaga(
+            {
+                context: { eventDispatcher: { dispatch } },
+                getState: () => backgroundState,
+            },
+            onEvaluateMessageStreaming,
+            evaluateMessageStreamingAction({
+                assistantMessageId: clarificationMessage.localId,
+                conversationId: "local-conversation",
+            }),
+        ).toPromise();
+
+        expect(dispatch).toHaveBeenCalledWith(
+            expect.objectContaining({
+                type: "chatClarificationQuestions",
+                threadId: "origin-thread",
+                interactionId: clarificationMessage.id,
+            }),
+        );
+    });
+
     it("emits structured user answers", async () => {
         const dispatch = vi.fn<(event: ChatEvent) => void>();
         const answers = [
@@ -121,6 +158,7 @@ describe("clarification question events", () => {
                 assistantMessageId: clarificationMessage.localId,
                 content: clarificationMessage.content as IChatConversationLocalContent,
                 interactionId: clarificationMessage.id,
+                conversationId: "thread-id",
             }),
         ).toPromise();
         await runSaga(
@@ -134,7 +172,10 @@ describe("clarification question events", () => {
         await runSaga(
             sagaOptions,
             onEvaluateMessageComplete,
-            evaluateMessageCompleteAction({ assistantMessageId: clarificationMessage.localId }),
+            evaluateMessageCompleteAction({
+                assistantMessageId: clarificationMessage.localId,
+                conversationId: "thread-id",
+            }),
         ).toPromise();
 
         expect(dispatch).toHaveBeenNthCalledWith(1, {
@@ -196,6 +237,72 @@ describe("clarification question events", () => {
 });
 
 describe("assistant message events", () => {
+    it.each([false, true])(
+        "emits completion after the active conversation switches (cancelled: %s)",
+        async (cancelled) => {
+            const dispatch = vi.fn<(event: ChatEvent) => void>();
+            const backgroundState: TestState = {
+                messages: [],
+                threadId: "unrelated-thread",
+                messagesByConversation: { "local-conversation": [clarificationMessage] },
+                conversations: [{ id: "origin-thread", localId: "local-conversation" }],
+            };
+
+            await runSaga(
+                {
+                    context: { eventDispatcher: { dispatch } },
+                    getState: () => backgroundState,
+                },
+                onEvaluateMessageComplete,
+                evaluateMessageCompleteAction({
+                    assistantMessageId: clarificationMessage.localId,
+                    conversationId: "local-conversation",
+                    cancelled,
+                }),
+            ).toPromise();
+
+            expect(dispatch).toHaveBeenCalledExactlyOnceWith({
+                type: "chatAssistantMessage",
+                interactionId: clarificationMessage.id,
+                useCase: "GENERAL",
+                skills: undefined,
+                threadId: "origin-thread",
+                ...(cancelled ? { cancelled: true } : {}),
+            });
+        },
+    );
+
+    it("emits cancellation so dashboard builds can be unlocked", async () => {
+        const dispatch = vi.fn<(event: ChatEvent) => void>();
+        const message = {
+            id: "interaction-id",
+            localId: "local-id",
+            role: "assistant",
+            content: { type: "text", text: "Working" },
+        } as IChatConversationLocalItem;
+
+        await runSaga(
+            {
+                context: { eventDispatcher: { dispatch } },
+                getState: () => ({
+                    messages: [message],
+                    threadId: "thread-id",
+                    messagesByConversation: { "thread-id": [message] },
+                }),
+            },
+            onEvaluateMessageComplete,
+            evaluateMessageCompleteAction({
+                assistantMessageId: message.localId,
+                conversationId: "thread-id",
+                cancelled: true,
+            }),
+        ).toPromise();
+
+        expect(dispatch).toHaveBeenCalledWith(
+            expect.objectContaining({ type: "chatAssistantMessage", cancelled: true }),
+        );
+    });
+
     it("emits activated skills", async () => {
         const dispatch = vi.fn<(event: ChatEvent) => void>();
         const skills = [
@@ -218,10 +325,14 @@ describe("assistant message events", () => {
                 getState: () => ({
                     messages: [skillActivatedMessage],
                     threadId: "thread-id",
+                    messagesByConversation: { "thread-id": [skillActivatedMessage] },
                 }),
             },
             onEvaluateMessageComplete,
-            evaluateMessageCompleteAction({ assistantMessageId: skillActivatedMessage.localId }),
+            evaluateMessageCompleteAction({
+                assistantMessageId: skillActivatedMessage.localId,
+                conversationId: "thread-id",
+            }),
         ).toPromise();
 
         expect(dispatch).toHaveBeenCalledWith({

@@ -48,6 +48,24 @@ describe("ConversationThread.resavePublisherDocument", () => {
         expect(JSON.parse(request.mock.calls[0][0].data)).toEqual({ id: "saved-1" });
     });
 
+    it("records a saved v2 document through the documents path", async () => {
+        await threadOf("conversation").resavePublisherDocument("report_2", "saved-2", { format: "aac-v2" });
+
+        expect(request.mock.calls[0][0]).toMatchObject({
+            method: "PATCH",
+            url: "/api/v1/ai/workspaces/workspace/chat/conversations/conversation/documents/report_2",
+        });
+        expect(JSON.parse(request.mock.calls[0][0].data)).toEqual({ id: "saved-2" });
+    });
+
+    it("records a saved v1 report through the reports path", async () => {
+        await threadOf("conversation").resavePublisherDocument("report_1", "saved-1", { format: "aac-v1" });
+
+        expect(request.mock.calls[0][0].url).toBe(
+            "/api/v1/ai/workspaces/workspace/chat/conversations/conversation/reports/report_1",
+        );
+    });
+
     it("puts the client's base path in front of the path", async () => {
         await threadOf("conversation", "https://acme.test").resavePublisherDocument("report_1", "saved-1");
 

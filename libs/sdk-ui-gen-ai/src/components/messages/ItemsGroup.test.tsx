@@ -116,4 +116,31 @@ describe("ItemsGroup", () => {
         expect(screen.queryByText("Heading 1...")).toBeNull();
         expect(screen.getByText("Heading 2...")).toBeDefined();
     });
+
+    it("should drop the reasoning live region once the group completes", () => {
+        const group: IChatMessagesGroup = {
+            type: "reasoning",
+            messages: [
+                {
+                    id: "1",
+                    role: "assistant",
+                    content: { type: "reasoning", summary: "# Heading 1\nContent 1" },
+                    createdAt: Date.now(),
+                    type: "item",
+                    replyTo: "1",
+                    responseId: "1",
+                    localId: "1",
+                    complete: true,
+                },
+            ],
+        };
+
+        const { container } = renderWithIntl(
+            <ItemsGroup group={group}>
+                <div>Reasoning Content</div>
+            </ItemsGroup>,
+        );
+
+        expect(container.querySelector("[aria-live]")).toBeNull();
+    });
 });

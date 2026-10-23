@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { type ReactNode, useCallback, useRef, useState } from "react";
+import { type MouseEvent, type ReactNode, useCallback, useRef, useState } from "react";
 
 import cx from "classnames";
 import { isEmpty } from "lodash-es";
@@ -28,7 +28,7 @@ interface IHeaderHelpProps {
     className: string;
     helpMenuDropdownAlignPoints?: HelpMenuDropdownAlignPoints;
     items: IHelpItem[];
-    onMenuItemClick?: (...args: any[]) => void;
+    onMenuItemClick?: (item: IHelpItem, e: MouseEvent<HTMLAnchorElement>) => void;
     disableDropdown?: boolean;
     onHelpClicked?: (isOpen?: boolean) => void;
     helpRedirectUrl?: string;
@@ -66,8 +66,8 @@ export function HeaderHelp({
                 href={item.href}
                 target={item.target}
                 rel={item.target === "_blank" ? "noreferrer noopener" : undefined}
-                onClick={() => {
-                    menuItemClicked(item);
+                onClick={(e) => {
+                    menuItemClicked(item, e);
                 }}
                 className={cx("gd-list-item gd-list-help-menu-item", {
                     [item.className as string]: !!item.className,
@@ -88,9 +88,9 @@ export function HeaderHelp({
         [isOpen, onHelpClicked],
     );
 
-    const menuItemClicked = (...args: any[]) => {
+    const menuItemClicked = (item: IHelpItem, e: MouseEvent<HTMLAnchorElement>) => {
         toggleHelpMenu(false);
-        onMenuItemClick?.(...args);
+        onMenuItemClick?.(item, e);
     };
 
     /**

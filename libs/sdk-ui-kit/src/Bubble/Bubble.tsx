@@ -96,6 +96,8 @@ export interface IBubbleProps {
     children?: ReactNode;
     overlayPositionType?: OverlayPositionType;
     ensureVisibility?: boolean;
+    resizeObserverThreshold?: number;
+    keepBottomOnResize?: boolean;
     accessibilityConfig?: IBubbleAccessibilityConfig;
 }
 
@@ -153,6 +155,8 @@ export const Bubble: NamedExoticComponent<IBubbleProps> = memo(
             children,
             overlayPositionType,
             ensureVisibility,
+            resizeObserverThreshold,
+            keepBottomOnResize,
             accessibilityConfig,
         } = { ...defaultProps, ...props };
 
@@ -260,6 +264,8 @@ export const Bubble: NamedExoticComponent<IBubbleProps> = memo(
                 closeOnEscape={closeOnEscape}
                 positionType={overlayPositionType}
                 ensureVisibility={ensureVisibility}
+                resizeObserverThreshold={resizeObserverThreshold}
+                keepBottomOnResize={keepBottomOnResize}
             >
                 <div
                     onMouseEnter={onMouseEnter}

@@ -2,6 +2,10 @@
 title: Key Driver Analysis
 category: AI & Modules
 diataxis_type: explanation
+api_symbols:
+  - "@gooddata/sdk-ui-gen-ai:GenAiKeyDriverAnalysis"
+  - "@gooddata/sdk-ui-dashboard:DashboardEventHandler"
+  - "@gooddata/sdk-ui-dashboard:IDashboardKeyDriverAnalysisRequested"
 related_pages:
   - /docs/dashboard-plugins/dashboard-events
   - /docs/dashboard-plugins/dashboard

@@ -11,12 +11,14 @@ import {
 
 import cx from "classnames";
 import { bindAll, debounce, isEqual, pick } from "lodash-es";
+import { flushSync } from "react-dom";
 import isReactEqual from "react-fast-compare";
 import { Portal } from "react-portal";
 import { v4 as uuid } from "uuid";
 
 import { isClickInsideOwnSubtree } from "../@ui/hooks/useCloseOnOutsideClick.js";
 import { type Alignment, type OverlayPositionType, type SameAsTargetPosition } from "../typings/overlay.js";
+import { type IAlignPoint } from "../typings/positioning.js";
 import { ENUM_KEY_CODE } from "../typings/utilities.js";
 import { elementRegion, isFixedPosition } from "../utils/domUtilities.js";
 import { GOODSTRAP_DRAG_EVENT } from "../utils/drag.js";
@@ -117,7 +119,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
     private overlayRef = createRef<HTMLDivElement>();
     private containerRef = createRef<HTMLSpanElement>();
     private resizeHandler = debounce(() => {
-        this.align();
+        this.realign();
     }, 100);
     private portalNode: HTMLDivElement | null = null;
     private isComponentMounted: boolean;
@@ -126,6 +128,8 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
     static override contextType = OverlayContext;
     declare context: ContextType<typeof OverlayContext>;
     private observer: ResizeObserver | undefined;
+    private lockedAlignPoints: IAlignPoint[] | undefined;
+    private bottomFromTarget = 0;
 
     constructor(props: IOverlayProps<T>) {
         super(props);
@@ -231,7 +235,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
                     closeOnAnchorHidden={this.props.closeOnAnchorHidden}
                     anchorKey={this.props.alignTo}
                     getAnchor={this.getAlignAnchor}
-                    onParentScroll={this.align}
+                    onParentScroll={this.realign}
                     onAnchorHidden={this.closeOnAnchorHidden}
                 />
                 <Portal node={this.portalNode}>
@@ -261,6 +265,11 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
         );
     }
 
+    private realign = (): void => {
+        this.lockedAlignPoints = undefined;
+        this.align();
+    };
+
     public align = (): void => {
         const { alignPoints, alignTo, positionType } = this.props;
         const overlay = this.overlayRef.current;
@@ -269,19 +278,29 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
             return;
         }
         const isSameAsTarget = this.isSameAsTargetPosition(positionType ?? "absolute");
+        const targetRegion = elementRegion(alignTo, isSameAsTarget);
+        const selfRegion = elementRegion(overlay);
         const optimalAlign = getOptimalAlignment({
-            targetRegion: elementRegion(alignTo, isSameAsTarget),
-            selfRegion: elementRegion(overlay),
-            alignPoints,
+            targetRegion,
+            selfRegion,
+            alignPoints: this.lockedAlignPoints ?? alignPoints,
             ignoreScrollOffsets: isSameAsTarget,
         });
+        const alignment = this.props.keepBottomOnResize
+            ? this.keepBottomEdge(
+                  optimalAlign.alignment,
+                  selfRegion.height,
+                  targetRegion.top,
+                  isSameAsTarget ? isFixedPosition(alignTo) : positionType === "fixed",
+              )
+            : optimalAlign.alignment;
 
         // process also if visiblePart is 1 to get dimensions of the overlay
         const shouldApplyConstraints = this.props.ensureVisibility && (optimalAlign.visiblePart ?? 0) > 0;
 
         const constrainedAlignment = shouldApplyConstraints
-            ? this.calculateConstrainedAlignment(optimalAlign.alignment, overlay, positionType === "fixed")
-            : optimalAlign.alignment;
+            ? this.calculateConstrainedAlignment(alignment, overlay, positionType === "fixed")
+            : alignment;
 
         const visiblePartChanged = this.hasVisiblePartChanged(optimalAlign.visiblePart ?? 0);
         const alignmentChanged = alignExceedsThreshold(this.state.alignment, constrainedAlignment);
@@ -293,15 +312,38 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
                     visiblePart: visiblePartChanged ? (optimalAlign.visiblePart ?? 0) : prevState.visiblePart,
                 }),
                 () => {
-                    const alignmentToReport = alignmentChanged
-                        ? constrainedAlignment
-                        : optimalAlign.alignment;
+                    const alignmentToReport = alignmentChanged ? constrainedAlignment : alignment;
                     this.props.onAlign?.(alignmentToReport);
                 },
             );
         } else {
-            this.props.onAlign?.(optimalAlign.alignment);
+            this.props.onAlign?.(alignment);
         }
+    };
+
+    private keepBottomEdge = (
+        alignment: Alignment,
+        height: number,
+        targetTop: number,
+        ignoreScrollOffsets: boolean,
+    ): Alignment => {
+        if (!this.lockedAlignPoints) {
+            this.lockedAlignPoints = this.props.alignPoints?.filter(
+                (point) => point.align === alignment.align,
+            );
+            this.bottomFromTarget = alignment.top + height - targetTop;
+        }
+
+        const viewportTop = ignoreScrollOffsets
+            ? 0
+            : window.visualViewport?.pageTop || window.scrollY || document.documentElement.scrollTop;
+        const viewportHeight = window.visualViewport?.height || window.innerHeight;
+        const top = Math.max(
+            viewportTop,
+            Math.min(targetTop + this.bottomFromTarget - height, viewportTop + viewportHeight - height),
+        );
+
+        return { ...alignment, top };
     };
 
     private calculateConstrainedAlignment = (
@@ -632,7 +674,11 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
                 (this.props.resizeObserverThreshold ?? 1);
 
             if (heightDiffersByThreshold) {
-                this.resizeHandler();
+                if (this.props.keepBottomOnResize) {
+                    flushSync(this.align);
+                } else {
+                    this.resizeHandler();
+                }
                 this.setState({ observedHeight: newHeightCandidate });
             }
         });

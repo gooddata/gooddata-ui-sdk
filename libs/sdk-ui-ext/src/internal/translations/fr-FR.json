@@ -339,7 +339,7 @@
     "dashboard.bucket.table.subtitle.rows": "en lignes",
     "properties.interactions.title": "Interactions",
     "properties.customTooltip.title": "Info-bulle personnalisée",
-    "properties.customTooltip.placeholder": "Ajouter un contenu d'info-bulle personnalisé...\n# Titre\n**Gras**\n'{metric/metric_id}'\n'{label/label_id}'",
+    "properties.customTooltip.placeholder": "Ajouter un contenu d’info-bulle personnalisé…\n# Titre\n**Gras**\n'{metric/metric_id}'\n'{label/label_id}'",
     "properties.customTooltip.contentLabel": "Contenu",
     "properties.customTooltip.formattingOptions": "Options de mise en forme",
     "properties.customTooltip.placement": "Positionnement",

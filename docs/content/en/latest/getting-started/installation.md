@@ -1,10 +1,16 @@
 ---
-title: Install GoodData.UI
+title: Installation
 description: Add GoodData.UI to an existing React application by installing the
   packages, importing the styles, connecting the analytical backend, and
   rendering a dashboard your users pick from a list.
 category: Getting Started
 diataxis_type: howto
+api_symbols:
+  - "@gooddata/sdk-ui:BackendProvider"
+  - "@gooddata/sdk-ui:WorkspaceProvider"
+  - "@gooddata/sdk-backend-tiger:tigerFactory"
+  - "@gooddata/sdk-backend-tiger:ContextDeferredAuthProvider"
+  - "@gooddata/sdk-ui-dashboard:Dashboard"
 related_pages:
   - /docs/getting-started/quickstart
   - /docs/integrations/authentication

@@ -11,6 +11,7 @@ import { IEntitlementDescriptor } from '@gooddata/sdk-model';
 import { IGenAIUserContext } from '@gooddata/sdk-model';
 import { ILocale } from '@gooddata/sdk-model';
 import { IPublisherDocumentDefinition } from '@gooddata/sdk-model';
+import { IPublisherDocumentDefinitionV2 } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
 import { IUserSettings } from '@gooddata/sdk-model';
@@ -101,6 +102,15 @@ export interface IAiAssistantPublisherDocumentDefinition {
 }
 
 // @alpha
+export interface IAiAssistantPublisherDocumentDefinitionV2 {
+    readonly baseDocumentId?: string;
+    readonly documentRef?: string;
+    readonly publisherDocumentV2: IPublisherDocumentDefinitionV2;
+    readonly refines?: string;
+    readonly reworksOpenDocument?: boolean;
+}
+
+// @alpha
 export interface IAiAssistantPublisherDocumentSavedEvent extends IPluggableAppEvent {
     // (undocumented)
     readonly payload: {
@@ -108,6 +118,7 @@ export interface IAiAssistantPublisherDocumentSavedEvent extends IPluggableAppEv
         readonly itemId: string;
         readonly documentRef?: string;
         readonly savedDocumentId: string;
+        readonly format?: "aac-v1" | "aac-v2";
     };
     // (undocumented)
     readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.PUBLISHER_DOCUMENT_SAVED";
@@ -240,6 +251,7 @@ export interface IOpenAiAssistantRequestedEvent extends IPluggableAppEvent {
         readonly appendToChat?: boolean;
         readonly replaceUserContext?: boolean;
         readonly effort?: GenAIChatEffort;
+        readonly conversationId?: string;
     };
     // (undocumented)
     readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.OPEN_REQUESTED";
@@ -406,6 +418,11 @@ export function isAiAssistantPublisherDocumentDefinition(obj: unknown): obj is O
 };
 
 // @alpha
+export function isAiAssistantPublisherDocumentDefinitionV2(obj: unknown): obj is Omit<IAiAssistantPublisherDocumentDefinitionV2, "publisherDocumentV2"> & {
+    readonly publisherDocumentV2: unknown;
+};
+
+// @alpha
 export function isAiAssistantPublisherDocumentSavedEvent(obj: unknown): obj is IAiAssistantPublisherDocumentSavedEvent;
 
 // @alpha
@@ -461,6 +478,7 @@ export function openAiAssistantRequested(payload?: {
     appendToChat?: boolean;
     replaceUserContext?: boolean;
     effort?: GenAIChatEffort;
+    conversationId?: string;
 }): IOpenAiAssistantRequestedEvent;
 
 // @alpha

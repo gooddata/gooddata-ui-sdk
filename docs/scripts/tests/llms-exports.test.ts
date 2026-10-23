@@ -178,7 +178,10 @@ const name = \`IVisualizationCallbacks\`;
         "latest/getting-started/advanced/_index.md",
         "---\ntitle: Advanced\nweight: 2\n---\n\nAdvanced topics.\n",
     );
-    c("latest/getting-started/advanced/tuning.md", "---\ntitle: Tuning\nweight: 1\n---\n\nTune it.\n");
+    c(
+        "latest/getting-started/advanced/tuning.md",
+        `---\ntitle: Tuning\nweight: 1\n---\n\nTune it.\n\n## Using C#\n\n## The \`use_foo\` hook\n\n## Typed -- dash\n\n## Custom anchor {#my-id}\n\n### Example\n\nOne.\n\n### Example\n\nTwo.\n\n## Configure the backend\n\n<div>\n## Configure the backend\n</div>\n\n\`\`\`\`md\n\`\`\`md\n## Inside a long fence\n\`\`\`\n\`\`\`\`\n\n~~~\n## Inside a tilde fence\n~~~\n\nIndented code:\n\n    \`\`\`\n    not a fence\n\n## After indented code\n\n## See [Install](../../install/)\n`,
+    );
 
     c(
         "latest/api-reference/_index.md",
@@ -380,7 +383,7 @@ Pass [\`IVisualizationCallbacks\`](${API}sdk-ui.ivisualizationcallbacks/index.md
 const name = \`IVisualizationCallbacks\`;
 \`\`\`
 
-## Check`;
+## [Check](${DOCS}getting-started/install/#check)`;
 
 test("index.md: the page as Markdown, shortcodes rendered, links to the Markdown versions", () => {
     const md = read("latest/getting-started/install/index.md");
@@ -630,6 +633,32 @@ test("HTML: a folded member has no page of its own; links to it go to its sectio
     assert.ok(
         iface.includes('<h3 id="v1ifoobar"><code><span class="api-member-owner">v1.IFoo.</span>bar</code>'),
     );
+});
+
+test("index.md: guide headings link to their web section, only where the match is certain", () => {
+    const md = read("latest/getting-started/advanced/tuning/index.md");
+    const page = `${DOCS}getting-started/advanced/tuning/`;
+    for (const [heading, id] of [
+        ["Using C#", "using-c"],
+        ["The `use_foo` hook", "the-use_foo-hook"],
+        ["Typed -- dash", "typed--dash"],
+        ["Custom anchor", "my-id"],
+        ["After indented code", "after-indented-code"],
+    ]) {
+        assert.ok(md.includes(`\n## [${heading}](${page}#${id})\n`), `${heading}\n${md}`);
+    }
+    // the rendered ids exist on the HTML page
+    const html = read("latest/getting-started/advanced/tuning/index.html");
+    for (const id of ["using-c", "the-use_foo-hook", "typed--dash", "my-id", "after-indented-code"]) {
+        assert.ok(html.includes(`id="${id}"`) || html.includes(`id=${id}`), id);
+    }
+    assert.ok(!md.includes("{#my-id}"), "the custom id attribute is dropped");
+    // left as written: a repeated title, a title that also appears outside a heading, code, a heading with a link
+    assert.ok(md.includes("\n### Example\n\nOne.") && md.includes("\n### Example\n\nTwo."));
+    assert.ok(md.includes("\n## Configure the backend\n"), "matches a non-heading line too, so not linked");
+    assert.ok(!md.includes("[Configure the backend]("));
+    assert.ok(md.includes("\n## Inside a long fence\n") && md.includes("\n## Inside a tilde fence\n"));
+    assert.ok(md.includes(`## See [Install](${DOCS}getting-started/install/index.md)`));
 });
 
 test("llms-full.txt: every guide page of llms.txt in the same order, as Markdown, without the API reference", () => {

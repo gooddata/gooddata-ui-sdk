@@ -4285,6 +4285,13 @@ export interface IGenAIPublisherDocumentContext {
     title?: string;
 }
 
+// @internal
+export interface IGenAIPublisherDocumentContextV2 {
+    definition?: IPublisherDocumentDefinitionV2;
+    ref?: ObjRef;
+    title?: string;
+}
+
 // @alpha
 export interface IGenAiSingleChoiceControl {
     options: Array<IGenAiClarifyingChoiceOption>;
@@ -4301,6 +4308,7 @@ export type IGenAISuggestion = {
 export interface IGenAIUIContext {
     dashboard?: IGenAIDashboardContext;
     publisherDocument?: IGenAIPublisherDocumentContext;
+    publisherDocumentV2?: IGenAIPublisherDocumentContextV2;
 }
 
 // @internal

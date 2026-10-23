@@ -42,3 +42,7 @@ $dashboard-canvas-tooltip: $filterbar-sdk-8-12 + 1;
 
 $dashboard-layout-column: 10;
 $dashboard-message: $dashboard-layout-column + 1;
+
+$dashboard-ai-building-overlay: $filterbar-sdk-8-12 - 1;
+$dashboard-ai-building-banner: $filterbar-sdk-8-12 + 1;
+$dashboard-ai-composing-overlay: 9999;

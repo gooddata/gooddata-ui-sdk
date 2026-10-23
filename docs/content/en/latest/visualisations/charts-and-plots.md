@@ -4,6 +4,11 @@ title: Charts and plots
 description: Shared behavior of GoodData.UI visual components — responsive sizing, the style and data props model, and the visualization lifecycle callbacks.
 category: Visualisations
 diataxis_type: explanation
+api_symbols:
+  - "@gooddata/sdk-ui:IVisualizationCallbacks"
+  - "@gooddata/sdk-ui:ErrorComponent"
+  - "@gooddata/sdk-ui:LoadingComponent"
+  - "@gooddata/sdk-ui:GoodDataSdkError"
 related_pages:
   - /docs/visualisations/chart-config
   - /docs/visualisations/insightview

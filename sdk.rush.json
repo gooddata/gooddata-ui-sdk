@@ -241,6 +241,11 @@
      */
     "projects": [
         {
+            "packageName": "@gooddata/sdk-maql-language-server",
+            "projectFolder": "libs/sdk-maql-language-server",
+            "versionPolicyName": "sdk"
+        },
+        {
             "packageName": "@gooddata/sdk-ui-gen-ai",
             "projectFolder": "libs/sdk-ui-gen-ai",
             "versionPolicyName": "sdk"

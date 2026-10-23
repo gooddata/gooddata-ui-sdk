@@ -13,7 +13,7 @@ import type { IGenAIContextObject, SelectedContext, StoreContext } from "../type
 import { addContextReference } from "./addContextReference.js";
 import { isReferenceChanged } from "./isReferenceChanged.js";
 import { removeContextReference } from "./removeContextReference.js";
-import { viewObjectId } from "./viewedPublisherDocument.js";
+import { viewObjectId, viewedPublisherDocument } from "./viewedPublisherDocument.js";
 
 export function pickSelectedContextFromUserContext(
     context: StoreContext,
@@ -101,7 +101,7 @@ function updateContextReference(
     activated?: boolean,
 ) {
     const dashboard = ambient?.view?.dashboard;
-    const publisherDocument = ambient?.view?.publisherDocument;
+    const publisherDocument = viewedPublisherDocument(ambient?.view);
 
     if (dashboard || publisherDocument) {
         newContext.loaded = true;

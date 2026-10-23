@@ -16,11 +16,7 @@ import { useDashboardSelector } from "../../../model/react/DashboardStoreProvide
 import { useDashboardAutomations } from "../../../model/react/useDashboardAutomations/useDashboardAutomations.js";
 import { selectAccessibleDashboardsLoaded } from "../../../model/store/accessibleDashboards/accessibleDashboardsSelectors.js";
 import { selectCatalogIsLoaded } from "../../../model/store/catalog/catalogSelectors.js";
-import {
-    selectIsAiLoading,
-    selectLocale,
-    selectSettings,
-} from "../../../model/store/config/configSelectors.js";
+import { selectLocale, selectSettings } from "../../../model/store/config/configSelectors.js";
 import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 import { selectDashboardDensity } from "../../../model/store/ui/uiSelectors.js";
 import {
@@ -42,8 +38,9 @@ import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeA
 import { useResizableSidebarState } from "../DashboardSidebar/useResizableSidebarState.js";
 import { type IDashboardProps } from "../types.js";
 
+import { DashboardInteractionComposing } from "./DashboardInteractionComposing.js";
+import { DashboardInteractionLock } from "./DashboardInteractionLock.js";
 import { DashboardScreenSizeProvider } from "./DashboardScreenSizeContext.js";
-import { DashboardSkeleton } from "./DashboardSkeleton.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 const toastsOverlayController = OverlayController.getInstance(DASHBOARD_TOASTS_OVERLAY_Z_INDEX);
@@ -55,7 +52,6 @@ export function DashboardInner(props: IDashboardProps) {
     const accessibleDashboardsLoaded = useDashboardSelector(selectAccessibleDashboardsLoaded);
     const density = useDashboardSelector(selectDashboardDensity);
     const settings = useDashboardSelector(selectSettings);
-    const isAiLoading = useDashboardSelector(selectIsAiLoading);
     const enableEnhancedInsightPicker = settings?.enableEnhancedInsightPicker ?? false;
 
     const headerRef = useRef<HTMLDivElement | null>(null);
@@ -120,7 +116,6 @@ export function DashboardInner(props: IDashboardProps) {
                         <div
                             className={cx("gd-dashboards-root gd-flex-container", {
                                 "gd-dashboards-root--floating-toolbar": enableEnhancedInsightPicker,
-                                "sdk-dashboard-generating": isAiLoading,
                             })}
                             style={dashboardsRootStyle}
                         >
@@ -131,24 +126,18 @@ export function DashboardInner(props: IDashboardProps) {
                                 WrapInsightListItemWithDragComponent={WrapInsightListItemWithDrag}
                             />
                             <main className={dashboardContentClassNames} {...mainContentNavigationProps}>
-                                {/* gd-dash-header-wrapper-sdk-8-12 style is added because we should keep old styles unchanged to not brake plugins */}
-                                <div
-                                    className="gd-dash-header-wrapper gd-dash-header-wrapper-sdk-8-12"
-                                    ref={headerRef}
-                                >
-                                    {/* Header z-index start at  6000, so we need force all overlays z-indexes start at 6000 to be under header */}
-                                    <OverlayControllerProvider overlayController={overlayController}>
-                                        <DashboardHeader />
-                                    </OverlayControllerProvider>
-                                </div>
-                                {isAiLoading ? (
-                                    <div className="gd-flex-item-stretch dash-section dash-section-kpis">
-                                        <DashboardScreenSizeProvider>
-                                            <DashboardSkeleton />
-                                        </DashboardScreenSizeProvider>
+                                <DashboardInteractionComposing>
+                                    {/* gd-dash-header-wrapper-sdk-8-12 style is added because we should keep old styles unchanged to not brake plugins */}
+                                    <div
+                                        className="gd-dash-header-wrapper gd-dash-header-wrapper-sdk-8-12"
+                                        ref={headerRef}
+                                    >
+                                        {/* Header z-index start at  6000, so we need force all overlays z-indexes start at 6000 to be under header */}
+                                        <OverlayControllerProvider overlayController={overlayController}>
+                                            <DashboardHeader />
+                                        </OverlayControllerProvider>
                                     </div>
-                                ) : (
-                                    <>
+                                    <DashboardInteractionLock>
                                         <div
                                             className="gd-flex-item-stretch dash-section dash-section-kpis"
                                             ref={layoutRef}
@@ -159,8 +148,8 @@ export function DashboardInner(props: IDashboardProps) {
                                             {enableEnhancedInsightPicker ? <FilterDeleteOverlay /> : null}
                                         </div>
                                         <div className="gd-dash-bottom-position-pixel" ref={bottomRef} />
-                                    </>
-                                )}
+                                    </DashboardInteractionLock>
+                                </DashboardInteractionComposing>
                             </main>
                         </div>
                         <Toolbar />

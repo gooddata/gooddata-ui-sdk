@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from "react";
 
+import { type GenAIPublisherDocumentFormat } from "@gooddata/sdk-backend-spi";
+
 import { publisherDocumentSavedAction } from "../../store/messages/messagesSlice.js";
 
 /**
@@ -14,6 +16,7 @@ export interface IPublisherDocumentSaved {
     itemId: string;
     documentRef?: string;
     savedDocumentId: string;
+    format?: GenAIPublisherDocumentFormat;
 }
 
 /**

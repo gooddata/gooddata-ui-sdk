@@ -22,6 +22,7 @@ import type {
     IMemoryItemDefinition,
     IMemoryItemMetadataObject,
     IPublisherDocumentDefinitionV1,
+    IPublisherDocumentDefinitionV2,
     ISemanticQualityIssuesCalculation,
     ISemanticQualityReport,
     ISemanticSearchRelationship,
@@ -1272,7 +1273,8 @@ export type IChatConversationMultipartPart =
     | IChatConversationWhatIfContent
     | IChatConversationSearchContent
     | IChatConversationDashboardContent
-    | IChatConversationPublisherDocumentContent;
+    | IChatConversationPublisherDocumentContent
+    | IChatConversationPublisherDocumentContentV2;
 
 /**
  * GenAI Chat Conversation text content
@@ -1714,6 +1716,49 @@ export function isChatConversationPublisherDocumentContent(
 }
 
 /**
+ * GenAI Chat Conversation publisher document content of Publisher content v2
+ * @internal
+ */
+export type IChatConversationPublisherDocumentContentV2 = Omit<
+    IChatConversationPublisherDocumentContent,
+    "type" | "publisherDocument"
+> & {
+    type: "publisherDocumentV2";
+    /**
+     * Snapshot of the whole document, not a change to apply to an earlier one. Null when the draft
+     * does not resolve or does not validate.
+     */
+    publisherDocument: IPublisherDocumentDefinitionV2 | null;
+};
+
+/**
+ * Is chat conversation publisher document content of Publisher content v2
+ * @internal
+ */
+export function isChatConversationPublisherDocumentContentV2(
+    content: IChatConversationMultipartPart,
+): content is IChatConversationPublisherDocumentContentV2 {
+    return content.type === "publisherDocumentV2";
+}
+
+/**
+ * Publisher document format a chat request asks the assistant to read and draft in.
+ * @internal
+ */
+export type GenAIPublisherDocumentFormat = "aac-v1" | "aac-v2";
+
+/**
+ * Options for recording the saved document of a conversation draft.
+ * @internal
+ */
+export type IChatConversationResavePublisherDocumentOptions = {
+    /**
+     * Format of the draft that was saved. Defaults to "aac-v1".
+     */
+    format?: GenAIPublisherDocumentFormat;
+};
+
+/**
  * Feedback for a chat conversation item.
  * @internal
  */
@@ -1810,8 +1855,13 @@ export interface IChatConversationThread {
      *
      * @param documentRef - name of the draft in the conversation
      * @param savedDocumentId - id of the document it was saved as
+     * @param options - format of the saved draft
      */
-    resavePublisherDocument(documentRef: string, savedDocumentId: string): Promise<void>;
+    resavePublisherDocument(
+        documentRef: string,
+        savedDocumentId: string,
+        options?: IChatConversationResavePublisherDocumentOptions,
+    ): Promise<void>;
     /**
      * Add a user message to the chat thread.
      */
@@ -1858,6 +1908,10 @@ export interface IChatConversationThreadQuery {
      * Define how much effort the LLM should spend reasoning about this message.
      */
     withEffort(effort?: GenAIChatEffort): IChatConversationThreadQuery;
+    /**
+     * Define the Publisher document format the assistant reads and drafts in. Defaults to "aac-v1".
+     */
+    withPublisherDocumentFormat(format: GenAIPublisherDocumentFormat): IChatConversationThreadQuery;
     /**
      * Execute the chat thread and stream the results.
      */

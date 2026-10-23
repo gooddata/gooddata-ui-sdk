@@ -3,6 +3,8 @@
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
+import { UiIcon } from "@gooddata/sdk-ui-kit";
+
 /**
  * @internal
  */
@@ -25,6 +27,9 @@ export function AddAttributeFilterPlaceholder({ disabled }: IAddAttributeFilterP
 
     return (
         <div className={className}>
+            <div className="add-item-placeholder__icon">
+                <UiIcon type="filter" size={18} layout="block" />
+            </div>
             <FormattedMessage id="addPanel.filter" />
         </div>
     );

@@ -11,7 +11,7 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../../model/react/DashboardStoreProvider.js";
-import { selectIsAiLoading } from "../../../../../model/store/config/configSelectors.js";
+import { selectIsAiBuilding, selectIsAiLoading } from "../../../../../model/store/config/configSelectors.js";
 import { selectIsShareButtonVisible } from "../../../../../model/store/topBar/topBarSelectors.js";
 import { uiActions } from "../../../../../model/store/ui/index.js";
 import { selectDashboardDensity } from "../../../../../model/store/ui/uiSelectors.js";
@@ -27,10 +27,11 @@ export function useShareButtonProps(): IShareButtonProps {
     const onShareButtonClick = useCallback(() => dispatch(uiActions.openShareDialog()), [dispatch]);
     const isVisible = useDashboardSelector(selectIsShareButtonVisible);
     const isAiLoading = useDashboardSelector(selectIsAiLoading);
+    const isAiBuilding = useDashboardSelector(selectIsAiBuilding);
 
     return {
         isVisible,
-        isEnabled: !isAiLoading,
+        isEnabled: !isAiLoading && !isAiBuilding,
         onShareButtonClick,
     };
 }

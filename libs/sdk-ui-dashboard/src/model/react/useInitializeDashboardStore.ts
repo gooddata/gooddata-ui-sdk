@@ -119,21 +119,15 @@ export const useInitializeDashboardStore = (
 
     useEffect(() => {
         if (dashboardStore) {
-            dashboardStore.store.dispatch(configActions.setIsAiGenerating(!!props.config?.isAiGenerating));
+            dashboardStore.store.dispatch(configActions.setAiMode(props.config?.aiMode));
         }
-    }, [dashboardStore, props.config?.isAiGenerating]);
+    }, [dashboardStore, props.config?.aiMode]);
 
     useEffect(() => {
         if (dashboardStore) {
-            dashboardStore.store.dispatch(configActions.setIsAiWaiting(!!props.config?.isAiWaiting));
+            dashboardStore.store.dispatch(configActions.setAiReasoningTitle(props.config?.aiReasoningTitle));
         }
-    }, [dashboardStore, props.config?.isAiWaiting]);
-
-    useEffect(() => {
-        if (dashboardStore) {
-            dashboardStore.store.dispatch(configActions.setIsAiMode(!!props.config?.isAiMode));
-        }
-    }, [dashboardStore, props.config?.isAiMode]);
+    }, [dashboardStore, props.config?.aiReasoningTitle]);
 
     // oxlint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {

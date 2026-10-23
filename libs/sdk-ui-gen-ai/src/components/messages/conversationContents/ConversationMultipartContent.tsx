@@ -7,6 +7,7 @@ import {
     type IChatConversationMultipartLocalPart,
     type TextContentObject,
 } from "../../../model.js";
+import { isPublisherDocumentPart } from "../../../publisherDocumentPart.js";
 import { loadWhatIfScenarios } from "../../../whatIf/whatIfMapping.js";
 import { useCustomization } from "../../CustomizationContext.js";
 
@@ -122,16 +123,8 @@ export function ConversationMultipartContent({
                         />
                     );
                 }
-                if (part.type === "publisherDocument") {
-                    return (
-                        <ConversationPublisherDocumentContent
-                            key={index}
-                            message={message}
-                            publisherDocument={part.publisherDocument}
-                            saved={part.saved}
-                            baseDocumentId={part.baseDocumentId}
-                        />
-                    );
+                if (isPublisherDocumentPart(part)) {
+                    return <ConversationPublisherDocumentContent key={index} message={message} part={part} />;
                 }
                 // Add more multipart types if needed
                 return null;

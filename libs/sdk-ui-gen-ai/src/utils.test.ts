@@ -125,11 +125,19 @@ describe("getVisualizationHref", () => {
 
 describe("getPublisherDocumentHref", () => {
     it("links a saved document inside the publisher", () => {
-        expect(getPublisherDocumentHref("ws1", "r1")).toBe("/workspace/ws1/publisher/report/r1");
+        expect(getPublisherDocumentHref("ws1", "r1", "aac-v1")).toBe("/workspace/ws1/publisher/report/r1");
+    });
+
+    it("links a saved v2 document on the document route", () => {
+        expect(getPublisherDocumentHref("ws1", "d/1", "aac-v2")).toBe(
+            "/workspace/ws1/publisher/document/d%2F1",
+        );
     });
 
     it("keeps an id with a slash in one path segment", () => {
-        expect(getPublisherDocumentHref("ws1", "r/1")).toBe("/workspace/ws1/publisher/report/r%2F1");
+        expect(getPublisherDocumentHref("ws1", "r/1", "aac-v1")).toBe(
+            "/workspace/ws1/publisher/report/r%2F1",
+        );
     });
 });
 
@@ -152,11 +160,43 @@ describe("getPublisherDocumentModifyHref", () => {
         expect(
             getPublisherDocumentModifyHref({
                 workspaceId: "ws1",
+                format: "aac-v1",
                 documentId: "r/1",
                 conversationId: "conv-1",
                 itemId: "item-1",
             }),
         ).toBe("/workspace/ws1/publisher/report/r%2F1?conversation=conv-1&item=item-1");
+    });
+});
+
+describe("getPublisherDocumentItemUrl of a v2 document", () => {
+    it("links the draft's changes to the saved document on the document route", () => {
+        expect(
+            getPublisherDocumentItemUrl({
+                workspaceId: "ws1",
+                format: "aac-v2",
+                baseDocumentId: "base-1",
+                conversationId: "conv-1",
+                itemId: "item-1",
+            }),
+        ).toBe("/workspace/ws1/publisher/document/base-1?conversation=conv-1&item=item-1");
+    });
+
+    it("links a saved document without the draft on the document route", () => {
+        expect(getPublisherDocumentItemUrl({ workspaceId: "ws1", format: "aac-v2", saved: "d1" })).toBe(
+            "/workspace/ws1/publisher/document/d1",
+        );
+    });
+
+    it("links a new draft the same way as a v1 one", () => {
+        expect(
+            getPublisherDocumentItemUrl({
+                workspaceId: "ws1",
+                format: "aac-v2",
+                conversationId: "conv-1",
+                itemId: "item-1",
+            }),
+        ).toBe("/workspace/ws1/publisher/new?conversation=conv-1&item=item-1");
     });
 });
 
@@ -168,6 +208,7 @@ describe("getPublisherDocumentItemUrl", () => {
         expect(
             getPublisherDocumentItemUrl({
                 workspaceId: "ws1",
+                format: "aac-v1",
                 baseDocumentId: "base-1",
                 conversationId: "conv-1",
                 itemId: "item-1",
@@ -179,6 +220,7 @@ describe("getPublisherDocumentItemUrl", () => {
         expect(
             getPublisherDocumentItemUrl({
                 workspaceId: "ws1",
+                format: "aac-v1",
                 saved: "r1",
                 baseDocumentId: "base-1",
                 conversationId: "conv-1",
@@ -191,6 +233,7 @@ describe("getPublisherDocumentItemUrl", () => {
         expect(
             getPublisherDocumentItemUrl({
                 workspaceId: "ws1",
+                format: "aac-v1",
                 baseDocumentId,
                 conversationId: "conv-1",
                 itemId: "item-1",
@@ -203,7 +246,12 @@ describe("getPublisherDocumentItemUrl", () => {
         ["an empty message id", { conversationId: "conv-1", itemId: "" }],
     ])("links no changes to a saved document with %s", (_description, ids) => {
         expect(
-            getPublisherDocumentItemUrl({ workspaceId: "ws1", baseDocumentId: "base-1", ...ids }),
+            getPublisherDocumentItemUrl({
+                workspaceId: "ws1",
+                format: "aac-v1",
+                baseDocumentId: "base-1",
+                ...ids,
+            }),
         ).toBeUndefined();
     });
 
@@ -211,6 +259,7 @@ describe("getPublisherDocumentItemUrl", () => {
         expect(
             getPublisherDocumentItemUrl({
                 workspaceId: "ws1",
+                format: "aac-v1",
                 saved: "r1",
                 conversationId: "conv-1",
                 itemId: "item-1",
@@ -223,14 +272,19 @@ describe("getPublisherDocumentItemUrl", () => {
         ["an empty message id", { conversationId: "conv-1", itemId: "" }],
         ["no ids", {}],
     ])("links a saved document without the draft with %s", (_description, ids) => {
-        expect(getPublisherDocumentItemUrl({ workspaceId: "ws1", saved: "r1", ...ids })).toBe(
-            "/workspace/ws1/publisher/report/r1",
-        );
+        expect(
+            getPublisherDocumentItemUrl({ workspaceId: "ws1", format: "aac-v1", saved: "r1", ...ids }),
+        ).toBe("/workspace/ws1/publisher/report/r1");
     });
 
     it("links a draft that names its conversation and message", () => {
         expect(
-            getPublisherDocumentItemUrl({ workspaceId: "ws1", conversationId: "conv-1", itemId: "item-1" }),
+            getPublisherDocumentItemUrl({
+                workspaceId: "ws1",
+                format: "aac-v1",
+                conversationId: "conv-1",
+                itemId: "item-1",
+            }),
         ).toBe(draftUrl);
     });
 
@@ -238,6 +292,7 @@ describe("getPublisherDocumentItemUrl", () => {
         expect(
             getPublisherDocumentItemUrl({
                 workspaceId: "ws1",
+                format: "aac-v1",
                 saved: null,
                 conversationId: "conv-1",
                 itemId: "item-1",
@@ -252,7 +307,7 @@ describe("getPublisherDocumentItemUrl", () => {
         ["no message id", { conversationId: "conv-1" }],
         ["neither id", {}],
     ])("links nothing for a draft with %s", (_description, ids) => {
-        expect(getPublisherDocumentItemUrl({ workspaceId: "ws1", ...ids })).toBeUndefined();
+        expect(getPublisherDocumentItemUrl({ workspaceId: "ws1", format: "aac-v1", ...ids })).toBeUndefined();
     });
 });
 

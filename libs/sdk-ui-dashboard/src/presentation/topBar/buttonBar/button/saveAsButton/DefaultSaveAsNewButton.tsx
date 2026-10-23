@@ -11,7 +11,7 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../../model/react/DashboardStoreProvider.js";
-import { selectIsAiLoading } from "../../../../../model/store/config/configSelectors.js";
+import { selectIsAiBuilding, selectIsAiLoading } from "../../../../../model/store/config/configSelectors.js";
 import { selectIsSaveAsNewButtonVisible } from "../../../../../model/store/topBar/topBarSelectors.js";
 import { uiActions } from "../../../../../model/store/ui/index.js";
 import { selectDashboardDensity } from "../../../../../model/store/ui/uiSelectors.js";
@@ -25,6 +25,7 @@ export function useSaveAsNewButtonProps(): ISaveAsNewButtonProps {
     const dashboardDispatch = useDashboardDispatch();
     const isVisible = useDashboardSelector(selectIsSaveAsNewButtonVisible);
     const isAiLoading = useDashboardSelector(selectIsAiLoading);
+    const isAiBuilding = useDashboardSelector(selectIsAiBuilding);
 
     const onSaveAsNewClick = useCallback(() => {
         dashboardDispatch(uiActions.openSaveAsDialog());
@@ -32,7 +33,7 @@ export function useSaveAsNewButtonProps(): ISaveAsNewButtonProps {
 
     return {
         isVisible,
-        isEnabled: !isAiLoading,
+        isEnabled: !isAiLoading && !isAiBuilding,
         onSaveAsNewClick,
     };
 }

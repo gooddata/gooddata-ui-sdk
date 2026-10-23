@@ -3,8 +3,6 @@ legacy_path: learn/web_components
 title: Web Components overview
 category: Integrations / Web Components
 diataxis_type: explanation
-api_symbols:
-  - "@gooddata/sdk-ui-web-components:setContext"
 source_files:
   - src/context.ts
 related_pages:

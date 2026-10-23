@@ -8,6 +8,7 @@ import {
     isChatConversationDashboardContent,
     isChatConversationMultipartContent,
     isChatConversationPublisherDocumentContent,
+    isChatConversationPublisherDocumentContentV2,
     isChatConversationVisualisationContent,
 } from "@gooddata/sdk-backend-spi";
 
@@ -58,6 +59,23 @@ export function* notifyDefinitionReceived(
                     itemId: item.id,
                     definitionType: "publisherDocument",
                     publisherDocument: multipartContent.publisherDocument,
+                    documentRef: multipartContent.ref ?? undefined,
+                    refines: multipartContent.refines ?? undefined,
+                    reworksOpenDocument: multipartContent.reworksOpenDocument === true,
+                    baseDocumentId: multipartContent.baseDocumentId ?? undefined,
+                }),
+            );
+        } else if (
+            isChatConversationPublisherDocumentContentV2(multipartContent) &&
+            multipartContent.publisherDocument
+        ) {
+            yield put(
+                onDefinitionReceivedAction({
+                    conversationId,
+                    interactionId,
+                    itemId: item.id,
+                    definitionType: "publisherDocumentV2",
+                    publisherDocumentV2: multipartContent.publisherDocument,
                     documentRef: multipartContent.ref ?? undefined,
                     refines: multipartContent.refines ?? undefined,
                     reworksOpenDocument: multipartContent.reworksOpenDocument === true,

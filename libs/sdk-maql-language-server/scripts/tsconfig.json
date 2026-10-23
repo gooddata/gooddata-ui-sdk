@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es2019",
+        "outDir": "build",
+        "lib": ["es2020", "dom"],
+        "declaration": true,
+        "rootDir": "./",
+        "strict": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": false,
+        "noImplicitAny": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "removeComments": false,
+        "useDefineForClassFields": true
+    },
+    "exclude": ["node_modules", "build"]
+}

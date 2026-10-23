@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 @use "sass:color";
 @use "@gooddata/sdk-ui-kit/styles/scss/Bubble/_variables" as bubble-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
@@ -90,7 +91,7 @@ $editable-label-border: var(
     color.adjust($default-button-normal-active-border-color, $alpha: -0.5)
 );
 
-$sidebar-transition-length: 0.5s;
+$sidebar-transition-length: 0.3s;
 
 $gd-dashboards-title-backgroundColor: var(
     --gd-dashboards-title-backgroundColor,
