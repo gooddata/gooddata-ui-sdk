@@ -1,13 +1,11 @@
 {
     "extends": "../tsconfig.base.json",
-    "exclude": ["src/antlr4/maql/**", "**/*.test.ts"],
-    "include": ["src/**/*"],
     "compilerOptions": {
         "noCheck": true,
         "rootDir": "./src",
         "outDir": "./esm",
-        "isolatedModules": true,
-        "removeComments": false,
         "ignoreDeprecations": "5.0"
-    }
+    },
+    "exclude": ["src/antlr4/maql/**", "**/*.test.ts"],
+    "include": ["src/**/*"]
 }

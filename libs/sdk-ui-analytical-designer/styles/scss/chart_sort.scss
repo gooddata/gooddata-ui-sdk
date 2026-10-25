@@ -1,0 +1,68 @@
+// (C) 2022 GoodData Corporation
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/Button/_variables" as button-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.adi-chart-sort {
+    padding: 4px 0 0 5px;
+
+    .sort-button-panel {
+        display: flex;
+        align-items: center;
+    }
+
+    .sort-button-label {
+        padding: 0;
+        min-width: 0;
+    }
+
+    .sort-button {
+        margin: 10px 0 10px 10px;
+        padding: 0 8px;
+        font-weight: normal;
+
+        .gd-button-icon {
+            margin-right: 0;
+        }
+    }
+
+    .sort-icon {
+        mask-repeat: no-repeat;
+        mask-position: center;
+        background-color: button-variables.$button-normal-color;
+
+        &--alphabetical-asc {
+            mask-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/sort-alphabetical-asc.svg");
+        }
+
+        &--alphabetical-desc {
+            mask-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/sort-alphabetical-desc.svg");
+        }
+
+        &--date-asc {
+            mask-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/sort-date-asc.svg");
+        }
+
+        &--date-desc {
+            mask-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/sort-date-desc.svg");
+        }
+
+        &--default {
+            mask-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/sort-default.svg");
+        }
+
+        &--numerical-asc {
+            mask-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/sort-numerical-asc.svg");
+        }
+
+        &--numerical-desc {
+            mask-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/sort-numerical-desc.svg");
+        }
+    }
+
+    .disabled {
+        .sort-icon {
+            background-color: kit-variables.$gd-color-disabled;
+        }
+    }
+}

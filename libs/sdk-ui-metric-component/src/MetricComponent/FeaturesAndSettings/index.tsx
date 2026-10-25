@@ -4,6 +4,9 @@ import { type PropsWithChildren, createContext, useContext, useMemo } from "reac
 
 import { type ObjectVisibility } from "@gooddata/sdk-model";
 
+/**
+ * @internal
+ */
 export interface IFeaturesAndSettingsContext {
     canShowResults: boolean;
     canShowSql: boolean;
@@ -27,6 +30,9 @@ const Defaults: IFeaturesAndSettingsContext = {
 
 export const FeaturesAndSettingsContext = createContext<IFeaturesAndSettingsContext>(Defaults);
 
+/**
+ * @internal
+ */
 export function FeaturesAndSettingsContextProvider({
     children,
     canShowResults = Defaults.canShowResults,

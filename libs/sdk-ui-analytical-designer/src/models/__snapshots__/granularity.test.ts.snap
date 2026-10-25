@@ -1,0 +1,143 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`granularity > isChronologicalDateGranularity > should filter out expected granularity options 1`] = `
+[
+  {
+    "dateType": "GDC.time.year",
+    "label": "year",
+  },
+  {
+    "dateType": "GDC.time.fiscal_year",
+    "label": "fiscal_year",
+  },
+  {
+    "dateType": "GDC.time.quarter",
+    "label": "quarter",
+    "recommendationLabel": "this_quarter",
+  },
+  {
+    "dateType": "GDC.time.fiscal_quarter",
+    "label": "fiscal_quarter",
+    "recommendationLabel": "this_fiscal_quarter",
+  },
+  {
+    "dateType": "GDC.time.month",
+    "label": "month",
+    "recommendationLabel": "this_month",
+  },
+  {
+    "dateType": "GDC.time.fiscal_month",
+    "label": "fiscal_month",
+    "recommendationLabel": "this_fiscal_month",
+  },
+  {
+    "dateType": "GDC.time.week_us",
+    "label": "week",
+  },
+  {
+    "dateType": "GDC.time.date",
+    "label": "day",
+  },
+  {
+    "dateType": "GDC.time.hour",
+    "label": "hour",
+  },
+  {
+    "dateType": "GDC.time.minute",
+    "label": "minute",
+  },
+  {
+    "dateType": "GDC.time.second",
+    "label": "second",
+  },
+]
+`;
+
+exports[`granularity > isGenericDateGranularity > should filter out expected granularity options 1`] = `
+[
+  {
+    "chronologicalGranularity": "GDC.time.quarter",
+    "dateType": "GDC.time.quarter_in_year",
+    "label": "quarter_in_year",
+    "valuesPreview": "quarter_in_year_preview",
+  },
+  {
+    "chronologicalGranularity": "GDC.time.month",
+    "dateType": "GDC.time.month_in_quarter",
+    "label": "month_in_quarter",
+    "valuesPreview": "month_in_quarter_preview",
+  },
+  {
+    "chronologicalGranularity": "GDC.time.month",
+    "dateType": "GDC.time.month_in_year",
+    "label": "month_in_year",
+    "valuesPreview": "month_in_year_preview",
+  },
+  {
+    "chronologicalGranularity": "GDC.time.week_us",
+    "dateType": "GDC.time.week_in_quarter",
+    "label": "week_in_quarter",
+    "valuesPreview": "week_in_quarter_preview",
+  },
+  {
+    "chronologicalGranularity": "GDC.time.week_us",
+    "dateType": "GDC.time.week_in_year",
+    "label": "week_in_year",
+    "valuesPreview": "week_in_year_preview",
+  },
+  {
+    "chronologicalGranularity": "GDC.time.date",
+    "dateType": "GDC.time.day_in_week",
+    "label": "day_in_week",
+    "valuesPreview": "day_in_week_preview",
+  },
+  {
+    "chronologicalGranularity": "GDC.time.date",
+    "dateType": "GDC.time.day_in_month",
+    "label": "day_in_month",
+    "valuesPreview": "day_in_month_preview",
+  },
+  {
+    "chronologicalGranularity": "GDC.time.date",
+    "dateType": "GDC.time.day_in_quarter",
+    "label": "day_in_quarter",
+    "valuesPreview": "day_in_quarter_preview",
+  },
+  {
+    "chronologicalGranularity": "GDC.time.date",
+    "dateType": "GDC.time.day_in_year",
+    "label": "day_in_year",
+    "valuesPreview": "day_in_year_preview",
+  },
+  {
+    "chronologicalGranularity": "GDC.time.hour",
+    "dateType": "GDC.time.hour_in_day",
+    "label": "hour_in_day",
+    "valuesPreview": "hour_in_day_preview",
+  },
+  {
+    "chronologicalGranularity": "GDC.time.minute",
+    "dateType": "GDC.time.minute_in_hour",
+    "label": "minute_in_hour",
+    "valuesPreview": "minute_in_hour_preview",
+  },
+  {
+    "chronologicalGranularity": "GDC.time.minute",
+    "dateType": "GDC.time.minute_in_day",
+    "label": "minute_in_day",
+    "valuesPreview": "minute_in_day_preview",
+  },
+  {
+    "chronologicalGranularity": "GDC.time.second",
+    "dateType": "GDC.time.second_in_minute",
+    "label": "second_in_minute",
+    "valuesPreview": "second_in_minute_preview",
+  },
+  {
+    "chronologicalGranularity": "GDC.time.second",
+    "dateType": "GDC.time.second_in_day",
+    "label": "second_in_day",
+    "valuesPreview": "second_in_day_preview",
+  },
+]
+`;

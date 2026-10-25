@@ -1,0 +1,413 @@
+// (C) 2007-2026 GoodData Corporation
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.app-root {
+    // width of the catalog column including its 1px edge; the resizable catalog sets it inline
+    --adi-catalog-width: 230px;
+}
+
+.adi-editor {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    min-width: 770px;
+    min-height: 545px;
+    // the catalog panel and the header are transparent, so paint AD's own
+    // surface instead of relying on the host shell's background
+    background-color: kit-variables.$gd-color-light;
+}
+
+.gd-header ~ .adi-editor {
+    top: 44px;
+}
+
+.ad-root-wrapper--pluggable {
+    height: 100%;
+}
+
+.app-root--pluggable {
+    position: relative;
+    height: 100%;
+}
+
+// refactor
+// stylelint-disable-next-line no-duplicate-selectors
+.adi-editor {
+    // make sure recommendations are clickable and
+    // not overlapped by canvas attribute replace shortcut
+    .adi-recommendations-container {
+        z-index: 15;
+    }
+    // make sure the shorcuts overlap the canvas
+    .adi-shortcuts-panel {
+        z-index: 15;
+    }
+    // make sure canvas message overlays highcharts container
+    // which has z-index 3000 (and its tooltip with 3005)
+    .adi-canvas-message {
+        z-index: 3100;
+    }
+    // make sure computing overlays everything on canvas
+    .adi-computing {
+        z-index: 3200;
+    }
+}
+
+.adi-editor-main {
+    position: absolute;
+    top: 47px; // 48px - 1px border that should be part of the header
+    right: 0;
+    bottom: 0;
+    left: calc(var(--adi-catalog-width) - 1px); // 1px border as above
+    display: flex;
+    padding: 0 10px 10px;
+    padding-left: 0;
+    border-left: 1px solid kit-variables.$gd-border-color;
+    border-top: 1px solid kit-variables.$gd-border-color;
+    background-color: kit-variables.$gd-color-white;
+
+    &.hidden-top-bar {
+        top: 0; // remove top space of header
+    }
+}
+
+.adi-editor-right-container {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: space-between;
+    width: calc(100% - 250px);
+}
+
+.adi-editor-canvas {
+    position: relative;
+    flex: 1 1 auto;
+    margin-top: 10px;
+}
+
+.adi-editor-canvas.is-report-ready {
+    display: flex;
+}
+
+.invisible-report-visualization .adi-report-visualization {
+    // geo chart needs to have the space already allocated for its first render
+    // otherwise it renders using its default 400x300 dimensions breaking viewport settings
+    visibility: hidden;
+
+    // for highcharts container we need to also set display to none,
+    // otherwise highcharts-grouped-categories labels still show through
+    // (they explicitly set visibility of its svg elements that overrides parent visibility settings)
+    .gd-viz-highchart-wrap {
+        display: none;
+    }
+
+    // ag-grid based visualizations (e.g. PivotTable) may override `visibility` on their internal elements;
+    // enforce `display: none` for the grid roots to prevent rendering bleeding through error overlays.
+    .ag-root-wrapper,
+    .ag-root {
+        display: none;
+    }
+}
+
+.adi-report-visualization {
+    display: flex;
+    flex: 1 1 auto;
+
+    &.gd-visualization-headline .adi-chart-container,
+    &.gd-visualization-xirr .adi-chart-container {
+        padding-top: 30px;
+        width: 400px;
+    }
+}
+
+.adi-chart-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    > div {
+        height: 100%;
+    }
+}
+
+.adi-chart-container-narrow {
+    right: 305px;
+
+    @media #{variables.$narrowDevice} {
+        right: 0;
+        bottom: 230px;
+    }
+}
+
+.adi-warning-partial-result {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 10px;
+    pointer-events: none;
+}
+
+.adi-partial-data-warning-container {
+    position: absolute;
+    bottom: 0;
+    // Centered on the canvas axis by default.
+    left: 50%;
+    transform: translateX(-50%);
+    width: 280px;
+    max-width: calc(100% - 20px);
+    pointer-events: auto;
+}
+
+.adi-shortcuts-panel {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 100%;
+    min-height: 350px;
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: kit-variables.$gd-color-white;
+    transform: translateX(-50%);
+}
+
+.adi-buckets-panel {
+    z-index: 100;
+    display: flex;
+    flex: 0 0 250px;
+    flex-direction: column;
+    width: 250px;
+    padding-top: 10px;
+
+    .adi-buckets-scroller {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        padding: 0 0 0 10px;
+    }
+}
+
+.adi-canvas-message {
+    position: relative;
+    margin: 70px auto 0;
+    text-align: center;
+
+    h2 {
+        margin: 10px 0 0;
+        font-size: 20px;
+        font-weight: normal;
+        text-transform: uppercase;
+        color: kit-variables.$gd-color-state-blank;
+    }
+
+    p,
+    ul,
+    .report-error-trace-id,
+    .report-message-description {
+        font-size: 14px;
+        line-height: 21px;
+        color: kit-variables.$gd-color-state-blank;
+    }
+
+    p {
+        margin: 3px 0;
+        white-space: pre-line;
+    }
+
+    a:not(.adi-canvas-link) {
+        text-decoration: underline;
+        color: kit-variables.$gd-color-state-blank;
+        cursor: pointer;
+
+        &:hover {
+            color: kit-variables.$gd-color-text;
+        }
+    }
+
+    .adi-canvas-link {
+        margin: 0;
+        padding: 0;
+    }
+
+    ul {
+        display: inline-block;
+        margin: 40px 0 0;
+        list-style-type: disc;
+        text-align: left;
+    }
+
+    &::before {
+        content: "\e637"; // default icon is alert
+        display: block;
+        height: 40px;
+        margin-bottom: 20px;
+        font-family: Indigo, sans-serif;
+        font-size: 40px;
+        line-height: 40px;
+        color: kit-variables.$gd-color-state-blank;
+    }
+
+    &.adi-canvas-message-empty-result::before {
+        content: "\e63c"; // filter icon
+    }
+
+    &.adi-canvas-message-too-many-data-points::before {
+        content: "\e608"; // raining cloud icon
+    }
+
+    &.adi-canvas-message-workspace-empty-result::before {
+        content: "";
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/no_data.svg");
+    }
+
+    .report-error-trace-id {
+        display: flex;
+        justify-content: center;
+        margin-top: 40px;
+
+        .report-error-trace-id-title {
+            display: inline-block;
+            border-bottom: 1px dashed #94a1ad;
+        }
+
+        .report-error-trace-id-data {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin-left: 4px;
+
+            svg {
+                margin-left: 3px;
+                padding-bottom: 2px;
+            }
+
+            &:hover svg {
+                fill: #14b2e2;
+            }
+        }
+    }
+}
+
+.adi-computing {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: kit-variables.$gd-color-white;
+
+    .adi-computing-inner {
+        box-sizing: border-box;
+        width: 230px;
+        height: 100px;
+        margin: 50px auto 0;
+        padding: 39px 0 0 95px;
+        border-radius: 7px;
+        font-size: 16px;
+        line-height: 22px;
+        color: kit-variables.$gd-color-label;
+        background-color: kit-variables.$gd-color-white;
+
+        &::before {
+            content: "";
+            display: block;
+            float: left;
+            width: 40px;
+            height: 38px;
+            margin: -10px 0 0 -60px;
+            // using background-position because
+            // it wont be sprited anyway, given it is GIF
+            background: url("@gooddata/sdk-ui-analytical-designer/styles/images/computing.gif") -40px -45px
+                no-repeat;
+        }
+    }
+    // Hide recommendation shadows when computing overlay is visible
+    ~ .adi-recommendations-container {
+        .adi-recommendation {
+            box-shadow: none;
+        }
+    }
+}
+
+.adi-bucket-list {
+    flex: 1 1 auto;
+    width: 220px;
+
+    .gd-bubble-trigger {
+        display: block;
+    }
+}
+
+.error-raw-data-area-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+
+    .error-raw-data-area {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        width: 600px;
+        height: inherit;
+        border: 1px solid #dde4eb;
+        border-radius: 3px;
+
+        .error-raw-data-area-header {
+            display: flex;
+            justify-content: space-between;
+            height: 23px;
+            padding: 2px 10px;
+            line-height: 23px;
+            font-weight: 400;
+            font-size: 14px;
+            color: #94a1ad;
+
+            .error-raw-data-header-icon {
+                padding-top: 1px;
+            }
+        }
+
+        .error-raw-data-area-content {
+            flex-grow: 1;
+            border-top: 1px solid #dde4eb;
+            padding: 10px;
+            background: #fcfcfd;
+            max-height: 320px;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+
+            pre {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                border: none;
+                line-height: 18px;
+                resize: none;
+                font-weight: 400;
+                font-size: 12px;
+                white-space: pre-wrap;
+                color: #6a737d;
+                tab-size: 2;
+                background: transparent;
+                text-align: left;
+            }
+        }
+    }
+}
+
+.bubble-primary {
+    &.error-raw-data-area-tooltip {
+        min-width: 322px;
+    }
+
+    &.trace-id-title-bubble {
+        min-width: 303px;
+    }
+}

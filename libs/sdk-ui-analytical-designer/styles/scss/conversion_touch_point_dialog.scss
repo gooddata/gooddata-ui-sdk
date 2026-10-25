@@ -1,0 +1,61 @@
+// (C) 2021-2022 GoodData Corporation
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.overlay.gd-dialog {
+    .gd-dialog-close {
+        right: 10px;
+    }
+
+    &.gd-pricing-plans-dialog {
+        box-sizing: border-box;
+        width: 1092px;
+        max-width: none;
+        height: 80vh;
+        max-height: 820px;
+        margin: 0 auto;
+        padding: 0;
+
+        @media #{kit-variables.$small-only} {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        @media #{kit-variables.$medium-only}, #{kit-variables.$large-only} {
+            width: calc(100% - 20px);
+            margin: 0 10px;
+        }
+
+        .gd-dialog-close {
+            right: 10px;
+        }
+
+        iframe {
+            border-radius: 4px;
+        }
+    }
+}
+
+.invisible.gd-pricing-wrapper {
+    display: block;
+    visibility: hidden;
+}
+
+.gd-pricing-overlay {
+    @media #{kit-variables.$small-only} {
+        width: 100%;
+    }
+
+    @media #{kit-variables.$large-only}, #{kit-variables.$medium-only} {
+        width: calc(100% - 20px);
+    }
+}
+
+.invisible .gdc-pricing-overlay .gd-dialog-close {
+    display: none;
+}

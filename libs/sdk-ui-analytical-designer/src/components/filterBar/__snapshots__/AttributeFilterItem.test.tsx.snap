@@ -1,0 +1,30 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AttributeFilterItem > selector > getDisplayFormsForAttributeFilterSelector > should return available display forms from item cache 1`] = `
+[
+  {
+    "id": "attr.text",
+    "ref": {
+      "uri": "/gdc/md/TeamOneGoodSales1/obj/666",
+    },
+    "title": "Text display form",
+    "type": undefined,
+  },
+  {
+    "id": "attr.hyperlink",
+    "ref": {
+      "uri": "/gdc/md/TeamOneGoodSales1/obj/667",
+    },
+    "title": "Hyperlink display form",
+    "type": "GDC.link",
+  },
+  {
+    "id": "attr.geo_pin",
+    "ref": {
+      "uri": "/gdc/md/TeamOneGoodSales1/obj/668",
+    },
+    "title": "Geo push pun display form",
+    "type": "GDC.geo.pin",
+  },
+]
+`;

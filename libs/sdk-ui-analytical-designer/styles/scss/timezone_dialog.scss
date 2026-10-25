@@ -1,0 +1,40 @@
+// (C) 2026 GoodData Corporation
+
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.gd-timezone-dialog {
+    width: 500px;
+    .gd-dialog-footer {
+        border-top: 1px solid kit-variables.$gd-border-color;
+        padding-top: 20px;
+    }
+
+    .gd-timezone-select__button {
+        height: 32px;
+        width: 300px;
+    }
+
+    .gd-timezone-dialog-picker {
+        display: flex;
+        align-items: center;
+    }
+
+    .gd-timezone-dialog-current-time {
+        margin-left: 15px;
+        color: kit-variables.$gd-color-state-blank;
+        white-space: nowrap;
+    }
+}
+
+// Timezone icon
+
+.gd-options-menu-timezone {
+    &::before {
+        content: "";
+        background: url("@gooddata/sdk-ui-analytical-designer/styles/images/timezone.svg") no-repeat center;
+        width: 18px;
+        height: 18px;
+        display: inline-block;
+        margin-right: 8px;
+    }
+}

@@ -22,6 +22,9 @@ import {
 } from "./metadata/model.js";
 import { type IMetadataInterface } from "./metadata/types.js";
 
+/**
+ * @internal
+ */
 export interface IMetadataServiceOptions {
     /**
      * Resolved value of the enableComputedAttributes workspace setting. The computed-attributes
@@ -32,6 +35,9 @@ export interface IMetadataServiceOptions {
     enableComputedAttributes?: boolean;
 }
 
+/**
+ * @internal
+ */
 export class MetadataService implements IMetadataInterface {
     private catalog?: IWorkspaceCatalog; // holds the entire unprocessed catalog
     private ldmObjects: Promise<LdmObjects>; // LDM objects holds latest parsed objects to be used further

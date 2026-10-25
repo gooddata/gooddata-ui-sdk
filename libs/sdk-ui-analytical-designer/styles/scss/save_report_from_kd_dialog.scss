@@ -1,0 +1,67 @@
+// (C) 2020-2022 GoodData Corporation
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.gd-dialog.save-report-dialog {
+    width: 500px;
+    max-width: 500px;
+
+    .input-radio-label {
+        margin-bottom: 5px;
+    }
+    .report-name-wrapper {
+        padding: 5px 127px 5px 22px;
+    }
+
+    .view-usage-wrapper {
+        padding: 5px 0;
+        border-top: solid 1px variables.$adi-bucket-border-color;
+        border-bottom: solid 1px variables.$adi-bucket-border-color;
+        margin-top: 15px;
+
+        .gd-collapsible-content {
+            height: auto;
+            max-height: 140px;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            margin-left: 0;
+
+            > ul {
+                margin: 0;
+                padding-left: 16px;
+            }
+
+            > ul > li {
+                margin-bottom: 10px;
+            }
+
+            > ul > li span {
+                font-size: 14px;
+                color: kit-variables.$default-gd-color-link;
+            }
+        }
+    }
+
+    .dashboard-item {
+        display: block;
+        width: fit-content;
+        text-decoration: none;
+
+        &:hover {
+            span {
+                text-decoration: underline;
+            }
+
+            &::after {
+                content: "";
+                display: inline-block;
+                width: 12px;
+                height: 12px;
+                background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/icon-external-link.svg");
+                background-size: contain;
+                margin-left: 5px;
+                filter: #{"invert(49%) sepia(5%) saturate(854%) hue-rotate(171deg) brightness(92%) contrast(95%)"};
+            }
+        }
+    }
+}

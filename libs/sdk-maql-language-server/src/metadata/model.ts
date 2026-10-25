@@ -19,13 +19,22 @@ import {
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
 
+/**
+ * @internal
+ */
 export interface ITigerMetadataObject extends IMetadataObject {
     tigerType: TigerObjectType;
 }
 
+/**
+ * @internal
+ */
 export type ITigerMetadataObjectStub = Pick<ITigerMetadataObject, "id" | "ref"> &
     Partial<ITigerMetadataObject>;
 
+/**
+ * @internal
+ */
 export interface ITigerAttribute extends IAttributeMetadataObject, ITigerMetadataObject {
     type: "attribute";
     tigerType: "attribute";
@@ -33,6 +42,9 @@ export interface ITigerAttribute extends IAttributeMetadataObject, ITigerMetadat
     granularity?: DateAttributeGranularity;
 }
 
+/**
+ * @internal
+ */
 export interface ITigerLabel extends IAttributeDisplayFormMetadataObject, ITigerMetadataObject {
     type: "displayForm";
     tigerType: "label";
@@ -44,16 +56,25 @@ export interface ITigerDateLabel extends ITigerLabel {
     tigerTypeModifier: "date";
 }
 
+/**
+ * @internal
+ */
 export interface ITigerFact extends IFactMetadataObject, ITigerMetadataObject {
     type: "fact";
     tigerType: "fact";
 }
 
+/**
+ * @internal
+ */
 export interface ITigerDataset extends ITigerMetadataObject {
     type: "dataSet";
     tigerType: "dataset";
 }
 
+/**
+ * @internal
+ */
 export interface ITigerMetric extends IMeasureMetadataObject, ITigerMetadataObject {
     type: "measure";
     tigerType: "metric";
@@ -63,12 +84,17 @@ export interface ITigerMetric extends IMeasureMetadataObject, ITigerMetadataObje
  * A computed attribute is referenced from MAQL by its own type rather than through a label - it has
  * no real labels. In MAQL text the type is spelled `computed_attribute`, which
  * {@link normalizeMaqlObjectType} translates into the `computedAttribute` Tiger type used here.
+ *
+ * @internal
  */
 export interface ITigerComputedAttribute extends IComputedAttributeMetadataObject, ITigerMetadataObject {
     type: "computedAttribute";
     tigerType: "computedAttribute";
 }
 
+/**
+ * @internal
+ */
 export interface ITigerParameter extends IParameterMetadataObject, ITigerMetadataObject {
     type: "parameter";
     tigerType: "parameter";
@@ -98,6 +124,9 @@ export function isITigerComputedAttribute(object: ITigerMetadataObject): object 
     return object.tigerType === "computedAttribute";
 }
 
+/**
+ * @internal
+ */
 export function isITigerParameter(object: ITigerMetadataObject): object is ITigerParameter {
     return object.tigerType === "parameter";
 }
@@ -105,6 +134,8 @@ export function isITigerParameter(object: ITigerMetadataObject): object is ITige
 /**
  * The dataset fields that MAQL completion uses. SPI dataset metadata objects and declarative
  * datasets both have them.
+ *
+ * @internal
  */
 export interface ILdmDataset {
     id: string;
@@ -112,6 +143,9 @@ export interface ILdmDataset {
     description?: string;
 }
 
+/**
+ * @internal
+ */
 export class LdmObjects {
     private readonly attributes: IMetadataObjectStruct<ITigerAttribute>;
     private readonly labels: IMetadataObjectStruct<ITigerLabel>;
@@ -278,18 +312,25 @@ interface IProcessedAttributes {
     labels: ITigerLabel[];
 }
 
-interface IMetadataObjectStruct<T extends IMetadataObject> {
+/**
+ * @internal
+ */
+export interface IMetadataObjectStruct<T extends IMetadataObject> {
     regular: T[];
     date: T[];
     all: T[];
 }
 
-type TypeModifiers = keyof IMetadataObjectStruct<IMetadataObject>;
+/**
+ * @internal
+ */
+export type TypeModifiers = keyof IMetadataObjectStruct<IMetadataObject>;
 
 /**
  * @param labels - label objects for which to get elements
  * @param excluded - label elements which should be filtered out from the result
  * @param options - label elements API advanced query options
+ * @internal
  */
 export type LabelElementsFunc = <T extends ITigerMetadataObjectStub>(
     labels: T[],
@@ -299,6 +340,9 @@ export type LabelElementsFunc = <T extends ITigerMetadataObjectStub>(
     offset?: number,
 ) => Promise<ILabelElementsFuncResult<T>>;
 
+/**
+ * @internal
+ */
 export interface ILabelElementsFuncResult<T extends ITigerMetadataObjectStub> {
     list: ILabelElementList;
     rejected: T[];
@@ -308,6 +352,9 @@ export interface ILabelElementsFuncResult<T extends ITigerMetadataObjectStub> {
     rejectionReasons?: Map<T, unknown>;
 }
 
+/**
+ * @internal
+ */
 export interface ILabelElementList {
     elements: IAttributeElement[];
     isIncomplete: boolean;

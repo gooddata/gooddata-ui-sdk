@@ -95,6 +95,9 @@ export function MaqlPreviewRenderer({ tokens, maqlFragmentCommonProps }: IMaqlPr
     );
 }
 
+/**
+ * @internal
+ */
 export interface IMaqlFragmentCommonProps {
     links?: NonNullable<IExpressionToken["category"]>[];
     onClick?: (token: IExpressionToken) => void;

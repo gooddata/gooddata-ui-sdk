@@ -1,11 +1,17 @@
 // (C) 2021-2026 GoodData Corporation
 
+/**
+ * @internal
+ */
 export enum EventCategories {
     emptyMetricList = "emptyMetricList",
     metricList = "metricList",
     metricComponent = "metricComponent",
 }
 
+/**
+ * @internal
+ */
 export enum Events {
     pageView = "pageView",
 

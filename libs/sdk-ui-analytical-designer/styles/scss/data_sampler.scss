@@ -1,0 +1,123 @@
+// (C) 2021-2024 GoodData Corporation
+@use "variables";
+@use "@gooddata/sdk-ui-ext/styles/internal/scss/variables" as ext-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.adi-data-sampler {
+    width: 150px;
+    flex-direction: column;
+    margin-left: auto;
+    padding: 11px 0 0 30px;
+
+    &.adi-data-sampler-small-screen {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: 5px 0 0 5px;
+
+        .adi-data-sampler-dropdown {
+            margin-left: 0;
+            margin-top: -1px;
+        }
+    }
+
+    .adi-data-sampler-checkbox-wrapper {
+        vertical-align: middle;
+        margin-right: 7px;
+
+        .adi-data-sampler-checkbox-icon {
+            padding-right: 30px;
+        }
+    }
+
+    .adi-data-sampler-toggler-label {
+        font-size: 12px;
+    }
+
+    .adi-data-sampler-dropdown {
+        display: flex;
+        margin-left: 31px;
+
+        .adi-data-sampler-dropdown-button {
+            max-width: 120px;
+            height: 20px;
+            padding: 0 6px;
+            border-color: transparent;
+            box-shadow: none;
+            color: var(--gd-palette-complementary-8, #464e56);
+        }
+
+        .adi-data-sampler-dropdown-button-active {
+            font-weight: 900;
+        }
+    }
+
+    .adi-data-sampler-dropdown-button {
+        &:active,
+        &:focus,
+        &:hover {
+            border: 1px solid var(--gd-palette-complementary-5-from-theme, #b1c1d1);
+            box-shadow: var(--gd-button-dropShadow, 0 1px 1px 0)
+                var(--gd-shadow-color, rgba(20, 56, 93, 0.15));
+            transition: none;
+        }
+    }
+}
+
+.adi-data-sampler-dropdown-body {
+    width: 250px;
+    border: 1px solid kit-variables.$default-gd-border-color;
+}
+
+.adi-data-sampler-dropdown-body-header {
+    display: flex;
+    background-color: ext-variables.$button-grey-background;
+    padding: 10px;
+    color: kit-variables.$gd-color-state-blank;
+
+    .adi-data-sampler-dropdown-body-header-label {
+        margin-right: 126px;
+        font-size: 11px;
+    }
+
+    .adi-data-sampler-dropdown-body-header-tooltip-icon {
+        font-size: 14px;
+    }
+}
+
+.adi-data-sampler-dropdown-body-content {
+    padding: 10px;
+
+    .adi-data-sampler-dropdown-body-input-error {
+        input,
+        .gd-input-suffix {
+            // override input border for validation purposes
+            // stylelint-disable-next-line declaration-no-important
+            border-color: kit-variables.$gd-color-negative !important;
+        }
+    }
+
+    .adi-data-sampler-message {
+        margin-top: 12px;
+    }
+
+    .adi-data-sampler-message-dismiss {
+        text-decoration: underline;
+    }
+}
+
+.adi-data-sampler-dropdown-body-footer {
+    margin: 0 10px 10px 10px;
+    text-align: right;
+    border-top: 1px solid kit-variables.$default-gd-border-color;
+    padding-top: 7px;
+}
+
+.data-sampler-checked::after {
+    // necessary override of style for default toggler colors
+    // stylelint-disable-next-line declaration-no-important
+    background-color: kit-variables.$gd-palette-warning-base-text !important;
+    // stylelint-disable-next-line declaration-no-important
+    border-color: #cc7100 !important;
+}

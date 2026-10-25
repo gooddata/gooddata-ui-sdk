@@ -1,0 +1,88 @@
+// (C) 2025 GoodData Corporation
+
+.gd-export-menu-overlay {
+    .gd-list-item {
+        justify-content: flex-start;
+    }
+}
+
+// Export menu icons
+.gd-export-options-xlsx {
+    &::before {
+        content: "";
+        background: url("@gooddata/sdk-ui-analytical-designer/styles/images/type-sheet.svg") no-repeat center;
+        width: 16px;
+        height: 16px;
+        display: inline-block;
+        margin-right: 8px;
+    }
+}
+
+.gd-export-options-pdf {
+    &::before {
+        content: "";
+        background: url("@gooddata/sdk-ui-analytical-designer/styles/images/type-pdf.svg") no-repeat center;
+        width: 16px;
+        height: 16px;
+        display: inline-block;
+        margin-right: 8px;
+    }
+}
+
+.gd-export-options-csv-formatted {
+    &::before {
+        content: "";
+        background: url("@gooddata/sdk-ui-analytical-designer/styles/images/type-csv-formatted.svg") no-repeat
+            center;
+        width: 16px;
+        height: 16px;
+        display: inline-block;
+        margin-right: 8px;
+    }
+}
+
+.gd-export-options-csv-raw {
+    &::before {
+        content: "";
+        background: url("@gooddata/sdk-ui-analytical-designer/styles/images/type-csv-raw.svg") no-repeat
+            center;
+        width: 16px;
+        height: 16px;
+        display: inline-block;
+        margin-right: 8px;
+    }
+}
+
+.gd-pdf-export-dialog {
+    min-width: 300px;
+
+    .input-checkbox-label {
+        height: auto;
+    }
+
+    .gd-dialog-content {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .gd-input.gd-pdf-export-dialog-item {
+            .gd-label {
+                display: block;
+                font-size: 14px;
+                font-weight: 400;
+                color: var(--gd-palette-complementary-7);
+                margin: 0 0 2px 0;
+            }
+        }
+    }
+}
+
+.gd-csv-export-dialog {
+    min-width: 300px;
+
+    .gd-dialog-content {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+}

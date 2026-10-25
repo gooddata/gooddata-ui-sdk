@@ -37,6 +37,9 @@ const useStyles = makeStyles()((theme) => ({
     },
 }));
 
+/**
+ * @internal
+ */
 export interface IMetricTooltipContentProps {
     metric: IMeasureMetadataObject;
     previewOptions?: IMaqlFragmentCommonProps;

@@ -9,6 +9,8 @@ import { type LabelElementsFunc, type LdmObjects } from "./model.js";
  * Internals do not matter for the service, only needed is the fact that
  * the language service can asynchronously get typed identifiers and that it is able
  * to force a refresh of the stored model
+ *
+ * @internal
  */
 export interface IMetadataInterface {
     updateModel(): void;

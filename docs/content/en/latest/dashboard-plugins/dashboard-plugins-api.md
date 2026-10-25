@@ -291,6 +291,46 @@ Don't create sections, items, and custom widget objects by hand. Use the factory
     The custom widget renderer that you registered previously will receive all this information so you can customize rendering
     based on the additional data.
 
+The following plugin registers a custom widget type and adds one widget of that type in a new full-width section at the top of the dashboard:
+
+```tsx
+import {
+    type DashboardContext,
+    DashboardPluginV1,
+    type IDashboardCustomizer,
+    type IDashboardWidgetProps,
+    newCustomWidget,
+    newDashboardItem,
+    newDashboardSection,
+} from "@gooddata/sdk-ui-dashboard";
+
+function MyCustomWidget(_props: IDashboardWidgetProps) {
+    return <div>Hello from a custom widget</div>;
+}
+
+export class Plugin extends DashboardPluginV1 {
+    // author, displayName, version, and the other plugin metadata go here
+
+    public register(_ctx: DashboardContext, customize: IDashboardCustomizer): void {
+        customize.customWidgets().addCustomWidget("myCustomWidget", MyCustomWidget);
+
+        customize.layout().customizeFluidLayout((_layout, customizer) => {
+            customizer.addSectionToPath(
+                { sectionIndex: 0 },
+                newDashboardSection(
+                    "Section added by the plugin",
+                    newDashboardItem(newCustomWidget("myWidget1", "myCustomWidget"), {
+                        xl: { gridWidth: 12, gridHeight: 1 },
+                    }),
+                ),
+            );
+        });
+    }
+}
+```
+
+To add the widget to an existing section instead, call `addItemToPath` with the item's position, for example `[{ sectionIndex: 0, itemIndex: -1 }]` to append it to the end of the first section.
+
 #### Calculate data for a custom widget
 
 When creating a custom widget, you often need to calculate some data for it similar to how the standard widgets do it.

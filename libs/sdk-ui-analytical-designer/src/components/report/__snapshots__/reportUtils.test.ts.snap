@@ -1,0 +1,89 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`reportUtils > parseRawDataToTextareaContent > parse array correctly 1`] = `
+"{
+	"error": [	
+		"error_1",
+		"error_2",
+		{
+			"error": {
+				"message": "error message",
+				"detail": "error detail"
+			},
+			"subError": [			
+				"error_1",
+				"error_2"
+			],
+			"emptyArray": []
+		}
+	],
+	"emptyArray": []
+}"
+`;
+
+exports[`reportUtils > parseRawDataToTextareaContent > parse data field non array/object correctly 1`] = `
+"{
+	"traceId": "trace_id",
+	"status": 500
+}"
+`;
+
+exports[`reportUtils > parseRawDataToTextareaContent > parse object correctly 1`] = `
+"{
+	"error": {
+		"status": 400,
+		"emptyObject": {},
+		"error": {
+			"message": "error message",
+			"detail": "error detail"
+		}
+	},
+	"emptyObject": {}
+}"
+`;
+
+exports[`reportUtils > parseRawDataToTextareaContent > parse object/array as a string when exceed limit recursive 1`] = `
+"{
+	"error": {
+		"status": 400,
+		"emptyObject": {},
+		"error": {
+			"message": "error message",
+			"detail": "error detail",
+			"error": {
+				"message": "error message",
+				"detail": "error detail",
+				"error": {"message":"error message","detail":"error detail","error":{"message":"error message","detail":"error detail","error":{"message":"error message","detail":"error detail","errorArray":["error_1","error_2"]}},"errorArray":["error_1","error_2"]},
+				"errorArray": ["error_1","error_2",{"message":"error message","detail":"error detail"}]
+			}
+		}
+	}
+}"
+`;
+
+exports[`reportUtils > parseRawDataToTextareaContent > parse rawData correctly 1`] = `
+"{
+	"errorArray": [	
+		"error_1",
+		"error_2",
+		{
+			"error": {
+				"message": "error message",
+				"detail": "error detail"
+			},
+			"subError": [			
+				"error_1",
+				"error_2"
+			],
+			"emptyArray": [],
+			"emptyObject": {}
+		}
+	],
+	"errorObj": {
+		"message": "error message",
+		"detail": "error detail",
+		"traceId": "trace_id"
+	},
+	"httpStatus": 400
+}"
+`;

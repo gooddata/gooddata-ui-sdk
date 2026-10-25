@@ -9,6 +9,9 @@ export interface IMetricsReloadContext {
 
 export const MetricsReloadContext = createContext<IMetricsReloadContext | null>(null);
 
+/**
+ * @internal
+ */
 export function MetricsReloadContextProvider({ children }: PropsWithChildren) {
     const [metricReloadRequest, setMetricReloadRequest] = useState("init");
 

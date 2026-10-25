@@ -9,6 +9,9 @@ import { useDeleteCallbacks } from "./hooks/useDeleteCallbacks.js";
 import { type IDeleteMetricInfo } from "./metric/deleteInfo.js";
 import { type IMeasureDef } from "./metric/metricHelpers.js";
 
+/**
+ * @internal
+ */
 export interface IDeleteMetricProps {
     locale?: string;
     metric: IMeasureDef;
@@ -17,6 +20,9 @@ export interface IDeleteMetricProps {
     onMetricsChange?: (metric: IMeasureDef) => void;
 }
 
+/**
+ * @internal
+ */
 export function DeleteMetric({ locale, metric, onDelete, onClose, onMetricsChange }: IDeleteMetricProps) {
     const { onDeleteHandler } = useDeleteCallbacks(metric, onDelete, onMetricsChange);
 

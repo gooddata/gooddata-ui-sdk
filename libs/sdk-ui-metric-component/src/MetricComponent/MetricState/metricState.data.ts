@@ -6,11 +6,17 @@ import { type SaveNameMode } from "../Content/EditMetricContent.data.js";
 import { type FormField } from "../Form/data.js";
 import { type IMeasureDef, type IMeasureSetting } from "../metric/metricHelpers.js";
 
+/**
+ * @internal
+ */
 export enum MetricInfoKind {
     Create = "CREATE",
     Edit = "EDIT",
 }
 
+/**
+ * @internal
+ */
 export type IMetricInfo = IMeasureSetting & {
     initial: IMeasureDef;
     current: IMeasureDef;
@@ -23,8 +29,14 @@ export type IMetricInfo = IMeasureSetting & {
     draftAccess?: IObjectShareDraft;
 };
 
+/**
+ * @internal
+ */
 export type IMetricInfoDraft = Omit<IMetricInfo, "identifier">;
 
+/**
+ * @internal
+ */
 export enum CloseAllStatus {
     Close = "close",
     Canceled = "canceled",
@@ -32,13 +44,22 @@ export enum CloseAllStatus {
     Incomplete = "incomplete",
 }
 
+/**
+ * @internal
+ */
 export type CloseAllTabsResult = CloseAllTabsWithCancel | CloseAllTabsWithProceed;
 
-type CloseAllTabsWithCancel = {
+/**
+ * @internal
+ */
+export type CloseAllTabsWithCancel = {
     status: CloseAllStatus.Canceled | CloseAllStatus.Close;
 };
 
-type CloseAllTabsWithProceed = {
+/**
+ * @internal
+ */
+export type CloseAllTabsWithProceed = {
     status: CloseAllStatus.Incomplete | CloseAllStatus.Complete;
     closedTabs: IMetricInfo[];
     invalidTabs: IMetricInfo[];

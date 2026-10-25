@@ -10,6 +10,9 @@ import { IntlWrapper } from "../translations/IntlWrapper.js";
 import { MinimizedMetricComponent } from "./MinimizedMetricComponent/MinimizedMetricComponent.js";
 import { MultipleMetricsContext } from "./MultipleMetricsState.js";
 
+/**
+ * @internal
+ */
 export interface IMinimizedMetricsProps {
     ref?: Ref<HTMLElement | undefined>;
     permissions?: IWorkspacePermissions;
@@ -17,6 +20,9 @@ export interface IMinimizedMetricsProps {
     setMinimized: (state: boolean) => void;
 }
 
+/**
+ * @internal
+ */
 export const MinimizeMetrics = forwardRef<HTMLElement | undefined, IMinimizedMetricsProps>(
     function MinimizeMetrics({ locale, setMinimized, permissions = fullWorkspacePermissions() }, _) {
         const { tabsProps, closeAllTabs } = useContext(MultipleMetricsContext);

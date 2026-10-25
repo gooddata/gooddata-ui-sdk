@@ -1,0 +1,16 @@
+// (C) 2007-2022 GoodData Corporation
+.main-error {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+    .adi-canvas-message {
+        margin: 0;
+    }
+}

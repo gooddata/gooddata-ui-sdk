@@ -1,6 +1,9 @@
 // (C) 2021-2026 GoodData Corporation
 
-function createDefaultTheme() {
+/**
+ * @internal
+ */
+export function createDefaultTheme() {
     const fonts = {
         main: `gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif`,
         indigo: `"Indigo", sans-serif`,
@@ -232,7 +235,10 @@ function createDefaultTheme() {
     };
 }
 
-export type DefaultTheme = ReturnType<typeof createDefaultTheme>;
-export function defaultTheme(): DefaultTheme {
+/**
+ * @internal
+ */
+export type MaqlEditorDefaultTheme = ReturnType<typeof createDefaultTheme>;
+export function defaultTheme(): MaqlEditorDefaultTheme {
     return createDefaultTheme();
 }

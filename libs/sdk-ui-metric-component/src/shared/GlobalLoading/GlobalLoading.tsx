@@ -12,6 +12,9 @@ const useStyles = makeStyles()(() => ({
     },
 }));
 
+/**
+ * @internal
+ */
 export function GlobalLoading() {
     const { classes, cx } = useStyles();
     return <LoadingSpinner className={cx(classes.root, "large")} />;

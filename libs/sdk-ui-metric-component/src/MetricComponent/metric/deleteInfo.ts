@@ -2,6 +2,9 @@
 
 import { type IMeasureReferencing } from "@gooddata/sdk-backend-spi";
 
+/**
+ * @internal
+ */
 export interface IDeleteMetricInfo {
     references: IMeasureReferencing;
 }

@@ -19,6 +19,8 @@ const TIGER_TYPE_TO_MAQL_OBJECT_TYPE: Readonly<Record<string, string>> = Object.
  * `{type/id}` token before looking the type up.
  *
  * Keep the MAQL spelling for anything user-facing (diagnostics quote what the author wrote).
+ *
+ * @internal
  */
 export function normalizeMaqlObjectType(maqlObjectType: string): string {
     return MAQL_OBJECT_TYPE_TO_TIGER_TYPE[maqlObjectType] ?? maqlObjectType;

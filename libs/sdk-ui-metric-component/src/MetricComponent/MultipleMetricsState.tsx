@@ -85,6 +85,9 @@ export const MultipleMetricsContext = createContext<IMultipleMetricsContextType>
     closeChangeId: () => {},
 });
 
+/**
+ * @internal
+ */
 export interface IMultipleMetricsProps {
     active: number;
     metrics: IMetricInfo[];
@@ -111,6 +114,9 @@ export interface IMultipleMetricsProps {
     children?: ReactNode;
 }
 
+/**
+ * @internal
+ */
 export function MultipleMetricsState({
     children,
     active,

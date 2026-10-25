@@ -1,0 +1,19 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush-project.schema.json",
+    "incrementalBuildIgnoredGlobs": [],
+    "operationSettings": [
+        {
+            "operationName": "_phase:build",
+            "outputFolderNames": ["esm", "styles/css"]
+        },
+        {
+            "operationName": "_phase:validate",
+            "outputFolderNames": []
+        },
+        {
+            "operationName": "_phase:test",
+            "outputFolderNames": [],
+            "weight": 4
+        }
+    ]
+}

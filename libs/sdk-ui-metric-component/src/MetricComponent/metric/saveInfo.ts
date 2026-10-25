@@ -7,6 +7,9 @@ import { type FormField } from "../Form/data.js";
 
 import { type IMeasureDef } from "./metricHelpers.js";
 
+/**
+ * @internal
+ */
 export interface ISaveMetricInfo {
     references: IMeasureReferencing;
     saveMode: SaveNameMode | undefined;

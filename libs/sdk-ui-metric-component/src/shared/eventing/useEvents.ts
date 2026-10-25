@@ -4,14 +4,23 @@ import { useCallback, useContext, useMemo } from "react";
 
 import { EventContext, type IEvent } from "./EventContext.js";
 
-interface IEventsInterface {
+/**
+ * @internal
+ */
+export interface IEventsInterface {
     [type: string]: (...args: never[]) => IEvent | null;
 }
 
+/**
+ * @internal
+ */
 export type IEventsCallback<Type extends IEventsInterface> = {
     [Property in keyof Type]: (...args: Parameters<Type[Property]>) => void;
 };
 
+/**
+ * @internal
+ */
 export function useEvents<EventsInterface extends IEventsInterface>(
     value: EventsInterface,
 ): IEventsCallback<EventsInterface> {

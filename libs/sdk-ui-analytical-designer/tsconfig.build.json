@@ -1,0 +1,10 @@
+{
+    "extends": "../tsconfig.react.json",
+    "exclude": ["**/*.test.ts", "**/*.test.tsx", "**/*.test.utils.ts", "**/*.test.utils.tsx"],
+    "include": ["src/**/*"],
+    "compilerOptions": {
+        "noCheck": true,
+        "rootDir": "./src",
+        "outDir": "./esm"
+    }
+}

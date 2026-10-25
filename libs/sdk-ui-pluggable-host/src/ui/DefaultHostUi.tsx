@@ -58,6 +58,7 @@ interface IHostUiBridgeProps {
         setNotification: (notification: IHostUiNotification | null) => void,
         setPageTitle: (pageTitle: string | undefined) => void,
         setChatState: (state: IChatButtonState) => void,
+        openPricingDialog: () => void,
     ) => void;
 }
 
@@ -87,10 +88,20 @@ function HostUiBridge({
         mode: "docked",
     });
     const appContainerRef = useRef<HTMLDivElement>(null);
+    const openPricingDialogRef = useRef<(() => void) | undefined>(undefined);
 
     // Layout effect runs in the same synchronous commit as flushSync.
     useLayoutEffect(() => {
-        onReady(setCtx, setApps, setPathname, setHeaderOptions, setNotification, setPageTitle, setChatState);
+        onReady(
+            setCtx,
+            setApps,
+            setPathname,
+            setHeaderOptions,
+            setNotification,
+            setPageTitle,
+            setChatState,
+            () => openPricingDialogRef.current?.(),
+        );
         if (appContainerRef.current) {
             onAppContainerReady(appContainerRef.current);
         }
@@ -117,6 +128,7 @@ function HostUiBridge({
                 onChatToggle={onChatToggleRequested}
                 onAskAiAssistant={onAskAiAssistant}
                 appPageTitle={pageTitle}
+                openPricingDialogRef={openPricingDialogRef}
             >
                 <div ref={appContainerRef} className={e("app-container")} />
             </HostChrome>
@@ -151,6 +163,7 @@ function mountDefaultHostUi(options: IHostUiMountOptions): IHostUiMountHandle {
     let updateNotificationFn: ((notification: IHostUiNotification | null) => void) | null = null;
     let updateDocumentTitleFn: ((pageTitle: string | undefined) => void) | null = null;
     let updateChatStateFn: ((state: IChatButtonState) => void) | null = null;
+    let openPricingDialogFn: (() => void) | null = null;
 
     // Use flushSync so that the DOM is ready synchronously after mount() returns,
     // making getAppContainer() safe to call immediately.
@@ -179,6 +192,7 @@ function mountDefaultHostUi(options: IHostUiMountOptions): IHostUiMountHandle {
                         setNotification,
                         setPageTitle,
                         setChatState,
+                        openPricingDialog,
                     ) => {
                         updateCtxFn = setCtx;
                         updateAppsFn = setApps;
@@ -187,6 +201,7 @@ function mountDefaultHostUi(options: IHostUiMountOptions): IHostUiMountHandle {
                         updateNotificationFn = setNotification;
                         updateDocumentTitleFn = setPageTitle;
                         updateChatStateFn = setChatState;
+                        openPricingDialogFn = openPricingDialog;
                     }}
                 />
             </HostErrorBoundary>,
@@ -206,6 +221,7 @@ function mountDefaultHostUi(options: IHostUiMountOptions): IHostUiMountHandle {
                 updateNotificationFn = null;
                 updateDocumentTitleFn = null;
                 updateChatStateFn = null;
+                openPricingDialogFn = null;
                 root.unmount();
             }
         },
@@ -232,6 +248,10 @@ function mountDefaultHostUi(options: IHostUiMountOptions): IHostUiMountHandle {
 
         updateChatState(state) {
             updateChatStateFn?.(state);
+        },
+
+        openPricingDialog() {
+            openPricingDialogFn?.();
         },
 
         getAppContainer(): HTMLElement {

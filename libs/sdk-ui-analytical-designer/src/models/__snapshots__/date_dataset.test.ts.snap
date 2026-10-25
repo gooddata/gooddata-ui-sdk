@@ -1,0 +1,64 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Decorated DateDataset > date dataset > attributes should be correctly set 1`] = `
+{
+  "chronologicalGranularity": undefined,
+  "dateType": "GDC.time.week_us",
+  "dfIdentifier": "date.aa281lMifn6q",
+  "dfRef": {
+    "uri": "/gdc/md/TeamOneGoodSales1/obj/15259",
+  },
+  "dfUri": "/gdc/md/TeamOneGoodSales1/obj/15259",
+  "displayForms": [],
+  "granularity": "date.euweek",
+  "label": "week",
+  "ref": {
+    "uri": "/gdc/md/TeamOneGoodSales1/obj/15254",
+  },
+  "title": "Week/Year (Date)",
+  "uri": "/gdc/md/TeamOneGoodSales1/obj/15254",
+  "valuesPreview": undefined,
+}
+`;
+
+exports[`Decorated DateDataset > date dataset > attributes should be correctly set 2`] = `
+{
+  "chronologicalGranularity": undefined,
+  "dateType": "GDC.time.date",
+  "dfIdentifier": "date.date.mmddyyyy",
+  "dfRef": {
+    "uri": "/gdc/md/TeamOneGoodSales1/obj/15203",
+  },
+  "dfUri": "/gdc/md/TeamOneGoodSales1/obj/15203",
+  "displayForms": [],
+  "granularity": "date.date",
+  "label": "day",
+  "ref": {
+    "uri": "/gdc/md/TeamOneGoodSales1/obj/15200",
+  },
+  "title": "Date (Date)",
+  "uri": "/gdc/md/TeamOneGoodSales1/obj/15200",
+  "valuesPreview": undefined,
+}
+`;
+
+exports[`Decorated DateDataset > date dataset > attributes should be correctly set 3`] = `
+{
+  "chronologicalGranularity": "GDC.time.month",
+  "dateType": "GDC.time.month_in_quarter",
+  "dfIdentifier": "created.aby81lMifn6q",
+  "dfRef": {
+    "uri": "/gdc/md/TeamOneGoodSales1/obj/15208",
+  },
+  "dfUri": "/gdc/md/TeamOneGoodSales1/obj/15208",
+  "displayForms": [],
+  "granularity": "GDC.time.month_in_quarter",
+  "label": "month_in_quarter",
+  "ref": {
+    "uri": "/gdc/md/TeamOneGoodSales1/obj/15208",
+  },
+  "title": "Date (Month in Quarter)",
+  "uri": "/gdc/md/TeamOneGoodSales1/obj/15208",
+  "valuesPreview": "month_in_quarter_preview",
+}
+`;

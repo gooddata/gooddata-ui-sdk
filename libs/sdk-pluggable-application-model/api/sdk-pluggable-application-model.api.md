@@ -195,6 +195,7 @@ export interface IHostUiModule {
 export interface IHostUiMountHandle {
     getAppContainer(): HTMLElement;
     notify?(notification: IHostUiNotification): void;
+    openPricingDialog?(): void;
     unmount(): void;
     updateApplications?(apps: PluggableApplicationRegistryItem[]): void;
     updateChatState?(state: {
@@ -255,6 +256,12 @@ export interface IOpenAiAssistantRequestedEvent extends IPluggableAppEvent {
     };
     // (undocumented)
     readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.OPEN_REQUESTED";
+}
+
+// @alpha
+export interface IOpenPricingDialogRequestedEvent extends IPluggableAppEvent {
+    // (undocumented)
+    readonly type: "GDC.PLUGGABLE_APP/EVT.PRICING_DIALOG.OPEN_REQUESTED";
 }
 
 // @alpha
@@ -435,6 +442,9 @@ export function isDocumentTitleChangedEvent(obj: unknown): obj is IDocumentTitle
 export function isOpenAiAssistantRequestedEvent(obj: unknown): obj is IOpenAiAssistantRequestedEvent;
 
 // @alpha
+export function isOpenPricingDialogRequestedEvent(obj: unknown): obj is IOpenPricingDialogRequestedEvent;
+
+// @alpha
 export function isPlatformContextV1(context: unknown): context is IPlatformContextV1;
 
 // @alpha
@@ -482,6 +492,9 @@ export function openAiAssistantRequested(payload?: {
 }): IOpenAiAssistantRequestedEvent;
 
 // @alpha
+export function openPricingDialogRequested(): IOpenPricingDialogRequestedEvent;
+
+// @alpha
 export enum PantherTier {
     // (undocumented)
     DEMO = "DEMO",
@@ -504,6 +517,7 @@ export const PluggableAppEventType: {
     readonly AI_ASSISTANT_CONTEXT_CHANGED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CONTEXT_CHANGED";
     readonly AI_ASSISTANT_PUBLISHER_DOCUMENT_SAVED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.PUBLISHER_DOCUMENT_SAVED";
     readonly AI_ASSISTANT_DASHBOARD_SAVED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.DASHBOARD_SAVED";
+    readonly PRICING_DIALOG_OPEN_REQUESTED: "GDC.PLUGGABLE_APP/EVT.PRICING_DIALOG.OPEN_REQUESTED";
 };
 
 // @alpha

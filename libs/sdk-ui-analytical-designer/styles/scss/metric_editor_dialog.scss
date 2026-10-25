@@ -1,0 +1,22 @@
+// (C) 2021-2026 GoodData Corporation
+
+/* stylelint-disable declaration-no-important */
+.editMetricDialog {
+    position: absolute !important;
+    z-index: 4999 !important;
+    max-width: none !important;
+    right: 10px;
+    bottom: 10px;
+    // leaves the catalog and the 250px buckets panel uncovered
+    width: calc(100% - var(--adi-catalog-width) - 260px);
+    min-width: 760px;
+    padding: 0 !important;
+
+    .edit-metric-form-content {
+        height: 442px;
+    }
+}
+
+.gd-measure-number-format-dropdown-body {
+    z-index: 5000 !important;
+}

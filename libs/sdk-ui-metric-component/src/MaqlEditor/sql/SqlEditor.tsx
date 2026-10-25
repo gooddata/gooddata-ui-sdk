@@ -12,7 +12,7 @@ import {
     type Monaco,
     MonacoEditor,
 } from "../monaco/MonacoEditor.js";
-import { type DefaultTheme } from "../theme/default.js";
+import { type MaqlEditorDefaultTheme } from "../theme/default.js";
 import { ThemeProvider } from "../theme/theme.js";
 
 import { LANGUAGE } from "./constants.js";
@@ -21,12 +21,18 @@ import { useLanguageConfiguration } from "./hooks/useLanguageConfiguration.js";
 import { type MonacoHandlers, useMonaco } from "./hooks/useMonaco.js";
 import { SqlEditorClass, SqlEditorTestClass } from "./SqlEditor.styles.js";
 
+/**
+ * @internal
+ */
 export interface ISqlEditorApi {
     copy: () => boolean;
 }
 
+/**
+ * @internal
+ */
 export interface ISqlEditorProps {
-    cssTheme?: DefaultTheme;
+    cssTheme?: MaqlEditorDefaultTheme;
     autofocus?: boolean;
     defaultValue?: string;
     readonly?: boolean;
@@ -39,6 +45,9 @@ export interface ISqlEditorProps {
     ref?: Ref<ISqlEditorApi | null>;
 }
 
+/**
+ * @internal
+ */
 export const SqlEditor = forwardRef<ISqlEditorApi, ISqlEditorProps>(function SqlEditor(
     {
         readonly = false,

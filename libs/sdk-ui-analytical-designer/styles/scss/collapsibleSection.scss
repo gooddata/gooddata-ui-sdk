@@ -1,0 +1,54 @@
+// (C) 2007-2022 GoodData Corporation
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.gd-collapsible-section {
+    padding: 10px 0 10px 15px;
+
+    summary {
+        outline: none;
+        line-height: 20px;
+        font-size: 11px;
+        font-weight: bold;
+        color: kit-variables.$gd-color-state-blank;
+        text-transform: uppercase;
+        cursor: pointer;
+        list-style-type: none;
+
+        &::marker {
+            display: none;
+        }
+
+        &::-webkit-details-marker {
+            display: none;
+        }
+
+        &::before {
+            content: "\e611";
+            position: relative;
+            top: 2px;
+            display: inline-block;
+            width: 10px;
+            margin-right: 5px;
+            margin-left: -15px;
+            font-family: Indigo, sans-serif;
+            font-size: 14px;
+            font-weight: normal;
+            color: kit-variables.$gd-palette-primary-base;
+            transform: rotate(0);
+            transition: transform 0.1s;
+        }
+    }
+
+    &[open] summary {
+        margin-bottom: 10px;
+
+        &::before {
+            transform: rotate(90deg);
+        }
+    }
+
+    &.gd-dialog-section-separated {
+        padding-top: 0;
+    }
+}

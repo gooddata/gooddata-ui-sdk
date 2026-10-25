@@ -1,0 +1,45 @@
+// (C) 2007-2022 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.main-loading {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+    text-align: center;
+    color: kit-variables.$gd-color-text-dimmed;
+    transform: translateY(-50%);
+
+    &::before {
+        content: "";
+        display: block;
+        width: 32px;
+        height: 32px;
+        margin: 10px auto;
+        background: url("@gooddata/sdk-ui-analytical-designer/styles/images/loading-32.gif") no-repeat center
+            center;
+    }
+}
+
+.editor-loading {
+    background: url("@gooddata/sdk-ui-analytical-designer/styles/images/loading-32.gif") no-repeat center
+        center;
+    opacity: 0;
+    animation: 0.3s ease 0.2s normal forwards 1 fadein;
+}
+
+.dropdown-loading {
+    background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/loading-32.gif");
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

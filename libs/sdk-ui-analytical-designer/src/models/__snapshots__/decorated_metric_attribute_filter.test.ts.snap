@@ -1,0 +1,22 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Metric Attribute Filter > decorated item > buildFilterSelection > should build expected filter selection 1`] = `
+{
+  "isAllSelected": false,
+  "isInverted": true,
+  "selectedElements": [
+    {
+      "available": true,
+      "title": "1 element 1",
+    },
+    {
+      "available": true,
+      "title": "2 element 2",
+    },
+    {
+      "available": true,
+      "title": "3 element 3",
+    },
+  ],
+}
+`;

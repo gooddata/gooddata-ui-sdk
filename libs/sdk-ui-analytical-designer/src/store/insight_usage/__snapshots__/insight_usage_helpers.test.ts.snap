@@ -1,0 +1,109 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`insight usage on dashboards > getInsightUsageOnDashboards > should process and correctly sort provided dashboards 1`] = `
+{
+  "accessibleDashboards": [
+    {
+      "id": "Bee6",
+      "title": "Abc",
+    },
+    {
+      "id": "Bee4",
+      "title": "akh",
+    },
+    {
+      "id": "Bee5",
+      "title": "Bcd",
+    },
+    {
+      "id": "Bee7",
+      "title": "bdf",
+    },
+    {
+      "id": "Bee1",
+      "title": "Sale1",
+    },
+    {
+      "id": "Bee2",
+      "title": "Sale2",
+    },
+    {
+      "id": "Bee3",
+      "title": "Selected Dashboard",
+    },
+  ],
+  "allDashboards": [
+    {
+      "id": "Bee2",
+      "title": "Sale2",
+    },
+    {
+      "id": "Bee4",
+      "title": "akh",
+    },
+    {
+      "id": "Bee5",
+      "title": "Bcd",
+    },
+    {
+      "id": "Bee1",
+      "title": "Sale1",
+    },
+    {
+      "id": "Bee7",
+      "title": "bdf",
+    },
+    {
+      "id": "Bee6",
+      "title": "Abc",
+    },
+    {
+      "id": "Bee3",
+      "title": "Selected Dashboard",
+    },
+  ],
+  "allDashboardsCount": 7,
+  "inaccessibleDashboardsCount": 0,
+}
+`;
+
+exports[`insight usage on dashboards > getInsightUsageOnDashboardsSelector > should return default object when usage info is null 1`] = `
+{
+  "accessibleDashboards": [],
+  "allDashboards": [],
+  "allDashboardsCount": 0,
+  "inaccessibleDashboardsCount": 0,
+}
+`;
+
+exports[`insight usage on dashboards > getInsightUsageOnDashboardsSelector > should return default object when usage info is undefined 1`] = `
+{
+  "accessibleDashboards": [],
+  "allDashboards": [],
+  "allDashboardsCount": 0,
+  "inaccessibleDashboardsCount": 0,
+}
+`;
+
+exports[`insight usage on dashboards > getInsightUsageOnDashboardsSelector > should return expected object from usage info from state 1`] = `
+{
+  "accessibleDashboards": [
+    {
+      "id": "id3",
+      "title": "Revenue",
+    },
+  ],
+  "allDashboards": [
+    {
+      "id": "Bee",
+      "title": "Sale",
+    },
+    {
+      "id": "id3",
+      "title": "Revenue",
+    },
+  ],
+  "allDashboardsCount": 2,
+  "inaccessibleDashboardsCount": 1,
+}
+`;

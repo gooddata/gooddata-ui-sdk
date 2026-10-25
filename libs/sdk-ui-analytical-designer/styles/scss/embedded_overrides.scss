@@ -1,0 +1,22 @@
+// (C) 2026 GoodData Corporation
+
+// Stacking overrides for hosted-component mode only (AnalyticalDesignerEmbedded toggles the
+// body class while mounted; standalone and pluggable AD never match these rules).
+//
+// In-process AD lives inside KD's insight overlay, whose wrapper carries inline z-index 9001
+// (INSIGHT_OVERLAY_Z_INDEX in gdc-dashboards-runtime). AD's floating elements portal to
+// document.body, making them stacking SIBLINGS of that wrapper — anything with a CSS-pinned
+// z-index below 9001 is trapped behind the editor. The `!important` pins below also beat the
+// OverlayController inline stacking (important author CSS wins over inline styles), so they must
+// be re-pinned here, preserving their standalone relative order:
+//
+//   editor 9001 < editMetricDialog 9002 < number-format dropdown 9003
+//   < controller-stacked ui-kit overlays 9011+ (see DirectAdOverlayImpl)
+//
+// mirroring the standalone order 4999 < 5000 < overlays.
+/* stylelint-disable declaration-no-important */
+body.gd-ad-embedded {
+    .kd-messages-overlay .overlay-wrapper {
+        z-index: 9001 !important;
+    }
+}

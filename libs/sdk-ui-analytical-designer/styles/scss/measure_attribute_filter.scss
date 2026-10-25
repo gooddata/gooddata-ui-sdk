@@ -1,0 +1,31 @@
+// (C) 2019-2022 GoodData Corporation
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.adi-attr-filter-picker-list {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.adi-attr-filter-picker-list-item {
+    display: flex;
+    padding: 0 10px;
+    cursor: pointer;
+
+    &:hover {
+        background: kit-variables.$is-focused-background;
+    }
+
+    &.is-disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .attr-field-name {
+        display: block;
+        flex: 1 1 auto;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}

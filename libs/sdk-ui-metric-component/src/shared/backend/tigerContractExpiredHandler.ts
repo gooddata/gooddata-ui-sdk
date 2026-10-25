@@ -3,6 +3,9 @@
 let openContractExpiredDialog: (tier: string) => void;
 let expiredTier: string | undefined;
 
+/**
+ * @internal
+ */
 export function initOpenContractExpiredDialog(callback: (tier: string) => void): void {
     openContractExpiredDialog = callback;
     // In cases when "contractExpiredHandler" is called before "initOpenContractExpiredDialog"
@@ -12,6 +15,9 @@ export function initOpenContractExpiredDialog(callback: (tier: string) => void):
     }
 }
 
+/**
+ * @internal
+ */
 export function contractExpiredHandler(tier: string): void {
     if (openContractExpiredDialog) {
         openContractExpiredDialog(tier);

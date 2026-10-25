@@ -1,0 +1,141 @@
+// (C) 2007-2023 GoodData Corporation
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+%adi-bucket-item {
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 12px;
+
+    div > span {
+        display: block;
+        overflow: hidden;
+    }
+
+    &::before {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 3px;
+        display: block;
+        width: 18px;
+        min-width: 18px;
+        font-family: Indigo, sans-serif;
+        font-weight: normal;
+        font-size: 15px;
+        line-height: 20px;
+        text-align: center;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    &.type-date,
+    &.type-fact,
+    &.type-metric,
+    &.type-measure,
+    &.type-attribute {
+        &::before {
+            content: "";
+            animation: fakeHover 1ms;
+        }
+    }
+
+    &.type-date {
+        &::before {
+            width: 12px;
+            margin-top: -1px;
+            background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/date.svg");
+        }
+
+        &.not-available {
+            &::before {
+                opacity: 0.5;
+            }
+        }
+
+        .is-dragging & {
+            &::before {
+                background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/date-unrelated.svg");
+            }
+        }
+    }
+
+    &.type-fact,
+    &.type-measure,
+    &.type-metric {
+        &::before {
+            width: 18px;
+            background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/measure.svg");
+        }
+
+        &.not-available {
+            &::before {
+                opacity: 0.5;
+            }
+        }
+
+        .is-dragging & {
+            &::before {
+                background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/measure-unrelated.svg");
+            }
+        }
+    }
+
+    &.renaming-measure-enable.type-metric {
+        &::before {
+            width: 14px;
+            background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/metric.svg");
+        }
+
+        &.not-available {
+            &::before {
+                opacity: 0.5;
+            }
+        }
+
+        .is-dragging & {
+            &::before {
+                background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/metric-unrelated.svg");
+            }
+        }
+    }
+
+    &.type-attribute {
+        &::before {
+            width: 18px;
+            background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/attribute.svg");
+        }
+
+        &.not-available {
+            &::before {
+                opacity: 0.5;
+            }
+        }
+
+        .is-dragging & {
+            &::before {
+                background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/attribute-unrelated.svg");
+            }
+        }
+    }
+
+    &.type-geo_attribute {
+        &::before {
+            content: "\E624"; // earth icon
+            font-size: 13px;
+            height: 18px;
+            margin: auto;
+            color: kit-variables.$gd-color-warning-text;
+        }
+    }
+}
+
+@keyframes fakeHover {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

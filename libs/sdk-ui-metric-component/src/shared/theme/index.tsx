@@ -2,7 +2,10 @@
 
 import { type CSSObject, createMakeStyles } from "tss-react";
 
-function useTheme() {
+/**
+ * @internal
+ */
+export function useTheme() {
     const defaultWhite = "#FFFFFF";
     const defaultText = "#464e56";
     const defaultBorder = "#dde4eb";
@@ -204,5 +207,12 @@ function useTheme() {
     };
 }
 
+/**
+ * @internal
+ */
 export type DefaultTheme = ReturnType<typeof useTheme>;
+
+/**
+ * @internal
+ */
 export const { makeStyles } = createMakeStyles({ useTheme });

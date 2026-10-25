@@ -18,6 +18,8 @@ import { type MetadataObjectAndRange } from "./tokenRanges.js";
 
 /**
  * A decoration in the model.
+ *
+ * @internal
  */
 export interface IDecoration {
     /**
@@ -32,6 +34,8 @@ export interface IDecoration {
 
 /**
  * Options for a decoration.
+ *
+ * @internal
  */
 export interface IDecorationOptions {
     /**
@@ -48,6 +52,9 @@ export interface IDecorationOptions {
     type: DecorationType;
 }
 
+/**
+ * @internal
+ */
 export type DecorationType = ITigerMetadataObject["tigerType"] | "dateAttribute" | "dateLabel";
 
 export function decorate(query: string, ldmObjects?: LdmObjects): IDecoration[] {

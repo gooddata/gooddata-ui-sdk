@@ -10,10 +10,16 @@ import {
     type IFeaturesAndSettingsContext,
 } from "./FeaturesAndSettings/index.js";
 
+/**
+ * @internal
+ */
 export interface IMetricServiceProps {
     settings?: Partial<IFeaturesAndSettingsContext>;
 }
 
+/**
+ * @internal
+ */
 export function MetricService({ children, settings = {} }: PropsWithChildren<IMetricServiceProps>) {
     return (
         <FeaturesAndSettingsContextProvider {...settings}>

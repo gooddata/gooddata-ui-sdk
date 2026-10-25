@@ -2,6 +2,9 @@
 
 import { type IMeasureMetadataObjectDefinition } from "@gooddata/sdk-model";
 
+/**
+ * @internal
+ */
 export type EmptyMetric = IMeasureMetadataObjectDefinition &
     Required<
         Pick<
@@ -9,8 +12,15 @@ export type EmptyMetric = IMeasureMetadataObjectDefinition &
             "expression" | "type" | "description" | "format" | "title" | "tags"
         >
     >;
+
+/**
+ * @internal
+ */
 export type EmptyMetricWidthId = EmptyMetric & { id: string };
 
+/**
+ * @internal
+ */
 export const emptyMetric: EmptyMetric = {
     type: "measure",
     title: "",
@@ -23,4 +33,7 @@ export const emptyMetric: EmptyMetric = {
     metricType: undefined,
 };
 
+/**
+ * @internal
+ */
 export const emptyMetricWithId: EmptyMetricWidthId = { ...emptyMetric, id: "" };

@@ -17,7 +17,7 @@ import {
     useRegisterFloatingAnchor,
 } from "@gooddata/sdk-ui-kit";
 
-import { type DefaultTheme } from "../theme/default.js";
+import { type MaqlEditorDefaultTheme } from "../theme/default.js";
 import { makeStyles } from "../theme/styles.js";
 
 import { ExpandableTooltipContextProvider } from "./ExpandableTooltipContext.js";
@@ -27,7 +27,7 @@ import { useRePosition } from "./hooks/useRePosition.js";
 export const ExpandedClass = "expanded";
 export const ScrollbarClass = "with-scrollbar";
 
-const useStyles = makeStyles()((theme: DefaultTheme) => ({
+const useStyles = makeStyles()((theme: MaqlEditorDefaultTheme) => ({
     root: {
         position: "absolute",
         zIndex: 9999,

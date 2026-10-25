@@ -1,0 +1,194 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`filterBarService > migrateAdditionalDateFilters > should migrate provided filters and omit filters that are not supported in the new date dataset 1`] = `
+[
+  {
+    "cacheItemIdentifier": "DATE3.dayOfMonth",
+    "displayFormRef": {
+      "identifier": "DATE3.dayOfMonth",
+      "type": "displayForm",
+    },
+    "filterConfig": {
+      "isInverted": false,
+      "selectedElements": [
+        {
+          "available": true,
+          "title": "Element 1",
+          "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/623?id=1",
+        },
+      ],
+      "totalElementsCount": 1,
+    },
+    "localIdentifier": "additional.filter1",
+    "type": "attribute",
+  },
+]
+`;
+
+exports[`filterBarService > resetAdditionalDateFilters > should migrate additional date filters 1`] = `
+{
+  "cacheItemIdentifier": "timeline.day.in.week",
+  "displayFormRef": {
+    "uri": "/gdc/md/868",
+  },
+  "filterConfig": {
+    "isInverted": false,
+    "selectedElements": [
+      {
+        "available": true,
+        "title": "Element 1",
+        "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/623?id=1",
+      },
+    ],
+    "totalElementsCount": 1,
+  },
+  "localIdentifier": "additional.filter",
+  "type": "attribute",
+}
+`;
+
+exports[`filterBarService > resetAdditionalDateFilters > should remove the unsupported additional date filter and report only that one 1`] = `
+{
+  "cacheItemIdentifier": "timeline.day.in.week",
+  "displayFormRef": {
+    "uri": "/gdc/md/868",
+  },
+  "filterConfig": {
+    "isInverted": false,
+    "selectedElements": [
+      {
+        "available": true,
+        "title": "Element 1",
+        "uri": "/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/623?id=1",
+      },
+    ],
+    "totalElementsCount": 1,
+  },
+  "localIdentifier": "additional.filter",
+  "type": "attribute",
+}
+`;
+
+exports[`filterBarService > updateMeasureValueFilter > should change comparison filter to use range condition instead 1`] = `
+{
+  "conditions": [
+    {
+      "range": {
+        "from": 12,
+        "operator": "BETWEEN",
+        "to": 14,
+      },
+    },
+  ],
+  "localIdentifier": "f1",
+  "measureLocalIdentifier": "m1",
+  "type": "measure",
+}
+`;
+
+exports[`filterBarService > updateMeasureValueFilter > should change range filter to use comparison condition instead 1`] = `
+{
+  "conditions": [
+    {
+      "comparison": {
+        "operator": "GREATER_THAN",
+        "value": 12,
+      },
+    },
+  ],
+  "localIdentifier": "f1",
+  "measureLocalIdentifier": "m2",
+  "type": "measure",
+}
+`;
+
+exports[`filterBarService > updateMeasureValueFilter > should remove conditions from configured filter if new filter does not have conditions 1`] = `
+{
+  "conditions": undefined,
+  "localIdentifier": "f1",
+  "measureLocalIdentifier": "m1",
+  "type": "measure",
+}
+`;
+
+exports[`filterBarService > updateMeasureValueFilter > should remove conditions from configured filter if new filter does not have them 1`] = `
+{
+  "conditions": undefined,
+  "localIdentifier": "f1",
+  "measureLocalIdentifier": "m1",
+  "type": "measure",
+}
+`;
+
+exports[`filterBarService > updateMeasureValueFilter > should set conditions to originally empty filter 1`] = `
+{
+  "conditions": [
+    {
+      "comparison": {
+        "operator": "GREATER_THAN",
+        "value": 12,
+      },
+    },
+  ],
+  "localIdentifier": "f1",
+  "measureLocalIdentifier": "m3",
+  "type": "measure",
+}
+`;
+
+exports[`filterBarService > updateMeasureValueFilter > should update comparison filter 1`] = `
+{
+  "conditions": [
+    {
+      "comparison": {
+        "operator": "LESS_THAN",
+        "value": 42,
+      },
+    },
+  ],
+  "localIdentifier": "f1",
+  "measureLocalIdentifier": "m1",
+  "type": "measure",
+}
+`;
+
+exports[`filterBarService > updateMeasureValueFilter > should update range filter 1`] = `
+{
+  "conditions": [
+    {
+      "range": {
+        "from": 10,
+        "operator": "NOT_BETWEEN",
+        "to": 20,
+      },
+    },
+  ],
+  "localIdentifier": "f1",
+  "measureLocalIdentifier": "m2",
+  "type": "measure",
+}
+`;
+
+exports[`filterBarService > updateRankingFilter > should remove attributes when All attributes option was selected 1`] = `
+{
+  "localIdentifier": "f5",
+  "measureLocalIdentifier": "m5",
+  "operator": "BOTTOM",
+  "type": "ranking",
+  "value": 3,
+}
+`;
+
+exports[`filterBarService > updateRankingFilter > should update all ranking filter props 1`] = `
+{
+  "attributes": [
+    "a2",
+    "a3",
+  ],
+  "localIdentifier": "f5",
+  "measureLocalIdentifier": "m1",
+  "operator": "TOP",
+  "type": "ranking",
+  "value": 5,
+}
+`;

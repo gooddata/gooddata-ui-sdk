@@ -1,0 +1,19 @@
+<svg width="81" height="59" viewBox="0 0 81 59" xmlns="http://www.w3.org/2000/svg">
+  <title>
+    Group 7
+  </title>
+  <g fill="none" fill-rule="evenodd">
+    <rect fill="#14B2E2" y="48" width="13" height="11" rx="1"/>
+    <rect fill="#14B2E2" y="32" width="13" height="11" rx="1"/>
+    <rect fill="#14B2E2" y="16" width="13" height="11" rx="1"/>
+    <rect fill="#14B2E2" width="13" height="11" rx="1"/>
+    <rect fill="#14B2E2" x="18" width="29" height="11" rx="1"/>
+    <rect fill="#96D5E8" x="18" y="16" width="29" height="11" rx="1"/>
+    <rect fill="#96D5E8" x="18" y="32" width="29" height="11" rx="1"/>
+    <rect fill="#96D5E8" x="18" y="48" width="29" height="11" rx="1"/>
+    <rect fill="#14B2E2" x="52" width="29" height="11" rx="1"/>
+    <rect fill="#96D5E8" x="52" y="16" width="29" height="11" rx="1"/>
+    <rect fill="#96D5E8" x="52" y="32" width="29" height="11" rx="1"/>
+    <rect fill="#96D5E8" x="52" y="48" width="29" height="11" rx="1"/>
+  </g>
+</svg>

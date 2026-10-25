@@ -2,11 +2,14 @@
 
 import { type PropsWithChildren, createContext, useMemo } from "react";
 
-import { type DefaultTheme, defaultTheme } from "./default.js";
+import { type MaqlEditorDefaultTheme, defaultTheme } from "./default.js";
 
-export const ThemeContext = createContext<DefaultTheme>(defaultTheme());
+export const ThemeContext = createContext<MaqlEditorDefaultTheme>(defaultTheme());
 
-export function ThemeProvider({ theme, children }: PropsWithChildren<{ theme?: DefaultTheme | null }>) {
+export function ThemeProvider({
+    theme,
+    children,
+}: PropsWithChildren<{ theme?: MaqlEditorDefaultTheme | null }>) {
     const def = useMemo(() => defaultTheme(), []);
 
     return <ThemeContext.Provider value={theme || def}>{children}</ThemeContext.Provider>;

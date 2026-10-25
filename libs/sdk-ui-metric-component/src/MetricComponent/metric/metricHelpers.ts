@@ -16,8 +16,14 @@ import { generateUniqId, generateUniqTitle } from "./nameGenerators.js";
 import { addPrefixToId, removePrefixFromId } from "./prefixHelper.js";
 import { transformToMetricDefinition } from "./transformer.js";
 
+/**
+ * @internal
+ */
 export type IMeasureDef = (IMeasureMetadataObjectDefinition | IMeasureMetadataObject) & { prefix?: string };
 
+/**
+ * @internal
+ */
 export type IMeasureSetting = {
     sqlOpen: boolean;
     computedFor: string | null;
@@ -29,6 +35,9 @@ function normalizeMetricType(metricType?: MetricType): MetricType | undefined {
     return metricType === "UNSPECIFIED" ? undefined : metricType;
 }
 
+/**
+ * @internal
+ */
 export function prepareMetricForSaveAs(
     initialValueMetric: IMeasureDef,
     metricToSaveAs: IMeasureDef,
@@ -64,6 +73,9 @@ export function prepareMetricForSaveAs(
     return { metric: newMetric, updatedFields: fieldsToGenerate };
 }
 
+/**
+ * @internal
+ */
 export function createDefinitionByMetric(metric: IMeasureDef): IMeasureMetadataObjectDefinition {
     const { title, description, expression, tags, format, metricType } = metric;
     const base = {
@@ -82,6 +94,9 @@ export function createDefinitionByMetric(metric: IMeasureDef): IMeasureMetadataO
     return { ...base, format };
 }
 
+/**
+ * @internal
+ */
 export function createNewMetricInfo(
     identifier: string,
     prescription?: IMeasureDef,
@@ -108,6 +123,9 @@ export function createNewMetricInfo(
     };
 }
 
+/**
+ * @internal
+ */
 export function createDraftNewMetricInfo(): IMetricInfoDraft {
     return {
         initial: { ...emptyMetricWithId },
@@ -123,6 +141,9 @@ export function createDraftNewMetricInfo(): IMetricInfoDraft {
     };
 }
 
+/**
+ * @internal
+ */
 export function createEditMetricInfo(identifier: string, metric: IMeasureDef): IMetricInfo {
     // Ensure metricType is preserved (can be undefined, "CURRENCY", or "UNSPECIFIED")
     const normalizedMetric = {
@@ -145,6 +166,9 @@ export function createEditMetricInfo(identifier: string, metric: IMeasureDef): I
     };
 }
 
+/**
+ * @internal
+ */
 export function createDraftEditMetricInfo(
     metric: IMeasureDef,
     saveMode?: SaveNameMode,

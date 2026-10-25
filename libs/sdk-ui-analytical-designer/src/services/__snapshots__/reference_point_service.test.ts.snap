@@ -1,0 +1,32 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`referencePointService > should convert ranking filters 1`] = `
+[
+  {
+    "autoCreated": false,
+    "filters": [
+      {
+        "measure": "m4",
+        "operator": "TOP",
+        "value": 10,
+      },
+    ],
+    "localIdentifier": "f5",
+  },
+  {
+    "autoCreated": false,
+    "filters": [
+      {
+        "attributes": [
+          "a1",
+          "a2",
+        ],
+        "measure": "m5",
+        "operator": "BOTTOM",
+        "value": 3,
+      },
+    ],
+    "localIdentifier": "f6",
+  },
+]
+`;

@@ -14,6 +14,9 @@ import { createTigerAuthenticationUrl, redirectToTigerAuthentication } from "@go
 
 let openNotAuthenticatedOverlay: (err: NotAuthenticatedError) => void;
 
+/**
+ * @internal
+ */
 export function initOpenNotAuthenticatedOverlay(callback: (err: NotAuthenticatedError) => void): void {
     openNotAuthenticatedOverlay = callback;
 }
@@ -23,6 +26,9 @@ const debouncedRedirectHandler = throttle(redirectToTigerAuthentication, 500, {
     trailing: true,
 });
 
+/**
+ * @internal
+ */
 export class NotAuthenticatedError extends NotAuthenticated {
     constructor(
         message: string,
@@ -33,6 +39,9 @@ export class NotAuthenticatedError extends NotAuthenticated {
     }
 }
 
+/**
+ * @internal
+ */
 export function notAuthenticatedHandler(ctx: IAuthenticationContext, err: NotAuthenticated): void {
     if (openNotAuthenticatedOverlay && err.authenticationFlow) {
         const tigerAuthenticationUrl = createTigerAuthenticationUrl(

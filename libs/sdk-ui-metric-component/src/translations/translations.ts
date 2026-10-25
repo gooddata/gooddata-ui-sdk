@@ -21,7 +21,14 @@ import en_US from "./en-US.json" with { type: "json" };
 // The composed sdk layer already falls back to English for its own keys.
 const DEFAULT_APP_MESSAGES: ITranslations = removeMetadata(en_US);
 
+/**
+ * @internal
+ */
 export const DEFAULT_LANGUAGE: ILocale = "en-US";
+
+/**
+ * @internal
+ */
 export const DEFAULT_MESSAGES: Record<string, ITranslations> = {
     [DEFAULT_LANGUAGE]: {
         ...SDK_DEFAULT_MESSAGES[DEFAULT_LANGUAGE],

@@ -1,0 +1,54 @@
+// (C) 2007-2022 GoodData Corporation
+@use "sass:color";
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.adi-blank-canvas-message {
+    box-sizing: content-box;
+    max-width: 340px;
+    margin: 110px auto 0;
+    padding: 40px;
+    border: 2px dashed color.adjust(kit-variables.$default-gd-color-disabled, $alpha: -0.55);
+    border-radius: 15px;
+    text-align: center;
+    background: color.adjust(variables.$adi-bucket-border-color, $alpha: -0.95);
+    transition:
+        padding-left 0.1s,
+        padding-right 0.1s;
+
+    h2,
+    p {
+        margin: 0;
+        line-height: 28px;
+        color: kit-variables.$gd-color-state-blank;
+    }
+
+    h2 {
+        font-weight: bold;
+    }
+
+    p {
+        font-size: 18px;
+        margin-top: 5px;
+        font-weight: normal;
+    }
+
+    .fact-field-icon::before,
+    .measure-field-icon::before,
+    .attr-field-icon::before {
+        top: 0;
+        width: 28px;
+        height: 11px;
+        margin: 0 3px;
+    }
+
+    .metric-field-icon::before {
+        top: 4px;
+        width: 20px;
+        height: 20px;
+    }
+
+    &.adi-blank-canvas-message-small {
+        padding: 40px 10px;
+    }
+}

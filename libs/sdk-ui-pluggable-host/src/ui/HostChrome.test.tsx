@@ -10,6 +10,7 @@ import { render } from "../../test/render.js";
 import { registerAppLifecycleCallbacks } from "../loader/pluggableApplicationsLoader.js";
 
 import { HostChrome } from "./HostChrome.js";
+import { setHostPricingExtension } from "./useHostChromePricing.js";
 
 const { setLocale, organizationSettings } = vi.hoisted(() => ({
     setLocale: vi.fn<(locale: string) => Promise<void>>(),
@@ -66,6 +67,44 @@ describe("HostChrome", () => {
         await user.click(await screen.findByRole("button", { name: "Language" }));
 
         expect(await screen.findByRole("dialog", { name: "Change language" })).toBeVisible();
+    });
+
+    describe("pricing dialog open request", () => {
+        const onUpsellButtonClick = vi.fn();
+
+        afterEach(() => {
+            setHostPricingExtension(undefined);
+            onUpsellButtonClick.mockClear();
+        });
+
+        it.each([
+            ["opens the pricing dialog in a trial organization", true, 1],
+            ["does nothing outside a trial organization", false, 0],
+        ])("%s", (_case, isTrial, expectedCalls) => {
+            setHostPricingExtension(() => ({
+                element: null,
+                isTrial,
+                expiredDate: "",
+                onUpsellButtonClick,
+            }));
+            const openPricingDialogRef: { current: (() => void) | undefined } = { current: undefined };
+            render(<HostChrome {...requiredProps} openPricingDialogRef={openPricingDialogRef} />);
+
+            openPricingDialogRef.current?.();
+
+            expect(onUpsellButtonClick).toHaveBeenCalledTimes(expectedCalls);
+        });
+
+        it("releases the handler on unmount", () => {
+            const openPricingDialogRef: { current: (() => void) | undefined } = { current: undefined };
+            const { unmount } = render(
+                <HostChrome {...requiredProps} openPricingDialogRef={openPricingDialogRef} />,
+            );
+
+            unmount();
+
+            expect(openPricingDialogRef.current).toBeUndefined();
+        });
     });
 
     describe("language telemetry", () => {

@@ -20,12 +20,18 @@ import { type IDeleteMetricInfo } from "./metric/deleteInfo.js";
 import { type IMeasureDef, type IMeasureSetting } from "./metric/metricHelpers.js";
 import { type ISaveMetricInfo } from "./metric/saveInfo.js";
 
+/**
+ * @internal
+ */
 export interface IManageMetricApi {
     save: () => Promise<void>;
     saveForce: () => Promise<void>;
     close: () => void;
 }
 
+/**
+ * @internal
+ */
 export interface IManageMetricProps {
     locale?: string;
     setting?: IMeasureSetting;
@@ -52,6 +58,9 @@ export interface IManageMetricProps {
     enableMetricFormatOverrides?: boolean;
 }
 
+/**
+ * @internal
+ */
 export const ManageMetric = forwardRef<IManageMetricApi | undefined, IManageMetricProps>(
     function ManageMetric(
         {

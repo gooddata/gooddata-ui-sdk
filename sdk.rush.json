@@ -241,6 +241,11 @@
      */
     "projects": [
         {
+            "packageName": "@gooddata/sdk-ui-analytical-designer",
+            "projectFolder": "libs/sdk-ui-analytical-designer",
+            "versionPolicyName": "sdk"
+        },
+        {
             "packageName": "@gooddata/sdk-ui-metric-component",
             "projectFolder": "libs/sdk-ui-metric-component",
             "versionPolicyName": "sdk"

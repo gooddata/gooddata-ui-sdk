@@ -22,11 +22,17 @@ interface ILoadListData {
 
 type IUserMetricListData = (search: string, sort: IMetricListSort) => Promise<ILoadListData>;
 
+/**
+ * @internal
+ */
 export interface IMetricListSort {
     type: "title" | "id";
     direction: "asc" | "desc";
 }
 
+/**
+ * @internal
+ */
 export interface IUseMetricList {
     items: IMeasureMetadataObject[];
     search: string;
@@ -65,6 +71,9 @@ export const getMetricListData =
         });
     };
 
+/**
+ * @internal
+ */
 export interface IUseMetricListDataOptions {
     /**
      * Ask the backend for each metric's object-level permissions.
@@ -72,6 +81,9 @@ export interface IUseMetricListDataOptions {
     loadPermissions?: boolean;
 }
 
+/**
+ * @internal
+ */
 export const useMetricListData = ({
     loadPermissions = false,
 }: IUseMetricListDataOptions = {}): IUseMetricList => {

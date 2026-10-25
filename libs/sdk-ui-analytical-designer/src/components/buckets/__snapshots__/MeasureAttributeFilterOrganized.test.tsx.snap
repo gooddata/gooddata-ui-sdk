@@ -1,0 +1,22 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`MeasureAttributeFilterOrganized > callbacks > should call onSelect when the item has been clicked 1`] = `
+{
+  "dataset": undefined,
+  "dfRef": {
+    "identifier": "identifier1",
+  },
+  "dfUri": "dfUri1",
+  "identifier": "attrIdentifier1",
+  "isLocationIconVisible": false,
+  "primaryRef": {
+    "identifier": "identifier1",
+  },
+  "primaryUri": "dfUri1",
+  "ref": {
+    "identifier": "attrIdentifier1",
+  },
+  "title": "title1 product",
+  "type": "attribute",
+}
+`;

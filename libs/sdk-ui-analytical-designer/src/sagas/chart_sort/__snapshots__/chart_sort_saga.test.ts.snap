@@ -1,0 +1,80 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Chart Sort saga > UI_UPDATE_APPLIED_CHART_SORT > should store current sort when changed by UI action 1`] = `
+[
+  {
+    "attributeSortItem": {
+      "attributeIdentifier": "attr1",
+      "direction": "asc",
+    },
+  },
+]
+`;
+
+exports[`Chart Sort saga > UI_UPDATE_CHART_SORT_CONFIG > should store sort config when changed by UI action and change applied state when new sort config contains new applied sort 1`] = `
+{
+  "availableSorts": [
+    {
+      "itemId": {
+        "localIdentifier": "m1",
+      },
+      "metricSorts": [
+        {
+          "locators": [
+            {
+              "measureLocatorItem": {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+      ],
+    },
+  ],
+  "defaultSort": [
+    {
+      "measureSortItem": {
+        "direction": "desc",
+        "locators": [
+          {
+            "measureLocatorItem": {
+              "measureIdentifier": "m1",
+            },
+          },
+        ],
+      },
+    },
+  ],
+  "disabled": false,
+  "disabledExplanation": undefined,
+  "supported": true,
+}
+`;
+
+exports[`Chart Sort saga > UI_UPDATE_CHART_SORT_CONFIG > should store sort config when changed by UI action and not reset applied state when new applied sort is not defined 1`] = `
+{
+  "availableSorts": [
+    {
+      "attributeSort": {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": {
+        "localIdentifier": "a1",
+      },
+    },
+  ],
+  "defaultSort": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "attr1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "disabledExplanation": undefined,
+  "supported": true,
+}
+`;

@@ -1,0 +1,12 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`selectors > getDecoratedCompatibleMeasures > should return a subset of compatible measures as decoratedBucketItems 1`] = `
+[
+  {
+    "alias": undefined,
+    "localIdentifier": "m1",
+    "sequenceNumber": 1,
+    "title": "Measure 1",
+  },
+]
+`;

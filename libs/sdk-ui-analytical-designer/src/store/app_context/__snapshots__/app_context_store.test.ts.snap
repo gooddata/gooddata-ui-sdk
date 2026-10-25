@@ -1,0 +1,10 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`app context reducers > clearInsightContent > should reset chart sort 1`] = `
+{
+  "availableSorts": [],
+  "defaultSort": [],
+  "disabled": false,
+  "supported": false,
+}
+`;

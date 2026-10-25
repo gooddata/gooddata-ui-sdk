@@ -1,0 +1,16 @@
+// (C) 2007-2022 GoodData Corporation
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.adi-filter-picker {
+    .filter-picker-buttons {
+        margin: 0 10px;
+        padding: 10px 0;
+        border-top: 1px solid kit-variables.$gd-border-color;
+        text-align: right;
+
+        button + button {
+            margin-left: 10px;
+        }
+    }
+}

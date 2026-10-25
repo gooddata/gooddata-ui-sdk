@@ -1,0 +1,14 @@
+// (C) 2019-2022 GoodData Corporation
+.gd-powered-by-logo-wrapper {
+    align-self: flex-end;
+    margin-top: 10px;
+    line-height: 0;
+
+    & > a {
+        display: block;
+        width: 165px;
+        height: 30px;
+        background: url("@gooddata/sdk-ui-analytical-designer/styles/images/powered-by-gd.svg?v=2022");
+        background-size: 165px 30px;
+    }
+}
