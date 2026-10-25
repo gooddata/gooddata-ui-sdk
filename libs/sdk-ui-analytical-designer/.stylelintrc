@@ -1,0 +1,6 @@
+{
+    "extends": ["@gooddata/stylelint-config"],
+    "rules": {
+        "order/properties-order": null
+    }
+}

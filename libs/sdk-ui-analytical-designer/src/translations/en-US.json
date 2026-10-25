@@ -1,0 +1,2681 @@
+{
+    "of": {
+        "text": "of",
+        "crowdinContext": "Test comment"
+    },
+    "search": {
+        "text": "Search…",
+        "crowdinContext": "Use '…' as one character, not 3 dots ('...')."
+    },
+    "search_data": {
+        "text": "Search data…",
+        "crowdinContext": "Use '…' as one character, not 3 dots ('...')."
+    },
+    "search_insights": {
+        "text": "Search all visualizations…",
+        "crowdinContext": "Use '…' as one character, not 3 dots ('...')."
+    },
+    "filter": {
+        "text": "Filter",
+        "crowdinContext": "Label for filter functionality or data filtering"
+    },
+    "filters": {
+        "text": "Filters",
+        "crowdinContext": "Label for multiple filters or filters section"
+    },
+    "table": {
+        "text": "Table",
+        "crowdinContext": "Label for table visualization type"
+    },
+    "line": {
+        "text": "Line chart",
+        "crowdinContext": "Label for line chart visualization type"
+    },
+    "column": {
+        "text": "Column chart",
+        "crowdinContext": "Label for column chart visualization type"
+    },
+    "bar": {
+        "text": "Bar chart",
+        "crowdinContext": "Label for bar chart visualization type"
+    },
+    "pie": {
+        "text": "Pie chart",
+        "crowdinContext": "Label for pie chart visualization type"
+    },
+    "headline": {
+        "text": "Headline",
+        "crowdinContext": "Label for headline visualization type"
+    },
+    "scatter": {
+        "text": "Scatter plot",
+        "crowdinContext": "Label for scatter plot visualization type"
+    },
+    "heat": {
+        "text": "Heat map",
+        "crowdinContext": "Label for heat map visualization type"
+    },
+    "bubble": {
+        "text": "Bubble chart",
+        "crowdinContext": "Label for bubble chart visualization type"
+    },
+    "bullet": {
+        "text": "Bullet chart",
+        "crowdinContext": "Label for bullet chart visualization type"
+    },
+    "geo": {
+        "text": "Geo chart",
+        "crowdinContext": "Label for geo chart visualization type"
+    },
+    "combo": {
+        "text": "Combo chart",
+        "crowdinContext": "Label for combo chart visualization type"
+    },
+    "combo2": {
+        "text": "Combo chart",
+        "crowdinContext": "Label for combo chart visualization type (variant 2)"
+    },
+    "heatmap": {
+        "text": "Heatmap",
+        "crowdinContext": "Label for heatmap visualization type"
+    },
+    "funnel": {
+        "text": "Funnel chart",
+        "crowdinContext": "Label for funnel chart visualization type"
+    },
+    "pyramid": {
+        "text": "Pyramid chart",
+        "crowdinContext": "Label for pyramid chart visualization type"
+    },
+    "dependencywheel": {
+        "text": "Dependency wheel chart",
+        "crowdinContext": "Label for dependency wheel chart visualization type"
+    },
+    "sankey": {
+        "text": "Sankey chart",
+        "crowdinContext": "Label for sankey chart visualization type"
+    },
+    "radar": {
+        "text": "Radar chart",
+        "crowdinContext": "Label for radar chart visualization type"
+    },
+    "donut": {
+        "text": "Donut chart",
+        "crowdinContext": "Label for donut chart visualization type"
+    },
+    "dual": {
+        "text": "Dual Axis chart",
+        "crowdinContext": "Label for dual axis chart visualization type"
+    },
+    "historgram": {
+        "text": "Histogram",
+        "crowdinContext": "Label for histogram visualization type"
+    },
+    "treemap": {
+        "text": "Treemap",
+        "crowdinContext": "Label for treemap visualization type"
+    },
+    "area": {
+        "text": "Stacked Area chart",
+        "crowdinContext": "Label for stacked area chart visualization type"
+    },
+    "pushpin": {
+        "text": "Geo chart (pushpins)",
+        "crowdinContext": "Label for geo chart with pushpin markers visualization type"
+    },
+    "region": {
+        "text": "Geo chart (regions)",
+        "crowdinContext": "Label for geo chart with region coloring visualization type"
+    },
+    "choropleth": {
+        "text": "Geo area chart",
+        "crowdinContext": "Label for geo area chart visualization type"
+    },
+    "waterfall": {
+        "text": "Waterfall chart",
+        "crowdinContext": "Label for waterfall chart visualization type"
+    },
+    "mekko": {
+        "text": "Mekko chart",
+        "crowdinContext": "Label for Mekko (Marimekko) chart visualization type"
+    },
+    "xirr": {
+        "text": "XIRR",
+        "crowdinContext": "This visualization computes a financial function called XIRR (see https://support.office.com/en-us/article/xirr-function-de1242ec-6477-445b-b11b-a303ad9adc9d for explanation)"
+    },
+    "repeater": {
+        "text": "Repeater",
+        "crowdinContext": "Label for repeater visualization type"
+    },
+    "chart.column": {
+        "text": "Column",
+        "crowdinContext": "Column chart"
+    },
+    "chart.line": {
+        "text": "Line",
+        "crowdinContext": "Line chart"
+    },
+    "chart.area": {
+        "text": "Area",
+        "crowdinContext": "Area chart"
+    },
+    "options.menu.export_data": {
+        "text": "Export data",
+        "crowdinContext": "Export report to some file."
+    },
+    "options.menu.open.in.analytical.designer": {
+        "text": "Open in Analytical Designer",
+        "crowdinContext": "Menu option to open visualization in Analytical Designer"
+    },
+    "options.menu.changeTimezone": {
+        "text": "Change time zone",
+        "crowdinContext": "Options menu item that opens the dialog for temporarily changing the time zone used for insight executions in Analytical Designer. Session-only; never persisted with the insight."
+    },
+    "timezoneDialog.title": {
+        "text": "Change time zone",
+        "crowdinContext": "Title of the dialog for temporarily changing the insight time zone in Analytical Designer"
+    },
+    "timezoneDialog.default": {
+        "text": "Default",
+        "crowdinContext": "Time zone picker item meaning the workspace default time zone is used."
+    },
+    "timezoneDialog.fromBrowser": {
+        "text": "Device time zone ({timezone})",
+        "crowdinContext": "Time zone picker item meaning the time zone is detected from the viewer's browser. The {timezone} placeholder shows the detected time zone."
+    },
+    "timezoneDialog.select.searchPlaceholder": {
+        "text": "Search …",
+        "crowdinContext": "Placeholder of the search input in the Analytical Designer change time zone dialog. Use '…' as one character, not 3 dots ('...')."
+    },
+    "timezoneDialog.select.noMatch": {
+        "text": "No matching time zone.",
+        "crowdinContext": "Message shown when the time zone search yields no results in the Analytical Designer change time zone dialog"
+    },
+    "timezoneDialog.currentTime": {
+        "text": "Now {time}",
+        "crowdinContext": "Live clock preview next to the time zone picker in the change time zone dialog. Example: 'Now 14:30'. The {time} placeholder is replaced with the current time in the selected time zone."
+    },
+    "timezoneDialog.success": {
+        "text": "Great! We changed the time zone!",
+        "crowdinContext": "Success toast shown after the viewer applies a temporary time zone change in Analytical Designer"
+    },
+    "export.type.XLSX": {
+        "text": "Formatted (.xlsx)",
+        "crowdinContext": "Export to XLSX file."
+    },
+    "export.type.CSV": {
+        "text": "Formatted (.csv)",
+        "crowdinContext": "Export to CSV file."
+    },
+    "export.type.CSV.formatted": {
+        "text": "Formatted (.csv)",
+        "crowdinContext": "Export option for CSV file with formatting applied"
+    },
+    "export.type.CSV.raw": {
+        "text": "Raw (.csv)",
+        "crowdinContext": "Export option for CSV file with raw data only"
+    },
+    "partial_data_warning.title": {
+        "text": "Partial results only.",
+        "crowdinContext": "Title of a warning displayed when a visualization shows partial data because result limits were exceeded."
+    },
+    "partial_data_warning.show_details": {
+        "text": "Show details",
+        "crowdinContext": "Link to expand partial data warning details."
+    },
+    "partial_data_warning.hide_details": {
+        "text": "Hide details",
+        "crowdinContext": "Link to collapse partial data warning details."
+    },
+    "partial_data_warning.close": {
+        "text": "Dismiss partial data warning",
+        "crowdinContext": "Accessibility label for the close button in partial data warning."
+    },
+    "partial_data_warning.export_raw": {
+        "text": "Export full result as Raw (.csv)",
+        "crowdinContext": "Action link in partial data warning that exports the full raw CSV result."
+    },
+    "options.menu.export_data.partial_result_disabled": {
+        "text": "Cannot export, because visualization exceeds result limits.",
+        "crowdinContext": "Tooltip shown on formatted export options when the visualization contains partial data due to exceeded result limits."
+    },
+    "export.type.PDF": {
+        "text": "Formatted (.pdf)",
+        "crowdinContext": "Export option for PDF file with formatting applied"
+    },
+    "export_unsupported.raw": {
+        "text": "Cannot export, because the result has too many datapoints.",
+        "crowdinContext": "Export to the file not supported."
+    },
+    "dialogs.export.cancel": {
+        "text": "Cancel",
+        "crowdinContext": "Cancel button in export dialog"
+    },
+    "dialogs.export.cells": {
+        "text": "CELLS",
+        "crowdinContext": "Cells of the table that is going to be exported to file"
+    },
+    "dialogs.export.csv.delimiter": {
+        "text": "CSV delimiter",
+        "crowdinContext": "Label for the field used to choose the CSV delimiter character."
+    },
+    "dialogs.export.csv.headline": {
+        "text": "Export settings (.csv)",
+        "crowdinContext": "Headline of the CSV export settings dialog."
+    },
+    "dialogs.export.csv.submit.disabledTooltip": {
+        "text": "Enter a valid single-character delimiter to export.",
+        "crowdinContext": "Tooltip on the disabled Export button of the CSV export settings dialog, explaining why it cannot be used."
+    },
+    "dialogs.export.filters": {
+        "text": "VISUALIZATION CONTEXT",
+        "crowdinContext": "The filters that are applied to the report"
+    },
+    "dialogs.export.includeFilters": {
+        "text": "Include applied filters",
+        "crowdinContext": "Include the applied filters to the exported file"
+    },
+    "dialogs.export.headline": {
+        "text": "Export to XLSX",
+        "crowdinContext": "Export data to XLSX file"
+    },
+    "dialogs.export.mergeHeaders": {
+        "text": "Keep attribute cells merged",
+        "crowdinContext": "Means that some cells of exported table are merged together."
+    },
+    "export_unsupported.disabled": {
+        "text": "Export is not supported",
+        "crowdinContext": "Export to the file not supported."
+    },
+    "export_unsupported.not.permissions": {
+        "text": "You don't have a permission to export.",
+        "crowdinContext": "Export to the file not supported."
+    },
+    "export_unsupported.raw.error": {
+        "text": "Export unavailable due to too many data points or error in the result.",
+        "crowdinContext": "Export to the file not supported."
+    },
+    "export_unsupported.error": {
+        "text": "The visualization cannot be exported at the moment. Try applying different filters, or using different metrics or attributes.",
+        "crowdinContext": "Error message when export fails due to metrics configuration"
+    },
+    "export_unsupported.loading": {
+        "text": "Export unavailable while the visualization is still loading.",
+        "crowdinContext": "Error message when export is attempted while visualization is loading"
+    },
+    "export_unsupported.duplicated_metric": {
+        "text": "The visualization is not compatible with Report Editor. \"{title}\" is in configuration twice. Remove one {type} to open as a report.",
+        "crowdinContext": "Error message when visualization has duplicate metrics and cannot be opened as report. {title} is the metric name, {type} is the metric type."
+    },
+    "export_unsupported.metric_date_filter": {
+        "text": "The visualization is not compatible with Report Editor. To open the visualization as a report, remove date filters from the metric definition.",
+        "crowdinContext": "Error when visualization cannot be opened as report due to date filters in metrics"
+    },
+    "export_unsupported.renaming": {
+        "text": "The visualization is not compatible with Report Editor. To open the visualization as a report, do not rename metrics and/or attributes in the visualization definition.",
+        "crowdinContext": "Error when visualization cannot be opened as report due to renamed metrics"
+    },
+    "export_unsupported.unsupportedInsightType": {
+        "text": "The visualization is not compatible with Report Editor. To open the visualization as a report, select another visualization type.",
+        "crowdinContext": "Error when visualization type is not compatible with Report Editor"
+    },
+    "export_unsupported.compare_enabled": {
+        "text": "The visualization is not compatible with Report Editor. To open the visualization as a report, disable compare in the visualization definition.",
+        "crowdinContext": "Error when visualization cannot be opened as report due to compare feature being enabled"
+    },
+    "export_unsupported.arithmetic_measure": {
+        "text": "The visualization is not compatible with Report Editor. To open the visualization as a report, do not create metrics directly in the visualization definition.",
+        "crowdinContext": "Error when visualization cannot be opened as report due to calculated metrics"
+    },
+    "export_unsupported.dual_axes": {
+        "text": "This visualization cannot be opened as a report in the Report Editor. To open the visualization as a report, remove the secondary axis from the visualization.",
+        "crowdinContext": "Error when visualization cannot be opened as report due to dual axes configuration"
+    },
+    "export_unsupported.measure_value_filter": {
+        "text": "The visualization is not compatible with Report Editor. To open the visualization as a report, do not filter the visualization by metric values.",
+        "crowdinContext": "Error tooltip shown when hovering over 'open report as' button"
+    },
+    "export_unsupported.ranking_filter": {
+        "text": "The visualization is not compatible with Report Editor. To open the visualization as a report, do not filter the visualization by top/bottom values.",
+        "crowdinContext": "Error tooltip shown when hovering over 'open report as' button"
+    },
+    "locked_report": {
+        "text": "Only Admins can save changes to this visualization.",
+        "crowdinContext": "Message when visualization is locked and only admins can modify it"
+    },
+    "inherited_report": {
+        "text": "You cannot edit or delete this visualization because it was created in the parent workspace. To edit or delete the visualization, do so from the parent workspace.",
+        "crowdinContext": "Message when visualization is inherited from parent workspace and cannot be modified"
+    },
+    "reset": {
+        "text": "Clear",
+        "crowdinContext": "Button to clear or reset current selections"
+    },
+    "undo": {
+        "text": "Undo",
+        "crowdinContext": "Button to undo last action"
+    },
+    "redo": {
+        "text": "Redo",
+        "crowdinContext": "Button to redo last undone action"
+    },
+    "save_as_new": {
+        "text": "Save as new",
+        "crowdinContext": "Button to save visualization as a new copy"
+    },
+    "saving": {
+        "text": "Saving…",
+        "crowdinContext": "Use '…' as one character, not 3 dots ('...')."
+    },
+    "save.disabledTooltip.executionTimestamp": {
+        "text": "To save the visualization, reset the date to today.",
+        "crowdinContext": "Tooltip explaining why save is disabled due to execution timestamp"
+    },
+    "date": {
+        "text": "Date",
+        "crowdinContext": "Generic date label"
+    },
+    "this_month": {
+        "text": "This month",
+        "crowdinContext": "Date filter option for current month"
+    },
+    "this_fiscal_month_to_date": {
+        "text": "This period to date",
+        "crowdinContext": "Relative date preset selecting the current period from its start through today."
+    },
+    "this_fiscal_month": {
+        "text": "This period",
+        "crowdinContext": "Relative date preset selecting the full current period."
+    },
+    "last_fiscal_month": {
+        "text": "Last period",
+        "crowdinContext": "Relative date preset selecting the previous period."
+    },
+    "last_12_fiscal_months": {
+        "text": "Last 12 periods",
+        "crowdinContext": "Relative date preset selecting the trailing twelve periods."
+    },
+    "this_quarter": {
+        "text": "This quarter",
+        "crowdinContext": "Date filter option for current quarter"
+    },
+    "this_fiscal_quarter_to_date": {
+        "text": "This fiscal quarter to date",
+        "crowdinContext": "Relative date preset selecting the current fiscal quarter from its start through today."
+    },
+    "this_fiscal_quarter": {
+        "text": "This fiscal quarter",
+        "crowdinContext": "Relative date preset selecting the full current fiscal quarter."
+    },
+    "last_fiscal_quarter": {
+        "text": "Last fiscal quarter",
+        "crowdinContext": "Relative date preset selecting the previous fiscal quarter."
+    },
+    "last_4_fiscal_quarters": {
+        "text": "Last 4 fiscal quarters",
+        "crowdinContext": "Relative date preset selecting the trailing four fiscal quarters."
+    },
+    "minute": {
+        "text": "Minute",
+        "crowdinContext": "Date granularity option for minute level"
+    },
+    "second": {
+        "text": "Second",
+        "crowdinContext": "Date granularity option for second level"
+    },
+    "minute_in_hour": {
+        "text": "Minute of Hour",
+        "crowdinContext": "Date granularity option for minute within hour (0-59)"
+    },
+    "minute_in_hour_preview": {
+        "text": "0–59",
+        "crowdinContext": "Preview showing range of minute values in a typical hour"
+    },
+    "minute_in_day": {
+        "text": "Minute of Day",
+        "crowdinContext": "Date granularity option for minute within day (00:00-23:59)"
+    },
+    "minute_in_day_preview": {
+        "text": "00:00–23:59",
+        "crowdinContext": "Preview showing range of minute-of-day values in a typical day"
+    },
+    "second_in_minute": {
+        "text": "Second of Minute",
+        "crowdinContext": "Date granularity option for second within minute (0-59)"
+    },
+    "second_in_minute_preview": {
+        "text": "0–59",
+        "crowdinContext": "Preview showing range of second values in a typical minute"
+    },
+    "second_in_day": {
+        "text": "Second of Day",
+        "crowdinContext": "Date granularity option for second within day (00:00:00-23:59:59)"
+    },
+    "second_in_day_preview": {
+        "text": "00:00:00–23:59:59",
+        "crowdinContext": "Preview showing range of second-of-day values in a typical day"
+    },
+    "hour": {
+        "text": "Hour",
+        "crowdinContext": "Date granularity option for hour level"
+    },
+    "hour_in_day": {
+        "text": "Hour of Day",
+        "crowdinContext": "Date granularity option for hour within day (0-23)"
+    },
+    "hour_in_day_preview": {
+        "text": "0–23",
+        "crowdinContext": "Preview showing range of hour values in a typical day"
+    },
+    "day": {
+        "text": "Day",
+        "crowdinContext": "Date granularity option for day level"
+    },
+    "day_in_week": {
+        "text": "Day of Week",
+        "crowdinContext": "Date granularity option for day within week (Sun-Sat)"
+    },
+    "day_in_week_preview": {
+        "text": "Sun–Sat",
+        "crowdinContext": "Preview of the range of day values in a typical week. Translate to short versions of day names (Sun is for Sunday, Mon for Monday, Sat for Saturday). Use start of week typical for the translation locale."
+    },
+    "day_in_month": {
+        "text": "Day of Month",
+        "crowdinContext": "Date granularity option for day within month (1-31)"
+    },
+    "day_in_month_preview": {
+        "text": "1–31",
+        "crowdinContext": "Preview showing range of day values in a calendar month"
+    },
+    "day_in_quarter": {
+        "text": "Day of Quarter",
+        "crowdinContext": "Date granularity option for day within quarter (1-92)"
+    },
+    "day_in_quarter_preview": {
+        "text": "1–92",
+        "crowdinContext": "Preview showing range of day values in a calendar quarter"
+    },
+    "day_in_year": {
+        "text": "Day of Year",
+        "crowdinContext": "Date granularity option for day within year (1-366)"
+    },
+    "day_in_year_preview": {
+        "text": "1–366",
+        "crowdinContext": "Preview showing range of day values in a calendar year"
+    },
+    "week": {
+        "text": "Week",
+        "crowdinContext": "Date granularity option for week level"
+    },
+    "week_in_quarter": {
+        "text": "Week of Quarter",
+        "crowdinContext": "Date granularity option for week within quarter (W1-W14)"
+    },
+    "week_in_quarter_preview": {
+        "text": "W1–W14",
+        "crowdinContext": "Preview showing range of week values in a calendar quarter"
+    },
+    "week_in_year": {
+        "text": "Week of Year",
+        "crowdinContext": "Date granularity option for week within year (W1-W53)"
+    },
+    "week_in_year_preview": {
+        "text": "1–53",
+        "crowdinContext": "Preview showing range of week values in a calendar year"
+    },
+    "quarter": {
+        "text": "Quarter",
+        "crowdinContext": "Date granularity option for quarter level"
+    },
+    "fiscal_quarter": {
+        "text": "Fiscal Quarter",
+        "crowdinContext": "Date granularity option for fiscal quarter level"
+    },
+    "quarter_in_year": {
+        "text": "Quarter of Year",
+        "crowdinContext": "Date granularity option for quarter within year (Q1-Q4)"
+    },
+    "quarter_in_year_preview": {
+        "text": "Q1–Q4",
+        "crowdinContext": "Preview showing quarter values in a calendar year"
+    },
+    "month": {
+        "text": "Month",
+        "crowdinContext": "Date granularity option for month level"
+    },
+    "fiscal_month": {
+        "text": "Period",
+        "crowdinContext": "Date granularity option for fiscal period level"
+    },
+    "month_in_quarter": {
+        "text": "Month of Quarter",
+        "crowdinContext": "Date granularity option for month within quarter (M1-M3)"
+    },
+    "month_in_quarter_preview": {
+        "text": "M1–M3",
+        "crowdinContext": "Preview showing month values in a calendar quarter"
+    },
+    "month_in_year": {
+        "text": "Month of Year",
+        "crowdinContext": "Label for month of year date dimension"
+    },
+    "month_in_year_preview": {
+        "text": "Jan–Dec",
+        "crowdinContext": "Preview showing abbreviated month names for a calendar year"
+    },
+    "fiscal_year": {
+        "text": "Fiscal Year",
+        "crowdinContext": "Date granularity option for fiscal year level"
+    },
+    "this_fiscal_year_to_date": {
+        "text": "This fiscal year to date",
+        "crowdinContext": "Relative date preset selecting the current fiscal year from its start through today."
+    },
+    "this_fiscal_year": {
+        "text": "This fiscal year",
+        "crowdinContext": "Relative date preset selecting the full current fiscal year."
+    },
+    "last_fiscal_year": {
+        "text": "Last fiscal year",
+        "crowdinContext": "Relative date preset selecting the previous fiscal year."
+    },
+    "year": {
+        "text": "Year",
+        "crowdinContext": "Label for year date dimension"
+    },
+    "granularity.moreOptions": {
+        "text": "More options",
+        "crowdinContext": "Label of dropdown list item that opens submenu with more options."
+    },
+    "granularity.header.second": {
+        "text": "Second",
+        "crowdinContext": "Header in a list that groups items related to a second of a minute."
+    },
+    "granularity.header.minute": {
+        "text": "Minute",
+        "crowdinContext": "Header in a list that groups items related to a minute of an hour."
+    },
+    "granularity.header.hour": {
+        "text": "Hour",
+        "crowdinContext": "Header in a list that groups items related to an hour of a day."
+    },
+    "granularity.header.day": {
+        "text": "Day",
+        "crowdinContext": "Header in a list that groups items related to a calendar day."
+    },
+    "granularity.header.week": {
+        "text": "Week",
+        "crowdinContext": "Header in a list that groups items related to a calendar week."
+    },
+    "granularity.header.month": {
+        "text": "Month",
+        "crowdinContext": "Header in a list that groups items related to a calendar month."
+    },
+    "granularity.header.fiscal_month": {
+        "text": "Period",
+        "crowdinContext": "Header in a list that groups items related to a fiscal period."
+    },
+    "granularity.header.fiscal_quarter": {
+        "text": "Fiscal Quarter",
+        "crowdinContext": "Header in a list that groups items related to a fiscal quarter."
+    },
+    "granularity.header.fiscal_year": {
+        "text": "Fiscal Year",
+        "crowdinContext": "Header in a list that groups items related to a fiscal year."
+    },
+    "granularity.header.year": {
+        "text": "Year",
+        "crowdinContext": "Header in a list that groups items related to a calendar year."
+    },
+    "granularity.header.quarter": {
+        "text": "Quarter",
+        "crowdinContext": "Header in a list that groups items related to a calendar quarter."
+    },
+    "all": {
+        "text": "All",
+        "crowdinContext": "Filter option to select all items"
+    },
+    "is_not": {
+        "text": "is not",
+        "crowdinContext": "Filter option to indicate exclusion, e.g., 'is not Aguadilla'"
+    },
+    "all_time": {
+        "text": "All time",
+        "crowdinContext": "Date filter option to include all available time periods"
+    },
+    "static_period": {
+        "text": "Static period",
+        "crowdinContext": "Date filter type for fixed time periods"
+    },
+    "floating_period": {
+        "text": "Relative period",
+        "crowdinContext": "Date filter type for dynamic time periods relative to current date"
+    },
+    "other": {
+        "text": "Other",
+        "crowdinContext": "Generic label for miscellaneous or additional options"
+    },
+    "deleted_value": {
+        "text": "deleted value",
+        "crowdinContext": "Label displayed for data fields that have been deleted"
+    },
+    "no_results_matched": {
+        "text": "No results matched",
+        "crowdinContext": "Message when search or filter returns no results"
+    },
+    "unsaved_changes": {
+        "text": "Visualization has unsaved changes.",
+        "crowdinContext": "Warning message indicating visualization has modifications that haven't been saved"
+    },
+    "messages.connectionError": {
+        "text": "Connection failed, try again later…",
+        "crowdinContext": "Use '…' as one character, not 3 dots ('...')."
+    },
+    "messages.metricSaveError": {
+        "text": "Metric save failed, try again later…",
+        "crowdinContext": "Use '…' as one character, not 3 dots ('...')."
+    },
+    "messages.exportResultError": {
+        "text": "Failed to export the data. Try again later.",
+        "crowdinContext": "Error message when data export fails"
+    },
+    "messages.exportResultError.tooManyRows": {
+        "text": "Export failed. Too many rows ({actual}). Limit is {limit}.",
+        "crowdinContext": "Error message when data export fails due to too many rows"
+    },
+    "messages.exportResultError.timeout": {
+        "text": "Export timed out. Narrow the export (fewer rows or columns) and try again.",
+        "crowdinContext": "Error message when a data export exceeds the time limit"
+    },
+    "messages.exportResultStart": {
+        "text": "Export in progress",
+        "crowdinContext": "Status message when export operation is in progress"
+    },
+    "messages.exportResultSuccess": {
+        "text": "Export successful.",
+        "crowdinContext": "Success message when export completes successfully"
+    },
+    "messages.saveReportError": {
+        "text": "Failed to save visualization, please try again.",
+        "crowdinContext": "Error message when visualization save operation fails"
+    },
+    "messages.deleteReportSuccess": {
+        "text": "Great! We deleted your visualization.",
+        "crowdinContext": "Success message when visualization is deleted successfully"
+    },
+    "messages.openReportError": {
+        "text": "Something went wrong and we can’t open your visualization",
+        "crowdinContext": "Error message when visualization cannot be opened"
+    },
+    "messages.openReportErrorDetails": {
+        "text": "One of the insight's filters has unsupported granularity.",
+        "crowdinContext": "Detailed error message when visualization cannot be opened due to filter granularity issues"
+    },
+    "messages.deleteReportError": {
+        "text": "Failed to delete visualization, please try again.",
+        "crowdinContext": "Error message when visualization deletion fails"
+    },
+    "messages.failedToDeleteReferencedReportError": {
+        "text": "Visualizations used on KPI dashboards cannot be deleted. To delete this visualization, remove it from all dashboards.",
+        "crowdinContext": "Error message when trying to delete visualization that is referenced by KPI dashboards"
+    },
+    "messages.saveReportSuccess": {
+        "text": "Great! We saved your visualization.",
+        "crowdinContext": "Success message when visualization is saved successfully"
+    },
+    "messages.saveMetric": {
+        "text": "Great! We saved your metric.",
+        "crowdinContext": "Success message when metric is saved successfully"
+    },
+    "messages.deleteMetric": {
+        "text": "Great! We deleted your metric.",
+        "crowdinContext": "Success message when metric is deleted successfully"
+    },
+    "messages.deleteMetricFailed": {
+        "text": "Failed to delete metric, please try again.",
+        "crowdinContext": "Error message when metric deletion fails"
+    },
+    "messages.longSaving": {
+        "text": "Saving is taking longer than expected, please wait…",
+        "crowdinContext": "Use '…' as one character, not 3 dots ('...')."
+    },
+    "messages.defaultTable": {
+        "text": "This visualization cannot be displayed in its original format because it is not available. We used table view to show the visualization.",
+        "crowdinContext": "Message when visualization falls back to table view due to unavailable original format"
+    },
+    "messages.defaultOther": {
+        "text": "This visualization cannot be displayed in its original format because it is not available. We used different visualization type to show the visualization.",
+        "crowdinContext": "Message when visualization falls back to different type due to unavailable original format"
+    },
+    "messages.parameterReset": {
+        "text": "<b>Warning:</b> Parameter \"{name}\" is out of range, so the default value is applied until you set a valid one.",
+        "crowdinContext": "Warning toast shown when a visualization opens and a saved parameter value is outside the parameter's allowed range; the workspace default is used instead. {name} is the parameter title; <b> renders the leading 'Warning:' label in bold."
+    },
+    "messages.parameterRemoved": {
+        "text": "<b>Warning:</b> Parameter \"{name}\" was removed because it no longer exists.",
+        "crowdinContext": "Warning toast shown when a visualization opens and a saved parameter no longer exists in the workspace. {name} is the parameter identifier; <b> renders the leading 'Warning:' label in bold."
+    },
+    "messages.parameterIncompatible": {
+        "text": "<b>Warning:</b> Parameter \"{name}\" is no longer compatible and has been ignored.",
+        "crowdinContext": "Warning toast shown when a visualization opens and a saved parameter value no longer matches the parameter type. {name} is the parameter title; <b> renders the leading 'Warning:' label in bold."
+    },
+    "messages.propertiesTooLong": {
+        "text": "Last action could not be completed and was reverted because of too many changes.",
+        "crowdinContext": "Error message when action is reverted due to excessive changes"
+    },
+    "messages.visualizations.forecast.error": {
+        "text": "Unable to compute forecast. {error} Try change forecast settings.",
+        "crowdinContext": "Error message when forecasting is not available for the current visualization."
+    },
+    "messages.visualizations.clustering.error": {
+        "text": "Unable to compute clustering. {error} Try changing the clustering settings.",
+        "crowdinContext": "Error message when clustering computation ended up with error for the current visualization."
+    },
+    "bucket_item_types.attribute": {
+        "text": "attribute",
+        "crowdinContext": "Item type of attribute."
+    },
+    "bucket_item_types.geo_attribute": {
+        "text": "geo attribute",
+        "crowdinContext": "Item type of geo pushpin attribute (type of a pin pushed to a map)."
+    },
+    "bucket_item_types.date": {
+        "text": "date",
+        "crowdinContext": "Item type of date."
+    },
+    "bucket_item_types.fact": {
+        "text": "fact",
+        "crowdinContext": "Item type of fact."
+    },
+    "bucket_item_types.metric": {
+        "text": "metric",
+        "crowdinContext": "Item type of metric that are calculated from other facts or metric."
+    },
+    "bucket_item_types.computed_attribute": {
+        "text": "computed attribute",
+        "crowdinContext": "Item type of computed attribute - an attribute whose values are computed by a formula."
+    },
+    "aggregations.title.sum": {
+        "text": "Sum",
+        "crowdinContext": "Total of type 'Sum'."
+    },
+    "aggregations.title.min": {
+        "text": "Minimum",
+        "crowdinContext": "Total of type 'Minimum'."
+    },
+    "aggregations.title.max": {
+        "text": "Maximum",
+        "crowdinContext": "Total of type 'Maximum'."
+    },
+    "aggregations.title.avg": {
+        "text": "Average",
+        "crowdinContext": "Total of type 'Average'."
+    },
+    "aggregations.title.runsum": {
+        "text": "Running sum",
+        "crowdinContext": "Total of type 'Running summary'."
+    },
+    "aggregations.title.median": {
+        "text": "Median",
+        "crowdinContext": "Total of type 'Median'."
+    },
+    "aggregations.title.count": {
+        "text": "Count",
+        "crowdinContext": "Total of type 'Count'."
+    },
+    "aggregations.title.approximate_count": {
+        "text": "Approximate count",
+        "crowdinContext": "Total of type 'Approximate count'."
+    },
+    "aggregations.metric_title.approximate_count": {
+        "text": "Approximate count of {title}",
+        "crowdinContext": "Error message when measure has comparison enabled. {title} is replaced with the measure name."
+    },
+    "aggregations.metric_title.approximate_count.static": {
+        "text": "Approximate count of",
+        "crowdinContext": "Same as aggregations.metric_title.approximate_count, but without {title} which will be already provided by the measure dropped in the bucket"
+    },
+    "aggregations.metric_title.count": {
+        "text": "Count of {title}",
+        "crowdinContext": "Error message with placeholder. {title} is replaced with the relevant item name."
+    },
+    "aggregations.metric_title.sum": {
+        "text": "Sum of {title}",
+        "crowdinContext": "Error message with placeholder. {title} is replaced with the relevant item name."
+    },
+    "aggregations.metric_title.max": {
+        "text": "Max {title}",
+        "crowdinContext": "Error message with placeholder. {title} is replaced with the relevant item name."
+    },
+    "aggregations.metric_title.min": {
+        "text": "Min {title}",
+        "crowdinContext": "Error message with placeholder. {title} is replaced with the relevant item name."
+    },
+    "aggregations.metric_title.avg": {
+        "text": "Avg {title}",
+        "crowdinContext": "Error message with placeholder. {title} is replaced with the relevant item name."
+    },
+    "aggregations.metric_title.runsum": {
+        "text": "Runsum of {title}",
+        "crowdinContext": "Error message with placeholder. {title} is replaced with the relevant item name."
+    },
+    "aggregations.metric_title.median": {
+        "text": "Median {title}",
+        "crowdinContext": "Error message with placeholder. {title} is replaced with the relevant item name."
+    },
+    "recommendation.filtering.title": {
+        "text": "Too many data points",
+        "crowdinContext": "Title of too many data points recommendation"
+    },
+    "recommendation.filtering.message": {
+        "text": "Displaying so many data points can make the visualizations difficult to understand and cause rendering issues.",
+        "crowdinContext": "Message to describe why the too many data points recommendation is shown"
+    },
+    "recommendation.filtering.action": {
+        "text": "Add filter",
+        "crowdinContext": "Action to take when too many data points problem occurs"
+    },
+    "recommendation.geo.segment_conflict.title": {
+        "text": "Conflicting segment values",
+        "crowdinContext": "Recommendation title shown for geo conflict when the same location or area has multiple segment values."
+    },
+    "recommendation.geo.segment_conflict.message": {
+        "text": "Some locations have more than one Segment by value. To fix this, use a less detailed Segment by field or add a filter.",
+        "crowdinContext": "Recommendation message shown for geo conflict when the same location or area has multiple segment values."
+    },
+    "recommendation.geo.segment_conflict.action": {
+        "text": "Add filter",
+        "crowdinContext": "Recommendation action for geo conflict card."
+    },
+    "recommendation.comparison.compare": {
+        "text": "Compare",
+        "crowdinContext": "Use imperative."
+    },
+    "recommendation.comparison.percents": {
+        "text": "See percents",
+        "crowdinContext": "Use imperative."
+    },
+    "recommendation.comparison.contribution_compare": {
+        "text": "Compare",
+        "crowdinContext": "Use imperative."
+    },
+    "recommendation.comparison.with_same_period": {
+        "text": "to the same period in previous year",
+        "crowdinContext": "Comparison option to compare with same period in previous year"
+    },
+    "recommendation.comparison.between_each": {
+        "text": "between each",
+        "crowdinContext": "Comparison option to compare between each item"
+    },
+    "recommendation.comparison.contribution_to_the_whole": {
+        "text": "contribution to the whole",
+        "crowdinContext": "Comparison option to show contribution to the whole"
+    },
+    "recommendation.trending.see": {
+        "text": "See trend",
+        "crowdinContext": "Action to view trending analysis"
+    },
+    "recommendation.trending.of_last_four_quarters": {
+        "text": "of last 4 quarters",
+        "crowdinContext": "Time period specification for trending analysis"
+    },
+    "recommendation.trending.in_time_by": {
+        "text": "in time by",
+        "crowdinContext": "Preposition for trending analysis time dimension"
+    },
+    "date.date-dataset.unrelated_hidden": {
+        "text": "{count} unrelated {count, plural, one {date} other {dates}} hidden",
+        "crowdinContext": "Date count display. Example: '1 date' or '3 dates'."
+    },
+    "date.date-dataset.unrelated_hidden_with_button": {
+        "text": "{count} unrelated {count, plural, one {date} other {dates}} {isShow, select, true {visible} other {hidden}}.",
+        "crowdinContext": "Date visibility status with count. Example: '2 dates and visible' or '1 date and hidden'."
+    },
+    "date.date-dataset.unavailableItems.show": {
+        "text": "Show",
+        "crowdinContext": "Text of link that shows unavailable items, that are hidden, in date dropdown when clicked upon."
+    },
+    "date.date-dataset.unavailableItems.hide": {
+        "text": "Hide",
+        "crowdinContext": "Text of link that hides unavailable items in date dropdown when clicked upon."
+    },
+    "date.floating.title.this.second": {
+        "text": "This {unitTitle}",
+        "crowdinContext": "Time period label for the current period. {unitTitle} resolves to a localized period name."
+    },
+    "date.floating.title.this.minute": {
+        "text": "This {unitTitle}",
+        "crowdinContext": "Time period label for the current period. {unitTitle} resolves to a localized period name."
+    },
+    "date.floating.title.this.hour": {
+        "text": "This {unitTitle}",
+        "crowdinContext": "Time period label for the current period. {unitTitle} resolves to a localized period name."
+    },
+    "date.floating.title.this.day": {
+        "text": "This {unitTitle}",
+        "crowdinContext": "Time period label. {unitTitle} is replaced with the time unit name."
+    },
+    "date.floating.title.this.week": {
+        "text": "This {unitTitle}",
+        "crowdinContext": "Time period label. {unitTitle} is replaced with the time unit name."
+    },
+    "date.floating.title.this.week_to_date": {
+        "text": "This {unitTitle} to date (WTD)",
+        "crowdinContext": "Week to date filter label showing current week up to today"
+    },
+    "date.floating.title.this.month": {
+        "text": "This {unitTitle}",
+        "crowdinContext": "Time period label. {unitTitle} is replaced with the time unit name."
+    },
+    "date.floating.title.this.month_to_date": {
+        "text": "This {unitTitle} to date (MTD)",
+        "crowdinContext": "Month to date filter label showing current month up to today"
+    },
+    "date.floating.title.this.quarter": {
+        "text": "This {unitTitle}",
+        "crowdinContext": "Time period label. {unitTitle} is replaced with the time unit name."
+    },
+    "date.floating.title.this.quarter_to_date": {
+        "text": "This {unitTitle} to date (QTD)",
+        "crowdinContext": "Quarter to date filter label showing current quarter up to today"
+    },
+    "date.floating.title.this.fiscal_quarter": {
+        "text": "This {unitTitle}",
+        "crowdinContext": "Time period label for the current fiscal quarter. {unitTitle} resolves to a localized fiscal quarter name."
+    },
+    "date.floating.title.this.fiscal_quarter_to_date": {
+        "text": "This {unitTitle} to date",
+        "crowdinContext": "Fiscal quarter to date filter label showing the current fiscal quarter up to today."
+    },
+    "date.floating.title.this.year": {
+        "text": "This {unitTitle}",
+        "crowdinContext": "Time period label. {unitTitle} is replaced with the time unit name."
+    },
+    "date.floating.title.this.year_to_date": {
+        "text": "This {unitTitle} to date (YTD)",
+        "crowdinContext": "Year to date filter label showing current year up to today"
+    },
+    "date.floating.title.this.fiscal_year": {
+        "text": "This {unitTitle}",
+        "crowdinContext": "Time period label for the current fiscal year. {unitTitle} resolves to a localized fiscal year name."
+    },
+    "date.floating.title.this.fiscal_year_to_date": {
+        "text": "This {unitTitle} to date",
+        "crowdinContext": "Fiscal year to date filter label showing the current fiscal year up to today."
+    },
+    "date.floating.title.this.fiscal_month": {
+        "text": "This {unitTitle}",
+        "crowdinContext": "Time period label for the current period. {unitTitle} resolves to a localized period name."
+    },
+    "date.floating.title.this.fiscal_month_to_date": {
+        "text": "This {unitTitle} to date",
+        "crowdinContext": "Period to date filter label showing the current period up to today."
+    },
+    "date.floating.title.last.second": {
+        "text": "{unitCount, plural, one {Last {unitTitle}} other {Last {unitCount} {unitTitle}}}",
+        "crowdinContext": "Last time period label for seconds. Example: 'Last second' or 'Last 15 seconds'."
+    },
+    "date.floating.title.last.minute": {
+        "text": "{unitCount, plural, one {Last {unitTitle}} other {Last {unitCount} {unitTitle}}}",
+        "crowdinContext": "Last time period label for minutes. Example: 'Last minute' or 'Last 15 minutes'."
+    },
+    "date.floating.title.last.hour": {
+        "text": "{unitCount, plural, one {Last {unitTitle}} other {Last {unitCount} {unitTitle}}}",
+        "crowdinContext": "Last time period label for hours. Example: 'Last hour' or 'Last 15 hours'."
+    },
+    "date.floating.title.last.day": {
+        "text": "{unitCount, plural, one {Last {unitTitle}} other {Last {unitCount} {unitTitle}}}",
+        "crowdinContext": "Last time period label. Example: 'Last day' or 'Last 3 days'."
+    },
+    "date.floating.title.last.week": {
+        "text": "{unitCount, plural, one {Last {unitTitle}} other {Last {unitCount} {unitTitle}}}",
+        "crowdinContext": "Last time period label. Example: 'Last day' or 'Last 3 days'."
+    },
+    "date.floating.title.last.month": {
+        "text": "{unitCount, plural, one {Last {unitTitle}} other {Last {unitCount} {unitTitle}}}",
+        "crowdinContext": "Last time period label. Example: 'Last day' or 'Last 3 days'."
+    },
+    "date.floating.title.last.quarter": {
+        "text": "{unitCount, plural, one {Last {unitTitle}} other {Last {unitCount} {unitTitle}}}",
+        "crowdinContext": "Last time period label. Example: 'Last day' or 'Last 3 days'."
+    },
+    "date.floating.title.last.year": {
+        "text": "{unitCount, plural, one {Last {unitTitle}} other {Last {unitCount} {unitTitle}}}",
+        "crowdinContext": "Last time period label. Example: 'Last day' or 'Last 3 days'."
+    },
+    "date.floating.title.last.fiscal_month": {
+        "text": "{unitCount, plural, one {Last {unitTitle}} other {Last {unitCount} {unitTitle}}}",
+        "crowdinContext": "Last time period label for periods. Example: 'Last period' or 'Last 12 periods'."
+    },
+    "date.floating.title.last.fiscal_quarter": {
+        "text": "{unitCount, plural, one {Last {unitTitle}} other {Last {unitCount} {unitTitle}}}",
+        "crowdinContext": "Last time period label for fiscal quarters. Example: 'Last fiscal quarter' or 'Last 4 fiscal quarters'."
+    },
+    "date.floating.title.last.fiscal_year": {
+        "text": "{unitCount, plural, one {Last {unitTitle}} other {Last {unitCount} {unitTitle}}}",
+        "crowdinContext": "Last time period label for fiscal years. Example: 'Last fiscal year' or 'Last 3 fiscal years'."
+    },
+    "date.floating.title.ago.second": {
+        "text": "{unitCount, plural, one {{unitCount} {unitTitle} ago} other {{unitCount} {unitTitle} ago}}",
+        "crowdinContext": "Time period ago label. Example: '1 second ago' or '3 seconds ago'."
+    },
+    "date.floating.title.ago.minute": {
+        "text": "{unitCount, plural, one {{unitCount} {unitTitle} ago} other {{unitCount} {unitTitle} ago}}",
+        "crowdinContext": "Time period ago label. Example: '1 minute ago' or '3 minutes ago'."
+    },
+    "date.floating.title.ago.hour": {
+        "text": "{unitCount, plural, one {{unitCount} {unitTitle} ago} other {{unitCount} {unitTitle} ago}}",
+        "crowdinContext": "Time period ago label. Example: '1 hour ago' or '3 hours ago'."
+    },
+    "date.floating.title.ago.day": {
+        "text": "{unitCount, plural, one {{unitCount} {unitTitle} ago} other {{unitCount} {unitTitle} ago}}",
+        "crowdinContext": "Time period ago label. Example: '1 day ago' or '3 weeks ago'."
+    },
+    "date.floating.title.ago.week": {
+        "text": "{unitCount, plural, one {{unitCount} {unitTitle} ago} other {{unitCount} {unitTitle} ago}}",
+        "crowdinContext": "Time period ago label. Example: '1 day ago' or '3 weeks ago'."
+    },
+    "date.floating.title.ago.month": {
+        "text": "{unitCount, plural, one {{unitCount} {unitTitle} ago} other {{unitCount} {unitTitle} ago}}",
+        "crowdinContext": "Time period ago label. Example: '1 day ago' or '3 weeks ago'."
+    },
+    "date.floating.title.ago.quarter": {
+        "text": "{unitCount, plural, one {{unitCount} {unitTitle} ago} other {{unitCount} {unitTitle} ago}}",
+        "crowdinContext": "Time period ago label. Example: '1 day ago' or '3 weeks ago'."
+    },
+    "date.floating.title.ago.year": {
+        "text": "{unitCount, plural, one {{unitCount} {unitTitle} ago} other {{unitCount} {unitTitle} ago}}",
+        "crowdinContext": "Time period ago label. Example: '1 day ago' or '3 weeks ago'."
+    },
+    "date.interval.title.single": {
+        "text": "{periodStart}",
+        "crowdinContext": "Date period start display. {periodStart} is replaced with the start date."
+    },
+    "date.interval.title.range": {
+        "text": "{periodStart} - {periodEnd}",
+        "crowdinContext": "Date range display format. {periodStart} and {periodEnd} are replaced with start and end dates."
+    },
+    "date.second": {
+        "text": "{count, plural, one {second} other {seconds}}",
+        "crowdinContext": "Time period in seconds. Example: '1 second' or '10 seconds'."
+    },
+    "date.minute": {
+        "text": "{count, plural, one {minute} other {minutes}}",
+        "crowdinContext": "Time period in minutes. Example: '1 minute' or '10 minutes'."
+    },
+    "date.hour": {
+        "text": "{count, plural, one {hour} other {hours}}",
+        "crowdinContext": "Time period in hours. Example: '1 hour' or '10 hours'."
+    },
+    "date.date": {
+        "text": "{count, plural, one {day} other {days}}",
+        "crowdinContext": "Time period in days. Example: '1 day' or '5 days'."
+    },
+    "date.week": {
+        "text": "{count, plural, one {week} other {weeks}}",
+        "crowdinContext": "Time period in weeks. Example: '1 week' or '3 weeks'."
+    },
+    "date.month": {
+        "text": "{count, plural, one {month} other {months}}",
+        "crowdinContext": "Time period in months. Example: '1 month' or '6 months'."
+    },
+    "date.fiscal_month": {
+        "text": "{count, plural, one {period} other {periods}}",
+        "crowdinContext": "Time period in fiscal periods. Example: '1 period' or '12 periods'."
+    },
+    "date.quarter": {
+        "text": "{count, plural, one {quarter} other {quarters}}",
+        "crowdinContext": "Time period in quarters. Example: '1 quarter' or '2 quarters'."
+    },
+    "date.fiscal_quarter": {
+        "text": "{count, plural, one {fiscal quarter} other {fiscal quarters}}",
+        "crowdinContext": "Time period in fiscal quarters. Example: '1 fiscal quarter' or '4 fiscal quarters'."
+    },
+    "date.year": {
+        "text": "{count, plural, one {year} other {years}}",
+        "crowdinContext": "Time period in years. Example: '1 year' or '10 years'."
+    },
+    "date.fiscal_year": {
+        "text": "{count, plural, one {fiscal year} other {fiscal years}}",
+        "crowdinContext": "Time period in fiscal years. Example: '1 fiscal year' or '3 fiscal years'."
+    },
+    "filter.isUnusedWarning": {
+        "text": "The filter may not affect some metrics in the visualization.",
+        "crowdinContext": "Displayed in a tooltip of a filter button when the filter is not applied on the data."
+    },
+    "filter.singleAdditionalFilterResetWarning.tooltip": {
+        "text": "<b>The additional filter was removed</b> because the date dimension (Date as) has been changed to one without its granularity.",
+        "crowdinContext": "Tooltip on the date filter button explaining that a single additional date filter (e.g. Day of Week) was removed when the date dimension was changed to one that does not offer that granularity. The <b> tags make the first part bold."
+    },
+    "filter.multipleAdditionalFiltersResetWarning.tooltip": {
+        "text": "<b>The additional filters were removed</b> because the date dimension (Date as) has been changed to one without their granularities.",
+        "crowdinContext": "Tooltip on the date filter button explaining that several additional date filters (e.g. Day of Week, Month of Year) were removed when the date dimension was changed to one that does not offer those granularities. The <b> tags make the first part bold."
+    },
+    "filter.singleAdditionalFilterResetWarning.panel": {
+        "text": "<b>Filter was removed</b> because the date dimension (Date as) has been changed to one without its granularity.",
+        "crowdinContext": "Message shown under the additional date filters in the date filter panel explaining that a single additional date filter was removed when the date dimension was changed to one that does not offer that granularity. The <b> tags make the first part bold."
+    },
+    "filter.multipleAdditionalFiltersResetWarning.panel": {
+        "text": "<b>Filters were removed</b> because the date dimension (Date as) has been changed to one without their granularities.",
+        "crowdinContext": "Message shown under the additional date filters in the date filter panel explaining that several additional date filters were removed when the date dimension was changed to one that does not offer those granularities. The <b> tags make the first part bold."
+    },
+    "filter.invalidFilterWarning": {
+        "text": "Invalid filter was removed.",
+        "crowdinContext": "Message explaining that an invalid filter was removed"
+    },
+    "filter.date.date-dataset.to": {
+        "text": "to",
+        "crowdinContext": "Preposition used in date range selections"
+    },
+    "filter.date.navigate.back": {
+        "text": "Back to other periods",
+        "crowdinContext": "Navigation link to return to period selection"
+    },
+    "filter.date.calendar": {
+        "text": "Date as",
+        "crowdinContext": "Label for date dimension dropdown selection"
+    },
+    "filter.date.period": {
+        "text": "Period",
+        "crowdinContext": "Label for date period selection"
+    },
+    "filter.date.compare_period_with": {
+        "text": "Compare the period with",
+        "crowdinContext": "Label for date period comparison selection"
+    },
+    "filter.date.comparing_not_supported_by_visualization": {
+        "text": "Current visualization type doesn't support comparing. To compare, switch to another visualization.",
+        "crowdinContext": "Error message when trying to use date comparison with unsupported visualization type"
+    },
+    "filter.date.disabled_compare": {
+        "text": "Date filter is disabled as metric is using global (visualization) compare.",
+        "crowdinContext": "Information message explaining why date filter is disabled for metrics"
+    },
+    "filter.date.additional_filter": {
+        "text": "Additional filter",
+        "crowdinContext": "Button label to add additional date attribute filter."
+    },
+    "filter.date.comparing_only_on_first_warning": {
+        "text": "To compare dates or use additional filter options, use the first date filter applied to the visualization.",
+        "crowdinContext": "Information why compare can not be set on this date filter."
+    },
+    "filter.date.additional_filter_dropdown_label": {
+        "text": "Add filter for:",
+        "crowdinContext": "Label of additional filter dropdown for selecting granularity option."
+    },
+    "filter.date.additional_filter.category.other": {
+        "text": "Other",
+        "crowdinContext": "Header for the Other category in additional date filter dropdown."
+    },
+    "filter.date.additional_filter.empty_values": {
+        "text": "Empty values",
+        "crowdinContext": "Label for empty values additional date filter option."
+    },
+    "filter.date.empty_values.include": {
+        "text": "Include",
+        "crowdinContext": "Option to include records with empty date values."
+    },
+    "filter.date.empty_values.exclude": {
+        "text": "Exclude",
+        "crowdinContext": "Option to exclude records with empty date values."
+    },
+    "filter.date.empty_values.only": {
+        "text": "Only",
+        "crowdinContext": "Option to show only records with empty date values."
+    },
+    "filter.date.empty_values.only.tooltip": {
+        "text": "Include only records without a date — disables the selected date range and any additional filters.",
+        "crowdinContext": "Tooltip explaining the Only option for empty values filter."
+    },
+    "filter.date.disabled_for_empty_values_only": {
+        "text": "Disabled when only empty values are included.",
+        "crowdinContext": "Tooltip shown when hovering over disabled date filter sections when empty values is set to Only."
+    },
+    "filter.date.empty_values.include.disabled_apply_tooltip": {
+        "text": "You can't include empty values unless Period is set to All time.",
+        "crowdinContext": "Tooltip on Apply button when Include is selected but period is not All time."
+    },
+    "filter.date.empty_values.include.disabled_option_tooltip": {
+        "text": "Select All time in period to include empty values",
+        "crowdinContext": "Tooltip on disabled Include option in empty values dropdown."
+    },
+    "filter.compare.apply_on": {
+        "text": "Apply on",
+        "crowdinContext": "Label for date comparison application scope selection"
+    },
+    "filter.compare.apply_on.cancel": {
+        "text": "Cancel",
+        "crowdinContext": "Button to cancel date comparison application"
+    },
+    "filter.compare.apply_on.apply": {
+        "text": "Apply",
+        "crowdinContext": "Button to apply date comparison settings"
+    },
+    "filter.compare.applied_on.all": {
+        "text": "All metrics",
+        "crowdinContext": "Option to apply comparison filter to all metrics"
+    },
+    "filter.compare.applied_on.other": {
+        "text": "Individual selection ({count})",
+        "crowdinContext": "Count display with placeholder. {count} is replaced with the number."
+    },
+    "filter.compare.displaying_only_compatible": {
+        "text": "Displaying only supported metrics.",
+        "crowdinContext": "Message when only compatible metrics are shown in comparison filter"
+    },
+    "filter.compare.type.dropdown.nothing": {
+        "text": "Nothing",
+        "crowdinContext": "Option to not apply any comparison in comparison filter dropdown"
+    },
+    "filter.compare.type.dropdown.same_period_previous_year": {
+        "text": "Same period previous year",
+        "crowdinContext": "Comparison option to compare with same period in previous year"
+    },
+    "filter.compare.type.dropdown.previous_period": {
+        "text": "Previous period",
+        "crowdinContext": "Comparison option to compare with previous period"
+    },
+    "filter.compare.type.dropdown.disabled_for_all_time_period_tooltip": {
+        "text": "This option is disabled for All time period",
+        "crowdinContext": "Displayed in a tooltip when hovering a compare type option disabled for All time period."
+    },
+    "filter.compare.type.dropdown.disabled_for_pop": {
+        "text": "This option is disabled for the selected date dimension (Date as). To compare, use the same date dimension in Date as and in the visualization definition.",
+        "crowdinContext": "Tooltip explaining why comparison option is disabled for selected date dimension"
+    },
+    "filter.compare.type.dropdown.disabled_for_pop_apply": {
+        "text": "You can’t compare in selected date dimension (Date as). To compare, use the same date dimension in Date as and in the visualization definition.",
+        "crowdinContext": "Error message when trying to apply comparison with incompatible date dimension"
+    },
+    "filter.compare.type.label.same_period_previous_year": {
+        "text": "Same period (SP) previous year",
+        "crowdinContext": "Abbreviation 'SP' stands for 'Same Period' - translate also this abbr."
+    },
+    "filter.compare.type.label.previous_period": {
+        "text": "Previous period",
+        "crowdinContext": "Label for previous period comparison type"
+    },
+    "filter.compare.all_measures": {
+        "text": "all",
+        "crowdinContext": "Label indicating all measures are selected for comparison"
+    },
+    "filter.compare.summary": {
+        "text": "Compare ({number_of_measures}) to:",
+        "crowdinContext": "Measure count display. {number_of_measures} is replaced with the number of measures."
+    },
+    "filter.compare.previous_period.all_time_not_supported": {
+        "text": "You can't compare All time to previous period.",
+        "crowdinContext": "Error message when trying to compare All time period to previous period"
+    },
+    "filter.compare.same_period_previous_year.all_time_not_supported": {
+        "text": "You can't compare All time to same period previous year.",
+        "crowdinContext": "Displayed in a tooltip for Apply button when the user tries to compare same Same period previous year with All time period."
+    },
+    "filter.measure.percentage_warning": {
+        "text": "The filter uses actual metric values, not percentages.",
+        "crowdinContext": "Warning that metric value filter uses actual values, not percentages"
+    },
+    "filter.measure.ranking_warning": {
+        "text": "To enable, remove the Top/bottom values filter.",
+        "crowdinContext": "Warning when using measure value filter in combination with ranking filter."
+    },
+    "filters.floatingRange.tooltip": {
+        "text": "The date range is relative to today and adjusts in time.",
+        "crowdinContext": "Tooltip explaining that the relative period filter will automatically update based on the current date, ensuring the time window remains consistent (e.g., 'Last 30 days' will always show the most recent 30 days)."
+    },
+    "catalog.group_title.ungrouped": {
+        "text": "Ungrouped",
+        "crowdinContext": "This is name of group for items which don't have group. for example: Group1, Group2, Ungrouped"
+    },
+    "catalog.group_title.suggestion": {
+        "text": "Similar",
+        "crowdinContext": "Name of group for items which are similar to search keyword."
+    },
+    "catalog.loading_availability": {
+        "text": "Fetching related data",
+        "crowdinContext": "Loading message while fetching related data in catalog"
+    },
+    "catalog.no_data_matching": {
+        "text": "No data matching",
+        "crowdinContext": "Message when no data matches search criteria in catalog"
+    },
+    "catalog.workspace_contains_no_data": {
+        "text": "This workspace contains no data.",
+        "crowdinContext": "Message when workspace has no data available"
+    },
+    "catalog.workspace_contains_no_data.link": {
+        "text": "Add data",
+        "crowdinContext": "Full sentence: \"This workspace contains no data. Add data\""
+    },
+    "catalog.no_related_data_items_found": {
+        "text": "No related data items found.",
+        "crowdinContext": "Message when no related data items are found in catalog"
+    },
+    "catalog.no_related_measures_found": {
+        "text": "No related metrics found.",
+        "crowdinContext": "Message when no related metrics are found in catalog"
+    },
+    "catalog.no_related_attributes_found": {
+        "text": "No related attributes found.",
+        "crowdinContext": "Message when no related attributes are found in catalog"
+    },
+    "catalog.no_data_items_available": {
+        "text": "No data items available.",
+        "crowdinContext": "Message when no data items are available in catalog"
+    },
+    "catalog.no_measures_available": {
+        "text": "No metrics available.",
+        "crowdinContext": "Message when no metrics are available in catalog"
+    },
+    "catalog.no_attributes_available": {
+        "text": "No attributes available.",
+        "crowdinContext": "Message when no attributes are available in catalog"
+    },
+    "catalog.unavailable_items_matched": {
+        "text": "{count} unrelated data {count, plural, one {item} other {items}} {isShow, select, true {visible} other {hidden}}.",
+        "crowdinContext": "Item visibility status with count. Example: '3 items and visible' or '1 item and hidden'."
+    },
+    "catalog.unavailableItems.show": {
+        "text": "Show",
+        "crowdinContext": "Text of link that shows unavailable items, that are hidden, in catalog when clicked upon."
+    },
+    "catalog.unavailableItems.hide": {
+        "text": "Hide",
+        "crowdinContext": "Text of link that hides unavailable items in catalog when clicked upon."
+    },
+    "catalog.filter.all": {
+        "text": "all data",
+        "crowdinContext": "Filter option to show all data types in catalog"
+    },
+    "catalog.filter.facts": {
+        "text": "facts",
+        "crowdinContext": "Filter option to show only facts in catalog"
+    },
+    "catalog.filter.metrics": {
+        "text": "metrics",
+        "crowdinContext": "Filter option to show only metrics in catalog"
+    },
+    "catalog.filter.attributes": {
+        "text": "attributes",
+        "crowdinContext": "Filter option to show only attributes in catalog"
+    },
+    "catalog.filter.geo.attributes": {
+        "text": "Attributes with GEO label",
+        "crowdinContext": "Filter option to show only geo-labeled attributes in catalog"
+    },
+    "catalog.sidebar.collapse": {
+        "text": "Collapse Data Catalog",
+        "crowdinContext": "Tooltip of the button that hides the Data Catalog panel on the left of Analytical Designer"
+    },
+    "catalog.sidebar.expand": {
+        "text": "Expand Data Catalog",
+        "crowdinContext": "Tooltip of the button that shows the hidden Data Catalog panel again"
+    },
+    "catalog.sidebar.resize": {
+        "text": "Resize Data Catalog",
+        "crowdinContext": "Accessible name of the drag handle that changes the width of the Data Catalog panel"
+    },
+    "catalog.refresh": {
+        "text": "Refresh data items",
+        "crowdinContext": "Button label for refreshing the catalog"
+    },
+    "catalog.refresh.no_items_updated": {
+        "text": "No items updated",
+        "crowdinContext": "Message displayed after the refresh saying nothing has changed"
+    },
+    "catalog.refresh.n_items_updated": {
+        "text": "{count} {count, plural, one {item} other {items}} updated",
+        "crowdinContext": "Refresh message showing changed items count. Example: '1 item changed' or '5 items changed'."
+    },
+    "catalog.add_calculated_measure": {
+        "text": "Create metric",
+        "crowdinContext": "Label of the button which redirects user to the different app (metric editor)"
+    },
+    "catalog.add_calculated_measure_long": {
+        "text": "Open the Metric Editor in a new window and create a metric.",
+        "crowdinContext": "Label of the button which redirects user to the different app (metric editor), with info about opening the new window"
+    },
+    "catalog.add_calculated_measure_disabled": {
+        "text": "Metric cannot be created when the workspace does not contain any data.",
+        "crowdinContext": "Label of the disabled button which redirects user to the different app (metric editor). Only when there are no data and button is disabled"
+    },
+    "dashboard.computing": {
+        "text": "Computing…",
+        "crowdinContext": "Use '…' as one character, not 3 dots ('...')."
+    },
+    "dashboard.bucket.metric.fact.attribute.add_placeholder": {
+        "text": "Drag {factIcon} , {metricIcon} or {attrIcon} here",
+        "crowdinContext": "Drag and drop placeholder text. {factIcon}, {metricIcon}, and {attrIcon} are replaced with visual icons."
+    },
+    "dashboard.bucket.metric.fact.attribute.add_metric_button.add_placeholder": {
+        "text": "Drag {factIcon} , {metricIcon} , {attrIcon} here",
+        "crowdinContext": "Drag and drop placeholder text. {factIcon}, {metricIcon}, and {attrIcon} are replaced with visual icons."
+    },
+    "dashboard.bucket.metric.attribute.add_placeholder": {
+        "text": "Drag {metricIcon} or {attrIcon} here",
+        "crowdinContext": "Drag and drop placeholder text. {metricIcon} and {attrIcon} are replaced with visual icons."
+    },
+    "dashboard.bucket.metric.fact.attribute.geo_attribute.add_placeholder": {
+        "text": "Drag {factIcon} , {metricIcon} , {geoAttrIcon} or {attrIcon}  here",
+        "crowdinContext": "String is placeholder showed in a target area of drag and drop. Users can drop measure (metric) or geo pushpin attribute or attribute into the area. {factIcon} {metricIcon} {geoAttrIcon} {attrIcon} "
+    },
+    "dashboard.bucket.metric.fact.attribute.dropzone_hint": {
+        "text": "Drag a fact, metric or attribute from the Data Catalog to add it here.",
+        "crowdinContext": "Drag and drop instruction. {dragItem} is replaced with the item being dragged."
+    },
+    "dashboard.bucket.attribute.date.add_placeholder": {
+        "text": "Drag {attrIcon} or {dateIcon} here",
+        "crowdinContext": "Drag and drop placeholder with icons for attribute or date elements"
+    },
+    "dashboard.bucket.attribute.metric.date.add_placeholder": {
+        "text": "Drag {attrIcon} , {metricIcon} or {dateIcon} here",
+        "crowdinContext": "Drag and drop placeholder with icons for attribute or date elements"
+    },
+    "dashboard.bucket.geo_attribute.attribute.date.add_placeholder": {
+        "text": "Drag {geoAttrIcon} , {attrIcon} or {dateIcon} here",
+        "crowdinContext": "String is placeholder showed in a target area of drag and drop. Users can drop geo pushpin attribute or attribute or date into the area."
+    },
+    "dashboard.bucket.geo_attribute.attribute.metric.date.add_placeholder": {
+        "text": "Drag {geoAttrIcon} , {attrIcon} , {metricIcon} or {dateIcon} here",
+        "crowdinContext": "String is placeholder showed in a target area of drag and drop. Users can drop geo pushpin attribute or attribute or date into the area."
+    },
+    "dashboard.bucket.attribute.date.dropzone_hint": {
+        "text": "Drag an attribute or date from the Data Catalog to add it here.",
+        "crowdinContext": "Placeholder text for attribute or date drag-and-drop area"
+    },
+    "dashboard.bucket.geo_attribute.dropzone_hint": {
+        "text": "Drag a geo attribute from the Data Catalog to add it here.",
+        "crowdinContext": "Placeholder text for geo attribute drag-and-drop area"
+    },
+    "dashboard.bucket.geo_attribute.add_placeholder": {
+        "text": "Drag {geoAttrIcon} here",
+        "crowdinContext": "String is placeholder showed in a target area of drag and drop. Users can drop geo pushpin attribute into the area."
+    },
+    "dashboard.bucket.attribute.geo_attribute.dropzone_hint": {
+        "text": "Drag a geo attribute or attribute from the Data Catalog to add it here.",
+        "crowdinContext": "Placeholder text for geo attribute or attribute drag-and-drop area"
+    },
+    "dashboard.bucket.metric.attribute.dropzone_hint": {
+        "text": "Drag a metric or attribute from the Data Catalog to add it here.",
+        "crowdinContext": "Placeholder text for metric or attribute drag-and-drop area"
+    },
+    "dashboard.bucket.metric.fact.attribute.geo_attribute.dropzone_hint": {
+        "text": "Drag a metric, geo attribute or attribute from the Data Catalog to add it here.",
+        "crowdinContext": "Placeholder text for metric, geo attribute, or attribute drag-and-drop area"
+    },
+    "dashboard.bucket.attribute.geo_attribute.add_placeholder": {
+        "text": "Drag {geoAttrIcon} or {attrIcon} here",
+        "crowdinContext": "String is placeholder showed in a target area of drag and drop. Users can drop geo pushpin attribute or attribute into the area."
+    },
+    "dashboard.bucket.metric.fact.add_placeholder": {
+        "text": "Drag {metricIcon} here",
+        "crowdinContext": "Drag and drop placeholder with metric icon"
+    },
+    "dashboard.bucket.metric.fact.dropzone_hint": {
+        "text": "Drag a fact or metric from the Data Catalog to add it here.",
+        "crowdinContext": "Placeholder text for fact or metric drag-and-drop area"
+    },
+    "dashboard.bucket.date.add_placeholder": {
+        "text": "Drag {dateIcon} here",
+        "crowdinContext": "Drag and drop placeholder with date attribute icon"
+    },
+    "dashboard.bucket.date.dropzone_hint": {
+        "text": "Drag a date from the Data Catalog to add it here.",
+        "crowdinContext": "Placeholder text for date drag-and-drop area"
+    },
+    "dashboard.bucket.drop": {
+        "text": "drop to add",
+        "crowdinContext": "Short instruction text for drag-and-drop interaction"
+    },
+    "dashboard.bucket.filter.attribute.date.add_placeholder": {
+        "text": "Drag {attrIcon} or {dateIcon} here",
+        "crowdinContext": "Filter drag and drop placeholder with icons for attribute or date elements"
+    },
+    "dashboard.bucket.filter.attribute.date.dropzone_hint": {
+        "text": "Drag an attribute or date from the Data Catalog to add it as a filter.",
+        "crowdinContext": "Placeholder text for attribute or date filter drag-and-drop area"
+    },
+    "dashboard.bucket.filter.attribute.metric.date.dropzone_hint": {
+        "text": "Drag an attribute, metric, or date from the Data Catalog to add it as a filter.",
+        "crowdinContext": "Placeholder text for attribute or date filter drag-and-drop area"
+    },
+    "dashboard.bucket.filter.geo_attribute.attribute.date.add_placeholder": {
+        "text": "Drag {geoAttrIcon} , {attrIcon} or {dateIcon} here",
+        "crowdinContext": "String is placeholder showed in a target area of drag and drop. Users can drop geo pushpin attribute or attribute or date into the area."
+    },
+    "dashboard.bucket.filter.geo_attribute.attribute.date.dropzone_hint": {
+        "text": "Drag a geo attribute or attribute or date from the Data Catalog to add it as a filter.",
+        "crowdinContext": "Placeholder text for geo attribute, attribute, or date filter drag-and-drop area"
+    },
+    "dashboard.bucket.filter.geo_attribute.attribute.metric.date.dropzone_hint": {
+        "text": "Drag a geo attribute or attribute or metric or date from the Data Catalog to add it as a filter.",
+        "crowdinContext": "Placeholder text for geo attribute, attribute, or date filter drag-and-drop area"
+    },
+    "dashboard.bucket.attribute.add_placeholder": {
+        "text": "Drag {attrIcon} here",
+        "crowdinContext": "Drag and drop placeholder with attribute icon"
+    },
+    "dashboard.bucket.attribute.dropzone_hint": {
+        "text": "Drag an attribute from the Data Catalog to add it here.",
+        "crowdinContext": "Placeholder text for attribute drag-and-drop area"
+    },
+    "dashboard.bucket.filter_by_date": {
+        "text": "Filter by date",
+        "crowdinContext": "Label for date filtering option"
+    },
+    "dashboard.bucket.add_attribute_filter": {
+        "text": "Add attribute filter",
+        "crowdinContext": "Button text for adding an attribute filter"
+    },
+    "dashboard.bucket.add_filter": {
+        "text": "Add filter",
+        "crowdinContext": "Button text of a metric opening the menu to add a date or an attribute filter to the metric"
+    },
+    "dashboard.bucket.add_filter.date_limit": {
+        "text": "This metric can have one date filter.",
+        "crowdinContext": "Tooltip on the disabled Date entry of a metric's add filter menu when the backend supports a single date filter per metric and the metric already has one"
+    },
+    "dashboard.bucket.add_filter.attribute_limit": {
+        "text": "A metric can have at most {max} attribute filters.",
+        "crowdinContext": "Tooltip on the disabled Attribute values entry of a metric's add filter menu. {max} is the maximum number of attribute filters per metric."
+    },
+    "dashboard.bucket.add_filter.attribute_limit_reached": {
+        "text": "Only {added} of the {picked} picked attributes were added: a metric can have at most {max} attribute filters.",
+        "crowdinContext": "Warning shown when more attributes were picked for a metric than its attribute filter maximum allows. {added} were added out of {picked} picked; {max} is the maximum."
+    },
+    "dashboard.bucket.create_arithmetic_measure": {
+        "text": "Create metric",
+        "crowdinContext": "Button for creating a new metric."
+    },
+    "dashboard.bucket_item.display_as": {
+        "text": "display as",
+        "crowdinContext": "Measure configuration header"
+    },
+    "dashboard.bucket_item.stacking": {
+        "text": "stacking",
+        "crowdinContext": "Header of control panel for stacking configuration. 'stacking' relates to 'stack by' feature of charts where multiple measures on each other."
+    },
+    "dashboard.bucket_item.granularity": {
+        "text": "group by",
+        "crowdinContext": "Label for grouping/granularity configuration in chart settings"
+    },
+    "dashboard.bucket_item.display_form": {
+        "text": "Display as: {title}",
+        "crowdinContext": "Label shown on dropdown button that changes form of the attribute used in visualization. For example 'Display as: Shortened name'"
+    },
+    "dashboard.bucket_item.hyperlink_text": {
+        "text": "Hyperlink text",
+        "crowdinContext": "Label above the text input that customizes hyperlink display form elements text in the report. E.g: it can replace 'https://www.gooddata.com/<elementId>' with human readable 'Learn more'"
+    },
+    "dashboard.bucket_item.inline_visualization_type.select": {
+        "text": "Display as",
+        "crowdinContext": "Label above the toggle for selecting the visualization type for inline visualization."
+    },
+    "dashboard.bucket_item.show_all_values": {
+        "text": "show missing values",
+        "crowdinContext": "Label of a checkbox related to an attribute."
+    },
+    "dashboard.bucket_item.show_all_values.attribute.tooltip": {
+        "text": "Show all attribute values, including those without any data.",
+        "crowdinContext": "Used in the attribute checkbox tooltip."
+    },
+    "dashboard.bucket_item.show_all_values.generic.date.attribute.tooltip": {
+        "text": "Show all date values, including those without any data.",
+        "crowdinContext": "Used in the date attribute checkbox tooltip for generic dates (like weeks/months/quarters)."
+    },
+    "dashboard.bucket_item.show_all_values.chronological.date.attributes.tooltip": {
+        "text": "Show all chronological values between the earliest and latest dates, including those without any data.",
+        "crowdinContext": "Used in the date attribute checkbox tooltip for chronological dates (like 01/01/2023 - 12/31/2023)."
+    },
+    "dashboard.bucket_item.show_contribution": {
+        "text": "show in %",
+        "crowdinContext": "Checkbox label for displaying values as percentages"
+    },
+    "dashboard.bucket_item.is_a_total": {
+        "text": "is a total",
+        "crowdinContext": "This is a checkbox label to set a bucket is a total for the waterfall chart."
+    },
+    "dashboard.bucket_item.show_on_right_axis": {
+        "text": "show on right axis",
+        "crowdinContext": "Checkbox label for displaying metric on right axis of chart"
+    },
+    "dashboard.bucket_item.is_threshold": {
+        "text": "is a line style control",
+        "crowdinContext": "Rendered next to a checkbox as '{checkbox} is a line style control'. It describes a metric item which computed result is used to control chart styling when the checkbox is checked."
+    },
+    "dashboard.bucket_item.is_threshold.tooltip.enabled": {
+        "text": "Controls the line styles of other metrics. Their lines are dashed if the value is 0 or empty; solid lines are used otherwise. This metric is not displayed. <a>Learn more</a>",
+        "crowdinContext": "Tooltip explaining line style control functionality with learn more link"
+    },
+    "dashboard.bucket_item.is_threshold.tooltip.disabled": {
+        "text": "Disabled — another metric controls the line style. Turn it off in that metric’s settings.",
+        "crowdinContext": "Tooltip text that describes why the checkbox next to a metric is disabled."
+    },
+    "dashboard.bucket_item.is_threshold.tooltip.disabled.oneMeasure": {
+        "text": "Disabled — there's just one metric in the bucket. Add another to enable this setting.",
+        "crowdinContext": "Tooltip text that describes why the checkbox next to a metric is disabled."
+    },
+    "dashboard.bucket_item.show_on_top_axis": {
+        "text": "show on top axis",
+        "crowdinContext": "Checkbox label for displaying metric on top axis of chart"
+    },
+    "dashboard.bucket_item.stack_measures": {
+        "text": "Stack metrics",
+        "crowdinContext": "Checkbox label for stacking metrics in chart visualization"
+    },
+    "dashboard.bucket_item.stack_to_percent": {
+        "text": "Stack to 100%",
+        "crowdinContext": "Check box label for stacking measures with percentage contribution and total as 100%"
+    },
+    "dashboard.bucket_item.stack_to_percent.negative_values_info": {
+        "text": "100% stacking can't be applied to negative values, so absolute values are shown. Apply an absolute-value transform or a filter, then re-enable.",
+        "crowdinContext": "Info note shown under the 'Stack to 100%' checkbox when the metric has negative values and the chart falls back to absolute stacking."
+    },
+    "dashboard.bucket_item.drop_to_switch": {
+        "text": "Drop to switch",
+        "crowdinContext": "Instruction text for drag-and-drop operation to switch elements"
+    },
+    "dashboard.bucket_item.no_date_available_category": {
+        "text": "Metric cannot be trended",
+        "crowdinContext": "Error message when metric cannot be used for trending analysis"
+    },
+    "dashboard.bucket_item.arithmetic_measure.operands_header": {
+        "text": "Where",
+        "crowdinContext": "The context of the word 'Where' is the same as in sentence 'X = A + B Where A is greater than B'. It introduces specification of some term used earlier."
+    },
+    "dashboard.bucket_item.arithmetic_measure.empty_operand_dropdown_label": {
+        "text": "Choose metric",
+        "crowdinContext": "Indicates that arithmetic metrics operand has not been set and so user action is needed to set it"
+    },
+    "dashboard.bucket_item.arithmetic_measure.operator_sum": {
+        "text": "Sum",
+        "crowdinContext": "Arithmetic operator for binary operation sum (A+B)"
+    },
+    "dashboard.bucket_item.arithmetic_measure.operator_ratio": {
+        "text": "Ratio",
+        "crowdinContext": "Arithmetic operator for binary operation divide (A/B)"
+    },
+    "dashboard.bucket_item.arithmetic_measure.operator_difference": {
+        "text": "Difference",
+        "crowdinContext": "Arithmetic operator for binary operation difference (A-B)"
+    },
+    "dashboard.bucket_item.arithmetic_measure.operator_multiplication": {
+        "text": "Product <i>(Multiplication)</i>",
+        "crowdinContext": "Arithmetic operator for binary operation multiplication (A×B)"
+    },
+    "dashboard.bucket_item.arithmetic_measure.operator_change": {
+        "text": "Change",
+        "crowdinContext": "Arithmetic operator for operation change (growth) ((A-B)/B)"
+    },
+    "dashboard.bucket_item.arithmetic_measure.sum_of": {
+        "text": "Sum of …",
+        "crowdinContext": "Title of an incomplete arithmetic measure of type Sum with no operands set"
+    },
+    "dashboard.bucket_item.arithmetic_measure.ratio_of": {
+        "text": "Ratio of …",
+        "crowdinContext": "Title of an incomplete arithmetic measure of type Ratio with no operands set"
+    },
+    "dashboard.bucket_item.arithmetic_measure.difference_of": {
+        "text": "Difference of …",
+        "crowdinContext": "Title of an incomplete arithmetic measure of type Difference with no operands set"
+    },
+    "dashboard.bucket_item.arithmetic_measure.multiplication_of": {
+        "text": "Product of …",
+        "crowdinContext": "Title of an incomplete arithmetic measure of type Product with no operands set"
+    },
+    "dashboard.bucket_item.arithmetic_measure.change_of": {
+        "text": "Change from …",
+        "crowdinContext": "Title of an incomplete arithmetic measure of type Change with no operands set"
+    },
+    "dashboard.bucket_item.arithmetic_measure.sum_of_incomplete": {
+        "text": "Sum of {measure_title} …",
+        "crowdinContext": "Title of an incomplete arithmetic measure of type Sum with one operand set. {measure_title} is replaced with the measure name"
+    },
+    "dashboard.bucket_item.arithmetic_measure.ratio_of_incomplete": {
+        "text": "Ratio of {measure_title} …",
+        "crowdinContext": "Title of an incomplete arithmetic measure of type Ratio with one operand set. {measure_title} is replaced with the measure name"
+    },
+    "dashboard.bucket_item.arithmetic_measure.difference_of_incomplete": {
+        "text": "Difference of {measure_title} …",
+        "crowdinContext": "Title of an incomplete arithmetic measure of type Difference with one operand set. {measure_title} is replaced with the measure name"
+    },
+    "dashboard.bucket_item.arithmetic_measure.multiplication_of_incomplete": {
+        "text": "Product of {measure_title} …",
+        "crowdinContext": "Title of an incomplete arithmetic measure of type Product with one operand set. {measure_title} is replaced with the measure name"
+    },
+    "dashboard.bucket_item.arithmetic_measure.change_of_incomplete": {
+        "text": "Change from {measure_title} …",
+        "crowdinContext": "Title of an incomplete arithmetic measure of type Change with one operand set. {measure_title} is replaced with the measure name"
+    },
+    "dashboard.bucket_item.arithmetic_measure.operator_header": {
+        "text": "Outcome is",
+        "crowdinContext": "Title for chosen operator. Used as 'Outcome is calculated Sum where A=measure 1 and B=measure 2'."
+    },
+    "dashboard.bucket_item.arithmetic_measure.operation_title": {
+        "text": "calculated",
+        "crowdinContext": "Title for list of available operators. Used as 'Outcome is calculated Sum where A=measure 1 and B=measure 2'"
+    },
+    "dashboard.bucket_item.approximate_count": {
+        "text": "use approximate count",
+        "crowdinContext": "An option when attribute is dropped into measure bucket. Ex. we drop 'category' attribute into measure bucket, we can select approximate count in bucket config to enhance performance while giving up on precision."
+    },
+    "dashboard.bucket_item.approximate_count.tooltip": {
+        "text": "If you have a large data set and don't require an exact count, you can increase the computation speed with approximate count.",
+        "crowdinContext": "Tooltip explaining the benefits of using approximate count for performance"
+    },
+    "dashboard.catalog_item.type": {
+        "text": "type",
+        "crowdinContext": "Label for data type in catalog item details"
+    },
+    "dashboard.catalog_item.defined_as": {
+        "text": "defined as",
+        "crowdinContext": "Label indicating how a catalog item is defined or constructed"
+    },
+    "dashboard.catalog_item.values": {
+        "text": "values",
+        "crowdinContext": "Label for values section in catalog item details"
+    },
+    "dashboard.catalog_item.dataset": {
+        "text": "dataset",
+        "crowdinContext": "Label for dataset information in catalog item details"
+    },
+    "dashboard.catalog_item.hierarchy": {
+        "text": "Hierarchy",
+        "crowdinContext": "The section title in the catalog tooltip"
+    },
+    "dashboard.catalog_item.shortening_decoration": {
+        "text": "…and {count} more",
+        "crowdinContext": "Text indicating additional items not shown. {count} is replaced with the number of remaining items"
+    },
+    "dashboard.catalog_item.common_date_description": {
+        "text": "Represents all your dates in project. Can group by Day, Week, Month, Quarter & Year.",
+        "crowdinContext": "Description of common date dimension functionality in project context"
+    },
+    "dashboard.catalog_item.common_date_description.workspace": {
+        "text": "Represents all your dates in workspace. Can group by Day, Week, Month, Quarter & Year.",
+        "crowdinContext": "Description of common date dimension functionality in workspace context"
+    },
+    "dashboard.catalog_item.view_details": {
+        "text": "View details",
+        "crowdinContext": "Detail button label in catalog item bubble help."
+    },
+    "dashboard.catalog_item.edit_metric": {
+        "text": "Edit",
+        "crowdinContext": "Edit button in catalog item bubble help"
+    },
+    "dashboard.catalog_item.view_metric": {
+        "text": "View",
+        "crowdinContext": "View button in catalog item bubble help"
+    },
+    "dashboard.message.blank.header": {
+        "text": "Drag {fact}, {metric} or {attribute} here",
+        "crowdinContext": "Instructions for dragging fact, metric, or attribute elements to empty area"
+    },
+    "dashboard.message.blank.header.attribute": {
+        "text": "Drag {attribute} here",
+        "crowdinContext": "Instructions for dragging attribute elements to empty area"
+    },
+    "dashboard.message.blank.description": {
+        "text": "They are located in the panel{br}on the left.",
+        "crowdinContext": "Instruction text about locating data panel. {br} is replaced with a line break"
+    },
+    "dashboard.message.report_not_found.header": {
+        "text": "We can't find this visualization",
+        "crowdinContext": "Error message header when visualization cannot be found"
+    },
+    "dashboard.message.report_not_found.description": {
+        "text": "It may have been deleted or you don't have access.",
+        "crowdinContext": "Explanation shown when requested visualization cannot be found or accessed"
+    },
+    "dashboard.message.report_not_found.missing_date_filter_items.description": {
+        "text": "{items} used in the date filter {count, plural, one {is} other {are}} no longer available.",
+        "crowdinContext": "Shown under the header 'Sorry, we can't display this visualization' when a visualization cannot be opened because its date filter uses a date granularity that was disabled in the data model. {items} is a comma-separated list of date items, each written as date dataset title, a dash and the granularity name, for example 'Order date - Minute of Hour'. {count} is the number of items."
+    },
+    "dashboard.message.invalid_configuration.header": {
+        "text": "Sorry, we can't display this visualization",
+        "crowdinContext": "Error message header when visualization configuration is invalid"
+    },
+    "dashboard.message.invalid_configuration.trace_id_message": {
+        "text": "<span>Error trace ID</span>: {traceId}",
+        "crowdinContext": "Error trace ID display message. {traceId} is replaced with the trace identifier"
+    },
+    "dashboard.message.invalid_configuration.trace_id_message.tooltip.manage": {
+        "text": "Trace ID helps us identify, investigate, and resolve issues as quickly as possible. If you decide to contact our support team, provide us with this ID.",
+        "crowdinContext": "Tooltip explaining trace ID purpose for managed environments with support team contact"
+    },
+    "dashboard.message.invalid_configuration.trace_id_message.tooltip.analyze": {
+        "text": "Trace ID helps us identify, investigate, and resolve issues as quickly as possible. If you decide to contact your administrator, provide them with this ID.",
+        "crowdinContext": "Tooltip explaining trace ID purpose for analyze environments with administrator contact"
+    },
+    "dashboard.message.invalid_configuration.trace_id_message.copy_icon.tooltip": {
+        "text": "Copy to clipboard",
+        "crowdinContext": "Tooltip for copy trace ID button"
+    },
+    "dashboard.message.invalid_configuration.trace_id_message.copy_to_clipboard.success": {
+        "text": "The trace ID was copied to your clipboard.",
+        "crowdinContext": "Success message when trace ID is copied to clipboard"
+    },
+    "dashboard.message.invalid_configuration.manage_user.error.400": {
+        "text": "A calculation error occurred.{br}<link>See the raw error response for details</link>",
+        "crowdinContext": "Error message for calculation errors with link to raw error details. {br} is replaced with a line break"
+    },
+    "dashboard.message.invalid_configuration.manage_user.error.500": {
+        "text": "An error has occurred. Please try again later.{br}If the issue persists, contact our support team.",
+        "crowdinContext": "Generic server error message with support contact instructions. {br} is replaced with a line break"
+    },
+    "dashboard.message.invalid_configuration.description": {
+        "text": "Try applying different filters, or using different metrics or attributes.{br}If this did not help, contact your administrator.",
+        "crowdinContext": "Troubleshooting instructions for invalid configuration with administrator contact. {br} is replaced with a line break"
+    },
+    "dashboard.message.negative_values.header": {
+        "text": "Sorry, we can't display this visualization",
+        "crowdinContext": "Error message header when negative values cannot be displayed in current visualization"
+    },
+    "dashboard.message.negative_values.description": {
+        "text": "Negative values cannot be rendered by current visualization.{br}Switch to column chart to display.",
+        "crowdinContext": "Error message for negative values with chart switch suggestion. {br} is replaced with a line break"
+    },
+    "dashboard.message.negative_values.description.without_switch": {
+        "text": "Negative values cannot be rendered by current visualization.",
+        "crowdinContext": "Error message for negative values without chart switch option"
+    },
+    "dashboard.message.missing_metric.header": {
+        "text": "No metric in your visualization",
+        "crowdinContext": "Error message header when no metric is present in visualization"
+    },
+    "dashboard.message.missing_metric.description": {
+        "text": "Add a metric to your visualization, or switch to table view.{br}Once done, you'll be able to save it.",
+        "crowdinContext": "Instructions for adding metric or switching to table view. {br} is replaced with a line break"
+    },
+    "dashboard.message.missing_location.header": {
+        "text": "No location in your visualization",
+        "crowdinContext": "Error message header when no geo location is present in visualization"
+    },
+    "dashboard.message.missing_location.description": {
+        "text": "Add a geo attribute to your visualization, or switch to other visualization.{br}Once done, you'll be able to save it.",
+        "crowdinContext": "Instructions for adding geo location or switching visualization type. {br} is replaced with a line break"
+    },
+    "dashboard.message.missing_area.header": {
+        "text": "No area in your visualization",
+        "crowdinContext": "Error message header when no geo area is present in visualization"
+    },
+    "dashboard.message.missing_area.description": {
+        "text": "Add a geo area attribute to your visualization, or switch to other visualization.{br}Once done, you'll be able to save it.",
+        "crowdinContext": "Instructions for adding geo area or switching visualization type. {br} is replaced with a line break"
+    },
+    "dashboard.message.missing_columns.header": {
+        "text": "No columns in your visualization",
+        "crowdinContext": "Error message header when no columns are present in visualization"
+    },
+    "dashboard.message.missing_columns.description": {
+        "text": "Add a catalog item to columns, or switch to table view.{br}Once done, you'll be able to save it.",
+        "crowdinContext": "Instructions for adding columns or switching to table view. {br} is replaced with a line break"
+    },
+    "dashboard.message.empty.header": {
+        "text": "No data for your filter selection",
+        "crowdinContext": "Error message header when filters result in no data"
+    },
+    "dashboard.message.empty.description": {
+        "text": "Try adjusting or removing some of the filters.",
+        "crowdinContext": "Suggestion for resolving no data issue by adjusting filters"
+    },
+    "dashboard.message.workspace_empty.header": {
+        "text": "No values to display",
+        "crowdinContext": "Error message header when workspace contains no data"
+    },
+    "dashboard.message.workspace_empty.description_question": {
+        "text": "The facts, metrics or attributes do not contain any data. Have you loaded the data?",
+        "crowdinContext": "Question asking if data has been loaded for facts/metrics/attributes"
+    },
+    "dashboard.message.workspace_empty.description_link": {
+        "text": "The facts, metrics or attributes do not contain any data. Have you <dataLoadLink>loaded the data?</dataLoadLink>",
+        "crowdinContext": "Question about data loading with link to data loading instructions for facts/metrics/attributes"
+    },
+    "dashboard.message.workspace_empty.description": {
+        "text": "The facts, metrics or attributes do not contain any data.",
+        "crowdinContext": "Statement that facts/metrics/attributes contain no data"
+    },
+    "dashboard.message.too_large_to_display.header": {
+        "text": "Too many data points to display",
+        "crowdinContext": "Error message header when dataset is too large for visualization"
+    },
+    "dashboard.message.too_large_to_display.description": {
+        "text": "<a2>Add a filter</a2><switch>, or <a1>switch to table view</a1></switch>.",
+        "crowdinContext": "Instructions for handling too large dataset with filter and table view links"
+    },
+    "dashboard.message.too_large_to_compute.header": {
+        "text": "Too many data points to display",
+        "crowdinContext": "Error message header when dataset is too large for computation"
+    },
+    "dashboard.message.too_large_to_compute.description": {
+        "text": "Try <a2>applying one or more filters</a2>.",
+        "crowdinContext": "Instructions to apply filters with link to filter options"
+    },
+    "dashboard.message.too_large_to_compute.rows_header": {
+        "text": "Too many rows",
+        "crowdinContext": "Error message header when dataset has too many rows for computation"
+    },
+    "dashboard.message.too_large_to_compute.columns_header": {
+        "text": "Too many columns",
+        "crowdinContext": "Error message header when dataset has too many columns for computation"
+    },
+    "dashboard.message.too_large_to_compute.cells_header": {
+        "text": "Too many datapoints",
+        "crowdinContext": "Error message header when dataset has too many data points for computation"
+    },
+    "dashboard.message.too_large_to_compute.rows_columns_header": {
+        "text": "Too many rows and columns",
+        "crowdinContext": "Error message header when dataset has too many rows and columns for computation"
+    },
+    "dashboard.message.too_large_to_compute.rows_cells_header": {
+        "text": "Too many rows and datapoints",
+        "crowdinContext": "Error message header when dataset has too many rows and data points for computation"
+    },
+    "dashboard.message.too_large_to_compute.columns_cells_header": {
+        "text": "Too many columns and datapoints",
+        "crowdinContext": "Error message header when dataset has too many columns and data points for computation"
+    },
+    "dashboard.message.too_large_to_compute.rows_columns_cells_header": {
+        "text": "Too many rows, columns and datapoints",
+        "crowdinContext": "Error message header when dataset has too many rows, columns and data points for computation"
+    },
+    "dashboard.message.too_large_to_compute.rows_description": {
+        "text": "The result exceeds the {rowLimit} row limit by {rowOverflow} rows and can't be computed.",
+        "crowdinContext": "Error message when row limit is exceeded. Example: 'The result exceeds the 100K row limit by 20K rows and can't be computed.'"
+    },
+    "dashboard.message.too_large_to_compute.columns_description": {
+        "text": "The result exceeds the {columnLimit} column limit by {columnOverflow} columns and can't be computed.",
+        "crowdinContext": "Error message when column limit is exceeded. Example: 'The result exceeds the 100K column limit by 20K columns and can't be computed.'"
+    },
+    "dashboard.message.too_large_to_compute.cells_description": {
+        "text": "The result exceeds the {cellLimit} datapoint limit by {cellOverflow} datapoints and can't be computed.",
+        "crowdinContext": "Error message when data point limit is exceeded. Example: 'The result exceeds the 100K datapoint limit by 20K datapoints and can't be computed.'"
+    },
+    "dashboard.message.too_large_to_compute.rows_columns_description": {
+        "text": "The result exceeds both the {rowLimit} row limit and the {columnLimit} column limit by {rowOverflow} rows and {columnOverflow} columns and can't be computed.",
+        "crowdinContext": "Error message when both row and column limits are exceeded. Example: 'The result exceeds both the 100K row limit and the 50K column limit by 20K rows and 10K columns and can't be computed.'"
+    },
+    "dashboard.message.too_large_to_compute.rows_cells_description": {
+        "text": "The result exceeds both the {rowLimit} row limit and the {cellLimit} datapoint limit by {rowOverflow} rows and {cellOverflow} datapoints and can't be computed.",
+        "crowdinContext": "Error message when both row and data point limits are exceeded. Example: 'The result exceeds both the 100K row limit and the 1M datapoint limit by 20K rows and 500K datapoints and can't be computed.'"
+    },
+    "dashboard.message.too_large_to_compute.columns_cells_description": {
+        "text": "The result exceeds both the {columnLimit} column limit and the {cellLimit} datapoint limit by {columnOverflow} columns and {cellOverflow} datapoints and can't be computed.",
+        "crowdinContext": "Error message when both column and data point limits are exceeded. Example: 'The result exceeds both the 50K column limit and the 1M datapoint limit by 10K columns and 500K datapoints and can't be computed.'"
+    },
+    "dashboard.message.too_large_to_compute.rows_columns_cells_description": {
+        "text": "The result exceeds the {rowLimit} row limit, the {columnLimit} column limit and the {cellLimit} datapoint limit by {rowOverflow} rows, {columnOverflow} columns and {cellOverflow} datapoints and can't be computed.",
+        "crowdinContext": "Error message when all three limits are exceeded. Example: 'The result exceeds the 100K row limit, the 50K column limit and the 1M datapoint limit by 20K rows, 10K columns and 500K datapoints and can't be computed.'"
+    },
+    "dashboard.message.too_large_to_compute.filter_call_to_action": {
+        "text": "Use filters to reduce the result set.",
+        "crowdinContext": "Call-to-action suggesting to use filters when result is too large to compute"
+    },
+    "dashboard.message.too_large_to_compute.transpose_call_to_action": {
+        "text": "Transpose the table to continue.",
+        "crowdinContext": "Call-to-action suggesting to transpose table when result is too large to compute"
+    },
+    "dashboard.message.too_large_to_compute.see_raw_error": {
+        "text": "See the raw error response for details",
+        "crowdinContext": "Link text to view detailed error information"
+    },
+    "dashboard.message.too_large_to_calculate.header": {
+        "text": "Query size limit exceeded",
+        "crowdinContext": ""
+    },
+    "dashboard.message.too_large_to_calculate.cumulative_table_bytes.description": {
+        "text": "The report attempted to process more data than allowed (over {limit}).",
+        "crowdinContext": "Do not translate the {limit} placeholder. It will contain localized compact sizes like 120 MB."
+    },
+    "dashboard.message.too_large_to_calculate.cumulative_table_bytes.call_to_action": {
+        "text": "To reduce data volume, simplify the report by using fewer datasets and metrics, or apply filters to narrow the scope.",
+        "crowdinContext": ""
+    },
+    "dashboard.message.execute_protected_report.header": {
+        "text": "You are not authorized to see this report",
+        "crowdinContext": "Error message header for insufficient permissions to access report"
+    },
+    "dashboard.message.execute_protected_report.description": {
+        "text": "Contact your administrator.",
+        "crowdinContext": "Instructions to contact administrator for access permissions"
+    },
+    "dashboard.message.unsupported_config.header": {
+        "text": "Comparison not supported",
+        "crowdinContext": "Error message header when comparison configuration is not supported"
+    },
+    "dashboard.message.unsupported_config.description": {
+        "text": "Change the period in the date filter to other than static period, or view the data by day.",
+        "crowdinContext": "Instructions for resolving unsupported comparison configuration"
+    },
+    "dashboard.recommendation.recommended_next_steps": {
+        "text": "RECOMMENDED NEXT STEPS",
+        "crowdinContext": "Heading for recommended next steps section"
+    },
+    "dashboard.recommendation.recommended_steps": {
+        "text": "RECOMMENDED STEPS",
+        "crowdinContext": "Heading for recommended steps section"
+    },
+    "dashboard.recommendation.turn_off": {
+        "text": "Turn off",
+        "crowdinContext": "Button to turn off recommendations feature"
+    },
+    "dashboard.trash.hint": {
+        "text": "Drop to remove",
+        "crowdinContext": "Drag and drop hint for removing items by dropping them"
+    },
+    "dashboard.create_metric_button": {
+        "text": "Create metric",
+        "crowdinContext": "Button text to create a new metric"
+    },
+    "shortcut.metric_over_time": {
+        "text": "See \"{decoratedTitle}\" <strong>trending</strong> over time",
+        "crowdinContext": "Shortcut option to view trending data over time. {decoratedTitle} is replaced with the metric name"
+    },
+    "shortcut.single_attribute": {
+        "text": "<strong>List</strong> of \"{decoratedTitle}\" values",
+        "crowdinContext": "Shortcut option to view list of attribute values. {decoratedTitle} is replaced with the attribute name"
+    },
+    "shortcut.computing_recommendation": {
+        "text": "<strong>Computing</strong> recommendation…",
+        "crowdinContext": "Status message shown while computing shortcut recommendations"
+    },
+    "shortcut.measure_cant_be_trended": {
+        "text": "This metric can't be trended.",
+        "crowdinContext": "Message explaining that a metric cannot be displayed as trending data"
+    },
+    "shortcut.single_metric": {
+        "text": "See \"{decoratedTitle}\"{br} as a <strong>column chart</strong>",
+        "crowdinContext": "Shortcut option to view metric as column chart. {decoratedTitle} is replaced with metric name, {br} is replaced with line break"
+    },
+    "gs.header.helpMenu.firstSteps": {
+        "text": "First steps in Analytical Designer",
+        "crowdinContext": "Help menu link to getting started guide for Analytical Designer"
+    },
+    "gs.header.helpMenu.visualizing": {
+        "text": "Visualizing your data",
+        "crowdinContext": "Help menu link to data visualization guide"
+    },
+    "gs.header.helpMenu.sorting": {
+        "text": "Sorting and filtering your results",
+        "crowdinContext": "Help menu link to sorting and filtering guide"
+    },
+    "gs.header.helpMenu.embedding": {
+        "text": "Embedding Analytical Designer into your app",
+        "crowdinContext": "Help menu link to embedding integration guide"
+    },
+    "gs.noData.noDataAvailable": {
+        "text": "No data available",
+        "crowdinContext": "Message displayed when no data is available to show"
+    },
+    "gs.visualizationsList.tabs.all": {
+        "text": "all",
+        "crowdinContext": "Tab label to show all visualizations in visualization list"
+    },
+    "gs.visualizationsList.tabs.my": {
+        "text": "created by me",
+        "crowdinContext": "Tab label to show only user's own visualizations in visualization list"
+    },
+    "error.workspace.not_found.message": {
+        "text": "Workspace `{projectId}` not found.",
+        "crowdinContext": "Error message when workspace cannot be found. {projectId} is replaced with the workspace identifier"
+    },
+    "error.workspace.not_found.description": {
+        "text": " ",
+        "crowdinContext": "Empty description for workspace not found error (intentionally blank)"
+    },
+    "error.workspace.access.message": {
+        "text": "Sorry, you don't have access to this workspace.",
+        "crowdinContext": "Error message when user lacks permission to access workspace"
+    },
+    "error.workspace.access.description": {
+        "text": "Ask workspace administrator to send you an invitation.",
+        "crowdinContext": "Instructions for resolving workspace access permission issue"
+    },
+    "error.no_workspace_available.message": {
+        "text": "No available workspace found.",
+        "crowdinContext": "Error message when no workspaces are available for the user"
+    },
+    "error.no_workspace_available.description": {
+        "text": " ",
+        "crowdinContext": "Empty description for no workspace available error (intentionally blank)"
+    },
+    "error.access.message": {
+        "text": "Sorry, you don't have access to this page.",
+        "crowdinContext": "Error message when user lacks permission to access a page"
+    },
+    "error.access.description": {
+        "text": "Ask your administrator to grant you permissions.",
+        "crowdinContext": "Instructions for resolving general access permission issue"
+    },
+    "error.general.workspace.message": {
+        "text": "Workspace `{projectId}` error",
+        "crowdinContext": "General error message for workspace issues. {projectId} is replaced with the workspace identifier"
+    },
+    "error.general.workspace.description": {
+        "text": " ",
+        "crowdinContext": "Empty description for general workspace error (intentionally blank)"
+    },
+    "error.unknown.message": {
+        "text": "Unknown error",
+        "crowdinContext": "Generic error message for unidentified or unexpected errors"
+    },
+    "error.unknown.description": {
+        "text": "We’re not quite sure what went wrong. Please try again later.",
+        "crowdinContext": "Instructions for users when encountering unknown errors"
+    },
+    "visualizationsList.noVisualizations": {
+        "text": "No visualizations saved.",
+        "crowdinContext": "Message displayed when no visualizations have been saved yet"
+    },
+    "visualizationsList.noVisualizationsFound": {
+        "text": "No visualization matched.",
+        "crowdinContext": "Message displayed when search or filter returns no visualization results"
+    },
+    "openReportPlaceholder": {
+        "text": "Open",
+        "crowdinContext": "Button label for opening a report"
+    },
+    "openReport.menu.delete": {
+        "text": "Delete",
+        "crowdinContext": "Menu action label to delete a visualization from the open-report picker."
+    },
+    "dialogs.openReportConfirmation.headline": {
+        "text": "Discard unsaved changes?",
+        "crowdinContext": "Dialog title asking user to confirm discarding unsaved changes when opening a report"
+    },
+    "dialogs.openReportConfirmation.description": {
+        "text": "All unsaved changes will be lost",
+        "crowdinContext": "Warning message about losing unsaved changes when opening a report"
+    },
+    "dialogs.openReportConfirmation.confirm": {
+        "text": "Discard changes",
+        "crowdinContext": "Button label to confirm discarding changes and proceed"
+    },
+    "dialogs.openReportConfirmation.cancel": {
+        "text": "Cancel",
+        "crowdinContext": "Button label to cancel the operation and keep changes"
+    },
+    "dialogs.deleteReportConfirmation.headline": {
+        "text": "Delete visualization?",
+        "crowdinContext": "Dialog title when deleting visualization"
+    },
+    "dialogs.deleteReportConfirmation.description": {
+        "text": "The visualization <strong>{deletedReportTitle}</strong> will be permanently deleted.",
+        "crowdinContext": "Warning message about permanent deletion. {deletedReportTitle} is replaced with the visualization name"
+    },
+    "dialogs.deleteReportConfirmation.confirm": {
+        "text": "Delete",
+        "crowdinContext": "Button label to confirm deletion of visualization"
+    },
+    "dialogs.deleteReportConfirmation.cancel": {
+        "text": "Cancel",
+        "crowdinContext": "Button label to cancel deletion of visualization"
+    },
+    "dialogs.deleteReportConfirmation.usage": {
+        "text": "The visualization is used on <strong>{dashboardsCount} {dashboardsCount, plural, one {dashboard} other {dashboards}}</strong>.",
+        "crowdinContext": "Shows number of dashboards using the visualization. Example: 'used on 5 dashboards' or 'used on 1 dashboard'"
+    },
+    "dialogs.deleteReportConfirmation.usage.checking": {
+        "text": "Checking where the visualization is used.",
+        "crowdinContext": "Loading message while checking visualization usage"
+    },
+    "dialogs.deleteReportConfirmation.usage.showMore": {
+        "text": "Show more",
+        "crowdinContext": "Link to expand and show additional visualization usage information"
+    },
+    "dialogs.deleteReportConfirmation.usage.showLess": {
+        "text": "Show less",
+        "crowdinContext": "Link to collapse and show fewer visualization usage details"
+    },
+    "dialogs.deleteReportConfirmation.usage.notUsed": {
+        "text": "The visualization is not used on any dashboard.",
+        "crowdinContext": "Message indicating visualization is not currently used on any dashboards"
+    },
+    "dialogs.deleteReportConfirmation.usage.inaccessibleDashboards": {
+        "text": "and <b>{count} more</b> not shared with you.",
+        "crowdinContext": "Message about additional dashboards user cannot access. Example: 'and 2 more not shared with you'"
+    },
+    "dialogs.deleteReportConfirmation.usage.inaccessibleDashboardsOnly": {
+        "text": "{count, plural, one {Dashboard is} other {Dashboards are}} not shared with you.",
+        "crowdinContext": "Message when all dashboards are inaccessible. Example: 'Dashboard is not shared with you' or 'Dashboards are not shared with you'"
+    },
+    "dialogs.usage.inaccessibleDashboards": {
+        "text": "and <b>{count} more</b> not shared with you",
+        "crowdinContext": "Message about additional dashboards user cannot access. Example: 'and 2 more not shared with you'"
+    },
+    "dialogs.usage.inaccessibleDashboardsOnly": {
+        "text": "{count} {count, plural, one {dashboard} other {dashboards}} not shared with you",
+        "crowdinContext": "Message when user has no access to any dashboards. Example: '1 dashboard not shared with you' or '42 dashboards not shared with you'"
+    },
+    "dialogs.deleteReportConfirmation.deleteProhibited": {
+        "text": "The visualization <strong>{deletedReportTitle}</strong> cannot be deleted because it is used on some dashboards. To delete this visualization, remove it from all dashboards first.",
+        "crowdinContext": "Error message when visualization cannot be deleted due to usage. {deletedReportTitle} is replaced with the visualization name"
+    },
+    "dialogs.savingUntitledReportConfirmation.headline": {
+        "text": "Name your visualization",
+        "crowdinContext": "Dialog title prompting user to name their visualization"
+    },
+    "dialogs.savingUntitledReportConfirmation.description": {
+        "text": "Give your new visualization a new descriptive name, so it's easier to find it later on.",
+        "crowdinContext": "Explanation encouraging users to provide descriptive names for their visualizations"
+    },
+    "dialogs.savingUntitledReportConfirmation.placeholder": {
+        "text": "Untitled visualization",
+        "crowdinContext": "Default placeholder text for visualization name input field"
+    },
+    "dialogs.savingUntitledReportConfirmation.confirm": {
+        "text": "Save",
+        "crowdinContext": "Button label to confirm saving the visualization with given name"
+    },
+    "dialogs.savingUntitledReportConfirmation.cancel": {
+        "text": "Cancel",
+        "crowdinContext": "Button label to cancel saving and return to previous state"
+    },
+    "dialogs.saveReportFromKD.headline": {
+        "text": "Visualization is being used on multiple dashboards",
+        "crowdinContext": "Dialog title when saving a visualization that exists on multiple dashboards"
+    },
+    "dialogs.saveReportFromKD.radio.saveOnAllDashboard": {
+        "text": "Save visualization on all dashboards",
+        "crowdinContext": "Radio button option to update visualization across all dashboards"
+    },
+    "dialogs.saveReportFromKD.radio.createCopyOfTheInsight": {
+        "text": "Create copy of the visualization and save it on this dashboard",
+        "crowdinContext": "Radio button option to create separate copy for current dashboard only"
+    },
+    "dialogs.saveReportFromKD.name": {
+        "text": "Name:",
+        "crowdinContext": "Label for visualization name input field"
+    },
+    "dialogs.saveReportFromKD.viewUsageDashboard": {
+        "text": "View usage ({dashboardCount} {dashboardCount, plural, one {dashboard} other {dashboards}})",
+        "crowdinContext": "Link to view dashboard usage information. Example: 'View usage (3 dashboards)' or 'View usage (1 dashboard)'"
+    },
+    "dialogs.saveReportFormKD.reportNamePlaceholder": {
+        "text": "Copy of {name}",
+        "crowdinContext": "Default name format for visualization copies. {name} is replaced with original visualization name"
+    },
+    "create.copy": {
+        "text": "Create copy",
+        "crowdinContext": "Button label to create a copy of visualization"
+    },
+    "export.defaultTitle": {
+        "text": "Untitled visualization",
+        "crowdinContext": "Default title used when exporting visualizations without names"
+    },
+    "configurationPanel.title": {
+        "text": "Configuration",
+        "crowdinContext": "Title for the configuration panel section"
+    },
+    "bucket.title.measureSequenceNumber": {
+        "text": "M{measureSequenceNumber}",
+        "crowdinContext": "Measure identifier in bucket title. For example, if measureSequenceNumber is 1, the title will be 'M1'."
+    },
+    "bucket.subtitle.masterMeasureSequenceNumber": {
+        "text": "from M{masterMeasureSequenceNumber};",
+        "crowdinContext": "Shows source measure for derived measures. Example: 'from M1'."
+    },
+    "bucket.subtitle.singleOperandSequenceNumber": {
+        "text": "from M{operandMeasureSequenceNumber};",
+        "crowdinContext": "Shows single operand for arithmetic measure when second operand not set. Example: 'from M1;'"
+    },
+    "bucket.subtitle.twoOperandsSequenceNumber": {
+        "text": "from M{firstOperandMeasureSequenceNumber}, M{secondOperandMeasureSequenceNumber};",
+        "crowdinContext": "Shows both operands for arithmetic measure. Example: 'from M1, M2'. Placeholders are replaced with measure numbers"
+    },
+    "arithmeticMeasureOperandTooltip.sectionTitle.example": {
+        "text": "example",
+        "crowdinContext": "Section title in arithmetic measure operator tooltip showing usage examples"
+    },
+    "arithmeticMeasureOperandTooltip.sectionTitle.formula": {
+        "text": "formula",
+        "crowdinContext": "Section title in arithmetic measure operator tooltip showing mathematical formula"
+    },
+    "arithmeticMeasureOperandTooltip.multiplication.title": {
+        "text": "Product (Multiplication)",
+        "crowdinContext": "Title for multiplication arithmetic operator in tooltip"
+    },
+    "arithmeticMeasureOperandTooltip.multiplication.example": {
+        "text": "Sales = Price per unit × Volume",
+        "crowdinContext": "Example demonstrating multiplication operation in arithmetic measures"
+    },
+    "arithmeticMeasureOperandTooltip.multiplication.formula": {
+        "text": "A × B",
+        "crowdinContext": "Mathematical formula for multiplication operation showing operands A and B"
+    },
+    "arithmeticMeasureOperandTooltip.change.title": {
+        "text": "Change",
+        "crowdinContext": "Title for change arithmetic operator in tooltip"
+    },
+    "arithmeticMeasureOperandTooltip.change.example": {
+        "text": "Sales change this year compared to last year = (This year sales - Last year sales) / Last year sales",
+        "crowdinContext": "Example demonstrating change operation calculation in arithmetic measures"
+    },
+    "arithmeticMeasureOperandTooltip.change.formula": {
+        "text": "(A - B) / B or (A / B) - 1",
+        "crowdinContext": "Mathematical formulas for change operation showing two equivalent calculation methods"
+    },
+    "filter_bar_add_filter.tooltip": {
+        "text": "Add filter",
+        "crowdinContext": "Tooltip for add filter button in filter bar"
+    },
+    "filter_bar_add_filter.menu.title": {
+        "text": "Add filter for",
+        "crowdinContext": "Title of add filter dropdown menu"
+    },
+    "filter_bar_add_filter.menu.date": {
+        "text": "Date",
+        "crowdinContext": "Menu item label for adding a date filter"
+    },
+    "filter_bar_add_filter.menu.attribute": {
+        "text": "Attribute values",
+        "crowdinContext": "Menu item label for adding attribute value filters"
+    },
+    "filter_bar_add_filter.menu.metric": {
+        "text": "Metric values",
+        "crowdinContext": "Menu item label for adding metric value filters"
+    },
+    "filter_bar_add_filter.menu.ranking": {
+        "text": "Top/bottom values",
+        "crowdinContext": "Menu item label for adding ranking filters"
+    },
+    "filter_bar_add_filter.menu.parameter": {
+        "text": "Parameter",
+        "crowdinContext": "Menu item label for adding a parameter control"
+    },
+    "filter_bar_add_filter.parameters.title": {
+        "text": "Select parameters",
+        "crowdinContext": "Header title of the workspace parameter picker dialog"
+    },
+    "filter_bar_parameter.reset_warning.tooltip": {
+        "text": "The original value is out of range, so the default is applied until you set a valid value.",
+        "crowdinContext": "Tooltip on a parameter filter button whose saved value is outside the parameter's allowed range; the workspace default is executed until the user sets a valid value."
+    },
+    "filter_bar_dropdown.ranking_filter.item.disabled_with_measure_value_filter.tooltip": {
+        "text": "Top/bottom values are not supported in combination with Metric value filters. To enable Top/bottom values, disable all the Metric value filters first.",
+        "crowdinContext": "Tooltip explaining why ranking filter is disabled when metric value filters are active"
+    },
+    "filter_bar_dropdown.ranking_filter.item.disabled_existing.tooltip": {
+        "text": "Only one Top/bottom values filter can be added.",
+        "crowdinContext": "Tooltip explaining why ranking filter is disabled when it already exists"
+    },
+    "filter_bar_dropdown.ranking_filter.item.disabled_not_supported.tooltip": {
+        "text": "Top/bottom values are not supported.",
+        "crowdinContext": "Tooltip explaining why ranking filter is disabled when backend does not support ranking filters"
+    },
+    "filter_bar_dropdown.ranking_filter.item.disabled_missing_items.tooltip": {
+        "text": "Top/bottom values require at least one metric and one attribute in the visualization.",
+        "crowdinContext": "Tooltip explaining why ranking filter is disabled when the visualization has no metrics or attributes"
+    },
+    "ranking_filter.button.title_top_short": {
+        "text": "<strong>Top {value}</strong> records",
+        "crowdinContext": "Short title for top ranking filter without a granularity attribute. Example: 'Top 3 records'. {value} is replaced with the number"
+    },
+    "ranking_filter.button.title_bottom_short": {
+        "text": "<strong>Bottom {value}</strong> records",
+        "crowdinContext": "Short title for bottom ranking filter without a granularity attribute. Example: 'Bottom 5 records'. {value} is replaced with the number"
+    },
+    "ranking_filter.button.title_top_long": {
+        "text": "<strong>Top {value}</strong> out of <strong>{attribute}</strong>",
+        "crowdinContext": "Full title for top ranking filter with attribute name. Example: 'Top 10 out of Product'. {value} is replaced with number, {attribute} with attribute name"
+    },
+    "ranking_filter.button.title_bottom_long": {
+        "text": "<strong>Bottom {value}</strong> out of <strong>{attribute}</strong>",
+        "crowdinContext": "Full title for bottom ranking filter with attribute name. Example: 'Bottom 3 out of Region'. {value} is replaced with number, {attribute} with attribute name"
+    },
+    "ranking_filter.button.configuration": {
+        "text": "based on {measure}",
+        "crowdinContext": "Shows which measure ranking is based on. Example: 'based on Sum of amount'. {measure} is replaced with measure name"
+    },
+    "ranking_filter.button.configuration_without_attribute": {
+        "text": "by {measure}",
+        "crowdinContext": "Shows which measure the ranking is by, when no granularity attribute is set. Example: 'by # of Orders'. {measure} is replaced with measure name"
+    },
+    "ranking_filter.attribute_dropdown.measure_value_filter_used": {
+        "text": "To enable this option, do not filter the visualization by metric value.",
+        "crowdinContext": "Tooltip explaining conflict between metric value filter and ranking filter"
+    },
+    "measure_value_filter.configuration.withDimensionality": {
+        "text": "{condition} for each {dimensionality}",
+        "crowdinContext": "Filter button value with dimensionality. Example: '> 300 for each Product & Brand'. {condition} is replaced with filter condition (e.g. '> 300'), {dimensionality} is replaced with attribute names (e.g. 'Product & Brand'). Translators may reorder placeholders as needed for natural language flow."
+    },
+    "bucket_notification.body.hiddenItem": {
+        "text": "Unsupported item is hidden",
+        "crowdinContext": "Notification when item is hidden due to visualization type change"
+    },
+    "bucket_notification.body.hiddenItems": {
+        "text": "Unsupported items are hidden",
+        "crowdinContext": "Notification when multiple items are hidden due to visualization type change"
+    },
+    "bucket_notification.body.removedItem": {
+        "text": "Dependent item was also removed",
+        "crowdinContext": "Notification when dependent item is automatically removed"
+    },
+    "bucket_notification.body.removedItems": {
+        "text": "Dependent items were also removed",
+        "crowdinContext": "Notification when multiple dependent items are automatically removed"
+    },
+    "bucket_notification.tooltip.removedItem": {
+        "text": "Removed item:",
+        "crowdinContext": "Tooltip title for list showing removed item"
+    },
+    "bucket_notification.tooltip.removedItems": {
+        "text": "Removed items:",
+        "crowdinContext": "Tooltip title for list showing removed items"
+    },
+    "bucket_notification.tooltip.hiddenItem": {
+        "text": "Hidden item:",
+        "crowdinContext": "Tooltip title for list showing hidden item"
+    },
+    "bucket_notification.tooltip.hiddenItems": {
+        "text": "Hidden items:",
+        "crowdinContext": "Tooltip title for list showing hidden items"
+    },
+    "bucket_notification.tooltip.items.measures": {
+        "text": "metrics ({value})",
+        "crowdinContext": "Tooltip item showing number of affected metrics. Example: 'metrics (2)'. {value} is replaced with the count"
+    },
+    "bucket_notification.tooltip.items.attributes": {
+        "text": "attributes ({value})",
+        "crowdinContext": "Tooltip item showing number of affected attributes. Example: 'attributes (2)'. {value} is replaced with the count"
+    },
+    "bucket_notification.tooltip.items.measureValueFilters": {
+        "text": "metric value filters ({value})",
+        "crowdinContext": "Tooltip item showing number of affected metric value filters. Example: 'metric value filters (2)'. {value} is replaced with the count"
+    },
+    "bucket_notification.tooltip.items.rankingFilter": {
+        "text": "top/bottom filter",
+        "crowdinContext": "Tooltip item indicating affected ranking filter"
+    },
+    "insightAccess.share": {
+        "text": "Share",
+        "crowdinContext": "Fallback label of the access button next to the visualization title, shown before the access level is known"
+    },
+    "insightAccess.private": {
+        "text": "Private",
+        "crowdinContext": "Label of the access button next to the visualization title when nobody but its owner has access"
+    },
+    "insightAccess.private.tooltip": {
+        "text": "Only you have access.",
+        "crowdinContext": "Tooltip of the access button when the visualization has no grantees and is not shared with the workspace"
+    },
+    "insightAccess.shared": {
+        "text": "Shared",
+        "crowdinContext": "Label of the access button next to the visualization title when named users or groups have access"
+    },
+    "insightAccess.shared.tooltip": {
+        "text": "You and the people or groups added have access.",
+        "crowdinContext": "Tooltip of the access button when the visualization is shared with named users or groups"
+    },
+    "insightAccess.workspace": {
+        "text": "Workspace",
+        "crowdinContext": "Label of the access button next to the visualization title when every workspace member has access"
+    },
+    "insightAccess.workspace.tooltip": {
+        "text": "All workspace members have access to the visualization.",
+        "crowdinContext": "Tooltip of the access button when the visualization is shared with all workspace members"
+    },
+    "insightAccess.ariaLabel": {
+        "text": "Access level: {level}. Click to manage sharing.",
+        "crowdinContext": "Screen reader label of the access button. {level} is the current level, e.g. Private"
+    },
+    "insightAccess.applyFailed": {
+        "text": "The visualization was saved, but its sharing could not be applied.",
+        "crowdinContext": "Error toast when a new visualization was created but the sharing set up before saving could not be written"
+    },
+    "insight.usages.button.label": {
+        "text": "Used on {dashboardsCount} {dashboardsCount, plural, one {dashboard} other {dashboards}}",
+        "crowdinContext": "Tooltip and accessible label of the button showing on how many dashboards the visualization is used. {dashboardsCount} is replaced with the count"
+    },
+    "insight.usages.overlay.header": {
+        "text": "visualization used on",
+        "crowdinContext": "Header for overlay showing visualization usage locations"
+    },
+    "dashboard.editing.now": {
+        "text": "Editing now",
+        "crowdinContext": "Status indicator showing dashboard is currently being edited"
+    },
+    "adAlertDialog.unsaved.changes.leave.anyway": {
+        "text": "Leave anyway",
+        "crowdinContext": "Button to leave page despite having unsaved changes"
+    },
+    "adAlertDialog.unsaved.changes.headline": {
+        "text": "Your changes are not saved",
+        "crowdinContext": "Warning dialog title about unsaved changes"
+    },
+    "adAlertDialog.unsaved.changes.message": {
+        "text": "If you leave now, all changes will be lost.",
+        "crowdinContext": "Warning message about losing unsaved changes"
+    },
+    "dataSampler.checkbox.label": {
+        "text": "Data sampling",
+        "crowdinContext": "Label for checkbox to enable data sampling feature"
+    },
+    "dataSampler.tooltip": {
+        "text": "Use a random sample of rows to increase the computation speed. <b>This setting will be temporarily enabled only for the current analysis.</b>",
+        "crowdinContext": "Tooltip explaining data sampling feature and its temporary nature"
+    },
+    "dataSampler.dropdown.button.label": {
+        "text": "set to",
+        "crowdinContext": "Label prefix for data sampling percentage setting. Example: 'set to 0.005%'"
+    },
+    "dataSampler.dropdown.button.label.disabled": {
+        "text": "turned off",
+        "crowdinContext": "Label showing data sampling is disabled"
+    },
+    "dataSampler.dropdown.body.header": {
+        "text": "Data Sampling",
+        "crowdinContext": "Header for data sampling dropdown configuration"
+    },
+    "dataSampler.dropdown.body.content.input": {
+        "text": "Sample Size:",
+        "crowdinContext": "Label for data sampling percentage input field. Example: 'Sample Size: 5%'"
+    },
+    "dataSampler.dropdown.body.content.input.validation": {
+        "text": "The size must be a number greater than 0.0 and lower than 100.0.",
+        "crowdinContext": "Validation error message for invalid data sampling percentage"
+    },
+    "dataSampler.dropdown.body.content.message": {
+        "text": "This setting will be temporarily enabled only for the current analysis.",
+        "crowdinContext": "Information about temporary nature of data sampling setting"
+    },
+    "dataSampler.dropdown.body.content.message.dismiss": {
+        "text": "Dismiss",
+        "crowdinContext": "Button to dismiss data sampling information message"
+    },
+    "chartSort.sortConfigButton.label": {
+        "text": "sort",
+        "crowdinContext": "Button label for chart sorting configuration"
+    },
+    "chartSort.sortConfigButton.value.disabled": {
+        "text": "N/A",
+        "crowdinContext": "Value shown when chart sorting is not available"
+    },
+    "chartSort.sortConfigButton.value.mixed": {
+        "text": "Mixed",
+        "crowdinContext": "Value shown when multiple different sort types are applied to chart"
+    },
+    "embedInsightDialog.code.copied.success": {
+        "text": "The code was copied to your clipboard.",
+        "crowdinContext": "Success message after copying embedding code to clipboard"
+    },
+    "embedInsightDialog.embed.menu.title": {
+        "text": "Embed visualization",
+        "crowdinContext": "Embed as a reference to a saved visualization in a generic GD.UI react component. Any future changes to the visualization (such as visualization type, metrics, attributes) will be reflected in the embedded version."
+    },
+    "embedInsightDialog.embed.analytical.designer.menu.title": {
+        "text": "How to embed this application",
+        "crowdinContext": "Menu item linking to documentation for embedding Analytical Designer application"
+    },
+    "embedInsightDialog.embed.disable.message.empty.report": {
+        "text": "Empty visualization cannot be embedded.",
+        "crowdinContext": "Message explaining why embedding is disabled (empty visualization)"
+    },
+    "catalog.clipboard.copy.id": {
+        "text": "ID",
+        "crowdinContext": "Button label to copy item ID to clipboard"
+    },
+    "catalog.clipboard.copy.id.tooltip": {
+        "text": "Copy to clipboard",
+        "crowdinContext": "Tooltip for copy ID button"
+    },
+    "catalog.clipboard.copy.id.message": {
+        "text": "The ID was copied to your clipboard.",
+        "crowdinContext": "Success message after copying ID to clipboard"
+    },
+    "report.description.add": {
+        "text": "Add description…",
+        "crowdinContext": "Placeholder text for adding visualization description"
+    },
+    "error_raw_data_area.header": {
+        "text": "Raw error response",
+        "crowdinContext": "Header for technical error details section"
+    },
+    "error_raw_data_area.header.tooltip": {
+        "text": "The raw error response shows back-end information about the error that has occurred. It is visible only to the administrators.",
+        "crowdinContext": "Tooltip explaining raw error response section (admin-only)"
+    },
+    "drillDown.item.in": {
+        "text": "in",
+        "crowdinContext": "Preposition used in drill-down item labels. Example: 'item in group 1'"
+    },
+    "messages.showMore": {
+        "text": "Show more",
+        "crowdinContext": "Button text to expand collapsed content"
+    },
+    "messages.showLess": {
+        "text": "Show less",
+        "crowdinContext": "Button text to collapse expanded content"
+    },
+    "apply": {
+        "text": "Apply",
+        "crowdinContext": "Button label to confirm and apply changes or selections in a dialog or form."
+    },
+    "cancel": "Cancel",
+    "dialogs.export.submit": {
+        "text": "Export",
+        "crowdinContext": "Start to export data to file"
+    },
+    "empty_value": {
+        "text": "empty value",
+        "crowdinContext": "Text displayed when a data field has no value. Used throughout the application to represent null or undefined values in data displays and tables."
+    },
+    "gs.list.except": {
+        "text": "except",
+        "crowdinContext": "Used in filter expressions to indicate exclusion, e.g., 'All except [selected items]'. Appears in filter components."
+    },
+    "gs.list.only": {
+        "text": "Only",
+        "crowdinContext": "Label used in filter expressions to indicate exclusive selection, e.g., 'Only Product A'."
+    },
+    "input.unit.percent": "Value in percent",
+    "loading": "Loading…",
+    "measureNumberFormat.numberFormat.preset.inherit": {
+        "text": "Inherit",
+        "crowdinContext": "Preset name for number format that inherits formatting from workspace settings or parent metric"
+    },
+    "save": {
+        "text": "Save",
+        "crowdinContext": "Label of save button or visual element"
+    }
+}

@@ -14,6 +14,9 @@ import {
 import { parameterSummary } from "./metadata/parameters.js";
 import { MaqlMetric } from "./parseMaql.js";
 
+/**
+ * @internal
+ */
 export type ObjectContent = {
     id: string;
     ref: ObjRef;
@@ -23,6 +26,9 @@ export type ObjectContent = {
     format: string;
     isLocked?: boolean;
 };
+/**
+ * @internal
+ */
 export type HoverWithData = Hover & {
     object: ObjectContent | null;
 };

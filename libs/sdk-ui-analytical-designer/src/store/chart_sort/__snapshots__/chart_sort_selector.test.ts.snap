@@ -1,0 +1,39 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`chart sort selector > getAppliedSort > should return applied sort from sort state 1`] = `
+[
+  {
+    "attributeSortItem": {
+      "aggregation": "sum",
+      "attributeIdentifier": "area1",
+      "direction": "asc",
+    },
+  },
+]
+`;
+
+exports[`chart sort selector > getSortConfig > should return sort config from sort state 1`] = `
+{
+  "availableSorts": [
+    {
+      "attributeSort": {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": {
+        "localIdentifier": "a1",
+      },
+    },
+  ],
+  "defaultSort": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "attr1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;

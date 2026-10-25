@@ -15,11 +15,17 @@ import { type FormField } from "../Form/data.js";
 import { type CancelData, type SaveData } from "../hooks/useEditCallbacks.js";
 import { type IMeasureDef, type IMeasureSetting } from "../metric/metricHelpers.js";
 
+/**
+ * @internal
+ */
 export enum SaveNameMode {
     save = "save",
     saveAsNew = "save_as_new",
 }
 
+/**
+ * @internal
+ */
 export enum CancelMode {
     Continue = "continue",
     Cross = "cross",

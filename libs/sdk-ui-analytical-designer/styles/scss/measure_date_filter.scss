@@ -1,0 +1,105 @@
+// (C) 2007-2026 GoodData Corporation
+@use "variables";
+
+.adi-metric-date-filter-picker {
+    .adi-metric-date-filter-presets {
+        overflow: auto;
+        overscroll-behavior: contain;
+        min-height: 195px;
+
+        .gd-date-preset-tabs {
+            padding: 10px 10px 0;
+        }
+    }
+}
+
+.adi-metric-date-filter-content {
+    position: relative;
+}
+
+.adi-metric-date-filter-loading-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-color: var(--gd-palette-complementary-0, #fff);
+
+    .dropdown-loading {
+        height: 100%;
+    }
+}
+
+.button-dropdown.gd-button-link.metric-date-filter-button {
+    font-size: 12px;
+    position: relative;
+    display: block;
+    text-decoration: none;
+    transition:
+        all 0.25s ease-in-out,
+        padding 0s;
+
+    &.gd-icon-right {
+        padding-right: 5px;
+        padding-left: 24px;
+
+        &.is-set {
+            padding-right: 18px;
+        }
+    }
+
+    .gd-button-text {
+        white-space: nowrap;
+    }
+
+    &::before {
+        content: "";
+        left: 3px;
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        margin-top: -1px;
+        margin-right: 6px;
+        font-family: Indigo, sans-serif;
+        font-size: 12px;
+        text-align: left;
+        vertical-align: bottom;
+        background: url("@gooddata/sdk-ui-analytical-designer/styles/images/date.svg") no-repeat center;
+    }
+
+    &.is-active {
+        &::before {
+            top: 50%;
+        }
+    }
+
+    &::after {
+        display: none;
+    }
+
+    &.is-set {
+        &::after {
+            position: absolute;
+            top: 50%;
+            right: 5px;
+            bottom: 0;
+            display: block;
+            width: auto;
+            height: 18px;
+            margin-left: 10px;
+            padding-top: inherit;
+            padding-bottom: inherit;
+            font-size: inherit;
+            line-height: inherit;
+            color: #94a1ad;
+            transform: translateY(-50%);
+        }
+    }
+}
+
+.adi-bucket-item.is-dragging {
+    .button-dropdown.gd-button-link.metric-date-filter-button {
+        &::before {
+            background: url("@gooddata/sdk-ui-analytical-designer/styles/images/date-unrelated.svg") no-repeat
+                center;
+        }
+    }
+}

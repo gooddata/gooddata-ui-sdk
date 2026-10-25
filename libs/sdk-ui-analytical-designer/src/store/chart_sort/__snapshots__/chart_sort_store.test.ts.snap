@@ -1,0 +1,62 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Chart Sort store > should reset chart store on application reset 1`] = `
+{
+  "appliedSort": [],
+  "sortConfig": {
+    "availableSorts": [],
+    "defaultSort": [],
+    "disabled": false,
+    "supported": false,
+  },
+}
+`;
+
+exports[`Chart Sort store > should store chart sort 1`] = `
+{
+  "appliedSort": [],
+  "sortConfig": {
+    "availableSorts": [
+      {
+        "attributeSort": {
+          "areaSortEnabled": true,
+          "normalSortEnabled": true,
+        },
+        "itemId": {
+          "localIdentifier": "a1",
+        },
+      },
+    ],
+    "defaultSort": [
+      {
+        "attributeSortItem": {
+          "attributeIdentifier": "attr1",
+          "direction": "asc",
+        },
+      },
+    ],
+    "disabled": false,
+    "disabledExplanation": undefined,
+    "supported": true,
+  },
+}
+`;
+
+exports[`Chart Sort store > should store current chart sort 1`] = `
+{
+  "appliedSort": [
+    {
+      "attributeSortItem": {
+        "attributeIdentifier": "attr1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "sortConfig": {
+    "availableSorts": [],
+    "defaultSort": [],
+    "disabled": false,
+    "supported": false,
+  },
+}
+`;

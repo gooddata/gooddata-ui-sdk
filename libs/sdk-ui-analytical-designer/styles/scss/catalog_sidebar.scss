@@ -1,0 +1,138 @@
+// (C) 2026 GoodData Corporation
+
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+$slide-duration: 0.3s;
+$header-height: 48px;
+
+// The mode blocks repeat .adi-editor to outrank the layout variant modifiers regardless of stylesheet order.
+
+// The catalog keeps its expanded width and is clipped while the kit column slides.
+.adi-editor.adi-editor--catalog-sidebar {
+    > .gd-ui-kit-resizable-sidebar {
+        --resizable-sidebar-slide-duration: #{$slide-duration};
+
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+
+        // above the buckets panel so the handle stays hoverable; the kit lifts it higher while in use
+        &:not(.gd-ui-kit-resizable-sidebar--dragging, :has(.gd-ui-kit-resizable-sidebar__handle:focus)) {
+            z-index: 101;
+        }
+    }
+
+    // the kit lays the trigger out for a flex row; here it overlays the padding of the buckets panel
+    > .gd-ui-kit-resizable-sidebar__expand-trigger {
+        position: absolute;
+        z-index: 101;
+        top: 0;
+        left: 0;
+        height: 100%;
+        margin: 0;
+    }
+
+    .adi-catalog-section {
+        position: absolute;
+        inset: 0 1px 0 0;
+        // clip, not hidden: focusing the toggle while the column is still narrow must not scroll the catalog
+        overflow: clip;
+        width: auto;
+        height: auto;
+    }
+
+    .adi-catalog-panel,
+    .adi-trash-panel {
+        width: calc(var(--adi-catalog-expanded-width) - 1px);
+    }
+
+    // sized for the default catalog width, these keep their default geometry and follow a wider catalog
+    .gd-filter-tab-icon {
+        flex-grow: 1;
+    }
+
+    .adi-catalog-info-panel {
+        right: 23px;
+        left: 0;
+        width: auto;
+    }
+
+    .adi-catalog-panel footer::before {
+        right: 14px;
+        left: 15px;
+        width: auto;
+    }
+
+    .adi-editor-header,
+    .adi-editor-main {
+        transition: left $slide-duration;
+    }
+}
+
+// The catalog column spans the full height with its toggle on top; the header starts next to it.
+.adi-editor.adi-editor--catalog-collapsible {
+    .adi-catalog-panel,
+    .adi-trash-panel {
+        top: $header-height;
+    }
+
+    .adi-catalog-panel {
+        border-top: none;
+
+        .adi-catalog-search {
+            margin-top: 0;
+        }
+    }
+
+    .adi-editor-header {
+        left: calc(var(--adi-catalog-width) - 1px);
+        padding-left: 10px;
+        border-left: 1px solid kit-variables.$gd-border-color;
+
+        .left-actions-wrapper {
+            margin-left: 0;
+        }
+    }
+}
+
+.adi-catalog-sidebar-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    width: calc(var(--adi-catalog-expanded-width) - 1px);
+    height: $header-height;
+    padding: 0 10px;
+}
+
+.adi-catalog-sidebar-restore {
+    display: flex;
+    flex: 0 0 auto;
+    animation: adi-catalog-sidebar-restore-in 0.2s ($slide-duration - 0.2s) both;
+}
+
+@keyframes adi-catalog-sidebar-restore-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .adi-editor.adi-editor--catalog-sidebar {
+        .adi-editor-header,
+        .adi-editor-main {
+            transition: none;
+        }
+    }
+
+    .adi-catalog-sidebar-restore {
+        animation: none;
+    }
+}

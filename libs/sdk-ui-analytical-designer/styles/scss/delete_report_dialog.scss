@@ -1,0 +1,102 @@
+// (C) 2021-2022 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+$dialog-width: 420px;
+$max-list-height: 120px;
+
+.gd-delete-report-dialog {
+    width: $dialog-width;
+}
+
+.gd-delete-report-dialog-usage {
+    padding-top: 15px;
+
+    .gd-message {
+        padding: 0;
+        a {
+            text-decoration: none;
+        }
+
+        &.warning {
+            width: 100%;
+        }
+    }
+
+    .gd-delete-report-dialog-usage-more {
+        cursor: pointer;
+        text-decoration: underline;
+        margin-left: 5px;
+    }
+
+    .gd-delete-report-dialog-usage-list-wrapper {
+        border-top: 1px solid rgba(kit-variables.$gd-color-warning-text, 0.3);
+        padding: 0 8px 0 10px;
+    }
+
+    .gd-delete-report-dialog-no-usage,
+    .gd-delete-report-dialog-usage-list-header {
+        padding: 4px 8px 4px 10px;
+    }
+
+    .gd-delete-report-dialog-usage-list {
+        max-height: $max-list-height;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        margin-bottom: 2px;
+        margin-top: 6px;
+        padding-inline-start: 25px;
+    }
+
+    .gd-delete-report-dialog-usage-inaccessible {
+        padding: 4px 0;
+    }
+
+    .gd-delete-report-dialog-usage-list-item {
+        display: flex;
+        align-items: center;
+        padding-right: 6px;
+
+        .gd-delete-report-dialog-usage-list-item-link,
+        .gd-delete-report-dialog-usage-list-item-text {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .gd-delete-report-dialog-usage-list-item-icon {
+            display: none;
+            flex: 0 0 auto;
+            width: 10px;
+            height: 10px;
+            margin-left: 5px;
+            background: left center / contain no-repeat
+                url("@gooddata/sdk-ui-analytical-designer/styles/images/icon-external-link-warning.svg");
+        }
+
+        &:hover {
+            .gd-delete-report-dialog-usage-list-item-link {
+                cursor: pointer;
+                text-decoration: underline;
+            }
+
+            .gd-delete-report-dialog-usage-list-item-icon {
+                display: inline-flex;
+            }
+        }
+    }
+}
+
+.gd-kd-save-report-dialog-usage-inaccessible {
+    color: kit-variables.$default-gd-color-link;
+}
+
+.gd-delete-report-dialog-usage-loading {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 20px 0 3px;
+
+    .gd-delete-report-dialog-usage-loading-message {
+        padding-left: 10px;
+    }
+}

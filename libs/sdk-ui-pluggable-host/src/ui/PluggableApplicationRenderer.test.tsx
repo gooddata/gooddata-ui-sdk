@@ -18,6 +18,7 @@ import {
     aiAssistantContextChanged,
     aiAssistantPublisherDocumentSaved,
     openAiAssistantRequested,
+    openPricingDialogRequested,
 } from "@gooddata/sdk-pluggable-application-model";
 
 import { type AppSecurityFailure } from "../loader/appSecurityValidation.js";
@@ -130,6 +131,7 @@ function renderer(options: {
     onAiAssistantPublisherDocumentSaved?: ComponentProps<
         typeof PluggableApplicationRenderer
     >["onAiAssistantPublisherDocumentSaved"];
+    onOpenPricingDialog?: () => void;
 }): ReactElement {
     return (
         <HostIntlProvider locale="en-US">
@@ -141,6 +143,7 @@ function renderer(options: {
                 onOpenAiAssistant={options.onOpenAiAssistant}
                 onAiAssistantContext={options.onAiAssistantContext}
                 onAiAssistantPublisherDocumentSaved={options.onAiAssistantPublisherDocumentSaved}
+                onOpenPricingDialog={options.onOpenPricingDialog}
             />
         </HostIntlProvider>
     );
@@ -224,6 +227,25 @@ describe("PluggableApplicationRenderer", () => {
             payload.effort,
             payload.conversationId,
         );
+    });
+
+    it("forwards a pricing dialog open request to the host", async () => {
+        const emitted: { onEvent?: (event: IPluggableAppEvent) => void } = {};
+        mocks.loadPluggableApplication.mockResolvedValue({
+            mount: (options): IPluggableApplicationMountHandle => {
+                emitted.onEvent = options.onEvent;
+                return { unmount: vi.fn(), onHostNavigationRequested };
+            },
+        });
+        const onOpenPricingDialog = vi.fn();
+        render(
+            renderer({ pathname: WS1_PATHNAME, ctx: context(), navigationRequestRef, onOpenPricingDialog }),
+        );
+        await flushMount();
+
+        emitted.onEvent?.(openPricingDialogRequested());
+
+        expect(onOpenPricingDialog).toHaveBeenCalledOnce();
     });
 
     it("forwards every AI assistant context field unchanged", async () => {

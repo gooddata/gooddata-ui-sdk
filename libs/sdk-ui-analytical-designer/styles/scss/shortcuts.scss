@@ -1,0 +1,145 @@
+// (C) 2007-2022 GoodData Corporation
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.adi-shortcut-metric-attribute {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: transparent;
+}
+
+.adi-shortcut-title {
+    margin-bottom: 14px;
+    font-weight: 700;
+    font-size: 11px;
+    color: kit-variables.$gd-color-state-blank;
+}
+
+.adi-shortcut {
+    position: relative;
+    border: 2px dashed kit-variables.$gd-palette-primary-base;
+    border-radius: 15px;
+    text-align: center;
+    background: variables.$adi-shortcut-border-color;
+
+    .adi-drop-disabled & {
+        border-color: variables.$adi-bucket-message-border-color;
+        background-color: variables.$adi-bucket-message-background-color-mix-white;
+
+        .adi-shortcut-type,
+        p {
+            color: kit-variables.$gd-color-text-dimmed;
+        }
+    }
+
+    .adi-shortcut-inner {
+        display: flex;
+        margin: 10px;
+        border-radius: 7px;
+    }
+
+    &.primary {
+        .adi-shortcut-inner {
+            flex-direction: column;
+            height: 150px;
+            padding: 25px;
+        }
+
+        p {
+            margin: 15px 0 0;
+            font-size: 20px;
+            line-height: 26px;
+        }
+
+        &.adi-droppable-hover p {
+            color: kit-variables.$gd-color-white;
+        }
+    }
+
+    &.secondary {
+        width: 50%;
+        height: 135px;
+        margin: 20px 0 0;
+
+        .adi-shortcut-inner {
+            align-items: center;
+            height: 114px;
+        }
+
+        p {
+            flex: 1;
+            margin: 0 15px 0 0;
+            font-size: 16px;
+            line-height: 22px;
+            text-align: left;
+        }
+    }
+}
+
+.adi-droppable-hover {
+    .adi-shortcut-inner {
+        background: kit-variables.$gd-palette-primary-base;
+    }
+
+    p {
+        color: kit-variables.$gd-color-white;
+    }
+}
+
+.adi-shortcut-type {
+    margin: 10px auto 5px;
+    background-repeat: no-repeat;
+}
+
+.adi-shortcut-metric-quarters {
+    width: 89px;
+    height: 69px;
+    margin: 0 20px;
+    background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/shortcut-trending.svg");
+
+    .adi-droppable-hover & {
+        background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/shortcut-trending-hover.svg");
+    }
+}
+
+.adi-shortcut-info {
+    width: 38px;
+    height: 38px;
+    margin: 0 20px;
+    background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/information.svg");
+}
+
+.adi-shortcut-computing {
+    width: 89px;
+    height: 69px;
+    margin: 0 20px;
+    background-position: center center;
+    background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/computing.gif");
+
+    .adi-droppable-hover & {
+        background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/computing-hover.gif");
+    }
+}
+
+.adi-shortcut-bar-metric {
+    width: 84px;
+    height: 58px;
+    background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/shortcut-metric-in-column.svg");
+
+    .adi-droppable-hover & {
+        background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/shortcut-metric-in-column-hover.svg");
+    }
+}
+
+.adi-shortcut-attribute-table {
+    width: 81px;
+    height: 59px;
+    background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/shortcut-values-in-table.svg");
+
+    .adi-droppable-hover & {
+        background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/shortcut-values-in-table-hover.svg");
+    }
+}

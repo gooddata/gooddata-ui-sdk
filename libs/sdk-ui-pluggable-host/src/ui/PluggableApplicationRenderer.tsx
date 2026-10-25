@@ -23,6 +23,7 @@ import {
     isCloseAiAssistantRequestedEvent,
     isDocumentTitleChangedEvent,
     isOpenAiAssistantRequestedEvent,
+    isOpenPricingDialogRequestedEvent,
     isReloadPlatformContextRequestedEvent,
 } from "@gooddata/sdk-pluggable-application-model";
 import { LoadingComponent, useAutoupdateRef } from "@gooddata/sdk-ui";
@@ -119,6 +120,8 @@ export interface IPluggableApplicationRendererProps {
     navigationRequestRef?: RefObject<((request: IHostNavigationRequest) => boolean) | undefined>;
     onHeaderChange?: (appId: string, header: IAppHeaderOptions) => void;
     onDocumentTitleChange?: (appId: string, pageTitle: string | undefined) => void;
+    /** Open the host UI's pricing dialog, requested by the active app. */
+    onOpenPricingDialog?: () => void;
 }
 
 export function PluggableApplicationRenderer({
@@ -136,6 +139,7 @@ export function PluggableApplicationRenderer({
     navigationRequestRef,
     onHeaderChange,
     onDocumentTitleChange,
+    onOpenPricingDialog,
 }: IPluggableApplicationRendererProps) {
     const intl = useIntl();
     const intlRef = useAutoupdateRef(intl);
@@ -147,6 +151,7 @@ export function PluggableApplicationRenderer({
     const onAiAssistantContextRef = useAutoupdateRef(onAiAssistantContext);
     const onAiAssistantPublisherDocumentSavedRef = useAutoupdateRef(onAiAssistantPublisherDocumentSaved);
     const onAiAssistantDashboardSavedRef = useAutoupdateRef(onAiAssistantDashboardSaved);
+    const onOpenPricingDialogRef = useAutoupdateRef(onOpenPricingDialog);
     const containerRef = useRef<HTMLDivElement>(null);
     const mountHandleRef = useRef<IPluggableApplicationMountHandle | undefined>(undefined);
     // The app/module pair currently mounted. Held so the context-change effect can
@@ -205,6 +210,10 @@ export function PluggableApplicationRenderer({
                 onAiAssistantDashboardSavedRef.current?.(event.payload);
                 return;
             }
+            if (isOpenPricingDialogRequestedEvent(event)) {
+                onOpenPricingDialogRef.current?.();
+                return;
+            }
             if (isDocumentTitleChangedEvent(event)) {
                 onDocumentTitleChangeRef.current?.(app.id, event.payload.pageTitle);
             }
@@ -217,6 +226,7 @@ export function PluggableApplicationRenderer({
             onAiAssistantContextRef,
             onAiAssistantPublisherDocumentSavedRef,
             onAiAssistantDashboardSavedRef,
+            onOpenPricingDialogRef,
         ],
     );
 

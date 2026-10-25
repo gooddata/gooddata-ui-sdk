@@ -29,6 +29,9 @@ import { useMetricUsage } from "./hooks/useMetricUsage.js";
 import { type IMeasureDef, type IMeasureSetting } from "./metric/metricHelpers.js";
 import { type ISaveMetricInfo } from "./metric/saveInfo.js";
 
+/**
+ * @internal
+ */
 export interface IEditMetricProps {
     metric: IMeasureDef;
     setting?: IMeasureSetting;
@@ -67,12 +70,18 @@ export interface IEditMetricProps {
     onDraftAccessChange?: (draftAccess: IObjectShareDraft | undefined) => void;
 }
 
+/**
+ * @internal
+ */
 export interface IEditMetricApi {
     close: () => void;
     save: () => Promise<void>;
     saveForce: () => Promise<void>;
 }
 
+/**
+ * @internal
+ */
 export const EditMetric = forwardRef<IEditMetricApi | undefined, IEditMetricProps>(function EditMetric(
     {
         initial,

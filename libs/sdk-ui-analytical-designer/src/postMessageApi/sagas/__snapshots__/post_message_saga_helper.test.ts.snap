@@ -1,0 +1,32 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`post message helper > getSupportedGranularities > should return expected granularities when time support is false 1`] = `
+{
+  "ALL_TIME_GRANULARITY": "all_time",
+  "GDC.time.date": "days",
+  "GDC.time.fiscal_month": "fiscal_months",
+  "GDC.time.fiscal_quarter": "fiscal_quarters",
+  "GDC.time.fiscal_year": "fiscal_years",
+  "GDC.time.month": "months",
+  "GDC.time.quarter": "quarters",
+  "GDC.time.week_us": "weeks",
+  "GDC.time.year": "years",
+}
+`;
+
+exports[`post message helper > getSupportedGranularities > should return expected granularities when time support is true 1`] = `
+{
+  "ALL_TIME_GRANULARITY": "all_time",
+  "GDC.time.date": "days",
+  "GDC.time.fiscal_month": "fiscal_months",
+  "GDC.time.fiscal_quarter": "fiscal_quarters",
+  "GDC.time.fiscal_year": "fiscal_years",
+  "GDC.time.hour": "hour",
+  "GDC.time.minute": "minute",
+  "GDC.time.month": "months",
+  "GDC.time.quarter": "quarters",
+  "GDC.time.second": "second",
+  "GDC.time.week_us": "weeks",
+  "GDC.time.year": "years",
+}
+`;

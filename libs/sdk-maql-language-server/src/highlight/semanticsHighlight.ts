@@ -23,6 +23,9 @@ import { LanguageId } from "../constants.js";
 import { MaqlMetric } from "../parseMaql.js";
 import { antlrContextRange } from "../tokenRanges.js";
 
+/**
+ * @internal
+ */
 export enum TokenTypes {
     Type,
     Keyword,
@@ -38,18 +41,30 @@ export enum TokenTypes {
     Dataset,
 }
 
+/**
+ * @internal
+ */
 export enum ModifierTypes {
     Deprecated,
 }
 
+/**
+ * @internal
+ */
 export const TokenTypesList = Object.values(TokenTypes).filter(
     (value: number | string) => typeof value === "string",
 );
 
+/**
+ * @internal
+ */
 export const ModifierTypesList = Object.values(ModifierTypes).filter(
     (value: number | string) => typeof value === "string",
 );
 
+/**
+ * @internal
+ */
 export const semanticTokensLegend: SemanticTokensLegend = {
     tokenTypes: TokenTypesList.map(mapToken),
     tokenModifiers: ModifierTypesList.map(mapToken),
@@ -271,6 +286,9 @@ function tokenize(tree: ParserRuleContext, stream: CommonTokenStream): Highlight
     return tokenizer.build();
 }
 
+/**
+ * @internal
+ */
 export type HighlightToken = {
     position: Range;
     type: string;

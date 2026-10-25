@@ -1,0 +1,329 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Save selectors > prepareForComparison > should convert boolean values to real values 1`] = `
+{
+  "insight": {
+    "buckets": [
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "computeRatio": false,
+                  "filters": [],
+                  "item": {
+                    "uri": "gd/md",
+                  },
+                },
+              },
+              "localIdentifier": "m1",
+            },
+          },
+        ],
+        "localIdentifier": "measures",
+        "totals": undefined,
+      },
+      {
+        "items": [
+          {
+            "attribute": {
+              "displayForm": {
+                "uri": "gd/md/a1",
+              },
+              "localIdentifier": "a1",
+            },
+          },
+        ],
+        "localIdentifier": "stack",
+        "totals": undefined,
+      },
+      {
+        "items": [
+          {
+            "attribute": {
+              "displayForm": {
+                "uri": "gd/md/a2",
+              },
+              "localIdentifier": "a2",
+            },
+          },
+        ],
+        "localIdentifier": "view",
+        "totals": undefined,
+      },
+    ],
+    "created": undefined,
+    "createdBy": undefined,
+    "filters": [],
+    "identifier": undefined,
+    "isLocked": undefined,
+    "properties": {
+      "controls": {},
+      "sortItems": [],
+    },
+    "ref": {
+      "uri": undefined,
+    },
+    "sorts": [],
+    "summary": "",
+    "tags": [],
+    "title": undefined,
+    "updated": undefined,
+    "updatedBy": undefined,
+    "uri": undefined,
+    "visualizationUrl": "visualizationClassUri",
+  },
+}
+`;
+
+exports[`Save selectors > prepareForComparison > should delete condition property for measure value filters set to all 1`] = `
+{
+  "insight": {
+    "buckets": [],
+    "created": undefined,
+    "createdBy": undefined,
+    "filters": [
+      {
+        "measureValueFilter": {
+          "measure": {
+            "localIdentifier": "m1",
+          },
+        },
+      },
+      {
+        "measureValueFilter": {
+          "condition": {
+            "comparison": {
+              "operator": "GREATER_THAN",
+              "value": 100,
+            },
+          },
+          "measure": {
+            "localIdentifier": "m2",
+          },
+        },
+      },
+      {
+        "negativeAttributeFilter": {
+          "displayForm": {
+            "uri": "gd/md/a1",
+          },
+          "localIdentifier": undefined,
+          "notIn": {
+            "uris": [],
+          },
+        },
+      },
+    ],
+    "identifier": undefined,
+    "isLocked": undefined,
+    "properties": {
+      "controls": {},
+      "sortItems": [],
+    },
+    "ref": {
+      "uri": undefined,
+    },
+    "sorts": [],
+    "summary": "",
+    "tags": [],
+    "title": undefined,
+    "updated": undefined,
+    "updatedBy": undefined,
+    "uri": undefined,
+    "visualizationUrl": undefined,
+  },
+}
+`;
+
+exports[`Save selectors > prepareForComparison > should delete title for comparison 1`] = `
+{
+  "insight": {
+    "buckets": [
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "computeRatio": false,
+                  "filters": [],
+                  "item": {
+                    "uri": "gd/md",
+                  },
+                },
+              },
+              "format": "#,##0.00%",
+              "localIdentifier": "m1",
+            },
+          },
+        ],
+        "localIdentifier": "measures",
+        "totals": undefined,
+      },
+      {
+        "items": [
+          {
+            "attribute": {
+              "displayForm": {
+                "uri": "gd/md/a1",
+              },
+              "localIdentifier": "a1",
+            },
+          },
+        ],
+        "localIdentifier": "stack",
+        "totals": undefined,
+      },
+      {
+        "items": [
+          {
+            "attribute": {
+              "displayForm": {
+                "uri": "gd/md/a2",
+              },
+              "localIdentifier": "a2",
+            },
+          },
+        ],
+        "localIdentifier": "view",
+        "totals": undefined,
+      },
+    ],
+    "created": undefined,
+    "createdBy": undefined,
+    "filters": [],
+    "identifier": undefined,
+    "isLocked": undefined,
+    "properties": {
+      "controls": {},
+      "sortItems": [],
+    },
+    "ref": {
+      "uri": undefined,
+    },
+    "sorts": [],
+    "summary": "",
+    "tags": [],
+    "title": undefined,
+    "updated": undefined,
+    "updatedBy": undefined,
+    "uri": undefined,
+    "visualizationUrl": "visualizationClassUri",
+  },
+}
+`;
+
+exports[`Save selectors > prepareForComparison > should expand properties for comparison 1`] = `
+{
+  "insight": {
+    "buckets": [],
+    "created": undefined,
+    "createdBy": undefined,
+    "filters": [],
+    "identifier": undefined,
+    "isLocked": undefined,
+    "properties": {
+      "controls": {},
+      "sortItems": [
+        {
+          "direction": "asc",
+        },
+      ],
+    },
+    "ref": {
+      "uri": undefined,
+    },
+    "sorts": [
+      {
+        "direction": "asc",
+      },
+    ],
+    "summary": "",
+    "tags": [],
+    "title": undefined,
+    "updated": undefined,
+    "updatedBy": undefined,
+    "uri": undefined,
+    "visualizationUrl": undefined,
+  },
+}
+`;
+
+exports[`Save selectors > prepareForComparison > should return reordered buckets by name 1`] = `
+{
+  "insight": {
+    "buckets": [
+      {
+        "items": [
+          {
+            "measure": {
+              "definition": {
+                "measureDefinition": {
+                  "computeRatio": false,
+                  "filters": [],
+                  "item": {
+                    "uri": "gd/md",
+                  },
+                },
+              },
+              "localIdentifier": "m1",
+            },
+          },
+        ],
+        "localIdentifier": "measures",
+        "totals": undefined,
+      },
+      {
+        "items": [
+          {
+            "attribute": {
+              "displayForm": {
+                "uri": "gd/md/a1",
+              },
+              "localIdentifier": "a1",
+            },
+          },
+        ],
+        "localIdentifier": "stack",
+        "totals": undefined,
+      },
+      {
+        "items": [
+          {
+            "attribute": {
+              "displayForm": {
+                "uri": "gd/md/a2",
+              },
+              "localIdentifier": "a2",
+            },
+          },
+        ],
+        "localIdentifier": "view",
+        "totals": undefined,
+      },
+    ],
+    "created": undefined,
+    "createdBy": undefined,
+    "filters": [],
+    "identifier": undefined,
+    "isLocked": undefined,
+    "properties": {
+      "controls": {},
+      "sortItems": [],
+    },
+    "ref": {
+      "uri": undefined,
+    },
+    "sorts": [],
+    "summary": "",
+    "tags": [],
+    "title": undefined,
+    "updated": undefined,
+    "updatedBy": undefined,
+    "uri": undefined,
+    "visualizationUrl": "visualizationClassUri",
+  },
+}
+`;

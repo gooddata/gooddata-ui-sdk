@@ -1,0 +1,157 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Date filter option factory > buildDateFilterValueFromDateFilterOption > should build expected value for absolute form option 1`] = `
+{
+  "granularity": "GDC.time.date",
+  "interval": [
+    "2019-12-24",
+    "2019-12-26",
+  ],
+  "type": "absolute",
+}
+`;
+
+exports[`Date filter option factory > buildDateFilterValueFromDateFilterOption > should build expected value for all time option 1`] = `
+{
+  "granularity": undefined,
+  "interval": undefined,
+  "name": "all_time",
+}
+`;
+
+exports[`Date filter option factory > buildDateFilterValueFromDateFilterOption > should build expected value for relative form option 1`] = `
+{
+  "granularity": "GDC.time.month",
+  "interval": [
+    -1,
+    -6,
+  ],
+  "name": "RELATIVE_FORM",
+  "type": "relative",
+}
+`;
+
+exports[`Date filter option factory > buildDateFilterValueFromDateFilterOption > should build expected value for relative presets option 1`] = `
+{
+  "granularity": "GDC.time.month",
+  "interval": [
+    -1,
+    -1,
+  ],
+  "name": "LAST_MONTH",
+  "type": "relative",
+}
+`;
+
+exports[`Date filter option factory > matchDateFilterValueToDateFilterOption > should build expected option for absolute form 1`] = `
+{
+  "excludeCurrentPeriod": false,
+  "filterOption": {
+    "from": "01/01/2018",
+    "localIdentifier": "ABSOLUTE_FORM",
+    "name": "",
+    "to": "12/31/2018",
+    "type": "absoluteForm",
+    "visible": true,
+  },
+}
+`;
+
+exports[`Date filter option factory > matchDateFilterValueToDateFilterOption > should build expected option for all time filter 1`] = `
+{
+  "excludeCurrentPeriod": false,
+  "filterOption": {
+    "localIdentifier": "ALL_TIME",
+    "name": "",
+    "type": "allTime",
+    "visible": true,
+  },
+}
+`;
+
+exports[`Date filter option factory > matchDateFilterValueToDateFilterOption > should build expected option for exact known preset 1`] = `
+{
+  "excludeCurrentPeriod": false,
+  "filterOption": {
+    "from": -3,
+    "granularity": "GDC.time.quarter",
+    "localIdentifier": "LAST_4_QUARTERS",
+    "name": "",
+    "to": 0,
+    "type": "relativePreset",
+    "visible": true,
+  },
+}
+`;
+
+exports[`Date filter option factory > matchDateFilterValueToDateFilterOption > should build expected option for known preset with excluded period (with missing type) 1`] = `
+{
+  "excludeCurrentPeriod": true,
+  "filterOption": {
+    "from": -3,
+    "granularity": "GDC.time.quarter",
+    "localIdentifier": "LAST_4_QUARTERS",
+    "name": "",
+    "to": 0,
+    "type": "relativePreset",
+    "visible": true,
+  },
+}
+`;
+
+exports[`Date filter option factory > matchDateFilterValueToDateFilterOption > should build expected option for known preset with excluded period 1`] = `
+{
+  "excludeCurrentPeriod": true,
+  "filterOption": {
+    "from": -3,
+    "granularity": "GDC.time.quarter",
+    "localIdentifier": "LAST_4_QUARTERS",
+    "name": "",
+    "to": 0,
+    "type": "relativePreset",
+    "visible": true,
+  },
+}
+`;
+
+exports[`Date filter option factory > matchDateFilterValueToDateFilterOption > should build expected option for relative form not matching any preset 1`] = `
+{
+  "excludeCurrentPeriod": false,
+  "filterOption": {
+    "from": -10,
+    "granularity": "GDC.time.year",
+    "localIdentifier": "RELATIVE_FORM",
+    "name": "",
+    "to": 69,
+    "type": "relativeForm",
+    "visible": true,
+  },
+}
+`;
+
+exports[`Date filter option factory > matchDateFilterValueToDateFilterOption > should build expected option for relative form without type not matching any preset 1`] = `
+{
+  "excludeCurrentPeriod": false,
+  "filterOption": {
+    "from": -10,
+    "granularity": "GDC.time.year",
+    "localIdentifier": "RELATIVE_FORM",
+    "name": "",
+    "to": 69,
+    "type": "relativeForm",
+    "visible": true,
+  },
+}
+`;
+
+exports[`Date filter option factory > matchDateFilterValueToDateFilterOption > should build expected option for undefined 1`] = `
+{
+  "excludeCurrentPeriod": false,
+  "filterOption": {
+    "localIdentifier": "ALL_TIME",
+    "name": "",
+    "type": "allTime",
+    "visible": true,
+  },
+}
+`;

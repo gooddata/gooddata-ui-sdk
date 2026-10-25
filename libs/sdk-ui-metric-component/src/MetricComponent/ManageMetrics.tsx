@@ -19,6 +19,9 @@ import { type CloseAllTabsResult } from "./MetricState/metricState.data.js";
 import { MultipleMetricsContext } from "./MultipleMetricsState.js";
 import { UnsavedChangesConfirmDialog } from "./UnsavedChangesConfirmDialog/UnsavedChangesConfirmDialog.js";
 
+/**
+ * @internal
+ */
 export interface IManageMetricsProps {
     ref?: Ref<IManageMetricsApi | undefined>;
     locale?: string;
@@ -34,10 +37,16 @@ export interface IManageMetricsProps {
     enableMetricFormatOverrides?: boolean;
 }
 
+/**
+ * @internal
+ */
 export interface IManageMetricsApi {
     saveAndCloseAll: () => Promise<CloseAllTabsResult>;
 }
 
+/**
+ * @internal
+ */
 export const ManageMetrics = forwardRef<IManageMetricsApi | undefined, IManageMetricsProps>(
     function ManageMetrics(
         {

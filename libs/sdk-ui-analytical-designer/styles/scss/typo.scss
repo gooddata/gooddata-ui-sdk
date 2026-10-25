@@ -1,0 +1,45 @@
+// (C) 2007-2026 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
+
+// :where() keeps the specificity of a bare element selector, so AD component rules still win.
+// The error screen renders outside .app-root, so it gets its own scope.
+:where(.app-root, .main-error) {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    p {
+        margin: 0;
+    }
+
+    h1 {
+        @include typo-mixins.gd-heading-1;
+    }
+
+    h2 {
+        @include typo-mixins.gd-heading-2;
+    }
+
+    h3 {
+        @include typo-mixins.gd-heading-3;
+    }
+
+    p {
+        @include typo-mixins.gd-paragraph;
+    }
+
+    button,
+    input,
+    optgroup,
+    select,
+    textarea {
+        outline: 0;
+        font: inherit;
+        color: inherit;
+
+        &:focus-visible {
+            outline: revert;
+        }
+    }
+}

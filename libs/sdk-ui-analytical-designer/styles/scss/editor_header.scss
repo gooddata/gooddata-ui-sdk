@@ -1,0 +1,464 @@
+// (C) 2007-2026 GoodData Corporation
+@use "sass:color";
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.adi-editor-header {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    left: 15px;
+    display: flex;
+    align-items: center;
+    height: 47px;
+
+    &.without-dataset-picker {
+        .left-actions-wrapper {
+            margin-left: calc(var(--adi-catalog-width) - 1px);
+        }
+    }
+
+    &.without-title-space {
+        left: 10px;
+
+        .left-actions-wrapper {
+            margin-left: 0;
+        }
+    }
+
+    .left-actions-wrapper {
+        display: flex;
+        flex: 0 1 auto;
+        overflow: hidden;
+        margin-left: var(--adi-catalog-width);
+        margin-right: 20px;
+    }
+
+    &.enhanced-insight-picker {
+        left: 0;
+        border-bottom: 1px solid kit-variables.$gd-border-color;
+    }
+
+    .export-wrapper {
+        flex: 1 0 auto;
+        text-align: right;
+
+        .gd-button-group {
+            display: inline-block;
+
+            .gd-button {
+                width: 36px;
+                height: 32px;
+                // overload the goodstrap style
+                // stylelint-disable-next-line declaration-no-important
+                box-shadow: variables.$adi-bucket-box-shadow !important;
+
+                // refactor
+                // stylelint-disable-next-line max-nesting-depth
+                &.disabled {
+                    // overwrite
+                    // stylelint-disable-next-line declaration-no-important
+                    box-shadow: none !important;
+                }
+
+                // refactor
+                // stylelint-disable-next-line max-nesting-depth
+                &::before {
+                    // icons are by default too small
+                    font-size: 18px;
+                }
+            }
+        }
+
+        .report-select {
+            display: inline-block;
+        }
+
+        .save-button {
+            min-width: 90px;
+            text-align: center;
+        }
+
+        .editor-header-item {
+            margin-left: 10px;
+        }
+    }
+
+    h1 {
+        position: absolute;
+        top: 16px;
+        left: 0;
+        margin: 0;
+        font-size: 20px;
+        line-height: 24px;
+        color: kit-variables.$gd-color-dark;
+    }
+
+    .report-title-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        max-width: 100%;
+
+        .gd-bubble-trigger {
+            display: inline-flex;
+            align-items: center;
+            height: 32px;
+        }
+
+        .gd-icon-lock-wrapper {
+            margin: 0 5px;
+
+            .gd-icon-lock {
+                font-size: 16px;
+                color: kit-variables.$gd-color-state-blank;
+            }
+        }
+
+        .gd-icon-circle {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            margin-left: 4px;
+            background-color: kit-variables.$gd-palette-primary-base;
+            border-radius: 50%;
+            animation: fade-in ease-out 0.2s;
+        }
+
+        .report-title-locked {
+            color: variables.$gd-analyticalDesigner-title-color;
+
+            &:hover {
+                border-color: transparent;
+                background-color: transparent;
+                cursor: default;
+            }
+        }
+
+        .report-title {
+            flex: 1 1 auto;
+            overflow: hidden;
+            width: auto;
+            height: 32px;
+            min-width: 50px;
+            padding: 4px 5px 2px 5px;
+            border: 1px solid transparent;
+            // Content-box (32 + padding + border = 40px box): resist a preloaded app's injected
+            // `*{box-sizing:border-box}` reset, which would shrink the box to 32px and clip it (LX-2604).
+            box-sizing: content-box;
+            font-size: 24px;
+            font-weight: bold;
+            line-height: 32px;
+            text-overflow: ellipsis;
+            color: variables.$gd-analyticalDesigner-title-color;
+
+            &,
+            textarea {
+                white-space: nowrap;
+            }
+
+            .gd-editable-label-inner {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+
+            textarea {
+                min-height: 24px;
+                border: none;
+            }
+
+            &:hover,
+            &.is-editing {
+                border: 1px solid color.adjust(variables.$adi-bucket-item-active-border-color, $alpha: -0.5);
+                background: color.adjust(kit-variables.$default-gd-color-white, $alpha: -0.05);
+            }
+
+            &.placeholder {
+                color: kit-variables.$gd-color-state-blank;
+            }
+        }
+
+        > div {
+            display: flex;
+            flex: 1 1 auto;
+            align-items: center;
+            overflow: hidden;
+        }
+        .move-right-animation {
+            animation: move-right 0.2s forwards ease-out;
+        }
+
+        .adi-description-tooltip-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 5px;
+            width: 15px;
+            height: 15px;
+            cursor: help;
+
+            .gd-bubble-trigger {
+                height: 100%;
+            }
+        }
+
+        .adi-description-tooltip-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            line-height: 16px;
+            font-size: 14px;
+            color: kit-variables.$gd-color-state-blank;
+        }
+
+        .adi-description-tooltip-icon:hover {
+            color: kit-variables.$gd-medium-gray;
+        }
+    }
+}
+
+.adi-description-tooltip-content {
+    overflow: hidden;
+
+    .bubble-content {
+        // stylelint-disable-next-line declaration-no-important
+        padding: 0 !important;
+    }
+
+    .adi-description-tooltip-base {
+        overflow: auto;
+        overscroll-behavior: contain;
+        padding: 5px;
+        border: 1px solid transparent;
+        line-height: 18px;
+        font-family: kit-variables.$gd-font-primary;
+        font-size: 13px;
+        border-radius: 0;
+        background-color: transparent;
+    }
+
+    .adi-description-tooltip-text {
+        max-width: 200px;
+        max-height: 490px;
+        margin: 10px;
+        white-space: pre-wrap;
+        color: kit-variables.$gd-medium-gray;
+
+        &:not(.disabled) {
+            cursor: pointer;
+            user-select: none;
+            &:hover {
+                border: 1px solid variables.$adi-description-tooltip-border-color;
+            }
+        }
+    }
+
+    .adi-description-tooltip-placeholder {
+        width: 200px;
+        height: 100px;
+        margin: 10px;
+        white-space: pre-wrap;
+        color: kit-variables.$gd-color-state-blank;
+        cursor: pointer;
+        user-select: none;
+
+        &:hover {
+            border: 1px solid variables.$adi-description-tooltip-border-color;
+        }
+    }
+
+    .adi-description-tooltip-textarea {
+        width: 200px;
+        margin: 10px 10px 6px;
+        color: kit-variables.$gd-medium-gray;
+        resize: none;
+    }
+
+    textarea:focus {
+        border: 1px solid variables.$adi-description-tooltip-border-color;
+
+        &::placeholder {
+            color: kit-variables.$gd-medium-gray;
+        }
+    }
+}
+
+.adi-description-tooltip-rich-text {
+    width: unset;
+    white-space: normal;
+    color: var(--gd-palette-complementary-7);
+
+    .adi-description-tooltip-rich-text-content {
+        width: 200px;
+        margin: 10px 10px 4px;
+
+        textarea {
+            color: var(--gd-palette-complementary-7);
+            padding: 5px;
+            border: 1px solid variables.$adi-description-tooltip-border-color;
+            font-size: 13px;
+            font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+            line-height: 18px;
+
+            &::placeholder {
+                color: var(--gd-palette-complementary-6, #94a1ad);
+            }
+        }
+    }
+}
+
+.bubble .bubble-content .content .adi-description-tooltip-rich-text {
+    p,
+    a,
+    ul {
+        font-size: 13px;
+        line-height: 18px;
+    }
+}
+
+.insight-access {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    margin-left: 8px;
+}
+
+.gd-insight-usage-on-dashboards {
+    flex: 0 0 auto;
+    margin-left: 8px;
+}
+
+.gd-insight-usages-overlay .gd-menu-wrapper.gd-menu-wrapper-small-spacing {
+    width: 300px;
+    margin-left: 4px;
+    padding: 0;
+    border: 1px solid #c9d5e0;
+
+    .gd-list-item.gd-list-item-header {
+        border-radius: 3px 3px 0 0;
+        padding: 10px 12px;
+        background: variables.$adi-date-filter-background-hover;
+        font-weight: 800;
+        font-size: 11px;
+
+        &:active {
+            background: variables.$adi-date-filter-background-hover;
+        }
+    }
+    .gd-list-item {
+        padding: 5px 12px;
+    }
+
+    .gd-usages-overlay-body {
+        max-height: 355px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding: 10px 0;
+    }
+
+    .gd-usages-inaccessible-dashboards-only {
+        padding: 10px 10px;
+        color: kit-variables.$default-gd-color-link;
+    }
+
+    .gd-usages-inaccessible-dashboards {
+        padding-top: 15px;
+        font-size: 13px;
+        margin: 5px 10px 5px;
+        border-top: 1px solid kit-variables.$gd-border-color;
+        color: kit-variables.$default-gd-color-link;
+    }
+
+    .gd-dashboard-link {
+        display: block;
+        font-size: 13px;
+        overflow: hidden;
+        color: kit-variables.$gd-color-link;
+        text-overflow: ellipsis;
+
+        &::first-letter {
+            text-transform: capitalize;
+        }
+    }
+
+    .external-icon-link {
+        display: flex;
+        align-items: baseline;
+
+        .gd-dashboard-link-hover-icon {
+            display: none;
+            flex: 1 0 auto;
+            width: 10px;
+            height: 10px;
+            vertical-align: middle;
+            background: left center / contain no-repeat
+                url("@gooddata/sdk-ui-analytical-designer/styles/images/icon-external-link.svg");
+        }
+
+        &:hover {
+            color: kit-variables.$gd-color-dark;
+            background: kit-variables.$is-focused-background;
+            cursor: pointer;
+
+            .gd-dashboard-link {
+                display: inline-block;
+                padding-right: 5px;
+                color: kit-variables.$gd-color-dark;
+            }
+
+            .gd-dashboard-link-hover-icon {
+                display: inline-flex;
+            }
+        }
+    }
+
+    .editing-now {
+        cursor: default;
+
+        .gd-dashboard-link {
+            flex: 1 1 auto;
+        }
+
+        .gd-dashboard-link-hover-icon {
+            flex: 0 0 auto;
+            padding: 0 3px 0 15px;
+            max-width: 200px;
+            font-size: 11px;
+            color: kit-variables.$gd-color-state-blank;
+        }
+
+        &:hover {
+            cursor: default;
+
+            .gd-dashboard-link {
+                color: kit-variables.$gd-color-dark;
+            }
+
+            .gd-dashboard-link-hover-icon {
+                color: kit-variables.$gd-color-state-blank;
+                cursor: default;
+            }
+        }
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes move-right {
+    from {
+        margin-left: 0;
+    }
+
+    to {
+        margin-left: 5px;
+    }
+}

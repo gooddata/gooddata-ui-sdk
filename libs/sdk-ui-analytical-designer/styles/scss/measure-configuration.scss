@@ -1,0 +1,85 @@
+// (C) 2007-2025 GoodData Corporation
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.measure-configuration {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 32px;
+    height: 30px;
+    cursor: pointer;
+
+    .menu-measure-configuration-icon {
+        width: 16px;
+        height: 16px;
+        padding: 7px 8px;
+        background: url("@gooddata/sdk-ui-analytical-designer/styles/images/measure-configuration.svg")
+            no-repeat center;
+    }
+
+    &:hover,
+    &.is-open {
+        height: 25px;
+        border-top: 2px solid transparent;
+        border-color: #ccd8e2;
+        background-color: #f4f8fa;
+
+        .menu-measure-configuration-icon {
+            padding: 6px 8px;
+            background: url("@gooddata/sdk-ui-analytical-designer/styles/images/measure-configuration-hover.svg")
+                no-repeat center;
+        }
+    }
+}
+
+.s-measure-configuration-body {
+    min-width: 192px;
+    padding: 4px 0;
+    border: 1px solid variables.$adi-bucket-border-color;
+    border-radius: variables.$adi-bucket-border-radius;
+    box-shadow: 0 1px 20px rgba(20, 56, 93, 0.2);
+    background-color: kit-variables.$gd-color-white;
+
+    .gd-list-item-header {
+        padding: 4px 10px;
+        font-weight: bold;
+    }
+
+    .s-measure-configuration-footer {
+        padding: 0 10px 4px 7px;
+
+        .gd-list-item-header {
+            padding-left: 3px;
+        }
+
+        .optional-stacking {
+            &.stack-measures-visible .stack-to-percent {
+                margin-left: 20px;
+            }
+        }
+    }
+
+    .input-checkbox-label {
+        padding-left: 22px;
+        font-size: 12px;
+        user-select: none;
+    }
+
+    .gd-list-item {
+        justify-content: flex-start;
+        padding: 4px 10px;
+
+        &.is-selected .gd-list-item-icon {
+            background-position:
+                -999px -999px,
+                center;
+        }
+    }
+
+    .gd-list-item-icon {
+        width: 16px;
+        height: 16px;
+        background-size: 100%;
+    }
+}

@@ -1,0 +1,482 @@
+// (C) 2007-2025 GoodData Corporation
+@use "sass:color";
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins";
+@use "@gooddata/sdk-ui-kit/styles/scss/Button/_variables" as button-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+// overrides the filter item button icons in case the filter is in error state
+@mixin adi-filter-warning-icon {
+    &.adi-filter-warning .gd-button-text::before,
+    &.adi-filter-warning.adi-filter-warning-medium .gd-button-text::before {
+        background-image: none;
+        content: "\e637";
+        color: kit-variables.$gd-color-warning-text;
+        font-family: Indigo, sans-serif;
+        text-align: center;
+    }
+
+    &.adi-filter-warning.adi-filter-warning-low .gd-button-text::before {
+        background-image: none;
+        content: "\e637";
+        color: kit-variables.$gd-color-warning-text;
+        font-family: Indigo, sans-serif;
+        text-align: center;
+    }
+
+    &.adi-filter-warning.adi-filter-warning-high .gd-button-text::before {
+        color: kit-variables.$gd-color-negative;
+    }
+
+    &.adi-filter-warning.is-active .gd-button-text::before,
+    &.adi-filter-warning.is-dragging .gd-button-text::before {
+        color: kit-variables.$gd-color-state-blank;
+    }
+}
+
+// overrides the filter item button icons in case the filter is in error state
+@mixin adi-filter-warning-background {
+    &.adi-filter-warning,
+    &.adi-filter-warning.adi-filter-warning-medium {
+        background: var(
+            --gd-palette-warning-medium-base-m80,
+            color.mix(#fff, kit-variables.$gd-color-warning, 80%)
+        );
+    }
+
+    &.adi-filter-warning.adi-filter-warning-low {
+        background: var(
+            --gd-palette-warning-low-base-m80,
+            color.mix(#fff, kit-variables.$gd-color-highlight, 80%)
+        );
+    }
+
+    &.adi-filter-warning.adi-filter-warning-high {
+        background: var(
+            --gd-palette-warning-high-base-m80,
+            color.mix(#fff, kit-variables.$gd-color-negative, 80%)
+        );
+    }
+}
+
+.adi-filter-bucket {
+    display: flex;
+    min-height: 52px; // this size is checked in checkMultiline function in FilterBar.tsx to determine if recommendations will be displayed or not
+
+    // Content-box: the 52px min-height above equals the single-line CONTENT height, and
+    // checkMultiline reads computed height > min-height as "the filter bar wrapped". Under a host
+    // app's `*{box-sizing:border-box}` reset (ui-kit Overlay's .gd-overlay-content in the KD
+    // insight overlay), the same single-line layout computes 56px (content + 2px+2px padding) and
+    // permanently hides the recommendations panel (STL-3363) — the LX-2604 precedent below.
+    // The doubled class beats the reset's `.gd-overlay-content *` (0,1,0) by specificity instead
+    // of relying on stylesheet load order.
+    margin: 0 15px 0 0;
+    padding: 2px 0;
+
+    &.adi-bucket {
+        box-sizing: content-box;
+    }
+
+    .adi-filter-bucket-header {
+        margin: 13px 5px 0 0;
+    }
+
+    .adi-bucket-item {
+        margin: 2px 0;
+        padding: 0;
+        border: 0;
+    }
+
+    .adi-bucket-invitation {
+        width: 194px;
+        // Content-box: resist a preloaded app's injected `*{box-sizing:border-box}` reset, which
+        // would otherwise treat 194px as the border box and shrink the content by 10px (LX-2604).
+        box-sizing: content-box;
+        margin: 4px 0 4px 10px;
+        padding: 3px;
+
+        &.adi-bucket-invitation-small {
+            width: 100px;
+            font-size: 0.75em;
+        }
+    }
+
+    .adi-bucket-invitation-outer {
+        padding: 0;
+    }
+}
+
+.metric-filter-wrapper .adi-filter-button,
+.adi-filter-selection {
+    &::after {
+        content: "\E612";
+        display: inline-block;
+        flex: 0 0 auto;
+        margin-left: 0.5em;
+        font-family: Indigo, sans-serif;
+        font-weight: normal;
+        font-size: inherit;
+        vertical-align: top;
+        color: kit-variables.$gd-color-state-blank;
+        transition: 0.2s;
+    }
+
+    &.is-active,
+    .adi-filter-button.is-active & {
+        &::after {
+            content: "\E613";
+        }
+    }
+}
+
+.adi-filter-selection {
+    display: flex;
+
+    & & {
+        &::after {
+            display: none;
+        }
+    }
+
+    &.adi-filter-all-selected {
+        font-weight: normal;
+    }
+
+    .adi-attribute-filter-label,
+    .adi-date-filter-label {
+        flex: 0 1 auto;
+        font-weight: bold;
+    }
+}
+
+.adi-filter-title {
+    display: flex;
+
+    &::after {
+        display: none;
+    }
+
+    span {
+        flex: 0 1 auto;
+        overflow: hidden;
+    }
+}
+
+.adi-filter-title-name,
+.adi-filter-title-value {
+    display: block;
+    flex: 0 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.adi-filter-title-value {
+    font-weight: bold;
+}
+
+.adi-filter-title-short,
+.adi-filter-title-long {
+    flex: 0 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.adi-filter-title-short {
+    max-width: 80px;
+}
+
+.adi-filter-title-long {
+    max-width: 120px;
+}
+
+.adi-rf-attribute-title {
+    .adi-filter-title-long {
+        max-width: 165px;
+    }
+}
+
+.adi-filter-bucket-header {
+    box-sizing: border-box;
+    flex: 0 0 auto;
+    min-width: 60px;
+    margin: 1px 0 0;
+    padding: 0 8px 0 6px;
+    font-size: 11px;
+    white-space: nowrap;
+    text-transform: uppercase;
+    color: kit-variables.$gd-color-state-blank;
+}
+
+.adi-filter-bucket-list {
+    padding-left: 0;
+
+    li {
+        display: inline-block;
+        padding-left: 0;
+        vertical-align: middle;
+
+        &:not(:last-child) {
+            margin-right: 5px;
+        }
+    }
+}
+
+.adi-filter-manage {
+    display: flex;
+    align-items: center;
+}
+
+.adi-filter-bucket-header,
+.adi-filter-bucket-list {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.adi-filter-button {
+    position: relative;
+    max-width: 250px;
+    padding: 4px 10px 4px 35px;
+    margin-left: 10px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    font-size: 12px;
+    line-height: 16px;
+    white-space: nowrap;
+    background: none;
+
+    @include adi-filter-warning-background;
+
+    &::after {
+        position: absolute;
+        top: 0;
+        right: 10px;
+        bottom: 0;
+        margin-left: 10px;
+        padding-top: inherit;
+        padding-bottom: inherit;
+        font-size: 13px;
+        line-height: inherit;
+        color: kit-variables.$gd-color-state-blank;
+    }
+
+    .gd-button-text {
+        position: relative;
+        display: block;
+        height: 18px;
+        max-width: none;
+        text-overflow: ellipsis;
+        transition: transform 0.2s;
+        &::before {
+            content: "";
+            position: absolute;
+            left: -25px;
+            display: inline-block;
+            width: 18px;
+            height: 16px;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .adi-filter-bucket & {
+            height: 32px;
+        }
+    }
+
+    &.is-dragging {
+        background-color: variables.$adi-date-filter-background-hover;
+
+        &,
+        &::after {
+            color: kit-variables.$gd-color-disabled;
+        }
+    }
+
+    &.adi-filter-button-hover,
+    &.adi-dragged-item,
+    &.is-active {
+        &:not(.metric-date-filter-button):not(.adi-metric-attribute-filter) {
+            padding: 4px 10px 4px 45px;
+            margin-left: 0;
+        }
+
+        // show the dragging icon
+        &::before {
+            content: "";
+            position: absolute;
+            top: 4px;
+            bottom: 4px;
+            left: 0;
+            display: block;
+            width: 20px;
+            margin-top: 2px;
+            background: url("@gooddata/sdk-ui-analytical-designer/styles/images/icon-drag-field.svg") repeat-y
+                center top;
+        }
+    }
+
+    &.adi-filter-button-hover,
+    &.adi-dragged-item {
+        border-color: button-variables.$button-normal-hover-border-color;
+        box-shadow:
+            0 1px 3px 0 button-variables.$button-shadow-lighter,
+            0 2px 9px 0 button-variables.$button-shadow-darker;
+        background: kit-variables.$gd-color-white;
+
+        @include adi-filter-warning-background;
+    }
+
+    &.is-active {
+        border-color: button-variables.$button-normal-hover-border-color;
+        box-shadow: inset 0 1px 0 0 button-variables.$button-normal-active-shadow;
+
+        @include mixins.gradient-linear(
+            button-variables.$button-normal-active-gradient-top,
+            button-variables.$button-normal-active-gradient-bottom
+        );
+    }
+}
+
+.adi-filter-item-wrapper {
+    &.about-to-be-removed {
+        border-radius: 3px;
+
+        .adi-filter-button {
+            padding: 4px 10px 4px 45px;
+            margin-left: 0;
+        }
+
+        .gd-button-text {
+            transform: translateX(-13px);
+        }
+
+        &::before {
+            top: -3px;
+        }
+    }
+}
+
+.adi-attribute-filter-button-warning {
+    background: var(
+        --gd-palette-warning-medium-base-m80,
+        color.mix(#fff, kit-variables.$gd-color-warning, 80%)
+    );
+    border-radius: 3px;
+
+    .adi-attribute-filter-warning-icon {
+        ::before {
+            background-image: none;
+            content: "\e637";
+            color: kit-variables.$gd-color-warning-text;
+            font-family: Indigo, sans-serif;
+            text-align: center;
+        }
+    }
+}
+
+.adi-date-filter-button {
+    .gd-button-text::before {
+        background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/date.svg");
+    }
+
+    &.is-dragging .gd-button-text::before {
+        background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/date-unrelated.svg");
+    }
+
+    @include adi-filter-warning-icon;
+
+    .adi-additional-filter-value,
+    .adi-compare-value {
+        font-weight: bold;
+    }
+
+    .adi-filter-selection {
+        .adi-filter-selection-shortened {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            max-width: 210px; // prevents jumping of the date filter width on hover
+        }
+    }
+}
+
+.adi-attr-filter-button {
+    .gd-button-text::before {
+        background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/attribute.svg");
+    }
+
+    &.is-dragging .gd-button-text::before {
+        background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/attribute-unrelated.svg");
+    }
+
+    @include adi-filter-warning-icon;
+}
+
+.adi-ranking-filter-button {
+    .gd-button-text::before {
+        background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/icon-filter-top-bottom.svg");
+    }
+
+    &.is-dragging .gd-button-text::before {
+        background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/icon-filter-top-bottom-unrelated.svg");
+    }
+}
+
+.adi-geo-attr-filter-button {
+    .gd-button-text::before {
+        content: "\E624"; // earth icon
+        font-family: Indigo, sans-serif;
+        height: 18px;
+        margin-top: 2px;
+        color: kit-variables.$gd-color-warning-text;
+    }
+}
+
+.gd-mvf-dropdown-toggle-button {
+    max-width: initial;
+
+    .adi-filter-title {
+        max-width: 193px;
+        overflow: hidden;
+    }
+
+    .gd-mvf-configuration {
+        max-width: 210px;
+
+        // The text is inside a <b> element which is a flex item.
+        // For ellipsis to work, the flex child needs min-width: 0 to shrink,
+        // and the text element needs the ellipsis styles.
+        > b {
+            display: block;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+
+    @include adi-filter-warning-icon;
+}
+
+.adi-measure-value-filter .gd-mvf-dropdown-toggle-button {
+    .gd-button-text::before {
+        background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/measure.svg");
+    }
+
+    &.is-dragging .gd-button-text::before {
+        background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/measure-unrelated.svg");
+    }
+}
+
+.adi-metric-value-filter .gd-mvf-dropdown-toggle-button {
+    .gd-button-text::before {
+        background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/metric.svg");
+    }
+
+    &.is-dragging .gd-button-text::before {
+        background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/metric-unrelated.svg");
+    }
+}
+
+.adi-custom-drag-layer .adi-filter-button .adi-filter-button-bottom-line {
+    display: none;
+}

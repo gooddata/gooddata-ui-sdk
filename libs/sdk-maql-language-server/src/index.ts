@@ -2,15 +2,29 @@
 
 // oxlint-disable no-barrel-files/no-barrel-files
 
-export { MaqlLanguageService } from "./maqlLanguageService.js";
+export { type Locale, locales } from "./docs/index.js";
+export { MaqlLanguageService, type ILanguageService } from "./maqlLanguageService.js";
 export { type IMetadataServiceOptions, MetadataService } from "./metadataService.js";
 export {
-    LdmObjects,
-    isITigerParameter,
+    type ILabelElementList,
+    type ILabelElementsFuncResult,
+    type ILdmDataset,
+    type IMetadataObjectStruct,
+    type ITigerAttribute,
+    type ITigerComputedAttribute,
+    type ITigerDataset,
+    type ITigerFact,
+    type ITigerLabel,
+    type ITigerMetadataObject,
+    type ITigerMetadataObjectStub,
+    type ITigerMetric,
     type ITigerParameter,
     type LabelElementsFunc,
+    LdmObjects,
+    type TypeModifiers,
+    isITigerParameter,
 } from "./metadata/model.js";
-export type { IDecoration, IDecorationOptions } from "./decorations.js";
+export type { DecorationType, IDecoration, IDecorationOptions } from "./decorations.js";
 export {
     renderParameterDefaults,
     resolveParameterValues,
@@ -18,11 +32,13 @@ export {
     type IResolvedParameter,
 } from "./renderParameters.js";
 export type { ObjectContent, HoverWithData } from "./hover.js";
+export { normalizeMaqlObjectType } from "./maqlObjectTypes.js";
 export type { IMetadataInterface } from "./metadata/types.js";
 export {
-    TokenTypesList,
-    ModifierTypesList,
-    semanticTokensLegend,
-    type TokenTypes,
+    type HighlightToken,
     type ModifierTypes,
+    ModifierTypesList,
+    type TokenTypes,
+    TokenTypesList,
+    semanticTokensLegend,
 } from "./highlight/semanticsHighlight.js";

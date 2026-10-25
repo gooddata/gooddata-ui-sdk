@@ -5,7 +5,6 @@
     "compilerOptions": {
         "noCheck": true,
         "rootDir": "./src",
-        "outDir": "./esm",
-        "noImplicitAny": false
+        "outDir": "./esm"
     }
 }

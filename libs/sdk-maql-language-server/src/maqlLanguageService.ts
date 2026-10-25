@@ -23,6 +23,9 @@ import { type HoverWithData, hover } from "./hover.js";
 import { type LabelElementsFunc, type LdmObjects } from "./metadata/model.js";
 import { type IMetadataInterface } from "./metadata/types.js";
 
+/**
+ * @internal
+ */
 export interface ILanguageService {
     initialize(): InitializeResult;
 
@@ -48,6 +51,8 @@ export interface ILanguageService {
  * A service to manage the capabilities of the MAQL language server
  * Can be supplied by Metadata API credentials to automatically
  * retrieve typed ldmObjects from the Logical Data Model (LDM)
+ *
+ * @internal
  */
 export class MaqlLanguageService implements ILanguageService {
     constructor(locale: Locale = "en-us", metadataService?: IMetadataInterface) {

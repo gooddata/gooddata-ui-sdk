@@ -1,0 +1,77 @@
+// (C) 2007-2025 GoodData Corporation
+@use "sass:color";
+@use "@gooddata/sdk-ui-kit/styles/scss/maqlPalette" as maql-palette;
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/Button/_variables" as button-variables;
+
+// replace by SDK
+$gd-palette-primary-base: var(--gd-palette-primary-base, kit-variables.$gd-color-highlight);
+$button-normal-hover-border-color: var(
+    --gd-palette-complementary-4-from-theme,
+    color.adjust(#1f3449, $alpha: -0.8)
+);
+
+// CSS - variables
+$gd-analyticalDesigner-title-color: var(--gd-analyticalDesigner-title-color, kit-variables.$gd-color-text);
+$gd-palette-primary-dimmed50: var(
+    --gd-palette-primary-dimmed50,
+    color.mix(kit-variables.$gd-color-highlight, kit-variables.$default-gd-color-white, 50%)
+);
+
+$adi-field-icon-color: kit-variables.$gd-palette-primary-base;
+$adi-dropzone-active-color: kit-variables.$gd-palette-primary-base;
+$adi-dropzone-active-lighter: $gd-palette-primary-dimmed50;
+$adi-dropzone-background-color: kit-variables.$gd-palette-primary-dimmed;
+$adi-catalog-background: #f8fafb;
+$adi-date-filter-background-hover: #ebeff4;
+$adi-filter-active-border-color: #1f3449;
+$adi-filter-item-active-border-color: #b1c1d1;
+$adi-shortcut-border-color: kit-variables.$gd-palette-primary-dimmed;
+$adi-shadow-lighter: button-variables.$button-shadow-lighter;
+$adi-shadow-darker: button-variables.$button-shadow-darker;
+$adi-bucket-background-color: kit-variables.$gd-color-light;
+$adi-bucket-border-color: #c9d5e0;
+$adi-bucket-box-shadow: 0 1px 2px 0 $adi-shadow-lighter;
+$adi-bucket-border-radius: 3px;
+$adi-bucket-item-active-border-color: #b1c1d1;
+$adi-bucket-item-header-padding: 4px;
+$adi-bucket-message-border-color: kit-variables.$gd-border-color;
+$adi-bucket-message-border-radius: 5px;
+$adi-button-active-gradient-top: button-variables.$button-normal-active-gradient-top;
+$adi-button-active-gradient-bottom: button-variables.$button-normal-active-gradient-bottom;
+$adi-bucket-add-item-button-width: 37px;
+$adi-sequence-number-font-family: menlo, monaco, consolas, "Courier New", monospace;
+$adi-bucket-notification-color: #78838c;
+$adi-description-tooltip-border-color: rgba(#b1c1d1, 0.5);
+
+// These colors work only when mixed with white background!
+$adi-bucket-background-color-mix-white: color.adjust(#d4d4df, $alpha: -0.93);
+$adi-bucket-message-background-color-mix-white: color.adjust(#bcc7d2, $alpha: -0.9);
+$adi-bucket-configuration-background-color-mix-white: color.adjust(#88aab9, $alpha: -0.94);
+
+$geo-tab-unselected-color: #687581;
+$tab-border-unselected-color: #ccd8e2;
+$tab-border-selected-color: rgba(31, 53, 74, 0.2);
+$tab-shadow-selected-color: rgba(177, 193, 209, 0.65);
+
+// MAQL code highlighting palette, shared with other MAQL-rendering surfaces via the kit partial
+$maql-fact: maql-palette.$maql-fact;
+$maql-metric: maql-palette.$maql-metric;
+$maql-attribute: maql-palette.$maql-attribute;
+$maql-attributeDisplayForm: maql-palette.$maql-attribute-display-form;
+$maql-attribute_element: maql-palette.$maql-attribute-element;
+$maql-dataset_element: maql-palette.$maql-dataset;
+$maql-parameter: maql-palette.$maql-parameter;
+$narrowDevice: "(max-width: 1400px) and (min-height: 860px)";
+
+// animation timing functions
+$ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);
+
+// @see http://nicolasgallagher.com/micro-clearfix-hack/
+@mixin clearfix {
+    &::after {
+        content: " ";
+        display: table;
+        clear: both;
+    }
+}

@@ -31,6 +31,9 @@ export async function loadMetrics(
     );
 }
 
+/**
+ * @internal
+ */
 export interface IUseMetricsOptions {
     /**
      * Ask the backend for each metric's object-level permissions. Defaults to the
@@ -41,6 +44,8 @@ export interface IUseMetricsOptions {
 
 /**
  * Hook allowing to get metrics
+ *
+ * @internal
  */
 export function useMetrics({ loadPermissions }: IUseMetricsOptions = {}): UseCancelablePromiseState<
     IMeasureMetadataObject[],

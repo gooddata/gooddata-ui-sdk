@@ -8,6 +8,8 @@ import { MaqlMetric } from "./parseMaql.js";
 /**
  * A MAQL template rendered with its parameters' defaults. `unresolved` lists the ids of references
  * that could not be turned into a literal; those are left untouched in `maql`.
+ *
+ * @internal
  */
 export interface IRenderedMaql {
     maql: string;
@@ -20,6 +22,8 @@ export interface IRenderedMaql {
  * and numeric ones bare. Unresolvable references are reported and left in place rather than guessed.
  *
  * Returns undefined when the template references no parameter at all.
+ *
+ * @internal
  */
 export function renderParameterDefaults(maql: string, ldmObjects: LdmObjects): IRenderedMaql | undefined {
     const parameters = findAllObjects(new MaqlMetric(maql)).filter(
@@ -51,6 +55,8 @@ export function renderParameterDefaults(maql: string, ldmObjects: LdmObjects): I
 /**
  * A parameter resolved to its default value. `value` is absent when the default cannot be
  * determined; `title` is absent when the parameter is unknown.
+ *
+ * @internal
  */
 export interface IResolvedParameter {
     id: string;
@@ -62,6 +68,8 @@ export interface IResolvedParameter {
  * Resolves every parameter the given MAQL templates and metrics depend on to its default value,
  * following `{metric/id}` references into metric expressions. Each parameter is reported once, in
  * order of first appearance.
+ *
+ * @internal
  */
 export function resolveParameterValues(
     maqls: string[],

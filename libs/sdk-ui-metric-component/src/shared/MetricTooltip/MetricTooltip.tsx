@@ -23,6 +23,9 @@ const useStyles = makeStyles()(() => ({
     },
 }));
 
+/**
+ * @internal
+ */
 export interface IMetricTooltipProps {
     active?: boolean;
     className?: string;
@@ -40,6 +43,9 @@ const alignPoints = [
     { align: "cr tl", offset: { x: -8, y: 0 } },
 ];
 
+/**
+ * @internal
+ */
 export function MetricTooltip({
     metric,
     className,

@@ -1,0 +1,251 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Buckets to metadata object conversion > bucketsToMetadata > deserialization > should set proper filters to bucket if no element selected 1`] = `
+[
+  {
+    "cacheItemIdentifier": "attr.product.id",
+    "displayFormRef": {
+      "uri": "/gdc/md/TeamOneGoodSales1/obj/952",
+    },
+    "filterConfig": {
+      "isInverted": false,
+      "selectedElements": [],
+      "totalElementsCount": 7,
+    },
+    "type": "attribute",
+  },
+  {
+    "cacheItemIdentifier": "attr.datedataset",
+    "dateDatasetRef": {
+      "type": "dataSet",
+      "uri": "/gdc/md/TeamOneGoodSales1/obj/15174",
+    },
+    "filterConfig": undefined,
+    "overTimeComparisonType": "same_period_previous_year",
+    "type": "date",
+  },
+]
+`;
+
+exports[`Buckets to metadata object conversion > bucketsToMetadata > deserialization > should set proper filters to buckets 1`] = `
+[
+  {
+    "cacheItemIdentifier": "attr.product.id",
+    "displayFormRef": {
+      "uri": "/gdc/md/TeamOneGoodSales1/obj/952",
+    },
+    "filterConfig": {
+      "isInverted": false,
+      "selectedElements": [
+        {
+          "title": "Educationly",
+          "uri": "/gdc/md/TeamOneGoodSales1/obj/949/elements?id=168282",
+        },
+        {
+          "title": "Grammar Plus",
+          "uri": "/gdc/md/TeamOneGoodSales1/obj/949/elements?id=168284",
+        },
+        {
+          "title": "PhoenixSoft",
+          "uri": "/gdc/md/TeamOneGoodSales1/obj/949/elements?id=964771",
+        },
+      ],
+      "totalElementsCount": 7,
+    },
+    "type": "attribute",
+  },
+  {
+    "cacheItemIdentifier": "attr.datedataset",
+    "dateDatasetRef": {
+      "type": "dataSet",
+      "uri": "/gdc/md/TeamOneGoodSales1/obj/15174",
+    },
+    "filterConfig": {
+      "granularity": "GDC.time.year",
+      "interval": [
+        -6,
+        0,
+      ],
+      "name": undefined,
+    },
+    "overTimeComparisonType": "same_period_previous_year",
+    "type": "date",
+  },
+  {
+    "cacheItemIdentifier": "attr.datedataset",
+    "dateDatasetRef": {
+      "type": "dataSet",
+      "uri": "/gdc/md/TeamOneGoodSales1/obj/15174",
+    },
+    "filterConfig": {
+      "granularity": "GDC.time.date",
+      "interval": [
+        "2017-01-01",
+        "2018-01-01",
+      ],
+      "type": "absolute",
+    },
+    "overTimeComparisonType": "nothing",
+    "type": "date",
+  },
+  {
+    "conditions": [
+      {
+        "comparison": {
+          "operator": "GREATER_THAN",
+          "value": 12,
+        },
+      },
+    ],
+    "measureLocalIdentifier": "m1",
+    "type": "measure",
+  },
+  {
+    "conditions": [
+      {
+        "range": {
+          "from": 12,
+          "operator": "BETWEEN",
+          "to": 14,
+        },
+      },
+    ],
+    "measureLocalIdentifier": "m2",
+    "type": "measure",
+  },
+  {
+    "measureLocalIdentifier": "m3",
+    "type": "measure",
+  },
+  {
+    "measureLocalIdentifier": "m3_previous_period",
+    "type": "measure",
+  },
+  {
+    "attributes": [
+      "a1",
+      "a2",
+    ],
+    "measureLocalIdentifier": "m5",
+    "operator": "BOTTOM",
+    "type": "ranking",
+    "value": 3,
+  },
+  {
+    "measureLocalIdentifier": "m4",
+    "operator": "TOP",
+    "type": "ranking",
+    "value": 10,
+  },
+]
+`;
+
+exports[`Buckets to metadata object conversion > bucketsToMetadata > serialization > should return proper filters 1`] = `
+[
+  {
+    "positiveAttributeFilter": {
+      "displayForm": {
+        "uri": "/gdc/md/TeamOneGoodSales1/obj/952",
+      },
+      "in": [
+        "Educationly",
+        "Grammar Plus",
+        "PhoenixSoft",
+      ],
+      "localIdentifier": "f_product",
+    },
+  },
+  {
+    "relativeDateFilter": {
+      "dataSet": {
+        "uri": "/gdc/md/TeamOneGoodSales1/obj/15174",
+      },
+      "from": -6,
+      "granularity": "GDC.time.year",
+      "to": 0,
+    },
+  },
+  {
+    "absoluteDateFilter": {
+      "dataSet": {
+        "uri": "/gdc/md/TeamOneGoodSales1/obj/15174",
+      },
+      "from": "2017-01-01",
+      "to": "2018-01-01",
+    },
+  },
+  {
+    "measureValueFilter": {
+      "condition": {
+        "comparison": {
+          "operator": "GREATER_THAN",
+          "value": 12,
+        },
+      },
+      "measure": {
+        "localIdentifier": "m1",
+      },
+    },
+  },
+  {
+    "measureValueFilter": {
+      "condition": {
+        "range": {
+          "from": 12,
+          "operator": "BETWEEN",
+          "to": 14,
+        },
+      },
+      "measure": {
+        "localIdentifier": "m2",
+      },
+    },
+  },
+  {
+    "measureValueFilter": {
+      "conditions": undefined,
+      "measure": {
+        "localIdentifier": "m3",
+      },
+    },
+  },
+  {
+    "measureValueFilter": {
+      "conditions": undefined,
+      "measure": {
+        "localIdentifier": "m3_previous_period",
+      },
+    },
+  },
+  {
+    "rankingFilter": {
+      "attributes": [
+        {
+          "localIdentifier": "a1",
+        },
+        {
+          "localIdentifier": "a2",
+        },
+      ],
+      "measures": [
+        {
+          "localIdentifier": "m5",
+        },
+      ],
+      "operator": "BOTTOM",
+      "value": 3,
+    },
+  },
+  {
+    "rankingFilter": {
+      "measures": [
+        {
+          "localIdentifier": "m4",
+        },
+      ],
+      "operator": "TOP",
+      "value": 10,
+    },
+  },
+]
+`;

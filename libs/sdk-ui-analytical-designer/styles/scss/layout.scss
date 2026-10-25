@@ -1,0 +1,10 @@
+// (C) 2007-2022 GoodData Corporation
+$include-html-classes: false;
+$include-html-grid-classes: true;
+
+// Hide all metamorphs accidentaly shown inside layout selectors
+script {
+    // refactor
+    // stylelint-disable-next-line declaration-no-important
+    display: none !important;
+}

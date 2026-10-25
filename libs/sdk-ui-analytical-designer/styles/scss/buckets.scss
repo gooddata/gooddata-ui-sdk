@@ -1,0 +1,1915 @@
+// (C) 2007-2025 GoodData Corporation
+@use "sass:color";
+@use "variables";
+@use "bucket_item";
+@use "@gooddata/sdk-ui-kit/styles/scss/editableLabel";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+$editable-label-border: #b1c1d1;
+
+%field-icon {
+    &::before {
+        content: "";
+        position: relative;
+        display: inline-block;
+        margin: 0 2px 0 3px;
+        font-family: Indigo, sans-serif;
+        font-size: 15px;
+        font-weight: normal;
+        line-height: 10px;
+        text-transform: none;
+        color: variables.$adi-field-icon-color;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+}
+
+%trash-icon {
+    &::before {
+        content: "\e61a"; // trash icon
+        position: absolute;
+        font-family: Indigo, serif;
+        font-size: 14px;
+        color: variables.$adi-dropzone-active-color;
+        animation-name: measure-trash-bin-reveal;
+        animation-duration: 500ms;
+        animation-timing-function: variables.$ease-out-cubic;
+        animation-fill-mode: forwards;
+    }
+}
+
+.date-field-icon {
+    @extend %field-icon;
+
+    &::before {
+        top: -1px;
+        width: 12px;
+        height: 12px;
+        margin: -2px 3px;
+        background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/date.svg");
+    }
+}
+
+.attr-field-icon {
+    @extend %field-icon;
+
+    &::before {
+        top: -1px;
+        width: 18px;
+        height: 7px;
+        margin: 0 2px 0 3px;
+        background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/attribute.svg");
+    }
+}
+
+.geo-attr-field-icon {
+    @extend %field-icon;
+
+    &::before {
+        content: "\E624";
+        font-family: Indigo, sans-serif;
+        font-size: 13px;
+        height: 14px;
+        margin: 0 2px;
+        line-height: normal;
+        vertical-align: middle;
+        color: kit-variables.$gd-color-warning-text;
+    }
+}
+
+.metric-field-icon,
+.fact-field-icon,
+.measure-field-icon {
+    @extend %field-icon;
+
+    &::before {
+        top: -1px;
+        width: 18px;
+        height: 7px;
+        margin: 0 2px 0 3px;
+        background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/measure.svg");
+    }
+}
+
+.metric-field-icon {
+    &::before {
+        top: 3px;
+        width: 14px;
+        height: 14px;
+        background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/metric.svg");
+    }
+}
+
+.adi-bucket-group {
+    margin: 0 0 10px;
+}
+
+.adi-bucket {
+    margin: 0 0 10px;
+    border-radius: variables.$adi-bucket-border-radius;
+
+    &:last-of-type {
+        margin-bottom: 1px;
+    }
+
+    .bucket-title {
+        position: relative;
+        box-sizing: content-box;
+        height: 30px;
+        border: 1px solid variables.$adi-bucket-border-color;
+        border-radius: variables.$adi-bucket-border-radius variables.$adi-bucket-border-radius 0 0;
+        border-bottom: 0;
+        background-color: variables.$adi-bucket-background-color-mix-white;
+
+        h3 {
+            overflow: hidden;
+            margin: 0 0 0 30px;
+            padding: 2px 0 0;
+            font-weight: bold;
+            font-size: 11px;
+            line-height: 26px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            text-transform: uppercase;
+            color: kit-variables.$gd-color-state-blank;
+            pointer-events: none;
+        }
+
+        .bucket-title-icon {
+            position: relative;
+            top: 6px;
+            left: 6px;
+            float: left;
+            width: 16px;
+            height: 16px;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        &.bucket-title-configuration-panel .bucket-title-icon {
+            background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/config.svg");
+            cursor: pointer;
+        }
+
+        .bucket-subtitle {
+            font-weight: normal;
+        }
+
+        &.bucket-title-metrics-combo2,
+        &.bucket-title-secondary-metrics-combo2 {
+            h3 {
+                padding-right: 32px;
+            }
+        }
+    }
+
+    .bucket-contents {
+        border: 1px solid variables.$adi-bucket-border-color;
+        border-radius: 0 0 variables.$adi-bucket-border-radius variables.$adi-bucket-border-radius;
+        border-top: none;
+        box-shadow: variables.$adi-bucket-box-shadow;
+    }
+
+    &.bucket-with-warn-message .bucket-contents {
+        border-radius: 0;
+    }
+
+    &.s-bucket-stack.bucket-with-warn-message {
+        .bucket-container {
+            border: 1px solid variables.$adi-bucket-message-border-color;
+            border-top: none;
+            border-radius: 0 0 variables.$adi-bucket-message-border-radius
+                variables.$adi-bucket-message-border-radius;
+            color: kit-variables.$gd-color-text-dimmed;
+            background-color: variables.$adi-bucket-message-background-color-mix-white;
+        }
+
+        .adi-stack-warn {
+            text-align: center;
+        }
+
+        .adi-stack-warn.optional-stacking-checkbox-visible {
+            text-align: left;
+        }
+
+        .adi-stack-warn,
+        .optional-stacking {
+            border: none;
+            background: none;
+        }
+    }
+
+    .optional-stacking {
+        background-color: variables.$adi-bucket-background-color-mix-white;
+        border: 1px solid variables.$adi-bucket-border-color;
+        border-radius: 0 0 variables.$adi-bucket-border-radius variables.$adi-bucket-border-radius;
+        border-top: none;
+        font-size: 12px;
+        color: kit-variables.$gd-color-text;
+
+        > div {
+            padding: 8px;
+        }
+
+        .input-checkbox-label {
+            margin-left: -3px;
+            padding-left: 23px;
+        }
+
+        &.stack-measures-visible {
+            padding-bottom: 6px;
+
+            > div {
+                padding: 0 6px 2px;
+            }
+
+            .stack-to-percent {
+                margin-left: 20px;
+            }
+        }
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        list-style-type: none;
+    }
+
+    .adi-bucket-invitation-separator {
+        margin: 0;
+        border: 0;
+        border-bottom: 1px solid variables.$adi-bucket-border-color;
+    }
+
+    &.has-rounded-corners {
+        .adi-bucket-invitation-inner::before {
+            border-radius: 0 0 variables.$adi-bucket-border-radius variables.$adi-bucket-border-radius;
+        }
+    }
+
+    .adi-bucket-dropzone {
+        .gd-bubble-trigger {
+            display: block;
+        }
+    }
+
+    .adi-bucket-invitation {
+        margin: 4px;
+        padding: 3px;
+        border: 2px dashed color.adjust(kit-variables.$default-gd-color-disabled, $alpha: -0.55);
+        border-radius: 5px;
+        font-size: 11px;
+        font-weight: bold;
+        line-height: 18px;
+        text-align: center;
+        text-transform: uppercase;
+        color: kit-variables.$gd-color-state-blank;
+        background: color.adjust(variables.$adi-bucket-border-color, $alpha: -0.95);
+        transition:
+            0.2s,
+            margin-right 0.4s;
+
+        .adi-bucket-invitation-inner {
+            padding: 2px 0 0;
+            border-radius: variables.$adi-bucket-border-radius;
+        }
+
+        &:hover {
+            border-color: color.adjust(kit-variables.$default-gd-color-disabled, $alpha: -0.15);
+            color: kit-variables.$gd-color-link;
+            background: color.adjust(variables.$adi-bucket-border-color, $alpha: -0.9);
+        }
+
+        &.adi-bucket-invitation-with-button {
+            margin-right: 41px;
+        }
+    }
+
+    .adi-droppable-active,
+    &.adi-droppable-active {
+        .adi-bucket-invitation {
+            border-color: variables.$adi-dropzone-active-lighter;
+            color: kit-variables.$gd-color-text;
+            background-color: variables.$adi-dropzone-background-color;
+        }
+
+        .adi-bucket-invitation-inner {
+            &::before {
+                border-color: variables.$adi-dropzone-active-lighter;
+            }
+
+            &::after {
+                display: block;
+            }
+        }
+    }
+
+    .adi-bucket-invitation-outer {
+        position: relative;
+        overflow: hidden;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
+
+    .adi-bucket-add-item-button {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 100%;
+        visibility: hidden;
+        width: 100%;
+        border-left: 1px solid variables.$adi-bucket-border-color;
+        font-size: 12px;
+        line-height: 18px;
+        white-space: nowrap;
+        color: kit-variables.$gd-color-text-dimmed;
+        background-color: kit-variables.$gd-color-light;
+        cursor: pointer;
+
+        &:hover {
+            left: 0;
+            border-left-color: transparent;
+            color: kit-variables.$gd-palette-primary-base;
+            transition: all 0.4s;
+        }
+
+        &::before,
+        span {
+            position: absolute;
+            top: 50%;
+            margin-top: -10px;
+            line-height: 20px;
+        }
+
+        &::before {
+            left: 0;
+            width: variables.$adi-bucket-add-item-button-width;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        span {
+            right: 11px;
+            left: variables.$adi-bucket-add-item-button-width;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    .adi-bucket-add-item-button-active {
+        left: calc(100% - #{variables.$adi-bucket-add-item-button-width});
+        visibility: visible;
+    }
+
+    .adi-unsupported-configuration {
+        padding: 20px 10px;
+        font-size: 12.5px;
+        line-height: 15px;
+        text-align: center;
+        color: kit-variables.$gd-color-text-dimmed;
+        background-color: variables.$adi-bucket-message-background-color-mix-white;
+    }
+
+    .adi-stack-warn,
+    .adi-category-warn {
+        padding: 10px 6px 8px;
+        border: 1px solid variables.$adi-bucket-message-border-color;
+        border-top: none;
+        border-radius: 0 0 variables.$adi-bucket-message-border-radius
+            variables.$adi-bucket-message-border-radius;
+        font-size: 11px;
+        font-weight: bold;
+        line-height: 15px;
+        text-transform: uppercase;
+        text-align: center;
+        color: kit-variables.$gd-color-text-dimmed;
+        background-color: variables.$adi-bucket-message-background-color-mix-white;
+
+        .attr-field-icon::before {
+            color: kit-variables.$gd-color-text-dimmed;
+        }
+    }
+
+    &.adi-droppable-active .adi-stack-warn,
+    .adi-stack-warn:hover,
+    &.adi-droppable-active .adi-category-warn,
+    .adi-category-warn:hover {
+        color: kit-variables.$gd-color-state-blank;
+
+        .attr-field-icon::before {
+            color: variables.$adi-field-icon-color;
+        }
+
+        .stack-by {
+            color: kit-variables.$gd-color-dark;
+        }
+    }
+
+    &.adi-droppable-hover,
+    .adi-droppable-hover {
+        .adi-bucket-invitation,
+        &.adi-bucket-invitation,
+        &.adi-replace-invitation {
+            .adi-bucket-invitation-inner {
+                color: kit-variables.$gd-color-white;
+                background-color: variables.$adi-dropzone-active-color;
+            }
+        }
+
+        &.adi-replace-invitation {
+            z-index: 2;
+
+            .adi-bucket-item-header {
+                z-index: 2;
+            }
+
+            .adi-bucket-invitation-inner {
+                display: block;
+                background-color: variables.$adi-dropzone-background-color;
+
+                // refactor
+                // stylelint-disable-next-line max-nesting-depth
+                &::before,
+                &::after {
+                    display: block;
+                }
+
+                // refactor
+                // stylelint-disable-next-line max-nesting-depth
+                &::before {
+                    border: 2px dashed variables.$adi-dropzone-active-color;
+                }
+            }
+        }
+    }
+
+    &.bucket-notifications {
+        align-items: center;
+        border: 1px solid variables.$adi-bucket-border-color;
+        box-shadow: variables.$adi-bucket-box-shadow;
+        color: variables.$adi-bucket-notification-color;
+        background-color: variables.$adi-dropzone-background-color;
+
+        .bucket-notification {
+            display: flex;
+            padding: 4px 7px 4px 0;
+
+            .bucket-notification-icon {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 30px;
+                flex-shrink: 0;
+                text-align: center;
+                font-size: 16px;
+                font-family: Indigo, serif;
+                line-height: 100%;
+            }
+
+            .bucket-notification-icon--granularity::before {
+                content: "\e63c";
+            }
+
+            .bucket-notification-icon--removed-items::before {
+                content: "\e61a";
+            }
+
+            .bucket-notification-icon--hidden-items::before {
+                content: "\e61e";
+            }
+
+            .bucket-notification-message {
+                line-height: 15px;
+                font-size: 11px;
+            }
+        }
+
+        .bucket-notification + .bucket-notification {
+            border-top: 1px solid variables.$adi-bucket-border-color;
+        }
+    }
+}
+
+.bucket-notification-tooltip {
+    ul {
+        margin: 5px;
+        padding-inline-start: 15px;
+    }
+}
+
+.bucket-collapsed {
+    margin-bottom: 0;
+
+    & + & {
+        .bucket-title {
+            border-top: none;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+    }
+
+    &:last-child {
+        box-shadow: variables.$adi-bucket-box-shadow;
+
+        .bucket-contents {
+            border-bottom: none;
+        }
+
+        .bucket-title {
+            border-bottom: 1px solid variables.$adi-bucket-border-color;
+            border-bottom-left-radius: variables.$adi-bucket-border-radius;
+            border-bottom-right-radius: variables.$adi-bucket-border-radius;
+        }
+    }
+
+    .bucket-title {
+        cursor: pointer;
+    }
+
+    .bucket-contents {
+        border-radius: 0;
+        box-shadow: none;
+    }
+}
+
+.bucket-configuration {
+    margin-top: 10px;
+
+    .adi-bucket-item:last-child {
+        .adi-bucket-item-header.collapsed {
+            border-bottom-left-radius: variables.$adi-bucket-border-radius;
+            border-bottom-right-radius: variables.$adi-bucket-border-radius;
+        }
+    }
+}
+
+.adi-bucket-item {
+    position: relative;
+    margin: -1px; // so the border can overlay the border of whole bucket
+    padding: 0;
+    border: 1px solid transparent; // only for bottom, left & right
+    color: kit-variables.$gd-color-text;
+
+    &.is-dragging {
+        &,
+        .adi-bucket-item-header,
+        .adi-bucket-item-header::before,
+        .gd-button.button-dropdown.gd-icon-right.gd-icon-plus::after,
+        .inlineBubbleHelp {
+            color: kit-variables.$gd-color-disabled;
+        }
+
+        .adi-bucket-item-header,
+        .adi-bucket-configuration {
+            background: variables.$adi-catalog-background;
+        }
+
+        .adi-catalog-item {
+            &::before {
+                color: kit-variables.$gd-border-color;
+            }
+        }
+
+        .adi-show-in-percent,
+        .adi-show-on-secondary-axis {
+            .input-checkbox-label .input-label-text {
+                color: kit-variables.$gd-color-disabled;
+            }
+        }
+
+        .button-dropdown {
+            transition: none;
+        }
+
+        .adi-measure-number-format-wrapper {
+            .adi-icon-number-format::before {
+                content: url("@gooddata/sdk-ui-analytical-designer/styles/images/number-format-unrelated.svg");
+            }
+        }
+    }
+
+    &.highlight {
+        // apply on insides of the filter buttons and not to their "adi-bucket-item" wrapper they share with bucket items
+        .adi-filter-button {
+            background-color: kit-variables.$is-focused-background;
+        }
+
+        .adi-attribute-filter-button {
+            border-radius: 3px;
+            background-color: kit-variables.$is-focused-background;
+        }
+
+        // apply only on "adi-bucket-item" that are not filter items (they are handled above)
+        &:not(.adi-filter-item-wrapper) {
+            background-color: kit-variables.$is-focused-background;
+        }
+    }
+
+    .adi-bucket-item-sequence-number {
+        position: absolute;
+        top: 0;
+        right: 5px;
+        font-family: variables.$adi-sequence-number-font-family;
+        font-size: 10px;
+        font-weight: normal;
+        color: kit-variables.$gd-color-state-blank;
+    }
+
+    .adi-bucket-item-header {
+        position: relative;
+        overflow: visible;
+        min-height: 25px;
+        margin: -1px;
+        padding: variables.$adi-bucket-item-header-padding 10px variables.$adi-bucket-item-header-padding 33px;
+        border: 1px solid variables.$adi-bucket-border-color;
+
+        @extend %adi-bucket-item;
+
+        border-bottom-left-radius: variables.$adi-bucket-border-radius;
+        border-bottom-right-radius: variables.$adi-bucket-border-radius;
+        line-height: 25px;
+        white-space: normal;
+        text-overflow: ellipsis;
+        color: kit-variables.$gd-color-dark;
+        transition: 0.2s;
+        transition-delay: 0.1s;
+        transition-property: margin-left, padding-left, border-radius, background-color, border-color;
+
+        > h4 {
+            position: relative;
+            top: 4px;
+            display: inline-block;
+            overflow: hidden;
+            max-width: 172px;
+            margin: 0 3px 3px 0;
+            font-size: 13px;
+            font-weight: normal;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            vertical-align: middle;
+        }
+
+        .adi-catalog-item {
+            position: relative;
+            top: 1px;
+            overflow: visible;
+            line-height: 27px;
+            color: inherit;
+
+            &.configurable-attribute,
+            &.multiple-dates {
+                left: 20px;
+                width: 150px;
+            }
+
+            &::before {
+                position: absolute;
+                left: -25px;
+            }
+
+            > div {
+                overflow: hidden;
+            }
+        }
+
+        .adi-attribute-filter-label {
+            font-size: 11px;
+        }
+
+        .gd-editable-label-inner {
+            // Size to content rather than inheriting EditableLabel's height: 100%.
+            // See the note on .gd-editable-label below.
+            height: auto;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        .gd-editable-label {
+            position: relative;
+            display: block;
+            overflow: hidden;
+            width: auto;
+            // Size to the line box instead of a fixed height. In the host shell, hovering
+            // the app header preloads other applications whose injected CSS forces a
+            // document-wide restyle; a fixed `height` then gets reinterpreted (the label's
+            // content box collapses) and the title is clipped. An auto height driven by
+            // line-height is immune to that restyle.
+            height: auto;
+            min-height: 17px;
+            margin: 0 -6px;
+            padding: 3px 5px;
+            line-height: 17px;
+            text-overflow: ellipsis;
+
+            &:hover,
+            &:focus,
+            &:active,
+            &.is-editing {
+                border-color: color.adjust(editableLabel.$editable-label-border, $alpha: -0.25);
+                background-color: kit-variables.$gd-color-white;
+            }
+
+            &,
+            textarea {
+                white-space: nowrap;
+            }
+
+            textarea {
+                width: 100%;
+            }
+
+            &.measure-item-editable-label {
+                margin: 0 20px 0 -6px; // leave a place for measure sequence number
+            }
+        }
+
+        .adi-bucket-item-sub-header {
+            display: block;
+            width: 175px;
+            margin: -2px 0 0;
+            border-radius: variables.$adi-bucket-border-radius;
+            font-size: 10px;
+            font-weight: normal;
+            line-height: 14px;
+            white-space: nowrap;
+            color: kit-variables.$gd-color-state-blank;
+            transition: 0.2s;
+            transition-property: color;
+        }
+
+        &.expanded {
+            .adi-bucket-item-sub-header {
+                color: inherit;
+            }
+        }
+
+        .adi-attribute-filter-label,
+        .adi-date-filter-label {
+            overflow: hidden;
+
+            .label {
+                max-width: 175px;
+            }
+        }
+    }
+
+    .adi-configuration-section-header {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .adi-bucket-item-header-has-toggle {
+        padding-right: 50px;
+    }
+
+    .expanded,
+    .collapsed {
+        border-color: variables.$adi-bucket-border-color;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+
+        &::before {
+            content: "\e611";
+            position: absolute;
+            top: 9px;
+            right: 190px;
+            bottom: auto;
+            left: auto;
+            display: inline-block;
+            font-family: Indigo, sans-serif;
+            font-weight: normal;
+            font-size: 15px;
+            line-height: 16px;
+            color: kit-variables.$gd-color-state-blank;
+
+            // Fix webkit transform flickering bug:
+            // http://www.sitepoint.com/fix-chrome-animation-flash-bug/
+            -webkit-backface-visibility: hidden;
+            transition: 0.2s;
+        }
+    }
+
+    .expanded {
+        z-index: 1;
+        border: 1px solid variables.$adi-bucket-item-active-border-color;
+        box-shadow: variables.$adi-bucket-box-shadow;
+        font-weight: bold;
+
+        > h4 {
+            font-weight: bold;
+        }
+
+        &::before {
+            color: kit-variables.$gd-color-link;
+            transform: rotate(90deg);
+        }
+
+        .adi-catalog-item {
+            font-weight: bold;
+        }
+    }
+
+    .adi-bucket-invitation-inner {
+        display: none;
+    }
+
+    &.adi-replace-invitation {
+        z-index: 1;
+
+        .adi-bucket-item-header {
+            transition-property: none;
+            transition-duration: 1ms;
+        }
+
+        .adi-bucket-invitation-inner {
+            position: absolute;
+            z-index: 3;
+            top: -1px;
+            right: -1px;
+            bottom: -2px;
+            left: -1px;
+            display: block;
+            margin: 0;
+            font-size: 11px;
+            font-weight: bold;
+            line-height: 20px;
+            text-transform: uppercase;
+            text-align: center;
+            color: transparent;
+
+            &::before,
+            &::after {
+                content: "";
+                position: absolute;
+                display: none;
+                width: auto;
+                margin: 0;
+            }
+
+            &::before {
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                display: block;
+                border: 2px solid variables.$adi-dropzone-active-lighter;
+            }
+
+            &::after {
+                z-index: -1;
+                top: 4px;
+                right: 4px;
+                bottom: 4px;
+                left: 4px;
+                border-radius: variables.$adi-bucket-border-radius;
+                background-color: variables.$adi-dropzone-active-color;
+            }
+
+            span {
+                position: absolute;
+                top: 50%;
+                right: 0;
+                left: 0;
+                display: block;
+                max-width: none;
+                margin-top: -10px;
+            }
+        }
+
+        .collapsed {
+            .adi-bucket-item-header {
+                border-bottom: transparent;
+            }
+        }
+    }
+
+    &:hover {
+        .adi-bucket-item-header:not(.renaming) {
+            box-shadow: variables.$adi-bucket-box-shadow;
+
+            &::before {
+                color: kit-variables.$gd-color-link;
+            }
+        }
+    }
+
+    &.adi-dragged-item {
+        width: 218px;
+        border: 1px solid color.adjust(variables.$adi-bucket-border-color, $alpha: -0.5);
+        border-radius: 2px;
+        box-shadow:
+            0 1px 3px 0 variables.$adi-shadow-lighter,
+            0 2px 9px 0 variables.$adi-shadow-darker;
+        list-style-type: none;
+        background: color.adjust(kit-variables.$default-gd-color-white, $alpha: -0.05);
+        opacity: 0.8;
+
+        .adi-bucket-configuration {
+            display: none;
+        }
+
+        .adi-bucket-item-header::after {
+            background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/icon-drag-field-dragged.svg");
+            opacity: 1;
+        }
+    }
+
+    &.about-to-be-removed {
+        background-color: kit-variables.$gd-palette-primary-dimmed;
+
+        @extend %trash-icon;
+
+        &::before {
+            line-height: 47px;
+        }
+
+        &.has-no-operands {
+            @extend %trash-icon;
+
+            &::before {
+                line-height: 35px;
+            }
+        }
+
+        &,
+        .adi-bucket-item-header,
+        .adi-bucket-item-header::before,
+        .adi-bucket-item-sub-header,
+        .gd-button.button-dropdown.gd-icon-right.gd-icon-plus::after {
+            color: kit-variables.$gd-color-disabled;
+        }
+
+        .adi-bucket-item-sequence-number {
+            visibility: hidden;
+        }
+
+        @keyframes measure-trash-bin-reveal {
+            from {
+                right: 15px;
+                opacity: 0;
+            }
+            to {
+                right: 5px;
+                opacity: 1;
+            }
+        }
+    }
+}
+
+.adi-bucket-item-drag-handle {
+    position: relative;
+
+    .adi-bucket-item-header {
+        cursor: grab;
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 17px;
+            margin: 6px 0 5px;
+            background: url("@gooddata/sdk-ui-analytical-designer/styles/images/icon-drag-field.svg") repeat-y
+                center top;
+            opacity: 0;
+            transition: 0.2s;
+            transition-delay: 0.1s;
+            transition-property: opacity;
+            transition-timing-function: ease-in;
+        }
+    }
+
+    &:hover {
+        z-index: 1;
+
+        .adi-bucket-item-header:not(.renaming) {
+            margin-left: -7px;
+            padding-left: 39px;
+            border-color: variables.$adi-bucket-item-active-border-color;
+            border-top-left-radius: variables.$adi-bucket-border-radius;
+            border-bottom-left-radius: variables.$adi-bucket-border-radius;
+            background-color: kit-variables.$gd-color-white;
+
+            &::after {
+                opacity: 1;
+                transition-timing-function: ease-out;
+            }
+        }
+    }
+}
+
+.adi-bucket-item-toggle {
+    position: absolute;
+    z-index: 1;
+    top: 7px;
+    right: 12px;
+}
+
+.adi-bucket-item-toggle-bubble {
+    cursor: help;
+}
+
+.adi-bucket-configuration {
+    z-index: 1;
+    padding: 6px 12px 8px;
+    box-shadow: inset 0 -1px 2px 0 variables.$adi-shadow-lighter;
+    font-size: 12px;
+    line-height: 16px;
+    background-color: variables.$adi-bucket-configuration-background-color-mix-white;
+
+    &:empty {
+        padding: 0;
+    }
+
+    section {
+        margin: 5px 0 0;
+        padding: 5px 0 0;
+        border-top: 1px solid kit-variables.$gd-border-color;
+    }
+
+    &.adi-arithmetic-measure-configuration {
+        section {
+            border-top: 0;
+
+            &.adi-is-a-total-measure {
+                margin-top: 10px;
+                border-top: 1px solid kit-variables.$gd-border-color;
+            }
+
+            &.adi-is-a-total-measure + section {
+                border-top: 1px solid kit-variables.$gd-border-color;
+            }
+        }
+    }
+
+    fieldset {
+        margin: 15px 0 0;
+        padding: 0 0 0 10px;
+        border: none;
+        border-left: 2px dotted kit-variables.$gd-border-color;
+    }
+
+    legend {
+        position: relative;
+        top: -10px;
+        left: -17px;
+        box-sizing: border-box;
+        width: calc(100% + 17px);
+        margin: 0 0 -4px;
+        padding: 5px 0 0;
+
+        .input-checkbox-toggle {
+            position: absolute;
+            top: 5px;
+            right: 0;
+            margin: 0;
+        }
+    }
+
+    .adi-input-warning {
+        color: gray;
+        background: kit-variables.$gd-palette-warning-base;
+    }
+
+    .adi-input-error,
+    .adi-input-progress,
+    .adi-input-warning {
+        width: 100%;
+        margin-top: 5px;
+        font-size: 12px;
+    }
+
+    .configuration-subsection {
+        padding-left: 5px;
+
+        .adi-properties-dropdown-container {
+            display: flex;
+            align-items: center;
+            width: 177px;
+
+            .input-label-text {
+                margin-right: 15px;
+            }
+        }
+    }
+
+    .adi-properties-dropdown-container {
+        display: flex;
+        align-items: center;
+
+        .input-label-text {
+            flex-grow: 2;
+        }
+    }
+
+    .adi-bucket-inputfield {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 4px 0;
+
+        .input-label-text {
+            margin-right: 20px;
+        }
+
+        .gd-input-field {
+            width: 117px;
+        }
+
+        .number {
+            text-align: right;
+        }
+
+        .button-dropdown {
+            width: 100%;
+
+            &:focus-visible {
+                outline-color: var(--gd-palette-primary-base, kit-variables.$gd-color-highlight);
+            }
+        }
+    }
+
+    .adi-bucket-inputfield-description {
+        color: var(--gd-palette-complementary-7);
+        font-size: 12px;
+        line-height: 16px;
+        margin: 3px 0;
+
+        a {
+            color: var(--gd-palette-complementary-7);
+            font-size: 12px;
+            line-height: 16px;
+
+            &:hover {
+                color: var(--gd-palette-complementary-8, #464e56);
+            }
+        }
+    }
+
+    .adi-bucket-dropdown {
+        flex: 1 1 auto;
+        overflow: hidden;
+        padding: 5px 0;
+    }
+
+    .adi-bucket-dropdown,
+    .adi-bucket-control {
+        width: 117px;
+    }
+
+    .legend-title {
+        position: relative;
+        display: block;
+        overflow: hidden;
+        margin: 0 40px 0 0;
+        font-size: 11px;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: kit-variables.$gd-color-state-blank;
+
+        &:only-child {
+            margin-right: 0;
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            display: inline-block;
+            width: 100%;
+            height: 0;
+            margin-left: 10px;
+            border-top: 1px solid kit-variables.$gd-border-color;
+        }
+    }
+
+    .attribute-filters-wrapper {
+        h2 {
+            margin-top: 1px;
+            margin-bottom: 2px;
+            font-weight: bold;
+            font-size: 10px;
+            text-transform: uppercase;
+            color: kit-variables.$gd-color-state-blank;
+        }
+
+        .gd-button-link.gd-icon-plus {
+            height: auto;
+            padding-left: 24px;
+            font-size: 12px;
+            color: inherit;
+
+            &::after {
+                right: auto;
+                left: 2px;
+                font-size: 15px;
+                color: kit-variables.$gd-palette-primary-base;
+            }
+
+            &,
+            &:hover {
+                // refactor
+                // stylelint-disable-next-line max-nesting-depth
+                &,
+                .gd-button-text {
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+
+    .adi-catalog-item {
+        color: inherit;
+
+        &::before {
+            margin-left: 0;
+            margin-right: 5px;
+        }
+    }
+
+    .adi-attribute-filters-list {
+        margin-left: -7px;
+        .gd-attribute-filter__next {
+            display: flex;
+        }
+    }
+
+    .metric-filter-wrapper {
+        display: flex;
+        justify-content: space-between;
+
+        > div {
+            flex-grow: 1;
+        }
+
+        .adi-filter-button {
+            max-width: 182px;
+        }
+
+        .remove-filter {
+            flex: 0 0 auto;
+            width: 19px;
+            margin-top: -3px;
+            margin-bottom: -5px;
+
+            &::before {
+                left: 0;
+                font-size: 14px;
+            }
+        }
+
+        .gd-bubble-trigger {
+            display: inline-block;
+        }
+    }
+
+    .adi-measure-number-format-button-wrapper {
+        width: 100%;
+    }
+
+    .adi-bucket-item__checkbox-with-label {
+        display: flex;
+
+        .input-checkbox-label {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .adi-bucket-item__checkbox-with-label__tooltip-trigger {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-left: auto;
+        }
+    }
+
+    .metric-date-filter-button,
+    .adi-filter-button,
+    .adi-measure-number-format-button,
+    .gd-button-link.gd-icon-plus {
+        height: auto;
+        margin-left: -7px;
+        padding: 2px 5px;
+        border: 1px solid transparent;
+        border-radius: variables.$adi-bucket-border-radius;
+        line-height: 18px;
+        color: inherit;
+
+        &.adi-metric-attribute-filter {
+            margin-left: 0;
+        }
+
+        &:hover,
+        &.is-active {
+            border-color: variables.$adi-bucket-item-active-border-color;
+            box-shadow:
+                0 1px 1px 0 variables.$adi-shadow-darker,
+                inset 0 -1px 0 0 color.adjust(variables.$adi-bucket-item-active-border-color, $alpha: -0.4);
+            background-color: variables.$adi-catalog-background;
+        }
+
+        &:active,
+        &.is-active {
+            border: 1px solid color.adjust(variables.$adi-filter-active-border-color, $alpha: -0.8);
+            box-shadow: inset 0 1px 0 0
+                color.adjust(variables.$adi-bucket-item-active-border-color, $alpha: -0.35);
+            background-image: linear-gradient(
+                -179deg,
+                variables.$adi-button-active-gradient-top 0%,
+                variables.$adi-button-active-gradient-bottom 100%
+            );
+        }
+
+        label {
+            text-align: left;
+            color: kit-variables.$gd-color-text;
+        }
+
+        &.disabled {
+            border-color: transparent;
+            box-shadow: none;
+            color: kit-variables.$gd-color-disabled;
+
+            &::before {
+                color: kit-variables.$gd-color-disabled;
+            }
+        }
+
+        .gd-button-text {
+            text-decoration: none;
+        }
+    }
+
+    .adi-filter-button {
+        position: relative;
+        display: block;
+        padding-right: 18px;
+
+        &.adi-dragged-item,
+        &.is-active,
+        &:hover,
+        .gd-button-text {
+            &::before {
+                display: none;
+            }
+        }
+
+        &::after {
+            position: absolute;
+            top: 0;
+            right: 5px;
+            bottom: 0;
+        }
+    }
+
+    .adi-show-all-values-section {
+        display: inline-block;
+    }
+
+    .input-checkbox-label {
+        margin-left: -3px;
+        padding-left: 23px;
+    }
+
+    &.adi-color-configuration {
+        padding-right: 0;
+        padding-bottom: 4px;
+        padding-left: 0;
+
+        &:empty {
+            padding: 0;
+        }
+
+        .gd-colored-items-list {
+            width: auto;
+        }
+    }
+
+    .adi-measure-number-format-wrapper {
+        .gd-button-link {
+            height: auto;
+            font-size: 12px;
+            color: inherit;
+
+            .gd-button-icon {
+                width: 13px;
+            }
+
+            .gd-button-text {
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                max-width: 155px;
+            }
+        }
+
+        .adi-measure-number-format-button:hover {
+            outline: none;
+        }
+
+        .adi-icon-number-format::before {
+            content: url("@gooddata/sdk-ui-analytical-designer/styles/images/number-format.svg");
+        }
+    }
+
+    .comparison-label-conditional {
+        .input-checkbox-label {
+            margin-top: 13px;
+        }
+    }
+
+    .comparison-label-itemline {
+        .adi-bucket-inputfield {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            align-content: space-between;
+            margin-top: 15px;
+        }
+
+        .gd-input-field {
+            width: 177px;
+            margin-top: 7px;
+        }
+    }
+
+    .calculation-control {
+        padding: 8px 0 2px;
+
+        .adi-properties-dropdown-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+
+        .adi-bucket-inputfield {
+            padding: 0;
+        }
+
+        .adi-bucket-dropdown {
+            width: 194px;
+        }
+    }
+
+    .comparison-indicator-sub-section {
+        display: flex;
+        flex-direction: column;
+        gap: 13px;
+    }
+
+    .comparison-color-list-item {
+        margin-top: 3px;
+
+        > div {
+            margin-top: 5px;
+        }
+
+        .gd-color-config-list-item {
+            padding: 5px 10px;
+        }
+    }
+}
+
+.adi-attribute-display-form-button:hover {
+    outline: none;
+}
+
+.date-granularity {
+    margin-top: 0;
+    padding-top: 12px;
+    border-top: 1px solid kit-variables.$gd-border-color;
+
+    .select {
+        display: flex;
+        align-items: center;
+        margin-top: 3px;
+        white-space: nowrap;
+
+        > span {
+            flex: 0 0 auto;
+        }
+
+        &:first-child {
+            &,
+            .select-label,
+            .select-button {
+                margin-top: 0;
+            }
+        }
+    }
+
+    .select-label,
+    .select-button {
+        margin-top: 4px;
+    }
+
+    .select-label {
+        margin-right: 10px;
+    }
+
+    .select-button {
+        flex: 1 1 auto;
+        overflow: hidden;
+
+        button {
+            width: 100%;
+        }
+    }
+
+    .adi-date-granularity-switch {
+        .gd-menuOpenedByClick-togglerWrapped {
+            width: 100%;
+        }
+    }
+}
+
+.adi-metric-bucket-item-configuration,
+.adi-attribute-bucket-item-configuration,
+.adi-configuration-bucket-item-configuration {
+    z-index: 2;
+    margin: 0 -1px -1px;
+    border: 1px solid variables.$adi-bucket-item-active-border-color;
+}
+
+.adi-metric-bucket-item-configuration {
+    label {
+        &:not(.input-checkbox-label) {
+            display: block;
+            padding: 4px 0;
+            color: inherit;
+        }
+
+        &.checkbox {
+            margin-left: 17px;
+
+            input {
+                float: left;
+                margin: 2px 0 0 -17px;
+            }
+        }
+
+        &.select {
+            select {
+                margin-left: 3px;
+            }
+        }
+
+        &.is-disabled {
+            color: kit-variables.$gd-color-disabled;
+        }
+    }
+}
+
+.adi-configuration-bucket-item-configuration {
+    border-top: none;
+}
+
+.adi-bucket-drop-line {
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    border-bottom: 3px dashed variables.$adi-dropzone-active-lighter;
+
+    &.adi-drop-line-top {
+        top: -1px;
+    }
+
+    &.adi-drop-line-bottom {
+        bottom: -1px;
+    }
+}
+
+// refactor
+// stylelint-disable-next-line no-duplicate-selectors
+.adi-bucket {
+    .adi-bucket-item {
+        .adi-bucket-item-header {
+            &.expanded,
+            &.collapsed {
+                cursor: pointer;
+            }
+        }
+
+        .adi-filter-button {
+            cursor: pointer;
+
+            &::before {
+                cursor: grab;
+            }
+        }
+    }
+}
+
+.adi-dragged-item {
+    cursor: grabbing;
+}
+
+.shortened-label {
+    display: flex;
+
+    div.text {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    div.count {
+        display: block;
+        flex: 0 0 auto;
+        margin-left: 10px;
+    }
+}
+
+.adi-attribute-wrapper,
+.adi-aggregation-wrapper {
+    position: relative;
+    overflow: hidden;
+    width: 194px;
+    font-size: 12px;
+    line-height: 24px;
+    text-overflow: ellipsis;
+    color: inherit;
+
+    .adi-catalog-item {
+        position: relative;
+
+        > div {
+            padding-right: 20px;
+            padding-left: 25px;
+        }
+
+        > .adi-catalog-item-title-tiger {
+            padding-right: 40px;
+        }
+    }
+
+    .inlineBubbleHelp {
+        width: auto;
+    }
+}
+
+.adi-attribute-hyperlink-static-text {
+    margin-top: 5px;
+}
+
+.adi-attribute-hyperlink-static-text-label {
+    color: #687581;
+}
+
+.adi-bucket-select {
+    > span {
+        margin-left: 3px;
+        line-height: inherit;
+
+        &:first-child {
+            margin-left: 0;
+        }
+    }
+
+    select {
+        width: 150px;
+    }
+}
+
+.adi-filter-button {
+    box-sizing: border-box;
+    display: inline-block;
+}
+
+.no-date-available {
+    position: relative;
+
+    .adi-bucket-configuration &.adi-filter-button,
+    .adi-date-filter & {
+        font-size: 11px;
+        font-weight: bold;
+        color: kit-variables.$gd-color-disabled;
+    }
+
+    .adi-bucket-configuration &.adi-filter-button {
+        white-space: normal;
+        text-align: center;
+        text-transform: uppercase;
+
+        &,
+        &:hover,
+        &:active {
+            padding: 0;
+            border: 0;
+            box-shadow: none;
+            background: none;
+            cursor: default;
+        }
+    }
+
+    .adi-date-filter & {
+        padding-right: 8px;
+
+        .gd-button-text span {
+            position: relative;
+            top: 1px;
+        }
+    }
+}
+
+.adi-date-datasets-list,
+.adi-date-presets-list {
+    .gd-list-item-header {
+        padding: 6px 10px;
+    }
+}
+
+.adi-date-granularity-dropdown {
+    z-index: 5001; // same as "overlay-wrapper" used by other dropdowns (bucket list have 100, Menu by default 10)
+    min-width: 135px;
+
+    .adi-date-granularity-more-options {
+        margin-right: 30px;
+    }
+
+    .adi-granularity-preview {
+        color: var(--gd-palette-complementary-6);
+        padding-left: 20px;
+        text-align: right;
+        font-weight: normal;
+    }
+}
+
+.gd-menu-wrapper.adi-date-granularity-dropdown {
+    padding: 6px 0;
+
+    .gd-list-item.gd-menu-item {
+        padding: 2px 10px;
+    }
+}
+
+.adi-attribute-display-form-button {
+    max-width: 200px;
+    padding: 2px 5px;
+    border: 1px solid transparent;
+    border-radius: variables.$adi-bucket-border-radius;
+    box-shadow: none;
+    line-height: 18px;
+    color: inherit;
+    background-color: inherit;
+
+    &:hover,
+    &.is-active {
+        border-color: variables.$adi-bucket-item-active-border-color;
+        box-shadow:
+            0 1px 1px 0 variables.$adi-shadow-darker,
+            inset 0 -1px 0 0 color.adjust(variables.$adi-bucket-item-active-border-color, $alpha: -0.4);
+        background-color: variables.$adi-catalog-background;
+    }
+
+    &:active,
+    &.is-active {
+        border: 1px solid color.adjust(variables.$adi-filter-active-border-color, $alpha: -0.8);
+        box-shadow: inset 0 1px 0 0
+            color.adjust(variables.$adi-bucket-item-active-border-color, $alpha: -0.35);
+        background-image: linear-gradient(
+            -179deg,
+            variables.$adi-button-active-gradient-top 0%,
+            variables.$adi-button-active-gradient-bottom 100%
+        );
+    }
+}
+
+.adi-attribute-bucket-item-configuration {
+    .adi-attribute-display-form-button {
+        margin-left: -7px;
+    }
+}
+
+.adi-date-bucket-item-configuration {
+    .select + section {
+        margin-top: 10px;
+    }
+
+    .adi-attribute-display-form-button {
+        margin-left: -6px;
+    }
+}
+
+.gd-attribute-display-form-dropdown-body {
+    line-height: 1.4rem;
+
+    .gd-attribute-display-form {
+        padding: 2px 10px;
+
+        &::before {
+            content: "";
+            flex-shrink: 0;
+            position: relative;
+            top: -1px;
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            margin-right: 6px;
+            vertical-align: bottom;
+        }
+
+        &.gd-icon-earth::before {
+            content: "\E624";
+            color: kit-variables.$gd-color-warning-text;
+            text-align: center;
+        }
+    }
+}
+
+.gd-bubble {
+    &.bubble-light.calculation-list-item-bubble {
+        .calculation-item-info-header {
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 23px;
+            margin-bottom: 10px;
+        }
+
+        .calculation-item-info-use-in-content {
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 18px;
+            color: var(--gd-palette-complementary-8-from-theme, #687581);
+        }
+    }
+}
+
+.gd-list-footer {
+    .unrelated-date-button {
+        line-height: 16px;
+        padding-left: 3px;
+        padding-right: 0;
+        margin-top: -3px;
+        font-size: 12px;
+    }
+}
+
+.gd-dropdown-icon-comparison-position-left,
+.gd-dropdown-icon-comparison-position-right,
+.gd-dropdown-icon-comparison-position-top {
+    margin-right: 10px;
+}
+
+.gd-drill-down-item {
+    border-left: 1px dashed kit-variables.$default-gd-border-color;
+    margin: 10px 0 0 5px;
+    padding-left: 10px;
+}
+
+.gd-drill-down-item-content {
+    background-color: var(--gd-palette-complementary-2, #ebeff4);
+    padding: 10px;
+}
+
+.gd-drill-down-item-attribute {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.gd-drill-down-item-hierarchy-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+    padding-left: 3px;
+
+    .gd-drill-down-hierarchy-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.adi-metric-visualization-select-wrapper {
+    margin: 5px 0 0;
+    padding: 5px 0 0;
+    border-top: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+}
+
+.adi-metric-visualization-select {
+    margin: 5px 0 0;
+    width: 100%;
+    display: flex;
+}
+
+.adi-metric-visualization-select-item {
+    width: 100%;
+    min-width: 0;
+
+    .gd-button-text {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

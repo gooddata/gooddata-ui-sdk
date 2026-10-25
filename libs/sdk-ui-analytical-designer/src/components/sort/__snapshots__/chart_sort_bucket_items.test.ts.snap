@@ -1,0 +1,36 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`chart sort bucket items > getBucketItemNames > should return merged attributes and measures names from buckets 1`] = `
+{
+  "a1": {
+    "name": "Country",
+    "type": "attribute",
+  },
+  "a2": {
+    "name": "My state",
+    "type": "attribute",
+  },
+  "a3": {
+    "name": "Closed - Day",
+    "type": "chronologicalDate",
+  },
+  "a4": {
+    "name": "Renamed chronological date",
+    "type": "chronologicalDate",
+  },
+  "a5": {
+    "name": "Closed - Day of Week",
+    "type": "genericDate",
+  },
+  "m1": {
+    "name": "Snapshot",
+    "sequenceNumber": "M1",
+    "type": "measure",
+  },
+  "m2": {
+    "name": "Probability",
+    "sequenceNumber": "M2",
+    "type": "measure",
+  },
+}
+`;

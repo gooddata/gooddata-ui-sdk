@@ -4,6 +4,9 @@ import { type ReactNode, createContext, useCallback, useRef } from "react";
 
 import { type Events } from "./events.js";
 
+/**
+ * @internal
+ */
 export interface IEvent {
     action: Events;
     label?: string;
@@ -15,15 +18,24 @@ export interface IEvent {
     };
 }
 
+/**
+ * @internal
+ */
 export interface IEventListener {
     (event: IEvent): void;
 }
 
+/**
+ * @internal
+ */
 export interface IEventContextType {
     emit: (event: IEvent) => void;
     registerListener: (listener: IEventListener) => () => void;
 }
 
+/**
+ * @internal
+ */
 export const EventContext = createContext<IEventContextType>({
     emit: () => {
         /*do nothing*/
@@ -34,6 +46,9 @@ export const EventContext = createContext<IEventContextType>({
     },
 });
 
+/**
+ * @internal
+ */
 export function EventContextProvider({
     children,
     listeners: initialListeners = [],

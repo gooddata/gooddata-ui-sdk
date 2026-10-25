@@ -12,6 +12,9 @@ import { useAutofocus } from "./hooks/useAutofocus.js";
 import { useMonaco } from "./hooks/useMonaco.js";
 import { type IMaqlEditorIcons, MonacoStyles } from "./MonacoEditor.styles.js";
 
+/**
+ * @internal
+ */
 export type Monaco = typeof monaco;
 
 export interface IMonacoEditorProps {
@@ -38,9 +41,24 @@ export interface IMonacoEditorProps {
     ref?: Ref<IStandaloneCodeEditor | null>;
 }
 
+/**
+ * @internal
+ */
 export type IDisposable = monaco.IDisposable;
+
+/**
+ * @internal
+ */
 export type IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
+
+/**
+ * @internal
+ */
 export type IStandaloneEditorConstructionOptions = monaco.editor.IStandaloneEditorConstructionOptions;
+
+/**
+ * @internal
+ */
 export type IEditorContribution = monaco.editor.IEditorContribution;
 export type IStandaloneThemeData = monaco.editor.IStandaloneThemeData;
 export type IMarkerData = monaco.editor.IMarkerData;

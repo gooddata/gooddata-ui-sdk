@@ -11,11 +11,17 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { type ObjRef } from "@gooddata/sdk-model";
 
-const TypeMapping = {
+/**
+ * @internal
+ */
+export const TypeMapping = {
     measure: "metric",
     label: "attribute",
 } as const;
 
+/**
+ * @internal
+ */
 export interface IExpressionToken {
     id?: string;
     ref?: ObjRef;

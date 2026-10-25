@@ -1,0 +1,223 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`metadata > metadataToBuckets > should not preserve non default attribute bucket item display form if it is not supported 1`] = `
+[
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "alias": null,
+        "attribute": "attr.opportunity.id",
+        "dfIdentifier": "label.opportunity.id.name",
+        "dfIdentifiers": [
+          "label.opportunity.id.name",
+          "label.opportunity.id",
+          "label.opportunity.id.url",
+        ],
+        "dfRef": {
+          "uri": "/gdc/md/m0fb588l0gp4ozk9qppdudn9k9lrck8y/obj/1069",
+        },
+        "dfUri": "/gdc/md/m0fb588l0gp4ozk9qppdudn9k9lrck8y/obj/1069",
+        "dfUris": [
+          "/gdc/md/m0fb588l0gp4ozk9qppdudn9k9lrck8y/obj/1069",
+          "/gdc/md/m0fb588l0gp4ozk9qppdudn9k9lrck8y/obj/1070",
+          "/gdc/md/m0fb588l0gp4ozk9qppdudn9k9lrck8y/obj/1071",
+        ],
+        "displayForm": {
+          "uri": "/gdc/md/m0fb588l0gp4ozk9qppdudn9k9lrck8y/obj/1069",
+        },
+        "displayForms": [
+          {
+            "id": "label.opportunity.id.name",
+            "ref": {
+              "uri": "/gdc/md/m0fb588l0gp4ozk9qppdudn9k9lrck8y/obj/1069",
+            },
+            "title": "Opportunity Name",
+            "uri": "/gdc/md/m0fb588l0gp4ozk9qppdudn9k9lrck8y/obj/1069",
+          },
+          {
+            "id": "label.opportunity.id",
+            "ref": {
+              "uri": "/gdc/md/m0fb588l0gp4ozk9qppdudn9k9lrck8y/obj/1070",
+            },
+            "title": "Opportunity",
+            "uri": "/gdc/md/m0fb588l0gp4ozk9qppdudn9k9lrck8y/obj/1070",
+          },
+          {
+            "id": "label.opportunity.id.legacyGeo",
+            "ref": {
+              "uri": "/gdc/md/m0fb588l0gp4ozk9qppdudn9k9lrck8y/obj/1071",
+            },
+            "title": "SFDC URL",
+            "type": "GDC.geo.ausstates.code",
+            "uri": "/gdc/md/m0fb588l0gp4ozk9qppdudn9k9lrck8y/obj/1071",
+          },
+        ],
+        "filters": [],
+        "granularity": null,
+        "identifier": "attr.opportunity.id",
+        "isKdaDisabled": null,
+        "isThresholdMeasure": null,
+        "isTotalMeasure": null,
+        "localIdentifier": "c34d73138ece49409eeddc5d346e0eec",
+        "masterLocalIdentifier": null,
+        "operandLocalIdentifiers": null,
+        "operator": null,
+        "ref": {
+          "uri": "/gdc/md/m0fb588l0gp4ozk9qppdudn9k9lrck8y/obj/1068",
+        },
+        "showAllValues": null,
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "title": "Opportunity",
+        "type": "attribute",
+        "uri": "/gdc/md/m0fb588l0gp4ozk9qppdudn9k9lrck8y/obj/1068",
+      },
+    ],
+    "localIdentifier": "attribute",
+  },
+]
+`;
+
+exports[`metadata > metadataToBuckets > should preserve non default attribute bucket item display form if it is supported 1`] = `
+[
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "alias": null,
+        "attribute": "attr.opportunity.id",
+        "dfIdentifier": "label.opportunity.id",
+        "dfIdentifiers": [
+          "label.opportunity.id.name",
+          "label.opportunity.id",
+          "label.opportunity.id.url",
+        ],
+        "dfRef": {
+          "uri": "/gdc/md/m0fb588l0gp4ozk9qppdudn9k9lrck8y/obj/1070",
+        },
+        "dfUri": "/gdc/md/m0fb588l0gp4ozk9qppdudn9k9lrck8y/obj/1070",
+        "dfUris": [
+          "/gdc/md/m0fb588l0gp4ozk9qppdudn9k9lrck8y/obj/1069",
+          "/gdc/md/m0fb588l0gp4ozk9qppdudn9k9lrck8y/obj/1070",
+          "/gdc/md/m0fb588l0gp4ozk9qppdudn9k9lrck8y/obj/1071",
+        ],
+        "displayForm": {
+          "uri": "/gdc/md/m0fb588l0gp4ozk9qppdudn9k9lrck8y/obj/1070",
+        },
+        "displayForms": [
+          {
+            "id": "label.opportunity.id.name",
+            "ref": {
+              "uri": "/gdc/md/m0fb588l0gp4ozk9qppdudn9k9lrck8y/obj/1069",
+            },
+            "title": "Opportunity Name",
+            "uri": "/gdc/md/m0fb588l0gp4ozk9qppdudn9k9lrck8y/obj/1069",
+          },
+          {
+            "id": "label.opportunity.id",
+            "ref": {
+              "uri": "/gdc/md/m0fb588l0gp4ozk9qppdudn9k9lrck8y/obj/1070",
+            },
+            "title": "Opportunity",
+            "uri": "/gdc/md/m0fb588l0gp4ozk9qppdudn9k9lrck8y/obj/1070",
+          },
+          {
+            "id": "label.opportunity.id.legacyGeo",
+            "ref": {
+              "uri": "/gdc/md/m0fb588l0gp4ozk9qppdudn9k9lrck8y/obj/1071",
+            },
+            "title": "SFDC URL",
+            "type": "GDC.geo.ausstates.code",
+            "uri": "/gdc/md/m0fb588l0gp4ozk9qppdudn9k9lrck8y/obj/1071",
+          },
+        ],
+        "filters": [],
+        "granularity": null,
+        "identifier": "attr.opportunity.id",
+        "isKdaDisabled": null,
+        "isThresholdMeasure": null,
+        "isTotalMeasure": null,
+        "localIdentifier": "c34d73138ece49409eeddc5d346e0eec",
+        "masterLocalIdentifier": null,
+        "operandLocalIdentifiers": null,
+        "operator": null,
+        "ref": {
+          "uri": "/gdc/md/m0fb588l0gp4ozk9qppdudn9k9lrck8y/obj/1068",
+        },
+        "showAllValues": null,
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "title": "Opportunity",
+        "type": "attribute",
+        "uri": "/gdc/md/m0fb588l0gp4ozk9qppdudn9k9lrck8y/obj/1068",
+      },
+    ],
+    "localIdentifier": "attribute",
+  },
+]
+`;
+
+exports[`metadata > metadataToBuckets > should preserve non default date attribute bucket item display form 1`] = `
+[
+  {
+    "items": [
+      {
+        "aggregation": null,
+        "alias": null,
+        "attribute": "attr.datedataset",
+        "dateDatasetRef": {
+          "uri": "/gdc/md/TeamOneGoodSales1/obj/15174",
+        },
+        "dateType": "GDC.time.year",
+        "dfIdentifier": "activity.df.two",
+        "dfRef": {
+          "uri": "/gdc/md/project/obj/df_two",
+        },
+        "dfUri": "/gdc/md/project/obj/df_two",
+        "displayForm": {
+          "uri": "/gdc/md/project/obj/df_two",
+        },
+        "displayForms": [
+          {
+            "id": "activity.df.one",
+            "ref": {
+              "uri": "/gdc/md/project/obj/df_one",
+            },
+            "title": "Year (Activity)",
+            "uri": "/gdc/md/project/obj/df_one",
+          },
+          {
+            "id": "activity.df.two",
+            "ref": {
+              "uri": "/gdc/md/project/obj/df_two",
+            },
+            "title": "Year (Activity) - alternative",
+            "uri": "/gdc/md/project/obj/df_two",
+          },
+        ],
+        "filters": [],
+        "granularity": "GDC.time.year",
+        "identifier": "attr.datedataset",
+        "isKdaDisabled": null,
+        "isThresholdMeasure": null,
+        "isTotalMeasure": null,
+        "localIdentifier": "c34d73138ece49409eeddc5d346e0eec",
+        "masterLocalIdentifier": null,
+        "operandLocalIdentifiers": null,
+        "operator": null,
+        "ref": {
+          "uri": "/gdc/md/TeamOneGoodSales1/obj/701",
+        },
+        "showAllValues": null,
+        "showInPercent": null,
+        "showOnSecondaryAxis": null,
+        "title": "Year (Activity)",
+        "type": "date",
+        "uri": "/gdc/md/TeamOneGoodSales1/obj/701",
+      },
+    ],
+    "localIdentifier": "attribute",
+  },
+]
+`;

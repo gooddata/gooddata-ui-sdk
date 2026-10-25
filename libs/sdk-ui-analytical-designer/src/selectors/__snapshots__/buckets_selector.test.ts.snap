@@ -1,0 +1,83 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Buckets selector test > bucketsSelector > should return valid display forms 1`] = `
+[
+  {
+    "id": "attr.opportunity.text",
+    "ref": {
+      "uri": "/gdc/md/TeamOneGoodSales1/obj/666",
+    },
+    "title": "Text display form",
+    "type": undefined,
+    "uri": "/md/attr.opportunity.text",
+  },
+  {
+    "id": "attr.opportunity.hyperlink",
+    "ref": {
+      "uri": "/gdc/md/TeamOneGoodSales1/obj/667",
+    },
+    "title": "Hyperlink display form",
+    "type": "GDC.link",
+    "uri": "/md/attr.opportunity.hyperlink",
+  },
+  {
+    "id": "attr.opportunity.image",
+    "ref": {
+      "uri": "/gdc/md/TeamOneGoodSales1/obj/670",
+    },
+    "title": "Image display form",
+    "type": "GDC.image",
+    "uri": "/md/attr.opportunity.image",
+  },
+  {
+    "id": "attr.opportunity.geo_pin",
+    "ref": {
+      "uri": "/gdc/md/TeamOneGoodSales1/obj/668",
+    },
+    "title": "Geo push pun display form",
+    "type": "GDC.geo.pin",
+    "uri": "/md/attr.opportunity.geo_pin",
+  },
+]
+`;
+
+exports[`Buckets selector test > getDisplayFormsForBucketItemSelector > should return supported display forms for the attribute 1`] = `
+[
+  {
+    "id": "attr.opportunity.text",
+    "ref": {
+      "uri": "/gdc/md/TeamOneGoodSales1/obj/666",
+    },
+    "title": "Text display form",
+    "type": undefined,
+    "uri": "/md/attr.opportunity.text",
+  },
+  {
+    "id": "attr.opportunity.hyperlink",
+    "ref": {
+      "uri": "/gdc/md/TeamOneGoodSales1/obj/667",
+    },
+    "title": "Hyperlink display form",
+    "type": "GDC.link",
+    "uri": "/md/attr.opportunity.hyperlink",
+  },
+  {
+    "id": "attr.opportunity.image",
+    "ref": {
+      "uri": "/gdc/md/TeamOneGoodSales1/obj/670",
+    },
+    "title": "Image display form",
+    "type": "GDC.image",
+    "uri": "/md/attr.opportunity.image",
+  },
+  {
+    "id": "attr.opportunity.geo_pin",
+    "ref": {
+      "uri": "/gdc/md/TeamOneGoodSales1/obj/668",
+    },
+    "title": "Geo push pun display form",
+    "type": "GDC.geo.pin",
+    "uri": "/md/attr.opportunity.geo_pin",
+  },
+]
+`;

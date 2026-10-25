@@ -1,0 +1,35 @@
+// (C) 2021-2022 GoodData Corporation
+
+.gd-invitation-overlay {
+    .overlay.gd-dialog {
+        width: 440px;
+        max-width: 440px;
+        height: 238px;
+        padding: 0;
+
+        iframe {
+            border-radius: 3px;
+        }
+    }
+
+    .overlay.gd-dialog.email-validation-error {
+        height: 260px;
+    }
+
+    .overlay.gd-dialog.limit-error {
+        height: 258px;
+    }
+
+    .overlay.gd-dialog.general-error {
+        height: 238px;
+    }
+}
+
+.invisible.gd-invitation-wrapper {
+    display: block;
+    visibility: hidden;
+}
+
+.invisible .gd-invitation-overlay .gd-dialog-close {
+    display: none;
+}

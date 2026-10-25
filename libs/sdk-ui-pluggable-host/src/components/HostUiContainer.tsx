@@ -200,6 +200,7 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate, onError }
         },
         [activeAppRef],
     );
+    const openPricingDialog = useCallback(() => handleRef.current?.openPricingDialog?.(), []);
 
     // Stable navigation callbacks that always use the latest router navigate.
     // Both must stay stable: the host UI module captures them once at mount, so a changing dependency
@@ -393,6 +394,7 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate, onError }
                             aiEventReceiveRef={appEventReceiveRef}
                             onHeaderChange={onHeaderChange}
                             onDocumentTitleChange={onDocumentTitleChange}
+                            onOpenPricingDialog={openPricingDialog}
                         />
                     </HostIntlProvider>
                 </HostErrorBoundary>,
@@ -407,6 +409,7 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate, onError }
         ctx,
         onHeaderChange,
         onDocumentTitleChange,
+        openPricingDialog,
         pathname,
         aiAssistantOpen,
         reportError,

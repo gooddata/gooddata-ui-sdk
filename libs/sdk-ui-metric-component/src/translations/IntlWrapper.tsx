@@ -12,10 +12,16 @@ export interface ITranslations {
     [key: string]: string;
 }
 
+/**
+ * @internal
+ */
 export interface IIntlWrapperProps {
     locale?: string;
 }
 
+/**
+ * @internal
+ */
 export function IntlWrapper({ locale = DEFAULT_LANGUAGE, children }: PropsWithChildren<IIntlWrapperProps>) {
     const messages = useResolveMessages(resolveLocale(locale), resolveMessages, DEFAULT_MESSAGES);
     if (!messages[locale]) {

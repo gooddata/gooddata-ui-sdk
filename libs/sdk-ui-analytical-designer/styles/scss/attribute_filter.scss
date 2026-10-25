@@ -1,0 +1,145 @@
+// (C) 2007-2022 GoodData Corporation
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.adi-filter-picker.adi-attr-filter-picker,
+.adi-filter-picker.adi-geo-attr-filter-picker {
+    $contentWidth: 208px;
+
+    min-width: 0;
+    max-width: $contentWidth;
+    margin: 0;
+    padding-top: 1px;
+
+    .spinner-wrapper {
+        width: $contentWidth;
+        height: 30px;
+        padding: 5px 0;
+        text-align: center;
+    }
+
+    .filter-list,
+    .gd-list {
+        min-width: $contentWidth;
+        outline: none;
+
+        .gd-list-view-item.is-selected.is-focused > div {
+            background-color: kit-variables.$is-focused-background;
+        }
+
+        .gd-input-search {
+            margin: 8px;
+            vertical-align: baseline;
+        }
+
+        .gd-list-item > div {
+            display: flex;
+            flex-grow: 1;
+            align-items: flex-start;
+            padding: 0;
+        }
+    }
+
+    .gd-button-link {
+        margin-left: 8px;
+        padding: 0;
+        font-size: 12px;
+    }
+
+    .adi-attribute-display-form-button-wrapper {
+        margin: -5px 0 4px 4px;
+    }
+}
+
+.adi-filter-item {
+    position: relative;
+
+    &:hover {
+        .inlineBubbleHelp {
+            display: block;
+        }
+    }
+
+    .attr-field-icon {
+        flex-grow: 0;
+        flex-shrink: 0;
+        margin-right: 3px;
+    }
+
+    .gd-bubble-trigger-wrap {
+        flex: 0 0 auto;
+    }
+
+    .inlineBubbleHelp {
+        right: 12px;
+        display: none;
+        width: 24px;
+        line-height: inherit;
+        text-align: center;
+
+        &::before {
+            content: "\e60b";
+        }
+    }
+}
+
+// the same hover-revealed (?) details icon, inside rows of the SDK catalog item picker
+.gd-ui-kit-catalog-item-picker__item {
+    // pull the icon towards the row's right edge, the row's own padding is already generous
+    .gd-ui-kit-catalog-item-picker__item-details {
+        margin-right: -6px;
+    }
+
+    &:hover {
+        .inlineBubbleHelp {
+            display: block;
+        }
+    }
+
+    .inlineBubbleHelp {
+        display: none;
+        width: 16px;
+        line-height: inherit;
+        text-align: center;
+
+        &::before {
+            content: "\e60b";
+        }
+    }
+}
+
+.adi-items-limit {
+    box-sizing: border-box;
+    max-width: 240px;
+    padding: 15px;
+    font-size: 12px;
+    color: kit-variables.$gd-color-state-blank;
+}
+
+.adi-attribute-filter-label {
+    display: flex;
+    overflow: hidden;
+
+    .label {
+        flex: 0 1 auto;
+        overflow: hidden;
+        max-width: 138px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        vertical-align: middle;
+    }
+
+    .value,
+    .count {
+        display: inline-block;
+        flex: 0 0 auto;
+        padding-left: 2px;
+    }
+}
+
+.adi-date-filter-label {
+    .shortened-text {
+        display: inline-block;
+        max-width: 138px;
+    }
+}

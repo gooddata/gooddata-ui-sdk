@@ -1,0 +1,56 @@
+// (C) 2007-2022 GoodData Corporation
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.adi-shortcut.adi-trash {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    bottom: 10px;
+    left: 10px;
+    border: 2px dashed variables.$adi-dropzone-active-color;
+    border-radius: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: kit-variables.$gd-color-dark;
+    background: variables.$adi-shortcut-border-color;
+
+    .adi-trash-inner {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        bottom: 10px;
+        left: 10px;
+        border-radius: 7px;
+    }
+
+    p {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        margin: -70px 0 0;
+    }
+
+    p::before {
+        content: "\e61a"; // trash icon
+        display: block;
+        font-family: Indigo, sans-serif;
+        font-size: 50px;
+        line-height: 80px;
+        color: variables.$adi-dropzone-active-color;
+    }
+
+    &.adi-droppable-hover {
+        box-shadow: none;
+
+        &,
+        p::before {
+            color: kit-variables.$gd-color-white;
+        }
+
+        .adi-trash-inner {
+            background: variables.$adi-dropzone-active-color;
+        }
+    }
+}

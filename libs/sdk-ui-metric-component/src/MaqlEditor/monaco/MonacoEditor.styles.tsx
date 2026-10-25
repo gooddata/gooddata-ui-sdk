@@ -12,12 +12,18 @@ import { type IStandaloneEditorConstructionOptions } from "./MonacoEditor.js";
 
 const useStyles = makeStyles()(() => ({}));
 
+/**
+ * @internal
+ */
 export interface IMaqlEditorIcon {
     base64: string;
     width?: number;
     height?: number;
 }
 
+/**
+ * @internal
+ */
 export interface IMaqlEditorIcons {
     fact?: IMaqlEditorIcon;
     metric?: IMaqlEditorIcon;

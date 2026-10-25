@@ -1,0 +1,1002 @@
+// (C) 2007-2026 GoodData Corporation
+@use "sass:color";
+@use "variables";
+@use "bucket_item";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+$bubble-trigger-buffer-zone: 6px;
+
+.adi-catalog-section {
+    width: calc(var(--adi-catalog-width) - 1px);
+    height: 100%;
+}
+
+.bubble-primary.catalog-filter .bubble-content .content {
+    text-transform: capitalize;
+}
+
+.bubble-primary.catalog-filter.geo .bubble-content .content {
+    text-transform: none;
+}
+
+%catalog-panel {
+    position: absolute;
+    top: 47px;
+    bottom: 0;
+    left: 0;
+    box-sizing: border-box;
+    width: calc(var(--adi-catalog-width) - 1px);
+
+    &.enhanced-insight-picker {
+        top: 58px;
+    }
+}
+
+.adi-catalog-panel {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid kit-variables.$gd-border-color;
+
+    @extend %catalog-panel;
+
+    .adi-catalog {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        width: inherit;
+    }
+
+    .adi-catalog-search {
+        margin: 10px 15px 0 15px;
+    }
+
+    .adi-catalog-filter {
+        flex: 0 0 25px;
+        margin-top: 10px;
+        &.tab-icons {
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        .gd-tabs {
+            margin-left: 14px;
+            margin-right: 14px;
+
+            .gd-tab {
+                margin-right: 8px;
+                padding: 3px 2px;
+                // refactor
+                // stylelint-disable-next-line max-nesting-depth
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+
+        .gd-tab-icons {
+            border-bottom: none;
+            margin-left: 15px;
+            margin-right: 15px;
+        }
+    }
+
+    .gd-tab-icons {
+        &.count-1 {
+            .gd-filter-tab-icon {
+                width: 199px;
+            }
+        }
+
+        &.count-2 {
+            .gd-filter-tab-icon:first-child {
+                width: 100px;
+            }
+
+            .gd-filter-tab-icon:last-child {
+                width: 99px;
+            }
+        }
+
+        &.count-3 {
+            .gd-filter-tab-icon {
+                width: 66px;
+            }
+
+            .gd-filter-tab-icon:first-child {
+                width: 67px;
+            }
+        }
+
+        &.count-4 {
+            .gd-filter-tab-icon {
+                width: 50px;
+            }
+
+            .gd-filter-tab-icon:nth-child(2) {
+                width: 49px;
+            }
+        }
+    }
+
+    // stylelint-disable max-nesting-depth
+    &.enhanced-insight-picker {
+        .adi-catalog-search {
+            margin: 0 10px;
+        }
+
+        .adi-catalog-filter {
+            .gd-tab-icons {
+                margin-left: 10px;
+                margin-right: 10px;
+
+                &.count-1 {
+                    .gd-filter-tab-icon {
+                        width: 209px;
+                    }
+                }
+
+                &.count-2 {
+                    .gd-filter-tab-icon:first-child {
+                        width: 105px;
+                    }
+
+                    .gd-filter-tab-icon:last-child {
+                        width: 104px;
+                    }
+                }
+
+                &.count-3 {
+                    .gd-filter-tab-icon {
+                        width: 69px;
+                    }
+
+                    .gd-filter-tab-icon:first-child {
+                        width: 70px;
+                    }
+                }
+
+                &.count-4 {
+                    .gd-filter-tab-icon {
+                        width: 53px;
+                    }
+
+                    .gd-filter-tab-icon:nth-child(2) {
+                        width: 50px;
+                    }
+                }
+            }
+        }
+    }
+    // stylelint-enable max-nesting-depth
+    .gd-tab-icons .gd-filter-tab-icon {
+        text-align: center;
+        height: 27px;
+        padding: 0;
+        box-shadow:
+            inset 0 -1px 0 variables.$tab-border-unselected-color,
+            inset 0 1px 0 variables.$tab-border-unselected-color,
+            inset -1px 0 0 variables.$tab-border-unselected-color;
+        background-color: #fcfcfd;
+        background-repeat: no-repeat;
+        line-height: 50%;
+
+        &:nth-of-type(4n-2),
+        &:nth-of-type(4n-1),
+        &:nth-of-type(4n) {
+            /* targets all except for first item in each row */
+            border-left: none;
+        }
+
+        &.facts-tab-icon {
+            width: 49px;
+        }
+
+        &:first-child {
+            box-shadow:
+                inset 1px 0 0 variables.$tab-border-unselected-color,
+                inset 0 -1px 0 variables.$tab-border-unselected-color,
+                inset 0 1px 0 variables.$tab-border-unselected-color,
+                inset -1px 0 0 variables.$tab-border-unselected-color;
+            border-top-left-radius: variables.$adi-bucket-border-radius;
+            border-bottom-left-radius: variables.$adi-bucket-border-radius;
+        }
+
+        &:last-child {
+            /* targets last item */
+            box-shadow:
+                inset 0 -1px 0 variables.$tab-border-unselected-color,
+                inset 0 1px 0 variables.$tab-border-unselected-color,
+                inset -1px 0 0 variables.$tab-border-unselected-color;
+            border-top-right-radius: variables.$adi-bucket-border-radius;
+        }
+
+        &:last-of-type {
+            border-bottom-right-radius: variables.$adi-bucket-border-radius;
+        }
+
+        button {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background-color: transparent;
+            background-repeat: no-repeat;
+            background-position:
+                center,
+                -999px -999px;
+            &:hover {
+                background-position:
+                    -999px -999px,
+                    center;
+            }
+        }
+
+        button.metrics-tab-icon {
+            background-image:
+                url("@gooddata/sdk-ui-analytical-designer/styles/images/metric-tab-unselected.svg"),
+                url("@gooddata/sdk-ui-analytical-designer/styles/images/metric-tab-selected.svg");
+        }
+
+        button.facts-tab-icon {
+            background-image:
+                url("@gooddata/sdk-ui-analytical-designer/styles/images/fact-tab-unselected.svg"),
+                url("@gooddata/sdk-ui-analytical-designer/styles/images/fact-tab-selected.svg");
+        }
+
+        button.attributes-tab-icon {
+            background-image:
+                url("@gooddata/sdk-ui-analytical-designer/styles/images/attribute-tab-unselected.svg"),
+                url("@gooddata/sdk-ui-analytical-designer/styles/images/attribute-tab-selected.svg");
+        }
+
+        button.geoAttributes-tab-icon {
+            &::before {
+                content: "\E624";
+                font-family: Indigo, sans-serif;
+                margin-top: 2px;
+                display: inline-block;
+                font-weight: normal;
+                background-repeat: no-repeat;
+                background-position: center;
+                color: variables.$geo-tab-unselected-color;
+            }
+
+            &:hover::before {
+                color: kit-variables.$gd-color-warning-text;
+            }
+        }
+    }
+
+    .gd-tab-icons .gd-filter-tab-icon.is-active {
+        box-shadow:
+            inset 0 1px 0 variables.$tab-border-selected-color,
+            inset 0 -1px 0 variables.$tab-border-selected-color,
+            inset 0 2px 0 variables.$tab-shadow-selected-color,
+            inset -1px 0 0 variables.$tab-border-selected-color,
+            inset 1px 0 0 variables.$tab-border-selected-color;
+        background: linear-gradient(180deg, #dee6ef 0%, #ecf0f5 100%);
+        margin-left: -1px;
+        padding-left: 1px;
+
+        &:first-child {
+            box-shadow:
+                inset 0 0 0 1px variables.$tab-border-selected-color,
+                inset 0 2px 0 variables.$tab-shadow-selected-color;
+            margin-left: 0;
+            padding-left: 0;
+        }
+
+        &:last-child {
+            box-shadow:
+                inset 0 0 0 1px variables.$tab-border-selected-color,
+                inset 0 2px 0 variables.$tab-shadow-selected-color;
+        }
+
+        button {
+            background-position:
+                -999px -999px,
+                center;
+
+            &:hover {
+                background-position:
+                    center,
+                    -999px -999px;
+            }
+        }
+
+        button.geoAttributes-tab-icon::before {
+            color: kit-variables.$gd-color-warning-text;
+        }
+
+        button.geoAttributes-tab-icon:hover {
+            &::before {
+                color: variables.$geo-tab-unselected-color;
+            }
+        }
+    }
+
+    .adi-no-items,
+    .adi-no-objects {
+        box-sizing: border-box;
+        flex: 1 0 auto;
+        overflow: hidden;
+        width: 100%;
+        padding: 18px 25px 0 50px;
+        font-size: 14px;
+        text-align: left;
+        word-wrap: break-word;
+        color: kit-variables.$gd-color-state-blank;
+
+        &::before {
+            content: "\E62B";
+            display: block;
+            float: left;
+            width: 20px;
+            height: 20px;
+            margin-left: -30px;
+            font-family: Indigo, sans-serif;
+            font-size: 18px;
+            line-height: 18px;
+            text-align: right;
+            color: kit-variables.$gd-color-state-blank;
+        }
+
+        .gd-button-link {
+            display: inline;
+        }
+
+        p {
+            margin: 0;
+        }
+    }
+
+    .adi-no-objects {
+        &::before {
+            content: "\E63C";
+        }
+    }
+
+    .adi-no-objects-empty-workspace {
+        &::before {
+            content: "\E637";
+        }
+    }
+
+    .create-measure-link-section,
+    .adi-catalog-create_metric_button {
+        flex: 0 0 auto;
+        border-top: 1px solid kit-variables.$gd-border-color;
+        box-shadow: 0 -1px 2px 0 variables.$adi-shadow-lighter;
+        line-height: 41px;
+        background-color: kit-variables.$gd-color-white;
+
+        > span {
+            display: block;
+        }
+
+        .gd-button {
+            display: block;
+            overflow: hidden;
+            height: inherit;
+            border-left: 10px solid kit-variables.$gd-color-white;
+            line-height: inherit;
+            white-space: nowrap;
+            color: kit-variables.$gd-palette-primary-base;
+            text-overflow: ellipsis;
+
+            &::before {
+                color: inherit;
+            }
+
+            &.disabled,
+            &.disabled:hover {
+                color: kit-variables.$gd-color-disabled;
+            }
+        }
+
+        .gd-button,
+        .gd-button-text {
+            text-decoration: none;
+        }
+    }
+
+    .adi-catalog-create_metric_button:hover {
+        color: kit-variables.$gd-palette-primary-base;
+    }
+
+    footer {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 15px;
+        font-size: 12px;
+        color: kit-variables.$gd-color-state-blank;
+        background-color: kit-variables.$gd-color-light;
+
+        &::before {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            top: 0;
+            display: block;
+            width: 200px;
+            height: 10px;
+            border-radius: 50%;
+            box-shadow: 0 -2px 4px 0 variables.$adi-shadow-lighter;
+        }
+
+        div {
+            border-top: 1px solid kit-variables.$gd-border-color;
+            line-height: 29px;
+            background-color: kit-variables.$gd-color-light;
+
+            &.unavailable-items-matched {
+                padding: 5px 0 5px;
+                margin-left: -4px;
+                margin-right: -4px;
+                line-height: 20px;
+            }
+        }
+
+        button {
+            font-size: 12px;
+            margin-top: -2px;
+            line-height: 15px;
+            padding-right: 0;
+            padding-left: 4px;
+        }
+
+        .gd-spinner {
+            margin: 5px 5px 0 0;
+            border: none;
+        }
+    }
+
+    footer.availability-spinner > div {
+        display: flex;
+    }
+}
+
+.adi-catalog-header {
+    position: absolute;
+    bottom: 3px;
+    left: 15px;
+    padding: 0;
+    font-size: 10px;
+    font-weight: normal;
+    line-height: 10px;
+    text-transform: uppercase;
+    color: kit-variables.$gd-color-state-blank;
+
+    @include variables.clearfix;
+}
+
+.adi-catalog-list .adi-catalog-item {
+    position: relative;
+    box-sizing: border-box;
+    height: 24px;
+    margin: 0 15px 0 16px;
+
+    &.type-date {
+        margin-top: 10px;
+    }
+
+    &.adi-catalog-item-hover {
+        border-radius: 3px;
+        border-color: color.adjust(variables.$adi-bucket-border-color, $alpha: -0.5);
+        box-shadow:
+            0 1px 3px 0 variables.$adi-shadow-lighter,
+            0 2px 9px 0 variables.$adi-shadow-darker;
+        background-color: kit-variables.$gd-color-white;
+
+        .inlineBubbleHelp,
+        .inlineEditMetricIcon {
+            display: block;
+        }
+
+        > div {
+            right: 24px;
+        }
+
+        .adi-catalog-item-title-tiger {
+            right: 48px;
+        }
+    }
+
+    > div {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 25px;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .inlineBubbleHelp,
+    .inlineEditMetricIcon {
+        display: none;
+    }
+}
+
+.adi-catalog-list {
+    position: relative;
+    flex: 1 1 auto;
+    overflow: hidden;
+    min-width: initial;
+}
+
+.adi-catalog-item {
+    padding: 0;
+
+    @extend %adi-bucket-item;
+
+    font-weight: normal;
+    line-height: 24px;
+    color: kit-variables.$gd-color-text;
+    background: transparent;
+
+    > div {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &.not-available > div {
+        opacity: 0.5;
+
+        &::before {
+            opacity: 0.5;
+        }
+    }
+
+    .gd-bubble-trigger,
+    .inlineBubbleHelp,
+    .inlineEditMetricIcon {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+    }
+
+    .gd-bubble-trigger {
+        right: 0 - $bubble-trigger-buffer-zone;
+    }
+
+    .inlineBubbleHelp {
+        right: $bubble-trigger-buffer-zone;
+        width: 24px;
+        line-height: inherit;
+        text-align: center;
+
+        &::before {
+            content: "\e60b";
+        }
+    }
+
+    .inlineEditMetricIcon {
+        right: 18px;
+        width: 24px;
+        line-height: inherit;
+        color: #c6c6c6;
+        text-align: center;
+
+        &:not(.disabled) {
+            cursor: pointer;
+        }
+
+        &:not(.disabled):hover {
+            color: kit-variables.$gd-palette-primary-base;
+        }
+    }
+}
+
+// refactor
+// stylelint-disable-next-line no-duplicate-selectors
+.adi-catalog-list {
+    // refactor
+    // stylelint-disable-next-line no-duplicate-selectors
+    .adi-catalog-item {
+        cursor: grab;
+    }
+}
+
+.adi-catalog-item.adi-dragged-item {
+    position: relative;
+    width: 200px;
+    height: 25px;
+    padding: 0 0 0 25px;
+    border: 1px solid color.adjust(variables.$adi-bucket-border-color, $alpha: -0.5);
+    border-radius: 3px;
+    box-shadow:
+        0 1px 3px 0 variables.$adi-shadow-lighter,
+        0 2px 9px 0 variables.$adi-shadow-darker;
+    font-weight: normal;
+    line-height: 25px;
+    color: kit-variables.$gd-color-dark;
+    background: color.adjust(kit-variables.$default-gd-color-white, $alpha: -0.2);
+
+    .inlineBubbleHelp {
+        display: none;
+    }
+}
+
+.adi-catalog-item-details {
+    width: 220px;
+    word-wrap: break-word;
+
+    .bubble-content {
+        padding: 0;
+
+        .adi-catalog-tooltip-header,
+        .adi-catalog-tooltip-footer,
+        .adi-catalog-tooltip-scroll-content {
+            padding-right: 15px;
+        }
+
+        .adi-catalog-tooltip-header {
+            padding-bottom: 12px;
+        }
+        .adi-catalog-tooltip-footer {
+            padding-top: 12px;
+        }
+    }
+
+    .bubble-content .content {
+        padding: 12px 0 12px 15px;
+
+        h3 {
+            margin: 0;
+            font-size: 14px;
+            color: kit-variables.$gd-color-text;
+        }
+
+        .adi-item-description {
+            margin: 0;
+            font-size: 13px;
+            font-weight: normal;
+            line-height: 16px;
+            color: kit-variables.$gd-color-state-blank;
+        }
+
+        .adi-item-rich-text-description p,
+        a,
+        ul {
+            font-size: 13px;
+        }
+
+        .adi-catalog-tooltip-scroll {
+            max-height: 60vh;
+        }
+
+        // small hack  - decrease space in scroll gradient component
+        .adi-catalog-tooltip-scroll > div > h4:first-child {
+            margin-top: 0;
+        }
+
+        h4 {
+            margin: 13px 0 0;
+            padding-right: 5px;
+            font-size: 10px;
+            font-weight: normal;
+            text-transform: uppercase;
+            color: kit-variables.$gd-color-state-blank;
+        }
+
+        p {
+            font-size: 12px;
+            line-height: 20px;
+        }
+
+        p.adi-item-type {
+            text-transform: capitalize;
+        }
+
+        p.adi-metric-maql span.adi-maql-segment {
+            font-weight: bold;
+            color: kit-variables.$gd-color-text;
+
+            &.fact {
+                color: variables.$maql-fact;
+            }
+
+            &.metric,
+            &.measure {
+                color: variables.$maql-metric;
+            }
+
+            &.attribute,
+            &.computedAttribute {
+                color: variables.$maql-attribute;
+            }
+
+            &.attributeDisplayForm,
+            &.displayForm {
+                color: variables.$maql-attributeDisplayForm;
+            }
+
+            &.attributeElement {
+                color: variables.$maql-attribute_element;
+            }
+
+            &.dataSet {
+                color: variables.$maql-dataset_element;
+            }
+
+            &.parameter {
+                color: variables.$maql-parameter;
+            }
+
+            &-link:hover {
+                text-decoration: underline;
+            }
+
+            &.adi-maql-segment-clickable {
+                cursor: pointer;
+            }
+        }
+
+        .adi-tooltip-elements-more {
+            color: kit-variables.$gd-color-state-blank;
+        }
+
+        .gd-button {
+            margin: 5px 0 3px;
+        }
+
+        .gd-button-link {
+            padding-left: 0;
+        }
+
+        .adi-catalog-tooltip-metric-editor-edit {
+            text-align: right;
+        }
+
+        .adi-catalog-identifier {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            overflow: hidden;
+            cursor: pointer;
+
+            .adi-catalog-identifier-text {
+                overflow: hidden;
+                word-wrap: break-word;
+                margin-right: auto;
+            }
+
+            .adi-catalog-identifier-icon {
+                visibility: hidden;
+                margin-left: 10px;
+                flex-shrink: 0;
+                height: 14px;
+            }
+        }
+
+        .adi-catalog-identifier:hover {
+            .adi-catalog-identifier-icon {
+                fill: kit-variables.$gd-palette-primary-base;
+            }
+        }
+
+        &:hover {
+            .adi-catalog-identifier-icon {
+                visibility: visible;
+            }
+        }
+
+        .adi-catalog-tooltip-header + h4 {
+            margin-top: 0;
+        }
+    }
+}
+
+.attribute-hierarchy-wrapper {
+    .inlineBubbleHelp {
+        margin-left: 10px;
+    }
+
+    .attribute-hierarchy-name {
+        display: flex;
+        gap: 5px;
+
+        .attribute-hierarchy-name-value {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+}
+
+.attribute-hierarchy-bubble-detail {
+    .gd-attribute-hierarchy-detail-panel {
+        padding: 0 12px 0 0;
+    }
+}
+
+.adi-trash-panel {
+    @extend %catalog-panel;
+}
+
+.adi-organized-catalog {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    .adi-catalog-items {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        overflow-y: hidden;
+    }
+
+    .adi-catalog-list {
+        .adi-catalog-loading-group {
+            display: flex;
+            justify-content: center;
+
+            .gd-spinner {
+                margin-top: 8px;
+            }
+        }
+    }
+
+    .adi-catalog-group {
+        user-select: none;
+    }
+
+    .adi-catalog-group-label,
+    .adi-catalog-suggestion-label {
+        display: flex;
+        margin: 5px 15px 0 16px;
+        font-size: 12px;
+        white-space: nowrap;
+        color: kit-variables.$gd-color-state-blank;
+        cursor: pointer;
+
+        span {
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        &::before {
+            content: "\E611";
+            margin-right: 0.3em;
+            font-family: Indigo, sans-serif;
+            vertical-align: top;
+        }
+
+        &.expanded {
+            &::before {
+                content: "\E612";
+            }
+        }
+    }
+    .adi-catalog-suggestion-label {
+        align-items: center;
+        line-height: 12px;
+        gap: 3px;
+        cursor: default;
+        margin-bottom: 5px;
+
+        &::before {
+            content: "";
+            display: none;
+        }
+        .gd-ui-kit-icon path {
+            fill: kit-variables.$gd-color-state-blank;
+        }
+    }
+
+    .adi-catalog-suggestion-loading {
+        margin: 5px 15px 0 15px;
+    }
+
+    .adi-catalog-group-content {
+        margin-left: 7px;
+
+        .gd-spinner {
+            margin-left: 15px;
+        }
+    }
+
+    .adi-catalog-separator {
+        hr {
+            margin: 10px 15px;
+            border-style: dotted;
+            border-width: 0.5px;
+            border-color: kit-variables.$gd-color-disabled;
+        }
+    }
+
+    .adi-catalog-tab-icons-separator {
+        hr {
+            height: 1px;
+            margin: 0 15px;
+            border: none;
+            background-color: #dde4ea;
+        }
+    }
+
+    &.enhanced-insight-picker {
+        .adi-catalog-tab-icons-separator {
+            hr {
+                margin: 5px 10px 0;
+            }
+        }
+    }
+
+    .adi-catalog-tab-suggestion-separator {
+        hr {
+            height: 1px;
+            margin: 10px 15px 15px 15px;
+            border: none;
+            background-color: #dde4ea;
+        }
+    }
+
+    .adi-catalog-item.type-date {
+        margin-top: 0;
+    }
+}
+
+.adi-catalog-info-panel-wrapper {
+    position: relative;
+
+    .adi-catalog-info-panel {
+        position: absolute;
+        top: 0;
+        width: 206px;
+        opacity: 0;
+        transition: all 0.15s ease-out;
+        user-select: none;
+
+        &.is-visible {
+            top: -29px;
+            opacity: 1;
+        }
+
+        .adi-catalog-info-panel-inner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 29px;
+            background-color: kit-variables.$gd-color-light;
+            padding-left: 23px;
+
+            .adi-catalog-info-panel-text {
+                font-size: 12px;
+                display: inline-block;
+                overflow: hidden;
+                line-height: 14px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+
+    .adi-catalog-updated-items {
+        white-space: nowrap;
+        color: kit-variables.$gd-color-state-blank;
+    }
+
+    .adi-catalog-refresh-button {
+        color: kit-variables.$gd-palette-primary-base;
+        cursor: pointer;
+
+        .adi-catalog-refresh-link {
+            padding-left: 2px;
+            position: relative;
+
+            .adi-catalog-refresh-icon {
+                position: absolute;
+                top: 6px;
+                bottom: 0;
+                left: 0;
+                height: 14px;
+            }
+        }
+    }
+}

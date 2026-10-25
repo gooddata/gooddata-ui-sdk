@@ -1,0 +1,355 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`getDateDatasetsWithGranularities > should return date datasets with all granularities, extended by granularity option and cacheIdentifier 1`] = `
+[
+  {
+    "attributes": [
+      {
+        "cacheIdentifier": "activity.year",
+        "dateType": "GDC.time.year",
+        "dfRef": {
+          "uri": "/gdc/md/702",
+        },
+        "label": "year",
+        "ref": {
+          "uri": "/gdc/md/701",
+        },
+      },
+      {
+        "cacheIdentifier": "activity.quarter",
+        "dateType": "GDC.time.quarter",
+        "dfRef": {
+          "uri": "/gdc/md/637",
+        },
+        "label": "quarter",
+        "recommendationLabel": "this_quarter",
+        "ref": {
+          "uri": "/gdc/md/636",
+        },
+      },
+      {
+        "cacheIdentifier": "activity.month",
+        "dateType": "GDC.time.month",
+        "dfRef": {
+          "uri": "/gdc/md/597",
+        },
+        "label": "month",
+        "recommendationLabel": "this_month",
+        "ref": {
+          "uri": "/gdc/md/596",
+        },
+      },
+      {
+        "cacheIdentifier": "activity.week",
+        "dateType": "GDC.time.week_us",
+        "dfRef": {
+          "uri": "/gdc/md/667",
+        },
+        "label": "week",
+        "ref": {
+          "uri": "/gdc/md/662",
+        },
+      },
+      {
+        "cacheIdentifier": "activity.date",
+        "dateType": "GDC.time.date",
+        "dfRef": {
+          "uri": "/gdc/md/573",
+        },
+        "label": "day",
+        "ref": {
+          "uri": "/gdc/md/570",
+        },
+      },
+      {
+        "cacheIdentifier": "activity.quarter.in.year",
+        "chronologicalGranularity": "GDC.time.quarter",
+        "dateType": "GDC.time.quarter_in_year",
+        "dfRef": {
+          "uri": "/gdc/md/653",
+        },
+        "label": "quarter_in_year",
+        "ref": {
+          "uri": "/gdc/md/652",
+        },
+        "valuesPreview": "quarter_in_year_preview",
+      },
+      {
+        "cacheIdentifier": "activity.month.in.quarter",
+        "chronologicalGranularity": "GDC.time.month",
+        "dateType": "GDC.time.month_in_quarter",
+        "dfRef": {
+          "uri": "/gdc/md/707",
+        },
+        "label": "month_in_quarter",
+        "ref": {
+          "uri": "/gdc/md/706",
+        },
+        "valuesPreview": "month_in_quarter_preview",
+      },
+      {
+        "cacheIdentifier": "activity.month.in.year",
+        "chronologicalGranularity": "GDC.time.month",
+        "dateType": "GDC.time.month_in_year",
+        "dfRef": {
+          "uri": "/gdc/md/607",
+        },
+        "label": "month_in_year",
+        "ref": {
+          "uri": "/gdc/md/606",
+        },
+        "valuesPreview": "month_in_year_preview",
+      },
+      {
+        "cacheIdentifier": "activity.week.in.quarter",
+        "chronologicalGranularity": "GDC.time.week_us",
+        "dateType": "GDC.time.week_in_quarter",
+        "dfRef": {
+          "uri": "/gdc/md/648",
+        },
+        "label": "week_in_quarter",
+        "ref": {
+          "uri": "/gdc/md/647",
+        },
+        "valuesPreview": "week_in_quarter_preview",
+      },
+      {
+        "cacheIdentifier": "activity.week.in.year",
+        "chronologicalGranularity": "GDC.time.week_us",
+        "dateType": "GDC.time.week_in_year",
+        "dfRef": {
+          "uri": "/gdc/md/687",
+        },
+        "label": "week_in_year",
+        "ref": {
+          "uri": "/gdc/md/686",
+        },
+        "valuesPreview": "week_in_year_preview",
+      },
+      {
+        "cacheIdentifier": "activity.day.in.week",
+        "chronologicalGranularity": "GDC.time.date",
+        "dateType": "GDC.time.day_in_week",
+        "dfRef": {
+          "uri": "/gdc/md/680",
+        },
+        "label": "day_in_week",
+        "ref": {
+          "uri": "/gdc/md/679",
+        },
+        "valuesPreview": "day_in_week_preview",
+      },
+      {
+        "cacheIdentifier": "activity.day.in.month",
+        "chronologicalGranularity": "GDC.time.date",
+        "dateType": "GDC.time.day_in_month",
+        "dfRef": {
+          "uri": "/gdc/md/643",
+        },
+        "label": "day_in_month",
+        "ref": {
+          "uri": "/gdc/md/642",
+        },
+        "valuesPreview": "day_in_month_preview",
+      },
+      {
+        "cacheIdentifier": "activity.day.in.quarter",
+        "chronologicalGranularity": "GDC.time.date",
+        "dateType": "GDC.time.day_in_quarter",
+        "dfRef": {
+          "uri": "/gdc/md/697",
+        },
+        "label": "day_in_quarter",
+        "ref": {
+          "uri": "/gdc/md/696",
+        },
+        "valuesPreview": "day_in_quarter_preview",
+      },
+      {
+        "cacheIdentifier": "activity.day.in.year",
+        "chronologicalGranularity": "GDC.time.date",
+        "dateType": "GDC.time.day_in_year",
+        "dfRef": {
+          "uri": "/gdc/md/673",
+        },
+        "label": "day_in_year",
+        "ref": {
+          "uri": "/gdc/md/672",
+        },
+        "valuesPreview": "day_in_year_preview",
+      },
+    ],
+    "ref": {
+      "uri": "/gdc/md/708",
+    },
+  },
+  {
+    "attributes": [
+      {
+        "cacheIdentifier": "timeline.year",
+        "dateType": "GDC.time.year",
+        "dfRef": {
+          "uri": "/gdc/md/890",
+        },
+        "label": "year",
+        "ref": {
+          "uri": "/gdc/md/889",
+        },
+      },
+      {
+        "cacheIdentifier": "timeline.quarter",
+        "dateType": "GDC.time.quarter",
+        "dfRef": {
+          "uri": "/gdc/md/826",
+        },
+        "label": "quarter",
+        "recommendationLabel": "this_quarter",
+        "ref": {
+          "uri": "/gdc/md/825",
+        },
+      },
+      {
+        "cacheIdentifier": "timeline.month",
+        "dateType": "GDC.time.month",
+        "dfRef": {
+          "uri": "/gdc/md/786",
+        },
+        "label": "month",
+        "recommendationLabel": "this_month",
+        "ref": {
+          "uri": "/gdc/md/785",
+        },
+      },
+      {
+        "cacheIdentifier": "timeline.week",
+        "dateType": "GDC.time.week_us",
+        "dfRef": {
+          "uri": "/gdc/md/855",
+        },
+        "label": "week",
+        "ref": {
+          "uri": "/gdc/md/850",
+        },
+      },
+      {
+        "cacheIdentifier": "timeline.date",
+        "dateType": "GDC.time.date",
+        "dfRef": {
+          "uri": "/gdc/md/762",
+        },
+        "label": "day",
+        "ref": {
+          "uri": "/gdc/md/759",
+        },
+      },
+      {
+        "cacheIdentifier": "timeline.quarter.in.year",
+        "chronologicalGranularity": "GDC.time.quarter",
+        "dateType": "GDC.time.quarter_in_year",
+        "dfRef": {
+          "uri": "/gdc/md/841",
+        },
+        "label": "quarter_in_year",
+        "ref": {
+          "uri": "/gdc/md/840",
+        },
+        "valuesPreview": "quarter_in_year_preview",
+      },
+      {
+        "cacheIdentifier": "timeline.month.in.quarter",
+        "chronologicalGranularity": "GDC.time.month",
+        "dateType": "GDC.time.month_in_quarter",
+        "dfRef": {
+          "uri": "/gdc/md/895",
+        },
+        "label": "month_in_quarter",
+        "ref": {
+          "uri": "/gdc/md/894",
+        },
+        "valuesPreview": "month_in_quarter_preview",
+      },
+      {
+        "cacheIdentifier": "timeline.month.in.year",
+        "chronologicalGranularity": "GDC.time.month",
+        "dateType": "GDC.time.month_in_year",
+        "dfRef": {
+          "uri": "/gdc/md/796",
+        },
+        "label": "month_in_year",
+        "ref": {
+          "uri": "/gdc/md/795",
+        },
+        "valuesPreview": "month_in_year_preview",
+      },
+      {
+        "cacheIdentifier": "timeline.week.in.quarter",
+        "chronologicalGranularity": "GDC.time.week_us",
+        "dateType": "GDC.time.week_in_quarter",
+        "dfRef": {
+          "uri": "/gdc/md/836",
+        },
+        "label": "week_in_quarter",
+        "ref": {
+          "uri": "/gdc/md/835",
+        },
+        "valuesPreview": "week_in_quarter_preview",
+      },
+      {
+        "cacheIdentifier": "timeline.week.in.year",
+        "chronologicalGranularity": "GDC.time.week_us",
+        "dateType": "GDC.time.week_in_year",
+        "dfRef": {
+          "uri": "/gdc/md/875",
+        },
+        "label": "week_in_year",
+        "ref": {
+          "uri": "/gdc/md/874",
+        },
+        "valuesPreview": "week_in_year_preview",
+      },
+      {
+        "cacheIdentifier": "timeline.day.in.week",
+        "chronologicalGranularity": "GDC.time.date",
+        "dateType": "GDC.time.day_in_week",
+        "dfRef": {
+          "uri": "/gdc/md/868",
+        },
+        "label": "day_in_week",
+        "ref": {
+          "uri": "/gdc/md/867",
+        },
+        "valuesPreview": "day_in_week_preview",
+      },
+      {
+        "cacheIdentifier": "timeline.day.in.month",
+        "chronologicalGranularity": "GDC.time.date",
+        "dateType": "GDC.time.day_in_month",
+        "dfRef": {
+          "uri": "/gdc/md/831",
+        },
+        "label": "day_in_month",
+        "ref": {
+          "uri": "/gdc/md/830",
+        },
+        "valuesPreview": "day_in_month_preview",
+      },
+      {
+        "cacheIdentifier": "timeline.day.in.year",
+        "chronologicalGranularity": "GDC.time.date",
+        "dateType": "GDC.time.day_in_year",
+        "dfRef": {
+          "uri": "/gdc/md/861",
+        },
+        "label": "day_in_year",
+        "ref": {
+          "uri": "/gdc/md/860",
+        },
+        "valuesPreview": "day_in_year_preview",
+      },
+    ],
+    "ref": {
+      "uri": "/gdc/md/896",
+    },
+  },
+]
+`;

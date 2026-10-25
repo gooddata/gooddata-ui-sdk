@@ -203,6 +203,16 @@ export interface IHostUiMountHandle {
     updateChatState?(state: { showChatItem: boolean; isOpen: boolean }): void;
 
     /**
+     * Opens the host UI's pricing (plan upgrade) dialog.
+     *
+     * @remarks
+     * Called by the host when the active pluggable application emits an
+     * {@link IOpenPricingDialogRequestedEvent}. The host UI decides whether the dialog applies
+     * (e.g. only for trial organizations). Host UIs without a pricing dialog may omit it or no-op.
+     */
+    openPricingDialog?(): void;
+
+    /**
      * Returns the DOM element where the active pluggable application should be rendered.
      *
      * @remarks

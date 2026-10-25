@@ -1,0 +1,207 @@
+// (C) 2007-2025 GoodData Corporation
+@use "sass:color";
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.adi-recommendations-container {
+    // position relative is needed because without it the z-index
+    // does not work
+    position: relative;
+    float: right;
+    width: 285px;
+
+    @media #{variables.$narrowDevice} {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: auto;
+        min-width: 655px;
+    }
+}
+
+.adi-recommendations-title-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 7px;
+
+    @media #{variables.$narrowDevice} {
+        width: 278px;
+    }
+}
+
+.adi-recommendations-title {
+    font-weight: 700;
+    font-size: 11px;
+    color: kit-variables.$gd-color-state-blank;
+}
+
+.adi-recommendations-turn-off-button {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    text-align: right;
+}
+
+.adi-recommendation-attribute-picker {
+    .adi-picker-loading {
+        height: 250px;
+        min-width: 230px;
+        margin: 6px 0;
+        background: kit-variables.$gd-color-white;
+        background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/loading-32.gif");
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+}
+
+.adi-recommendation {
+    position: relative;
+    margin-bottom: 20px;
+    padding: 20px 15px;
+    border: 1px solid color.adjust(variables.$adi-bucket-border-color, $alpha: -0.5);
+    box-shadow:
+        0 1px 3px 0 variables.$adi-shadow-lighter,
+        0 2px 9px 0 variables.$adi-shadow-darker;
+    background-color: kit-variables.$gd-color-white;
+
+    @media #{variables.$narrowDevice} {
+        float: left;
+        width: 245px;
+        margin-right: 30px;
+    }
+
+    .adi-recommendation-arrow {
+        // function of this element is to clip the arrow
+        // easiest solution would be to clip the arrow itself
+        // but that can not be done, because clip is applied before the transformation
+        $height: 30px;
+        $width: 17px;
+
+        position: absolute;
+        top: 50%;
+        left: -$width;
+        overflow: hidden;
+        width: $width;
+        height: $height;
+        margin-top: calc(-#{$height} / 2);
+
+        @media #{variables.$narrowDevice} {
+            top: -2px;
+            left: 75%;
+            width: $height;
+            height: $width;
+            margin-left: calc(-#{$width} / 2);
+        }
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 7px;
+            left: 8px;
+            width: 18px;
+            height: 18px;
+            box-shadow:
+                -2px -2px 2px 0 variables.$adi-shadow-lighter,
+                0 2px 9px 0 variables.$adi-shadow-darker;
+            background: white;
+            transform: rotate(-45deg);
+
+            @media #{variables.$narrowDevice} {
+                top: 8px;
+                left: 7px;
+            }
+        }
+    }
+}
+
+.adi-recommendation-content {
+    margin: 0 0 0 100px;
+    line-height: 20px;
+
+    > h3 {
+        margin: 0 0 7px;
+        font-weight: 700;
+        line-height: 20px;
+    }
+
+    > button {
+        margin-top: 14px;
+    }
+
+    > select {
+        margin-bottom: 7px;
+
+        + button {
+            margin-top: 7px;
+        }
+    }
+}
+
+.adi-recommendation-ico {
+    content: "";
+    position: absolute;
+    top: 22px;
+    left: 20px;
+}
+
+.adi-recommendation-trending {
+    .adi-recommendation-ico {
+        width: 77px;
+        height: 69px;
+        background: url("@gooddata/sdk-ui-analytical-designer/styles/images/recomm-trending.svg") no-repeat;
+    }
+}
+
+.adi-recommendation-comparison {
+    .adi-recommendation-ico {
+        width: 78px;
+        height: 64px;
+        background: url("@gooddata/sdk-ui-analytical-designer/styles/images/recomm-comparison.svg") no-repeat;
+    }
+
+    .adi-attribute-switch {
+        width: 140px;
+        margin-top: 5px;
+    }
+}
+
+.adi-recommendation-metric-with-period {
+    .adi-recommendation-ico {
+        width: 94px;
+        height: 64px;
+        background: url("@gooddata/sdk-ui-analytical-designer/styles/images/recomm-comparison-with-metric.svg")
+            no-repeat;
+    }
+}
+
+.adi-recommendation-comparison-with-period {
+    .adi-recommendation-ico {
+        width: 88px;
+        height: 65px;
+        background: url("@gooddata/sdk-ui-analytical-designer/styles/images/recomm-comparison-with-period.svg")
+            no-repeat;
+    }
+}
+
+.adi-recommendation-contribution {
+    .adi-recommendation-ico {
+        width: 91px;
+        height: 81px;
+        background: url("@gooddata/sdk-ui-analytical-designer/styles/images/recomm-percents.svg") no-repeat;
+    }
+}
+
+.adi-recommendation-contribution,
+.adi-recommendation-metric-with-period,
+.adi-recommendation-comparison-with-period {
+    .adi-recommendation-content {
+        margin: 0 0 0 120px;
+    }
+}
+
+.adi-recommendation-filtering {
+    .adi-recommendation-content {
+        margin: 0;
+    }
+}

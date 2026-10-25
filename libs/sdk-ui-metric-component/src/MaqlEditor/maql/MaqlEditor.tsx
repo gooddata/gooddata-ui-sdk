@@ -14,7 +14,7 @@ import { type IStandaloneCodeEditor, type Monaco, MonacoEditor } from "../monaco
 import { type IMaqlEditorIcons } from "../monaco/MonacoEditor.styles.js";
 //more info in README.md
 import { StatusBar } from "../statusBar/SuggestionStatusBar.js";
-import { type DefaultTheme } from "../theme/default.js";
+import { type MaqlEditorDefaultTheme } from "../theme/default.js";
 import { ThemeProvider } from "../theme/theme.js";
 
 import { LANGUAGE } from "./constants.js";
@@ -22,14 +22,20 @@ import { useLanguageConfiguration } from "./hooks/useLanguageConfiguration.js";
 import { type MonacoHandlers, useMonaco } from "./hooks/useMonaco.js";
 import { MaqlEditorClass, MaqlEditorTestClass, MaqlStyles } from "./MaqlEditor.styles.js";
 
+/**
+ * @internal
+ */
 export interface IMaqlEditorApi {
     autoformat: () => void;
     getValue: () => string;
     getValid: () => boolean;
 }
 
+/**
+ * @internal
+ */
 export interface IMaqlEditorProps {
-    cssTheme?: DefaultTheme;
+    cssTheme?: MaqlEditorDefaultTheme;
     autofocus?: boolean;
     autohint?: boolean;
     decorators?: boolean;
@@ -47,6 +53,9 @@ export interface IMaqlEditorProps {
     ref?: Ref<IMaqlEditorApi | null>;
 }
 
+/**
+ * @internal
+ */
 export const MaqlEditor = forwardRef<IMaqlEditorApi, IMaqlEditorProps>(function MaqlEditor(
     {
         readonly = false,

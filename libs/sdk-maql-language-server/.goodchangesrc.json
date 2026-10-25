@@ -1,7 +1,7 @@
 {
     "targets": [
         {
-            "targetName": "gdc-maql-language-server-unit-tests",
+            "targetName": "@gooddata/sdk-maql-language-server-unit-tests",
             "changeDirs": [
                 {
                     "glob": "**/*",

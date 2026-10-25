@@ -1,0 +1,27 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`additional_date_filter_selector > getAdditionalDateFiltersLabel > should return label props for additional filters with selection 1`] = `
+[
+  {
+    "granularity": "GDC.time.day_in_week",
+    "isAllSelected": false,
+    "isInverted": true,
+    "selectedElements": [
+      {
+        "available": true,
+        "title": "First",
+      },
+      {
+        "available": false,
+        "title": "Second",
+      },
+      {
+        "available": true,
+        "title": "Third",
+      },
+    ],
+    "selectionSize": 2,
+    "totalElementsCount": 3,
+  },
+]
+`;

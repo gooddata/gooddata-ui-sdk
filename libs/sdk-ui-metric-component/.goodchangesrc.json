@@ -1,7 +1,7 @@
 {
     "targets": [
         {
-            "targetName": "gdc-metric-component-unit-tests",
+            "targetName": "@gooddata/sdk-ui-metric-component-unit-tests",
             "changeDirs": [
                 {
                     "glob": "**/*",

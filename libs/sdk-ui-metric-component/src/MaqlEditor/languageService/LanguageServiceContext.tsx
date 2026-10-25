@@ -9,6 +9,9 @@ import { useReloadMetrics } from "../../shared/metrics/useReloadMetrics.js";
 
 export const LanguageServiceContext = createContext<MaqlLanguageService | undefined>(undefined);
 
+/**
+ * @internal
+ */
 export interface ILanguageServiceProviderProps {
     /**
      * Resolved value of the enableComputedAttributes workspace setting. When false, the language
@@ -18,6 +21,9 @@ export interface ILanguageServiceProviderProps {
     enableComputedAttributes?: boolean;
 }
 
+/**
+ * @internal
+ */
 export function LanguageServiceProvider({
     children,
     enableComputedAttributes,

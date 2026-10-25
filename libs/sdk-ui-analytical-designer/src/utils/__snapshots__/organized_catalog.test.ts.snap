@@ -1,0 +1,39 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`OrganizedCatalogUtils > convertToItemCacheList > should return itemCache objects list having displayFormUri as dfUri 1`] = `
+[
+  {
+    "dfIdentifier": "displayForm1.identifier",
+    "dfIdentifiers": [
+      "displayForm1.identifier",
+    ],
+    "dfRef": {
+      "identifier": "displayForm1.identifier",
+    },
+    "dfUri": "/uri/attribute/displayForm",
+    "dfUris": [
+      "/uri/attribute/displayForm",
+    ],
+    "displayForms": [
+      {
+        "id": "displayForm1.identifier",
+        "isDefault": true,
+        "isPrimary": true,
+        "ref": {
+          "identifier": "displayForm1.identifier",
+        },
+        "title": "displayForm 1",
+        "type": undefined,
+        "uri": "/uri/attribute/displayForm",
+      },
+    ],
+    "identifier": "attribute1.identifier",
+    "ref": {
+      "identifier": "attribute1.identifier",
+    },
+    "title": "attribute 1",
+    "type": "attribute",
+    "uri": "uri/attribute1",
+  },
+]
+`;

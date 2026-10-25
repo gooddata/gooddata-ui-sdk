@@ -1,0 +1,51 @@
+// (C) 2026 GoodData Corporation
+
+@use "@gooddata/sdk-ui-kit/styles/scss/Bubble/_variables" as bubble-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.gd-header,
+.gd-header-embedded {
+    z-index: 1;
+}
+
+.gd-header-embedded {
+    position: relative;
+    height: 0;
+}
+
+.invisible {
+    display: none;
+}
+
+.transparent {
+    opacity: 0;
+}
+
+.bubble.bubble-primary p {
+    color: bubble-variables.$bubble-primary-color; // fix color for primary bubbles that have <p> inside
+}
+
+.gd-upsell-button {
+    @media screen and (max-width: 1024px) {
+        display: none;
+    }
+}
+
+.gd-message-overlay.gd-message {
+    margin-bottom: 5px;
+}
+
+.attribute-hierarchy-overlay .modalityPlugin-mask-visible {
+    z-index: 5001;
+}
+
+.gd-invertable-select-status-bar {
+    flex-wrap: wrap;
+}
+
+// fix wrong order of css file imports that sets gray error to toast error messages
+.gd-message-overlay.error {
+    .gd-typography--p {
+        color: kit-variables.$gd-color-text-light;
+    }
+}

@@ -1,12 +1,10 @@
 {
     "extends": "../tsconfig.base.json",
     "compilerOptions": {
+        "noCheck": true,
         "rootDir": "./src",
         "outDir": "./esm",
-        "declaration": true,
-        "types": ["node"],
-        "noEmit": false,
-        "allowImportingTsExtensions": false
+        "types": ["node"]
     },
     "include": ["src/**/*"]
 }

@@ -4,6 +4,7 @@ import {
     type KeyboardEvent,
     type MouseEvent,
     type ReactNode,
+    type RefObject,
     useCallback,
     useEffect,
     useMemo,
@@ -118,6 +119,11 @@ export interface IHostChromeProps {
      * event. When omitted, the active application's manifest title is used instead.
      */
     appPageTitle?: string;
+    /**
+     * Ref the chrome populates with a handler that opens the pricing dialog. The handler is a no-op
+     * outside a trial organization.
+     */
+    openPricingDialogRef?: RefObject<(() => void) | undefined>;
     children?: ReactNode;
 }
 
@@ -135,6 +141,7 @@ export function HostChrome({
     onChatToggle,
     onAskAiAssistant,
     appPageTitle,
+    openPricingDialogRef,
     children,
 }: IHostChromeProps) {
     const locale = resolveLocale(ctx.preferredLocale);
@@ -148,6 +155,20 @@ export function HostChrome({
     );
 
     const pricing = useHostChromePricing(ctx, locale);
+    const { isTrial, onUpsellButtonClick } = pricing;
+    useEffect(() => {
+        if (!openPricingDialogRef) {
+            return;
+        }
+        openPricingDialogRef.current = () => {
+            if (isTrial) {
+                onUpsellButtonClick();
+            }
+        };
+        return () => {
+            openPricingDialogRef.current = undefined;
+        };
+    }, [openPricingDialogRef, isTrial, onUpsellButtonClick]);
     const [isLanguageDialogOpen, setIsLanguageDialogOpen] = useState(false);
 
     // The host's single GenAI chat is owned by the runtime (HostChat), not the chrome — so it survives

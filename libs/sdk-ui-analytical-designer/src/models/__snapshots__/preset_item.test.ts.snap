@@ -1,0 +1,216 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Decorated Preset Item > asDateFilterConfig > should convert all presets to expected format 1`] = `
+[
+  {
+    "granularity": undefined,
+    "interval": undefined,
+    "name": "all_time",
+  },
+  {
+    "granularity": undefined,
+    "interval": undefined,
+    "name": "static_period",
+    "type": "absolute",
+  },
+  undefined,
+  {
+    "granularity": "GDC.time.date",
+    "interval": [
+      -6,
+      0,
+    ],
+    "name": "last_7_days",
+    "type": "relative",
+  },
+  {
+    "granularity": "GDC.time.date",
+    "interval": [
+      -29,
+      0,
+    ],
+    "name": "last_30_days",
+    "type": "relative",
+  },
+  {
+    "granularity": "GDC.time.date",
+    "interval": [
+      -89,
+      0,
+    ],
+    "name": "last_90_days",
+    "type": "relative",
+  },
+  undefined,
+  {
+    "granularity": "GDC.time.week_us",
+    "interval": [
+      0,
+      0,
+    ],
+    "name": "this_week_us",
+    "type": "relative",
+  },
+  {
+    "granularity": "GDC.time.week_us",
+    "interval": [
+      -1,
+      -1,
+    ],
+    "name": "last_week_us",
+    "type": "relative",
+  },
+  {
+    "granularity": "GDC.time.week_us",
+    "interval": [
+      -1,
+      0,
+    ],
+    "name": "last_2_weeks_us",
+    "type": "relative",
+  },
+  undefined,
+  {
+    "granularity": "GDC.time.month",
+    "interval": [
+      0,
+      0,
+    ],
+    "name": "this_month",
+    "type": "relative",
+  },
+  {
+    "granularity": "GDC.time.month",
+    "interval": [
+      -1,
+      -1,
+    ],
+    "name": "last_month",
+    "type": "relative",
+  },
+  {
+    "granularity": "GDC.time.month",
+    "interval": [
+      -11,
+      0,
+    ],
+    "name": "last_12_months",
+    "type": "relative",
+  },
+  undefined,
+  {
+    "granularity": "GDC.time.quarter",
+    "interval": [
+      0,
+      0,
+    ],
+    "name": "this_quarter",
+    "type": "relative",
+  },
+  {
+    "granularity": "GDC.time.quarter",
+    "interval": [
+      -1,
+      -1,
+    ],
+    "name": "last_quarter",
+    "type": "relative",
+  },
+  {
+    "granularity": "GDC.time.quarter",
+    "interval": [
+      -3,
+      0,
+    ],
+    "name": "last_4_quarters",
+    "type": "relative",
+  },
+  undefined,
+  {
+    "granularity": "GDC.time.year",
+    "interval": [
+      0,
+      0,
+    ],
+    "name": "this_year",
+    "type": "relative",
+  },
+  {
+    "granularity": "GDC.time.year",
+    "interval": [
+      -1,
+      -1,
+    ],
+    "name": "last_year",
+    "type": "relative",
+  },
+  undefined,
+  {
+    "granularity": "GDC.time.fiscal_quarter",
+    "interval": [
+      0,
+      0,
+    ],
+    "name": "this_fiscal_quarter",
+    "type": "relative",
+  },
+  {
+    "granularity": "GDC.time.fiscal_quarter",
+    "interval": [
+      -1,
+      -1,
+    ],
+    "name": "last_fiscal_quarter",
+    "type": "relative",
+  },
+  {
+    "granularity": "GDC.time.fiscal_quarter",
+    "interval": [
+      -3,
+      0,
+    ],
+    "name": "last_4_fiscal_quarters",
+    "type": "relative",
+  },
+  undefined,
+  {
+    "granularity": "GDC.time.fiscal_month",
+    "interval": [
+      0,
+      0,
+    ],
+    "name": "this_fiscal_month",
+    "type": "relative",
+  },
+  {
+    "granularity": "GDC.time.fiscal_month",
+    "interval": [
+      -1,
+      -1,
+    ],
+    "name": "last_fiscal_month",
+    "type": "relative",
+  },
+  {
+    "granularity": "GDC.time.fiscal_month",
+    "interval": [
+      -11,
+      0,
+    ],
+    "name": "last_12_fiscal_months",
+    "type": "relative",
+  },
+]
+`;
+
+exports[`Decorated Preset Item > asDateFilterConfig > should convert static period 1`] = `
+{
+  "granularity": "GDC.time.date",
+  "interval": [
+    "01/01/2018",
+    "12/31/2018",
+  ],
+  "name": "static_period",
+  "type": "absolute",
+}
+`;

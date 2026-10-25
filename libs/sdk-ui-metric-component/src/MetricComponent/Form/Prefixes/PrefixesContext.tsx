@@ -2,6 +2,9 @@
 
 import { type ReactElement, type ReactNode, createContext } from "react";
 
+/**
+ * @internal
+ */
 export interface IPrefixes {
     current: string | undefined;
     parents: string[];

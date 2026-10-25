@@ -1,0 +1,54 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Bucket Filters Reducer > update measure value filter > should update measure value filter 1`] = `
+{
+  "conditions": [
+    {
+      "range": {
+        "from": 12,
+        "operator": "BETWEEN",
+        "to": 14,
+      },
+    },
+  ],
+  "localIdentifier": "f1",
+  "measureLocalIdentifier": "m1",
+  "type": "measure",
+}
+`;
+
+exports[`Bucket Filters Reducer > update ranking filter > should update ranking filter 1`] = `
+{
+  "attributes": [
+    "a1",
+    "a2",
+  ],
+  "localIdentifier": "f6",
+  "measureLocalIdentifier": "m5",
+  "operator": "TOP",
+  "type": "ranking",
+  "value": 5,
+}
+`;
+
+exports[`Bucket Filters Reducer > updateDateFilterDateDataset > should migrate additional filters 1`] = `
+{
+  "cacheItemIdentifier": "activity.day.in.week",
+  "displayFormRef": {
+    "uri": "/gdc/md/680",
+  },
+  "filterConfig": {
+    "isInverted": false,
+    "selectedElements": [
+      {
+        "available": true,
+        "title": "Element 1",
+        "uri": "/gdc/md/obj/679?id=1",
+      },
+    ],
+    "totalElementsCount": 1,
+  },
+  "localIdentifier": "additional.filter",
+  "type": "attribute",
+}
+`;

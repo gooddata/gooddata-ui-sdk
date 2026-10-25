@@ -1,0 +1,8 @@
+// (C) 2026 GoodData Corporation
+
+// AD rules and the SDK config-panel partials that no public SDK stylesheet ships.
+// It has no normalize.css and no page-level rules.
+@use "@gooddata/sdk-ui-ext/styles/internal/scss/dropdown_icons";
+@use "@gooddata/sdk-ui-ext/styles/internal/scss/config_panel";
+@use "ad_partials";
+@use "component_overrides";

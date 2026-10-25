@@ -22,6 +22,7 @@ export const PluggableAppEventType = {
     AI_ASSISTANT_CONTEXT_CHANGED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CONTEXT_CHANGED",
     AI_ASSISTANT_PUBLISHER_DOCUMENT_SAVED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.PUBLISHER_DOCUMENT_SAVED",
     AI_ASSISTANT_DASHBOARD_SAVED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.DASHBOARD_SAVED",
+    PRICING_DIALOG_OPEN_REQUESTED: "GDC.PLUGGABLE_APP/EVT.PRICING_DIALOG.OPEN_REQUESTED",
 } as const;
 
 /**
@@ -279,6 +280,41 @@ export function isCloseAiAssistantRequestedEvent(obj: unknown): obj is ICloseAiA
     return (
         typeof obj === "object" &&
         (obj as { type?: unknown })?.type === PluggableAppEventType.AI_ASSISTANT_CLOSE_REQUESTED
+    );
+}
+
+/**
+ * Event requesting the host to open its pricing (plan upgrade) dialog.
+ *
+ * @remarks
+ * A pluggable application emits this from an in-content upsell control (e.g. an "Upgrade" button).
+ * The pricing dialog is owned by the host UI. The default host UI opens it only for trial
+ * organizations; outside a trial, or with a host UI that has no pricing dialog, the event is a no-op.
+ *
+ * @alpha
+ */
+export interface IOpenPricingDialogRequestedEvent extends IPluggableAppEvent {
+    readonly type: "GDC.PLUGGABLE_APP/EVT.PRICING_DIALOG.OPEN_REQUESTED";
+}
+
+/**
+ * Creates an {@link IOpenPricingDialogRequestedEvent}.
+ *
+ * @alpha
+ */
+export function openPricingDialogRequested(): IOpenPricingDialogRequestedEvent {
+    return { type: PluggableAppEventType.PRICING_DIALOG_OPEN_REQUESTED };
+}
+
+/**
+ * Type guard for {@link IOpenPricingDialogRequestedEvent}.
+ *
+ * @alpha
+ */
+export function isOpenPricingDialogRequestedEvent(obj: unknown): obj is IOpenPricingDialogRequestedEvent {
+    return (
+        typeof obj === "object" &&
+        (obj as { type?: unknown })?.type === PluggableAppEventType.PRICING_DIALOG_OPEN_REQUESTED
     );
 }
 

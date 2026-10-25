@@ -17,6 +17,9 @@ export type MetricIdConflicts = {
     usableIds: string[];
 };
 
+/**
+ * @internal
+ */
 export type ConflictChecker = (identifiers: string[]) => Promise<IMeasureOverride[]>;
 
 export function useConflictDetection(): (metricId?: string) => Promise<MetricIdConflicts> {

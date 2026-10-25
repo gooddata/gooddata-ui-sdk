@@ -69,8 +69,14 @@ import { content as cont__functions_for_referring_to_past_time_periods } from ".
 
 /**
  * IETF BCP 47 language tags for supported locales in documentation
+ *
+ * @internal
  */
 export const locales = ["en-us"] as const;
+
+/**
+ * @internal
+ */
 export type Locale = (typeof locales)[number];
 
 export const docsIndex = {

@@ -1,0 +1,20 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Buckets service > getAttributeBucketItemsByRef > should return an array of attributes with matching ref 1`] = `
+[
+  {
+    "localIdentifier": "a1",
+    "ref": {
+      "uri": "/uri0",
+    },
+    "type": "attribute",
+  },
+  {
+    "localIdentifier": "a2",
+    "ref": {
+      "uri": "/uri0",
+    },
+    "type": "attribute",
+  },
+]
+`;

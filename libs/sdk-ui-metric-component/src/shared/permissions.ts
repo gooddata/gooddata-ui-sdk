@@ -2,11 +2,17 @@
 
 import { type IWorkspacePermissions } from "@gooddata/sdk-model";
 
+/**
+ * @internal
+ */
 export interface IOrganizationPermissions {
     hasOrgManagePermission: boolean;
     hasBaseUiAccessPermission?: boolean;
 }
 
+/**
+ * @internal
+ */
 export function emptyWorkspacePermissions(): IWorkspacePermissions {
     return {
         canAccessWorkbench: false,
@@ -40,6 +46,9 @@ export function emptyWorkspacePermissions(): IWorkspacePermissions {
     };
 }
 
+/**
+ * @internal
+ */
 export function emptyOrganizationPermissions(): IOrganizationPermissions {
     return {
         hasOrgManagePermission: false,

@@ -1,0 +1,220 @@
+// (C) 2007-2022 GoodData Corporation
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/Form/_mixins";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.adi-am-selector,
+.adi-am-operator-selector {
+    margin: 2px 0 5px;
+}
+
+.adi-am-selector-title {
+    position: relative;
+    overflow: hidden;
+    height: 25px;
+    padding: 0 8px 0 34px;
+    border: 1px solid kit-variables.$gd-input-text-border;
+    line-height: 25px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+
+    .adi-am-selector-title-name {
+        font-weight: bold;
+    }
+}
+
+.adi-am-selector-title-order {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 26px;
+    border-right: 1px solid kit-variables.$gd-input-text-border;
+    color: kit-variables.$gd-color-state-blank;
+    font-weight: bold;
+    text-align: center;
+    background: #ebeff4;
+}
+
+.adi-am-selector-title-add,
+.adi-am-selector-title-name {
+    position: relative;
+    display: inline-block;
+    padding-left: 18px;
+
+    &::before {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        font-size: 16px;
+    }
+}
+
+.adi-am-selector-title-add {
+    color: kit-variables.$gd-palette-primary-base;
+}
+
+.adi-am-selector-title-name {
+    &::before {
+        margin-left: 2px;
+        color: kit-variables.$gd-color-label;
+        transition: transform 0.2s;
+
+        .adi-am-selector-expanded & {
+            margin-top: -2px;
+            margin-left: 0;
+            transform: rotate(90deg);
+        }
+    }
+}
+
+.adi-am-selector-subtitle {
+    color: kit-variables.$gd-color-state-blank;
+}
+
+.adi-am-selector-list {
+    .gd-list-item {
+        span span {
+            display: inline;
+            flex: none;
+        }
+
+        &.is-selected {
+            .adi-am-selector-name,
+            .adi-am-selector-subtitle {
+                color: kit-variables.$gd-palette-primary-base;
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+.adi-am-operator-selector-button {
+    padding-left: 7px;
+    position: relative;
+    overflow: hidden;
+    height: 27px;
+    border: 1px solid kit-variables.$gd-input-text-border;
+    line-height: 27px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+
+    &::after {
+        content: "\E612";
+        position: absolute;
+        top: 0;
+        right: 7px;
+        bottom: 0;
+        color: kit-variables.$gd-color-state-blank;
+        background: no-repeat center;
+        font-family: Indigo, sans-serif;
+        font-size: 20px;
+    }
+}
+
+.adi-am-operator-selector-button-expanded {
+    &::after {
+        content: "\E613";
+    }
+}
+
+.gd-list-item:not(.is-selected) {
+    .adi-am-operator-selector-item {
+        i {
+            color: kit-variables.$gd-color-state-blank;
+        }
+    }
+}
+
+.adi-am-operator-selector-item {
+    position: relative;
+    display: inline-block;
+    padding: 0 20px 0 24px;
+    font-size: 12px;
+
+    i {
+        font-weight: normal;
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 15px;
+        background: no-repeat center;
+    }
+
+    &-sum::before {
+        background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/measure-operator-sum.svg");
+    }
+
+    &-difference::before {
+        background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/measure-operator-difference.svg");
+    }
+
+    &-ratio::before {
+        background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/measure-operator-ratio.svg");
+    }
+
+    &-multiplication::before {
+        background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/measure-operator-multiplication.svg");
+    }
+
+    &-change::before {
+        background-image: url("@gooddata/sdk-ui-analytical-designer/styles/images/measure-operator-change.svg");
+    }
+}
+
+.adi-am-operator-selector-list-heading {
+    padding: 10px 0 0 10px;
+    text-transform: uppercase;
+    font-size: 12px;
+    line-height: 10px;
+    color: kit-variables.$gd-color-state-blank;
+}
+
+.adi-am-operator-selector-hint {
+    padding: 3px 0 5px;
+    color: kit-variables.$gd-color-state-blank;
+    letter-spacing: 1.5px;
+}
+
+.adi-am-operator-selector-list .inlineBubbleHelp {
+    position: absolute;
+    top: 0;
+    right: 6px;
+    bottom: 0;
+    width: 24px;
+    line-height: inherit;
+    text-align: center;
+}
+
+.adi-arithmetic-measure-operand-bubble {
+    .bubble-content .content {
+        padding: 5px;
+
+        h3 {
+            margin: 0;
+            font-size: 14px;
+            color: kit-variables.$gd-color-text;
+        }
+
+        h4 {
+            margin: 13px 0 0;
+            font-size: 10px;
+            font-weight: normal;
+            text-transform: uppercase;
+            color: kit-variables.$gd-color-state-blank;
+        }
+
+        p {
+            font-size: 12px;
+            line-height: 20px;
+        }
+    }
+}

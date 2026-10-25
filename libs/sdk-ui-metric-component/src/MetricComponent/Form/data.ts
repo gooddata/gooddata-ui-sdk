@@ -6,6 +6,9 @@ import { type EmptyMetricWidthId } from "../metric/emptyMetric.js";
 
 import { type IMeasureDefWithMaqlField } from "./maqlFieldFunctions.js";
 
+/**
+ * @internal
+ */
 export enum FormField {
     id = "id",
     title = "title",

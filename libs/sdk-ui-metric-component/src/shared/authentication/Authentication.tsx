@@ -7,6 +7,9 @@ import { useBackendStrict } from "@gooddata/sdk-ui";
 
 import { GlobalLoading } from "../GlobalLoading/GlobalLoading.js";
 
+/**
+ * @internal
+ */
 export function Authentication({
     children,
     Error,

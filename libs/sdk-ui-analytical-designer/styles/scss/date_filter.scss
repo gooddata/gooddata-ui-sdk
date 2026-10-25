@@ -1,0 +1,434 @@
+// (C) 2007-2025 GoodData Corporation
+@use "sass:color";
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/Button/_variables" as button-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.adi-filter-button.adi-date-filter-button {
+    max-width: 285px;
+
+    .label {
+        max-width: 213px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.adi-filter-picker.adi-date-filter-picker {
+    padding: 0;
+
+    .date-filter-error-message {
+        font-size: 12px;
+        margin: 10px;
+        margin-top: 0;
+    }
+
+    .navigate-back-header {
+        padding: 4px 8px 0;
+        line-height: 26px;
+        color: kit-variables.$gd-palette-primary-base;
+        cursor: pointer;
+        border-bottom: 1px solid #dde4eb;
+
+        .navigate-header-icon {
+            font-size: 18px;
+            margin-right: 5px;
+        }
+
+        .navigate-header-label {
+            font-size: 12px;
+
+            span {
+                vertical-align: top;
+            }
+        }
+
+        &:hover {
+            background-color: variables.$adi-catalog-background;
+            color: button-variables.$button-action-hover-bg;
+        }
+    }
+
+    .adi-date-dropdown {
+        padding: 8px;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        font-size: 12px;
+        color: kit-variables.$gd-color-label;
+
+        &.adi-date-dataset-select {
+            background-color: kit-variables.$is-focused-background;
+        }
+
+        .select {
+            display: flex;
+            margin: 0 -5px;
+
+            & > * {
+                margin: 0 5px;
+                align-self: center;
+            }
+
+            .adi-date-preset-select-dropdown,
+            .adi-date-dataset-select-dropdown {
+                flex: 1 1 auto;
+                max-width: 250px;
+
+                // refactor
+                // stylelint-disable-next-line max-nesting-depth
+                button {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+    &.adi-date-filter-picker-wide {
+        .adi-date-dataset-select select {
+            max-width: 250px;
+        }
+
+        .adi-date-preset-select-dropdown,
+        .adi-date-dataset-select-dropdown {
+            width: 180px;
+
+            button {
+                width: 100%;
+            }
+        }
+    }
+
+    section,
+    .section {
+        padding: 10px;
+
+        &.adi-tab-presets {
+            padding: 10px 0 7px;
+        }
+
+        &.adi-tab-range {
+            min-width: 255px;
+            font-size: 14px;
+            white-space: nowrap;
+            color: kit-variables.$gd-color-label;
+        }
+    }
+
+    .subsection-wrap {
+        margin: 5px 0 0 5px;
+        padding: 5px 0 0 10px;
+        border-left: 2px dotted kit-variables.$gd-border-color;
+
+        &.exclude-period-subsection {
+            padding: 0;
+
+            .gd-extended-date-filter-exclude-current {
+                border-top: 0;
+            }
+        }
+
+        .subsection {
+            background-color: kit-variables.$is-focused-background;
+            padding: 10px;
+        }
+    }
+
+    footer {
+        margin-top: 20px;
+        text-align: right;
+    }
+
+    .adi-date-input-from,
+    .adi-date-input-to {
+        display: inline-block;
+        width: 123px;
+    }
+
+    .adi-date-input-from {
+        margin-right: 5px;
+    }
+
+    .adi-date-input-to {
+        margin-left: 5px;
+    }
+
+    .filter-picker-text {
+        padding-left: 10px;
+        padding-right: 10px;
+        font-size: 12px;
+        line-height: 23px;
+        cursor: pointer;
+    }
+
+    .filter-picker-empty-space {
+        height: 14px;
+    }
+
+    .filter-picker-header {
+        margin-top: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        font-size: 10px;
+        line-height: 16px;
+        text-transform: uppercase;
+        color: kit-variables.$gd-color-state-blank;
+    }
+
+    button + .gd-bubble-trigger {
+        margin-left: 10px;
+    }
+
+    // override static and relative range input size from SDK (where it is set to match attribute filter inputs in KD)
+    .gd-input-field,
+    .input-text {
+        font-size: 12px;
+    }
+}
+
+.adi-metric-date-filter-picker {
+    min-width: 208px;
+
+    section.adi-tab-presets {
+        padding-top: 0;
+    }
+}
+
+.adi-compare-apply-select {
+    .adi-compare-apply-label {
+        font-size: 12px;
+        color: kit-variables.$gd-color-label;
+    }
+
+    .adi-compare-apply-incompatible {
+        font-size: 12px;
+        margin: 6px 0 0;
+        color: kit-variables.$gd-color-label;
+    }
+}
+
+.adi-compare-measures-list {
+    .gd-list-actions .gd-button-text {
+        font-size: 12px;
+    }
+
+    .gd-list-item span span {
+        display: inline;
+        flex: none;
+    }
+
+    .adi-compare-measures-list-item-sequence {
+        font-family: variables.$adi-sequence-number-font-family;
+        font-size: 10px;
+        font-weight: normal;
+        color: kit-variables.$gd-color-state-blank;
+        margin-left: 6px;
+    }
+
+    .adi-compare-measures-buttons {
+        margin: 10px;
+        text-align: right;
+        padding: 10px 0 0;
+        border-top: 1px solid kit-variables.$gd-border-color;
+
+        button + button {
+            margin-left: 10px;
+        }
+    }
+}
+
+.adi-compare-types-list {
+    .gd-list-item {
+        &:hover.is-disabled {
+            background: initial;
+
+            &:not(.is-selected) {
+                color: kit-variables.$gd-color-text;
+            }
+        }
+
+        &.is-disabled {
+            opacity: 0.5;
+            cursor: default;
+        }
+    }
+}
+
+.adi-date-filter-body {
+    max-height: 295px;
+    min-width: 230px;
+    width: min-content;
+    overflow: auto;
+    overscroll-behavior: contain;
+
+    .section.is-disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+}
+
+.adi-additional-date-attributes {
+    padding: 0 10px 10px;
+
+    &.is-disabled {
+        // Apply disabled styling to specific children, not the container
+        // This ensures EmptyValuesFilter remains visually normal
+        .adi-additional-date-attribute,
+        .adi-additional-filter-reset-warning,
+        .adi-additional-date-granularities-dropdown-button {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+    }
+
+    .adi-additional-date-granularities-dropdown-button {
+        height: auto;
+        padding: 2px 5px 2px 24px;
+        border: 1px solid transparent;
+        border-radius: 3px;
+        font-size: 12px;
+        line-height: 18px;
+        color: inherit;
+
+        &::before {
+            right: auto;
+            left: 2px;
+            font-size: 15px;
+            color: kit-variables.$gd-palette-primary-base;
+        }
+
+        &:hover,
+        &.is-active {
+            border-color: variables.$adi-filter-item-active-border-color;
+            box-shadow:
+                0 1px 1px 0 variables.$adi-shadow-darker,
+                inset 0 -1px 0 0 color.adjust(variables.$adi-filter-item-active-border-color, $alpha: -0.4);
+            background-color: variables.$adi-catalog-background;
+        }
+
+        &:active,
+        &.is-active {
+            border: 1px solid color.adjust(variables.$adi-filter-active-border-color, $alpha: -0.8);
+            box-shadow: inset 0 1px 0 0
+                color.adjust(variables.$adi-filter-item-active-border-color, $alpha: -0.35);
+            background-image: linear-gradient(
+                -179deg,
+                variables.$adi-button-active-gradient-top 0%,
+                variables.$adi-button-active-gradient-bottom 100%
+            );
+        }
+
+        .gd-button-text {
+            text-decoration: none;
+        }
+    }
+
+    .adi-additional-date-attribute {
+        &.adi-date-dropdown {
+            padding: 0 0 10px;
+        }
+
+        .adi-additional-date-attribute-button-wrapper {
+            display: flex;
+        }
+
+        .adi-additional-date-attribute-dropdown-button {
+            width: 180px;
+        }
+
+        .adi-additional-date-attribute-remove {
+            flex: 0 0 auto;
+            padding: 8px;
+
+            &::before {
+                font-size: 14px;
+            }
+        }
+    }
+
+    .adi-additional-filter-reset-warning {
+        width: 160px;
+        padding: 4px 8px 4px 10px;
+        margin-bottom: 8px;
+        line-height: 1.4em;
+        font-size: 12px;
+        font-family: kit-variables.$gd-font-primary;
+        color: kit-variables.$gd-color-warning-text;
+        background: var(
+            --gd-palette-warning-base-t85,
+            color.adjust(kit-variables.$gd-color-warning, $alpha: -0.85)
+        );
+        border-radius: 3px;
+    }
+
+    .adi-empty-values-filter {
+        &.adi-date-dropdown {
+            padding: 0 0 10px;
+        }
+
+        .adi-empty-values-filter-button-wrapper {
+            display: flex;
+        }
+
+        .adi-empty-values-filter-button {
+            width: 180px;
+        }
+
+        .adi-empty-values-filter-remove {
+            flex: 0 0 auto;
+            padding: 8px;
+
+            &::before {
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+.adi-additional-date-attribute-dropdown {
+    &.adi-filter-picker.adi-attr-filter-picker {
+        margin-top: -5px;
+        max-width: 190px;
+
+        .gd-list {
+            min-width: 180px;
+        }
+    }
+}
+
+.adi-additional-date-granularities-dropdown {
+    &.adi-date-granularity-dropdown {
+        min-width: 230px;
+    }
+
+    .adi-additional-date-granularities-dropdown-label {
+        padding: 8px 10px;
+        margin-top: -6px;
+        background-color: kit-variables.$is-focused-background;
+        color: kit-variables.$gd-color-state-blank;
+        font-size: 11px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .adi-granularity-item {
+        height: 22px;
+        line-height: 16px;
+    }
+
+    .filter-reset-warning {
+        color: kit-variables.$gd-palette-warning-base-text;
+        background: kit-variables.$gd-palette-warning-base;
+    }
+}
+
+.gd-date-filter-preset-dropdown {
+    display: block;
+    overflow: auto;
+    overscroll-behavior: contain;
+    padding: 10px 0;
+    min-width: 180px;
+
+    .gd-date-preset-tabs {
+        padding: 0 10px 10px;
+    }
+}
