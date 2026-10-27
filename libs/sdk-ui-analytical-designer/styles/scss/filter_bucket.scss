@@ -67,7 +67,7 @@
     // checkMultiline reads computed height > min-height as "the filter bar wrapped". Under a host
     // app's `*{box-sizing:border-box}` reset (ui-kit Overlay's .gd-overlay-content in the KD
     // insight overlay), the same single-line layout computes 56px (content + 2px+2px padding) and
-    // permanently hides the recommendations panel (STL-3363) — the LX-2604 precedent below.
+    // permanently hides the recommendations panel — same fix as .adi-bucket-invitation below.
     // The doubled class beats the reset's `.gd-overlay-content *` (0,1,0) by specificity instead
     // of relying on stylesheet load order.
     margin: 0 15px 0 0;
@@ -90,7 +90,7 @@
     .adi-bucket-invitation {
         width: 194px;
         // Content-box: resist a preloaded app's injected `*{box-sizing:border-box}` reset, which
-        // would otherwise treat 194px as the border box and shrink the content by 10px (LX-2604).
+        // would otherwise treat 194px as the border box and shrink the content by 10px.
         box-sizing: content-box;
         margin: 4px 0 4px 10px;
         padding: 3px;

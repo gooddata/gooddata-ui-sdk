@@ -22,7 +22,7 @@ export const insightNotFoundError: ICommandFailedBody = {
  */
 /**
  * What the InsightOpened event carries. Deliberately NOT sdk-embedding's AdInsightOpenedBody:
- * its `definition` differs from what AD has always posted (ONE-4679).
+ * its `definition` differs from what AD has always posted.
  */
 export interface IAdInsightOpenedBody {
     availableCommands: GdcAdCommandType[];

@@ -102,9 +102,6 @@ export interface IPluggableVisualizationProps extends IVisCallbacks {
  *                 |
  *                 ▼
  *           [Visualization]
- *
- *
- * more at: https://confluence.intgdc.com/display/VS/INTERNAL+ONLY+App+Components+-+Pluggable+Visualizations
  */
 
 function PluggableVisualizationPure({

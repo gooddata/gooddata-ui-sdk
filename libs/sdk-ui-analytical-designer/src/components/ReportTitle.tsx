@@ -41,7 +41,7 @@ export function ReportTitle() {
 
     const renderLockIcon = () => {
         if (isReportLocked) {
-            // TODO: TIGER-HACK - inherited insights are locked and cannot be edited; we need to give slightly different tooltip.
+            // Inherited insights are locked and cannot be edited; we need to give slightly different tooltip.
             return (
                 <BubbleHoverTrigger className="gd-icon-lock-wrapper" showDelay={0} hideDelay={0}>
                     <i className="gd-icon-lock" />

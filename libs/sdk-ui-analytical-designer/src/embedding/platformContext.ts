@@ -21,7 +21,10 @@ import { type IApiToken } from "../backend.js";
 // AD's IBootstrapData.user.separators is required; the host settings can lack them.
 const DEFAULT_SEPARATORS = { thousand: ",", decimal: "." };
 
-/** AD's token shape for the platform-context credentials; undefined for context-deferred auth. */
+/**
+ * AD's token shape for the platform-context credentials; undefined for context-deferred auth. It
+ * seeds the stored token, so the SetApiToken renewals update it in place.
+ */
 export function platformContextAuthToApiToken(auth: IAuthCredentials): IApiToken | undefined {
     if (auth.type === "apiToken") {
         return { apiToken: auth.token, apiTokenType: "gooddata" };
@@ -34,11 +37,6 @@ export function platformContextAuthToApiToken(auth: IAuthCredentials): IApiToken
         };
     }
     return undefined;
-}
-
-/** The external identity provider a context-deferred host authenticates through, if any. */
-export function platformContextAuthExternalProviderId(auth: IAuthCredentials): string | undefined {
-    return auth.type === "contextDeferred" ? auth.externalProviderId : undefined;
 }
 
 /**

@@ -114,7 +114,7 @@ export const getTagsConfiguration = createSelector(
 /**
  * The route tag scope (include / exclude object tags) as strings. The pluggable host shell passes it
  * to its AI assistant so the host's object search stays within the same tag filter AD applies to
- * its catalog (LX-2544).
+ * its catalog.
  */
 export interface IAiAssistantTagScope {
     includeTags?: string[];

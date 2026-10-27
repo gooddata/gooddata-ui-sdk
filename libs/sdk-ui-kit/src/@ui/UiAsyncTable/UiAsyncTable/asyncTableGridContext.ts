@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type RefObject, createContext, useContext } from "react";
+import { type Ref, type RefObject, createContext, useContext } from "react";
 
 /**
  * Ref to the grid element that holds the table's real DOM focus.
@@ -14,3 +14,14 @@ const AsyncTableGridRefContext = createContext<RefObject<HTMLElement | null> | n
 export const AsyncTableGridRefProvider = AsyncTableGridRefContext.Provider;
 
 export const useAsyncTableGridRef = () => useContext(AsyncTableGridRefContext);
+
+interface IAsyncTableHeaderNavigation {
+    focusedColumnIndex?: number;
+    focusedElementRef: Ref<HTMLElement>;
+    isTooltipOpen: boolean;
+    getHeaderId: (index: number) => string;
+}
+
+const AsyncTableHeaderNavigationContext = createContext<IAsyncTableHeaderNavigation | null>(null);
+export const AsyncTableHeaderNavigationProvider = AsyncTableHeaderNavigationContext.Provider;
+export const useAsyncTableHeaderNavigation = () => useContext(AsyncTableHeaderNavigationContext);

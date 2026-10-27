@@ -20,13 +20,6 @@ export interface IChangeMeasureValueFilterConfigModePayload {
 }
 
 /**
- * @internal
- */
-export interface ISetMeasureValueFilterConfigsPayload {
-    measureValueFilterConfigs?: IDashboardMeasureValueFilterConfig[];
-}
-
-/**
  * Changes the config mode for the measure value filter given by its local identifier.
  */
 const changeMeasureValueFilterConfigMode: MeasureValueFilterConfigReducer<
@@ -57,6 +50,13 @@ const changeMeasureValueFilterConfigMode: MeasureValueFilterConfigReducer<
         ];
     }
 };
+
+/**
+ * @internal
+ */
+export interface ISetMeasureValueFilterConfigsPayload {
+    measureValueFilterConfigs?: IDashboardMeasureValueFilterConfig[];
+}
 
 const setMeasureValueFilterConfigs: MeasureValueFilterConfigReducer<
     PayloadAction<ISetMeasureValueFilterConfigsPayload>

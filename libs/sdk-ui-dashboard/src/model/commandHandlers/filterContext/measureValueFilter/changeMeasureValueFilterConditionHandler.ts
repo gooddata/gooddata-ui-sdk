@@ -1,26 +1,20 @@
 // (C) 2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
-import { call, put, select } from "redux-saga/effects";
+import { call, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
 import { type IChangeMeasureValueFilterCondition } from "../../../commands/filters.js";
 import { measureValueFilterConditionChanged } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
-import { selectEnablePersistentFiltersAcrossTabs } from "../../../store/meta/metaSelectors.js";
 import {
     selectFilterContextMeasureValueFilterByLocalId,
     selectWorkingFilterContextMeasureValueFilterByLocalId,
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
-import {
-    type IFilterContextByTabSnapshot,
-    captureFilterContextByTabSnapshot,
-    dispatchFilterContextChanged,
-    dispatchFilterContextChangedForMutatedTabs,
-} from "../common.js";
+import { type ITabSyncSession, beginTabSync, endTabSync, putTabSynced } from "../tabSync/tabSyncSaga.js";
 
 export function* changeMeasureValueFilterConditionHandler(
     ctx: DashboardContext,
@@ -31,10 +25,7 @@ export function* changeMeasureValueFilterConditionHandler(
     const existingFilter: ReturnType<ReturnType<typeof selectFilterContextMeasureValueFilterByLocalId>> =
         yield select(selectFilterContextMeasureValueFilterByLocalId(localIdentifier));
 
-    const enablePersistentFiltersAcrossTabs: ReturnType<typeof selectEnablePersistentFiltersAcrossTabs> =
-        yield select(selectEnablePersistentFiltersAcrossTabs);
-
-    const filterContextSnapshot: IFilterContextByTabSnapshot = yield call(captureFilterContextByTabSnapshot);
+    const session: ITabSyncSession = yield call(beginTabSync);
 
     if (!existingFilter) {
         throw invalidArgumentsProvided(
@@ -44,14 +35,13 @@ export function* changeMeasureValueFilterConditionHandler(
         );
     }
 
-    yield put(
+    yield call(putTabSynced, session, [
         tabsActions.changeMeasureValueFilterCondition({
             localIdentifier,
             conditions,
             ...(isWorkingSelectionChange === undefined ? {} : { isWorkingSelectionChange }),
-            enablePersistentFiltersAcrossTabs,
         }),
-    );
+    ]);
 
     const updatedFilterSelector = isWorkingSelectionChange
         ? selectWorkingFilterContextMeasureValueFilterByLocalId(localIdentifier)
@@ -71,9 +61,5 @@ export function* changeMeasureValueFilterConditionHandler(
         ),
     );
 
-    if (enablePersistentFiltersAcrossTabs) {
-        yield call(dispatchFilterContextChangedForMutatedTabs, ctx, cmd, filterContextSnapshot);
-    } else {
-        yield call(dispatchFilterContextChanged, ctx, cmd);
-    }
+    yield call(endTabSync, ctx, cmd, session);
 }

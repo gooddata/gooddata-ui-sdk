@@ -32,9 +32,6 @@ describe("mapLegacyUrlToHost", () => {
     );
 
     it.each([
-        ["/dashboards/", "#/workspace/ws1/dashboard/d1", "/workspace/ws1/dashboards/#/dashboard/d1"],
-        ["/dashboards/", "#/project/ws1", "/workspace/ws1/dashboards/"],
-        ["/dashboards/embedded/", "#/client/ws1/x", "/embedded/workspace/ws1/dashboards/#/x"],
         ["/analyze/", "#/ws1/insight1", "/workspace/ws1/analyze/#/insight1"],
         ["/analyze/embedded/", "#/ws1", "/embedded/workspace/ws1/analyze/"],
         ["/metrics", "#/ws1/metric/m1", "/workspace/ws1/metrics/metric/m1"],
@@ -42,6 +39,128 @@ describe("mapLegacyUrlToHost", () => {
         ["/modeler", "#/ws1?displayEditMode", "/workspace/ws1/modeler?displayEditMode"],
     ])("maps %s%s to %s", (pathname, hash, expected) => {
         expect(mapLegacyUrlToHost(location(pathname, hash))).toBe(expected);
+    });
+
+    it.each([
+        ["#/workspace/ws1/dashboard/d1", "", "/workspace/ws1/dashboards/#/dashboard/d1"],
+        ["#/workspace/ws1/dashboard/d1/tab/t1", "", "/workspace/ws1/dashboards/#/dashboard/d1/tab/t1"],
+        ["#/workspace/ws1/dashboardId/d1", "", "/workspace/ws1/dashboards/#/dashboardId/d1"],
+        ["#/workspace/ws1/new-dashboard", "", "/workspace/ws1/dashboards/#/new-dashboard"],
+        ["#/workspace/ws1/new-dashboard-edit", "", "/workspace/ws1/dashboards/#/new-dashboard-edit"],
+        ["#/workspace/ws1", "", "/workspace/ws1/dashboards/"],
+        ["#/workspace/ws1?x=1", "", "/workspace/ws1/dashboards/#?x=1"],
+        ["#/project/ws1", "", "/workspace/ws1/dashboards/"],
+        ["#/project/ws1/dashboard/d1/tab/t1", "", "/workspace/ws1/dashboards/#/dashboard/d1/tab/t1"],
+        ["#/p/ws1/dashboard/d1", "", "/workspace/ws1/dashboards/#/dashboard/d1"],
+        ["#/p/ws1/dashboard/d1/tab/t1", "", "/workspace/ws1/dashboards/#/dashboard/d1/tab/t1"],
+        ["#/p/ws1/new-dashboard", "", "/workspace/ws1/dashboards/#/new-dashboard"],
+        ["#/workspace/ws1/dashboard/d1", "?locale=en", "/workspace/ws1/dashboards/?locale=en#/dashboard/d1"],
+        ["#/workspace/client/dashboard/d1", "", "/workspace/client/dashboards/#/dashboard/d1"],
+    ])("maps the legacy KD URL /dashboards/%s (search %s) to %s", (hash, search, expected) => {
+        expect(mapLegacyUrlToHost(location("/dashboards/", hash, search))).toBe(expected);
+    });
+
+    it.each([
+        [
+            "PDF export",
+            "#/workspace/ws1/dashboard/d1?displayMode=export&exportId=e1",
+            "",
+            "/workspace/ws1/dashboards/#/dashboard/d1?displayMode=export&exportId=e1",
+        ],
+        [
+            "PDF export in the query string",
+            "#/workspace/ws1/dashboard/d1",
+            "?displayMode=export&exportId=e1",
+            "/workspace/ws1/dashboards/?displayMode=export&exportId=e1#/dashboard/d1",
+        ],
+        [
+            "slides export",
+            "#/workspace/ws1/dashboard/d1?mode=export&initialContent=%7B%22a%22%3A1%7D&widgetId=w1&exportId=e1&slideWidth=1920&slideHeight=1080",
+            "",
+            "/workspace/ws1/dashboards/#/dashboard/d1?mode=export&initialContent=%7B%22a%22%3A1%7D&widgetId=w1&exportId=e1&slideWidth=1920&slideHeight=1080",
+        ],
+        [
+            "automation link",
+            "#/workspace/ws1/dashboard/d1?automationId=a1&asOfDate=2026-10-26T10%3A00%3A00Z",
+            "",
+            "/workspace/ws1/dashboards/#/dashboard/d1?automationId=a1&asOfDate=2026-10-26T10%3A00%3A00Z",
+        ],
+        [
+            "AI builder draft",
+            "#/workspace/ws1/dashboard/d1?aibuilder=v1",
+            "",
+            "/workspace/ws1/dashboards/#/dashboard/d1?aibuilder=v1",
+        ],
+        [
+            "AI builder new dashboard draft",
+            "#/workspace/ws1/new-dashboard/?aibuilder=v1",
+            "",
+            "/workspace/ws1/dashboards/#/new-dashboard/?aibuilder=v1",
+        ],
+    ])("keeps the query of a legacy KD %s byte for byte", (_name, hash, search, expected) => {
+        expect(mapLegacyUrlToHost(location("/dashboards/", hash, search))).toBe(expected);
+    });
+
+    it.each([
+        [
+            "#/workspace/ws1/dashboard/d1?showNavigation=true&setHeight=700&hideControl=[filterBar,topBar]",
+            "",
+            "/embedded/workspace/ws1/dashboards/#/dashboard/d1?showNavigation=true&setHeight=700&hideControl=[filterBar,topBar]",
+        ],
+        [
+            "#/workspace/ws1/dashboard/d1?apiTokenAuthentication=true&externalProviderId=p1",
+            "",
+            "/embedded/workspace/ws1/dashboards/#/dashboard/d1?apiTokenAuthentication=true&externalProviderId=p1",
+        ],
+        [
+            "#/workspace/ws1/dashboard/d1?filters=f%3Dlabel1%3Av1",
+            "",
+            "/embedded/workspace/ws1/dashboards/#/dashboard/d1?filters=f%3Dlabel1%3Av1",
+        ],
+        [
+            "#/project/ws1/dashboard/d1",
+            "?apiTokenAuthentication=true",
+            "/embedded/workspace/ws1/dashboards/?apiTokenAuthentication=true#/dashboard/d1",
+        ],
+        ["#/p/ws1/dashboard/d1", "", "/embedded/workspace/ws1/dashboards/#/dashboard/d1"],
+    ])("maps the embedded legacy KD URL %s (search %s) to %s", (hash, search, expected) => {
+        expect(mapLegacyUrlToHost(location("/dashboards/embedded/", hash, search))).toBe(expected);
+    });
+
+    it.each([
+        ["#/client/c1", "", "/dashboards"],
+        ["#/client/c1/dashboard/d1", "?x=1", "/dashboards?x=1"],
+        ["#/client/c1/dashboard/d1/tab/t1?showNavigation=true", "", "/dashboards"],
+        ["#/product/p1/client/c1", "", "/dashboards"],
+        ["#/product/p1/client/c1/dashboard/d1?x=1", "?y=2", "/dashboards?y=2"],
+        ["#/product/p1/client/c1/new-dashboard", "", "/dashboards"],
+    ])(
+        "sends the workspace-less KD client URL %s (search %s) to the bare KD landing %s",
+        (hash, search, expected) => {
+            expect(mapLegacyUrlToHost(location("/dashboards/", hash, search))).toBe(expected);
+        },
+    );
+
+    it.each(["#/client/c1/dashboard/d1", "#/product/p1/client/c1/dashboard/d1?apiTokenAuthentication=true"])(
+        "keeps the embedded KD client URL %s in the frame on a route no app serves",
+        (hash) => {
+            expect(mapLegacyUrlToHost(location("/dashboards/embedded/", hash, "?showNavigation=false"))).toBe(
+                `/embedded/organization/dashboards?showNavigation=false${hash}`,
+            );
+        },
+    );
+
+    it("sends the standalone KD access-denied page to the host root", () => {
+        expect(mapLegacyUrlToHost(location("/dashboards/403.html"))).toBe("/");
+    });
+
+    it.each([
+        ["/dashboards", ""],
+        ["/dashboards/", ""],
+        ["/dashboards/", "#/"],
+        ["/dashboards/embedded/", ""],
+    ])("leaves the bare KD landing %s%s to the host redirect", (pathname, hash) => {
+        expect(mapLegacyUrlToHost(location(pathname, hash))).toBeNull();
     });
 
     it.each([
@@ -102,10 +221,10 @@ describe("mapLegacyUrlToHost", () => {
         },
     );
 
-    it("leaves an embedded client URL alone", () => {
+    it("keeps an embedded client URL in the frame on a route no app serves", () => {
         expect(
             mapLegacyUrlToHost(location("/analyze/embedded/", "#/client/prod1:client1/insight1/edit")),
-        ).toBeNull();
+        ).toBe("/embedded/organization/analyze#/client/prod1:client1/insight1/edit");
     });
 
     it.each([

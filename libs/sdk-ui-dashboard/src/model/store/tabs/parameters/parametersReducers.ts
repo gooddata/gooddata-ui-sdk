@@ -10,13 +10,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type IParameterValueChange } from "../../../commands/parameters.js";
-import {
-    type ITabState,
-    type ITabsState,
-    getActiveTab,
-    getTabOrActive,
-    getTabsToMutate,
-} from "../tabsState.js";
+import { type ITabState, type ITabsState, getActiveTab, getTabOrActive } from "../tabsState.js";
 
 import { type IDashboardParameterEntry, parametersInitialState } from "./parametersState.js";
 
@@ -58,29 +52,21 @@ export interface ISetParameterRuntimeValuesPayload {
     values: IParameterValueChange[];
     /**
      * Target tab. When omitted, the active tab is used.
-     * With `enablePersistentFiltersAcrossTabs`, this tab is the source and every other tab is written too.
      */
     tabLocalIdentifier?: string;
-    /**
-     * When true, write the values onto every tab. A tab that does not define the parameter is unchanged.
-     */
-    enablePersistentFiltersAcrossTabs?: boolean;
 }
 
 const setParameterRuntimeValues: ParametersReducer<PayloadAction<ISetParameterRuntimeValuesPayload>> = (
     state,
     action,
 ) => {
-    // Parameter values sync by parameter ref. A tab that does not define the parameter is a no-op.
-    // Working overrides are not written here.
-    for (const tab of getTabsToMutate(
-        state,
-        action.payload.tabLocalIdentifier,
-        action.payload.enablePersistentFiltersAcrossTabs,
-    )) {
-        for (const entry of action.payload.values) {
-            setRuntimeOverrideOnTab(tab, entry);
-        }
+    // A value of a parameter the tab does not define is a no-op. Working overrides are not written here.
+    const tab = getTabOrActive(state, action.payload.tabLocalIdentifier);
+    if (!tab) {
+        return;
+    }
+    for (const entry of action.payload.values) {
+        setRuntimeOverrideOnTab(tab, entry);
     }
 };
 

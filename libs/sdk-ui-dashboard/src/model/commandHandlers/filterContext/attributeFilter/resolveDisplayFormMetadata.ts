@@ -14,15 +14,19 @@ import { queryAttributeByDisplayForm } from "../../../queries/attributes.js";
 import { query } from "../../../store/_infra/queryCall.js";
 import { selectAllCatalogDisplayFormsMap } from "../../../store/catalog/catalogSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
+import { type ITabSyncSession, putTabSynced } from "../tabSync/tabSyncSaga.js";
 
 /**
  * Resolves display form metadata for the given ObjRef and registers it in the store
  * so that selectors like selectAttributeFilterDisplayFormsMap can resolve it.
  *
+ * With a tab sync `session`, the display form is registered on the synced tabs too.
+ *
  * @returns the resolved display form metadata, or undefined if not found
  */
 export function* resolveAndRegisterDisplayFormMetadata(
     displayForm: ObjRef,
+    session?: ITabSyncSession,
 ): SagaIterator<IAttributeDisplayFormMetadataObject | undefined> {
     const catalogDisplayFormsMap: ReturnType<typeof selectAllCatalogDisplayFormsMap> = yield select(
         selectAllCatalogDisplayFormsMap,
@@ -39,7 +43,12 @@ export function* resolveAndRegisterDisplayFormMetadata(
     }
 
     if (displayFormData) {
-        yield put(tabsActions.addAttributeFilterDisplayForm(displayFormData));
+        const action = tabsActions.addAttributeFilterDisplayForm(displayFormData);
+        if (session) {
+            yield call(putTabSynced, session, [action]);
+        } else {
+            yield put(action);
+        }
     }
 
     return displayFormData;

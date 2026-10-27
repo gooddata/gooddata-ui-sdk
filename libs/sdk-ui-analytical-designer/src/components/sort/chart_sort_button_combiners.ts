@@ -133,7 +133,7 @@ export const sortButtonCurrentSortTypeCombiner = (
     if (isAllSortedByChronologicalDate(currentSortParams, "desc")) {
         return "DATE_DESC";
     }
-    // TODO TNT-462 check itemCache for other attr's DFs if they contain sort label (requires SDK enhancement)
+    // TODO: check itemCache for other attr's DFs if they contain sort label (requires SDK enhancement)
     //  add something like "|| isAllSortedBySortLabel(currentSort, bucketItems, itemCache)" to the condition
     if (isAllSortedByGenericDate(currentSortParams)) {
         return "DEFAULT";

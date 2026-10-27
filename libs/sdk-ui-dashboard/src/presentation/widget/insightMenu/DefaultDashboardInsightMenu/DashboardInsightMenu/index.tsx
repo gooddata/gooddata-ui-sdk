@@ -217,6 +217,17 @@ export function DashboardInsightMenuBody({
         ? undefined
         : intl.formatMessage({ id: "insightMenu.restrictedWidget.options" });
 
+    // The element that opened the menu, kept from before the menu took the focus.
+    const openerRef = useRef(document.activeElement);
+
+    // An actions menu does not trap focus: Tab out closes it and continues from where it was opened.
+    const handleTabOut = () => {
+        onClose();
+        if (openerRef.current instanceof HTMLElement) {
+            openerRef.current.focus();
+        }
+    };
+
     const getMaxHeight = (context: IUiMenuContext<IMenuItemData, unknown>) => {
         if (getSelectedMenuId(context) === "Alerts") {
             return 500;
@@ -225,7 +236,11 @@ export function DashboardInsightMenuBody({
     };
 
     return (
-        <UiFocusManager enableAutofocus={{ initialFocus: menuId }} enableFocusTrap enableReturnFocusOnUnmount>
+        <UiFocusManager
+            enableAutofocus={{ initialFocus: menuId }}
+            enableReturnFocusOnUnmount
+            tabOutHandler={handleTabOut}
+        >
             <DashboardInsightMenuContainer
                 ariaLabelledBy={menuLabel ? undefined : menuLabelId}
                 ariaLabel={menuLabel}

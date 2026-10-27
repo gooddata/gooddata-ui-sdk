@@ -27,6 +27,13 @@ function toHashHostUrl(
     return `${prefix}/workspace/${workspaceId}/${app}/${search}${hash}`;
 }
 
+// An embedded URL the host cannot resolve must keep the /embedded/ prefix, or the host leaves iframe
+// mode and skips the API token handshake. No organization application has this route, so the host
+// shows its not-found page inside the frame. The hash keeps apiTokenAuthentication for the handshake.
+function toEmbeddedNotFoundUrl(app: string, search: string, hash: string): string {
+    return `/embedded/organization/${app}${search}${hash}`;
+}
+
 const AI_BUILDER_PARAM_PREFIX = "aibuilder=";
 
 // Hosted AD links carry `aibuilder` in the query string, not in the hash query.
@@ -64,10 +71,10 @@ function mapLegacyAnalyzeUrl(pathname: string, hash: string, search: string): st
 
     // #/client/<product>:<client>/<report>/edit has no workspace id, and no backend the host
     // supports can resolve a client to a workspace. Outside an embedding, fall back to the bare
-    // landing, which opens AD in the remembered or first workspace. Inside an embedding, leave the
-    // URL alone: a landing in some other workspace must not replace the embedded insight.
+    // landing, which opens AD in the remembered or first workspace. Inside an embedding, a landing
+    // in some other workspace must not replace the embedded insight.
     if (CLIENT_HASH.test(hash)) {
-        return embedded ? null : `/analyze${search}`;
+        return embedded ? toEmbeddedNotFoundUrl("analyze", search, hash) : `/analyze${search}`;
     }
 
     const match = /^#\/([^/?]+)(.*)$/.exec(hash);
@@ -76,6 +83,30 @@ function mapLegacyAnalyzeUrl(pathname: string, hash: string, search: string): st
     }
     const lifted = liftAiBuilderToSearch(match[2], search);
     return toHashHostUrl(embedded, "analyze", match[1], lifted.remainder, lifted.search);
+}
+
+// KD reads <c> in #/client/<c> and #/product/<p>/client/<c> as a client id, never a workspace id.
+const KD_CLIENT_HASH = /^#\/(?:product\/[^/?]+\/)?client\/[^/?]+/;
+
+// KD legacy hash: #/workspace|project|p/<ws>/<rest>. Lift <ws> to the path, keep <rest>.
+function mapLegacyDashboardsUrl(pathname: string, hash: string, search: string): string | null {
+    const embedded = isUnder(pathname, "/dashboards/embedded");
+
+    // The standalone app sent users without BASE_UI_ACCESS here. The host root applies the same
+    // restriction.
+    if (pathname === "/dashboards/403.html") {
+        return "/";
+    }
+
+    // No backend the host supports can resolve a client to a workspace. Outside an embedding, fall
+    // back to the bare landing, which opens KD in the remembered or first workspace. Inside an
+    // embedding, a dashboard of some other workspace must not replace the embedded one.
+    if (KD_CLIENT_HASH.test(hash)) {
+        return embedded ? toEmbeddedNotFoundUrl("dashboards", search, hash) : `/dashboards${search}`;
+    }
+
+    const match = /^#\/(?:workspace|project|p)\/([^/?]+)(.*)$/.exec(hash);
+    return match ? toHashHostUrl(embedded, "dashboards", match[1], match[2], search) : null;
 }
 
 // Where the standalone home-ui pages live inside the host: the gdc-home-ui module is mounted
@@ -116,18 +147,8 @@ export function mapLegacyUrlToHost(location: ILegacyLocation): string | null {
         return `${formerPublisher[1]}/publisher${formerPublisher[2] ?? ""}${search}${hash}`;
     }
 
-    // KD legacy hash: #/workspace|project|client/<ws>/<rest>. Lift <ws> to the path, keep <rest>.
     if (isUnder(pathname, "/dashboards")) {
-        const match = /^#\/(?:workspace|project|client)\/([^/?]+)(.*)$/.exec(hash);
-        return match
-            ? toHashHostUrl(
-                  isUnder(pathname, "/dashboards/embedded"),
-                  "dashboards",
-                  match[1],
-                  match[2],
-                  search,
-              )
-            : null;
+        return mapLegacyDashboardsUrl(pathname, hash, search);
     }
 
     if (isUnder(pathname, "/analyze")) {

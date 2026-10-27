@@ -2,7 +2,7 @@
 
 import { toNumber } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
-import { type SagaReturnType, call, put, select } from "redux-saga/effects";
+import { type SagaReturnType, call, select } from "redux-saga/effects";
 
 import {
     type IDashboardDateFilter,
@@ -17,21 +17,14 @@ import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
 import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../../store/config/configSelectors.js";
 import { selectIsCrossFiltering } from "../../../store/drill/drillSelectors.js";
-import { selectEnablePersistentFiltersAcrossTabs } from "../../../store/meta/metaSelectors.js";
 import {
     selectFilterContextDateFilter,
     selectFilterContextDateFilterByDataSet,
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
-import {
-    type IFilterContextByTabSnapshot,
-    canApplyDateFilter,
-    captureFilterContextByTabSnapshot,
-    dispatchFilterContextChanged,
-    dispatchFilterContextChangedForMutatedTabs,
-    resetCrossFiltering,
-} from "../common.js";
+import { canApplyDateFilter, resetCrossFiltering } from "../common.js";
+import { type ITabSyncSession, beginTabSync, endTabSync, putTabSynced } from "../tabSync/tabSyncSaga.js";
 
 export function* changeDateFilterSelectionHandler(
     ctx: DashboardContext,
@@ -54,24 +47,21 @@ export function* changeDateFilterSelectionHandler(
             `Cannot apply a date filter that is invalid by the current dateFilterConfig.`,
         );
     }
-    const filterContextSnapshot: IFilterContextByTabSnapshot = yield call(captureFilterContextByTabSnapshot);
+    const session: ITabSyncSession = yield call(beginTabSync);
 
-    const enablePersistentFiltersAcrossTabs: ReturnType<typeof selectEnablePersistentFiltersAcrossTabs> =
-        yield select(selectEnablePersistentFiltersAcrossTabs);
     const isApplyAllAtOnceEnabledAndSet: ReturnType<typeof selectIsApplyFiltersAllAtOnceEnabledAndSet> =
         yield select(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     const isWorkingSelectionChange = cmd.payload.isWorkingSelectionChange && isApplyAllAtOnceEnabledAndSet;
     const localIdentifierObj = cmd.payload.localIdentifier
         ? { localIdentifier: cmd.payload.localIdentifier }
         : {};
-    yield put(
+    yield call(putTabSynced, session, [
         tabsActions.upsertDateFilter(
             isAllTime
                 ? {
                       type: "allTime",
                       dataSet: cmd.payload.dataSet,
                       isWorkingSelectionChange,
-                      enablePersistentFiltersAcrossTabs,
                       ...localIdentifierObj,
                       ...(cmd.payload.emptyValueHandling
                           ? { emptyValueHandling: cmd.payload.emptyValueHandling }
@@ -84,7 +74,6 @@ export function* changeDateFilterSelectionHandler(
                       to: cmd.payload.to,
                       dataSet: cmd.payload.dataSet,
                       isWorkingSelectionChange,
-                      enablePersistentFiltersAcrossTabs,
                       ...localIdentifierObj,
                       ...(cmd.payload.boundedFilter ? { boundedFilter: cmd.payload.boundedFilter } : {}),
                       ...(cmd.payload.emptyValueHandling
@@ -92,7 +81,7 @@ export function* changeDateFilterSelectionHandler(
                           : {}),
                   },
         ),
-    );
+    ]);
 
     if (!isWorkingSelectionChange) {
         const isCrossFiltering = yield select(selectIsCrossFiltering);
@@ -109,11 +98,7 @@ export function* changeDateFilterSelectionHandler(
         dateFilterChanged(ctx, affectedFilter, cmd.payload.dateFilterOptionLocalId, cmd.correlationId),
     );
 
-    if (enablePersistentFiltersAcrossTabs) {
-        yield call(dispatchFilterContextChangedForMutatedTabs, ctx, cmd, filterContextSnapshot);
-    } else {
-        yield call(dispatchFilterContextChanged, ctx, cmd);
-    }
+    yield call(endTabSync, ctx, cmd, session);
 }
 
 function dateFilterSelectionToDateFilter(dateFilterSelection: DateFilterSelection): IDashboardDateFilter {

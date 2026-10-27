@@ -10,18 +10,28 @@ import {
     adoptHostBackend,
     backend,
     clearCache,
-    isHostBackendAdopted,
-    reinitializeBackend,
+    resetBackend,
     resetCatalogs,
+    setApiTokenHandler,
+    setJwtHandler,
 } from "../backend.js";
 import { handleReceivedApiToken } from "../postMessageApi/sagas/api_token_received_saga.js";
+import { backendInitialized } from "../sagas/application_context/application_context_actions.js";
 import { storeApiToken } from "../store/application_context/app_context_actions.js";
 import { selectApiToken, selectApiTokenType } from "../store/application_context/app_context_selector.js";
 
+const setApiTokenCommand = (token: string, type: "gooddata" | "jwt") =>
+    ({
+        gdc: {
+            product: "analyticalDesigner",
+            event: { name: "setApiToken", data: { token, type } },
+        },
+    }) as Parameters<typeof handleReceivedApiToken>[0];
+
 describe("adoptHostBackend", () => {
     afterEach(() => {
-        // The backend module is a singleton — restore the own-backend state for other tests.
-        reinitializeBackend();
+        // The backend module is a singleton — restore the uninitialized state for other tests.
+        resetBackend();
         vi.restoreAllMocks();
     });
 
@@ -33,7 +43,6 @@ describe("adoptHostBackend", () => {
         backend.workspace("host-workspace");
 
         expect(workspaceSpy).toHaveBeenCalledWith("host-workspace");
-        expect(isHostBackendAdopted).toBe(true);
     });
 
     it("should wire cache invalidation refs to the host callbacks", () => {
@@ -57,26 +66,63 @@ describe("adoptHostBackend", () => {
         }).not.toThrow();
     });
 
-    it("should be reverted by reinitializeBackend (own-backend path)", () => {
-        adoptHostBackend({ instance: dummyBackend() });
-        reinitializeBackend();
+    it("should wire the token renewal refs to the host setters", () => {
+        const setApiToken = vi.fn();
+        const setJwt = vi.fn();
 
-        expect(isHostBackendAdopted).toBe(false);
+        adoptHostBackend({ instance: dummyBackend(), setApiToken, setJwt });
+
+        expect(setApiTokenHandler).toBe(setApiToken);
+        expect(setJwtHandler).toBe(setJwt);
     });
 
-    it("should keep the stored token in sync on SetApiToken without an AD-side auth provider", () => {
-        // With an adopted backend there is no AD-side provider, so no update handler exists; the
-        // renewal must not crash and must still record the token for components that read it.
+    it("should be reverted by resetBackend", () => {
+        adoptHostBackend({ instance: dummyBackend(), setApiToken: vi.fn() });
+        resetBackend();
+
+        expect(setApiTokenHandler).toBeUndefined();
+        expect(() => backend.workspace("ws")).toThrow("Backend API cannot be used");
+    });
+
+    it("should renew the host token on SetApiToken when the host provides a setter", () => {
+        const setApiToken = vi.fn();
+        adoptHostBackend({ instance: dummyBackend(), setApiToken });
+
+        return expectSaga(handleReceivedApiToken, setApiTokenCommand("renewed-token", "gooddata"))
+            .provide([
+                [select(selectApiTokenType), "gooddata"],
+                [select(selectApiToken), "previous-token"],
+            ])
+            .put(storeApiToken("renewed-token", "gooddata"))
+            .run()
+            .then(() => {
+                expect(setApiToken).toHaveBeenCalledWith("renewed-token");
+            });
+    });
+
+    it("should hand the first injected token to the host setter and flag the backend as initialized", () => {
+        const setApiToken = vi.fn();
+        adoptHostBackend({ instance: dummyBackend(), setApiToken });
+
+        return expectSaga(handleReceivedApiToken, setApiTokenCommand("first-token", "gooddata"))
+            .provide([
+                [select(selectApiTokenType), undefined],
+                [select(selectApiToken), undefined],
+            ])
+            .put(storeApiToken("first-token", "gooddata"))
+            .put(backendInitialized())
+            .run()
+            .then(() => {
+                expect(setApiToken).toHaveBeenCalledWith("first-token");
+            });
+    });
+
+    it("should keep the stored token in sync on SetApiToken when the host renews its provider itself", () => {
+        // Without a setter the renewal must not crash and must still record the token for the
+        // components that read it.
         adoptHostBackend({ instance: dummyBackend() });
 
-        const command = {
-            gdc: {
-                product: "analyticalDesigner",
-                event: { name: "setApiToken", data: { token: "renewed-token", type: "gooddata" } },
-            },
-        } as Parameters<typeof handleReceivedApiToken>[0];
-
-        return expectSaga(handleReceivedApiToken, command)
+        return expectSaga(handleReceivedApiToken, setApiTokenCommand("renewed-token", "gooddata"))
             .provide([
                 [select(selectApiTokenType), "gooddata"],
                 [select(selectApiToken), "previous-token"],

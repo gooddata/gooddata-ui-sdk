@@ -1,11 +1,12 @@
 {{- /* Docs home: the primary call to action (a pill button) and a secondary text link.
-     Params: primary, primaryHref, secondary, secondaryHref. */ -}}
+     Params: primary, primaryHref, secondary, secondaryHref. A page-relative href (`./getting-started/`)
+     is resolved against the page (resolve-url.html), so it works when the home was opened as …/latest. */ -}}
 <div class="not-prose mt-2 flex flex-wrap items-center gap-4">
-    <a href="{{ .Get "primaryHref" }}" class="inline-flex items-center gap-2 rounded-full bg-gd-primary px-5 py-3 font-medium text-gd-on-primary transition hover:bg-[color-mix(in_srgb,var(--color-gd-primary)_80%,var(--color-gd-secondary))] hover:no-underline focus-visible:ring-2 focus-visible:ring-gd-secondary focus-visible:ring-offset-2 focus-visible:outline-none dark:focus-visible:ring-white">
+    <a href="{{ partial "resolve-url.html" (dict "page" .Page "url" (.Get "primaryHref")) }}" class="inline-flex items-center gap-2 rounded-full bg-gd-primary px-5 py-3 font-medium text-gd-on-primary transition hover:bg-[color-mix(in_srgb,var(--color-gd-primary)_80%,var(--color-gd-secondary))] hover:no-underline focus-visible:ring-2 focus-visible:ring-gd-secondary focus-visible:ring-offset-2 focus-visible:outline-none dark:focus-visible:ring-white">
         {{ .Get "primary" }}
         <span aria-hidden="true">→</span>
     </a>
     {{- with .Get "secondary" }}
-    <a href="{{ $.Get "secondaryHref" }}" class="font-medium">{{ . }}</a>
+    <a href="{{ partial "resolve-url.html" (dict "page" $.Page "url" ($.Get "secondaryHref")) }}" class="font-medium">{{ . }}</a>
     {{- end }}
 </div>

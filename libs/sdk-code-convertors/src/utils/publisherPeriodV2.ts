@@ -6,6 +6,9 @@ import type {
 } from "@gooddata/sdk-code-schemas/v1";
 import { type DateFilterGranularity, type PublisherPeriodV2 } from "@gooddata/sdk-model";
 
+import { describeValue } from "./describeValue.js";
+import { CoreErrorCode, type IErrorContext, newError, updateErrorContext } from "./errors.js";
+
 type YamlPeriodGranularity = PublisherRelativePeriodV2["granularity"];
 
 const storedGranularities = {
@@ -13,6 +16,7 @@ const storedGranularities = {
     MINUTE: "GDC.time.minute",
     HOUR: "GDC.time.hour",
     DAY: "GDC.time.date",
+    WEEK: "GDC.time.week_us",
     WEEK_US: "GDC.time.week_us",
     MONTH: "GDC.time.month",
     QUARTER: "GDC.time.quarter",
@@ -23,12 +27,33 @@ const storedGranularities = {
 } as const satisfies Record<YamlPeriodGranularity, DateFilterGranularity>;
 
 const yamlGranularities = Object.fromEntries(
-    Object.entries(storedGranularities).map(([yaml, stored]) => [stored, yaml]),
-) as Record<DateFilterGranularity, YamlPeriodGranularity>;
+    Object.entries(storedGranularities)
+        .filter(([yaml]) => yaml !== "WEEK")
+        .map(([yaml, stored]) => [stored, yaml] as const),
+) as Record<DateFilterGranularity, Exclude<YamlPeriodGranularity, "WEEK">>;
 
 /** @internal */
-export function periodToDeclarativeV2(period: AacPublisherPeriodV2): PublisherPeriodV2 {
+export function assertPublisherGranularityV2(
+    granularity: unknown,
+    errorContext: IErrorContext | undefined,
+): asserts granularity is YamlPeriodGranularity {
+    if (typeof granularity === "string" && Object.hasOwn(storedGranularities, granularity)) {
+        return;
+    }
+    throw newError(
+        CoreErrorCode.UnsupportedGranularity,
+        [describeValue(granularity), Object.keys(storedGranularities).join(", ")],
+        updateErrorContext(errorContext, { path: ["granularity"] }),
+    );
+}
+
+/** @internal */
+export function periodToDeclarativeV2(
+    period: AacPublisherPeriodV2,
+    errorContext: IErrorContext | undefined,
+): PublisherPeriodV2 {
     if ("granularity" in period) {
+        assertPublisherGranularityV2(period.granularity, errorContext);
         return {
             type: "relative",
             granularity: storedGranularities[period.granularity],

@@ -353,7 +353,7 @@ export function VisualizationsDropdown() {
                                 const isSelected = identifier === openInsightId;
                                 const insightUriRef = uriRef(uri);
 
-                                // TODO: TIGER-HACK - tiger does not have roles yet. It does, however have concept
+                                // TODO: tiger does not have roles yet. It does, however have concept
                                 //  of parent-child workspaces and inheritance of objects. Inherited objects are locked
                                 //  and read-only. Thus the extra tiger backend check here. Once the tiger has
                                 //  ACLs and true read-only indicators, we can clean this up.

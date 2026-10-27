@@ -11,9 +11,9 @@ This product includes a number of subcomponents with separate copyright notices 
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2026-10-25
+Date generated: 2026-10-26
 
-Revision ID: f54d1053fc2eb0435abe5b739483c83ee0951f5c
+Revision ID: d8606b2768a48a06325391dbaf84f11d7174f90e
 
 ================================================================================
 ================================================================================
@@ -125,7 +125,6 @@ Revision ID: f54d1053fc2eb0435abe5b739483c83ee0951f5c
 - @formatjs/intl-utils (2.3.0) [MIT]
 - @formatjs/ts-transformer (3.13.23) [MIT]
 - @gooddata/emailjs-mime-codec-new (3.0.2) [MIT]
-- @gooddata/js-utils (4.1.0) [BSD-3-Clause]
 - @gooddata/maql-antlr4ts (0.5.1-02977c25.0) [MIT, BSD-3-Clause]
 - @html-validate/stylish (6.1.0) [MIT]
 - @inquirer/external-editor (1.0.3) [MIT]
@@ -578,7 +577,6 @@ Revision ID: f54d1053fc2eb0435abe5b739483c83ee0951f5c
 - jiti (2.6.1) [MIT]
 - jquery (3.7.1) [MIT]
 - jquery.browser (0.1.0) [MIT]
-- js-cookie (2.2.1) [MIT]
 - js-tokens (10.0.0) [MIT]
 - js-tokens (4.0.0) [MIT]
 - js-yaml (4.3.2) [MIT]
@@ -4577,53 +4575,6 @@ THE SOFTWARE.
 * Copyrights *
 MIT
 - Copyright (c) 2013 Andris Reinman
-
---------------------------------------------------------------------------------
-Package Title: @gooddata/js-utils (4.1.0)
-
-Package Locator: npm+@gooddata/js-utils$4.1.0
-
-Package Depth: Direct
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-BSD-3-Clause
-
-* License Header *
-BSD 3-Clause License
-
-Copyright (c) 2017, GoodData Corporation
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
-* Redistributions of source code must retain the above copyright notice, this
-  list of conditions and the following disclaimer.
-
-* Redistributions in binary form must reproduce the above copyright notice,
-  this list of conditions and the following disclaimer in the documentation
-  and/or other materials provided with the distribution.
-
-* Neither the name of the copyright holder nor the names of its
-  contributors may be used to endorse or promote products derived from
-  this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-
-* Copyrights *
-BSD-3-Clause
-- Copyright (c) 2017, GoodData Corporation
 
 --------------------------------------------------------------------------------
 Package Title: @gooddata/maql-antlr4ts (0.5.1-02977c25.0)
@@ -39022,45 +38973,6 @@ MIT
 - Copyright (c) 2005, 2015 jQuery Foundation, Inc. and other contributors\n * http://jquery.org/license\n *\n * Modifications Copyright <%= grunt.template.today("yyyy") %> Gabriel Cebrian\n * https://github.com/gabceb\n *\n * Released under the MIT license\n *\n * Date: <%= grunt.template.today("dd-mm-yyyy")%>\n
 
 --------------------------------------------------------------------------------
-Package Title: js-cookie (2.2.1)
-
-Package Locator: npm+js-cookie$2.2.1
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-* License Header *
-MIT License
-
-Copyright (c) 2018 Copyright 2018 Klaus Hartl, Fagner Brack, GitHub Contributors
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-* Copyrights *
-MIT
-- Copyright (c) 2018 Copyright 2018 Klaus Hartl, Fagner Brack, GitHub Contributors
-
---------------------------------------------------------------------------------
 Package Title: js-tokens (10.0.0)
 
 Package Locator: npm+js-tokens$10.0.0
@@ -72828,4 +72740,4 @@ MIT
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2026-10-25
+Report Generated by FOSSA on 2026-10-26

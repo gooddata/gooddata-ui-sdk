@@ -16,8 +16,6 @@ import { UiSearchableSelectDivider } from "./UiSearchableSelectDivider.js";
 import { getUiSearchableSelectItemDescriptor } from "./UiSearchableSelectItem.js";
 import { findUiSearchableSelectListRenderItem } from "./UiSearchableSelectList.js";
 
-const BODY_WIDTH = 300;
-
 /**
  * @internal
  */
@@ -108,14 +106,13 @@ export function UiSearchableSelect<T>({
 
     return (
         <UiDropdown
-            width={BODY_WIDTH}
+            width="same-as-anchor"
             fullWidthButton
             autofocusOnOpen
             // like a native <select>, tab closes the popup and moves on from the button: the tab out focuses
             // the button (returnFocusTo) before the browser moves the focus
             enableFocusTrap={false}
             returnFocusTo={buttonId}
-            offset={4}
             openOnInit={defaultOpen}
             accessibilityConfig={{ popupRole: "listbox" }}
             // a new opening starts with all items, like TimezoneSelect

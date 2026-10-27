@@ -40,7 +40,6 @@
         padding: 6.5px 10px;
         border-radius: 3px;
         border: 1px solid var(--gd-palette-complementary-4);
-        // "Shadow selectbox default" of the Select in Figma; hover and pressed have their own
         box-shadow: 0 1px 1px 0 rgba(48, 52, 66, 0.05);
 
         /**
@@ -91,7 +90,6 @@
         }
     }
 
-    // long values are cut off, so that the icon stays visible
     &__button-title {
         @include mixins.text-overflow;
     }

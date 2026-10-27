@@ -1,8 +1,9 @@
 // (C) 2026 GoodData Corporation
 
-import { type ReactNode } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
 import { IntlProvider } from "react-intl";
 import { describe, expect, it, vi } from "vitest";
 
@@ -40,13 +41,7 @@ const renderTable = (onItemClick: (item: IItem) => void, items: IItem[] = [open,
         />,
     );
 
-const getRowsContainer = () => {
-    const rows = screen.getByRole("grid").querySelector<HTMLElement>('[tabindex="0"]');
-    if (!rows) {
-        throw new Error("The focusable rows container was not rendered.");
-    }
-    return rows;
-};
+const getRowsContainer = () => screen.getByRole("grid");
 
 const getRow = (text: string) => {
     const row = screen.getByText(text).closest<HTMLElement>("[role='row']");
@@ -106,17 +101,70 @@ describe("UiAsyncTable row click", () => {
         expect(getRowsContainer()).toHaveAttribute("aria-activedescendant", getRow("Third").id);
     });
 
-    it("continues keyboard navigation from the clicked row", () => {
-        const onItemClick = vi.fn<(item: IItem) => void>();
-        const third: IItem = { id: "third", title: "Third" };
-        renderTable(onItemClick, [open, third, locked]);
+    it("keeps DOM focus on the grid and navigates from a clicked non-actionable row", async () => {
+        const user = userEvent.setup();
+        const onItemClick = vi.fn();
+        renderTable(onItemClick, [open, locked, { id: "third", title: "Third" }]);
 
-        fireEvent.click(screen.getByText("Third"));
-        onItemClick.mockClear();
-        fireEvent.keyDown(getRowsContainer(), { key: "ArrowUp", code: "ArrowUp" });
-        fireEvent.keyDown(getRowsContainer(), { key: "Enter", code: "Enter" });
+        await user.click(screen.getByText("Locked"));
 
-        expect(onItemClick).toHaveBeenCalledWith(open);
+        expect(getRowsContainer()).toHaveFocus();
+        expect(onItemClick).not.toHaveBeenCalled();
+        await user.keyboard("{ArrowDown}{Enter}");
+        expect(onItemClick).toHaveBeenCalledWith({ id: "third", title: "Third" });
+    });
+
+    it("keeps DOM focus on the grid when a skeleton row is clicked", async () => {
+        const user = userEvent.setup();
+        renderWithIntl(
+            <UiAsyncTable
+                items={[open, locked]}
+                columns={columns}
+                hasNextPage
+                isLoading
+                skeletonItemsCount={2}
+                loadNextPage={vi.fn()}
+            />,
+        );
+        const grid = getRowsContainer();
+
+        await user.click(grid.querySelector(".gd-ui-kit-skeleton")!);
+
+        expect(grid).toHaveFocus();
+        await user.keyboard("{ArrowDown}");
+        expect(grid).toHaveAttribute("aria-activedescendant", getRow("Locked").id);
+    });
+
+    it("preserves focus on an interactive cell control", async () => {
+        const user = userEvent.setup();
+        renderWithIntl(
+            <UiAsyncTable
+                items={[open]}
+                columns={[{ key: "title", renderButton: () => <button>Cell action</button> }]}
+            />,
+        );
+
+        await user.click(screen.getByRole("button", { name: "Cell action" }));
+
+        expect(screen.getByRole("button", { name: "Cell action" })).toHaveFocus();
+    });
+
+    it("preserves focus moved outside the grid by a row action", async () => {
+        const user = userEvent.setup();
+        renderWithIntl(
+            <>
+                <button>Action destination</button>
+                <UiAsyncTable
+                    items={[open]}
+                    columns={columns}
+                    onItemClick={() => screen.getByRole("button", { name: "Action destination" }).focus()}
+                />
+            </>,
+        );
+
+        await user.click(screen.getByText("Open"));
+
+        expect(screen.getByRole("button", { name: "Action destination" })).toHaveFocus();
     });
 });
 
@@ -212,7 +260,12 @@ describe("UiAsyncTable column headerTooltip", () => {
         renderWithIntl(
             <UiAsyncTable items={[open]} totalItemsCount={1} columns={sortableColumns} onSort={() => {}} />,
         );
-    const getHeader = () => screen.getAllByRole("row")[0];
+    const getHeader = () => {
+        const grid = screen.getByRole("grid");
+        act(() => grid.focus());
+        fireEvent.keyDown(grid, { key: "Home", code: "Home", ctrlKey: true });
+        return grid;
+    };
     const tooltipText = "The name of the item";
     const expectNoTooltip = () =>
         waitFor(() => expect(screen.queryByText(tooltipText)).not.toBeInTheDocument());
@@ -304,12 +357,269 @@ describe("UiAsyncTable column headerTooltip", () => {
             .getAllByRole("columnheader", { name: "Title" })
             .map((cell) => cell.parentElement!);
         expect(headers).toHaveLength(2);
-        const secondHeader = headers[1];
+        const secondHeader = headers[1].closest<HTMLElement>('[role="grid"]')!;
         act(() => secondHeader.focus());
+        fireEvent.keyDown(secondHeader, { key: "Home", code: "Home", ctrlKey: true });
 
         fireEvent.keyDown(secondHeader, { key: "ArrowRight", code: "ArrowRight" });
 
         const active = document.getElementById(secondHeader.getAttribute("aria-activedescendant") ?? "");
         expect(secondHeader.contains(active)).toBe(true);
+    });
+});
+
+describe("UiAsyncTable grid focus", () => {
+    const manyItems = Array.from({ length: 50 }, (_, index) => ({
+        id: `item-${index}`,
+        title: `Item ${index}`,
+    }));
+    const gridColumns: IUiAsyncTableColumn<IItem>[] = [
+        { key: "title", label: "Title", sortable: true },
+        { key: "id", label: "ID" },
+    ];
+
+    it("keeps focus, headers and the active cell in one grid with one tab stop", () => {
+        renderWithIntl(
+            <UiAsyncTable items={manyItems} totalItemsCount={50} columns={gridColumns} maxHeight={100} />,
+        );
+        const grid = screen.getByRole("grid");
+        act(() => grid.focus());
+        expect(grid).toHaveFocus();
+        expect(grid).toHaveAttribute("tabindex", "0");
+        expect(grid.querySelectorAll('[tabindex="0"]')).toHaveLength(0);
+        expect(within(grid).getAllByRole("columnheader")).toHaveLength(2);
+        expect(grid).toHaveAttribute("aria-rowcount", "51");
+        expect(grid.querySelector('[role="rowgroup"]')).not.toHaveAttribute("aria-activedescendant");
+
+        fireEvent.keyDown(grid, { key: "End", code: "End", ctrlKey: true });
+        const active = document.getElementById(grid.getAttribute("aria-activedescendant")!);
+        expect(active).toHaveAttribute("role", "gridcell");
+        expect(active).toHaveTextContent("item-49");
+        expect(active?.closest('[role="row"]')).toHaveAttribute("aria-rowindex", "51");
+        expect(grid.contains(active)).toBe(true);
+        expect(grid).toHaveFocus();
+    });
+
+    it("sorts from the header through the grid without introducing another tab stop", () => {
+        const onSort = vi.fn();
+        renderWithIntl(
+            <UiAsyncTable items={[open]} totalItemsCount={1} columns={gridColumns} onSort={onSort} />,
+        );
+        const grid = screen.getByRole("grid");
+        act(() => grid.focus());
+        fireEvent.keyDown(grid, { key: "Home", code: "Home", ctrlKey: true });
+        fireEvent.keyDown(grid, { key: "Enter", code: "Enter" });
+        expect(onSort).toHaveBeenCalledWith("title");
+        expect(document.getElementById(grid.getAttribute("aria-activedescendant")!)).toHaveAttribute(
+            "role",
+            "columnheader",
+        );
+        expect(grid).toHaveFocus();
+    });
+
+    it.each([{ items: [] }, { items: [open] }])(
+        "keeps PageUp on the header with $items.length items",
+        ({ items }) => {
+            renderWithIntl(<UiAsyncTable items={items} columns={gridColumns} />);
+            const grid = screen.getByRole("grid");
+            act(() => grid.focus());
+            fireEvent.keyDown(grid, { key: "Home", code: "Home", ctrlKey: true });
+            fireEvent.keyDown(grid, { key: "ArrowRight", code: "ArrowRight" });
+            const headerId = grid.getAttribute("aria-activedescendant");
+
+            fireEvent.keyDown(grid, { key: "PageUp", code: "PageUp" });
+
+            expect(grid).toHaveAttribute("aria-activedescendant", headerId);
+            expect(document.getElementById(headerId!)).toBe(
+                within(grid).getByRole("columnheader", { name: "ID" }),
+            );
+            expect(grid).toHaveFocus();
+        },
+    );
+
+    it("reaches the header when PageUp goes beyond the first data row", () => {
+        renderWithIntl(<UiAsyncTable items={manyItems} columns={gridColumns} maxHeight={100} />);
+        const grid = screen.getByRole("grid");
+        act(() => grid.focus());
+        fireEvent.keyDown(grid, { key: "Home", code: "Home", ctrlKey: true });
+        fireEvent.keyDown(grid, { key: "ArrowDown", code: "ArrowDown" });
+
+        fireEvent.keyDown(grid, { key: "PageUp", code: "PageUp" });
+
+        const active = document.getElementById(grid.getAttribute("aria-activedescendant")!);
+        expect(active).toBe(within(grid).getByRole("columnheader", { name: "Title" }));
+    });
+
+    it("moves right immediately after PageUp reaches the header from a whole row", async () => {
+        const user = userEvent.setup();
+        renderWithIntl(<UiAsyncTable items={[open]} columns={gridColumns} />);
+        await user.tab();
+        const grid = screen.getByRole("grid");
+        expect(grid).toHaveFocus();
+
+        await user.keyboard("{PageUp}");
+        expect(grid).toHaveAttribute(
+            "aria-activedescendant",
+            screen.getByRole("columnheader", { name: "Title" }).id,
+        );
+        await user.keyboard("{ArrowRight}");
+
+        expect(grid).toHaveAttribute(
+            "aria-activedescendant",
+            screen.getByRole("columnheader", { name: "ID" }).id,
+        );
+        expect(grid).toHaveFocus();
+    });
+
+    it("moves right immediately when Tab lands on the header of an empty table", async () => {
+        const user = userEvent.setup();
+        renderWithIntl(<UiAsyncTable items={[]} columns={gridColumns} />);
+        await user.tab();
+        const grid = screen.getByRole("grid");
+        expect(grid).toHaveAttribute(
+            "aria-activedescendant",
+            screen.getByRole("columnheader", { name: "Title" }).id,
+        );
+
+        await user.keyboard("{ArrowRight}");
+
+        expect(grid).toHaveAttribute(
+            "aria-activedescendant",
+            screen.getByRole("columnheader", { name: "ID" }).id,
+        );
+    });
+
+    it("steps back from the first cell to the whole row, which Enter opens", async () => {
+        const user = userEvent.setup();
+        const onItemClick = vi.fn();
+        renderWithIntl(<UiAsyncTable items={[open]} columns={gridColumns} onItemClick={onItemClick} />);
+        await user.tab();
+        const grid = screen.getByRole("grid");
+
+        await user.keyboard("{ArrowRight}{ArrowRight}{ArrowLeft}{ArrowLeft}");
+        expect(grid).toHaveAttribute("aria-activedescendant", getRow("Open").id);
+        await user.keyboard("{Enter}");
+        expect(onItemClick).toHaveBeenCalledWith(open);
+
+        // the header has no whole-row state, so it stops at its first column
+        await user.keyboard("{ArrowUp}{ArrowLeft}");
+        expect(grid).toHaveAttribute(
+            "aria-activedescendant",
+            screen.getByRole("columnheader", { name: "Title" }).id,
+        );
+    });
+
+    it("keeps the header active when sorting resets the scroll target", async () => {
+        // like the automations list: sorting reloads from the top, then clears the target once loaded
+        function SortResettingTable() {
+            const [scrollToIndex, setScrollToIndex] = useState<number>();
+            useEffect(() => {
+                if (scrollToIndex !== undefined) {
+                    setScrollToIndex(undefined);
+                }
+            }, [scrollToIndex]);
+            return (
+                <UiAsyncTable
+                    items={[open]}
+                    columns={gridColumns}
+                    scrollToIndex={scrollToIndex}
+                    onSort={() => setScrollToIndex(0)}
+                />
+            );
+        }
+        const user = userEvent.setup();
+        renderWithIntl(<SortResettingTable />);
+        await user.tab();
+        const grid = screen.getByRole("grid");
+
+        await user.keyboard("{PageUp}{Enter}");
+        expect(grid).toHaveAttribute(
+            "aria-activedescendant",
+            screen.getByRole("columnheader", { name: "Title" }).id,
+        );
+        await user.keyboard("{ArrowRight}");
+        expect(grid).toHaveAttribute(
+            "aria-activedescendant",
+            screen.getByRole("columnheader", { name: "ID" }).id,
+        );
+    });
+
+    it("keeps navigation on data rows when a custom header has no generated IDs", () => {
+        renderWithIntl(
+            <UiAsyncTable
+                items={[open]}
+                totalItemsCount={1}
+                columns={gridColumns}
+                renderHeader={() => (
+                    <div role="rowgroup">
+                        <div role="row" aria-rowindex={1}>
+                            <div role="columnheader" aria-colindex={1}>
+                                Custom title
+                            </div>
+                        </div>
+                    </div>
+                )}
+            />,
+        );
+        const grid = screen.getByRole("grid");
+        act(() => grid.focus());
+        expect(grid).toHaveAttribute("aria-rowcount", "2");
+
+        for (const key of ["ArrowUp", "Home", "PageUp"]) {
+            fireEvent.keyDown(grid, { key, code: key, ctrlKey: key === "Home" });
+            const active = document.getElementById(grid.getAttribute("aria-activedescendant")!);
+            expect(active).toBeInTheDocument();
+            expect(active?.closest('[role="row"]')).toHaveAttribute("aria-rowindex", "2");
+            expect(grid.contains(active)).toBe(true);
+        }
+        const activeId = grid.getAttribute("aria-activedescendant");
+        fireEvent.click(screen.getByRole("columnheader", { name: "Custom title" }));
+        expect(grid).toHaveAttribute("aria-activedescendant", activeId);
+    });
+
+    it("does not add an empty grid tab stop for a custom header", () => {
+        renderWithIntl(
+            <UiAsyncTable items={[]} columns={gridColumns} renderHeader={() => <div>Custom header</div>} />,
+        );
+        expect(screen.getByRole("grid")).toHaveAttribute("tabindex", "-1");
+        expect(screen.getByRole("grid")).not.toHaveAttribute("aria-activedescendant");
+    });
+
+    it("loads another page when keyboard navigation reaches the last loaded row", () => {
+        const loadNextPage = vi.fn();
+        renderWithIntl(
+            <UiAsyncTable
+                items={manyItems}
+                totalItemsCount={100}
+                columns={gridColumns}
+                maxHeight={100}
+                hasNextPage
+                loadNextPage={loadNextPage}
+                skeletonItemsCount={5}
+            />,
+        );
+        const grid = screen.getByRole("grid");
+        act(() => grid.focus());
+        expect(loadNextPage).not.toHaveBeenCalled();
+        fireEvent.keyDown(grid, { key: "End", code: "End", ctrlKey: true });
+        expect(loadNextPage).toHaveBeenCalledTimes(1);
+        expect(document.getElementById(grid.getAttribute("aria-activedescendant")!)).toBeInTheDocument();
+    });
+
+    it("uses Home/End for columns and PageDown/PageUp for rows", () => {
+        renderWithIntl(
+            <UiAsyncTable items={manyItems} totalItemsCount={50} columns={gridColumns} maxHeight={100} />,
+        );
+        const grid = screen.getByRole("grid");
+        act(() => grid.focus());
+        const active = () => document.getElementById(grid.getAttribute("aria-activedescendant")!);
+        fireEvent.keyDown(grid, { key: "End", code: "End" });
+        expect(active()).toHaveTextContent("item-0");
+        fireEvent.keyDown(grid, { key: "Home", code: "Home" });
+        expect(active()).toHaveTextContent("Item 0");
+        fireEvent.keyDown(grid, { key: "PageDown", code: "PageDown" });
+        expect(active()).not.toHaveTextContent("Item 0");
+        fireEvent.keyDown(grid, { key: "PageUp", code: "PageUp" });
+        expect(active()).toHaveTextContent("Item 0");
     });
 });

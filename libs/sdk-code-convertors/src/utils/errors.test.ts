@@ -46,6 +46,18 @@ describe("errors", () => {
             const msg = buildMessage("Error {0}", ["A"], { type: "test" });
             expect(msg).toBe("Error A");
         });
+
+        it("does not fill a placeholder written inside a parameter", () => {
+            expect(buildMessage("{0} {1}", ["{1}", "x"])).toBe("{1} x");
+        });
+
+        it("keeps a replacement pattern in a parameter as written", () => {
+            expect(buildMessage("{0}", ["$&"])).toBe("$&");
+        });
+
+        it("keeps a placeholder that has no parameter", () => {
+            expect(buildMessage("{0} and {1}", ["A"], { path: ["a", "b"] })).toBe("A and {1} in: a/b");
+        });
     });
 
     describe("newError", () => {

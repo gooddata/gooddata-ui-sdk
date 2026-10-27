@@ -159,7 +159,6 @@ function stripQueryParams(uri: string): string {
     const questionMarkIndex = uri.indexOf("?");
     // for some reason when we use includeObjectsWithTags or excludeObjectsWithTags, the URI contains a query parameter
     // we need to strip it to get the correct URI
-    // see https://gooddata.atlassian.net/browse/EB-448
     return questionMarkIndex === -1 ? uri : uri.substring(0, questionMarkIndex);
 }
 

@@ -761,6 +761,7 @@ export type ChangeParameterValuesParams = {
     parameters: IParameterValueChange[];
     tabLocalIdentifier?: string;
     correlationId?: string;
+    restorePerTabOriginals?: boolean;
 };
 
 // @beta
@@ -2425,6 +2426,7 @@ export interface IAddAttributeFilterPayload {
     readonly parentFilters?: ReadonlyArray<IDashboardAttributeFilterParent>;
     // (undocumented)
     readonly selectionMode?: DashboardAttributeFilterSelectionMode;
+    readonly tabLocalIdentifier?: string;
     // (undocumented)
     readonly title?: string;
 }
@@ -2449,6 +2451,15 @@ export interface IAddDateFilterPayload {
     readonly dateDataset: ObjRef;
     // (undocumented)
     readonly index: number;
+}
+
+// @internal (undocumented)
+export interface IAddDateFilterReducerPayload {
+    // (undocumented)
+    readonly dateDataset: ObjRef;
+    // (undocumented)
+    readonly index: number;
+    readonly tabLocalIdentifier?: string;
 }
 
 // @alpha (undocumented)
@@ -2522,6 +2533,19 @@ export interface IAddMeasureValueFilterPayload {
     readonly title?: string;
 }
 
+// @internal (undocumented)
+export interface IAddMeasureValueFilterReducerPayload {
+    // (undocumented)
+    readonly index: number;
+    // (undocumented)
+    readonly localIdentifier?: string;
+    // (undocumented)
+    readonly measure: ObjRef;
+    readonly tabLocalIdentifier?: string;
+    // (undocumented)
+    readonly title?: string;
+}
+
 // @alpha
 export interface IAddParameterPayload {
     // (undocumented)
@@ -2568,6 +2592,7 @@ export interface IAddTextAttributeFilterReducerPayload {
     readonly filter: DashboardTextAttributeFilter;
     // (undocumented)
     readonly index: number;
+    readonly tabLocalIdentifier?: string;
 }
 
 // @beta (undocumented)
@@ -2891,11 +2916,10 @@ export interface IApplyFilterViewPayload {
 
 // @internal (undocumented)
 export interface IApplyWorkingSelectionPayload {
-    readonly crossFilteringLocalIdsByTab?: CrossFilteringLocalIdsByTab;
     // (undocumented)
     readonly enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
-    // (undocumented)
-    readonly enablePersistentFiltersAcrossTabs?: boolean;
+    readonly mirroredSelection?: IMirroredSelection;
+    readonly tabLocalIdentifier?: string;
 }
 
 // @alpha (undocumented)
@@ -3237,7 +3261,30 @@ export interface IChangeAttributeDisplayFormPayload {
     readonly isResultOfMigration?: boolean;
     // (undocumented)
     readonly isWorkingSelectionChange?: boolean;
+    readonly restoreTargetOriginal?: boolean;
     readonly tabLocalIdentifier?: string;
+}
+
+// @internal (undocumented)
+export interface IChangeAttributeFilterConfigModePayload {
+    localIdentifier: string;
+    mode?: DashboardAttributeFilterConfigMode;
+    tabLocalIdentifier?: string;
+}
+
+// @internal (undocumented)
+export interface IChangeAttributeFilterDisplayAsLabelPayload {
+    displayAsLabel: ObjRef | undefined;
+    localIdentifier: string;
+    restoreTargetOriginal?: boolean;
+    tabLocalIdentifier?: string;
+}
+
+// @internal (undocumented)
+export interface IChangeAttributeFilterSelectionTypePayload {
+    localIdentifier: string;
+    selectionType?: DashboardAttributeFilterSelectionType;
+    tabLocalIdentifier?: string;
 }
 
 // @internal (undocumented)
@@ -3246,6 +3293,7 @@ export interface IChangeAttributeLimitingItemsPayload {
     readonly filterLocalId: string;
     // (undocumented)
     readonly limitingItems: ObjRef[];
+    readonly tabLocalIdentifier?: string;
 }
 
 // @internal (undocumented)
@@ -3254,12 +3302,14 @@ export interface IChangeAttributeSelectionModePayload {
     readonly filterLocalId: string;
     // (undocumented)
     readonly selectionMode: DashboardAttributeFilterSelectionMode;
+    readonly tabLocalIdentifier?: string;
 }
 
 // @internal (undocumented)
 export interface IChangeAttributeTitlePayload {
     // (undocumented)
     readonly filterLocalId: string;
+    readonly tabLocalIdentifier?: string;
     // (undocumented)
     readonly title?: string;
 }
@@ -3524,7 +3574,7 @@ export type IChangeMeasureValueFilterConditionReducerPayload = {
     readonly localIdentifier: string;
     readonly conditions?: MeasureValueFilterCondition[];
     readonly isWorkingSelectionChange?: boolean;
-    readonly enablePersistentFiltersAcrossTabs?: boolean;
+    readonly tabLocalIdentifier?: string;
     readonly restoreTargetOriginal?: boolean;
 };
 
@@ -3534,6 +3584,15 @@ export interface IChangeMeasureValueFilterConfigModePayload {
     localIdentifier: string;
     // (undocumented)
     mode?: DashboardAttributeFilterConfigMode;
+}
+
+// @internal (undocumented)
+export interface IChangeMeasureValueFilterTitleReducerPayload {
+    // (undocumented)
+    readonly filterLocalId: string;
+    readonly tabLocalIdentifier?: string;
+    // (undocumented)
+    readonly title?: string;
 }
 
 // @internal
@@ -3548,6 +3607,7 @@ export interface IChangeParameterValues extends IDashboardCommand {
 export interface IChangeParameterValuesPayload {
     // (undocumented)
     readonly parameters: IParameterValueChange[];
+    readonly restorePerTabOriginals?: boolean;
     // (undocumented)
     readonly tabLocalIdentifier?: string;
 }
@@ -3635,11 +3695,9 @@ export interface IChangeVisualizationSwitcherActiveVisualizationPayload {
 
 // @internal (undocumented)
 export interface IClearAttributeFiltersSelectionPayload {
-    readonly crossFilteringLocalIdsByTab?: CrossFilteringLocalIdsByTab;
-    // (undocumented)
-    readonly enablePersistentFiltersAcrossTabs?: boolean;
     // (undocumented)
     readonly filterLocalIds: string[];
+    readonly restoreOriginal?: boolean;
     readonly restoreTargetOriginal?: boolean;
     readonly tabLocalIdentifier?: string;
 }
@@ -5671,6 +5729,8 @@ export interface IDashboardProps extends IDashboardBaseProps, IDashboardExtensio
     // (undocumented)
     children?: ReactElement | ((dashboard: any) => ReactElement);
     // @internal
+    onReplyInChat?: () => void;
+    // @internal
     persistedDashboard?: IDashboard;
 }
 
@@ -7469,6 +7529,22 @@ export interface IMetricsAndFacts {
     metrics: ICatalogMeasure[];
 }
 
+// @internal (undocumented)
+export interface IMirroredParameterValue {
+    // (undocumented)
+    readonly ref: ObjRef;
+    // (undocumented)
+    readonly value: ParameterValue | undefined;
+}
+
+// @internal
+export interface IMirroredSelection {
+    // (undocumented)
+    readonly filters: readonly FilterContextItem[];
+    // (undocumented)
+    readonly parameters: readonly IMirroredParameterValue[];
+}
+
 // @alpha (undocumented)
 export interface IModifyDrillDownForInsightWidget extends IDashboardCommand {
     // (undocumented)
@@ -7527,6 +7603,7 @@ export interface IMoveAttributeFilterPayload {
     readonly filterLocalId: string;
     // (undocumented)
     readonly index: number;
+    readonly tabLocalIdentifier?: string;
 }
 
 // @beta (undocumented)
@@ -7543,6 +7620,7 @@ export interface IMoveDateFilterPayload {
     readonly dataSet: ObjRef;
     // (undocumented)
     readonly index: number;
+    readonly tabLocalIdentifier?: string;
 }
 
 // @beta (undocumented)
@@ -7573,6 +7651,7 @@ export interface IMoveMeasureValueFilterPayload {
     readonly index: number;
     // (undocumented)
     readonly localIdentifier: string;
+    readonly tabLocalIdentifier?: string;
 }
 
 // @beta (undocumented)
@@ -8007,9 +8086,24 @@ export interface IReloadFilterViews extends IDashboardCommand {
 }
 
 // @internal (undocumented)
+export interface IRemoveAttributeFilterConfigPayload {
+    // (undocumented)
+    readonly localIdentifier: string;
+    readonly tabLocalIdentifier?: string;
+}
+
+// @internal (undocumented)
+export interface IRemoveAttributeFilterDisplayFormsPayload {
+    // (undocumented)
+    readonly displayForm: ObjRef;
+    readonly tabLocalIdentifier?: string;
+}
+
+// @internal (undocumented)
 export interface IRemoveAttributeFilterPayload {
     // (undocumented)
     readonly filterLocalId: string;
+    readonly tabLocalIdentifier?: string;
 }
 
 // @beta (undocumented)
@@ -8029,6 +8123,7 @@ export interface IRemoveAttributeFiltersPayload {
 export interface IRemoveDateFilterPayload {
     // (undocumented)
     readonly dataSet: ObjRef;
+    readonly tabLocalIdentifier?: string;
 }
 
 // @beta (undocumented)
@@ -8120,6 +8215,7 @@ export type IRemoveMeasureValueFilter = IRemoveMeasureValueFilters;
 export interface IRemoveMeasureValueFilterReducerPayload {
     // (undocumented)
     readonly localIdentifier: string;
+    readonly tabLocalIdentifier?: string;
 }
 
 // @alpha
@@ -8230,9 +8326,6 @@ export interface IRenderModeState {
 
 // @internal
 export interface IReplaceAttributeFilterItemPayload {
-    readonly crossFilteringLocalIdsByTab?: CrossFilteringLocalIdsByTab;
-    // (undocumented)
-    readonly enablePersistentFiltersAcrossTabs?: boolean;
     // (undocumented)
     readonly filter: DashboardAttributeFilterItem;
     // (undocumented)
@@ -9363,6 +9456,7 @@ export interface ISetAttributeFilterDependentDateFiltersPayload {
     readonly dependentDateFilters: ReadonlyArray<IDashboardAttributeFilterByDate>;
     // (undocumented)
     readonly filterLocalId: string;
+    readonly tabLocalIdentifier?: string;
 }
 
 // @beta (undocumented)
@@ -9413,6 +9507,7 @@ export interface ISetAttributeFilterParentsPayload {
     readonly filterLocalId: string;
     // (undocumented)
     readonly parentFilters: ReadonlyArray<IDashboardAttributeFilterParent>;
+    readonly tabLocalIdentifier?: string;
 }
 
 // @beta (undocumented)
@@ -9614,7 +9709,6 @@ export interface ISetMeasureValueFilterTitlePayload {
 
 // @alpha (undocumented)
 export interface ISetParameterRuntimeValuesPayload {
-    enablePersistentFiltersAcrossTabs?: boolean;
     tabLocalIdentifier?: string;
     // (undocumented)
     values: IParameterValueChange[];
@@ -10187,13 +10281,10 @@ export interface IUndoPayload<T extends IDashboardCommand = IDashboardCommand> {
 
 // @internal (undocumented)
 export interface IUpdateAttributeFilterSelectionPayload {
-    readonly crossFilteringLocalIdsByTab?: CrossFilteringLocalIdsByTab;
     // (undocumented)
     readonly elements: IAttributeElements;
     // (undocumented)
     readonly enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
-    // (undocumented)
-    readonly enablePersistentFiltersAcrossTabs?: boolean;
     // (undocumented)
     readonly filterLocalId: string;
     // (undocumented)
@@ -10229,8 +10320,6 @@ export interface IUpsertDateFilterAllTimePayload {
     // (undocumented)
     readonly emptyValueHandling?: EmptyValues;
     // (undocumented)
-    readonly enablePersistentFiltersAcrossTabs?: boolean;
-    // (undocumented)
     readonly isWorkingSelectionChange?: boolean;
     // (undocumented)
     readonly localIdentifier?: string;
@@ -10248,8 +10337,6 @@ export interface IUpsertDateFilterNonAllTimePayload {
     readonly dataSet?: ObjRef;
     // (undocumented)
     readonly emptyValueHandling?: EmptyValues;
-    // (undocumented)
-    readonly enablePersistentFiltersAcrossTabs?: boolean;
     // (undocumented)
     readonly from?: DateString | number;
     // (undocumented)
@@ -13469,7 +13556,7 @@ filterContextIdentity?: IDashboardObjectIdentity;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly removeAttributeFilterDisplayForms: (state: WritableDraft<ITabsState>, action: {
-payload: ObjRef;
+payload: IRemoveAttributeFilterDisplayFormsPayload;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly addAttributeFilterDisplayForm: (state: WritableDraft<ITabsState>, action: {
@@ -13485,7 +13572,7 @@ payload: IAddTextAttributeFilterReducerPayload;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly addMeasureValueFilter: (state: WritableDraft<ITabsState>, action: {
-payload: IAddMeasureValueFilterPayload;
+payload: IAddMeasureValueFilterReducerPayload;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly removeMeasureValueFilter: (state: WritableDraft<ITabsState>, action: {
@@ -13505,7 +13592,7 @@ payload: IMoveAttributeFilterPayload;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly addDateFilter: (state: WritableDraft<ITabsState>, action: {
-payload: IAddDateFilterPayload;
+payload: IAddDateFilterReducerPayload;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly removeDateFilter: (state: WritableDraft<ITabsState>, action: {
@@ -13580,16 +13667,13 @@ readonly setMeasureValueFilterDimensionality: (state: WritableDraft<ITabsState>,
 payload: {
 readonly localIdentifier: string;
 readonly dimensionality?: ObjRef[];
+readonly tabLocalIdentifier?: string;
 readonly restoreTargetOriginal?: boolean;
-readonly enablePersistentFiltersAcrossTabs?: boolean;
 };
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly changeMeasureValueFilterTitle: (state: WritableDraft<ITabsState>, action: {
-payload: {
-readonly filterLocalId: string;
-readonly title?: string;
-};
+payload: IChangeMeasureValueFilterTitleReducerPayload;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly addParameter: (state: WritableDraft<ITabsState>, action: {
@@ -13660,11 +13744,11 @@ payload: void;
 type: string;
 }>;
 readonly changeAttributeFilterConfigMode: (state: WritableDraft<ITabsState>, action: {
-payload: ISetDashboardAttributeFilterConfigModePayload;
+payload: IChangeAttributeFilterConfigModePayload;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly changeAttributeFilterSelectionType: (state: WritableDraft<ITabsState>, action: {
-payload: ISetDashboardAttributeFilterSelectionTypePayload;
+payload: IChangeAttributeFilterSelectionTypePayload;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly setAttributeFilterConfigs: (state: WritableDraft<ITabsState>, action: {
@@ -13672,11 +13756,11 @@ payload: any;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly removeAttributeFilterConfig: TabsReducer<    {
-payload: string;
+payload: IRemoveAttributeFilterConfigPayload;
 type: string;
 }>;
 readonly changeDisplayAsLabel: (state: WritableDraft<ITabsState>, action: {
-payload: ISetDashboardAttributeFilterConfigDisplayAsLabelPayload;
+payload: IChangeAttributeFilterDisplayAsLabelPayload;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly setDateFilterConfig: (state: WritableDraft<ITabsState>, action: {
@@ -13747,6 +13831,7 @@ type: string;
 readonly removeIgnoredAttributeFilter: (state: WritableDraft<ITabsState>, action: {
 payload: {
 displayFormRefs: ObjRef[];
+tabLocalIdentifier?: string;
 };
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;

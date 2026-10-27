@@ -1,6 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import {
+    type CacheControl,
     RecommendedCachingConfiguration,
     withCaching,
     withCustomWorkspaceSettings,
@@ -34,14 +35,28 @@ export interface ICreateBackendOptions {
      */
     packageVersion?: string;
     auth?: IAuthCredentials;
+    /**
+     * Called when the JWT of the auth provider is about to expire. An embedded application uses
+     * it to ask its parent page for a renewal, which it then applies through `setJwt`.
+     */
+    onJwtIsAboutToExpire?: () => void;
 }
 
+/**
+ * The backend of a pluggable application or the host, with its auth and cache lifecycle.
+ */
 export interface IBackendFactory {
     getBackend: () => IAnalyticalBackend;
     getAuthCredentials: () => IAuthCredentials;
     setNotAuthenticatedHandler: (handler: NotAuthenticatedHandler) => void;
+    /** Renews the API token in place when the auth type stays; otherwise rebuilds the backend. */
     setApiToken: (token: string) => void;
+    /** The JWT counterpart of setApiToken. */
     setJwt: (jwt: string, secondsBeforeTokenExpirationToCallReminder?: number) => void;
+    /** Resets ALL caches of the backend's caching decorator. */
+    resetAllCaches: () => void;
+    /** Resets the catalog cache of the backend's caching decorator. */
+    resetCatalogs: () => void;
 }
 
 /**
@@ -72,10 +87,6 @@ export const wrapWithCustomWorkspaceSettings = (backend: IAnalyticalBackend): IA
     return withCustomWorkspaceSettings(backend, {
         commonSettingsWrapper: applyCustomWorkspaceSettings,
     });
-};
-
-const decorateBackend = (backend: IAnalyticalBackend): IAnalyticalBackend => {
-    return withCaching(wrapWithCustomWorkspaceSettings(backend), RecommendedCachingConfiguration);
 };
 
 const EMBEDDED_PATH_PREFIX = "/embedded/";
@@ -115,7 +126,18 @@ export function createBackendFactory(options: ICreateBackendOptions = {}): IBack
     let setJwtHandler: SetJwtCallback | undefined = undefined;
     const jwtIsAboutToExpire: JwtIsAboutToExpireHandler = (setJwt) => {
         setJwtHandler = setJwt;
+        options.onJwtIsAboutToExpire?.();
     };
+
+    // The cache controls of the current backend; replaced whenever the backend is rebuilt.
+    let cacheControl: CacheControl | undefined;
+    const decorateBackend = (backend: IAnalyticalBackend): IAnalyticalBackend =>
+        withCaching(wrapWithCustomWorkspaceSettings(backend), {
+            ...RecommendedCachingConfiguration,
+            onCacheReady: (control) => {
+                cacheControl = control;
+            },
+        });
 
     const packageVersion =
         options.packageVersion ??
@@ -168,28 +190,38 @@ export function createBackendFactory(options: ICreateBackendOptions = {}): IBack
         }
     };
 
-    let backend: IAnalyticalBackend = decorateBackend(getBackendImplementation(currentAuth));
+    // A rebuild drops the update handlers of the previous provider, so a later renewal of that
+    // auth type cannot reach a provider the backend no longer uses.
+    const rebuildBackend = (auth: IAuthCredentials): IAnalyticalBackend => {
+        setApiTokenHandler = undefined;
+        setJwtHandler = undefined;
+        return decorateBackend(getBackendImplementation(auth));
+    };
+
+    let backend: IAnalyticalBackend = rebuildBackend(currentAuth);
 
     const setNotAuthenticatedHandler = (handler: NotAuthenticatedHandler) => {
         notAuthenticatedErrorHandler = handler;
     };
 
     const setApiToken = (token: string) => {
+        const previousAuth = currentAuth;
         currentAuth = { type: "apiToken", token };
-        if (setApiTokenHandler) {
+        if (previousAuth.type === "apiToken" && setApiTokenHandler) {
             setApiTokenHandler(token);
             return;
         }
-        backend = decorateBackend(getBackendImplementation(currentAuth));
+        backend = rebuildBackend(currentAuth);
     };
 
     const setJwt: IBackendFactory["setJwt"] = (jwt, secondsBeforeTokenExpirationToCallReminder) => {
+        const previousAuth = currentAuth;
         currentAuth = { type: "jwt", token: jwt, secondsBeforeTokenExpirationToCallReminder };
-        if (setJwtHandler) {
+        if (previousAuth.type === "jwt" && setJwtHandler) {
             setJwtHandler(jwt, secondsBeforeTokenExpirationToCallReminder);
             return;
         }
-        backend = decorateBackend(getBackendImplementation(currentAuth));
+        backend = rebuildBackend(currentAuth);
     };
 
     /**
@@ -207,6 +239,8 @@ export function createBackendFactory(options: ICreateBackendOptions = {}): IBack
         setNotAuthenticatedHandler,
         setApiToken,
         setJwt,
+        resetAllCaches: () => cacheControl?.resetAll(),
+        resetCatalogs: () => cacheControl?.resetCatalogs(),
     };
 }
 

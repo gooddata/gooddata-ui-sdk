@@ -1,6 +1,6 @@
 {{- /* One destination in a home/links list. Params: title, href; the inner text is the
-     one-line description. */ -}}
-<a href="{{ .Get "href" }}" class="group flex items-baseline justify-between gap-6 py-4 hover:no-underline">
+     one-line description. A page-relative href is resolved against the page (resolve-url.html). */ -}}
+<a href="{{ partial "resolve-url.html" (dict "page" .Page "url" (.Get "href")) }}" class="group flex items-baseline justify-between gap-6 py-4 hover:no-underline">
     <span><span class="font-heading font-semibold text-gd-secondary group-hover:underline">{{ .Get "title" }}</span>
     <span class="block pt-1 text-sm text-gd-text-secondary">{{ trim .Inner " \r\n" }}</span></span>
     <span class="text-gd-text-secondary transition group-hover:translate-x-1 group-hover:text-gd-secondary" aria-hidden="true">→</span>

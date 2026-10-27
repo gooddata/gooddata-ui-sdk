@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-pluggable-host: Legacy KPI Dashboards URLs with #/p/ routes map to the hosted dashboards. Client and product/client URLs land on the bare dashboards landing. Embedded KD and AD client URLs stay in the embedding and show the not-found page. /dashboards/403.html goes to the root. sdk-ui-gen-ai: The legacy dashboard link includes the dashboard route segment.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

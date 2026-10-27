@@ -5,7 +5,7 @@ title: Quarterly review
 content:
     defaults:
         period:
-            granularity: WEEK
+            granularity: FORTNIGHT
             from: -1
             to: -1
     pages:

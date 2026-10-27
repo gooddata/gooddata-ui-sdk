@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 52db43276615e2f90fac570c9c8b308d512ff91dac93d08876a5d9e0b5843960
+# schema-hash: 6a4cbac8afba80ea39a31da62b3668ddd7329a4d1616940af7bd920a9ef0dfff
 
 from __future__ import annotations
 
@@ -2992,6 +2992,7 @@ class Granularity4(Enum):
     MINUTE = 'MINUTE'
     HOUR = 'HOUR'
     DAY = 'DAY'
+    WEEK = 'WEEK'
     WEEK_US = 'WEEK_US'
     MONTH = 'MONTH'
     QUARTER = 'QUARTER'

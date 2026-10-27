@@ -47,15 +47,6 @@
             height: var(--gd-table-row-height-small);
         }
 
-        &:focus-visible {
-            outline: none;
-
-            #{$root}__cell--isFocused {
-                transition: outline 0s ease-in-out;
-                @include mixins.focus-ring;
-            }
-        }
-
         #{$root}__cell {
             transition: color 0.25s ease-in-out;
             border-bottom: 2px solid var(--gd-palette-complementary-3);
@@ -458,7 +449,10 @@
         line-height: 20px;
     }
 
-    .gd-ui-kit-paged-virtual-list__list:focus-visible {
+    &__grid:focus-visible {
+        outline: none;
+
+        #{$root}__cell--isFocused,
         #{$root}__row--focused,
         #{$root}__cell--focused {
             @include mixins.focus-ring;

@@ -1,4 +1,6 @@
-{{- $destination := .Destination -}}
+{{- /* A page-relative link (`../on-drill/`) is made root-relative first, in relref's form, so the
+       rest treats it as one (resolve-url.html says why). */ -}}
+{{- $destination := partial "resolve-url.html" (dict "page" .Page "url" .Destination) -}}
 {{- $isAbsolute := or (strings.HasPrefix $destination "http://") (strings.HasPrefix $destination "https://") (strings.HasPrefix $destination "mailto:") (strings.HasPrefix $destination "tel:") (strings.HasPrefix $destination "//") -}}
 {{- if and (strings.HasPrefix $destination "/") (not $isAbsolute) -}}
   {{- $destination = relURL (strings.TrimPrefix "/" $destination) -}}

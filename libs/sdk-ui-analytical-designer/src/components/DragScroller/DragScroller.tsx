@@ -67,7 +67,7 @@ export function DragScroller({
 
     const dispatchScroll = useCallback(
         (event: MouseEvent) => {
-            // Ignore scroll event when just scrollable container size has changed. Chrome issue. See BB-78
+            // Ignore scroll event when just scrollable container size has changed. Chrome issue.
             const { scrollHeight } = getContainer();
             if (scrollHeight !== containerScrollHeightRef.current) {
                 updateContainerRect();

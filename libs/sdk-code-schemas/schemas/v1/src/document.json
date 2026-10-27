@@ -112,6 +112,7 @@
                                 "MINUTE",
                                 "HOUR",
                                 "DAY",
+                                "WEEK",
                                 "WEEK_US",
                                 "MONTH",
                                 "QUARTER",

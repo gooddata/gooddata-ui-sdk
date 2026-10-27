@@ -49,7 +49,7 @@ const buildHelpMenuItems = (intl: ReturnType<typeof createIntl>): IHeaderMenuIte
 /**
  * Builds the AD help menu with all labels resolved from AD's eagerly-loaded default (en-US) messages.
  * Synchronous, so the pluggable mount can push a complete, correct menu immediately and avoid a flash
- * of the host's generic fallback while the localized bundle loads. (LX-2573)
+ * of the host's generic fallback while the localized bundle loads.
  */
 export const getHelpMenuItems = (): IHeaderMenuItem[] =>
     buildHelpMenuItems(
@@ -59,7 +59,7 @@ export const getHelpMenuItems = (): IHeaderMenuItem[] =>
 /**
  * Builds the AD help menu with all labels resolved from AD's own translations for the given locale.
  * Used by the pluggable mount to push help items to the host header: the host renders `item.label`
- * directly, so it needs no knowledge of AD-specific help-menu strings. (LX-2573)
+ * directly, so it needs no knowledge of AD-specific help-menu strings.
  */
 export const getTranslatedHelpMenuItemsForLocale = async (locale?: string): Promise<IHeaderMenuItem[]> => {
     const resolvedLocale = resolveLocale(locale ?? DEFAULT_LANGUAGE);

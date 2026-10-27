@@ -8,7 +8,7 @@ import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type IColorPalette, type IUser, type IWorkspacePermissions } from "@gooddata/sdk-model";
 
 import { type IBootstrapData } from "../actions/app_context_actions.js";
-import { type IAdHostBackend, adoptHostBackend, reinitializeBackend, resetCatalogs } from "../backend.js";
+import { type IAdHostBackend, adoptHostBackend, resetBackend, resetCatalogs } from "../backend.js";
 import { manualCatalogRefresh } from "../sagas/catalog/catalog_saga.js";
 import { requestCatalogRefresh } from "../sagas/catalog/catalog_ui_actions.js";
 
@@ -209,7 +209,7 @@ describe("AnalyticalDesignerInternal", () => {
                 .run();
             resetCatalogs();
         } finally {
-            reinitializeBackend();
+            resetBackend();
         }
 
         expect(firstResetAll).not.toHaveBeenCalled();

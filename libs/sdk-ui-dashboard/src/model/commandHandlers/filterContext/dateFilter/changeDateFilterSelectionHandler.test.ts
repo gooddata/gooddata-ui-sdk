@@ -8,6 +8,9 @@ import { TestCorrelation } from "../../../../tests/Dashboard.test.helpers.js";
 import { SimpleDashboardIdentifier } from "../../../../tests/SimpleDashboard.test.helpers.js";
 import { changeDateFilterSelection, clearDateFilterSelection } from "../../../commands/filters.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../DashboardTester.js";
+import { selectConfig } from "../../../store/config/configSelectors.js";
+import { configActions } from "../../../store/config/index.js";
+import { metaActions } from "../../../store/meta/index.js";
 import { selectFilterContextDateFilter } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 
 describe("changeDateFilterSelectionHandler", () => {
@@ -86,5 +89,47 @@ describe("changeDateFilterSelectionHandler", () => {
         await Tester.waitFor("GDC.DASH/EVT.FILTER_CONTEXT.CHANGED");
 
         expect(selectFilterContextDateFilter(Tester.state())).toBeUndefined();
+    });
+
+    describe("when filters persist across tabs", () => {
+        const filterContextChangedCount = () =>
+            Tester.emittedEventsDigest().filter(
+                (event) => event.type === "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+            ).length;
+
+        beforeEach(() => {
+            const config = selectConfig(Tester.state());
+            Tester.dispatch(
+                configActions.setConfig({
+                    ...config,
+                    settings: { ...config.settings, enableDashboardPersistentFiltersAcrossTabs: true },
+                }),
+            );
+            Tester.dispatch(metaActions.setDisablePersistentFiltersAcrossTabs(false));
+        });
+
+        it("emits one filter context changed event for the changed source tab", async () => {
+            await Tester.dispatchAndWaitFor(
+                changeDateFilterSelection("relative", "GDC.time.month", -3, 0),
+                "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+            );
+
+            expect(filterContextChangedCount()).toBe(1);
+        });
+
+        it("emits a filter context changed event for a command that changes nothing", async () => {
+            await Tester.dispatchAndWaitFor(
+                changeDateFilterSelection("relative", "GDC.time.month", -3, 0),
+                "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+            );
+            Tester.resetMonitors();
+
+            await Tester.dispatchAndWaitFor(
+                changeDateFilterSelection("relative", "GDC.time.month", -3, 0),
+                "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+            );
+
+            expect(filterContextChangedCount()).toBe(1);
+        });
     });
 });

@@ -16,9 +16,6 @@ import { getIsEmbedded } from "./meta_selector.js";
 
 export const bootstrapData = (state: IAppState): IBootstrapData | null => getBootstrapDataState(state);
 
-// EXTERNAL SCRIPTS
-export const externalScripts = createSelector([bootstrapData], (data) => data?.externalScripts);
-
 // BEAR
 export const hasWorkspaceAccess = createSelector([bootstrapData], () => {
     // Tiger does not support workspaces yet

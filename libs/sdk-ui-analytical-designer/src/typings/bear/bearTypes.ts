@@ -123,9 +123,6 @@ export interface IUISettings {
     headerTextColor?: string;
     useOnboarding?: boolean;
     displayNPS?: boolean;
-    walkMe?: string;
-    walkMeEnvironment?: string;
-    includeTrialSnippet?: string;
     ssoLogoutUrl?: Uri;
     ssoExpiredUrl?: Uri;
     ssoUnauthorizedUrl?: Uri;
@@ -454,9 +451,6 @@ export interface IBearBootstrap {
             requiresRedirect: boolean;
             timezone: ITimezoneInfo | null;
             analyticalDashboards?: Uri[] | null;
-            walkMe?: string | null;
-            walkMeEnvironment?: string | null;
-            includeTrialSnippet?: string | null;
             clientSecret?: string;
             user?: {
                 passwordExpirationTimestamp?: DateString;

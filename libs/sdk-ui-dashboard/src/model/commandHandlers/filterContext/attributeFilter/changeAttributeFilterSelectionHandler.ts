@@ -1,7 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
-import { all, call, put, select } from "redux-saga/effects";
+import { call, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
 import { type ChangeAttributeFilterSelection } from "../../../commands/filters.js";
@@ -13,24 +13,17 @@ import {
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
 } from "../../../store/config/configSelectors.js";
 import {
-    selectCrossFilteringFiltersLocalIdentifiersByTab,
     selectIsCrossFiltering,
     selectIsFilterFromCrossFilteringByLocalIdentifier,
 } from "../../../store/drill/drillSelectors.js";
-import { selectEnablePersistentFiltersAcrossTabs } from "../../../store/meta/metaSelectors.js";
 import {
     selectAttributeFilterDescendants,
     selectFilterContextAttributeFilterByLocalId,
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
-import {
-    type IFilterContextByTabSnapshot,
-    captureFilterContextByTabSnapshot,
-    dispatchFilterContextChanged,
-    dispatchFilterContextChangedForMutatedTabs,
-    resetCrossFiltering,
-} from "../common.js";
+import { resetCrossFiltering } from "../common.js";
+import { type ITabSyncSession, beginTabSync, endTabSync, putTabSynced } from "../tabSync/tabSyncSaga.js";
 
 export function* changeAttributeFilterSelectionHandler(
     ctx: DashboardContext,
@@ -58,15 +51,10 @@ export function* changeAttributeFilterSelectionHandler(
     const enableImmediateAttributeFilterDisplayAsLabelMigration: ReturnType<
         typeof selectEnableImmediateAttributeFilterDisplayAsLabelMigration
     > = yield select(selectEnableImmediateAttributeFilterDisplayAsLabelMigration);
-    const crossFilteringLocalIdsByTab: ReturnType<typeof selectCrossFilteringFiltersLocalIdentifiersByTab> =
-        yield select(selectCrossFilteringFiltersLocalIdentifiersByTab);
 
-    const enablePersistentFiltersAcrossTabs: ReturnType<typeof selectEnablePersistentFiltersAcrossTabs> =
-        yield select(selectEnablePersistentFiltersAcrossTabs);
+    const session: ITabSyncSession = yield call(beginTabSync, { enabled: !isResultOfMigration });
 
-    const filterContextSnapshot: IFilterContextByTabSnapshot = yield call(captureFilterContextByTabSnapshot);
-
-    yield put(
+    yield call(putTabSynced, session, [
         tabsActions.updateAttributeFilterSelection({
             elements,
             filterLocalId,
@@ -75,10 +63,8 @@ export function* changeAttributeFilterSelectionHandler(
             enableImmediateAttributeFilterDisplayAsLabelMigration,
             isResultOfMigration,
             isSelectionInvalid,
-            crossFilteringLocalIdsByTab,
-            enablePersistentFiltersAcrossTabs,
         }),
-    );
+    ]);
 
     const changedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
         yield select(selectFilterContextAttributeFilterByLocalId(cmd.payload.filterLocalId));
@@ -90,20 +76,18 @@ export function* changeAttributeFilterSelectionHandler(
             selectAttributeFilterDescendants(changedFilter.attributeFilter.localIdentifier!),
         );
 
-        yield all(
+        yield call(
+            putTabSynced,
+            session,
             childFiltersIds.map((childFilterId) =>
-                put(
-                    tabsActions.updateAttributeFilterSelection({
-                        filterLocalId: childFilterId,
-                        elements: {
-                            uris: [],
-                        },
-                        negativeSelection: true,
-                        isWorkingSelectionChange: isWorkingSelectionChange && isApplyAllAtOnceEnabledAndSet,
-                        crossFilteringLocalIdsByTab,
-                        enablePersistentFiltersAcrossTabs,
-                    }),
-                ),
+                tabsActions.updateAttributeFilterSelection({
+                    filterLocalId: childFilterId,
+                    elements: {
+                        uris: [],
+                    },
+                    negativeSelection: true,
+                    isWorkingSelectionChange: isWorkingSelectionChange && isApplyAllAtOnceEnabledAndSet,
+                }),
             ),
         );
     }
@@ -122,9 +106,5 @@ export function* changeAttributeFilterSelectionHandler(
 
     yield dispatchDashboardEvent(attributeFilterSelectionChanged(ctx, changedFilter, cmd.correlationId));
 
-    if (enablePersistentFiltersAcrossTabs) {
-        yield call(dispatchFilterContextChangedForMutatedTabs, ctx, cmd, filterContextSnapshot);
-    } else {
-        yield call(dispatchFilterContextChanged, ctx, cmd);
-    }
+    yield call(endTabSync, ctx, cmd, session);
 }

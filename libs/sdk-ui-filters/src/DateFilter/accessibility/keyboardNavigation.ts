@@ -32,8 +32,6 @@ interface IDateFilterKeyboardNavigationConfig {
 interface IGranularityTabsKeyboardNavigationConfig {
     /** Reference to the granularity tabs element */
     tabGranularityRef: MutableRefObject<HTMLDivElement | null>;
-    /** Callback to close the dropdown */
-    closeDropdown?: () => void;
 }
 
 /**
@@ -162,13 +160,12 @@ export const createDateFilterKeyboardHandler =
 /**
  * Creates a keyboard event handler for a granularity tabs element, shared by the relative and absolute
  * date filter forms.
- * @param config - Configuration object containing ref and optional close handler
+ * @param config - Configuration object containing the granularity tabs ref
  * @returns Keyboard event handler function
  * @internal
  */
 export const createGranularityTabsKeyboardHandler = ({
     tabGranularityRef,
-    closeDropdown,
 }: IGranularityTabsKeyboardNavigationConfig) => {
     return (event: KeyboardEvent): void => {
         if (!tabGranularityRef.current) {
@@ -206,7 +203,6 @@ export const createGranularityTabsKeyboardHandler = ({
                     lastElement?.focus();
                 }
             },
-            onClose: closeDropdown,
         });
 
         keyboardHandler(event);
@@ -217,14 +213,12 @@ export const submitRelativeDateFilterForm = (
     event: KeyboardEvent,
     canSubmit: boolean,
     withoutApply: boolean,
-    onSubmit: () => void,
     submit: () => void,
 ) => {
     if (event.key === "Enter") {
         const canSubmitForm = canSubmit && document.activeElement instanceof HTMLInputElement;
         if (canSubmitForm && !withoutApply) {
             submit();
-            onSubmit();
         }
     }
 

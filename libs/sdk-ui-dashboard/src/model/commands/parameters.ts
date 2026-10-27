@@ -26,6 +26,10 @@ export type ChangeParameterValuesParams = {
      */
     tabLocalIdentifier?: string;
     correlationId?: string;
+    /**
+     * See {@link IChangeParameterValuesPayload.restorePerTabOriginals}.
+     */
+    restorePerTabOriginals?: boolean;
 };
 
 /**
@@ -36,6 +40,12 @@ export type ChangeParameterValuesParams = {
 export interface IChangeParameterValuesPayload {
     readonly parameters: IParameterValueChange[];
     readonly tabLocalIdentifier?: string;
+    /**
+     * When true, tabs other than the one this command addresses reset the parameters that tab
+     * defines to their own reset values instead of receiving this payload. Used by filter reset
+     * when filters are persisted across tabs.
+     */
+    readonly restorePerTabOriginals?: boolean;
 }
 
 /**
@@ -70,6 +80,7 @@ export function changeParameterValues({
     parameters,
     tabLocalIdentifier,
     correlationId,
+    restorePerTabOriginals,
 }: ChangeParameterValuesParams): IChangeParameterValues {
     return {
         type: "GDC.DASH/CMD.PARAMETERS.CHANGE_VALUES",
@@ -77,6 +88,7 @@ export function changeParameterValues({
         payload: {
             parameters,
             tabLocalIdentifier,
+            ...(restorePerTabOriginals ? { restorePerTabOriginals } : {}),
         },
     };
 }

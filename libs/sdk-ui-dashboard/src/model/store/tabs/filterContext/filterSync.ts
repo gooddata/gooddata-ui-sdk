@@ -3,6 +3,7 @@
 import { type IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
 import {
     type DashboardAttributeFilterItem,
+    type DashboardAttributeFilterSelectionType,
     type FilterContextItem,
     type IAttributeDisplayFormMetadataObject,
     type IDashboardAttributeFilterConfig,
@@ -13,7 +14,9 @@ import {
     type IDashboardMeasureValueFilterConfig,
     type IFilterContextDefinition,
     type ObjRef,
+    type ParameterValue,
     areObjRefsEqual,
+    dashboardAttributeFilterItemDisplayForm,
     dashboardAttributeFilterItemFilterElementsBy,
     dashboardAttributeFilterItemFilterElementsByDate,
     dashboardAttributeFilterItemLocalIdentifier,
@@ -26,22 +29,24 @@ import {
     isDashboardDateFilter,
     isDashboardMatchAttributeFilter,
     isDashboardMeasureValueFilter,
+    isSingleSelectionFilter,
 } from "@gooddata/sdk-model";
 
-import { findAttributeFilterCounterpart } from "../../../utils/attributeFilterMatching.js";
-import { type ITabState, type ITabsState } from "../tabsState.js";
+import {
+    displayFormsEquivalent,
+    findAttributeFilterCounterpart,
+} from "../../../utils/attributeFilterMatching.js";
+import { effectiveSelectionTypeOf } from "../../../utils/attributeFilterSelectionTypeCompatibility.js";
+import { type ITabState } from "../tabsState.js";
 
 import { type WorkingFilterContextItem } from "./filterContextState.js";
 
 type StagedFilter = FilterContextItem | WorkingFilterContextItem;
 
 /**
- * Cross-tab identity match. `allowListToText` enables the list-filter → text-filter migration
- * used when a whole filter definition is replaced. Selection-only writes leave it off so a
- * list selection does not convert a text filter on another tab.
+ * Cross-tab identity match.
  */
 export interface IFindCounterpartOptions {
-    readonly allowListToText?: boolean;
     /**
      * Cross-filtering virtual filters on the target tab are never a counterpart.
      */
@@ -75,8 +80,10 @@ export function isCrossFilteringVirtualFilter(
 
 /**
  * Finds the filter on `targetTab` that is the same logical filter as `sourceFilter`.
- * Same-type matches take precedence over list/text migrations. A missing or incompatible
- * counterpart is a no-op for the caller.
+ * An attribute filter is a counterpart only when it is of the same type (list or text), has the
+ * same display-as label and selection type, both with their defaults applied, and the same single
+ * or multiple value selection mode.
+ * A missing or incompatible counterpart is a no-op for the caller.
  *
  * Assumes at most one filter per display form, date data set, and measure with a given
  * dimensionality on a tab.
@@ -106,15 +113,25 @@ export function findCounterpartFilter(
     const displayForms = collectDisplayForms(sourceTab, targetTab, attributesWithReferences);
 
     if (isDashboardAttributeFilterItem(sourceFilter)) {
+        const sourcePresentation = attributeFilterPresentation(sourceTab, sourceFilter);
         const result = findAttributeFilterCounterpart(
             sourceFilter,
-            targets.filter(isDashboardAttributeFilterItem),
+            targets
+                .filter(isDashboardAttributeFilterItem)
+                .filter((target) =>
+                    samePresentation(
+                        sourcePresentation,
+                        attributeFilterPresentation(targetTab, target),
+                        displayForms,
+                    ),
+                ),
             {
                 sourceFilterConfigs: sourceTab.attributeFilterConfigs?.attributeFilterConfigs,
                 targetFilterConfigs: targetTab.attributeFilterConfigs?.attributeFilterConfigs,
                 displayForms,
                 attributesWithReferences,
-                allowListToText: options?.allowListToText ?? true,
+                allowListToText: false,
+                allowTextToList: false,
             },
         );
         return result.status === "matched" ? result.counterpart : undefined;
@@ -280,75 +297,82 @@ export function applyMirroredFilterValue(
 }
 
 /**
- * After the active tab commits staged filters and parameters, copy those applied values
- * onto matching filters and parameters on the other tabs. Working overlays are not copied.
- * A target tab's own staged value for a mirrored filter or parameter is dropped, so it cannot
- * shadow the mirrored value; staged values of other filters on that tab are kept.
+ * Applied filter and parameter values committed on another tab, already fitted to the tab
+ * they are written to.
  *
  * @internal
  */
-export function mirrorCommittedWorkingSelection(
-    state: ITabsState,
-    sourceTab: ITabState,
-    stagedFilters: readonly StagedFilter[] | undefined,
-    stagedParameterRefs: readonly ObjRef[],
-    crossFilteringLocalIdsByTab?: CrossFilteringLocalIdsByTab,
-    enablePersistentFiltersAcrossTabs?: boolean,
-): void {
-    if (!enablePersistentFiltersAcrossTabs) {
-        return;
-    }
-    const others = (state.tabs ?? []).filter((tab) => tab.localIdentifier !== sourceTab.localIdentifier);
-    if (others.length === 0) {
-        return;
-    }
+export interface IMirroredSelection {
+    readonly filters: readonly FilterContextItem[];
+    readonly parameters: readonly IMirroredParameterValue[];
+}
 
-    for (const staged of stagedFilters ?? []) {
-        const applied = findAppliedFilterForStaged(sourceTab, staged);
-        if (!applied) {
+/**
+ * @internal
+ */
+export interface IMirroredParameterValue {
+    readonly ref: ObjRef;
+    readonly value: ParameterValue | undefined;
+}
+
+/**
+ * Writes `selection` onto the matching applied filters and parameters of `tab`. The tab's own staged
+ * value of a written filter or parameter is dropped, so it cannot shadow the written value; staged
+ * values of other filters and parameters are kept. Does not create a filter or parameter, except the
+ * common date filter, whose absence means all time.
+ *
+ * @internal
+ */
+export function writeMirroredSelection(tab: ITabState, selection: IMirroredSelection): void {
+    for (const filter of selection.filters) {
+        const current = findAppliedFilterWithIdentityOf(tab, filter);
+        if (current) {
+            writeFilter(tab, current, filter);
+        } else if (isDashboardCommonDateFilter(filter)) {
+            tab.filterContext?.filterContextDefinition?.filters.unshift(filter);
+        } else {
             continue;
         }
-        if (
-            isCrossFilteringVirtualFilter(
-                sourceTab,
-                dashboardFilterLocalIdentifier(applied),
-                crossFilteringLocalIdsByTab,
-            )
-        ) {
-            continue;
-        }
-
-        for (const tab of others) {
-            const match = findCounterpartFilter(sourceTab, applied, tab, state.attributesWithReferences, {
-                allowListToText: false,
-                crossFilteringLocalIdsByTab,
-            });
-            if (!match) {
-                continue;
-            }
-            writeFilter(tab, match, applyMirroredFilterValue(applied, match));
-            dropStagedOverlay(tab, match);
-        }
+        dropStagedOverlay(tab, filter);
     }
 
-    for (const ref of stagedParameterRefs) {
-        const sourceEntry = sourceTab.parameters?.parameters.find((entry) =>
-            areObjRefsEqual(entry.parameter.ref, ref),
+    for (const { ref, value } of selection.parameters) {
+        const entry = tab.parameters?.parameters.find((candidate) =>
+            areObjRefsEqual(candidate.parameter.ref, ref),
         );
-        if (!sourceEntry) {
+        if (!entry) {
             continue;
         }
-        for (const tab of others) {
-            const entry = tab.parameters?.parameters.find((candidate) =>
-                areObjRefsEqual(candidate.parameter.ref, ref),
-            );
-            if (!entry) {
-                continue;
-            }
-            delete entry.workingOverride;
-            entry.runtimeOverride = sourceEntry.runtimeOverride;
-        }
+        delete entry.workingOverride;
+        entry.runtimeOverride = value;
     }
+}
+
+/**
+ * The applied filter of `tab` that a staged entry overlays.
+ *
+ * @internal
+ */
+export function findAppliedFilterForStaged(
+    tab: ITabState,
+    staged: StagedFilter,
+): FilterContextItem | undefined {
+    const filters = appliedFilters(tab);
+    if ("dateFilter" in staged && staged.dateFilter) {
+        if (!staged.dateFilter.dataSet) {
+            return filters.find(isDashboardCommonDateFilter);
+        }
+        return filters.find(
+            (filter) =>
+                isDashboardDateFilter(filter) &&
+                areObjRefsEqual(filter.dateFilter.dataSet, staged.dateFilter.dataSet),
+        );
+    }
+    const localIdentifier = stagedLocalIdentifier(staged);
+    if (!localIdentifier) {
+        return undefined;
+    }
+    return filters.find((filter) => dashboardFilterLocalIdentifier(filter) === localIdentifier);
 }
 
 /**
@@ -453,23 +477,17 @@ function dropStagedOverlay(tab: ITabState, applied: FilterContextItem): void {
     }
 }
 
-function findAppliedFilterForStaged(tab: ITabState, staged: StagedFilter): FilterContextItem | undefined {
-    const filters = appliedFilters(tab);
-    if ("dateFilter" in staged && staged.dateFilter) {
-        if (!staged.dateFilter.dataSet) {
-            return filters.find(isDashboardCommonDateFilter);
-        }
-        return filters.find(
-            (filter) =>
-                isDashboardDateFilter(filter) &&
-                areObjRefsEqual(filter.dateFilter.dataSet, staged.dateFilter.dataSet),
-        );
+function findAppliedFilterWithIdentityOf(
+    tab: ITabState,
+    filter: FilterContextItem,
+): FilterContextItem | undefined {
+    if (isDashboardDateFilter(filter)) {
+        return findDateCounterpart(filter, appliedFilters(tab));
     }
-    const localIdentifier = stagedLocalIdentifier(staged);
-    if (!localIdentifier) {
-        return undefined;
-    }
-    return filters.find((filter) => dashboardFilterLocalIdentifier(filter) === localIdentifier);
+    const localIdentifier = dashboardFilterLocalIdentifier(filter);
+    return localIdentifier
+        ? appliedFilters(tab).find((item) => dashboardFilterLocalIdentifier(item) === localIdentifier)
+        : undefined;
 }
 
 function stagedLocalIdentifier(item: StagedFilter): string | undefined {
@@ -505,6 +523,45 @@ function collectDisplayForms(
         ...(targetTab.filterContext?.attributeFilterDisplayForms ?? []),
         ...(attributesWithReferences ?? []).flatMap((entry) => entry.attribute.displayForms ?? []),
     ];
+}
+
+interface IAttributeFilterPresentation {
+    readonly displayAsLabel: ObjRef;
+    readonly selectionType: DashboardAttributeFilterSelectionType;
+    readonly isSingleSelection: boolean;
+}
+
+function attributeFilterPresentation(
+    tab: ITabState,
+    filter: DashboardAttributeFilterItem,
+): IAttributeFilterPresentation {
+    const localIdentifier = dashboardAttributeFilterItemLocalIdentifier(filter);
+    const config = localIdentifier
+        ? tab.attributeFilterConfigs?.attributeFilterConfigs?.find(
+              (item) => item.localIdentifier === localIdentifier,
+          )
+        : undefined;
+    return {
+        displayAsLabel: config?.displayAsLabel ?? dashboardAttributeFilterItemDisplayForm(filter),
+        selectionType: effectiveSelectionTypeOf(config?.selectionType, filter),
+        isSingleSelection: isDashboardAttributeFilter(filter) && isSingleSelectionFilter(filter),
+    };
+}
+
+/**
+ * Attribute filters sync only when they show the same label, accept the same selection type
+ * and both select either a single value or multiple values.
+ */
+function samePresentation(
+    left: IAttributeFilterPresentation,
+    right: IAttributeFilterPresentation,
+    displayForms: IAttributeDisplayFormMetadataObject[],
+): boolean {
+    return (
+        left.selectionType === right.selectionType &&
+        left.isSingleSelection === right.isSingleSelection &&
+        displayFormsEquivalent(left.displayAsLabel, right.displayAsLabel, displayForms)
+    );
 }
 
 function findDateCounterpart(

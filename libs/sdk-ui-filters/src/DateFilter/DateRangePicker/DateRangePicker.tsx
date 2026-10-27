@@ -60,7 +60,7 @@ const useCalendarPopup = () => {
         (e: KeyboardEvent<HTMLInputElement>) => {
             if (isOpen && (e.key === "Escape" || e.key === "Tab")) {
                 setIsOpen(false);
-                e.stopPropagation(); // prevent closing of the dropdown when just the calendar should close
+                e.stopPropagation(); // only the calendar closes, the form stays open
             }
         },
         [isOpen],

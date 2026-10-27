@@ -20,8 +20,9 @@ import {
 } from "../from/declarativeDashboardToYaml.js";
 import { yamlFilterContextToDeclarative } from "../to/yamlDashboardToDeclarative.js";
 
-import { CoreErrorCode, type IErrorContext, newError } from "./errors.js";
+import { CoreErrorCode, type IErrorContext, newError, updateErrorContext } from "./errors.js";
 import { referencesAsStored, referencesAsWritten } from "./publisherFilterRefs.js";
+import { assertPublisherGranularityV2 } from "./publisherPeriodV2.js";
 import { createFilterContextItemKeyName } from "./yamlUtils.js";
 
 /**
@@ -95,6 +96,17 @@ function lostSettings(filter: object, holder: PublisherFilterHolderV2): string[]
     }
 }
 
+// The dashboard reader stores WEEK as GDC.time.week, which v2 does not store; WEEK_US is the same week.
+function withStoredWeek(filter: FilterContextItem): FilterContextItem {
+    if (!isDashboardDateFilter(filter)) {
+        return filter;
+    }
+    const granularity: string = filter.dateFilter.granularity;
+    return granularity === "GDC.time.week"
+        ? { dateFilter: { ...filter.dateFilter, granularity: "GDC.time.week_us" } }
+        : filter;
+}
+
 /**
  * Reads a v2 filter list. A setting the v2 shape has nowhere to keep throws instead of being dropped.
  *
@@ -111,9 +123,15 @@ export function filtersToDeclarativeV2(
         if (lost !== undefined) {
             throw newError(CoreErrorCode.FilterSettingNotStorable, [key, lost, holder], errorContext);
         }
+        const granularity = setting(filter, "granularity");
+        if (filter.type === "date_filter" && granularity != null) {
+            assertPublisherGranularityV2(granularity, updateErrorContext(errorContext, { path: [key] }));
+        }
     }
     const { filterContext, attributeFilterConfigs } = yamlFilterContextToDeclarative("document", filters);
-    const read = (filterContext.content as IFilterContextDefinition | undefined)?.filters ?? [];
+    const read = ((filterContext.content as IFilterContextDefinition | undefined)?.filters ?? []).map(
+        withStoredWeek,
+    );
     const missing = entries.find(
         ([key]) => !read.some((filter) => dashboardFilterLocalIdentifier(filter) === key),
     );

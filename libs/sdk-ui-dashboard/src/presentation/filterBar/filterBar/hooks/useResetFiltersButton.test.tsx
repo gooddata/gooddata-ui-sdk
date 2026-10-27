@@ -98,7 +98,10 @@ describe("useResetFiltersButton", () => {
         });
 
         expect(mockDispatch).toHaveBeenCalledWith(
-            changeParameterValues({ parameters: [{ ref: topNRef, value: 10 }] }),
+            changeParameterValues({
+                parameters: [{ ref: topNRef, value: 10 }],
+                restorePerTabOriginals: true,
+            }),
         );
         expect(mockDispatch.mock.calls.map(([action]) => action.type)).not.toContain(
             "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION",

@@ -30,7 +30,7 @@ const consumerImporter: sass.Importer<"sync"> = {
 
 /**
  * Mirrors an app entry point that pulls several SDK stylesheets in through legacy `@import` —
- * libs/gdc-ldm-modeler-runtime/src/styles/app.scss does exactly this for ~20 SDK packages.
+ * libs/gdc-ldm-modeler/src/styles/app.scss does exactly this for ~20 SDK packages.
  */
 const ENTRY_SCSS = `
 @import "button";

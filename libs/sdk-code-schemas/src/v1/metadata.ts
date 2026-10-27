@@ -14226,6 +14226,7 @@ export interface PublisherRelativePeriodV2 {
         | "MINUTE"
         | "HOUR"
         | "DAY"
+        | "WEEK"
         | "WEEK_US"
         | "MONTH"
         | "QUARTER"

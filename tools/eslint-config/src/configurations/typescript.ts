@@ -35,6 +35,7 @@ const v9Common = {
 export const typescript: IDualConfiguration<"@typescript-eslint" | "no-restricted-syntax", ""> = {
     v8: {
         packages,
+        plugins: ["@typescript-eslint"],
         overrides: [
             {
                 files: typescriptOverrideFiles,

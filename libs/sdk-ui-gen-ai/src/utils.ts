@@ -47,7 +47,7 @@ export function getDashboardHref(
     }
     return useHostedDashboards
         ? `/workspace/${wsId}/dashboards/#/dashboard/${dasId}/tab/defaultTabId`
-        : `/dashboards/#/workspace/${wsId}/${dasId}/tab/defaultTabId`;
+        : `/dashboards/#/workspace/${wsId}/dashboard/${dasId}/tab/defaultTabId`;
 }
 
 // Encoded like the Publisher app's own route builder, so an id with a slash stays one segment.

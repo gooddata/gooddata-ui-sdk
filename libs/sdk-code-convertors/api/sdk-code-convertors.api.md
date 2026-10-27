@@ -1319,6 +1319,8 @@ export enum CoreErrorCode {
     // (undocumented)
     LayerTypeNotSupported = "core.layerTypeNotSupported",
     // (undocumented)
+    MissingRequiredKey = "core.missingRequiredKey",
+    // (undocumented)
     MultipleCommonDateFilters = "core.multipleCommonDateFilters",
     // (undocumented)
     MultipleDateDataSets = "core.multipleDateDataSets",
@@ -1336,6 +1338,8 @@ export enum CoreErrorCode {
     TabsAndRootContentMutuallyExclusive = "core.tabsAndRootContentMutuallyExclusive",
     // (undocumented)
     UnsupportedContentVersion = "core.unsupportedContentVersion",
+    // (undocumented)
+    UnsupportedGranularity = "core.unsupportedGranularity",
     // (undocumented)
     VisualizationNotSupported = "core.visualizationNotSupported"
 }

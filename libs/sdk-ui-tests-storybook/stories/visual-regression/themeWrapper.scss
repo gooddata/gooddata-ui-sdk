@@ -10,3 +10,15 @@ body:has(.theme-wrapper) {
         transition: none !important;
     }
 }
+
+.no-animations,
+body:has(.no-animations) {
+    *,
+    ::before,
+    ::after {
+        // stylelint-disable-next-line declaration-no-important
+        transition: none !important;
+        // stylelint-disable-next-line declaration-no-important
+        animation: none !important;
+    }
+}

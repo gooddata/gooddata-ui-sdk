@@ -2,9 +2,9 @@
 
 import { isEqual } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
-import { call, put, select } from "redux-saga/effects";
+import { type SagaReturnType, call, select } from "redux-saga/effects";
 
-import { type IInsightParameterValue } from "@gooddata/sdk-model";
+import { type IInsightParameterValue, areObjRefsEqual } from "@gooddata/sdk-model";
 
 import { type IDashboardCommand } from "../../commands/base.js";
 import { type IChangeParameterValues } from "../../commands/parameters.js";
@@ -13,13 +13,19 @@ import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { selectEnableParameters } from "../../store/config/configSelectors.js";
 import { selectEnablePersistentFiltersAcrossTabs } from "../../store/meta/metaSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
-import { selectParameterValuesByTab } from "../../store/tabs/parameters/parametersSelectors.js";
+import {
+    selectDashboardParametersByTab,
+    selectParameterResetTargetsByTab,
+    selectParameterValuesByTab,
+} from "../../store/tabs/parameters/parametersSelectors.js";
 import { selectActiveOrDefaultTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+import { type ITabSyncSession, beginTabSync, putTabSynced } from "../filterContext/tabSync/tabSyncSaga.js";
 
 /**
  * Parameters not present on a written tab are ignored by the reducer. When persistent filters
- * across tabs are on, the same values are written to every tab. A change event is emitted for
+ * across tabs are on, the same values are written to every tab, or with `restorePerTabOriginals`
+ * every other tab resets them to its own reset values. A change event is emitted for
  * each tab whose applied values differ from the snapshot, source tab first.
  *
  * @internal
@@ -33,22 +39,58 @@ export function* changeParameterValuesHandler(
         return;
     }
 
-    const tabId: string =
-        cmd.payload.tabLocalIdentifier ?? (yield select(selectActiveOrDefaultTabLocalIdentifier));
-    const enablePersistentFiltersAcrossTabs: ReturnType<typeof selectEnablePersistentFiltersAcrossTabs> =
-        yield select(selectEnablePersistentFiltersAcrossTabs);
+    const { parameters, tabLocalIdentifier, restorePerTabOriginals } = cmd.payload;
+    const tabId: string = tabLocalIdentifier ?? (yield select(selectActiveOrDefaultTabLocalIdentifier));
     const valuesBefore: ReturnType<typeof selectParameterValuesByTab> =
         yield select(selectParameterValuesByTab);
+    const session: ITabSyncSession = yield call(beginTabSync, {
+        tabLocalIdentifier,
+        enabled: !restorePerTabOriginals,
+    });
+    const restoreActions: SagaReturnType<typeof getOtherTabsParameterResetActions> = restorePerTabOriginals
+        ? yield call(getOtherTabsParameterResetActions, tabId)
+        : [];
 
-    yield put(
-        tabsActions.setParameterRuntimeValues({
-            values: cmd.payload.parameters,
-            tabLocalIdentifier: cmd.payload.tabLocalIdentifier,
-            enablePersistentFiltersAcrossTabs,
-        }),
-    );
+    yield call(putTabSynced, session, [
+        tabsActions.setParameterRuntimeValues({ values: parameters, tabLocalIdentifier }),
+        ...restoreActions,
+    ]);
 
     yield call(dispatchParametersChangedForAffectedTabs, ctx, cmd, valuesBefore, tabId);
+}
+
+/**
+ * When filters persist across tabs, every other tab resets the parameters that `sourceTabId` defines
+ * to its own reset values.
+ */
+function* getOtherTabsParameterResetActions(
+    sourceTabId: string,
+): SagaIterator<ReturnType<typeof tabsActions.setParameterRuntimeValues>[]> {
+    const persistAcrossTabs: ReturnType<typeof selectEnablePersistentFiltersAcrossTabs> = yield select(
+        selectEnablePersistentFiltersAcrossTabs,
+    );
+    if (!persistAcrossTabs) {
+        return [];
+    }
+    const parametersByTab: ReturnType<typeof selectDashboardParametersByTab> = yield select(
+        selectDashboardParametersByTab,
+    );
+    const resetTargetsByTab: ReturnType<typeof selectParameterResetTargetsByTab> = yield select(
+        selectParameterResetTargetsByTab,
+    );
+    const sourceParameters = parametersByTab[sourceTabId] ?? [];
+
+    return Object.entries(resetTargetsByTab).flatMap(([tabLocalIdentifier, targets]) => {
+        if (tabLocalIdentifier === sourceTabId) {
+            return [];
+        }
+        const values = targets.filter((target) =>
+            sourceParameters.some((parameter) => areObjRefsEqual(parameter.ref, target.ref)),
+        );
+        return values.length > 0
+            ? [tabsActions.setParameterRuntimeValues({ values, tabLocalIdentifier })]
+            : [];
+    });
 }
 
 /**

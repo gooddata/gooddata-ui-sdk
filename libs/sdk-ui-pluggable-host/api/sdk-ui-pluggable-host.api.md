@@ -36,6 +36,9 @@ export class HostErrorBoundary extends Component<IHostErrorBoundaryProps, IHostE
     state: IHostErrorBoundaryState;
 }
 
+// @internal (undocumented)
+export function HostIntlProvider(input: IHostIntlProviderProps): JSX.Element;
+
 // @alpha (undocumented)
 export interface IAppLifecycleCallbacks {
     // (undocumented)
@@ -90,6 +93,31 @@ export interface IHostErrorBoundaryState {
     resetKey?: string | number;
 }
 
+// @internal (undocumented)
+export interface IHostIntlProviderProps {
+    // (undocumented)
+    additionalMessages?: Record<string, string>;
+    // (undocumented)
+    children: ReactNode;
+    // (undocumented)
+    locale: ILocale;
+}
+
+// @internal (undocumented)
+export interface ILanguageDialogProps extends ILanguages {
+    // (undocumented)
+    onClose: () => void;
+}
+
+// @internal (undocumented)
+export interface ILanguages {
+    currentLanguage: ILocale | undefined;
+    defaultLanguage: ILocale;
+    deleteLanguage: () => Promise<void>;
+    languages: ILocale[];
+    setLanguage: (language: ILocale) => Promise<void>;
+}
+
 // @alpha (undocumented)
 export interface ILegacyLocation {
     // (undocumented)
@@ -134,6 +162,9 @@ export interface IVersionWatcherOptions {
     onNewDeployment: (newHash: string) => void;
     url: string;
 }
+
+// @internal
+export function LanguageDialog(input: ILanguageDialogProps): JSX.Element;
 
 // @alpha (undocumented)
 export type LocalPluggableApplicationLoader = () => Promise<{

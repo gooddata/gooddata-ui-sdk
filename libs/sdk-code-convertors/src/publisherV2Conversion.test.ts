@@ -13,6 +13,7 @@ import {
     type IPublisherDocumentPageV2,
     type ObjRef,
     type PublisherLayoutNodeV2,
+    getDateFilterGranularities,
     idRef,
     uriRef,
 } from "@gooddata/sdk-model";
@@ -554,22 +555,157 @@ describe("v2 Publisher entities as code: what the convertor rejects", () => {
         expect(thrownCode(write)).toBe(CoreErrorCode.ReferenceTypeNotSupported);
     });
 
-    it.each([2, "3", undefined])("rejects as-code version %s", (version) => {
-        const written = { ...declarativePublisherDocumentToYamlV2(northwind).json, version };
+    describe("a version it does not know", () => {
+        function withVersion<T extends { version: string }>(entity: T, version: unknown) {
+            return { ...entity, version };
+        }
 
-        expect(
-            thrownCode(() => yamlPublisherDocumentToDeclarativeV2(written as AacPublisherDocumentV2)),
-        ).toBe(CoreErrorCode.UnsupportedContentVersion);
-    });
+        function withoutVersion<T extends { version: string }>({ version: _, ...rest }: T) {
+            return rest;
+        }
 
-    it("rejects a stored version it does not know", () => {
-        const stored = { ...northwind, version: "3" };
+        const writtenDocument = declarativePublisherDocumentToYamlV2(northwind).json;
+        const tooLong = "9".repeat(100);
+        const selfReferencing: Record<string, unknown> = {};
+        selfReferencing["self"] = selfReferencing;
 
-        expect(
-            thrownCode(() =>
-                declarativePublisherDocumentToYamlV2(stored as unknown as DeclarativePublisherDocumentV2),
-            ),
-        ).toBe(CoreErrorCode.UnsupportedContentVersion);
+        it.each([
+            {
+                name: "the number 2",
+                written: withVersion(writtenDocument, 2),
+                code: CoreErrorCode.UnsupportedContentVersion,
+                message: 'Expected "2", got 2. in: version',
+            },
+            {
+                name: "another version",
+                written: withVersion(writtenDocument, "3"),
+                code: CoreErrorCode.UnsupportedContentVersion,
+                message: 'Expected "2", got "3". in: version',
+            },
+            {
+                name: "a null version",
+                written: withVersion(writtenDocument, null),
+                code: CoreErrorCode.UnsupportedContentVersion,
+                message: 'Expected "2", got null. in: version',
+            },
+            {
+                name: "an array as the version",
+                written: withVersion(writtenDocument, ["2"]),
+                code: CoreErrorCode.UnsupportedContentVersion,
+                message: 'Expected "2", got an array. in: version',
+            },
+            {
+                name: "a version longer than 80 characters",
+                written: withVersion(writtenDocument, tooLong),
+                code: CoreErrorCode.UnsupportedContentVersion,
+                message: `Expected "2", got "${"9".repeat(78)}…. in: version`,
+            },
+            {
+                name: "a bigint as the version",
+                written: withVersion(writtenDocument, 2n),
+                code: CoreErrorCode.UnsupportedContentVersion,
+                message: 'Expected "2", got a bigint. in: version',
+            },
+            {
+                name: "a version that refers to itself",
+                written: withVersion(writtenDocument, selfReferencing),
+                code: CoreErrorCode.UnsupportedContentVersion,
+                message: 'Expected "2", got an object. in: version',
+            },
+            {
+                name: "NaN as the version",
+                written: withVersion(writtenDocument, Number.NaN),
+                code: CoreErrorCode.UnsupportedContentVersion,
+                message: 'Expected "2", got NaN. in: version',
+            },
+            {
+                name: "Infinity as the version",
+                written: withVersion(writtenDocument, Number.POSITIVE_INFINITY),
+                code: CoreErrorCode.UnsupportedContentVersion,
+                message: 'Expected "2", got Infinity. in: version',
+            },
+            {
+                name: "-Infinity as the version",
+                written: withVersion(writtenDocument, Number.NEGATIVE_INFINITY),
+                code: CoreErrorCode.UnsupportedContentVersion,
+                message: 'Expected "2", got -Infinity. in: version',
+            },
+            {
+                name: "no version",
+                written: withoutVersion(writtenDocument),
+                code: CoreErrorCode.MissingRequiredKey,
+                message: 'Missing required key "version". in: version',
+            },
+        ])("says what is wrong with a document written with $name", ({ written, code, message }) => {
+            const error = thrown(() =>
+                yamlPublisherDocumentToDeclarativeV2(written as AacPublisherDocumentV2),
+            );
+
+            expect(error?.code).toBe(code);
+            expect(error?.message).toBe(message);
+        });
+
+        it.each([
+            {
+                kind: "document",
+                direction: "read",
+                convert: () =>
+                    yamlPublisherDocumentToDeclarativeV2(
+                        withVersion(writtenDocument, "3") as AacPublisherDocumentV2,
+                    ),
+            },
+            {
+                kind: "document",
+                direction: "written",
+                convert: () =>
+                    declarativePublisherDocumentToYamlV2(
+                        withVersion(northwind, "3") as DeclarativePublisherDocumentV2,
+                    ),
+            },
+            {
+                kind: "document template",
+                direction: "read",
+                convert: () =>
+                    yamlPublisherDocumentTemplateToDeclarativeV2(
+                        withVersion(
+                            declarativePublisherDocumentTemplateToYamlV2(quarterlyTemplate).json,
+                            "3",
+                        ) as AacPublisherDocumentTemplateV2,
+                    ),
+            },
+            {
+                kind: "document template",
+                direction: "written",
+                convert: () =>
+                    declarativePublisherDocumentTemplateToYamlV2(
+                        withVersion(quarterlyTemplate, "3") as DeclarativePublisherDocumentTemplateV2,
+                    ),
+            },
+            {
+                kind: "page template",
+                direction: "read",
+                convert: () =>
+                    yamlPublisherPageTemplateToDeclarativeV2(
+                        withVersion(
+                            declarativePublisherPageTemplateToYamlV2(everyWidget).json,
+                            "3",
+                        ) as AacPublisherPageTemplateV2,
+                    ),
+            },
+            {
+                kind: "page template",
+                direction: "written",
+                convert: () =>
+                    declarativePublisherPageTemplateToYamlV2(
+                        withVersion(everyWidget, "3") as DeclarativePublisherPageTemplateV2,
+                    ),
+            },
+        ])("checks the version of a $kind when it is $direction", ({ convert }) => {
+            const error = thrown(convert);
+
+            expect(error?.code).toBe(CoreErrorCode.UnsupportedContentVersion);
+            expect(error?.message).toBe('Expected "2", got "3". in: version');
+        });
     });
 
     describe("a layout node of a type it does not know", () => {
@@ -771,7 +907,7 @@ describe("v2 Publisher entities as code: what the convertor rejects", () => {
         const error = thrown(() => yamlPublisherDocumentToDeclarativeV2(written));
 
         expect(error?.code).toBe(CoreErrorCode.ItemNotSupported);
-        expect(error?.context?.path).toEqual(["content", "pages", "p"]);
+        expect(error?.context?.path).toEqual(["content", "pages", "p", "filters"]);
     });
 
     it("rejects a YAML all-time page date filter the dashboard writer would skip", () => {
@@ -789,7 +925,7 @@ describe("v2 Publisher entities as code: what the convertor rejects", () => {
         };
 
         expect(thrown(() => yamlPublisherDocumentToDeclarativeV2(written))?.message).toBe(
-            "Item is not supported. Item: d in: content/pages/p",
+            "Item is not supported. Item: d in: content/pages/p/filters",
         );
     });
 
@@ -801,9 +937,10 @@ describe("v2 Publisher entities as code: what the convertor rejects", () => {
             },
         };
 
-        expect(thrownCode(() => yamlPublisherPageTemplateToDeclarativeV2(written))).toBe(
-            CoreErrorCode.ReferenceTypeNotSupported,
-        );
+        const error = thrown(() => yamlPublisherPageTemplateToDeclarativeV2(written));
+
+        expect(error?.code).toBe(CoreErrorCode.ReferenceTypeNotSupported);
+        expect(error?.context?.path).toEqual(["content", "widget1", "ignored_filters"]);
     });
 
     it.each([
@@ -954,5 +1091,246 @@ describe("v2 Publisher filters as code: the normal form", () => {
         );
 
         expect(content.attributeFilterConfigs).toBeUndefined();
+    });
+});
+
+describe("v2 Publisher granularities as code", () => {
+    const allowed =
+        "SECOND, MINUTE, HOUR, DAY, WEEK, WEEK_US, MONTH, QUARTER, YEAR, FISCAL_YEAR, FISCAL_QUARTER, FISCAL_MONTH";
+    const writtenDocument = declarativePublisherDocumentToYamlV2(monthlyReview).json;
+    const writtenTemplate = declarativePublisherDocumentTemplateToYamlV2(quarterlyTemplate).json;
+
+    function relativeFilter(granularity: unknown) {
+        return { week: { type: "date_filter", date: "order_date", granularity, from: -1, to: -1 } };
+    }
+
+    function documentWith(granularity: unknown): AacPublisherDocumentV2 {
+        return { ...writtenDocument, period: { granularity, from: -1, to: -1 } } as AacPublisherDocumentV2;
+    }
+
+    function templateWith(granularity: unknown): AacPublisherDocumentTemplateV2 {
+        return {
+            ...writtenTemplate,
+            content: { ...writtenTemplate.content, defaults: { period: { granularity, from: -1, to: -1 } } },
+        } as AacPublisherDocumentTemplateV2;
+    }
+
+    function documentFilterWith(granularity: unknown): AacPublisherDocumentV2 {
+        return {
+            ...writtenDocument,
+            content: { ...writtenDocument.content, filters: relativeFilter(granularity) },
+        } as AacPublisherDocumentV2;
+    }
+
+    function pageFilterWith(granularity: unknown): AacPublisherDocumentV2 {
+        return {
+            ...writtenDocument,
+            content: {
+                pages: [
+                    { id: "p", layout: { type: "row", children: [] }, filters: relativeFilter(granularity) },
+                ],
+            },
+        } as AacPublisherDocumentV2;
+    }
+
+    function pageTemplateFilterWith(granularity: unknown): AacPublisherPageTemplateV2 {
+        const written = declarativePublisherPageTemplateToYamlV2(everyWidget).json;
+        return {
+            ...written,
+            content: { layout: { type: "row", children: [] }, filters: relativeFilter(granularity) },
+        } as AacPublisherPageTemplateV2;
+    }
+
+    function widgetFilterWith(granularity: unknown): AacPublisherDocumentV2 {
+        const widget = { type: "visualization", id: "chart", filters: relativeFilter(granularity) };
+        return {
+            ...writtenDocument,
+            content: { pages: [{ id: "p", layout: { type: "row", children: [widget] } }] },
+        } as AacPublisherDocumentV2;
+    }
+
+    function asDocument(granularity: unknown, written: (granularity: unknown) => AacPublisherDocumentV2) {
+        const stored = yamlPublisherDocumentToDeclarativeV2(written(granularity));
+        return {
+            stored,
+            issues: validateDeclarativePublisherEntityV2(stored, "document"),
+            rewritten: declarativePublisherDocumentToYamlV2(stored).json,
+        };
+    }
+
+    const periodHolders = [
+        {
+            name: "the period",
+            read: (g: unknown) => asDocument(g, documentWith),
+            path: "period/granularity",
+        },
+        {
+            name: "a template's default period",
+            read: (g: unknown) => {
+                const stored = yamlPublisherDocumentTemplateToDeclarativeV2(templateWith(g));
+                return {
+                    stored,
+                    issues: validateDeclarativePublisherEntityV2(stored, "documentTemplate"),
+                    rewritten: declarativePublisherDocumentTemplateToYamlV2(stored).json,
+                };
+            },
+            path: "content/defaults/period/granularity",
+        },
+    ];
+
+    const filterHolders = [
+        {
+            name: "a document date filter",
+            read: (g: unknown) => asDocument(g, documentFilterWith),
+            path: "content/filters/week/granularity",
+        },
+        {
+            name: "a document page date filter",
+            read: (g: unknown) => asDocument(g, pageFilterWith),
+            path: "content/pages/p/filters/week/granularity",
+        },
+        {
+            name: "a page template date filter",
+            read: (g: unknown) => {
+                const stored = yamlPublisherPageTemplateToDeclarativeV2(pageTemplateFilterWith(g));
+                return {
+                    stored,
+                    issues: validateDeclarativePublisherEntityV2(stored, "pageTemplate"),
+                    rewritten: declarativePublisherPageTemplateToYamlV2(stored).json,
+                };
+            },
+            path: "content/filters/week/granularity",
+        },
+        {
+            name: "a widget date filter",
+            read: (g: unknown) => asDocument(g, widgetFilterWith),
+            path: "content/pages/p/chart/filters/week/granularity",
+        },
+    ];
+
+    const holders = [...periodHolders, ...filterHolders];
+
+    function granularitiesIn(value: unknown): unknown[] {
+        if (typeof value !== "object" || value === null) {
+            return [];
+        }
+        const nested = Object.values(value).flatMap(granularitiesIn);
+        return "granularity" in value ? [value.granularity, ...nested] : nested;
+    }
+
+    it.each(holders)(
+        "stores WEEK in $name as the US week, which the stored validator accepts",
+        ({ read }) => {
+            const { stored, issues } = read("WEEK");
+
+            expect(granularitiesIn(stored)).toContain("GDC.time.week_us");
+            expect(granularitiesIn(stored)).not.toContain("GDC.time.week");
+            expect(issues).toEqual([]);
+        },
+    );
+
+    it.each(holders)("writes WEEK in $name back as WEEK_US", ({ read }) => {
+        const { rewritten } = read("WEEK");
+
+        expect(granularitiesIn(rewritten)).toContain("WEEK_US");
+        expect(granularitiesIn(rewritten)).not.toContain("WEEK");
+    });
+
+    it.each(holders)("round-trips WEEK_US in $name", ({ read }) => {
+        const { stored, issues, rewritten } = read("WEEK_US");
+
+        expect(granularitiesIn(stored)).toContain("GDC.time.week_us");
+        expect(issues).toEqual([]);
+        expect(granularitiesIn(rewritten)).toContain("WEEK_US");
+    });
+
+    it.each(holders)("rejects a granularity no date filter has in $name", ({ read, path }) => {
+        const error = thrown(() => read("FORTNIGHT"));
+
+        expect(error?.code).toBe(CoreErrorCode.UnsupportedGranularity);
+        expect(error?.message).toBe(
+            `Granularity "FORTNIGHT" is not supported. Supported granularities: ${allowed}. in: ${path}`,
+        );
+    });
+
+    it.each(filterHolders)("reads an empty granularity in $name as DAY, as dashboards do", ({ read }) => {
+        const { stored, issues } = read(null);
+
+        expect(stored).toEqual(read("DAY").stored);
+        expect(issues).toEqual([]);
+    });
+
+    it.each(getDateFilterGranularities({ calendars: [{ type: "standard" }, { type: "fiscal" }] }))(
+        "round-trips a %s period",
+        (granularity) => {
+            const stored = {
+                ...monthlyReview,
+                period: { type: "relative", granularity, from: -1, to: -1 },
+            } as const;
+
+            const read = yamlPublisherDocumentToDeclarativeV2(
+                declarativePublisherDocumentToYamlV2(stored).json,
+            );
+
+            expect(read.period).toEqual(stored.period);
+        },
+    );
+
+    it("stores WEEK in an absolute document date filter as the US week", () => {
+        const written = {
+            ...writtenDocument,
+            content: {
+                ...writtenDocument.content,
+                filters: {
+                    week: {
+                        type: "date_filter",
+                        date: "order_date",
+                        granularity: "WEEK",
+                        from: "2026-01-05",
+                        to: "2026-01-11",
+                    },
+                },
+            },
+        } as AacPublisherDocumentV2;
+
+        const stored = yamlPublisherDocumentToDeclarativeV2(written);
+
+        expect(granularitiesIn(stored)).toContain("GDC.time.week_us");
+        expect(granularitiesIn(stored)).not.toContain("GDC.time.week");
+        expect(validateDeclarativePublisherEntityV2(stored, "document")).toEqual([]);
+    });
+
+    it("checks the granularity of date filters only", () => {
+        const written = {
+            ...writtenDocument,
+            content: {
+                ...writtenDocument.content,
+                filters: {
+                    region: { type: "attribute_filter", using: "label/region", granularity: "FORTNIGHT" },
+                },
+            },
+        } as AacPublisherDocumentV2;
+
+        expect(yamlPublisherDocumentToDeclarativeV2(written).content.filters).toHaveLength(1);
+    });
+
+    const selfReferencing: Record<string, unknown> = {};
+    selfReferencing["self"] = selfReferencing;
+
+    it.each([
+        { name: "a number", granularity: 7, described: "7" },
+        { name: "NaN", granularity: Number.NaN, described: "NaN" },
+        { name: "a bigint", granularity: 2n, described: "a bigint" },
+        { name: "null", granularity: null, described: "null" },
+        { name: "an array", granularity: ["MONTH"], described: "an array" },
+        { name: "an object", granularity: { month: 1 }, described: '{"month":1}' },
+        { name: "an object that refers to itself", granularity: selfReferencing, described: "an object" },
+        { name: "a long string", granularity: "W".repeat(100), described: `"${"W".repeat(78)}…` },
+    ])("describes $name written as the granularity", ({ granularity, described }) => {
+        const error = thrown(() => yamlPublisherDocumentToDeclarativeV2(documentWith(granularity)));
+
+        expect(error?.message).toBe(
+            `Granularity ${described} is not supported. Supported granularities: ${allowed}. in: period/granularity`,
+        );
     });
 });

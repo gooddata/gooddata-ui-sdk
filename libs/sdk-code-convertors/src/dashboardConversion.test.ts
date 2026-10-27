@@ -48,6 +48,16 @@ describe("dashboard conversion", () => {
             expect((result.filterContext.content as any).filters.length).toBeGreaterThan(0);
         });
 
+        it("stores WEEK in a date filter as GDC.time.week", () => {
+            const filters = {
+                week: { type: "date_filter", granularity: "WEEK", from: -1, to: -1 },
+            } as Dashboard["filters"];
+
+            const result = yamlFilterContextToDeclarative("dash1", filters);
+
+            expect(JSON.stringify(result.filterContext.content)).toContain('"granularity":"GDC.time.week"');
+        });
+
         it("should convert dashboard text filters", () => {
             const filters = {
                 date_common: {

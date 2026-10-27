@@ -41,6 +41,28 @@ function Listbox({
 }
 
 describe("UiPagedVirtualList", () => {
+    it.each(["list", "listbox", "grid"] as const)(
+        "does not suppress native scroll-container focus for a standalone %s",
+        (representAs) => {
+            render(
+                <UiPagedVirtualList
+                    maxHeight={100}
+                    items={manyItems}
+                    itemHeight={20}
+                    itemsGap={0}
+                    itemPadding={0}
+                    skeletonItemsCount={0}
+                    representAs={representAs}
+                >
+                    {(item) => <span>{item}</span>}
+                </UiPagedVirtualList>,
+            );
+            const list = screen.getByRole(representAs === "grid" ? "rowgroup" : representAs);
+            expect(list.parentElement).not.toHaveAttribute("tabindex");
+            expect(list.getAttribute("tabindex")).toBe(representAs === "list" ? null : "0");
+        },
+    );
+
     it("points aria-activedescendant at the keyboard-active option and moves it with the arrows", () => {
         render(<Listbox />);
 
@@ -78,4 +100,27 @@ describe("UiPagedVirtualList", () => {
 
         expect(screen.getByRole("listbox")).not.toHaveAttribute("aria-activedescendant");
     });
+});
+
+it("keeps a parent-managed active row mounted outside the virtual window", () => {
+    render(
+        <UiPagedVirtualList
+            maxHeight={100}
+            items={manyItems}
+            itemHeight={20}
+            itemsGap={0}
+            itemPadding={0}
+            skeletonItemsCount={0}
+            tabIndex={-1}
+            focusedItem={manyItems[49]}
+            representAs="grid"
+        >
+            {(item) => <div role="row">{item}</div>}
+        </UiPagedVirtualList>,
+    );
+    const rowgroup = screen.getByRole("rowgroup");
+    expect(screen.getByText("Row 49")).toBeInTheDocument();
+    expect(rowgroup).toHaveAttribute("tabindex", "-1");
+    expect(rowgroup).not.toHaveAttribute("aria-activedescendant");
+    expect(rowgroup.parentElement).toHaveAttribute("tabindex", "-1");
 });

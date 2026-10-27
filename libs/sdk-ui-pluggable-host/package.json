@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-pluggable-host",
-    "version": "11.65.0-alpha.8",
+    "version": "11.65.0-alpha.9",
     "description": "GoodData SDK runtime for hosting pluggable applications — registry, loader, routing, platform context, default UI chrome",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -25,7 +25,10 @@
     ],
     "browser": "./esm/index.js",
     "types": "./esm/index.d.ts",
-    "exports": "./esm/index.js",
+    "exports": {
+        ".": "./esm/index.js",
+        "./internal": "./esm/internal.js"
+    },
     "scripts": {
         "_phase:build": "npm run build",
         "_phase:test": "npm run test-once",

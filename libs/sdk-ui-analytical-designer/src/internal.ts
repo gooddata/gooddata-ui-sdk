@@ -8,7 +8,8 @@
 export { Root } from "./Root.js";
 export { store, startSagas, subscribeControls, sagaMiddleware } from "./reduxStore.js";
 export { getHelpMenuItems, getTranslatedHelpMenuItemsForLocale } from "./utils/appHeader.js";
-export { type IApiToken, reinitializeBackend } from "./backend.js";
+export { type IAdHostBackend, type IApiToken, adoptHostBackend, resetBackend } from "./backend.js";
+export { emitApiTokenIsAboutToExpire } from "./postMessageApi/outgoing/set_api_token_events.js";
 export { workspacePermissionsSuccess } from "./actions/permissions_actions.js";
 export { setEmbedded } from "./actions/embedded_actions.js";
 export { resetForPluggableMount } from "./actions/reset_for_pluggable_mount_actions.js";
@@ -33,7 +34,6 @@ export {
     clearHostTelemetryCallbacks,
 } from "./services/telemetry/tracking_events.js";
 export {
-    platformContextAuthExternalProviderId,
     platformContextAuthToApiToken,
     platformContextToBootstrapData,
 } from "./embedding/platformContext.js";
