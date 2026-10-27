@@ -508,6 +508,256 @@ describe("visualisation conversion", () => {
         });
     });
 
+    describe("empty date values", () => {
+        type EmittedDateFilter = {
+            empty_values?: string;
+            granularity?: string;
+            from?: number;
+            with?: Record<string, unknown>;
+        };
+        const createdDataset = { identifier: "created", type: "dataSet" as const };
+        const emptyStringFilter = (localIdentifier?: string) => ({
+            negativeAttributeFilter: {
+                ...(localIdentifier ? { localIdentifier } : {}),
+                displayForm: { identifier: "created.year", type: "displayForm" as const },
+                notIn: { values: [""] },
+            },
+        });
+        const insightFilterBy = (json: unknown) =>
+            (json as { query: { filter_by: Record<string, EmittedDateFilter> } }).query.filter_by;
+        const metricFilterBy = (json: unknown) =>
+            (json as { query: { fields: Record<string, { filter_by: Record<string, EmittedDateFilter> }> } })
+                .query.fields["m1"].filter_by;
+
+        describe("YAML to stored", () => {
+            it("writes empty_values of a relative period as the date filter's emptyValueHandling", () => {
+                const { filters } = yamlFiltersToDeclarative(emptyEntities, {
+                    d1: {
+                        type: "date_filter",
+                        using: "dataset/created",
+                        granularity: "YEAR",
+                        from: -1,
+                        to: 0,
+                        empty_values: "only",
+                    },
+                });
+
+                expect(filters).toEqual([
+                    {
+                        relativeDateFilter: {
+                            dataSet: { identifier: { id: "created", type: "dataset" } },
+                            granularity: "GDC.time.year",
+                            from: -1,
+                            to: 0,
+                            emptyValueHandling: "only",
+                        },
+                    },
+                ]);
+            });
+
+            it("writes empty_values of a static period on the absolute date filter", () => {
+                const { filters } = yamlFiltersToDeclarative(emptyEntities, {
+                    d1: {
+                        type: "date_filter",
+                        using: "dataset/created",
+                        from: "2020-01-01",
+                        to: "2020-12-31",
+                        empty_values: "exclude",
+                    },
+                });
+
+                expect(filters).toEqual([
+                    {
+                        absoluteDateFilter: {
+                            dataSet: { identifier: { id: "created", type: "dataset" } },
+                            from: "2020-01-01",
+                            to: "2020-12-31",
+                            emptyValueHandling: "exclude",
+                        },
+                    },
+                ]);
+            });
+
+            it("writes All time with empty_values as the real All time filter carrying the mode", () => {
+                const { filters } = yamlFiltersToDeclarative(emptyEntities, {
+                    d1: { type: "date_filter", using: "dataset/created", empty_values: "exclude" },
+                });
+
+                expect(filters).toEqual([
+                    {
+                        relativeDateFilter: {
+                            dataSet: { identifier: { id: "created", type: "dataset" } },
+                            granularity: "ALL_TIME_GRANULARITY",
+                            from: 0,
+                            to: 0,
+                            emptyValueHandling: "exclude",
+                        },
+                    },
+                ]);
+            });
+
+            it("keeps All time without empty_values in its bare shape", () => {
+                const { filters } = yamlFiltersToDeclarative(emptyEntities, {
+                    d1: { type: "date_filter", using: "dataset/created" },
+                });
+
+                expect(filters).toEqual([
+                    {
+                        relativeDateFilter: {
+                            dataSet: { identifier: { id: "created", type: "dataset" } },
+                            granularity: "GDC.time.year",
+                        },
+                    },
+                ]);
+            });
+        });
+
+        describe("round trip", () => {
+            it("keeps empty_values on the insight's and on a metric's date filter", () => {
+                const input = visualisation({
+                    type: "bar_chart",
+                    id: "b1",
+                    title: "B",
+                    query: {
+                        fields: {
+                            m1: {
+                                using: "metric/revenue",
+                                filter_by: {
+                                    md: {
+                                        type: "date_filter",
+                                        using: "date/created",
+                                        empty_values: "exclude",
+                                        with: {
+                                            af: { type: "attribute_filter", using: "label/created.month" },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                        filter_by: {
+                            d1: {
+                                type: "date_filter",
+                                using: "date/created",
+                                granularity: "MONTH",
+                                from: -11,
+                                to: 0,
+                                empty_values: "only",
+                            },
+                        },
+                    },
+                    metrics: [{ field: "m1" }],
+                });
+
+                const declarative = yamlVisualisationToDeclarative(emptyEntities, input);
+                const content = declarative.content as VisualisationDefinition;
+                expect(content.filters).toEqual([
+                    expect.objectContaining({
+                        relativeDateFilter: expect.objectContaining({ emptyValueHandling: "only" }),
+                    }),
+                ]);
+
+                const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
+                expect(Object.values(insightFilterBy(json))).toEqual([
+                    expect.objectContaining({ empty_values: "only", from: -11 }),
+                ]);
+                const metricDateFilter = Object.values(metricFilterBy(json))[0];
+                expect(metricDateFilter.empty_values).toBe("exclude");
+                expect(metricDateFilter.granularity).toBeUndefined();
+                expect(Object.keys(metricDateFilter.with ?? {})).toHaveLength(1);
+            });
+        });
+
+        describe("stored to YAML", () => {
+            const stored = (filters: unknown[], measureFilters: unknown[] = []) =>
+                declarative({
+                    id: "b1",
+                    title: "B",
+                    content: {
+                        visualizationUrl: "local:bar",
+                        buckets: [
+                            {
+                                localIdentifier: "measures",
+                                items: [
+                                    {
+                                        measure: {
+                                            localIdentifier: "m1",
+                                            definition: {
+                                                measureDefinition: {
+                                                    item: { identifier: "revenue", type: "measure" },
+                                                    filters: measureFilters,
+                                                },
+                                            },
+                                        },
+                                    },
+                                ],
+                            },
+                        ],
+                        sorts: [],
+                        properties: {},
+                        filters,
+                    },
+                } as FixtureOf<DeclarativeVisualisation>);
+
+            it("still reads the legacy empty string attribute filter of an insight date filter as empty_values", () => {
+                const { json } = declarativeVisualisationToYaml(
+                    emptyFromEntities,
+                    stored([
+                        { relativeDateFilter: { dataSet: createdDataset, granularity: "GDC.time.year" } },
+                        emptyStringFilter(),
+                    ]),
+                );
+
+                const filterBy = insightFilterBy(json);
+                expect(Object.keys(filterBy)).toHaveLength(1);
+                expect(Object.values(filterBy)[0]).toEqual({
+                    type: "date_filter",
+                    using: "created",
+                    empty_values: "exclude",
+                });
+            });
+
+            it("prefers the date filter's emptyValueHandling over the legacy attribute filter", () => {
+                const { json } = declarativeVisualisationToYaml(
+                    emptyFromEntities,
+                    stored([
+                        {
+                            relativeDateFilter: {
+                                dataSet: createdDataset,
+                                granularity: "ALL_TIME_GRANULARITY",
+                                from: 0,
+                                to: 0,
+                                emptyValueHandling: "only",
+                            },
+                        },
+                        emptyStringFilter(),
+                    ]),
+                );
+
+                const filterBy = insightFilterBy(json);
+                expect(Object.keys(filterBy)).toHaveLength(1);
+                expect(Object.values(filterBy)[0]).toMatchObject({ empty_values: "only" });
+                expect(Object.values(filterBy)[0].with).toBeUndefined();
+            });
+
+            it("leaves a metric's empty string attribute filter an ordinary carried filter", () => {
+                const { json } = declarativeVisualisationToYaml(
+                    emptyFromEntities,
+                    stored(
+                        [],
+                        [
+                            { relativeDateFilter: { dataSet: createdDataset, granularity: "GDC.time.year" } },
+                            emptyStringFilter(),
+                        ],
+                    ),
+                );
+
+                const metricDateFilter = Object.values(metricFilterBy(json))[0];
+                expect(metricDateFilter.empty_values).toBeUndefined();
+                expect(Object.keys(metricDateFilter.with ?? {})).toHaveLength(1);
+            });
+        });
+    });
+
     describe("filters a date filter carries", () => {
         // Grouping under a date filter requires the label to belong to that filter's own dataset.
         const CARRIED_LABEL = "label/created.month";

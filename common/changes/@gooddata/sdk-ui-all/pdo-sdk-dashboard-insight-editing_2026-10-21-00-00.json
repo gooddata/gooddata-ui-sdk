@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-dashboard: The alpha `enableInsightEditing` config option opens visualizations in the embedded Analytical Designer from the widget menu, the edit mode panel and the empty visualization list. sdk-ui-dashboard now depends on sdk-ui-analytical-designer, so every app that bundles the dashboard must meet its bundler requirements, also with the option off: webpack needs a loader for the `?worker&url` Monaco worker import, and Vite needs the external worker URL optimizeDeps plugin and the `global` and `process.env` defines. The Analytical Designer README and the dashboard-plugin-template and react-app-template show the setup.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

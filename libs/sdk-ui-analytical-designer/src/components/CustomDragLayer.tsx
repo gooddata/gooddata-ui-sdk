@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 
 import { useDragLayer } from "@evil-internetmann/react-dnd";
-import CustomEvent from "custom-event";
 import { useDispatch } from "react-redux";
 import { type Action, type Dispatch } from "redux";
 

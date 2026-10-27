@@ -18,6 +18,7 @@ import {
     type IScheduleEmailContext,
 } from "../../../types.js";
 import { type IDashboardWidgetOverlay } from "../../types/commonTypes.js";
+import { type InsightEditorTarget } from "../../types/insightEditorTypes.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
 import { selectConfig, selectEnableDashboardDensitySetting } from "../config/configSelectors.js";
 import { selectIsInEditMode } from "../renderMode/renderModeSelectors.js";
@@ -697,4 +698,14 @@ export const selectVisualizationSwitcherActiveVisualizationByWidgetRef: (
     createSelector(selectVisualizationSwitcherActiveVisualizations, (activeVisualizations) => {
         return activeVisualizations[objRefToString(ref)];
     }),
+);
+
+/**
+ * Returns what the embedded Analytical Designer has open, or undefined when it is closed.
+ *
+ * @alpha
+ */
+export const selectInsightEditorTarget: DashboardSelector<InsightEditorTarget | undefined> = createSelector(
+    selectSelf,
+    (state) => state.insightEditorTarget,
 );

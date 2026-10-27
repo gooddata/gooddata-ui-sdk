@@ -240,6 +240,7 @@ const CONFIG_DEFAULTS: Required<
         | "menuButtonItemsVisibility"
         | "allowUnfinishedFeatures"
         | "allowCreateInsightRequest"
+        | "enableInsightEditing"
         | "initialRenderMode"
         | "hideSaveAsNewButton"
         | "hideShareButton"
@@ -261,6 +262,7 @@ const CONFIG_DEFAULTS: Required<
     menuButtonItemsVisibility: {},
     allowUnfinishedFeatures: false,
     allowCreateInsightRequest: false,
+    enableInsightEditing: false,
     initialRenderMode: "view",
     hideSaveAsNewButton: false,
     hideShareButton: false,

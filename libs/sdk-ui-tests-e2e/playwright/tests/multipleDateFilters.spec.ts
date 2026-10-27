@@ -27,7 +27,7 @@ test.describe(
     "Multiple date filters",
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
-        test("should add multiple date filters", { tag: ["@pre-merge-isolated"] }, async ({ page }) => {
+        test("should add multiple date filters", { tag: ["@isolated-default"] }, async ({ page }) => {
             await visit(page, "dashboard/multiple-date-filters");
             await waitChartLoaded(page, widgetSelector(0, 0));
 
@@ -41,7 +41,7 @@ test.describe(
 
         test(
             "should list date filters in the config panel without a date dataset dropdown",
-            { tag: ["@pre-merge-isolated"] },
+            { tag: ["@isolated-default"] },
             async ({ page }) => {
                 await visit(page, "dashboard/multiple-date-filters");
                 await waitChartLoaded(page, widgetSelector(0, 0));
@@ -85,7 +85,7 @@ test.describe(
 
         test(
             "should apply a default selection to a new date filter in edit mode",
-            { tag: ["@pre-merge-isolated"] },
+            { tag: ["@isolated-default"] },
             async ({ page }) => {
                 await visit(page, "dashboard/multiple-date-filters");
                 await waitChartLoaded(page, widgetSelector(0, 0));
@@ -108,7 +108,7 @@ test.describe(
             },
         );
 
-        test("should remove date filters one by one", { tag: ["@pre-merge-isolated"] }, async ({ page }) => {
+        test("should remove date filters one by one", { tag: ["@isolated-default"] }, async ({ page }) => {
             await visit(page, "dashboard/multiple-date-filters");
             await waitChartLoaded(page, widgetSelector(0, 0));
 
@@ -127,7 +127,7 @@ test.describe(
 
         test(
             "(SEPARATE) should keep the date filter after save as new",
-            { tag: ["@pre-merge-isolated"] },
+            { tag: ["@isolated-default"] },
             async ({ page }) => {
                 await visit(page, "dashboard/multiple-date-filters");
                 await waitChartLoaded(page, widgetSelector(0, 0));

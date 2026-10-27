@@ -19,7 +19,7 @@ test.describe(
             test(
                 "should render the dashboard despite an unknown visualization class",
                 {
-                    tag: ["@pre-merge-isolated"],
+                    tag: ["@isolated-default"],
                 },
                 async ({ page }) => {
                     await visit(page, "dashboard/dashboard-tiger-unknown-visualization");

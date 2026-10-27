@@ -14,7 +14,7 @@ test.beforeEach(async ({ page }) => {
 test.describe("Scatter Plot", { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } }, () => {
     test(
         "should group points by segment and customize color",
-        { tag: ["@pre-merge-isolated"] },
+        { tag: ["@isolated-default"] },
         async ({ page }) => {
             await visit(page, "visualizations/scatterplot/segmentation");
             await waitChartComputed(page, ".s-scatter-plot");
@@ -32,7 +32,7 @@ test.describe("Scatter Plot", { additionalWindowProperties: { useSafeLocalIdenti
         },
     );
 
-    test("should group points by segment", { tag: ["@pre-merge-isolated"] }, async ({ page }) => {
+    test("should group points by segment", { tag: ["@isolated-default"] }, async ({ page }) => {
         await visit(page, "visualizations/scatterplot/segmentation-insight-view");
         await waitChartComputed(page, ".s-scatter-plot");
 

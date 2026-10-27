@@ -1,9 +1,7 @@
 // (C) 2026 GoodData Corporation
 
-import MaqlPkg from "@gooddata/maql-antlr4ts";
+import { escapeString } from "@gooddata/maql-antlr4ts";
 import { type IParameterDefinition, isStringParameterDefinition } from "@gooddata/sdk-model";
-
-const { escapeString } = MaqlPkg;
 
 export function parameterTypeLabel(definition: IParameterDefinition): string {
     return definition.type.toLowerCase();

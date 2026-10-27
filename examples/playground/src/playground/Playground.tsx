@@ -21,6 +21,7 @@ export function Playground() {
                     initialRenderMode: dashboardInitialRenderMode ?? "view",
                     mapboxToken: mapboxToken,
                     agGridToken: agGridToken,
+                    enableInsightEditing: true,
                 }}
             />
         );

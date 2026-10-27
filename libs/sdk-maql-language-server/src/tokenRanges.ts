@@ -1,9 +1,9 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { type Token } from "antlr4ts";
-import { type Range } from "vscode-languageserver";
+import type { Token } from "antlr4ng";
+import type { Range } from "vscode-languageserver";
 
-import { type IRange } from "@gooddata/maql-antlr4ts";
+import type { IRange } from "@gooddata/maql-antlr4ts";
 
 import { type ITigerMetadataObject, type ITigerMetadataObjectStub } from "./metadata/model.js";
 
@@ -41,7 +41,7 @@ export function tokenRange(token: Token): Range {
     // subtract one line to change to indexing from zero
     // subtract one more for the added "parse metric" line
     const startLine = token.line - 2;
-    const startCharacter = token.charPositionInLine;
+    const startCharacter = token.column;
     const lines = token.text?.split("\n") ?? [""];
     const endLine = startLine + lines.length - 1;
     const endCharacter = lines[lines.length - 1].length + (startLine === endLine ? startCharacter : 0);
@@ -67,13 +67,9 @@ export function defaultRange(
     };
 }
 
-export function antlrContextRange(start: Token, stop: Token = start): AntlrRange {
-    return new AntlrRange(
-        start.line,
-        start.charPositionInLine,
-        stop.line,
-        stop.charPositionInLine + (stop.text?.length ?? 1),
-    );
+export function antlrContextRange(start: Token, stop: Token | null = start): AntlrRange {
+    const end = stop ?? start;
+    return new AntlrRange(start.line, start.column, end.line, end.column + (end.text?.length ?? 1));
 }
 
 export class AntlrRange {

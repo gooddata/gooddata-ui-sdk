@@ -17,6 +17,7 @@ import {
     asyncProcessSelector,
     conversationMessagesSelector,
     conversationSelector,
+    loadedSelector,
 } from "../store/messages/messagesSelectors.js";
 
 import { ChatSkeleton } from "./ChatSkeleton.js";
@@ -35,6 +36,7 @@ type MessagesComponentProps = {
 
 export function Messages({ initializing }: MessagesComponentProps) {
     const loading = useSelector(asyncProcessSelector);
+    const loaded = useSelector(loadedSelector);
     const conversation = useSelector(conversationSelector);
     const conversationMessages = useSelector(conversationMessagesSelector);
     const catalogItems = useSelector(catalogItemsSelector);
@@ -45,7 +47,7 @@ export function Messages({ initializing }: MessagesComponentProps) {
     const { isBigScreen, isSmallScreen, isFullscreen } = useFullscreenCheck();
     const intl = useIntl();
 
-    const isLoading = loading === "loading" || loading === "clearing" || initializing;
+    const isLoading = loading === "loading" || loading === "clearing" || initializing || !loaded;
     const isEmpty = !conversationMessages.length && !isLoading;
 
     return (

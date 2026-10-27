@@ -8,6 +8,8 @@ import { changeFilterContextSelection } from "../../../model/commands/filters.js
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useDispatchDashboardCommand } from "../../../model/react/useDispatchDashboardCommand.js";
 import { useWidgetSelection } from "../../../model/react/useWidgetSelection.js";
+import { selectIsAiLoading } from "../../../model/store/config/configSelectors.js";
+import { selectIsNewDashboard } from "../../../model/store/meta/metaSelectors.js";
 import { selectRenderMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 import { useDashboardDrop } from "../../dragAndDrop/useDashboardDrop.js";
 import { ExportThemeProvider } from "../../export/ExportThemeProvider.js";
@@ -15,6 +17,8 @@ import { useWidgetDragHoverHandlers as useFlexibleWidgetDragHoverHandlers } from
 import { DashboardLayout } from "../../widget/dashboardLayout/DashboardLayout.js";
 import { DateFilterConfigWarnings } from "../components/DateFilterConfigWarnings.js";
 import { type IDashboardProps } from "../types.js";
+
+import { DashboardContentLoader } from "./DashboardContentLoader.js";
 
 /**
  * @internal
@@ -24,6 +28,8 @@ export function DefaultDashboardMainContent(_: IDashboardProps) {
     const { deselectWidgets } = useWidgetSelection();
 
     const renderMode = useDashboardSelector(selectRenderMode);
+    const isAiLoading = useDashboardSelector(selectIsAiLoading);
+    const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
 
     const { handleDragHoverEnd } = useFlexibleWidgetDragHoverHandlers();
     const [{ isOver }, dropRef] = useDashboardDrop(
@@ -63,8 +69,14 @@ export function DefaultDashboardMainContent(_: IDashboardProps) {
                 ref={dropRef as unknown as Ref<HTMLDivElement> | undefined}
                 onClick={deselectWidgets}
             >
-                <DateFilterConfigWarnings />
-                <DashboardLayout onFiltersChange={onFiltersChange} />
+                {isNewDashboard && isAiLoading ? (
+                    <DashboardContentLoader />
+                ) : (
+                    <>
+                        <DateFilterConfigWarnings />
+                        <DashboardLayout onFiltersChange={onFiltersChange} />
+                    </>
+                )}
             </div>
         );
     };

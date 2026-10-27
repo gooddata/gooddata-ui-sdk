@@ -294,6 +294,8 @@ const messagesSlice = createSlice({
         },
         loadThreadErrorAction: (state, { payload: { error } }: PayloadAction<{ error: Error }>) => {
             state.globalError = errorToObject(error);
+            state.loaded = true;
+            state.conversationsLoaded = true;
             const data = getConversationData(state.conversationsData, state.currentConversation?.localId);
             delete data?.asyncProcess;
         },

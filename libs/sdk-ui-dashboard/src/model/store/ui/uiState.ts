@@ -13,6 +13,7 @@ import {
     type IScheduleEmailContext,
 } from "../../../types.js";
 import { type IDashboardWidgetOverlay } from "../../types/commonTypes.js";
+import { type InsightEditorTarget } from "../../types/insightEditorTypes.js";
 
 /**
  * @alpha
@@ -113,6 +114,10 @@ export interface IUiState {
     selectedFilterIndex: number | undefined;
     activeSection: ILayoutSectionPath | undefined;
     ignoreExecutionTimestamp: boolean;
+    /**
+     * What the embedded Analytical Designer has open. Undefined means it is closed.
+     */
+    insightEditorTarget: InsightEditorTarget | undefined;
     filterValidationMessages: {
         incompatibleDefaultFiltersOverride: boolean;
     };
@@ -238,4 +243,5 @@ export const uiInitialState: IUiState = {
     widgetsOverlay: {},
     visualizationSwitcherActiveVisualizations: {},
     ignoreExecutionTimestamp: false,
+    insightEditorTarget: undefined,
 };

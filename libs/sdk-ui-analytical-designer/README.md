@@ -43,39 +43,6 @@ React peers:
 With the same version, the host and AD share one copy of each SDK package, so they share its React
 contexts and the bundle contains one SDK.
 
-### Vite configuration
-
-```ts
-// vite.config.ts
-import react from "@vitejs/plugin-react";
-import { defineConfig } from "vite";
-
-export default defineConfig({
-    plugins: [react()],
-    define: {
-        // Legacy CommonJS dependencies bundled with AD read these.
-        global: "globalThis",
-        "process.env": "{}",
-    },
-    optimizeDeps: {
-        rolldownOptions: {
-            // The metric editor in AD imports its Monaco worker with `?worker&url`, which the
-            // dependency pre-bundler cannot load. Leave that import external, so Vite's own
-            // pipeline resolves it to the worker URL when it serves the pre-bundled chunk.
-            plugins: [
-                {
-                    name: "external-worker-url",
-                    resolveId: (id: string) => (/\?worker(&url)?$/.test(id) ? { id, external: true } : null),
-                },
-            ],
-        },
-    },
-});
-```
-
-Without the `optimizeDeps` plugin, the dev server stops while it pre-bundles dependencies, with
-`[UNLOADABLE_DEPENDENCY] Could not load …/editorWebWorkerMain.js?worker&url`. See Workers below.
-
 ### Backend
 
 AD runs on the host's backend. When the backend caches, give AD the cache resets, so the catalog
@@ -169,19 +136,20 @@ Leave out `insight` to open a new insight. The AnalyticalDesigner component sect
   built with. AD mounts its own backend, workspace and theme providers, so it runs next to a host on
   another SDK version. Align the versions when host components and AD components have to share a
   React context from the SDK, and to avoid bundling two SDK copies.
-- **Build-time defines**: `global` and `process.env` must be defined, because legacy CommonJS
-  dependencies bundled with AD read them (`globalThis` and `{}`). No other define is needed. The
+- **Build-time defines**: `process.env` must be defined (`{}`). The MAQL parser of the metric editor
+  (`antlr4ts`) loads the `assert` and `util` polyfills, which read it when they load. No other
+  define is needed: AD does not read `global`. The
   build flags `DEBUG`, `TESTING`, `READONLY_MODE` and `TIGER_API_TOKEN` are optional: the code reads
   them behind `typeof` guards and falls back to production defaults, so define them only to change
   that behavior. `modules/gdc-analytical-designer/module/vite.config.ts` is the reference setup.
-- **Workers**: the metric editor (`@gooddata/sdk-ui-metric-component`) starts Monaco's editor worker
-  from an import with the Vite-only `?worker&url` suffix, which ships unchanged in the package:
-    - A Vite build handles it.
-    - The Vite dev server pre-bundles the package from `node_modules` and cannot load the
-      import. Add the `optimizeDeps` plugin from the Quick start. Hosts inside gdc-ui do not need
-      it: Vite does not pre-bundle the linked workspace packages.
-    - webpack does not understand the suffix. `apps/gdc-dashboards/webpack.monacoWorker.loader.cjs`
-      replaces the import with a webpack worker.
+- **Workers**: no setup is needed in Vite or webpack. The metric editor
+  (`@gooddata/sdk-ui-metric-component`) ships Monaco's editor worker bundled into one file. It starts
+  the worker from that file when the bundler emitted it next to the page, and from a Blob of the same
+  code otherwise, for example in the Vite dev server or when the editor loads from another origin. A
+  content security policy must then allow `blob:` workers. A page that enforces Trusted Types must
+  allow the `gdMetricEditorWorker` policy, or create it through
+  `MonacoEnvironment.createTrustedTypesPolicy`. A host that sets its own `MonacoEnvironment`
+  (`getWorker` or `getWorkerUrl`) before the editor loads keeps its own workers.
 
 - **Import side effects**: importing an entry creates no router and no browser history. `Root`
   creates its router when it mounts: a `BrowserRouter` under the host's base path in the pluggable

@@ -1,6 +1,7 @@
 // (C) 2022-2026 GoodData Corporation
 
-import MaqlPkg, {
+import {
+    AbstractAstVisitor,
     type AstNode,
     type BooleanLiteralNode,
     type CaseNode,
@@ -24,7 +25,6 @@ import MaqlPkg, {
     type SelectNode,
     type StringLiteralNode,
 } from "@gooddata/maql-antlr4ts";
-const { AbstractAstVisitor } = MaqlPkg;
 import { isTigerType } from "@gooddata/sdk-backend-tiger";
 
 import { normalizeMaqlObjectType } from "../maqlObjectTypes.js";

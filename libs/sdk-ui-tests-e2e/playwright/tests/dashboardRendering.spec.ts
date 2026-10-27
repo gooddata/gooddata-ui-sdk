@@ -64,7 +64,7 @@ test.describe("Dashboard", { additionalWindowProperties: { useSafeLocalIdentifie
         test(
             "should render the top bar",
             {
-                tag: ["@pre-merge-isolated"],
+                tag: ["@isolated-default"],
             },
             async ({ page }) => {
                 await visit(page, "dashboard/dashboard-tiger");
@@ -75,7 +75,7 @@ test.describe("Dashboard", { additionalWindowProperties: { useSafeLocalIdentifie
         test.skip(
             "should render the title",
             {
-                tag: ["@pre-merge-isolated"],
+                tag: ["@isolated-default"],
             },
             async ({ page }) => {
                 await visit(page, "dashboard/dashboard-tiger");
@@ -88,7 +88,7 @@ test.describe("Dashboard", { additionalWindowProperties: { useSafeLocalIdentifie
         test(
             "should render the edit button",
             {
-                tag: ["@pre-merge-isolated"],
+                tag: ["@isolated-default"],
             },
             async ({ page }) => {
                 await visit(page, "dashboard/dashboard-tiger");
@@ -100,7 +100,7 @@ test.describe("Dashboard", { additionalWindowProperties: { useSafeLocalIdentifie
         test(
             "should render the menu button",
             {
-                tag: ["@pre-merge-isolated"],
+                tag: ["@isolated-default"],
             },
             async ({ page }) => {
                 await visit(page, "dashboard/dashboard-tiger");
@@ -111,7 +111,7 @@ test.describe("Dashboard", { additionalWindowProperties: { useSafeLocalIdentifie
         test.skip(
             "should open the menu with its items",
             {
-                tag: ["@pre-merge-isolated"],
+                tag: ["@isolated-default"],
             },
             async ({ page }) => {
                 await visit(page, "dashboard/dashboard-tiger");
@@ -127,7 +127,7 @@ test.describe("Dashboard", { additionalWindowProperties: { useSafeLocalIdentifie
         test(
             "should render the filter bar",
             {
-                tag: ["@pre-merge-isolated"],
+                tag: ["@isolated-default"],
             },
             async ({ page }) => {
                 await visit(page, "dashboard/dashboard-tiger");
@@ -138,7 +138,7 @@ test.describe("Dashboard", { additionalWindowProperties: { useSafeLocalIdentifie
         test(
             "should render the date filter",
             {
-                tag: ["@pre-merge-isolated"],
+                tag: ["@isolated-default"],
             },
             async ({ page }) => {
                 await visit(page, "dashboard/dashboard-tiger");
@@ -154,7 +154,7 @@ test.describe("Dashboard", { additionalWindowProperties: { useSafeLocalIdentifie
         test.skip(
             "should change the date filter",
             {
-                tag: ["@pre-merge-isolated"],
+                tag: ["@isolated-default"],
             },
             async ({ page }) => {
                 await visit(page, "dashboard/dashboard-tiger");
@@ -172,7 +172,7 @@ test.describe("Dashboard", { additionalWindowProperties: { useSafeLocalIdentifie
         test.skip(
             "should render a single insight",
             {
-                tag: ["@pre-merge-isolated"],
+                tag: ["@isolated-default"],
             },
             async ({ page }) => {
                 await visit(page, "dashboard/kpis");
@@ -185,7 +185,7 @@ test.describe("Dashboard", { additionalWindowProperties: { useSafeLocalIdentifie
         test(
             "should render the insight",
             {
-                tag: ["@pre-merge-isolated"],
+                tag: ["@isolated-default"],
             },
             async ({ page }) => {
                 await visit(page, "dashboard/manydata");

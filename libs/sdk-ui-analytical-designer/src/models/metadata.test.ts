@@ -5,8 +5,12 @@ import { describe, expect, it } from "vitest";
 
 import { idRef } from "@gooddata/sdk-model";
 
+import { type IDateFilter, type IDateFilterConfig } from "../store/filter_bar/filter_bar_types.js";
 import { dateCreated } from "../tests/constants.test.helpers.js";
-import { type IVisualizationObjectContent } from "../typings/bear/bearTypes.js";
+import {
+    type IVisualizationObjectContent,
+    type VisualizationObjectExtendedFilter,
+} from "../typings/bear/bearTypes.js";
 import { type IBucketItemMetricFilter } from "../typings/bucket_item_filter.js";
 import { type IDecoratedBuckets } from "../typings/buckets.js";
 import { type IDecoratedMetricFilter } from "../typings/measure_filters.js";
@@ -226,6 +230,220 @@ describe("metadata", () => {
                     },
                 },
             ]);
+        });
+    });
+});
+
+describe("empty date values mode", () => {
+    // the year attribute of dateCreated, which the legacy "" attribute filter targets
+    const yearDisplayForm = dateCreated.attributes[0].dfRef;
+    const dateFilter = (overrides: Partial<IDateFilter> = {}): IDateFilter => ({
+        type: "date",
+        localIdentifier: "date",
+        cacheItemIdentifier: DATE_DATASET_ATTRIBUTE,
+        overTimeComparisonType: "nothing",
+        dateDatasetRef: dateCreated.ref,
+        ...overrides,
+    });
+    const lastYear: IDateFilterConfig = { granularity: "GDC.time.year", interval: [-1, -1] };
+    const emptyValuesAttributeFilter: VisualizationObjectExtendedFilter = {
+        negativeAttributeFilter: { displayForm: yearDisplayForm, notIn: [""] },
+    };
+
+    describe("filtersToMetadata", () => {
+        describe("with emptyValueHandling", () => {
+            it("writes exclude on All time as the real All time filter carrying the mode", () => {
+                const result = filtersToMetadata(
+                    [dateFilter({ emptyDateValuesFilter: "exclude" })],
+                    {},
+                    defaultDateDatasets,
+                    true,
+                );
+
+                expect(result).toEqual([
+                    {
+                        relativeDateFilter: {
+                            dataSet: dateCreated.ref,
+                            granularity: "ALL_TIME_GRANULARITY",
+                            from: 0,
+                            to: 0,
+                            emptyValueHandling: "exclude",
+                        },
+                    },
+                ]);
+            });
+
+            it("writes only on a relative period as the date filter's emptyValueHandling", () => {
+                const result = filtersToMetadata(
+                    [dateFilter({ filterConfig: lastYear, emptyDateValuesFilter: "only" })],
+                    {},
+                    defaultDateDatasets,
+                    true,
+                );
+
+                expect(result).toEqual([
+                    {
+                        relativeDateFilter: {
+                            dataSet: dateCreated.ref,
+                            granularity: "GDC.time.year",
+                            from: -1,
+                            to: -1,
+                            emptyValueHandling: "only",
+                        },
+                    },
+                ]);
+            });
+
+            it("writes exclude on a static period as the absolute date filter's emptyValueHandling", () => {
+                const result = filtersToMetadata(
+                    [
+                        dateFilter({
+                            filterConfig: {
+                                type: "absolute",
+                                granularity: "GDC.time.date",
+                                interval: ["2026-01-01", "2026-01-31"],
+                            },
+                            emptyDateValuesFilter: "exclude",
+                        }),
+                    ],
+                    {},
+                    defaultDateDatasets,
+                    true,
+                );
+
+                expect(result).toEqual([
+                    {
+                        absoluteDateFilter: {
+                            dataSet: dateCreated.ref,
+                            from: "2026-01-01",
+                            to: "2026-01-31",
+                            emptyValueHandling: "exclude",
+                        },
+                    },
+                ]);
+            });
+
+            it("keeps the bare All time shape for include and for no mode", () => {
+                const allTime = {
+                    relativeDateFilter: { dataSet: dateCreated.ref, granularity: "GDC.time.year" },
+                };
+
+                expect(
+                    filtersToMetadata(
+                        [dateFilter({ emptyDateValuesFilter: "include" })],
+                        {},
+                        defaultDateDatasets,
+                        true,
+                    ),
+                ).toEqual([allTime]);
+                expect(filtersToMetadata([dateFilter()], {}, defaultDateDatasets, true)).toEqual([allTime]);
+            });
+        });
+
+        it("writes the legacy empty string attribute filter while the flag is off", () => {
+            const result = filtersToMetadata(
+                [dateFilter({ emptyDateValuesFilter: "exclude" })],
+                {},
+                defaultDateDatasets,
+            );
+
+            expect(result).toEqual([
+                { relativeDateFilter: { dataSet: dateCreated.ref, granularity: "GDC.time.year" } },
+                emptyValuesAttributeFilter,
+            ]);
+        });
+    });
+
+    describe("metadataToBuckets", () => {
+        const readFilters = (filters: VisualizationObjectExtendedFilter[]) =>
+            metadataToBuckets({
+                metadataObject: { buckets: [], filters } as unknown as IVisualizationObjectContent,
+                additionalData: defaultAdditionalData,
+            }).filters;
+
+        it("reads emptyValueHandling of the All time filter as the mode and the period as All time", () => {
+            const filters = readFilters([
+                {
+                    relativeDateFilter: {
+                        dataSet: dateCreated.ref,
+                        granularity: "ALL_TIME_GRANULARITY",
+                        from: 0,
+                        to: 0,
+                        emptyValueHandling: "only",
+                    },
+                },
+            ]);
+
+            expect(filters).toHaveLength(1);
+            expect(filters[0]).toMatchObject({ type: "date", emptyDateValuesFilter: "only" });
+            expect((filters[0] as IDateFilter).filterConfig).toBeUndefined();
+        });
+
+        it("reads emptyValueHandling of a relative date filter together with its period", () => {
+            const filters = readFilters([
+                {
+                    relativeDateFilter: {
+                        dataSet: dateCreated.ref,
+                        granularity: "GDC.time.year",
+                        from: -1,
+                        to: -1,
+                        emptyValueHandling: "exclude",
+                    },
+                },
+            ]);
+
+            expect(filters[0]).toMatchObject({
+                type: "date",
+                emptyDateValuesFilter: "exclude",
+                filterConfig: { granularity: "GDC.time.year", interval: [-1, -1] },
+            });
+        });
+
+        it("reads emptyValueHandling of an absolute date filter together with its period", () => {
+            const filters = readFilters([
+                {
+                    absoluteDateFilter: {
+                        dataSet: dateCreated.ref,
+                        from: "2026-01-01",
+                        to: "2026-01-31",
+                        emptyValueHandling: "exclude",
+                    },
+                },
+            ]);
+
+            expect(filters[0]).toMatchObject({
+                type: "date",
+                emptyDateValuesFilter: "exclude",
+                filterConfig: { type: "absolute", interval: ["2026-01-01", "2026-01-31"] },
+            });
+        });
+
+        it("reads the legacy empty string attribute filter as the mode and drops it", () => {
+            const filters = readFilters([
+                { relativeDateFilter: { dataSet: dateCreated.ref, granularity: "GDC.time.year" } },
+                emptyValuesAttributeFilter,
+            ]);
+
+            expect(filters).toHaveLength(1);
+            expect(filters[0]).toMatchObject({ type: "date", emptyDateValuesFilter: "exclude" });
+        });
+
+        it("prefers emptyValueHandling over the legacy attribute filter when both are stored", () => {
+            const filters = readFilters([
+                {
+                    relativeDateFilter: {
+                        dataSet: dateCreated.ref,
+                        granularity: "ALL_TIME_GRANULARITY",
+                        from: 0,
+                        to: 0,
+                        emptyValueHandling: "only",
+                    },
+                },
+                emptyValuesAttributeFilter,
+            ]);
+
+            expect(filters).toHaveLength(1);
+            expect(filters[0]).toMatchObject({ type: "date", emptyDateValuesFilter: "only" });
         });
     });
 });

@@ -3,15 +3,15 @@
 import { groupBy } from "lodash-es";
 import { Diagnostic, DiagnosticSeverity, type Range } from "vscode-languageserver";
 
-import MaqlPkg, {
+import {
     type AstNode,
     type CaseNode,
     type ConditionalNode,
     type IdentifierNode,
+    MaqlLexer,
     type OperatorNode,
     type StringLiteralNode,
 } from "@gooddata/maql-antlr4ts";
-const { MaqlLexer } = MaqlPkg;
 import { isStringParameterDefinition } from "@gooddata/sdk-model";
 
 import { ErrorCodes, diagnosticsSource } from "./constants.js";
@@ -177,7 +177,7 @@ function keywordRange(caseNode: CaseNode, metric: MaqlMetric): Range | undefined
         .find(
             (candidate) =>
                 candidate.line - 1 === astRange.start.line &&
-                candidate.charPositionInLine === astRange.start.character &&
+                candidate.column === astRange.start.character &&
                 (candidate.type === MaqlLexer.CASE || candidate.type === MaqlLexer.IF),
         );
     return token ? tokenRange(token) : undefined;

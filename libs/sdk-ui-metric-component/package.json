@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-metric-component",
-    "version": "11.65.0-alpha.9",
+    "version": "11.65.0-alpha.10",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
     "repository": {
@@ -10,6 +10,7 @@
     },
     "files": [
         "esm",
+        "worker/*.js",
         "NOTICE"
     ],
     "type": "module",
@@ -25,10 +26,11 @@
         "_phase:test": "npm run test-once",
         "_phase:validate": "npm run validate",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
-        "build": "npm-run-all -p build-check build-ts && npm run api-extractor",
+        "build": "npm run build-worker && npm-run-all -p build-check build-ts && npm run api-extractor",
         "build-check": "tsc",
         "build-ts": "tsc -p tsconfig.build.json",
-        "clean": "../../common/scripts/clean-command-state.sh && rm -rf dist *.log",
+        "build-worker": "rolldown node_modules/monaco-editor/esm/vs/editor/common/services/editorWebWorkerMain.js --format esm --platform browser --minify --file worker/monaco-editor-worker.js && node scripts/buildWorkerSource.js worker/monaco-editor-worker.js worker/monaco-editor-worker.source.js",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf dist worker *.log",
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
         "lint": "oxlint . --quiet && eslint .",
@@ -100,6 +102,7 @@
         "oxlint-tsgolint": "7.0.2001",
         "react": "19.1.1",
         "react-dom": "19.1.1",
+        "rolldown": "1.0.3",
         "typescript": "7.0.2",
         "vitest": "5.0.4"
     },

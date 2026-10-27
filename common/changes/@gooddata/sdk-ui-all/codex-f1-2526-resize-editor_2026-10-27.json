@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "gdc-dashboards-runtime: The visualization editor stays open and preserves unsaved changes when the browser is resized across the mobile breakpoint.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

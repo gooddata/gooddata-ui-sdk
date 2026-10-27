@@ -154,6 +154,7 @@ export {
 export {
     type ClaimFilterKey,
     type DateFilterEmitOptions,
+    type DeclarativeFiltersToYamlOptions,
     type WrittenFilter,
     declarativeAbsoluteDateFilterToYaml,
     declarativeFiltersToYaml,

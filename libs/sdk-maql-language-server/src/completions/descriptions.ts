@@ -2,8 +2,7 @@
 
 import { type CompletionItem, CompletionItemKind, InsertTextFormat } from "vscode-languageserver";
 
-import MaqlPkg from "@gooddata/maql-antlr4ts";
-const { MaqlParser } = MaqlPkg;
+import { MaqlParser } from "@gooddata/maql-antlr4ts";
 
 import { errorTokens } from "../diagnostics.js";
 import { type ResolveTag } from "../docs/index.js";

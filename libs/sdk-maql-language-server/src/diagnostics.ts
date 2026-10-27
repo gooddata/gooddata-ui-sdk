@@ -6,17 +6,19 @@ import {
     InputMismatchException,
     NoViableAltException,
     type Token,
-} from "antlr4ts";
+} from "antlr4ng";
 import { groupBy } from "lodash-es";
 import { Diagnostic, DiagnosticSeverity, Range } from "vscode-languageserver";
 
-import MaqlPkg, {
+import {
+    AbstractAstVisitor,
     type AstNode,
+    MaqlLexer,
     type Operator,
     type OperatorNode,
     type StringLiteralNode,
+    SyntaxErrorListener,
 } from "@gooddata/maql-antlr4ts";
-const { AbstractAstVisitor, MaqlLexer, SyntaxErrorListener } = MaqlPkg;
 import { isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
 import { areObjRefsEqual, serializeObjRef } from "@gooddata/sdk-model";
 

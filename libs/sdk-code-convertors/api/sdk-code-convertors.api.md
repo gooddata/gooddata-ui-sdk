@@ -40,6 +40,7 @@ import { DeclarativeReport } from '@gooddata/api-client-tiger';
 import { DeclarativeReportPageLayout } from '@gooddata/api-client-tiger';
 import { DeclarativeTable } from '@gooddata/api-client-tiger';
 import { DeclarativeVisualizationObject } from '@gooddata/api-client-tiger';
+import { EmptyValues } from '@gooddata/sdk-model';
 import type { Fields } from '@gooddata/sdk-code-schemas/v1';
 import type { Filter } from '@gooddata/sdk-code-schemas/v1';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
@@ -1407,6 +1408,8 @@ export type DateFilterEmitOptions = {
     entities: FromEntities;
     claimKey: ClaimFilterKey;
     connectedAttributeFilters?: IFilter[];
+    emptyValueHandling?: EmptyValues;
+    readLegacyEmptyValuesFilter?: boolean;
     errorContext?: IErrorContext;
 };
 
@@ -1483,7 +1486,12 @@ export function declarativeFilterContextToYaml(dateFilterConfig?: IDashboardDate
 export function declarativeFiltersConfigToYaml(filtersMap: Record<string, FilterContextItem>, dateFilterConfig?: IDashboardDateFilterConfig, dateFilterConfigs?: IDashboardDateFilterConfigItem[], attributeFilterConfigs?: IDashboardAttributeFilterConfig[], measureValueFilterConfigs?: IDashboardMeasureValueFilterConfig[], errorContext?: IErrorContext): void;
 
 // @internal (undocumented)
-export function declarativeFiltersToYaml(entities: FromEntities, filters: IFilter[], errorContext?: IErrorContext): YamlFilters;
+export function declarativeFiltersToYaml(entities: FromEntities, filters: IFilter[], errorContext?: IErrorContext, input?: DeclarativeFiltersToYamlOptions): YamlFilters;
+
+// @internal (undocumented)
+export type DeclarativeFiltersToYamlOptions = {
+    readLegacyEmptyValuesFilter?: boolean;
+};
 
 // @internal (undocumented)
 export function declarativeInlineMetricToYaml(def: IMeasureBody, inlineDef: IInlineMeasureDefinition): YAMLMap;

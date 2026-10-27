@@ -1,0 +1,53 @@
+// (C) 2020-2026 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.gd-insight-editor-overlay {
+    visibility: visible;
+
+    .gd-edit-insight-modal-overlay {
+        left: 5vw !important; /* stylelint-disable-line declaration-no-important */
+    }
+
+    .modalityPlugin-mask-visible {
+        opacity: 0;
+        animation: gd-insight-editor-fade-in 0.4s ease-out forwards;
+    }
+
+    .overlay-move-left {
+        animation: gd-insight-editor-move-left 0.4s ease-out;
+    }
+}
+
+// The editor portals to the body with z-index 5001. The sticky dashboard header (6000) and the
+// edit-mode sidebar (6001) must stay in the dashboard stacking context while the editor is open.
+.component-root.is-insight-editor-open {
+    isolation: isolate;
+}
+
+.gd-edit-insight-overlay-content {
+    position: relative;
+    outline: none;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    width: 95vw;
+    height: 100vh;
+    background-color: kit-variables.$gd-color-white;
+}
+
+@keyframes gd-insight-editor-move-left {
+    0% {
+        transform: translateX(100vw);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes gd-insight-editor-fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0.9;
+    }
+}

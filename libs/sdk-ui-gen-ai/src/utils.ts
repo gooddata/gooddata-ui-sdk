@@ -39,11 +39,16 @@ export function getDashboardHref(
     dasId: string,
     status: "draft" | "saved",
     useHostedDashboards?: boolean,
+    conversationId?: string,
 ) {
     if (status === "draft") {
+        const query = new URLSearchParams({ aibuilder: dasId });
+        if (conversationId) {
+            query.set("conversationId", conversationId);
+        }
         return useHostedDashboards
-            ? `/workspace/${wsId}/dashboards/#/new-dashboard/?aibuilder=${dasId}`
-            : `/dashboards/#/workspace/${wsId}/new-dashboard/?aibuilder=${dasId}`;
+            ? `/workspace/${wsId}/dashboards/#/new-dashboard/?${query.toString()}`
+            : `/dashboards/#/workspace/${wsId}/new-dashboard/?${query.toString()}`;
     }
     return useHostedDashboards
         ? `/workspace/${wsId}/dashboards/#/dashboard/${dasId}/tab/defaultTabId`

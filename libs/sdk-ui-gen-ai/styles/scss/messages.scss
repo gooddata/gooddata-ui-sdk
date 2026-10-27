@@ -901,6 +901,10 @@ $dataset_color: #952f8e;
     &--user {
         justify-content: flex-end;
 
+        // Light chips for user content outside the blue bubble (the clarifying answers card).
+        // Must stay before the bubble rule: its icon selectors tie on specificity with these.
+        @include object-types("assistant");
+
         .gd-gen-ai-chat__conversation__item__content--text {
             $tail-height: 7px;
             $tail-width: 10px;
@@ -927,9 +931,8 @@ $dataset_color: #952f8e;
             }
 
             @include content-markdown(kit-variables.$gd-color-white, "user");
+            @include object-types("user");
         }
-
-        @include object-types("user");
     }
 
     &--assistant {

@@ -18,7 +18,7 @@ import { selectAccessibleDashboardsLoaded } from "../../../model/store/accessibl
 import { selectCatalogIsLoaded } from "../../../model/store/catalog/catalogSelectors.js";
 import { selectLocale, selectSettings } from "../../../model/store/config/configSelectors.js";
 import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
-import { selectDashboardDensity } from "../../../model/store/ui/uiSelectors.js";
+import { selectDashboardDensity, selectInsightEditorTarget } from "../../../model/store/ui/uiSelectors.js";
 import {
     DASHBOARD_HEADER_OVERLAYS_Z_INDEX,
     DASHBOARD_TOASTS_OVERLAY_Z_INDEX,
@@ -29,6 +29,8 @@ import { useDashboardDragScroll } from "../../dragAndDrop/useDashboardDragScroll
 import { WrapCreatePanelItemWithDrag } from "../../dragAndDrop/WrapCreatePanelItemWithDrag.js";
 import { WrapInsightListItemWithDrag } from "../../dragAndDrop/WrapInsightListItemWithDrag.js";
 import { DragLayerComponent as FlexibleDragLayerComponent } from "../../flexibleLayout/dragAndDrop/DragLayer.js";
+import { InsightEditorOverlay } from "../../insightEditor/InsightEditorOverlay.js";
+import { InsightEditorPermissionsProvider } from "../../insightEditor/InsightEditorPermissionsContext.js";
 import { IntlWrapper } from "../../localization/IntlWrapper.js";
 import { Toolbar } from "../../toolbar/Toolbar.js";
 import { DashboardContent } from "../DashboardContent.js";
@@ -51,6 +53,7 @@ export function DashboardInner(props: IDashboardProps) {
     const isCatalogLoaded = useDashboardSelector(selectCatalogIsLoaded);
     const accessibleDashboardsLoaded = useDashboardSelector(selectAccessibleDashboardsLoaded);
     const density = useDashboardSelector(selectDashboardDensity);
+    const isInsightEditorOpen = !!useDashboardSelector(selectInsightEditorTarget);
     const settings = useDashboardSelector(selectSettings);
     const enableEnhancedInsightPicker = settings?.enableEnhancedInsightPicker ?? false;
 
@@ -102,59 +105,64 @@ export function DashboardInner(props: IDashboardProps) {
                     <ToastsCenter />
                 </OverlayControllerProvider>
 
-                {/* we need wrapping element for drag layer and dashboard for proper rendering in flex layout */}
-                <UiResizableSidebarProvider value={resizableSidebar}>
-                    <div
-                        className={cx("component-root", {
-                            "sdk-edit-mode-on": isEditMode,
-                            "sdk-view-mode-on": !isEditMode,
-                            "catalog-is-loaded": isCatalogLoaded,
-                            "accessible-dashboards-loaded": accessibleDashboardsLoaded,
-                        })}
-                    >
-                        <DragLayerComponent />
+                <InsightEditorOverlay />
+
+                <InsightEditorPermissionsProvider>
+                    {/* we need wrapping element for drag layer and dashboard for proper rendering in flex layout */}
+                    <UiResizableSidebarProvider value={resizableSidebar}>
                         <div
-                            className={cx("gd-dashboards-root gd-flex-container", {
-                                "gd-dashboards-root--floating-toolbar": enableEnhancedInsightPicker,
+                            className={cx("component-root", {
+                                "sdk-edit-mode-on": isEditMode,
+                                "sdk-view-mode-on": !isEditMode,
+                                "catalog-is-loaded": isCatalogLoaded,
+                                "accessible-dashboards-loaded": accessibleDashboardsLoaded,
+                                "is-insight-editor-open": isInsightEditorOpen,
                             })}
-                            style={dashboardsRootStyle}
                         >
-                            <DashboardSidebar
-                                DefaultSidebar={RenderModeAwareDashboardSidebar}
-                                DeleteDropZoneComponent={DeleteDropZone}
-                                WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDrag}
-                                WrapInsightListItemWithDragComponent={WrapInsightListItemWithDrag}
-                            />
-                            <main className={dashboardContentClassNames} {...mainContentNavigationProps}>
-                                <DashboardInteractionComposing onReplyInChat={props.onReplyInChat}>
-                                    {/* gd-dash-header-wrapper-sdk-8-12 style is added because we should keep old styles unchanged to not brake plugins */}
-                                    <div
-                                        className="gd-dash-header-wrapper gd-dash-header-wrapper-sdk-8-12"
-                                        ref={headerRef}
-                                    >
-                                        {/* Header z-index start at  6000, so we need force all overlays z-indexes start at 6000 to be under header */}
-                                        <OverlayControllerProvider overlayController={overlayController}>
-                                            <DashboardHeader />
-                                        </OverlayControllerProvider>
-                                    </div>
-                                    <DashboardInteractionLock>
+                            <DragLayerComponent />
+                            <div
+                                className={cx("gd-dashboards-root gd-flex-container", {
+                                    "gd-dashboards-root--floating-toolbar": enableEnhancedInsightPicker,
+                                })}
+                                style={dashboardsRootStyle}
+                            >
+                                <DashboardSidebar
+                                    DefaultSidebar={RenderModeAwareDashboardSidebar}
+                                    DeleteDropZoneComponent={DeleteDropZone}
+                                    WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDrag}
+                                    WrapInsightListItemWithDragComponent={WrapInsightListItemWithDrag}
+                                />
+                                <main className={dashboardContentClassNames} {...mainContentNavigationProps}>
+                                    <DashboardInteractionComposing onReplyInChat={props.onReplyInChat}>
+                                        {/* gd-dash-header-wrapper-sdk-8-12 style is added because we should keep old styles unchanged to not brake plugins */}
                                         <div
-                                            className="gd-flex-item-stretch dash-section dash-section-kpis"
-                                            ref={layoutRef}
+                                            className="gd-dash-header-wrapper gd-dash-header-wrapper-sdk-8-12"
+                                            ref={headerRef}
                                         >
-                                            <DashboardScreenSizeProvider>
-                                                <DashboardContent {...props} />
-                                            </DashboardScreenSizeProvider>
-                                            {enableEnhancedInsightPicker ? <FilterDeleteOverlay /> : null}
+                                            {/* Header z-index start at  6000, so we need force all overlays z-indexes start at 6000 to be under header */}
+                                            <OverlayControllerProvider overlayController={overlayController}>
+                                                <DashboardHeader />
+                                            </OverlayControllerProvider>
                                         </div>
-                                        <div className="gd-dash-bottom-position-pixel" ref={bottomRef} />
-                                    </DashboardInteractionLock>
-                                </DashboardInteractionComposing>
-                            </main>
+                                        <DashboardInteractionLock>
+                                            <div
+                                                className="gd-flex-item-stretch dash-section dash-section-kpis"
+                                                ref={layoutRef}
+                                            >
+                                                <DashboardScreenSizeProvider>
+                                                    <DashboardContent {...props} />
+                                                </DashboardScreenSizeProvider>
+                                                {enableEnhancedInsightPicker ? <FilterDeleteOverlay /> : null}
+                                            </div>
+                                            <div className="gd-dash-bottom-position-pixel" ref={bottomRef} />
+                                        </DashboardInteractionLock>
+                                    </DashboardInteractionComposing>
+                                </main>
+                            </div>
+                            <Toolbar />
                         </div>
-                        <Toolbar />
-                    </div>
-                </UiResizableSidebarProvider>
+                    </UiResizableSidebarProvider>
+                </InsightEditorPermissionsProvider>
             </ToastsCenterContextProvider>
         </IntlWrapper>
     );

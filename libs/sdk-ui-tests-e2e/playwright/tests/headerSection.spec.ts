@@ -102,7 +102,7 @@ test.describe(
 
             test(
                 "should remove the header when the last insight in a section is deleted",
-                { tag: ["@pre-merge-isolated"] },
+                { tag: ["@isolated-default"] },
                 async ({ page }) => {
                     // Navigate to dashboard and verify not in edit mode
                     await visit(page, "dashboard/header");
@@ -198,7 +198,7 @@ test.describe(
 
             test(
                 "should translate the header placeholders",
-                { tag: ["@pre-merge-isolated"] },
+                { tag: ["@isolated-default"] },
                 async ({ page }) => {
                     // Setup (from Cypress beforeEach for Localization block)
                     await visit(page, "dashboard/header-localization");
@@ -226,10 +226,10 @@ test.describe(
                     await page.keyboard.press("Escape");
 
                     // Assert placeholder title is translated to French
-                    await expect(titleWrapper).toHaveText("Ajouter un titre ici...");
+                    await expect(titleWrapper).toHaveText("Ajouter un titre ici…");
 
                     // Assert placeholder description is translated to French
-                    await expect(descWrapper).toHaveText("Ajouter une description ici...");
+                    await expect(descWrapper).toHaveText("Ajouter une description ici…");
                 },
             );
         });

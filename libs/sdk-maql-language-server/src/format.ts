@@ -1,16 +1,53 @@
 // (C) 2022-2026 GoodData Corporation
 
-import type { CommonTokenStream, ParserRuleContext, Token } from "antlr4ts";
-import {
-    AbstractParseTreeVisitor,
-    type ErrorNode,
-    type ParseTree,
-    type RuleNode,
-    type TerminalNode,
-} from "antlr4ts/tree/index.js";
+import type {
+    CommonTokenStream,
+    ErrorNode,
+    ParseTree,
+    ParserRuleContext,
+    TerminalNode,
+    Token,
+} from "antlr4ng";
 import { type FormattingOptions, type Position, type Range, TextEdit } from "vscode-languageserver";
 
-import Maql from "@gooddata/maql-antlr4ts";
+import {
+    type AdditionContext,
+    type AttributeListContext,
+    type ByContext,
+    type CaseConditionalContext,
+    type CaseContext,
+    type ConjunctionContext,
+    type DisjunctionContext,
+    ExpressionListContext,
+    type ForEachContext,
+    type ForTransformationContext,
+    type FunctionCallContext,
+    type FunctionCallLastFirstValueContext,
+    type FunctionCallRankContext,
+    type FunctionCallRunContext,
+    type HavingContext,
+    type IfContext,
+    type ListLiteralContext,
+    type MaqlComputedAttributeContext,
+    MaqlExpressionContext,
+    type MaqlFilterContext,
+    type MaqlMeasureContext,
+    MaqlParser,
+    MaqlParserVisitor,
+    type MultiplicationContext,
+    type RelationBetweenContext,
+    type RelationInContext,
+    type RelationLikeContext,
+    type RelationNotContext,
+    type RelationRelopContext,
+    type SelectExpressionContext,
+    type TimeMacroContext,
+    type TransFunctionContext,
+    type UsingContext,
+    type WhereContext,
+    type WithPfContext,
+    type WithoutPfContext,
+} from "@gooddata/maql-antlr4ts";
 
 import { TokenTypes, tokenTypeMap } from "./highlight/semanticsHighlight.js";
 import { MaqlMetric } from "./parseMaql.js";
@@ -48,13 +85,11 @@ export function formatRange(query: string, range: Range, options: FormattingOpti
  * using the same token, the first rule triggered has precedence.
  * Most important are the whitespace (WS) tokens, which are strings of whitespace characters - spaces, new lines, tabs etc.
  */
-class MaqlFormatter
-    extends AbstractParseTreeVisitor<TextEdit[]>
-    implements Maql.MaqlParserVisitor<TextEdit[]>
-{
+class MaqlFormatter extends MaqlParserVisitor<TextEdit[]> {
     private indentationLevel = 0;
     private formattedTokens: Set<number>;
     private readonly stream: CommonTokenStream;
+    private readonly range?: Range;
 
     get indentSpaces(): string {
         return " ".repeat(this.indentationLevel * this.options.tabSize);
@@ -68,13 +103,10 @@ class MaqlFormatter
         super();
         this.formattedTokens = new Set();
         this.stream = metric.tokenStream;
-        if (range) {
-            // if a range is specified do not enter contexts where the intersection with the context range is empty
-            this.visit = (tree) => this.visitInRange(tree, range);
-        }
+        this.range = range;
     }
 
-    protected defaultResult(): TextEdit[] {
+    protected override defaultResult(): TextEdit[] {
         return [];
     }
 
@@ -82,21 +114,30 @@ class MaqlFormatter
         return aggregate.concat(nextResult);
     }
 
+    override visit(tree: ParseTree): TextEdit[] {
+        // if a range is specified do not enter contexts where the intersection with the context range is empty
+        if (this.range) {
+            return this.visitInRange(tree, this.range);
+        }
+        return super.visit(tree) ?? this.defaultResult();
+    }
+
     visitInRange(tree: ParseTree, range: Range): TextEdit[] {
+        const interval = tree.getSourceInterval();
         const treeRange = antlrContextRange(
-            this.stream.get(tree.sourceInterval.a),
-            this.stream.get(tree.sourceInterval.b),
+            this.stream.get(interval.start),
+            this.stream.get(interval.stop),
         ).toRange();
         if (!this.intersects(treeRange, range)) {
             return this.defaultResult();
         }
-        return super.visit(tree).filter((edit) => this.intersects(edit.range, range));
+        return (super.visit(tree) ?? []).filter((edit) => this.intersects(edit.range, range));
     }
 
     override visitChildren(
-        node: RuleNode,
+        node: ParseTree,
         firstChild: number = 0,
-        lastChild: number = node.childCount - 1,
+        lastChild: number = node.getChildCount() - 1,
     ): TextEdit[] {
         let result = this.defaultResult();
         for (let i = firstChild; i <= lastChild; i++) {
@@ -139,13 +180,11 @@ class MaqlFormatter
         return edits;
     }
 
-    visitMaqlMeasure = this.visitMaqlQuery;
-    visitMaqlComputedAttribute = this.visitMaqlQuery;
-    visitMaqlFilter = this.visitMaqlQuery;
+    override visitMaqlMeasure = this.visitMaqlQuery;
+    override visitMaqlComputedAttribute = this.visitMaqlQuery;
+    override visitMaqlFilter = this.visitMaqlQuery;
 
-    visitMaqlQuery(
-        ctx: Maql.MaqlMeasureContext | Maql.MaqlComputedAttributeContext | Maql.MaqlFilterContext,
-    ): TextEdit[] {
+    visitMaqlQuery(ctx: MaqlMeasureContext | MaqlComputedAttributeContext | MaqlFilterContext): TextEdit[] {
         const edits: TextEdit[] = [];
         const eof = ctx.EOF().symbol;
         const eofPosition = tokenRange(eof).start;
@@ -162,9 +201,9 @@ class MaqlFormatter
         return edits;
     }
 
-    visitFunctionCall = this.visitFunctionCallCommon;
+    override visitFunctionCall = (ctx: FunctionCallContext): TextEdit[] => this.visitFunctionCallCommon(ctx);
 
-    visitFunctionCallRun(ctx: Maql.FunctionCallRunContext): TextEdit[] {
+    override visitFunctionCallRun = (ctx: FunctionCallRunContext): TextEdit[] => {
         const edits: TextEdit[] = [];
         edits.push(...this.visitFunctionCallCommon(ctx));
         const withinCtx = ctx.within();
@@ -176,9 +215,9 @@ class MaqlFormatter
             edits.push(...this.visitFunctionCallClause(rollWindowCtx));
         }
         return edits;
-    }
+    };
 
-    visitFunctionCallRank(ctx: Maql.FunctionCallRankContext): TextEdit[] {
+    override visitFunctionCallRank = (ctx: FunctionCallRankContext): TextEdit[] => {
         const edits: TextEdit[] = [];
         edits.push(...this.visitFunctionCallCommon(ctx));
         const rankDirCtx = ctx.rankDir();
@@ -190,9 +229,9 @@ class MaqlFormatter
             edits.push(...this.visitFunctionCallClause(withinCtx));
         }
         return edits;
-    }
+    };
 
-    visitFunctionCallLastFirstValue(ctx: Maql.FunctionCallLastFirstValueContext): TextEdit[] {
+    override visitFunctionCallLastFirstValue = (ctx: FunctionCallLastFirstValueContext): TextEdit[] => {
         const edits: TextEdit[] = [];
         edits.push(...this.visitFunctionCallCommon(ctx));
         const orderByCtx = ctx.orderby();
@@ -204,22 +243,28 @@ class MaqlFormatter
             edits.push(...this.visitFunctionCallClause(withinCtx));
         }
         return edits;
-    }
+    };
 
     /**
      * Ensure new line before function modifying clauses e.g. WITHIN
      */
     private visitFunctionCallClause(ctx: ParserRuleContext): TextEdit[] {
         const edits: TextEdit[] = [];
-        edits.push(...this.ensureNewline(this.getHiddenToLeft(ctx.start), tokenRange(ctx.start).start));
+        const start = ctx.start;
+        if (start) {
+            edits.push(...this.ensureNewline(this.getHiddenToLeft(start), tokenRange(start).start));
+        }
         edits.push(...this.visit(ctx));
         return edits;
     }
 
     private visitFunctionCallCommon(ctx: FunctionCallCommonContext): TextEdit[] {
         const edits: TextEdit[] = [];
-        edits.push(...this.visit(ctx.getChild(0)));
-        const lparen = ctx.tryGetToken(Maql.MaqlParser.LPAREN, 0)?.symbol;
+        const name = ctx.getChild(0);
+        if (name) {
+            edits.push(...this.visit(name));
+        }
+        const lparen = ctx.getToken(MaqlParser.LPAREN, 0)?.symbol;
         if (lparen) {
             edits.push(...this.removeWhitespace(this.getHiddenToLeft(lparen)));
         }
@@ -235,12 +280,11 @@ class MaqlFormatter
         }
         this.indent();
         const argsCtx =
-            ctx.tryGetRuleContext(0, Maql.ExpressionListContext) ??
-            ctx.tryGetRuleContext(0, Maql.MaqlExpressionContext);
+            ctx.getRuleContext(0, ExpressionListContext) ?? ctx.getRuleContext(0, MaqlExpressionContext);
         if (argsCtx) {
             edits.push(...this.visit(argsCtx));
         }
-        const rparen = ctx.tryGetToken(Maql.MaqlParser.RPAREN, 0)?.symbol;
+        const rparen = ctx.getToken(MaqlParser.RPAREN, 0)?.symbol;
         if (rparen) {
             edits.push(...this.removeWhitespace(this.getHiddenToLeft(rparen)));
         }
@@ -251,9 +295,12 @@ class MaqlFormatter
         return edits;
     }
 
-    visitTimeMacro(ctx: Maql.TimeMacroContext): TextEdit[] {
+    override visitTimeMacro = (ctx: TimeMacroContext): TextEdit[] => {
         const edits: TextEdit[] = [];
-        edits.push(...this.visit(ctx.getChild(0)));
+        const name = ctx.getChild(0);
+        if (name) {
+            edits.push(...this.visit(name));
+        }
         const lparen = ctx.LPAREN().symbol;
         edits.push(...this.removeWhitespace(this.getHiddenToLeft(lparen)));
         edits.push(
@@ -276,30 +323,24 @@ class MaqlFormatter
             edits.push(...this.visit(amountCtx));
         }
         return edits;
-    }
+    };
 
-    visitExpressionList(ctx: Maql.ExpressionListContext): TextEdit[] {
+    override visitExpressionList = (ctx: ExpressionListContext): TextEdit[] => {
         const edits: TextEdit[] = [];
-        const commaContext = ctx.COMMA();
-        const commas = (Array.isArray(commaContext) ? commaContext : [commaContext])
-            .map((c) => c?.symbol)
-            .filter((c): c is Token => c !== undefined);
-        for (const comma of commas) {
+        for (const comma of ctx.COMMA().map((c) => c.symbol)) {
             edits.push(...this.removeWhitespace(this.getHiddenToLeft(comma)));
             const commaRange = tokenRange(comma);
             edits.push(...this.ensureSpace(this.getHiddenToRight(comma), commaRange.end));
         }
         edits.push(...this.visitChildren(ctx));
         return edits;
-    }
+    };
 
-    visitDisjunction(ctx: Maql.DisjunctionContext): TextEdit[] {
-        return this.visitLogicalOperatorExpression(ctx, () => ctx.OR());
-    }
+    override visitDisjunction = (ctx: DisjunctionContext): TextEdit[] =>
+        this.visitLogicalOperatorExpression(ctx, () => ctx.OR());
 
-    visitConjunction(ctx: Maql.ConjunctionContext): TextEdit[] {
-        return this.visitLogicalOperatorExpression(ctx, () => ctx.AND());
-    }
+    override visitConjunction = (ctx: ConjunctionContext): TextEdit[] =>
+        this.visitLogicalOperatorExpression(ctx, () => ctx.AND());
 
     visitLogicalOperatorExpression(ctx: ParserRuleContext, ops: () => TerminalNode[]): TextEdit[] {
         const edits: TextEdit[] = [];
@@ -313,23 +354,21 @@ class MaqlFormatter
         return edits;
     }
 
-    visitAddition(ctx: Maql.AdditionContext): TextEdit[] {
-        return this.visitArithmeticOperatorExpression(ctx, () =>
+    override visitAddition = (ctx: AdditionContext): TextEdit[] =>
+        this.visitArithmeticOperatorExpression(ctx, () =>
             ctx
                 .additiveOperator()
                 .map((it) => it.PLUS() ?? it.MINUS())
                 .filter((it): it is TerminalNode => !!it),
         );
-    }
 
-    visitMultiplication(ctx: Maql.MultiplicationContext): TextEdit[] {
-        return this.visitArithmeticOperatorExpression(ctx, () =>
+    override visitMultiplication = (ctx: MultiplicationContext): TextEdit[] =>
+        this.visitArithmeticOperatorExpression(ctx, () =>
             ctx
                 .multiplicativeOperator()
                 .map((it) => it.MUL() ?? it.DIV())
                 .filter((it): it is TerminalNode => !!it),
         );
-    }
 
     visitArithmeticOperatorExpression(ctx: ParserRuleContext, ops: () => TerminalNode[]): TextEdit[] {
         const edits: TextEdit[] = [];
@@ -343,7 +382,7 @@ class MaqlFormatter
         return edits;
     }
 
-    visitRelationRelop(ctx: Maql.RelationRelopContext): TextEdit[] {
+    override visitRelationRelop = (ctx: RelationRelopContext): TextEdit[] => {
         const edits: TextEdit[] = [];
         const relop = ctx.RELOP().symbol;
         const relopRange = tokenRange(relop);
@@ -351,21 +390,21 @@ class MaqlFormatter
         edits.push(...this.ensureSpace(this.getHiddenToRight(relop), relopRange.end));
         edits.push(...this.visitChildren(ctx));
         return edits;
-    }
+    };
 
-    visitRelationLike(ctx: Maql.RelationLikeContext): TextEdit[] {
+    override visitRelationLike = (ctx: RelationLikeContext): TextEdit[] => {
         const edits: TextEdit[] = [];
         const likeCtx = ctx.like();
-        const item = likeCtx.LIKE() || likeCtx.ILIKE();
+        const item = likeCtx.LIKE() ?? likeCtx.ILIKE();
         const like = item!.symbol;
         const likeRange = tokenRange(like);
         edits.push(...this.ensureSpace(this.getHiddenToLeft(like), likeRange.start));
         edits.push(...this.ensureSpace(this.getHiddenToRight(like), likeRange.end));
         edits.push(...this.visit(likeCtx));
         return edits;
-    }
+    };
 
-    visitRelationBetween(ctx: Maql.RelationBetweenContext): TextEdit[] {
+    override visitRelationBetween = (ctx: RelationBetweenContext): TextEdit[] => {
         const edits: TextEdit[] = [];
         const between = ctx.BETWEEN().symbol;
         const betweenRange = tokenRange(between);
@@ -379,9 +418,9 @@ class MaqlFormatter
 
         edits.push(...this.visitChildren(ctx));
         return edits;
-    }
+    };
 
-    visitRelationNot(ctx: Maql.RelationNotContext): TextEdit[] {
+    override visitRelationNot = (ctx: RelationNotContext): TextEdit[] => {
         const not = ctx.NOT();
         const edits: TextEdit[] = [];
         if (not) {
@@ -393,9 +432,9 @@ class MaqlFormatter
         }
         edits.push(...this.visit(ctx.relationNegatable()));
         return edits;
-    }
+    };
 
-    visitRelationIn(ctx: Maql.RelationInContext): TextEdit[] {
+    override visitRelationIn = (ctx: RelationInContext): TextEdit[] => {
         const edits: TextEdit[] = [];
         const int = ctx.IN().symbol;
         const range = tokenRange(int);
@@ -405,19 +444,19 @@ class MaqlFormatter
         const lparen = ctx.LPAREN().symbol;
         const lparenRange = tokenRange(lparen);
 
-        if (ctx.listLiteral() === undefined) {
+        if (ctx.listLiteral() === null) {
             edits.push(...this.removeWhitespace(this.getHiddenToLeft(ctx.RPAREN().symbol)));
         } else {
             this.indent();
             edits.push(...this.ensureNewline(this.getHiddenToRight(lparen), lparenRange.end));
-            edits.push(...this.visitChildren(ctx, 1, ctx.childCount - 2));
+            edits.push(...this.visitChildren(ctx, 1, ctx.getChildCount() - 2));
             this.dedent();
         }
         edits.push(...this.visit(ctx.RPAREN()));
         return edits;
-    }
+    };
 
-    visitSelectExpression(ctx: Maql.SelectExpressionContext): TextEdit[] {
+    override visitSelectExpression = (ctx: SelectExpressionContext): TextEdit[] => {
         const edits: TextEdit[] = [];
         const select = ctx.SELECT().symbol;
         const selectRange = tokenRange(select);
@@ -428,13 +467,11 @@ class MaqlFormatter
         edits.push(...this.visitChildren(ctx, 1));
         this.dedent();
         return edits;
-    }
+    };
 
-    visitBy(ctx: Maql.ByContext): TextEdit[] {
-        return this.visitKeywordOfStatement(ctx, () => ctx.BY());
-    }
+    override visitBy = (ctx: ByContext): TextEdit[] => this.visitKeywordOfStatement(ctx, () => ctx.BY());
 
-    visitForEach(ctx: Maql.ForEachContext): TextEdit[] {
+    override visitForEach = (ctx: ForEachContext): TextEdit[] => {
         const edits: TextEdit[] = [];
         const forEach = ctx.FOR().symbol;
         const forEachRange = tokenRange(forEach);
@@ -443,31 +480,25 @@ class MaqlFormatter
         edits.push(...this.visitChildren(ctx, 1));
         this.dedent();
         return edits;
-    }
+    };
 
-    visitForTransformation(ctx: Maql.ForTransformationContext): TextEdit[] {
-        return this.visitKeywordOfStatement(ctx, () => ctx.FOR());
-    }
+    override visitForTransformation = (ctx: ForTransformationContext): TextEdit[] =>
+        this.visitKeywordOfStatement(ctx, () => ctx.FOR());
 
-    visitWhere(ctx: Maql.WhereContext): TextEdit[] {
-        return this.visitKeywordOfStatement(ctx, () => ctx.WHERE());
-    }
+    override visitWhere = (ctx: WhereContext): TextEdit[] =>
+        this.visitKeywordOfStatement(ctx, () => ctx.WHERE());
 
-    visitHaving(ctx: Maql.HavingContext): TextEdit[] {
-        return this.visitKeywordOfStatement(ctx, () => ctx.HAVING());
-    }
+    override visitHaving = (ctx: HavingContext): TextEdit[] =>
+        this.visitKeywordOfStatement(ctx, () => ctx.HAVING());
 
-    visitUsing(ctx: Maql.UsingContext): TextEdit[] {
-        return this.visitKeywordOfStatement(ctx, () => ctx.USING());
-    }
+    override visitUsing = (ctx: UsingContext): TextEdit[] =>
+        this.visitKeywordOfStatement(ctx, () => ctx.USING());
 
-    visitWithPf(ctx: Maql.WithPfContext): TextEdit[] {
-        return this.visitKeywordOfStatement(ctx, () => ctx.WITH());
-    }
+    override visitWithPf = (ctx: WithPfContext): TextEdit[] =>
+        this.visitKeywordOfStatement(ctx, () => ctx.WITH());
 
-    visitWithoutPf(ctx: Maql.WithoutPfContext): TextEdit[] {
-        return this.visitKeywordOfStatement(ctx, () => ctx.WITHOUT());
-    }
+    override visitWithoutPf = (ctx: WithoutPfContext): TextEdit[] =>
+        this.visitKeywordOfStatement(ctx, () => ctx.WITHOUT());
 
     visitKeywordOfStatement(ctx: ParserRuleContext, keyword: () => TerminalNode): TextEdit[] {
         const edits: TextEdit[] = [];
@@ -480,18 +511,14 @@ class MaqlFormatter
         return edits;
     }
 
-    visitAttributeList(ctx: Maql.AttributeListContext): TextEdit[] {
-        return this.visitNewlineSeparatedCommaList(ctx);
-    }
+    override visitAttributeList = (ctx: AttributeListContext): TextEdit[] =>
+        this.visitNewlineSeparatedCommaList(ctx);
 
     // oxlint-disable-next-line sonarjs/no-identical-functions -- distinct ANTLR visitor override with intentionally identical formatting behavior
-    visitListLiteral(ctx: Maql.ListLiteralContext): TextEdit[] {
-        return this.visitNewlineSeparatedCommaList(ctx);
-    }
+    override visitListLiteral = (ctx: ListLiteralContext): TextEdit[] =>
+        this.visitNewlineSeparatedCommaList(ctx);
 
-    private visitNewlineSeparatedCommaList(
-        ctx: Maql.AttributeListContext | Maql.ListLiteralContext,
-    ): TextEdit[] {
+    private visitNewlineSeparatedCommaList(ctx: AttributeListContext | ListLiteralContext): TextEdit[] {
         const edits: TextEdit[] = [];
         for (const comma of ctx.COMMA()) {
             const token = comma.symbol;
@@ -502,21 +529,21 @@ class MaqlFormatter
         return edits;
     }
 
-    visitIf(ctx: Maql.IfContext): TextEdit[] {
+    override visitIf = (ctx: IfContext): TextEdit[] => {
         const edits: TextEdit[] = [];
         edits.push(...this.visit(ctx.IF()));
         edits.push(...this.visitElse(ctx));
         return edits;
-    }
+    };
 
-    visitCase(ctx: Maql.CaseContext): TextEdit[] {
+    override visitCase = (ctx: CaseContext): TextEdit[] => {
         const edits: TextEdit[] = [];
         edits.push(...this.visit(ctx.CASE()));
         edits.push(...this.visitElse(ctx));
         return edits;
-    }
+    };
 
-    visitElse(ctx: Maql.IfContext | Maql.CaseContext): TextEdit[] {
+    visitElse(ctx: IfContext | CaseContext): TextEdit[] {
         const edits: TextEdit[] = [];
         this.indent();
         const elseCtx = ctx.ELSE();
@@ -526,15 +553,20 @@ class MaqlFormatter
             );
             edits.push(...this.visit(elseCtx));
         }
-        edits.push(...this.visitChildren(ctx, 1, ctx.childCount - 2));
+        // error recovery may leave an IF/CASE without its END token; the generated END() then returns null
+        const endNode = ctx.getToken(MaqlParser.END, 0);
+        const lastChild = endNode ? ctx.getChildCount() - 2 : ctx.getChildCount() - 1;
+        edits.push(...this.visitChildren(ctx, 1, lastChild));
         this.dedent();
-        const end = ctx.END()?.symbol;
-        edits.push(...this.ensureNewline(this.getHiddenToLeft(end), tokenRange(end).start));
-        edits.push(...this.visit(ctx.END()));
+        if (endNode) {
+            const end = endNode.symbol;
+            edits.push(...this.ensureNewline(this.getHiddenToLeft(end), tokenRange(end).start));
+            edits.push(...this.visit(endNode));
+        }
         return edits;
     }
 
-    visitCaseConditional(ctx: Maql.CaseConditionalContext) {
+    override visitCaseConditional = (ctx: CaseConditionalContext): TextEdit[] => {
         const edits: TextEdit[] = this.defaultResult();
         for (const when of ctx.WHEN()) {
             const token = when.symbol;
@@ -542,17 +574,17 @@ class MaqlFormatter
         }
         edits.push(...this.visitChildren(ctx));
         return edits;
-    }
+    };
 
-    visitTransFunction(ctx: Maql.TransFunctionContext): TextEdit[] {
+    override visitTransFunction = (ctx: TransFunctionContext): TextEdit[] => {
         const token = ctx.NEXT() ?? ctx.NEXTPERIOD() ?? ctx.PREVIOUS() ?? ctx.PREVIOUSPERIOD();
-        const text = token?.text;
+        const text = token?.getText();
         const edited = text ? formatTransFunction(text) : undefined;
         if (!token || !edited || text === edited) return this.defaultResult();
         const range = tokenRange(token.symbol);
         if (!this.inRange(range)) return this.defaultResult();
         return [TextEdit.replace(range, edited)];
-    }
+    };
 
     /**
      * Shortens whitespace, trims trailing spaces, inserts string at the start of the last line
@@ -599,7 +631,7 @@ class MaqlFormatter
         return tokens
             .map((token) => {
                 if (!token.text || this.formattedTokens.has(token.tokenIndex)) return null;
-                if (token.type === Maql.MaqlParser.WS) {
+                if (token.type === MaqlParser.WS) {
                     const range = tokenRange(token);
                     const edited = this.formatWhitespace(token.text, finalInline, finalNewline);
                     if (token.text !== edited) {
@@ -632,7 +664,7 @@ class MaqlFormatter
         tokens.forEach((token, idx) => {
             if (!token.text || this.formattedTokens.has(token.tokenIndex)) return;
             this.formattedTokens.add(token.tokenIndex);
-            if (token.type === Maql.MaqlParser.WS) {
+            if (token.type === MaqlParser.WS) {
                 const range = tokenRange(token);
                 const edited = prevIsLineComment
                     ? "\n" + this.indentSpaces
@@ -643,7 +675,7 @@ class MaqlFormatter
                     edits.push(TextEdit.replace(range, edited));
                 }
             }
-            prevIsLineComment = token.type === Maql.MaqlParser.Comment;
+            prevIsLineComment = token.type === MaqlParser.Comment;
         });
         return edits;
     }
@@ -671,20 +703,20 @@ class MaqlFormatter
 
     private getHiddenToLeft(token: Token): Token[] {
         if (token.tokenIndex < 0 || token.tokenIndex >= this.stream.size) return [];
-        return this.stream.getHiddenTokensToLeft(token.tokenIndex, -1);
+        return this.stream.getHiddenTokensToLeft(token.tokenIndex, -1) ?? [];
     }
 
     private getHiddenToRight(token: Token): Token[] {
         if (token.tokenIndex < 0 || token.tokenIndex >= this.stream.size) return [];
-        return this.stream.getHiddenTokensToRight(token.tokenIndex, -1);
+        return this.stream.getHiddenTokensToRight(token.tokenIndex, -1) ?? [];
     }
 }
 
 type FunctionCallCommonContext =
-    | Maql.FunctionCallContext
-    | Maql.FunctionCallRunContext
-    | Maql.FunctionCallRankContext
-    | Maql.FunctionCallLastFirstValueContext;
+    | FunctionCallContext
+    | FunctionCallRunContext
+    | FunctionCallRankContext
+    | FunctionCallLastFirstValueContext;
 
 function formatTransFunction(func: string): string {
     switch (func.toUpperCase()) {

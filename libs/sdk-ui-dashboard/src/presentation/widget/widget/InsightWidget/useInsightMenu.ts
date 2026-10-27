@@ -12,6 +12,10 @@ import { selectDashboardUserAutomationAlertsInContext } from "../../../../model/
 import { selectExecutionResultByRef } from "../../../../model/store/executionResults/executionResultsSelectors.js";
 import { selectCanCreateAutomation } from "../../../../model/store/permissions/permissionsSelectors.js";
 import { useDashboardCustomizationsContext } from "../../../dashboardContexts/DashboardCustomizationsContext.js";
+import {
+    addExploreMenuItem,
+    useExploreInsightMenuItem,
+} from "../../../insightEditor/useInsightEditorMenuItems.js";
 import { getDefaultInsightMenuItems } from "../../insightMenu/DefaultDashboardInsightMenu/getDefaultInsightMenuItems.js";
 import {
     type AlertingDisabledReason,
@@ -66,7 +70,12 @@ export const useInsightMenu = (
     const openMenu = useCallback(() => setIsMenuOpen(true), []);
 
     const { insightMenuItemsProvider } = useDashboardCustomizationsContext();
-    const defaultMenuItems = useDefaultMenuItems(config, setIsMenuOpen);
+    const exploreMenuItem = useExploreInsightMenuItem(insight, widget, closeMenu);
+    const builtInMenuItems = useDefaultMenuItems(config, setIsMenuOpen);
+    const defaultMenuItems = useMemo(
+        () => addExploreMenuItem(builtInMenuItems, exploreMenuItem),
+        [builtInMenuItems, exploreMenuItem],
+    );
 
     const menuItems = useMemo<IInsightMenuItem[]>(() => {
         return insightMenuItemsProvider && insight

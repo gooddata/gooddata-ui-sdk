@@ -2,7 +2,6 @@
 
 import { type CSSProperties, type ReactNode, useCallback, useEffect, useRef } from "react";
 
-import CustomEvent from "custom-event";
 import { throttle } from "lodash-es";
 
 import { GOODSTRAP_SCROLLED_EVENT } from "@gooddata/sdk-ui-kit";

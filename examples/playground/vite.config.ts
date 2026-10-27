@@ -230,6 +230,7 @@ export default defineConfig(({ mode }) => {
 
     return {
         plugins: [react()],
+
         build: {
             chunkSizeWarningLimit: 15000, // Increased to suppress warnings for large chunks
             rolldownOptions: {
@@ -239,12 +240,35 @@ export default defineConfig(({ mode }) => {
             },
         },
         optimizeDeps: {
+            // The SDK packages are excluded and served from source, so the dependency scanner does not crawl
+            // them. Vite would find their dependencies only when the browser requests them, the lazily loaded
+            // Analytical Designer of the dashboard included, and reload the page after each new batch.
+            entries: [
+                "index.html",
+                ...[
+                    ...packagesWithoutStyles,
+                    ...packagesWithStyles,
+                    "@gooddata/sdk-ui-analytical-designer",
+                ].map((pkg) => `../../libs/${pkg.split("/")[1]}/src/index.ts`),
+            ],
             exclude: [
                 "@codemirror/state",
                 "@codemirror/view",
                 ...packagesWithoutStyles,
                 ...packagesWithStyles,
             ],
+            rolldownOptions: {
+                // The dashboard can embed Analytical Designer, whose metric editor imports its Monaco worker with
+                // `?worker&url`. The dependency pre-bundler cannot load it, so the import stays external and
+                // Vite resolves it to the worker URL when it serves the pre-bundled chunk.
+                plugins: [
+                    {
+                        name: "external-worker-url",
+                        resolveId: (id: string) =>
+                            /\?worker(&url)?$/.test(id) ? { id, external: true } : null,
+                    },
+                ],
+            },
         },
         css: {
             preprocessorOptions: {

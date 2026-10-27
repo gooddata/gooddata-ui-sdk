@@ -82,7 +82,7 @@ test.describe(
 
             test(
                 "should show placeholder text during drag",
-                { tag: ["@pre-merge-isolated"] },
+                { tag: ["@isolated-default"] },
                 async ({ page }) => {
                     await visit(page, "dashboard/drag-drop-widgets");
                     await assertInEditMode(page);
@@ -119,7 +119,7 @@ test.describe(
 
             test(
                 "should remove widgets after drag and drop",
-                { tag: ["@pre-merge-isolated"] },
+                { tag: ["@isolated-default"] },
                 async ({ page }) => {
                     await visit(page, "dashboard/drag-drop-widgets");
                     await assertInEditMode(page);

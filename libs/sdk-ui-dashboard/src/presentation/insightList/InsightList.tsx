@@ -28,18 +28,20 @@ import {
 
 import { messages } from "../../locales.js";
 import { createInsightRequested } from "../../model/events/lab.js";
-import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
+import { useDashboardDispatch, useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
 import { useDashboardEventDispatch } from "../../model/react/useDashboardEventDispatch.js";
 import { useDashboardExecConfig } from "../../model/react/useWidgetExecConfig.js";
 import { selectBackendCapabilities } from "../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import {
     selectAllowCreateInsightRequest,
     selectEnableCatalogSmartSearchResults,
+    selectEnableInsightEditing,
     selectEnableVisualizationFilteringByTags,
     selectObjectAvailabilityConfig,
     selectSettings,
 } from "../../model/store/config/configSelectors.js";
 import { selectCanCreateVisualization } from "../../model/store/permissions/permissionsSelectors.js";
+import { uiActions } from "../../model/store/ui/index.js";
 import { selectInsightListLastUpdateRequested } from "../../model/store/ui/uiSelectors.js";
 import { selectRestrictedRichTextReferences } from "../../model/store/unavailableObjects/unavailableObjectsSelectors.js";
 import { selectCurrentUser } from "../../model/store/user/userSelectors.js";
@@ -238,13 +240,20 @@ export function InsightList({
     };
 
     const eventDispatch = useDashboardEventDispatch();
-    const createInsightRequestedEvent = useCallback((e: MouseEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
+    const dispatch = useDashboardDispatch();
+    const isInsightEditingEnabled = useDashboardSelector(selectEnableInsightEditing);
+    const createInsightRequestedEvent = useCallback(
+        (e: MouseEvent) => {
+            e.preventDefault();
+            e.stopPropagation();
 
-        eventDispatch(createInsightRequested());
-        // oxlint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+            eventDispatch(createInsightRequested());
+            if (isInsightEditingEnabled) {
+                dispatch(uiActions.openInsightEditor({ type: "new" }));
+            }
+        },
+        [eventDispatch, dispatch, isInsightEditingEnabled],
+    );
 
     const TABS_AND_SEARCHFIELD_HEIGHT = 70;
     const SEARCHFIELD_HEIGHT = 47;
@@ -254,7 +263,8 @@ export function InsightList({
     const dropdownListHeight = height && height - controlsHeight;
     const dropdownListLoading = isLoading && pagedInsights.length === 0;
     const showDropdownListTabs = initialLoadCompleted && !search;
-    const showNoDataCreateButton = allowCreateInsightRequest && canCreateVisualization;
+    const showNoDataCreateButton =
+        (allowCreateInsightRequest || isInsightEditingEnabled) && canCreateVisualization;
 
     return (
         <DropdownList

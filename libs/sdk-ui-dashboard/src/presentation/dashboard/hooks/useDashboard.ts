@@ -234,12 +234,16 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         return typeof dashboard === "string" ? idRef(dashboard) : dashboard;
     }, [dashboard]);
 
+    const enableInsightEditing = !!props.config?.enableInsightEditing;
     const insightWidgetComponentSet = useMemo<InsightWidgetComponentSet>(() => {
-        const defaultComponentSet = DefaultDashboardInsightComponentSetFactory(insightProvider);
+        const defaultComponentSet = DefaultDashboardInsightComponentSetFactory(
+            insightProvider,
+            enableInsightEditing,
+        );
         return InsightComponentSetProvider
             ? InsightComponentSetProvider(defaultComponentSet)
             : defaultComponentSet;
-    }, [InsightComponentSetProvider, insightProvider]);
+    }, [InsightComponentSetProvider, insightProvider, enableInsightEditing]);
 
     const attributeFilterComponentSet = useMemo<AttributeFilterComponentSet>(() => {
         return DefaultDashboardAttributeFilterComponentSetFactory(attributeFilterProvider);

@@ -345,6 +345,26 @@ export const selectAllowCreateInsightRequest: DashboardSelector<boolean> = creat
 );
 
 /**
+ * Returns whether the per-visualization permissions are on.
+ *
+ * @internal
+ */
+export const selectEnableVisualizationPermissions: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => !!state.settings?.enableVisualizationPermissions,
+);
+
+/**
+ * Returns whether the dashboard opens visualizations in the embedded Analytical Designer.
+ *
+ * @alpha
+ */
+export const selectEnableInsightEditing: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => state.enableInsightEditing ?? false,
+);
+
+/**
  * Returns whether the dashboard is in AI mode.
  *
  * @internal

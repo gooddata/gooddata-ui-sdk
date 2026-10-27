@@ -475,6 +475,7 @@ exports[`initialize dashboard handler > for any dashboard > should resolve confi
   "disablePersistentFiltersAcrossTabs": false,
   "disableUserFilterReset": false,
   "enableFilterValuesResolutionInDrillEvents": false,
+  "enableInsightEditing": false,
   "externalRecipient": undefined,
   "hideAddTabButton": false,
   "hideSaveAsNewButton": false,

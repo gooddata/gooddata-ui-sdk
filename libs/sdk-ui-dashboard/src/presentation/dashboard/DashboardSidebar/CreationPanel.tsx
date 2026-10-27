@@ -24,6 +24,9 @@ import {
     type IWrapCreatePanelItemWithDragComponent,
     type IWrapInsightListItemWithDragComponent,
 } from "../../dragAndDrop/types.js";
+import { InsightEditorCreatePanelItem } from "../../insightEditor/InsightEditorCreatePanelItem.js";
+import { InsightEditorPlaceholder } from "../../insightEditor/InsightEditorPlaceholder.js";
+import { useCanCreateInsightInEditor } from "../../insightEditor/useCanCreateInsightInEditor.js";
 
 import { DraggableInsightList } from "./DraggableInsightList/DraggableInsightList.js";
 import { SidebarCollapseToggle } from "./SidebarCollapseToggle.js";
@@ -65,9 +68,16 @@ export function CreationPanel(props: ICreationPanelProps) {
     const VisualizationSwitcherWidgetComponentSet = props.VisualizationSwitcherWidgetComponentSet!;
     const DashboardLayoutWidgetComponentSet = props.DashboardLayoutWidgetComponentSet!;
 
+    const canCreateInsightInEditor = useCanCreateInsightInEditor();
+
     const addItemPanelItems = useMemo(() => {
+        // A customization can wrap one of the two editor components, so either of them marks the editor.
+        const creating = InsightWidgetComponentSet.creating;
+        const isInsightEditorItem =
+            creating?.CreatePanelListItemComponent === InsightEditorCreatePanelItem ||
+            creating?.CreatingPlaceholderComponent === InsightEditorPlaceholder;
         const items = compact([
-            InsightWidgetComponentSet.creating,
+            (!isInsightEditorItem || canCreateInsightInEditor) && InsightWidgetComponentSet.creating,
             AttributeFilterComponentSet.creating,
             DashboardLayoutWidgetComponentSet.creating,
             VisualizationSwitcherWidgetComponentSet.creating,
@@ -109,6 +119,7 @@ export function CreationPanel(props: ICreationPanelProps) {
         WrapCreatePanelItemWithDragComponent,
         isAiLoading,
         isRailCollapsed,
+        canCreateInsightInEditor,
     ]);
 
     return (

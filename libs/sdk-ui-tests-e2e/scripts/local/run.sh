@@ -34,7 +34,7 @@ elif [[ -n "${1:-}" && "${1:-}" != --* ]]; then
 fi
 
 if [[ "$TEST_TYPE" == "isolated" ]]; then
-    PLAYWRIGHT_GREP="@pre-merge-isolated"
+    PLAYWRIGHT_GREP="@isolated"
 else
     while true; do
         PLAYWRIGHT_GREP=""

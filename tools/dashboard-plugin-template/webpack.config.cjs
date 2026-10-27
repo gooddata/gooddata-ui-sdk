@@ -182,6 +182,15 @@ module.exports = (_env, argv) => {
         },
         module: {
             rules: [
+                // The embedded Analytical Designer imports the Monaco editor worker with the Vite
+                // `?worker&url` syntax. webpack matches the query with ".js" appended, as the
+                // monaco-editor exports map puts the query before the extension.
+                {
+                    test: /[\\/]monaco-editor[\\/]/,
+                    resourceQuery: /^\?worker(&|$)/,
+                    sideEffects: true,
+                    loader: path.resolve(__dirname, "webpack.monacoWorker.loader.cjs"),
+                },
                 // TS source files in case TS is used
                 {
                     test: /\.tsx?$/,

@@ -1,5 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
+import { Vocabulary } from "antlr4ng";
 import { describe, expect, it } from "vitest";
 
 import { type AstType, type IPosition, MaqlParser } from "@gooddata/maql-antlr4ts";
@@ -8,6 +9,8 @@ import { MaqlMetric } from "../parseMaql.js";
 import { MaqlType } from "../types/hierarchy.js";
 
 import { findContext } from "./findContext.js";
+
+const vocabulary = new Vocabulary(MaqlParser.literalNames, MaqlParser.symbolicNames);
 
 describe("query context tests", () => {
     it.each([
@@ -105,7 +108,7 @@ describe("query context tests", () => {
             const realOffset = MaqlMetric.offset(offset);
             const position: IPosition = { line: 1, character: offset };
             const context = findContext(metric, position, realOffset);
-            const tokenName = (id: number) => MaqlParser.VOCABULARY.getSymbolicName(id);
+            const tokenName = (id: number) => vocabulary.getSymbolicName(id);
             const { leftFinalToken, caretToken, rightFinalToken } = context.tokens;
             const actualNodeStackType = context.nodeStack.map((node) => node.type);
             const actualTypes = context.expectedTypes.map((type) => MaqlType[type]);

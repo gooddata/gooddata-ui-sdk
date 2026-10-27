@@ -68,7 +68,11 @@ import { supportsAllAttributeValues } from "./backend_capabilities_selector.js";
 import { getFormatLocale } from "./bootstrap_selector.js";
 import { canApplyCustomSort } from "./chart_sort_selectors.js";
 import { getBucketsExtended } from "./extended_reference_point_selector.js";
-import { getActiveCalendars, getFeatureFlags } from "./feature_flag_selector.js";
+import {
+    enableImprovedMetricDateFilter,
+    getActiveCalendars,
+    getFeatureFlags,
+} from "./feature_flag_selector.js";
 import { getIntl } from "./intl_selector.js";
 import { getItemCache } from "./item_cache_selector.js";
 import {
@@ -302,8 +306,9 @@ function constructVisualizationMDObj(
     usedDateDatasets: IUsedDateDatasets,
     currentVisualizationProperties: IStoredVisualizationProperties,
     canApplySort: boolean,
-    appliedSort?: ISortItem[],
-    activeCalendars?: IActiveCalendars,
+    appliedSort: ISortItem[] | undefined,
+    activeCalendars: IActiveCalendars | undefined,
+    useEmptyValueHandling: boolean,
 ): IReportContent {
     const dateFilter = filters.find(FilterBar.isDateFilter);
     const dateFilterDateDatasetRef = dateFilter ? dateFilter.dateDatasetRef : undefined; // for PoP measures
@@ -313,7 +318,12 @@ function constructVisualizationMDObj(
         dateFilterDateDatasetRef,
         activeCalendars,
     });
-    const filtersMDObj = filtersToMetadata(filters, attributeFilterConfigs, dateDatasets);
+    const filtersMDObj = filtersToMetadata(
+        filters,
+        attributeFilterConfigs,
+        dateDatasets,
+        useEmptyValueHandling,
+    );
     const filtersProp = isEmpty(filtersMDObj) ? {} : { filters: filtersMDObj };
 
     const parametersMDObj = parametersToMetadata(parameterFilters);
@@ -370,6 +380,7 @@ export const currentReportMDObject = createSelector(
     VisualizationPropertiesSelectors.getExtendedReferencePointProperties,
     canApplyCustomSort,
     getActiveCalendars,
+    enableImprovedMetricDateFilter,
     (
         buckets,
         filters,
@@ -381,6 +392,7 @@ export const currentReportMDObject = createSelector(
         currentVisualizationProperties,
         applySort,
         activeCalendars,
+        useEmptyValueHandling,
     ) =>
         constructVisualizationMDObj(
             buckets,
@@ -394,6 +406,7 @@ export const currentReportMDObject = createSelector(
             applySort,
             undefined,
             activeCalendars,
+            useEmptyValueHandling,
         ),
 );
 
@@ -409,6 +422,7 @@ export const currentReportMDObjectExtended = createSelector(
     canApplyCustomSort,
     getAppliedSort,
     getActiveCalendars,
+    enableImprovedMetricDateFilter,
     (
         buckets,
         filtersExtended,
@@ -421,6 +435,7 @@ export const currentReportMDObjectExtended = createSelector(
         applySort,
         appliedSort,
         activeCalendars,
+        useEmptyValueHandling,
     ) =>
         constructVisualizationMDObj(
             buckets,
@@ -434,6 +449,7 @@ export const currentReportMDObjectExtended = createSelector(
             applySort,
             appliedSort,
             activeCalendars,
+            useEmptyValueHandling,
         ),
 );
 

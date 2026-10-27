@@ -5,3 +5,6 @@ interface Window {
     // this variable is set before e2e and causes local identifiers to be deterministic for recording snapshots
     useSafeLocalIdentifiersForE2e: boolean;
 }
+
+// The lazy insight editor chunk imports the stylesheets of Analytical Designer for the bundler.
+declare module "*.css" {}

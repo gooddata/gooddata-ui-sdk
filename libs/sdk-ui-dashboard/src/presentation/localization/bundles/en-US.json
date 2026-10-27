@@ -3774,5 +3774,37 @@
     "dashboard_add_filter.menu.parameter": {
         "text": "Parameter",
         "crowdinContext": "Menu item label for adding a dashboard parameter control"
+    },
+    "insightEditor.menu.explore": {
+        "text": "Explore from here",
+        "crowdinContext": "Open visualization in AD overlay"
+    },
+    "addPanel.insight": {
+        "text": "Visualization",
+        "crowdinContext": "Option to add visualization widget to dashboard"
+    },
+    "insightEditor.filterContext.dateFilterInapplicable": {
+        "text": "Filter context cannot be kept because the date filter in Dashboards cannot be applied to this visualization.",
+        "crowdinContext": "Warning when date filter cannot be applied to a visualization"
+    },
+    "insightEditor.filterContext.invalidFilterItemsCount": {
+        "text": "Filter context cannot be kept because the visualization applied more than 20 items on filter bar",
+        "crowdinContext": "Warning when too many filter items are applied (exceeds 20 item limit)"
+    },
+    "insightEditor.filterContext.tookTooLong": {
+        "text": "It took too long to keep filter context for this visualization. Please try exploring the visualization again.",
+        "crowdinContext": "Timeout error message when keeping filter context takes too long"
+    },
+    "insightEditor.filterContext.failed": {
+        "text": "Filter context cannot be kept for this visualization. Please try exploring the visualization again.",
+        "crowdinContext": "Warning when the dashboard filters cannot pass to the visualization editor because of an unexpected error"
+    },
+    "insightEditor.dialog.label": {
+        "text": "Visualization editor",
+        "crowdinContext": "Accessible name of the overlay where the user edits or explores a visualization of the dashboard"
+    },
+    "insightEditor.save.placementFailed": {
+        "text": "The visualization is saved, but it cannot be added to the dashboard.",
+        "crowdinContext": "Error toast when a visualization saved in the editor cannot be placed on the dashboard"
     }
 }

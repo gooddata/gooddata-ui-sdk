@@ -8,11 +8,6 @@ import { readFile } from "fs/promises";
 const STUBBED_PACKAGE_PREFIXES = ["monaco-editor/", "monaco-languageclient/"];
 const STUBBED_MODULES = ["/esm/MetricComponent/Form/MaqlEditorField/MaqlEditorEditor.js"];
 const STUB_MARKER = "?validate-esm-stub";
-// Vite's `?worker&url` / `?url` imports evaluate to the asset's URL string. The query has to go before
-// Node resolves the specifier, because an `exports` map such as `./*` -> `./esm/vs/*.js` would otherwise
-// append `.js` to the query instead of the file name.
-const URL_IMPORT_QUERY = /\?(?:worker&)?url$/;
-const URL_MARKER = "?validate-esm-url";
 // Only Monaco may import CSS; the package itself ships none.
 const MONACO_CSS = /\/monaco-editor\/.*\.css$/;
 
@@ -56,10 +51,6 @@ ${declarations}`;
 }
 
 export async function resolve(specifier, context, nextResolve) {
-    if (URL_IMPORT_QUERY.test(specifier)) {
-        const resolved = await nextResolve(specifier.replace(URL_IMPORT_QUERY, ""), context);
-        return { ...resolved, url: resolved.url + URL_MARKER };
-    }
     const resolved = await nextResolve(specifier, context);
     return isStubbed(specifier, resolved.url) ? { ...resolved, url: resolved.url + STUB_MARKER } : resolved;
 }
@@ -68,10 +59,6 @@ export async function load(url, context, nextLoad) {
     if (url.endsWith(STUB_MARKER)) {
         const source = await readFile(new URL(url), "utf8");
         return { format: "module", source: stubSource(exportedNames(source)), shortCircuit: true };
-    }
-    if (url.endsWith(URL_MARKER)) {
-        const source = `export default ${JSON.stringify(url.slice(0, -URL_MARKER.length))};`;
-        return { format: "module", source, shortCircuit: true };
     }
     if (MONACO_CSS.test(new URL(url).pathname)) {
         return { format: "module", source: "", shortCircuit: true };
