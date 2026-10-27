@@ -14,7 +14,7 @@ test.beforeEach(async ({ page }) => {
 test.describe("Many data", { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } }, () => {
     test(
         "should render a chart component over the data point limit",
-        { tag: ["@pre-merge-isolated"] },
+        { tag: ["@isolated-default"] },
         async ({ page }) => {
             await visit(page, "visualizations/manydata/pie-many-data");
             await waitChartComputed(page, ".s-pie-chart");
@@ -24,7 +24,7 @@ test.describe("Many data", { additionalWindowProperties: { useSafeLocalIdentifie
 
     test(
         "should render an insight view over the data point limit",
-        { tag: ["@pre-merge-isolated"] },
+        { tag: ["@isolated-default"] },
         async ({ page }) => {
             await visit(page, "visualizations/manydata/many-data-insight-view");
             await waitChartComputed(page, ".s-column-chart");

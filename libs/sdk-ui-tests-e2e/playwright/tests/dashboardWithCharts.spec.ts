@@ -16,7 +16,7 @@ test.describe(
     { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test.describe("rendering", {}, () => {
-            test("should render charts", { tag: ["@pre-merge-isolated"] }, async ({ page }) => {
+            test("should render charts", { tag: ["@isolated-default"] }, async ({ page }) => {
                 await visit(page, "dashboard/dashboard-tiger-charts");
 
                 // Check dashboard widget list contains expected chart names

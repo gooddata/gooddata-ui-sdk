@@ -2,18 +2,20 @@
 
 import {
     type ANTLRErrorListener,
-    type ANTLRErrorStrategy,
     CommonTokenStream,
+    type DefaultErrorStrategy,
     type ParserRuleContext,
-    type Token,
-} from "antlr4ts";
+} from "antlr4ng";
 
-import MaqlPkg, {
+import {
     type AstNode,
+    CaseInsensitiveCharStream,
+    MaqlAstVisitor,
+    MaqlLexer,
     type MaqlLexer as MaqlLexerType,
+    MaqlParser,
     type MaqlParser as MaqlParserType,
 } from "@gooddata/maql-antlr4ts";
-const { CaseInsensitiveCharStream, MaqlAstVisitor, MaqlLexer, MaqlParser } = MaqlPkg;
 
 /**
  * Class holding different representations of a MAQL query
@@ -63,7 +65,7 @@ class MaqlQuery {
         this._parser = new MaqlParser(this._tokenStream);
     }
 
-    addErrorListener(listener: ANTLRErrorListener<Token>): this {
+    addErrorListener(listener: ANTLRErrorListener): this {
         this._parser.addErrorListener(listener);
         this.notifyChangedConfiguration();
         return this;
@@ -75,7 +77,7 @@ class MaqlQuery {
         return this;
     }
 
-    setErrorHandler(errorHandler: ANTLRErrorStrategy): this {
+    setErrorHandler(errorHandler: DefaultErrorStrategy): this {
         this._parser.errorHandler = errorHandler;
         this.notifyChangedConfiguration();
         return this;

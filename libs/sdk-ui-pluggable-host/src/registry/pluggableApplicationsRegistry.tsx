@@ -168,17 +168,27 @@ function settingsForRequirements(ctx: IPlatformContext): IPlatformContext["setti
     };
 }
 
-function appMeetsRequirements(
+function workspacePermissionsForRequirements(
     {
-        requiredSettings,
         requiredWorkspacePermissions,
-        requiredOrganizationPermissions,
-        requiredEntitlements,
+        requiredWorkspacePermissionsInExportMode,
     }: PluggableApplicationRegistryItem,
+    ctx: IPlatformContext,
+): PluggableApplicationRegistryItem["requiredWorkspacePermissions"] {
+    if (ctx.isExportMode === true && requiredWorkspacePermissionsInExportMode !== undefined) {
+        return requiredWorkspacePermissionsInExportMode;
+    }
+    return requiredWorkspacePermissions;
+}
+
+function appMeetsRequirements(
+    app: PluggableApplicationRegistryItem,
     ctx: IPlatformContext,
     skipWorkspacePermissions: boolean,
     skipSettings: boolean,
 ): boolean {
+    const { requiredSettings, requiredOrganizationPermissions, requiredEntitlements } = app;
+    const requiredWorkspacePermissions = workspacePermissionsForRequirements(app, ctx);
     if (
         requiredSettings !== undefined &&
         !skipSettings &&
@@ -298,7 +308,7 @@ interface IResolveApplicationsOptions {
  * 4. Apply overrides from the remote registry to the merged list
  * 5. Filter out disabled applications (isEnabled: false)
  * 6. Filter by application scope - keep only apps whose applicationScope matches scope; if scope is undefined, no apps pass through
- * 7. Filter by requirements - check requiredSettings, requiredWorkspacePermissions, requiredOrganizationPermissions, and requiredEntitlements (embedded and export modes force the shell application flags on; `skipWorkspacePermissions` leaves requiredWorkspacePermissions to the caller)
+ * 7. Filter by requirements - check requiredSettings, requiredWorkspacePermissions, requiredOrganizationPermissions, and requiredEntitlements (embedded and export modes force the shell application flags on; export mode checks requiredWorkspacePermissionsInExportMode, when declared, in place of requiredWorkspacePermissions; `skipWorkspacePermissions` leaves requiredWorkspacePermissions to the caller)
  * 8. Sort by menuOrder (ascending)
  *
  * @param options - Resolution options; see {@link IResolveApplicationsOptions}

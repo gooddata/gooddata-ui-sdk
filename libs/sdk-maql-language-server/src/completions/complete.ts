@@ -1,7 +1,12 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { type CandidateRule, type CandidatesCollection, CodeCompletionCore, type TokenList } from "antlr4-c3";
-import { type Token } from "antlr4ts";
+import {
+    type CandidatesCollection,
+    CodeCompletionCore,
+    type ICandidateRule,
+    type TokenList,
+} from "antlr4-c3";
+import { type Token, Vocabulary } from "antlr4ng";
 import {
     CompletionItem,
     CompletionItemKind,
@@ -11,9 +16,7 @@ import {
     TextEdit,
 } from "vscode-languageserver";
 
-import MaqlPkg, { type IPosition } from "@gooddata/maql-antlr4ts";
-const { MaqlLexer, MaqlParser, escapeString } = MaqlPkg;
-
+import { type IPosition, MaqlLexer, MaqlParser, escapeString } from "@gooddata/maql-antlr4ts";
 import { type IParameterDefinition } from "@gooddata/sdk-model";
 
 import { type LabelContext, findLabelContext } from "../labelElements.js";
@@ -39,6 +42,9 @@ import { findContext, isFinal } from "./findContext.js";
 import { adjustSortText } from "./sort.js";
 
 const [tokenCompletions, ruleCompletions] = getTokenAndRuleCompletions(descriptions);
+
+// antlr4ng exposes the vocabulary only on parser instances, so build one from the static name tables
+const vocabulary = new Vocabulary(MaqlParser.literalNames, MaqlParser.symbolicNames);
 
 export async function resolve(
     item: CompletionItem,
@@ -160,11 +166,11 @@ function completeFromCandidateTokens(
 }
 
 function getTokenName(tokenId: number): string {
-    const literalName = MaqlParser.VOCABULARY.getLiteralName(tokenId);
-    if (literalName !== undefined) {
+    const literalName = vocabulary.getLiteralName(tokenId);
+    if (literalName !== null) {
         return literalName.slice(1, literalName.length - 1).toUpperCase();
     }
-    return MaqlParser.VOCABULARY.getDisplayName(tokenId);
+    return vocabulary.getDisplayName(tokenId) ?? String(tokenId);
 }
 
 /**
@@ -175,7 +181,7 @@ function getTokenName(tokenId: number): string {
  * because using the parser rules is more explicit than checking for type tokens.
  */
 function completeFromRules(
-    rules: Map<number, CandidateRule>,
+    rules: Map<number, ICandidateRule>,
     range: Range | undefined,
     ldmObjects: LdmObjects | undefined,
     allowedTypes: MaqlType[],
@@ -346,16 +352,14 @@ function createMetadataCompletionItem(metadataObject: ITigerMetadataObject, rang
  */
 function tokenToString(token: Token, offset: number): string | undefined {
     if (token.type === MaqlParser.UnterminatedString) {
-        return token.text
-            ?.slice(1, Math.min(token.text.length, offset - token.startIndex))
-            .replace(/\\"/g, '"');
+        return token.text?.slice(1, Math.min(token.text.length, offset - token.start)).replace(/\\"/g, '"');
     } else if (token.type === MaqlParser.String) {
         return token.text
-            ?.slice(1, Math.min(token.text.length - 1, offset - token.startIndex))
+            ?.slice(1, Math.min(token.text.length - 1, offset - token.start))
             .replace(/\\"/g, '"');
         // oxlint-disable-next-line eslint/no-negated-condition
     } else if (!isFinal(token)) {
-        return token.text?.slice(0, Math.min(token.text.length, offset - token.startIndex));
+        return token.text?.slice(0, Math.min(token.text.length, offset - token.start));
     } else {
         return undefined; // final tokens must not be used - their text value is not useful
     }

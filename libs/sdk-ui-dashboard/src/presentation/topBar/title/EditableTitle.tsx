@@ -5,9 +5,11 @@ import { defineMessage, useIntl } from "react-intl";
 import { EditableLabel } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectIsAiLoading } from "../../../model/store/config/configSelectors.js";
 import { selectDashboardTitle } from "../../../model/store/meta/metaSelectors.js";
 import { DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/dashboard.js";
 
+import { DefaultTitle } from "./DefaultTitle.js";
 import { TitleWrapper } from "./TitleWrapper.js";
 import { type ITitleProps } from "./types.js";
 
@@ -19,6 +21,17 @@ const placeholderMessage = defineMessage({ id: "untitled" });
 export function EditableTitle({ title, onTitleChanged }: ITitleProps) {
     const intl = useIntl();
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
+    const isAiLoading = useDashboardSelector(selectIsAiLoading);
+
+    if (isAiLoading) {
+        return (
+            <DefaultTitle
+                title={title || intl.formatMessage(placeholderMessage)}
+                onTitleChanged={onTitleChanged}
+            />
+        );
+    }
+
     return (
         <TitleWrapper>
             <EditableLabel

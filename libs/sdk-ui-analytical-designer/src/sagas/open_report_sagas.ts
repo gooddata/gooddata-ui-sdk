@@ -14,6 +14,7 @@ import {
     insightSorts,
     insightUri,
     insightVisualizationUrl,
+    isAllTimeDateFilter,
     isDateFilterGranularity,
     isRelativeDateFilter,
     isUriRef,
@@ -356,6 +357,21 @@ export function* failOnMissingDateFilterItems(insight: IInsight) {
     }
 }
 
+/**
+ * Whether one of the insight's relative date filters has a granularity AD cannot load. All time is
+ * supported: it is stored as the real All time filter (ALL_TIME_GRANULARITY) when it carries the empty
+ * date values mode.
+ */
+export function hasDateFilterWithUnsupportedGranularity(insight: IInsight): boolean {
+    return insight.insight.filters
+        .filter(isRelativeDateFilter)
+        .some(
+            (filter) =>
+                !isAllTimeDateFilter(filter) &&
+                !isDateFilterGranularity(filter.relativeDateFilter.granularity),
+        );
+}
+
 const missingItemsOf = (error: unknown): ReadonlyArray<IMissingDateFilterItem> | undefined =>
     isMissingInsightItemsError(error) ? error.missingItems : undefined;
 
@@ -393,14 +409,7 @@ export function* fetchReport(projectId: string, reportId: string) {
             sideloadInsightItems,
         );
 
-        const hasFilterWithInvalidGranularity = insight.insight.filters
-            .filter(isRelativeDateFilter)
-            .some((filter) => {
-                const granularity = filter.relativeDateFilter.granularity;
-                return !isDateFilterGranularity(granularity);
-            });
-
-        if (hasFilterWithInvalidGranularity) {
+        if (hasDateFilterWithUnsupportedGranularity(insight)) {
             const reset: IApplicationResetCarrier = yield call(selectOpenReportFailureReset);
             yield put(openReportFailed(reset, false, "incorrectMetadata"));
             // uses delay, must be called after previous call to not block it

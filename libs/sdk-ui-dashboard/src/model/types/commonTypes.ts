@@ -280,6 +280,25 @@ export type DashboardConfig = {
     allowCreateInsightRequest?: boolean;
 
     /**
+     * Opens visualizations in Analytical Designer, embedded on top of the dashboard.
+     *
+     * @remarks
+     * When on, the dashboard offers these actions to users with the permissions they need:
+     * "Explore from here" in the widget menu in view mode, "Edit" in the widget menu in edit mode,
+     * the new visualization item in the edit mode panel and the create button in the empty
+     * visualization list. Analytical Designer loads lazily when one of them opens it.
+     *
+     * `@gooddata/sdk-ui-analytical-designer` and its stylesheets load with it. Analytical Designer
+     * imports the Monaco editor worker with the Vite `?worker&url` syntax: a Vite dev server needs the
+     * `optimizeDeps` plugin and a webpack host needs a loader for it, see the README of that package.
+     *
+     * Defaults to false.
+     *
+     * @alpha
+     */
+    enableInsightEditing?: boolean;
+
+    /**
      * Specify which render mode will be use d for initial rendering.
      *
      * @remarks

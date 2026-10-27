@@ -6,7 +6,7 @@
     "gs.header.accessibility.label": "Global application header",
     "gs.header.href.accessibility": "Go to homepage",
     "gs.header.logo.title.accessibility": "{organizationName} logo",
-    "gs.header.mainMenu.ariaLabel": "Main Menu",
+    "gs.header.mainMenu.ariaLabel": "Main menu",
     "gs.header.menu.accessibility.label": "Global navigation",
     "gs.header.account.title": "Account",
     "gs.header.slack": "Slack",

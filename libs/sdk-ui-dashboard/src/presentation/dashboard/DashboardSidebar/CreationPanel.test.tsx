@@ -7,7 +7,9 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IUiResizableSidebarState } from "@gooddata/sdk-ui-kit";
 
+import { type InsightWidgetComponentSet } from "../../componentDefinition/types.js";
 import { type DraggableContentItemType } from "../../dragAndDrop/types.js";
+import { InsightEditorPlaceholder } from "../../insightEditor/InsightEditorPlaceholder.js";
 import { createInternalIntl } from "../../localization/createInternalIntl.js";
 
 // `isolate: false` shares one module graph per worker, so the modules mocked below may already have
@@ -63,11 +65,16 @@ function componentSet<T>(type: DraggableContentItemType, label: string) {
     } as unknown as T;
 }
 
-function panel() {
+function panel(
+    InsightWidgetComponentSet = componentSet<InsightWidgetComponentSet>(
+        "insight-placeholder",
+        "insight item",
+    ),
+) {
     return (
         <RawIntlProvider value={createInternalIntl()}>
             <CreationPanel
-                InsightWidgetComponentSet={componentSet("insight-placeholder", "insight item")}
+                InsightWidgetComponentSet={InsightWidgetComponentSet}
                 AttributeFilterComponentSet={componentSet("attributeFilter-placeholder", "filter item")}
                 DashboardLayoutWidgetComponentSet={componentSet("dashboardLayoutListItem", "layout item")}
                 VisualizationSwitcherWidgetComponentSet={componentSet(
@@ -113,6 +120,18 @@ describe("CreationPanel", () => {
         rerender(panel());
 
         await expect(screen.findByText("Visualization")).rejects.toThrow();
+    });
+
+    it("hides a wrapped insight editor item when the user cannot create insights in the editor", () => {
+        const insightSet = componentSet<{ creating: object }>("insight-placeholder", "insight item");
+        insightSet.creating = {
+            ...insightSet.creating,
+            CreatingPlaceholderComponent: InsightEditorPlaceholder,
+        };
+        render(panel(insightSet as unknown as InsightWidgetComponentSet));
+
+        expect(screen.queryByRole("button", { name: "insight item" })).not.toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "filter item" })).toBeInTheDocument();
     });
 
     it("offers the rail search shortcut only when the sidebar collapses to a rail", () => {

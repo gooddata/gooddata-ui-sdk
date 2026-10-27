@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-analytical-designer: the insight date filter's empty date values mode is stored as the date filter's `emptyValueHandling` (behind `enableImprovedMetricDateFilter`); the legacy empty-string attribute filter is still read.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

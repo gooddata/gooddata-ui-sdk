@@ -2,8 +2,8 @@
 
 import { describe, expect, it } from "vitest";
 
-import MaqlPkg from "@gooddata/maql-antlr4ts";
-import { type ICatalogMeasure } from "@gooddata/sdk-model";
+import { SyntaxErrorListener } from "@gooddata/maql-antlr4ts";
+import type { ICatalogMeasure } from "@gooddata/sdk-model";
 
 import { LdmObjects } from "./metadata/model.js";
 import { MaqlMetric } from "./parseMaql.js";
@@ -109,7 +109,6 @@ describe("renderParameterDefaults", () => {
     });
 
     it("produces MAQL that still parses, for defaults full of awkward characters", () => {
-        const { SyntaxErrorListener } = MaqlPkg;
         for (const defaultValue of [
             'say "hi"',
             "back\\slash",

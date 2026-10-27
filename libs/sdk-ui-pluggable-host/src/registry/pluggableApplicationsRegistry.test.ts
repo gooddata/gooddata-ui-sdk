@@ -730,6 +730,93 @@ describe("resolveApplications", () => {
                 expect(result).toHaveLength(0);
             });
 
+            it("asks the export-mode workspace permission on an export", () => {
+                const result = resolveApplications({
+                    localApps: [
+                        externalApp({
+                            id: "a",
+                            menuOrder: 1,
+                            requiredWorkspacePermissions: { canManageWorkspace: true },
+                            requiredWorkspacePermissionsInExportMode: { canViewWorkspace: true },
+                        }),
+                    ],
+                    remoteRegistry: undefined,
+                    ctx: ctxWith({
+                        workspacePermissions: { canAccessWorkbench: true, canManageProject: false },
+                        isExportMode: true,
+                    }),
+                    scope: "workspace",
+                });
+
+                expect(result.map((a) => a.id)).toEqual(["a"]);
+            });
+
+            it("drops an app on an export when its export-mode workspace permission is missing", () => {
+                const result = resolveApplications({
+                    localApps: [
+                        externalApp({
+                            id: "a",
+                            menuOrder: 1,
+                            requiredWorkspacePermissions: { canManageWorkspace: true },
+                            requiredWorkspacePermissionsInExportMode: { canViewWorkspace: true },
+                        }),
+                    ],
+                    remoteRegistry: undefined,
+                    ctx: ctxWith({
+                        workspacePermissions: { canAccessWorkbench: false, canManageProject: false },
+                        isExportMode: true,
+                    }),
+                    scope: "workspace",
+                });
+
+                expect(result).toHaveLength(0);
+            });
+
+            it("asks the export-mode workspace permission on an export, in place of an override", () => {
+                const result = resolveApplications({
+                    localApps: [
+                        externalApp({
+                            id: "a",
+                            menuOrder: 1,
+                            requiredWorkspacePermissions: { canManageWorkspace: true },
+                            requiredWorkspacePermissionsInExportMode: { canViewWorkspace: true },
+                        }),
+                    ],
+                    remoteRegistry: remoteRegistry({
+                        overrides: {
+                            a: { requiredWorkspacePermissions: { canAnalyze: true } },
+                        },
+                    }),
+                    ctx: ctxWith({
+                        workspacePermissions: { canAccessWorkbench: true, canAnalyzeWorkspace: false },
+                        isExportMode: true,
+                    }),
+                    scope: "workspace",
+                });
+
+                expect(result.map((a) => a.id)).toEqual(["a"]);
+            });
+
+            it("ignores the export-mode workspace permission outside an export", () => {
+                const result = resolveApplications({
+                    localApps: [
+                        externalApp({
+                            id: "a",
+                            menuOrder: 1,
+                            requiredWorkspacePermissions: { canManageWorkspace: true },
+                            requiredWorkspacePermissionsInExportMode: { canViewWorkspace: true },
+                        }),
+                    ],
+                    remoteRegistry: undefined,
+                    ctx: ctxWith({
+                        workspacePermissions: { canAccessWorkbench: true, canManageProject: false },
+                    }),
+                    scope: "workspace",
+                });
+
+                expect(result).toHaveLength(0);
+            });
+
             it("excludes app when required permission is false", () => {
                 const local = [
                     externalApp({

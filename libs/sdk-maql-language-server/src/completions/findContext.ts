@@ -1,14 +1,16 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { type Token, type TokenStream } from "antlr4ts";
+import { type Token, type TokenStream } from "antlr4ng";
 
-import MaqlPkg, {
+import {
+    AbstractAstVisitor,
     type AstNode,
     type FunctionNode,
     type IPosition,
+    MaqlParser,
     type OrderByElementNode,
+    positionInRange,
 } from "@gooddata/maql-antlr4ts";
-const { AbstractAstVisitor, MaqlParser, positionInRange } = MaqlPkg;
 
 import { type MaqlMetric } from "../parseMaql.js";
 import { MaqlType, abstractValueTypes } from "../types/hierarchy.js";
@@ -163,10 +165,10 @@ function findCaretToken(
     // first find the caret token
     for (let tokenIndex = 0; tokenIndex < tokenStream.size; tokenIndex++) {
         const nextToken = tokenStream.get(tokenIndex);
-        if (nextToken.startIndex < offset || (nextToken.startIndex === offset && isFinal(caretToken))) {
+        if (nextToken.start < offset || (nextToken.start === offset && isFinal(caretToken))) {
             caretToken = nextToken;
         }
-        if (nextToken.startIndex >= offset) break;
+        if (nextToken.start >= offset) break;
     }
     for (let tokenIndex = caretToken.tokenIndex; tokenIndex < tokenStream.size; tokenIndex++) {
         const nextToken = tokenStream.get(tokenIndex);

@@ -14,6 +14,7 @@ import {
 import { type EventDispatcher } from "./events.js";
 import { messagesSliceName, messagesSliceReducer } from "./messages/messagesSlice.js";
 import { type OptionsDispatcher } from "./options.js";
+import { queueActivateConversationMiddleware } from "./queues/queue.activateConversationAction.js";
 import { queueMiddleware } from "./queues/queue.newMessage.js";
 import { rootSaga } from "./sideEffects/index.js";
 
@@ -61,6 +62,7 @@ export const getStore = (
                 },
             })
                 .prepend(sagaMiddleware as any)
+                .prepend(queueActivateConversationMiddleware)
                 .prepend(queueMiddleware),
         devTools: {
             name: "GenAI",

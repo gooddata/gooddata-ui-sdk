@@ -17,7 +17,7 @@ test.describe("RichText", { additionalWindowProperties: { useSafeLocalIdentifier
             await visit(page, "dashboard/rich-text");
         });
 
-        test("should render rich text in view mode", { tag: ["@pre-merge-isolated"] }, async ({ page }) => {
+        test("should render rich text in view mode", { tag: ["@isolated-default"] }, async ({ page }) => {
             const richText = page.locator(".s-dash-item-1_0 .s-rich-text");
             await expect(richText).toBeVisible();
 
@@ -27,7 +27,7 @@ test.describe("RichText", { additionalWindowProperties: { useSafeLocalIdentifier
 
         test(
             "should change rich text widget content in edit mode",
-            { tag: ["@pre-merge-isolated"] },
+            { tag: ["@isolated-default"] },
             async ({ page }) => {
                 await enterEditMode(page);
 
@@ -59,7 +59,7 @@ test.describe("RichText", { additionalWindowProperties: { useSafeLocalIdentifier
 
         test(
             "should remove rich text widget in edit mode",
-            { tag: ["@pre-merge-isolated"] },
+            { tag: ["@isolated-default"] },
             async ({ page }) => {
                 await enterEditMode(page);
 

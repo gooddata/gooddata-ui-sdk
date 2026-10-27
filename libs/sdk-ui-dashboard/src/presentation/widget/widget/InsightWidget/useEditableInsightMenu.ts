@@ -17,6 +17,7 @@ import {
 } from "../../../../model/store/automations/automationsSelectors.js";
 import { selectDrillTargetsByWidgetRef } from "../../../../model/store/drillTargets/drillTargetsSelectors.js";
 import { useDashboardCustomizationsContext } from "../../../dashboardContexts/DashboardCustomizationsContext.js";
+import { addEditMenuItem, useEditInsightMenuItem } from "../../../insightEditor/useInsightEditorMenuItems.js";
 import { getDefaultInsightEditMenuItems } from "../../insightMenu/DefaultDashboardInsightMenu/getDefaultInsightEditMenuItems.js";
 import { type IInsightMenuItem } from "../../insightMenu/types.js";
 
@@ -56,8 +57,9 @@ export const useEditableInsightMenu = (
     );
 
     const { insightMenuItemsProvider } = useDashboardCustomizationsContext();
+    const editMenuItem = useEditInsightMenuItem(insight, widget);
     const defaultMenuItems = useMemo<IInsightMenuItem[]>(() => {
-        return getDefaultInsightEditMenuItems(widget, {
+        const builtInMenuItems = getDefaultInsightEditMenuItems(widget, {
             intl,
             dispatch,
             eventDispatch,
@@ -65,7 +67,9 @@ export const useEditableInsightMenu = (
             includeConfigurations,
             useWidgetDeleteDialog,
         });
+        return addEditMenuItem(builtInMenuItems, editMenuItem);
     }, [
+        editMenuItem,
         dispatch,
         eventDispatch,
         intl,

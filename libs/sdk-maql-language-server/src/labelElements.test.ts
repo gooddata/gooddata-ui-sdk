@@ -5,7 +5,7 @@
 import { dedent } from "ts-dedent";
 import { describe, expect, it } from "vitest";
 
-import { type IPosition } from "@gooddata/maql-antlr4ts";
+import type { IPosition } from "@gooddata/maql-antlr4ts";
 import { type TigerObjectType, tigerIdTypeToObjectType } from "@gooddata/sdk-backend-tiger";
 
 import { LabelContext, findLabelContext, labelElementsFinder } from "./labelElements.js";

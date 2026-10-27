@@ -2,8 +2,12 @@
 
 import { CompletionItemKind, InsertTextFormat } from "vscode-languageserver";
 
-import MaqlPkg, { type FunctionAstType, type FunctionDefinition } from "@gooddata/maql-antlr4ts";
-const { MaqlParser, functionDefinitions } = MaqlPkg;
+import {
+    type FunctionAstType,
+    type FunctionDefinition,
+    MaqlParser,
+    functionDefinitions,
+} from "@gooddata/maql-antlr4ts";
 
 import { type ResolveTag } from "../docs/index.js";
 import { getTokenIdFromName } from "../parseMaql.js";

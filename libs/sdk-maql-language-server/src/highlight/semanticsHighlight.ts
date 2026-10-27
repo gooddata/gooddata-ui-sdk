@@ -1,23 +1,26 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { type CommonTokenStream, type ParserRuleContext, type Token } from "antlr4ts";
 import {
+    type CommonTokenStream,
     type ErrorNode,
-    type ParseTreeListener,
     ParseTreeWalker,
+    type ParserRuleContext,
     type TerminalNode,
-} from "antlr4ts/tree/index.js";
+    type Token,
+} from "antlr4ng";
 import { type Range, type SemanticTokensLegend } from "vscode-languageserver";
 
-import MaqlPkg, {
+import {
     type AttributeContext,
+    AttributeTypeContext,
     type FactContext,
-    type MaqlParserListener,
+    MaqlLexer,
+    MaqlParserListener,
     type NumericContext,
+    NumericTypeContext,
     type ObjectContext,
     type ParameterContext,
 } from "@gooddata/maql-antlr4ts";
-const { AttributeTypeContext, MaqlLexer, NumericTypeContext } = MaqlPkg;
 
 import { LanguageId } from "../constants.js";
 import { MaqlMetric } from "../parseMaql.js";
@@ -299,81 +302,86 @@ export type HighlightToken = {
  * Parse tree listener that assigns semantic tokens to nodes of a MAQL parse tree, usually by directly mapping
  * from a MAQL token, but is able to use more complicated logic in special cases.
  */
-class SemanticTokenizer implements MaqlParserListener, ParseTreeListener {
+class SemanticTokenizer extends MaqlParserListener {
     private readonly tokens: HighlightToken[] = [];
     private skipNodes: boolean = false;
 
-    constructor(private readonly stream: CommonTokenStream) {}
+    constructor(private readonly stream: CommonTokenStream) {
+        super();
+    }
 
-    visitTerminal(node: TerminalNode) {
+    override visitTerminal(node: TerminalNode): void {
         if (this.skipNodes) return;
         const token = node.symbol;
         this.pushHiddenTokensToLeft(token.tokenIndex);
         this.pushToken(token);
     }
 
-    visitErrorNode(node: ErrorNode) {
+    override visitErrorNode(node: ErrorNode): void {
         if (node.symbol.tokenIndex === -1) return; // conjured up symbol -> skip
         this.visitTerminal(node); // for syntax highlighting error nodes do not differ from terminal nodes
     }
 
-    enterObject(_: ObjectContext) {
+    enterObject(_: ObjectContext): void {
         this.skipNodes = true;
     }
 
-    exitObject(ctx: ObjectContext, objectTypeId: number = -1) {
+    exitObject(ctx: ObjectContext, objectTypeId: number = -1): void {
         this.skipNodes = false;
-        this.pushHiddenTokensToLeft(ctx.start.tokenIndex);
+        if (ctx.start) {
+            this.pushHiddenTokensToLeft(ctx.start.tokenIndex);
+        }
         this.pushRule(ctx, objectTypeId);
     }
 
-    enterAttribute = this.enterObject;
+    override enterAttribute = this.enterObject;
 
-    exitAttribute(ctx: AttributeContext) {
-        const typeCtx = ctx.tryGetChild(0, AttributeTypeContext);
+    override exitAttribute = (ctx: AttributeContext): void => {
+        const typeCtx = ctx.getRuleContext(0, AttributeTypeContext);
         const type =
             typeCtx?.ATTRIBUTE() ??
             typeCtx?.COMPUTED_ATTRIBUTE_OBJECT() ??
             typeCtx?.LABEL() ??
             typeCtx?.DATASET();
         this.exitObject(ctx, this.getTokenId(type));
-    }
+    };
 
-    enterNumeric = this.enterObject;
+    override enterNumeric = this.enterObject;
 
-    exitNumeric(ctx: NumericContext) {
-        const typeCtx = ctx.tryGetChild(0, NumericTypeContext);
+    override exitNumeric = (ctx: NumericContext): void => {
+        const typeCtx = ctx.getRuleContext(0, NumericTypeContext);
         this.exitObject(ctx, this.getTokenId(typeCtx?.FACT() ?? typeCtx?.METRIC_TYPE()));
-    }
+    };
 
-    exitFact(ctx: FactContext) {
+    override exitFact = (ctx: FactContext): void => {
         this.exitObject(ctx, this.getTokenId(ctx.FACT()));
-    }
+    };
 
-    enterParameter = this.enterObject;
+    override enterParameter = this.enterObject;
 
-    exitParameter(ctx: ParameterContext) {
+    override exitParameter = (ctx: ParameterContext): void => {
         this.exitObject(ctx, this.getTokenId(ctx.PARAMETER()));
-    }
+    };
 
-    private getTokenId = (node?: TerminalNode): number | undefined => node?.symbol.type;
+    private getTokenId = (node?: TerminalNode | null): number | undefined => node?.symbol.type;
 
     private pushHiddenTokensToLeft(tokenIndex: number) {
         if (tokenIndex < 0 || this.stream.size < tokenIndex) return;
-        this.stream.getHiddenTokensToLeft(tokenIndex, -1).forEach((token) => this.pushToken(token));
+        (this.stream.getHiddenTokensToLeft(tokenIndex, -1) ?? []).forEach((token) => this.pushToken(token));
     }
 
     private pushToken(token: Token) {
         if (SKIP_TOKENS.includes(token.type)) return;
         const tokenType: number = tokenTypeMap.get(token.type) ?? TokenTypes.Type;
         if (!token.text) return;
-        this.push(token.text, token.line, token.charPositionInLine, tokenType);
+        this.push(token.text, token.line, token.column, tokenType);
     }
 
     private pushRule(rule: ParserRuleContext, objectTypeId: number) {
+        if (!rule.start) return;
         const tokenType: number = getObjectTypeTokenType(objectTypeId) ?? TokenTypes.Type;
         const range = antlrContextRange(rule.start, rule.stop);
-        this.push(rule.text, range.startLine, range.startCharacter, tokenType);
+        this.push(rule.getText(), range.startLine, range.startCharacter, tokenType);
     }
 
     private push(

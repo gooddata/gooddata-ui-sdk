@@ -27,7 +27,7 @@ test.describe(
     () => {
         test(
             "should disable the save button when nothing changed",
-            { tag: ["@pre-merge-isolated"] },
+            { tag: ["@isolated-default"] },
             async ({ page }) => {
                 await visit(page, "dashboard/insight");
                 await enterEditMode(page);
@@ -39,7 +39,7 @@ test.describe(
 
         test(
             "should use the insight title as the placeholder",
-            { tag: ["@pre-merge-isolated"] },
+            { tag: ["@isolated-default"] },
             async ({ page }) => {
                 await visit(page, "dashboard/insight");
                 await enterEditMode(page);
@@ -58,7 +58,7 @@ test.describe(
 
         test(
             "should show a message when no visualization matches the search",
-            { tag: ["@pre-merge-isolated"] },
+            { tag: ["@isolated-default"] },
             async ({ page }) => {
                 await visit(page, "dashboard/insight");
                 await enterEditMode(page);
@@ -79,7 +79,7 @@ test.describe(
 
         test(
             "should show the no data message when the filter yields no data",
-            { tag: ["@pre-merge-isolated"] },
+            { tag: ["@isolated-default"] },
             async ({ page }) => {
                 await visit(page, "dashboard/insight");
                 await enterEditMode(page);
@@ -106,7 +106,7 @@ test.describe(
 
         test(
             "(SEPARATE) should rename an existing insight",
-            { tag: ["@pre-merge-isolated"] },
+            { tag: ["@isolated-default"] },
             async ({ page }) => {
                 await visit(page, "dashboard/insight");
                 await enterEditMode(page);

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-tests-reference-workspace",
-    "version": "11.65.0-alpha.9",
+    "version": "11.65.0-alpha.10",
     "private": true,
     "description": "GoodData SDK reference workspace",
     "license": "LicenseRef-LICENSE",

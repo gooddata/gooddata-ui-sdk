@@ -2,6 +2,7 @@
 
 // oxlint-disable typescript-eslint/require-array-sort-compare
 
+import { Vocabulary } from "antlr4ng";
 import { describe, expect, it } from "vitest";
 import { type CompletionItem, type CompletionItemKind, Range, TextEdit } from "vscode-languageserver";
 
@@ -836,11 +837,12 @@ function stringToCompletionItem(label: string, insertText?: string, range?: Rang
 }
 
 describe("all MAQL tokens either have custom descriptions or are not suggested", () => {
+    const vocabulary = new Vocabulary(MaqlLexer.literalNames, MaqlLexer.symbolicNames);
     it.each(
-        Array(MaqlLexer.VOCABULARY.maxTokenType)
+        Array(vocabulary.maxTokenType)
             .fill(1)
-            .map((v, i) => [MaqlLexer.VOCABULARY.getSymbolicName(v + i), v + i]),
-    )(`%s token`, (_name: string | undefined, idx: number) => {
+            .map((v, i) => [vocabulary.getSymbolicName(v + i), v + i]),
+    )(`%s token`, (_name: string | null, idx: number) => {
         const desc = descriptions.filter((desc) => desc.triggerTokenId === idx);
         // Token should either be ignored or have descriptions
         expect(ignoredTokens.has(idx) || desc.length > 0).toBe(true);

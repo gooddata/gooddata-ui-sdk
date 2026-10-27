@@ -52,6 +52,7 @@ export function ConversationDashboardContent(props: ConversationDashboardContent
                     dashboard.identifier,
                     dashboardStatus,
                     useHostedDashboards,
+                    conversation?.localId,
                 );
             } else {
                 config.linkHandler?.({
@@ -65,6 +66,7 @@ export function ConversationDashboardContent(props: ConversationDashboardContent
                         dashboard.identifier,
                         dashboardStatus,
                         useHostedDashboards,
+                        conversation?.localId,
                     ),
                     dashboard,
                     insights: insights ?? [],

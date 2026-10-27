@@ -165,9 +165,9 @@ function numberOrUndefined(value: string | number | undefined): number | undefin
 const ALL_TIME_GRANULARITY: AllTimeGranularity = "ALL_TIME_GRANULARITY";
 
 /**
- * The `emptyValueHandling` a metric date filter stores for the empty date values mode. Like the filter
- * bar's `""` attribute filter, only exclude and only are stored: include is the backend default for All
- * time and the picker does not offer it with a period.
+ * The `emptyValueHandling` a date filter stores for the empty date values mode. Like the legacy `""`
+ * attribute filter, only exclude and only are stored: include is the backend default for All time and
+ * the picker does not offer it with a period.
  */
 export function emptyValueHandlingToMd(emptyDateValuesFilter: EmptyDateValuesFilterMode | undefined): {
     emptyValueHandling?: EmptyValues;
@@ -296,11 +296,12 @@ function measureFilterToMd(filter: IDecoratedMetricFilter): IVisualizationObject
     };
 }
 
-function dateFilterToMd({
-    filterConfig,
-    dateDatasetRef,
-}: IDateFilter): IVisualizationObjectAbsoluteDateFilter | IVisualizationObjectRelativeDateFilter {
+function dateFilterToMd(
+    { filterConfig, dateDatasetRef, emptyDateValuesFilter }: IDateFilter,
+    useEmptyValueHandling: boolean,
+): IVisualizationObjectAbsoluteDateFilter | IVisualizationObjectRelativeDateFilter {
     const [from, to] = filterConfig?.interval || [undefined, undefined];
+    const emptyValueHandlingProp = useEmptyValueHandling ? emptyValueHandlingToMd(emptyDateValuesFilter) : {};
 
     if (filterConfig?.type === "absolute") {
         return {
@@ -308,6 +309,21 @@ function dateFilterToMd({
                 dataSet: dateDatasetRef,
                 from: from as string | undefined,
                 to: to as string | undefined,
+                ...emptyValueHandlingProp,
+            },
+        };
+    }
+
+    // All time is stored without bounds, a no-op the execution drops. To carry the empty date values mode
+    // it has to be the real All time filter, the one the execution sends.
+    if ((from === undefined || to === undefined) && !isEmpty(emptyValueHandlingProp)) {
+        return {
+            relativeDateFilter: {
+                dataSet: dateDatasetRef,
+                granularity: ALL_TIME_GRANULARITY,
+                from: 0,
+                to: 0,
+                ...emptyValueHandlingProp,
             },
         };
     }
@@ -320,6 +336,7 @@ function dateFilterToMd({
             from: numberOrUndefined(from),
             to: numberOrUndefined(to),
             ...(filterConfig?.boundedFilter ? { boundedFilter: filterConfig.boundedFilter } : {}),
+            ...emptyValueHandlingProp,
         }) as IVisualizationObjectRelativeDateFilter["relativeDateFilter"],
     };
 }
@@ -457,9 +474,10 @@ function rankingFilterToMd(filter: IRankingFilter): IVisualizationObjectRankingF
 function filterToMd(
     filter: IFilter,
     attributeFilterConfigs: IAttributeFilterConfigs,
+    useEmptyValueHandling: boolean,
 ): VisualizationObjectExtendedFilter {
     if (FilterBar.isDateFilter(filter)) {
-        return dateFilterToMd(filter);
+        return dateFilterToMd(filter, useEmptyValueHandling);
     } else if (FilterBar.isAttributeFilter(filter)) {
         return attributeFilterToMd(filter, attributeFilterConfigs);
     } else if (FilterBar.isMeasureValueFilter(filter)) {
@@ -814,8 +832,10 @@ function findDateAttributeDfRef(
 }
 
 /**
- * Creates an attribute filter for empty date values based on the emptyDateValuesFilter mode.
- * The filter uses the same granularity as the date filter to ensure consistency.
+ * LEGACY representation of the empty date values mode, written while `enableImprovedMetricDateFilter` is
+ * off: an attribute filter on the date attribute of the date filter's granularity with the single empty
+ * string element. With the flag on the mode is written as the date filter's `emptyValueHandling`
+ * instead; both representations are always read (see transformVisualizationFilters).
  * Returns undefined if no filter should be created (e.g., for "include" mode).
  */
 function createEmptyDateValuesAttributeFilter(
@@ -858,18 +878,23 @@ function createEmptyDateValuesAttributeFilter(
     return undefined;
 }
 
+/**
+ * @param useEmptyValueHandling - whether the empty date values mode is written as the date filter's
+ *  `emptyValueHandling` (the `enableImprovedMetricDateFilter` flag) or as the legacy `""` attribute filter,
+ *  which needs `dateDatasets` to find the date attribute.
+ */
 export function filtersToMetadata(
     filters: ReadonlyArray<IFilter>,
     attributeFilterConfigs: IAttributeFilterConfigs = {},
     dateDatasets?: IDateDatasets,
+    useEmptyValueHandling = false,
 ) {
     const result: VisualizationObjectExtendedFilter[] = [];
 
     filters.forEach((filter) => {
-        result.push(filterToMd(filter, attributeFilterConfigs));
+        result.push(filterToMd(filter, attributeFilterConfigs, useEmptyValueHandling));
 
-        // Add empty date values attribute filter if applicable
-        if (FilterBar.isDateFilter(filter)) {
+        if (!useEmptyValueHandling && FilterBar.isDateFilter(filter)) {
             const emptyValuesFilter = createEmptyDateValuesAttributeFilter(filter, dateDatasets);
             if (emptyValuesFilter) {
                 result.push(emptyValuesFilter);
@@ -1220,7 +1245,8 @@ function transformToDateFilterConfig(visualizationFilter: IVisualizationObjectDa
     if (isVisualizationObjectRelativeDateFilter(visualizationFilter)) {
         const { granularity, from, to, boundedFilter } = visualizationFilter.relativeDateFilter;
 
-        if (from === undefined || to === undefined) {
+        // All time: stored without bounds, or as the real All time filter when it carries a mode
+        if (granularity === ALL_TIME_GRANULARITY || from === undefined || to === undefined) {
             return undefined;
         }
 
@@ -1268,6 +1294,8 @@ function transformVisualizationDateFilter(
         type: "dataSet",
     } as IdentifierRef;
 
+    const emptyDateValuesFilter = getDateFilterEmptyValueHandling(visualizationFilter);
+
     return {
         type: "date",
         localIdentifier: generateBucketItemIdentifier(),
@@ -1277,6 +1305,7 @@ function transformVisualizationDateFilter(
             : { overTimeComparisonType }),
         filterConfig: transformToDateFilterConfig(visualizationFilter),
         dateDatasetRef: datasetRef,
+        ...(emptyDateValuesFilter ? { emptyDateValuesFilter } : {}),
     };
 }
 
@@ -1543,7 +1572,8 @@ function transformVisualizationFilters(
     const visualizationFilters = metadataObject.filters || [];
     const dateDatasets = additionalData?.dateDatasets || undefined;
 
-    // First pass: identify empty date values attribute filters
+    // First pass: identify LEGACY empty date values attribute filters (the single-"" element filters on a
+    // date attribute), kept readable so insights saved before the mode moved to `emptyValueHandling` open
     const emptyDateValuesFilters: Record<string, { mode: "only" | "exclude"; dateDatasetRef: ObjRef }> = {};
     const emptyDateValuesFilterIndices = new globalThis.Set<number>();
 
@@ -1580,11 +1610,12 @@ function transformVisualizationFilters(
                 firstDateFilterTransformed,
             );
 
-            // Check if there's a matching empty date values filter
+            // the legacy "" attribute filter sets the mode unless the date filter carries it itself; either
+            // way the attribute filter is dropped, so re-saving migrates the insight to the field
             const dateDatasetRef = df.dateDatasetRef;
             const key = objRefToString(dateDatasetRef);
             const emptyValuesInfo = emptyDateValuesFilters[key];
-            if (emptyValuesInfo) {
+            if (emptyValuesInfo && !df.emptyDateValuesFilter) {
                 df = { ...df, emptyDateValuesFilter: emptyValuesInfo.mode };
             }
 

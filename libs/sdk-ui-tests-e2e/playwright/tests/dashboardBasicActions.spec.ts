@@ -17,7 +17,7 @@ test.describe(
     () => {
         test(
             "should discard changes to an existing dashboard",
-            { tag: ["@pre-merge-isolated"] },
+            { tag: ["@isolated-default"] },
             async ({ page }) => {
                 // Navigate and enter edit mode (mirrors beforeEach)
                 await visit(page, "dashboard/insight");
@@ -47,7 +47,7 @@ test.describe(
 
         test(
             "should stay in edit mode when the discard dialog is closed",
-            { tag: ["@pre-merge-isolated"] },
+            { tag: ["@isolated-default"] },
             async ({ page }) => {
                 // Navigate and enter edit mode (mirrors beforeEach)
                 await visit(page, "dashboard/insight");

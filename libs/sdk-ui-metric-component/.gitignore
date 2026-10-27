@@ -2,3 +2,4 @@ esm
 dist
 node_modules
 rush-logs
+worker

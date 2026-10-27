@@ -67,6 +67,13 @@ export type {
     isDashboardItemVisualizationContent,
 } from "./model/types/commonTypes.js";
 export {
+    type IInsightEditorWidgetTarget,
+    type IInsightEditorInsightTarget,
+    type IInsightEditorPlaceholderTarget,
+    type IInsightEditorNewTarget,
+    type InsightEditorTarget,
+} from "./model/types/insightEditorTypes.js";
+export {
     type ICustomWidget,
     type ICustomWidgetDefinition,
     type ICustomWidgetBase,
@@ -1224,6 +1231,24 @@ export {
     isCreateInsightRequested,
 } from "./model/events/lab.js";
 export {
+    type IDashboardInsightEditorOpened,
+    type IDashboardInsightEditorOpenedPayload,
+    type IDashboardInsightEditorInsightSaved,
+    type IDashboardInsightEditorInsightSavedPayload,
+    type IDashboardInsightEditorCancelled,
+    type IDashboardInsightEditorCancelledPayload,
+    type IDashboardInsightEditorCacheResetRequested,
+    type IDashboardInsightEditorCacheResetRequestedPayload,
+    insightEditorOpened,
+    insightEditorInsightSaved,
+    insightEditorCancelled,
+    insightEditorCacheResetRequested,
+    isDashboardInsightEditorOpened,
+    isDashboardInsightEditorInsightSaved,
+    isDashboardInsightEditorCancelled,
+    isDashboardInsightEditorCacheResetRequested,
+} from "./model/events/insightEditor.js";
+export {
     type ICreateAttributeHierarchyRequested,
     type IDeleteAttributeHierarchyRequested,
     createAttributeHierarchyRequested,
@@ -1340,6 +1365,7 @@ export {
     selectIsSaveAsNewButtonHidden,
     selectAllowUnfinishedFeatures,
     selectAllowCreateInsightRequest,
+    selectEnableInsightEditing,
     selectIsAiMode,
     selectAiReasoningTitle,
     selectIsAiGenerating,
@@ -1855,6 +1881,7 @@ export {
     selectKpiDeleteDialogWidgetLayoutPath,
     selectKpiDeleteDialogWidgetCoordinates,
     selectInsightListLastUpdateRequested,
+    selectInsightEditorTarget,
     selectIsWidgetLoadingAdditionalDataByWidgetRef,
     selectIsFilterAttributeSelectionOpen,
     selectSelectedFilterIndex,

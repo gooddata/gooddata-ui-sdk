@@ -2,7 +2,7 @@
 
 import { type CompletionItemKind, type CompletionList } from "vscode-languageserver";
 
-import { type AstNode, type FunctionNode } from "@gooddata/maql-antlr4ts";
+import type { AstNode, FunctionNode } from "@gooddata/maql-antlr4ts";
 
 import { Kind } from "./descriptions.js";
 import { type ICaretContext } from "./findContext.js";

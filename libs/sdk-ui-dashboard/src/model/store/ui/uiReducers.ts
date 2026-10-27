@@ -27,6 +27,7 @@ import {
     type IScheduleEmailContext,
 } from "../../../types.js";
 import { type IDashboardWidgetOverlay } from "../../types/commonTypes.js";
+import { type InsightEditorTarget } from "../../types/insightEditorTypes.js";
 
 import {
     type FilterViewDialogMode,
@@ -495,6 +496,14 @@ const changeIgnoreExecutionTimestamp: UiReducer<PayloadAction<boolean>> = (state
     state.ignoreExecutionTimestamp = action.payload;
 };
 
+const openInsightEditor: UiReducer<PayloadAction<InsightEditorTarget>> = (state, action) => {
+    state.insightEditorTarget = action.payload;
+};
+
+const closeInsightEditor: UiReducer = (state) => {
+    state.insightEditorTarget = undefined;
+};
+
 const setIncompatibleDefaultFiltersOverrideMessage: UiReducer = (state) => {
     state.filterValidationMessages.incompatibleDefaultFiltersOverride = true;
 };
@@ -605,4 +614,6 @@ export const uiReducers = {
     openTimezoneDialog,
     closeTimezoneDialog,
     setVisualizationSwitcherActiveVisualization,
+    openInsightEditor,
+    closeInsightEditor,
 };

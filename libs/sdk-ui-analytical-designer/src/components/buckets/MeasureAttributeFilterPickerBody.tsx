@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import CustomEvent from "custom-event";
 import { useIntl } from "react-intl";
 
 import { GOODSTRAP_SCROLLED_EVENT, Input } from "@gooddata/sdk-ui-kit";

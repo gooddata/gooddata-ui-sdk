@@ -18,7 +18,7 @@ test.describe(
         test(
             "should show the hidden tooltip on the date filter configuration option",
             {
-                tag: ["@pre-merge-isolated"],
+                tag: ["@isolated-default"],
             },
             async ({ page }) => {
                 await visit(page, "dashboard/dashboard-tiger");
@@ -45,7 +45,7 @@ test.describe(
         test(
             "should show the hidden tooltip on the attribute filter configuration option",
             {
-                tag: ["@pre-merge-isolated"],
+                tag: ["@isolated-default"],
             },
             async ({ page }) => {
                 await visit(page, "dashboard/dashboard-tiger-hide-filters");
@@ -73,7 +73,7 @@ test.describe(
         test(
             "should show the hidden tooltip on the date filter icon in edit mode",
             {
-                tag: ["@pre-merge-isolated"],
+                tag: ["@isolated-default"],
             },
             async ({ page }) => {
                 await visit(page, "dashboard/dashboard-tiger");
@@ -113,7 +113,7 @@ test.describe(
         test(
             "should show the hidden tooltip on the attribute filter icon in edit mode",
             {
-                tag: ["@pre-merge-isolated"],
+                tag: ["@isolated-default"],
             },
             async ({ page }) => {
                 await visit(page, "dashboard/dashboard-tiger-hide-filters");
@@ -151,7 +151,7 @@ test.describe(
         test(
             "should show the locked tooltip on the date filter configuration option",
             {
-                tag: ["@pre-merge-isolated"],
+                tag: ["@isolated-default"],
             },
             async ({ page }) => {
                 await visit(page, "dashboard/dashboard-tiger");
@@ -178,7 +178,7 @@ test.describe(
         test(
             "should show the locked tooltip on the attribute filter configuration option",
             {
-                tag: ["@pre-merge-isolated"],
+                tag: ["@isolated-default"],
             },
             async ({ page }) => {
                 await visit(page, "dashboard/dashboard-tiger-hide-filters");
@@ -206,7 +206,7 @@ test.describe(
         test(
             "should show the locked tooltip on the date filter icon in edit mode",
             {
-                tag: ["@pre-merge-isolated"],
+                tag: ["@isolated-default"],
             },
             async ({ page }) => {
                 await visit(page, "dashboard/dashboard-tiger");
@@ -246,7 +246,7 @@ test.describe(
         test(
             "should show the locked tooltip on the date filter icon in view mode",
             {
-                tag: ["@pre-merge-isolated"],
+                tag: ["@isolated-default"],
             },
             async ({ page }) => {
                 await visit(page, "dashboard/dashboard-tiger-readonly-date-filter");

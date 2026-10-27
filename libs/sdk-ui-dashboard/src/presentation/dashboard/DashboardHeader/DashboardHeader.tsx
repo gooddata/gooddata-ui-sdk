@@ -2,8 +2,6 @@
 
 import { type ReactElement } from "react";
 
-import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
-import { selectIsAiLoading } from "../../../model/store/config/configSelectors.js";
 import {
     ScheduledEmailAutomationsProvider,
     ScheduledEmailConnector,
@@ -70,10 +68,7 @@ function TopBarWrapper() {
 
 function FilterBarWrapper() {
     const filterBarProps = useFilterBarProps();
-    const isAiLoading = useDashboardSelector(selectIsAiLoading);
-    if (isAiLoading) {
-        return null;
-    }
+
     return <FilterBar {...filterBarProps} />;
 }
 
@@ -84,10 +79,7 @@ function CancelEditDialogWrapper() {
 
 export function DashboardTabsWrapper() {
     const dashboardTabsProps = useDashboardTabsProps();
-    const isAiLoading = useDashboardSelector(selectIsAiLoading);
-    if (isAiLoading) {
-        return null;
-    }
+
     return <DashboardTabs {...dashboardTabsProps} />;
 }
 

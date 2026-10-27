@@ -388,8 +388,8 @@ export function areFiltersEqual(filter1: IFilter, filter2: IFilter): boolean {
     } else if (isAbsoluteDateFilter(filter1) && isAbsoluteDateFilter(filter2)) {
         // An automation does not store a granularity that has no period literal, so the granularity counts
         // only when both filters have one.
-        const { granularity: granularity1, ...values1 } = absoluteDateFilterValues(filter1);
-        const { granularity: granularity2, ...values2 } = absoluteDateFilterValues(filter2);
+        const { granularity: granularity1, ...values1 } = dateFilterValues(filter1);
+        const { granularity: granularity2, ...values2 } = dateFilterValues(filter2);
 
         return (
             isEqual(values1, values2) &&
@@ -403,12 +403,20 @@ export function areFiltersEqual(filter1: IFilter, filter2: IFilter): boolean {
     return isEqual(filter1, filter2);
 }
 
+/**
+ * Values to compare date filters by. A bounded range never matches an empty date, so a missing
+ * `emptyValueHandling` counts as "exclude" there; on an all-time filter it means no filtering at all.
+ */
 export function dateFilterValues(filter: IDateFilter) {
-    if (isAbsoluteDateFilter(filter)) {
-        return absoluteDateFilterValues(filter);
+    const values = isAbsoluteDateFilter(filter)
+        ? absoluteDateFilterValues(filter)
+        : relativeDateFilterValues(filter);
+
+    if (values.emptyValueHandling !== undefined || isAllTimeDateFilterFixed(filter)) {
+        return values;
     }
 
-    return relativeDateFilterValues(filter);
+    return { ...values, emptyValueHandling: "exclude" as const };
 }
 
 export function isFilterIgnoredByWidget(filter: FilterContextItem, widget: ExtendedDashboardWidget): boolean {

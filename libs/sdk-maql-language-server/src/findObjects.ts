@@ -1,17 +1,19 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { type ParseTreeListener, ParseTreeWalker, type TerminalNode } from "antlr4ts/tree/index.js";
+import { ParseTreeWalker } from "antlr4ng";
 
-import MaqlPkg, {
+import {
     type AttributeContext,
+    AttributeTypeContext,
     type FactContext,
-    type MaqlParserListener,
+    MaqlParser,
+    MaqlParserListener,
     type NumericContext,
+    NumericTypeContext,
     type ObjectContext,
     type ParameterContext,
     type PromptContext,
 } from "@gooddata/maql-antlr4ts";
-const { AttributeTypeContext, MaqlParser, NumericTypeContext } = MaqlPkg;
 import { isTigerType, tigerIdTypeToObjectType } from "@gooddata/sdk-backend-tiger";
 import { type ObjectType } from "@gooddata/sdk-model";
 
@@ -33,69 +35,71 @@ export function findAllObjects(metric: MaqlMetric): IMaqlObjectAt[] {
 }
 
 // TODO rewrite using AbstractAstVisitor
-class ObjectFinder implements MaqlParserListener, ParseTreeListener {
-    visitTerminal?: (/*@NotNull*/ node: TerminalNode) => void; // to satisfy TS2559 - weak type detection
-
-    constructor(readonly objects: IMaqlObjectAt[] = []) {}
+class ObjectFinder extends MaqlParserListener {
+    constructor(readonly objects: IMaqlObjectAt[] = []) {
+        super();
+    }
 
     pushObject(ctx: ObjectContext, type: string | undefined): void {
-        const lbrace = ctx.tryGetToken(MaqlParser.LBRACE, 0);
-        const sep = ctx.tryGetToken(MaqlParser.SEP, 0);
-        const id = ctx.tryGetToken(MaqlParser.ID, 0);
-        const rbrace = ctx.tryGetToken(MaqlParser.RBRACE, 0);
+        const lbrace = ctx.getToken(MaqlParser.LBRACE, 0);
+        const sep = ctx.getToken(MaqlParser.SEP, 0);
+        const id = ctx.getToken(MaqlParser.ID, 0);
+        const rbrace = ctx.getToken(MaqlParser.RBRACE, 0);
+        const start = ctx.start;
         // check that the object is complete
         if (
-            lbrace === undefined ||
+            lbrace === null ||
             lbrace.symbol.tokenIndex === -1 ||
-            sep === undefined ||
+            sep === null ||
             sep.symbol.tokenIndex === -1 ||
-            id === undefined ||
+            id === null ||
             id.symbol.tokenIndex === -1 ||
-            rbrace === undefined ||
+            rbrace === null ||
             rbrace.symbol.tokenIndex === -1 ||
-            type === undefined
+            type === undefined ||
+            start === null
         ) {
             return;
         }
-        const range = antlrContextRange(ctx.start, ctx.stop);
+        const range = antlrContextRange(start, ctx.stop);
         // `actualType` keeps the MAQL spelling so diagnostics quote what the author wrote.
         //NOTE: The lexer accepts any casing, so fold it before the type is looked up.
         const tigerType = normalizeMaqlObjectType(type.toLowerCase());
         this.objects.push({
             tigerType: isTigerType(tigerType) ? tigerType : undefined,
             actualType: type,
-            id: ctx.ID().text,
+            id: id.getText(),
             ref: {
                 type: (tigerIdTypeToObjectType as unknown as Record<string, ObjectType | undefined>)[
                     tigerType
                 ],
-                identifier: ctx.ID().text,
+                identifier: id.getText(),
             },
             range: range,
             offsets: {
-                start: MaqlMetric.rawOffset(ctx.start.startIndex),
-                end: MaqlMetric.rawOffset((ctx.stop?.stopIndex ?? ctx.start.stopIndex) + 1),
+                start: MaqlMetric.rawOffset(start.start),
+                end: MaqlMetric.rawOffset((ctx.stop?.stop ?? start.stop) + 1),
             },
         });
     }
 
-    exitAttribute(ctx: AttributeContext) {
-        this.pushObject(ctx, ctx.tryGetRuleContext(0, AttributeTypeContext)?.text);
-    }
+    override exitAttribute = (ctx: AttributeContext): void => {
+        this.pushObject(ctx, ctx.getRuleContext(0, AttributeTypeContext)?.getText());
+    };
 
-    exitNumeric(ctx: NumericContext) {
-        this.pushObject(ctx, ctx.tryGetRuleContext(0, NumericTypeContext)?.text);
-    }
+    override exitNumeric = (ctx: NumericContext): void => {
+        this.pushObject(ctx, ctx.getRuleContext(0, NumericTypeContext)?.getText());
+    };
 
-    exitFact(ctx: FactContext) {
-        this.pushObject(ctx, ctx.tryGetToken(MaqlParser.FACT, 0)?.text);
-    }
+    override exitFact = (ctx: FactContext): void => {
+        this.pushObject(ctx, ctx.getToken(MaqlParser.FACT, 0)?.getText());
+    };
 
-    exitPrompt(ctx: PromptContext) {
-        this.pushObject(ctx, ctx.tryGetToken(MaqlParser.PROMPT, 0)?.text);
-    }
+    override exitPrompt = (ctx: PromptContext): void => {
+        this.pushObject(ctx, ctx.getToken(MaqlParser.PROMPT, 0)?.getText());
+    };
 
-    exitParameter(ctx: ParameterContext) {
-        this.pushObject(ctx, ctx.tryGetToken(MaqlParser.PARAMETER, 0)?.text);
-    }
+    override exitParameter = (ctx: ParameterContext): void => {
+        this.pushObject(ctx, ctx.getToken(MaqlParser.PARAMETER, 0)?.getText());
+    };
 }

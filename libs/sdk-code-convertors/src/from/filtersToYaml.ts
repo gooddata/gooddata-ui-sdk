@@ -4,6 +4,7 @@ import { Pair, YAMLMap, YAMLSeq } from "yaml";
 
 import { type ITigerCompoundCondition } from "@gooddata/api-client-tiger";
 import {
+    type EmptyValues,
     type IAbsoluteDateFilter,
     type IArbitraryAttributeFilterBody,
     type IAttributeElements,
@@ -178,10 +179,22 @@ export type WrittenFilter = { key: string; yaml: YAMLMap; filter: IFilter };
 type WrittenDateFilter = WrittenFilter & { carried?: WrittenFilter[] };
 
 /** @internal */
+/** @internal */
+export type DeclarativeFiltersToYamlOptions = {
+    /**
+     * Whether a date filter's connected attribute filter on the single empty string value is read as the
+     * date filter's `empty_values`: the representation insights saved before `emptyValueHandling` carry on
+     * their own (insight-level) date filters. A metric's such filter is one of its additional filters.
+     */
+    readLegacyEmptyValuesFilter?: boolean;
+};
+
+/** @internal */
 export function declarativeFiltersToYaml(
     entities: FromEntities,
     filters: IFilter[],
     errorContext?: IErrorContext,
+    { readLegacyEmptyValuesFilter = false }: DeclarativeFiltersToYamlOptions = {},
 ): YamlFilters {
     const filtersArray: Array<Pair> = [];
     const filtersMap: Record<string, YamlFilterMapEntry> = {};
@@ -220,6 +233,7 @@ export function declarativeFiltersToYaml(
             updateErrorContext(errorContext, {
                 path: [fi.toString()],
             }),
+            readLegacyEmptyValuesFilter,
         );
         if (!result) {
             return;
@@ -237,6 +251,7 @@ export function declarativeFiltersToYaml(
             updateErrorContext(errorContext, {
                 path: [dateFilter[1].toString()],
             }),
+            readLegacyEmptyValuesFilter,
         );
         if (!result) {
             return;
@@ -260,6 +275,7 @@ function declarativeFilterToYaml(
     claimKey: ClaimFilterKey,
     connectedAttributeFilters?: IFilter[],
     errorContext?: IErrorContext,
+    readLegacyEmptyValuesFilter = false,
 ): WrittenDateFilter | null {
     if (!isFilter(filter)) {
         return null;
@@ -280,6 +296,7 @@ function declarativeFilterToYaml(
             entities,
             claimKey,
             connectedAttributeFilters,
+            readLegacyEmptyValuesFilter,
             errorContext: updateErrorContext(errorContext, { path: ["absoluteDateFilter"] }),
         });
         return { key, yaml, filter, carried };
@@ -289,6 +306,7 @@ function declarativeFilterToYaml(
             entities,
             claimKey,
             connectedAttributeFilters,
+            readLegacyEmptyValuesFilter,
             errorContext: updateErrorContext(errorContext, { path: ["relativeDateFilter"] }),
         });
         return { key, yaml, filter, carried };
@@ -371,26 +389,42 @@ function declarativeFilterToYaml(
     throw newError(CoreErrorCode.FilterItemTypeNotSupported, [JSON.stringify(filter)], errorContext);
 }
 
-/** Adds `empty_values` and `with` to `map`, returning the filters written under the latter. */
+/**
+ * Adds `empty_values` and `with` to `map`, returning the filters written under the latter.
+ *
+ * `empty_values` is the date filter's own `emptyValueHandling`. An insight-level date filter saved before
+ * the field carried the mode as a connected attribute filter on the single empty string value instead
+ * (`readLegacyEmptyValuesFilter`): that filter is read as the mode when the date filter has none and is
+ * dropped either way, so the YAML always says `empty_values`.
+ */
 function processConnectedAttributeFilters(
     map: YAMLMap,
     connectedAttributeFilters: IFilter[],
-    entities: FromEntities,
-    claimKey: ClaimFilterKey,
-    errorContext?: IErrorContext,
+    {
+        entities,
+        claimKey,
+        emptyValueHandling,
+        readLegacyEmptyValuesFilter,
+        errorContext,
+    }: DateFilterEmitOptions,
 ): WrittenFilter[] {
-    // empty values filter
+    // empty values
 
-    const emptyValuesFilter = connectedAttributeFilters.find((filter) => detectEmptyValuesFilterType(filter));
+    const legacyEmptyValuesFilter = readLegacyEmptyValuesFilter
+        ? connectedAttributeFilters.find((filter) => detectEmptyValuesFilterType(filter))
+        : undefined;
+    const emptyValues =
+        emptyValueHandling ??
+        (legacyEmptyValuesFilter ? detectEmptyValuesFilterType(legacyEmptyValuesFilter) : undefined);
 
-    if (emptyValuesFilter) {
-        map.add(new Pair("empty_values", detectEmptyValuesFilterType(emptyValuesFilter)));
+    if (emptyValues) {
+        map.add(new Pair("empty_values", emptyValues));
     }
 
     // additional attribute filters
 
     const additionalAttributeFilters = connectedAttributeFilters.filter(
-        (filter) => filter !== emptyValuesFilter,
+        (filter) => filter !== legacyEmptyValuesFilter,
     );
 
     if (additionalAttributeFilters.length === 0) {
@@ -416,13 +450,16 @@ export type DateFilterEmitOptions = {
     entities: FromEntities;
     claimKey: ClaimFilterKey;
     connectedAttributeFilters?: IFilter[];
+    /** the date filter's own mode, written as `empty_values` */
+    emptyValueHandling?: EmptyValues;
+    readLegacyEmptyValuesFilter?: boolean;
     errorContext?: IErrorContext;
 };
 
 /** @internal */
 export function declarativeAbsoluteDateFilterToYaml(
     absoluteDateFilter: IAbsoluteDateFilter["absoluteDateFilter"],
-    { entities, claimKey, connectedAttributeFilters = [], errorContext }: DateFilterEmitOptions,
+    { connectedAttributeFilters = [], errorContext, ...options }: DateFilterEmitOptions,
 ): { yaml: YAMLMap; carried: WrittenFilter[] } {
     const map = new YAMLMap();
 
@@ -442,15 +479,13 @@ export function declarativeAbsoluteDateFilterToYaml(
     );
     map.add(new Pair("using", id));
 
-    // connected attribute filters
+    // empty values and connected attribute filters
 
-    const carried = processConnectedAttributeFilters(
-        map,
-        connectedAttributeFilters,
-        entities,
-        claimKey,
+    const carried = processConnectedAttributeFilters(map, connectedAttributeFilters, {
+        ...options,
+        emptyValueHandling: absoluteDateFilter.emptyValueHandling,
         errorContext,
-    );
+    });
 
     return { yaml: map, carried };
 }
@@ -472,7 +507,7 @@ function isRelativeDateFilterAllTime(
 /** @internal */
 export function declarativeRelativeDateFilterToYaml(
     relativeDateFilter: IRelativeDateFilter["relativeDateFilter"],
-    { entities, claimKey, connectedAttributeFilters = [], errorContext }: DateFilterEmitOptions,
+    { connectedAttributeFilters = [], errorContext, ...options }: DateFilterEmitOptions,
 ): { yaml: YAMLMap; carried: WrittenFilter[] } {
     const map = new YAMLMap();
 
@@ -502,13 +537,11 @@ export function declarativeRelativeDateFilterToYaml(
     );
     map.add(new Pair("using", id));
 
-    const carried = processConnectedAttributeFilters(
-        map,
-        connectedAttributeFilters,
-        entities,
-        claimKey,
+    const carried = processConnectedAttributeFilters(map, connectedAttributeFilters, {
+        ...options,
+        emptyValueHandling: relativeDateFilter.emptyValueHandling,
         errorContext,
-    );
+    });
 
     return { yaml: map, carried };
 }

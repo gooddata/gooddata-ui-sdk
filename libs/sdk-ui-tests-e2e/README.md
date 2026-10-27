@@ -56,7 +56,7 @@ npm run e2e:isolated:replay -- --ui --headed
 - The scenarios app's `BACKEND_URL` must point to `http://localhost:8080`
 - The scenarios app's `TEST_WORKSPACE_ID` must point to the static recorded workspace id (`c76e0537d0614abb0027f7c992656b964922506f`, exposed via `getRecordingsWorkspaceId` in `@gooddata/sdk-ui-tests-reference-workspace`)
 - Recorded mappings must exist
-- `PLAYWRIGHT_GREP` is set to `@pre-merge-isolated`
+- `PLAYWRIGHT_GREP` is set to `@isolated-default`
 
 #### Isolated: record
 

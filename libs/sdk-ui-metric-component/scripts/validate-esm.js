@@ -2,7 +2,7 @@
 
 import { register } from "module";
 
-// Bundlers load the Monaco CSS and worker URLs that the package imports. The hooks do the same in Node.
+// Bundlers load the Monaco CSS that the package imports. The hooks do the same in Node.
 register("./validate-esm-hooks.js", import.meta.url);
 
 await import("@gooddata/sdk-ui-metric-component");

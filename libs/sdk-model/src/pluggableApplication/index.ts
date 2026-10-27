@@ -352,6 +352,16 @@ export interface IPluggableApplicationMetaV1 {
     requiredWorkspacePermissions?: RequiredWorkspacePermissions;
 
     /**
+     * Workspace permissions and their values that must be set for the pluggable application to be
+     * accessible in export mode, in place of {@link IPluggableApplicationMetaV1.requiredWorkspacePermissions}.
+     *
+     * The export browser renders as the user who requested the export, so an application whose exports
+     * need less than its interactive UI declares that here. When not set, export mode uses
+     * `requiredWorkspacePermissions`.
+     */
+    requiredWorkspacePermissionsInExportMode?: RequiredWorkspacePermissions;
+
+    /**
      * Organization permissions that must be set for the pluggable application to be accessible for
      * the currently logged user.
      */

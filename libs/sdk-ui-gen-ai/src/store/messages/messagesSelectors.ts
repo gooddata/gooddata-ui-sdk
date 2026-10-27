@@ -40,7 +40,7 @@ export const asyncProcessSelector: (
             const data = state.conversationsData[state.currentConversation.localId];
             return data?.asyncProcess;
         }
-        return "loading";
+        return state.loaded && state.conversationsLoaded ? undefined : "loading";
     },
 );
 

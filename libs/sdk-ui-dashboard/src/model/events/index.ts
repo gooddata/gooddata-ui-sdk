@@ -92,6 +92,12 @@ import {
 } from "./insight.js";
 import { type IDashboardInsightDeleted } from "./insightDelete.js";
 import {
+    type IDashboardInsightEditorCacheResetRequested,
+    type IDashboardInsightEditorCancelled,
+    type IDashboardInsightEditorInsightSaved,
+    type IDashboardInsightEditorOpened,
+} from "./insightEditor.js";
+import {
     type IDashboardKpiWidgetChanged,
     type IDashboardKpiWidgetComparisonChanged,
     type IDashboardKpiWidgetConfigurationChanged,
@@ -290,6 +296,10 @@ export type DashboardEvents =
     | IDashboardTabRenamed
     | IDashboardParametersSelectionReset
     | IDashboardParametersChanged
+    | IDashboardInsightEditorOpened
+    | IDashboardInsightEditorInsightSaved
+    | IDashboardInsightEditorCancelled
+    | IDashboardInsightEditorCacheResetRequested
     // internal
     | ICreateInsightRequested
     | ICreateAttributeHierarchyRequested

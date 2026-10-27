@@ -1,6 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
-import MaqlPkg, {
+import {
+    AbstractAstVisitor,
     type AstNode,
     type FunctionNode,
     type GranularityNode,
@@ -8,8 +9,8 @@ import MaqlPkg, {
     type IdentifierNode,
     type OperatorNode,
     type StringLiteralNode,
+    positionInRange,
 } from "@gooddata/maql-antlr4ts";
-const { AbstractAstVisitor, positionInRange } = MaqlPkg;
 import { isTigerType, tigerIdTypeToObjectType } from "@gooddata/sdk-backend-tiger";
 
 import { normalizeMaqlObjectType } from "./maqlObjectTypes.js";

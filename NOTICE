@@ -11,9 +11,9 @@ This product includes a number of subcomponents with separate copyright notices 
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2026-10-26
+Date generated: 2026-10-27
 
-Revision ID: d8606b2768a48a06325391dbaf84f11d7174f90e
+Revision ID: 8eee4cae5b91c02ebdcccf9e294cd9cee012581f
 
 ================================================================================
 ================================================================================
@@ -125,7 +125,7 @@ Revision ID: d8606b2768a48a06325391dbaf84f11d7174f90e
 - @formatjs/intl-utils (2.3.0) [MIT]
 - @formatjs/ts-transformer (3.13.23) [MIT]
 - @gooddata/emailjs-mime-codec-new (3.0.2) [MIT]
-- @gooddata/maql-antlr4ts (0.5.1-02977c25.0) [MIT, BSD-3-Clause]
+- @gooddata/maql-antlr4ts (0.7.2) [MIT, BSD-3-Clause]
 - @html-validate/stylish (6.1.0) [MIT]
 - @inquirer/external-editor (1.0.3) [MIT]
 - @inquirer/figures (1.0.15) [MIT]
@@ -338,18 +338,16 @@ Revision ID: d8606b2768a48a06325391dbaf84f11d7174f90e
 - ansi-escapes (4.3.2) [MIT]
 - ansi-regex (5.0.1) [MIT]
 - ansi-styles (4.3.0) [MIT]
-- antlr4-c3 (1.1.16) [MIT]
-- antlr4ts (0.5.0-alpha.4) [BSD-3-Clause]
+- antlr4-c3 (3.4.4) [MIT]
+- antlr4ng (3.0.16) [BSD-3-Clause]
 - argparse (2.0.1) [Python-2.0]
 - aria-hidden (1.2.6) [MIT]
 - array-find-index (1.0.2) [MIT]
 - array-union (2.1.0) [MIT]
-- assert (2.1.0) [MIT]
 - assertion-error (2.0.1) [MIT]
 - ast-v8-to-istanbul (1.0.7) [MIT]
 - astral-regex (2.0.0) [MIT]
 - asynckit (0.4.0) [MIT]
-- available-typed-arrays (1.0.7) [MIT]
 - axios (1.20.0) [MIT]
 - axios-cache-interceptor (1.12.3) [MIT]
 - babel-plugin-macros (3.1.0) [MIT]
@@ -421,7 +419,6 @@ Revision ID: d8606b2768a48a06325391dbaf84f11d7174f90e
 - cssesc (3.0.0) [MIT]
 - csstype (3.2.3) [MIT]
 - currently-unhandled (0.4.1) [MIT]
-- custom-event (1.0.1) [MIT]
 - date-fns (4.1.0) [MIT]
 - date-fns-jalali (4.1.0-0) [MIT]
 - date-fns-tz (3.2.0) [MIT]
@@ -434,7 +431,6 @@ Revision ID: d8606b2768a48a06325391dbaf84f11d7174f90e
 - default-import (1.1.5) [MIT]
 - defaults (1.0.4) [MIT]
 - define-data-property (1.1.4) [MIT]
-- define-properties (1.2.1) [MIT]
 - delayed-stream (1.0.0) [MIT]
 - dequal (2.0.3) [MIT]
 - detect-libc (2.1.2) [Apache-2.0]
@@ -486,13 +482,11 @@ Revision ID: d8606b2768a48a06325391dbaf84f11d7174f90e
 - flat-cache (6.1.23) [MIT]
 - flatted (3.4.4) [ISC]
 - follow-redirects (1.16.1) [MIT]
-- for-each (0.3.5) [MIT]
 - form-data (4.0.6) [MIT]
 - fs-extra (10.1.0) [MIT]
 - fsevents (2.3.2) [MIT]
 - fsevents (2.3.3) [MIT]
 - function-bind (1.1.2) [MIT]
-- generator-function (2.0.1) [MIT]
 - geojson-vt (3.2.1) [ISC]
 - get-intrinsic (1.3.0) [MIT]
 - get-node-dimensions (1.2.1) [MIT]
@@ -549,27 +543,21 @@ Revision ID: d8606b2768a48a06325391dbaf84f11d7174f90e
 - invariant (2.2.2) [BSD-3-Clause]
 - is-alphabetical (2.0.1) [MIT]
 - is-alphanumerical (2.0.1) [MIT]
-- is-arguments (1.2.0) [MIT]
 - is-arrayish (0.2.1) [MIT]
-- is-callable (1.2.7) [MIT]
 - is-core-module (2.17.0) [MIT]
 - is-decimal (2.0.1) [MIT]
 - is-docker (2.2.1) [MIT]
 - is-extglob (2.1.1) [MIT]
 - is-fullwidth-code-point (3.0.0) [MIT]
-- is-generator-function (1.1.2) [MIT]
 - is-glob (4.0.3) [MIT]
 - is-hexadecimal (2.0.1) [MIT]
 - is-interactive (1.0.0) [MIT]
 - is-mobile (5.0.0) [MIT]
-- is-nan (1.3.2) [MIT]
 - is-number (7.0.0) [MIT]
 - is-obj (1.0.1) [MIT]
 - is-plain-obj (4.1.0) [MIT]
 - is-plain-object (5.1.0) [MIT]
-- is-regex (1.2.1) [MIT]
 - is-regexp (1.0.0) [MIT]
-- is-typed-array (1.1.15) [MIT]
 - is-unicode-supported (0.1.0) [MIT]
 - is-wsl (2.2.0) [MIT]
 - isarray (2.0.5) [MIT]
@@ -647,7 +635,7 @@ Revision ID: d8606b2768a48a06325391dbaf84f11d7174f90e
 - mdn-data (2.27.1) [CC0-1.0]
 - mdn-data (2.37.2) [CC0-1.0]
 - memoize-one (6.0.0) [MIT]
-- meow (13.2.0) [MIT, ISC, Apache-2.0, BSD-2-Clause]
+- meow (13.2.0) [MIT, ISC, BSD-2-Clause, Apache-2.0]
 - merge2 (1.4.1) [MIT]
 - micromark (4.0.3) [MIT]
 - micromark-core-commonmark (2.0.4) [MIT]
@@ -704,9 +692,7 @@ Revision ID: d8606b2768a48a06325391dbaf84f11d7174f90e
 - normalize-path (3.0.0) [MIT]
 - object-assign (4.1.1) [MIT]
 - object-code (2.0.0) [MIT]
-- object-is (1.1.6) [MIT]
 - object-keys (1.1.1) [MIT]
-- object.assign (4.1.7) [MIT]
 - obug (3.0.0) [MIT]
 - onetime (5.1.2) [MIT]
 - open (7.4.2) [MIT]
@@ -731,7 +717,6 @@ Revision ID: d8606b2768a48a06325391dbaf84f11d7174f90e
 - playwright (1.62.1) [Apache-2.0, MIT, BSD-3-Clause, blueoak-1.0.0, ISC, CC-BY-4.0]
 - playwright-core (1.62.1) [Apache-2.0, MIT, ISC, BSD-2-Clause, BSD-3-Clause, blueoak-1.0.0, NCSA]
 - polished (3.7.2) [MIT, OFL-1.1]
-- possible-typed-array-names (1.1.0) [MIT]
 - postcss (8.5.26) [MIT]
 - postcss-media-query-parser (0.2.3) [MIT]
 - postcss-resolve-nested-selector (0.1.6) [MIT]
@@ -811,7 +796,6 @@ Revision ID: d8606b2768a48a06325391dbaf84f11d7174f90e
 - rxjs (6.6.7) [Apache-2.0, ISC]
 - rxjs (7.8.2) [Apache-2.0, ISC]
 - safe-buffer (5.2.1) [MIT]
-- safe-regex-test (1.1.0) [MIT]
 - safer-buffer (2.1.2) [MIT]
 - sass (1.104.1) [MIT, BSD-3-Clause, Apache-2.0, Zlib, bzip2-1.0.6]
 - scheduler (0.26.0) [MIT]
@@ -904,7 +888,6 @@ Revision ID: d8606b2768a48a06325391dbaf84f11d7174f90e
 - use-isomorphic-layout-effect (1.2.1) [MIT]
 - use-latest (1.3.0) [MIT]
 - use-sync-external-store (1.7.0) [MIT]
-- util (0.12.5) [MIT]
 - util-deprecate (1.0.2) [MIT]
 - uuid (11.1.1) [MIT, BSD-3-Clause]
 - validate-npm-package-name (5.0.1) [ISC]
@@ -934,7 +917,6 @@ Revision ID: d8606b2768a48a06325391dbaf84f11d7174f90e
 - whatwg-url (5.0.0) [MIT]
 - which (1.3.1) [ISC]
 - which (2.0.2) [ISC]
-- which-typed-array (1.1.24) [MIT]
 - why-is-node-running (3.2.1) [MIT]
 - wrap-ansi (6.2.0) [MIT]
 - write-file-atomic (5.0.1) [ISC]
@@ -4577,9 +4559,9 @@ MIT
 - Copyright (c) 2013 Andris Reinman
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/maql-antlr4ts (0.5.1-02977c25.0)
+Package Title: @gooddata/maql-antlr4ts (0.7.2)
 
-Package Locator: npm+@gooddata/maql-antlr4ts$0.5.1-02977c25.0
+Package Locator: npm+@gooddata/maql-antlr4ts$0.7.2
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -4588,30 +4570,19 @@ Package Depth: Direct
 MIT
 
 * License Header *
-Copyright (c) <year> <copyright holders>
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Copyright (c) 2020-2022 GoodData Corporation
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 * Other Licenses *
 BSD-3-Clause
 
 * License Header *
-Copyright (c) 2016 The ANTLR Project . All rights reserved.
+Copyright (c) 2012-2023 The ANTLR Project. All rights reserved. . All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -4639,8 +4610,10 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 * Copyrights *
+MIT
+- Copyright (c) 2020-2022 GoodData Corporation
 BSD-3-Clause
-- Copyright (c) 2016 The ANTLR Project
+- Copyright (c) 2012-2023 The ANTLR Project. All rights reserved.
 
 * Package Info *
 
@@ -4657,7 +4630,7 @@ The following 3rd-party software packages may be used by or distributed with
 @gooddata/maql-antlr4ts. Any information relevant to third-party vendors listed
 below are collected using common, reasonable means.
 
-Date generated: 2026-10-20
+Date generated: 2026-10-27
 
 ================================================================================
 ================================================================================
@@ -4669,13 +4642,13 @@ Date generated: 2026-10-20
 
 ================================================================================
 
-- antlr4ts (0.5.0-alpha.4) [BSD-3-Clause]
+- antlr4ng (3.0.16) [BSD-3-Clause]
 
 
 --------------------------------------------------------------------------------
-Package Title: antlr4ts (0.5.0-alpha.4)
+Package Title: antlr4ng (3.0.16)
 
-Package Locator: npm+antlr4ts$0.5.0-alpha.4
+Package Locator: npm+antlr4ng$3.0.16
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -4685,41 +4658,43 @@ BSD-3-Clause
 
 
 [The "BSD license"]
-Copyright (c) 2016 The ANTLR Project
-All rights reserved.
+Copyright (c) 2012-2023 The ANTLR Project. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions
 are met:
 
- 1. Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
- 2. Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in the
-    documentation and/or other materials provided with the distribution.
- 3. Neither the name of the copyright holder nor the names of its
-    contributors may be used to endorse or promote products derived from
-    this software without specific prior written permission.
+1. Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
 
-THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
-IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
-INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
-THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+2. Redistributions in binary form must reproduce the above copyright
+notice, this list of conditions and the following disclaimer in the
+documentation and/or other materials provided with the distribution.
+
+3. Neither name of copyright holders nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 * Package Info *
 
-Authors: Terence Parr, Sam Harwell, and Burt Harris
+Authors: Mike Lischke and The ANTLR Project
 
-Package Homepage: https://github.com/tunnelvisionlabs/antlr4ts
+Package Homepage: https://github.com/mike-lischke/antlr4ng
 
-Package Download URL: https://registry.npmjs.org/antlr4ts/-/antlr4ts-0.5.0-alpha.4.tgz
+Package Download URL: https://registry.npmjs.org/antlr4ng/-/antlr4ng-3.0.16.tgz
 
 --------------------------------------------------------------------------------
 
@@ -28527,9 +28502,9 @@ MIT
 - Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 --------------------------------------------------------------------------------
-Package Title: antlr4-c3 (1.1.16)
+Package Title: antlr4-c3 (3.4.4)
 
-Package Locator: npm+antlr4-c3$1.1.16
+Package Locator: npm+antlr4-c3$3.4.4
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -28538,10 +28513,7 @@ Package Depth: Direct
 MIT
 
 * License Header *
-MIT License
-
-Copyright (c) 2016, 2017, Mike Lischke
-
+Copyright (c) 2016 present Mike Lischke
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -28560,15 +28532,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-
 * Copyrights *
 MIT
-- Copyright (c) 2016, 2017 Mike Lischke
+- Copyright (c) 2016 present Mike Lischke
 
 --------------------------------------------------------------------------------
-Package Title: antlr4ts (0.5.0-alpha.4)
+Package Title: antlr4ng (3.0.16)
 
-Package Locator: npm+antlr4ts$0.5.0-alpha.4
+Package Locator: npm+antlr4ng$3.0.16
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -28578,37 +28549,39 @@ BSD-3-Clause
 
 * License Header *
 [The "BSD license"]
-Copyright (c) 2016 The ANTLR Project
-All rights reserved.
+Copyright (c) 2012-2023 The ANTLR Project. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions
 are met:
 
- 1. Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
- 2. Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in the
-    documentation and/or other materials provided with the distribution.
- 3. Neither the name of the copyright holder nor the names of its
-    contributors may be used to endorse or promote products derived from
-    this software without specific prior written permission.
+1. Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
 
-THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
-IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
-INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
-THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+2. Redistributions in binary form must reproduce the above copyright
+notice, this list of conditions and the following disclaimer in the
+documentation and/or other materials provided with the distribution.
+
+3. Neither name of copyright holders nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 * Copyrights *
 BSD-3-Clause
-- Copyright (c) 2016 The ANTLR Project
+- Copyright (c) 2012-2023 The ANTLR Project. All rights reserved.
 
 --------------------------------------------------------------------------------
 Package Title: argparse (2.0.1)
@@ -28992,42 +28965,6 @@ MIT
 - Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 --------------------------------------------------------------------------------
-Package Title: assert (2.1.0)
-
-Package Locator: npm+assert$2.1.0
-
-Package Depth: Direct
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-* License Header *
-Copyright Joyent, Inc. and other Node contributors. All rights reserved.
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to
-deal in the Software without restriction, including without limitation the
-rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
-sell copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-IN THE SOFTWARE.
-
-
-* Copyrights *
-MIT
-- Copyright (c)  Joyent, Inc. and other Node contributors. All rights reserved.
-
---------------------------------------------------------------------------------
 Package Title: assertion-error (2.0.1)
 
 Package Locator: npm+assertion-error$2.0.1
@@ -29178,45 +29115,6 @@ SOFTWARE.
 * Copyrights *
 MIT
 - Copyright (c) 2016 Alex Indigo
-
---------------------------------------------------------------------------------
-Package Title: available-typed-arrays (1.0.7)
-
-Package Locator: npm+available-typed-arrays$1.0.7
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-* License Header *
-MIT License
-
-Copyright (c) 2020 Inspect JS
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-* Copyrights *
-MIT
-- Copyright (c) 2020 Inspect JS
 
 --------------------------------------------------------------------------------
 Package Title: axios (1.20.0)
@@ -31872,43 +31770,6 @@ MIT
 - Copyright (c)  James Talmage <james@talmage.io> (github.com/jamestalmage)
 
 --------------------------------------------------------------------------------
-Package Title: custom-event (1.0.1)
-
-Package Locator: npm+custom-event$1.0.1
-
-Package Depth: Direct
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-* License Header *
-Copyright (c) 2015 Nathan Rajlich
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to
-deal in the Software without restriction, including without limitation the
-rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
-sell copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-IN THE SOFTWARE.
-
-
-* Copyrights *
-MIT
-- Copyright (c) 2015 Nathan Rajlich
-
---------------------------------------------------------------------------------
 Package Title: date-fns (4.1.0)
 
 Package Locator: npm+date-fns$4.1.0
@@ -32353,44 +32214,6 @@ SOFTWARE.
 * Copyrights *
 MIT
 - Copyright (c) 2023 Jordan Harband
-
---------------------------------------------------------------------------------
-Package Title: define-properties (1.2.1)
-
-Package Locator: npm+define-properties$1.2.1
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-* License Header *
-The MIT License (MIT)
-
-Copyright (C) 2015 Jordan Harband
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-
-* Copyrights *
-MIT
-- Copyright (c) 2015 Jordan Harband
 
 --------------------------------------------------------------------------------
 Package Title: delayed-stream (1.0.0)
@@ -35350,46 +35173,6 @@ MIT
 - Copyright (c) 2014 present Olivier Lalonde <olalonde@gmail.com>, James Talmage <james@talmage.io>, Ruben Verborgh
 
 --------------------------------------------------------------------------------
-Package Title: for-each (0.3.5)
-
-Package Locator: npm+for-each$0.3.5
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-* License Header *
-The MIT License (MIT)
-
-Copyright (c) 2012 Raynos.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-
-* Copyrights *
-MIT
-- Copyright (c) 2012 Raynos.
-
---------------------------------------------------------------------------------
 Package Title: form-data (4.0.6)
 
 Package Locator: npm+form-data$4.0.6
@@ -35574,31 +35357,6 @@ THE SOFTWARE.
 * Copyrights *
 MIT
 - Copyright (c) 2013 Raynos.
-
---------------------------------------------------------------------------------
-Package Title: generator-function (2.0.1)
-
-Package Locator: npm+generator-function$2.0.1
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-* License Header *
-Copyright (c) 2015 Tiancheng “Timothy” Gu
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-* Copyrights *
-MIT
-- Copyright (c) 2015 Tiancheng “Timothy” Gu
 
 --------------------------------------------------------------------------------
 Package Title: geojson-vt (3.2.1)
@@ -37966,44 +37724,6 @@ MIT
 - Copyright (c) 2016 Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
-Package Title: is-arguments (1.2.0)
-
-Package Locator: npm+is-arguments$1.2.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-* License Header *
-The MIT License (MIT)
-
-Copyright (c) 2014 Jordan Harband
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-* Copyrights *
-MIT
-- Copyright (c) 2014 Jordan Harband
-
---------------------------------------------------------------------------------
 Package Title: is-arrayish (0.2.1)
 
 Package Locator: npm+is-arrayish$0.2.1
@@ -38041,46 +37761,6 @@ THE SOFTWARE.
 * Copyrights *
 MIT
 - Copyright (c) 2015 JD Ballard
-
---------------------------------------------------------------------------------
-Package Title: is-callable (1.2.7)
-
-Package Locator: npm+is-callable$1.2.7
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-* License Header *
-The MIT License (MIT)
-
-Copyright (c) 2015 Jordan Harband
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-
-* Copyrights *
-MIT
-- Copyright (c) 2015 Jordan Harband
 
 --------------------------------------------------------------------------------
 Package Title: is-core-module (2.17.0)
@@ -38264,44 +37944,6 @@ MIT
 - Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 --------------------------------------------------------------------------------
-Package Title: is-generator-function (1.1.2)
-
-Package Locator: npm+is-generator-function$1.1.2
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-* License Header *
-The MIT License (MIT)
-
-Copyright (c) 2014 Jordan Harband
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-* Copyrights *
-MIT
-- Copyright (c) 2014 Jordan Harband
-
---------------------------------------------------------------------------------
 Package Title: is-glob (4.0.3)
 
 Package Locator: npm+is-glob$4.0.3
@@ -38444,44 +38086,6 @@ SOFTWARE.
 * Copyrights *
 MIT
 - Copyright (c) 2013 Julian Gruber &lt;julian@juliangruber.com&gt;
-
---------------------------------------------------------------------------------
-Package Title: is-nan (1.3.2)
-
-Package Locator: npm+is-nan$1.3.2
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-* License Header *
-The MIT License (MIT)
-
-Copyright (c) 2014 Jordan Harband
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-* Copyrights *
-MIT
-- Copyright (c) 2014 Jordan Harband
 
 --------------------------------------------------------------------------------
 Package Title: is-number (7.0.0)
@@ -38630,44 +38234,6 @@ MIT
 - Copyright (c) 2014-2017 Jon Schlinkert.
 
 --------------------------------------------------------------------------------
-Package Title: is-regex (1.2.1)
-
-Package Locator: npm+is-regex$1.2.1
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-* License Header *
-The MIT License (MIT)
-
-Copyright (c) 2014 Jordan Harband
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-* Copyrights *
-MIT
-- Copyright (c) 2014 Jordan Harband
-
---------------------------------------------------------------------------------
 Package Title: is-regexp (1.0.0)
 
 Package Locator: npm+is-regexp$1.0.0
@@ -38683,46 +38249,6 @@ MIT
 ## License
 
 MIT © [Sindre Sorhus](http://sindresorhus.com)
-
---------------------------------------------------------------------------------
-Package Title: is-typed-array (1.1.15)
-
-Package Locator: npm+is-typed-array$1.1.15
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-* License Header *
-The MIT License (MIT)
-
-Copyright (c) 2015 Jordan Harband
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-
-* Copyrights *
-MIT
-- Copyright (c) 2015 Jordan Harband
 
 --------------------------------------------------------------------------------
 Package Title: is-unicode-supported (0.1.0)
@@ -46344,7 +45870,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 * Other Licenses *
-ISC, Apache-2.0, BSD-2-Clause
+ISC, BSD-2-Clause, Apache-2.0
 
 * ISC *
 
@@ -46352,23 +45878,6 @@ ISC, Apache-2.0, BSD-2-Clause
 Copyright (c) 2016 Contributors
 Permission to use, copy, modify, and distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
 THE SOFTWARE IS PROVIDED "AS IS" AND ISC DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL ISC BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-* Apache-2.0 *
-
-* License Header *
-Copyright 2016 Contributors
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-
-See the License for the specific language governing permissions and limitations under the License.
 
 * BSD-2-Clause *
 
@@ -46397,14 +45906,31 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+* Apache-2.0 *
+
+* License Header *
+Copyright 2016 Contributors
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+See the License for the specific language governing permissions and limitations under the License.
+
 * Copyrights *
 MIT
 - Copyright (c) 2016 Contributors
 ISC
 - Copyright (c) 2016 Contributors
-Apache-2.0
-- Copyright (c) 2016 Contributors
 BSD-2-Clause
+- Copyright (c) 2016 Contributors
+Apache-2.0
 - Copyright (c) 2016 Contributors
 
 --------------------------------------------------------------------------------
@@ -49142,44 +48668,6 @@ MIT
 - Copyright (c) 2022 present Arthur Fiorette
 
 --------------------------------------------------------------------------------
-Package Title: object-is (1.1.6)
-
-Package Locator: npm+object-is$1.1.6
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-* License Header *
-The MIT License (MIT)
-
-Copyright (c) 2014 Jordan Harband
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-* Copyrights *
-MIT
-- Copyright (c) 2014 Jordan Harband
-
---------------------------------------------------------------------------------
 Package Title: object-keys (1.1.1)
 
 Package Locator: npm+object-keys$1.1.1
@@ -49216,44 +48704,6 @@ THE SOFTWARE.
 * Copyrights *
 MIT
 - Copyright (c) 2013 Jordan Harband
-
---------------------------------------------------------------------------------
-Package Title: object.assign (4.1.7)
-
-Package Locator: npm+object.assign$4.1.7
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-* License Header *
-The MIT License (MIT)
-
-Copyright (c) 2014 Jordan Harband
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-* Copyrights *
-MIT
-- Copyright (c) 2014 Jordan Harband
 
 --------------------------------------------------------------------------------
 Package Title: obug (3.0.0)
@@ -51119,45 +50569,6 @@ MIT
 - Copyright (c) 2016 - 2021 Brian Hough and Maximilian Stoiber
 OFL-1.1
 - Copyright (c) 2010, 2012 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries.
-
---------------------------------------------------------------------------------
-Package Title: possible-typed-array-names (1.1.0)
-
-Package Locator: npm+possible-typed-array-names$1.1.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-* License Header *
-MIT License
-
-Copyright (c) 2024 Jordan Harband
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-* Copyrights *
-MIT
-- Copyright (c) 2024 Jordan Harband
 
 --------------------------------------------------------------------------------
 Package Title: postcss (8.5.26)
@@ -54595,45 +54006,6 @@ THE SOFTWARE.
 * Copyrights *
 MIT
 - Copyright (c)  Feross Aboukhadijeh
-
---------------------------------------------------------------------------------
-Package Title: safe-regex-test (1.1.0)
-
-Package Locator: npm+safe-regex-test$1.1.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-* License Header *
-MIT License
-
-Copyright (c) 2022 Jordan Harband
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-* Copyrights *
-MIT
-- Copyright (c) 2022 Jordan Harband
 
 --------------------------------------------------------------------------------
 Package Title: safer-buffer (2.1.2)
@@ -60983,42 +60355,6 @@ SOFTWARE.
 * Copyrights *
 MIT
 - Copyright (c)  Meta Platforms, Inc. and affiliates.
-
---------------------------------------------------------------------------------
-Package Title: util (0.12.5)
-
-Package Locator: npm+util$0.12.5
-
-Package Depth: Direct
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-* License Header *
-Copyright Joyent, Inc. and other Node contributors. All rights reserved.
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to
-deal in the Software without restriction, including without limitation the
-rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
-sell copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-IN THE SOFTWARE.
-
-
-* Copyrights *
-MIT
-- Copyright (c)  Joyent, Inc. and other Node contributors. All rights reserved.
 
 --------------------------------------------------------------------------------
 Package Title: util-deprecate (1.0.2)
@@ -72336,46 +71672,6 @@ THIS SOFTWARE.
 
 
 --------------------------------------------------------------------------------
-Package Title: which-typed-array (1.1.24)
-
-Package Locator: npm+which-typed-array$1.1.24
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-* License Header *
-The MIT License (MIT)
-
-Copyright (c) 2015 Jordan Harband
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-
-* Copyrights *
-MIT
-- Copyright (c) 2015 Jordan Harband
-
---------------------------------------------------------------------------------
 Package Title: why-is-node-running (3.2.1)
 
 Package Locator: npm+why-is-node-running$3.2.1
@@ -72740,4 +72036,4 @@ MIT
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2026-10-26
+Report Generated by FOSSA on 2026-10-27

@@ -10,7 +10,6 @@ import type {
     Bucket,
     Comparison,
     ComparisonCondition,
-    DateDataset,
     DateFilter,
     EmptyBucket,
     Field,
@@ -32,6 +31,7 @@ import type {
 } from "@gooddata/sdk-code-schemas/v1";
 import {
     type ArithmeticMeasureOperator,
+    type EmptyValues,
     type IAttributeFilterConfigs,
     type IBucket,
     type IFilter,
@@ -75,7 +75,7 @@ import { convertBucketToTitle } from "../utils/convertBucketToTitle.js";
 import { mapDateAttribute, mapDateDataset } from "../utils/dateUtils.js";
 import { CoreErrorCode, newError } from "../utils/errors.js";
 import { parseDateValues, yamlConditionToMatch } from "../utils/filterUtils.js";
-import { convertGranularity, convertGranularityToId } from "../utils/granularityUtils.js";
+import { convertGranularity } from "../utils/granularityUtils.js";
 import { mapLocationLabel } from "../utils/locationUtils.js";
 import { assertUnreachable, convertIdToTitle, getFullBucket, getFullField } from "../utils/sharedUtils.js";
 import {
@@ -704,12 +704,12 @@ function yamlAbsoluteDateFilterToDeclarative(
                     dataSet: createIdentifier<any>(filter.using, { forceType: "dataset" }),
                     from: filter.from as string,
                     to: filter.to as string,
+                    ...dateFilterEmptyValueHandling(filter),
                 },
             },
         ],
     };
 
-    result = mergeDeclarativeResults(result, dateFilterEmptyValuesToDeclarative(filter));
     result = mergeDeclarativeResults(
         result,
         dateFilterWithFieldToDeclarative(entities, filter, assignFilterLocalId),
@@ -718,50 +718,16 @@ function yamlAbsoluteDateFilterToDeclarative(
     return result;
 }
 
-function dateFilterEmptyValuesToDeclarative(filter: DateFilter): YamlFilterToDeclarativeResult {
-    if (!filter.empty_values) {
-        return { filters: [] };
-    }
-
-    const identifier = createIdentifier<any>(
-        `${filter.using}.${convertGranularityToId(
-            (filter.granularity as Required<DateDataset>["granularities"][number]) ?? "YEAR",
-        )}`,
-        { forceType: "label" },
-    );
-
-    switch (filter.empty_values) {
-        case "exclude": {
-            return {
-                filters: [
-                    {
-                        negativeAttributeFilter: {
-                            displayForm: identifier,
-                            notIn: {
-                                values: [""],
-                            },
-                        },
-                    },
-                ],
-            };
-        }
-        case "only": {
-            return {
-                filters: [
-                    {
-                        positiveAttributeFilter: {
-                            displayForm: identifier,
-                            in: {
-                                values: [""],
-                            },
-                        },
-                    },
-                ],
-            };
-        }
-    }
-
-    return { filters: [] };
+/**
+ * `empty_values` is the date filter's own `emptyValueHandling`, as on dashboard filters. Insights saved
+ * before carried the mode as a separate attribute filter on the single empty string value instead; that
+ * representation is still read (see `processConnectedAttributeFilters`), never written.
+ */
+function dateFilterEmptyValueHandling(filter: DateFilter): { emptyValueHandling?: EmptyValues } {
+    const { empty_values } = filter;
+    return empty_values === "include" || empty_values === "exclude" || empty_values === "only"
+        ? { emptyValueHandling: empty_values }
+        : {};
 }
 
 function dateFilterWithFieldToDeclarative(
@@ -801,6 +767,23 @@ function yamlRelativeDateFilterToDeclarative(
                         granularity: convertGranularity(filter.granularity)!,
                         from: filter.from,
                         to: filter.to,
+                        ...dateFilterEmptyValueHandling(filter),
+                    },
+                },
+            ],
+        });
+    } else if (filter.empty_values) {
+        // All time carrying an empty values mode is the real All time filter, the one the execution
+        // sends and AD stores for it
+        result = mergeDeclarativeResults(result, {
+            filters: [
+                {
+                    relativeDateFilter: {
+                        dataSet: identifier,
+                        granularity: "ALL_TIME_GRANULARITY",
+                        from: 0,
+                        to: 0,
+                        ...dateFilterEmptyValueHandling(filter),
                     },
                 },
             ],
@@ -812,7 +795,6 @@ function yamlRelativeDateFilterToDeclarative(
                     relativeDateFilter: {
                         dataSet: identifier,
                         // This is not compliant with the types from gdc-model, but this is what AD emits for an all time filter.
-                        // AD actually cannot understand an ALL_TIME_GRANULARITY granularity.
                         granularity: convertGranularity("YEAR")!,
                     } as unknown as IRelativeDateFilterAllTimeBody,
                 },
@@ -820,7 +802,6 @@ function yamlRelativeDateFilterToDeclarative(
         });
     }
 
-    result = mergeDeclarativeResults(result, dateFilterEmptyValuesToDeclarative(filter));
     result = mergeDeclarativeResults(
         result,
         dateFilterWithFieldToDeclarative(entities, filter, assignFilterLocalId),

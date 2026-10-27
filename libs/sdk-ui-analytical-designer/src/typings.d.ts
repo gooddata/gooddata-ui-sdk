@@ -1,12 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
-declare module "custom-event" {
-    export = CustomEvent;
-}
-
-// Both ship no types, and both are consumed via a default import, which `no-restricted-exports`
-// forbids declaring explicitly — the shorthand form still silences TS7016 if `noImplicitAny` is
-// ever enabled.
+// It ships no types and is consumed via a default import, which `no-restricted-exports` forbids
+// declaring explicitly — the shorthand form still silences TS7016 if `noImplicitAny` is ever enabled.
 // Dev-only Immutable inspector, loaded behind the DEBUG flag in Root.tsx.
 declare module "immutable-devtools";
 

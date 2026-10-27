@@ -32,7 +32,7 @@ test.describe(
     () => {
         test(
             "should add virtual filter when cross-filtering in view mode",
-            { tag: ["@pre-merge-isolated"] },
+            { tag: ["@isolated-default"] },
             async ({ page }) => {
                 await visit(page, "dashboard/dashboard-cross-filtering");
 

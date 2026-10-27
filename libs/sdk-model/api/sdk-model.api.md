@@ -5800,6 +5800,7 @@ export interface IPluggableApplicationMetaV1 {
     requiredOrganizationPermissions?: RequiredOrganizationPermissions;
     requiredSettings?: RequiredSettings;
     requiredWorkspacePermissions?: RequiredWorkspacePermissions;
+    requiredWorkspacePermissionsInExportMode?: RequiredWorkspacePermissions;
     title: string;
 }
 

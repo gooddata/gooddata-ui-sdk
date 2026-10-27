@@ -1,0 +1,45 @@
+// (C) 2026 GoodData Corporation
+
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.gd-dashboard-content-loader {
+    width: 100%;
+
+    &__status {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    &__charts {
+        min-width: 0;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: variables.$item-outer-padding;
+
+        @media #{kit-variables.$medium-up} {
+            grid-template-columns: var(--dashboard-content-loader-columns, minmax(0, 1fr));
+        }
+    }
+
+    &__chart {
+        box-sizing: border-box;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        padding: variables.$item-inner-padding;
+        border-style: solid;
+        border-width: variables.$gd-dashboards-content-widget-borderWidth;
+        border-color: variables.$gd-dashboards-content-widget-borderColor;
+        border-radius: variables.$gd-dashboards-content-widget-borderRadius;
+        background-color: kit-variables.$gd-widget-background;
+        box-shadow: variables.$gd-dashboards-content-widget-dropShadow;
+    }
+}

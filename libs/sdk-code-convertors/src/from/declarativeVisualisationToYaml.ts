@@ -230,6 +230,8 @@ function declarativeReportToYaml(
         updateErrorContext(errorContext, {
             path: ["filters"],
         }),
+        // only the insight's own date filters may carry the mode as the legacy "" attribute filter
+        { readLegacyEmptyValuesFilter: true },
     );
     declarativeFiltersConfigToYaml(
         def,

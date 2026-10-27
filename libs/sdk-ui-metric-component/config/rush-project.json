@@ -4,7 +4,7 @@
     "operationSettings": [
         {
             "operationName": "_phase:build",
-            "outputFolderNames": ["esm"]
+            "outputFolderNames": ["esm", "worker"]
         },
         {
             "operationName": "_phase:validate",

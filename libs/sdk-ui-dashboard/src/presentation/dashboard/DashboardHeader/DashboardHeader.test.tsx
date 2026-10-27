@@ -33,22 +33,22 @@ function setup(state: SetupState) {
 }
 
 describe("DashboardTabsWrapper", () => {
-    it("should hide tabs while AI is waiting for user input", () => {
+    it("should show tabs while AI is waiting for user input", () => {
         setup({
             config: { config: { aiMode: "waiting" } },
             tabs: tabsState(),
         });
 
-        expect(screen.queryByRole("tab")).not.toBeInTheDocument();
+        expect(screen.queryAllByRole("tab").length).toBe(2);
     });
 
-    it("should hide tabs while AI is building", () => {
+    it("should show tabs while AI is building", () => {
         setup({
             config: { config: { aiMode: "building" } },
             tabs: tabsState(),
         });
 
-        expect(screen.queryByRole("tab")).not.toBeInTheDocument();
+        expect(screen.queryAllByRole("tab").length).toBe(2);
     });
 
     it("should support double-click tab renaming in edit mode", async () => {

@@ -132,7 +132,7 @@ export default defineConfig(({ mode }) => {
         build: {
             outDir: "dist",
             emptyOutDir: true,
-            chunkSizeWarningLimit: 16000, // Increased to suppress warnings for large chunks
+            chunkSizeWarningLimit: 20000, // Increased to suppress warnings for large chunks
             sourcemap: mode !== "production",
             rolldownOptions: {
                 onLog(logLevel, warning, warn) {

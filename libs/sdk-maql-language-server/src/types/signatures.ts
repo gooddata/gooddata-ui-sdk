@@ -1,13 +1,14 @@
 // (C) 2021-2026 GoodData Corporation
 
-import MaqlPkg, {
+import {
     type AstType,
     type FunctionAstType,
     type FunctionDefinition,
     type FunctionParameter,
     type ParameterType,
+    functionDefinitions,
+    isMaqlFunctionName,
 } from "@gooddata/maql-antlr4ts";
-const { functionDefinitions, isMaqlFunctionName } = MaqlPkg;
 
 import { MaqlType } from "./hierarchy.js";
 

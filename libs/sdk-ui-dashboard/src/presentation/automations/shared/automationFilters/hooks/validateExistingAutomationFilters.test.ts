@@ -442,6 +442,33 @@ describe("validateExistingAutomationFilters", () => {
             expect(hiddenFilterHasDifferentValueInSavedFilter).toBe(false);
         });
 
+        it("should be valid with a hidden date filter the backend saved with excluded empty values", () => {
+            // An automation saved without empty value handling comes back from the backend with "exclude".
+            const savedByBackend = newRelativeDateFilter(
+                nonCommonDataSetRef,
+                "GDC.time.date",
+                1,
+                2,
+                nonCommonDateFilterLocalIdentifier,
+                undefined,
+                "exclude",
+            );
+
+            const result = validateExistingAutomationFilters({
+                savedAutomationFilters: [savedByBackend],
+                savedAutomationVisibleFilters: [],
+                hiddenFilters: [nonAllTimeDateFilterContextItem],
+                lockedFilters: [],
+                ignoredFilters: [],
+                dashboardFilters: [nonAllTimeDateFilterContextItem],
+                widget,
+                insight,
+            });
+
+            expect(result.isValid).toBe(true);
+            expect(result.hiddenFilterHasDifferentValueInSavedFilter).toBe(false);
+        });
+
         it("should be invalid when hidden attribute filter is changed in saved automation filters", () => {
             const {
                 isValid,

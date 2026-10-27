@@ -14,8 +14,10 @@ import {
     type VisualizationProperties,
     idRef,
     insightVisualizationUrl,
+    newAllTimeFilter,
     newAttributeSort,
     newNegativeAttributeFilter,
+    newRelativeDateFilter,
     uriRef,
 } from "@gooddata/sdk-model";
 
@@ -82,6 +84,7 @@ import {
     getObjectsReferencing,
     getReferencedObjects,
     getStartTime,
+    hasDateFilterWithUnsupportedGranularity,
     openReportRequested,
     restoreInsightParameterFilters,
     selectOpenReportFailureReset,
@@ -512,6 +515,40 @@ describe("Open report sagas", () => {
             expect(saga.effects.call).not.toContainEqual(
                 call(getItemCacheItems, orphanedDateFilterInsight, state),
             );
+        });
+    });
+
+    describe("hasDateFilterWithUnsupportedGranularity", () => {
+        const insightWithFilters = (filters: Parameters<typeof newRelativeDateFilter>[]) =>
+            newInsight("foo", `foo_${reportId}`, `/gdc/md/${projectId}/obj/${reportId}`, (insight) =>
+                insight.filters(filters.map((args) => newRelativeDateFilter(...args))),
+            );
+
+        it("accepts a relative date filter on a date granularity", () => {
+            expect(
+                hasDateFilterWithUnsupportedGranularity(
+                    insightWithFilters([["delivery_date", "GDC.time.year", -1, -1]]),
+                ),
+            ).toBe(false);
+        });
+
+        it("accepts the All time filter carrying the empty date values mode", () => {
+            const insight = newInsight(
+                "foo",
+                `foo_${reportId}`,
+                `/gdc/md/${projectId}/obj/${reportId}`,
+                (i) => i.filters([newAllTimeFilter("delivery_date", undefined, "exclude")]),
+            );
+
+            expect(hasDateFilterWithUnsupportedGranularity(insight)).toBe(false);
+        });
+
+        it("rejects a relative date filter on a granularity that is not a date granularity", () => {
+            expect(
+                hasDateFilterWithUnsupportedGranularity(
+                    insightWithFilters([["delivery_date", "GDC.time.minute_in_hour", -1, -1]]),
+                ),
+            ).toBe(true);
         });
     });
 

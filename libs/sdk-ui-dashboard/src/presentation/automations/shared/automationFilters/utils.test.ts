@@ -6,6 +6,7 @@ import { describe, expect, it } from "vitest";
 
 import {
     type DateAttributeGranularity,
+    type EmptyValues,
     type FilterContextItem,
     type IAttributeDisplayFormMetadataObject,
     type ICatalogAttribute,
@@ -245,6 +246,49 @@ describe("automationFilters/utils", () => {
                 expect(areFiltersEqual(filter1, filter2)).toBe(expected);
             },
         );
+
+        it.each([
+            ["no empty value handling", "exclude", true, undefined, "exclude"],
+            ["exclude", "no empty value handling", true, "exclude", undefined],
+            ["no empty value handling", "include", false, undefined, "include"],
+            ["no empty value handling", "only", false, undefined, "only"],
+        ] as [string, string, boolean, EmptyValues | undefined, EmptyValues | undefined][])(
+            "should compare relative date filters of the same range with %s and with %s as equal: %s",
+            (_desc1, _desc2, expected, emptyValueHandling1, emptyValueHandling2) => {
+                const lastMonths = (emptyValueHandling: EmptyValues | undefined) =>
+                    newRelativeDateFilter(
+                        idRef("date", "dataSet"),
+                        "GDC.time.month",
+                        -35,
+                        0,
+                        "df",
+                        undefined,
+                        emptyValueHandling,
+                    );
+
+                expect(
+                    areFiltersEqual(lastMonths(emptyValueHandling1), lastMonths(emptyValueHandling2)),
+                ).toBe(expected);
+            },
+        );
+
+        it("should treat absolute date filters of the same days without and with excluded empty values as equal", () => {
+            const ref = idRef("date", "dataSet");
+            const filter1 = newAbsoluteDateFilter(ref, "2026-01-01", "2026-03-31");
+            const filter2 = newAbsoluteDateFilter(ref, "2026-01-01", "2026-03-31", {
+                emptyValueHandling: "exclude",
+            });
+
+            expect(areFiltersEqual(filter1, filter2)).toBe(true);
+        });
+
+        it("should treat an all-time filter without empty value handling and one excluding empty values as unequal", () => {
+            const ref = idRef("date", "dataSet");
+
+            expect(areFiltersEqual(newAllTimeFilter(ref, "df"), newAllTimeFilter(ref, "df", "exclude"))).toBe(
+                false,
+            );
+        });
 
         it("should treat absolute date filters of different days at the same granularity as unequal", () => {
             const ref = idRef("date", "dataSet");
