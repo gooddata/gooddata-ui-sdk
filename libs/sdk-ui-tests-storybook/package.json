@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-tests-storybook",
-    "version": "11.65.0-alpha.8",
+    "version": "11.65.0-alpha.9",
     "description": "GoodData React components storybook",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
@@ -59,6 +59,7 @@
         "@gooddata/sdk-ui-geo": "workspace:*",
         "@gooddata/sdk-ui-kit": "workspace:*",
         "@gooddata/sdk-ui-pivot": "workspace:*",
+        "@gooddata/sdk-ui-pluggable-host": "workspace:*",
         "@gooddata/sdk-ui-semantic-search": "workspace:*",
         "@gooddata/sdk-ui-tests-scenarios": "workspace:*",
         "@gooddata/sdk-ui-theme-provider": "workspace:*",
@@ -119,6 +120,7 @@
         "@gooddata/sdk-ui-geo": "workspace:*",
         "@gooddata/sdk-ui-kit": "workspace:*",
         "@gooddata/sdk-ui-pivot": "workspace:*",
+        "@gooddata/sdk-ui-pluggable-host": "workspace:*",
         "@gooddata/sdk-ui-semantic-search": "workspace:*",
         "@gooddata/sdk-ui-theme-provider": "workspace:*",
         "@gooddata/sdk-ui-web-components": "workspace:*",

@@ -14,7 +14,7 @@ import { type ITabsState, getActiveTab } from "../tabsState.js";
 type DateFilterConfigReducer<A extends Action> = CaseReducer<ITabsState, A>;
 
 /**
- * Changes the config mode for the date filter given by its data seet.
+ * Changes the config mode for the date filter given by its data set.
  */
 const changeDateFilterConfigsMode: DateFilterConfigReducer<
     PayloadAction<ISetDashboardDateFilterWithDimensionConfigModePayload>

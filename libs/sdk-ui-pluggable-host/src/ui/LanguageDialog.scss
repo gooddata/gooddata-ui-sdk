@@ -1,11 +1,12 @@
 // (C) 2026 GoodData Corporation
 
 .gd-language-dialog {
-    .gd-ui-kit-searchable-select__button {
+    &__select {
         width: 300px;
+        max-width: 100%;
     }
 
-    .gd-language-dialog-note {
+    &__note {
         display: block;
         margin-top: 20px;
         padding: 4px 10px;

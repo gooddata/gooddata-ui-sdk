@@ -3,52 +3,111 @@
 import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 
 import {
-    type ISetDashboardAttributeFilterConfigDisplayAsLabelPayload,
-    type ISetDashboardAttributeFilterConfigModePayload,
-    type ISetDashboardAttributeFilterSelectionTypePayload,
-} from "../../../../model/commands/dashboard.js";
+    type DashboardAttributeFilterConfigMode,
+    type DashboardAttributeFilterSelectionType,
+    type IDashboardAttributeFilterConfig,
+    type ObjRef,
+} from "@gooddata/sdk-model";
+
 import { type TabsReducer } from "../tabsReducers.js";
-import { type ITabsState, getActiveTab, getTabOrActive } from "../tabsState.js";
+import { type ITabState, type ITabsState, getActiveTab, getTabOrActive } from "../tabsState.js";
 
 type AttributeFilterConfigReducer<A extends Action> = CaseReducer<ITabsState, A>;
+
+/**
+ * @internal
+ */
+export interface IChangeAttributeFilterConfigModePayload {
+    /**
+     * Local identifier of the filter to change mode.
+     */
+    localIdentifier: string;
+    /**
+     * Mode of the attribute filter.
+     */
+    mode?: DashboardAttributeFilterConfigMode;
+    /**
+     * Optional tab local identifier to target a specific tab.
+     * If not provided, the active tab will be used.
+     */
+    tabLocalIdentifier?: string;
+}
+
+/**
+ * @internal
+ */
+export interface IChangeAttributeFilterSelectionTypePayload {
+    /**
+     * Local identifier of the filter to change available mode.
+     */
+    localIdentifier: string;
+    /**
+     * Available mode of the attribute filter — controls which presentation modes
+     * (list, text, or both) are available to the user in Dashboard View mode.
+     */
+    selectionType?: DashboardAttributeFilterSelectionType;
+    /**
+     * Optional tab local identifier to target a specific tab.
+     * If not provided, the active tab will be used.
+     */
+    tabLocalIdentifier?: string;
+}
+
+/**
+ * @internal
+ */
+export interface IChangeAttributeFilterDisplayAsLabelPayload {
+    /**
+     * Local identifier of the filter to change display as label (= display form).
+     */
+    localIdentifier: string;
+    /**
+     *  Display as label of the attribute filter. Used to present filter in UI
+     */
+    displayAsLabel: ObjRef | undefined;
+    /**
+     * Optional tab local identifier to target a specific tab.
+     * If not provided, the active tab will be used.
+     */
+    tabLocalIdentifier?: string;
+    /**
+     * When true, tabs this change is synced to restore their own saved display as label instead of this payload.
+     */
+    restoreTargetOriginal?: boolean;
+}
+
+/**
+ * @internal
+ */
+export interface IRemoveAttributeFilterConfigPayload {
+    readonly localIdentifier: string;
+    /**
+     * Optional tab local identifier to target a specific tab.
+     * If not provided, the active tab will be used.
+     */
+    readonly tabLocalIdentifier?: string;
+}
 
 /**
  * Changes the config mode for the attribute filter given by its local identifier.
  */
 const changeAttributeFilterConfigMode: AttributeFilterConfigReducer<
-    PayloadAction<ISetDashboardAttributeFilterConfigModePayload>
+    PayloadAction<IChangeAttributeFilterConfigModePayload>
 > = (state, action) => {
-    const { localIdentifier } = action.payload;
+    const { localIdentifier, mode, tabLocalIdentifier } = action.payload;
+    const targetTab = getTabOrActive(state, tabLocalIdentifier);
 
-    const activeTab = getActiveTab(state);
-    if (!activeTab) {
+    if (!targetTab) {
         return;
     }
-    if (!activeTab.attributeFilterConfigs) {
-        activeTab.attributeFilterConfigs = { attributeFilterConfigs: [] };
-    }
-    const existingConfig = activeTab.attributeFilterConfigs.attributeFilterConfigs?.find(
-        (item) => item.localIdentifier === localIdentifier,
-    );
-
-    if (existingConfig) {
-        existingConfig.mode = action.payload.mode;
-        activeTab.attributeFilterConfigs.attributeFilterConfigs = [
-            ...(activeTab.attributeFilterConfigs.attributeFilterConfigs ?? []),
-        ];
-    } else {
-        activeTab.attributeFilterConfigs.attributeFilterConfigs = [
-            ...(activeTab.attributeFilterConfigs.attributeFilterConfigs || []),
-            action.payload,
-        ];
-    }
+    upsertAttributeFilterConfig(targetTab, localIdentifier, { mode });
 };
 
 /**
  * Changes the config mode for the filter given by its local identifier.
  */
 const changeDisplayAsLabel: AttributeFilterConfigReducer<
-    PayloadAction<ISetDashboardAttributeFilterConfigDisplayAsLabelPayload>
+    PayloadAction<IChangeAttributeFilterDisplayAsLabelPayload>
 > = (state, action) => {
     const { localIdentifier, displayAsLabel, tabLocalIdentifier } = action.payload;
 
@@ -56,56 +115,21 @@ const changeDisplayAsLabel: AttributeFilterConfigReducer<
     if (!targetTab) {
         return;
     }
-    if (!targetTab.attributeFilterConfigs) {
-        targetTab.attributeFilterConfigs = { attributeFilterConfigs: [] };
-    }
-    const existingConfig = targetTab.attributeFilterConfigs.attributeFilterConfigs?.find(
-        (item) => item.localIdentifier === localIdentifier,
-    );
-
-    if (existingConfig) {
-        existingConfig.displayAsLabel = displayAsLabel;
-        targetTab.attributeFilterConfigs.attributeFilterConfigs = [
-            ...(targetTab.attributeFilterConfigs.attributeFilterConfigs ?? []),
-        ];
-    } else {
-        targetTab.attributeFilterConfigs.attributeFilterConfigs = [
-            ...(targetTab.attributeFilterConfigs.attributeFilterConfigs || []),
-            action.payload,
-        ];
-    }
+    upsertAttributeFilterConfig(targetTab, localIdentifier, { displayAsLabel });
 };
 
 /**
  * Changes the available mode for the attribute filter given by its local identifier.
  */
 const changeAttributeFilterSelectionType: AttributeFilterConfigReducer<
-    PayloadAction<ISetDashboardAttributeFilterSelectionTypePayload>
+    PayloadAction<IChangeAttributeFilterSelectionTypePayload>
 > = (state, action) => {
-    const { localIdentifier } = action.payload;
-
-    const activeTab = getActiveTab(state);
-    if (!activeTab) {
+    const { localIdentifier, selectionType, tabLocalIdentifier } = action.payload;
+    const targetTab = getTabOrActive(state, tabLocalIdentifier);
+    if (!targetTab) {
         return;
     }
-    if (!activeTab.attributeFilterConfigs) {
-        activeTab.attributeFilterConfigs = { attributeFilterConfigs: [] };
-    }
-    const existingConfig = activeTab.attributeFilterConfigs.attributeFilterConfigs?.find(
-        (item) => item.localIdentifier === localIdentifier,
-    );
-
-    if (existingConfig) {
-        existingConfig.selectionType = action.payload.selectionType;
-        activeTab.attributeFilterConfigs.attributeFilterConfigs = [
-            ...(activeTab.attributeFilterConfigs.attributeFilterConfigs ?? []),
-        ];
-    } else {
-        activeTab.attributeFilterConfigs.attributeFilterConfigs = [
-            ...(activeTab.attributeFilterConfigs.attributeFilterConfigs || []),
-            action.payload,
-        ];
-    }
+    upsertAttributeFilterConfig(targetTab, localIdentifier, { selectionType });
 };
 
 const setAttributeFilterConfigs: AttributeFilterConfigReducer<PayloadAction<any>> = (state, action) => {
@@ -122,18 +146,50 @@ const setAttributeFilterConfigs: AttributeFilterConfigReducer<PayloadAction<any>
         : undefined;
 };
 
-const removeAttributeFilterConfig: TabsReducer<PayloadAction<string>> = (state, action) => {
-    const activeTab = getActiveTab(state);
-    if (!activeTab) {
+const removeAttributeFilterConfig: TabsReducer<PayloadAction<IRemoveAttributeFilterConfigPayload>> = (
+    state,
+    action,
+) => {
+    const { localIdentifier, tabLocalIdentifier } = action.payload;
+    const configs = getTabOrActive(state, tabLocalIdentifier)?.attributeFilterConfigs;
+    if (!configs?.attributeFilterConfigs) {
         return;
     }
-    if (activeTab.attributeFilterConfigs?.attributeFilterConfigs) {
-        activeTab.attributeFilterConfigs.attributeFilterConfigs =
-            activeTab.attributeFilterConfigs.attributeFilterConfigs.filter(
-                (attributeFilterConfig) => attributeFilterConfig.localIdentifier !== action.payload,
-            );
-    }
+    configs.attributeFilterConfigs = configs.attributeFilterConfigs.filter(
+        (config) => config.localIdentifier !== localIdentifier,
+    );
 };
+
+function upsertAttributeFilterConfig(
+    tab: ITabState,
+    localIdentifier: string,
+    patch: Partial<Pick<IDashboardAttributeFilterConfig, "mode" | "displayAsLabel" | "selectionType">>,
+): void {
+    if (!tab.attributeFilterConfigs) {
+        tab.attributeFilterConfigs = { attributeFilterConfigs: [] };
+    }
+    const configs = tab.attributeFilterConfigs.attributeFilterConfigs ?? [];
+    // const existingConfig = configs.find((item) => item.localIdentifier === localIdentifier);
+
+    const existingConfig = tab.attributeFilterConfigs.attributeFilterConfigs?.find(
+        (item) => item.localIdentifier === localIdentifier,
+    );
+    if (existingConfig) {
+        if ("mode" in patch) {
+            existingConfig.mode = patch.mode;
+        }
+        if ("displayAsLabel" in patch) {
+            existingConfig.displayAsLabel = patch.displayAsLabel;
+        }
+        if ("selectionType" in patch) {
+            existingConfig.selectionType = patch.selectionType;
+        }
+        tab.attributeFilterConfigs.attributeFilterConfigs = [...configs];
+        return;
+    }
+
+    tab.attributeFilterConfigs.attributeFilterConfigs = [...configs, { localIdentifier, ...patch }];
+}
 
 export const attributeFilterConfigsReducers = {
     changeAttributeFilterConfigMode,

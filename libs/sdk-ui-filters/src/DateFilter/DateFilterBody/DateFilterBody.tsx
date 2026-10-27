@@ -25,7 +25,7 @@ import {
     isEmptyValuesDateFilterOption,
     isRelativeDateFilterForm,
 } from "@gooddata/sdk-model";
-import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import { isEscapeKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { isEditableElement } from "../../shared/utils/domUtilities.js";
 import { CheckboxSection } from "../CheckboxSection/CheckboxSection.js";
@@ -354,7 +354,9 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
     );
 
     const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-        if (e.key === "ArrowLeft" && route && !isEditableElement(e.target)) {
+        // In a form, Escape steps back to the option list like Back; from the list it closes the filter.
+        const isBackKey = isEscapeKey(e) || (e.key === "ArrowLeft" && !isEditableElement(e.target));
+        if (route && isBackKey) {
             e.preventDefault();
             e.stopPropagation();
             handleBackNavigation();
@@ -430,7 +432,6 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
                         onPeriodRangeValidityChange={setIsPeriodRangeValid}
                         activeForm={route}
                         onBackNavigation={handleBackNavigation}
-                        onClose={closeDropdown}
                         submitForm={() => {
                             onApplyClick();
                             if (!withoutApply) {

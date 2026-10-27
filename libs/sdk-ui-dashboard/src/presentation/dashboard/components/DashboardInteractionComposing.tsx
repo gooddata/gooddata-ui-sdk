@@ -3,7 +3,9 @@
 import { type ReactNode } from "react";
 
 import cx from "classnames";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, defineMessages, useIntl } from "react-intl";
+
+import { UiButton } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import {
@@ -15,11 +17,20 @@ import {
 
 import { DashboardAiComposingOverlay } from "./DashboardAiComposingOverlay.js";
 
+const messages = defineMessages({
+    replyNow: { id: "dashboard.ai.composing.replyNow", defaultMessage: "Reply now" },
+});
+
 interface IDashboardInteractionComposingProps {
     children: ReactNode;
+    onReplyInChat?: () => void;
 }
 
-export function DashboardInteractionComposing({ children }: IDashboardInteractionComposingProps) {
+export function DashboardInteractionComposing({
+    children,
+    onReplyInChat,
+}: IDashboardInteractionComposingProps) {
+    const intl = useIntl();
     const isAiGenerating = useDashboardSelector(selectIsAiGenerating);
     const isAiBuilding = useDashboardSelector(selectIsAiBuilding);
     const isAiWaiting = useDashboardSelector(selectIsAiWaiting);
@@ -41,14 +52,26 @@ export function DashboardInteractionComposing({ children }: IDashboardInteractio
                 className={cx("gd-dashboard-interaction-composing__status", {
                     hidden: !showStatus,
                 })}
-                role={showStatus ? "status" : undefined}
                 aria-hidden={!showStatus}
             >
-                {isAiWaiting || !showReasoningTitle ? (
-                    <FormattedMessage id="dashboard.ai.composing.waiting" />
-                ) : (
-                    aiReasoningTitle
-                )}
+                <div
+                    className="gd-dashboard-interaction-composing__message"
+                    role={showStatus ? "status" : undefined}
+                    aria-hidden={!showStatus}
+                >
+                    {isAiWaiting || !showReasoningTitle ? (
+                        <FormattedMessage id="dashboard.ai.composing.waiting" />
+                    ) : (
+                        aiReasoningTitle
+                    )}
+                </div>
+                {isAiWaiting && onReplyInChat ? (
+                    <UiButton
+                        variant="tertiary"
+                        label={intl.formatMessage(messages.replyNow)}
+                        onClick={onReplyInChat}
+                    />
+                ) : null}
             </div>
         </>
     );

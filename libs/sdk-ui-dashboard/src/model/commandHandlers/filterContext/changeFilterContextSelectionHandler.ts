@@ -1,9 +1,8 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { compact, partition, uniqBy } from "lodash-es";
-import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
-import { type SagaReturnType, all, call, put, select } from "redux-saga/effects";
+import { type SagaReturnType, all, call, select } from "redux-saga/effects";
 
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
@@ -46,13 +45,11 @@ import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/
 import { type ChangeFilterContextSelection } from "../../commands/filters.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
-import { selectCrossFilteringFiltersLocalIdentifiersByTab } from "../../store/drill/drillSelectors.js";
 import {
     selectRestrictedDashboardFilterLocalIdentifiers,
     selectRestrictedDashboardFilterLocalIdentifiersForTab,
 } from "../../store/filtering/dashboardFilterSelectors.js";
 import { isDashboardFilterUsingRestrictedObject } from "../../store/filtering/restrictedFilterUtils.js";
-import { selectEnablePersistentFiltersAcrossTabs } from "../../store/meta/metaSelectors.js";
 import {
     selectAttributeFilterConfigsOverrides,
     selectAttributeFilterConfigsOverridesByTab,
@@ -97,13 +94,8 @@ import {
     computedAttributesDisabledMessage,
     findDisabledComputedAttributeRef,
 } from "./attributeFilter/validation/computedAttributesEnabledValidation.js";
-import {
-    type IFilterContextByTabSnapshot,
-    canApplyDateFilter,
-    captureFilterContextByTabSnapshot,
-    dispatchFilterContextChanged,
-    dispatchFilterContextChangedForMutatedTabs,
-} from "./common.js";
+import { canApplyDateFilter } from "./common.js";
+import { type ITabSyncSession, beginTabSync, endTabSync, putTabSynced } from "./tabSync/tabSyncSaga.js";
 
 /**
  * Actions the selection-change generators may emit.
@@ -155,8 +147,8 @@ const RESTORE_TARGET_ORIGINAL = {
     ...classifyRestore(tabsActions.changeMeasureValueFilterCondition.type, true),
     ...classifyRestore(tabsActions.setMeasureValueFilterDimensionality.type, true),
     ...classifyRestore(tabsActions.addAttributeFilterDisplayForm.type, false),
-    ...classifyRestore(tabsActions.changeAttributeDisplayForm.type, false),
-    ...classifyRestore(tabsActions.changeDisplayAsLabel.type, false),
+    ...classifyRestore(tabsActions.changeAttributeDisplayForm.type, true),
+    ...classifyRestore(tabsActions.changeDisplayAsLabel.type, true),
 } satisfies RestoreTargetOriginalByAction;
 
 /**
@@ -287,6 +279,18 @@ function* selectFilterContextDateFiltersWithDimensionTabAware(
     return tabLocalIdentifier
         ? yield select(selectFilterContextDateFiltersWithDimensionForTab(tabLocalIdentifier))
         : yield select(selectFilterContextDateFiltersWithDimension);
+}
+
+function* selectFilterContextMeasureValueFiltersTabAware(
+    tabLocalIdentifier?: string,
+): SagaIterator<ReturnType<typeof selectFilterContextMeasureValueFilters>> {
+    if (tabLocalIdentifier) {
+        const filters: ReturnType<ReturnType<typeof selectFiltersForTab>> = yield select(
+            selectFiltersForTab(tabLocalIdentifier),
+        );
+        return filters.filter(isDashboardMeasureValueFilter);
+    }
+    return yield select(selectFilterContextMeasureValueFilters);
 }
 
 function* selectAttributeFilterConfigsSelectionTypeMapTabAware(
@@ -499,13 +503,10 @@ export function* changeFilterContextSelectionHandler(
         ),
         call(getDateFilterUpdateActions, commonDateFilter, resetOthers, tabLocalIdentifier),
         call(getDateFiltersUpdateActions, dateFiltersWithDimension, resetOthers, tabLocalIdentifier),
-        call(getMeasureValueFiltersUpdateActions, measureValueFilters, resetOthers),
+        call(getMeasureValueFiltersUpdateActions, measureValueFilters, resetOthers, tabLocalIdentifier),
     ]);
 
-    const enablePersistentFiltersAcrossTabs: ReturnType<typeof selectEnablePersistentFiltersAcrossTabs> =
-        yield select(selectEnablePersistentFiltersAcrossTabs);
-
-    const filterContextSnapshot: IFilterContextByTabSnapshot = yield call(captureFilterContextByTabSnapshot);
+    const session: ITabSyncSession = yield call(beginTabSync, { tabLocalIdentifier });
 
     // Ensure display form metadata is loaded for filters that will actually be applied.
     // This handles the case where a default saved view changed filter types (e.g., list→text)
@@ -521,25 +522,21 @@ export function* changeFilterContextSelectionHandler(
         }
     }
 
-    yield put(
-        batchActions(
-            markRestoreTargetOriginal(
-                [
-                    ...attributeFilterResult.actions,
-                    ...commonDateFilterUpdateActions,
-                    ...dateFiltersUpdateActions,
-                    ...measureValueFilterUpdateActions,
-                ],
-                restorePerTabOriginals,
-            ),
+    yield call(
+        putTabSynced,
+        session,
+        markRestoreTargetOriginal(
+            [
+                ...attributeFilterResult.actions,
+                ...commonDateFilterUpdateActions,
+                ...dateFiltersUpdateActions,
+                ...measureValueFilterUpdateActions,
+            ],
+            restorePerTabOriginals,
         ),
     );
 
-    if (enablePersistentFiltersAcrossTabs) {
-        yield call(dispatchFilterContextChangedForMutatedTabs, ctx, cmd, filterContextSnapshot);
-    } else {
-        yield call(dispatchFilterContextChanged, ctx, cmd, tabLocalIdentifier);
-    }
+    yield call(endTabSync, ctx, cmd, session, tabLocalIdentifier);
 }
 
 function* getDashboardFilterByAttributeMatching(
@@ -706,16 +703,11 @@ function* getAttributeFiltersUpdateActions(
     const updateActions: SelectionUpdateAction[] = [];
     const displayFormsToResolve: ObjRef[] = [];
     const handledLocalIds = new Set<string>();
-    const crossFilteringLocalIdsByTab: ReturnType<typeof selectCrossFilteringFiltersLocalIdentifiersByTab> =
-        yield select(selectCrossFilteringFiltersLocalIdentifiersByTab);
     const resolvedDisplayForms: SagaReturnType<typeof resolveDisplayFormMetadata> = yield call(
         resolveDisplayFormMetadata,
         ctx,
         attributeFilters.map((af) => dashboardAttributeFilterItemDisplayForm(af)),
     );
-
-    const enablePersistentFiltersAcrossTabs: ReturnType<typeof selectEnablePersistentFiltersAcrossTabs> =
-        yield select(selectEnablePersistentFiltersAcrossTabs);
 
     // A payload can give a display form as a URI ref, and the dashboard can store it as an
     // identifier ref. The two refs are equal when they point to the same display form metadata.
@@ -961,8 +953,6 @@ function* getAttributeFiltersUpdateActions(
                 tabsActions.updateAttributeFilterSelection({
                     ...getAttributeFilterSelectionPayload(attributeFilter, dashboardFilter),
                     tabLocalIdentifier,
-                    crossFilteringLocalIdsByTab,
-                    enablePersistentFiltersAcrossTabs,
                 }),
             );
 
@@ -1037,8 +1027,6 @@ function* getAttributeFiltersUpdateActions(
                             filterLocalId: targetLocalId,
                             filter: normalizedListFilter,
                             tabLocalIdentifier,
-                            crossFilteringLocalIdsByTab,
-                            enablePersistentFiltersAcrossTabs,
                         }),
                         tabsActions.changeDisplayAsLabel({
                             localIdentifier: targetLocalId,
@@ -1120,8 +1108,6 @@ function* getAttributeFiltersUpdateActions(
                 filterLocalId: targetLocalId,
                 filter: normalizedTextFilter,
                 tabLocalIdentifier,
-                crossFilteringLocalIdsByTab,
-                enablePersistentFiltersAcrossTabs,
             }),
         );
 
@@ -1162,8 +1148,6 @@ function* getAttributeFiltersUpdateActions(
                         dashboardAttributeFilterItemLocalIdentifier(filter)!,
                     ),
                     tabLocalIdentifier,
-                    crossFilteringLocalIdsByTab,
-                    enablePersistentFiltersAcrossTabs,
                 }),
             );
         }
@@ -1198,8 +1182,6 @@ function* getAttributeFiltersUpdateActions(
                     filterLocalId: localId,
                     filter: resetFilter,
                     tabLocalIdentifier,
-                    crossFilteringLocalIdsByTab,
-                    enablePersistentFiltersAcrossTabs,
                 }),
             );
         }
@@ -1213,9 +1195,6 @@ function* getDateFilterUpdateActions(
     resetOthers: boolean,
     tabLocalIdentifier?: string,
 ): SagaIterator<SelectionUpdateAction[]> {
-    const enablePersistentFiltersAcrossTabs: ReturnType<typeof selectEnablePersistentFiltersAcrossTabs> =
-        yield select(selectEnablePersistentFiltersAcrossTabs);
-
     if (dateFilter) {
         const canApply: SagaReturnType<typeof canApplyDateFilter> = yield call(
             canApplyDateFilter,
@@ -1239,7 +1218,6 @@ function* getDateFilterUpdateActions(
                   ...localIdentifierObj,
                   ...emptyValueHandlingObj,
                   tabLocalIdentifier,
-                  enablePersistentFiltersAcrossTabs,
               }
             : {
                   type: dateFilter.dateFilter.type,
@@ -1253,7 +1231,6 @@ function* getDateFilterUpdateActions(
                       : {}),
                   ...emptyValueHandlingObj,
                   tabLocalIdentifier,
-                  enablePersistentFiltersAcrossTabs,
               };
 
         return [tabsActions.upsertDateFilter(upsertPayload)];
@@ -1262,7 +1239,6 @@ function* getDateFilterUpdateActions(
             tabsActions.upsertDateFilter({
                 type: "allTime",
                 tabLocalIdentifier,
-                enablePersistentFiltersAcrossTabs,
             }),
         ];
     }
@@ -1273,25 +1249,25 @@ function* getDateFilterUpdateActions(
 function* getMeasureValueFiltersUpdateActions(
     measureValueFilters: IDashboardMeasureValueFilter[],
     resetOthers: boolean,
+    tabLocalIdentifier?: string,
 ): SagaIterator<SelectionUpdateAction[]> {
     const updateActions: SelectionUpdateAction[] = [];
     const handledLocalIds = new Set<string>();
 
     // a restricted filter keeps its stored conditions: it is neither matched nor reset
-    const allMeasureValueFilters: ReturnType<typeof selectFilterContextMeasureValueFilters> = yield select(
-        selectFilterContextMeasureValueFilters,
+    const allMeasureValueFilters: ReturnType<typeof selectFilterContextMeasureValueFilters> = yield call(
+        selectFilterContextMeasureValueFiltersTabAware,
+        tabLocalIdentifier,
     );
-    const restrictedLocalIdentifiers: ReturnType<typeof selectRestrictedDashboardFilterLocalIdentifiers> =
-        yield select(selectRestrictedDashboardFilterLocalIdentifiers);
+    const restrictedLocalIdentifiers: SagaReturnType<
+        typeof selectRestrictedDashboardFilterLocalIdentifiersTabAware
+    > = yield call(selectRestrictedDashboardFilterLocalIdentifiersTabAware, tabLocalIdentifier);
     const currentMeasureValueFilters = allMeasureValueFilters.filter(
         (filter) => !restrictedLocalIdentifiers.has(dashboardMeasureValueFilterLocalIdentifier(filter)),
     );
     const currentByLocalId = new Map(
         currentMeasureValueFilters.map((f) => [dashboardMeasureValueFilterLocalIdentifier(f), f]),
     );
-
-    const enablePersistentFiltersAcrossTabs: ReturnType<typeof selectEnablePersistentFiltersAcrossTabs> =
-        yield select(selectEnablePersistentFiltersAcrossTabs);
 
     for (const incoming of measureValueFilters) {
         const incomingLocalIdentifier = dashboardMeasureValueFilterLocalIdentifier(incoming);
@@ -1316,7 +1292,7 @@ function* getMeasureValueFiltersUpdateActions(
             tabsActions.changeMeasureValueFilterCondition({
                 localIdentifier,
                 conditions: incoming.dashboardMeasureValueFilter.conditions,
-                enablePersistentFiltersAcrossTabs,
+                tabLocalIdentifier,
             }),
         );
         if ("dimensionality" in incoming.dashboardMeasureValueFilter) {
@@ -1324,7 +1300,7 @@ function* getMeasureValueFiltersUpdateActions(
                 tabsActions.setMeasureValueFilterDimensionality({
                     localIdentifier,
                     dimensionality: incoming.dashboardMeasureValueFilter.dimensionality,
-                    enablePersistentFiltersAcrossTabs,
+                    tabLocalIdentifier,
                 }),
             );
         }
@@ -1342,7 +1318,7 @@ function* getMeasureValueFiltersUpdateActions(
                 tabsActions.changeMeasureValueFilterCondition({
                     localIdentifier,
                     conditions: undefined,
-                    enablePersistentFiltersAcrossTabs,
+                    tabLocalIdentifier,
                 }),
             );
         }
@@ -1358,9 +1334,6 @@ function* getDateFiltersUpdateActions(
 ): SagaIterator<SelectionUpdateAction[]> {
     const updateActions: SelectionUpdateAction[] = [];
     const handledDataSets = new Set<string>();
-
-    const enablePersistentFiltersAcrossTabs: ReturnType<typeof selectEnablePersistentFiltersAcrossTabs> =
-        yield select(selectEnablePersistentFiltersAcrossTabs);
 
     for (const dateFilter of dateFilters) {
         const filterRef = dateFilter.dateFilter.dataSet!;
@@ -1382,7 +1355,6 @@ function* getDateFiltersUpdateActions(
                       ...localIdentifierObj,
                       ...emptyValueHandlingObj,
                       tabLocalIdentifier,
-                      enablePersistentFiltersAcrossTabs,
                   }
                 : {
                       type: dateFilter.dateFilter.type,
@@ -1396,7 +1368,6 @@ function* getDateFiltersUpdateActions(
                           : {}),
                       ...emptyValueHandlingObj,
                       tabLocalIdentifier,
-                      enablePersistentFiltersAcrossTabs,
                   };
 
             updateActions.push(tabsActions.upsertDateFilter(upsertPayload));
@@ -1424,7 +1395,6 @@ function* getDateFiltersUpdateActions(
                         dataSet: dateFilter.dateFilter.dataSet,
                         ...localIdentifierObj,
                         tabLocalIdentifier,
-                        enablePersistentFiltersAcrossTabs,
                     }),
                 );
             }

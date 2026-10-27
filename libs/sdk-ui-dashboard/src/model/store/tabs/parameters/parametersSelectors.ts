@@ -719,3 +719,31 @@ export const selectActiveTabExportParameters: DashboardSelector<IDashboardExport
     selectActiveOrDefaultTabLocalIdentifier,
     (parametersByTab, activeTabId) => parametersByTab[activeTabId] ?? EMPTY_EXPORT_PARAMETERS,
 );
+
+/**
+ * Reset targets of every tab, keyed by tab `localIdentifier`, computed like
+ * {@link selectActiveTabParameterResetTargets} from each tab's own parameter entries.
+ *
+ * @internal
+ */
+export const selectParameterResetTargetsByTab: DashboardSelector<Record<string, IInsightParameterValue[]>> =
+    createSelector(
+        selectTabs,
+        selectCatalogParameters,
+        selectIsInEditMode,
+        selectEnableParameters,
+        (tabs, workspaceParameters, isInEditMode, isEnabled) => {
+            const result: Record<string, IInsightParameterValue[]> = {};
+            if (!isEnabled) {
+                return result;
+            }
+            for (const tab of tabs ?? []) {
+                result[tab.localIdentifier] = computeParameterResetTargets(
+                    tab.parameters?.parameters ?? [],
+                    workspaceParameters,
+                    isInEditMode,
+                );
+            }
+            return result;
+        },
+    );

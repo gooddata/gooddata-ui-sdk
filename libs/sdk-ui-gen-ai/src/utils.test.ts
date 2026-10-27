@@ -9,6 +9,7 @@ import {
     convertReferenceTypeToGenAiType,
     formatPublisherDocumentPeriod,
     generateTitleFromQuestion,
+    getDashboardHref,
     getPublisherDocumentDraftHref,
     getPublisherDocumentHref,
     getPublisherDocumentItemUrl,
@@ -120,6 +121,17 @@ describe("getVisualizationHref", () => {
 
     it("should carry the AI builder id in the search for a draft visualization", () => {
         expect(getVisualizationHref("ws1", "vis1", "draft")).toBe("/workspace/ws1/analyze/?aibuilder=vis1");
+    });
+});
+
+describe("getDashboardHref", () => {
+    it.each([
+        ["saved", true, "/workspace/ws1/dashboards/#/dashboard/d1/tab/defaultTabId"],
+        ["saved", false, "/dashboards/#/workspace/ws1/dashboard/d1/tab/defaultTabId"],
+        ["draft", true, "/workspace/ws1/dashboards/#/new-dashboard/?aibuilder=d1"],
+        ["draft", false, "/dashboards/#/workspace/ws1/new-dashboard/?aibuilder=d1"],
+    ] as const)("should return the %s dashboard route (hosted %s)", (status, hosted, expected) => {
+        expect(getDashboardHref("ws1", "d1", status, hosted)).toBe(expected);
     });
 });
 

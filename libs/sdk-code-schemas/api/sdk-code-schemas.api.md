@@ -14609,7 +14609,7 @@ type PublisherRadiusValueV22 = "{theme.corners.small}" | "{theme.corners.medium}
 interface PublisherRelativePeriodV2 {
     from: number;
     // (undocumented)
-    granularity: "SECOND" | "MINUTE" | "HOUR" | "DAY" | "WEEK_US" | "MONTH" | "QUARTER" | "YEAR" | "FISCAL_YEAR" | "FISCAL_QUARTER" | "FISCAL_MONTH";
+    granularity: "SECOND" | "MINUTE" | "HOUR" | "DAY" | "WEEK" | "WEEK_US" | "MONTH" | "QUARTER" | "YEAR" | "FISCAL_YEAR" | "FISCAL_QUARTER" | "FISCAL_MONTH";
     to: number;
 }
 

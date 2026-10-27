@@ -11,6 +11,7 @@ import { initializeDashboard } from "../../commands/dashboard.js";
 import { changeParameterValues } from "../../commands/parameters.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { isDashboardParametersChanged } from "../../events/parameters.js";
+import { catalogActions } from "../../store/catalog/index.js";
 import { selectConfig } from "../../store/config/configSelectors.js";
 import { configActions } from "../../store/config/index.js";
 import { metaActions } from "../../store/meta/index.js";
@@ -208,6 +209,49 @@ describe("changeParameterValues handler", () => {
                 { parameters: [{ ref: topNRef, value: 3 }], tabLocalIdentifier: otherTabId },
             ]);
             expect(events.every((event) => event.correlationId === "corr-tabs")).toBe(true);
+        });
+
+        it("resets every other tab to its own reset value with restorePerTabOriginals", async () => {
+            enableCrossTabFilters();
+            Tester.dispatch(
+                catalogActions.setCatalogParameters({
+                    status: "loaded",
+                    parameters: [
+                        {
+                            type: "parameter",
+                            id: "topN",
+                            uri: "/topN",
+                            ref: topNRef,
+                            title: "Top N",
+                            description: "",
+                            production: true,
+                            deprecated: false,
+                            unlisted: false,
+                            definition: { type: "NUMBER", defaultValue: 10 },
+                        },
+                    ],
+                }),
+            );
+            appendTab([{ parameter: { ...topNParameter, value: 7 }, runtimeOverride: 8 }]);
+            const sourceTabId = selectActiveTabLocalIdentifier(Tester.state())!;
+
+            await Tester.dispatchAndWaitFor(
+                changeParameterValues({
+                    parameters: [{ ref: topNRef, value: 10 }],
+                    restorePerTabOriginals: true,
+                }),
+                "GDC.DASH/CMD.PARAMETERS.CHANGE_VALUES",
+            );
+
+            expect(selectParameterValuesByTab(Tester.state())).toMatchObject({
+                [sourceTabId]: [{ ref: topNRef, value: 10 }],
+                [otherTabId]: [{ ref: topNRef, value: 7 }],
+            });
+            const events = Tester.emittedEvents().filter(isDashboardParametersChanged);
+            expect(events.map((event) => event.payload.tabLocalIdentifier)).toEqual([
+                sourceTabId,
+                otherTabId,
+            ]);
         });
 
         it("does not emit a change for a tab that does not define the parameter", async () => {

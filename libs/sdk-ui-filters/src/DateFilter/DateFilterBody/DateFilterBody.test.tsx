@@ -643,6 +643,73 @@ describe("ExtendedDateFilterBody", () => {
         });
     });
 
+    describe("Escape in a period form", () => {
+        const absoluteForm: IUiAbsoluteDateFilterForm = {
+            localIdentifier: "ABSOLUTE_FORM",
+            type: "absoluteForm",
+            name: "",
+            visible: true,
+        };
+        const relativeForm: IUiRelativeDateFilterForm = {
+            localIdentifier: "RELATIVE_FORM",
+            type: "relativeForm",
+            name: "",
+            visible: true,
+            granularity: "GDC.time.date",
+        };
+
+        it("steps back from the static period form to the option list instead of closing the filter", () => {
+            const closeDropdown = vi.fn();
+            renderDateFilterBody({
+                filterOptions: { absoluteForm },
+                selectedFilterOption: absoluteForm,
+                closeDropdown,
+            });
+
+            fireEvent.click(screen.getByRole("button", { name: /Static period/i }));
+            const notPrevented = fireEvent.keyDown(screen.getByRole("dialog", { name: /Static period/i }), {
+                key: "Escape",
+                code: "Escape",
+            });
+
+            expect(notPrevented).toBe(false);
+            expect(closeDropdown).not.toHaveBeenCalled();
+            expect(screen.getByRole("button", { name: /Static period/i })).toBeInTheDocument();
+        });
+
+        it("steps back from a relative period granularity tab instead of closing the filter", () => {
+            const closeDropdown = vi.fn();
+            renderDateFilterBody({
+                filterOptions: { relativeForm },
+                selectedFilterOption: relativeForm,
+                availableGranularities: ["GDC.time.date", "GDC.time.month"],
+                closeDropdown,
+            });
+
+            fireEvent.click(screen.getByRole("button", { name: /Relative period/i }));
+            const monthTab = screen.getByRole("tab", { name: /month/i });
+            monthTab.focus();
+            fireEvent.keyDown(monthTab, { key: "Escape", code: "Escape" });
+
+            expect(closeDropdown).not.toHaveBeenCalled();
+            expect(
+                document.querySelector(".s-relative-filter-form-granularity-tabs"),
+            ).not.toBeInTheDocument();
+            expect(screen.getByRole("button", { name: /Relative period/i })).toBeInTheDocument();
+        });
+
+        it("leaves Escape in the option list to the dropdown, which closes the filter", () => {
+            renderDateFilterBody({ filterOptions: { absoluteForm }, selectedFilterOption: absoluteForm });
+
+            const notPrevented = fireEvent.keyDown(screen.getByRole("button", { name: /Static period/i }), {
+                key: "Escape",
+                code: "Escape",
+            });
+
+            expect(notPrevented).toBe(true);
+        });
+    });
+
     describe("calculateHeight", () => {
         const resizeWindow = (x: number, y: number) => {
             window.innerWidth = x;

@@ -5,7 +5,7 @@ import { type Mock, afterEach, beforeEach, describe, expect, it, vi } from "vite
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { type IAnalyticalWorkspace } from "@gooddata/sdk-backend-spi";
 
-import { adoptHostBackend, reinitializeBackend } from "../backend.js";
+import { adoptHostBackend, resetBackend } from "../backend.js";
 
 import { checkMetricOverrides, getMetricsEditorUrl, setupSessionId } from "./api.js";
 
@@ -43,7 +43,7 @@ describe("getMetricsEditorUrl", () => {
 
 describe("checkMetricOverrides", () => {
     afterEach(() => {
-        reinitializeBackend();
+        resetBackend();
         vi.restoreAllMocks();
     });
 

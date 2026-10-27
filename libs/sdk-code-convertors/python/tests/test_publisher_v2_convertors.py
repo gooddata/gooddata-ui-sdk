@@ -6,6 +6,8 @@ Requires the WASM binary to be built first:
     cd sdk/libs/sdk-code-convertors && npm run build-wasm
 """
 
+import re
+
 import pytest
 
 from gooddata_code_convertors import (
@@ -255,8 +257,42 @@ def test_validator_reports_an_issue_on_the_reference_on_the_id():
 def test_rejects_a_yaml_version_it_does_not_know():
     written = {**declarative_publisher_page_template_to_yaml_v2(PAGE_TEMPLATE)["json"], "version": "3"}
 
-    with pytest.raises(ConversionError, match='Content version "3" is not supported'):
+    with pytest.raises(ConversionError, match='Expected "2", got "3"'):
         yaml_publisher_page_template_to_declarative_v2(written)
+
+
+def _with_document_date_filter(granularity):
+    written = declarative_publisher_document_to_yaml_v2(DOCUMENT)["json"]
+    written["content"]["filters"]["week"] = {
+        "type": "date_filter",
+        "date": "order_date",
+        "granularity": granularity,
+        "from": -1,
+        "to": -1,
+    }
+    return written
+
+
+def test_stores_a_week_document_date_filter_as_the_us_week():
+    stored = yaml_publisher_document_to_declarative_v2(_with_document_date_filter("WEEK"))
+
+    [week] = [
+        item["dateFilter"]
+        for item in stored["content"]["filters"]
+        if item.get("dateFilter", {}).get("localIdentifier") == "week"
+    ]
+    assert week["granularity"] == "GDC.time.week_us"
+    assert validate_publisher_entity_v2(stored, "document") == []
+
+
+def test_rejects_a_document_date_filter_granularity_no_date_filter_has():
+    with pytest.raises(
+        ConversionError,
+        match=re.escape('Granularity "FORTNIGHT" is not supported.')
+        + ".*"
+        + re.escape(" in: content/filters/week/granularity"),
+    ):
+        yaml_publisher_document_to_declarative_v2(_with_document_date_filter("FORTNIGHT"))
 
 
 def test_fills_missing_ids_and_keeps_comments():

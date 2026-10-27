@@ -214,7 +214,7 @@ export const getAvailableGranularityOptions = (
                 ),
         )
         .filter(isGenericDateGranularity)
-        // TODO CQ-2773: second of day is temporarily not offered as it causes UI issues
+        // TODO: second of day is temporarily not offered as it causes UI issues
         // in additional date filters; remove this filter once those are resolved.
         .filter(({ dateType }) => dateType !== GRANULARITY.SECOND_IN_DAY)
         .map(({ dateType, label, chronologicalGranularity, valuesPreview }) => ({

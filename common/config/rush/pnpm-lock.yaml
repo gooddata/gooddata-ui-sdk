@@ -3354,9 +3354,6 @@ importers:
       '@formatjs/intl-pluralrules':
         specifier: 1.5.9
         version: 1.5.9
-      '@gooddata/js-utils':
-        specifier: 4.1.0
-        version: 4.1.0
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
         version: link:../sdk-backend-base
@@ -6973,6 +6970,9 @@ importers:
       '@gooddata/sdk-ui-pivot':
         specifier: workspace:*
         version: link:../sdk-ui-pivot
+      '@gooddata/sdk-ui-pluggable-host':
+        specifier: workspace:*
+        version: link:../sdk-ui-pluggable-host
       '@gooddata/sdk-ui-semantic-search':
         specifier: workspace:*
         version: link:../sdk-ui-semantic-search
@@ -9836,9 +9836,6 @@ packages:
 
   '@gooddata/fixtures@3.7.0':
     resolution: {integrity: sha512-O3c1ptiJXF/CeTJKlcdP/AXuPiby91PUrsZtOk2W+Uor9pLnNc5HH3jG3RfmAa5GWUYjCT1BxNlVqxGIAx4Avg==}
-
-  '@gooddata/js-utils@4.1.0':
-    resolution: {integrity: sha512-OMXX/Zhy4TwRpcZZ3f3kBji4eRvD6xuHNplgADeEdJysE+I3xVBsxVCYiOuK8fVdgxBXI/Nt+h65xrNZf2Yz9A==}
 
   '@gooddata/maql-antlr4ts@0.5.1-02977c25.0':
     resolution: {integrity: sha512-LuQ5IOdk25vvMNyfBnTUsDTMFSnvE00X9xCRoAZVE0HOhDOD4TSjqKIr/dr077g0XdwBSt64RTT04XJrwf8/TQ==}
@@ -12885,8 +12882,8 @@ packages:
   base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
 
-  baseline-browser-mapping@2.11.29:
-    resolution: {integrity: sha512-YeesxhUmR4h5y5V8KF8iBCqJb8YFrBJ++XBTeGcWIaQOYXGN19JM0FoiOjAhwuDoln8owMgXcWBmgHtYSkky2w==}
+  baseline-browser-mapping@2.11.33:
+    resolution: {integrity: sha512-yiVKDX+qCMRKBE084lXvq9EcwFUhKZ2nU8TK1EQQuOgPNR/lmbGxXOeDdlGUqC2Zz11Cs9rk1d/8NfgBmlkt0w==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
@@ -14978,9 +14975,6 @@ packages:
 
   jquery@3.7.1:
     resolution: {integrity: sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==}
-
-  js-cookie@2.2.1:
-    resolution: {integrity: sha512-HvdH2LzI/EAZcUwA8+0nKNtWHqS+ZmijLA30RwZA0bo7ToCckjK5MkGhjED9KoRcXO6BaGI3I9UIzSA1FKFPOQ==}
 
   js-tokens@10.0.0:
     resolution: {integrity: sha512-lM/UBzQmfJRo9ABXbPWemivdCW8V2G8FHaHdypQaIy523snUjog0W71ayWXTjiR+ixeMyVHN2XcpnTd/liPg/Q==}
@@ -18882,11 +18876,6 @@ snapshots:
       - debug
       - supports-color
 
-  '@gooddata/js-utils@4.1.0':
-    dependencies:
-      js-cookie: 2.2.1
-      lodash: 4.18.1
-
   '@gooddata/maql-antlr4ts@0.5.1-02977c25.0':
     dependencies:
       antlr4ts: 0.5.0-alpha.4
@@ -21692,7 +21681,7 @@ snapshots:
 
   base64-js@1.5.1: {}
 
-  baseline-browser-mapping@2.11.29: {}
+  baseline-browser-mapping@2.11.33: {}
 
   basic-ftp@5.3.1: {}
 
@@ -21758,7 +21747,7 @@ snapshots:
 
   browserslist@4.29.4:
     dependencies:
-      baseline-browser-mapping: 2.11.29
+      baseline-browser-mapping: 2.11.33
       caniuse-lite: 1.0.30001816
       electron-to-chromium: 1.5.459
       node-releases: 2.0.59
@@ -23963,8 +23952,6 @@ snapshots:
   jquery.browser@0.1.0: {}
 
   jquery@3.7.1: {}
-
-  js-cookie@2.2.1: {}
 
   js-tokens@10.0.0: {}
 

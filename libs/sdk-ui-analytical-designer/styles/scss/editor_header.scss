@@ -144,7 +144,7 @@
             padding: 4px 5px 2px 5px;
             border: 1px solid transparent;
             // Content-box (32 + padding + border = 40px box): resist a preloaded app's injected
-            // `*{box-sizing:border-box}` reset, which would shrink the box to 32px and clip it (LX-2604).
+            // `*{box-sizing:border-box}` reset, which would shrink the box to 32px and clip it.
             box-sizing: content-box;
             font-size: 24px;
             font-weight: bold;

@@ -27,7 +27,7 @@ import { setFeatureFlagsItems } from "../actions/featureFlags_actions.js";
 import { workspacePermissionsSuccess } from "../actions/permissions_actions.js";
 import { resetForPluggableMount } from "../actions/reset_for_pluggable_mount_actions.js";
 import { setHostedComponentMode } from "../appMode/appMode.js";
-import { type IAdHostBackend, type IApiToken, adoptHostBackend, reinitializeBackend } from "../backend.js";
+import { type IAdHostBackend, type IApiToken, adoptHostBackend, resetBackend } from "../backend.js";
 import { startSagas, store } from "../reduxStore.js";
 import { Root } from "../Root.js";
 import { type IHostTelemetryCallbacks } from "../services/telemetry/tracker.js";
@@ -66,16 +66,16 @@ export interface IAdEmbeddedHostContext {
     bootstrapData?: IBootstrapData;
     featureFlags?: IUserWorkspaceSettings | IUserSettings;
     workspacePermissions?: IWorkspacePermissions;
-    /** Undefined means context-deferred (cookie-based) authentication. */
+    /**
+     * Seeds the stored token for the components that read it directly; the SetApiToken renewals
+     * keep it in sync. Undefined means context-deferred (cookie-based) authentication.
+     */
     auth?: IApiToken;
     /**
-     * Host-owned backend to adopt instead of creating an AD-owned instance. When provided, the
-     * host's auth provider owns authentication and token renewal and the host's cache is shared;
-     * `auth` then only seeds the stored token for components that read it directly (SetApiToken
-     * renewals keep it in sync without touching the backend).
+     * The host-owned backend AD runs against. The host's auth provider owns authentication and
+     * the host's cache is shared; see adoptHostBackend.
      */
-    hostBackend?: IAdHostBackend;
-    externalProviderId?: string;
+    hostBackend: IAdHostBackend;
     locale?: string;
     /**
      * Telemetry forwarding into the host's pipeline. When omitted, no-op callbacks are registered
@@ -206,16 +206,11 @@ export function AnalyticalDesignerEmbedded({
         if (mountHost.locale) {
             store.dispatch(setLocale(mountHost.locale));
         }
-        // Seeding the token is what makes later SetApiToken renewals take the update-in-place path
-        // instead of a full backend replacement.
+        // Seeding the token is what makes later SetApiToken renewals take the update-in-place path.
         if (mountHost.auth?.apiToken) {
             store.dispatch(storeApiToken(mountHost.auth.apiToken, mountHost.auth.apiTokenType ?? "gooddata"));
         }
-        if (mountHost.hostBackend) {
-            adoptHostBackend(mountHost.hostBackend);
-        } else {
-            reinitializeBackend(mountHost.auth, mountHost.externalProviderId);
-        }
+        adoptHostBackend(mountHost.hostBackend);
         const telemetryCallbacks = mountHost.telemetryCallbacks ?? NOOP_TELEMETRY;
         setHostTelemetryCallbacks(telemetryCallbacks);
         // Report each error that stops AD from starting; the store keeps them in order.
@@ -238,6 +233,7 @@ export function AnalyticalDesignerEmbedded({
             uninstallAdapter();
             clearHostTelemetryCallbacks(telemetryCallbacks);
             store.dispatch(resetForPluggableMount());
+            resetBackend();
             document.body.classList.remove("gd-ad-embedded");
             releaseAnalyticalDesignerRuntime();
         };

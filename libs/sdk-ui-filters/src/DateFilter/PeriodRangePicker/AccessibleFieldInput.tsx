@@ -100,10 +100,9 @@ export const AccessibleFieldInput = forwardRef<HTMLInputElement, IAccessibleFiel
                 e.stopPropagation();
             }
             // rc-picker already closes its own calendar on Escape internally; without this, the event keeps
-            // bubbling up to DateFilterFormContent's outer keydown handler, whose `makeLinearKeyboardNavigation`
-            // maps only Escape to closing the whole dropdown. The Tab branch below is not mirroring that
-            // mapping - it's a deliberate extra guard so Tab-ing between the two fields, which the browser
-            // handles natively, never also reaches that outer handler's own key routing.
+            // bubbling up to DateFilterBody, which would also step the form back to the option list. The Tab
+            // branch is a deliberate extra guard so Tab-ing between the two fields, which the browser handles
+            // natively, never also reaches the outer handlers' own key routing.
             if (isCalendarOpen && (e.key === "Escape" || e.key === "Tab")) {
                 e.stopPropagation();
             }

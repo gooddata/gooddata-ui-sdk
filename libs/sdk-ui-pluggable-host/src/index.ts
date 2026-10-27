@@ -39,3 +39,7 @@ export {
     type UseHostPricingExtension,
     type IHostChromePricing,
 } from "./ui/useHostChromePricing.js";
+
+export { HostIntlProvider, type IHostIntlProviderProps } from "./ui/HostIntlProvider.js";
+export { LanguageDialog, type ILanguageDialogProps } from "./ui/LanguageDialog.js";
+export { type ILanguages } from "./ui/useLanguages.js";

@@ -916,10 +916,8 @@ export function MeasureDateFilterBase({
                 <span className="select">
                     <FormattedMessage id="filter" tagName="span" />
                     {state.activeContentId === ContentId.PRESETS_CONTENT_ID && (
-                        // This is fix for https://jira.intgdc.com/browse/BB-870
-                        // It was happening because DateDatasetsDropdown was not unmounted,
-                        // but just hidden by .invisible selector,
-                        // so it did not recalculate dropdown dimensions properly.
+                        // DateDatasetsDropdown has to be unmounted here, not just hidden by .invisible selector,
+                        // otherwise it does not recalculate dropdown dimensions properly.
                         <DateDatasetsDropdown
                             className="s-filter-date-date-dataset-switch adi-date-dataset-select-dropdown"
                             unavailableCount={dateDatasetsUnavailableCount}

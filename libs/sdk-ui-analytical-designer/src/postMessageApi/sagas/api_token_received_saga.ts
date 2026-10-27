@@ -4,18 +4,10 @@ import { call, put, select } from "redux-saga/effects";
 
 import { type AdSetApiTokenCommandData } from "@gooddata/sdk-embedding";
 
-import {
-    type IApiToken,
-    isHostBackendAdopted,
-    isValidApiTokenType,
-    reinitializeBackend,
-    setApiTokenHandler,
-    setJwtHandler,
-} from "../../backend.js";
+import { type IApiToken, isValidApiTokenType, setApiTokenHandler, setJwtHandler } from "../../backend.js";
 import { backendInitialized } from "../../sagas/application_context/application_context_actions.js";
 import { storeApiToken } from "../../store/application_context/app_context_actions.js";
 import { selectApiToken, selectApiTokenType } from "../../store/application_context/app_context_selector.js";
-import { getExternalProviderIdParam } from "../../utils/location.js";
 import { postInvalidCommandArgument } from "../outgoing/invalid_command_events.js";
 
 import { getPostMessageContextIdFromCommandData } from "./post_message_saga_helper.js";
@@ -54,30 +46,20 @@ export function* handleReceivedApiToken(setApiTokenContext: AdSetApiTokenCommand
 
     const previousToken: ReturnType<typeof selectApiToken> = yield select(selectApiToken);
 
-    if (previousToken === undefined) {
-        yield call(initializeBackendForTheFirstTime, apiToken);
-    } else if (type === "gooddata") {
+    // The first token and a renewal take the same path: the host's setter decides whether it renews
+    // its provider in place or switches the backend to the token (a first token over cookie auth).
+    if (type === "gooddata") {
         yield call(updateApiTokenValue, apiToken);
     } else if (type === "jwt") {
         yield call(updateJwtValue, apiToken, contextId);
     }
-}
-
-function* initializeBackendForTheFirstTime(apiToken: IApiToken) {
-    // A host-adopted backend must never be replaced from here — the host's provider already
-    // authenticates; only record the token (components like the metric editor read it).
-    if (!isHostBackendAdopted) {
-        const externalProviderId: ReturnType<typeof getExternalProviderIdParam> =
-            yield call(getExternalProviderIdParam);
-        yield call(reinitializeBackend, apiToken, externalProviderId);
+    if (previousToken === undefined) {
+        yield put(backendInitialized());
     }
-    yield put(storeApiToken(apiToken.apiToken, apiToken.apiTokenType));
-    yield put(backendInitialized());
 }
 
 function* updateApiTokenValue({ apiToken: token, apiTokenType }: IApiToken) {
-    // No handler means there is no AD-side auth provider (host-adopted backend) — the host has
-    // already renewed its provider in place; only keep the stored token in sync.
+    // No handler means the host renews its auth provider itself; only keep the stored token in sync.
     if (setApiTokenHandler) {
         setApiTokenHandler(token);
 
@@ -91,8 +73,7 @@ function* updateApiTokenValue({ apiToken: token, apiTokenType }: IApiToken) {
 function* updateJwtValue(apiToken: IApiToken, contextId: string) {
     const { apiToken: token, apiTokenType, secondsBeforeTokenExpirationToCallReminder } = apiToken;
     try {
-        // No handler means there is no AD-side auth provider (host-adopted backend) — the host has
-        // already renewed its provider in place; only keep the stored token in sync.
+        // No handler means the host renews its auth provider itself; only keep the stored token in sync.
         if (setJwtHandler) {
             // set token to backend instance via callback we received from the expiration reminder
             setJwtHandler(token, secondsBeforeTokenExpirationToCallReminder);

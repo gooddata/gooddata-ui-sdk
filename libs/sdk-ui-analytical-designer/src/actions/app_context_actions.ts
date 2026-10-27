@@ -12,12 +12,6 @@ import { ActionTypeKeys } from "../constants/actions.js";
 import { type IBearBootstrap } from "../typings/bear/bearTypes.js";
 import { isMobile } from "../utils/browser_detect.js";
 
-export interface IExternalScripts {
-    walkMe: string;
-    walkMeEnvironment: string;
-    includeTrialSnippet: string;
-}
-
 // In the future, split to submodules
 export interface IBootstrapData {
     mapboxToken?: string;
@@ -88,9 +82,6 @@ export interface IBootstrapData {
         defaultDashboardTab: string;
         analyticalDashboards: IBearBootstrap["bootstrapResource"]["current"]["analyticalDashboards"];
     };
-
-    // External scripts to load
-    externalScripts?: IExternalScripts;
 
     // Color palette
     colorPalette?: IColorPalette;
@@ -190,13 +181,6 @@ export type IResetApplicationAction = ReturnType<typeof resetApplication>;
 export const clearInsightContent = createAction(ActionTypeKeys.CLEAR_INSIGHT_CONTENT);
 
 export type IClearInsightContentAction = ReturnType<typeof clearInsightContent>;
-
-export const loadExternalScripts = createAction(
-    ActionTypeKeys.LOAD_EXTERNAL_SCRIPTS_REQUESTED,
-    (scripts: IExternalScripts) => ({ payload: { scripts } }),
-);
-
-export type ILoadExternalScriptsAction = ReturnType<typeof loadExternalScripts>;
 
 // the fresh id is generated HERE so the sessionId reducer stays pure
 export const refreshSessionId = createAction(ActionTypeKeys.STORE_REFRESH_SESSION_ID, () => ({

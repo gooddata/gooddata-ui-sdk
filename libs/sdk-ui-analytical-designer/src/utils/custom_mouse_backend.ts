@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-/**
+/*!
  * Copyright 2015, Yahoo Inc.
  * Copyrights licensed under the MIT License.
  *

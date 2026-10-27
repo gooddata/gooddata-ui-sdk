@@ -197,7 +197,11 @@ function sharesAttributeIdentity(
     return !!leftAttribute && !!rightAttribute && areObjRefsEqual(leftAttribute, rightAttribute);
 }
 
-function displayFormsEquivalent(
+/**
+ * Tests whether two references point to the same display form, also when one is an identifier
+ * and the other a URI reference of a display form in `displayForms`.
+ */
+export function displayFormsEquivalent(
     left: ObjRef,
     right: ObjRef,
     displayForms: IAttributeDisplayFormMetadataObject[],
@@ -210,16 +214,26 @@ function displayFormsEquivalent(
     return !!leftMetadata && !!rightMetadata && leftMetadata.id === rightMetadata.id;
 }
 
+/**
+ * Tests whether display form metadata is referenced by `ref`, regardless of whether `ref` is
+ * an identifier or a URI reference.
+ */
+export function isDisplayFormMetadataReferencedBy(
+    displayForm: IAttributeDisplayFormMetadataObject,
+    ref: ObjRef,
+): boolean {
+    return (
+        areObjRefsEqual(displayForm.ref, ref) ||
+        areObjRefsEqual(idRef(displayForm.id, "displayForm"), ref) ||
+        areObjRefsEqual(uriRef(displayForm.uri), ref)
+    );
+}
+
 function findDisplayFormMetadata(
     ref: ObjRef,
     displayForms: IAttributeDisplayFormMetadataObject[],
 ): IAttributeDisplayFormMetadataObject | undefined {
-    return displayForms.find(
-        (displayForm) =>
-            areObjRefsEqual(displayForm.ref, ref) ||
-            areObjRefsEqual(idRef(displayForm.id, "displayForm"), ref) ||
-            areObjRefsEqual(uriRef(displayForm.uri), ref),
-    );
+    return displayForms.find((displayForm) => isDisplayFormMetadataReferencedBy(displayForm, ref));
 }
 
 function attributeRefForDisplayForm(

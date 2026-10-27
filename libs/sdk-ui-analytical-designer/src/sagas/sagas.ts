@@ -41,7 +41,6 @@ import { watchDrillableItems } from "./drillable_items_sagas.js";
 import { watchEmbedDialogSaga } from "./embed_dialog_sagas.js";
 import { watchExecuteReport } from "./execute_report_sagas.js";
 import { watchExportReport } from "./export_report_sagas.js";
-import { watchLoadExternalScripts } from "./external_scripts_saga.js";
 import { watchFeatureFlags } from "./featureFlags_sagas.js";
 import { watchFilterBar } from "./filter_bar/filter_bar_saga.js";
 import { highlightingWatcher } from "./highlighting/highlighting_saga.js";
@@ -104,7 +103,6 @@ export function* root() {
             watchDrillableItems(),
             watchIncomingCommands(),
             watchDispatchPostponedAction(),
-            watchLoadExternalScripts(),
             watchCatalog(),
             watchFilterBar(),
             watchFeatureFlags(),

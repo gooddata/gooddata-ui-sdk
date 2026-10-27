@@ -65,6 +65,8 @@ function visualizationToDeclarative(
     errorContext: IErrorContext | undefined,
 ): IPublisherVisualizationWidgetV2 {
     const { visualization, date, filters, ignored_filters, ...rest } = widget;
+    const widgetContext = updateErrorContext(errorContext, { path: [widget.id] });
+    const ignoredContext = updateErrorContext(widgetContext, { path: ["ignored_filters"] });
     return {
         ...camelKeys(rest),
         ...(visualization === undefined
@@ -73,12 +75,18 @@ function visualizationToDeclarative(
         ...(date === undefined ? {} : { dateDataSet: { identifier: date, type: "dataSet" } }),
         ...(filters === undefined
             ? {}
-            : { filters: filtersToDeclarativeV2(filters, "widget", errorContext).filters }),
+            : {
+                  filters: filtersToDeclarativeV2(
+                      filters,
+                      "widget",
+                      updateErrorContext(widgetContext, { path: ["filters"] }),
+                  ).filters,
+              }),
         ...(ignored_filters === undefined
             ? {}
             : {
                   ignoreDocumentFilters: ignored_filters.map((id) =>
-                      ignoredFilterToDeclarative(id, errorContext),
+                      ignoredFilterToDeclarative(id, ignoredContext),
                   ),
               }),
     };
@@ -120,7 +128,13 @@ function pageBodyToDeclarative(
         layout: layoutNodeToDeclarative(layout, errorContext),
         ...(filters === undefined
             ? {}
-            : { filters: filtersToDeclarativeV2(filters, "page", errorContext).filters }),
+            : {
+                  filters: filtersToDeclarativeV2(
+                      filters,
+                      "page",
+                      updateErrorContext(errorContext, { path: ["filters"] }),
+                  ).filters,
+              }),
     };
 }
 
@@ -145,15 +159,20 @@ function sectionToDeclarative(
     return { ...rest, pages: pages.map((page) => documentPageToDeclarative(page, pagesContext)) };
 }
 
-function defaultsToDeclarative({
-    period,
-    ...rest
-}: NonNullable<AacPublisherDocumentContentV2["defaults"]>): NonNullable<
-    PublisherDocumentContentV2["defaults"]
-> {
+function defaultsToDeclarative(
+    { period, ...rest }: NonNullable<AacPublisherDocumentContentV2["defaults"]>,
+    errorContext: IErrorContext | undefined,
+): NonNullable<PublisherDocumentContentV2["defaults"]> {
     return {
         ...camelKeys(rest),
-        ...(period === undefined ? {} : { period: periodToDeclarativeV2(period) }),
+        ...(period === undefined
+            ? {}
+            : {
+                  period: periodToDeclarativeV2(
+                      period,
+                      updateErrorContext(errorContext, { path: ["period"] }),
+                  ),
+              }),
     };
 }
 
@@ -173,7 +192,10 @@ function contentToDeclarative(
         ...(defaults === undefined
             ? {}
             : {
-                  defaults: defaultsToDeclarative(defaults),
+                  defaults: defaultsToDeclarative(
+                      defaults,
+                      updateErrorContext(errorContext, { path: ["defaults"] }),
+                  ),
               }),
         ...declared,
         ...camelKeys(rest),
@@ -204,7 +226,7 @@ function documentBody(
     assertPublisherContentVersionV2(input, errorContext);
     return {
         ...entityFields(input),
-        period: periodToDeclarativeV2(input.period),
+        period: periodToDeclarativeV2(input.period, updateErrorContext(errorContext, { path: ["period"] })),
         content: contentToDeclarative(input.content, updateErrorContext(errorContext, { path: ["content"] })),
     };
 }

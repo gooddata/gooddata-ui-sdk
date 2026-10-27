@@ -49,7 +49,6 @@ export interface IAnalyticalDesignerInternalApi extends IAnalyticalDesignerApi {
 export interface IAnalyticalDesignerInternalProps extends Omit<IAnalyticalDesignerProps, "apiRef"> {
     /** Seeds the stored token, so the SetApiToken renewals update it in place. */
     auth?: IApiToken;
-    externalProviderId?: string;
     apiRef?: Ref<IAnalyticalDesignerInternalApi>;
 }
 
@@ -231,7 +230,6 @@ export function AnalyticalDesignerInternal(props: IAnalyticalDesignerInternalPro
                 workspacePermissions: hostData.permissions,
                 hostBackend: { instance: mount.backend, ...cacheReset },
                 auth: props.auth,
-                externalProviderId: props.externalProviderId,
                 locale: config.locale,
                 telemetryCallbacks: config.telemetryCallbacks,
                 isReadOnly: config.isReadOnly,

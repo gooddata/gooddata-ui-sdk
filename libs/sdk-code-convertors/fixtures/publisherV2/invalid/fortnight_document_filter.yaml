@@ -1,0 +1,22 @@
+type: document
+id: weekly
+version: "2"
+title: Weekly
+period:
+    granularity: WEEK_US
+    from: -1
+    to: -1
+content:
+    filters:
+        order_week:
+            type: date_filter
+            date: order_date
+            granularity: FORTNIGHT
+            from: -1
+            to: -1
+    pages:
+        - id: cover
+          layout:
+              type: title
+              id: title
+              markdown: "{documentName}"

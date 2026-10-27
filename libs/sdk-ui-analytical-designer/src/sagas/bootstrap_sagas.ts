@@ -11,10 +11,9 @@ import {
     appFinishedSuccessfulInitialization,
     appStartedLoading,
     bootstrapError,
-    loadExternalScripts,
 } from "../actions/app_context_actions.js";
 import { DEFAULT_REPORT_ID } from "../constants/route_params.js";
-import { externalScripts, getProjectId } from "../selectors/bootstrap_selector.js";
+import { getProjectId } from "../selectors/bootstrap_selector.js";
 import { SERVICE_NAME, VERSION } from "../services/telemetry/openTelemetry/constants.js";
 import { logAccessingAD } from "../services/telemetry/tracking_events.js";
 import { setCatalogFirstLoaded } from "../store/catalog/catalog_store_actions.js";
@@ -56,12 +55,6 @@ export function* bootstrap(routeParams: ICustomRouteParams) {
         // Verify if user has all required permissions & feature flags for current app context
         // Throws error, when not
         yield call(verifyUserAccess);
-
-        // Load external scripts, when provided
-        const extScripts: ReturnType<typeof externalScripts> = yield select(externalScripts);
-        if (extScripts) {
-            yield put(loadExternalScripts(extScripts));
-        }
 
         // Set current workspaceId as a stashed project in the user profile settings
         const currentProjectId: ReturnType<typeof getProjectId> = yield select(getProjectId);

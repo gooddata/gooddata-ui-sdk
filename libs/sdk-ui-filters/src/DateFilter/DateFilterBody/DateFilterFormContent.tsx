@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type KeyboardEvent, type ReactNode, type RefObject, useCallback, useRef } from "react";
+import { type ReactNode, useRef } from "react";
 
 import { isEmpty } from "lodash-es";
 import { useIntl } from "react-intl";
@@ -55,26 +55,9 @@ export interface IDateFilterFormContentProps {
 
     activeForm: DateFilterRoute;
     onBackNavigation: () => void;
-    onClose: () => void;
 
     submitForm: () => void;
     errors?: IExtendedDateFilterErrors;
-}
-
-/**
- * Builds the keydown handler bound to a granularity tabs container, shared by the absolute and relative
- * form's wrapper `<div>`s below - the only two consumers, hence a local hook rather than a shared export.
- */
-function useGranularityTabsKeydownHandler(
-    tabGranularityRef: RefObject<HTMLDivElement | null>,
-    closeDropdown: () => void,
-) {
-    return useCallback(
-        (event: KeyboardEvent) => {
-            createGranularityTabsKeyboardHandler({ tabGranularityRef, closeDropdown })(event);
-        },
-        [tabGranularityRef, closeDropdown],
-    );
 }
 
 /**
@@ -101,7 +84,6 @@ export function DateFilterFormContent({
     onPeriodRangeValidityChange,
     activeForm,
     onBackNavigation,
-    onClose,
     submitForm,
     errors,
 }: IDateFilterFormContentProps) {
@@ -133,11 +115,10 @@ export function DateFilterFormContent({
     const effectiveEmptyValueHandling = selectedFilterOption.emptyValueHandling ?? "exclude";
     const emptyValueHandlingToggleChecked = effectiveEmptyValueHandling === "include";
 
-    const handleRelativeDateFilterKeydown = useGranularityTabsKeydownHandler(tabGranularityRef, onClose);
-    const handleAbsoluteDateFilterKeydown = useGranularityTabsKeydownHandler(
-        absoluteTabGranularityRef,
-        onClose,
-    );
+    const handleRelativeDateFilterKeydown = createGranularityTabsKeyboardHandler({ tabGranularityRef });
+    const handleAbsoluteDateFilterKeydown = createGranularityTabsKeyboardHandler({
+        tabGranularityRef: absoluteTabGranularityRef,
+    });
 
     return (
         <div className="gd-date-filter-form-content">
@@ -219,7 +200,6 @@ export function DateFilterFormContent({
                                         event,
                                         isEmpty(errors),
                                         withoutApply ?? false,
-                                        onClose,
                                         submitForm,
                                     )
                                 }

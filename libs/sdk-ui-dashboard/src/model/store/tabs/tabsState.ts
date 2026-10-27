@@ -45,32 +45,6 @@ export const getTabOrActive = (state: ITabsState, tabLocalIdentifier?: string): 
 };
 
 /**
- * Tabs a filter or parameter mutation should write.
- *
- * With `persistFiltersAcrossTabs` off, that is the tab addressed by `tabLocalIdentifier`
- * or the active tab. With the flag on, that is every tab, source first. Working-selection
- * edits stay on the source tab so half-applied values are not mirrored.
- *
- * @internal
- */
-export const getTabsToMutate = (
-    state: ITabsState,
-    tabLocalIdentifier?: string,
-    enablePersistentFiltersAcrossTabs?: boolean,
-    isWorkingSelectionChange?: boolean,
-): ITabState[] => {
-    const source = getTabOrActive(state, tabLocalIdentifier);
-    if (!source) {
-        return [];
-    }
-    if (isWorkingSelectionChange || !enablePersistentFiltersAcrossTabs) {
-        return [source];
-    }
-    const others = (state.tabs ?? []).filter((tab) => tab.localIdentifier !== source.localIdentifier);
-    return [source, ...others];
-};
-
-/**
  * @alpha
  */
 export interface ITabState {

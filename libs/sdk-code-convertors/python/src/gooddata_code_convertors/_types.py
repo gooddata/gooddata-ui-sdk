@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 52db43276615e2f90fac570c9c8b308d512ff91dac93d08876a5d9e0b5843960
+# schema-hash: 6a4cbac8afba80ea39a31da62b3668ddd7329a4d1616940af7bd920a9ef0dfff
 
 from __future__ import annotations
 
@@ -881,7 +881,7 @@ PublisherPageProportionV2: TypeAlias = float
 PublisherPeriodV21 = TypedDict(
     'PublisherPeriodV21',
     {
-        'granularity': Literal['SECOND', 'MINUTE', 'HOUR', 'DAY', 'WEEK_US', 'MONTH', 'QUARTER', 'YEAR', 'FISCAL_YEAR', 'FISCAL_QUARTER', 'FISCAL_MONTH'],
+        'granularity': Literal['SECOND', 'MINUTE', 'HOUR', 'DAY', 'WEEK', 'WEEK_US', 'MONTH', 'QUARTER', 'YEAR', 'FISCAL_YEAR', 'FISCAL_QUARTER', 'FISCAL_MONTH'],
         'from': int,
         'to': int,
     },

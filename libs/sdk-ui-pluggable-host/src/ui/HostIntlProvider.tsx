@@ -9,12 +9,18 @@ import { DEFAULT_LANGUAGE, resolveLocale, useResolveMessages } from "@gooddata/s
 
 import { DEFAULT_MESSAGES, resolveMessages } from "../components/lib/translations.js";
 
-interface IHostIntlProviderProps {
+/**
+ * @internal
+ */
+export interface IHostIntlProviderProps {
     locale: ILocale;
     additionalMessages?: Record<string, string>;
     children: ReactNode;
 }
 
+/**
+ * @internal
+ */
 export function HostIntlProvider({ locale, additionalMessages, children }: IHostIntlProviderProps) {
     const resolvedLocale = resolveLocale(locale);
     const baseMessages = useResolveMessages(resolvedLocale, resolveMessages, DEFAULT_MESSAGES);

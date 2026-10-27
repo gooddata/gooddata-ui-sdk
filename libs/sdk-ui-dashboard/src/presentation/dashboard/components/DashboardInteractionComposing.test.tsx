@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import { isInaccessible } from "@testing-library/dom";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { useDashboardDispatch } from "../../../model/react/DashboardStoreProvider.js";
 import { configActions } from "../../../model/store/config/index.js";
@@ -28,6 +28,38 @@ function ModeControls() {
 }
 
 describe("DashboardInteractionComposing", () => {
+    it("opens the assistant from the waiting notice with mouse and keyboard", async () => {
+        const onReplyInChat = vi.fn();
+        const { container, getByRole, user } = render(
+            <DashboardInteractionComposing onReplyInChat={onReplyInChat}>
+                <DashboardInteractionLock>
+                    <button>Dashboard control</button>
+                </DashboardInteractionLock>
+            </DashboardInteractionComposing>,
+            { state: { config: { config: { aiMode: "waiting" } } } },
+        );
+        const replyButton = getByRole("button", { name: "Reply now" });
+
+        expect(container.querySelector(".gd-dashboard-interaction-lock__content")).toHaveAttribute("inert");
+        expect(replyButton.closest(".gd-dashboard-interaction-lock__content")).toBeNull();
+        replyButton.focus();
+        expect(replyButton).toHaveFocus();
+        await user.keyboard("{Enter}");
+        expect(onReplyInChat).toHaveBeenCalledTimes(1);
+        await user.click(replyButton);
+        expect(onReplyInChat).toHaveBeenCalledTimes(2);
+    });
+
+    it("does not show a Reply now button when no callback is provided", () => {
+        const { getByRole, queryByRole } = render(
+            <DashboardInteractionComposing>Dashboard content</DashboardInteractionComposing>,
+            { state: { config: { config: { aiMode: "waiting" } } } },
+        );
+
+        expect(getByRole("status")).toHaveTextContent("Reply in chat to continue.");
+        expect(queryByRole("button", { name: "Reply now" })).not.toBeInTheDocument();
+    });
+
     it.each(["generating", "building"] as const)(
         "shows and replaces the reasoning title in %s mode without changing the overlay or lock",
         async (aiMode) => {
@@ -180,9 +212,10 @@ describe("DashboardInteractionComposing", () => {
     });
 
     it("shows the notice on entering waiting and removes it when building resumes or finishes", async () => {
+        const onReplyInChat = vi.fn();
         const { getByRole, getByText, queryByRole, user } = render(
             <>
-                <DashboardInteractionComposing>
+                <DashboardInteractionComposing onReplyInChat={onReplyInChat}>
                     <button>Dashboard control</button>
                 </DashboardInteractionComposing>
                 <ModeControls />
@@ -191,20 +224,25 @@ describe("DashboardInteractionComposing", () => {
         );
 
         expect(queryByRole("status")).not.toBeInTheDocument();
+        expect(queryByRole("button", { name: "Reply now" })).not.toBeInTheDocument();
         expect(isInaccessible(getByText("Reply in chat to continue."))).toBe(true);
         await user.click(getByRole("button", { name: "Wait" }));
         expect(getByRole("status")).toHaveTextContent("Reply in chat to continue.");
+        expect(getByRole("button", { name: "Reply now" })).toBeInTheDocument();
         expect(isInaccessible(getByText("Reply in chat to continue."))).toBe(false);
         expect(getByRole("status").closest('[aria-hidden="true"], [inert]')).toBeNull();
         expect(getByRole("button", { name: "Wait" })).toHaveFocus();
 
         await user.click(getByRole("button", { name: "Build" }));
         expect(queryByRole("status")).not.toBeInTheDocument();
+        expect(queryByRole("button", { name: "Reply now" })).not.toBeInTheDocument();
         expect(isInaccessible(getByText("Reply in chat to continue."))).toBe(true);
         await user.click(getByRole("button", { name: "Wait" }));
         expect(getByRole("status")).toBeInTheDocument();
+        expect(getByRole("button", { name: "Reply now" })).toBeInTheDocument();
         await user.click(getByRole("button", { name: "Finish" }));
         expect(queryByRole("status")).not.toBeInTheDocument();
+        expect(queryByRole("button", { name: "Reply now" })).not.toBeInTheDocument();
         expect(isInaccessible(getByText("Reply in chat to continue."))).toBe(true);
         expect(getByRole("button", { name: "Dashboard control" })).toBeInTheDocument();
     });

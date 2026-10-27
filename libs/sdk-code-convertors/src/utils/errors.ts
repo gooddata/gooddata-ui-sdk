@@ -27,6 +27,8 @@ export enum CoreErrorCode {
     FilterSettingNotStorable = "core.filterSettingNotStorable",
     PagesAndSectionsMutuallyExclusive = "core.pagesAndSectionsMutuallyExclusive",
     PagesOrSectionsRequired = "core.pagesOrSectionsRequired",
+    MissingRequiredKey = "core.missingRequiredKey",
+    UnsupportedGranularity = "core.unsupportedGranularity",
 }
 
 /**
@@ -50,11 +52,13 @@ export const CoreErrorMessages: Record<CoreErrorCode, string> = {
     [CoreErrorCode.DuplicateTabIdentifier]: `Duplicate tab identifier "{0}". Each tab must have a unique identifier within the dashboard.`,
     [CoreErrorCode.TabsAndRootContentMutuallyExclusive]: `Dashboard "{0}" defines both "tabs" and root-level "sections" or "filters". These are mutually exclusive — keep all content inside tabs or at the root, not both.`,
     [CoreErrorCode.InvalidIanaTimezoneId]: `"{0}" is not a valid IANA timezone ID. Use a real timezone such as Europe/Prague or $browserDetected.`,
-    [CoreErrorCode.UnsupportedContentVersion]: `Content version "{0}" is not supported. Supported version: "{1}".`,
+    [CoreErrorCode.UnsupportedContentVersion]: `Expected "{0}", got {1}.`,
     [CoreErrorCode.DateFilterWithoutDataSet]: `Date filter "{0}" names no date dataset. A document date filter must name the date dataset it applies to.`,
     [CoreErrorCode.FilterSettingNotStorable]: `Filter "{0}" sets "{1}", which a {2} cannot store.`,
     [CoreErrorCode.PagesAndSectionsMutuallyExclusive]: `Content defines both "pages" and "sections". Keep the pages at the top level or inside sections, not both.`,
     [CoreErrorCode.PagesOrSectionsRequired]: `Content defines neither "pages" nor "sections". Add one of them; an empty document has "pages: []".`,
+    [CoreErrorCode.MissingRequiredKey]: `Missing required key "{0}".`,
+    [CoreErrorCode.UnsupportedGranularity]: `Granularity {0} is not supported. Supported granularities: {1}.`,
 };
 
 /**
@@ -83,6 +87,8 @@ export const CoreErrorTypes: Record<CoreErrorCode, string> = {
     [CoreErrorCode.FilterSettingNotStorable]: "FilterSettingNotStorable",
     [CoreErrorCode.PagesAndSectionsMutuallyExclusive]: "PagesAndSectionsMutuallyExclusive",
     [CoreErrorCode.PagesOrSectionsRequired]: "PagesOrSectionsRequired",
+    [CoreErrorCode.MissingRequiredKey]: "MissingRequiredKey",
+    [CoreErrorCode.UnsupportedGranularity]: "UnsupportedGranularity",
 };
 
 /**
@@ -134,10 +140,7 @@ export function newError(code: CoreErrorCode, params: Array<string> = [], contex
 }
 
 export function buildMessage(message: string, params: Array<string>, context?: IErrorContext) {
-    const m = params.reduce(
-        (msg, param, index) => msg.replace(new RegExp(`\\{${index}}`, "gi"), param),
-        message,
-    );
+    const m = message.replace(/\{(\d+)}/g, (match, index: string) => params[Number(index)] ?? match);
 
     if (context?.path) {
         return `${m} in: ${context.path.join("/")}`;

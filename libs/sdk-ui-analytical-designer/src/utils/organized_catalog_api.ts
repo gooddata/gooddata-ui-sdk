@@ -1,7 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-// TODO: this file will be moved into gooddata-js repository as being said in BB-1683
-
 import {
     type CatalogItemType,
     type IAttributeOrMeasure,

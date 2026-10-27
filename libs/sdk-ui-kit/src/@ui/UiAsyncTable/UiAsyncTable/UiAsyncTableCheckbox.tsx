@@ -7,6 +7,7 @@ import { UiCheckbox } from "../../UiCheckbox/UiCheckbox.js";
 import { e } from "../asyncTableBem.js";
 import { type UiAsyncTableCheckboxProps } from "../types.js";
 
+import { useAsyncTableHeaderNavigation } from "./asyncTableGridContext.js";
 import { ASYNC_TABLE_SELECTED_COUNT_ID } from "./constants.js";
 import { getColumnHeaderId, stopPropagationCallback } from "./utils.js";
 
@@ -21,6 +22,7 @@ export function UiAsyncTableCheckbox({
     cellRef,
     cellId,
 }: UiAsyncTableCheckboxProps) {
+    const headerNavigation = useAsyncTableHeaderNavigation();
     // The native input is now overlaid on the visible 14×14 control (kit
     // convention for @ui/UiCheckbox), so the input itself is the click
     // target and `stopPropagation` stops the click from bubbling to the
@@ -32,7 +34,9 @@ export function UiAsyncTableCheckbox({
             className={e("cell", { checkbox: true, focused: isCellFocused ?? false })}
             role={header ? undefined : "gridcell"}
             id={cellId}
-            aria-labelledby={header ? undefined : getColumnHeaderId("checkbox")}
+            aria-labelledby={
+                header ? undefined : (headerNavigation?.getHeaderId(0) ?? getColumnHeaderId("checkbox"))
+            }
             aria-describedby={header ? ASYNC_TABLE_SELECTED_COUNT_ID : undefined}
             onClick={(e) => {
                 stopPropagationCallback(e, onChange);

@@ -295,8 +295,6 @@ export enum ActionTypeKeys {
     // Visualization classes
     STORE_SET_VISUALIZATION_CLASSES = "STORE/SET_VISUALIZATION_CLASSES",
 
-    LOAD_EXTERNAL_SCRIPTS_REQUESTED = "LOAD_EXTERNAL_SCRIPTS_REQUESTED",
-
     // Item cache
     STORE_UPDATE_ITEM_CACHE = "STORE/UPDATE_ITEM_CACHE",
 
@@ -319,8 +317,6 @@ export enum ActionTypeKeys {
     // Embed dialog
     UI_EMBED_DIALOG_COPY_CODE = "UI/EMBED_DIALOG_COPY_CODE",
     UI_EMBED_DIALOG_OPEN = "UI/EMBED_DIALOG_OPEN",
-
-    // Panther Trial Conversion dialog
 
     // Telemetry actions
     TELEMETRY_INITIALIZED = "TELEMETRY/INITIALIZED",

@@ -157,8 +157,8 @@ function getMeasureAxisLabel(
             return "";
         }
 
-        // TODO INE: switch to the SDK date filter title and drop the legacy preset title strings once
-        // enableImprovedMetricDateFilter is removed, see https://gooddata.atlassian.net/browse/CQ-3083
+        // TODO: switch to the SDK date filter title and drop the legacy preset title strings once
+        // enableImprovedMetricDateFilter is removed
         const dateFilterTitles = dateFilters.map((dateFilter) =>
             DecoratedDateFilter.getTitle(dateFilter, intl, formatLocale),
         );

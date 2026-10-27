@@ -19,11 +19,9 @@ import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { selectEnableImmediateAttributeFilterDisplayAsLabelMigration } from "../../store/config/configSelectors.js";
 import {
     selectCrossFilteringFiltersLocalIdentifiers,
-    selectCrossFilteringFiltersLocalIdentifiersByTab,
     selectIsCrossFiltering,
 } from "../../store/drill/drillSelectors.js";
 import { drillActions } from "../../store/drill/index.js";
-import { selectEnablePersistentFiltersAcrossTabs } from "../../store/meta/metaSelectors.js";
 import {
     selectAttributeFilterConfigsOverrides,
     selectAttributeFilterConfigsOverridesByTab,
@@ -41,6 +39,8 @@ import { selectParameterValuesByTab } from "../../store/tabs/parameters/paramete
 import { selectActiveOrDefaultTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { dispatchParametersChangedForAffectedTabs } from "../parameters/changeParameterValuesHandler.js";
+
+import { type ITabSyncSession, beginTabSync, endTabSync, putTabSynced } from "./tabSync/tabSyncSaga.js";
 
 /**
  * Applied filter context and attribute filter configs of every tab, taken before a write.
@@ -64,10 +64,14 @@ export function* captureFilterContextByTabSnapshot(): SagaIterator<IFilterContex
     return { filterContexts, workingFilterContexts, attributeFilterConfigs };
 }
 
+/**
+ * Emits a filter context changed event for every tab that differs from `snapshot`, except `skippedTabId`.
+ */
 export function* dispatchFilterContextChangedForMutatedTabs(
     ctx: DashboardContext,
     cmd: IDashboardCommand,
     snapshot: IFilterContextByTabSnapshot,
+    skippedTabId?: string,
 ): SagaIterator<void> {
     const filterContexts: ReturnType<typeof selectFilterContextDefinitionsByTab> = yield select(
         selectFilterContextDefinitionsByTab,
@@ -79,7 +83,7 @@ export function* dispatchFilterContextChangedForMutatedTabs(
     );
 
     for (const tabId of Object.keys(filterContexts)) {
-        if (!filterContexts[tabId]) {
+        if (!filterContexts[tabId] || tabId === skippedTabId) {
             continue;
         }
         const configs = attributeFilterConfigs[tabId] ?? [];
@@ -184,19 +188,11 @@ export function* applyWorkingSelectionHandler(ctx: DashboardContext, cmd: IDashb
     );
     const valuesBefore: ReturnType<typeof selectParameterValuesByTab> =
         yield select(selectParameterValuesByTab);
-    const crossFilteringLocalIdsByTab: ReturnType<typeof selectCrossFilteringFiltersLocalIdentifiersByTab> =
-        yield select(selectCrossFilteringFiltersLocalIdentifiersByTab);
-    const enablePersistentFiltersAcrossTabs: ReturnType<typeof selectEnablePersistentFiltersAcrossTabs> =
-        yield select(selectEnablePersistentFiltersAcrossTabs);
-    const filterContextSnapshot: IFilterContextByTabSnapshot = yield call(captureFilterContextByTabSnapshot);
+    const session: ITabSyncSession = yield call(beginTabSync);
 
-    yield put(
-        tabsActions.applyWorkingSelection({
-            enableImmediateAttributeFilterDisplayAsLabelMigration,
-            crossFilteringLocalIdsByTab,
-            enablePersistentFiltersAcrossTabs,
-        }),
-    );
+    yield call(putTabSynced, session, [
+        tabsActions.applyWorkingSelection({ enableImmediateAttributeFilterDisplayAsLabelMigration }),
+    ]);
     const isCrossFiltering: ReturnType<typeof selectIsCrossFiltering> = yield select(selectIsCrossFiltering);
 
     if (isWorkingFilterContextChanged && isCrossFiltering) {
@@ -204,11 +200,7 @@ export function* applyWorkingSelectionHandler(ctx: DashboardContext, cmd: IDashb
     }
     yield dispatchDashboardEvent(filterContextWorkingSelectionApplied(ctx, cmd.correlationId));
 
-    if (enablePersistentFiltersAcrossTabs) {
-        yield call(dispatchFilterContextChangedForMutatedTabs, ctx, cmd, filterContextSnapshot);
-    } else {
-        yield call(dispatchFilterContextChanged, ctx, cmd);
-    }
+    yield call(endTabSync, ctx, cmd, session);
 
     yield call(dispatchParametersChangedForAffectedTabs, ctx, cmd, valuesBefore, tabId);
 }

@@ -1,0 +1,29 @@
+{{- /* A page-relative URL (`../on-drill/`, `./quickstart/`, `insightview/`, `shot.png`) made
+root-relative against the page it is written on, in the form relref and .RelPermalink use, so a
+render hook or shortcode then treats it like any other root-relative URL. Same rule as the Markdown
+copy (page-markdown.html): `#fragment` and `?query` are kept, and so is a trailing slash; `..` and
+`.` keep the slash too, as a browser would resolve them.
+
+Why: every page is a directory (…/on-drill/), and a relative link resolves against the URL the
+browser loaded. www.gooddata.ai also serves …/on-drill without the slash (the proxy in front of
+Netlify drops its slash redirect), and there `../drillable-items/` lands one level too high: opened
+as …/latest, every link on the docs home was a 404. Resolved at build time, the link works either way.
+
+Anything else (a scheme, `//host`, root-relative `/…`, `#anchor`, `?query`, empty) is returned as
+written. So is a shortcode's output (a relref in a link's destination): a render hook runs before
+the shortcode is expanded and sees Hugo's placeholder (HAHAHUGOSHORTCODE-…), which is replaced by
+the root-relative link afterwards. Expects dict "page" and "url"; returns the URL. */ -}}
+{{- $url := .url -}}
+{{- if and $url (not (findRE `^(?:[A-Za-z][A-Za-z0-9+.-]*:|//|/|#|\?)` $url)) (not (strings.Contains $url "HUGOSHORTCODE")) -}}
+  {{- $path := $url -}}
+  {{- $rest := "" -}}
+  {{- with findRE `[?#].*$` $url 1 -}}
+    {{- $rest = index . 0 -}}
+    {{- $path = strings.TrimSuffix $rest $url -}}
+  {{- end -}}
+  {{- $dir := or (hasSuffix $path "/") (eq $path ".") (eq $path "..") (hasSuffix $path "/.") (hasSuffix $path "/..") -}}
+  {{- $joined := path.Clean (path.Join .page.RelPermalink $path) -}}
+  {{- if and $dir (ne $joined "/") -}}{{- $joined = printf "%s/" $joined -}}{{- end -}}
+  {{- $url = printf "%s%s" $joined $rest -}}
+{{- end -}}
+{{- return $url -}}

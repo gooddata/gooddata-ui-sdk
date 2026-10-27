@@ -1,4 +1,5 @@
-{{- $src := .Destination -}}
+{{- /* A page-relative image (`../shot.png`) is made root-relative first, as in render-link.html. */ -}}
+{{- $src := partial "resolve-url.html" (dict "page" .Page "url" .Destination) -}}
 {{- if not (urls.Parse $src).Scheme -}}
   {{- $src = strings.TrimPrefix "/" $src | relURL -}}
 {{- end -}}

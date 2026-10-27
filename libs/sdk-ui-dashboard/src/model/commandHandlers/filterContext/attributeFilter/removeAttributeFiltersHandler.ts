@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { compact, difference, partition } from "lodash-es";
+import { difference, partition } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
@@ -68,6 +68,7 @@ export function* removeAttributeFiltersHandler(
         const isFilterDuplicatedInSurvivingFilters = survivingFilters.some((item) =>
             areObjRefsEqual(dashboardAttributeFilterItemDisplayForm(item), removedDisplayForm),
         );
+
         const removeIgnoredAttributeFilterActionArray = isFilterDuplicatedInSurvivingFilters
             ? []
             : [
@@ -76,8 +77,8 @@ export function* removeAttributeFiltersHandler(
                   }),
               ];
 
-        const batch = batchActions(
-            compact([
+        yield put(
+            batchActions([
                 // remove filter from parents for all affected children (standard and arbitrary filters)
                 ...affectedChildren.map((item) =>
                     tabsActions.setAttributeFilterParents({
@@ -93,15 +94,13 @@ export function* removeAttributeFiltersHandler(
                     filterLocalId: removedLocalId,
                 }),
                 // remove filter's display form metadata object
-                tabsActions.removeAttributeFilterDisplayForms(removedDisplayForm),
+                tabsActions.removeAttributeFilterDisplayForms({ displayForm: removedDisplayForm }),
                 // remove reflect dashboard attribute filter config
-                tabsActions.removeAttributeFilterConfig(removedLocalId),
+                tabsActions.removeAttributeFilterConfig({ localIdentifier: removedLocalId }),
                 // house-keeping: ensure the removed attribute filter disappears from widget ignore lists
                 ...removeIgnoredAttributeFilterActionArray,
             ]),
         );
-
-        yield put(batch);
         yield dispatchDashboardEvent(
             attributeFilterRemoved(ctx, removedFilter, affectedChildren, cmd.correlationId),
         );

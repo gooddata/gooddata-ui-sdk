@@ -54,7 +54,7 @@ export const saveReportFromKDDialogSelector = createSelector(
         openSaveReportFromKD,
         editingReportTitle,
         canCreateCopy,
-        // TODO: TIGER-HACK locked reports are inherited from parent workspace and cannot be modified by anyone
+        // locked reports are inherited from parent workspace and cannot be modified by anyone
         isSaveAsNewReportOnly: isReportLocked || (!canManageProject && isReportLocked),
     }),
 );

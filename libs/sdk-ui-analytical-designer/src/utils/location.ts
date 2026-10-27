@@ -122,13 +122,6 @@ export function shouldWaitForInjectedApiToken() {
     return window.EMBEDDED && isApiTokenAuthentication;
 }
 
-export const getExternalProviderIdParam = (): string | undefined => {
-    const locationHash = parseHash(getCurrentHash());
-    return window.EMBEDDED && locationHash.query?.externalProviderId
-        ? decodeURIComponent(locationHash.query?.externalProviderId)
-        : undefined;
-};
-
 export function setLocation(location: string) {
     // Hosted-component mode: navigation goes to the memory router, never to the real browser URL.
     const virtualNavigate = getVirtualNavigate();

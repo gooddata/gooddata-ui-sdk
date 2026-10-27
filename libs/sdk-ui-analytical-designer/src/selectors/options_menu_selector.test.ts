@@ -26,7 +26,6 @@ import {
     setErrorReportNegativeValue,
 } from "./test_helpers.js";
 
-// TODO: STL-456
 describe.todo("optionsMenuSelector", () => {
     const fakeIntl: IntlShape = createFakeTestIntl();
 

@@ -148,7 +148,7 @@ describe("export_report_sagas", () => {
                 })
                 .run();
 
-            // the definition carrying parameterValues is what proves F1-2561 is fixed
+            // the definition carrying parameterValues must reach the export
             expect(expectedDefinition.executionConfig?.parameterValues).toEqual(
                 executionConfig.parameterValues,
             );

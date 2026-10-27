@@ -1590,6 +1590,12 @@ export {
 } from "./model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 export type { IDateFilterConfigsState } from "./model/store/tabs/dateFilterConfigs/dateFilterConfigsState.js";
 export type { IAttributeFilterConfigsState } from "./model/store/tabs/attributeFilterConfigs/attrtibuteFilterConfigsState.js";
+export type {
+    IChangeAttributeFilterConfigModePayload,
+    IChangeAttributeFilterDisplayAsLabelPayload,
+    IChangeAttributeFilterSelectionTypePayload,
+    IRemoveAttributeFilterConfigPayload,
+} from "./model/store/tabs/attributeFilterConfigs/attributeFilterConfigsReducers.js";
 export type { IMeasureValueFilterConfigsState } from "./model/store/tabs/measureValueFilterConfigs/measureValueFilterConfigsState.js";
 export type {
     IChangeMeasureValueFilterConfigModePayload,
@@ -1597,12 +1603,19 @@ export type {
 } from "./model/store/tabs/measureValueFilterConfigs/measureValueFilterConfigsReducers.js";
 export type { ILayoutState, LayoutStash } from "./model/store/tabs/layout/layoutState.js";
 export type { IApplyWorkingSelectionPayload, TabsReducer } from "./model/store/tabs/tabsReducers.js";
-export type { CrossFilteringLocalIdsByTab } from "./model/store/tabs/filterContext/filterSync.js";
+export type {
+    CrossFilteringLocalIdsByTab,
+    IMirroredParameterValue,
+    IMirroredSelection,
+} from "./model/store/tabs/filterContext/filterSync.js";
 export type { IdentityMapping } from "./_staging/dashboard/dashboardLayout.js";
 export type {
     IAddAttributeFilterPayload,
+    IAddDateFilterReducerPayload,
+    IAddMeasureValueFilterReducerPayload,
     IAddTextAttributeFilterReducerPayload,
     IRemoveAttributeFilterPayload,
+    IRemoveAttributeFilterDisplayFormsPayload,
     ISetAttributeFilterDependentDateFiltersPayload,
     ISetAttributeFilterParentsPayload,
     IMoveAttributeFilterPayload,
@@ -1619,6 +1632,7 @@ export type {
     IChangeAttributeTitlePayload,
     IChangeAttributeSelectionModePayload,
     IChangeAttributeLimitingItemsPayload,
+    IChangeMeasureValueFilterTitleReducerPayload,
     IAddAttributeFilterDisplayFormPayload,
     IRemoveMeasureValueFilterReducerPayload,
     IMoveMeasureValueFilterPayload,

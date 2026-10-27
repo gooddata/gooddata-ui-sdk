@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
-import { call, put, select } from "redux-saga/effects";
+import { call, select } from "redux-saga/effects";
 
 import { dashboardAttributeFilterItemDisplayForm } from "@gooddata/sdk-model";
 
@@ -11,15 +11,14 @@ import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
 import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../../store/config/configSelectors.js";
 import {
-    selectCrossFilteringFiltersLocalIdentifiersByTab,
     selectIsCrossFiltering,
     selectIsFilterFromCrossFilteringByLocalIdentifier,
 } from "../../../store/drill/drillSelectors.js";
-import { selectEnablePersistentFiltersAcrossTabs } from "../../../store/meta/metaSelectors.js";
 import { selectFilterContextAttributeFilterItemByLocalId } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
-import { dispatchFilterContextChanged, resetCrossFiltering } from "../common.js";
+import { resetCrossFiltering } from "../common.js";
+import { type ITabSyncSession, beginTabSync, endTabSync, putTabSynced } from "../tabSync/tabSyncSaga.js";
 
 import { resolveAndRegisterDisplayFormMetadata } from "./resolveDisplayFormMetadata.js";
 
@@ -39,21 +38,16 @@ export function* replaceAttributeFilterItemSelectionHandler(
 
     const isApplyAllAtOnceEnabledAndSet: ReturnType<typeof selectIsApplyFiltersAllAtOnceEnabledAndSet> =
         yield select(selectIsApplyFiltersAllAtOnceEnabledAndSet);
-    const crossFilteringLocalIdsByTab: ReturnType<typeof selectCrossFilteringFiltersLocalIdentifiersByTab> =
-        yield select(selectCrossFilteringFiltersLocalIdentifiersByTab);
-    const enablePersistentFiltersAcrossTabs: ReturnType<typeof selectEnablePersistentFiltersAcrossTabs> =
-        yield select(selectEnablePersistentFiltersAcrossTabs);
+    const session: ITabSyncSession = yield call(beginTabSync);
 
-    yield put(
+    yield call(putTabSynced, session, [
         tabsActions.replaceAttributeFilterItem({
             filterLocalId,
             filter,
             isWorkingSelectionChange: isWorkingSelectionChange && isApplyAllAtOnceEnabledAndSet,
             isSelectionInvalid,
-            crossFilteringLocalIdsByTab,
-            enablePersistentFiltersAcrossTabs,
         }),
-    );
+    ]);
 
     // Ensure the new filter's displayForm is registered in the displayFormsMap.
     // This is needed for cross-type migration (e.g. text→list) where the new filter's
@@ -83,5 +77,5 @@ export function* replaceAttributeFilterItemSelectionHandler(
         yield call(resetCrossFiltering, cmd);
     }
 
-    yield call(dispatchFilterContextChanged, ctx, cmd);
+    yield call(endTabSync, ctx, cmd, session);
 }

@@ -1,18 +1,17 @@
 // (C) 2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
-import { call, put, select } from "redux-saga/effects";
+import { call, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
 import { type ISetMeasureValueFilterDimensionality } from "../../../commands/filters.js";
 import { measureValueFilterDimensionalityChanged } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
-import { selectEnablePersistentFiltersAcrossTabs } from "../../../store/meta/metaSelectors.js";
 import { selectFilterContextMeasureValueFilterByLocalId } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
-import { dispatchFilterContextChanged } from "../common.js";
+import { type ITabSyncSession, beginTabSync, endTabSync, putTabSynced } from "../tabSync/tabSyncSaga.js";
 
 export function* changeMeasureValueFilterDimensionalityHandler(
     ctx: DashboardContext,
@@ -22,8 +21,7 @@ export function* changeMeasureValueFilterDimensionalityHandler(
 
     const existingFilter: ReturnType<ReturnType<typeof selectFilterContextMeasureValueFilterByLocalId>> =
         yield select(selectFilterContextMeasureValueFilterByLocalId(localIdentifier));
-    const enablePersistentFiltersAcrossTabs: ReturnType<typeof selectEnablePersistentFiltersAcrossTabs> =
-        yield select(selectEnablePersistentFiltersAcrossTabs);
+    const session: ITabSyncSession = yield call(beginTabSync);
 
     if (!existingFilter) {
         throw invalidArgumentsProvided(
@@ -33,13 +31,9 @@ export function* changeMeasureValueFilterDimensionalityHandler(
         );
     }
 
-    yield put(
-        tabsActions.setMeasureValueFilterDimensionality({
-            localIdentifier,
-            dimensionality,
-            enablePersistentFiltersAcrossTabs,
-        }),
-    );
+    yield call(putTabSynced, session, [
+        tabsActions.setMeasureValueFilterDimensionality({ localIdentifier, dimensionality }),
+    ]);
 
     const updatedFilter: ReturnType<ReturnType<typeof selectFilterContextMeasureValueFilterByLocalId>> =
         yield select(selectFilterContextMeasureValueFilterByLocalId(localIdentifier));
@@ -56,5 +50,5 @@ export function* changeMeasureValueFilterDimensionalityHandler(
         ),
     );
 
-    yield call(dispatchFilterContextChanged, ctx, cmd);
+    yield call(endTabSync, ctx, cmd, session);
 }

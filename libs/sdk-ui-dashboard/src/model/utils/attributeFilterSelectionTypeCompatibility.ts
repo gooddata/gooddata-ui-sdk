@@ -45,9 +45,25 @@ export function canApplyFilterTypeToTarget(
     configSelectionType: DashboardAttributeFilterSelectionType | undefined,
     targetFilter: DashboardAttributeFilterItem,
 ): boolean {
-    const defaultType =
-        isDashboardAttributeFilter(targetFilter) && isSingleSelectionFilter(targetFilter)
-            ? "list"
-            : "listOrText";
-    return isFilterTypeCompatibleWithSelectionType(incomingFilterType, configSelectionType, defaultType);
+    return isFilterTypeCompatibleWithSelectionType(
+        incomingFilterType,
+        effectiveSelectionTypeOf(configSelectionType, targetFilter),
+    );
+}
+
+/**
+ * Selection type of a dashboard attribute filter: the configured one, otherwise "list" for
+ * single-selection list filters and "listOrText" for all other filters.
+ *
+ * @param configSelectionType - selectionType from the filter's attribute filter config, if set
+ * @param filter - the dashboard filter item the config belongs to
+ */
+export function effectiveSelectionTypeOf(
+    configSelectionType: DashboardAttributeFilterSelectionType | undefined,
+    filter: DashboardAttributeFilterItem,
+): DashboardAttributeFilterSelectionType {
+    if (configSelectionType) {
+        return configSelectionType;
+    }
+    return isDashboardAttributeFilter(filter) && isSingleSelectionFilter(filter) ? "list" : "listOrText";
 }

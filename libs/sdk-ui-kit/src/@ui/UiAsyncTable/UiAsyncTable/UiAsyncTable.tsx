@@ -75,31 +75,27 @@ function AsyncTableCore<T extends { id: string } | { ref: ObjRef }>(props: IUiAs
                 accessibilityConfig={accessibilityConfig}
             />
 
-            <div
-                role="grid"
-                aria-label={accessibilityConfig?.gridAriaLabel}
-                aria-rowcount={totalItemsCount}
-                aria-colcount={bulkActions ? columns.length + 1 : columns.length}
-            >
-                {hideHeader ? null : renderHeader()}
-                <UiAsyncTableBody
-                    items={items}
-                    maxHeight={maxHeight}
-                    itemHeight={itemHeight}
-                    skeletonItemsCount={skeletonItemsCount}
-                    hasNextPage={hasNextPage}
-                    isLoading={isLoading}
-                    onItemClick={props.onItemClick ? handleItemClick : undefined}
-                    loadNextPage={loadNextPage}
-                    columns={columns}
-                    bulkActions={bulkActions}
-                    scrollToIndex={scrollToIndex}
-                    shouldLoadNextPage={shouldLoadNextPage}
-                    getItemTooltip={props.getItemTooltip}
-                    renderItem={renderItem}
-                    isLargeRow={isLargeRow}
-                />
-            </div>
+            <UiAsyncTableBody
+                gridAriaLabel={accessibilityConfig?.gridAriaLabel}
+                totalItemsCount={totalItemsCount}
+                header={hideHeader ? null : renderHeader()}
+                isHeaderNavigable={!hideHeader && !props.renderHeader}
+                items={items}
+                maxHeight={maxHeight}
+                itemHeight={itemHeight}
+                skeletonItemsCount={skeletonItemsCount}
+                hasNextPage={hasNextPage}
+                isLoading={isLoading}
+                onItemClick={props.onItemClick ? handleItemClick : undefined}
+                loadNextPage={loadNextPage}
+                columns={columns}
+                bulkActions={bulkActions}
+                scrollToIndex={scrollToIndex}
+                shouldLoadNextPage={shouldLoadNextPage}
+                getItemTooltip={props.getItemTooltip}
+                renderItem={renderItem}
+                isLargeRow={isLargeRow}
+            />
 
             {items.length === 0 && !isLoading && renderEmptyState()}
         </div>
@@ -123,6 +119,7 @@ const useAsyncTable = <T extends { id: string } | { ref: ObjRef }>({
     isItemClickable,
     getItemTooltip,
     accessibilityConfig,
+    hideHeader,
 }: IUiAsyncTableProps<T>) => {
     const isSmall = variant === "small";
 
@@ -198,7 +195,7 @@ const useAsyncTable = <T extends { id: string } | { ref: ObjRef }>({
             ) : (
                 <UiAsyncTableRow
                     item={item}
-                    itemIndex={itemIndex}
+                    itemIndex={itemIndex + (hideHeader ? 0 : 1)}
                     columns={columns}
                     onSelect={onItemSelect}
                     isSelected={isItemSelected(item)}
@@ -225,6 +222,7 @@ const useAsyncTable = <T extends { id: string } | { ref: ObjRef }>({
             bulkActions,
             isLargeRow,
             accessibilityConfig,
+            hideHeader,
         ],
     );
 

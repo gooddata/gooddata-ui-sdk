@@ -312,7 +312,12 @@ export const useResetFiltersButton = (): {
         }
 
         if (canResetParameters) {
-            dispatch(changeParameterValues({ parameters: parameterResetTargets }));
+            dispatch(
+                changeParameterValues({
+                    parameters: parameterResetTargets,
+                    restorePerTabOriginals: true,
+                }),
+            );
             dispatchEvent(parametersSelectionReset());
             parametersStateReset();
         }

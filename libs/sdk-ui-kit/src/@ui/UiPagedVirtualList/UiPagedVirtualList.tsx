@@ -15,7 +15,7 @@ import {
     useState,
 } from "react";
 
-import { type VirtualItem, useVirtualizer } from "@tanstack/react-virtual";
+import { type Range, type VirtualItem, defaultRangeExtractor, useVirtualizer } from "@tanstack/react-virtual";
 
 import { forwardRefWithGenerics } from "@gooddata/sdk-ui";
 
@@ -208,6 +208,7 @@ function UiPagedVirtualListNotWrapped<T>(
                 className={e("scroll-container", { hover: scrollbarHoverEffect ?? false })}
                 style={{ height, paddingTop: itemsGap + containerPadding }}
                 onScroll={onScroll}
+                tabIndex={representAs === "grid" && tabIndex < 0 ? -1 : undefined}
             >
                 <ListElement
                     className={e("list")}
@@ -313,6 +314,7 @@ function useVirtualList<T>({
     loadNextPage,
     isLoading,
     maxHeight,
+    focusedItem,
     scrollToItem,
     scrollToItemKeyExtractor,
     scrollToIndex,
@@ -384,24 +386,43 @@ function useVirtualList<T>({
 
     const observeElementRect = useVirtualizerRectObserver(scrollContainerRef, height);
 
+    const pinnedIndex = focusedItem === undefined ? -1 : (items?.indexOf(focusedItem) ?? -1);
+    const rangeExtractor = useCallback(
+        (range: Range) => {
+            const indexes = defaultRangeExtractor(range);
+            return pinnedIndex < 0 || indexes.includes(pinnedIndex)
+                ? indexes
+                : [...indexes, pinnedIndex].sort((a, b) => a - b);
+        },
+        [pinnedIndex],
+    );
+
     const rowVirtualizer = useVirtualizer({
         count: renderItemsCount,
         getScrollElement: () => scrollContainerRef.current,
         estimateSize: (index) => getItemSizeWithGap(index),
         observeElementRect,
         overscan: 5,
+        rangeExtractor,
     });
 
     const virtualItems = rowVirtualizer.getVirtualItems();
 
+    // A pinned active row may be far outside the viewport. Only the visible range and its
+    // overscan drive scroll pagination; parent-managed keyboard navigation loads its own pages.
+    const lastVisibleIndex = rowVirtualizer.range
+        ? Math.min(rowVirtualizer.range.endIndex + rowVirtualizer.options.overscan, renderItemsCount - 1)
+        : -1;
     useEffect(() => {
-        const [lastItem] = [...virtualItems].reverse();
-
-        if (!lastItem) {
+        if (lastVisibleIndex < 0) {
             return;
         }
 
-        if (shouldLoadNextPage(lastItem.index, itemsCount, skeletonItemsCount) && hasNextPage && !isLoading) {
+        if (
+            shouldLoadNextPage(lastVisibleIndex, itemsCount, skeletonItemsCount) &&
+            hasNextPage &&
+            !isLoading
+        ) {
             loadNextPage?.();
         }
     }, [
@@ -409,7 +430,7 @@ function useVirtualList<T>({
         loadNextPage,
         itemsCount,
         isLoading,
-        virtualItems,
+        lastVisibleIndex,
         skeletonItemsCount,
         shouldLoadNextPage,
     ]);

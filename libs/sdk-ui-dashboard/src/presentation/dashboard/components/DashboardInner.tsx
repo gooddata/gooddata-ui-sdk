@@ -126,7 +126,7 @@ export function DashboardInner(props: IDashboardProps) {
                                 WrapInsightListItemWithDragComponent={WrapInsightListItemWithDrag}
                             />
                             <main className={dashboardContentClassNames} {...mainContentNavigationProps}>
-                                <DashboardInteractionComposing>
+                                <DashboardInteractionComposing onReplyInChat={props.onReplyInChat}>
                                     {/* gd-dash-header-wrapper-sdk-8-12 style is added because we should keep old styles unchanged to not brake plugins */}
                                     <div
                                         className="gd-dash-header-wrapper gd-dash-header-wrapper-sdk-8-12"

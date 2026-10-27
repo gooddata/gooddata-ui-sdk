@@ -152,6 +152,25 @@ describe("resolveRedirectTarget", () => {
             ).rejects.toThrow(AppNotFoundError);
         });
 
+        it.each(["/embedded/organization/dashboards", "/embedded/organization/analyze"])(
+            "throws AppNotFoundError for the embedded legacy client target %s",
+            async (pathname) => {
+                await expect(
+                    resolveRedirectTarget({
+                        apps: [orgApp, wsApp, wsAppAnalyze] as PluggableApplicationRegistryItem[],
+                        ctx: context({
+                            currentApplicationScope: "organization",
+                            embeddingMode: "iframe",
+                            organizationPermissions: { canManageOrganization: true },
+                        }),
+                        pathname,
+                        fetchFirstWorkspaceId: noFetchWorkspaceId,
+                        getWorkspaceAccess,
+                    }),
+                ).rejects.toThrow(AppNotFoundError);
+            },
+        );
+
         it("returns null when user without manage permission navigates to a valid org app", async () => {
             const result = await resolveRedirectTarget({
                 apps: [orgApp] as PluggableApplicationRegistryItem[],

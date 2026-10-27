@@ -17,11 +17,14 @@ import {
     UiSearchableSelectItem,
     UiSearchableSelectList,
     UiSearchableSelectSearch,
+    bemFactory,
 } from "@gooddata/sdk-ui-kit";
 
 import { LANGUAGE_NAMES, matchesLanguage } from "./languages.js";
 import { type ILanguages } from "./useLanguages.js";
 import "./LanguageDialog.scss";
+
+const { b, e } = bemFactory("gd-language-dialog");
 
 const DEFAULT_ITEM = "default";
 
@@ -75,48 +78,53 @@ export function LanguageDialog({
 
     return (
         <UiModalDialog isOpen onClose={onClose} width={540} variant="confirmation">
-            <div className="gd-language-dialog">
+            <div className={b()}>
                 <UiDialogHeader title={title} onClose={onClose} />
                 <UiDialogBody>
-                    <UiSearchableSelect
-                        accessibilityConfig={{ ariaLabel: title, ariaDescribedBy: noteId }}
-                        items={items}
-                        value={selectedItem}
-                        onChange={setSelectedItem}
-                        placeholder={title}
-                        // the default language is offered only when not searching, as it isn't a language of its own
-                        filter={(item, query) =>
-                            item === DEFAULT_ITEM ? !query : matchesLanguage(item, query)
-                        }
-                    >
-                        <UiSearchableSelectSearch
-                            accessibilityConfig={{
-                                ariaLabel: intl.formatMessage({ id: "languageDialog.select.searchLabel" }),
-                            }}
-                            placeholder={intl.formatMessage({
-                                id: "languageDialog.select.searchPlaceholder",
-                            })}
-                        />
-                        <UiSearchableSelectList<LanguageItem>
-                            noItemsText={intl.formatMessage({ id: "languageDialog.select.noMatch" })}
-                        >
-                            {(item) =>
-                                item === DEFAULT_ITEM ? (
-                                    <>
-                                        <UiSearchableSelectItem id={item}>
-                                            {defaultItemLabel}
-                                        </UiSearchableSelectItem>
-                                        <UiSearchableSelectDivider />
-                                    </>
-                                ) : (
-                                    <UiSearchableSelectItem id={item} lang={item}>
-                                        {LANGUAGE_NAMES[item].nativeName}
-                                    </UiSearchableSelectItem>
-                                )
+                    <div className={e("select")}>
+                        <UiSearchableSelect
+                            accessibilityConfig={{ ariaLabel: title, ariaDescribedBy: noteId }}
+                            items={items}
+                            value={selectedItem}
+                            onChange={setSelectedItem}
+                            placeholder={title}
+                            // the default language is offered only when not searching, as it isn't a
+                            // language of its own
+                            filter={(item, query) =>
+                                item === DEFAULT_ITEM ? !query : matchesLanguage(item, query)
                             }
-                        </UiSearchableSelectList>
-                    </UiSearchableSelect>
-                    <Message id={noteId} type="progress" className="gd-language-dialog-note">
+                        >
+                            <UiSearchableSelectSearch
+                                accessibilityConfig={{
+                                    ariaLabel: intl.formatMessage({
+                                        id: "languageDialog.select.searchLabel",
+                                    }),
+                                }}
+                                placeholder={intl.formatMessage({
+                                    id: "languageDialog.select.searchPlaceholder",
+                                })}
+                            />
+                            <UiSearchableSelectList<LanguageItem>
+                                noItemsText={intl.formatMessage({ id: "languageDialog.select.noMatch" })}
+                            >
+                                {(item) =>
+                                    item === DEFAULT_ITEM ? (
+                                        <>
+                                            <UiSearchableSelectItem id={item}>
+                                                {defaultItemLabel}
+                                            </UiSearchableSelectItem>
+                                            <UiSearchableSelectDivider />
+                                        </>
+                                    ) : (
+                                        <UiSearchableSelectItem id={item} lang={item}>
+                                            {LANGUAGE_NAMES[item].nativeName}
+                                        </UiSearchableSelectItem>
+                                    )
+                                }
+                            </UiSearchableSelectList>
+                        </UiSearchableSelect>
+                    </div>
+                    <Message id={noteId} type="progress" className={e("note")}>
                         <FormattedMessage
                             id="languageDialog.description"
                             values={{ b: (chunks: ReactNode) => <strong>{chunks}</strong> }}

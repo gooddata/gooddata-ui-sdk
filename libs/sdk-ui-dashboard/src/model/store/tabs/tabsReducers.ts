@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { type Action, type CaseReducer, type PayloadAction, current } from "@reduxjs/toolkit";
+import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 
 import { type ObjRef } from "@gooddata/sdk-model";
 
@@ -9,10 +9,7 @@ import {
     commitFilterContextWorkingValues,
 } from "./filterContext/filterContextReducers.js";
 import { initializeFilterContext } from "./filterContext/filterContextUtils.js";
-import {
-    type CrossFilteringLocalIdsByTab,
-    mirrorCommittedWorkingSelection,
-} from "./filterContext/filterSync.js";
+import { type IMirroredSelection, writeMirroredSelection } from "./filterContext/filterSync.js";
 import {
     clearParameterWorkingValues,
     commitParameterWorkingValues,
@@ -22,7 +19,7 @@ import {
     type ITabState,
     type ITabsState,
     getActiveTab,
-    getTabsToMutate,
+    getTabOrActive,
 } from "./tabsState.js";
 
 /**
@@ -199,46 +196,41 @@ const resolveDefaultTab: TabsReducer<PayloadAction<{ newLocalIdentifier: string 
 export interface IApplyWorkingSelectionPayload {
     readonly enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     /**
-     * Cross-filtering virtual filters per tab. They are not mirrored to or from other tabs.
+     * Tab to apply. When omitted, the active tab is used.
      */
-    readonly crossFilteringLocalIdsByTab?: CrossFilteringLocalIdsByTab;
-    readonly enablePersistentFiltersAcrossTabs?: boolean;
+    readonly tabLocalIdentifier?: string;
+    /**
+     * Values another tab committed. When set, they are written onto the tab instead of committing
+     * its own staged values.
+     */
+    readonly mirroredSelection?: IMirroredSelection;
 }
 
 const applyWorkingSelection: TabsReducer<PayloadAction<IApplyWorkingSelectionPayload>> = (state, action) => {
+    const tab = getTabOrActive(state, action.payload.tabLocalIdentifier);
+    if (!tab) {
+        return;
+    }
+
+    if (action.payload.mirroredSelection) {
+        writeMirroredSelection(tab, action.payload.mirroredSelection);
+        return;
+    }
+
+    commitFilterContextWorkingValues(
+        tab,
+        action.payload.enableImmediateAttributeFilterDisplayAsLabelMigration,
+    );
+    commitParameterWorkingValues(tab);
+};
+
+const resetWorkingSelection: TabsReducer<PayloadAction> = (state) => {
     const activeTab = getActiveTab(state);
     if (!activeTab) {
         return;
     }
-
-    const stagedFilters = activeTab.filterContext?.workingFilterContextDefinition
-        ? current(activeTab.filterContext.workingFilterContextDefinition).filters
-        : undefined;
-    const stagedParameterRefs = (activeTab.parameters?.parameters ?? [])
-        .filter((entry) => entry.workingOverride !== undefined)
-        .map((entry) => entry.parameter.ref);
-
-    commitFilterContextWorkingValues(
-        activeTab,
-        action.payload.enableImmediateAttributeFilterDisplayAsLabelMigration,
-    );
-    commitParameterWorkingValues(activeTab);
-    // Mirror the committed applied values, not the working overlay.
-    mirrorCommittedWorkingSelection(
-        state,
-        activeTab,
-        stagedFilters,
-        stagedParameterRefs,
-        action.payload.crossFilteringLocalIdsByTab,
-        action.payload.enablePersistentFiltersAcrossTabs,
-    );
-};
-
-const resetWorkingSelection: TabsReducer<PayloadAction> = (state) => {
-    for (const tab of getTabsToMutate(state)) {
-        clearFilterContextWorkingValues(tab);
-        clearParameterWorkingValues(tab);
-    }
+    clearFilterContextWorkingValues(activeTab);
+    clearParameterWorkingValues(activeTab);
 };
 
 export const tabsReducers = {

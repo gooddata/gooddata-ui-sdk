@@ -952,6 +952,7 @@ const replaceWidgetFilterSettings = adaptLayoutReducer(withUndo(replaceWidgetFil
 
 type RemoveIgnoredAttributeFilter = {
     displayFormRefs: ObjRef[];
+    tabLocalIdentifier?: string;
 };
 
 const removeIgnoredAttributeFilterFromLayout = (

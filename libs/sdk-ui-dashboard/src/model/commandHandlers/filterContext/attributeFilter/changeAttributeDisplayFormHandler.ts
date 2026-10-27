@@ -1,8 +1,7 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
-import { type SagaReturnType, call, put, select } from "redux-saga/effects";
+import { type SagaReturnType, call, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
 import { type ISetAttributeFilterDisplayForm } from "../../../commands/filters.js";
@@ -16,7 +15,7 @@ import {
 import { selectFilterContextAttributeFilterItemByLocalId } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
-import { dispatchFilterContextChanged } from "../common.js";
+import { type ITabSyncSession, beginTabSync, endTabSync, putTabSynced } from "../tabSync/tabSyncSaga.js";
 
 import { resolveAndRegisterDisplayFormMetadata } from "./resolveDisplayFormMetadata.js";
 import {
@@ -43,7 +42,9 @@ export function* changeAttributeDisplayFormHandler(
         );
     }
 
-    const displayFormData = yield call(resolveAndRegisterDisplayFormMetadata, displayForm);
+    // Every tab migrates its own filters when it loads.
+    const session: ITabSyncSession = yield call(beginTabSync, { enabled: !isResultOfMigration });
+    const displayFormData = yield call(resolveAndRegisterDisplayFormMetadata, displayForm, session);
 
     invariant(
         displayFormData,
@@ -73,20 +74,18 @@ export function* changeAttributeDisplayFormHandler(
     const isApplyAllAtOnceEnabledAndSet: ReturnType<typeof selectIsApplyFiltersAllAtOnceEnabledAndSet> =
         yield select(selectIsApplyFiltersAllAtOnceEnabledAndSet);
 
-    yield put(
-        batchActions([
-            tabsActions.changeAttributeDisplayForm({
-                filterLocalId,
-                displayForm,
-                isWorkingSelectionChange:
-                    isWorkingSelectionChange &&
-                    !enableImmediateAttributeFilterDisplayAsLabelMigration &&
-                    isApplyAllAtOnceEnabledAndSet,
-                enableImmediateAttributeFilterDisplayAsLabelMigration,
-                isResultOfMigration,
-            }),
-        ]),
-    );
+    yield call(putTabSynced, session, [
+        tabsActions.changeAttributeDisplayForm({
+            filterLocalId,
+            displayForm,
+            isWorkingSelectionChange:
+                isWorkingSelectionChange &&
+                !enableImmediateAttributeFilterDisplayAsLabelMigration &&
+                isApplyAllAtOnceEnabledAndSet,
+            enableImmediateAttributeFilterDisplayAsLabelMigration,
+            isResultOfMigration,
+        }),
+    ]);
 
     const changedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterItemByLocalId>> =
         yield select(selectFilterContextAttributeFilterItemByLocalId(filterLocalId));
@@ -96,5 +95,5 @@ export function* changeAttributeDisplayFormHandler(
         "Inconsistent state in changeAttributeDisplayFormHandler, cannot update attribute filter for given local identifier.",
     );
     yield dispatchDashboardEvent(attributeDisplayFormChanged(ctx, changedFilter, cmd.correlationId));
-    yield call(dispatchFilterContextChanged, ctx, cmd);
+    yield call(endTabSync, ctx, cmd, session);
 }

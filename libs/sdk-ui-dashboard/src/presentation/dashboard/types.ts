@@ -918,6 +918,11 @@ export interface IDashboardExtensionProps
 export interface IDashboardProps extends IDashboardBaseProps, IDashboardExtensionProps {
     children?: ReactElement | ((dashboard: any) => ReactElement);
     /**
+     * Open the assistant on the active conversation when it is waiting for a user response.
+     * @internal
+     */
+    onReplyInChat?: () => void;
+    /**
      * Override the persisted dashboard. This is mainly useful for internal use cases.
      * @internal
      */
