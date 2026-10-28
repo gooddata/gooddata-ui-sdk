@@ -3,7 +3,6 @@
 import { describe, expect, it, vi } from "vitest";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { GdcErrorType, type IAdAvailableCommands, type ICommandFailedBody } from "@gooddata/sdk-embedding";
 import { type IInsight, type ITheme, idRef, uriRef } from "@gooddata/sdk-model";
 
 import { type IBootstrapData } from "../actions/app_context_actions.js";
@@ -13,10 +12,8 @@ import {
     resolveRouteIdentifiers,
     resolveTheme,
     routeTargetKey,
-    toEmbeddedCallbacks,
     toRouteConfig,
 } from "./analyticalDesignerConfig.js";
-import { type IAnalyticalDesignerEvent } from "./analyticalDesignerTypes.js";
 
 const insight = { insight: { identifier: "insight-from-object", uri: "/insights/1" } } as IInsight;
 
@@ -31,8 +28,6 @@ function mockBackend() {
     } as unknown as IAnalyticalBackend;
     return { backend, getInsight, getDashboard };
 }
-
-const event = (name: string): IAnalyticalDesignerEvent => ({ product: "analyticalDesigner", name, data: {} });
 
 describe("resolveRouteIdentifiers", () => {
     it("passes identifiers and identifier refs through without a backend request", async () => {
@@ -186,53 +181,5 @@ describe("applyConfigToBootstrapData", () => {
             organizationExpiredDate: "2026-12-31",
         });
         expect(result.theme).toBe(theme);
-    });
-});
-
-describe("toEmbeddedCallbacks", () => {
-    it("calls onMetricsChanged for the metricsChanged event", () => {
-        const onMetricsChanged = vi.fn();
-        const onEvent = vi.fn();
-
-        toEmbeddedCallbacks({ onMetricsChanged, onEvent }).onEvent?.(event("metricsChanged"));
-
-        expect(onEvent).toHaveBeenCalledOnce();
-        expect(onMetricsChanged).toHaveBeenCalledOnce();
-    });
-
-    it("calls only the event handlers that accept the event", () => {
-        const accepted = vi.fn();
-        const rejected = vi.fn();
-
-        toEmbeddedCallbacks({
-            eventHandlers: [
-                { eval: (e) => e.name === "insightSaved", handler: accepted },
-                { eval: () => false, handler: rejected },
-            ],
-        }).onEvent?.(event("insightSaved"));
-
-        expect(accepted).toHaveBeenCalledOnce();
-        expect(rejected).not.toHaveBeenCalled();
-    });
-
-    it("maps the command failures onto onCommandFailed", () => {
-        const onCommandFailed = vi.fn();
-        const failure: ICommandFailedBody = {
-            errorCode: GdcErrorType.InvalidCommand,
-            errorMessage: "failed",
-        };
-
-        toEmbeddedCallbacks({ onCommandFailed }).onAppCommandFailed?.(failure, "context-1");
-
-        expect(onCommandFailed).toHaveBeenCalledWith(failure, "context-1");
-    });
-
-    it("passes the command context to the callbacks of the command results", () => {
-        const onSetFilterContextFinished = vi.fn();
-        const data: IAdAvailableCommands = { availableCommands: [] };
-
-        toEmbeddedCallbacks({ onSetFilterContextFinished }).onSetFilterContextFinished?.(data, "context-1");
-
-        expect(onSetFilterContextFinished).toHaveBeenCalledWith(data, "context-1");
     });
 });

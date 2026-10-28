@@ -9,7 +9,9 @@ import {
 } from "@testing-library/react";
 import { type UserEvent, userEvent } from "@testing-library/user-event";
 
-import { HostIntlProvider } from "../src/ui/HostIntlProvider.js";
+import { dummyBackend } from "@gooddata/sdk-backend-base";
+
+import { HostChromeProviders } from "../src/ui/HostChromeProviders.js";
 
 /**
  * Return type of the `render` needs to be explicit, because then an `The inferred type of 'render' cannot be named
@@ -21,6 +23,11 @@ import { HostIntlProvider } from "../src/ui/HostIntlProvider.js";
 export function render(jsx: ReactNode, options: RenderOptions = {}): RenderResult & { user: UserEvent } {
     return {
         user: userEvent.setup(),
-        ...testingLibraryRender(<HostIntlProvider locale="en-US">{jsx}</HostIntlProvider>, options),
+        ...testingLibraryRender(
+            <HostChromeProviders locale="en-US" backend={dummyBackend()}>
+                {jsx}
+            </HostChromeProviders>,
+            options,
+        ),
     };
 }

@@ -4,6 +4,7 @@
 
 ```ts
 
+import { AdCatalogLoadedBody } from '@gooddata/sdk-embedding';
 import { AdCommandData } from '@gooddata/sdk-embedding';
 import { AdExportFinishedBody } from '@gooddata/sdk-embedding';
 import { AdFilterContextChangedBody } from '@gooddata/sdk-embedding';
@@ -16,6 +17,7 @@ import { IAdAvailableCommands } from '@gooddata/sdk-embedding';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { ICommandFailedBody } from '@gooddata/sdk-embedding';
+import { IDrillEvent } from '@gooddata/sdk-ui';
 import { IEntitlementDescriptor } from '@gooddata/sdk-model';
 import { IFilterContextContent } from '@gooddata/sdk-embedding';
 import { IInsight } from '@gooddata/sdk-model';
@@ -35,6 +37,18 @@ import { Ref } from 'react';
 
 // @alpha
 export function AnalyticalDesigner(props: IAnalyticalDesignerProps): ReactElement;
+
+// @alpha
+export type AnalyticalDesignerEvent<T extends AnalyticalDesignerEventType = AnalyticalDesignerEventType> = {
+    [K in T]: {
+        type: K;
+        data: IAnalyticalDesignerEventDataMap[K];
+        contextId?: string;
+    };
+}[T];
+
+// @alpha
+export type AnalyticalDesignerEventType = keyof IAnalyticalDesignerEventDataMap;
 
 // @alpha
 export type AnalyticalDesignerHiddenAction = "open" | "clear" | "export" | "save" | "saveAs" | "openInAnalyticalDesigner";
@@ -96,17 +110,28 @@ export interface IAnalyticalDesignerErrorProps {
 }
 
 // @alpha
-export interface IAnalyticalDesignerEvent<TData = unknown> {
-    contextId?: string;
-    data: TData;
-    name: string;
-    product: string;
-}
-
-// @alpha
-export interface IAnalyticalDesignerEventHandler {
-    eval: (event: IAnalyticalDesignerEvent) => boolean;
-    handler: (event: IAnalyticalDesignerEvent) => void;
+export interface IAnalyticalDesignerEventDataMap {
+    apiTokenIsAboutToExpire: Record<string, never>;
+    appCommandFailed: ICommandFailedBody;
+    attributeHierarchyModified: IAdAvailableCommands;
+    availableCommands: GdcAdCommandType[];
+    catalogLoaded: AdCatalogLoadedBody;
+    clearFinished: IAdAvailableCommands;
+    clearInsightFinished: IAdAvailableCommands;
+    drill: IDrillEvent;
+    exportInsightFinished: AdExportFinishedBody;
+    filterContextChanged: AdFilterContextChangedBody;
+    insightChanged: AdInsightChangedBody;
+    insightEditingCancelled: null;
+    insightOpened: IAnalyticalDesignerInsightOpenedData;
+    insightRendered: AdInsightRenderedBody;
+    listeningForDrillableItems: Record<string, never>;
+    metricsChanged: Record<string, never>;
+    redoFinished: IAdAvailableCommands;
+    removeFilterContextFinished: IAdAvailableCommands;
+    setFilterContextFinished: IAdAvailableCommands;
+    undoFinished: IAdAvailableCommands;
+    visualizationSaved: AdInsightSavedBody;
 }
 
 // @alpha
@@ -128,26 +153,9 @@ export interface IAnalyticalDesignerProps {
     cacheReset?: IAnalyticalDesignerCacheReset;
     config?: IAnalyticalDesignerConfig;
     disableThemeLoading?: boolean;
-    eventHandlers?: IAnalyticalDesignerEventHandler[];
     insight?: string | ObjRef | IInsight;
-    onAttributeHierarchyModified?: () => void;
-    onClearFinished?: (data: IAdAvailableCommands, contextId?: string) => void;
-    onClearInsightFinished?: (data: IAdAvailableCommands, contextId?: string) => void;
-    onCommandFailed?: (data: ICommandFailedBody, contextId?: string) => void;
     onError?: (error: unknown) => void;
-    onEvent?: (event: IAnalyticalDesignerEvent) => void;
-    onExportFinished?: (data: AdExportFinishedBody, contextId?: string) => void;
-    onFilterContextChanged?: (data: AdFilterContextChangedBody) => void;
-    onInsightChanged?: (data: AdInsightChangedBody) => void;
-    onInsightEditingCancelled?: () => void;
-    onInsightOpened?: (data: IAnalyticalDesignerInsightOpenedData) => void;
-    onInsightRendered?: (data: AdInsightRenderedBody) => void;
-    onInsightSaved?: (data: AdInsightSavedBody, contextId?: string) => void;
-    onMetricsChanged?: () => void;
-    onRedoFinished?: (data: IAdAvailableCommands, contextId?: string) => void;
-    onRemoveFilterContextFinished?: (data: IAdAvailableCommands, contextId?: string) => void;
-    onSetFilterContextFinished?: (data: IAdAvailableCommands, contextId?: string) => void;
-    onUndoFinished?: (data: IAdAvailableCommands, contextId?: string) => void;
+    onEvent?: (event: AnalyticalDesignerEvent) => void;
     permissions?: IWorkspacePermissions;
     slots?: IAnalyticalDesignerSlots;
     theme?: ITheme;

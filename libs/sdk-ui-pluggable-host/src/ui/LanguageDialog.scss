@@ -6,7 +6,8 @@
         max-width: 100%;
     }
 
-    &__note {
+    // Use `&` to win over `.gd-message` styles set globally
+    & &__note {
         display: block;
         margin-top: 20px;
         padding: 4px 10px;

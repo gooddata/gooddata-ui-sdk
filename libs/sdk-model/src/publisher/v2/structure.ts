@@ -77,6 +77,7 @@ import {
 } from "./document.js";
 import { type IPublisherContainerV2 } from "./layout.js";
 import { type IPublisherDocumentPageV2, type IPublisherPageBodyV2, PublisherPageSizesV2 } from "./page.js";
+import { PUBLISHER_COMPLEMENTARY_STEPS_V2, PUBLISHER_PALETTE_FAMILIES_V2 } from "./paletteReference.js";
 import {
     type IPublisherBackgroundStyleV2,
     type IPublisherBorderStyleV2,
@@ -116,8 +117,9 @@ import {
 const themeName = "[A-Za-z0-9_-]+";
 const hexColor = /^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/;
 const rgbColor = /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*(?:,\s*(\d+(?:\.\d+)?|\.\d+)\s*)?\)$/;
+const paletteColor = `(?:${PUBLISHER_PALETTE_FAMILIES_V2.join("|")}|complementary\\.(?:${PUBLISHER_COMPLEMENTARY_STEPS_V2.join("|")}))`;
 const themeColor = new RegExp(
-    `^\\{theme\\.(?:colors\\.(?:backgrounds|texts|lines)\\.${themeName}|palette\\.(?:primary|success|error|warning))\\}$`,
+    `^\\{theme\\.(?:colors\\.(?:backgrounds|texts|lines)\\.${themeName}|palette\\.${paletteColor})\\}$`,
 );
 
 function isColor(value: unknown): boolean {

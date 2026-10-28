@@ -26,7 +26,7 @@ related_pages:
   - /docs/dashboard-plugins/dashboard-performance
 type: docs
 description: Embed a saved dashboard with Dashboard, read its state through selectors, dispatch commands, handle events, configure behavior, and access its store externally.
-weight: 29
+weight: 28
 section: Dashboard & plugins
 aliases:
   - "../references/dashboard_component/detailed_description/"
@@ -186,6 +186,7 @@ All configuration properties are optional. For most of them, the Dashboard compo
 | `separators` | `ISeparators` | The number separators used by the charts on the dashboard. |
 | `mapboxToken` | `string` | The map access token used by geo pushpin charts. |
 | `isReadOnly` | `boolean` | If `true`, the dashboard is embedded in read-only mode, which disables any user interaction that would alter backend state (creating or changing alerts, creating scheduled emails, and so on). Defaults to `false`. |
+| `enableInsightEditing` | `boolean` | `@alpha`. If `true`, users explore, edit, and create visualizations in Analytical Designer on top of the dashboard. See [Edit visualizations on a dashboard](../edit-visualizations-on-dashboard/). Defaults to `false`. |
 
 All configuration options are in `DashboardConfig`.
 

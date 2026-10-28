@@ -1,0 +1,31 @@
+// (C) 2026 GoodData Corporation
+
+import { type IIconProps } from "@gooddata/sdk-ui-kit";
+
+/**
+ * @internal
+ */
+export function BulletTarget({ color, className, width = 16, height = 16, ariaHidden }: IIconProps) {
+    return (
+        <svg
+            className={className}
+            width={width}
+            height={height}
+            viewBox="0 0 16 16"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden={ariaHidden}
+        >
+            <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+                <path
+                    d="M0.0355780683,7.19575859 L8.03557807,7.19575859 L8.03557807,9.19575859 L0.0355780683,9.19575859 L0.0355780683,7.19575859 Z M0.0355780683,13.0153536 L4.03557807,13.0153536 L4.03557807,15.0153536 L0.0355780683,15.0153536 L0.0355780683,13.0153536 Z M0.0355780683,1 L16.0355781,1 L16.0355781,3 L0.0355780683,3 L0.0355780683,1 Z"
+                    fillOpacity="0.45"
+                    fill={color ?? "#B0BECA"}
+                />
+                <path
+                    d="M11.0355781,6.19575859 L12.0355781,6.19575859 L12.0355781,10.1957586 L11.0355781,10.1957586 L11.0355781,6.19575859 Z M6.03557807,12.0153536 L7.03557807,12.0153536 L7.03557807,16.0153536 L6.03557807,16.0153536 L6.03557807,12.0153536 Z M13.0355781,4.4408921e-16 L14.0355781,4.4408921e-16 L14.0355781,4 L13.0355781,4 L13.0355781,4.4408921e-16 Z"
+                    fill={color ?? "#94A1AD"}
+                />
+            </g>
+        </svg>
+    );
+}

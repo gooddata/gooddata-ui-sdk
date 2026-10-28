@@ -22,6 +22,9 @@ export function dispatchHostNotification(notification: IHostUiNotification): voi
 // @alpha (undocumented)
 export function getBackend(): IAnalyticalBackend;
 
+// @internal (undocumented)
+export function HostChromeProviders(input: IHostChromeProvidersProps): JSX.Element;
+
 // @alpha
 export class HostErrorBoundary extends Component<IHostErrorBoundaryProps, IHostErrorBoundaryState> {
     // (undocumented)
@@ -75,6 +78,18 @@ export interface IHostChromePricing {
     onUpsellButtonClick: () => void;
 }
 
+// @internal (undocumented)
+export interface IHostChromeProvidersProps {
+    // (undocumented)
+    additionalMessages?: Record<string, string>;
+    // (undocumented)
+    backend: IAnalyticalBackend;
+    // (undocumented)
+    children: ReactNode;
+    // (undocumented)
+    locale: ILocale;
+}
+
 // @alpha
 export interface IHostErrorBoundaryProps {
     // (undocumented)
@@ -111,11 +126,14 @@ export interface ILanguageDialogProps extends ILanguages {
 
 // @internal (undocumented)
 export interface ILanguages {
-    currentLanguage: ILocale | undefined;
+    // (undocumented)
+    changeLanguage: (language: LanguageChoice) => Promise<void>;
+    // (undocumented)
+    currentLanguage: LanguageChoice;
+    // (undocumented)
     defaultLanguage: ILocale;
-    deleteLanguage: () => Promise<void>;
+    // (undocumented)
     languages: ILocale[];
-    setLanguage: (language: ILocale) => Promise<void>;
 }
 
 // @alpha (undocumented)
@@ -164,6 +182,9 @@ export interface IVersionWatcherOptions {
 }
 
 // @internal
+export type LanguageChoice = ILocale | "default";
+
+// @internal (undocumented)
 export function LanguageDialog(input: ILanguageDialogProps): JSX.Element;
 
 // @alpha (undocumented)

@@ -30,6 +30,10 @@ export type ChangeParameterValuesParams = {
      * See {@link IChangeParameterValuesPayload.restorePerTabOriginals}.
      */
     restorePerTabOriginals?: boolean;
+    /**
+     * See {@link IChangeParameterValuesPayload.adoptAsOriginal}.
+     */
+    adoptAsOriginal?: boolean;
 };
 
 /**
@@ -46,6 +50,11 @@ export interface IChangeParameterValuesPayload {
      * when filters are persisted across tabs.
      */
     readonly restorePerTabOriginals?: boolean;
+    /**
+     * When true, the values this command writes become the values a reset restores, on this tab and
+     * on every tab they are synced to. Used when a default filter view initializes the shared state.
+     */
+    readonly adoptAsOriginal?: boolean;
 }
 
 /**
@@ -81,6 +90,7 @@ export function changeParameterValues({
     tabLocalIdentifier,
     correlationId,
     restorePerTabOriginals,
+    adoptAsOriginal,
 }: ChangeParameterValuesParams): IChangeParameterValues {
     return {
         type: "GDC.DASH/CMD.PARAMETERS.CHANGE_VALUES",
@@ -89,6 +99,7 @@ export function changeParameterValues({
             parameters,
             tabLocalIdentifier,
             ...(restorePerTabOriginals ? { restorePerTabOriginals } : {}),
+            ...(adoptAsOriginal ? { adoptAsOriginal } : {}),
         },
     };
 }

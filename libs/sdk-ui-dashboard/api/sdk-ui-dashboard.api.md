@@ -668,6 +668,7 @@ export type ChangeFilterContextSelectionParams = {
     tabLocalIdentifier?: string;
     matchByLocalIdentifier?: boolean;
     restorePerTabOriginals?: boolean;
+    adoptAsOriginal?: boolean;
 };
 
 // @public
@@ -678,6 +679,7 @@ export type ChangeFilterContextSelectionPayload = {
     tabLocalIdentifier?: string;
     matchByLocalIdentifier?: boolean;
     restorePerTabOriginals?: boolean;
+    adoptAsOriginal?: boolean;
 };
 
 // @alpha
@@ -762,6 +764,7 @@ export type ChangeParameterValuesParams = {
     tabLocalIdentifier?: string;
     correlationId?: string;
     restorePerTabOriginals?: boolean;
+    adoptAsOriginal?: boolean;
 };
 
 // @beta
@@ -3606,6 +3609,7 @@ export interface IChangeParameterValues extends IDashboardCommand {
 
 // @internal
 export interface IChangeParameterValuesPayload {
+    readonly adoptAsOriginal?: boolean;
     // (undocumented)
     readonly parameters: IParameterValueChange[];
     readonly restorePerTabOriginals?: boolean;
@@ -7011,6 +7015,8 @@ export interface IFilterViews {
 
 // @alpha (undocumented)
 export interface IFilterViewsState {
+    // @internal
+    defaultFilterViewAppliedTabs?: string[];
     // (undocumented)
     filterViews: IFilterViews[];
     // (undocumented)
@@ -10890,6 +10896,22 @@ export interface IWrapInsightListItemWithDragProps {
     onDragStart?: (item: DraggableItem) => void;
 }
 
+// @internal
+export interface IWrittenTabFilters {
+    readonly commonDateFilter: boolean;
+    // (undocumented)
+    readonly dateDataSets: ObjRef[];
+    readonly filterLocalIds: string[];
+    readonly tabLocalIdentifier?: string;
+}
+
+// @internal
+export interface IWrittenTabParameters {
+    // (undocumented)
+    readonly refs: ObjRef[];
+    readonly tabLocalIdentifier?: string;
+}
+
 // @beta (undocumented)
 export interface IXlsxExportConfig {
     // (undocumented)
@@ -13796,6 +13818,10 @@ readonly changeMeasureValueFilterTitle: (state: WritableDraft<ITabsState>, actio
 payload: IChangeMeasureValueFilterTitleReducerPayload;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
+readonly adoptAppliedFiltersAsOriginal: (state: WritableDraft<ITabsState>, action: {
+payload: IWrittenTabFilters[];
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
 readonly addParameter: (state: WritableDraft<ITabsState>, action: {
 payload: IAddParameterPayload;
 type: string;
@@ -13810,6 +13836,10 @@ type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly removeParameter: (state: WritableDraft<ITabsState>, action: {
 payload: IRemoveParameterPayload;
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly adoptRuntimeValuesAsResetBaseline: (state: WritableDraft<ITabsState>, action: {
+payload: IWrittenTabParameters[];
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly setTabs: TabsReducer<    {

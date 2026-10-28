@@ -14,7 +14,7 @@ import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/endpoints/prof
 
 import { LIB_VERSION } from "../../__version.js";
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
-import { DefaultFeatureFlags, type ITigerFeatureFlags } from "../uiFeatures.js";
+import { DefaultFeatureFlags, type ITigerFeatureFlags, LocalFeatureFlagOverrides } from "../uiFeatures.js";
 
 import { getFeatureHubFeatures } from "./hub.js";
 import { getStaticFeatures } from "./static.js";
@@ -42,21 +42,21 @@ export class TigerFeaturesService {
             ...wsContext,
             jsSdkVersion: LIB_VERSION,
         };
-        const cachedResponse = responseMap.get(getKeyFromContext(contextWithVersion));
-        if (cachedResponse) {
-            return cachedResponse;
+        // A changed or removed local override must not reuse a previously forced value.
+        const key = JSON.stringify([
+            getKeyFromContext(contextWithVersion),
+            Object.entries(LocalFeatureFlagOverrides),
+        ]);
+        let response = responseMap.get(key);
+        if (!response) {
+            response = this.authCall(async (client) => {
+                const prof = profile || (await ProfileApi_GetCurrent(client.axios));
+                const results = await loadFeatures(prof, contextWithVersion);
+                return { ...DefaultFeatureFlags, ...results };
+            });
+            responseMap.set(key, response);
         }
-        const response = this.authCall(async (client) => {
-            const prof = profile || (await ProfileApi_GetCurrent(client.axios));
-            const results = await loadFeatures(prof, contextWithVersion);
-
-            return {
-                ...DefaultFeatureFlags,
-                ...results,
-            };
-        });
-        responseMap.set(getKeyFromContext(contextWithVersion), response);
-        return response;
+        return { ...(await response), ...LocalFeatureFlagOverrides };
     }
 }
 

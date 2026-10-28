@@ -13,9 +13,12 @@ import {
 } from "react";
 
 import { type CompletionSource } from "@codemirror/autocomplete";
-import { forceLinting, lintGutter } from "@codemirror/lint";
-import { Compartment } from "@codemirror/state";
+import { forceLinting, lintGutter, linter } from "@codemirror/lint";
+import { Compartment, type Extension } from "@codemirror/state";
 import { type EditorView, lineNumbers } from "@codemirror/view";
+import { isEqual } from "lodash-es";
+
+import { useAutoupdateRef } from "@gooddata/sdk-ui";
 
 import { createSyntaxErrorLinter } from "../../syntaxHighlightingInput/syntaxErrorLinter.js";
 import { SyntaxHighlightingInput } from "../../syntaxHighlightingInput/SyntaxHighlightingInput.js";
@@ -26,6 +29,7 @@ import { useLanguageGrammar } from "./configEditorGrammars.js";
 import { themedHighlightStyle } from "./configEditorHighlighting.js";
 import { type ConfigEditorLanguage, beautify, convertText, isProjectable } from "./configEditorLanguage.js";
 import { ConfigEditorToolbar } from "./ConfigEditorToolbar.js";
+import { getWarningDiagnostics } from "./configEditorWarnings.js";
 import { type IUiConfigEditorProps } from "./types.js";
 
 const { b, e } = bem("gd-ui-kit-config-editor");
@@ -56,6 +60,7 @@ export function UiConfigEditor({
     onLanguageChange,
     completionSource,
     labels,
+    warnings,
     renderContextMenu,
     label,
     placeholder,
@@ -240,38 +245,68 @@ export function UiConfigEditor({
     // wire — selection, undo history, focus — and their next keystroke would land at offset 0.
     const grammarCompartmentRef = useRef(new Compartment());
 
+    const syntaxErrorMessage = labels?.syntaxError;
+    const [syntaxErrorCompartment] = useState(() => new Compartment());
+    const syntaxErrorLinter = useCallback(
+        (): Extension => (syntaxErrorMessage ? createSyntaxErrorLinter(syntaxErrorMessage) : []),
+        [syntaxErrorMessage],
+    );
+
     useEffect(() => {
         const view = viewRef.current;
         if (view) {
             // `grammar ?? []` and not a skip: switching to a language whose grammar is still
             // loading must clear the previous one, or the document keeps being parsed, highlighted
             // and linted as the old language until the chunk arrives — indefinitely, if it fails.
+            // A lint that already ran saw the previous grammar or none, and a lint runs again only
+            // when the document or the lint configuration changes, so a new syntax error linter is
+            // swapped in; `forceLinting` then runs it now rather than after the lint delay.
             view.dispatch({
-                effects: grammarCompartmentRef.current.reconfigure(grammar ?? []),
+                effects: [
+                    grammarCompartmentRef.current.reconfigure(grammar ?? []),
+                    syntaxErrorCompartment.reconfigure(syntaxErrorLinter()),
+                ],
             });
-            // The reconfigure changes neither the document nor the lint configuration, so the
-            // linter would not run again on its own — stale diagnostics from the previous grammar
-            // (or from the grammar-less tree) would stay in the gutter.
             forceLinting(view);
         }
-    }, [grammar]);
+    }, [grammar, syntaxErrorCompartment, syntaxErrorLinter]);
+
+    // The linter reads the warnings when it runs, so a remounted editor shows the current ones; a
+    // running view gets new warnings by swapping in a new linter. Each swap delays every linter's
+    // next run, the syntax error one included, so it happens only when the warnings' content changes.
+    const warningsRef = useAutoupdateRef(warnings);
+    const appliedWarningsRef = useRef(warnings ?? []);
+    const [warningsCompartment] = useState(() => new Compartment());
+    const warningLinter = useCallback(
+        (): Extension =>
+            linter((view) => getWarningDiagnostics(view.state.doc.toString(), warningsRef.current ?? [])),
+        [warningsRef],
+    );
+    useEffect(() => {
+        const current = warnings ?? [];
+        if (isEqual(appliedWarningsRef.current, current)) {
+            return;
+        }
+        appliedWarningsRef.current = current;
+        viewRef.current?.dispatch({ effects: warningsCompartment.reconfigure(warningLinter()) });
+    }, [warnings, warningsCompartment, warningLinter]);
 
     // Extensions are read once when CodeMirror initialises, so the editor is remounted (keyed on
     // language) to swap grammars. Losing the undo history is reasonable there: the document was
     // just rewritten in a different language, so there is nothing coherent left to undo into.
-    const syntaxErrorMessage = labels?.syntaxError;
     const extensions = useMemo(
         () => [
             grammarCompartmentRef.current.of(grammar ?? []),
             lineNumbers(),
             lintGutter(),
-            ...(syntaxErrorMessage ? [createSyntaxErrorLinter(syntaxErrorMessage)] : []),
+            syntaxErrorCompartment.of(syntaxErrorLinter()),
+            warningsCompartment.of(warningLinter()),
         ],
         // Keyed on `grammar` (which changes with the language) rather than the language itself: a
         // running view gets a late-arriving grammar through the effect above, but any later remount
         // (a completion-source toggle, say) is built from this memo — stale, it would mount an
         // editor with no grammar at all.
-        [grammar, syntaxErrorMessage],
+        [grammar, syntaxErrorCompartment, syntaxErrorLinter, warningsCompartment, warningLinter],
     );
 
     // The completion source speaks in terms of the document's shape — the mapping keys enclosing the

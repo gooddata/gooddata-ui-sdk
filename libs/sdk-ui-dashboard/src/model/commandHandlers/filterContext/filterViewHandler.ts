@@ -14,6 +14,7 @@ import {
 } from "@gooddata/sdk-model";
 import { defaultErrorHandler } from "@gooddata/sdk-ui";
 
+import { type IDashboardCommand } from "../../commands/base.js";
 import {
     type IApplyFilterView,
     type IDeleteFilterView,
@@ -22,6 +23,7 @@ import {
     changeFilterContextSelectionByParams,
 } from "../../commands/filters.js";
 import { changeParameterValues } from "../../commands/parameters.js";
+import { type ISwitchDashboardTab } from "../../commands/tabs.js";
 import {
     filterViewApplicationFailed,
     filterViewApplicationSucceeded,
@@ -35,8 +37,14 @@ import {
 import { selectCatalogParameters } from "../../store/catalog/catalogSelectors.js";
 import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../store/config/configSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
-import { selectFilterViews } from "../../store/filterViews/filterViewsReducersSelectors.js";
+import {
+    selectDashboardFilterViews,
+    selectDefaultFilterViewAppliedTabs,
+    selectFilterViews,
+} from "../../store/filterViews/filterViewsReducersSelectors.js";
 import { filterViewsActions } from "../../store/filterViews/index.js";
+import { selectEnablePersistentFiltersAcrossTabs } from "../../store/meta/metaSelectors.js";
+import { selectIsInEditMode } from "../../store/renderMode/renderModeSelectors.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
     selectFilterContextDefinition,
@@ -47,13 +55,18 @@ import {
     selectDashboardParameterEntries,
     selectFilterViewDisplayParameters,
 } from "../../store/tabs/parameters/parametersSelectors.js";
-import { selectActiveTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
+import {
+    selectActiveTabLocalIdentifier,
+    selectFirstTabLocalIdentifier,
+} from "../../store/tabs/tabsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
+import { findTabDefaultFilterView } from "../dashboard/common/filterViews.js";
 import { resolveParameterValuesForFilterView } from "../dashboard/common/parameterHydration.js";
 import { loadFilterViews } from "../dashboard/initializeDashboardHandler/loadFilterViews.js";
 import { changeParameterValuesHandler } from "../parameters/changeParameterValuesHandler.js";
 
+import { changeFilterContextSelectionHandler } from "./changeFilterContextSelectionHandler.js";
 import { resetCrossFiltering } from "./common.js";
 
 function createFilterView(
@@ -173,49 +186,125 @@ export function* applyFilterViewHandler(ctx: DashboardContext, cmd: IApplyFilter
         cmd.payload.ref,
     );
 
+    if (filterView) {
+        yield call(applyFilterViewSelection, ctx, cmd, filterView);
+        yield put(filterViewApplicationSucceeded(ctx, filterView, cmd.correlationId));
+    } else {
+        yield put(filterViewApplicationFailed(ctx));
+    }
+}
+
+/**
+ * Applies the filters and parameters of `filterView` to the active tab. While filters persist across
+ * tabs, the filter and parameter handlers mirror the values to every other tab, so the view sets the
+ * shared state.
+ */
+function* applyFilterViewSelection(
+    ctx: DashboardContext,
+    cmd: IDashboardCommand,
+    filterView: IDashboardFilterView,
+    options?: { adoptAsOriginal?: boolean },
+): SagaIterator<void> {
     const attributeFilterConfigs: IDashboardAttributeFilterConfig[] = yield select(
         selectAttributeFilterConfigsOverrides,
     );
 
-    if (filterView) {
-        yield call(resetCrossFiltering, cmd);
-        const isApplyAllAtOnceEnabledAndSet: ReturnType<typeof selectIsApplyFiltersAllAtOnceEnabledAndSet> =
-            yield select(selectIsApplyFiltersAllAtOnceEnabledAndSet);
-        if (isApplyAllAtOnceEnabledAndSet) {
-            yield put(tabsActions.resetWorkingSelection());
+    yield call(resetCrossFiltering, cmd);
+    const isApplyAllAtOnceEnabledAndSet: ReturnType<typeof selectIsApplyFiltersAllAtOnceEnabledAndSet> =
+        yield select(selectIsApplyFiltersAllAtOnceEnabledAndSet);
+    if (isApplyAllAtOnceEnabledAndSet) {
+        yield put(tabsActions.resetWorkingSelection());
+    }
+    const parameterEntries: ReturnType<typeof selectDashboardParameterEntries> = yield select(
+        selectDashboardParameterEntries,
+    );
+    const workspaceParameters: ReturnType<typeof selectCatalogParameters> =
+        yield select(selectCatalogParameters);
+    yield call(
+        changeParameterValuesHandler,
+        ctx,
+        changeParameterValues({
+            parameters: resolveParameterValuesForFilterView(
+                parameterEntries,
+                filterView.parameters ?? [],
+                workspaceParameters,
+            ),
+            correlationId: cmd.correlationId,
+            adoptAsOriginal: options?.adoptAsOriginal,
+        }),
+    );
+    // inline, so the view is applied before the caller continues: a queued command would run after
+    // the caller's own filter changes (e.g. automation filters after a tab switch) and overwrite them
+    yield call(
+        changeFilterContextSelectionHandler,
+        ctx,
+        changeFilterContextSelectionByParams({
+            filters: filterView.filterContext.filters,
+            attributeFilterConfigs,
+            resetOthers: true,
+            correlationId: cmd.correlationId,
+            // a default view initializes the shared state, so the applied values are what a reset restores
+            adoptAsOriginal: options?.adoptAsOriginal,
+            // a filter view snapshots this dashboard's own filter context, so its localIdentifiers
+            // are authoritative; display form matching alone cannot tell apart filters that share
+            // a display form
+            matchByLocalIdentifier: true,
+        }),
+    );
+}
+
+/**
+ * While filters persist across tabs, the dashboard opens with the default view of its active tab as
+ * the shared state. Every other tab applies its own default view, to all tabs, on its first visit in
+ * the session. Later visits keep the shared state. A drill to the tab sets the shared state itself, so
+ * it counts as the first visit without applying the view.
+ *
+ * @internal
+ */
+export function* applyDefaultFilterViewOnFirstTabVisit(
+    ctx: DashboardContext,
+    cmd: ISwitchDashboardTab,
+    tabLocalIdentifier: string,
+): SagaIterator<void> {
+    const persistFiltersAcrossTabs: ReturnType<typeof selectEnablePersistentFiltersAcrossTabs> = yield select(
+        selectEnablePersistentFiltersAcrossTabs,
+    );
+    // edit mode starts from the saved filters, same as on load
+    const isInEditMode: ReturnType<typeof selectIsInEditMode> = yield select(selectIsInEditMode);
+    if (!persistFiltersAcrossTabs || isInEditMode) {
+        return;
+    }
+
+    const appliedTabs: ReturnType<typeof selectDefaultFilterViewAppliedTabs> = yield select(
+        selectDefaultFilterViewAppliedTabs,
+    );
+    if (appliedTabs.includes(tabLocalIdentifier)) {
+        return;
+    }
+    if (cmd.payload.source === "drillToSelf") {
+        yield put(filterViewsActions.markDefaultFilterViewApplied(tabLocalIdentifier));
+        return;
+    }
+
+    const filterViews: ReturnType<typeof selectDashboardFilterViews> =
+        yield select(selectDashboardFilterViews);
+    const firstTabLocalIdentifier: ReturnType<typeof selectFirstTabLocalIdentifier> = yield select(
+        selectFirstTabLocalIdentifier,
+    );
+    const defaultFilterView = findTabDefaultFilterView(
+        filterViews,
+        tabLocalIdentifier,
+        tabLocalIdentifier === firstTabLocalIdentifier,
+    );
+    // A failed view must not fail the caller (the tab is already switched, a save already persisted).
+    // The tab stays unmarked, so its next visit retries the view.
+    try {
+        if (defaultFilterView) {
+            yield call(applyFilterViewSelection, ctx, cmd, defaultFilterView, { adoptAsOriginal: true });
         }
-        yield put(
-            changeFilterContextSelectionByParams({
-                filters: filterView.filterContext.filters,
-                attributeFilterConfigs,
-                resetOthers: true,
-                correlationId: cmd.correlationId,
-                // a filter view snapshots this dashboard's own filter context, so its localIdentifiers
-                // are authoritative; display form matching alone cannot tell apart filters that share
-                // a display form
-                matchByLocalIdentifier: true,
-            }),
-        );
-        const parameterEntries: ReturnType<typeof selectDashboardParameterEntries> = yield select(
-            selectDashboardParameterEntries,
-        );
-        const workspaceParameters: ReturnType<typeof selectCatalogParameters> =
-            yield select(selectCatalogParameters);
-        yield call(
-            changeParameterValuesHandler,
-            ctx,
-            changeParameterValues({
-                parameters: resolveParameterValuesForFilterView(
-                    parameterEntries,
-                    filterView.parameters ?? [],
-                    workspaceParameters,
-                ),
-                correlationId: cmd.correlationId,
-            }),
-        );
-        yield put(filterViewApplicationSucceeded(ctx, filterView, cmd.correlationId));
-    } else {
-        yield put(filterViewApplicationFailed(ctx));
+        yield put(filterViewsActions.markDefaultFilterViewApplied(tabLocalIdentifier));
+    } catch (error) {
+        defaultErrorHandler(error);
     }
 }
 

@@ -29,8 +29,9 @@ export type PublisherVerticalAlignV2 = "top" | "center" | "bottom";
  *
  * @remarks
  * A reference is the whole value, never part of a longer string:
- * `{theme.colors.<list>.<id>}`, where list is `backgrounds`, `texts` or `lines`, or
- * `{theme.palette.<name>}`, where name is `primary`, `success`, `error` or `warning`.
+ * `{theme.colors.<list>.<id>}`, where list is `backgrounds`, `texts` or `lines`, or a color of the
+ * platform palette (see {@link PublisherThemePaletteReferenceV2}): `{theme.palette.<name>}`, where name
+ * is `primary`, `success`, `error`, `warning` or `info`, or `{theme.palette.complementary.c0}` to `c9`.
  * The ids `default`, `surface`, `inverse`, `muted` and `accent` always resolve.
  *
  * A literal is `#rgb`, `#rrggbb`, `#rrggbbaa`, or `rgb()` with 3 or 4 arguments. `#rgba` is invalid.

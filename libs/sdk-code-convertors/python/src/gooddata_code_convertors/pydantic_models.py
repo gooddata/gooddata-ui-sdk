@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 6a4cbac8afba80ea39a31da62b3668ddd7329a4d1616940af7bd920a9ef0dfff
+# schema-hash: d2aab5e374ec09cfd67a1e6679aba2eacf4421c9e84950f8e0d2e77c5c6320d7
 
 from __future__ import annotations
 
@@ -2858,15 +2858,15 @@ class Type75(Enum):
 class PublisherColorValueV2(
     RootModel[
         constr(
-            pattern=r'^(#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*(,\s*\d*\.?\d+\s*)?\)|\{theme\.(colors\.(backgrounds|texts|lines)\.[A-Za-z0-9_-]+|palette\.(primary|success|error|warning))\})$'
+            pattern=r'^(#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*(,\s*\d*\.?\d+\s*)?\)|\{theme\.(colors\.(backgrounds|texts|lines)\.[A-Za-z0-9_-]+|palette\.(primary|success|error|warning|info|complementary\.c[0-9]))\})$'
         )
     ]
 ):
     root: constr(
-        pattern=r'^(#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*(,\s*\d*\.?\d+\s*)?\)|\{theme\.(colors\.(backgrounds|texts|lines)\.[A-Za-z0-9_-]+|palette\.(primary|success|error|warning))\})$'
+        pattern=r'^(#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*(,\s*\d*\.?\d+\s*)?\)|\{theme\.(colors\.(backgrounds|texts|lines)\.[A-Za-z0-9_-]+|palette\.(primary|success|error|warning|info|complementary\.c[0-9]))\})$'
     ) = Field(
         ...,
-        description='A theme color reference such as {theme.palette.primary}, or #rgb, #rrggbb, #rrggbbaa, or rgb() with 3 or 4 arguments.',
+        description='A theme color reference such as {theme.palette.primary}, {theme.palette.info} or {theme.palette.complementary.c3}, or #rgb, #rrggbb, #rrggbbaa, or rgb() with 3 or 4 arguments.',
         title='Publisher Color Value V2',
     )
 

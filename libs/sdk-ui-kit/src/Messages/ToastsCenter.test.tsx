@@ -11,7 +11,6 @@ import { ToastsCenterContext, useToastsCenterValue } from "./toasts/context.js";
 import { ToastsCenter } from "./toasts/ToastsCenter.js";
 
 const intlMessages = {
-    "messages.accessibility.noMessages": "No messages",
     "messages.accessibility.partial.error": "{count} errors",
     "messages.accessibility.partial.warning": "{count} warnings",
     "messages.accessibility.partial.success": "{count} success",
@@ -54,7 +53,7 @@ describe("ToastsCenter", () => {
         expect(textNodes[1]).toHaveTextContent("First");
     });
 
-    it("dismiss button removes message and updates aria label", async () => {
+    it("dismiss button removes the last message and the landmark region with it", async () => {
         let api!: ReturnType<typeof useToastsCenterValue>;
         function Capture() {
             api = ToastsCenterContext.useContextStore((c) => c);
@@ -76,7 +75,8 @@ describe("ToastsCenter", () => {
         const closeBtn = within(region).getByLabelText("Dismiss notification");
         await userEvent.click(closeBtn);
 
-        await waitFor(() => expect(region).toHaveAttribute("aria-label", "No messages"));
+        // An empty landmark region would only be noise for navigating landmarks with a screen reader
+        await waitFor(() => expect(screen.queryByRole("region", { hidden: true })).not.toBeInTheDocument());
     });
 
     it("sr-only status announces the latest message", async () => {

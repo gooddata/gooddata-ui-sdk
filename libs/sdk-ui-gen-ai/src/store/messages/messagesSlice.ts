@@ -541,6 +541,7 @@ const messagesSlice = createSlice({
                 assistantMessageId: string;
                 conversationId: string;
                 cancelled?: boolean;
+                responseCompleted?: boolean;
             }>,
         ) => {
             // Always clear the async process first to avoid stranding the UI

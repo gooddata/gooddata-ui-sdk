@@ -86,6 +86,8 @@ Use `IBackendCapabilities` so your code will stay backend agnostic.
 
 Code in this package realizes Analytical Backend SPI using the GoodData 'tiger' platform.
 
+For feature-flag registration, validation and local overrides, see [Feature flags](./feature-flags.md).
+
 ##### @gooddata/sdk-backend-mockingbird
 
 Code in this package realizes Analytical Backend SPI using mocks. It is great for testing in

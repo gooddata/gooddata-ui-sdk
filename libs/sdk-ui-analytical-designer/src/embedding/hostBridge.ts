@@ -2,17 +2,10 @@
 
 import { type AdCommandData } from "@gooddata/sdk-embedding";
 
+import { type AnalyticalDesignerEvent } from "./analyticalDesignerTypes.js";
+
 /** Envelope of an incoming AD command — the exact shape the postMessage transport delivers. */
 export type AdCommandEnvelope = AdCommandData;
-
-/** One outgoing AD event — exactly what messagingUtils.postEvent would have wrapped. */
-export interface IAdOutgoingEvent<TData = unknown> {
-    product: string;
-    name: string;
-    /** the @gooddata/sdk-embedding contract payload for `name` — opaque to the bridge itself */
-    data: TData;
-    contextId?: string;
-}
 
 /**
  * Transport adapter installed by a host that renders AD in-process (as a React component) instead
@@ -22,7 +15,7 @@ export interface IAdOutgoingEvent<TData = unknown> {
  * host's own embedded postMessage API).
  */
 export interface IAdHostAdapter {
-    onEvent(event: IAdOutgoingEvent): void;
+    onEvent(event: AnalyticalDesignerEvent): void;
 }
 
 /**

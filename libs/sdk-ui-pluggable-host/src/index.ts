@@ -41,5 +41,7 @@ export {
 } from "./ui/useHostChromePricing.js";
 
 export { HostIntlProvider, type IHostIntlProviderProps } from "./ui/HostIntlProvider.js";
+export { HostChromeProviders, type IHostChromeProvidersProps } from "./ui/HostChromeProviders.js";
 export { LanguageDialog, type ILanguageDialogProps } from "./ui/LanguageDialog.js";
 export { type ILanguages } from "./ui/useLanguages.js";
+export { type LanguageChoice } from "./ui/languages.js";

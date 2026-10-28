@@ -1663,6 +1663,7 @@ export type {
     IRemoveMeasureValueFilterReducerPayload,
     IMoveMeasureValueFilterPayload,
     IChangeMeasureValueFilterConditionReducerPayload,
+    IWrittenTabFilters,
 } from "./model/store/tabs/filterContext/filterContextReducers.js";
 export {
     selectTabs,
@@ -1745,6 +1746,7 @@ export type {
     IRemoveParameterPayload,
     ISetParameterRuntimeValuesPayload,
     ISetParameterWorkingValuePayload,
+    IWrittenTabParameters,
 } from "./model/store/tabs/parameters/parametersReducers.js";
 export type {
     IDashboardParameterEntry,

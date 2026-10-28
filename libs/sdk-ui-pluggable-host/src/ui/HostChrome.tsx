@@ -24,7 +24,7 @@ import {
     type IPlatformContext,
     type IPluggableAppTelemetryCallbacks,
 } from "@gooddata/sdk-pluggable-application-model";
-import { BackendProvider, resolveLocale } from "@gooddata/sdk-ui";
+import { resolveLocale } from "@gooddata/sdk-ui";
 import { AppHeaderNotifications } from "@gooddata/sdk-ui-application-header";
 import { GenAIAssistantMode } from "@gooddata/sdk-ui-gen-ai";
 import {
@@ -32,7 +32,6 @@ import {
     DocumentHeader,
     type IHeaderMenuItem,
     type IHeaderWorkspace,
-    ToastsCenterContextProvider,
     generateHeaderAccountMenuItems,
     generateHeaderCommonHelpMenuItems,
     generateHeaderStaticHelpMenuItems,
@@ -52,8 +51,9 @@ import {
     isPlainLeftClick,
 } from "./chromeHelpers.js";
 import { b, e } from "./hostChromeBem.js";
-import { HostIntlProvider } from "./HostIntlProvider.js";
+import { HostChromeProviders } from "./HostChromeProviders.js";
 import { HostNotificationDispatcher } from "./HostNotificationDispatcher.js";
+import { LanguageChangedToast } from "./LanguageChangedToast.js";
 import { LanguageDialog } from "./LanguageDialog.js";
 import { trackLanguageSettingsOpen } from "./languageTelemetry.js";
 import { useAppPreloadOnHover } from "./useAppPreloadOnHover.js";
@@ -359,75 +359,72 @@ export function HostChrome({
     );
 
     return (
-        <HostIntlProvider locale={locale} additionalMessages={appMessages}>
-            <BackendProvider backend={getBackend()}>
-                <ToastsCenterContextProvider>
-                    <div className={b({ export: ctx.isExportMode === true })}>
-                        <DocumentHeader
-                            pageTitle={documentPageTitle}
-                            brandTitle={documentBrandTitle}
-                            faviconUrl={faviconUrl}
-                            appleTouchIconUrl={ctx.whiteLabeling?.appleTouchIconUrl}
-                        />
-                        {hideChrome ? null : (
-                            <div
-                                className={e("header")}
-                                onMouseOver={appPreloadOnHover.onMouseOver}
-                                onMouseLeave={appPreloadOnHover.onMouseLeave}
-                            >
-                                <AppHeader
-                                    logoUrl={ctx.whiteLabeling?.logoUrl || defaultLogoUrl}
-                                    logoHref={LOGO_HREF}
-                                    onLogoClick={handleLogoClick}
-                                    logoTitle={logoTitle}
-                                    headerColor={headerColor}
-                                    headerTextColor={headerTextColor}
-                                    activeColor={activeColor}
-                                    userName={userName}
-                                    organizationName={ctx.organization?.title}
-                                    isAccessibilityCompliant
-                                    workspacePicker={workspacePicker}
-                                    menuItemsGroups={menuItemsGroups}
-                                    helpMenuItems={helpMenuItems}
-                                    accountMenuItems={accountMenuItems}
-                                    onMenuItemClick={handleMenuItemClick}
-                                    showUpsellButton={pricing.isTrial}
-                                    onUpsellButtonClick={pricing.onUpsellButtonClick}
-                                    expiredDate={pricing.isTrial ? pricing.expiredDate : undefined}
-                                    search={search.element}
-                                    showChatItem={showChatItem}
-                                    isChatOpen={chatIsOpen}
-                                    onChatItemClick={onChatToggle}
-                                    notificationsPanel={({ isMobile, closeNotificationsOverlay }) => (
-                                        <AppHeaderNotifications
-                                            locale={locale}
-                                            isMobile={isMobile}
-                                            closeNotificationsOverlay={closeNotificationsOverlay}
-                                            useAsOfDateParam
-                                            enableExportToDocumentStorage={
-                                                ctx.userSettings.enableExportToDocumentStorage ?? false
-                                            }
-                                        />
-                                    )}
+        <HostChromeProviders locale={locale} additionalMessages={appMessages} backend={getBackend()}>
+            <div className={b({ export: ctx.isExportMode === true })}>
+                <DocumentHeader
+                    pageTitle={documentPageTitle}
+                    brandTitle={documentBrandTitle}
+                    faviconUrl={faviconUrl}
+                    appleTouchIconUrl={ctx.whiteLabeling?.appleTouchIconUrl}
+                />
+                {hideChrome ? null : (
+                    <div
+                        className={e("header")}
+                        onMouseOver={appPreloadOnHover.onMouseOver}
+                        onMouseLeave={appPreloadOnHover.onMouseLeave}
+                    >
+                        <AppHeader
+                            logoUrl={ctx.whiteLabeling?.logoUrl || defaultLogoUrl}
+                            logoHref={LOGO_HREF}
+                            onLogoClick={handleLogoClick}
+                            logoTitle={logoTitle}
+                            headerColor={headerColor}
+                            headerTextColor={headerTextColor}
+                            activeColor={activeColor}
+                            userName={userName}
+                            organizationName={ctx.organization?.title}
+                            isAccessibilityCompliant
+                            workspacePicker={workspacePicker}
+                            menuItemsGroups={menuItemsGroups}
+                            helpMenuItems={helpMenuItems}
+                            accountMenuItems={accountMenuItems}
+                            onMenuItemClick={handleMenuItemClick}
+                            showUpsellButton={pricing.isTrial}
+                            onUpsellButtonClick={pricing.onUpsellButtonClick}
+                            expiredDate={pricing.isTrial ? pricing.expiredDate : undefined}
+                            search={search.element}
+                            showChatItem={showChatItem}
+                            isChatOpen={chatIsOpen}
+                            onChatItemClick={onChatToggle}
+                            notificationsPanel={({ isMobile, closeNotificationsOverlay }) => (
+                                <AppHeaderNotifications
+                                    locale={locale}
+                                    isMobile={isMobile}
+                                    closeNotificationsOverlay={closeNotificationsOverlay}
+                                    useAsOfDateParam
+                                    enableExportToDocumentStorage={
+                                        ctx.userSettings.enableExportToDocumentStorage ?? false
+                                    }
                                 />
-                            </div>
-                        )}
-                        <Wrapper chatIsOpen={Boolean(chatIsOpen && enablePanel)} mode={chatMode}>
-                            {children}
-                        </Wrapper>
-                        {pricing.element}
-                        {isLanguageDialogOpen ? (
-                            <HostLanguageDialog
-                                ctx={ctx}
-                                telemetry={shellTelemetry}
-                                onClose={() => setIsLanguageDialogOpen(false)}
-                            />
-                        ) : null}
-                        <HostNotificationDispatcher notification={notification} />
+                            )}
+                        />
                     </div>
-                </ToastsCenterContextProvider>
-            </BackendProvider>
-        </HostIntlProvider>
+                )}
+                <Wrapper chatIsOpen={Boolean(chatIsOpen && enablePanel)} mode={chatMode}>
+                    {children}
+                </Wrapper>
+                {pricing.element}
+                {isLanguageDialogOpen ? (
+                    <HostLanguageDialog
+                        ctx={ctx}
+                        telemetry={shellTelemetry}
+                        onClose={() => setIsLanguageDialogOpen(false)}
+                    />
+                ) : null}
+                <HostNotificationDispatcher notification={notification} />
+                <LanguageChangedToast />
+            </div>
+        </HostChromeProviders>
     );
 }
 
@@ -448,15 +445,13 @@ function HostLanguageDialog({ ctx, telemetry, onClose }: IHostLanguageDialogProp
             return;
         }
         isOpenTracked.current = true;
-        const context = languages.currentLanguage
-            ? "own"
-            : ctx.currentWorkspaceId
-              ? "workspaceRoute"
-              : "orgRoute";
+        const { currentLanguage, defaultLanguage } = languages;
+        const context =
+            currentLanguage === "default" ? (ctx.currentWorkspaceId ? "workspaceRoute" : "orgRoute") : "own";
         trackLanguageSettingsOpen(
             telemetry,
             "userMenu",
-            languages.currentLanguage ?? languages.defaultLanguage,
+            currentLanguage === "default" ? defaultLanguage : currentLanguage,
             context,
         );
     }, [languages, telemetry, ctx.currentWorkspaceId]);

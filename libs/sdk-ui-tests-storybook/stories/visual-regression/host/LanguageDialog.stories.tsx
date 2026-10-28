@@ -3,17 +3,21 @@
 import { type Decorator } from "@storybook/react-vite";
 import { action } from "storybook/actions";
 
-import { HostIntlProvider, type ILanguageDialogProps, LanguageDialog } from "@gooddata/sdk-ui-pluggable-host";
+import { dummyBackend } from "@gooddata/sdk-backend-base";
+import {
+    HostChromeProviders,
+    type ILanguageDialogProps,
+    LanguageDialog,
+} from "@gooddata/sdk-ui-pluggable-host";
 
 import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
 import "../themeWrapper.scss";
 
 const requiredProps = {
-    currentLanguage: undefined,
+    currentLanguage: "default",
     defaultLanguage: "en-US",
     languages: ["en-US", "de-DE"],
-    setLanguage: () => Promise.resolve(),
-    deleteLanguage: () => Promise.resolve(),
+    changeLanguage: () => Promise.resolve(),
     onClose: action("onClose"),
 } satisfies ILanguageDialogProps;
 
@@ -22,9 +26,9 @@ export default {
     decorators: [
         (Story) => (
             <div className="no-animations">
-                <HostIntlProvider locale="en-US">
+                <HostChromeProviders locale="en-US" backend={dummyBackend()}>
                     <Story />
-                </HostIntlProvider>
+                </HostChromeProviders>
             </div>
         ),
     ] satisfies Decorator[],

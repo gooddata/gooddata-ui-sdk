@@ -2,7 +2,10 @@
 
 import { isEqual, omit } from "lodash-es";
 
-import { type IUnavailableDashboardReference } from "@gooddata/sdk-backend-spi";
+import {
+    type IAttributeWithReferences,
+    type IUnavailableDashboardReference,
+} from "@gooddata/sdk-backend-spi";
 import {
     type DashboardAttributeFilterItem,
     type DashboardTextAttributeFilter,
@@ -29,6 +32,7 @@ import {
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
+    isDashboardCommonDateFilter,
     isDashboardDateFilter,
     isDashboardMatchAttributeFilter,
     isDashboardMeasureValueFilter,
@@ -41,6 +45,11 @@ import {
 import { type RenderMode } from "../../../../types.js";
 import { filterLocalIdentifiers } from "../../../store/filtering/dashboardFilterSelectors.js";
 import { getRestrictedDashboardFilters } from "../../../store/filtering/restrictedFilterUtils.js";
+import {
+    applyMirroredFilterValue,
+    findCounterpartFilter,
+} from "../../../store/tabs/filterContext/filterSync.js";
+import { type ITabState } from "../../../store/tabs/tabsState.js";
 import { isFilterTypeCompatibleWithSelectionType } from "../../../utils/attributeFilterSelectionTypeCompatibility.js";
 
 const findMatchingAttributeFilterByLocalIdentifier = (
@@ -469,6 +478,71 @@ export const changeFilterContextSelection = (
     };
 };
 
+type DashboardTab = NonNullable<IDashboard["tabs"]>[number];
+
+/**
+ * @internal
+ */
+export interface IApplyDefaultFilterViewOptions {
+    /**
+     * When true, the default view of the tab the dashboard opens on initializes the filters shared by
+     * every tab. The other tabs' own default views are applied on their first visit instead.
+     */
+    readonly persistFiltersAcrossTabs?: boolean;
+    /**
+     * Tab the dashboard opens on. Defaults to the first tab.
+     */
+    readonly activeTabLocalIdentifier?: string;
+    /**
+     * Attributes of the attribute filters, with their display forms. The view of the active tab is
+     * written to the filters of the other tabs that filter the same attribute, which only equal display
+     * form refs identify without them.
+     */
+    readonly attributesWithReferences?: IAttributeWithReferences[];
+}
+
+/**
+ * True when applying the default filter view writes it to other tabs, so the attributes of the attribute
+ * filters are needed to match the filters of the tabs, see {@link IApplyDefaultFilterViewOptions}.
+ *
+ * @internal
+ */
+export function isDefaultFilterViewSharedAcrossTabs(
+    dashboard: IDashboard,
+    filterViews: IDashboardFilterView[],
+    renderMode: RenderMode,
+    options: IApplyDefaultFilterViewOptions,
+): boolean {
+    const tabs = dashboard.tabs ?? [];
+    if (renderMode === "edit" || !options.persistFiltersAcrossTabs || tabs.length < 2) {
+        return false;
+    }
+    const sourceIndex = Math.max(
+        0,
+        tabs.findIndex((tab) => tab.localIdentifier === options.activeTabLocalIdentifier),
+    );
+    return !!findTabDefaultFilterView(filterViews, tabs[sourceIndex].localIdentifier, sourceIndex === 0);
+}
+
+/**
+ * The default filter view of a tab. A legacy default view, saved without a tab, belongs to the first tab.
+ *
+ * @internal
+ */
+export function findTabDefaultFilterView(
+    filterViews: IDashboardFilterView[],
+    tabLocalIdentifier: string,
+    isFirstTab: boolean,
+): IDashboardFilterView | undefined {
+    const tabDefaultView = filterViews.find(
+        (view) => view.isDefault && view.tabLocalIdentifier === tabLocalIdentifier,
+    );
+    if (tabDefaultView || !isFirstTab) {
+        return tabDefaultView;
+    }
+    return filterViews.find((view) => view.isDefault && !view.tabLocalIdentifier);
+}
+
 /**
  * Applies the user's default filter view for the given render mode. The view is the user's own starting
  * point for viewing; edit mode starts from the saved filters, otherwise the view's selection would make
@@ -480,10 +554,11 @@ export function applyDefaultFilterViewForRenderMode(
     exportId: string | undefined,
     unavailableObjects: ReadonlyArray<IUnavailableDashboardReference>,
     renderMode: RenderMode,
+    options?: IApplyDefaultFilterViewOptions,
 ): IDashboard {
     return renderMode === "edit"
         ? dashboard
-        : applyDefaultFilterView(dashboard, filterViews, exportId, unavailableObjects);
+        : applyDefaultFilterView(dashboard, filterViews, exportId, unavailableObjects, options);
 }
 
 export function applyDefaultFilterView(
@@ -491,6 +566,7 @@ export function applyDefaultFilterView(
     filterViews: IDashboardFilterView[],
     exportId: string | undefined,
     unavailableObjects: ReadonlyArray<IUnavailableDashboardReference>,
+    options: IApplyDefaultFilterViewOptions = {},
 ): IDashboard {
     // In an export render, the loaded filter context may be synthesized from export metadata,
     // carrying the filters captured at export-request time (they replace the persisted context on
@@ -501,48 +577,27 @@ export function applyDefaultFilterView(
         return dashboard;
     }
 
-    // If dashboard has tabs, apply default views per tab
     if (dashboard.tabs && dashboard.tabs.length > 0) {
-        // Find legacy global default view (without tabLocalIdentifier) as fallback for first tab
-        const legacyDefaultView = filterViews.find((view) => view.isDefault && !view.tabLocalIdentifier);
-
-        const updatedTabs = dashboard.tabs.map((tab, index) => {
-            // Find default view specific to this tab
-            const tabDefaultView = filterViews.find(
-                (view) => view.isDefault && view.tabLocalIdentifier === tab.localIdentifier,
+        if (options.persistFiltersAcrossTabs) {
+            return applyDefaultFilterViewToSharedTabs(
+                dashboard,
+                dashboard.tabs,
+                filterViews,
+                unavailableObjects,
+                options.activeTabLocalIdentifier,
+                options.attributesWithReferences,
             );
-
-            // Use tab-specific default, or fall back to legacy global default only for the first tab
-            const isFirstTab = index === 0;
-            const effectiveDefaultView = tabDefaultView ?? (isFirstTab ? legacyDefaultView : undefined);
-            const parameters = applyFilterViewParameterValues(
-                tab.parameters,
-                effectiveDefaultView?.parameters,
-            );
-
-            if (effectiveDefaultView && tab.filterContext && isFilterContext(tab.filterContext)) {
-                const { filterContext: updatedFilterContext, configUpdates } = changeFilterContextSelection(
-                    tab.filterContext,
-                    effectiveDefaultView.filterContext.filters,
-                    filterLocalIdentifiers(
-                        getRestrictedDashboardFilters(tab.filterContext.filters, unavailableObjects),
-                    ),
-                    tab.attributeFilterConfigs,
-                );
-                return {
-                    ...tab,
-                    ...(parameters === undefined ? {} : { parameters }),
-                    filterContext: updatedFilterContext,
-                    attributeFilterConfigs: applyConfigUpdates(tab.attributeFilterConfigs, configUpdates),
-                };
-            }
-
-            return parameters === undefined ? tab : { ...tab, parameters };
-        });
+        }
 
         return {
             ...dashboard,
-            tabs: updatedTabs,
+            tabs: dashboard.tabs.map((tab, index) =>
+                applyFilterViewToTab(
+                    tab,
+                    findTabDefaultFilterView(filterViews, tab.localIdentifier, index === 0),
+                    unavailableObjects,
+                ),
+            ),
         };
     }
 
@@ -567,6 +622,170 @@ export function applyDefaultFilterView(
     }
 
     return dashboard;
+}
+
+function applyFilterViewToTab(
+    tab: DashboardTab,
+    filterView: IDashboardFilterView | undefined,
+    unavailableObjects: ReadonlyArray<IUnavailableDashboardReference>,
+): DashboardTab {
+    const parameters = applyFilterViewParameterValues(tab.parameters, filterView?.parameters);
+
+    if (filterView && tab.filterContext && isFilterContext(tab.filterContext)) {
+        const { filterContext: updatedFilterContext, configUpdates } = changeFilterContextSelection(
+            tab.filterContext,
+            filterView.filterContext.filters,
+            filterLocalIdentifiers(
+                getRestrictedDashboardFilters(tab.filterContext.filters, unavailableObjects),
+            ),
+            tab.attributeFilterConfigs,
+        );
+        return {
+            ...tab,
+            ...(parameters === undefined ? {} : { parameters }),
+            filterContext: updatedFilterContext,
+            attributeFilterConfigs: applyConfigUpdates(tab.attributeFilterConfigs, configUpdates),
+        };
+    }
+
+    return parameters === undefined ? tab : { ...tab, parameters };
+}
+
+/**
+ * Applies the default view of the active tab to it and writes the resulting values to the same logical
+ * filters and parameters of every other tab, the way a filter change is mirrored while filters persist
+ * across tabs. Filters that exist on one tab only keep their own value.
+ */
+function applyDefaultFilterViewToSharedTabs(
+    dashboard: IDashboard,
+    tabs: DashboardTab[],
+    filterViews: IDashboardFilterView[],
+    unavailableObjects: ReadonlyArray<IUnavailableDashboardReference>,
+    activeTabLocalIdentifier: string | undefined,
+    attributesWithReferences: IAttributeWithReferences[] | undefined,
+): IDashboard {
+    const sourceIndex = Math.max(
+        0,
+        tabs.findIndex((tab) => tab.localIdentifier === activeTabLocalIdentifier),
+    );
+    const source = tabs[sourceIndex];
+    const filterView = findTabDefaultFilterView(filterViews, source.localIdentifier, sourceIndex === 0);
+    if (!filterView) {
+        return dashboard;
+    }
+
+    const updatedSource = applyFilterViewToTab(source, filterView, unavailableObjects);
+    return {
+        ...dashboard,
+        tabs: tabs.map((tab) =>
+            tab === source
+                ? updatedSource
+                : mirrorTabSelection(
+                      source,
+                      updatedSource,
+                      tab,
+                      filterView,
+                      unavailableObjects,
+                      attributesWithReferences,
+                  ),
+        ),
+    };
+}
+
+function mirrorTabSelection(
+    sourceBefore: DashboardTab,
+    sourceAfter: DashboardTab,
+    target: DashboardTab,
+    filterView: IDashboardFilterView,
+    unavailableObjects: ReadonlyArray<IUnavailableDashboardReference>,
+    attributesWithReferences: IAttributeWithReferences[] | undefined,
+): DashboardTab {
+    const parameters = applyFilterViewParameterValues(target.parameters, filterView.parameters);
+    const withParameters = parameters === undefined ? target : { ...target, parameters };
+
+    if (
+        !isFilterContext(sourceBefore.filterContext) ||
+        !isFilterContext(sourceAfter.filterContext) ||
+        !isFilterContext(target.filterContext)
+    ) {
+        return withParameters;
+    }
+
+    const sourceRestricted = filterLocalIdentifiers(
+        getRestrictedDashboardFilters(sourceBefore.filterContext.filters, unavailableObjects),
+    );
+    const targetRestricted = filterLocalIdentifiers(
+        getRestrictedDashboardFilters(target.filterContext.filters, unavailableObjects),
+    );
+    const isRestricted = (restricted: ReadonlySet<string>, filter: FilterContextItem) =>
+        restricted.has(dashboardFilterLocalIdentifier(filter) ?? "");
+
+    const sourceState = toTabSyncState(sourceBefore, sourceBefore.filterContext);
+    const targetState = toTabSyncState(target, target.filterContext);
+
+    const replacements = new Map<FilterContextItem, FilterContextItem>();
+    for (const before of sourceBefore.filterContext.filters) {
+        if (isCommonDateFilter(before) || isRestricted(sourceRestricted, before)) {
+            continue;
+        }
+        const after = findSameTabFilter(sourceAfter.filterContext.filters, before);
+        // a list and a text filter hold incompatible values, and their configs stay on their own tab
+        if (!after || isDashboardTextAttributeFilter(before) !== isDashboardTextAttributeFilter(after)) {
+            continue;
+        }
+        const counterpart = findCounterpartFilter(sourceState, before, targetState, attributesWithReferences);
+        if (counterpart && !isRestricted(targetRestricted, counterpart)) {
+            replacements.set(counterpart, applyMirroredFilterValue(after, counterpart));
+        }
+    }
+
+    const mirroredFilters = target.filterContext.filters
+        .filter((filter) => !isCommonDateFilter(filter))
+        .map((filter) => replacements.get(filter) ?? filter);
+    // the common date filter is all time when it is absent, so it is shared even without a counterpart
+    const sourceCommonDate = sourceAfter.filterContext.filters.find(isDashboardCommonDateFilter);
+    const targetCommonDate = target.filterContext.filters.find(isDashboardCommonDateFilter);
+    const commonDate = sourceCommonDate
+        ? targetCommonDate
+            ? applyMirroredFilterValue(sourceCommonDate, targetCommonDate)
+            : { dateFilter: omit(sourceCommonDate.dateFilter, ["localIdentifier"]) }
+        : undefined;
+
+    return {
+        ...withParameters,
+        filterContext: {
+            ...target.filterContext,
+            filters: commonDate ? [commonDate, ...mirroredFilters] : mirroredFilters,
+        },
+    };
+}
+
+/**
+ * The filter of the same tab that `filter` was before a filter view changed its value.
+ */
+function findSameTabFilter(
+    filters: FilterContextItem[],
+    filter: FilterContextItem,
+): FilterContextItem | undefined {
+    if (isDashboardDateFilter(filter)) {
+        return findMatchingDateFilterByDataSet(filter, filters);
+    }
+    const localIdentifier = dashboardFilterLocalIdentifier(filter);
+    return localIdentifier
+        ? filters.find((item) => dashboardFilterLocalIdentifier(item) === localIdentifier)
+        : undefined;
+}
+
+/**
+ * The tab state that the cross-tab filter matching reads. Display form metadata comes from the
+ * attributes passed to the matching, as the tab state does not hold it yet.
+ */
+function toTabSyncState(tab: DashboardTab, filterContext: IFilterContext): ITabState {
+    return {
+        localIdentifier: tab.localIdentifier,
+        filterContext: { filtersWithInvalidSelection: [], filterContextDefinition: filterContext },
+        attributeFilterConfigs: { attributeFilterConfigs: tab.attributeFilterConfigs },
+    };
 }
 
 /**

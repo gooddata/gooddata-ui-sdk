@@ -4,7 +4,7 @@ import { type ReactNode, useId, useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { type ILocale, isLocale } from "@gooddata/sdk-model";
+import { isLocale } from "@gooddata/sdk-model";
 import {
     Message,
     UiButton,
@@ -18,19 +18,17 @@ import {
     UiSearchableSelectList,
     UiSearchableSelectSearch,
     bemFactory,
+    useUiToast,
 } from "@gooddata/sdk-ui-kit";
 
-import { LANGUAGE_NAMES, matchesLanguage } from "./languages.js";
+import { LANGUAGE_NAMES, type LanguageChoice, matchesLanguage } from "./languages.js";
 import { type ILanguages } from "./useLanguages.js";
 import "./LanguageDialog.scss";
 
 const { b, e } = bemFactory("gd-language-dialog");
 
 const DEFAULT_ITEM = "default";
-
-type LanguageItem = ILocale | typeof DEFAULT_ITEM;
-
-const keepOpen = () => {};
+const ERROR_TOAST_ID = "language-dialog-error";
 
 /**
  * @internal
@@ -40,46 +38,60 @@ export interface ILanguageDialogProps extends ILanguages {
 }
 
 /**
- * Lets the user change the language of the interface for themselves (ATEAM-25).
- *
  * @internal
  */
 export function LanguageDialog({
     currentLanguage,
     defaultLanguage,
     languages,
-    setLanguage,
-    deleteLanguage,
+    changeLanguage,
     onClose,
 }: ILanguageDialogProps) {
     const intl = useIntl();
+    const { addError, remove } = useUiToast();
     const noteId = useId();
-    const currentItem = currentLanguage ?? DEFAULT_ITEM;
-    const [selectedItem, setSelectedItem] = useState<string>(currentItem);
+    const [selectedItem, setSelectedItem] = useState<string>(currentLanguage);
+    const [status, setStatus] = useState<"idle" | "saving">("idle");
     const title = intl.formatMessage({ id: "languageDialog.title" });
-    const items: LanguageItem[] = [DEFAULT_ITEM, ...languages];
+    const items: LanguageChoice[] = [DEFAULT_ITEM, ...languages];
     // "English (US)" becomes "Default (English US)", without brackets in brackets
     const defaultItemLabel = intl.formatMessage(
         { id: "languageDialog.default" },
         { language: LANGUAGE_NAMES[defaultLanguage].nativeName.replace(/[()]/g, "") },
     );
 
-    // the dialog closes once the language is saved; a failure keeps it open (the error toast comes later)
-    const apply = () => {
-        // as in TimezoneDialog, applying an unchanged language only closes the dialog
-        if (selectedItem === currentItem) {
-            onClose();
-        } else if (selectedItem === DEFAULT_ITEM) {
-            void deleteLanguage().then(onClose, keepOpen);
-        } else if (isLocale(selectedItem)) {
-            void setLanguage(selectedItem).then(onClose, keepOpen);
+    function handleClose() {
+        if (status === "saving") {
+            return;
         }
-    };
+
+        remove(ERROR_TOAST_ID);
+        onClose();
+    }
+
+    function handleApply() {
+        if (selectedItem === currentLanguage) {
+            handleClose();
+        } else if (selectedItem === DEFAULT_ITEM || isLocale(selectedItem)) {
+            // Such states should be ideally handled with something like Tanstack Query and tested in a flexible way through Mock Service Worker
+            setStatus("saving");
+            remove(ERROR_TOAST_ID);
+            changeLanguage(selectedItem)
+                .then(onClose)
+                .catch(() => {
+                    setStatus("idle");
+                    addError(
+                        { descriptor: { id: "languageDialog.error" } },
+                        { id: ERROR_TOAST_ID, sticky: true },
+                    );
+                });
+        }
+    }
 
     return (
-        <UiModalDialog isOpen onClose={onClose} width={540} variant="confirmation">
+        <UiModalDialog isOpen onClose={handleClose} width={540} variant="confirmation">
             <div className={b()}>
-                <UiDialogHeader title={title} onClose={onClose} />
+                <UiDialogHeader title={title} onClose={handleClose} />
                 <UiDialogBody>
                     <div className={e("select")}>
                         <UiSearchableSelect
@@ -88,8 +100,6 @@ export function LanguageDialog({
                             value={selectedItem}
                             onChange={setSelectedItem}
                             placeholder={title}
-                            // the default language is offered only when not searching, as it isn't a
-                            // language of its own
                             filter={(item, query) =>
                                 item === DEFAULT_ITEM ? !query : matchesLanguage(item, query)
                             }
@@ -104,7 +114,7 @@ export function LanguageDialog({
                                     id: "languageDialog.select.searchPlaceholder",
                                 })}
                             />
-                            <UiSearchableSelectList<LanguageItem>
+                            <UiSearchableSelectList<LanguageChoice>
                                 noItemsText={intl.formatMessage({ id: "languageDialog.select.noMatch" })}
                             >
                                 {(item) =>
@@ -136,13 +146,14 @@ export function LanguageDialog({
                         label={intl.formatMessage({ id: "cancel" })}
                         variant="secondary"
                         size="medium"
-                        onClick={onClose}
+                        onClick={handleClose}
                     />
                     <UiButton
                         label={intl.formatMessage({ id: "apply" })}
                         variant="primary"
                         size="medium"
-                        onClick={apply}
+                        isPending={status === "saving"}
+                        onClick={handleApply}
                     />
                 </UiDialogFooter>
             </div>

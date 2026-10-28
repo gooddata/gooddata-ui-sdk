@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-metric-component: Add the @gooddata/sdk-ui-metric-component package to the SDK; the metric component was moved into the SDK from the internal GoodData libs.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

@@ -8,6 +8,7 @@ import {
     type IUserWorkspaceSettings,
 } from "@gooddata/sdk-backend-spi";
 import {
+    type AdCatalogLoadedBody,
     type AdCommandData,
     type AdExportFinishedBody,
     type AdFilterContextChangedBody,
@@ -32,6 +33,7 @@ import {
     type IWorkspacePermissions,
     type ObjRef,
 } from "@gooddata/sdk-model";
+import { type IDrillEvent } from "@gooddata/sdk-ui";
 
 import { type IAnalyticalDesignerSlots } from "./slots.js";
 
@@ -208,51 +210,6 @@ export interface IAnalyticalDesignerConfig {
 }
 
 /**
- * An event Analytical Designer emits. `name` and `data` follow the `@gooddata/sdk-embedding`
- * contract of the embedded Analytical Designer.
- *
- * @alpha
- */
-export interface IAnalyticalDesignerEvent<TData = unknown> {
-    /**
-     * Name of the product that emits the event.
-     */
-    product: string;
-
-    /**
-     * Name of the event.
-     */
-    name: string;
-
-    /**
-     * Payload of the event.
-     */
-    data: TData;
-
-    /**
-     * Identifier of the command the event answers, if any.
-     */
-    contextId?: string;
-}
-
-/**
- * Handles the Analytical Designer events that it accepts.
- *
- * @alpha
- */
-export interface IAnalyticalDesignerEventHandler {
-    /**
-     * Returns true for the events the handler accepts.
-     */
-    eval: (event: IAnalyticalDesignerEvent) => boolean;
-
-    /**
-     * Called with each accepted event.
-     */
-    handler: (event: IAnalyticalDesignerEvent) => void;
-}
-
-/**
  * Payload of the event Analytical Designer emits when it opens an insight.
  *
  * @alpha
@@ -273,6 +230,154 @@ export interface IAnalyticalDesignerInsightOpenedData {
      */
     insight: IObjectMeta;
 }
+
+/**
+ * Payload of each event Analytical Designer emits, by the type of the event.
+ *
+ * @remarks
+ * The types are the names of the `@gooddata/sdk-embedding` contract of the embedded Analytical
+ * Designer, for example `GdcAdEventType.InsightSaved` is `visualizationSaved`.
+ *
+ * @alpha
+ */
+export interface IAnalyticalDesignerEventDataMap {
+    /**
+     * Analytical Designer opened an insight.
+     */
+    insightOpened: IAnalyticalDesignerInsightOpenedData;
+
+    /**
+     * The insight rendered.
+     */
+    insightRendered: AdInsightRenderedBody;
+
+    /**
+     * The insight definition changed and its execution started.
+     */
+    insightChanged: AdInsightChangedBody;
+
+    /**
+     * The user or a `save` command saved the insight.
+     */
+    visualizationSaved: AdInsightSavedBody;
+
+    /**
+     * The user cancelled the editing.
+     */
+    insightEditingCancelled: null;
+
+    /**
+     * The catalog loaded.
+     */
+    catalogLoaded: AdCatalogLoadedBody;
+
+    /**
+     * A `clear` command finished.
+     */
+    clearFinished: IAdAvailableCommands;
+
+    /**
+     * A `clearInsight` command finished.
+     */
+    clearInsightFinished: IAdAvailableCommands;
+
+    /**
+     * An `undo` command finished.
+     */
+    undoFinished: IAdAvailableCommands;
+
+    /**
+     * A `redo` command finished.
+     */
+    redoFinished: IAdAvailableCommands;
+
+    /**
+     * An `exportInsight` command finished, with the link to the exported file.
+     */
+    exportInsightFinished: AdExportFinishedBody;
+
+    /**
+     * The user changed a filter of the insight.
+     */
+    filterContextChanged: AdFilterContextChangedBody;
+
+    /**
+     * A `setFilterContext` command finished.
+     */
+    setFilterContextFinished: IAdAvailableCommands;
+
+    /**
+     * A `removeFilterContext` command finished.
+     */
+    removeFilterContextFinished: IAdAvailableCommands;
+
+    /**
+     * The user created, changed or deleted an attribute hierarchy.
+     */
+    attributeHierarchyModified: IAdAvailableCommands;
+
+    /**
+     * A command the host sent failed.
+     */
+    appCommandFailed: ICommandFailedBody;
+
+    /**
+     * The commands Analytical Designer accepts changed.
+     */
+    availableCommands: GdcAdCommandType[];
+
+    /**
+     * The user saved or deleted a metric. A host that shares a caching backend with Analytical
+     * Designer resets its caches here.
+     */
+    metricsChanged: Record<string, never>;
+
+    /**
+     * The user drilled in the insight.
+     */
+    drill: IDrillEvent;
+
+    /**
+     * Analytical Designer accepts the `drillableItems` command.
+     */
+    listeningForDrillableItems: Record<string, never>;
+
+    /**
+     * The API token of Analytical Designer expires soon.
+     */
+    apiTokenIsAboutToExpire: Record<string, never>;
+}
+
+/**
+ * Type of an event Analytical Designer emits.
+ *
+ * @alpha
+ */
+export type AnalyticalDesignerEventType = keyof IAnalyticalDesignerEventDataMap;
+
+/**
+ * An event Analytical Designer emits. Checking `type` narrows `data` to the payload of the event.
+ *
+ * @alpha
+ */
+export type AnalyticalDesignerEvent<T extends AnalyticalDesignerEventType = AnalyticalDesignerEventType> = {
+    [K in T]: {
+        /**
+         * Type of the event.
+         */
+        type: K;
+
+        /**
+         * Payload of the event.
+         */
+        data: IAnalyticalDesignerEventDataMap[K];
+
+        /**
+         * Identifier of the command the event answers, if any.
+         */
+        contextId?: string;
+    };
+}[T];
 
 /**
  * Commands a host sends to Analytical Designer.
@@ -383,101 +488,14 @@ export interface IAnalyticalDesignerProps {
     slots?: IAnalyticalDesignerSlots;
 
     /**
-     * Called when the user or a `save` command saves the insight. `contextId` identifies the command.
+     * Called with every event Analytical Designer emits. Check `event.type` to narrow `event.data`.
      */
-    onInsightSaved?: (data: AdInsightSavedBody, contextId?: string) => void;
-
-    /**
-     * Called when the user cancels the editing.
-     */
-    onInsightEditingCancelled?: () => void;
-
-    /**
-     * Called when Analytical Designer opens an insight.
-     */
-    onInsightOpened?: (data: IAnalyticalDesignerInsightOpenedData) => void;
-
-    /**
-     * Called when the insight renders.
-     */
-    onInsightRendered?: (data: AdInsightRenderedBody) => void;
-
-    /**
-     * Called when the insight definition changes and its execution starts.
-     */
-    onInsightChanged?: (data: AdInsightChangedBody) => void;
-
-    /**
-     * Called when a `clear` command finishes. `contextId` identifies the command.
-     */
-    onClearFinished?: (data: IAdAvailableCommands, contextId?: string) => void;
-
-    /**
-     * Called when a `clearInsight` command finishes. `contextId` identifies the command.
-     */
-    onClearInsightFinished?: (data: IAdAvailableCommands, contextId?: string) => void;
-
-    /**
-     * Called when an `undo` command finishes. `contextId` identifies the command.
-     */
-    onUndoFinished?: (data: IAdAvailableCommands, contextId?: string) => void;
-
-    /**
-     * Called when a `redo` command finishes. `contextId` identifies the command.
-     */
-    onRedoFinished?: (data: IAdAvailableCommands, contextId?: string) => void;
-
-    /**
-     * Called when an `exportInsight` command finishes, with the link to the exported file.
-     * `contextId` identifies the command.
-     */
-    onExportFinished?: (data: AdExportFinishedBody, contextId?: string) => void;
-
-    /**
-     * Called when the user changes a filter of the insight.
-     */
-    onFilterContextChanged?: (data: AdFilterContextChangedBody) => void;
-
-    /**
-     * Called when a `setFilterContext` command finishes. `contextId` identifies the command.
-     */
-    onSetFilterContextFinished?: (data: IAdAvailableCommands, contextId?: string) => void;
-
-    /**
-     * Called when a `removeFilterContext` command finishes. `contextId` identifies the command.
-     */
-    onRemoveFilterContextFinished?: (data: IAdAvailableCommands, contextId?: string) => void;
-
-    /**
-     * Called when the user saves or deletes a metric. A host that shares a caching backend with
-     * Analytical Designer resets its caches here.
-     */
-    onMetricsChanged?: () => void;
-
-    /**
-     * Called when the user creates, changes or deletes an attribute hierarchy.
-     */
-    onAttributeHierarchyModified?: () => void;
-
-    /**
-     * Called when a command the host sent fails. `contextId` identifies the command.
-     */
-    onCommandFailed?: (data: ICommandFailedBody, contextId?: string) => void;
+    onEvent?: (event: AnalyticalDesignerEvent) => void;
 
     /**
      * Called when Analytical Designer cannot start.
      */
     onError?: (error: unknown) => void;
-
-    /**
-     * Called with every event, before the typed callback.
-     */
-    onEvent?: (event: IAnalyticalDesignerEvent) => void;
-
-    /**
-     * Handlers called with the events they accept.
-     */
-    eventHandlers?: IAnalyticalDesignerEventHandler[];
 
     /**
      * Receives the commands the host sends to Analytical Designer.

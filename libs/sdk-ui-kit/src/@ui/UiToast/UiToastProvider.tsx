@@ -52,6 +52,11 @@ interface IUiToastContextValue {
      * runs `resolveText` against the consumer's `useIntl()`.
      */
     push: (kind: UiToastKind, text: string, options?: IUiToastOptions) => string;
+    /**
+     * Replace the text of a showing toast, keeping its dismiss timer. Returns
+     * whether the toast is still showing.
+     */
+    update: (id: string, text: string) => boolean;
     /** Dismiss one toast by id. */
     remove: (id: string) => void;
     /** Dismiss all toasts. */
@@ -180,6 +185,19 @@ export function UiToastProvider({ children }: { children: ReactNode }) {
         [idPrefix, remove, clearTimer, commit],
     );
 
+    const update = useCallback(
+        (id: string, text: string): boolean => {
+            const current = toastsRef.current;
+            const toast = current.find((t) => t.id === id);
+            if (!toast) return false;
+            if (toast.text !== text) {
+                commit(current.map((t) => (t === toast ? { ...t, text } : t)));
+            }
+            return true;
+        },
+        [commit],
+    );
+
     // Cancel pending dismiss timers on unmount.
     useEffect(() => {
         const timers = timersRef.current;
@@ -211,8 +229,8 @@ export function UiToastProvider({ children }: { children: ReactNode }) {
             // `UiToastsContainer` knows to render nothing.
             return { ...parent, isNested: true };
         }
-        return { toasts, push, remove, removeAll, isNested: false };
-    }, [parent, toasts, push, remove, removeAll]);
+        return { toasts, push, update, remove, removeAll, isNested: false };
+    }, [parent, toasts, push, update, remove, removeAll]);
 
     return <UiToastContext.Provider value={value}>{children}</UiToastContext.Provider>;
 }
@@ -221,7 +239,9 @@ export function UiToastProvider({ children }: { children: ReactNode }) {
  * Consumer hook. Resolves the toast message via the **caller's**
  * `useIntl()` so a consumer rendered under a nested `IntlProvider` formats
  * `MessageDescriptor` content with that subtree's locale, not the
- * provider's. Throws when called outside a `UiToastProvider`.
+ * provider's. `MessageDescriptor` toasts follow the caller's messages, e.g.
+ * once its locale's messages have loaded after the toast was added. Throws
+ * when called outside a `UiToastProvider`.
  *
  * @internal
  */
@@ -231,11 +251,28 @@ export function useUiToast(): IUseUiToastResult {
         throw new Error("useUiToast must be used inside <UiToastProvider>");
     }
     const intl = useIntl();
-    const { push, remove, removeAll } = ctx;
+    const { push, update, remove, removeAll } = ctx;
+    const descriptorToastsRef = useRef(new Map<string, UiToastMessage>());
+
+    useEffect(() => {
+        for (const [id, message] of descriptorToastsRef.current) {
+            if (!update(id, resolveText(intl, message))) {
+                descriptorToastsRef.current.delete(id);
+            }
+        }
+    }, [intl, update]);
 
     return useMemo<IUseUiToastResult>(() => {
-        const add = (kind: UiToastKind, message: UiToastMessage, options?: IUiToastOptions) =>
-            push(kind, resolveText(intl, message, options), options);
+        const add = (kind: UiToastKind, message: UiToastMessage, options?: IUiToastOptions) => {
+            const id = push(kind, resolveText(intl, message, options), options);
+            if (typeof message === "string") {
+                // A plain text may replace a descriptor toast with the same id
+                descriptorToastsRef.current.delete(id);
+            } else {
+                descriptorToastsRef.current.set(id, message);
+            }
+            return id;
+        };
         return {
             addSuccess: (message, options) => add("success", message, options),
             addInfo: (message, options) => add("info", message, options),

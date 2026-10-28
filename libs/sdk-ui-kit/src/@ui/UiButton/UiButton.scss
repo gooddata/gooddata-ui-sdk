@@ -22,6 +22,24 @@
         cursor: default;
     }
 
+    &--isPending {
+        position: relative;
+        cursor: default;
+
+        // Hide every direct child of a pending button, except pending indicator
+        > :not(#{$root}__pending-indicator) {
+            opacity: 0;
+        }
+    }
+
+    &__pending-indicator {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     &__text {
         overflow: hidden;
         text-overflow: ellipsis;

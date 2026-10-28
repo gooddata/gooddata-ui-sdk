@@ -2037,6 +2037,11 @@ export {
     getPublisherThemeImageReferenceV2,
     resolvePublisherImageUrlV2,
 } from "./publisher/v2/imageSource.js";
+export {
+    type PublisherThemePaletteFamilyV2,
+    type PublisherThemePaletteReferenceV2,
+    getPublisherThemePaletteReferenceV2,
+} from "./publisher/v2/paletteReference.js";
 
 export {
     type ISemanticQualityReport,

@@ -2,13 +2,14 @@
 
 import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
-import { put, select } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 
 import { type ISwitchDashboardTab } from "../../commands/tabs.js";
 import { type IDashboardTabSwitched, dashboardTabSwitched } from "../../events/tabs.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+import { applyDefaultFilterViewOnFirstTabVisit } from "../filterContext/filterViewHandler.js";
 
 /**
  * @internal
@@ -36,6 +37,8 @@ export function* switchDashboardTabHandler(
     actions.push(tabsActions.clearLayoutHistory());
 
     yield put(batchActions(actions));
+
+    yield call(applyDefaultFilterViewOnFirstTabVisit, ctx, cmd, newTab.localIdentifier);
 
     return dashboardTabSwitched(ctx, currentActiveTabId, tabId, cmd.correlationId, source);
 }

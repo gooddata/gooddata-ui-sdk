@@ -1161,6 +1161,9 @@ export function getPublisherTextPlaceholdersV2(text: string): string[];
 export function getPublisherThemeImageReferenceV2(source: unknown): PublisherThemeImageReferenceV2 | undefined;
 
 // @alpha
+export function getPublisherThemePaletteReferenceV2(value: unknown): PublisherThemePaletteReferenceV2 | undefined;
+
+// @alpha
 export function getPublisherThemeReferencePathV2(value: unknown): string[] | undefined;
 
 // @alpha
@@ -10323,6 +10326,18 @@ export type PublisherThemeImageReferenceV2 = {
     type: "asset";
     list: "logos" | "images";
     id: string;
+};
+
+// @alpha
+export type PublisherThemePaletteFamilyV2 = Exclude<keyof IThemePalette, "complementary">;
+
+// @alpha
+export type PublisherThemePaletteReferenceV2 = {
+    type: "family";
+    family: PublisherThemePaletteFamilyV2;
+} | {
+    type: "complementary";
+    step: keyof IThemeComplementaryPalette;
 };
 
 // @alpha

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { uniqBy } from "lodash-es";
 
@@ -21,7 +21,28 @@ export function preloadAttributeFiltersData(
     dashboard?: IDashboard,
     unavailableObjects: IUnavailableDashboardReference[] = [],
 ): Promise<IAttributeWithReferences[]> {
+    return loadAttributesWithReferences(ctx, attributeFilterDisplayFormRefs(dashboard, unavailableObjects));
+}
+
+export function loadAttributesWithReferences(
+    ctx: DashboardContext,
+    refs: ObjRef[],
+): Promise<IAttributeWithReferences[]> {
+    if (!refs.length) {
+        return Promise.resolve([]);
+    }
+
     const { backend, workspace } = ctx;
+    return backend.workspace(workspace).attributes().getAttributesWithReferences(refs);
+}
+
+/**
+ * The unique display forms of the attribute filters of the dashboard and its tabs that the user can read.
+ */
+export function attributeFilterDisplayFormRefs(
+    dashboard?: IDashboard,
+    unavailableObjects: IUnavailableDashboardReference[] = [],
+): ObjRef[] {
     const dashboardAttributeFilterRefs = dashboard?.filterContext?.filters
         .filter(isDashboardAttributeFilter)
         .map((filter) => filter.attributeFilter.displayForm);
@@ -38,11 +59,5 @@ export function preloadAttributeFiltersData(
     );
 
     // Remove duplicates by comparing ObjRef string representations
-    const uniqueRefs = uniqBy(allRefs, objRefToString);
-
-    if (!uniqueRefs?.length) {
-        return Promise.resolve([]);
-    }
-
-    return backend.workspace(workspace).attributes().getAttributesWithReferences(uniqueRefs);
+    return uniqBy(allRefs, objRefToString);
 }

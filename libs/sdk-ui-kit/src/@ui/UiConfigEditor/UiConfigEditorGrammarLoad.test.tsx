@@ -102,3 +102,28 @@ describe("UiConfigEditor while its grammar is still loading", () => {
         });
     });
 });
+
+describe("UiConfigEditor showing a syntax error while its grammar is still loading", () => {
+    beforeAll(async () => {
+        vi.resetModules();
+        ({ UiConfigEditor } = await import("./UiConfigEditor.js"));
+    });
+
+    it("marks a document that is broken from the start as soon as the grammar arrives", async () => {
+        render(
+            <UiConfigEditor
+                value={'{\n    "title": "Quarterly revenue",\n    "slides": [\n'}
+                onChange={() => {}}
+                labels={{ syntaxError: "Syntax error" }}
+            />,
+        );
+        expect(document.querySelector(".cm-line span")).toBeNull();
+
+        await waitFor(() => expect(document.querySelector(".cm-line span")).not.toBeNull());
+
+        // Well under the 750 ms lint delay, so the marker cannot come from a scheduled lint.
+        await waitFor(() => expect(document.querySelector(".cm-lint-marker-error")).not.toBeNull(), {
+            timeout: 300,
+        });
+    });
+});

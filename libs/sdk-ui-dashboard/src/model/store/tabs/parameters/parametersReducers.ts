@@ -165,9 +165,52 @@ export function clearParameterWorkingValues(tab: ITabState): void {
     }
 }
 
+/**
+ * Parameters that a command wrote on one tab.
+ *
+ * @internal
+ */
+export interface IWrittenTabParameters {
+    /**
+     * When omitted, the active tab.
+     */
+    readonly tabLocalIdentifier?: string;
+    readonly refs: ObjRef[];
+}
+
+/**
+ * Makes the applied values of the written parameters the values a reset restores. A default filter
+ * view that initializes the shared state must not look like a change away from it. Parameters the view
+ * did not write keep their reset values.
+ */
+const adoptRuntimeValuesAsResetBaseline: ParametersReducer<PayloadAction<IWrittenTabParameters[]>> = (
+    state,
+    action,
+) => {
+    const activeTabLocalIdentifier = getActiveTab(state)?.localIdentifier;
+    for (const tab of state.tabs ?? []) {
+        const writtenRefs = action.payload
+            .filter(
+                (written) => (written.tabLocalIdentifier ?? activeTabLocalIdentifier) === tab.localIdentifier,
+            )
+            .flatMap((written) => written.refs);
+        for (const entry of tab.parameters?.parameters ?? []) {
+            if (!writtenRefs.some((ref) => areObjRefsEqual(ref, entry.parameter.ref))) {
+                continue;
+            }
+            if (entry.runtimeOverride === undefined) {
+                delete entry.parameter.value;
+            } else {
+                entry.parameter.value = entry.runtimeOverride;
+            }
+        }
+    }
+};
+
 export const parametersReducers = {
     addParameter,
     setParameterRuntimeValues,
     setParameterWorkingValue,
     removeParameter,
+    adoptRuntimeValuesAsResetBaseline,
 };

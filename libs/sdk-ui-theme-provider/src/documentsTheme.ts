@@ -1,6 +1,12 @@
 // (C) 2026 GoodData Corporation
 
-import { type ITheme, getPublisherThemeReferencePathV2 } from "@gooddata/sdk-model";
+import {
+    type ITheme,
+    getPublisherThemePaletteReferenceV2,
+    getPublisherThemeReferencePathV2,
+} from "@gooddata/sdk-model";
+
+import { paletteCssVariable } from "./paletteColors.js";
 
 // Document lengths are px on the page canvas, emitted bare for the renderer to scale. A value that
 // starts like a number without being one carries a unit, which documents do not accept.
@@ -32,7 +38,6 @@ const BUILT_IN_COLOR_IDS: Record<ColorList, string[]> = {
     lines: ["default", "accent"],
 };
 
-const PALETTE_NAMES = ["primary", "success", "error", "warning"];
 const SPACING_KINDS = ["gap", "padding"];
 const SPACING_STEPS = ["compact", "normal", "spacious"];
 // `full` is built in: the renderer resolves it and the theme never sets it.
@@ -68,12 +73,13 @@ function themeColorIds(documents: Record<string, unknown>, list: ColorList): str
 
 // A reference becomes the variable of the value it names, and only when that variable exists.
 function themeReferenceCss(value: string, documents: Record<string, unknown>): string {
+    const palette = getPublisherThemePaletteReferenceV2(value);
+    if (palette !== undefined) {
+        return `var(${paletteCssVariable(palette)})`;
+    }
     const [group, name, step, ...rest] = getPublisherThemeReferencePathV2(value) ?? [];
     if (rest.length > 0 || name === undefined) {
         return "";
-    }
-    if (group === "palette" && step === undefined && PALETTE_NAMES.includes(name)) {
-        return `var(--gd-palette-${name}-base)`;
     }
     if (
         group === "colors" &&
@@ -182,6 +188,31 @@ export function documentsThemeCssValues(documents: unknown): object | "" {
             },
         },
     };
+}
+
+/**
+ * Whether a document drawn with the theme has a color for the id in the list: one built in, or one the
+ * theme states with a value the provider writes.
+ *
+ * @remarks
+ * A reference to a color the theme lists but writes no value for still counts as set.
+ *
+ * @internal
+ */
+export function isDocumentsThemeColorSet(theme: ITheme | undefined, list: string, id: string): boolean {
+    if (!isColorList(list)) {
+        return false;
+    }
+    if (BUILT_IN_COLOR_IDS[list].includes(id)) {
+        return true;
+    }
+    const documents: unknown = theme?.documents;
+    if (!isObject(documents)) {
+        return false;
+    }
+    const colors = isObject(documents["colors"]) ? documents["colors"][list] : undefined;
+    const byId = colorsById(colors, documents);
+    return Object.prototype.hasOwnProperty.call(byId, id) && byId[id] !== "";
 }
 
 /**

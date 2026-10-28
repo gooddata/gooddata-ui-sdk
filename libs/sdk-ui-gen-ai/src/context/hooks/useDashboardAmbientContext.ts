@@ -2,7 +2,7 @@
 
 import { type RefObject, useEffect, useRef } from "react";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { type IWidget, type ObjRef, idRef, serializeObjRef } from "@gooddata/sdk-model";
 import {
@@ -22,18 +22,20 @@ import {
 } from "@gooddata/sdk-ui-dashboard";
 import { dashboardFilterToFilterContextItem } from "@gooddata/sdk-ui-dashboard/internal";
 
+import { contextSetupEnabledSelector } from "../../store/chatWindow/chatWindowSelectors.js";
 import { setAmbientUserContextAction } from "../../store/chatWindow/chatWindowSlice.js";
 import { mergeContexts } from "../build.js";
 import { buildDashboardContext, buildFiltersContext, buildWidgetsContext } from "../dashboard.js";
 
 export function useDashboardAmbientContext(dashboardSelector?: DashboardSelectorEvaluator | null) {
     const dispatch = useDispatch();
+    const contextSetupEnabled = useSelector(contextSetupEnabledSelector);
     const used = useRef(false);
 
     useEffect(() => {
         const context = dashboardSelector ? buildFromDashboard(dashboardSelector) : undefined;
         setContext(dispatch, context, used, dashboardSelector);
-    }, [dashboardSelector, dispatch]);
+    }, [dashboardSelector, contextSetupEnabled, dispatch]);
 }
 
 function setContext(

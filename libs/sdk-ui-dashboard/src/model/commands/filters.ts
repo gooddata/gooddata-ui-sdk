@@ -1196,6 +1196,15 @@ export type ChangeFilterContextSelectionPayload = {
      * @internal
      */
     restorePerTabOriginals?: boolean;
+
+    /**
+     * When true, the values this command writes become their initial values, on this tab and on every
+     * tab they are synced to, so a reset restores them. Used when a default filter view initializes
+     * the shared state.
+     *
+     * @internal
+     */
+    adoptAsOriginal?: boolean;
 };
 
 /**
@@ -1275,6 +1284,13 @@ export type ChangeFilterContextSelectionParams = {
      * @internal
      */
     restorePerTabOriginals?: boolean;
+    /**
+     * When true, the applied values become the initial state a reset restores.
+     * See {@link ChangeFilterContextSelectionPayload.adoptAsOriginal}.
+     *
+     * @internal
+     */
+    adoptAsOriginal?: boolean;
 };
 
 /**
@@ -1300,6 +1316,7 @@ export function changeFilterContextSelectionByParams({
     tabLocalIdentifier,
     matchByLocalIdentifier,
     restorePerTabOriginals,
+    adoptAsOriginal,
 }: ChangeFilterContextSelectionParams): ChangeFilterContextSelection {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION",
@@ -1311,6 +1328,7 @@ export function changeFilterContextSelectionByParams({
             tabLocalIdentifier,
             matchByLocalIdentifier,
             restorePerTabOriginals,
+            adoptAsOriginal,
         },
     };
 }

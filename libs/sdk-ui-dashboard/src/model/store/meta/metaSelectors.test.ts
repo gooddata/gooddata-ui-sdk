@@ -47,8 +47,56 @@ import {
     ComplexDashboardWidgets,
 } from "../../tests/ComplexDashboard.test.helpers.js";
 import { type ExtendedDashboardItem } from "../../types/layoutTypes.js";
+import { selectConfig } from "../config/configSelectors.js";
+import { configActions } from "../config/index.js";
 
-import { selectIsDashboardDirty } from "./metaSelectors.js";
+import { metaActions } from "./index.js";
+import {
+    selectEnablePersistentFiltersAcrossTabs,
+    selectIsDashboardDirty,
+    selectPersistedDashboard,
+    selectPersistedEnablePersistentFiltersAcrossTabs,
+} from "./metaSelectors.js";
+
+describe("selectPersistedEnablePersistentFiltersAcrossTabs", () => {
+    let Tester: DashboardTester;
+
+    beforeEach(async () => {
+        await preloadedTesterFactory((tester) => {
+            Tester = tester;
+        }, ComplexDashboardIdentifier);
+        const config = selectConfig(Tester.state());
+        Tester.dispatch(
+            configActions.setConfig({
+                ...config,
+                settings: { ...config.settings, enableDashboardPersistentFiltersAcrossTabs: true },
+            }),
+        );
+    });
+
+    function persistSetting(disablePersistentFiltersAcrossTabs: boolean): void {
+        const dashboard = selectPersistedDashboard(Tester.state())!;
+        Tester.dispatch(
+            metaActions.setMeta({ dashboard: { ...dashboard, disablePersistentFiltersAcrossTabs } }),
+        );
+    }
+
+    it("ignores an unsaved enablement", () => {
+        persistSetting(true);
+        Tester.dispatch(metaActions.setDisablePersistentFiltersAcrossTabs(false));
+
+        expect(Tester.select(selectEnablePersistentFiltersAcrossTabs)).toBe(true);
+        expect(Tester.select(selectPersistedEnablePersistentFiltersAcrossTabs)).toBe(false);
+    });
+
+    it("ignores an unsaved disablement", () => {
+        persistSetting(false);
+        Tester.dispatch(metaActions.setDisablePersistentFiltersAcrossTabs(true));
+
+        expect(Tester.select(selectEnablePersistentFiltersAcrossTabs)).toBe(false);
+        expect(Tester.select(selectPersistedEnablePersistentFiltersAcrossTabs)).toBe(true);
+    });
+});
 
 describe("selectIsDashboardDirty", () => {
     let Tester: DashboardTester;

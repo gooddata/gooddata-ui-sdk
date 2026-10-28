@@ -1,4 +1,5 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
 import { type ThemeInternalCssVariable } from "../types.js";
 
 export const internalSpacingThemeVariables: ThemeInternalCssVariable[] = [
@@ -51,5 +52,10 @@ export const internalSpacingThemeVariables: ThemeInternalCssVariable[] = [
         type: "internal",
         variableName: "--gd-spacing-34px",
         defaultValue: "34px",
+    },
+    {
+        type: "internal",
+        variableName: "--gd-spacing-30px",
+        defaultValue: "30px",
     },
 ];

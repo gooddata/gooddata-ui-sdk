@@ -1453,7 +1453,7 @@ export type PublisherPageNodeIdV2 = string;
  */
 export type PublisherPeriodV21 = PublisherRelativePeriodV2 | PublisherAbsolutePeriodV2;
 /**
- * A theme color reference such as \{theme.palette.primary\}, or #rgb, #rrggbb, #rrggbbaa, or rgb() with 3 or 4 arguments.
+ * A theme color reference such as \{theme.palette.primary\}, \{theme.palette.info\} or \{theme.palette.complementary.c3\}, or #rgb, #rrggbb, #rrggbbaa, or rgb() with 3 or 4 arguments.
  */
 export type PublisherColorValueV2 = string;
 export type PublisherOpacityV2 = number;

@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 
+import { type IUserSettingsService } from "@gooddata/sdk-backend-spi";
 import { type ILocale, isLocale } from "@gooddata/sdk-model";
 import {
     type IPlatformContext,
@@ -11,31 +12,20 @@ import { DEFAULT_LANGUAGE } from "@gooddata/sdk-ui";
 
 import { getBackend } from "../platformContext/backend.js";
 
-import { LANGUAGES } from "./languages.js";
+import { rememberLanguageChange } from "./LanguageChangedToast.js";
+import { LANGUAGES, type LanguageChoice } from "./languages.js";
 import { trackOwnLanguageSave } from "./languageTelemetry.js";
 
 /**
  * @internal
  */
 export interface ILanguages {
-    /** The user's own language (their LOCALE setting), `undefined` when they use the default one. */
-    currentLanguage: ILocale | undefined;
-    /** The language the user gets without their own: the one of the workspace or organization. */
+    currentLanguage: LanguageChoice;
     defaultLanguage: ILocale;
-    /** The languages the user can switch the interface to, in the order to show them. */
     languages: ILocale[];
-    /** Saves the language as the LOCALE setting of the current user. */
-    setLanguage: (language: ILocale) => Promise<void>;
-    /** Deletes the LOCALE setting of the current user, so that the default language applies again. */
-    deleteLanguage: () => Promise<void>;
+    changeLanguage: (language: LanguageChoice) => Promise<void>;
 }
 
-/**
- * The languages for the user's own interface language control (ATEAM-25). `undefined` until the default language
- * is loaded.
- *
- * @internal
- */
 export function useLanguages(
     ctx: IPlatformContext,
     telemetry?: IPluggableAppTelemetryCallbacks,
@@ -45,40 +35,27 @@ export function useLanguages(
     // The SPI can't tell whether the user has a LOCALE of their own, so a language different from the default one
     // counts as theirs. One they picked although it's the default one shows as Default, which reads the same.
     const resolvedLanguage = isLocale(ctx.preferredLocale) ? ctx.preferredLocale : undefined;
-    const currentLanguage = resolvedLanguage === defaultLanguage ? undefined : resolvedLanguage;
+    const currentLanguage: LanguageChoice =
+        !resolvedLanguage || resolvedLanguage === defaultLanguage ? "default" : resolvedLanguage;
 
-    const saveLanguage = useCallback(
-        async (save: () => Promise<void>, language: ILocale | undefined) => {
-            try {
-                await save();
-            } catch (error) {
-                trackOwnLanguageSave(telemetry, currentLanguage, language, "error");
-                throw error;
-            }
-            trackOwnLanguageSave(telemetry, currentLanguage, language, "success");
-            // A page reload, as reloading the platform context isn't enough: on workspace routes, the language comes
-            // from the workspace settings, which the backend's caching keeps until the page reloads.
-            window.location.reload();
-        },
+    const changeLanguage = useCallback(
+        (language: LanguageChoice) =>
+            changeOwnLanguage(language, {
+                settings: getBackend().currentUser().settings(),
+                track: (to, outcome) => trackOwnLanguageSave(telemetry, currentLanguage, to, outcome),
+                // A page reload, as reloading the platform context isn't enough: on workspace routes, the language
+                // comes from the workspace settings, which the backend's caching keeps until the page reloads.
+                rememberChange: rememberLanguageChange,
+                reload: () => window.location.reload(),
+            }),
         [telemetry, currentLanguage],
-    );
-
-    const setLanguage = useCallback(
-        (language: ILocale) =>
-            saveLanguage(() => getBackend().currentUser().settings().setLocale(language), language),
-        [saveLanguage],
-    );
-
-    const deleteLanguage = useCallback(
-        () => saveLanguage(() => getBackend().currentUser().settings().deleteLocale(), undefined),
-        [saveLanguage],
     );
 
     if (!defaultLanguage) {
         return undefined;
     }
 
-    return { currentLanguage, defaultLanguage, languages: LANGUAGES, setLanguage, deleteLanguage };
+    return { currentLanguage, defaultLanguage, languages: LANGUAGES, changeLanguage };
 }
 
 /**
@@ -113,4 +90,27 @@ function useDefaultLanguage(workspaceId: string | undefined): ILocale | undefine
     }, [workspaceId]);
 
     return defaultLanguage;
+}
+
+export interface IChangeOwnLanguageDependencies {
+    settings: Pick<IUserSettingsService, "setLocale" | "deleteLocale">;
+    track: (language: LanguageChoice, outcome: "success" | "error") => void;
+    // For the success toast after the reload
+    rememberChange: () => void;
+    reload: () => void;
+}
+
+export async function changeOwnLanguage(
+    language: LanguageChoice,
+    { settings, track, rememberChange, reload }: IChangeOwnLanguageDependencies,
+) {
+    try {
+        await (language === "default" ? settings.deleteLocale() : settings.setLocale(language));
+    } catch (error) {
+        track(language, "error");
+        throw error;
+    }
+    track(language, "success");
+    rememberChange();
+    reload();
 }

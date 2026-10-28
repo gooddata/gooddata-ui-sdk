@@ -41,7 +41,8 @@ export function ToastsCenter({
             <ScreenReaderToast />
 
             <Overlay containerClassName={containerClassName}>
-                <div className="gd-messages" role={"region"} aria-label={label}>
+                {/* A landmark only while there are messages: an empty one is only noise in the landmarks list */}
+                <div className="gd-messages" role={label ? "region" : undefined} aria-label={label}>
                     <ToastMessageList messages={sortedMessages} onRemoveMessage={removeMessage} />
                 </div>
             </Overlay>
@@ -117,7 +118,7 @@ function useMessagesLabel(messages: IMessage[]) {
     const numProgress = messages.filter((message) => message.type === "progress").length;
 
     if (numTotal === 0) {
-        return formatMessage({ id: "messages.accessibility.noMessages" });
+        return undefined;
     }
 
     const errorMessage = formatMessage({ id: "messages.accessibility.partial.error" }, { count: numErrors });

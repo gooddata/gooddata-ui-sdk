@@ -1,6 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
+import { cloneDeep } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { type IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
@@ -1929,6 +1930,109 @@ const changeMeasureValueFilterTitle: FilterContextReducer<
     };
 };
 
+/**
+ * Filters that a command wrote on one tab.
+ *
+ * @internal
+ */
+export interface IWrittenTabFilters {
+    /**
+     * When omitted, the active tab.
+     */
+    readonly tabLocalIdentifier?: string;
+    /**
+     * Attribute and measure value filters.
+     */
+    readonly filterLocalIds: string[];
+    readonly dateDataSets: ObjRef[];
+    /**
+     * An all time common date filter is stored as its absence, so it is written also when it is missing.
+     */
+    readonly commonDateFilter: boolean;
+}
+
+function isWrittenFilter(filter: FilterContextItem, written: IWrittenTabFilters): boolean {
+    if (isDashboardDateFilter(filter)) {
+        const { dataSet } = filter.dateFilter;
+        return dataSet
+            ? written.dateDataSets.some((writtenDataSet) => areObjRefsEqual(writtenDataSet, dataSet))
+            : written.commonDateFilter;
+    }
+    const localIdentifier = dashboardFilterLocalIdentifier(filter);
+    return !!localIdentifier && written.filterLocalIds.includes(localIdentifier);
+}
+
+/**
+ * Makes the applied values of the written filters their initial values. A default filter view that
+ * initializes the shared state is that initial state, so the reset button stays hidden until the user
+ * changes it. Filters the view did not write keep their initial values, so a change the user made
+ * before stays resettable.
+ */
+const adoptAppliedFiltersAsOriginal: FilterContextReducer<PayloadAction<IWrittenTabFilters[]>> = (
+    state,
+    action,
+) => {
+    for (const written of action.payload) {
+        const tab = getTabOrActive(state, written.tabLocalIdentifier);
+        const definition = tab?.filterContext?.filterContextDefinition;
+        if (!tab?.filterContext || !definition) {
+            continue;
+        }
+        const originals = tab.filterContext.originalFilterContextDefinition?.filters ?? [];
+        const originalOf = new Map<FilterContextItem, FilterContextItem>();
+        const matchedOriginals = new Set<FilterContextItem>();
+        const match = (filter: FilterContextItem, original: FilterContextItem | undefined): void => {
+            if (original && !matchedOriginals.has(original)) {
+                originalOf.set(filter, original);
+                matchedOriginals.add(original);
+            }
+        };
+        // Each initial value belongs to one applied filter. Exact localIdentifier matches go first, so a
+        // filter without an initial value, e.g. a cross-filtering one, cannot take the initial value of
+        // another filter with the same display form through identity matching.
+        for (const filter of definition.filters) {
+            const localIdentifier = dashboardFilterLocalIdentifier(filter);
+            match(
+                filter,
+                localIdentifier
+                    ? originals.find(
+                          (original) => dashboardFilterLocalIdentifier(original) === localIdentifier,
+                      )
+                    : undefined,
+            );
+        }
+        for (const filter of definition.filters) {
+            if (!originalOf.has(filter)) {
+                match(filter, findOriginalFilter(tab, filter));
+            }
+        }
+        // the reset button compares the lists in order, so the applied order is kept; an unwritten filter
+        // without an initial value, e.g. a cross-filtering one, stays out of the initial values
+        const adopted = definition.filters.flatMap((filter): FilterContextItem[] => {
+            if (isWrittenFilter(filter, written)) {
+                return [cloneDeep(filter)];
+            }
+            const original = originalOf.get(filter);
+            return original ? [cloneDeep(original)] : [];
+        });
+        // an unwritten initial value without an applied filter, e.g. a common date filter set to all time
+        for (const original of originals) {
+            if (matchedOriginals.has(original) || isWrittenFilter(original, written)) {
+                continue;
+            }
+            if (isDashboardCommonDateFilter(original)) {
+                adopted.unshift(cloneDeep(original));
+            } else {
+                adopted.push(cloneDeep(original));
+            }
+        }
+        tab.filterContext.originalFilterContextDefinition = {
+            ...(tab.filterContext.originalFilterContextDefinition ?? definition),
+            filters: adopted,
+        };
+    }
+};
+
 //
 //
 //
@@ -1966,4 +2070,5 @@ export const filterContextReducers = {
     changeMeasureValueFilterCondition,
     setMeasureValueFilterDimensionality,
     changeMeasureValueFilterTitle,
+    adoptAppliedFiltersAsOriginal,
 };

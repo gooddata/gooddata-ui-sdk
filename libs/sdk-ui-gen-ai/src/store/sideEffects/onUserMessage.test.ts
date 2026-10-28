@@ -19,6 +19,7 @@ import { chatWindowSliceReducer } from "../chatWindow/chatWindowSlice.js";
 import { type EventDispatcher } from "../events.js";
 import { conversationMessagesByIdSelector } from "../messages/messagesSelectors.js";
 import {
+    evaluateMessageCompleteAction,
     evaluateMessageStreamingAction,
     messagesSliceReducer,
     newMessageAction,
@@ -305,6 +306,9 @@ describe("onUserMessage reasoning titles", () => {
         await run.fail();
 
         expect(run.events()).toStrictEqual([clearEvent, titleEvent("Plan"), clearEvent]);
+        expect(
+            run.actions.filter(evaluateMessageCompleteAction.match).at(-1)?.payload.responseCompleted,
+        ).toBe(undefined);
     });
 
     it("clears after an error chunk ends the stream", async () => {
@@ -316,6 +320,16 @@ describe("onUserMessage reasoning titles", () => {
         expect(run.events()).toStrictEqual([clearEvent, titleEvent("Plan"), clearEvent]);
     });
 
+    it("marks only the final successful assistant message as response-complete", async () => {
+        const run = setup();
+        await run.send(item({ type: "text", text: "Working" }, "interaction-1"));
+        await run.send(item({ type: "text", text: "Please approve" }, "interaction-2"));
+        await run.finish();
+
+        const completions = run.actions.filter(evaluateMessageCompleteAction.match);
+        expect(completions.map(({ payload }) => payload.responseCompleted)).toEqual([undefined, true]);
+    });
+
     it("clears on cancellation and cancels the pending reader", async () => {
         const run = setup();
         await run.send(reasoning("# Plan"));
@@ -324,6 +338,9 @@ describe("onUserMessage reasoning titles", () => {
         await vi.waitFor(() => expect(run.cancelStream).toHaveBeenCalledOnce());
 
         expect(run.events()).toStrictEqual([clearEvent, titleEvent("Plan"), clearEvent]);
+        const completion = run.actions.filter(evaluateMessageCompleteAction.match).at(-1);
+        expect(completion?.payload.cancelled).toBe(true);
+        expect(completion?.payload.responseCompleted).toBeUndefined();
     });
 
     it("uses the original server thread ID after navigating away and removing the assistant message", async () => {

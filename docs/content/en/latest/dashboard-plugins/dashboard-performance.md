@@ -135,3 +135,7 @@ see its [source on GitHub](https://github.com/gooddata/gooddata-ui-sdk/blob/mast
 Clear the narrowest cache that covers the write. After you change a visualization, clear both visualizations and
 executions, because its cached results are stale too. After you rename a measure, call `resetMeasures()` and
 `resetCatalogs()`, because the catalog holds a copy of the title.
+
+With `enableInsightEditing`, the writes happen in Analytical Designer, on top of the dashboard. The dashboard tells you
+when to reset with the `GDC.DASH/EVT.INSIGHT_EDITOR.CACHE_RESET_REQUESTED` event. See
+[Keep a caching backend fresh](../edit-visualizations-on-dashboard/#keep-a-caching-backend-fresh).

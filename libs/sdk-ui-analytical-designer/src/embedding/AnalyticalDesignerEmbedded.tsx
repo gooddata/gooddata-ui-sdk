@@ -39,8 +39,8 @@ import { getErrorsState } from "../store/app_context/app_context_selectors.js";
 import { storeApiToken } from "../store/application_context/app_context_actions.js";
 import { setRouteProjectId } from "../store/router/router_actions.js";
 
+import { type IAnalyticalDesignerProps } from "./analyticalDesignerTypes.js";
 import { type IAdEmbeddedRouteConfig, buildEmbeddedHash } from "./buildEmbeddedHash.js";
-import { type IAdEmbeddedCallbacks, deliverEventToCallbacks } from "./embeddedCallbacks.js";
 import { type AdCommandEnvelope, installHostAdapter } from "./hostBridge.js";
 import {
     type HostCommandOwner,
@@ -96,12 +96,15 @@ export interface IAdEmbeddedApi {
     setApiToken(body: IAdSetApiTokenBody): void;
 }
 
+/** The callbacks AD delivers its events and its start failures to. */
+type AdEmbeddedCallbacks = Pick<IAnalyticalDesignerProps, "onEvent" | "onError">;
+
 export interface IAnalyticalDesignerEmbeddedProps {
     /** Route configuration: which insight, which flow, which UI actions. Changes navigate AD. */
     config: IAdEmbeddedRouteConfig;
     /** Mount-scoped host context (workspace, bootstrap data, auth, feature flags). */
     host: IAdEmbeddedHostContext;
-    callbacks?: IAdEmbeddedCallbacks;
+    callbacks?: AdEmbeddedCallbacks;
     apiRef?: Ref<IAdEmbeddedApi>;
     /** Regions the host replaces or wraps. */
     slots?: IAnalyticalDesignerSlots;
@@ -148,7 +151,7 @@ export function AnalyticalDesignerEmbedded({
     const [ready, setReady] = useState(false);
     const [mountError, setMountError] = useState<Error | null>(null);
 
-    const callbacksRef = useRef<IAdEmbeddedCallbacks | undefined>(callbacks);
+    const callbacksRef = useRef<AdEmbeddedCallbacks | undefined>(callbacks);
     useEffect(() => {
         callbacksRef.current = callbacks;
     });
@@ -185,7 +188,7 @@ export function AnalyticalDesignerEmbedded({
         // only a body-level marker can.
         document.body.classList.add("gd-ad-embedded");
         const uninstallAdapter = installHostAdapter({
-            onEvent: (event) => deliverEventToCallbacks(event, callbacksRef.current),
+            onEvent: (event) => callbacksRef.current?.onEvent?.(event),
         });
         // setHostedComponentMode(true): differentiates the router choice and postMessage registration.
         store.dispatch(setHostedComponentMode(true));

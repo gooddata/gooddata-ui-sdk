@@ -67,6 +67,16 @@ export const selectDashboardFilterViews: DashboardSelector<IDashboardFilterView[
 );
 
 /**
+ * Tabs that have taken their default filter view in this session.
+ *
+ * @internal
+ */
+export const selectDefaultFilterViewAppliedTabs: DashboardSelector<string[]> = createSelector(
+    selectSelf,
+    (state) => state.defaultFilterViewAppliedTabs ?? [],
+);
+
+/**
  * @alpha
  */
 export const selectFilterViewsAreLoading: DashboardSelector<boolean> = createSelector(

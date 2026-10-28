@@ -162,5 +162,13 @@
     "languageDialog.select.noMatch": {
         "text": "No matching language.",
         "crowdinContext": "Shown in the language select of the change language dialog when no language matches the search. Also read by screen readers."
+    },
+    "languageDialog.error": {
+        "text": "We couldn't change the language. Try again.",
+        "crowdinContext": "Error toast when saving the user's own interface language fails. The change language dialog stays open, so that they can apply again."
+    },
+    "languageDialog.success": {
+        "text": "Great! We changed the language!",
+        "crowdinContext": "Success toast after the user changes their own interface language and the page reloads in it. Shown in the new language."
     }
 }

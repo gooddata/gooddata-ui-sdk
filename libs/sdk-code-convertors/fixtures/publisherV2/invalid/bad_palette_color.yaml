@@ -1,0 +1,13 @@
+type: page_template
+id: bad_palette_color
+version: "2"
+title: Bad palette color
+content:
+    layout:
+        type: column
+        style:
+            background_color: "{theme.palette.primary.base}"
+        children:
+            - type: text
+              id: body
+              markdown: Body

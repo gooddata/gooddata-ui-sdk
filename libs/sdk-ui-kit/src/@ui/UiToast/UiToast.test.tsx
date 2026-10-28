@@ -1,12 +1,15 @@
 // (C) 2026 GoodData Corporation
 
-import { type ReactNode } from "react";
+import { type ReactNode, useState } from "react";
 
 import { act, fireEvent, render, renderHook, screen, within } from "@testing-library/react";
-import { IntlProvider } from "react-intl";
+import { IntlProvider, useIntl } from "react-intl";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
+
+import { render as customRender } from "../../../test/render.js";
+import { UiModalDialog } from "../UiModalDialog/UiModalDialog.js";
 
 import { UiToastProvider, useUiToast } from "./UiToastProvider.js";
 import { UiToastsContainer } from "./UiToastsContainer.js";
@@ -308,5 +311,79 @@ describe("UiToast", () => {
             }),
         ).toThrow(/UiToastProvider/);
         spy.mockRestore();
+    });
+
+    it("keeps toasts in a named region that an open modal dialog doesn't hide from assistive technology", async () => {
+        vi.useRealTimers(); // The test suite sets `vi.useFakeTimer` in beforeEach(). Reset.
+        /**
+         * A modal dialog hides almost everything outside of the dialog from assistive technology
+         * (and then also from accessible test assertions).
+         *
+         * Make sure the toast messages are an exception. Therefore, it is crucial to test this in an
+         * integration test with a modal like `<UiModalDialog />`.
+         */
+        function ModalDialogWithErrorToast() {
+            const { addError } = useUiToast();
+
+            return (
+                <UiModalDialog isOpen onClose={() => {}}>
+                    <button onClick={() => addError("Something went wrong.")}>Show error</button>
+                </UiModalDialog>
+            );
+        }
+        const { user } = customRender(withProviders(<ModalDialogWithErrorToast />));
+
+        // There should not be a landmark region if empty
+        expect(screen.queryByRole("region", { hidden: true })).not.toBeInTheDocument();
+
+        await user.click(screen.getByRole("button", { name: "Show error" }));
+
+        const region = screen.getByRole("region", { name: "1 notification" });
+        expect(within(region).getByRole("alert")).toHaveTextContent("Something went wrong.");
+    });
+
+    it("updates a shown toast once messages have loaded, unless plain text replaced it", async () => {
+        vi.useRealTimers(); // The test suite sets `vi.useFakeTimer` in beforeEach(). Reset.
+        function PageWithLateMessages() {
+            const intl = useIntl();
+            const [messages, setMessages] = useState({ ...intl.messages, message: "Fallback message" });
+
+            return (
+                <IntlProvider locale={DEFAULT_LANGUAGE} messages={messages}>
+                    <UiToastProvider>
+                        <ToastButtons />
+                        <button onClick={() => setMessages({ ...messages, message: "Loaded message" })}>
+                            Load messages
+                        </button>
+                        <UiToastsContainer />
+                    </UiToastProvider>
+                </IntlProvider>
+            );
+        }
+        // A component of its own, it reads the providers above the component calling it
+        function ToastButtons() {
+            const { addSuccess } = useUiToast();
+
+            return (
+                <>
+                    <button onClick={() => addSuccess({ descriptor: { id: "message" } }, { id: "toast" })}>
+                        Show toast
+                    </button>
+                    <button onClick={() => addSuccess("Plain text", { id: "toast" })}>Replace toast</button>
+                </>
+            );
+        }
+        const { user } = customRender(<PageWithLateMessages />);
+
+        await user.click(screen.getByRole("button", { name: "Show toast" }));
+        await user.click(screen.getByRole("button", { name: "Load messages" }));
+
+        expect(screen.getByRole("status")).toHaveTextContent("Loaded message");
+
+        await user.click(screen.getByRole("button", { name: "Replace toast" }));
+        // NOTE: The messages change again
+        await user.click(screen.getByRole("button", { name: "Load messages" }));
+
+        expect(screen.getByRole("status")).toHaveTextContent("Plain text");
     });
 });

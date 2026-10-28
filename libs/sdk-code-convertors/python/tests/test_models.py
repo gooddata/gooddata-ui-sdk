@@ -15,6 +15,7 @@ from gooddata_code_convertors.pydantic_models import (
     DateDataset,
     Metric,
     Plugin,
+    PublisherColorValueV2,
     QueryAttributeFilter,
     QueryDateFilter,
     QueryFilter,
@@ -60,3 +61,33 @@ def test_key_types_importable():
     assert QueryFilter is not None
     assert QueryDateFilter is not None
     assert QueryRankingFilter is not None
+
+
+PALETTE_FAMILIES = ["primary", "success", "error", "warning", "info"]
+
+
+@pytest.mark.parametrize(
+    "color",
+    [f"{{theme.palette.{family}}}" for family in PALETTE_FAMILIES]
+    + [f"{{theme.palette.complementary.c{step}}}" for step in range(10)],
+)
+def test_publisher_color_accepts_each_palette_color(color):
+    assert PublisherColorValueV2.model_validate(color).root == color
+
+
+@pytest.mark.parametrize(
+    "color",
+    [
+        f"{{theme.palette.{family}.{shade}}}"
+        for family in PALETTE_FAMILIES
+        for shade in ["light", "dark", "contrast", "base"]
+    ]
+    + [
+        "{theme.palette.primary.lighter}",
+        "{theme.palette.complementary.c10}",
+        "{theme.palette.complementary}",
+    ],
+)
+def test_publisher_color_rejects_a_palette_color_that_does_not_exist(color):
+    with pytest.raises(ValidationError):
+        PublisherColorValueV2.model_validate(color)

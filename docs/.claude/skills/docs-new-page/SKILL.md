@@ -35,7 +35,7 @@ each type differently, so the type is more than a label:
 ## 2. Place it
 
 1. Choose a section folder: `getting-started`, `visualisations`, `filters`, `data-layer`,
-   `dashboard-plugins`, `integrations`, `ai-modules`. Keep British folder names like
+   `dashboard-plugins`, `analytical-designer`, `integrations`, `ai-modules`. Keep British folder names like
    `visualisations/`, because they are part of the URLs.
 2. File name: kebab-case, with `use-*.md` for hooks. The file name becomes the URL slug.
 3. `weight`: read the sibling pages' weights and choose a free number. Order rule: guides
@@ -49,7 +49,7 @@ Copy the template for your type from [TEMPLATES.md](TEMPLATES.md). The fields th
 
 | Field | What it does | Rule |
 | --- | --- | --- |
-| `title` | H1, nav label, `<title>` | Sentence case, except the feature names in the style guide (AI Assistant, Analytics Catalog, Semantic Search, Key Driver Analysis). About five words, so the sidebar row does not wrap. A how-to title is a verb phrase that names the goal ("Add totals to a table"); reference and explanation titles are a noun phrase ("Version compatibility"). Change the title, never the file name. An empty title fails the build. |
+| `title` | H1, nav label, `<title>` | Sentence case, except the feature names in the style guide (AI Assistant, Analytics Catalog, Semantic Search, Key Driver Analysis, Analytical Designer). About five words, so the sidebar row does not wrap. A how-to title is a verb phrase that names the goal ("Add totals to a table"); reference and explanation titles are a noun phrase ("Version compatibility"). Change the title, never the file name. An empty title fails the build. |
 | `description` | Line under the H1 (not on howto), section cards, SEO, `llms.txt`, the quote under the title in the Markdown copy | One sentence. It must not repeat the first paragraph. |
 | `api_symbols` | **API chips** above the title. Adds a **Guide:** chip on each symbol's reference page. Picks the Props table. Steers inline auto-links. | `"@gooddata/<package>:<Symbol>"`. Only `@public` / `@beta` symbols have pages. Put the main symbol first, for example the component before its props interface. |
 | `related_pages` | The **Related** box at the bottom (first 5 entries) | Absolute `/docs/<path>` with no version. Choose them by hand: the next step, the sibling task, the concept behind it. An entry that doesn't resolve is dropped with a build warning. |

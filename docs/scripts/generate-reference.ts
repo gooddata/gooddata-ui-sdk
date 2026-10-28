@@ -56,6 +56,13 @@ const LIBS_TO_SKIP = new Set([
     "sdk-ui-web-components",
 ]);
 
+// Packages whose whole API is @alpha but that still get a reference section, because a guide
+// section documents them. Every other alpha-only package is skipped (see pruneApiJson).
+export const ALPHA_ONLY_LIBS_TO_PUBLISH: ReadonlySet<string> = new Set([
+    // analytical-designer/ guides
+    "sdk-ui-analytical-designer",
+]);
+
 function fail(msg: string): never {
     console.error(`[generate-reference] ${msg}`);
     process.exit(1);
@@ -161,7 +168,7 @@ function countLeaves(node: unknown, stats: { count: number; stable: number }) {
  * `keptStable === 0` means the package has no @public or @beta API (internal-only packages
  * like util or sdk-e2e-utils, alpha-only ones like sdk-ui-pluggable-application) — callers
  * skip those entirely: a whole package that is @alpha is not ready for consumers, so it gets
- * no reference section.
+ * no reference section, unless it is in ALPHA_ONLY_LIBS_TO_PUBLISH (see isPackageSkipped).
  */
 export function pruneApiJson(original: unknown): PruneResult {
     const before = { count: 0, stable: 0 };
@@ -175,6 +182,18 @@ export function pruneApiJson(original: unknown): PruneResult {
         keptStable: after.stable,
         droppedReleaseTag: before.count - after.count,
     };
+}
+
+/**
+ * Whether a pruned package gets no reference section: it has no published declaration, or only
+ * @alpha ones and is not in ALPHA_ONLY_LIBS_TO_PUBLISH.
+ */
+export function isPackageSkipped(
+    pkg: string,
+    { kept, keptStable }: Pick<PruneResult, "kept" | "keptStable">,
+) {
+    if (kept === 0) return true;
+    return keptStable === 0 && !ALPHA_ONLY_LIBS_TO_PUBLISH.has(pkg);
 }
 
 /**
@@ -721,11 +740,11 @@ function main(cfg: GeneratorConfig) {
     for (const file of apiJsonFiles) {
         const original = JSON.parse(readFileSync(file, "utf8")) as unknown;
         const { pruned, kept, keptStable, droppedReleaseTag } = pruneApiJson(original);
-        if (keptStable === 0) {
-            skippedEmpty.push(basename(file, ".api.json"));
+        const pkg = basename(file, ".api.json");
+        if (isPackageSkipped(pkg, { kept, keptStable })) {
+            skippedEmpty.push(pkg);
             continue;
         }
-        const pkg = basename(file, ".api.json");
         for (const [slug, tag] of collectReleaseTags(pruned)) releaseTagBySlug.set(slug, tag);
         for (const [slug, esmPath] of collectSourcePaths(pruned)) {
             const hit = esmPathToSrcCandidates(esmPath).find((candidate) =>
