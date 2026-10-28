@@ -3,6 +3,13 @@
 import { type ILocale, isLocale } from "@gooddata/sdk-model";
 import { matchesSearchQuery } from "@gooddata/sdk-ui-kit";
 
+/**
+ * A language of the user's own, or "default" for the one of the workspace or organization.
+ *
+ * @internal
+ */
+export type LanguageChoice = ILocale | "default";
+
 interface ILanguageNames {
     /** The name in the language itself, as the list shows it; never translated. */
     nativeName: string;
@@ -11,7 +18,7 @@ interface ILanguageNames {
 }
 
 /**
- * The interface languages in the order the list shows them (ATEAM-25). A region is named only where a language ships
+ * The interface languages in the order the list shows them. A region is named only where a language ships
  * in more than one variant.
  *
  * Endonyms on purpose: a language is listed in its own name, whatever the interface language.

@@ -12,6 +12,7 @@ export { ColorDropdown } from "./components/configurationControls/colors/colorDr
 export { ColoredItemContent } from "./components/configurationControls/colors/coloredItemsList/ColoredItemContent.js";
 export { LegendSection } from "./components/configurationControls/legend/LegendSection.js";
 export { MinMaxControl } from "./components/configurationControls/MinMaxControl.js";
+export { getBucketIcon, type BucketIconRenderer } from "./components/bucketIcons/bucketIcons.js";
 
 export {
     BaseVisualization,

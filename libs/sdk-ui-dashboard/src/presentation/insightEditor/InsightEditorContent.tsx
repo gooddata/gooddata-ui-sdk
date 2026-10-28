@@ -130,14 +130,30 @@ export function InsightEditorContent({ target, session, closeHandleRef }: IInsig
             // The dashboard already resolved the theme of the workspace.
             disableThemeLoading
             cacheReset={cacheReset}
-            onInsightSaved={(data) => void session.save(data.insight.identifier)}
-            onInsightEditingCancelled={session.cancel}
-            onInsightOpened={filterTransfer.onInsightOpened}
-            onInsightRendered={filterTransfer.onInsightRendered}
-            onCommandFailed={filterTransfer.onCommandFailed}
-            onAttributeHierarchyModified={() => {
-                eventDispatch(insightEditorCacheResetRequested("catalogs"));
-                dispatch(attributeHierarchyModified());
+            onEvent={(event) => {
+                switch (event.type) {
+                    case "visualizationSaved":
+                        void session.save(event.data.insight.identifier);
+                        break;
+                    case "insightEditingCancelled":
+                        session.cancel();
+                        break;
+                    case "insightOpened":
+                        filterTransfer.onInsightOpened();
+                        break;
+                    case "insightRendered":
+                        filterTransfer.onInsightRendered();
+                        break;
+                    case "appCommandFailed":
+                        filterTransfer.onCommandFailed(event.data, event.contextId);
+                        break;
+                    case "attributeHierarchyModified":
+                        eventDispatch(insightEditorCacheResetRequested("catalogs"));
+                        dispatch(attributeHierarchyModified());
+                        break;
+                    default:
+                        break;
+                }
             }}
             // A failed Analytical Designer never answers a command, so the overlay closes directly.
             onError={() => setIsFailed(true)}

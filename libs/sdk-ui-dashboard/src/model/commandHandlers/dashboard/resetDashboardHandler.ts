@@ -30,8 +30,13 @@ import {
 } from "../../store/config/configSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
 import { selectDashboardFilterViews } from "../../store/filterViews/filterViewsReducersSelectors.js";
-import { selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
+import { filterViewsActions } from "../../store/filterViews/index.js";
+import {
+    selectPersistedDashboard,
+    selectPersistedEnablePersistentFiltersAcrossTabs,
+} from "../../store/meta/metaSelectors.js";
 import { selectRenderMode } from "../../store/renderMode/renderModeSelectors.js";
+import { selectPreloadedAttributesWithReferences } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { DEFAULT_TAB_ID, type ITabState } from "../../store/tabs/tabsState.js";
 import { selectUnavailableObjects } from "../../store/unavailableObjects/unavailableObjectsSelectors.js";
@@ -219,12 +224,36 @@ function* resetDashboardFromPersisted(ctx: DashboardContext, renderMode: RenderM
             yield select(selectDashboardFilterViews);
         const unavailableObjects: ReturnType<typeof selectUnavailableObjects> =
             yield select(selectUnavailableObjects);
+
+        const currentActiveTabId: ReturnType<typeof selectActiveTabLocalIdentifier> = yield select(
+            selectActiveTabLocalIdentifier,
+        );
+
+        // Validate that the current active tab exists in the persisted dashboard
+        // If not (e.g., user created a new tab but didn't save), fall back to first tab
+        const activeTabExistsInPersisted = persistedDashboard.tabs?.some(
+            (tab) => tab.localIdentifier === currentActiveTabId,
+        );
+        const effectiveActiveTabId = activeTabExistsInPersisted
+            ? currentActiveTabId
+            : persistedDashboard.tabs?.[0]?.localIdentifier;
+
+        // the state is rebuilt from the persisted dashboard, so an unsaved change of the setting does not apply
+        const persistFiltersAcrossTabs: ReturnType<typeof selectPersistedEnablePersistentFiltersAcrossTabs> =
+            yield select(selectPersistedEnablePersistentFiltersAcrossTabs);
+        const attributesWithReferences: ReturnType<typeof selectPreloadedAttributesWithReferences> =
+            yield select(selectPreloadedAttributesWithReferences);
         const dashboardWithUpdatedFilterContext = applyDefaultFilterViewForRenderMode(
             persistedDashboard,
             filterViews,
             ctx.config?.exportId,
             unavailableObjects,
             renderMode,
+            {
+                persistFiltersAcrossTabs,
+                activeTabLocalIdentifier: effectiveActiveTabId,
+                attributesWithReferences,
+            },
         );
 
         const insightRefsFromWidgets = insightReferencesFromDashboard(dashboardWithUpdatedFilterContext);
@@ -240,23 +269,10 @@ function* resetDashboardFromPersisted(ctx: DashboardContext, renderMode: RenderM
         );
         const resolvedInsightsValues = [...resolvedInsights.resolved.values()];
 
-        const currentActiveTabId: ReturnType<typeof selectActiveTabLocalIdentifier> = yield select(
-            selectActiveTabLocalIdentifier,
-        );
-
-        // Validate that the current active tab exists in the persisted dashboard
-        // If not (e.g., user created a new tab but didn't save), fall back to first tab
-        const activeTabExistsInPersisted = persistedDashboard.tabs?.some(
-            (tab) => tab.localIdentifier === currentActiveTabId,
-        );
-        const effectiveActiveTabId = activeTabExistsInPersisted
-            ? currentActiveTabId
-            : persistedDashboard.tabs?.[0]?.localIdentifier;
-
         const workspaceParameters: ReturnType<typeof selectCatalogParameters> =
             yield select(selectCatalogParameters);
 
-        batch = yield call(
+        const initActions: SagaReturnType<typeof actionsToInitializeExistingDashboard> = yield call(
             actionsToInitializeExistingDashboard,
             ctx,
             dashboardWithUpdatedFilterContext,
@@ -273,6 +289,12 @@ function* resetDashboardFromPersisted(ctx: DashboardContext, renderMode: RenderM
             effectiveActiveTabId,
             workspaceParameters,
         );
+        batch = [
+            ...initActions,
+            filterViewsActions.setDefaultFilterViewAppliedTabs(
+                effectiveActiveTabId ? [effectiveActiveTabId] : [],
+            ),
+        ];
     } else {
         const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
 

@@ -213,8 +213,9 @@ function buildUiTextWrappingMenuItems(
                 id: wrapItem.id,
                 stringTitle: wrapItem.title,
                 isSelected: wrapItem.isActive,
+                selectionRole: "checkbox",
                 data: wrapItem,
-                iconRight: wrapItem.isActive ? <i className="gd-icon-checkmark" /> : null,
+                iconRight: wrapItem.isActive ? <i className="gd-icon-checkmark" aria-hidden="true" /> : null,
             });
         });
     }
@@ -252,7 +253,7 @@ function buildUiSortingMenuItems(
                 stringTitle: sortItem.title,
                 isSelected: sortItem.isActive,
                 data: sortItem,
-                iconRight: sortItem.isActive ? <i className="gd-icon-checkmark" /> : null,
+                iconRight: sortItem.isActive ? <i className="gd-icon-checkmark" aria-hidden="true" /> : null,
                 ariaAttributes: sortItem.ariaLabel ? { "aria-label": sortItem.ariaLabel } : undefined,
             });
         });

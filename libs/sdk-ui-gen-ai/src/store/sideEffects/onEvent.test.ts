@@ -303,6 +303,69 @@ describe("assistant message events", () => {
         );
     });
 
+    it("marks the final assistant event when the response completed successfully", async () => {
+        const dispatch = vi.fn<(event: ChatEvent) => void>();
+        const message = {
+            id: "interaction-id",
+            localId: "local-id",
+            role: "assistant",
+            content: { type: "text", text: "Please approve this" },
+        } as IChatConversationLocalItem;
+
+        await runSaga(
+            {
+                context: { eventDispatcher: { dispatch } },
+                getState: () => ({
+                    messages: [message],
+                    threadId: "thread-id",
+                    messagesByConversation: { "thread-id": [message] },
+                }),
+            },
+            onEvaluateMessageComplete,
+            evaluateMessageCompleteAction({
+                assistantMessageId: message.localId,
+                conversationId: "thread-id",
+                responseCompleted: true,
+            }),
+        ).toPromise();
+
+        expect(dispatch).toHaveBeenCalledWith(
+            expect.objectContaining({ type: "chatAssistantMessage", responseCompleted: true }),
+        );
+    });
+
+    it("does not mark an error message as a successful response completion", async () => {
+        const dispatch = vi.fn<(event: ChatEvent) => void>();
+        const message = {
+            id: "interaction-id",
+            localId: "local-id",
+            role: "assistant",
+            content: { type: "error", message: "Failed" },
+        } as unknown as IChatConversationLocalItem;
+
+        await runSaga(
+            {
+                context: { eventDispatcher: { dispatch } },
+                getState: () => ({
+                    messages: [message],
+                    threadId: "thread-id",
+                    messagesByConversation: { "thread-id": [message] },
+                }),
+            },
+            onEvaluateMessageComplete,
+            evaluateMessageCompleteAction({
+                assistantMessageId: message.localId,
+                conversationId: "thread-id",
+                responseCompleted: true,
+            }),
+        ).toPromise();
+
+        expect(dispatch).toHaveBeenCalledWith(
+            expect.objectContaining({ type: "chatAssistantMessage", useCase: "INVALID" }),
+        );
+        expect(dispatch.mock.calls[0][0]).not.toHaveProperty("responseCompleted");
+    });
+
     it("emits activated skills", async () => {
         const dispatch = vi.fn<(event: ChatEvent) => void>();
         const skills = [

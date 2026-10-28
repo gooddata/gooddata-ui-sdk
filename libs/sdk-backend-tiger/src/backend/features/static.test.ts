@@ -4,8 +4,6 @@ import { describe, expect, it } from "vitest";
 
 import { type IStaticFeatures } from "@gooddata/api-client-tiger";
 
-import { TigerFeaturesNames } from "../uiFeatures.js";
-
 import { getStaticFeatures } from "./static.js";
 
 describe("static features", () => {
@@ -30,13 +28,13 @@ describe("static features", () => {
     it("full definition", () => {
         const results = getStaticFeatures(
             createFeatures({
-                [TigerFeaturesNames.EnableMetricSqlAndDataExplain]: "ENABLED",
-                [TigerFeaturesNames.EnableSqlDatasets]: "TRUE",
-                [TigerFeaturesNames.EnableGeoChartA11yImprovements]: "TRUE",
-                [TigerFeaturesNames.EnableGeoChartsViewportConfig]: "TRUE",
-                [TigerFeaturesNames.EnableGeoSegmentConflictRecommendation]: "TRUE",
-                [TigerFeaturesNames.EnableGeoBasemapConfig]: "TRUE",
-                [TigerFeaturesNames.EnableGeoSatelliteBasemapOption]: "TRUE",
+                enableMetricSqlAndDataExplain: "ENABLED",
+                enableSqlDatasets: "TRUE",
+                enableGeoChartA11yImprovements: "TRUE",
+                enableGeoChartsViewportConfig: "TRUE",
+                enableGeoSegmentConflictRecommendation: "TRUE",
+                enableGeoBasemapConfig: "TRUE",
+                enableGeoSatelliteBasemapOption: "TRUE",
             }),
         );
         expect(results).toEqual({
@@ -54,13 +52,13 @@ describe("static features", () => {
         const results = getStaticFeatures(
             createFeatures(
                 {
-                    [TigerFeaturesNames.EnableMetricSqlAndDataExplain]: "ENABLED",
-                    [TigerFeaturesNames.EnableSqlDatasets]: "TRUE",
-                    [TigerFeaturesNames.EnableGeoChartA11yImprovements]: "TRUE",
-                    [TigerFeaturesNames.EnableGeoChartsViewportConfig]: "TRUE",
-                    [TigerFeaturesNames.EnableGeoSegmentConflictRecommendation]: "TRUE",
-                    [TigerFeaturesNames.EnableGeoBasemapConfig]: "TRUE",
-                    [TigerFeaturesNames.EnableGeoSatelliteBasemapOption]: "TRUE",
+                    enableMetricSqlAndDataExplain: "ENABLED",
+                    enableSqlDatasets: "TRUE",
+                    enableGeoChartA11yImprovements: "TRUE",
+                    enableGeoChartsViewportConfig: "TRUE",
+                    enableGeoSegmentConflictRecommendation: "TRUE",
+                    enableGeoBasemapConfig: "TRUE",
+                    enableGeoSatelliteBasemapOption: "TRUE",
                 },
                 ["beta"],
             ),
@@ -77,9 +75,7 @@ describe("static features", () => {
     });
 
     it("maps the SPSS file storage flag", () => {
-        const results = getStaticFeatures(
-            createFeatures({ [TigerFeaturesNames.EnableSavFileStorage]: "TRUE" }),
-        );
+        const results = getStaticFeatures(createFeatures({ enableSavFileStorage: "TRUE" }));
 
         expect(results).toEqual({ enableSavFileStorage: true });
     });

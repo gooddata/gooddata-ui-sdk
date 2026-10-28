@@ -308,6 +308,10 @@ export type ChatAssistantMessageEvent = BaseEvent & {
      */
     cancelled?: boolean;
     /**
+     * Whether this event marks the end of the full assistant response rather than an intermediate message.
+     */
+    responseCompleted?: boolean;
+    /**
      * Skills activated while processing the message.
      */
     skills?: {

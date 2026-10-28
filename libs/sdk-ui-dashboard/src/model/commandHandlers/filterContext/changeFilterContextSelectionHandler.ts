@@ -2,7 +2,7 @@
 
 import { compact, partition, uniqBy } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
-import { type SagaReturnType, all, call, select } from "redux-saga/effects";
+import { type SagaReturnType, all, call, put, select } from "redux-saga/effects";
 
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
@@ -96,6 +96,7 @@ import {
 } from "./attributeFilter/validation/computedAttributesEnabledValidation.js";
 import { canApplyDateFilter } from "./common.js";
 import { type ITabSyncSession, beginTabSync, endTabSync, putTabSynced } from "./tabSync/tabSyncSaga.js";
+import { writtenFiltersOf } from "./tabSync/writtenTargets.js";
 
 /**
  * Actions the selection-change generators may emit.
@@ -316,6 +317,7 @@ export function* changeFilterContextSelectionHandler(
         tabLocalIdentifier,
         matchByLocalIdentifier = false,
         restorePerTabOriginals = false,
+        adoptAsOriginal = false,
     } = cmd.payload;
 
     // Validate that the target tab exists if tabLocalIdentifier is provided
@@ -522,7 +524,7 @@ export function* changeFilterContextSelectionHandler(
         }
     }
 
-    yield call(
+    const dispatchedActions: SagaReturnType<typeof putTabSynced> = yield call(
         putTabSynced,
         session,
         markRestoreTargetOriginal(
@@ -537,6 +539,12 @@ export function* changeFilterContextSelectionHandler(
     );
 
     yield call(endTabSync, ctx, cmd, session, tabLocalIdentifier);
+
+    // A default filter view initializes the shared state. The values it wrote are that initial state,
+    // on this tab and on every tab they were synced to, so a reset restores them.
+    if (adoptAsOriginal) {
+        yield put(tabsActions.adoptAppliedFiltersAsOriginal(writtenFiltersOf(dispatchedActions)));
+    }
 }
 
 function* getDashboardFilterByAttributeMatching(

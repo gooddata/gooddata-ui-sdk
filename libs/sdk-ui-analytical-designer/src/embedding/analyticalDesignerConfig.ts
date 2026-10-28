@@ -12,11 +12,9 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type IBootstrapData } from "../actions/app_context_actions.js";
-import { METRICS_CHANGED_EVENT } from "../postMessageApi/outgoing/metrics_changed_events.js";
 
 import { type IAnalyticalDesignerConfig, type IAnalyticalDesignerProps } from "./analyticalDesignerTypes.js";
 import { type IAdEmbeddedRouteConfig } from "./buildEmbeddedHash.js";
-import { type IAdEmbeddedCallbacks } from "./embeddedCallbacks.js";
 
 /** The identifiers AD builds its route from, resolved from the identifiers and refs of the props. */
 export interface IResolvedRouteIdentifiers {
@@ -155,43 +153,6 @@ export function applyConfigToBootstrapData(
             isOrganizationAdmin: organization?.isAdmin ?? data.tiger.isOrganizationAdmin,
             organizationExpiredDate: organization?.expiredDate ?? data.tiger.organizationExpiredDate,
             organizationEntitlements: organization?.entitlements ?? data.tiger.organizationEntitlements,
-        },
-    };
-}
-
-/**
- * The callbacks AD delivers its events to: the typed callbacks of the props, then the catch-all, the
- * event handlers and onMetricsChanged, which has no typed event of its own.
- */
-export function toEmbeddedCallbacks(props: IAnalyticalDesignerProps): IAdEmbeddedCallbacks {
-    return {
-        onInsightSaved: (data, contextId) => props.onInsightSaved?.(data, contextId),
-        onInsightEditingCancelled: () => props.onInsightEditingCancelled?.(),
-        onInsightOpened: (data) => props.onInsightOpened?.(data),
-        onInsightRendered: (data) => props.onInsightRendered?.(data),
-        onInsightChanged: (data) => props.onInsightChanged?.(data),
-        onClearFinished: (data, contextId) => props.onClearFinished?.(data, contextId),
-        onClearInsightFinished: (data, contextId) => props.onClearInsightFinished?.(data, contextId),
-        onUndoFinished: (data, contextId) => props.onUndoFinished?.(data, contextId),
-        onRedoFinished: (data, contextId) => props.onRedoFinished?.(data, contextId),
-        onExportFinished: (data, contextId) => props.onExportFinished?.(data, contextId),
-        onFilterContextChanged: (data) => props.onFilterContextChanged?.(data),
-        onSetFilterContextFinished: (data, contextId) => props.onSetFilterContextFinished?.(data, contextId),
-        onRemoveFilterContextFinished: (data, contextId) =>
-            props.onRemoveFilterContextFinished?.(data, contextId),
-        onAppCommandFailed: (data, contextId) => props.onCommandFailed?.(data, contextId),
-        onAttributeHierarchyModified: () => props.onAttributeHierarchyModified?.(),
-        onError: (reason) => props.onError?.(reason),
-        onEvent: (event) => {
-            props.onEvent?.(event);
-            props.eventHandlers?.forEach((eventHandler) => {
-                if (eventHandler.eval(event)) {
-                    eventHandler.handler(event);
-                }
-            });
-            if (event.name === METRICS_CHANGED_EVENT) {
-                props.onMetricsChanged?.();
-            }
         },
     };
 }

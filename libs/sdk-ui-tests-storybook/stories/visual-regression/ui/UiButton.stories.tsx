@@ -1,5 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
+import { IntlWrapper } from "@gooddata/sdk-ui";
 import { ComponentTable, type IUiButtonProps, UiButton, propCombinationsFor } from "@gooddata/sdk-ui-kit";
 
 import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
@@ -22,6 +23,11 @@ const allVariants = propCombination("variant", [
 const allIconLeft = propCombination("iconBefore", ["check", "plus", "sync"]);
 const allIconRight = propCombination("iconAfter", ["check", "plus", "sync"]);
 const disabled = propCombination("isDisabled", [true]);
+
+const pendingPropCombination = propCombinationsFor({ label: "Apply", isPending: true } as IUiButtonProps);
+const allPendingSizes = pendingPropCombination("size", ["small", "medium", "large"]);
+const allPendingIconLeft = pendingPropCombination("iconBefore", ["check"]);
+const allPendingIconRight = pendingPropCombination("iconAfter", ["check"]);
 
 function UiButtonTest({ showCode }: { showCode?: boolean }) {
     return (
@@ -60,3 +66,23 @@ export function Interface() {
     return <UiButtonTest showCode />;
 }
 Interface.parameters = { kind: "interface" } satisfies IStoryParameters;
+
+export function Pending() {
+    return (
+        <IntlWrapper>
+            <div className="screenshot-target no-animations">
+                <ComponentTable
+                    columnsBy={allVariants}
+                    rowsBy={[allPendingSizes, allPendingIconLeft, allPendingIconRight]}
+                    Component={UiButton}
+                    align="center"
+                    cellWidth={200}
+                />
+            </div>
+        </IntlWrapper>
+    );
+}
+Pending.parameters = {
+    kind: "pending",
+    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
+} satisfies IStoryParameters;

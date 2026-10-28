@@ -1,9 +1,13 @@
 // (C) 2007-2026 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
 // :where() keeps the specificity of a bare element selector, so AD component rules still win.
 // The error screen renders outside .app-root, so it gets its own scope.
 :where(.app-root, .main-error) {
+    // AD sets no body font, so the roots carry it; descendants inherit it, overlays get it from the kit.
+    font-family: kit-variables.$gd-font-primary;
+
     h1,
     h2,
     h3,

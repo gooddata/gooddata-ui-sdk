@@ -3,6 +3,8 @@
 import { type ILocale } from "@gooddata/sdk-model";
 import { type IPluggableAppTelemetryCallbacks } from "@gooddata/sdk-pluggable-application-model";
 
+import { type LanguageChoice } from "./languages.js";
+
 // Events carry only language codes. Never add names of people or workspaces.
 const LOCALIZATION_CATEGORY = "localization";
 
@@ -35,17 +37,21 @@ export function trackLanguageSettingsOpen(
     trackLocalizationEvent(telemetry, "user_settings_open", `${displayLanguage}:${context}`, { entry });
 }
 
-// `undefined` is a language that follows the workspace or organization.
+// The default language is the one that follows the workspace or organization.
 export function trackOwnLanguageSave(
     telemetry: IPluggableAppTelemetryCallbacks | undefined,
-    from: ILocale | undefined,
-    to: ILocale | undefined,
+    from: LanguageChoice,
+    to: LanguageChoice,
     outcome: "success" | "error",
 ) {
     trackLocalizationEvent(
         telemetry,
         "own_language_save",
-        `${from ?? INHERITED_LANGUAGE}→${to ?? INHERITED_LANGUAGE}`,
+        `${trackedLanguage(from)}→${trackedLanguage(to)}`,
         { outcome },
     );
+}
+
+function trackedLanguage(language: LanguageChoice): string {
+    return language === "default" ? INHERITED_LANGUAGE : language;
 }

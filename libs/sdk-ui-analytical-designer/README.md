@@ -116,8 +116,7 @@ export function App() {
                         config={{ locale: "en-US" }}
                         cacheReset={cacheReset}
                         slots={slots}
-                        onInsightOpened={({ insight }) => console.log("opened", insight)}
-                        onInsightSaved={({ insight }) => console.log("saved", insight)}
+                        onEvent={(event) => console.log(event.type, event.data)}
                         onError={(error) => console.error("AD error", error)}
                     />
                 </div>
@@ -212,8 +211,16 @@ import "@gooddata/sdk-ui-analytical-designer/styles/css/main.css";
             insight="insight-id"
             config={{ locale: "en-US", hiddenActions: ["open"], isReadOnly: false }}
             cacheReset={cacheReset}
-            onInsightSaved={({ insight }) => console.log("saved", insight)}
-            onMetricsChanged={() => console.log("metrics changed")}
+            onEvent={(event) => {
+                switch (event.type) {
+                    case "visualizationSaved":
+                        console.log("saved", event.data.insight);
+                        break;
+                    case "metricsChanged":
+                        console.log("metrics changed");
+                        break;
+                }
+            }}
         />
     </WorkspaceProvider>
 </BackendProvider>;
@@ -235,16 +242,15 @@ import "@gooddata/sdk-ui-analytical-designer/styles/css/main.css";
   `isEmbedded`, `allowDashboardLinks`) follow the props.
 - **Theme**: `theme` replaces the workspace theme, `disableThemeLoading` skips it, and
   `themeModifier` changes the theme AD applies.
-- **Events**: `onInsightSaved`, `onInsightEditingCancelled`, `onInsightOpened`,
-  `onInsightRendered`, `onInsightChanged`, `onFilterContextChanged`, `onAttributeHierarchyModified`,
-  `onError`, the catch-all `onEvent`, and `eventHandlers` (`{ eval, handler }` pairs). The results of
-  the commands are `onClearFinished`, `onClearInsightFinished`, `onUndoFinished`, `onRedoFinished`,
-  `onExportFinished`, `onSetFilterContextFinished`, `onRemoveFilterContextFinished` and
-  `onCommandFailed`; they and `onInsightSaved` get the `contextId` of the command as the second
-  argument. The other events (`drill`, `listeningForDrillableItems`, `apiTokenIsAboutToExpire`)
-  reach `onEvent` only. `onMetricsChanged` fires when the user
-  saves or deletes a metric. A host that shares a caching backend with AD passes `cacheReset`
-  (`resetAll`, `resetCatalogs`; the `CacheControl` of `withCaching` fits): AD calls it when the user
+- **Events**: `onEvent` gets every event AD emits as an `AnalyticalDesignerEvent`: `type`, `data`
+  and the `contextId` of the command the event answers. Checking `type` narrows `data`;
+  `IAnalyticalDesignerEventDataMap` lists the payload of each type. The types are the names of the
+  `@gooddata/sdk-embedding` contract (`visualizationSaved`, `insightEditingCancelled`,
+  `insightOpened`, `appCommandFailed`, `undoFinished`, ...), plus `metricsChanged`, when the user
+  saves or deletes a metric, and `availableCommands`. The `drill` event carries the `IDrillEvent` of
+  `@gooddata/sdk-ui`. `onError` fires when AD cannot start. A host that shares a caching backend
+  with AD passes `cacheReset` (`resetAll`, `resetCatalogs`; the `CacheControl` of `withCaching`
+  fits): AD calls it when the user
   refreshes the catalog or edits a metric, before it reloads the data.
 - **Commands**: `apiRef` takes `clear`, `requestCancellation`, `setFilterContext` and
   `sendCommand`. Commands sent before AD mounts run once it does.

@@ -2,7 +2,7 @@
 
 import { isEqual } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
-import { type SagaReturnType, call, select } from "redux-saga/effects";
+import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 
 import { type IInsightParameterValue, areObjRefsEqual } from "@gooddata/sdk-model";
 
@@ -21,6 +21,7 @@ import {
 import { selectActiveOrDefaultTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type ITabSyncSession, beginTabSync, putTabSynced } from "../filterContext/tabSync/tabSyncSaga.js";
+import { writtenParametersOf } from "../filterContext/tabSync/writtenTargets.js";
 
 /**
  * Parameters not present on a written tab are ignored by the reducer. When persistent filters
@@ -39,7 +40,7 @@ export function* changeParameterValuesHandler(
         return;
     }
 
-    const { parameters, tabLocalIdentifier, restorePerTabOriginals } = cmd.payload;
+    const { parameters, tabLocalIdentifier, restorePerTabOriginals, adoptAsOriginal } = cmd.payload;
     const tabId: string = tabLocalIdentifier ?? (yield select(selectActiveOrDefaultTabLocalIdentifier));
     const valuesBefore: ReturnType<typeof selectParameterValuesByTab> =
         yield select(selectParameterValuesByTab);
@@ -51,10 +52,13 @@ export function* changeParameterValuesHandler(
         ? yield call(getOtherTabsParameterResetActions, tabId)
         : [];
 
-    yield call(putTabSynced, session, [
+    const dispatchedActions: SagaReturnType<typeof putTabSynced> = yield call(putTabSynced, session, [
         tabsActions.setParameterRuntimeValues({ values: parameters, tabLocalIdentifier }),
         ...restoreActions,
     ]);
+    if (adoptAsOriginal) {
+        yield put(tabsActions.adoptRuntimeValuesAsResetBaseline(writtenParametersOf(dispatchedActions)));
+    }
 
     yield call(dispatchParametersChangedForAffectedTabs, ctx, cmd, valuesBefore, tabId);
 }

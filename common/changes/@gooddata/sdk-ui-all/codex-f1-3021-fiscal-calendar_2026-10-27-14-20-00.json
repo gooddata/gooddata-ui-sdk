@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "gdc-home-ui: Fix fiscal calendar start-year and end-year naming so saved settings and previews match visualization labels.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

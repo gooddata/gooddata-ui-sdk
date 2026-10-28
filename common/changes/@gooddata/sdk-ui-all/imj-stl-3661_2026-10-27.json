@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-analytical-designer: Replace the typed event callbacks and eventHandlers of AnalyticalDesigner with one onEvent that gets a typed AnalyticalDesignerEvent union; the drill event carries the IDrillEvent of sdk-ui.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

@@ -655,6 +655,23 @@ const selectPersistedDashboardDisablePersistentFiltersAcrossTabs = createSelecto
 });
 
 /**
+ * Selects whether persistent filters across tabs are enabled for the persisted dashboard, ignoring unsaved
+ * changes of the setting. A state rebuilt from the persisted dashboard uses this value, same as the load.
+ *
+ * @internal
+ */
+export const selectPersistedEnablePersistentFiltersAcrossTabs: DashboardSelector<boolean> = createSelector(
+    selectEnableDashboardPersistentFiltersAcrossTabs,
+    selectPersistedDashboardDisablePersistentFiltersAcrossTabs,
+    (enableDashboardPersistentFiltersAcrossTabs, persistedDisablePersistentFiltersAcrossTabs) => {
+        return (
+            enableDashboardPersistentFiltersAcrossTabs &&
+            persistedDisablePersistentFiltersAcrossTabs === false
+        );
+    },
+);
+
+/**
  * Selects a boolean indication if the dashboard has any changes to the persistent filters across tabs compared to the persisted version (if any)
  *
  * @internal

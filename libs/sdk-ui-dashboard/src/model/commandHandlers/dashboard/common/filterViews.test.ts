@@ -4,9 +4,12 @@
 
 import { describe, expect, it } from "vitest";
 
+import { type IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
 import {
     type FilterContextItem,
+    type IAttributeDisplayFormMetadataObject,
     type IDashboard,
+    type IDashboardAttributeFilter,
     type IDashboardFilterView,
     type IDashboardParameter,
     type IFilterContext,
@@ -14,6 +17,7 @@ import {
     type MeasureValueFilterCondition,
     exportOverrideFilterContextIdentifier,
     idRef,
+    uriRef,
 } from "@gooddata/sdk-model";
 
 import { applyDefaultFilterView, changeFilterContextSelection } from "./filterViews.js";
@@ -198,6 +202,211 @@ describe("filterViews", () => {
 
             expect(updated.tabs?.[0]?.parameters).toBeUndefined();
             expect(updated.tabs?.[1]?.parameters).toBeUndefined();
+        });
+
+        describe("when filters persist across tabs", () => {
+            const regionFilter = (localIdentifier: string, uris: string[]): FilterContextItem => ({
+                attributeFilter: {
+                    displayForm: idRef("region", "displayForm"),
+                    attributeElements: { uris },
+                    negativeSelection: false,
+                    localIdentifier,
+                },
+            });
+            const productFilter = (localIdentifier: string, uris: string[]): FilterContextItem => ({
+                attributeFilter: {
+                    displayForm: idRef("product", "displayForm"),
+                    attributeElements: { uris },
+                    negativeSelection: false,
+                    localIdentifier,
+                },
+            });
+            const commonDate = (from: number, localIdentifier?: string): FilterContextItem => ({
+                dateFilter: {
+                    type: "relative",
+                    granularity: "GDC.time.month",
+                    from,
+                    to: 0,
+                    ...(localIdentifier ? { localIdentifier } : {}),
+                },
+            });
+            const buildTabbedDashboard = () =>
+                buildDashboard({
+                    tabs: [
+                        {
+                            localIdentifier: "tab-A",
+                            title: "Tab A",
+                            filterContext: buildFilterContext([regionFilter("a_region", ["stored-a"])]),
+                            parameters: [topNParameter],
+                        },
+                        {
+                            localIdentifier: "tab-B",
+                            title: "Tab B",
+                            filterContext: buildFilterContext([
+                                commonDate(-3, "b_date"),
+                                regionFilter("b_region", ["stored-b"]),
+                                productFilter("b_product", ["stored-b"]),
+                            ]),
+                            parameters: [topNParameter],
+                        },
+                    ],
+                });
+            const tabFilters = (dashboard: IDashboard, index: number) =>
+                (dashboard.tabs?.[index]?.filterContext as IFilterContext | undefined)?.filters;
+
+            it("initializes every tab from the default view of the active tab", () => {
+                const dashboard = buildTabbedDashboard();
+                const viewA = buildFilterView({
+                    tabLocalIdentifier: "tab-A",
+                    filterContext: {
+                        title: "",
+                        description: "",
+                        filters: [commonDate(-6), regionFilter("a_region", ["view-a"])],
+                    },
+                    parameters: [{ ...topNParameter, value: 7 }],
+                });
+                const viewB = buildFilterView({
+                    ref: idRef("filter-view-2", "filterView"),
+                    tabLocalIdentifier: "tab-B",
+                    filterContext: {
+                        title: "",
+                        description: "",
+                        filters: [productFilter("b_product", ["view-b"])],
+                    },
+                });
+
+                const updated = applyDefaultFilterView(dashboard, [viewA, viewB], undefined, [], {
+                    persistFiltersAcrossTabs: true,
+                    activeTabLocalIdentifier: "tab-A",
+                });
+
+                expect(tabFilters(updated, 0)).toEqual([
+                    commonDate(-6),
+                    regionFilter("a_region", ["view-a"]),
+                ]);
+                // the view of tab B waits for its first visit; its own product filter keeps the stored value
+                expect(tabFilters(updated, 1)).toEqual([
+                    commonDate(-6, "b_date"),
+                    regionFilter("b_region", ["view-a"]),
+                    productFilter("b_product", ["stored-b"]),
+                ]);
+                expect(updated.tabs?.[1]?.parameters).toEqual([{ ...topNParameter, value: 7 }]);
+            });
+
+            it("uses the default view of the tab the dashboard opens on", () => {
+                const dashboard = buildTabbedDashboard();
+                const viewB = buildFilterView({
+                    tabLocalIdentifier: "tab-B",
+                    filterContext: {
+                        title: "",
+                        description: "",
+                        filters: [regionFilter("b_region", ["view-b"])],
+                    },
+                });
+
+                const updated = applyDefaultFilterView(dashboard, [viewB], undefined, [], {
+                    persistFiltersAcrossTabs: true,
+                    activeTabLocalIdentifier: "tab-B",
+                });
+
+                // the view has no common date, so it is all time on every tab
+                expect(tabFilters(updated, 1)).toEqual([
+                    regionFilter("b_region", ["view-b"]),
+                    {
+                        attributeFilter: {
+                            ...(productFilter("b_product", []) as IDashboardAttributeFilter).attributeFilter,
+                            negativeSelection: true,
+                        },
+                    },
+                ]);
+                expect(tabFilters(updated, 0)).toEqual([regionFilter("a_region", ["view-b"])]);
+            });
+
+            it("matches the filters of the tabs through the attributes of the attribute filters", () => {
+                const regionDisplayForm = {
+                    type: "displayForm",
+                    id: "region",
+                    uri: "/region",
+                    ref: idRef("region", "displayForm"),
+                    attribute: idRef("region.attr", "attribute"),
+                } as IAttributeDisplayFormMetadataObject;
+                const attributesWithReferences = [
+                    {
+                        attribute: {
+                            ref: idRef("region.attr", "attribute"),
+                            displayForms: [regionDisplayForm],
+                        },
+                    },
+                ] as IAttributeWithReferences[];
+                // tab B refers to the same display form by its URI
+                const regionByUri: FilterContextItem = {
+                    attributeFilter: {
+                        displayForm: uriRef("/region"),
+                        attributeElements: { uris: ["stored-b"] },
+                        negativeSelection: false,
+                        localIdentifier: "b_region",
+                    },
+                };
+                const dashboard = buildDashboard({
+                    tabs: [
+                        {
+                            localIdentifier: "tab-A",
+                            title: "Tab A",
+                            filterContext: buildFilterContext([regionFilter("a_region", ["stored-a"])]),
+                        },
+                        {
+                            localIdentifier: "tab-B",
+                            title: "Tab B",
+                            filterContext: buildFilterContext([regionByUri]),
+                        },
+                    ],
+                });
+                const viewA = buildFilterView({
+                    tabLocalIdentifier: "tab-A",
+                    filterContext: {
+                        title: "",
+                        description: "",
+                        filters: [regionFilter("a_region", ["view-a"])],
+                    },
+                });
+                const options = { persistFiltersAcrossTabs: true, activeTabLocalIdentifier: "tab-A" };
+
+                const withoutAttributes = applyDefaultFilterView(dashboard, [viewA], undefined, [], options);
+                const withAttributes = applyDefaultFilterView(dashboard, [viewA], undefined, [], {
+                    ...options,
+                    attributesWithReferences,
+                });
+
+                expect(tabFilters(withoutAttributes, 1)).toEqual([regionByUri]);
+                expect(tabFilters(withAttributes, 1)).toMatchObject([
+                    {
+                        attributeFilter: {
+                            displayForm: uriRef("/region"),
+                            attributeElements: { uris: ["view-a"] },
+                            localIdentifier: "b_region",
+                        },
+                    },
+                ]);
+            });
+
+            it("leaves every tab unchanged when the active tab has no default view", () => {
+                const dashboard = buildTabbedDashboard();
+                const viewB = buildFilterView({
+                    tabLocalIdentifier: "tab-B",
+                    filterContext: {
+                        title: "",
+                        description: "",
+                        filters: [regionFilter("b_region", ["view-b"])],
+                    },
+                });
+
+                const updated = applyDefaultFilterView(dashboard, [viewB], undefined, [], {
+                    persistFiltersAcrossTabs: true,
+                    activeTabLocalIdentifier: "tab-A",
+                });
+
+                expect(updated).toBe(dashboard);
+            });
         });
 
         describe("export override filter context", () => {

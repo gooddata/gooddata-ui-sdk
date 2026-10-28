@@ -8,7 +8,6 @@ import { describe, expect, it, vi } from "vitest";
 import { NonContextToastsInterop } from "./toasts/NonContextToastsInterop.js";
 
 const intlMessages = {
-    "messages.accessibility.noMessages": "No messages",
     "messages.accessibility.partial.error": "{count} errors",
     "messages.accessibility.partial.warning": "{count} warnings",
     "messages.accessibility.partial.success": "{count} success",

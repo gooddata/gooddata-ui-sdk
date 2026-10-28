@@ -83,6 +83,7 @@ export function* onUserMessage({ payload }: ReturnType<typeof newMessageAction>)
 function* conversationUserMessage(message: IChatConversationLocalItem) {
     let initialAssistantMessage: IChatConversationLocalItem | undefined = undefined;
     let lastAssistantMessage: IChatConversationLocalItem | undefined = undefined;
+    let responseCompleted = false;
     let eventDispatcher: EventDispatcher | undefined = undefined;
 
     // Check current conversation
@@ -235,6 +236,7 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
             !conversationState.id,
         );
         lastAssistantMessage = result.lastAssistantMessage;
+        responseCompleted = true;
     } catch (e) {
         const wasCanceled: boolean = yield cancelled();
 
@@ -273,6 +275,7 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
                         assistantMessageId: messageToComplete.localId,
                         conversationId: conversation?.localId ?? conversationState?.localId ?? "",
                         cancelled: wasCanceled,
+                        ...(responseCompleted && !wasCanceled ? { responseCompleted: true } : {}),
                     }),
                 );
             }

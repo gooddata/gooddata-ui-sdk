@@ -65,6 +65,7 @@ export type ChatAssistantMessageEvent = BaseEvent & {
     interactionId?: string;
     useCase: string;
     cancelled?: boolean;
+    responseCompleted?: boolean;
     skills?: {
         name: AgentCustomSkill;
         title: string;

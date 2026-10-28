@@ -39,4 +39,5 @@ export {
     findMissingRequiredThemeColors,
     type IInvalidThemeColor,
 } from "./colorValidation.js";
-export { findDocumentLengthsWithUnits } from "./documentsTheme.js";
+export { findDocumentLengthsWithUnits, isDocumentsThemeColorSet } from "./documentsTheme.js";
+export { paletteCssVariable, paletteDefaultColor } from "./paletteColors.js";

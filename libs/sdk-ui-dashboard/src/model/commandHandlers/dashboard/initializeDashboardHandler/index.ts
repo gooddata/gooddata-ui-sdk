@@ -5,10 +5,16 @@ import { type BatchAction, batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, all, call, put, select, spawn } from "redux-saga/effects";
 
-import { type IDashboardWithReferences, walkLayout } from "@gooddata/sdk-backend-spi";
+import {
+    type IAttributeWithReferences,
+    type IDashboardWithReferences,
+    type IUnavailableDashboardReference,
+    walkLayout,
+} from "@gooddata/sdk-backend-spi";
 import {
     type IDashboard,
     type IDashboardAttributeFilterConfig,
+    type IDashboardFilterView,
     type IDashboardLayout,
     type IDateFilterConfig,
     type IDateHierarchyTemplate,
@@ -21,6 +27,7 @@ import {
     isDrillToInsight,
     isInsightWidget,
     isVisualizationSwitcherWidget,
+    objRefToString,
     serializeObjRef,
 } from "@gooddata/sdk-model";
 
@@ -29,6 +36,7 @@ import {
     createDisplayFormMapFromCatalog,
 } from "../../../../_staging/catalog/displayFormMap.js";
 import { deriveAbsoluteFormGranularitiesFromRelativeForm } from "../../../../_staging/dateFilterConfig/merge.js";
+import { type RenderMode } from "../../../../types.js";
 import { type InitializeDashboard } from "../../../commands/dashboard.js";
 import { changeDashboardTimezoneOverride } from "../../../commands/timezone.js";
 import { type DashboardInitialized, dashboardInitialized } from "../../../events/dashboard.js";
@@ -64,7 +72,11 @@ import { type PromiseFnReturnType } from "../../../types/sagas.js";
 import { collectDashboardParameterRoots } from "../../parameters/dashboardParameterRoots.js";
 import { loadParameterDependencies } from "../../parameters/loadParameterDependencies.js";
 import { changeDashboardTimezoneOverrideHandler } from "../../timezone/changeDashboardTimezoneOverrideHandler.js";
-import { applyDefaultFilterViewForRenderMode } from "../common/filterViews.js";
+import {
+    type IApplyDefaultFilterViewOptions,
+    applyDefaultFilterViewForRenderMode,
+    isDefaultFilterViewSharedAcrossTabs,
+} from "../common/filterViews.js";
 import {
     actionsToInitializeExistingDashboard,
     actionsToInitializeNewDashboard,
@@ -81,7 +93,10 @@ import { loadFilterViews } from "./loadFilterViews.js";
 import { dashboardLoadReferenceTypes, loadUnavailableReferences } from "./loadUnavailableReferences.js";
 import { loadUser } from "./loadUser.js";
 import { type IDateFilterMergeResult, mergeDateFilterConfigWithOverrides } from "./mergeDateFilterConfigs.js";
-import { preloadAttributeFiltersData as preloadAttributeFiltersDataFromBackend } from "./preloadAttributeFiltersData.js";
+import {
+    attributeFilterDisplayFormRefs,
+    loadAttributesWithReferences,
+} from "./preloadAttributeFiltersData.js";
 import { resolveDashboardConfigAndFeatureFlagDependentCalls } from "./resolveDashboardConfig.js";
 import { resolveEntitlements } from "./resolveEntitlements.js";
 import { resolvePermissions } from "./resolvePermissions.js";
@@ -205,6 +220,15 @@ type DashboardLoadResult = {
      * export timezone it goes through the timezone command, which needs the initialized state.
      */
     automationTimezone?: string;
+    /**
+     * The attributes already loaded during the initialization, which the deferred preload reuses.
+     */
+    preloadedAttributeFilters?: IPreloadedAttributeFilters;
+};
+
+type IPreloadedAttributeFilters = {
+    refs: ObjRef[];
+    attributesWithReferences: IAttributeWithReferences[];
 };
 
 function resolveActiveTabId(
@@ -334,19 +358,38 @@ function* loadExistingDashboard(
     );
     yield put(unavailableObjectsActions.setUnavailableObjects(unavailableReferences));
 
+    // Resolve active tab: URL's initialTabId takes precedence, otherwise default to first tab
+    // Note: activeTabLocalIdentifier is app state only, NOT persisted to/read from dashboard MD
+    const resolvedActiveTabId = resolveActiveTabId(
+        loadedDashboard.tabs,
+        cmd.payload.initialTabId,
+        undefined, // Don't use any persisted value - always default to first tab if no URL param
+    );
+    // same rule as selectEnablePersistentFiltersAcrossTabs, which cannot be selected before init
+    const persistFiltersAcrossTabs =
+        !!config.settings.enableDashboardPersistentFiltersAcrossTabs &&
+        loadedDashboard.disablePersistentFiltersAcrossTabs === false;
+    const filterViewOptions = { persistFiltersAcrossTabs, activeTabLocalIdentifier: resolvedActiveTabId };
+    const preloadedAttributeFilters: SagaReturnType<typeof loadAttributesForSharedDefaultFilterView> =
+        yield call(
+            loadAttributesForSharedDefaultFilterView,
+            ctx,
+            loadedDashboard,
+            filterViews,
+            config.initialRenderMode,
+            filterViewOptions,
+            unavailableReferences,
+        );
     const dashboardWithFilterView = applyDefaultFilterViewForRenderMode(
         loadedDashboard,
         filterViews,
         config.exportId,
         unavailableReferences,
         config.initialRenderMode,
-    );
-    // Resolve active tab: URL's initialTabId takes precedence, otherwise default to first tab
-    // Note: activeTabLocalIdentifier is app state only, NOT persisted to/read from dashboard MD
-    const resolvedActiveTabId = resolveActiveTabId(
-        dashboardWithFilterView.tabs,
-        cmd.payload.initialTabId,
-        undefined, // Don't use any persisted value - always default to first tab if no URL param
+        {
+            ...filterViewOptions,
+            attributesWithReferences: preloadedAttributeFilters?.attributesWithReferences,
+        },
     );
     const dashboard = dashboardWithFilterView;
     const enableParameters = config.settings?.enableParameters ?? false;
@@ -410,6 +453,13 @@ function* loadExistingDashboard(
             catalogActions.mergeCatalogParameterDependencies(parameterDependencies.byRoot),
             catalogActions.markParameterDependenciesFailed(parameterDependencies.failedRoots),
             ...initActions,
+            ...(preloadedAttributeFilters
+                ? [
+                      tabsActions.setPreloadedAttributesWithReferences(
+                          preloadedAttributeFilters.attributesWithReferences,
+                      ),
+                  ]
+                : []),
             // NOTE: Tab configs (dateFilterConfig, dateFilterConfigs, attributeFilterConfigs, filterContext)
             // are now initialized as part of the tabs state in initActions via setTabs action
             uiActions.setMenuButtonItemsVisibility(config.menuButtonItemsVisibility),
@@ -423,6 +473,9 @@ function* loadExistingDashboard(
                 dashboard: ctx.dashboardRef!, // should be defined as we are in existing dashboard load fn
                 filterViews,
             }),
+            filterViewsActions.setDefaultFilterViewAppliedTabs(
+                resolvedActiveTabId ? [resolvedActiveTabId] : [],
+            ),
         ],
         "@@GDC.DASH/BATCH.INIT.EXISTING",
     );
@@ -433,6 +486,7 @@ function* loadExistingDashboard(
         event,
         // an export render takes its timezone from the export itself
         automationTimezone: exportTimezone ? undefined : automationTimezone,
+        preloadedAttributeFilters,
     };
 }
 
@@ -625,11 +679,59 @@ function makeCatalogParametersPayload(result: IParameterMetadataObject[] | "gate
     return { status: "loaded", parameters: result };
 }
 
-export function* preloadAttributeFiltersData(ctx: DashboardContext, dashboard: IDashboard) {
+/**
+ * The attributes of the attribute filters, which match the filters of the tabs when the default view of the
+ * active tab is written to the other tabs. The view is not shared, or the attributes fail to load: none,
+ * so filters match on equal display form refs.
+ */
+function* loadAttributesForSharedDefaultFilterView(
+    ctx: DashboardContext,
+    dashboard: IDashboard,
+    filterViews: IDashboardFilterView[],
+    renderMode: RenderMode,
+    options: IApplyDefaultFilterViewOptions,
+    unavailableObjects: IUnavailableDashboardReference[],
+): SagaIterator<IPreloadedAttributeFilters | undefined> {
+    if (!isDefaultFilterViewSharedAcrossTabs(dashboard, filterViews, renderMode, options)) {
+        return undefined;
+    }
+    const refs = attributeFilterDisplayFormRefs(dashboard, unavailableObjects);
+    try {
+        const attributesWithReferences: PromiseFnReturnType<typeof loadAttributesWithReferences> = yield call(
+            loadAttributesWithReferences,
+            ctx,
+            refs,
+        );
+        return { refs, attributesWithReferences };
+    } catch (error) {
+        console.warn("Loading the attributes of the dashboard filters failed", error);
+        return undefined;
+    }
+}
+
+/**
+ * Loads the attributes of the attribute filters, unless the initialization already loaded the attributes
+ * of all of them. Applying the default view can switch a filter to another display form, so the dashboard
+ * can need more attributes than the initialization loaded.
+ */
+export function* preloadAttributeFiltersData(
+    ctx: DashboardContext,
+    dashboard: IDashboard,
+    preloaded?: IPreloadedAttributeFilters,
+) {
     const unavailableObjects: ReturnType<typeof selectUnavailableObjects> =
         yield select(selectUnavailableObjects);
-    const attributesWithReferences: PromiseFnReturnType<typeof preloadAttributeFiltersDataFromBackend> =
-        yield call(preloadAttributeFiltersDataFromBackend, ctx, dashboard, unavailableObjects);
+    const refs = attributeFilterDisplayFormRefs(dashboard, unavailableObjects);
+    const preloadedRefs = new Set(preloaded?.refs.map(objRefToString));
+    if (preloaded && refs.every((ref) => preloadedRefs.has(objRefToString(ref)))) {
+        return;
+    }
+
+    const attributesWithReferences: PromiseFnReturnType<typeof loadAttributesWithReferences> = yield call(
+        loadAttributesWithReferences,
+        ctx,
+        refs,
+    );
 
     yield put(tabsActions.setPreloadedAttributesWithReferences(attributesWithReferences));
 }
@@ -651,10 +753,11 @@ function* advancedLoader(
     ctx: DashboardContext,
     cmd: InitializeDashboard,
     dashboard: IDashboard,
+    preloadedAttributeFilters: IPreloadedAttributeFilters | undefined,
 ): SagaIterator {
     yield all([
         call(requestCatalog, ctx, cmd),
-        call(preloadAttributeFiltersData, ctx, dashboard),
+        call(preloadAttributeFiltersData, ctx, dashboard, preloadedAttributeFilters),
         call(requestDashboardsList, ctx),
     ]);
 }
@@ -710,7 +813,13 @@ export function* initializeDashboardHandler(ctx: DashboardContext, cmd: Initiali
         if (dashboardRef) {
             // let's run effects which are not essential for the existing
             // dashboard to be rendered, such as catalog load
-            yield spawn(advancedLoader, ctx, cmd, result.event.payload.dashboard);
+            yield spawn(
+                advancedLoader,
+                ctx,
+                cmd,
+                result.event.payload.dashboard,
+                result.preloadedAttributeFilters,
+            );
         }
     } catch (e) {
         yield put(loadingActions.setLoadingError(e as Error));

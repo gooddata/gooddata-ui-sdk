@@ -4,7 +4,7 @@ import { type ReactNode, useContext, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { commonDialogMessages } from "../../locales.js";
+import { commonDialogMessages, uiToastMessages } from "../../locales.js";
 import { bem } from "../@utils/bem.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
 
@@ -98,6 +98,7 @@ export interface IUiToastsContainerProps {
  * @internal
  */
 export function UiToastsContainer({ dataTestId }: IUiToastsContainerProps): ReactNode {
+    const intl = useIntl();
     const ctx = useContext(UiToastContextInternal);
     // Render newest-first so the most recent notification sits at the top
     // of the stack — matches the legacy `ToastsCenter` overlay
@@ -110,8 +111,25 @@ export function UiToastsContainer({ dataTestId }: IUiToastsContainerProps): Reac
         return null;
     }
 
+    const hasToasts = items.length > 0;
+
     return (
-        <div className={b()} data-testid={dataTestId}>
+        <div
+            className={b()}
+            role={hasToasts ? "region" : undefined}
+            aria-label={
+                hasToasts
+                    ? intl.formatMessage(uiToastMessages.regionLabel, { count: items.length })
+                    : undefined
+            }
+            /**
+             * `aria-live="off"` makes the toasts an exception in modals, where almost all content behind the modal
+             * dialog is removed from assistive technology. The "liveness" is not lost; the toast items have their own
+             * `aria-live`.
+             */
+            aria-live="off"
+            data-testid={dataTestId}
+        >
             {items.map((toast) => (
                 <UiToastItem key={toast.id} toast={toast} onClose={ctx.remove} />
             ))}

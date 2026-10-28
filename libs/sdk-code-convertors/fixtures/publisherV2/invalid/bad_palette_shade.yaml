@@ -1,0 +1,13 @@
+type: page_template
+id: bad_palette_shade
+version: "2"
+title: Bad palette shade
+content:
+    layout:
+        type: column
+        style:
+            background_color: "{theme.palette.error.contrast}"
+        children:
+            - type: text
+              id: body
+              markdown: Body

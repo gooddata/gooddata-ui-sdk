@@ -210,7 +210,7 @@ The sections below describe the events with extra properties.
 
 ### ChatAssistantMessageEvent
 
-This event is triggered when the assistant completes a response. If the response activates any skills, the optional `skills` property holds their identifiers and display titles.
+This event is triggered when an assistant message completes. The optional `responseCompleted` property is `true` only for the final message in the full assistant response; it is omitted for intermediate messages. If the response activates any skills, the optional `skills` property holds their identifiers and display titles.
 
 | Property      | Type                                          | Description                                     |
 | ------------- | --------------------------------------------- | ----------------------------------------------- |
@@ -218,6 +218,7 @@ This event is triggered when the assistant completes a response. If the response
 | interactionId | `string`                                      | (Optional) The ID of the assistant interaction. |
 | threadId      | `string`                                      | (Optional) The ID of the conversation thread.   |
 | useCase       | `string`                                      | The routing use case for the response.          |
+| responseCompleted | `boolean`                                  | (Optional) `true` when the full assistant response has completed. |
 | skills        | `{ name: AgentCustomSkill; title: string }[]` | (Optional) Skills activated for the response.   |
 
 ### ChatReasoningEvent

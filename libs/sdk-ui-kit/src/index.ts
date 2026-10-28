@@ -1373,6 +1373,7 @@ export {
     type IUiConfigEditorApi,
     type IUiConfigEditorContextMenuProps,
     type IUiConfigEditorLabels,
+    type IUiConfigEditorWarning,
 } from "./@ui/UiConfigEditor/types.js";
 export { preloadUiConfigEditorGrammars } from "./@ui/UiConfigEditor/configEditorGrammars.js";
 export { type ConfigEditorLanguage } from "./@ui/UiConfigEditor/configEditorLanguage.js";

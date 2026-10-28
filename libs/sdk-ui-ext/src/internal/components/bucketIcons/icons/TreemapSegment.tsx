@@ -1,0 +1,26 @@
+// (C) 2026 GoodData Corporation
+
+import { type IIconProps } from "@gooddata/sdk-ui-kit";
+
+/**
+ * @internal
+ */
+export function TreemapSegment({ color, className, width = 16, height = 16, ariaHidden }: IIconProps) {
+    return (
+        <svg
+            className={className}
+            width={width}
+            height={height}
+            viewBox="0 0 16 16"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden={ariaHidden}
+        >
+            <g fill={color ?? "#B0BECA"} fillRule="evenodd">
+                <path d="M0 0h4v16H0z" />
+                <path fillOpacity=".8" d="M5 5h5v11H5z" />
+                <path opacity=".6" d="M16.00000008-8e-8V3.9999999H5.00017992V-8e-8z" />
+                <path opacity=".4" d="M11 5h5v11h-5z" />
+            </g>
+        </svg>
+    );
+}

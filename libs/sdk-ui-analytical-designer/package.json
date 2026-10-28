@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-analytical-designer",
-    "version": "11.65.0-alpha.10",
+    "version": "11.65.0-alpha.11",
     "description": "Analytical Designer UI library — core components, sagas, reducers, and application logic",
     "license": "LicenseRef-LICENSE",
     "author": {

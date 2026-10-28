@@ -18,7 +18,7 @@ describe("metricsChanged", () => {
         metricsChanged();
         uninstall();
 
-        expect(onEvent).toHaveBeenCalledWith(expect.objectContaining({ name: METRICS_CHANGED_EVENT }));
+        expect(onEvent).toHaveBeenCalledWith({ type: METRICS_CHANGED_EVENT, data: {}, contextId: undefined });
     });
 
     it("posts nothing to an iframe parent", () => {

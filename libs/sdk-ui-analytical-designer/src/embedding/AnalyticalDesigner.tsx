@@ -25,7 +25,6 @@ import {
     resolveRouteIdentifiers,
     resolveTheme,
     routeTargetKey,
-    toEmbeddedCallbacks,
     toRouteConfig,
 } from "./analyticalDesignerConfig.js";
 import { AnalyticalDesignerEmbedded, type IAdEmbeddedApi } from "./AnalyticalDesignerEmbedded.js";
@@ -218,8 +217,6 @@ export function AnalyticalDesignerInternal(props: IAnalyticalDesignerInternalPro
         return renderSlot(props.slots?.Loading, DefaultLoading, {});
     }
 
-    const callbacks = toEmbeddedCallbacks(props);
-
     return (
         <AnalyticalDesignerEmbedded
             config={toRouteConfig(route.identifiers, config)}
@@ -234,7 +231,7 @@ export function AnalyticalDesignerInternal(props: IAnalyticalDesignerInternalPro
                 telemetryCallbacks: config.telemetryCallbacks,
                 isReadOnly: config.isReadOnly,
             }}
-            callbacks={callbacks}
+            callbacks={{ onEvent: props.onEvent, onError: props.onError }}
             apiRef={embeddedApiRef}
             slots={props.slots}
         />

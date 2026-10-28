@@ -6278,8 +6278,10 @@ export interface IUiButtonProps {
     id?: string;
     // (undocumented)
     isDisabled?: boolean;
-    // (undocumented)
+    // @deprecated (undocumented)
     isLoading?: boolean;
+    // (undocumented)
+    isPending?: boolean;
     // (undocumented)
     isSelected?: boolean;
     // (undocumented)
@@ -6626,6 +6628,15 @@ export interface IUiConfigEditorProps {
     renderContextMenu?: (props: IUiConfigEditorContextMenuProps) => ReactNode;
     rows?: number;
     value: string;
+    warnings?: readonly IUiConfigEditorWarning[];
+}
+
+// @internal
+export interface IUiConfigEditorWarning {
+    // (undocumented)
+    message: string;
+    part?: string;
+    path: ReadonlyArray<string | number>;
 }
 
 // @internal (undocumented)

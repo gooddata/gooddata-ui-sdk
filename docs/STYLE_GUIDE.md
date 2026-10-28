@@ -80,7 +80,7 @@ Consistent terminology is the single highest-leverage thing in these docs. Use t
 
 These GoodData features are product names: keep them capitalized everywhere, titles included.
 
-**AI Assistant** · **Analytics Catalog** · **Semantic Search** · **Key Driver Analysis**
+**AI Assistant** · **Analytics Catalog** · **Semantic Search** · **Key Driver Analysis** · **Analytical Designer**
 
 Every other feature and UI part is a common noun in sentence case: "Notifications panel", "the
 dashboard filter bar". Component and package names keep their code casing (`NotificationsPanel`,
@@ -113,7 +113,7 @@ When you must reference the legacy term on a page, reuse the canonical deprecati
 
 Canonical package names, as readers install them (each is a library under `sdk/libs`). The API reference covers the ones `sdk/docs/scripts/generate-reference.ts` does not skip (`LIBS_TO_SKIP`): `@gooddata/sdk-ui-kit`, `@gooddata/sdk-ui-web-components` and `@gooddata/api-client-tiger` have no reference pages, so their symbols don't auto-link.
 
-`@gooddata/sdk-ui` · `@gooddata/sdk-ui-charts` · `@gooddata/sdk-ui-dashboard` · `@gooddata/sdk-ui-filters` · `@gooddata/sdk-model` · `@gooddata/sdk-ui-ext` · `@gooddata/sdk-ui-geo` · `@gooddata/sdk-ui-pivot` · `@gooddata/sdk-ui-kit` · `@gooddata/sdk-ui-theme-provider` · `@gooddata/sdk-ui-gen-ai` · `@gooddata/sdk-ui-semantic-search` · `@gooddata/sdk-ui-catalog` · `@gooddata/sdk-ui-loaders` · `@gooddata/sdk-ui-web-components` · `@gooddata/sdk-ui-vis-commons` · `@gooddata/sdk-backend-tiger` · `@gooddata/api-client-tiger`
+`@gooddata/sdk-ui` · `@gooddata/sdk-ui-charts` · `@gooddata/sdk-ui-dashboard` · `@gooddata/sdk-ui-filters` · `@gooddata/sdk-model` · `@gooddata/sdk-ui-ext` · `@gooddata/sdk-ui-geo` · `@gooddata/sdk-ui-pivot` · `@gooddata/sdk-ui-kit` · `@gooddata/sdk-ui-theme-provider` · `@gooddata/sdk-ui-gen-ai` · `@gooddata/sdk-ui-semantic-search` · `@gooddata/sdk-ui-catalog` · `@gooddata/sdk-ui-analytical-designer` · `@gooddata/sdk-ui-loaders` · `@gooddata/sdk-ui-web-components` · `@gooddata/sdk-ui-vis-commons` · `@gooddata/sdk-backend-tiger` · `@gooddata/api-client-tiger`
 
 ---
 

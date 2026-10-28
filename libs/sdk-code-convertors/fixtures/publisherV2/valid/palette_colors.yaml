@@ -1,0 +1,83 @@
+type: page_template
+id: palette_colors
+version: "2"
+title: Palette colors
+content:
+    layout:
+        type: column
+        children:
+            - type: text
+              id: primary
+              markdown: primary
+              style:
+                  text_color: "{theme.palette.primary}"
+            - type: text
+              id: success
+              markdown: success
+              style:
+                  text_color: "{theme.palette.success}"
+            - type: text
+              id: error
+              markdown: error
+              style:
+                  text_color: "{theme.palette.error}"
+            - type: text
+              id: warning
+              markdown: warning
+              style:
+                  text_color: "{theme.palette.warning}"
+            - type: text
+              id: info
+              markdown: info
+              style:
+                  text_color: "{theme.palette.info}"
+            - type: text
+              id: complementary_c0
+              markdown: complementary_c0
+              style:
+                  text_color: "{theme.palette.complementary.c0}"
+            - type: text
+              id: complementary_c1
+              markdown: complementary_c1
+              style:
+                  text_color: "{theme.palette.complementary.c1}"
+            - type: text
+              id: complementary_c2
+              markdown: complementary_c2
+              style:
+                  text_color: "{theme.palette.complementary.c2}"
+            - type: text
+              id: complementary_c3
+              markdown: complementary_c3
+              style:
+                  text_color: "{theme.palette.complementary.c3}"
+            - type: text
+              id: complementary_c4
+              markdown: complementary_c4
+              style:
+                  text_color: "{theme.palette.complementary.c4}"
+            - type: text
+              id: complementary_c5
+              markdown: complementary_c5
+              style:
+                  text_color: "{theme.palette.complementary.c5}"
+            - type: text
+              id: complementary_c6
+              markdown: complementary_c6
+              style:
+                  text_color: "{theme.palette.complementary.c6}"
+            - type: text
+              id: complementary_c7
+              markdown: complementary_c7
+              style:
+                  text_color: "{theme.palette.complementary.c7}"
+            - type: text
+              id: complementary_c8
+              markdown: complementary_c8
+              style:
+                  text_color: "{theme.palette.complementary.c8}"
+            - type: text
+              id: complementary_c9
+              markdown: complementary_c9
+              style:
+                  text_color: "{theme.palette.complementary.c9}"

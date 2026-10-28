@@ -1,22 +1,23 @@
 // (C) 2026 GoodData Corporation
 
-import { act, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
-
-import { type ILocale } from "@gooddata/sdk-model";
+import { act, screen, within } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { render } from "../../test/render.js";
 
 import { type ILanguageDialogProps, LanguageDialog } from "./LanguageDialog.js";
 
 const requiredProps = {
-    currentLanguage: undefined,
+    currentLanguage: "default",
     defaultLanguage: "en-US",
     languages: ["en-US", "de-DE"],
-    setLanguage: () => Promise.resolve(),
-    deleteLanguage: () => Promise.resolve(),
+    changeLanguage: () => Promise.resolve(),
     onClose: () => {},
 } satisfies ILanguageDialogProps;
+
+afterEach(() => {
+    vi.useRealTimers();
+});
 
 describe("LanguageDialog", () => {
     it("should show a dialog with a language select, a note and cancel and apply buttons", async () => {
@@ -26,9 +27,9 @@ describe("LanguageDialog", () => {
         expect(await screen.findByRole("dialog", { name: "Change language" })).toBeVisible();
         // NOTE: The select is named by its value and its label, and describes itself by the note
         expect(screen.getByRole("button", { name: "Default (English US) Change language" })).toBeVisible();
-        expect(
-            screen.getByRole("button", { name: "Default (English US) Change language" }),
-        ).toHaveAccessibleDescription("Note: Changes the interface only, not dashboard content.");
+        expect(screen.getByRole("button", { name: /Change language/ })).toHaveAccessibleDescription(
+            "Note: Changes the interface only, not dashboard content.",
+        );
         expect(screen.getByRole("button", { name: "Cancel" })).toBeVisible();
         expect(screen.getByRole("button", { name: "Apply" })).toBeVisible();
     });
@@ -42,7 +43,7 @@ describe("LanguageDialog", () => {
     it("should find a language by its English name and hide the default language while searching", async () => {
         const { user } = render(<LanguageDialog {...requiredProps} />);
 
-        await user.click(await screen.findByRole("button", { name: "Default (English US) Change language" }));
+        await user.click(await screen.findByRole("button", { name: /Change language/ }));
         await user.type(screen.getByRole("combobox", { name: "Search languages" }), "german");
 
         expect(screen.getByRole("option", { name: "Deutsch" })).toBeVisible();
@@ -55,56 +56,45 @@ describe("LanguageDialog", () => {
     it("should tell when no language matches the search", async () => {
         const { user } = render(<LanguageDialog {...requiredProps} />);
 
-        await user.click(await screen.findByRole("button", { name: "Default (English US) Change language" }));
+        await user.click(await screen.findByRole("button", { name: /Change language/ }));
         await user.type(screen.getByRole("combobox", { name: "Search languages" }), "abrakadabra");
 
         expect(screen.getByText("No matching language.")).toBeVisible();
     });
 
     it("should save the picked language on apply", async () => {
-        const setLanguage = vi.fn<(language: ILocale) => Promise<void>>(() => Promise.resolve());
-        const deleteLanguage = vi.fn<() => Promise<void>>(() => Promise.resolve());
-        const { user } = render(
-            <LanguageDialog {...requiredProps} setLanguage={setLanguage} deleteLanguage={deleteLanguage} />,
-        );
+        const changeLanguage = vi.fn(() => Promise.resolve());
+        const { user } = render(<LanguageDialog {...requiredProps} changeLanguage={changeLanguage} />);
 
-        await user.click(await screen.findByRole("button", { name: "Default (English US) Change language" }));
+        await user.click(await screen.findByRole("button", { name: /Change language/ }));
         await user.click(screen.getByRole("option", { name: "Deutsch" }));
         await user.click(screen.getByRole("button", { name: "Apply" }));
 
-        expect(setLanguage.mock.calls).toEqual([["de-DE"]]);
-        expect(deleteLanguage).not.toHaveBeenCalled();
+        expect(changeLanguage.mock.calls).toEqual([["de-DE"]]);
     });
 
-    it("should delete the user's own language when the default one is applied", async () => {
-        const setLanguage = vi.fn<(language: ILocale) => Promise<void>>(() => Promise.resolve());
-        const deleteLanguage = vi.fn<() => Promise<void>>(() => Promise.resolve());
+    it("should save the default language when it is applied", async () => {
+        const changeLanguage = vi.fn(() => Promise.resolve());
         const { user } = render(
-            <LanguageDialog
-                {...requiredProps}
-                currentLanguage="de-DE"
-                setLanguage={setLanguage}
-                deleteLanguage={deleteLanguage}
-            />,
+            <LanguageDialog {...requiredProps} currentLanguage="de-DE" changeLanguage={changeLanguage} />,
         );
 
-        await user.click(await screen.findByRole("button", { name: "Deutsch Change language" }));
+        await user.click(await screen.findByRole("button", { name: /Change language/ }));
         await user.click(screen.getByRole("option", { name: "Default (English US)" }));
         await user.click(screen.getByRole("button", { name: "Apply" }));
 
-        expect(deleteLanguage).toHaveBeenCalledTimes(1);
-        expect(setLanguage).not.toHaveBeenCalled();
+        expect(changeLanguage.mock.calls).toEqual([["default"]]);
     });
 
     it("should close once the picked language is saved", async () => {
         let finishSaving = () => {};
-        const setLanguage = () => new Promise<void>((resolve) => (finishSaving = resolve));
-        const onClose = vi.fn<() => void>();
+        const changeLanguage = () => new Promise<void>((resolve) => (finishSaving = resolve));
+        const onClose = vi.fn();
         const { user } = render(
-            <LanguageDialog {...requiredProps} setLanguage={setLanguage} onClose={onClose} />,
+            <LanguageDialog {...requiredProps} changeLanguage={changeLanguage} onClose={onClose} />,
         );
 
-        await user.click(await screen.findByRole("button", { name: "Default (English US) Change language" }));
+        await user.click(await screen.findByRole("button", { name: /Change language/ }));
         await user.click(screen.getByRole("option", { name: "Deutsch" }));
         await user.click(screen.getByRole("button", { name: "Apply" }));
 
@@ -112,63 +102,118 @@ describe("LanguageDialog", () => {
 
         await act(async () => finishSaving());
 
-        expect(onClose).toHaveBeenCalledTimes(1);
+        expect(onClose).toHaveBeenCalled();
     });
 
     it("should close on cancel without saving", async () => {
-        const setLanguage = vi.fn<(language: ILocale) => Promise<void>>(() => Promise.resolve());
-        const deleteLanguage = vi.fn<() => Promise<void>>(() => Promise.resolve());
-        const onClose = vi.fn<() => void>();
+        const changeLanguage = vi.fn(() => Promise.resolve());
+        const onClose = vi.fn();
         const { user } = render(
-            <LanguageDialog
-                {...requiredProps}
-                setLanguage={setLanguage}
-                deleteLanguage={deleteLanguage}
-                onClose={onClose}
-            />,
+            <LanguageDialog {...requiredProps} changeLanguage={changeLanguage} onClose={onClose} />,
         );
 
-        await user.click(await screen.findByRole("button", { name: "Default (English US) Change language" }));
+        await user.click(await screen.findByRole("button", { name: /Change language/ }));
         await user.click(screen.getByRole("option", { name: "Deutsch" }));
         await user.click(screen.getByRole("button", { name: "Cancel" }));
 
-        expect(onClose).toHaveBeenCalledTimes(1);
-        expect(setLanguage).not.toHaveBeenCalled();
-        expect(deleteLanguage).not.toHaveBeenCalled();
+        expect(onClose).toHaveBeenCalled();
+        expect(changeLanguage).not.toHaveBeenCalled();
     });
 
     it("should only close when the language is applied unchanged", async () => {
-        const setLanguage = vi.fn<(language: ILocale) => Promise<void>>(() => Promise.resolve());
-        const onClose = vi.fn<() => void>();
+        const changeLanguage = vi.fn(() => Promise.resolve());
+        const onClose = vi.fn();
         const { user } = render(
             <LanguageDialog
                 {...requiredProps}
                 currentLanguage="de-DE"
-                setLanguage={setLanguage}
+                changeLanguage={changeLanguage}
                 onClose={onClose}
             />,
         );
 
         await user.click(await screen.findByRole("button", { name: "Apply" }));
 
-        expect(onClose).toHaveBeenCalledTimes(1);
-        expect(setLanguage).not.toHaveBeenCalled();
+        expect(onClose).toHaveBeenCalled();
+        expect(changeLanguage).not.toHaveBeenCalled();
     });
 
     it("should close only the select on escape in it, and the dialog on the next escape", async () => {
-        const onClose = vi.fn<() => void>();
+        const onClose = vi.fn();
         const { user } = render(<LanguageDialog {...requiredProps} onClose={onClose} />);
 
-        await user.click(await screen.findByRole("button", { name: "Default (English US) Change language" }));
+        await user.click(await screen.findByRole("button", { name: /Change language/ }));
         await user.keyboard("{Escape}");
 
-        expect(
-            screen.getByRole("button", { name: "Default (English US) Change language", expanded: false }),
-        ).toBeVisible();
+        expect(screen.getByRole("button", { name: /Change language/, expanded: false })).toBeVisible();
         expect(onClose).not.toHaveBeenCalled();
 
         await user.keyboard("{Escape}");
 
-        expect(onClose).toHaveBeenCalledTimes(1);
+        expect(onClose).toHaveBeenCalled();
+    });
+
+    it("should show apply as pending while the language is saving", async () => {
+        const changeLanguage = () => new Promise<void>(() => {});
+        const { user } = render(<LanguageDialog {...requiredProps} changeLanguage={changeLanguage} />);
+
+        await user.click(await screen.findByRole("button", { name: /Change language/ }));
+        await user.click(screen.getByRole("option", { name: "Deutsch" }));
+        await user.click(screen.getByRole("button", { name: "Apply" }));
+
+        expect(
+            within(screen.getByRole("button", { name: "Apply" })).getByRole("progressbar", {
+                name: "Loading…",
+            }),
+        ).toBeVisible();
+    });
+
+    it("should show an error toast when saving fails, and clear it when apply is clicked again", async () => {
+        vi.useFakeTimers({ shouldAdvanceTime: true, advanceTimeDelta: 1 });
+        const changeLanguage = () => new Promise<void>((_, reject) => setTimeout(reject, 1000));
+        const { user } = render(<LanguageDialog {...requiredProps} changeLanguage={changeLanguage} />);
+
+        await user.click(await screen.findByRole("button", { name: /Change language/ }));
+        await user.click(screen.getByRole("option", { name: "Deutsch" }));
+        await user.click(screen.getByRole("button", { name: "Apply" }));
+        await act(() => vi.advanceTimersByTimeAsync(1000)); // After `changeLanguage()` saves
+
+        expect(screen.getByRole("alert")).toHaveTextContent("We couldn't change the language. Try again.");
+
+        await user.click(screen.getByRole("button", { name: "Apply" }));
+
+        // The error toast should be cleared after clicking "Apply" again.
+        expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+
+        await act(() => vi.advanceTimersByTimeAsync(1000)); // After `changeLanguage()` saves
+
+        expect(screen.getByRole("alert")).toHaveTextContent("We couldn't change the language. Try again.");
+
+        // The error toast should not auto close
+        await act(() => vi.advanceTimersByTimeAsync(10000));
+
+        expect(screen.getByRole("alert")).toHaveTextContent("We couldn't change the language. Try again.");
+
+        await user.click(screen.getByRole("button", { name: "Cancel" }));
+
+        // The error toast should be cleared once the dialog closes
+        expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+    });
+
+    it("should not allow closing while the language is saving", async () => {
+        const changeLanguage = () => new Promise<void>(() => {});
+        const onClose = vi.fn();
+        const { user } = render(
+            <LanguageDialog {...requiredProps} changeLanguage={changeLanguage} onClose={onClose} />,
+        );
+
+        await user.click(await screen.findByRole("button", { name: /Change language/ }));
+        await user.click(screen.getByRole("option", { name: "Deutsch" }));
+        await user.click(screen.getByRole("button", { name: "Apply" }));
+        await user.click(screen.getByRole("button", { name: "Cancel" }));
+        await user.click(screen.getByRole("button", { name: "Close" }));
+        await user.keyboard("{Escape}");
+
+        expect(onClose).not.toHaveBeenCalled();
     });
 });

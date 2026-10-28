@@ -10,12 +10,13 @@
 
 export { AnalyticalDesigner } from "./embedding/AnalyticalDesigner.js";
 export {
+    type AnalyticalDesignerEvent,
+    type AnalyticalDesignerEventType,
     type AnalyticalDesignerHiddenAction,
     type IAnalyticalDesignerApi,
     type IAnalyticalDesignerCacheReset,
     type IAnalyticalDesignerConfig,
-    type IAnalyticalDesignerEvent,
-    type IAnalyticalDesignerEventHandler,
+    type IAnalyticalDesignerEventDataMap,
     type IAnalyticalDesignerInsightOpenedData,
     type IAnalyticalDesignerProps,
     type IAnalyticalDesignerTelemetryCallbacks,

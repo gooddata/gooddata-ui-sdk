@@ -35,8 +35,6 @@ export async function getFeatureHubFeatures(
     return DefaultFeatureFlags;
 }
 
-//NOTE: Use FeatureHub SDK after we upgrade version of typescript
-// - more info in ticket RAIL-4279
 async function loadHubFeatures(
     configuration: ILiveFeatures["live"]["configuration"],
     context: FeatureContext,
@@ -51,19 +49,20 @@ async function loadHubFeatures(
         }
 
         const promise = getFeatureHubData(host, key, context, state[key]);
-        void promise.then(({ data, headers, status }) => {
-            if (status === 304) {
-                loadFeatures(state[key].data, resolve, callFailed);
-                return;
-            }
+        void promise
+            .then(({ data, headers, status }) => {
+                if (status === 304) {
+                    loadFeatures(state[key].data, resolve, callFailed);
+                    return;
+                }
 
-            state[key] = {
-                etag: headers["etag"],
-                data: data || [],
-            };
-            loadFeatures(data, resolve, callFailed);
-        });
-        promise.catch(callFailed);
+                state[key] = {
+                    etag: headers["etag"],
+                    data: data || [],
+                };
+                loadFeatures(data, resolve, callFailed);
+            })
+            .catch(callFailed);
     });
 }
 

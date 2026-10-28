@@ -2,8 +2,12 @@
 
 import { type KeyboardEvent, type MouseEvent, type ReactNode, forwardRef } from "react";
 
+import { useIntl } from "react-intl";
+
 import { simplifyText } from "@gooddata/util";
 
+import { LoadingSpinner } from "../../LoadingSpinner/LoadingSpinner.js";
+import { uiButtonMessages } from "../../locales.js";
 import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { accessibilityConfigToAttributes } from "../../typings/utilities.js";
 import { type IconType } from "../@types/icon.js";
@@ -54,7 +58,11 @@ export interface IUiButtonProps {
     label: string;
     type?: "button" | "submit" | "reset";
     isDisabled?: boolean;
+    /**
+     * @deprecated Doesn't do anything. Use `isPending` instead.
+     */
     isLoading?: boolean;
+    isPending?: boolean;
     isSelected?: boolean;
     tooltip?: ReactNode;
     onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
@@ -94,6 +102,7 @@ export const UiButton = forwardRef<HTMLButtonElement, IUiButtonProps>(
             isDisabled,
             isSelected,
             isLoading,
+            isPending,
             disableIconAnimation,
             iconBefore,
             iconBeforeSize: iconBeforeSizeProp,
@@ -126,14 +135,16 @@ export const UiButton = forwardRef<HTMLButtonElement, IUiButtonProps>(
                     size,
                     variant,
                     isLoading: isLoading ?? false,
+                    isPending: isPending ?? false,
                     hasIconBefore,
                     hasIconAfter,
                     isSelected: isSelected ?? false,
                 })}
-                disabled={isDisabled}
+                disabled={isPending ? false : isDisabled}
+                aria-disabled={isPending || undefined}
                 tabIndex={tabIndex}
                 autoFocus={autoFocus}
-                onClick={onClick}
+                onClick={isPending ? (e) => e.preventDefault() : onClick}
                 onKeyDown={onKeyDown}
                 data-id={dataId}
                 data-testid={testId}
@@ -168,9 +179,28 @@ export const UiButton = forwardRef<HTMLButtonElement, IUiButtonProps>(
                         disableAnimation={disableIconAnimation}
                     />
                 ) : null}
+                {isPending ? <UiButtonPendingIndicator /> : null}
             </button>
         );
     },
 );
 
 UiButton.displayName = "UiButton";
+
+/**
+ * Extracted into a component because many current tests do not hook up `<IntlProvider />` in them
+ * (or do not use global `render()` function). `useIntl()` would otherwise throw there.
+ */
+function UiButtonPendingIndicator() {
+    const intl = useIntl();
+
+    return (
+        <span
+            className={e("pending-indicator")}
+            role="progressbar"
+            aria-label={intl.formatMessage(uiButtonMessages.pending)}
+        >
+            <LoadingSpinner className="small" color="currentColor" />
+        </span>
+    );
+}

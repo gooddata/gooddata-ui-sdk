@@ -9,6 +9,7 @@ import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { ITheme } from '@gooddata/sdk-model';
 import { IThemeHeader } from '@gooddata/sdk-model';
 import { JSX } from 'react/jsx-runtime';
+import { PublisherThemePaletteReferenceV2 } from '@gooddata/sdk-model';
 import { ReactNode } from 'react';
 
 // @internal
@@ -51,6 +52,9 @@ export interface IScopedThemeProviderProps {
 export const isDarkTheme: (theme: ITheme | undefined) => boolean;
 
 // @internal
+export function isDocumentsThemeColorSet(theme: ITheme | undefined, list: string, id: string): boolean;
+
+// @internal
 export const isValidThemeColor: (color: unknown) => boolean;
 
 // @public (undocumented)
@@ -74,6 +78,12 @@ export interface IThemeProviderProps {
     theme?: ITheme;
     workspace?: string;
 }
+
+// @internal
+export function paletteCssVariable(reference: PublisherThemePaletteReferenceV2): string;
+
+// @internal
+export function paletteDefaultColor(reference: PublisherThemePaletteReferenceV2): string;
 
 // @internal
 export function ScopedThemeProvider(input: IScopedThemeProviderProps): JSX.Element;

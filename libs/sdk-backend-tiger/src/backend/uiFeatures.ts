@@ -1,548 +1,159 @@
-// (C) 2020-2026 GoodData Corporation
+// (C) 2026 GoodData Corporation
 
 import { type IEarlyAccessFeaturesConfig, type IProductionFeaturesConfig } from "@gooddata/sdk-model";
 
-/**
- * This is list of feature flags managed on Panther by FeatureHub
- * and keeping their default values for non-managed env
- */
+// Defaults are used only when the backend does not supply a value.
+const booleanFeature = (defaultValue: boolean) => ({ type: "BOOLEAN" as const, defaultValue });
+const numberFeature = (defaultValue?: number) => ({ type: "NUMBER" as const, defaultValue });
+const jsonFeature = <T>(defaultValue?: T) => ({ type: "JSON" as const, defaultValue });
 
-export enum TigerFeaturesNames {
-    EnableMetricSqlAndDataExplain = "enableMetricSqlAndDataExplain",
-    EnableMetricFormatOverrides = "enableMetricFormatOverrides",
-    EnableColumnLevelPermissions = "enableColumnLevelPermissions",
-    EnableMetricPermissions = "enableMetricPermissions",
-    EnableCreateVisualizationWorkspacePermission = "enableCreateVisualizationWorkspacePermission",
-    EnableVisualizationPermissions = "enableVisualizationPermissions",
-    EnableSqlDatasets = "enableSqlDatasets",
-    EnableHighchartsAccessibility = "enableHighchartsAccessibility",
-    EnableAccessibleChartTooltip = "enableAccessibleChartTooltip",
-    EnableChangeAnalysis = "enableChangeAnalysis",
-    EnableRankingWithMvf = "enableRankingWithMvf",
-    EnableRankingStrictLimit = "enableRankingStrictLimit",
-    EnableImprovedRankingFilter = "enableImprovedRankingFilter",
-    EnableMySqlDataSource = "enableMySqlDataSource",
-    EnableMariaDbDataSource = "enableMariaDbDataSource",
-    EnableOracleDataSource = "enableOracleDataSource",
-    EnableAnalyticalCatalog = "enableAnalyticalCatalog",
-    EnableParameters = "enableParameters",
-    EnableAnalyticalCatalogMetricEditor = "enableAnalyticalCatalogMetricEditor",
-    EnableAnalyticalCatalogVisualizationEditor = "enableAnalyticalCatalogVisualizationEditor",
-    EnableStringParameters = "enableStringParameters",
-    EnableCustomTooltip = "enableCustomTooltip",
-    EnableMotherDuckDataSource = "enableMotherDuckDataSource",
-    EnableStarrocksDataSource = "enableStarrocksDataSource",
-    EnableLabsSmartFunctions = "enableLabsSmartFunctions",
-    EnableDataProfiling = "enableDataProfiling",
-    EnableExperimentalFeaturesUI = "enableExperimentalFeaturesUI",
-    EnableSingleStoreDataSource = "enableSingleStoreDataSource",
-    EnableCacheRetentionPolicy = "enableCacheRetentionPolicy",
-    EnableDenodoDataSource = "enableDenodoDataSource",
-    EnableTrinoDataSource = "enableTrinoDataSource",
-    EnableSavFileStorage = "enableSavFileStorage",
-    EnableOidcAuth = "enableOidcAuth",
-    EnableSemanticSearch = "enableSemanticSearch",
-    EnableCatalogSmartSearchResults = "enableCatalogSmartSearchResults",
-    EnableGenAICatalogQualityChecker = "enableGenAICatalogQualityChecker",
-    EnableCatalogTrendingObjects = "enableCatalogTrendingObjects",
-    EnableCatalogLineage = "enableCatalogLineage",
-    EnableCertification = "enableCertification",
-    EnableAIDataSetting = "enableAIDataSetting",
-    EnableSystemAccountFiltering = "enableSystemAccountFiltering",
-    EnableNewInsightChangedPostMessageEvent = "enableNewInsightChangedPostMessageEvent",
-    EarlyAccessFeatures = "earlyAccessFeatures",
-    EnableDefaultSmtp = "enableDefaultSmtp",
-    EnableVisualizationFilteringByTags = "enableVisualizationFilteringByTags",
-    EnableVisualizationFineTuning = "enableVisualizationFineTuning",
-    EnableDashboardDescriptionDynamicHeight = "enableDashboardDescriptionDynamicHeight",
-    EnableExportTemplateSelection = "enableExportTemplateSelection",
-    EnableExportTemplatesSettingUi = "enableExportTemplatesSettingUi",
-    EnableRawExports = "enableRawExports",
-    EnableExecutionCancelling = "enableExecutionCancelling",
-    EnableDashboardTabularExport = "enableDashboardTabularExport",
-    EnableOrchestratedTabularExports = "enableOrchestratedTabularExports",
-    EnableImmediateAttributeFilterDisplayAsLabelMigration = "enableImmediateAttributeFilterDisplayAsLabelMigration",
-    EnableAnalyticalDesignerCatalogSideload = "enableAnalyticalDesignerCatalogSideload",
-    EnableWorkspaceSettingsAppHeaderMenuItem = "enableWorkspaceSettingsAppHeaderMenuItem",
-    EnableSnapshotExportAccessibility = "enableSnapshotExportAccessibility",
-    EnableExportToDocumentStorage = "enableExportToDocumentStorage",
-    EnableNotificationChannelIdentifiers = "enableNotificationChannelIdentifiers",
-    EnableDashboardShareDialogLink = "enableDashboardShareDialogLink",
-    EnableDashboardPartialRendering = "enableDashboardPartialRendering",
-    ProductionFeatures = "productionFeatures",
-    EnablePreAggregationDatasets = "enablePreAggregationDatasets",
-    EnableNewPivotTable = "enableNewPivotTable",
-    EnableConditionalFormatting = "enableConditionalFormatting",
-    EnableSemanticConditionalFormatting = "enableSemanticConditionalFormatting",
-    EnableNewGeoPushpin = "enableNewGeoPushpin",
-    EnableGeoArea = "enableGeoArea",
-    EnableHLL = "enableHLL",
-    EnableGeoPushpinIcon = "enableGeoPushpinIcon",
-    EnableGeoChartA11yImprovements = "enableGeoChartA11yImprovements",
-    EnableGeoLayersExport = "enableGeoLayersExport",
-    EnableGeoChartsViewportConfig = "enableGeoChartsViewportConfig",
-    EnableGeoSegmentConflictRecommendation = "enableGeoSegmentConflictRecommendation",
-    EnableGeoBasemapConfig = "enableGeoBasemapConfig",
-    EnableCustomGeoCollection = "enableCustomGeoCollection",
-    EnableGeoSatelliteBasemapOption = "enableGeoSatelliteBasemapOption",
-    EnableGenAIMemory = "enableGenAIMemory",
-    EnableOrgLevelAIMemory = "enableOrgLevelAIMemory",
-    EnableAiAgenticSuggestions = "enableAiAgenticSuggestions",
-    EnableGenAiReasoningEffort = "enableGenAiReasoningEffort",
-    EnableGenAiObservability = "enableGenAiObservability",
-    EnableGenAiInteractionIntelligence = "enableGenAiInteractionIntelligence",
-    EnableGenAiInteractionIntelligenceTimeline = "enableGenAiInteractionIntelligence_timeline",
-    EnableGenAiAgenticDataShareOptOut = "enableGenAiAgenticDataShareOptOut",
-    AIChatSearchLimit = "aiChatSearchLimit",
-    EnableRichTextWidgetFilterConfiguration = "enableRichTextWidgetFilterConfiguration",
-    EnableDashboardSectionHeadersDateDataSet = "enableDashboardSectionHeadersDateDataSet",
-    EnableAnalyticalDashboardVersion3 = "enableAnalyticalDashboardVersion3",
-    EnableAnomalyDetectionAlert = "enableAnomalyDetectionAlert",
-    EnableAnomalyDetectionVisualization = "enableAnomalyDetectionVisualization",
-    EnableAlertOncePerInterval = "enableAlertOncePerInterval",
-    EnableFiscalCalendars = "enableFiscalCalendars",
-    EnableSecondGranularities = "enableSecondGranularities",
-    EnableImprovedMetricDateFilter = "enableImprovedMetricDateFilter",
-    EnableDashboardFilterGroups = "enableDashboardFilterGroups",
-    EnableDashboardTimezone = "enableDashboardTimezone",
-    EnableMeasureValueFilterKD = "enableMeasureValueFilterKD",
-    EnableShellApplication = "enableShellApplication",
-    EnableShellApplicationDashboards = "enableShellApplication_dashboards",
-    EnableLogicalModelExtensionsFromParentsCall = "enableLogicalModelExtensionsFromParentsCall",
-    EnableDashboardDensitySetting = "enableDashboardDensitySetting",
-    EnableDashboardsSearch = "enableDashboardsSearch",
-    EnableAgentInstructions = "enableAgentInstructions",
-    EnableAutomationTrigger = "enableAutomationTrigger",
-    EnableUserDataFiltersUi = "enableUserDataFiltersUi",
-    EnableEnhancedInsightPicker = "enableEnhancedInsightPicker",
-    EnableDashboardVisualizationDelete = "enableDashboardVisualizationDelete",
-    EnableAiAgenticMultiConversations = "enableAiAgenticMultiConversations",
-    EnableAiLlmAnthropicProvider = "enableAiLlmAnthropicProvider",
-    EnableRadarChart = "enableRadarChart",
-    EnableMekkoChart = "enableMekkoChart",
-    EnableLineChartStyling = "enableLineChartStyling",
-    EnableDonutDataLabels = "enableDonutDataLabels",
-    EnableDashboardSidebarResize = "enableDashboardSidebarResize",
-    EnableCollapsibleLeftSidebar = "enableCollapsibleLeftSidebar",
-    EnableExportTimeoutFix = "enableExportTimeoutFix",
-    EnableAiAssistantEmbedding = "enableAiAssistantEmbedding",
-    EnableAiAssistantChartsV2 = "enableAiAssistantChartsV2",
-    EnableAiContextSetup = "enableAiContextSetup",
-    EnableDashboardPersistentFiltersAcrossTabs = "enableDashboardPersistentFiltersAcrossTabs",
-    EnableGenAiDashboardBuilderSkill = "enableGenAiDashboardBuilderSkill",
-    EnableGenAiRightPanel = "enableGenAiRightPanel",
-    EnableAbsoluteDateFilterGranularity = "enableAbsoluteDateFilterGranularity",
-    EnableComputedAttributes = "enableComputedAttributes",
-    EnableBusinessBriefingReportsApp = "enableBusinessBriefingReportsApp",
-    EnableReportsSubsections = "enableReportsSubsections",
-    EnablePublisherV2 = "enablePublisherV2",
-    EnableGenAiReportTakeaways = "enableGenAiReportTakeaways",
-    EnableEmbeddingWriteCommands = "enableEmbeddingWriteCommands",
-    EnableLocalizationOverview = "enableLocalizationOverview",
-    EnableUserLanguageChange = "enableUserLanguageChange",
-}
+export const TigerFeatureDefinitions = {
+    enableMetricFormatOverrides: booleanFeature(false),
+    enableColumnLevelPermissions: booleanFeature(false),
+    enableMetricPermissions: booleanFeature(false),
+    enableCreateVisualizationWorkspacePermission: booleanFeature(false),
+    enableVisualizationPermissions: booleanFeature(false),
+    enableHighchartsAccessibility: booleanFeature(true),
+    enableAccessibleChartTooltip: booleanFeature(false),
+    enableRadarChart: booleanFeature(false),
+    enableMekkoChart: booleanFeature(false),
+    enableChangeAnalysis: booleanFeature(false),
+    enableRankingWithMvf: booleanFeature(false),
+    enableRankingStrictLimit: booleanFeature(true),
+    enableImprovedRankingFilter: booleanFeature(true),
+    enableMySqlDataSource: booleanFeature(false),
+    enableMariaDbDataSource: booleanFeature(false),
+    enableOracleDataSource: booleanFeature(false),
+    enableOidcAuth: booleanFeature(true),
+    enableMotherDuckDataSource: booleanFeature(false),
+    enableStarrocksDataSource: booleanFeature(false),
+    enableSingleStoreDataSource: booleanFeature(false),
+    enableDenodoDataSource: booleanFeature(false),
+    enableTrinoDataSource: booleanFeature(false),
+    enableCacheRetentionPolicy: booleanFeature(false),
+    enableSavFileStorage: booleanFeature(false),
+    enableSemanticSearch: booleanFeature(false),
+    enableCatalogSmartSearchResults: booleanFeature(true),
+    enableGenAICatalogQualityChecker: booleanFeature(false),
+    enableGenAiDashboardBuilderSkill: booleanFeature(false),
+    enableGenAiRightPanel: booleanFeature(false),
+    enableCatalogTrendingObjects: booleanFeature(false),
+    enableCertification: booleanFeature(false),
+    enableSystemAccountFiltering: booleanFeature(true),
+    enableDefaultSmtp: booleanFeature(false),
+    enableVisualizationFineTuning: booleanFeature(false),
+    enableDashboardTabularExport: booleanFeature(false),
+    enableOrchestratedTabularExports: booleanFeature(false),
+    enableDashboardDescriptionDynamicHeight: booleanFeature(false),
+    enableRawExports: booleanFeature(false),
+    enableExportTemplateSelection: booleanFeature(true),
+    enableExportTemplatesSettingUi: booleanFeature(false),
+    enableRichTextWidgetFilterConfiguration: booleanFeature(false),
+    enableDashboardSectionHeadersDateDataSet: booleanFeature(false),
+    enableAnalyticalDashboardVersion3: booleanFeature(false),
+    enableExecutionCancelling: booleanFeature(false),
+    enableImmediateAttributeFilterDisplayAsLabelMigration: booleanFeature(false),
+    enableWorkspaceSettingsAppHeaderMenuItem: booleanFeature(false),
+    enableSnapshotExportAccessibility: booleanFeature(false),
+    enableExportTimeoutFix: booleanFeature(false),
+    enableExportToDocumentStorage: booleanFeature(false),
+    enableNotificationChannelIdentifiers: booleanFeature(false),
+    enableDashboardShareDialogLink: booleanFeature(false),
+    enableDashboardPartialRendering: booleanFeature(false),
+    productionFeatures: jsonFeature<IProductionFeaturesConfig>(),
+    enablePreAggregationDatasets: booleanFeature(false),
+    enableNewPivotTable: booleanFeature(true),
+    enableDonutDataLabels: booleanFeature(false),
+    enableConditionalFormatting: booleanFeature(true),
+    enableSemanticConditionalFormatting: booleanFeature(false),
+    enableNewGeoPushpin: booleanFeature(true),
+    enableGeoArea: booleanFeature(true),
+    enableHLL: booleanFeature(false),
+    enableGeoChartA11yImprovements: booleanFeature(true),
+    enableGeoLayersExport: booleanFeature(false),
+    enableGeoChartsViewportConfig: booleanFeature(true),
+    enableGeoSegmentConflictRecommendation: booleanFeature(true),
+    enableGeoBasemapConfig: booleanFeature(true),
+    enableCustomGeoCollection: booleanFeature(true),
+    enableGeoSatelliteBasemapOption: booleanFeature(false),
+    enableGeoPushpinIcon: booleanFeature(true),
+    enableGenAIMemory: booleanFeature(false),
+    enableOrgLevelAIMemory: booleanFeature(false),
+    enableAIDataSetting: booleanFeature(false),
+    aiChatSearchLimit: numberFeature(),
+    enableAnomalyDetectionAlert: booleanFeature(false),
+    enableAnomalyDetectionVisualization: booleanFeature(true),
+    enableCustomTooltip: booleanFeature(true),
+    enableAlertOncePerInterval: booleanFeature(false),
+    enableFiscalCalendars: booleanFeature(true),
+    enableSecondGranularities: booleanFeature(true),
+    enableImprovedMetricDateFilter: booleanFeature(false),
+    enableDashboardFilterGroups: booleanFeature(true),
+    enableDashboardTimezone: booleanFeature(false),
+    enableMeasureValueFilterKD: booleanFeature(true),
+    enableVisualizationFilteringByTags: booleanFeature(false),
+    enableShellApplication: booleanFeature(true),
+    enableShellApplication_dashboards: booleanFeature(true),
+    enableLogicalModelExtensionsFromParentsCall: booleanFeature(false),
+    enableDashboardDensitySetting: booleanFeature(false),
+    enableDashboardsSearch: booleanFeature(false),
+    enableAnalyticalCatalog: booleanFeature(false),
+    enableAgentInstructions: booleanFeature(false),
+    enableAutomationTrigger: booleanFeature(false),
+    enableUserDataFiltersUi: booleanFeature(false),
+    enableAiContextSetup: booleanFeature(false),
+    enableGenAiAgenticDataShareOptOut: booleanFeature(false),
+    enableParameters: booleanFeature(true),
+    enableAnalyticalCatalogMetricEditor: booleanFeature(false),
+    enableAnalyticalCatalogVisualizationEditor: booleanFeature(false),
+    enableStringParameters: booleanFeature(true),
+    enableEnhancedInsightPicker: booleanFeature(false),
+    enableDashboardVisualizationDelete: booleanFeature(false),
+    enableAiAgenticSuggestions: booleanFeature(false),
+    enableAiAgenticMultiConversations: booleanFeature(false),
+    enableGenAiReasoningEffort: booleanFeature(false),
+    enableGenAiObservability: booleanFeature(false),
+    enableGenAiInteractionIntelligence: booleanFeature(false),
+    enableGenAiInteractionIntelligence_timeline: booleanFeature(false),
+    enableAiLlmAnthropicProvider: booleanFeature(false),
+    enableDashboardSidebarResize: booleanFeature(true),
+    enableCollapsibleLeftSidebar: booleanFeature(true),
+    enableLineChartStyling: booleanFeature(true),
+    enableDashboardPersistentFiltersAcrossTabs: booleanFeature(false),
+    enableAbsoluteDateFilterGranularity: booleanFeature(false),
+    enableComputedAttributes: booleanFeature(false),
+    enableBusinessBriefingReportsApp: booleanFeature(false),
+    enableReportsSubsections: booleanFeature(false),
+    enablePublisherV2: booleanFeature(false),
+    enableGenAiReportTakeaways: booleanFeature(false),
+    enableEmbeddingWriteCommands: booleanFeature(false),
+    enableLocalizationOverview: booleanFeature(false),
+    enableAiAssistantChartsV2: booleanFeature(false),
+    enableUserLanguageChange: booleanFeature(true),
+    enableMetricSqlAndDataExplain: booleanFeature(false),
+    enableSqlDatasets: booleanFeature(false),
+    enableLabsSmartFunctions: booleanFeature(false),
+    enableDataProfiling: booleanFeature(false),
+    enableExperimentalFeaturesUI: booleanFeature(false),
+    enableCatalogLineage: booleanFeature(false),
+    enableNewInsightChangedPostMessageEvent: booleanFeature(false),
+    earlyAccessFeatures: jsonFeature<IEarlyAccessFeaturesConfig>(),
+    enableAnalyticalDesignerCatalogSideload: booleanFeature(false),
+    enableAiAssistantEmbedding: booleanFeature(false),
+} as const;
 
 export type ITigerFeatureFlags = {
-    enableMetricSqlAndDataExplain: (typeof FeatureFlagsValues)["enableMetricSqlAndDataExplain"][number];
-    enableMetricFormatOverrides: (typeof FeatureFlagsValues)["enableMetricFormatOverrides"][number];
-    enableColumnLevelPermissions: (typeof FeatureFlagsValues)["enableColumnLevelPermissions"][number];
-    enableMetricPermissions: (typeof FeatureFlagsValues)["enableMetricPermissions"][number];
-    enableCreateVisualizationWorkspacePermission: (typeof FeatureFlagsValues)["enableCreateVisualizationWorkspacePermission"][number];
-    enableVisualizationPermissions: (typeof FeatureFlagsValues)["enableVisualizationPermissions"][number];
-    enableSqlDatasets: (typeof FeatureFlagsValues)["enableSqlDatasets"][number];
-    enableRadarChart: (typeof FeatureFlagsValues)["enableRadarChart"][number];
-    enableMekkoChart: (typeof FeatureFlagsValues)["enableMekkoChart"][number];
-    enableLineChartStyling: (typeof FeatureFlagsValues)["enableLineChartStyling"][number];
-    enableDonutDataLabels: (typeof FeatureFlagsValues)["enableDonutDataLabels"][number];
-    enableChangeAnalysis: (typeof FeatureFlagsValues)["enableChangeAnalysis"][number];
-    enableRankingWithMvf: (typeof FeatureFlagsValues)["enableRankingWithMvf"][number];
-    enableRankingStrictLimit: (typeof FeatureFlagsValues)["enableRankingStrictLimit"][number];
-    enableImprovedRankingFilter: (typeof FeatureFlagsValues)["enableImprovedRankingFilter"][number];
-    enableMySqlDataSource: (typeof FeatureFlagsValues)["enableMySqlDataSource"][number];
-    enableMariaDbDataSource: (typeof FeatureFlagsValues)["enableMariaDbDataSource"][number];
-    enableOracleDataSource: (typeof FeatureFlagsValues)["enableOracleDataSource"][number];
-    enableAnalyticalCatalog: (typeof FeatureFlagsValues)["enableAnalyticalCatalog"][number];
-    enableParameters: (typeof FeatureFlagsValues)["enableParameters"][number];
-    enableAnalyticalCatalogMetricEditor: (typeof FeatureFlagsValues)["enableAnalyticalCatalogMetricEditor"][number];
-    enableAnalyticalCatalogVisualizationEditor: (typeof FeatureFlagsValues)["enableAnalyticalCatalogVisualizationEditor"][number];
-    enableStringParameters: (typeof FeatureFlagsValues)["enableStringParameters"][number];
-    enableLabsSmartFunctions: (typeof FeatureFlagsValues)["enableLabsSmartFunctions"][number];
-    enableCustomTooltip: (typeof FeatureFlagsValues)["enableCustomTooltip"][number];
-    enableMotherDuckDataSource: (typeof FeatureFlagsValues)["enableMotherDuckDataSource"][number];
-    enableStarrocksDataSource: (typeof FeatureFlagsValues)["enableStarrocksDataSource"][number];
-    enableDataProfiling: (typeof FeatureFlagsValues)["enableDataProfiling"][number];
-    enableExperimentalFeaturesUI: (typeof FeatureFlagsValues)["enableExperimentalFeaturesUI"][number];
-    enableSingleStoreDataSource: (typeof FeatureFlagsValues)["enableSingleStoreDataSource"][number];
-    enableCacheRetentionPolicy: (typeof FeatureFlagsValues)["enableCacheRetentionPolicy"][number];
-    enableDenodoDataSource: (typeof FeatureFlagsValues)["enableDenodoDataSource"][number];
-    enableTrinoDataSource: (typeof FeatureFlagsValues)["enableTrinoDataSource"][number];
-    enableSavFileStorage: (typeof FeatureFlagsValues)["enableSavFileStorage"][number];
-    enableOidcAuth: (typeof FeatureFlagsValues)["enableOidcAuth"][number];
-    enableSemanticSearch: (typeof FeatureFlagsValues)["enableSemanticSearch"][number];
-    enableCatalogSmartSearchResults: (typeof FeatureFlagsValues)["enableCatalogSmartSearchResults"][number];
-    enableGenAICatalogQualityChecker: (typeof FeatureFlagsValues)["enableGenAICatalogQualityChecker"][number];
-    enableCatalogTrendingObjects: (typeof FeatureFlagsValues)["enableCatalogTrendingObjects"][number];
-    enableCatalogLineage: (typeof FeatureFlagsValues)["enableCatalogLineage"][number];
-    enableCertification: (typeof FeatureFlagsValues)["enableCertification"][number];
-    enableAIDataSetting: (typeof FeatureFlagsValues)["enableAIDataSetting"][number];
-    enableSystemAccountFiltering: (typeof FeatureFlagsValues)["enableSystemAccountFiltering"][number];
-    enableNewInsightChangedPostMessageEvent: (typeof FeatureFlagsValues)["enableNewInsightChangedPostMessageEvent"][number];
-    earlyAccessFeatures: (typeof FeatureFlagsValues)["earlyAccessFeatures"][number];
-    enableDefaultSmtp: (typeof FeatureFlagsValues)["enableDefaultSmtp"][number];
-    enableVisualizationFilteringByTags: (typeof FeatureFlagsValues)["enableVisualizationFilteringByTags"][number];
-    enableVisualizationFineTuning: (typeof FeatureFlagsValues)["enableVisualizationFineTuning"][number];
-    enableDashboardTabularExport: (typeof FeatureFlagsValues)["enableDashboardTabularExport"][number];
-    enableOrchestratedTabularExports: (typeof FeatureFlagsValues)["enableOrchestratedTabularExports"][number];
-    enableDashboardDescriptionDynamicHeight: (typeof FeatureFlagsValues)["enableDashboardDescriptionDynamicHeight"][number];
-    enableExportTemplateSelection: (typeof FeatureFlagsValues)["enableExportTemplateSelection"][number];
-    enableExportTemplatesSettingUi: (typeof FeatureFlagsValues)["enableExportTemplatesSettingUi"][number];
-    enableRawExports: (typeof FeatureFlagsValues)["enableRawExports"][number];
-    enableExecutionCancelling: (typeof FeatureFlagsValues)["enableExecutionCancelling"][number];
-    enableImmediateAttributeFilterDisplayAsLabelMigration: (typeof FeatureFlagsValues)["enableImmediateAttributeFilterDisplayAsLabelMigration"][number];
-    enableAnalyticalDesignerCatalogSideload: (typeof FeatureFlagsValues)["enableAnalyticalDesignerCatalogSideload"][number];
-    enableHighchartsAccessibility: (typeof FeatureFlagsValues)["enableHighchartsAccessibility"][number];
-    enableAccessibleChartTooltip: (typeof FeatureFlagsValues)["enableAccessibleChartTooltip"][number];
-    enableWorkspaceSettingsAppHeaderMenuItem: (typeof FeatureFlagsValues)["enableWorkspaceSettingsAppHeaderMenuItem"][number];
-    enableSnapshotExportAccessibility: (typeof FeatureFlagsValues)["enableSnapshotExportAccessibility"][number];
-    enableExportToDocumentStorage: (typeof FeatureFlagsValues)["enableExportToDocumentStorage"][number];
-    enableNotificationChannelIdentifiers: (typeof FeatureFlagsValues)["enableNotificationChannelIdentifiers"][number];
-    enableDashboardShareDialogLink: (typeof FeatureFlagsValues)["enableDashboardShareDialogLink"][number];
-    enableDashboardPartialRendering: (typeof FeatureFlagsValues)["enableDashboardPartialRendering"][number];
-    productionFeatures: (typeof FeatureFlagsValues)["productionFeatures"][number];
-    enablePreAggregationDatasets: (typeof FeatureFlagsValues)["enablePreAggregationDatasets"][number];
-    enableNewPivotTable: (typeof FeatureFlagsValues)["enableNewPivotTable"][number];
-    enableConditionalFormatting: (typeof FeatureFlagsValues)["enableConditionalFormatting"][number];
-    enableSemanticConditionalFormatting: (typeof FeatureFlagsValues)["enableSemanticConditionalFormatting"][number];
-    enableNewGeoPushpin: (typeof FeatureFlagsValues)["enableNewGeoPushpin"][number];
-    enableGeoArea: (typeof FeatureFlagsValues)["enableGeoArea"][number];
-    enableHLL: (typeof FeatureFlagsValues)["enableHLL"][number];
-    enableGeoPushpinIcon: (typeof FeatureFlagsValues)["enableGeoPushpinIcon"][number];
-    enableGeoChartA11yImprovements: (typeof FeatureFlagsValues)["enableGeoChartA11yImprovements"][number];
-    enableGeoLayersExport: (typeof FeatureFlagsValues)["enableGeoLayersExport"][number];
-    enableGeoChartsViewportConfig: (typeof FeatureFlagsValues)["enableGeoChartsViewportConfig"][number];
-    enableGeoSegmentConflictRecommendation: (typeof FeatureFlagsValues)["enableGeoSegmentConflictRecommendation"][number];
-    enableGeoBasemapConfig: (typeof FeatureFlagsValues)["enableGeoBasemapConfig"][number];
-    enableCustomGeoCollection: (typeof FeatureFlagsValues)["enableCustomGeoCollection"][number];
-    enableGeoSatelliteBasemapOption: (typeof FeatureFlagsValues)["enableGeoSatelliteBasemapOption"][number];
-    enableGenAIMemory: (typeof FeatureFlagsValues)["enableGenAIMemory"][number];
-    enableOrgLevelAIMemory: (typeof FeatureFlagsValues)["enableOrgLevelAIMemory"][number];
-    enableAiAgenticSuggestions: (typeof FeatureFlagsValues)["enableAiAgenticSuggestions"][number];
-    enableAiAssistantEmbedding: (typeof FeatureFlagsValues)["enableAiAssistantEmbedding"][number];
-    enableAiAssistantChartsV2: (typeof FeatureFlagsValues)["enableAiAssistantChartsV2"][number];
-    enableAiAgenticMultiConversations: (typeof FeatureFlagsValues)["enableAiAgenticMultiConversations"][number];
-    enableGenAiReasoningEffort: (typeof FeatureFlagsValues)["enableGenAiReasoningEffort"][number];
-    enableGenAiObservability: (typeof FeatureFlagsValues)["enableGenAiObservability"][number];
-    enableGenAiInteractionIntelligence: (typeof FeatureFlagsValues)["enableGenAiInteractionIntelligence"][number];
-    enableGenAiInteractionIntelligence_timeline: (typeof FeatureFlagsValues)["enableGenAiInteractionIntelligence_timeline"][number];
-    aiChatSearchLimit: (typeof FeatureFlagsValues)["aiChatSearchLimit"][number];
-    enableRichTextWidgetFilterConfiguration: (typeof FeatureFlagsValues)["enableRichTextWidgetFilterConfiguration"][number];
-    enableDashboardSectionHeadersDateDataSet: (typeof FeatureFlagsValues)["enableDashboardSectionHeadersDateDataSet"][number];
-    enableAnalyticalDashboardVersion3: (typeof FeatureFlagsValues)["enableAnalyticalDashboardVersion3"][number];
-    enableAnomalyDetectionAlert: (typeof FeatureFlagsValues)["enableAnomalyDetectionAlert"][number];
-    enableAnomalyDetectionVisualization: (typeof FeatureFlagsValues)["enableAnomalyDetectionVisualization"][number];
-    enableAlertOncePerInterval: (typeof FeatureFlagsValues)["enableAlertOncePerInterval"][number];
-    enableFiscalCalendars: (typeof FeatureFlagsValues)["enableFiscalCalendars"][number];
-    enableSecondGranularities: (typeof FeatureFlagsValues)["enableSecondGranularities"][number];
-    enableImprovedMetricDateFilter: (typeof FeatureFlagsValues)["enableImprovedMetricDateFilter"][number];
-    enableDashboardFilterGroups: (typeof FeatureFlagsValues)["enableDashboardFilterGroups"][number];
-    enableDashboardTimezone: (typeof FeatureFlagsValues)["enableDashboardTimezone"][number];
-    enableMeasureValueFilterKD: (typeof FeatureFlagsValues)["enableMeasureValueFilterKD"][number];
-    enableShellApplication: (typeof FeatureFlagsValues)["enableShellApplication"][number];
-    enableShellApplication_dashboards: (typeof FeatureFlagsValues)["enableShellApplication_dashboards"][number];
-    enableLogicalModelExtensionsFromParentsCall: (typeof FeatureFlagsValues)["enableLogicalModelExtensionsFromParentsCall"][number];
-    enableDashboardDensitySetting: (typeof FeatureFlagsValues)["enableDashboardDensitySetting"][number];
-    enableDashboardsSearch: (typeof FeatureFlagsValues)["enableDashboardsSearch"][number];
-    enableAgentInstructions: (typeof FeatureFlagsValues)["enableAgentInstructions"][number];
-    enableAiContextSetup: (typeof FeatureFlagsValues)["enableAiContextSetup"][number];
-    enableGenAiDashboardBuilderSkill: (typeof FeatureFlagsValues)["enableGenAiDashboardBuilderSkill"][number];
-    enableGenAiRightPanel: (typeof FeatureFlagsValues)["enableGenAiRightPanel"][number];
-    enableGenAiAgenticDataShareOptOut: (typeof FeatureFlagsValues)["enableGenAiAgenticDataShareOptOut"][number];
-    enableAutomationTrigger: (typeof FeatureFlagsValues)["enableAutomationTrigger"][number];
-    enableUserDataFiltersUi: (typeof FeatureFlagsValues)["enableUserDataFiltersUi"][number];
-    enableEnhancedInsightPicker: (typeof FeatureFlagsValues)["enableEnhancedInsightPicker"][number];
-    enableDashboardVisualizationDelete: (typeof FeatureFlagsValues)["enableDashboardVisualizationDelete"][number];
-    enableAiLlmAnthropicProvider: (typeof FeatureFlagsValues)["enableAiLlmAnthropicProvider"][number];
-    enableDashboardSidebarResize: (typeof FeatureFlagsValues)["enableDashboardSidebarResize"][number];
-    enableCollapsibleLeftSidebar: (typeof FeatureFlagsValues)["enableCollapsibleLeftSidebar"][number];
-    enableExportTimeoutFix: (typeof FeatureFlagsValues)["enableExportTimeoutFix"][number];
-    enableDashboardPersistentFiltersAcrossTabs: (typeof FeatureFlagsValues)["enableDashboardPersistentFiltersAcrossTabs"][number];
-    enableAbsoluteDateFilterGranularity: (typeof FeatureFlagsValues)["enableAbsoluteDateFilterGranularity"][number];
-    enableComputedAttributes: (typeof FeatureFlagsValues)["enableComputedAttributes"][number];
-    enableBusinessBriefingReportsApp: (typeof FeatureFlagsValues)["enableBusinessBriefingReportsApp"][number];
-    enableReportsSubsections: (typeof FeatureFlagsValues)["enableReportsSubsections"][number];
-    enablePublisherV2: (typeof FeatureFlagsValues)["enablePublisherV2"][number];
-    enableGenAiReportTakeaways: (typeof FeatureFlagsValues)["enableGenAiReportTakeaways"][number];
-    enableEmbeddingWriteCommands: (typeof FeatureFlagsValues)["enableEmbeddingWriteCommands"][number];
-    enableLocalizationOverview: (typeof FeatureFlagsValues)["enableLocalizationOverview"][number];
-    enableUserLanguageChange: (typeof FeatureFlagsValues)["enableUserLanguageChange"][number];
+    -readonly [
+        Key in keyof typeof TigerFeatureDefinitions
+    ]: (typeof TigerFeatureDefinitions)[Key]["defaultValue"];
 };
 
-export const DefaultFeatureFlags: ITigerFeatureFlags = {
-    enableMetricSqlAndDataExplain: false,
-    enableMetricFormatOverrides: false,
-    enableColumnLevelPermissions: false,
-    enableMetricPermissions: false,
-    enableCreateVisualizationWorkspacePermission: false,
-    enableVisualizationPermissions: false,
-    enableSqlDatasets: false,
-    enableRadarChart: false,
-    enableMekkoChart: false,
-    enableLineChartStyling: true,
-    enableDonutDataLabels: false,
-    enableChangeAnalysis: false,
-    enableRankingWithMvf: false,
-    enableRankingStrictLimit: true,
-    enableImprovedRankingFilter: true,
-    enableMySqlDataSource: false,
-    enableMariaDbDataSource: false,
-    enableMotherDuckDataSource: false,
-    enableStarrocksDataSource: false,
-    enableOracleDataSource: false,
-    enableAnalyticalCatalog: false,
-    enableParameters: true,
-    enableAnalyticalCatalogMetricEditor: false,
-    enableAnalyticalCatalogVisualizationEditor: false,
-    enableStringParameters: true,
-    enableLabsSmartFunctions: false,
-    enableCustomTooltip: true,
-    enableDataProfiling: false,
-    enableExperimentalFeaturesUI: false,
-    enableSingleStoreDataSource: false,
-    enableCacheRetentionPolicy: false,
-    enableDenodoDataSource: false,
-    enableTrinoDataSource: false,
-    enableSavFileStorage: false,
-    enableOidcAuth: true,
-    enableSemanticSearch: false,
-    enableCatalogSmartSearchResults: true,
-    enableGenAICatalogQualityChecker: false,
-    enableCatalogTrendingObjects: false,
-    enableCatalogLineage: false,
-    enableCertification: false,
-    enableAIDataSetting: false,
-    enableSystemAccountFiltering: true,
-    enableNewInsightChangedPostMessageEvent: false,
-    earlyAccessFeatures: undefined,
-    enableDefaultSmtp: false,
-    enableVisualizationFilteringByTags: false,
-    enableVisualizationFineTuning: false,
-    enableDashboardTabularExport: false,
-    enableOrchestratedTabularExports: false,
-    enableDashboardDescriptionDynamicHeight: false,
-    enableExportTemplateSelection: true,
-    enableExportTemplatesSettingUi: false,
-    enableRawExports: false,
-    enableExecutionCancelling: false,
-    enableImmediateAttributeFilterDisplayAsLabelMigration: false,
-    enableAnalyticalDesignerCatalogSideload: false,
-    enableHighchartsAccessibility: true,
-    enableAccessibleChartTooltip: false,
-    enableWorkspaceSettingsAppHeaderMenuItem: false,
-    enableSnapshotExportAccessibility: false,
-    enableExportToDocumentStorage: false,
-    enableNotificationChannelIdentifiers: false,
-    enableDashboardShareDialogLink: false,
-    enableDashboardPartialRendering: false,
-    productionFeatures: undefined,
-    enablePreAggregationDatasets: false,
-    enableNewPivotTable: true,
-    enableConditionalFormatting: true,
-    enableSemanticConditionalFormatting: false,
-    enableNewGeoPushpin: true,
-    enableGeoArea: true,
-    enableHLL: false,
-    enableGeoPushpinIcon: true,
-    enableGeoChartA11yImprovements: true,
-    enableGeoLayersExport: false,
-    enableGeoChartsViewportConfig: true,
-    enableGeoSegmentConflictRecommendation: true,
-    enableGeoBasemapConfig: true,
-    enableCustomGeoCollection: true,
-    enableGeoSatelliteBasemapOption: false,
-    enableGenAIMemory: false,
-    enableOrgLevelAIMemory: false,
-    enableAiAgenticSuggestions: false,
-    enableAiAssistantEmbedding: false,
-    enableAiAssistantChartsV2: false,
-    enableAiAgenticMultiConversations: false,
-    enableGenAiReasoningEffort: false,
-    enableGenAiObservability: false,
-    enableGenAiInteractionIntelligence: false,
-    enableGenAiInteractionIntelligence_timeline: false,
-    aiChatSearchLimit: undefined,
-    enableRichTextWidgetFilterConfiguration: false,
-    enableDashboardSectionHeadersDateDataSet: false,
-    enableAnalyticalDashboardVersion3: false,
-    enableAnomalyDetectionAlert: false,
-    enableAnomalyDetectionVisualization: true,
-    enableAlertOncePerInterval: false,
-    enableFiscalCalendars: true,
-    enableSecondGranularities: true,
-    enableImprovedMetricDateFilter: false,
-    enableDashboardFilterGroups: true,
-    enableDashboardTimezone: false,
-    enableMeasureValueFilterKD: true,
-    enableShellApplication: true,
-    enableShellApplication_dashboards: true,
-    enableLogicalModelExtensionsFromParentsCall: false,
-    enableDashboardDensitySetting: false,
-    enableDashboardsSearch: false,
-    enableAgentInstructions: false,
-    enableAiContextSetup: false,
-    enableGenAiDashboardBuilderSkill: false,
-    enableGenAiRightPanel: false,
-    enableGenAiAgenticDataShareOptOut: false,
-    enableAutomationTrigger: false,
-    enableUserDataFiltersUi: false,
-    enableEnhancedInsightPicker: false,
-    enableDashboardVisualizationDelete: false,
-    enableAiLlmAnthropicProvider: false,
-    enableDashboardSidebarResize: true,
-    enableCollapsibleLeftSidebar: true,
-    enableExportTimeoutFix: false,
-    enableDashboardPersistentFiltersAcrossTabs: false,
-    enableAbsoluteDateFilterGranularity: false,
-    enableComputedAttributes: false,
-    enableBusinessBriefingReportsApp: false,
-    enableReportsSubsections: false,
-    enablePublisherV2: false,
-    enableGenAiReportTakeaways: false,
-    enableEmbeddingWriteCommands: false,
-    enableLocalizationOverview: false,
-    enableUserLanguageChange: true,
-};
+export const DefaultFeatureFlags = Object.fromEntries(
+    Object.entries(TigerFeatureDefinitions).map(([key, definition]) => [key, definition.defaultValue]),
+) as ITigerFeatureFlags;
 
-export const FeatureFlagsValues = {
-    enableMetricSqlAndDataExplain: [true, false] as const,
-    enableMetricFormatOverrides: [true, false] as const,
-    enableColumnLevelPermissions: [true, false] as const,
-    enableMetricPermissions: [true, false] as const,
-    enableCreateVisualizationWorkspacePermission: [true, false] as const,
-    enableVisualizationPermissions: [true, false] as const,
-    enableSqlDatasets: [true, false] as const,
-    enableRadarChart: [true, false] as const,
-    enableMekkoChart: [true, false] as const,
-    enableLineChartStyling: [true, false] as const,
-    enableDonutDataLabels: [true, false] as const,
-    enableChangeAnalysis: [true, false] as const,
-    enableRankingWithMvf: [true, false] as const,
-    enableRankingStrictLimit: [true, false] as const,
-    enableImprovedRankingFilter: [true, false] as const,
-    enableMySqlDataSource: [true, false] as const,
-    enableMotherDuckDataSource: [true, false] as const,
-    enableStarrocksDataSource: [true, false] as const,
-    enableMariaDbDataSource: [true, false] as const,
-    enableOracleDataSource: [true, false] as const,
-    enableAnalyticalCatalog: [true, false] as const,
-    enableParameters: [true, false] as const,
-    enableAnalyticalCatalogMetricEditor: [true, false] as const,
-    enableAnalyticalCatalogVisualizationEditor: [true, false] as const,
-    enableStringParameters: [true, false] as const,
-    enableLabsSmartFunctions: [true, false] as const,
-    enableCustomTooltip: [true, false] as const,
-    enableDataProfiling: [true, false] as const,
-    enableExperimentalFeaturesUI: [true, false] as const,
-    enableSingleStoreDataSource: [true, false] as const,
-    enableCacheRetentionPolicy: [true, false] as const,
-    enableDenodoDataSource: [true, false] as const,
-    enableTrinoDataSource: [true, false] as const,
-    enableSavFileStorage: [true, false] as const,
-    enableOidcAuth: [true, false] as const,
-    enableSemanticSearch: [true, false] as const,
-    enableCatalogSmartSearchResults: [true, false] as const,
-    enableGenAICatalogQualityChecker: [false, true] as const,
-    enableCatalogTrendingObjects: [true, false] as const,
-    enableCatalogLineage: [false, true] as const,
-    enableCertification: [true, false] as const,
-    enableAIDataSetting: [true, false] as const,
-    enableSystemAccountFiltering: [true, false] as const,
-    enableNewInsightChangedPostMessageEvent: [true, false] as const,
-    earlyAccessFeatures: [undefined, {} as IEarlyAccessFeaturesConfig] as const,
-    enableDefaultSmtp: [true, false] as const,
-    enableVisualizationFilteringByTags: [true, false] as const,
-    enableVisualizationFineTuning: [true, false] as const,
-    enableDashboardTabularExport: [true, false] as const,
-    enableOrchestratedTabularExports: [true, false] as const,
-    enableDashboardDescriptionDynamicHeight: [true, false] as const,
-    enableExportTemplateSelection: [true, false] as const,
-    enableExportTemplatesSettingUi: [true, false] as const,
-    enableRawExports: [true, false] as const,
-    enableHighchartsAccessibility: [true, false] as const,
-    enableAccessibleChartTooltip: [true, false] as const,
-    enableExecutionCancelling: [true, false] as const,
-    enableImmediateAttributeFilterDisplayAsLabelMigration: [true, false] as const,
-    enableAnalyticalDesignerCatalogSideload: [true, false] as const,
-    enableWorkspaceSettingsAppHeaderMenuItem: [true, false] as const,
-    enableSnapshotExportAccessibility: [true, false] as const,
-    enableExportToDocumentStorage: [true, false] as const,
-    enableNotificationChannelIdentifiers: [true, false] as const,
-    enableDashboardShareDialogLink: [true, false] as const,
-    enableDashboardPartialRendering: [true, false] as const,
-    productionFeatures: [undefined, {} as IProductionFeaturesConfig] as const,
-    enablePreAggregationDatasets: [true, false] as const,
-    enableNewPivotTable: [true, false] as const,
-    enableConditionalFormatting: [true, false] as const,
-    enableSemanticConditionalFormatting: [true, false] as const,
-    enableNewGeoPushpin: [true, false] as const,
-    enableGeoArea: [true, false] as const,
-    enableHLL: [true, false] as const,
-    enableGeoPushpinIcon: [true, false] as const,
-    enableGeoChartA11yImprovements: [true, false] as const,
-    enableGeoLayersExport: [true, false] as const,
-    enableGeoChartsViewportConfig: [true, false] as const,
-    enableGeoSegmentConflictRecommendation: [true, false] as const,
-    enableGeoBasemapConfig: [true, false] as const,
-    enableCustomGeoCollection: [true, false] as const,
-    enableGeoSatelliteBasemapOption: [true, false] as const,
-    enableGenAIMemory: [false, true] as const,
-    enableOrgLevelAIMemory: [false, true] as const,
-    enableAiAgenticSuggestions: [true, false] as const,
-    enableAiAssistantEmbedding: [true, false] as const,
-    enableAiAssistantChartsV2: [true, false] as const,
-    enableAiAgenticMultiConversations: [true, false] as const,
-    enableGenAiReasoningEffort: [true, false] as const,
-    enableGenAiObservability: [true, false] as const,
-    enableGenAiInteractionIntelligence: [true, false] as const,
-    enableGenAiInteractionIntelligence_timeline: [true, false] as const,
-    aiChatSearchLimit: [undefined, {} as number] as const,
-    enableRichTextWidgetFilterConfiguration: [true, false] as const,
-    enableDashboardSectionHeadersDateDataSet: [true, false] as const,
-    enableAnalyticalDashboardVersion3: [true, false] as const,
-    enableAnomalyDetectionAlert: [true, false] as const,
-    enableAnomalyDetectionVisualization: [true, false] as const,
-    enableAlertOncePerInterval: [true, false] as const,
-    enableFiscalCalendars: [true, false] as const,
-    enableSecondGranularities: [true, false] as const,
-    enableImprovedMetricDateFilter: [true, false] as const,
-    enableDashboardFilterGroups: [true, false] as const,
-    enableMeasureValueFilterKD: [false, true] as const,
-    enableDashboardTimezone: [true, false] as const,
-    enableShellApplication: [true, false] as const,
-    enableShellApplication_dashboards: [false, true] as const,
-    enableLogicalModelExtensionsFromParentsCall: [true, false] as const,
-    enableDashboardDensitySetting: [true, false] as const,
-    enableDashboardsSearch: [false, true] as const,
-    enableAgentInstructions: [true, false] as const,
-    enableAiContextSetup: [true, false] as const,
-    enableGenAiDashboardBuilderSkill: [true, false] as const,
-    enableGenAiRightPanel: [true, false] as const,
-    enableGenAiAgenticDataShareOptOut: [true, false] as const,
-    enableAutomationTrigger: [true, false] as const,
-    enableUserDataFiltersUi: [true, false] as const,
-    enableEnhancedInsightPicker: [true, false] as const,
-    enableDashboardVisualizationDelete: [true, false] as const,
-    enableAiLlmAnthropicProvider: [true, false] as const,
-    enableDashboardSidebarResize: [true, false] as const,
-    enableCollapsibleLeftSidebar: [true, false] as const,
-    enableExportTimeoutFix: [true, false] as const,
-    enableDashboardPersistentFiltersAcrossTabs: [true, false] as const,
-    enableAbsoluteDateFilterGranularity: [true, false] as const,
-    enableComputedAttributes: [true, false] as const,
-    enableBusinessBriefingReportsApp: [false, true] as const,
-    enableReportsSubsections: [false, true] as const,
-    enablePublisherV2: [false, true] as const,
-    enableGenAiReportTakeaways: [false, true] as const,
-    enableEmbeddingWriteCommands: [true, false] as const,
-    enableLocalizationOverview: [false, true] as const,
-    enableUserLanguageChange: [true, false] as const,
-};
+/**
+ * Local development overrides. A present key wins over FeatureHub and static configuration,
+ * including false, zero and undefined. Keep this object empty in committed code.
+ */
+export const LocalFeatureFlagOverrides: Partial<ITigerFeatureFlags> = {};

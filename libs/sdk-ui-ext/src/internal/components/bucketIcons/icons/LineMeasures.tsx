@@ -1,0 +1,27 @@
+// (C) 2026 GoodData Corporation
+
+import { type IIconProps } from "@gooddata/sdk-ui-kit";
+
+/**
+ * @internal
+ */
+export function LineMeasures({ color, className, width = 18, height = 14, ariaHidden }: IIconProps) {
+    return (
+        <svg
+            className={className}
+            width={width}
+            height={height}
+            viewBox="0 0 18 14"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden={ariaHidden}
+        >
+            <path
+                d="M1 8s.47424014 4.9959633 2.82352941 4c1.31402236-1.47283533 1.1278969-10.99999895 3.76470588-11 1.08870658-6.4e-7 4.20547021 9.55931203 6.58823531 9C15.797442 9.77586221 17 5 17 5"
+                strokeLinecap="round"
+                stroke={color ?? "#94A1AD"}
+                strokeWidth="2"
+                fill="none"
+            />
+        </svg>
+    );
+}

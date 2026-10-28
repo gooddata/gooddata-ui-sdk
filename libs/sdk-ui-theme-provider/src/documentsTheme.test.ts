@@ -5,7 +5,11 @@ import { describe, expect, it } from "vitest";
 import { type ITheme } from "@gooddata/sdk-model";
 
 import { parseThemeToCssProperties } from "./cssProperties.js";
-import { documentsThemeCssValues, findDocumentLengthsWithUnits } from "./documentsTheme.js";
+import {
+    documentsThemeCssValues,
+    findDocumentLengthsWithUnits,
+    isDocumentsThemeColorSet,
+} from "./documentsTheme.js";
 
 // Theme files are written by hand, so the values are typed loosely on purpose.
 const themeWith = (documents: unknown) => ({ documents }) as ITheme;
@@ -63,6 +67,9 @@ describe("documentsThemeCssValues", () => {
 
     it.each([
         ["backgroundColor", "{theme.palette.primary}", "var(--gd-palette-primary-base)"],
+        ["backgroundColor", "{theme.palette.info}", "var(--gd-palette-info-base)"],
+        ["backgroundColor", "{theme.palette.complementary.c0}", "var(--gd-palette-complementary-0)"],
+        ["borderColor", "{theme.palette.complementary.c9}", "var(--gd-palette-complementary-9)"],
         [
             "backgroundColor",
             "{theme.colors.backgrounds.surface}",
@@ -81,7 +88,11 @@ describe("documentsThemeCssValues", () => {
     });
 
     it.each([
-        "{theme.palette.info}",
+        "{theme.palette.primary.base}",
+        "{theme.palette.error.light}",
+        "{theme.palette.warning.contrast}",
+        "{theme.palette.complementary.c10}",
+        "{theme.palette.complementary}",
         "{theme.colors.backgrounds.unknown}",
         "{theme.colors.shades.default}",
         "{theme.spacing.padding.huge}",
@@ -184,5 +195,79 @@ describe("findDocumentLengthsWithUnits", () => {
     it("lists nothing without a documents section", () => {
         expect(findDocumentLengthsWithUnits(undefined)).toEqual([]);
         expect(findDocumentLengthsWithUnits({ palette: { primary: { base: "#14b2e2" } } })).toEqual([]);
+    });
+});
+
+describe("isDocumentsThemeColorSet", () => {
+    const backgrounds = (entries: unknown[]) => themeWith({ colors: { backgrounds: entries } });
+
+    it.each([
+        ["a hex color", "#ff0000"],
+        ["a CSS keyword", "red"],
+        ["a value with spaces around it", " #ff0000 "],
+        ["a reference to a color the theme writes", "{theme.colors.backgrounds.other}"],
+        ["a palette reference", "{theme.palette.primary}"],
+    ])("is set for a color written as %s", (_, color) => {
+        const theme = backgrounds([
+            { id: "brand", color },
+            { id: "other", color: "#000000" },
+        ]);
+
+        expect(isDocumentsThemeColorSet(theme, "backgrounds", "brand")).toBe(true);
+    });
+
+    it.each([
+        ["no value", undefined],
+        ["a reference to a color the theme does not have", "{theme.colors.backgrounds.nope}"],
+        ["a value that could end the declaration", "red; color: blue"],
+    ])("is not set for a color with %s", (_, color) => {
+        expect(isDocumentsThemeColorSet(backgrounds([{ id: "brand", color }]), "backgrounds", "brand")).toBe(
+            false,
+        );
+    });
+
+    it("agrees with the variables the provider writes", () => {
+        const entries = [
+            { id: "keyword", color: "transparent" },
+            { id: "chain", color: "{theme.colors.backgrounds.nope}" },
+            { id: "empty", color: "" },
+        ];
+        const variables = documentsVariables({ colors: { backgrounds: entries } });
+
+        for (const { id } of entries) {
+            expect(isDocumentsThemeColorSet(backgrounds(entries), "backgrounds", id)).toBe(
+                variables[`--gd-documents-colors-backgrounds-${id}`] !== undefined,
+            );
+        }
+    });
+
+    it("reads a color from the first entry of its id", () => {
+        const theme = backgrounds([{ id: "late" }, { id: "late", color: "#ffffff" }]);
+
+        expect(isDocumentsThemeColorSet(theme, "backgrounds", "late")).toBe(false);
+    });
+
+    it("is not set for a theme id without a documents section", () => {
+        expect(isDocumentsThemeColorSet(undefined, "backgrounds", "brand")).toBe(false);
+        expect(isDocumentsThemeColorSet({}, "backgrounds", "brand")).toBe(false);
+    });
+
+    it("is set for a built-in id the theme leaves out or restates without a value", () => {
+        expect(isDocumentsThemeColorSet(undefined, "texts", "muted")).toBe(true);
+        expect(isDocumentsThemeColorSet(backgrounds([{ id: "accent" }]), "backgrounds", "accent")).toBe(true);
+    });
+
+    it.each([
+        ["an id another list has", "texts", "brand"],
+        ["an unknown list", "shades", "brand"],
+        ["an id an object has by default", "backgrounds", "constructor"],
+        ["an id outside the name grammar", "backgrounds", "brand blue"],
+    ])("is not set for %s", (_, list, id) => {
+        const theme = backgrounds([
+            { id: "brand", color: "#ff0000" },
+            { id: "brand blue", color: "#0000ff" },
+        ]);
+
+        expect(isDocumentsThemeColorSet(theme, list, id)).toBe(false);
     });
 });

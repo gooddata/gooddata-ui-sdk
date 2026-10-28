@@ -3155,6 +3155,10 @@
         "text": "Search",
         "crowdinContext": "Default placeholder text in the search input of the generic autocomplete primitive. Sentence case."
     },
+    "uiKit.toast.regionLabel": {
+        "text": "{count, plural, one {# notification} other {# notifications}}",
+        "crowdinContext": "Accessible name of the area with the toast notifications (success and error messages that pop up), read by screen readers. # is the number of notifications shown."
+    },
     "uiKit.autocomplete.stateLoading": {
         "text": "Loading…",
         "crowdinContext": "Placeholder shown inside the autocomplete dropdown while results are loading."
@@ -4854,10 +4858,6 @@
     "tabs.allTabsListLabel.noActions": {
         "text": "List of all tabs",
         "crowdinContext": "Screen reader description for the list of all tabs when there are no actions available."
-    },
-    "messages.accessibility.noMessages": {
-        "text": "No messages",
-        "crowdinContext": "Accessibility label for the empty state of the message list. Used by screen readers."
     },
     "messages.accessibility.partial.error": {
         "text": "{count, plural, one {# error} other {# errors}}",

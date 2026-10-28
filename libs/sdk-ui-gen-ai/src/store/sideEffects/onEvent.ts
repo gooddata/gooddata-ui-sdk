@@ -324,7 +324,7 @@ export function* onNewMessage({ payload: message }: ReturnType<typeof newMessage
 }
 
 export function* onEvaluateMessageComplete({
-    payload: { assistantMessageId, cancelled, conversationId },
+    payload: { assistantMessageId, cancelled, conversationId, responseCompleted },
 }: ReturnType<typeof evaluateMessageCompleteAction>) {
     const message: MessageInfo | null = yield call(loadMessage, assistantMessageId, conversationId);
 
@@ -345,6 +345,9 @@ export function* onEvaluateMessageComplete({
         skills: message.skills,
         threadId,
         ...(cancelled ? { cancelled: true } : {}),
+        ...(responseCompleted && !cancelled && message.useCase !== "INVALID"
+            ? { responseCompleted: true }
+            : {}),
     });
 }
 

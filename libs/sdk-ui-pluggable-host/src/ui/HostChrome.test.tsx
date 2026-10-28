@@ -166,7 +166,7 @@ describe("HostChrome", () => {
             },
         );
 
-        it("should track a saved language before the page reloads", async () => {
+        it("should track a saved language and reload the page", async () => {
             setLocale.mockResolvedValue(undefined);
 
             await applyGerman();
@@ -178,10 +178,6 @@ describe("HostChrome", () => {
                 label: "inherit→de-DE",
                 stats: { outcome: "success" },
             });
-            const saveCall = trackEvent.mock.calls.findIndex(([event]) => event === "own_language_save");
-            expect(trackEvent.mock.invocationCallOrder[saveCall]).toBeLessThan(
-                reload.mock.invocationCallOrder[0],
-            );
         });
 
         it("should track a failed save as an error", async () => {

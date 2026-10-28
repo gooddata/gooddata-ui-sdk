@@ -92,10 +92,23 @@ const setFilterLoading: FilterViewsReducer<PayloadAction<boolean>> = (state, act
     state.isLoading = action.payload;
 };
 
+const setDefaultFilterViewAppliedTabs: FilterViewsReducer<PayloadAction<string[]>> = (state, action) => {
+    state.defaultFilterViewAppliedTabs = action.payload;
+};
+
+const markDefaultFilterViewApplied: FilterViewsReducer<PayloadAction<string>> = (state, action) => {
+    const appliedTabs = state.defaultFilterViewAppliedTabs ?? [];
+    if (!appliedTabs.includes(action.payload)) {
+        state.defaultFilterViewAppliedTabs = [...appliedTabs, action.payload];
+    }
+};
+
 export const filterViewsReducers = {
     setFilterViews,
     addFilterView,
     removeFilterView,
     setFilterViewAsDefault,
     setFilterLoading,
+    setDefaultFilterViewAppliedTabs,
+    markDefaultFilterViewApplied,
 };

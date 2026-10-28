@@ -41,6 +41,12 @@ export interface ISetFilterViewAsDefault {
 export interface IFilterViewsState {
     filterViews: IFilterViews[];
     isLoading: boolean;
+    /**
+     * Tabs that have taken their default filter view in this session. While filters persist across tabs,
+     * a tab takes its own default view only on its first visit.
+     * @internal
+     */
+    defaultFilterViewAppliedTabs?: string[];
 }
 
 export const filterViewsInitialState: IFilterViewsState = { filterViews: [], isLoading: false };

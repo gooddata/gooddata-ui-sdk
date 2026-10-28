@@ -533,6 +533,8 @@ describe("page structure", () => {
         "{theme.colors.backgrounds.surface}",
         "{theme.colors.lines.default}",
         "{theme.palette.primary}",
+        "{theme.palette.info}",
+        "{theme.palette.complementary.c5}",
     ])("accepts the color %s", (color) => {
         expect(
             validatePublisherPageBodyV2(pageWith({ type: "text", id: "a", style: { textColor: color } })),
@@ -550,7 +552,13 @@ describe("page structure", () => {
         "rgba(0, 0, 0, 0.5)",
         "rgb(0, 0, 0, 1.)",
         "{theme.colors.fills.surface}",
-        "{theme.palette.info}",
+        "{theme.palette.primary.base}",
+        "{theme.palette.info.base}",
+        "{theme.palette.error.contrast}",
+        "{theme.palette.primary.light}",
+        "{theme.palette.primary.lighter}",
+        "{theme.palette.complementary.c10}",
+        "{theme.palette.complementary}",
     ])("rejects the color %s", (color) => {
         expect(
             paths(

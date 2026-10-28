@@ -141,10 +141,20 @@ $editable-label-border: #b1c1d1;
             top: 6px;
             left: 6px;
             float: left;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
             width: 16px;
             height: 16px;
             background-position: center;
             background-repeat: no-repeat;
+
+            // Keep the icon at its natural size and let the box clip it, the same way the
+            // background-image rendering of the former svg assets was centered and clipped.
+            > svg {
+                flex-shrink: 0;
+            }
         }
 
         &.bucket-title-configuration-panel .bucket-title-icon {

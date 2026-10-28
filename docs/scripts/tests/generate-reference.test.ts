@@ -13,6 +13,7 @@ import {
     labelBareCodeFences,
     overviewToIndexBody,
     pruneApiJson,
+    isPackageSkipped,
     collectSourcePaths,
     esmPathToSrcCandidates,
     packageIndexFrontmatter,
@@ -94,6 +95,13 @@ test("pruneApiJson: package with only Internal/Alpha declarations keeps zero", (
     assert.equal(kept, 2);
     assert.equal(keptStable, 0);
     assert.equal(droppedReleaseTag, 1);
+});
+
+test("isPackageSkipped: alpha-only packages are skipped unless opted in", () => {
+    assert.equal(isPackageSkipped("util", { kept: 2, keptStable: 0 }), true);
+    assert.equal(isPackageSkipped("sdk-ui-analytical-designer", { kept: 2, keptStable: 0 }), false);
+    assert.equal(isPackageSkipped("sdk-ui-analytical-designer", { kept: 0, keptStable: 0 }), true);
+    assert.equal(isPackageSkipped("util", { kept: 3, keptStable: 1 }), false);
 });
 
 test("pruneApiJson: mixed package keeps Public and None, drops the rest", () => {

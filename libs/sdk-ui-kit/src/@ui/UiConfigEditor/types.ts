@@ -60,6 +60,26 @@ export interface IUiConfigEditorLabels {
 }
 
 /**
+ * A warning about a value in the editor's text, shown in the lint gutter. It does not stop the value
+ * being edited or emitted.
+ *
+ * @internal
+ */
+export interface IUiConfigEditorWarning {
+    /**
+     * Where the value sits in the parsed document, as object keys and array indexes. The same path
+     * finds it whichever language is displayed.
+     */
+    path: ReadonlyArray<string | number>;
+    /**
+     * A piece of the value's text to mark, such as one marker in a string, at each place the value
+     * holds it. The whole value is marked when it is absent or the value does not hold it.
+     */
+    part?: string;
+    message: string;
+}
+
+/**
  * @internal
  */
 export interface IUiConfigEditorProps {
@@ -110,6 +130,11 @@ export interface IUiConfigEditorProps {
     completionSource?: YamlCompletionSource;
     /** The editor's localized texts. Anything omitted falls back to a neutral default. */
     labels?: IUiConfigEditorLabels;
+    /**
+     * Warnings about values, shown in the lint gutter next to any syntax error. A warning whose path
+     * the displayed text does not hold is not shown.
+     */
+    warnings?: readonly IUiConfigEditorWarning[];
     /**
      * Renders the contents of the toolbar's context menu, usually a `UiMenu`.
      *
