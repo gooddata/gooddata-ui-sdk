@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-embedding",
-    "version": "11.65.0-alpha.11",
+    "version": "11.65.0-alpha.12",
     "description": "GoodData Embedding APIs",
     "license": "MIT",
     "author": "GoodData",
