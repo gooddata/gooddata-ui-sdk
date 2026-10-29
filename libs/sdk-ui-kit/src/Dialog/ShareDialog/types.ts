@@ -76,8 +76,8 @@ export interface IShareDialogProps {
     dashboardFilters?: FilterContextItem[];
     dashboardParameters?: IDashboardParameter[];
     /**
-     * Base path used when building the dashboard share link, e.g. `/workspace/{id}/dashboards/` when the
-     * dashboards shell application is enabled. Defaults to `/dashboards/` (legacy standalone) when omitted.
+     * Base path used when building the dashboard share link, e.g. `/workspace/{id}/dashboards/`.
+     * Defaults to the current page path when omitted.
      */
     dashboardLinkBasePath?: string;
     isGranteeShareLoading?: boolean;

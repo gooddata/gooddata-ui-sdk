@@ -590,6 +590,8 @@ const messagesSlice = createSlice({
             state.currentConversation = createEmptyConversation();
             // mark as loaded to prevent auto-loading last conversation while on landing
             state.loaded = true;
+            // clear global error so new conversation can be loaded
+            delete state.globalError;
         },
         setCurrentConversationAction: (
             state,

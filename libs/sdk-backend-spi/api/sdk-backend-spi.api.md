@@ -2223,7 +2223,7 @@ export interface ILocalizationTranslationUsage {
 // @alpha
 export interface ILocalizationTranslationValueUsage {
     // (undocumented)
-    bySetting: Partial<Record<LocalizationTranslatedSettingType, Record<LocalizationTranslationState, ILocalizationTranslationCount>>>;
+    bySetting: Partial<Record<LocalizationSettingType, Partial<Record<LocalizationTranslationState, ILocalizationTranslationCount>>>>;
     // (undocumented)
     content: ILocalizationValueContent;
 }
@@ -3904,7 +3904,7 @@ export type LocalizationSettingType = "LOCALE" | "METADATA_LOCALE" | "DATA_LOCAL
 export type LocalizationTranslatedSettingType = "METADATA_LOCALE" | "DATA_LOCALE";
 
 // @alpha
-export type LocalizationTranslationState = "missing" | "available";
+export type LocalizationTranslationState = "missing" | "available" | "variant";
 
 // @alpha
 export type LocalizationUsageSource = "USER" | "WORKSPACE" | "PARENT" | "ORGANIZATION" | "ENVIRONMENT" | "DEFAULT";

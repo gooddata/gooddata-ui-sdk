@@ -5,7 +5,7 @@ exports[`generateHeaderMenuItemsGroups > should return absolute paths for Panthe
   [
     {
       "className": "s-menu-kpis",
-      "href": "https://cdnUrl/dashboards/#/workspace/TestWorkspaceId",
+      "href": "https://cdnUrl/workspace/TestWorkspaceId/dashboards",
       "isActiveByStartWith": undefined,
       "key": "gs.header.kpis.new",
     },
@@ -36,7 +36,7 @@ exports[`generateHeaderMenuItemsGroups > should return correct absolute paths fo
   [
     {
       "className": "s-menu-kpis",
-      "href": "https://cdnUr/dashboards/#/workspace/TestWorkspaceId",
+      "href": "https://cdnUr/workspace/TestWorkspaceId/dashboards",
       "isActiveByStartWith": undefined,
       "key": "gs.header.kpis.new",
     },
@@ -67,7 +67,7 @@ exports[`generateHeaderMenuItemsGroups > should return relative paths for Panthe
   [
     {
       "className": "s-menu-kpis",
-      "href": "/dashboards/#/workspace/TestWorkspaceId",
+      "href": "/workspace/TestWorkspaceId/dashboards",
       "isActiveByStartWith": undefined,
       "key": "gs.header.kpis.new",
     },

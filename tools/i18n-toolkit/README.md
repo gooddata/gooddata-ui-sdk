@@ -211,6 +211,6 @@ const text = intl.formatMessage(condition ? messages.textOne : messages.textTwo)
 
 ## License
 
-(C) 2017-2022 GoodData Corporation
+(C) 2017-2026 GoodData Corporation
 
 This project is under MIT License. See [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-kit/LICENSE).

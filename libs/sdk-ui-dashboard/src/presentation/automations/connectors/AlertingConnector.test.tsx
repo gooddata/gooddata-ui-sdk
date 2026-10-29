@@ -109,7 +109,6 @@ vi.mock("../../../model/store/config/configSelectors.js", () => ({
     selectIsEmbedded: () => false,
     selectSettings: () => ({
         enableShellApplication: true,
-        enableShellApplication_dashboards: true,
     }),
 }));
 
@@ -200,7 +199,6 @@ describe("AlertingConnector", () => {
             dashboardId: "other-dashboard",
             automationId: "alert-1",
             isEmbedded: false,
-            useHostRoute: true,
             queryParams: { recipient: "recipient@example.com" },
         });
         expect(fixtures.navigate).toHaveBeenCalledWith("/target-url");

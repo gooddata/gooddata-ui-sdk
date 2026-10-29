@@ -11,6 +11,6 @@ This package defines APIs for embedding and interfacing with the [embedded GoodD
 
 ## License
 
-(C) 2017-2022 GoodData Corporation
+(C) 2017-2026 GoodData Corporation
 
 This project is under MIT License. See [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-embedding/LICENSE).

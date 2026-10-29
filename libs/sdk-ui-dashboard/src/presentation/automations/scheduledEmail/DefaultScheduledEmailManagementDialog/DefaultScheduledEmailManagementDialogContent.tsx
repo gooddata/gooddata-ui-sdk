@@ -27,7 +27,6 @@ import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../constants/zIndex.js";
 import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 import { useScheduledEmailManagementDialogContext } from "../../contexts/ScheduledEmailManagementDialogContext.js";
 import { type AutomationDashboardUrlBuilder } from "../../shared/types.js";
-import { computeUseHostRoute } from "../../shared/utils/automationUtils.js";
 import { SCHEDULED_EMAIL_DIALOG_ID } from "../DefaultScheduledEmailDialog/constants.js";
 import { useScheduleEmailDialogAccessibility } from "../hooks/useScheduleEmailDialogAccessibility.js";
 import { isMobileView } from "../utils/responsive.js";
@@ -55,7 +54,6 @@ export function DefaultScheduledEmailManagementDialogContent({
     const {
         timezone,
         locale,
-        settings,
         isWhiteLabeled,
         isExecutionTimestampMode,
         externalRecipient: externalRecipientOverride,
@@ -75,7 +73,6 @@ export function DefaultScheduledEmailManagementDialogContent({
     } = useScheduledEmailManagementDialogContext();
 
     const enableBulkActions = !enableAccessibilityMode;
-    const useHostRoute = computeUseHostRoute(settings);
     const { returnFocusTo } = useScheduleEmailDialogAccessibility();
 
     const maxAutomationsReached = automations.length >= maxAutomations && !unlimitedAutomations;
@@ -102,12 +99,11 @@ export function DefaultScheduledEmailManagementDialogContent({
                       dashboardId,
                       tabId,
                       isEmbedded,
-                      useHostRoute,
                       queryParams: externalRecipientOverride
                           ? { recipient: externalRecipientOverride }
                           : undefined,
                   }),
-        [customDashboardUrlBuilder, isEmbedded, useHostRoute, externalRecipientOverride],
+        [customDashboardUrlBuilder, isEmbedded, externalRecipientOverride],
     );
 
     const titleElementId = useId();

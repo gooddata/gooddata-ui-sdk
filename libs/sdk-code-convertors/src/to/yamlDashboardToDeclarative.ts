@@ -1126,7 +1126,7 @@ export function yamlFilterContextToDeclarative(
                         ...(filter.metric_filters
                             ? {
                                   validateElementsBy: filter["metric_filters"].map((metricFilter) =>
-                                      createIdentifier(metricFilter),
+                                      createIdentifier(metricFilter, { forceMetric: true }),
                                   ),
                               }
                             : {}),
@@ -1333,7 +1333,7 @@ export function yamlFilterContextToDeclarative(
                         ...(filter.metric_filters
                             ? {
                                   validateElementsBy: filter.metric_filters.map((metricFilter) =>
-                                      createIdentifier(metricFilter),
+                                      createIdentifier(metricFilter, { forceMetric: true }),
                                   ),
                               }
                             : {}),

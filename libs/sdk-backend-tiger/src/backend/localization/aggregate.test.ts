@@ -164,7 +164,7 @@ describe("translationUsage", () => {
         translationUsage(scope).values.find((entry) => entry.content.value === code)?.bySetting;
 
     it("counts the workspaces that set a language without a translation", () => {
-        expect(translationsOf("es-ES")?.METADATA_LOCALE?.missing.workspaces).toBe(10);
+        expect(translationsOf("es-ES")?.METADATA_LOCALE?.missing?.workspaces).toBe(10);
     });
 
     it("counts the workspaces that could use a translation to their interface language", () => {
@@ -173,7 +173,72 @@ describe("translationUsage", () => {
     });
 
     it("finds nothing missing where every workspace has the translation", () => {
-        expect(translationsOf("de-DE")?.METADATA_LOCALE?.missing.workspaces ?? 0).toBe(0);
+        expect(translationsOf("de-DE")?.METADATA_LOCALE?.missing).toBeUndefined();
+    });
+
+    it("counts the workspaces and people whose interface language has no translation", () => {
+        expect(translationsOf("fr-FR")?.LOCALE).toEqual({ missing: { workspaces: 9, users: 0 } });
+        expect(translationsOf("ko-KR")?.LOCALE).toEqual({ missing: { workspaces: 0, users: 3 } });
+        expect(translationsOf("it-IT")?.LOCALE).toBeUndefined();
+    });
+
+    it("never reports English", () => {
+        expect(translationsOf("en-GB")).toBeUndefined();
+        expect(translationsOf("en-US")).toBeUndefined();
+    });
+
+    it("reports a metadata language with a translation to another code of the same language as a variant", () => {
+        const austria = {
+            ...workspaces[0],
+            id: "austria",
+            settings: {
+                ...workspaces[0].settings,
+                METADATA_LOCALE: { content: { value: "de-AT" }, source: "WORKSPACE" as const },
+            },
+        };
+        const variantScope = {
+            workspaces: [austria],
+            people: [],
+            translatedLocales: () => new Set(["en-US", "de-DE"]),
+        };
+
+        expect(
+            translationUsage(variantScope).values.find((entry) => entry.content.value === "de-AT")?.bySetting,
+        ).toEqual({ METADATA_LOCALE: { variant: { workspaces: 1, users: 0 } } });
+        expect(
+            usageWorkspaces(variantScope, {
+                value: "de-AT",
+                setting: "METADATA_LOCALE",
+                translation: "variant",
+            }).totalCount,
+        ).toBe(1);
+    });
+
+    it("reports a person as a variant only when every workspace without the translation has another code of it", () => {
+        const person = {
+            id: "user-at",
+            name: "Austrian user",
+            email: "at@example.com",
+            own: { METADATA_LOCALE: "de-AT" },
+            workspaceIds: ["vienna", "graz"],
+            settings: { METADATA_LOCALE: { content: { value: "de-AT" }, source: "USER" as const } },
+        };
+        const usageOf = (grazLocales: string[]) =>
+            translationUsage({
+                workspaces: [],
+                people: [person],
+                translatedLocales: (workspaceId) =>
+                    new Set(workspaceId === "vienna" ? ["de-DE"] : grazLocales),
+            }).values.find((entry) => entry.content.value === "de-AT")?.bySetting;
+
+        expect(usageOf([])).toEqual({ METADATA_LOCALE: { missing: { workspaces: 0, users: 1 } } });
+        expect(usageOf(["de-DE"])).toEqual({ METADATA_LOCALE: { variant: { workspaces: 0, users: 1 } } });
+    });
+
+    it("lists the workspaces whose interface language has no translation", () => {
+        const page = usageWorkspaces(scope, { value: "fr-FR", setting: "LOCALE", translation: "missing" });
+
+        expect(page.totalCount).toBe(9);
     });
 
     it("lists the workspaces behind a count", () => {

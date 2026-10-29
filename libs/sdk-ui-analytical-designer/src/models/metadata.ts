@@ -1281,9 +1281,7 @@ function transformVisualizationDateFilter(
     overTimeComparisonType: OverTimeComparisonType,
     ignoreOverTimeComparisonType: boolean,
 ): IDateFilter {
-    let datasetRef = isVisualizationObjectRelativeDateFilter(visualizationFilter)
-        ? visualizationFilter.relativeDateFilter.dataSet
-        : visualizationFilter.absoluteDateFilter.dataSet;
+    let datasetRef = getDateFilterDataSet(visualizationFilter);
 
     /**
      * convertor from SDK returns ref without type
@@ -1307,6 +1305,13 @@ function transformVisualizationDateFilter(
         dateDatasetRef: datasetRef,
         ...(emptyDateValuesFilter ? { emptyDateValuesFilter } : {}),
     };
+}
+
+/** The date dataset a stored date filter filters on. */
+function getDateFilterDataSet(visualizationFilter: IVisualizationObjectDateFilter): ObjQualifier {
+    return isVisualizationObjectRelativeDateFilter(visualizationFilter)
+        ? visualizationFilter.relativeDateFilter.dataSet
+        : visualizationFilter.absoluteDateFilter.dataSet;
 }
 
 /** The empty date values mode a stored date filter carries as `emptyValueHandling`, if any. */
@@ -1564,6 +1569,83 @@ function detectEmptyDateValuesAttributeFilter(
     return undefined;
 }
 
+/**
+ * Finds the LEGACY empty date values attribute filters (the single-"" element filters on a date
+ * attribute), kept readable so insights saved before the mode moved to `emptyValueHandling` open.
+ */
+function collectLegacyEmptyDateValuesFilters(
+    visualizationFilters: ReadonlyArray<VisualizationObjectExtendedFilter>,
+    dateDatasets: IDateDatasets | undefined,
+) {
+    // keyed by the date dataset ref string
+    const emptyDateValuesFilters: Record<string, { mode: "only" | "exclude"; dateDatasetRef: ObjRef }> = {};
+    const emptyDateValuesFilterIndices = new globalThis.Set<number>();
+
+    visualizationFilters.forEach((filter, index) => {
+        if (isVisualizationObjectAttributeFilter(filter)) {
+            const detected = detectEmptyDateValuesAttributeFilter(filter, dateDatasets);
+            if (detected) {
+                emptyDateValuesFilters[objRefToString(detected.dateDatasetRef)] = detected;
+                emptyDateValuesFilterIndices.add(index);
+            }
+        }
+    });
+
+    return { emptyDateValuesFilters, emptyDateValuesFilterIndices };
+}
+
+/**
+ * Rewrites the stored filters so that every representation of the same empty date values mode compares
+ * equal: the legacy `""` attribute filter is folded into its date filter's `emptyValueHandling` (the way
+ * the reader does), All time with a mode becomes the ALL_TIME_GRANULARITY filter whether it is stored with
+ * bounds or without, and the `include` default is dropped as the writer drops it. Only for comparing
+ * stored content, the result is never saved.
+ */
+export function normalizeEmptyDateValuesFilters(
+    visualizationFilters: ReadonlyArray<VisualizationObjectExtendedFilter>,
+    dateDatasets: IDateDatasets | undefined,
+): VisualizationObjectExtendedFilter[] {
+    const { emptyDateValuesFilters, emptyDateValuesFilterIndices } = collectLegacyEmptyDateValuesFilters(
+        visualizationFilters,
+        dateDatasets,
+    );
+
+    return visualizationFilters
+        .filter((_filter, index) => !emptyDateValuesFilterIndices.has(index))
+        .map((filter) => {
+            if (!isVisualizationObjectDateFilter(filter)) {
+                return filter;
+            }
+            const dataSet = getDateFilterDataSet(filter);
+            const storedMode = getDateFilterEmptyValueHandling(filter);
+            const mode = emptyValueHandlingToMd(
+                storedMode ?? emptyDateValuesFilters[objRefToString(dataSet)]?.mode,
+            );
+
+            if (isVisualizationObjectAbsoluteDateFilter(filter)) {
+                return {
+                    absoluteDateFilter: { ...omit(filter.absoluteDateFilter, "emptyValueHandling"), ...mode },
+                };
+            }
+            const { granularity, from, to } = filter.relativeDateFilter;
+            const isAllTime = granularity === ALL_TIME_GRANULARITY || from === undefined || to === undefined;
+            if (isAllTime && !isEmpty(mode)) {
+                return {
+                    relativeDateFilter: {
+                        dataSet,
+                        granularity: ALL_TIME_GRANULARITY,
+                        from: 0,
+                        to: 0,
+                        ...mode,
+                    },
+                };
+            }
+            return {
+                relativeDateFilter: { ...omit(filter.relativeDateFilter, "emptyValueHandling"), ...mode },
+            };
+        });
+}
+
 function transformVisualizationFilters(
     metadataObject: IVisualizationObjectContent,
     overTimeComparisonType: OverTimeComparisonType,
@@ -1572,22 +1654,11 @@ function transformVisualizationFilters(
     const visualizationFilters = metadataObject.filters || [];
     const dateDatasets = additionalData?.dateDatasets || undefined;
 
-    // First pass: identify LEGACY empty date values attribute filters (the single-"" element filters on a
-    // date attribute), kept readable so insights saved before the mode moved to `emptyValueHandling` open
-    const emptyDateValuesFilters: Record<string, { mode: "only" | "exclude"; dateDatasetRef: ObjRef }> = {};
-    const emptyDateValuesFilterIndices = new globalThis.Set<number>();
-
-    visualizationFilters.forEach((filter, index) => {
-        if (isVisualizationObjectAttributeFilter(filter)) {
-            const detected = detectEmptyDateValuesAttributeFilter(filter, dateDatasets);
-            if (detected) {
-                // Key by date dataset ref string for lookup
-                const key = objRefToString(detected.dateDatasetRef);
-                emptyDateValuesFilters[key] = detected;
-                emptyDateValuesFilterIndices.add(index);
-            }
-        }
-    });
+    // First pass: identify the legacy empty date values attribute filters
+    const { emptyDateValuesFilters, emptyDateValuesFilterIndices } = collectLegacyEmptyDateValuesFilters(
+        visualizationFilters,
+        dateDatasets,
+    );
 
     // Second pass: transform filters, setting emptyDateValuesFilter on date filters
     let firstDateFilterTransformed = false;

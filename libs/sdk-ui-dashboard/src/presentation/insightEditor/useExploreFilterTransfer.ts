@@ -63,10 +63,12 @@ export interface IExploreFilterTransfer {
  * explored insight shows the same data as the widget.
  *
  * @remarks
- * The transfer starts when Analytical Designer opens the insight, before its first execution ends.
+ * The transfer starts when the opened insight first renders. Analytical Designer replaces its filters
+ * with each answer of the visualization to a reference point change. An answer that the opened
+ * insight requested can arrive after the filters were set, and then removes them without an error.
  * When Analytical Designer is not ready yet (its date datasets still load), the command fails and the
- * transfer retries until it succeeds or takes too long. The rendered insight starts the transfer again
- * if the retries stopped too early.
+ * transfer retries until it succeeds or takes too long. A later render starts the transfer again if
+ * the retries stopped too early.
  */
 export function useExploreFilterTransfer(
     target: InsightEditorTarget,
@@ -213,8 +215,7 @@ export function useExploreFilterTransfer(
             };
             apiRef.current?.sendCommand(command);
         }
-        void keepFilterContext();
-    }, [isExplore, apiRef, keepFilterContext]);
+    }, [isExplore, apiRef]);
 
     const onInsightRendered = useCallback(() => {
         if (isExplore) {

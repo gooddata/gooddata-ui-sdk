@@ -3,7 +3,7 @@
 /** Other use cases are covered in `metadata_legacy.test.ts`. */
 import { describe, expect, it } from "vitest";
 
-import { idRef } from "@gooddata/sdk-model";
+import { type ObjRef, idRef } from "@gooddata/sdk-model";
 
 import { type IDateFilter, type IDateFilterConfig } from "../store/filter_bar/filter_bar_types.js";
 import { dateCreated } from "../tests/constants.test.helpers.js";
@@ -24,6 +24,7 @@ import {
     filtersToMetadata,
     findItemInCache,
     metadataToBuckets,
+    normalizeEmptyDateValuesFilters,
 } from "./metadata.js";
 import {
     itemCache,
@@ -444,6 +445,97 @@ describe("empty date values mode", () => {
 
             expect(filters).toHaveLength(1);
             expect(filters[0]).toMatchObject({ type: "date", emptyDateValuesFilter: "only" });
+        });
+    });
+
+    describe("normalizeEmptyDateValuesFilters", () => {
+        const normalize = (filters: VisualizationObjectExtendedFilter[]) =>
+            normalizeEmptyDateValuesFilters(filters, defaultDateDatasets);
+        // what AD writes back for a stored insight opened without edits
+        const reSaved = (stored: VisualizationObjectExtendedFilter[], useEmptyValueHandling: boolean) =>
+            filtersToMetadata(
+                metadataToBuckets({
+                    metadataObject: {
+                        buckets: [],
+                        filters: stored,
+                    } as unknown as IVisualizationObjectContent,
+                    additionalData: defaultAdditionalData,
+                }).filters,
+                {},
+                defaultDateDatasets,
+                useEmptyValueHandling,
+            );
+        // the ref as the reader types it, so the stored and the written filters compare without the
+        // ref normalization prepareForComparison does afterwards
+        const dataSet = { ...dateCreated.ref, type: "dataSet" } as ObjRef;
+        const allTime = { relativeDateFilter: { dataSet, granularity: "GDC.time.year" } };
+        const lastYearFilter = {
+            relativeDateFilter: { dataSet, granularity: "GDC.time.year", from: -1, to: -1 },
+        };
+        const weekDisplayForm = dateCreated.attributes[1].dfRef;
+
+        it.each<[string, VisualizationObjectExtendedFilter[]]>([
+            ["legacy exclude on All time", [allTime, emptyValuesAttributeFilter]],
+            [
+                "legacy only on All time",
+                [allTime, { positiveAttributeFilter: { displayForm: yearDisplayForm, in: [""] } }],
+            ],
+            [
+                "legacy exclude on another granularity's label",
+                [allTime, { negativeAttributeFilter: { displayForm: weekDisplayForm, notIn: [""] } }],
+            ],
+            ["legacy exclude on a relative period", [lastYearFilter, emptyValuesAttributeFilter]],
+            [
+                "All time with the mode",
+                [
+                    {
+                        relativeDateFilter: {
+                            dataSet,
+                            granularity: "ALL_TIME_GRANULARITY",
+                            from: 0,
+                            to: 0,
+                            emptyValueHandling: "exclude",
+                        },
+                    },
+                ],
+            ],
+            [
+                "bound-less All time with the mode",
+                [{ relativeDateFilter: { ...allTime.relativeDateFilter, emptyValueHandling: "only" } }],
+            ],
+            [
+                "a relative period with the mode",
+                [
+                    {
+                        relativeDateFilter: {
+                            ...lastYearFilter.relativeDateFilter,
+                            emptyValueHandling: "exclude",
+                        },
+                    },
+                ],
+            ],
+            [
+                "include stored on All time",
+                [{ relativeDateFilter: { ...allTime.relativeDateFilter, emptyValueHandling: "include" } }],
+            ],
+        ])("compares %s equal to what AD writes back with the flag on and off", (_name, stored) => {
+            expect(normalize(reSaved(stored, true))).toEqual(normalize(stored));
+            expect(normalize(reSaved(stored, false))).toEqual(normalize(stored));
+        });
+
+        it("keeps different modes different", () => {
+            expect(normalize([allTime, emptyValuesAttributeFilter])).not.toEqual(
+                normalize([allTime, { positiveAttributeFilter: { displayForm: yearDisplayForm, in: [""] } }]),
+            );
+            expect(normalize([allTime, emptyValuesAttributeFilter])).not.toEqual(normalize([allTime]));
+        });
+
+        it("leaves an empty string filter on a non-date attribute alone", () => {
+            const attributeFilter: VisualizationObjectExtendedFilter = {
+                negativeAttributeFilter: { displayForm: idRef("label.region"), notIn: [""] },
+            };
+
+            expect(normalize([allTime, attributeFilter])).toEqual([allTime, attributeFilter]);
         });
     });
 });

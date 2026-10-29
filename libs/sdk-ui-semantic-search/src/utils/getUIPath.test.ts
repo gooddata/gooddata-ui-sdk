@@ -19,6 +19,15 @@ describe("getUIPath", () => {
         ).toBe("/workspace/workspace-id/metrics/metric/metric-id");
     });
 
+    it("returns hosted dashboards paths for dashboards", () => {
+        expect(getUIPath("dashboard", "dash-id", "workspace-id")).toBe(
+            "/workspace/workspace-id/dashboards/#/dashboard/dash-id",
+        );
+        expect(getUIPath("dashboardVisualization", "dash-id", "workspace-id", "vis-id")).toBe(
+            "/workspace/workspace-id/dashboards/#/dashboard/dash-id?visualizationId=vis-id",
+        );
+    });
+
     it("returns hosted analytical designer path for visualizations", () => {
         expect(getUIPath("visualization", "vis-id", "workspace-id")).toBe(
             "/workspace/workspace-id/analyze/#/vis-id/edit",

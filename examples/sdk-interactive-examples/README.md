@@ -5,32 +5,32 @@ Here are basic usage examples of [GoodData.UI](https://github.com/gooddata/goodd
 ## List of Examples
 
 <!---{LIST-START}-->
-* Attribute Filter Example - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-attributefilter?file=/src/example/Example.tsx)
 
-* Chart config manipulation - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-chartconfig?file=/src/example/Example.tsx)
+- Attribute Filter Example - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-attributefilter?file=/src/example/Example.tsx)
 
-* ColumnChart - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-columnchart?file=/src/example/Example.tsx)
+- Chart config manipulation - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-chartconfig?file=/src/example/Example.tsx)
 
-* ComboChart - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-combochart?file=/src/example/Example.tsx)
+- ColumnChart - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-columnchart?file=/src/example/Example.tsx)
 
-* Dashboard component - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-dashboard?file=/src/example/Example.tsx)
+- ComboChart - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-combochart?file=/src/example/Example.tsx)
 
-* DateFilter - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-datefilter?file=/src/example/Example.tsx)
+- Dashboard component - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-dashboard?file=/src/example/Example.tsx)
 
-* Dependent Filters Example - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-dependentfilters?file=/src/example/Example.tsx)
+- DateFilter - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-datefilter?file=/src/example/Example.tsx)
 
-* Execute - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-execute?file=/src/example/Example.tsx)
+- Dependent Filters Example - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-dependentfilters?file=/src/example/Example.tsx)
 
-* Granularity - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-granularity?file=/src/example/Example.tsx)
+- Execute - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-execute?file=/src/example/Example.tsx)
 
-* Headline - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-headline?file=/src/example/Example.tsx)
+- Granularity - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-granularity?file=/src/example/Example.tsx)
 
-* PivotTable - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-pivottable?file=/src/example/Example.tsx)
+- Headline - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-headline?file=/src/example/Example.tsx)
 
-* RelativeDateFilter - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-relativedatefilter?file=/src/example/Example.tsx)
+- PivotTable - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-pivottable?file=/src/example/Example.tsx)
 
-* Repeater Example - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-repeater?file=/src/example/Example.tsx)
+- RelativeDateFilter - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-relativedatefilter?file=/src/example/Example.tsx)
 
+- Repeater Example - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-repeater?file=/src/example/Example.tsx)
 
 <!---{LIST-END}}-->
 
@@ -216,6 +216,6 @@ Do not update catalog in specific example. It will be lost in next template upda
 
 ## License
 
-(C) 2017-2021 GoodData Corporation
+(C) 2017-2026 GoodData Corporation
 
 This repository is under the GoodData commercial license available in the [LICENSE](LICENSE) file because it contains a commercial package, HighCharts.

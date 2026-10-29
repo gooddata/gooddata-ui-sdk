@@ -60,7 +60,24 @@ export interface IUsageScope {
 }
 
 const TRANSLATED_SETTINGS: LocalizationTranslatedSettingType[] = ["METADATA_LOCALE", "DATA_LOCALE"];
-const TRANSLATION_STATES: LocalizationTranslationState[] = ["missing", "available"];
+const TRANSLATION_USAGE_SETTINGS: LocalizationSettingType[] = ["LOCALE", ...TRANSLATED_SETTINGS];
+
+function isEnglish(code: string): boolean {
+    return code === "en" || code.startsWith("en-");
+}
+
+function languageOf(code: string): string | undefined {
+    try {
+        return new Intl.Locale(code).language;
+    } catch {
+        return undefined;
+    }
+}
+
+function hasSameLanguage(locales: ReadonlySet<string>, code: string): boolean {
+    const language = languageOf(code);
+    return !!language && [...locales].some((locale) => languageOf(locale) === language);
+}
 
 // Workspaces outside the scope still count for the people who can open them.
 function translationState(
@@ -68,22 +85,36 @@ function translationState(
     settings: ResolvedSettings,
     workspaceIds: string[],
     value: string,
-    setting: LocalizationTranslatedSettingType,
+    setting: LocalizationSettingType,
 ): LocalizationTranslationState | undefined {
-    const translated = (workspaceId: string) => scope.translatedLocales?.(workspaceId, setting).has(value);
+    if (isEnglish(value)) {
+        return undefined;
+    }
+    const localesOf = (workspaceId: string, translated: LocalizationTranslatedSettingType) =>
+        scope.translatedLocales?.(workspaceId, translated) ?? new Set<string>();
+    if (setting === "LOCALE") {
+        return settings.LOCALE?.content.value === value &&
+            workspaceIds.some((workspaceId) => !localesOf(workspaceId, "METADATA_LOCALE").has(value))
+            ? "missing"
+            : undefined;
+    }
     if (settings[setting]?.content.value === value) {
-        return workspaceIds.some((workspaceId) => !translated(workspaceId)) ? "missing" : undefined;
+        const untranslated = workspaceIds.filter(
+            (workspaceId) => !localesOf(workspaceId, setting).has(value),
+        );
+        if (untranslated.length === 0) {
+            return undefined;
+        }
+        return untranslated.every((workspaceId) => hasSameLanguage(localesOf(workspaceId, setting), value))
+            ? "variant"
+            : "missing";
     }
     if (settings.LOCALE?.content.value === value) {
-        return workspaceIds.some(translated) ? "available" : undefined;
+        return workspaceIds.some((workspaceId) => localesOf(workspaceId, setting).has(value))
+            ? "available"
+            : undefined;
     }
     return undefined;
-}
-
-function isTranslationSetting(
-    setting: LocalizationSettingType | undefined,
-): setting is LocalizationTranslatedSettingType {
-    return setting === "METADATA_LOCALE" || setting === "DATA_LOCALE";
 }
 
 function matchesTranslation(
@@ -93,7 +124,7 @@ function matchesTranslation(
     query: ILocalizationUsageListQuery,
 ): LocalizationUsageSource | undefined {
     const { value, setting } = query;
-    if (value === undefined || !isTranslationSetting(setting)) {
+    if (value === undefined || setting === undefined) {
         return undefined;
     }
     return translationState(scope, settings, workspaceIds, value, setting) === query.translation
@@ -105,7 +136,7 @@ export function translationUsage(scope: IUsageScope): ILocalizationTranslationUs
     const entries = new Map<string, ILocalizationTranslationValueUsage>();
     const countOf = (
         value: string,
-        setting: LocalizationTranslatedSettingType,
+        setting: LocalizationSettingType,
         state: LocalizationTranslationState,
     ): ILocalizationTranslationCount => {
         let entry = entries.get(value);
@@ -113,11 +144,8 @@ export function translationUsage(scope: IUsageScope): ILocalizationTranslationUs
             entry = { content: { value }, bySetting: {} };
             entries.set(value, entry);
         }
-        const bySetting = (entry.bySetting[setting] ??= {
-            missing: { workspaces: 0, users: 0 },
-            available: { workspaces: 0, users: 0 },
-        });
-        return bySetting[state];
+        const bySetting = (entry.bySetting[setting] ??= {});
+        return (bySetting[state] ??= { workspaces: 0, users: 0 });
     };
     const subjects = [
         ...scope.workspaces.map((workspace) => ({
@@ -139,23 +167,11 @@ export function translationUsage(scope: IUsageScope): ILocalizationTranslationUs
                 .filter((value): value is string => !!value),
         );
         for (const value of values) {
-            for (const setting of TRANSLATED_SETTINGS) {
+            for (const setting of TRANSLATION_USAGE_SETTINGS) {
                 const state = translationState(scope, subject.settings, subject.workspaceIds, value, setting);
                 if (state) {
                     countOf(value, setting, state)[subject.kind] += 1;
                 }
-            }
-        }
-    }
-
-    for (const entry of entries.values()) {
-        for (const setting of TRANSLATED_SETTINGS) {
-            const counts = entry.bySetting[setting];
-            if (
-                counts &&
-                TRANSLATION_STATES.every((state) => counts[state].workspaces + counts[state].users === 0)
-            ) {
-                delete entry.bySetting[setting];
             }
         }
     }

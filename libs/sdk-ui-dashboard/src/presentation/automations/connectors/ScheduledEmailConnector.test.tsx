@@ -115,7 +115,6 @@ vi.mock("../../../model/store/config/configSelectors.js", () => ({
     selectIsEmbedded: () => false,
     selectSettings: () => ({
         enableShellApplication: true,
-        enableShellApplication_dashboards: true,
     }),
     selectEnableAccessibilityMode: () => false,
 }));
@@ -227,7 +226,6 @@ describe("ScheduledEmailConnector", () => {
             dashboardId: "other-dashboard",
             automationId: "se-1",
             isEmbedded: false,
-            useHostRoute: true,
             queryParams: { recipient: "recipient@example.com" },
         });
         expect(fixtures.navigate).toHaveBeenCalledWith("/target-url");

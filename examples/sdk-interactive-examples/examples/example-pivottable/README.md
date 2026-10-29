@@ -28,6 +28,6 @@ Do not use this if you cloned whole mono repo it will break rush workspaces
 
 ## License
 
-(C) 2017-2021 GoodData Corporation
+(C) 2017-2026 GoodData Corporation
 
 This repository is under the GoodData commercial license available in the [LICENSE](LICENSE) file because it contains a commercial package, HighCharts.

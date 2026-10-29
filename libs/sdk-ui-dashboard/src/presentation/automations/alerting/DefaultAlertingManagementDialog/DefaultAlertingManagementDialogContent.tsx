@@ -27,7 +27,6 @@ import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../constants/zIndex.js";
 import { useAlertingManagementDialogContext } from "../../contexts/AlertingManagementDialogContext.js";
 import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
 import { type AutomationDashboardUrlBuilder } from "../../shared/types.js";
-import { computeUseHostRoute } from "../../shared/utils/automationUtils.js";
 import { ALERTING_DIALOG_ID } from "../DefaultAlertingDialog/constants.js";
 import { useAlertingDialogAccessibility } from "../hooks/useAlertingDialogAccessibility.js";
 import { useGetSupportedMeasures } from "../hooks/useGetSupportedMeasures.js";
@@ -75,7 +74,6 @@ export function DefaultAlertingManagementDialogContent({
     const enableBulkActions = !enableAccessibilityMode;
     const { returnFocusTo } = useAlertingDialogAccessibility();
 
-    const useHostRoute = computeUseHostRoute(useAutomationsContext().settings);
     const isMobile = isMobileView();
 
     // Check if widget has metrics for alert creation
@@ -103,12 +101,11 @@ export function DefaultAlertingManagementDialogContent({
                       dashboardId,
                       tabId,
                       isEmbedded,
-                      useHostRoute,
                       queryParams: externalRecipientOverride
                           ? { recipient: externalRecipientOverride }
                           : undefined,
                   }),
-        [customDashboardUrlBuilder, isEmbedded, useHostRoute, externalRecipientOverride],
+        [customDashboardUrlBuilder, isEmbedded, externalRecipientOverride],
     );
 
     const titleElementId = useId();

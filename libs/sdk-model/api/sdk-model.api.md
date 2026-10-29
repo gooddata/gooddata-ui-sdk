@@ -4044,6 +4044,7 @@ export interface IFeatureFlags {
     enableImprovedRankingFilter?: boolean;
     enableLineChartStyling?: boolean;
     enableLocalizationOverview?: boolean;
+    enableLocalizationValidations?: boolean;
     enableLogicalModelExtensionsFromParentsCall?: boolean;
     // (undocumented)
     enableMariaDbDataSource?: boolean;
@@ -4082,7 +4083,6 @@ export interface IFeatureFlags {
     enableSemanticConditionalFormatting?: boolean;
     enableSemanticSearch?: boolean;
     enableShellApplication?: boolean;
-    enableShellApplication_dashboards?: boolean;
     // (undocumented)
     enableSingleStoreDataSource?: boolean;
     enableSlidesExport?: boolean;

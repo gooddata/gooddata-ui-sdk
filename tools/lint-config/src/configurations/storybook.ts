@@ -4,7 +4,7 @@ import { IOverride, IPackage, Rules } from "../types.js";
 
 export const storybookPlugin: IPackage = {
     name: "eslint-plugin-storybook",
-    version: "10.5.6",
+    version: "10.6.5",
 };
 
 export const storybookPackages = [
@@ -12,7 +12,7 @@ export const storybookPackages = [
     {
         // peer
         name: "storybook",
-        version: "^10.5.6",
+        version: "^10.6.5",
     },
     {
         // peer

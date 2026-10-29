@@ -510,7 +510,7 @@ export interface IExternalUrlPluggableApplicationModule {
      * @example
      * https://google.com
      * @example
-     * /dashboards/#/project/\{workspaceId\}
+     * /workspace/\{workspaceId\}/dashboards
      */
     url: string;
 }

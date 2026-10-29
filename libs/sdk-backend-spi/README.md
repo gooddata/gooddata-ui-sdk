@@ -15,6 +15,6 @@ The Analytical Backend SPI for GoodData Cloud and GoodData.CN (joint codename `t
 
 ## License
 
-(C) 2017-2022 GoodData Corporation
+(C) 2017-2026 GoodData Corporation
 
 This project is under MIT License. See [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-backend-spi/LICENSE).

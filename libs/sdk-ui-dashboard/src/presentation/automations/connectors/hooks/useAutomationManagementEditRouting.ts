@@ -6,13 +6,8 @@ import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { buildAutomationUrl, navigate, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
-import {
-    selectExternalRecipient,
-    selectIsEmbedded,
-    selectSettings,
-} from "../../../../model/store/config/configSelectors.js";
+import { selectExternalRecipient, selectIsEmbedded } from "../../../../model/store/config/configSelectors.js";
 import { selectDashboardId } from "../../../../model/store/meta/metaSelectors.js";
-import { computeUseHostRoute } from "../../shared/utils/automationUtils.js";
 
 /**
  * Handles cross-dashboard edit routing for automation management dialogs.
@@ -29,8 +24,6 @@ export function useAutomationManagementEditRouting(
     const dashboardId = useDashboardSelector(selectDashboardId);
     const isEmbedded = useDashboardSelector(selectIsEmbedded);
     const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
-    const settings = useDashboardSelector(selectSettings);
-    const useHostRoute = computeUseHostRoute(settings);
 
     return useCallback(
         (automation: IAutomationMetadataObject) => {
@@ -43,7 +36,6 @@ export function useAutomationManagementEditRouting(
                         dashboardId: targetDashboardId,
                         automationId: automation.id,
                         isEmbedded,
-                        useHostRoute,
                         queryParams: externalRecipientOverride
                             ? { recipient: externalRecipientOverride }
                             : undefined,
@@ -53,6 +45,6 @@ export function useAutomationManagementEditRouting(
             }
             onLocalEdit(automation);
         },
-        [onLocalEdit, dashboardId, workspace, isEmbedded, useHostRoute, externalRecipientOverride],
+        [onLocalEdit, dashboardId, workspace, isEmbedded, externalRecipientOverride],
     );
 }

@@ -11,7 +11,6 @@ import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { UiButton, UiIcon } from "@gooddata/sdk-ui-kit";
 
 import type { IChatConversationLocalItem, IChatConversationMultipartLocalPart } from "../../../model.js";
-import { settingsSelector } from "../../../store/chatWindow/chatWindowSelectors.js";
 import { conversationSelector } from "../../../store/messages/messagesSelectors.js";
 import { getDashboardHref } from "../../../utils.js";
 import { useConfig } from "../../ConfigContext.js";
@@ -33,7 +32,6 @@ export function ConversationDashboardContent(props: ConversationDashboardContent
     const config = useConfig();
 
     const workspaceId = useWorkspaceStrict();
-    const useHostedDashboards = Boolean(useSelector(settingsSelector)?.enableShellApplication_dashboards);
     const conversation = useSelector(conversationSelector);
     const { dashboardCheckLoading, dashboardSaved } = useDashboardSaveCheck(part, dashboard, true);
     const isDashboardSaved = dashboardSaved && part.saved;
@@ -51,7 +49,6 @@ export function ConversationDashboardContent(props: ConversationDashboardContent
                     workspaceId,
                     dashboard.identifier,
                     dashboardStatus,
-                    useHostedDashboards,
                     conversation?.localId,
                 );
             } else {
@@ -65,7 +62,6 @@ export function ConversationDashboardContent(props: ConversationDashboardContent
                         workspaceId,
                         dashboard.identifier,
                         dashboardStatus,
-                        useHostedDashboards,
                         conversation?.localId,
                     ),
                     dashboard,
@@ -76,7 +72,7 @@ export function ConversationDashboardContent(props: ConversationDashboardContent
                 });
             }
         };
-    }, [dashboard, insights, config, workspaceId, useHostedDashboards, conversation]);
+    }, [dashboard, insights, config, workspaceId, conversation]);
 
     const classNames = cx(
         "gd-gen-ai-chat__conversation__item__content",
