@@ -7,8 +7,8 @@ import { describe, expect, it } from "vitest";
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { measureLocalId } from "@gooddata/sdk-model";
-import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { DEFAULT_LEGEND_CONFIG } from "@gooddata/sdk-ui-vis-commons";
+import { DataViewFacade, VisualizationTypes } from "@gooddata/sdk-ui";
+import { DEFAULT_LEGEND_CONFIG, type ISeriesItemMetric } from "@gooddata/sdk-ui-vis-commons";
 
 import { recordedDataFacade } from "../../testUtils/recordings.fixture.js";
 import { generateChartOptions } from "../chartTypes/_util/helper.js";
@@ -137,6 +137,67 @@ describe("shouldLegendBeEnabled", () => {
 });
 
 describe("getLegendItems", () => {
+    it.each(["clusterName", "segmentName"])(
+        "should preserve scatter plot legend indices for %s when indices are not consecutive",
+        (nameProperty) => {
+            const chartOptions = {
+                type: VisualizationTypes.SCATTER,
+                data: {
+                    series: [
+                        {
+                            data: [
+                                { [nameProperty]: "B", color: "green", legendIndex: 3 },
+                                { [nameProperty]: "A", color: "blue", legendIndex: 1 },
+                                { [nameProperty]: "B", color: "green", legendIndex: 3 },
+                            ],
+                        },
+                    ],
+                },
+            } as IChartOptions;
+
+            expect(getLegendItems(chartOptions, undefined)).toEqual([
+                { type: "scatter", isVisible: true, name: "A", color: "blue", legendIndex: 1 },
+                { type: "scatter", isVisible: true, name: "B", color: "green", legendIndex: 3 },
+            ]);
+        },
+    );
+
+    it.each([0, 1, 2, null])(
+        "should keep legend indices aligned after removing NULL coordinates from cluster %s",
+        (missingCluster) => {
+            const dv = rec(
+                ReferenceRecordings.Scenarios.ScatterPlot
+                    .XAndYAxisMeasuresAndAttributeWithNullsInData as unknown as ScenarioRecording,
+            );
+            const rows = dv.rawData().twoDimData();
+            const visibleClusters = [0, 1, 2].filter((cluster) => cluster !== missingCluster);
+            const clusters = rows.map((row, index) =>
+                row.some((value) => value === null)
+                    ? missingCluster
+                    : visibleClusters[index % visibleClusters.length],
+            );
+            const dataView = dv.dataView.withClustering(
+                { numberOfClusters: 3 },
+                {
+                    attribute: rows.map((_, index) => `${index}`),
+                    clusters,
+                    xcoord: rows.map((row) => (row[0] === null ? null : Number(row[0]))),
+                    ycoord: rows.map((row) => (row[1] === null ? null : Number(row[1]))),
+                },
+            );
+            const chartOptions = generateChartOptions(DataViewFacade.for(dataView), { type: "scatter" });
+            const points = chartOptions.data!.series![0].data!;
+            const legendItems = getLegendItems(chartOptions, undefined) as ISeriesItemMetric[];
+
+            expect(points).toHaveLength(3);
+            expect(legendItems).toHaveLength(visibleClusters.length);
+            for (const point of points) {
+                const legendItem = legendItems.find((item) => item.color === point.color);
+                expect(legendItem?.legendIndex).toBe(point.legendIndex);
+            }
+        },
+    );
+
     it("should name sankey legend items by the node name, falling back to the node id", () => {
         const chartOptions = {
             type: "sankey",

@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-dashboard: Key driver analysis on a Mekko chart now explains the Height measure the columns show instead of the Width measure, and compares neighbouring dates of the same measure when the chart has a Stack by attribute; key driver analysis also skips measures it is disabled on",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "rodrigo.balsells@gooddata.com"
+}

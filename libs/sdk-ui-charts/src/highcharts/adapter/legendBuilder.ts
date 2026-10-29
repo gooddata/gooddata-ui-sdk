@@ -171,13 +171,13 @@ export function getLegendItems(
             uniqBy(chartOptions.data?.series?.[0]?.data, (it: ISeriesItem) => it.legendIndex),
             (it) => it.legendIndex,
         );
-        return uniqueItems.map((it: ISeriesItem, index: number): ISeriesItemMetric => {
+        return uniqueItems.map((it: ISeriesItem): ISeriesItemMetric => {
             return {
                 type: VisualizationTypes.SCATTER,
                 isVisible: true,
                 name: it.clusterName || it.segmentName,
                 color: it.color as ISeriesItemMetric["color"],
-                legendIndex: index,
+                legendIndex: it.legendIndex!,
                 anomaly: it.anomaly,
             };
         });

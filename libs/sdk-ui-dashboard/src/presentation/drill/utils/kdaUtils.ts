@@ -6,12 +6,16 @@ import {
     type DataValue,
     type IKeyDriveAnalysis,
     type IResultAttributeHeaderItem,
+    bucketMeasures,
+    bucketsFind,
     isAttributeDescriptor,
     isMeasureDescriptor,
     isMeasureGroupDescriptor,
     isYearGranularity,
+    measureLocalId,
 } from "@gooddata/sdk-model";
 import {
+    BucketNames,
     DataViewFacade,
     type IDrillEvent,
     type IDrillEventIntersectionElement,
@@ -41,10 +45,11 @@ export function getKdaKeyDriverCombinations(
     drillDefinition: IKeyDriveAnalysis,
     drillEvent: IDrillEvent,
     enableSecondGranularities = false,
+    isMeasureDisabled: (localIdentifier: string) => boolean = () => false,
 ): IDashboardKeyDriverCombinationItem[] {
     //TODO: Special implementation for headline
     const dv = DataViewFacade.for(drillEvent.dataView);
-    const combinations = findHeadersCombinations(dv, drillDefinition, drillEvent);
+    const combinations = findHeadersCombinations(dv, drillDefinition, drillEvent, isMeasureDisabled);
 
     // No relevant headers
     if (!combinations.dateHeader || !combinations.metricHeader) {
@@ -70,15 +75,20 @@ export function getKdaKeyDriverCombinations(
     const exactColumn = filterExactColumn(filteredColumns, dimScopedValues[1]);
     const exactRow = filterExactRow(filteredRows, dimScopedValues[0]);
 
-    const isFirstColumn = exactColumn === filteredColumns[0];
-    const isFirstRow = exactRow === filteredRows[0];
-
-    const isLastColumn = exactColumn === filteredColumns[filteredColumns.length - 1];
-    const isLastRow = exactRow === filteredRows[filteredRows.length - 1];
-
     const current = getCurrentValue(table.data, dateId, exactRow, exactColumn);
-    const previous = getDirectionValue(table.data, dateId, current, -1, isFirstColumn, isFirstRow);
-    const next = getDirectionValue(table.data, dateId, current, 1, isLastColumn, isLastRow);
+    const getNeighbourValue = (direction: -1 | 1) =>
+        getDirectionValue(
+            table.data,
+            dateId,
+            current,
+            direction,
+            filteredRows,
+            filteredColumns,
+            exactRow,
+            exactColumn,
+        );
+    const previous = getNeighbourValue(-1);
+    const next = getNeighbourValue(1);
 
     const res: IDashboardKeyDriverCombinationItem[] = [];
 
@@ -267,27 +277,21 @@ function getDirectionValue(
     dateId: string,
     current: CurrentValue | null,
     direction: -1 | 1,
-    isColumnOnBorder: boolean,
-    isRowOnBorder: boolean,
+    rows: ITableRowDefinition[],
+    columns: ITableColumnDefinition[],
+    row?: ITableRowDefinition,
+    column?: ITableColumnDefinition,
 ) {
-    if (!current) {
+    if (!current || !row || !column) {
         return null;
     }
 
     if (current.direction === "row") {
-        if (isRowOnBorder) {
-            return null;
-        }
-        const res = data[current.row + direction]?.[current.column];
-        return mapToCurrentValue(res, dateId, current.row + direction, current.column);
+        return getCurrentValue(data, dateId, rows[rows.indexOf(row) + direction], column);
     }
 
     if (current.direction === "column") {
-        if (isColumnOnBorder) {
-            return null;
-        }
-        const res = data[current.row]?.[current.column + direction];
-        return mapToCurrentValue(res, dateId, current.row, current.column + direction);
+        return getCurrentValue(data, dateId, row, columns[columns.indexOf(column) + direction]);
     }
 
     return null;
@@ -488,6 +492,7 @@ function findHeadersCombinations(
     dv: DataViewFacade,
     drillDefinition: IKeyDriveAnalysis,
     drillEvent: IDrillEvent,
+    isMeasureDisabled: (localIdentifier: string) => boolean,
 ) {
     if (drillDefinition.transition !== "in-place") {
         return {
@@ -503,9 +508,15 @@ function findHeadersCombinations(
     const dateHeader = intersections
         .map((intersectionElement) => intersectionElement.header)
         .filter(isDrillIntersectionDateAttributeItem)[0];
-    const metricHeader = intersections
+    const measureHeaders = intersections
         .map((intersectionElement) => intersectionElement.header)
-        .filter(isMeasureDescriptor)[0];
+        .filter(isMeasureDescriptor)
+        .filter((header) => !isMeasureDisabled(header.measureHeaderItem.localIdentifier));
+    const preferredMeasureIds = getPreferredMeasureIds(drillEvent);
+    const metricHeader =
+        measureHeaders.find((header) =>
+            preferredMeasureIds.includes(header.measureHeaderItem.localIdentifier),
+        ) ?? measureHeaders[0];
 
     const attributeHeaders = intersections
         .map((intersectionElement) => intersectionElement.header)
@@ -531,7 +542,7 @@ function findHeadersCombinations(
                             });
                         }
                         if (isMeasureGroupDescriptor(h)) {
-                            return intersections.find((i) => isMeasureDescriptor(i.header));
+                            return intersections.find((i) => i.header === metricHeader);
                         }
                         return undefined;
                     })
@@ -544,6 +555,14 @@ function findHeadersCombinations(
         metricHeader,
         attributeHeaders,
     };
+}
+
+function getPreferredMeasureIds(drillEvent: IDrillEvent): string[] {
+    if (drillEvent.drillContext.type !== "mekko") {
+        return [];
+    }
+    const heightBucket = bucketsFind(drillEvent.dataView.definition.buckets, BucketNames.SECONDARY_MEASURES);
+    return heightBucket ? bucketMeasures(heightBucket).map(measureLocalId) : [];
 }
 
 function getPreviousYear(currentYear: IResultAttributeHeaderItem) {
