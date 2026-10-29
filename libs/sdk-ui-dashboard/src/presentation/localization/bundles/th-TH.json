@@ -1,4 +1,6 @@
 {
+    "dashboard.ai.composing.replyNow": "ตอบกลับตอนนี้",
+    "dashboard.ai.composing.waiting": "ตอบกลับในแชตเพื่อดำเนินการต่อ",
     "dashboard.contractExpired.trial.title": "ช่วงทดลองใช้ของคุณสิ้นสุดแล้ว.",
     "dashboard.contractExpired.trial.description": "ติดต่อเราหากคุณต้องการใช้งาน GoodData Cloud ต่อไป",
     "dashboard.contractExpired.nonTrial.title": "การเข้าถึงของคุณถูกล็อก.",
@@ -940,5 +942,13 @@
     "dashboard.tabs.accessibility.add-button-label": "เพิ่มแท็บใหม่",
     "dashboard_add_filter.button.aria_label": "เพิ่มตัวกรอง",
     "dashboard_add_filter.menu.title": "เพิ่มตัวกรอง",
-    "dashboard_add_filter.menu.parameter": "พารามิเตอร์"
+    "dashboard_add_filter.menu.parameter": "พารามิเตอร์",
+    "insightEditor.menu.explore": "สำรวจจากที่นี่",
+    "addPanel.insight": "การแสดงภาพข้อมูล",
+    "insightEditor.filterContext.dateFilterInapplicable": "ไม่สามารถเก็บบริบทของตัวกรองไว้ได้ เนื่องจากตัวกรองวันที่ในแดชบอร์ดไม่สามารถนำไปใช้กับการแสดงภาพข้อมูลนี้ได้",
+    "insightEditor.filterContext.invalidFilterItemsCount": "ไม่สามารถเก็บบริบทของตัวกรองไว้ได้ เนื่องจากการแสดงภาพข้อมูลใช้รายการมากกว่า 20 รายการบนแถบตัวกรอง",
+    "insightEditor.filterContext.tookTooLong": "ใช้เวลานานเกินไปในการเก็บบริบทของตัวกรองสำหรับการแสดงภาพข้อมูลนี้ โปรดลองสำรวจการแสดงภาพข้อมูลอีกครั้ง",
+    "insightEditor.filterContext.failed": "ไม่สามารถเก็บบริบทของตัวกรองไว้สำหรับการแสดงภาพข้อมูลนี้ได้ โปรดลองสำรวจการแสดงภาพข้อมูลอีกครั้ง",
+    "insightEditor.dialog.label": "ตัวแก้ไขการแสดงภาพข้อมูล",
+    "insightEditor.save.placementFailed": "บันทึกการแสดงภาพข้อมูลแล้ว แต่ไม่สามารถเพิ่มลงในแดชบอร์ดได้"
 }

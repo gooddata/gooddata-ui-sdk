@@ -39,5 +39,7 @@
     "languageDialog.description": "<b>Nota:</b> Solo cambia la interfaz, no el contenido del panel.",
     "languageDialog.select.searchLabel": "Buscar idiomas",
     "languageDialog.select.searchPlaceholder": "Buscar…",
-    "languageDialog.select.noMatch": "No hay ningún idioma que coincida."
+    "languageDialog.select.noMatch": "No hay ningún idioma que coincida.",
+    "languageDialog.error": "No se pudo cambiar el idioma. Inténtelo de nuevo.",
+    "languageDialog.success": "¡Genial! ¡Se ha cambiado el idioma!"
 }

@@ -149,6 +149,8 @@
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, one {# página} other {# páginas}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, one {# página} other {# páginas}}",
     "gd.gen-ai.publisherDocument.unavailable": "El documento no está disponible.",
+    "gd.gen-ai.publisherDocument.previousVersion": "Este documento se creó en la versión anterior de Publisher y no se puede abrir aquí.",
+    "gd.gen-ai.publisherDocument.newerVersion": "Este documento se creó en una versión más reciente de Publisher y no se puede abrir aquí.",
     "gd.gen-ai.alert-proposal.summary.trigger": "Disparador",
     "gd.gen-ai.alert-proposal.summary.trigger.mode": "Modo",
     "gd.gen-ai.alert-proposal.summary.trigger.interval": "Intervalo",

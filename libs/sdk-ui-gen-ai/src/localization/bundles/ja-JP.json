@@ -149,6 +149,8 @@
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, other {# ページ}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, other {# ページ}}",
     "gd.gen-ai.publisherDocument.unavailable": "ドキュメントは利用できません。",
+    "gd.gen-ai.publisherDocument.previousVersion": "このドキュメントは以前のバージョンのPublisherで作成されたため、ここでは開けません。",
+    "gd.gen-ai.publisherDocument.newerVersion": "このドキュメントはより新しいバージョンのPublisherで作成されたため、ここでは開けません。",
     "gd.gen-ai.alert-proposal.summary.trigger": "トリガー",
     "gd.gen-ai.alert-proposal.summary.trigger.mode": "モード",
     "gd.gen-ai.alert-proposal.summary.trigger.interval": "間隔",

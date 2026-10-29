@@ -149,6 +149,8 @@
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, one {# stran} two {# strani} few {# strani} other {# strani}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, one {# stran} two {# strani} few {# strani} other {# strani}}",
     "gd.gen-ai.publisherDocument.unavailable": "Dokument ni na voljo.",
+    "gd.gen-ai.publisherDocument.previousVersion": "Ta dokument je bil ustvarjen v prejšnji različici Publisherja in ga tukaj ni mogoče odpreti.",
+    "gd.gen-ai.publisherDocument.newerVersion": "Ta dokument je bil ustvarjen v novejši različici Publisherja in ga tukaj ni mogoče odpreti.",
     "gd.gen-ai.alert-proposal.summary.trigger": "Sprožilec",
     "gd.gen-ai.alert-proposal.summary.trigger.mode": "Način",
     "gd.gen-ai.alert-proposal.summary.trigger.interval": "Interval",

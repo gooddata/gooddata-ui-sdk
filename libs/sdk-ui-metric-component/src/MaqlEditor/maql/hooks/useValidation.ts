@@ -3,7 +3,6 @@
 import { useMemo } from "react";
 
 import * as monaco from "monaco-editor/editor/editor.api.js";
-import { ProtocolToMonacoConverter } from "monaco-languageclient/monaco-converter";
 import { type Diagnostic } from "vscode-languageserver";
 import { type TextDocument } from "vscode-languageserver-textdocument";
 
@@ -11,6 +10,7 @@ import { type MaqlLanguageService } from "@gooddata/sdk-maql-language-server";
 
 //more info in README.md
 import { type IMarkerData, type IStandaloneCodeEditor, type Monaco } from "../../monaco/MonacoEditor.js";
+import { ProtocolToMonacoConverter } from "../monacoConverter.js";
 import { createDocument } from "../utils.js";
 
 // pending validations are stored here, so we don't run multiple validations on same document

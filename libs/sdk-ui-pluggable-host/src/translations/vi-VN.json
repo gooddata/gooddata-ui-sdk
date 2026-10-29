@@ -39,5 +39,7 @@
     "languageDialog.description": "<b>Lưu ý:</b> Chỉ thay đổi giao diện, không thay đổi nội dung bảng điều khiển.",
     "languageDialog.select.searchLabel": "Tìm kiếm ngôn ngữ",
     "languageDialog.select.searchPlaceholder": "Tìm kiếm…",
-    "languageDialog.select.noMatch": "Không có ngôn ngữ khớp."
+    "languageDialog.select.noMatch": "Không có ngôn ngữ khớp.",
+    "languageDialog.error": "Chúng tôi không thể thay đổi ngôn ngữ. Hãy thử lại.",
+    "languageDialog.success": "Tuyệt vời! Chúng tôi đã thay đổi ngôn ngữ!"
 }

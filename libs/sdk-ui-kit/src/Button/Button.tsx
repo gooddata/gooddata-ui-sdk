@@ -74,9 +74,9 @@ export const Button = forwardRef<HTMLElement, IButtonProps>(function Button(
 
     const ariaDropdownAttributesFromConfig = {
         ...ariaDropdownProps,
-        // override calculated dropdown props by explicit overrides from props
-        "aria-controls": ariaControls ?? undefined,
-        "aria-expanded": ariaExpanded ?? undefined,
+        // override calculated dropdown props by explicit overrides from props, when set
+        ...(ariaControls === undefined ? {} : { "aria-controls": ariaControls }),
+        ...(ariaExpanded === undefined ? {} : { "aria-expanded": ariaExpanded }),
     };
 
     const handleClick = useCallback<MouseEventHandler>(

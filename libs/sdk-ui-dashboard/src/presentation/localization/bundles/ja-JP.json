@@ -1,4 +1,6 @@
 {
+    "dashboard.ai.composing.replyNow": "今すぐ返信",
+    "dashboard.ai.composing.waiting": "続行するにはチャットで返信してください。",
     "dashboard.contractExpired.trial.title": "トライアルは終了しました。",
     "dashboard.contractExpired.trial.description": "引き続き GoodData Cloud をご利用になる場合は、こちらまでお問い合わせください。",
     "dashboard.contractExpired.nonTrial.title": "アクセスはロックされています。",
@@ -940,5 +942,13 @@
     "dashboard.tabs.accessibility.add-button-label": "新しいタブを追加する",
     "dashboard_add_filter.button.aria_label": "フィルタを追加",
     "dashboard_add_filter.menu.title": "フィルタを追加",
-    "dashboard_add_filter.menu.parameter": "パラメーター"
+    "dashboard_add_filter.menu.parameter": "パラメーター",
+    "insightEditor.menu.explore": "このグラフを元に新しく分析",
+    "addPanel.insight": "ビジュアライゼーション",
+    "insightEditor.filterContext.dateFilterInapplicable": "ダッシュボードの日付フィルタをこのビジュアライゼーションに適用できないため、フィルタ-コンテキストを保持できません。",
+    "insightEditor.filterContext.invalidFilterItemsCount": "ビジュアライゼーションがフィルターバーに20以上の項目を適用したため、フィルターコンテキストを保持できません",
+    "insightEditor.filterContext.tookTooLong": "このビジュアライゼーションのフィルターのコンテキストを保持するのに時間がかかりすぎました。もう一度ビジュアライゼーションをお試しください。",
+    "insightEditor.filterContext.failed": "このビジュアライゼーションのフィルターコンテキストを保持できません。もう一度ビジュアライゼーションを探索してみてください。",
+    "insightEditor.dialog.label": "ビジュアライゼーションエディター",
+    "insightEditor.save.placementFailed": "ビジュアライゼーションは保存されましたが、ダッシュボードに追加できません。"
 }

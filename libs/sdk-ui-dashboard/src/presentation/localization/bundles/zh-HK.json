@@ -1,4 +1,6 @@
 {
+    "dashboard.ai.composing.replyNow": "立即回覆",
+    "dashboard.ai.composing.waiting": "請在聊天中回覆以繼續。",
     "dashboard.contractExpired.trial.title": "您的試用期已結束。",
     "dashboard.contractExpired.trial.description": "如果您想繼續使用GoodData Cloud，請聯繫我們。",
     "dashboard.contractExpired.nonTrial.title": "您的存取權限已被鎖定。",
@@ -940,5 +942,13 @@
     "dashboard.tabs.accessibility.add-button-label": "加入新標籤",
     "dashboard_add_filter.button.aria_label": "添加篩選器",
     "dashboard_add_filter.menu.title": "添加篩選器",
-    "dashboard_add_filter.menu.parameter": "參數"
+    "dashboard_add_filter.menu.parameter": "參數",
+    "insightEditor.menu.explore": "从呢度探索",
+    "addPanel.insight": "可視化",
+    "insightEditor.filterContext.dateFilterInapplicable": "無法保留篩選器上下文，因為儀表板中的日期篩選器無法應用于此可視化效果。",
+    "insightEditor.filterContext.invalidFilterItemsCount": "無法保留篩選器上下文，因為可視化在篩選器欄上套用了超過20個項目",
+    "insightEditor.filterContext.tookTooLong": "保留此可視化效果的篩選器上下文花費的時間太長。 請再次嘗試探索可視化效果。",
+    "insightEditor.filterContext.failed": "無法保留此可視化的篩選器上下文。請嘗試再次探索此可視化。",
+    "insightEditor.dialog.label": "可視化編輯器",
+    "insightEditor.save.placementFailed": "可視化已儲存，但無法新增至儀表板。"
 }

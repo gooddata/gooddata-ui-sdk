@@ -1,4 +1,6 @@
 {
+    "dashboard.ai.composing.replyNow": "Vastaa nyt",
+    "dashboard.ai.composing.waiting": "Jatka vastaamalla chatissa.",
     "dashboard.contractExpired.trial.title": "Kokeilusi on päättynyt.",
     "dashboard.contractExpired.trial.description": "Ota yhteyttä, jos haluat jatkaa GoodData Cloudin käyttöä.",
     "dashboard.contractExpired.nonTrial.title": "Pääsysi on lukittu.",
@@ -940,5 +942,13 @@
     "dashboard.tabs.accessibility.add-button-label": "Lisää uusi välilehti",
     "dashboard_add_filter.button.aria_label": "Lisää suodatin",
     "dashboard_add_filter.menu.title": "Lisää suodatin",
-    "dashboard_add_filter.menu.parameter": "Parametri"
+    "dashboard_add_filter.menu.parameter": "Parametri",
+    "insightEditor.menu.explore": "Tutki tästä",
+    "addPanel.insight": "Visualisointi",
+    "insightEditor.filterContext.dateFilterInapplicable": "Suodatinkontekstia ei voida säilyttää, koska Dashboardin päivämääräsuodatinta ei voida käyttää tähän visualisointiin.",
+    "insightEditor.filterContext.invalidFilterItemsCount": "Suodatinkontekstia ei voida säilyttää, koska visualisointi käytti yli 20 kohdetta suodatinpalkissa.",
+    "insightEditor.filterContext.tookTooLong": "Suodatinkontekstin säilyttäminen tätä visualisointia varten kesti liian kauan. Yritä ladata visualisointi uudelleen.",
+    "insightEditor.filterContext.failed": "Suodatinkontekstia ei voida säilyttää tätä visualisointia varten. Yritä tutkia visualisointia uudelleen.",
+    "insightEditor.dialog.label": "Visualisointieditori",
+    "insightEditor.save.placementFailed": "Visualisointi on tallennettu, mutta sitä ei voida lisätä koontinäyttöön."
 }

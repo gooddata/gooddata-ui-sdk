@@ -39,5 +39,7 @@
     "languageDialog.description": "<b>Примітка:</b> Змінюється лише мова інтерфейсу, а не вміст інформаційних панелей.",
     "languageDialog.select.searchLabel": "Пошук мов",
     "languageDialog.select.searchPlaceholder": "Пошук…",
-    "languageDialog.select.noMatch": "Відповідної мови не знайдено."
+    "languageDialog.select.noMatch": "Відповідної мови не знайдено.",
+    "languageDialog.error": "Не вдалося змінити мову. Спробуйте ще раз.",
+    "languageDialog.success": "Чудово! Мову змінено!"
 }

@@ -39,5 +39,7 @@
     "languageDialog.description": "<b>Huomautus:</b> Muuttaa vain käyttöliittymän kieltä, ei koontinäytön sisältöä.",
     "languageDialog.select.searchLabel": "Etsi kieliä",
     "languageDialog.select.searchPlaceholder": "Hae…",
-    "languageDialog.select.noMatch": "Vastaavaa kieltä ei löytynyt."
+    "languageDialog.select.noMatch": "Vastaavaa kieltä ei löytynyt.",
+    "languageDialog.error": "Kielen vaihtaminen epäonnistui. Yritä uudelleen.",
+    "languageDialog.success": "Hienoa! Vaihdoimme kielen!"
 }

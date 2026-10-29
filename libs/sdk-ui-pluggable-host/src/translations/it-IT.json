@@ -39,5 +39,7 @@
     "languageDialog.description": "<b>Nota:</b> Modifica solo l'interfaccia, non il contenuto del cruscotto.",
     "languageDialog.select.searchLabel": "Cerca lingue",
     "languageDialog.select.searchPlaceholder": "Cerca…",
-    "languageDialog.select.noMatch": "Nessuna lingua corrispondente."
+    "languageDialog.select.noMatch": "Nessuna lingua corrispondente.",
+    "languageDialog.error": "Non è stato possibile cambiare la lingua. Riprova.",
+    "languageDialog.success": "Ottimo! Abbiamo modificato la lingua!"
 }

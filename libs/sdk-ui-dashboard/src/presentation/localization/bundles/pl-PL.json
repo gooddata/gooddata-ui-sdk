@@ -1,4 +1,6 @@
 {
+    "dashboard.ai.composing.replyNow": "Odpowiedz teraz",
+    "dashboard.ai.composing.waiting": "Odpowiedz na czacie, aby kontynuować.",
     "dashboard.contractExpired.trial.title": "Twój okres próbny dobiegł końca.",
     "dashboard.contractExpired.trial.description": "Skontaktuj się z nami, jeśli chcesz kontynuować korzystanie z GoodData Cloud.",
     "dashboard.contractExpired.nonTrial.title": "Twój dostęp jest zablokowany.",
@@ -940,5 +942,13 @@
     "dashboard.tabs.accessibility.add-button-label": "Dodaj nową kartę",
     "dashboard_add_filter.button.aria_label": "Dodaj filtr",
     "dashboard_add_filter.menu.title": "Dodaj filtr",
-    "dashboard_add_filter.menu.parameter": "Parametr"
+    "dashboard_add_filter.menu.parameter": "Parametr",
+    "insightEditor.menu.explore": "Eksploruj stąd",
+    "addPanel.insight": "Wizualizacja",
+    "insightEditor.filterContext.dateFilterInapplicable": "Kontekst filtra nie może być zachowany, ponieważ filtr daty w Pulpicie nawigacyjnym nie może być zastosowany do tej wizualizacji.",
+    "insightEditor.filterContext.invalidFilterItemsCount": "Kontekst filtra nie może być zachowany, ponieważ wizualizacja zastosowała więcej niż 20 elementów na pasku filtra",
+    "insightEditor.filterContext.tookTooLong": "Zachowanie kontekstu filtra dla tej wizualizacji zajęło zbyt dużo czasu. Proszę spróbować ponownie przeanalizować wizualizację.",
+    "insightEditor.filterContext.failed": "Nie można zachować kontekstu filtra dla tej wizualizacji. Proszę spróbować ponownie przeanalizować wizualizację.",
+    "insightEditor.dialog.label": "Edytor wizualizacji",
+    "insightEditor.save.placementFailed": "Wizualizacja została zapisana, ale nie można jej dodać do pulpitu."
 }

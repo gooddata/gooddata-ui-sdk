@@ -149,6 +149,8 @@
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, one {# сторінка} few {# сторінки} many {# сторінок} other {# сторінки}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, one {# сторінка} few {# сторінки} many {# сторінок} other {# сторінки}}",
     "gd.gen-ai.publisherDocument.unavailable": "Документ недоступний.",
+    "gd.gen-ai.publisherDocument.previousVersion": "Цей документ створено в попередній версії Publisher, тому його неможливо тут відкрити.",
+    "gd.gen-ai.publisherDocument.newerVersion": "Цей документ створено в новішій версії Publisher, тому його неможливо тут відкрити.",
     "gd.gen-ai.alert-proposal.summary.trigger": "Тригер",
     "gd.gen-ai.alert-proposal.summary.trigger.mode": "Режим",
     "gd.gen-ai.alert-proposal.summary.trigger.interval": "Інтервал",

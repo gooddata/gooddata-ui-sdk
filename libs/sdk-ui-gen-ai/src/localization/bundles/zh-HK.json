@@ -149,6 +149,8 @@
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, other {# 頁}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, other {# 頁}}",
     "gd.gen-ai.publisherDocument.unavailable": "文件無法使用。",
+    "gd.gen-ai.publisherDocument.previousVersion": "此文件是在舊版 Publisher 中建立，因此無法在此開啟。",
+    "gd.gen-ai.publisherDocument.newerVersion": "此文件是在較新版的 Publisher 中建立，因此無法在此開啟。",
     "gd.gen-ai.alert-proposal.summary.trigger": "觸發",
     "gd.gen-ai.alert-proposal.summary.trigger.mode": "模式",
     "gd.gen-ai.alert-proposal.summary.trigger.interval": "間隔",

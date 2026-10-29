@@ -39,5 +39,7 @@
     "languageDialog.description": "<b>Remarque :</b> Modifie uniquement l’interface, et non le contenu des tableaux de bord.",
     "languageDialog.select.searchLabel": "Rechercher des langues",
     "languageDialog.select.searchPlaceholder": "Rechercher…",
-    "languageDialog.select.noMatch": "Aucune langue correspondante."
+    "languageDialog.select.noMatch": "Aucune langue correspondante.",
+    "languageDialog.error": "Nous n’avons pas pu changer la langue. Réessayez.",
+    "languageDialog.success": "Parfait! Nous avons changé la langue!"
 }

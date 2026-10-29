@@ -39,5 +39,7 @@
     "languageDialog.description": "<b>หมายเหตุ:</b> การเปลี่ยนแปลงนี้มีผลเฉพาะกับอินเทอร์เฟซเท่านั้น ไม่รวมเนื้อหาในแดชบอร์ด",
     "languageDialog.select.searchLabel": "ค้นหาภาษา",
     "languageDialog.select.searchPlaceholder": "ค้นหา…",
-    "languageDialog.select.noMatch": "ไม่พบภาษาที่ตรงกัน"
+    "languageDialog.select.noMatch": "ไม่พบภาษาที่ตรงกัน",
+    "languageDialog.error": "เราไม่สามารถเปลี่ยนภาษาได้ โปรดลองอีกครั้ง",
+    "languageDialog.success": "ยอดเยี่ยม! เราได้เปลี่ยนภาษาแล้ว!"
 }

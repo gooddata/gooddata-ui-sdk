@@ -1,4 +1,6 @@
 {
+    "dashboard.ai.composing.replyNow": "Ответить сейчас",
+    "dashboard.ai.composing.waiting": "Чтобы продолжить, ответьте в чате.",
     "dashboard.contractExpired.trial.title": "Срок действия вашей пробной версии истек.",
     "dashboard.contractExpired.trial.description": "Свяжитесь с нами, если вы хотите продолжить использование GoodData Cloud.",
     "dashboard.contractExpired.nonTrial.title": "Ваш доступ заблокирован.",
@@ -940,5 +942,13 @@
     "dashboard.tabs.accessibility.add-button-label": "Добавить новую вкладку",
     "dashboard_add_filter.button.aria_label": "Добавить фильтр",
     "dashboard_add_filter.menu.title": "Добавить фильтр",
-    "dashboard_add_filter.menu.parameter": "Параметр"
+    "dashboard_add_filter.menu.parameter": "Параметр",
+    "insightEditor.menu.explore": "Исследовать отсюда",
+    "addPanel.insight": "Визуализация",
+    "insightEditor.filterContext.dateFilterInapplicable": "Сохранить контекст фильтра невозможно, потому что фильтр даты на панелях мониторинга не может быть применён к этой визуализации.",
+    "insightEditor.filterContext.invalidFilterItemsCount": "Сохранить контекст фильтра невозможно, потому что в визуализации применяется более 20 элементов на панели фильтров.",
+    "insightEditor.filterContext.tookTooLong": "Сохранение контекста фильтра для этой визуализации заняло слишком много времени. Повторите попытку анализа визуализации.",
+    "insightEditor.filterContext.failed": "Не удалось сохранить контекст фильтра для этой визуализации. Повторите попытку анализа визуализации.",
+    "insightEditor.dialog.label": "Редактор визуализации",
+    "insightEditor.save.placementFailed": "Визуализация сохранена, но ее не удалось добавить на дашборд."
 }

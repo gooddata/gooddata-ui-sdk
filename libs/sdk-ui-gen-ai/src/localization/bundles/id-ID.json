@@ -149,6 +149,8 @@
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, other {# halaman}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, other {# halaman}}",
     "gd.gen-ai.publisherDocument.unavailable": "Dokumen tidak tersedia.",
+    "gd.gen-ai.publisherDocument.previousVersion": "Dokumen ini dibuat di Publisher versi sebelumnya dan tidak dapat dibuka di sini.",
+    "gd.gen-ai.publisherDocument.newerVersion": "Dokumen ini dibuat di Publisher versi yang lebih baru dan tidak dapat dibuka di sini.",
     "gd.gen-ai.alert-proposal.summary.trigger": "Pemicu",
     "gd.gen-ai.alert-proposal.summary.trigger.mode": "Mode",
     "gd.gen-ai.alert-proposal.summary.trigger.interval": "Interval",

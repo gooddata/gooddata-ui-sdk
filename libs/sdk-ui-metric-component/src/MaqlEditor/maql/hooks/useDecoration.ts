@@ -3,7 +3,6 @@
 import { type MutableRefObject, useCallback, useEffect, useRef } from "react";
 
 import * as monaco from "monaco-editor/editor/editor.api.js";
-import { ProtocolToMonacoConverter } from "monaco-languageclient/monaco-converter";
 import { type TextDocument } from "vscode-languageserver-textdocument";
 
 import { type IDecoration, type MaqlLanguageService } from "@gooddata/sdk-maql-language-server";
@@ -11,6 +10,7 @@ import { type IDecoration, type MaqlLanguageService } from "@gooddata/sdk-maql-l
 //more info in README.md
 import { type IStandaloneCodeEditor } from "../../monaco/MonacoEditor.js";
 import { Decorators } from "../../monaco/MonacoEditor.styles.js";
+import { ProtocolToMonacoConverter } from "../monacoConverter.js";
 import { createDocument } from "../utils.js";
 
 export function useDecoration(

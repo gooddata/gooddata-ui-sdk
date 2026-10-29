@@ -11,7 +11,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe("Boiler app", {}, () => {
-    test("should render the headline value", { tag: ["@checklist_boiler_tiger"] }, async ({ page }) => {
+    test("should render the headline value", { tag: ["@boiler-app"] }, async ({ page }) => {
         await page.goto("/");
 
         const container = page.locator(".insight-view-visualization .headline");

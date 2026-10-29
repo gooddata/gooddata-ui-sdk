@@ -1,4 +1,6 @@
 {
+    "dashboard.ai.composing.replyNow": "Nu antwoorden",
+    "dashboard.ai.composing.waiting": "Antwoord in de chat om door te gaan.",
     "dashboard.contractExpired.trial.title": "Uw proefperiode is afgelopen.",
     "dashboard.contractExpired.trial.description": "Neem contact met ons op als u GoodData Cloud wilt blijven gebruiken.",
     "dashboard.contractExpired.nonTrial.title": "Uw toegang is vergrendeld.",
@@ -940,5 +942,13 @@
     "dashboard.tabs.accessibility.add-button-label": "Nieuw tabblad toevoegen",
     "dashboard_add_filter.button.aria_label": "Filter toevoegen",
     "dashboard_add_filter.menu.title": "Filter toevoegen",
-    "dashboard_add_filter.menu.parameter": "Parameter"
+    "dashboard_add_filter.menu.parameter": "Parameter",
+    "insightEditor.menu.explore": "Vanaf hier verkennen",
+    "addPanel.insight": "Weergave",
+    "insightEditor.filterContext.dateFilterInapplicable": "Filtercontext kan niet worden bewaard omdat het datumfilter in Dashboards niet kan worden toegepast op deze visualisatie.",
+    "insightEditor.filterContext.invalidFilterItemsCount": "Filtercontext kan niet worden bewaard omdat de visualisatie meer dan 20 items op de filterbalk heeft toegepast",
+    "insightEditor.filterContext.tookTooLong": "Het duurde te lang om de filtercontext voor deze visualisatie bij te houden. Probeer de visualisatie opnieuw te verkennen.",
+    "insightEditor.filterContext.failed": "De filtercontext kan niet worden behouden voor deze visualisatie. Probeer de visualisatie opnieuw te verkennen.",
+    "insightEditor.dialog.label": "Visualisatie-editor",
+    "insightEditor.save.placementFailed": "De visualisatie is opgeslagen, maar kan niet aan het dashboard worden toegevoegd."
 }

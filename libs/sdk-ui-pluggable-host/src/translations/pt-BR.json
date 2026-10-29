@@ -39,5 +39,7 @@
     "languageDialog.description": "<b>Observação:</b> Altera apenas a interface, não o conteúdo do painel.",
     "languageDialog.select.searchLabel": "Pesquisar idiomas",
     "languageDialog.select.searchPlaceholder": "Pesquisar…",
-    "languageDialog.select.noMatch": "Nenhum idioma correspondente."
+    "languageDialog.select.noMatch": "Nenhum idioma correspondente.",
+    "languageDialog.error": "Não foi possível alterar o idioma. Tente novamente.",
+    "languageDialog.success": "Ótimo! Alteramos o idioma!"
 }

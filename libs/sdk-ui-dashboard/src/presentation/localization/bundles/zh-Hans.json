@@ -1,4 +1,6 @@
 {
+    "dashboard.ai.composing.replyNow": "立即回复",
+    "dashboard.ai.composing.waiting": "请在聊天中回复以继续。",
     "dashboard.contractExpired.trial.title": "您的试用已结束。",
     "dashboard.contractExpired.trial.description": "如果想继续使用 GoodData Cloud，请联系我们。",
     "dashboard.contractExpired.nonTrial.title": "您的访问权限已被锁定。",
@@ -940,5 +942,13 @@
     "dashboard.tabs.accessibility.add-button-label": "添加新标签页",
     "dashboard_add_filter.button.aria_label": "添加筛选器",
     "dashboard_add_filter.menu.title": "添加筛选器",
-    "dashboard_add_filter.menu.parameter": "参数"
+    "dashboard_add_filter.menu.parameter": "参数",
+    "insightEditor.menu.explore": "从此处探索",
+    "addPanel.insight": "可视化",
+    "insightEditor.filterContext.dateFilterInapplicable": "无法保留过滤器上下文，因为仪表板中的日期过滤器无法应用于此可视化。",
+    "insightEditor.filterContext.invalidFilterItemsCount": "无法保留筛选上下文，因为可视化在筛选栏上应用了超过 20 个项目",
+    "insightEditor.filterContext.tookTooLong": "保留此可视化的筛选上下文所用的时间过长。请尝试再次探索此可视化。",
+    "insightEditor.filterContext.failed": "无法保留此可视化的筛选上下文。请尝试再次探索此可视化。",
+    "insightEditor.dialog.label": "可视化编辑器",
+    "insightEditor.save.placementFailed": "可视化已保存，但无法添加到仪表板。"
 }

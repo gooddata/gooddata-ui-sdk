@@ -39,5 +39,7 @@
     "languageDialog.description": "<b>注意：</b>只會變更介面，不會變更儀表板內容。",
     "languageDialog.select.searchLabel": "搜尋語言",
     "languageDialog.select.searchPlaceholder": "搜尋…",
-    "languageDialog.select.noMatch": "沒有相符的語言。"
+    "languageDialog.select.noMatch": "沒有相符的語言。",
+    "languageDialog.error": "我們無法變更語言。請再試一次。",
+    "languageDialog.success": "太好了！我們已變更語言！"
 }

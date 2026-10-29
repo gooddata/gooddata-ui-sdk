@@ -1,4 +1,6 @@
 {
+    "dashboard.ai.composing.replyNow": "지금 답변하기",
+    "dashboard.ai.composing.waiting": "계속하려면 채팅에서 답변하세요.",
     "dashboard.contractExpired.trial.title": "체험 기간이 종료되었습니다.",
     "dashboard.contractExpired.trial.description": "GoodData Cloud를 계속 사용하시려는 경우 저희에게 연락주시기 바랍니다.",
     "dashboard.contractExpired.nonTrial.title": "접근이 차단되었습니다.",
@@ -940,5 +942,13 @@
     "dashboard.tabs.accessibility.add-button-label": "새 탭 추가",
     "dashboard_add_filter.button.aria_label": "필터 추가",
     "dashboard_add_filter.menu.title": "필터 추가",
-    "dashboard_add_filter.menu.parameter": "매개변수"
+    "dashboard_add_filter.menu.parameter": "매개변수",
+    "insightEditor.menu.explore": "여기에서 탐색",
+    "addPanel.insight": "시각화",
+    "insightEditor.filterContext.dateFilterInapplicable": "필터 컨텍스트를 유지할 수 없습니다. 대시보드의 날짜 필터를 이 시각화에 적용할 수 없습니다.",
+    "insightEditor.filterContext.invalidFilterItemsCount": "필터 막대에 20개 이상의 항목이 적용되어 필터 컨텍스트를 유지할 수 없습니다",
+    "insightEditor.filterContext.tookTooLong": "이 시각화의 필터 컨텍스트를 유지하는 데 시간이 너무 오래 걸렸습니다. 시각화를 다시 탐색해 보세요.",
+    "insightEditor.filterContext.failed": "이 시각화의 필터 컨텍스트를 유지할 수 없습니다. 시각화를 다시 탐색해 보세요.",
+    "insightEditor.dialog.label": "시각화 편집기",
+    "insightEditor.save.placementFailed": "시각화가 저장되었지만 대시보드에 추가할 수 없습니다."
 }

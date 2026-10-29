@@ -1,4 +1,6 @@
 {
+    "dashboard.ai.composing.replyNow": "Responder agora",
+    "dashboard.ai.composing.waiting": "Responda no chat para continuar.",
     "dashboard.contractExpired.trial.title": "Seu período de teste terminou.",
     "dashboard.contractExpired.trial.description": "Entre em contato conosco se deseja continuar usando o GoodData Cloud.",
     "dashboard.contractExpired.nonTrial.title": "Seu acesso está bloqueado.",
@@ -940,5 +942,13 @@
     "dashboard.tabs.accessibility.add-button-label": "Adicionar nova aba",
     "dashboard_add_filter.button.aria_label": "Adicionar filtro",
     "dashboard_add_filter.menu.title": "Adicionar filtro",
-    "dashboard_add_filter.menu.parameter": "Parâmetro"
+    "dashboard_add_filter.menu.parameter": "Parâmetro",
+    "insightEditor.menu.explore": "Explorar daqui",
+    "addPanel.insight": "Visualização",
+    "insightEditor.filterContext.dateFilterInapplicable": "O contexto do filtro não pode ser mantido porque o filtro de data em Painéis não pode ser aplicado a essa visualização.",
+    "insightEditor.filterContext.invalidFilterItemsCount": "O contexto do filtro não pode ser mantido porque a visualização aplicou mais de 20 itens na barra de filtro",
+    "insightEditor.filterContext.tookTooLong": "Demorou muito tempo para manter o contexto do filtro para essa visualização. Tente explorar a visualização novamente.",
+    "insightEditor.filterContext.failed": "O contexto do filtro não pode ser mantido para esta visualização. Tente explorar a visualização novamente.",
+    "insightEditor.dialog.label": "Editor de visualização",
+    "insightEditor.save.placementFailed": "A visualização foi salva, mas não pode ser adicionada ao painel."
 }

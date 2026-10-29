@@ -3,13 +3,13 @@
 import { useEffect } from "react";
 
 import * as monaco from "monaco-editor/editor/editor.api.js";
-import { MonacoToProtocolConverter, ProtocolToMonacoConverter } from "monaco-languageclient/monaco-converter";
 //more info in README.md
 import { type CompletionList, type InitializeResult, TextEdit } from "vscode-languageserver";
 import { type Command } from "vscode-languageserver-types";
 
 import { type MaqlLanguageService } from "@gooddata/sdk-maql-language-server";
 
+import { MonacoToProtocolConverter, ProtocolToMonacoConverter } from "../monacoConverter.js";
 import { createDocument } from "../utils.js";
 
 const triggerSuggestCommand: Command = {

@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useRef } from "react";
 
 import * as monaco from "monaco-editor/editor/editor.api.js";
-import { MonacoToProtocolConverter, ProtocolToMonacoConverter } from "monaco-languageclient/monaco-converter";
 import { useIntl } from "react-intl";
 import { type InitializeResult } from "vscode-languageserver";
 
@@ -15,6 +14,7 @@ import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { type IRootRef } from "../../components/ExpandableTooltip.js";
 import { type IStandaloneCodeEditor } from "../../monaco/MonacoEditor.js";
 import { destroyMaqlTooltip } from "../MaqlEditor.tooltip.js";
+import { MonacoToProtocolConverter, ProtocolToMonacoConverter } from "../monacoConverter.js";
 import { createDocument } from "../utils.js";
 
 import { doHover } from "./hover/doHover.js";

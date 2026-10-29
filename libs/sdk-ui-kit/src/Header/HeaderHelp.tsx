@@ -162,10 +162,7 @@ export function HeaderHelp({
         <Button
             className={cx(classNames, "gd-header-button")}
             onClick={() => toggleHelpMenu()}
-            accessibilityConfig={{
-                isExpanded: isOpen,
-                popupId: dropdownId,
-            }}
+            accessibilityConfig={disableDropdown ? undefined : { isExpanded: isOpen, popupId: dropdownId }}
             ref={helpMenuButtonRef}
         >
             <FormattedMessage id="gs.header.help" />
