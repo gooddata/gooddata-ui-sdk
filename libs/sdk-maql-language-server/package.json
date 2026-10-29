@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-maql-language-server",
-    "version": "11.65.0",
+    "version": "11.65.1",
     "license": "MIT",
     "author": {
         "name": "Stellar",

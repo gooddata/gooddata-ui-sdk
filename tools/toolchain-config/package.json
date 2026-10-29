@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/toolchain-config",
-    "version": "11.65.0",
+    "version": "11.65.1",
     "description": "Shared build and test toolchain configuration (rolldown, vite, vitest, playwright) for gdc-ui packages",
     "license": "MIT",
     "author": "GoodData",

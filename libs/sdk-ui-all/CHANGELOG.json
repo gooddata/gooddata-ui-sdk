@@ -2,6 +2,12 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.65.1",
+            "tag": "@gooddata/sdk-ui-all_v11.65.1",
+            "date": "Thu, 29 Oct 2026 14:43:57 GMT",
+            "comments": {}
+        },
+        {
             "version": "11.65.0",
             "tag": "@gooddata/sdk-ui-all_v11.65.0",
             "date": "Thu, 29 Oct 2026 14:21:52 GMT",

@@ -1,6 +1,12 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 29 Oct 2026 14:21:52 GMT and should not be manually modified.
+This log was last generated on Thu, 29 Oct 2026 14:43:57 GMT and should not be manually modified.
+
+## 11.65.1
+
+Thu, 29 Oct 2026 14:43:57 GMT
+
+_Version update only_
 
 ## 11.65.0
 
