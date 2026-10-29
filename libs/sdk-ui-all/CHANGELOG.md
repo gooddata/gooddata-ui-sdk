@@ -1,6 +1,124 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 22 Oct 2026 10:09:35 GMT and should not be manually modified.
+This log was last generated on Thu, 29 Oct 2026 14:21:52 GMT and should not be manually modified.
+
+## 11.65.0
+
+Thu, 29 Oct 2026 14:21:52 GMT
+
+### Patches
+
+- sdk-backend-tiger: Simplify feature flag registration, support explicit local overrides, and avoid an unhandled rejection when FeatureHub requests fail.
+- sdk-ui-dashboard: A newly created alert or scheduled export no longer warns that its filters changed when the dashboard has a hidden or locked date filter
+- sdk-ui-metric-component: drop the monaco-languageclient dependency. Its 2.x releases import vscode-languageserver-protocol without declaring it, so a consumer with a newer protocol package hoisted failed to build (the deep imports are blocked by its exports map). The Monaco/protocol conversions the MAQL editor needs are now part of the package and use vscode-languageserver-types.
+- sdk-model, sdk-backend-tiger: remove the enableShellApplication_dashboards feature flag; sdk-ui: remove useHostRoute from the dashboard URL builders; KPI Dashboards links always target the host-application route
+
+### Updates
+
+- sdk-pluggable-application-model, sdk-ui-pluggable-host: A pluggable application can ask the host to open the pricing dialog with the new openPricingDialogRequested event. The default host UI opens it for trial organizations only.
+- sdk-model: add requiredWorkspacePermissionsInExportMode to the pluggable application manifest. sdk-ui-pluggable-host checks it in export mode in place of requiredWorkspacePermissions, so Publisher can require only VIEW for the export browser while its interactive UI keeps requiring MANAGE.
+- sdk-ui-kit: UiListbox has a new `shouldSelectOnOptionClick` prop that selects an item on a click anywhere in its option.
+- sdk-ui-kit: Compact UiListbox rows are 28px high. UiTextInput is 32px high including its border, shows a border on hover and a 2px outline on focus, and its icons darken on hover and focus. UiFloatingPanel has a border.
+- sdk-ui-kit: UiTextInput no longer shows the browser focus ring on its inner input.
+- sdk-ui-kit: UiListbox highlights rows without a transition, so the highlight no longer flickers when moving between items.
+- sdk-ui-kit: UiSearchResultsAnnouncement accepts a custom `noResultsText`.
+- sdk-ui-kit: UiTextInput has a new `small` size.
+- sdk-ui-kit: UiListbox has a new `padding` prop; `"none"` removes the vertical padding of the list.
+- sdk-ui-kit: UiListbox items accept a `lang` attribute, which is set on their option.
+- sdk-ui-kit: UiListbox supports virtual focus with the new `focusedItemId` and `onFocusedItemIdChange` props.
+- sdk-ui-all: Add the UiSearchableSelect component, a select with a search field in its popup.
+- sdk-ui-kit: Header tests pass workspace permissions as named parameters.
+- sdk-ui-all: `generateHeaderAccountMenuItems()` takes the workspace ID and feature flags in an options parameter.
+- sdk-ui-kit: User menu items without a link render as buttons.
+- sdk-ui-pluggable-host: Add a shared `render()` helper for tests.
+- sdk-ui-all: Users can change their interface language from the user menu, also in the mobile menu, behind the new `enableUserLanguageChange` feature flag. Add `IUserSettingsService.deleteLocale()` and the `globe` icon of UiIcon.
+- sdk-ui-kit: UiModalDialog is never wider than the screen, so it fits small screens too.
+- sdk-ui-kit: Added support for `isPending` to `<UiButton />` component. Deprecated `isLoading` as it wasn't doing anything.
+- sdk-ui-pluggable-host: Added loading, error and success states in user language change feature.
+- sdk-ui-kit: Disabled showing aria landmark region in legacy toasts if there are no messages.
+- sdk-ui-kit: Reverted `<UiSearchableSelect />` popup `4px` offset and `complementary-3` border per design request.
+- sdk-ui-all: Fixed language dialog select not closing when clicking on the outside right side of the select. Fixed possible slight mobile overflow of language dialog select.
+- sdk-model: Remove `MONGODB` and the stale `DRILL` from the `DataSourceType` union; neither is a supported data source type any more
+- api-client-tiger: Remove `MONGODB` from the generated data source type enums
+- sdk-code-convertors: v2 version errors show the value's type and name a missing `version`.
+- sdk-code-schemas, sdk-code-convertors: v2 documents accept `WEEK` granularity and store it as `WEEK_US`.
+- sdk-ui-kit: UiConfigEditor has a new internal `warnings` prop that marks values in the code with lint warnings.
+- api-client-tiger, sdk-model, sdk-backend-spi, sdk-backend-tiger, sdk-pluggable-application-model, sdk-ui-gen-ai: The Publisher copilot reads and writes v2 documents behind `enablePublisherV2`.
+- api-client-tiger, sdk-model, sdk-backend-spi, sdk-backend-base, sdk-backend-tiger, sdk-code-convertors, sdk-ui-gen-ai: Add the v2 Publisher service on the Document entities.
+- sdk-model, sdk-ui-theme-provider, sdk-code-schemas, sdk-code-convertors: Publisher colors accept `{theme.palette.info}` and `{theme.palette.complementary.c0}`–`c9` as theme references.
+- sdk-ui-pivot: Expose column text wrapping options as checked menu items and hide decorative checkmarks from screen readers.
+- sdk-ui-pivot: Focus column menus when opened with assistive technology and allow Enter or Space to activate menu buttons without sorting.
+- gdc-dashboards-runtime: The visualization editor stays open and preserves unsaved changes when the browser is resized across the mobile breakpoint.
+- sdk-ui-all: Improve complementary-7 text contrast by updating the default color to #6A737D and aligning legacy hardcoded uses.
+- sdk-ui-dashboard: Restore actionable focus and show an empty state after removing the last visible scheduled export attachment.
+- sdk-ui-kit: Fix keyboard focus and active-cell announcements in virtualized async tables.
+- sdk-ui-dashboard: Restore focus to the correct saved-view delete action after canceling its confirmation dialog and hide the tooltip when focus leaves.
+- sdk-ui: Visualizations display a localized access error instead of the internal PROTECTED_REPORT code when execution references restricted data.
+- gdc-home-ui: Fix fiscal calendar start-year and end-year naming so saved settings and previews match visualization labels.
+- sdk-ui-kit: UiIcon has new columnGroup, visualizationStack and richText icons.
+- sdk-ui-pluggable-application: createBackendForModule takes an onCacheReady option that receives the cache control of the created backend, so a module can reset its caches.
+- sdk-maql-language-server: Add the @gooddata/sdk-maql-language-server package to the SDK; the MAQL language server was moved into the SDK from the internal GoodData libs.
+- sdk-ui-metric-component: The package ships the Monaco editor worker bundled, so apps need no worker setup in Vite or webpack. The worker starts from the bundled file, or from an inline Blob when the file is not reachable from the page.
+- sdk-ui-analytical-designer: Replace the typed event callbacks and eventHandlers of AnalyticalDesigner with one onEvent that gets a typed AnalyticalDesignerEvent union; the drill event carries the IDrillEvent of sdk-ui.
+- Element values of numeric computed attributes are formatted with the attribute's number format. In the attribute filter, a number typed with the display separators searches by the raw value, and an item tooltip shows the raw value when the displayed one is rounded or scaled. Date values in the repeater and in geo chart tooltips and legends now display formatted, consistent with other visualizations.
+- sdk-code-convertors: `empty_values` of a visualisation or metric date filter now round-trips through the date filter's `emptyValueHandling`; the legacy empty-string attribute filter is still read on insight-level date filters.
+- sdk-ui-analytical-designer: the insight date filter's empty date values mode is stored as the date filter's `emptyValueHandling` (behind `enableImprovedMetricDateFilter`); the legacy empty-string attribute filter is still read.
+- sdk-ui-kit: Add renderItemDetails to the internal CatalogItemPicker and make it generic over its payload types.
+- sdk-backend-base: The caching backend no longer serves cached attribute elements of a label for a computed attribute sharing its id.
+- sdk-ui-analytical-designer: An insight with an empty date values mode no longer opens with unsaved changes when stored in another shape than AD writes.
+- sdk-embedding: Add the catalogLoaded Analytical Designer event, emitted after every successful catalog load so the host can set filters in an empty AD.
+- sdk-ui-dashboard: Alerting and scheduled email management dialogs accept a dashboardUrlBuilder prop.
+- sdk-ui-gen-ai, sdk-pluggable-application-model, sdk-ui-pluggable-host: The reasoning effort picked on the new-dashboard screen carries into the chat.
+- sdk-ui-gen-ai: Metric and attribute options picked in the clarifying answers card are readable instead of white on white.
+- sdk-ui-analytical-designer: Add the @gooddata/sdk-ui-analytical-designer package to the SDK; the Analytical Designer was moved into the SDK from the internal GoodData libs.
+- sdk-ui-metric-component: Add the @gooddata/sdk-ui-metric-component package to the SDK; the metric component was moved into the SDK from the internal GoodData libs.
+- sdk-ui-ext, sdk-ui-analytical-designer: Bucket title icons are now React components resolved through getBucketIcon instead of svg asset imports, so the Analytical Designer package no longer ships ESM that depends on a bundler asset loader. The bucket-title svg files were removed from sdk-ui-ext internal assets.
+- sdk-ui-dashboard: The dashboard Edit button stays available in browser windows wider than 640 px instead of disappearing below 1171 px. In narrower windows, edit mode keeps the desktop layout at a minimum width of 1170 px and scrolls horizontally, so layout changes are saved as they appear. A dismissable note explains this while editing in a narrow window.
+- sdk-backend-tiger: The collapsible, resizable left sidebar is on by default; `enableCollapsibleLeftSidebar` now defaults to `true` when the backend does not set it.
+- sdk-ui-dashboard: In compact content density, headline widgets no longer leave empty space below their content and keep the font size they have in comfortable density.
+- sdk-ui-kit: Chip labels in dialogs, such as the alert list filters, show in Safari without needing a hover.
+- sdk-ui-kit: Resizable sidebars slide in 300 ms by default instead of 500 ms. sdk-ui-dashboard: The dashboard side panels and the filter bar slide in 300 ms instead of 500 ms, also when the dashboard enters or leaves edit mode. The edit-mode panel items use the same icon set. In the collapsible panel they line up with the collapse button and turn darker in the collapsed rail, and the panel title, item labels and visualization list appear while the panel expands.
+- sdk-ui-dashboard: Apply default Filter View on all tabs when persistent filters across tabs is enabled, updating matching filters.
+- sdk-ui-dashboard: Synchronize dashboard filter selections across tabs when persistent filters are enabled. Filter configuration changes stay on their own tab.
+- api-client-tiger, sdk-backend-tiger: The workspace localization usage, its workspaces and users lists and the workspace localization statistics come from the backend localization endpoints. The defaults of a workspace are the values it gets.
+- sdk-backend-spi, sdk-backend-tiger: The localization usage lists accept a name filter, which the backend applies before paging.
+- sdk-ui-kit: Escape in a UiPopover closes only the popover, not a parent drawer or dialog.
+- sdk-ui-ext: Report which language settings the user detail saved through `onEvent`
+- sdk-ui-pluggable-host: Track the user's language settings open and save
+- sdk-backend-tiger: Enable the user interface language change by default; `enableUserLanguageChange` now defaults to `true`
+- sdk-ui-gen-ai: Add the `VisualizationMenu` slot to add, remove or reorder items of the visualization menu in AI Assistant messages
+- sdk-ui-pluggable-host: Legacy KPI Dashboards URLs with #/p/ routes map to the hosted dashboards. Client and product/client URLs land on the bare dashboards landing. Embedded KD and AD client URLs stay in the embedding and show the not-found page. /dashboards/403.html goes to the root. sdk-ui-gen-ai: The legacy dashboard link includes the dashboard route segment.
+- sdk-ui-kit, sdk-ui-filters, sdk-ui-pluggable-host: Native buttons and inputs in overlays use the page font instead of the browser default font.
+- sdk-ui-dashboard: The alpha `enableInsightEditing` config option opens visualizations in the embedded Analytical Designer from the widget menu, the edit mode panel and the empty visualization list. sdk-ui-dashboard now depends on sdk-ui-analytical-designer, so every app that bundles the dashboard must meet its bundler requirements, also with the option off: webpack needs a loader for the `?worker&url` Monaco worker import, and Vite needs the external worker URL optimizeDeps plugin and the `global` and `process.env` defines. The Analytical Designer README and the dashboard-plugin-template and react-app-template show the setup.
+- sdk-ui-dashboard: Explore from here passes the dashboard filters to Analytical Designer when the explored insight first renders, so a late visualization update no longer drops them.
+- sdk-backend-spi: Add data source management, data source files (CSV upload, analysis and import) and data filter settings to the backend SPI. sdk-model: Add data source and CSV file types.
+- sdk-ui-pluggable-application: Remove the mention of backend-specific functions from the client platform context documentation.
+- sdk-backend-spi: Add reading and writing of the declarative logical data model, the workspace layout import, data source scans and logical model generation, workspace custom application settings and all workspace references. sdk-model: Add declarative logical data model, physical data model and custom application setting types.
+- sdk-backend-spi: Add organization CSP directives, platform usage, user invitations, current user API tokens, workspace creation and deletion. sdk-backend-tiger: Deprecate TigerSpecificFunctions; it will be removed in the next major version.
+- sdk-backend-tiger: The workspace search test loads its own module copy, so it passes in any test file order.
+- sdk-ui-pluggable-host: In export mode, users without the BASE_UI_ACCESS permission keep the Dashboards and Publisher applications, so the exports they request render as they did in the standalone Dashboards application, which never checked this permission.
+- sdk-ui-kit: Add opt-in highlight and strikethrough markdown to RichText.
+- sdk-model: Add theme image references and image URL resolution for v2 Publisher documents.
+- sdk-ui-semantic-search: Keep the search result tooltip on screen.
+- sdk-ui-gen-ai: Screen readers announce each reasoning step heading once and read the assistant's answer when it completes.
+- sdk-ui-gen-ai: Recent conversations rows span the full panel width on screens narrower than 640px.
+- sdk-ui-gen-ai: The response feedback form closes when the chat is scrolled.
+- sdk-model, sdk-backend-spi, sdk-backend-tiger: Add the `enableLocalizationValidations` feature flag; translation usage reports `variant` and `LOCALE` `missing`
+- sdk-ui-ext: The user detail dialog notes whether the user's workspaces have a translation into their metadata and data language.
+- sdk-ui-gen-ai: Improve error handling and graceful degradation in GenAI.
+- sdk-model, sdk-backend-tiger: Add the `enableGenAiReportTakeaways` feature flag
+- api-client-tiger, sdk-backend-spi, sdk-backend-tiger: Add IGenAIService.generateTakeaway (beta) for the AI takeaway endpoint
+- sdk-ui-dashboard: The widget options menu no longer traps keyboard focus; Tab closes it and moves on, like other menus.
+- sdk-ui-filters: In the date filter, Escape in the static and relative period forms returns to the option list instead of closing the filter.
+- sdk-ui-dashboard: The recipients field in the alert and scheduled export dialogs tells screen reader users which recipients are selected and how to move between them.
+- sdk-ui-ext: Keep the date icon on a conditional formatting date rule whose column was removed.
+- sdk-ui-ext: The workspace permission dialog keeps Visualizations saved next to Manage all visualizations, so unchecking the latter no longer removes it.
+- sdk-ui-dashboard: Pressing Space on a selected recipient in the alert and scheduled export dialogs removes it, like Enter.
+- sdk-ui-pluggable-host: Cmd/Ctrl/Shift-click on a host header menu item opens it in a new tab or window instead of navigating the current tab.
+- sdk-ui-kit: a header menu item keeps its focus underline only for keyboard focus, so a Cmd/Ctrl-clicked item no longer stays underlined.
+- sdk-ui-kit: AppHeader help menu items pass the click event to onMenuItemClick, so Cmd/Ctrl/Shift-click on a help link keeps the browser's native new tab or window behavior.
+- sdk-ui-kit: Buttons that open a menu or dialog tell screen readers whether it is open.
+- sdk-ui-ext: The workspace permission dialog shows Manage all visualizations as included in Analyze where the workspace grants it with Analyze.
 
 ## 11.64.0
 

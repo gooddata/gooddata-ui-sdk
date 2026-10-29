@@ -4,8 +4,9 @@
 /docs/ {{ printf "%s/" .Site.Params.homeSlug | absURL }} 301!
 # The versions archive moved from its own top-level section into the reference.
 {{ with index (where .Site.Pages "Params.versions_archive" true) 0 }}/versions/ {{ .Permalink }} 301!{{ end }}
-/11.64/ {{ "latest/" | absURL }} 301!
-/11.64.0/ {{ "latest/" | absURL }} 301!
+/11.65/ {{ "latest/" | absURL }} 301!
+/11.65.0/ {{ "latest/" | absURL }} 301!
+/11.64.0/ {{ "11.64/" | absURL }} 301!
 /11.63.0/ {{ "11.63/" | absURL }} 301!
 /11.62.0/ {{ "11.62/" | absURL }} 301!
 /11.61.0/ {{ "11.61/" | absURL }} 301!

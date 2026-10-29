@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-metric-component",
-    "version": "11.65.0-alpha.15",
+    "version": "11.65.0",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
     "repository": {
