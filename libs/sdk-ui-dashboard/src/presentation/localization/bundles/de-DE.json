@@ -1,4 +1,6 @@
 {
+    "dashboard.ai.composing.replyNow": "Jetzt antworten",
+    "dashboard.ai.composing.waiting": "Antworten Sie im Chat, um fortzufahren.",
     "dashboard.contractExpired.trial.title": "Ihre Testversion ist abgelaufen.",
     "dashboard.contractExpired.trial.description": "Wenn Sie GoodData Cloud weiterhin nutzen möchten, kontaktieren Sie uns bitte.",
     "dashboard.contractExpired.nonTrial.title": "Ihr Zugriff ist gesperrt.",
@@ -940,5 +942,13 @@
     "dashboard.tabs.accessibility.add-button-label": "Neuen Tab hinzufügen",
     "dashboard_add_filter.button.aria_label": "Filter hinzufügen",
     "dashboard_add_filter.menu.title": "Filter hinzufügen",
-    "dashboard_add_filter.menu.parameter": "Parameter"
+    "dashboard_add_filter.menu.parameter": "Parameter",
+    "insightEditor.menu.explore": "Von hier erkunden",
+    "addPanel.insight": "Visualisierung",
+    "insightEditor.filterContext.dateFilterInapplicable": "Der Filterkontext kann nicht beibehalten werden, da der Datumsfilter in Dashboards nicht auf diese Visualisierung angewendet werden kann.",
+    "insightEditor.filterContext.invalidFilterItemsCount": "Der Filterkontext kann nicht beibehalten werden, da die Visualisierung mehr als 20 Elemente in der Filterleiste angewendet hat.",
+    "insightEditor.filterContext.tookTooLong": "Es hat zu lange gedauert, den Filterkontext für diese Visualisierung beizubehalten. Bitte versuchen Sie, die Visualisierung erneut zu erkunden.",
+    "insightEditor.filterContext.failed": "Der Filterkontext kann für diese Visualisierung nicht beibehalten werden. Bitte versuchen Sie, die Visualisierung erneut zu erkunden.",
+    "insightEditor.dialog.label": "Visualisierungseditor",
+    "insightEditor.save.placementFailed": "Die Visualisierung wurde gespeichert, kann dem Dashboard jedoch nicht hinzugefügt werden."
 }

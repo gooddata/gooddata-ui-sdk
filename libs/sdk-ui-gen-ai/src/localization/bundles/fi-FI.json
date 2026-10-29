@@ -149,6 +149,8 @@
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, one {# sivu} other {# sivua}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, one {# sivu} other {# sivua}}",
     "gd.gen-ai.publisherDocument.unavailable": "Asiakirja ei ole saatavilla.",
+    "gd.gen-ai.publisherDocument.previousVersion": "Tämä asiakirja luotiin Publisherin edellisessä versiossa, eikä sitä voi avata tässä.",
+    "gd.gen-ai.publisherDocument.newerVersion": "Tämä asiakirja luotiin Publisherin uudemmassa versiossa, eikä sitä voi avata tässä.",
     "gd.gen-ai.alert-proposal.summary.trigger": "Laukaisin",
     "gd.gen-ai.alert-proposal.summary.trigger.mode": "Tila",
     "gd.gen-ai.alert-proposal.summary.trigger.interval": "Aikaväli",

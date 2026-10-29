@@ -1,4 +1,6 @@
 {
+    "dashboard.ai.composing.replyNow": "Répondre maintenant",
+    "dashboard.ai.composing.waiting": "Répondez dans la conversation pour continuer.",
     "dashboard.contractExpired.trial.title": "Votre essai est terminé.",
     "dashboard.contractExpired.trial.description": "Contactez-nous si vous souhaitez continuer à utiliser GoodData Cloud.",
     "dashboard.contractExpired.nonTrial.title": "Votre accès est bloqué.",
@@ -575,7 +577,7 @@
     "configurationPanel.visualprops.inheritDescriptionHelp": "Héritez de la description de la visualisation.",
     "configurationPanel.visualprops.customDescription": "Personnalisé",
     "configurationPanel.visualprops.customDescriptionHelp": "Ajoutez une description personnalisée pour cette instance de visualisation.",
-    "configurationPanel.visualprops.noneDescription": "Aucun(e)",
+    "configurationPanel.visualprops.noneDescription": "Aucune",
     "configurationPanel.visualprops.includeMetrics": "Inclure les descriptions des métriques",
     "configurationPanel.visualprops.includeMetricsHelp": "Affichez la section listant les métriques de la visualisation et leur description.",
     "configurationPanel.visualprops.descriptionPlaceholder": "Ajouter une description…",
@@ -940,5 +942,13 @@
     "dashboard.tabs.accessibility.add-button-label": "Ajouter un nouvel onglet",
     "dashboard_add_filter.button.aria_label": "Ajouter un filtre",
     "dashboard_add_filter.menu.title": "Ajouter un filtre",
-    "dashboard_add_filter.menu.parameter": "Paramètre"
+    "dashboard_add_filter.menu.parameter": "Paramètre",
+    "insightEditor.menu.explore": "Explorer à partir d’ici",
+    "addPanel.insight": "Visualisation",
+    "insightEditor.filterContext.dateFilterInapplicable": "Le contexte de filtrage ne peut être conservé car le filtre de date dans les tableaux de bord ne peut pas être appliqué à cette visualisation.",
+    "insightEditor.filterContext.invalidFilterItemsCount": "Le contexte de filtrage ne peut être conservé car la visualisation a appliqué plus de 20 éléments sur la barre de filtre",
+    "insightEditor.filterContext.tookTooLong": "Il a pris trop de temps pour conserver le contexte de filtrage pour cette visualisation. Veuillez réessayer d’explorer la visualisation.",
+    "insightEditor.filterContext.failed": "Le contexte de filtrage ne peut pas être conservé pour cette visualisation. Veuillez réessayer d’explorer la visualisation.",
+    "insightEditor.dialog.label": "Éditeur de visualisation",
+    "insightEditor.save.placementFailed": "La visualisation est enregistrée, mais elle ne peut pas être ajoutée au tableau de bord."
 }

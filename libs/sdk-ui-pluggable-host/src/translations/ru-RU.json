@@ -39,5 +39,7 @@
     "languageDialog.description": "<b>Примечание:</b> Изменяется только язык интерфейса, но не содержимое дашбордов.",
     "languageDialog.select.searchLabel": "Поиск языков",
     "languageDialog.select.searchPlaceholder": "Поиск…",
-    "languageDialog.select.noMatch": "Подходящий язык не найден."
+    "languageDialog.select.noMatch": "Подходящий язык не найден.",
+    "languageDialog.error": "Не удалось изменить язык. Повторите попытку.",
+    "languageDialog.success": "Отлично! Мы изменили язык!"
 }

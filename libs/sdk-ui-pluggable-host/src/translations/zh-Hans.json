@@ -39,5 +39,7 @@
     "languageDialog.description": "<b>注意：</b>仅更改界面，不会更改仪表板内容。",
     "languageDialog.select.searchLabel": "搜索语言",
     "languageDialog.select.searchPlaceholder": "搜索…",
-    "languageDialog.select.noMatch": "没有匹配的语言。"
+    "languageDialog.select.noMatch": "没有匹配的语言。",
+    "languageDialog.error": "无法更改语言。请重试。",
+    "languageDialog.success": "很好！我们已更改语言！"
 }

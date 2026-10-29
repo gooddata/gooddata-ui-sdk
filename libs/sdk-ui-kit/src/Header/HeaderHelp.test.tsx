@@ -30,9 +30,12 @@ describe("HeaderHelp", () => {
         const docsLink = { key: "docs", label: "Documentation", href: "#docs" };
         const clickSpy = vi.fn();
         const { user } = render(<HeaderHelp className="" items={[docsLink]} onMenuItemClick={clickSpy} />);
+        const urlBeforeClick = window.location.href;
 
         await user.click(screen.getByRole("button", { name: "Help" }));
         fireEvent.click(await screen.findByRole("option", { name: "Documentation" }), { metaKey: true });
+        // The followed link left #docs in the URL, which later test files in this worker would inherit.
+        window.history.replaceState(null, "", urlBeforeClick);
 
         expect(clickSpy).toHaveBeenCalledWith(
             docsLink,
@@ -47,5 +50,26 @@ describe("HeaderHelp", () => {
         await user.click(await screen.findByRole("option", { name: "Documentation" }));
 
         expect(screen.queryByRole("option", { name: "Documentation" })).not.toBeInTheDocument();
+    });
+
+    it("points aria-controls at the open menu", async () => {
+        const { user } = render(<HeaderHelp className="" items={[documentationItem]} />);
+        const button = screen.getByRole("button", { name: "Help" });
+
+        await user.click(button);
+
+        expect(button).toHaveAttribute("aria-expanded", "true");
+        expect(document.getElementById(button.getAttribute("aria-controls") ?? "")).toBeInTheDocument();
+    });
+
+    it("does not announce a popup when the dropdown is disabled", async () => {
+        const { user } = render(<HeaderHelp className="" items={[documentationItem]} disableDropdown />);
+        const button = screen.getByRole("button", { name: "Help" });
+
+        await user.click(button);
+
+        expect(button).not.toHaveAttribute("aria-expanded");
+        expect(button).not.toHaveAttribute("aria-controls");
+        expect(button).not.toHaveAttribute("aria-haspopup");
     });
 });

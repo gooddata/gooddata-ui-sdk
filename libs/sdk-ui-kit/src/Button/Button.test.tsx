@@ -81,4 +81,62 @@ describe("ReactButton", () => {
             expect(screen.getByTestId("gd-button-icon")).toBeInTheDocument();
         });
     });
+
+    describe("dropdown aria attributes", () => {
+        it("should derive aria-expanded and aria-controls from isExpanded and popupId", () => {
+            renderButton({ accessibilityConfig: { isExpanded: true, popupId: "popup" } });
+
+            const button = screen.getByRole("button");
+            expect(button).toHaveAttribute("aria-expanded", "true");
+            expect(button).toHaveAttribute("aria-controls", "popup");
+            expect(button).toHaveAttribute("aria-haspopup", "true");
+        });
+
+        it("should not render aria-controls when collapsed", () => {
+            renderButton({ accessibilityConfig: { isExpanded: false, popupId: "popup" } });
+
+            const button = screen.getByRole("button");
+            expect(button).toHaveAttribute("aria-expanded", "false");
+            expect(button).not.toHaveAttribute("aria-controls");
+        });
+
+        it("should let explicit ariaExpanded and ariaControls override the derived values", () => {
+            renderButton({
+                accessibilityConfig: {
+                    isExpanded: true,
+                    popupId: "popup",
+                    ariaExpanded: false,
+                    ariaControls: "other",
+                },
+            });
+
+            const button = screen.getByRole("button");
+            expect(button).toHaveAttribute("aria-expanded", "false");
+            expect(button).toHaveAttribute("aria-controls", "other");
+        });
+
+        it("should derive aria-controls when ariaExpanded is explicit but ariaControls is not", () => {
+            // the shape Dropdown's renderButton and DropdownButton pass while open
+            renderButton({
+                accessibilityConfig: {
+                    isExpanded: true,
+                    popupId: "popup",
+                    ariaExpanded: true,
+                    ariaControls: undefined,
+                },
+            });
+
+            const button = screen.getByRole("button");
+            expect(button).toHaveAttribute("aria-expanded", "true");
+            expect(button).toHaveAttribute("aria-controls", "popup");
+        });
+
+        it("should render explicit ariaExpanded and ariaControls without isExpanded", () => {
+            renderButton({ accessibilityConfig: { ariaExpanded: true, ariaControls: "description" } });
+
+            const button = screen.getByRole("button");
+            expect(button).toHaveAttribute("aria-expanded", "true");
+            expect(button).toHaveAttribute("aria-controls", "description");
+        });
+    });
 });

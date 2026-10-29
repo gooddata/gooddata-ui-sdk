@@ -1,4 +1,6 @@
 {
+    "dashboard.ai.composing.replyNow": "Rispondi ora",
+    "dashboard.ai.composing.waiting": "Rispondi in chat per continuare.",
     "dashboard.contractExpired.trial.title": "Il periodo di prova è terminato.",
     "dashboard.contractExpired.trial.description": "È possibile contattarci qualora si desiderasse continuare a utilizzare GoodData Cloud.",
     "dashboard.contractExpired.nonTrial.title": "L'accesso è bloccato.",
@@ -940,5 +942,13 @@
     "dashboard.tabs.accessibility.add-button-label": "Aggiungi una nuova scheda",
     "dashboard_add_filter.button.aria_label": "Aggiungi filtro",
     "dashboard_add_filter.menu.title": "Aggiungi filtro",
-    "dashboard_add_filter.menu.parameter": "Parametro"
+    "dashboard_add_filter.menu.parameter": "Parametro",
+    "insightEditor.menu.explore": "Esplora da qui",
+    "addPanel.insight": "Visualizzazione",
+    "insightEditor.filterContext.dateFilterInapplicable": "Il contesto del filtro non può essere mantenuto perché il filtro data del cruscotto non può essere applicato a questa visualizzazione.",
+    "insightEditor.filterContext.invalidFilterItemsCount": "Il contesto del filtro non può essere mantenuto perché la visualizzazione ha applicato più di 20 elementi alla barra dei filtri.",
+    "insightEditor.filterContext.tookTooLong": "È stato necessario troppo tempo per mantenere il contesto del filtro per questa visualizzazione. Provare a esplorare di nuovo la visualizzazione.",
+    "insightEditor.filterContext.failed": "Impossibile mantenere il contesto del filtro per questa visualizzazione. Provare a esplorare di nuovo la visualizzazione.",
+    "insightEditor.dialog.label": "Editor di visualizzazione",
+    "insightEditor.save.placementFailed": "La visualizzazione è stata salvata, ma non è stato possibile aggiungerla al cruscotto."
 }

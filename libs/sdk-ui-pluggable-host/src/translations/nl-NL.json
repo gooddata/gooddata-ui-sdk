@@ -39,5 +39,7 @@
     "languageDialog.description": "<b>Opmerking:</b> Hiermee wijzigt u alleen de interface, niet de dashboardinhoud.",
     "languageDialog.select.searchLabel": "Talen zoeken",
     "languageDialog.select.searchPlaceholder": "Bezig met zoeken…",
-    "languageDialog.select.noMatch": "Geen overeenkomende taal."
+    "languageDialog.select.noMatch": "Geen overeenkomende taal.",
+    "languageDialog.error": "We konden de taal niet wijzigen. Probeer het opnieuw.",
+    "languageDialog.success": "Prima! We hebben de taal gewijzigd!"
 }

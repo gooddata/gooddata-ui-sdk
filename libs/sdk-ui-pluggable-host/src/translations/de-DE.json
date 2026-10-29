@@ -39,5 +39,7 @@
     "languageDialog.description": "<b>Hinweis:</b> Ändert nur die Benutzeroberfläche, nicht die Dashboard-Inhalte.",
     "languageDialog.select.searchLabel": "Sprachen suchen",
     "languageDialog.select.searchPlaceholder": "Suchen…",
-    "languageDialog.select.noMatch": "Keine übereinstimmende Sprache."
+    "languageDialog.select.noMatch": "Keine übereinstimmende Sprache.",
+    "languageDialog.error": "Wir konnten die Sprache nicht ändern. Versuchen Sie es erneut.",
+    "languageDialog.success": "Großartig! Wir haben die Sprache geändert!"
 }

@@ -1,4 +1,6 @@
 {
+    "dashboard.ai.composing.replyNow": "Reply now",
+    "dashboard.ai.composing.waiting": "Reply in chat to continue.",
     "dashboard.contractExpired.trial.title": "Your trial has ended.",
     "dashboard.contractExpired.trial.description": "Contact us if you would like to continue using GoodData Cloud.",
     "dashboard.contractExpired.nonTrial.title": "Your access is locked.",
@@ -940,5 +942,13 @@
     "dashboard.tabs.accessibility.add-button-label": "Add new tab",
     "dashboard_add_filter.button.aria_label": "Add filter",
     "dashboard_add_filter.menu.title": "Add filter",
-    "dashboard_add_filter.menu.parameter": "Parameter"
+    "dashboard_add_filter.menu.parameter": "Parameter",
+    "insightEditor.menu.explore": "Explore from here",
+    "addPanel.insight": "Visualisation",
+    "insightEditor.filterContext.dateFilterInapplicable": "Filter context cannot be kept because the date filter in Dashboards cannot be applied to this visualisation.",
+    "insightEditor.filterContext.invalidFilterItemsCount": "Filter context cannot be kept because the visualisation applied more than 20 items on filter bar",
+    "insightEditor.filterContext.tookTooLong": "It took too long to keep filter context for this visualisation. Please try exploring the visualisation again.",
+    "insightEditor.filterContext.failed": "Filter context cannot be kept for this visualisation. Please try exploring the visualisation again.",
+    "insightEditor.dialog.label": "Visualisation editor",
+    "insightEditor.save.placementFailed": "The visualisation is saved, but it cannot be added to the dashboard."
 }

@@ -1,4 +1,6 @@
 {
+    "dashboard.ai.composing.replyNow": "Şimdi yanıtla",
+    "dashboard.ai.composing.waiting": "Devam etmek için sohbette yanıtlayın.",
     "dashboard.contractExpired.trial.title": "Deneme süreniz sona erdi.",
     "dashboard.contractExpired.trial.description": "GoodData Cloud'u kullanmaya devam etmek istiyorsanız bizimle iletişime geçin.",
     "dashboard.contractExpired.nonTrial.title": "Erişiminiz kilitlendi.",
@@ -940,5 +942,13 @@
     "dashboard.tabs.accessibility.add-button-label": "Yeni sekme ekle",
     "dashboard_add_filter.button.aria_label": "Filtre ekle",
     "dashboard_add_filter.menu.title": "Filtre ekle",
-    "dashboard_add_filter.menu.parameter": "Parametre"
+    "dashboard_add_filter.menu.parameter": "Parametre",
+    "insightEditor.menu.explore": "Buradan keşfet",
+    "addPanel.insight": "Görselleştirme",
+    "insightEditor.filterContext.dateFilterInapplicable": "Filtre bağlamı korunamıyor çünkü Panolardaki tarih filtresi bu görselleştirmeye uygulanamıyor.",
+    "insightEditor.filterContext.invalidFilterItemsCount": "Filtre bağlamı korunamıyor çünkü görselleştirme, filtre çubuğunda 20'den fazla öğe uyguladı.",
+    "insightEditor.filterContext.tookTooLong": "Bu görselleştirme için filtre bağlamını korumak çok uzun sürdü. Lütfen görselleştirmeyi tekrar incelemeyi deneyin.",
+    "insightEditor.filterContext.failed": "Bu görselleştirme için filtre bağlamı korunamıyor. Lütfen görselleştirmeyi tekrar incelemeyi deneyin.",
+    "insightEditor.dialog.label": "Görselleştirme düzenleyicisi",
+    "insightEditor.save.placementFailed": "Görselleştirme kaydedildi, ancak gösterge tablosuna eklenemiyor."
 }

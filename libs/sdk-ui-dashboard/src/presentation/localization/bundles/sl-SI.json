@@ -1,4 +1,6 @@
 {
+    "dashboard.ai.composing.replyNow": "Odgovorite zdaj",
+    "dashboard.ai.composing.waiting": "Za nadaljevanje odgovorite v klepetu.",
     "dashboard.contractExpired.trial.title": "Vaša preizkusna različica se je končala.",
     "dashboard.contractExpired.trial.description": "Kontaktirajte nas, če želite še naprej uporabljati GoodData Cloud.",
     "dashboard.contractExpired.nonTrial.title": "Vaš dostop je zaklenjen.",
@@ -940,5 +942,13 @@
     "dashboard.tabs.accessibility.add-button-label": "Dodaj novo kartico",
     "dashboard_add_filter.button.aria_label": "Dodaj filter",
     "dashboard_add_filter.menu.title": "Dodaj filter",
-    "dashboard_add_filter.menu.parameter": "Parameter"
+    "dashboard_add_filter.menu.parameter": "Parameter",
+    "insightEditor.menu.explore": "Raziščite od tukaj",
+    "addPanel.insight": "Vizualizacija",
+    "insightEditor.filterContext.dateFilterInapplicable": "Filtrirnega konteksta ni mogoče ohraniti, ker filter datuma na nadzornih ploščah ni mogoče uporabiti za to vizualizacijo.",
+    "insightEditor.filterContext.invalidFilterItemsCount": "Filtrirnega konteksta ni mogoče ohraniti, ker je vizualizacija uporabila več kot 20 elementov na vrstici filtrov",
+    "insightEditor.filterContext.tookTooLong": "Predolgo je trajalo za ohranitev filtrirnega konteksta za to vizualizacijo. Poskusite znova raziskovati vizualizacijo.",
+    "insightEditor.filterContext.failed": "Filtrirnega konteksta za to vizualizacijo ni mogoče ohraniti. Poskusite znova raziskati vizualizacijo.",
+    "insightEditor.dialog.label": "Urejevalnik vizualizacije",
+    "insightEditor.save.placementFailed": "Vizualizacija je shranjena, vendar je ni mogoče dodati na nadzorno ploščo."
 }

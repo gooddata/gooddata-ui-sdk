@@ -1,13 +1,14 @@
 // (C) 2022-2026 GoodData Corporation
 
 import * as monaco from "monaco-editor/editor/editor.api.js";
-import { MonacoToProtocolConverter, ProtocolToMonacoConverter } from "monaco-languageclient/monaco-converter";
 import { type TextDocument } from "vscode-languageserver-textdocument";
 
 import { type MaqlLanguageService } from "@gooddata/sdk-maql-language-server";
 
 //more info in README.md
 import { type FormattingOptions, type Range } from "../monaco/MonacoEditor.js";
+
+import { MonacoToProtocolConverter, ProtocolToMonacoConverter } from "./monacoConverter.js";
 
 export function formatDocument(
     languageService: MaqlLanguageService,

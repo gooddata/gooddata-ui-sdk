@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-metric-component: drop the monaco-languageclient dependency. Its 2.x releases import vscode-languageserver-protocol without declaring it, so a consumer with a newer protocol package hoisted failed to build (the deep imports are blocked by its exports map). The Monaco/protocol conversions the MAQL editor needs are now part of the package and use vscode-languageserver-types.",
+            "type": "patch",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

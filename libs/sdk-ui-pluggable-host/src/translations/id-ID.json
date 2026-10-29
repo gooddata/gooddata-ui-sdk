@@ -39,5 +39,7 @@
     "languageDialog.description": "<b>Catatan:</b> Hanya mengubah antarmuka, bukan konten dasbor.",
     "languageDialog.select.searchLabel": "Cari bahasa",
     "languageDialog.select.searchPlaceholder": "Cari…",
-    "languageDialog.select.noMatch": "Tidak ada bahasa yang cocok."
+    "languageDialog.select.noMatch": "Tidak ada bahasa yang cocok.",
+    "languageDialog.error": "Kami tidak dapat mengubah bahasa. Coba lagi.",
+    "languageDialog.success": "Bagus! Kami telah mengubah bahasa!"
 }

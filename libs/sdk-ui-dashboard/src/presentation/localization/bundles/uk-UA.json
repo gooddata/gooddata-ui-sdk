@@ -1,4 +1,6 @@
 {
+    "dashboard.ai.composing.replyNow": "Відповісти зараз",
+    "dashboard.ai.composing.waiting": "Щоб продовжити, дайте відповідь у чаті.",
     "dashboard.contractExpired.trial.title": "Ваш пробний період завершився.",
     "dashboard.contractExpired.trial.description": "Зв’яжіться з нами, якщо хочете й надалі користуватися GoodData Cloud.",
     "dashboard.contractExpired.nonTrial.title": "Ваш доступ заблоковано.",
@@ -940,5 +942,13 @@
     "dashboard.tabs.accessibility.add-button-label": "Додати нову вкладку",
     "dashboard_add_filter.button.aria_label": "Додати фільтр",
     "dashboard_add_filter.menu.title": "Додати фільтр",
-    "dashboard_add_filter.menu.parameter": "Параметр"
+    "dashboard_add_filter.menu.parameter": "Параметр",
+    "insightEditor.menu.explore": "Відкрити для аналізу звідси",
+    "addPanel.insight": "Візуалізація",
+    "insightEditor.filterContext.dateFilterInapplicable": "Контекст фільтра не можна зберегти, оскільки фільтр дати в інформаційних панелях не можна застосувати до цієї візуалізації.",
+    "insightEditor.filterContext.invalidFilterItemsCount": "Контекст фільтра не можна зберегти, оскільки до візуалізації застосовано понад 20 елементів на панелі фільтрів",
+    "insightEditor.filterContext.tookTooLong": "Збереження контексту фільтра для цієї візуалізації зайняло надто багато часу. Спробуйте знову відкрити візуалізацію для аналізу.",
+    "insightEditor.filterContext.failed": "Не вдалося зберегти контекст фільтра для цієї візуалізації. Спробуйте знову відкрити візуалізацію для аналізу.",
+    "insightEditor.dialog.label": "Редактор візуалізації",
+    "insightEditor.save.placementFailed": "Візуалізацію збережено, але її не вдалося додати до інформаційної панелі."
 }

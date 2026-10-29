@@ -1,4 +1,6 @@
 {
+    "dashboard.ai.composing.replyNow": "Trả lời ngay",
+    "dashboard.ai.composing.waiting": "Hãy trả lời trong cuộc trò chuyện để tiếp tục.",
     "dashboard.contractExpired.trial.title": "Bản dùng thử của bạn đã kết thúc.",
     "dashboard.contractExpired.trial.description": "Liên hệ với chúng tôi nếu bạn muốn tiếp tục dùng GoodData Cloud.",
     "dashboard.contractExpired.nonTrial.title": "Quyền truy cập của bạn đã bị khóa.",
@@ -940,5 +942,13 @@
     "dashboard.tabs.accessibility.add-button-label": "Thêm tab mới",
     "dashboard_add_filter.button.aria_label": "Thêm bộ lọc",
     "dashboard_add_filter.menu.title": "Thêm bộ lọc",
-    "dashboard_add_filter.menu.parameter": "Tham số"
+    "dashboard_add_filter.menu.parameter": "Tham số",
+    "insightEditor.menu.explore": "Khám phá từ đây",
+    "addPanel.insight": "Trực quan hóa",
+    "insightEditor.filterContext.dateFilterInapplicable": "Không thể giữ ngữ cảnh bộ lọc vì bộ lọc ngày trong Bảng điều khiển không thể áp dụng cho trực quan hóa này.",
+    "insightEditor.filterContext.invalidFilterItemsCount": "Không thể giữ ngữ cảnh bộ lọc vì trực quan hóa đã áp dụng hơn 20 mục trên thanh bộ lọc",
+    "insightEditor.filterContext.tookTooLong": "Mất quá nhiều thời gian để giữ ngữ cảnh bộ lọc cho trực quan hóa này. Vui lòng thử khám phá lại trực quan hóa.",
+    "insightEditor.filterContext.failed": "Không thể giữ ngữ cảnh bộ lọc cho trực quan hóa này. Vui lòng thử khám phá lại trực quan hóa.",
+    "insightEditor.dialog.label": "Trình chỉnh sửa trực quan hóa",
+    "insightEditor.save.placementFailed": "Trực quan hóa đã được lưu, nhưng không thể thêm vào bảng điều khiển."
 }

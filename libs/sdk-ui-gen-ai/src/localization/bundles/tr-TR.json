@@ -149,6 +149,8 @@
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, one {# sayfa} other {# sayfa}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, one {# sayfa} other {# sayfa}}",
     "gd.gen-ai.publisherDocument.unavailable": "Belge kullanılamıyor.",
+    "gd.gen-ai.publisherDocument.previousVersion": "Bu belge Publisher'ın önceki sürümünde oluşturulduğu için burada açılamıyor.",
+    "gd.gen-ai.publisherDocument.newerVersion": "Bu belge Publisher'ın daha yeni bir sürümünde oluşturulduğu için burada açılamıyor.",
     "gd.gen-ai.alert-proposal.summary.trigger": "Tetikleyici",
     "gd.gen-ai.alert-proposal.summary.trigger.mode": "Mod",
     "gd.gen-ai.alert-proposal.summary.trigger.interval": "Aralık",

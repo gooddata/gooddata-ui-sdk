@@ -149,6 +149,8 @@
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, other {#페이지}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, other {#페이지}}",
     "gd.gen-ai.publisherDocument.unavailable": "문서를 사용할 수 없습니다.",
+    "gd.gen-ai.publisherDocument.previousVersion": "이 문서는 이전 버전의 Publisher에서 만들어졌으므로 여기에서 열 수 없습니다.",
+    "gd.gen-ai.publisherDocument.newerVersion": "이 문서는 현재보다 최신 버전의 Publisher에서 만들어졌으므로 여기에서 열 수 없습니다.",
     "gd.gen-ai.alert-proposal.summary.trigger": "트리거",
     "gd.gen-ai.alert-proposal.summary.trigger.mode": "모드",
     "gd.gen-ai.alert-proposal.summary.trigger.interval": "간격",

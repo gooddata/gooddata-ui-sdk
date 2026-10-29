@@ -149,6 +149,8 @@
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, other {# trang}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, other {# trang}}",
     "gd.gen-ai.publisherDocument.unavailable": "Tài liệu không khả dụng.",
+    "gd.gen-ai.publisherDocument.previousVersion": "Tài liệu này được tạo trong phiên bản trước của Publisher và không thể mở tại đây.",
+    "gd.gen-ai.publisherDocument.newerVersion": "Tài liệu này được tạo trong phiên bản mới hơn của Publisher và không thể mở tại đây.",
     "gd.gen-ai.alert-proposal.summary.trigger": "Kích hoạt",
     "gd.gen-ai.alert-proposal.summary.trigger.mode": "Chế độ",
     "gd.gen-ai.alert-proposal.summary.trigger.interval": "Khoảng thời gian",

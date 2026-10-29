@@ -1,7 +1,7 @@
 {
     "semantic-search.error.title": "Nuestro servicio de búsqueda está temporalmente fuera de servicio.",
     "semantic-search.error.text": "Estamos trabajando para resolver el problema.",
-    "semantic-search.no-results": "No se han encontrado resultados para ”{query}”.",
+    "semantic-search.no-results": "No se han encontrado resultados para «{query}».",
     "semantic-search.results.count": "{count, plural, one {# resultado} other {# resultados}}",
     "semantic-search.label": "Búsqueda en panel de control o visualización",
     "semantic-search.placeholder": "Búsqueda en cuadros de mando o visualización…",

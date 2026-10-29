@@ -39,5 +39,7 @@
     "languageDialog.description": "<b>Opomba:</b> Spremeni se samo jezik vmesnika, ne pa vsebina nadzorne plošče.",
     "languageDialog.select.searchLabel": "Iskanje jezikov",
     "languageDialog.select.searchPlaceholder": "Iskanje…",
-    "languageDialog.select.noMatch": "Ni ujemajočega se jezika."
+    "languageDialog.select.noMatch": "Ni ujemajočega se jezika.",
+    "languageDialog.error": "Jezika ni bilo mogoče spremeniti. Poskusite znova.",
+    "languageDialog.success": "Odlično! Spremenili smo jezik!"
 }

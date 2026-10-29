@@ -1,4 +1,6 @@
 {
+    "dashboard.ai.composing.replyNow": "Balas sekarang",
+    "dashboard.ai.composing.waiting": "Balas dalam percakapan untuk melanjutkan.",
     "dashboard.contractExpired.trial.title": "Uji coba Anda telah berakhir.",
     "dashboard.contractExpired.trial.description": "Hubungi kami jika Anda ingin terus menggunakan GoodData Cloud.",
     "dashboard.contractExpired.nonTrial.title": "Akses Anda dikunci.",
@@ -940,5 +942,13 @@
     "dashboard.tabs.accessibility.add-button-label": "Tambahkan tab baru",
     "dashboard_add_filter.button.aria_label": "Tambahkan filter",
     "dashboard_add_filter.menu.title": "Tambahkan filter",
-    "dashboard_add_filter.menu.parameter": "Parameter"
+    "dashboard_add_filter.menu.parameter": "Parameter",
+    "insightEditor.menu.explore": "Jelajahi dari sini",
+    "addPanel.insight": "Visualisasi",
+    "insightEditor.filterContext.dateFilterInapplicable": "Konteks filter tidak dapat dipertahankan karena filter tanggal di Dasbor tidak dapat diterapkan ke visualisasi ini.",
+    "insightEditor.filterContext.invalidFilterItemsCount": "Konteks filter tidak dapat dipertahankan karena visualisasi menerapkan lebih dari 20 item pada bilah filter",
+    "insightEditor.filterContext.tookTooLong": "Terlalu lama untuk mempertahankan konteks filter untuk visualisasi ini. Silakan coba jelajahi visualisasi lagi.",
+    "insightEditor.filterContext.failed": "Konteks filter tidak dapat dipertahankan untuk visualisasi ini. Silakan coba jelajahi visualisasi lagi.",
+    "insightEditor.dialog.label": "Editor visualisasi",
+    "insightEditor.save.placementFailed": "Visualisasi telah disimpan, tetapi tidak dapat ditambahkan ke dasbor."
 }

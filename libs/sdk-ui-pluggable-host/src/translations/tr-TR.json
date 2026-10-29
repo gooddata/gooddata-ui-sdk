@@ -39,5 +39,7 @@
     "languageDialog.description": "<b>Not:</b> Yalnızca arayüzü değiştirir, gösterge tablosu içeriğini değiştirmez.",
     "languageDialog.select.searchLabel": "Dil ara",
     "languageDialog.select.searchPlaceholder": "Ara…",
-    "languageDialog.select.noMatch": "Eşleşen dil yok."
+    "languageDialog.select.noMatch": "Eşleşen dil yok.",
+    "languageDialog.error": "Dili değiştiremedik. Tekrar deneyin.",
+    "languageDialog.success": "Harika! Dili değiştirdik!"
 }
