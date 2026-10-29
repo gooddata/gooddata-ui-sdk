@@ -10,7 +10,7 @@ import { BackendProvider } from "@gooddata/sdk-ui";
 
 import { OrganizationIdProvider } from "../OrganizationIdContext.js";
 import { TelemetryProvider } from "../TelemetryContext.js";
-import { type IGrantedWorkspace } from "../types.js";
+import { type IGrantedWorkspace, type WorkspacePermissions } from "../types.js";
 
 import { useAddWorkspace } from "./useAddWorkspace.js";
 
@@ -80,13 +80,14 @@ describe("useAddWorkspace", () => {
         act(() => {
             hook.result.current.onChange({
                 ...WORKSPACE,
-                permissions: ["VIEW", "CREATE_VISUALIZATION", "MANAGE_VISUALIZATIONS"],
+                permissions: ["VIEW", "EXPORT", "EXPORT_PDF", "EXPORT_TABULAR"],
             });
         });
         expect(hook.result.current.addedWorkspaces[0].permissions).toEqual([
             "VIEW",
-            "CREATE_VISUALIZATION",
-            "MANAGE_VISUALIZATIONS",
+            "EXPORT",
+            "EXPORT_PDF",
+            "EXPORT_TABULAR",
         ]);
 
         await act(async () => {
@@ -95,12 +96,26 @@ describe("useAddWorkspace", () => {
 
         expect(assignPermissions).toHaveBeenCalledWith(
             expect.objectContaining({
-                workspaces: [expect.objectContaining({ permissions: ["VIEW", "MANAGE_VISUALIZATIONS"] })],
+                workspaces: [expect.objectContaining({ permissions: ["VIEW", "EXPORT"] })],
             }),
         );
-        expect(onSubmit).toHaveBeenCalledWith([
-            expect.objectContaining({ permissions: ["VIEW", "MANAGE_VISUALIZATIONS"] }),
-        ]);
+        expect(onSubmit).toHaveBeenCalledWith([expect.objectContaining({ permissions: ["VIEW", "EXPORT"] })]);
+    });
+
+    it("saves Visualizations chosen next to Manage all visualizations", async () => {
+        const { hook, assignPermissions } = renderAddWorkspace(vi.fn());
+        const permissions: WorkspacePermissions = ["VIEW", "CREATE_VISUALIZATION", "MANAGE_VISUALIZATIONS"];
+
+        act(() => {
+            hook.result.current.onChange({ ...WORKSPACE, permissions });
+        });
+        await act(async () => {
+            hook.result.current.onAdd();
+        });
+
+        expect(assignPermissions).toHaveBeenCalledWith(
+            expect.objectContaining({ workspaces: [expect.objectContaining({ permissions })] }),
+        );
     });
 
     it("leaves Manage all visualizations out of an Analyze save where the workspace grants it with Analyze", async () => {

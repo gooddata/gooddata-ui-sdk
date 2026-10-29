@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 import { type IGrantedWorkspace, type WorkspacePermissions } from "../../types.js";
 
 import {
+    areRedundantPermissionsPresent,
     getGranularPermissions,
     getImplicitGranularPermissions,
     haveWorkspacePermissionsChanged,
@@ -77,6 +78,13 @@ describe("granularPermissionUtils", () => {
 
             expect(removeRedundantPermissions(permissions)).toEqual(["MANAGE"]);
         });
+
+        it("drops export formats under EXPORT and flags them as redundant", () => {
+            const permissions: WorkspacePermissions = ["VIEW", "EXPORT", "EXPORT_PDF"];
+
+            expect(removeRedundantPermissions(permissions)).toEqual(["VIEW", "EXPORT"]);
+            expect(areRedundantPermissionsPresent(permissions)).toBe(true);
+        });
     });
 
     describe("getGranularPermissions", () => {
@@ -129,10 +137,15 @@ describe("granularPermissionUtils", () => {
             expect(isPermissionDisabled("CREATE_VISUALIZATION", "VIEW", granular)).toBe(true);
         });
 
-        it("drops the included CREATE_VISUALIZATION and survives sanitization under ANALYZE", () => {
-            expect(
-                removeRedundantPermissions(["VIEW", "MANAGE_VISUALIZATIONS", "CREATE_VISUALIZATION"]),
-            ).toEqual(["VIEW", "MANAGE_VISUALIZATIONS"]);
+        it("keeps an explicit CREATE_VISUALIZATION and survives sanitization under ANALYZE", () => {
+            const permissions: WorkspacePermissions = [
+                "VIEW",
+                "MANAGE_VISUALIZATIONS",
+                "CREATE_VISUALIZATION",
+            ];
+
+            expect(removeRedundantPermissions(permissions)).toEqual(permissions);
+            expect(areRedundantPermissionsPresent(permissions)).toBe(false);
             expect(removeRedundantPermissions(["ANALYZE", "MANAGE_VISUALIZATIONS"])).toEqual([
                 "ANALYZE",
                 "MANAGE_VISUALIZATIONS",

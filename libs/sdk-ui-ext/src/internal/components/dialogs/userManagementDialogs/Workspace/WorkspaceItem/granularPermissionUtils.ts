@@ -11,7 +11,7 @@ export const workspacePermissions: WorkspacePermissions = ["MANAGE", "ANALYZE", 
 const exportSubPermissions: WorkspacePermissions = ["EXPORT_PDF", "EXPORT_TABULAR"];
 export const exportPermissions: WorkspacePermissions = ["EXPORT", ...exportSubPermissions];
 
-// Shown checked and locked under the including permission, never stored.
+// Shown checked and locked under the including permission.
 const includedPermissions: Partial<Record<WorkspacePermission, WorkspacePermissions>> = {
     EXPORT: exportSubPermissions,
     MANAGE_VISUALIZATIONS: ["CREATE_VISUALIZATION"],
@@ -191,8 +191,11 @@ export const removeRedundantPermissions = (
         sanitizedPermissions = sanitizedPermissions.filter((p) => p !== "VIEW" && !implicit.includes(p));
     }
 
-    const included = includedBy(permissions);
-    return sanitizedPermissions.filter((p) => !included.includes(p));
+    if (permissions.includes("EXPORT")) {
+        sanitizedPermissions = sanitizedPermissions.filter((p) => !exportSubPermissions.includes(p));
+    }
+
+    return sanitizedPermissions;
 };
 
 /**

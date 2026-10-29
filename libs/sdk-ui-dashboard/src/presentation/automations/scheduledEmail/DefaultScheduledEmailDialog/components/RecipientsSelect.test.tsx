@@ -507,6 +507,58 @@ describe("RecipientsSelect", () => {
         }
     });
 
+    it("removes a recipient focused with the arrow keys when Space is pressed", () => {
+        const { query } = createUsersQueryStub(async () => []);
+        const onChange = vi.fn();
+        const john = userRecipient("john.id", "john@example.com", "John Doe");
+        const jane = userRecipient("jane.id", "jane@example.com", "Jane Roe");
+        renderComponent(createBackend(query), { value: [john, jane], onChange });
+
+        fireEvent.keyDown(combobox(), { key: "ArrowLeft", code: "ArrowLeft" });
+        const lastRecipient = screen.getByRole("button", {
+            name: "Remove Jane Roe (jane@example.com)",
+            hidden: true,
+        });
+        fireEvent.keyDown(lastRecipient, { key: " ", code: "Space" });
+
+        expect(onChange).toHaveBeenCalledWith([john]);
+        expect(combobox()).toHaveAttribute("aria-expanded", "false");
+    });
+
+    it("forgets the focused recipient once focus is back in the search input", () => {
+        const { query } = createUsersQueryStub(async () => []);
+        const onChange = vi.fn();
+        renderComponent(createBackend(query), {
+            value: [
+                userRecipient("john.id", "john@example.com", "John Doe"),
+                userRecipient("jane.id", "jane@example.com", "Jane Roe"),
+            ],
+            onChange,
+        });
+
+        fireEvent.keyDown(combobox(), { key: "ArrowLeft", code: "ArrowLeft" });
+        // e.g. a click on the field label or Shift+Tab returns focus to the input without the arrow keys
+        fireEvent.focus(combobox());
+        fireEvent.keyDown(combobox(), { key: " ", code: "Space" });
+
+        expect(onChange).not.toHaveBeenCalled();
+        expect(combobox()).toHaveAttribute("aria-expanded", "true");
+    });
+
+    it("leaves Space in the search input to react-select", () => {
+        const { query } = createUsersQueryStub(async () => []);
+        const onChange = vi.fn();
+        renderComponent(createBackend(query), {
+            value: [userRecipient("john.id", "john@example.com", "John Doe")],
+            onChange,
+        });
+
+        fireEvent.keyDown(combobox(), { key: " ", code: "Space" });
+
+        expect(onChange).not.toHaveBeenCalled();
+        expect(combobox()).toHaveAttribute("aria-expanded", "true");
+    });
+
     it("discards a stale response resolving after a newer search", async () => {
         let resolveFirstPage: (users: IWorkspaceUser[]) => void = () => {};
         const { query, requests } = createUsersQueryStub(({ search }) =>
