@@ -122,6 +122,11 @@ const defaultLegend: ILegendOptions = {
 
 const defaultDocumentObj = typeof document === "undefined" ? null : document;
 
+function createLegendItemsEnabled(legendItems: ILegendOptions["items"] = []): boolean[] {
+    const legendItemsCount = legendItems.reduce((count, item) => Math.max(count, item.legendIndex + 1), 0);
+    return new Array<boolean>(legendItemsCount).fill(true);
+}
+
 export const HighChartsRenderer = memo(function HighChartsRenderer({
     chartOptions,
     hcOptions,
@@ -151,11 +156,9 @@ export const HighChartsRenderer = memo(function HighChartsRenderer({
         );
     }, [documentObj, legend?.responsive]);
 
-    const [legendItemsEnabled, setLegendItemsEnabled] = useState<boolean[]>(() => {
-        // Initialize with proper array size on first render (equivalent to UNSAFE_componentWillMount)
-        const legendItemsCount = legend?.items?.length ?? 0;
-        return new Array(legendItemsCount).fill(true);
-    });
+    const [legendItemsEnabled, setLegendItemsEnabled] = useState<boolean[]>(() =>
+        createLegendItemsEnabled(legend.items),
+    );
     const [showFluidLegend, setShowFluidLegend] = useState<boolean>(shouldShowFluid());
 
     const realignPieOrDonutChart = useCallback(() => {
@@ -174,9 +177,8 @@ export const HighChartsRenderer = memo(function HighChartsRenderer({
 
     const throttledOnWindowResize = useMemo(() => throttle(onWindowResize, 100), [onWindowResize]);
 
-    const resetLegendState = useCallback((legendItems: any[] | undefined) => {
-        const legendItemsCount = legendItems?.length ?? 0;
-        setLegendItemsEnabled(new Array(legendItemsCount).fill(true));
+    const resetLegendState = useCallback((legendItems: ILegendOptions["items"] | undefined) => {
+        setLegendItemsEnabled(createLegendItemsEnabled(legendItems));
     }, []);
 
     const onLegendItemClick = useCallback((item: any): void => {

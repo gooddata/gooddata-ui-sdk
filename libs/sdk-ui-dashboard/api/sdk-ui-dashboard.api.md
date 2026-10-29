@@ -2297,7 +2297,7 @@ export function getDrillDownTitle(drillDefinition: IDrillDownDefinition, drillEv
 export function getFilterIdentifier(filter: FilterContextItem): string;
 
 // @internal (undocumented)
-export function getKdaKeyDriverCombinations(drillDefinition: IKeyDriveAnalysis, drillEvent: IDrillEvent, enableSecondGranularities?: boolean): IDashboardKeyDriverCombinationItem[];
+export function getKdaKeyDriverCombinations(drillDefinition: IKeyDriveAnalysis, drillEvent: IDrillEvent, enableSecondGranularities?: boolean, isMeasureDisabled?: (localIdentifier: string) => boolean): IDashboardKeyDriverCombinationItem[];
 
 // @internal
 export function getKeyDriverAnalysisSupportedGranularities(enableSecondGranularities?: boolean): DateAttributeGranularity[];
