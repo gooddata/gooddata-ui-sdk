@@ -3,7 +3,6 @@
 import { type IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
 import {
     type DashboardAttributeFilterItem,
-    type DashboardAttributeFilterSelectionType,
     type FilterContextItem,
     type IAttributeDisplayFormMetadataObject,
     type IDashboardAttributeFilterConfig,
@@ -36,7 +35,7 @@ import {
     displayFormsEquivalent,
     findAttributeFilterCounterpart,
 } from "../../../utils/attributeFilterMatching.js";
-import { effectiveSelectionTypeOf } from "../../../utils/attributeFilterSelectionTypeCompatibility.js";
+import { canApplyFilterTypeToTarget } from "../../../utils/attributeFilterSelectionTypeCompatibility.js";
 import { type ITabState } from "../tabsState.js";
 
 import { type WorkingFilterContextItem } from "./filterContextState.js";
@@ -80,10 +79,11 @@ export function isCrossFilteringVirtualFilter(
 
 /**
  * Finds the filter on `targetTab` that is the same logical filter as `sourceFilter`.
- * An attribute filter is a counterpart only when it is of the same type (list or text), has the
- * same display-as label and selection type, both with their defaults applied, and the same single
- * or multiple value selection mode.
- * A missing or incompatible counterpart is a no-op for the caller.
+ * An attribute filter is a counterpart when it is of the same type (list or text), shows the same
+ * label, and selects either a single value or multiple values. Selection type is not part of that
+ * identity: it only limits how a value can be entered on a tab. Whether the value itself can be
+ * stored on the counterpart is decided by {@link targetAcceptsAttributeFilterValue}.
+ * A missing counterpart is a no-op for the caller.
  *
  * Assumes at most one filter per display form, date data set, and measure with a given
  * dimensionality on a tab.
@@ -527,7 +527,6 @@ function collectDisplayForms(
 
 interface IAttributeFilterPresentation {
     readonly displayAsLabel: ObjRef;
-    readonly selectionType: DashboardAttributeFilterSelectionType;
     readonly isSingleSelection: boolean;
 }
 
@@ -543,14 +542,38 @@ function attributeFilterPresentation(
         : undefined;
     return {
         displayAsLabel: config?.displayAsLabel ?? dashboardAttributeFilterItemDisplayForm(filter),
-        selectionType: effectiveSelectionTypeOf(config?.selectionType, filter),
         isSingleSelection: isDashboardAttributeFilter(filter) && isSingleSelectionFilter(filter),
     };
 }
 
 /**
- * Attribute filters sync only when they show the same label, accept the same selection type
- * and both select either a single value or multiple values.
+ * Whether `value` can be stored on `targetFilter`.
+ *
+ * A list selection is valid on a list filter and on a list-or-text filter, so it syncs in both
+ * directions. A text value, such as a "contains" match, is valid on a text filter and on a
+ * list-or-text filter, and cannot be applied to a list-only filter. An omitted selection type
+ * means list-or-text, except a single-value list filter, which means list.
+ *
+ * @internal
+ */
+export function targetAcceptsAttributeFilterValue(
+    targetTab: ITabState,
+    targetFilter: DashboardAttributeFilterItem,
+    value: DashboardAttributeFilterItem,
+): boolean {
+    const localIdentifier = dashboardAttributeFilterItemLocalIdentifier(targetFilter);
+    const selectionType = localIdentifier
+        ? targetTab.attributeFilterConfigs?.attributeFilterConfigs?.find(
+              (config) => config.localIdentifier === localIdentifier,
+          )?.selectionType
+        : undefined;
+    const valueType = isDashboardAttributeFilter(value) ? "list" : "text";
+    return canApplyFilterTypeToTarget(valueType, selectionType, targetFilter);
+}
+
+/**
+ * Attribute filters are the same filter when they show the same label and both select either a
+ * single value or multiple values.
  */
 function samePresentation(
     left: IAttributeFilterPresentation,
@@ -558,7 +581,6 @@ function samePresentation(
     displayForms: IAttributeDisplayFormMetadataObject[],
 ): boolean {
     return (
-        left.selectionType === right.selectionType &&
         left.isSingleSelection === right.isSingleSelection &&
         displayFormsEquivalent(left.displayAsLabel, right.displayAsLabel, displayForms)
     );

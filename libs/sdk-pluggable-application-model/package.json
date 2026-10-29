@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-pluggable-application-model",
-    "version": "11.65.0-alpha.15",
+    "version": "11.66.0-alpha.0",
     "description": "GoodData SDK model contracts for pluggable applications",
     "license": "MIT",
     "author": "GoodData Corporation",

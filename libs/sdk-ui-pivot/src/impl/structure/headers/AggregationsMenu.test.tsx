@@ -10,9 +10,11 @@ import { DataViewFirstPage, type ScenarioRecording } from "@gooddata/sdk-backend
 import {
     type ITotal,
     defWithFilters,
+    defWithSorting,
     emptyDef,
     idRef,
     localIdRef,
+    newMeasureSort,
     newMeasureValueFilter,
     newPositiveAttributeFilter,
     newRankingFilter,
@@ -50,6 +52,7 @@ beforeAll(async () => {
 });
 
 const intlMock = createIntlMock({
+    "visualizations.totals.dropdown.tooltip.subtotal.disabled.measureSort": "Metric sorting explanation",
     "visualizations.totals.dropdown.tooltip.nat.disabled.ranking": "Tooltip 1",
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "Tooltip 2",
 });
@@ -205,6 +208,35 @@ describe("AggregationsMenu", () => {
         });
         expect(document.querySelectorAll(".is-disabled")).toHaveLength(1);
         expect(AggregationsSubMenu).toHaveBeenCalledTimes(5);
+    });
+
+    it("uses current sorting for the subtotal explanation even when the original execution is stale", () => {
+        const definition = defWithSorting(emptyDef("testWorkspace"), [newMeasureSort("m1", "desc")]);
+        const { rerender } = renderComponent({
+            showSubmenu: true,
+            getExecutionDefinition: () => definition,
+            getSortItems: () => [],
+        });
+        expect(AggregationsSubMenu.mock.calls.at(-1)?.[0].rowSubtotalTooltip).toBeUndefined();
+        rerender(
+            <AggregationsMenu
+                intl={intlMock}
+                isMenuOpened
+                isMenuButtonVisible
+                showSubmenu
+                showColumnsSubMenu
+                availableTotalTypes={["sum"]}
+                colId={attributeColumnId}
+                getTableDescriptor={getTableDescriptor}
+                getExecutionDefinition={() => emptyDef("testWorkspace")}
+                getSortItems={() => [newMeasureSort("m1", "desc")]}
+                onAggregationSelect={onAggregationSelect}
+                onMenuOpenedChange={onMenuOpenedChange}
+            />,
+        );
+        expect(AggregationsSubMenu.mock.calls.at(-1)?.[0].rowSubtotalTooltip).toBe(
+            "Metric sorting explanation",
+        );
     });
 
     it("should close on scroll", () => {

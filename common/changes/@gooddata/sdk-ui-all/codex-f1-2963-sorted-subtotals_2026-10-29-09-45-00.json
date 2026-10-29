@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-pivot: Allow grouped totals after sorting by attributes, preserve them when saving insights, and explain why adding subtotals is unavailable with metric sorting.",
+            "type": "patch",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

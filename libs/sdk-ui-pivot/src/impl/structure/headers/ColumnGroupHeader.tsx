@@ -19,6 +19,7 @@ export function ColumnGroupHeader({
     displayName,
     onMenuAggregationClick,
     getExecutionDefinition,
+    getSortItems,
     getColumnTotals,
     getRowTotals,
 }: IProps) {
@@ -43,6 +44,7 @@ export function ColumnGroupHeader({
             colId={colId}
             getTableDescriptor={getTableDescriptor}
             getExecutionDefinition={getExecutionDefinition}
+            getSortItems={getSortItems}
             getColumnTotals={getColumnTotals}
             getRowTotals={getRowTotals}
             intl={intl}

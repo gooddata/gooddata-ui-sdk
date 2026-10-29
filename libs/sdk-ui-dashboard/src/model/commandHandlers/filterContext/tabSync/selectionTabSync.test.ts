@@ -353,11 +353,38 @@ describe("view mode tab sync", () => {
             expect(selectionOnTabB(next)).toEqual({ uris: ["east"] });
         });
 
-        it("does not sync a filter with another selection type", () => {
+        it.each([
+            [
+                "List",
+                { selectionType: "list" as const },
+                "List or Text",
+                { selectionType: "listOrText" as const },
+            ],
+            [
+                "List or Text",
+                { selectionType: "listOrText" as const },
+                "List",
+                { selectionType: "list" as const },
+            ],
+            ["List", { selectionType: "list" as const }, "default List or Text", {}],
+            ["default List or Text", {}, "List", { selectionType: "list" as const }],
+        ] as const)("syncs a list selection from $0 to $2", (_, sourceConfig, __, targetConfig) => {
             const next = sync(
                 makeState([
-                    tabWith("tab-a", "region-a", { selectionType: "list" }),
-                    tabWith("tab-b", "region-b", { selectionType: "listOrText" }),
+                    tabWith("tab-a", "region-a", sourceConfig),
+                    tabWith("tab-b", "region-b", targetConfig),
+                ]),
+                selectWest,
+            );
+
+            expect(selectionOnTabB(next)).toEqual({ uris: ["west"] });
+        });
+
+        it("does not sync a list selection to a text-only filter", () => {
+            const next = sync(
+                makeState([
+                    tabWith("tab-a", "region-a", { selectionType: "listOrText" }),
+                    tabWith("tab-b", "region-b", { selectionType: "text" }),
                 ]),
                 selectWest,
             );
@@ -1031,6 +1058,114 @@ describe("view mode tab sync", () => {
         });
     });
 
+    it("clears a list selection on a tab whose selection type is the default list or text", () => {
+        const initial = makeState([
+            {
+                localIdentifier: "tab-a",
+                filterContext: filterContext([attributeFilter("region-a", displayForm, ["east"])]),
+                attributeFilterConfigs: {
+                    attributeFilterConfigs: [{ localIdentifier: "region-a", selectionType: "list" }],
+                },
+            },
+            {
+                localIdentifier: "tab-b",
+                filterContext: filterContext([attributeFilter("region-b", displayForm, ["east"])]),
+            },
+        ]);
+
+        const next = sync(
+            initial,
+            tabsActions.clearAttributeFiltersSelection({
+                filterLocalIds: ["region-a"],
+            }),
+        );
+
+        expect(next.tabs?.[1]?.filterContext?.filterContextDefinition?.filters[0]).toMatchObject({
+            attributeFilter: {
+                localIdentifier: "region-b",
+                attributeElements: { uris: [] },
+                negativeSelection: true,
+            },
+        });
+    });
+
+    it("does not commit a staged list selection onto a text-only filter", () => {
+        const target = allAttributeFilter("region-b", displayForm);
+        const initial = makeState([
+            {
+                localIdentifier: "tab-a",
+                filterContext: filterContext(
+                    [allAttributeFilter("region-a", displayForm)],
+                    [attributeFilter("region-a", displayForm, ["west"])],
+                ),
+            },
+            {
+                localIdentifier: "tab-b",
+                filterContext: filterContext([target]),
+                attributeFilterConfigs: {
+                    attributeFilterConfigs: [{ localIdentifier: "region-b", selectionType: "text" }],
+                },
+            },
+        ]);
+
+        const next = sync(initial, tabsActions.applyWorkingSelection({}));
+
+        expect(next.tabs?.[1]?.filterContext?.filterContextDefinition?.filters).toEqual([target]);
+    });
+
+    it("does not change the display form of a text-only filter", () => {
+        const target = allAttributeFilter("region-b", displayForm);
+        const initial = makeState([
+            {
+                localIdentifier: "tab-a",
+                filterContext: filterContext([allAttributeFilter("region-a", displayForm)]),
+            },
+            {
+                localIdentifier: "tab-b",
+                filterContext: filterContext([target]),
+                attributeFilterConfigs: {
+                    attributeFilterConfigs: [{ localIdentifier: "region-b", selectionType: "text" }],
+                },
+            },
+        ]);
+
+        const next = sync(
+            initial,
+            tabsActions.changeAttributeDisplayForm({
+                filterLocalId: "region-a",
+                displayForm: otherDisplayForm,
+            }),
+        );
+
+        expect(next.tabs?.[1]?.filterContext?.filterContextDefinition?.filters).toEqual([target]);
+    });
+
+    it("does not clear a list selection on a text-only filter", () => {
+        const target = attributeFilter("region-b", displayForm, ["east"]);
+        const initial = makeState([
+            {
+                localIdentifier: "tab-a",
+                filterContext: filterContext([attributeFilter("region-a", displayForm, ["east"])]),
+            },
+            {
+                localIdentifier: "tab-b",
+                filterContext: filterContext([target]),
+                attributeFilterConfigs: {
+                    attributeFilterConfigs: [{ localIdentifier: "region-b", selectionType: "text" }],
+                },
+            },
+        ]);
+
+        const next = sync(
+            initial,
+            tabsActions.clearAttributeFiltersSelection({
+                filterLocalIds: ["region-a"],
+            }),
+        );
+
+        expect(next.tabs?.[1]?.filterContext?.filterContextDefinition?.filters).toEqual([target]);
+    });
+
     it("does not copy a text filter onto a different label of the same attribute", () => {
         const name = idRef("region.name", "displayForm");
         const code = idRef("region.code", "displayForm");
@@ -1137,6 +1272,184 @@ describe("view mode tab sync", () => {
         );
 
         expect(next.tabs?.[1]?.filterContext?.filterContextDefinition?.filters).toEqual([target]);
+    });
+
+    it("does not apply a contains value to a list-only filter", () => {
+        const contains = (localIdentifier: string, literal: string) => ({
+            matchAttributeFilter: {
+                displayForm,
+                localIdentifier,
+                operator: "contains" as const,
+                literal,
+            },
+        });
+        const initial = makeState([
+            {
+                localIdentifier: "tab-a",
+                filterContext: filterContext([attributeFilter("region-a", displayForm, ["east"])]),
+            },
+            {
+                localIdentifier: "tab-b",
+                filterContext: filterContext([attributeFilter("region-b", displayForm, ["east"])]),
+                attributeFilterConfigs: {
+                    attributeFilterConfigs: [{ localIdentifier: "region-b", selectionType: "list" }],
+                },
+            },
+        ]);
+
+        const next = sync(
+            initial,
+            tabsActions.replaceAttributeFilterItem({
+                filterLocalId: "region-a",
+                filter: contains("region-a", "West"),
+            }),
+        );
+
+        expect(next.tabs?.[1]?.filterContext?.filterContextDefinition?.filters).toEqual([
+            attributeFilter("region-b", displayForm, ["east"]),
+        ]);
+    });
+
+    it("syncs the next list value after a list-only filter rejects a contains value", () => {
+        const contains = (localIdentifier: string, literal: string) => ({
+            matchAttributeFilter: {
+                displayForm,
+                localIdentifier,
+                operator: "contains" as const,
+                literal,
+            },
+        });
+        const initial = makeState([
+            {
+                localIdentifier: "tab-a",
+                filterContext: filterContext([attributeFilter("region-a", displayForm, ["east"])]),
+                attributeFilterConfigs: {
+                    attributeFilterConfigs: [{ localIdentifier: "region-a", selectionType: "listOrText" }],
+                },
+            },
+            {
+                localIdentifier: "tab-b",
+                filterContext: filterContext([attributeFilter("region-b", displayForm, ["east"])]),
+                attributeFilterConfigs: {
+                    attributeFilterConfigs: [{ localIdentifier: "region-b", selectionType: "list" }],
+                },
+            },
+        ]);
+
+        const next = sync(initial, [
+            tabsActions.replaceAttributeFilterItem({
+                filterLocalId: "region-a",
+                filter: contains("region-a", "W"),
+            }),
+            tabsActions.replaceAttributeFilterItem({
+                filterLocalId: "region-a",
+                filter: attributeFilter("region-a", displayForm, ["north"]),
+            }),
+        ]);
+
+        expect(next.tabs?.[0]?.filterContext?.filterContextDefinition?.filters[0]).toMatchObject({
+            attributeFilter: { attributeElements: { uris: ["north"] } },
+        });
+        expect(next.tabs?.[1]?.filterContext?.filterContextDefinition?.filters[0]).toMatchObject({
+            attributeFilter: { localIdentifier: "region-b", attributeElements: { uris: ["north"] } },
+        });
+    });
+
+    it("restores a list-only filter to its own original after a rejected text value", () => {
+        const contains = (localIdentifier: string, literal: string) => ({
+            matchAttributeFilter: {
+                displayForm,
+                localIdentifier,
+                operator: "contains" as const,
+                literal,
+            },
+        });
+        const initial = makeState([
+            {
+                localIdentifier: "tab-a",
+                filterContext: filterContext(
+                    [attributeFilter("region-a", displayForm, ["east"])],
+                    [],
+                    [attributeFilter("region-a", displayForm, ["saved-a"])],
+                ),
+                attributeFilterConfigs: {
+                    attributeFilterConfigs: [{ localIdentifier: "region-a", selectionType: "listOrText" }],
+                },
+            },
+            {
+                localIdentifier: "tab-b",
+                filterContext: filterContext(
+                    [attributeFilter("region-b", displayForm, ["east"])],
+                    [],
+                    [attributeFilter("region-b", displayForm, ["saved-b"])],
+                ),
+                attributeFilterConfigs: {
+                    attributeFilterConfigs: [{ localIdentifier: "region-b", selectionType: "list" }],
+                },
+            },
+        ]);
+
+        const afterText = sync(
+            initial,
+            tabsActions.replaceAttributeFilterItem({
+                filterLocalId: "region-a",
+                filter: contains("region-a", "W"),
+            }),
+        );
+        const reset = sync(
+            afterText,
+            tabsActions.replaceAttributeFilterItem({
+                filterLocalId: "region-a",
+                filter: attributeFilter("region-a", displayForm, ["saved-a"]),
+                restoreTargetOriginal: true,
+            }),
+        );
+
+        expect(reset.tabs?.[0]?.filterContext?.filterContextDefinition?.filters[0]).toMatchObject({
+            attributeFilter: { localIdentifier: "region-a", attributeElements: { uris: ["saved-a"] } },
+        });
+        expect(reset.tabs?.[1]?.filterContext?.filterContextDefinition?.filters[0]).toMatchObject({
+            attributeFilter: { localIdentifier: "region-b", attributeElements: { uris: ["saved-b"] } },
+        });
+    });
+
+    it("applies a text value from a list or text filter to a text filter", () => {
+        const text = (localIdentifier: string, values: string[]) => ({
+            arbitraryAttributeFilter: {
+                displayForm,
+                localIdentifier,
+                negativeSelection: false,
+                values,
+            },
+        });
+        const initial = makeState([
+            {
+                localIdentifier: "tab-a",
+                filterContext: filterContext([attributeFilter("region-a", displayForm, ["east"])]),
+                attributeFilterConfigs: {
+                    attributeFilterConfigs: [{ localIdentifier: "region-a", selectionType: "listOrText" }],
+                },
+            },
+            {
+                localIdentifier: "tab-b",
+                filterContext: filterContext([attributeFilter("region-b", displayForm, ["east"])]),
+                attributeFilterConfigs: {
+                    attributeFilterConfigs: [{ localIdentifier: "region-b", selectionType: "text" }],
+                },
+            },
+        ]);
+
+        const next = sync(
+            initial,
+            tabsActions.replaceAttributeFilterItem({
+                filterLocalId: "region-a",
+                filter: text("region-a", ["West"]),
+            }),
+        );
+
+        expect(next.tabs?.[1]?.filterContext?.filterContextDefinition?.filters[0]).toEqual(
+            text("region-b", ["West"]),
+        );
     });
 
     it("does not match a text filter by local id when the attributes differ", () => {

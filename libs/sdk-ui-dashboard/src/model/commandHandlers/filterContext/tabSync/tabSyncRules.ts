@@ -30,6 +30,7 @@ import {
     findOriginalFilter,
     isCrossFilteringVirtualFilter,
     retargetAttributeFilterItem,
+    targetAcceptsAttributeFilterValue,
 } from "../../../store/tabs/filterContext/filterSync.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import { type ITabState } from "../../../store/tabs/tabsState.js";
@@ -103,6 +104,30 @@ function findCounterpart(
     return sourceFilter ? findCounterpartOf(ctx, ctx.source, sourceFilter, target) : undefined;
 }
 
+/**
+ * Attribute-filter counterpart of a replacement.
+ *
+ * The first lookup uses the filter before the action. A value the target cannot store, such as a
+ * text value on a list-only filter, leaves the tabs on different kinds, so the next value is matched
+ * from the filter after the action. A reset does the same: the restored source value is a list again,
+ * and the target restores its own original.
+ */
+function findReplacedAttributeCounterpart(
+    ctx: ITabSyncRuleContext,
+    target: ITabState,
+    sourceFilter: FilterContextItem,
+    sourceLocalId: string,
+): FilterContextItem | undefined {
+    const counterpart = findCounterpartOf(ctx, ctx.source, sourceFilter, target);
+    if (isDashboardAttributeFilterItem(counterpart)) {
+        return counterpart;
+    }
+    const sourceFilterAfter = findFilterByLocalId(ctx.sourceAfter, sourceLocalId);
+    return isDashboardAttributeFilterItem(sourceFilterAfter)
+        ? findCounterpartOf(ctx, ctx.sourceAfter, sourceFilterAfter, target)
+        : undefined;
+}
+
 function counterpartLocalId(
     ctx: ITabSyncRuleContext,
     target: ITabState,
@@ -134,6 +159,28 @@ function findSelectionCounterpart(
     }
     const counterpart = findCounterpartOf(ctx, ctx.source, sourceFilter, target);
     return isDashboardAttributeFilter(counterpart) && counterpart.attributeFilter.localIdentifier
+        ? counterpart
+        : undefined;
+}
+
+/**
+ * The list filter on `target` that stores a list selection from `sourceLocalId`.
+ * A list value is written onto a list filter and onto a list-or-text filter, and is not written
+ * onto a text-only filter. A reset still resolves the counterpart, so the tab restores its own value.
+ */
+function mirroredListSelection(
+    ctx: ITabSyncRuleContext,
+    target: ITabState,
+    sourceLocalId: string,
+    restoreTargetOriginal: boolean | undefined,
+): IDashboardAttributeFilter | undefined {
+    const counterpart = findSelectionCounterpart(ctx, target, sourceLocalId);
+    if (!counterpart || restoreTargetOriginal) {
+        return counterpart;
+    }
+    const sourceFilter = findFilterByLocalId(ctx.source, sourceLocalId);
+    return isDashboardAttributeFilter(sourceFilter) &&
+        targetAcceptsAttributeFilterValue(target, counterpart, sourceFilter)
         ? counterpart
         : undefined;
 }
@@ -215,6 +262,13 @@ function committedFilterValues(ctx: ITabSyncRuleContext, target: ITabState): Fil
         }
         const counterpart = findCounterpartOf(ctx, ctx.sourceAfter, committed, target);
         if (counterpart) {
+            if (
+                isDashboardAttributeFilterItem(committed) &&
+                isDashboardAttributeFilterItem(counterpart) &&
+                !targetAcceptsAttributeFilterValue(target, counterpart, committed)
+            ) {
+                return [];
+            }
             return [applyMirroredFilterValue(committed, counterpart)];
         }
         // A tab without a common date filter is all time, so it receives the committed value
@@ -250,6 +304,14 @@ const filterContextRules: Array<[string, AnyTabSyncRule]> = [
         }
         const counterpart = findCounterpart(ctx, target, payload.filterLocalId);
         if (!isDashboardAttributeFilter(counterpart)) {
+            return [];
+        }
+        const sourceFilter = findFilterByLocalId(ctx.source, payload.filterLocalId);
+        if (
+            !payload.restoreTargetOriginal &&
+            (!isDashboardAttributeFilter(sourceFilter) ||
+                !targetAcceptsAttributeFilterValue(target, counterpart, sourceFilter))
+        ) {
             return [];
         }
         const filterLocalId = dashboardFilterLocalIdentifier(counterpart)!;
@@ -318,7 +380,12 @@ const selectionRules: Array<[string, AnyTabSyncRule]> = [
         if (payload.isWorkingSelectionChange || payload.isResultOfMigration) {
             return undefined;
         }
-        const counterpart = findSelectionCounterpart(ctx, target, payload.filterLocalId);
+        const counterpart = mirroredListSelection(
+            ctx,
+            target,
+            payload.filterLocalId,
+            payload.restoreTargetOriginal,
+        );
         if (!counterpart) {
             return undefined;
         }
@@ -347,7 +414,12 @@ const selectionRules: Array<[string, AnyTabSyncRule]> = [
         if (!isDashboardAttributeFilterItem(sourceFilter)) {
             return undefined;
         }
-        const counterpart = findCounterpartOf(ctx, ctx.source, sourceFilter, target);
+        const counterpart = findReplacedAttributeCounterpart(
+            ctx,
+            target,
+            sourceFilter,
+            payload.filterLocalId,
+        );
         if (!isDashboardAttributeFilterItem(counterpart)) {
             return undefined;
         }
@@ -360,11 +432,22 @@ const selectionRules: Array<[string, AnyTabSyncRule]> = [
             return undefined;
         }
         const replacement = isDashboardAttributeFilterItem(original) ? original : payload.filter;
+        if (
+            !payload.restoreTargetOriginal &&
+            !targetAcceptsAttributeFilterValue(target, counterpart, replacement)
+        ) {
+            return undefined;
+        }
         return { ...payload, filterLocalId, filter: retargetAttributeFilterItem(replacement, filterLocalId) };
     }),
     defineRule(tabsActions.clearAttributeFiltersSelection, (payload, target, ctx) => {
         const filterLocalIds = payload.filterLocalIds.flatMap((filterLocalId) => {
-            const counterpart = findSelectionCounterpart(ctx, target, filterLocalId);
+            const counterpart = mirroredListSelection(
+                ctx,
+                target,
+                filterLocalId,
+                payload.restoreTargetOriginal,
+            );
             return counterpart ? [counterpart.attributeFilter.localIdentifier!] : [];
         });
         if (filterLocalIds.length === 0) {

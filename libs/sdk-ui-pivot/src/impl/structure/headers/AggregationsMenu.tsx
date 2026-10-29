@@ -8,10 +8,12 @@ import { type IntlShape } from "react-intl";
 import {
     type IAttributeDescriptor,
     type IExecutionDefinition,
+    type ISortItem,
     type ITheme,
     type ITotal,
     type TotalType,
     hasMeasureValueFilterConditions,
+    isMeasureSort,
     isMeasureValueFilter,
     isRankingFilter,
 } from "@gooddata/sdk-model";
@@ -64,6 +66,7 @@ export interface IAggregationsMenuProps {
     colId: string;
     getTableDescriptor: () => TableDescriptor;
     getExecutionDefinition: () => IExecutionDefinition;
+    getSortItems?: () => ISortItem[];
     getColumnTotals?: () => ITotal[];
     getRowTotals?: () => ITotal[];
     onAggregationSelect: (clickConfig: IMenuAggregationClickConfig) => void;
@@ -92,10 +95,16 @@ export function AggregationsMenu({
     getColumnTotals,
     getRowTotals,
     getExecutionDefinition,
+    getSortItems,
     onAggregationSelect,
     showSubmenu,
     availableTotalTypes,
 }: IAggregationsMenuProps) {
+    const isMetricSorted = (getSortItems?.() ?? getExecutionDefinition().sortBy).some(isMeasureSort);
+    const rowSubtotalTooltip = isMetricSorted
+        ? intl.formatMessage(messages["disabled.measureSort"])
+        : undefined;
+
     const getColumnTotalsWrapper = (
         measureLocalIdentifiers: string[],
         isGroupedHeader: boolean,
@@ -231,6 +240,8 @@ export function AggregationsMenu({
                                 rowAttributeDescriptors={rowAttributeDescriptors}
                                 columnAttributeDescriptors={columnAttributeDescriptors}
                                 columnTotals={columnTotals}
+                                rowSubtotalTooltip={rowSubtotalTooltip}
+                                existingRowTotals={getColumnTotals?.()}
                                 rowTotals={rowTotals}
                                 measureLocalIdentifiers={measureLocalIdentifiers}
                                 onAggregationSelect={onAggregationSelect}
@@ -246,6 +257,8 @@ export function AggregationsMenu({
         },
         [
             availableTotalTypes,
+            rowSubtotalTooltip,
+            getColumnTotals,
             getItemClassNames,
             intl,
             isTableFilteredByMeasureValue,

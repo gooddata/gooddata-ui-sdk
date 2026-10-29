@@ -391,6 +391,10 @@
         "text": "Rollup (Total) aggregation is not available when filtering the visualization by ranking filter. To use Rollup (Total), remove ranking filter from the filter bar.",
         "crowdinContext": "The tooltip that is shown in pivot's table totals menu when rollup (native) total is disabled because ranking filters are configured for the pivot."
     },
+    "visualizations.totals.dropdown.tooltip.subtotal.disabled.measureSort": {
+        "text": "Row subtotals are not available when sorting by a metric. Clear metric sorting to show subtotals.",
+        "crowdinContext": "Tooltip for a disabled grouped row aggregation in the pivot table when a metric sort prevents the backend from returning subtotals. Grand totals remain available."
+    },
     "visualizations.totals.dropdown.title.med": {
         "text": "Median",
         "crowdinContext": "Total of type 'Median'. Showed in menu before adding to table."

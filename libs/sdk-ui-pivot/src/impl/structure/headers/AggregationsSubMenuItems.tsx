@@ -7,11 +7,12 @@ import { type IntlShape } from "react-intl";
 
 import {
     type IAttributeDescriptor,
+    type ITotal,
     type TotalType,
     attributeDescriptorLocalId,
     attributeDescriptorName,
 } from "@gooddata/sdk-model";
-import { Header, Item } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, Header, Item } from "@gooddata/sdk-ui-kit";
 
 import { type IMenuAggregationClickConfig } from "../../privateTypes.js";
 
@@ -24,6 +25,8 @@ interface IAggregationsSubMenuItemsProps {
     totalType: TotalType;
     measureLocalIdentifiers: string[];
     totals: IColumnTotal[];
+    subtotalTooltip?: string;
+    existingTotals?: ITotal[];
     isColumn: boolean;
     icon: ReactElement;
     headerText: string;
@@ -65,6 +68,8 @@ export function AggregationsSubMenuItems({
     intl,
     totalType,
     totals,
+    subtotalTooltip,
+    existingTotals,
     isColumn,
     icon,
     headerText,
@@ -73,8 +78,20 @@ export function AggregationsSubMenuItems({
     const attributeItems = attributeDescriptors.map(
         (_attributeDescriptor: IAttributeDescriptor, headerIndex: number) => {
             const attributeLocalIdentifier = attributeDescriptorLocalId(attributeDescriptors[headerIndex]);
-            const isSelected = isTotalEnabledForSubMenuAttribute(attributeLocalIdentifier, totalType, totals);
-            const onClick = () =>
+            const tooltip = headerIndex > 0 ? subtotalTooltip : undefined;
+            const isSelected = tooltip
+                ? (existingTotals ?? []).some(
+                      (total) =>
+                          total.attributeIdentifier === attributeLocalIdentifier &&
+                          total.type === totalType &&
+                          measureLocalIdentifiers.includes(total.measureIdentifier),
+                  )
+                : isTotalEnabledForSubMenuAttribute(attributeLocalIdentifier, totalType, totals);
+            const isDisabled = !!tooltip && !isSelected;
+            const onClick = () => {
+                if (isDisabled) {
+                    return;
+                }
                 onAggregationSelect({
                     type: totalType,
                     measureIdentifiers: measureLocalIdentifiers,
@@ -82,10 +99,11 @@ export function AggregationsSubMenuItems({
                     attributeIdentifier: attributeLocalIdentifier,
                     isColumn,
                 });
+            };
 
             const attributeName = getAttributeName(intl, attributeDescriptors, headerIndex, isColumn);
-            return (
-                <Item checked={isSelected} key={attributeLocalIdentifier}>
+            const item = (
+                <Item checked={isSelected} disabled={isDisabled} key={attributeLocalIdentifier}>
                     <div
                         onClick={onClick}
                         className={cx(
@@ -102,6 +120,16 @@ export function AggregationsSubMenuItems({
                         {attributeName}
                     </div>
                 </Item>
+            );
+            return tooltip ? (
+                <BubbleHoverTrigger key={attributeLocalIdentifier} showDelay={200} hideDelay={0}>
+                    {item}
+                    <Bubble className="bubble-primary" alignPoints={[{ align: "bc tc" }]}>
+                        {tooltip}
+                    </Bubble>
+                </BubbleHoverTrigger>
+            ) : (
+                item
             );
         },
     );

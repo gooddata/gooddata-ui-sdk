@@ -78,6 +78,7 @@ export function createGridOptions(
         onMenuAggregationClick: tableMethods.onMenuAggregationClick,
         getTableDescriptor: () => table.tableDescriptor,
         getExecutionDefinition: tableMethods.getExecutionDefinition,
+        getSortItems: table.getSortItems,
         getColumnTotals: tableMethods.getColumnTotals,
         getRowTotals: tableMethods.getRowTotals,
         intl: props.intl,

@@ -46,6 +46,43 @@ rushx validate
 Include any public API report changes produced by the build. Creating or changing
 the flag in FeatureHub is a separate rollout task.
 
+## Retire Early Access and Controlled Feature Rollout values
+
+`earlyAccessValues` on organizations and workspaces also holds values managed
+directly through the API, including backend feature targeting. The
+`earlyAccessFeatures` and `productionFeatures` JSON configurations list the
+settings exposed in the UI; they are not a complete list of valid targeting
+values. Absence from these lists must not cause deletion.
+
+To enable cleanup for a retired value, add its exact string to the optional
+`retiredEarlyAccessValues` array in either JSON configuration. Do this only after
+confirming that no active rollout strategy, including backend service strategies,
+still needs the value. For example:
+
+```json
+{
+    "features": [],
+    "retiredEarlyAccessValues": ["example-retired-rollout"]
+}
+```
+
+On an organization or workspace settings save, Home UI removes values explicitly
+retired by either configuration. Values still listed in either active `features`
+array take precedence over retirement declarations. Unknown values are preserved.
+Bulk workspace saves also clean affected workspaces whose selected state did not
+change, but skip writes when both the selection and stored values are unchanged.
+Cleanup-only write failures are logged and do not fail the selection save; failed
+requested feature changes still fail the save. Workspace descriptors are refreshed
+after a successful save, including when cleanup-only writes failed.
+Opening settings does not trigger writes.
+
+Existing configurations without retirement declarations preserve all unrelated
+values. Deploying the UI alone therefore does not clean historical values: rollout
+owners must first identify and declare them in FeatureHub. Keep declarations for
+organizations and workspaces that have not yet saved their settings; removing a
+declaration stops cleanup for that value. Moving a feature between EA and CFR is
+not retirement.
+
 ## Override a flag locally
 
 Edit `LocalFeatureFlagOverrides` in `uiFeatures.ts`:

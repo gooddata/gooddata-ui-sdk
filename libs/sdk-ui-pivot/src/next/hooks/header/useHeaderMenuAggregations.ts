@@ -8,6 +8,7 @@ import {
     type IExecutionDefinition,
     type ITotal,
     hasMeasureValueFilterConditions,
+    isMeasureSort,
     isMeasureValueFilter,
     isRankingFilter,
 } from "@gooddata/sdk-model";
@@ -34,7 +35,7 @@ export const useHeaderMenuAggregations = (
 ) => {
     const intl = useIntl();
     const { currentDataView } = useCurrentDataView();
-    const { config, execution, rows, columns } = usePivotTableProps();
+    const { config, execution, rows, columns, sortBy } = usePivotTableProps();
     const { onUpdateTotals } = useUpdateTotals();
 
     const { rowTotals, columnTotals } = getTotalsFromExecutionDefinition(execution.definition);
@@ -67,10 +68,14 @@ export const useHeaderMenuAggregations = (
               config.menu,
               intl,
               disableRollupTotalTooltip,
+              sortBy.some(isMeasureSort) ? intl.formatMessage(messages["disabled.measureSort"]) : undefined,
           )
         : [];
 
     const handleAggregationsItemClick = (item: IAggregationsSubMenuItem) => {
+        if (item.isDisabled) {
+            return;
+        }
         const currentTotals = item.isColumn ? columnTotals : rowTotals;
 
         onUpdateTotals(currentTotals, item.totalDefinitions, item.isActive, item.isColumn);

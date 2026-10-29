@@ -5,7 +5,7 @@ import { type ReactElement } from "react";
 import cx from "classnames";
 import { type IntlShape } from "react-intl";
 
-import { type IAttributeDescriptor, type TotalType } from "@gooddata/sdk-model";
+import { type IAttributeDescriptor, type ITotal, type TotalType } from "@gooddata/sdk-model";
 import { ItemsWrapper, SubMenu } from "@gooddata/sdk-ui-kit";
 
 import { type IMenuAggregationClickConfig } from "../../privateTypes.js";
@@ -27,6 +27,8 @@ export interface IAggregationsSubMenuProps {
     columnAttributeDescriptors: IAttributeDescriptor[];
     measureLocalIdentifiers: string[];
     columnTotals: IColumnTotal[];
+    rowSubtotalTooltip?: string;
+    existingRowTotals?: ITotal[];
     rowTotals: IColumnTotal[];
     showColumnsSubMenu: boolean;
     onAggregationSelect: (clickConfig: IMenuAggregationClickConfig) => void;
@@ -41,6 +43,8 @@ export function AggregationsSubMenu({
     columnAttributeDescriptors,
     measureLocalIdentifiers,
     columnTotals,
+    rowSubtotalTooltip,
+    existingRowTotals,
     rowTotals,
     showColumnsSubMenu,
     onAggregationSelect,
@@ -63,6 +67,8 @@ export function AggregationsSubMenu({
                             measureLocalIdentifiers={measureLocalIdentifiers}
                             totalType={totalType}
                             totals={columnTotals}
+                            subtotalTooltip={rowSubtotalTooltip}
+                            existingTotals={existingRowTotals}
                             isColumn
                             icon={<RowsHeaderIcon />}
                             headerText={intl.formatMessage({
