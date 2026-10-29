@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "sdk-ui-kit: Disabled showing aria landmark region in legacy toasts if there are no messages.",
+            "comment": "sdk-model: Add optional retiredEarlyAccessValues to early access and production feature configs.",
             "type": "none"
         }
     ],

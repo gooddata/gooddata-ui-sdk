@@ -2,15 +2,14 @@
 
 import { type SortChangedEvent } from "ag-grid-community";
 
-import { type IExecutionDefinition } from "@gooddata/sdk-model";
+import { type ITotal } from "@gooddata/sdk-model";
 import { BucketNames, type IPushData } from "@gooddata/sdk-ui";
 
 import { type InternalTableState } from "../../tableState.js";
-import { sanitizeDefTotals } from "../utils.js";
 
 export interface ISortingEventHandlerContext {
     internal: InternalTableState;
-    getExecutionDefinition: () => IExecutionDefinition;
+    getColumnTotals: () => ITotal[];
     pushDataGuard: (data: IPushData) => void;
     setState: (state: any, callback?: () => void) => void;
 }
@@ -19,7 +18,7 @@ export class SortingEventHandlers {
     constructor(private context: ISortingEventHandlerContext) {}
 
     public onSortChanged = (event: SortChangedEvent): void => {
-        const { internal, getExecutionDefinition, pushDataGuard, setState } = this.context;
+        const { internal, getColumnTotals, pushDataGuard, setState } = this.context;
 
         if (!internal.table) {
             console.warn("changing sorts without prior execution cannot work");
@@ -28,10 +27,8 @@ export class SortingEventHandlers {
 
         const sortItems = internal.table.createSortItems(event.api.getAllGridColumns());
 
-        // Changing sort may cause subtotals to no longer be reasonably placed - remove them if that is the case
-        // This applies only to totals in ATTRIBUTE bucket, column totals are not affected by sorting
-        const executionDefinition = getExecutionDefinition();
-        const totals = sanitizeDefTotals(executionDefinition, sortItems);
+        // Sorting changes subtotal visibility, but must preserve the current selection.
+        const totals = getColumnTotals();
 
         // oxlint-disable-next-line eslint-js/no-console
         console.debug("onSortChanged", sortItems);

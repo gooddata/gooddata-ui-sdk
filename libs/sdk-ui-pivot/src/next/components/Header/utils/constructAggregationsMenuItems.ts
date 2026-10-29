@@ -111,7 +111,7 @@ const createOtherAttributeTotalItems = (
  * @param measureIdentifiers - The identifiers of the measures
  * @param currentTotals - The current totals
  * @param isColumn - Whether the total is for a column
- * @param disabledTooltip - The disabled tooltip
+ * @param intl - The localization formatter
  * @returns The aggregation menu items
  */
 const constructAggregationsSubMenuItems = (
@@ -149,14 +149,16 @@ const constructAggregationsSubMenuItems = (
  * Creates aggregation menu items for specified measures on a cell.
  *
  * @param measureIdentifiers - The identifiers of the measures
- * @param availableTotalTypes - The available total types
  * @param currentRowTotals - The current row totals
  * @param currentColumnTotals - The current column totals
  * @param rows - The rows
  * @param columns - The columns
  * @param rowAttributeDescriptors - The row attribute descriptors
  * @param pivotAttributeDescriptors - The pivot attribute descriptors
+ * @param menu - The aggregation menu configuration
+ * @param intl - The localization formatter
  * @param disabledTooltip - The disabled tooltip
+ * @param disabledRowSubtotalTooltip - Explanation for unavailable, unselected row subtotals
  * @returns The aggregation menu items
  */
 export const constructAggregationsMenuItems = (
@@ -170,6 +172,7 @@ export const constructAggregationsMenuItems = (
     menu: IMenu,
     intl: IntlShape,
     disabledTooltip?: string,
+    disabledRowSubtotalTooltip?: string,
 ): IAggregationsMenuItem[] => {
     // first row is the main row attribute
     const mainRowAttribute = rows.length > 0 ? rows[0] : undefined;
@@ -193,7 +196,29 @@ export const constructAggregationsMenuItems = (
             currentRowTotals,
             false,
             intl,
-        );
+        ).map((item) => {
+            // Grand totals remain available, and existing subtotals can always be removed.
+            const isSubtotal = item.totalDefinitions.some(
+                (total) => total.attributeIdentifier !== mainRowAttribute?.attribute.localIdentifier,
+            );
+            if (!isSubtotal || !disabledRowSubtotalTooltip) {
+                return item;
+            }
+
+            const existingDefinitions = item.totalDefinitions.filter((definition) =>
+                currentRowTotals.some((total) => areTotalsSameDefinition(total, definition)),
+            );
+            // A group can have subtotals for only some measures. Offer removal of those definitions
+            // instead of trying to add the missing ones while metric sorting prevents subtotals.
+            return existingDefinitions.length > 0
+                ? {
+                      ...item,
+                      isActive: true,
+                      totalDefinitions: existingDefinitions,
+                      disabledTooltip: disabledRowSubtotalTooltip,
+                  }
+                : { ...item, isDisabled: true, disabledTooltip: disabledRowSubtotalTooltip };
+        });
 
         const columnItems = includeColumns
             ? constructAggregationsSubMenuItems(

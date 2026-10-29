@@ -3674,6 +3674,7 @@ export interface IEarlyAccessFeatureConfig {
 export interface IEarlyAccessFeaturesConfig {
     // (undocumented)
     features: IEarlyAccessFeatureConfig[];
+    retiredEarlyAccessValues?: string[];
 }
 
 // @alpha
@@ -5894,6 +5895,7 @@ export interface IProductionFeatureConfig {
 export interface IProductionFeaturesConfig {
     // (undocumented)
     features?: IProductionFeatureConfig[];
+    retiredEarlyAccessValues?: string[];
 }
 
 // @alpha

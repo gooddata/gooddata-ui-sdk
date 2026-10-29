@@ -389,6 +389,48 @@ describe("filterViews", () => {
                 ]);
             });
 
+            it("keeps a text-only filter when the default view holds a list selection", () => {
+                const allRegion = (localIdentifier: string): FilterContextItem => ({
+                    attributeFilter: {
+                        displayForm: idRef("region", "displayForm"),
+                        attributeElements: { uris: [] },
+                        negativeSelection: true,
+                        localIdentifier,
+                    },
+                });
+                const dashboard = buildDashboard({
+                    tabs: [
+                        {
+                            localIdentifier: "tab-A",
+                            title: "Tab A",
+                            filterContext: buildFilterContext([allRegion("a_region")]),
+                        },
+                        {
+                            localIdentifier: "tab-B",
+                            title: "Tab B",
+                            filterContext: buildFilterContext([allRegion("b_region")]),
+                            attributeFilterConfigs: [{ localIdentifier: "b_region", selectionType: "text" }],
+                        },
+                    ],
+                });
+                const view = buildFilterView({
+                    tabLocalIdentifier: "tab-A",
+                    filterContext: {
+                        title: "",
+                        description: "",
+                        filters: [regionFilter("a_region", ["view-a"])],
+                    },
+                });
+
+                const updated = applyDefaultFilterView(dashboard, [view], undefined, [], {
+                    persistFiltersAcrossTabs: true,
+                    activeTabLocalIdentifier: "tab-A",
+                });
+
+                expect(tabFilters(updated, 0)).toEqual([regionFilter("a_region", ["view-a"])]);
+                expect(tabFilters(updated, 1)).toEqual([allRegion("b_region")]);
+            });
+
             it("leaves every tab unchanged when the active tab has no default view", () => {
                 const dashboard = buildTabbedDashboard();
                 const viewB = buildFilterView({

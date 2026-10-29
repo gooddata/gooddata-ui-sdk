@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type IInsight, idRef, uriRef } from "@gooddata/sdk-model";
+import { type IInsight, type ITotal, idRef, uriRef } from "@gooddata/sdk-model";
 import { ErrorCodes } from "@gooddata/sdk-ui";
 
 import { LOCAL_COLUMN, LOCAL_PUSHPIN, LOCAL_TABLE } from "../constants/visualization_types.js";
@@ -539,6 +539,13 @@ const reportWithSubtotalsAndSort = withWrites(getInitializedState(), (set) => {
                                         },
                                     },
                                 ],
+                                totals: [
+                                    {
+                                        attributeIdentifier: "a2",
+                                        measureIdentifier: "m1",
+                                        type: "sum",
+                                    },
+                                ],
                             },
                         ],
                         visualizationClass: {
@@ -1049,6 +1056,38 @@ describe("Save selectors", () => {
         );
 
         describe("saving subtotals with sorting on other than first attribute", () => {
+            it("preserves subtotals in the insight prepared for saving", () => {
+                const insight = getInsightForSaveViaMd(reportWithSubtotalsAndSort);
+
+                expect(
+                    insight.insight.buckets.find((bucket) => bucket.localIdentifier === "attributes")?.totals,
+                ).toEqual([{ attributeIdentifier: "a2", measureIdentifier: "m1", type: "sum" }]);
+            });
+
+            it("detects removing a saved subtotal as an unsaved change", () => {
+                const state = withData(reportWithSubtotalsAndSort, {
+                    buckets: reportWithSubtotalsAndSort.data.buckets.map((bucket) => ({
+                        ...bucket,
+                        totals: [] as ITotal[],
+                    })),
+                });
+
+                expect(isSavedReportCurrentReport(state)).toBe(false);
+            });
+
+            it("detects adding a subtotal to a saved report as an unsaved change", () => {
+                const savedReport = reportWithSubtotalsAndSort.report.lastSavedObject;
+                const content = savedReport.visualizationObject!.content!;
+                const state = withReport(reportWithSubtotalsAndSort, {
+                    lastSavedObject: withMdObjectContent(savedReport, {
+                        ...content,
+                        buckets: content.buckets.map((bucket) => ({ ...bucket, totals: [] as ITotal[] })),
+                    }),
+                });
+
+                expect(isSavedReportCurrentReport(state)).toBe(false);
+            });
+
             it("should return false if current report is different", () => {
                 const state = withData(reportWithSubtotalsAndSort, {
                     buckets: withBucketItems(reportWithSubtotalsAndSort.data.buckets, 0, []),
