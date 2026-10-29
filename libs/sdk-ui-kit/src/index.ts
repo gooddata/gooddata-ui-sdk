@@ -1128,6 +1128,7 @@ export { UiBadge, type IUiBadgeProps } from "./@ui/UiBadge/UiBadge.js";
 
 export {
     makeMenuKeyboardNavigation,
+    makeGridKeyboardNavigation,
     makeLinearKeyboardNavigation,
     makeKeyboardNavigation,
     makeTabsKeyboardNavigation,

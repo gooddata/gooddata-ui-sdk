@@ -33,7 +33,7 @@ export function ShareLink({
         const url = window.location.origin;
         const hashLocation = window.location.hash.split("?")[0];
         return url
-            .concat(dashboardLinkBasePath ?? "/dashboards/")
+            .concat(dashboardLinkBasePath ?? window.location.pathname)
             .concat(hashLocation)
             .concat(`?${new URLSearchParams(queryParams).toString()}`);
     }, [dashboardFilters, dashboardParameters, dashboardLinkBasePath]);

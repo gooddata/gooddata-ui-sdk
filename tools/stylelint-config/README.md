@@ -14,6 +14,6 @@ Add the library as a development dependency and modify your `.stylelintrc` confi
 
 ## License
 
-(C) 2019-2025 GoodData Corporation
+(C) 2019-2026 GoodData Corporation
 
 This project is under MIT License. See [LICENSE](./LICENSE) for details.

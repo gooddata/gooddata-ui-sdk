@@ -108,39 +108,49 @@ export function convertChatConversationFromBackend(conversation: AiConversationR
 export function convertChatConversationItemFromBackend(
     item: AiConversationItemResponse,
     responses: AiConversationResponseList["responses"] | undefined,
-    history: IChatConversationItem[],
+    history: (IChatConversationItem | IChatConversationError)[],
     dateNormalizer: DateNormalizer,
     locale?: FormattingLocale,
     timezone?: string,
-): IChatConversationItem | undefined {
-    const content = convertChatConversationContentFromBackend(
-        item.content,
-        history,
-        dateNormalizer,
-        locale,
-        timezone,
-    );
-    if (!content) {
-        return undefined;
+): IChatConversationItem | IChatConversationError | undefined {
+    try {
+        const content = convertChatConversationContentFromBackend(
+            item.content,
+            history,
+            dateNormalizer,
+            locale,
+            timezone,
+        );
+        if (!content) {
+            return undefined;
+        }
+
+        const response = responses?.find((r) => r.responseId === item.responseId);
+
+        return {
+            type: "item",
+            id: item.itemId,
+            role: item.role,
+            responseId: item.responseId ?? "",
+            replyTo: item.replyTo ?? undefined,
+            createdAt: new Date(item.createdAt).getTime(),
+            feedback: convertChatConversationFeedbackFromBackend(response),
+            content,
+            stepId: item.stepId ?? undefined,
+            detail: convertChatConversationItemDetailFromBackend(item.detail),
+            agentId: item.newAgentId ?? undefined,
+            oldAgentId: item.oldAgentId ?? undefined,
+            reasoningEffort: item.reasoningEffort ?? undefined,
+        };
+    } catch (e) {
+        const error = e as Error;
+        console.error("Failed to convert conversation item", item.itemId, e);
+        return {
+            type: "error",
+            code: 0,
+            message: error.message,
+        };
     }
-
-    const response = responses?.find((r) => r.responseId === item.responseId);
-
-    return {
-        type: "item",
-        id: item.itemId,
-        role: item.role,
-        responseId: item.responseId ?? "",
-        replyTo: item.replyTo ?? undefined,
-        createdAt: new Date(item.createdAt).getTime(),
-        feedback: convertChatConversationFeedbackFromBackend(response),
-        content,
-        stepId: item.stepId ?? undefined,
-        detail: convertChatConversationItemDetailFromBackend(item.detail),
-        agentId: item.newAgentId ?? undefined,
-        oldAgentId: item.oldAgentId ?? undefined,
-        reasoningEffort: item.reasoningEffort ?? undefined,
-    };
 }
 
 export function convertChatConversationItemsFromBackend(
@@ -150,7 +160,7 @@ export function convertChatConversationItemsFromBackend(
     locale?: FormattingLocale,
     timezone?: string,
 ): IChatConversationItem[] {
-    const history: IChatConversationItem[] = [];
+    const history: (IChatConversationItem | IChatConversationError)[] = [];
     return items
         .map((itm) => {
             const item = convertChatConversationItemFromBackend(
@@ -186,7 +196,7 @@ function convertChatConversationFeedbackFromBackend(
 
 function convertChatConversationContentFromBackend(
     content: AiContent | AiSendClarifyingAnswersContent,
-    history: IChatConversationItem[],
+    history: (IChatConversationItem | IChatConversationError)[],
     dateNormalizer: DateNormalizer,
     locale?: FormattingLocale,
     timezone?: string,
@@ -255,7 +265,7 @@ function convertChatConversationContentFromBackend(
  */
 function convertMultipartParts(
     rawParts: AiMultipartContentPartsInner[],
-    history: IChatConversationItem[],
+    history: (IChatConversationItem | IChatConversationError)[],
     dateNormalizer: DateNormalizer,
     locale?: FormattingLocale,
     timezone?: string,
@@ -270,24 +280,34 @@ function convertMultipartParts(
     const parts: IChatConversationMultipartPart[] = [];
 
     rawParts.forEach((rawPart) => {
-        const part = convertMultipartPart(rawPart, history, siblings, dateNormalizer, locale, timezone);
+        try {
+            const part = convertMultipartPart(rawPart, history, siblings, dateNormalizer, locale, timezone);
 
-        // Unknown parts are dropped rather than failing the whole item, so the rest
-        // of the message (known parts) keeps rendering normally.
-        if (!part) {
-            return;
-        }
+            // Unknown parts are dropped rather than failing the whole item, so the rest
+            // of the message (known parts) keeps rendering normally.
+            if (!part) {
+                return;
+            }
 
-        siblings.push(part);
+            siblings.push(part);
 
-        const isPatchBase =
-            rawPart.type === "dashboard" &&
-            part.type === "dashboard" &&
-            !!part.dashboard &&
-            patchedDashboardIds.has(part.dashboard.identifier);
+            const isPatchBase =
+                rawPart.type === "dashboard" &&
+                part.type === "dashboard" &&
+                !!part.dashboard &&
+                patchedDashboardIds.has(part.dashboard.identifier);
 
-        if (!isPatchBase) {
-            parts.push(part);
+            if (!isPatchBase) {
+                parts.push(part);
+            }
+        } catch (e) {
+            const error = e as Error;
+            history.push({
+                type: "error",
+                code: 0,
+                message: error.message,
+            });
+            console.error("Failed to convert conversation part", rawPart.type, e);
         }
     });
 
@@ -296,7 +316,7 @@ function convertMultipartParts(
 
 function convertMultipartPart(
     part: AiMultipartContentPartsInner,
-    history: IChatConversationItem[],
+    history: (IChatConversationItem | IChatConversationError)[],
     siblings: IChatConversationMultipartPart[],
     dateNormalizer: DateNormalizer,
     locale?: FormattingLocale,
@@ -740,7 +760,7 @@ function asNonPersistedFilterContext<T>(
 // Apply dashboard patch to the items
 
 function applyDashboardPatch(
-    items: IChatConversationItem[],
+    items: (IChatConversationItem | IChatConversationError)[],
     siblings: IChatConversationMultipartPart[],
     patch: AiDashboardPatchPart["patch"],
 ) {
@@ -825,7 +845,7 @@ function applyDashboardPatch(
 }
 
 function collectRelatedItems(
-    items: IChatConversationItem[],
+    items: (IChatConversationItem | IChatConversationError)[],
     siblings: IChatConversationMultipartPart[],
     ref: ObjRef,
 ) {
@@ -836,6 +856,9 @@ function collectRelatedItems(
         }
     };
     items.forEach((item) => {
+        if (item.type === "error") {
+            return;
+        }
         if (item.content.type === "multipart") {
             item.content.parts.forEach(collect);
         }

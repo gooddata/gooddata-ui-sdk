@@ -313,6 +313,37 @@ describe("dashboard conversion", () => {
             expect((result.filterContext?.content as any)?.filters).toEqual([]);
         });
 
+        it.each([
+            { type: "attribute_filter", filterKey: "attributeFilter" },
+            { type: "text_filter", filterKey: "arbitraryAttributeFilter" },
+        ] as const)("should preserve metric references in $type metric_filters", ({ type, filterKey }) => {
+            const input = makeDashboard({
+                filters: {
+                    region: {
+                        type,
+                        using: "label/region",
+                        metric_filters: ["metric/revenue", "metric/orders"],
+                        ...(type === "text_filter" ? { condition: "is", values: ["US"] } : {}),
+                    },
+                } as Dashboard["filters"],
+            });
+
+            const result = yamlDashboardToDeclarative(emptyEntities, input);
+
+            expect(result.filterContext?.content).toMatchObject({
+                filters: [
+                    {
+                        [filterKey]: {
+                            validateElementsBy: [
+                                { identifier: { id: "revenue", type: "metric" } },
+                                { identifier: { id: "orders", type: "metric" } },
+                            ],
+                        },
+                    },
+                ],
+            });
+        });
+
         it("should handle dashboard settings flags", () => {
             const input = makeDashboard({
                 cross_filtering: false,

@@ -131,7 +131,7 @@ export interface ILocalizationUsageListQuery extends ILocalizationPageQuery {
     name?: string;
     /**
      * Lists the workspaces and people behind one count of {@link ILocalizationTranslationUsage}.
-     * Use it together with `value` and a metadata or data `setting`.
+     * Use it together with `value` and `setting`.
      */
     translation?: LocalizationTranslationState;
 }
@@ -217,12 +217,15 @@ export type LocalizationTranslatedSettingType = "METADATA_LOCALE" | "DATA_LOCALE
  *
  * @remarks
  * `missing`: they use the language for the setting, but their workspace has no translation to it.
+ * For `LOCALE`, they use a language other than English for the interface and their workspace has no metadata translation to it.
  * `available`: they use the language for the interface but not for the setting, and their workspace has a translation to it.
+ * `variant`: they use the language for the setting, their workspace has no translation to it,
+ * but it has a translation to another code of the same language.
  * A person counts over the workspaces they can open.
  *
  * @alpha
  */
-export type LocalizationTranslationState = "missing" | "available";
+export type LocalizationTranslationState = "missing" | "available" | "variant";
 
 /**
  * Workspaces and people behind one translation state.
@@ -237,14 +240,17 @@ export interface ILocalizationTranslationCount {
 /**
  * Translation states of one language.
  *
+ * @remarks
+ * A setting or a state is absent when nobody is behind it. `LOCALE` reports `missing` only.
+ *
  * @alpha
  */
 export interface ILocalizationTranslationValueUsage {
     content: ILocalizationValueContent;
     bySetting: Partial<
         Record<
-            LocalizationTranslatedSettingType,
-            Record<LocalizationTranslationState, ILocalizationTranslationCount>
+            LocalizationSettingType,
+            Partial<Record<LocalizationTranslationState, ILocalizationTranslationCount>>
         >
     >;
 }

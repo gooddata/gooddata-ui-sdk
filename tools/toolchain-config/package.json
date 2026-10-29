@@ -1,0 +1,77 @@
+{
+    "name": "@gooddata/toolchain-config",
+    "version": "11.65.0-alpha.14",
+    "description": "Shared build and test toolchain configuration (rolldown, vite, vitest, playwright) for gdc-ui packages",
+    "license": "MIT",
+    "author": "GoodData",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "tools/toolchain-config"
+    },
+    "files": [
+        "esm/**/*",
+        "*.md"
+    ],
+    "type": "module",
+    "sideEffects": false,
+    "exports": {
+        "./playwright": {
+            "types": "./esm/playwright/index.d.ts",
+            "import": "./esm/playwright/index.js"
+        },
+        "./rolldown": {
+            "types": "./esm/rolldown/index.d.ts",
+            "import": "./esm/rolldown/index.js"
+        }
+    },
+    "scripts": {
+        "_phase:build": "npm run build",
+        "_phase:validate": "npm run validate",
+        "build": "rm -rf esm && npm-run-all -p build-check build-ts",
+        "build-check": "tsc",
+        "build-ts": "tsc -p tsconfig.build.json",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo tsconfig.check.tsbuildinfo",
+        "format-check": "oxfmt --check .",
+        "format-write": "oxfmt .",
+        "lint": "oxlint . --quiet && eslint .",
+        "lint-fix": "oxlint . --quiet --fix && eslint . --fix",
+        "validate": "npm run lint && npm run format-check"
+    },
+    "devDependencies": {
+        "@gooddata/eslint-config": "workspace:*",
+        "@gooddata/oxlint-config": "workspace:*",
+        "@playwright/test": "1.62.1",
+        "@types/node": "24.12.0",
+        "@typescript-eslint/eslint-plugin": "8.58.0",
+        "@typescript-eslint/parser": "8.58.0",
+        "eslint": "^9.39.2",
+        "eslint-plugin-headers": "1.3.3",
+        "eslint-plugin-import-esm": "1.2.1",
+        "eslint-plugin-jsdoc": "62.1.0",
+        "eslint-plugin-no-barrel-files": "1.2.2",
+        "eslint-plugin-regexp": "1.15.0",
+        "eslint-plugin-sonarjs": "3.0.6",
+        "eslint-plugin-tsdoc": "0.2.14",
+        "jiti": "2.6.1",
+        "npm-run-all": "4.1.5",
+        "oxfmt": "0.68.0",
+        "oxlint": "1.83.0",
+        "oxlint-plugin-eslint": "1.82.0",
+        "oxlint-tsgolint": "7.0.2001",
+        "rolldown": "1.0.3",
+        "typescript": "7.0.2"
+    },
+    "peerDependencies": {
+        "@playwright/test": "^1.62.1",
+        "rolldown": "^1.0.3"
+    },
+    "peerDependenciesMeta": {
+        "@playwright/test": {
+            "optional": true
+        },
+        "rolldown": {
+            "optional": true
+        }
+    }
+}

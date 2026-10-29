@@ -4,10 +4,7 @@ import { type MouseEvent, useMemo } from "react";
 
 import { useSelector } from "react-redux";
 
-import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-
 import { type IChatConversationLocal } from "../../../model.js";
-import { settingsSelector } from "../../../store/chatWindow/chatWindowSelectors.js";
 import { conversationSelector } from "../../../store/messages/messagesSelectors.js";
 import { getPublisherDocumentHref } from "../../../utils.js";
 import { type LinkHandlerEvent, useConfig } from "../../ConfigContext.js";
@@ -19,7 +16,6 @@ export type CustomHyperlinkOwnProps = {
 };
 
 type CustomHyperlinkProps = CustomHyperlinkOwnProps & {
-    settings?: IUserWorkspaceSettings;
     conversation?: IChatConversationLocal;
 };
 
@@ -27,9 +23,8 @@ type CustomHyperlinkProps = CustomHyperlinkOwnProps & {
  * Similar to SDK Hyperlink, but can handle customer schemas
  * used for links management
  */
-export function CustomHyperlinkComponent({ href, text, settings, conversation }: CustomHyperlinkProps) {
+export function CustomHyperlinkComponent({ href, text, conversation }: CustomHyperlinkProps) {
     const { linkHandler, allowNativeLinks, canManage, canAnalyze } = useConfig();
-    const enableShellApplication_dashboards = Boolean(settings?.enableShellApplication_dashboards);
     const canManageMetrics = canManage || canAnalyze;
     const canManageVisualisations = canManage || canAnalyze;
     const plainText = removeMarkdown(text);
@@ -59,7 +54,7 @@ export function CustomHyperlinkComponent({ href, text, settings, conversation }:
             return null;
         }
 
-        const itemUrl = getItemUrl(workspaceId, id, type, enableShellApplication_dashboards);
+        const itemUrl = getItemUrl(workspaceId, id, type);
 
         if (!itemUrl) {
             return null;
@@ -71,7 +66,7 @@ export function CustomHyperlinkComponent({ href, text, settings, conversation }:
             id,
             itemUrl,
         };
-    }, [href, enableShellApplication_dashboards]);
+    }, [href]);
 
     if (!parsedRef) {
         return plainText;
@@ -123,19 +118,12 @@ export function CustomHyperlinkComponent({ href, text, settings, conversation }:
     );
 }
 
-const getItemUrl = (
-    workspaceId: string,
-    id: string,
-    objectType: string,
-    enableShellApplication_dashboards?: boolean,
-) => {
+const getItemUrl = (workspaceId: string, id: string, objectType: string) => {
     switch (objectType) {
         case "visualization":
             return `/workspace/${workspaceId}/analyze/#/${id}/edit`;
         case "dashboard":
-            return enableShellApplication_dashboards
-                ? `/workspace/${workspaceId}/dashboards/#/dashboard/${id}`
-                : `/dashboards/#/workspace/${workspaceId}/dashboard/${id}`;
+            return `/workspace/${workspaceId}/dashboards/#/dashboard/${id}`;
         case "metric":
             return `/workspace/${workspaceId}/metrics/metric/${id}`;
         case "report":
@@ -146,10 +134,7 @@ const getItemUrl = (
 };
 
 export function CustomHyperlink({ href, text }: CustomHyperlinkOwnProps) {
-    const settings = useSelector(settingsSelector);
     const conversation = useSelector(conversationSelector);
 
-    return (
-        <CustomHyperlinkComponent href={href} text={text} settings={settings} conversation={conversation} />
-    );
+    return <CustomHyperlinkComponent href={href} text={text} conversation={conversation} />;
 }

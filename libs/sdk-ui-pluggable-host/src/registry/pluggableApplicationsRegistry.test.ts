@@ -1040,70 +1040,7 @@ describe("resolveApplications", () => {
             });
         });
 
-        describe("shell flag exemptions", () => {
-            function dashboardsPair() {
-                return [
-                    externalApp({
-                        id: "dashboards",
-                        menuOrder: 1,
-                        requiredSettings: { enableShellApplication_dashboards: true },
-                    }),
-                    externalApp({
-                        id: "dashboards-legacy",
-                        menuOrder: 1,
-                        requiredSettings: { enableShellApplication_dashboards: false },
-                    }),
-                ];
-            }
-
-            it("keeps the legacy app when the flag is absent on an ordinary page", () => {
-                const result = resolveApplications({
-                    localApps: dashboardsPair(),
-                    remoteRegistry: undefined,
-                    ctx: ctxWith({ userSettings: {} }),
-                    scope: "workspace",
-                });
-
-                expect(result.map((a) => a.id)).toEqual(["dashboards-legacy"]);
-            });
-
-            it("keeps the shell app when the flag is absent and the page is an export", () => {
-                const result = resolveApplications({
-                    localApps: dashboardsPair(),
-                    remoteRegistry: undefined,
-                    ctx: ctxWith({ userSettings: {}, isExportMode: true }),
-                    scope: "workspace",
-                });
-
-                expect(result.map((a) => a.id)).toEqual(["dashboards"]);
-            });
-
-            it("keeps the shell app when the flag is false and the page is an export", () => {
-                const result = resolveApplications({
-                    localApps: dashboardsPair(),
-                    remoteRegistry: undefined,
-                    ctx: ctxWith({
-                        userSettings: { enableShellApplication_dashboards: true },
-                        settings: { enableShellApplication_dashboards: false },
-                        isExportMode: true,
-                    }),
-                    scope: "workspace",
-                });
-
-                expect(result.map((a) => a.id)).toEqual(["dashboards"]);
-            });
-
-            it("keeps the shell app when the flag is absent and the page is embedded", () => {
-                const result = resolveApplications({
-                    localApps: dashboardsPair(),
-                    remoteRegistry: undefined,
-                    ctx: ctxWith({ userSettings: {}, embeddingMode: "iframe" }),
-                    scope: "workspace",
-                });
-
-                expect(result.map((a) => a.id)).toEqual(["dashboards"]);
-            });
-
+        describe("requiredSettings", () => {
             it("leaves requiredSettings to the caller when skipSettings is set", () => {
                 const result = resolveApplications({
                     localApps: [
@@ -1122,7 +1059,7 @@ describe("resolveApplications", () => {
                 expect(result.map((a) => a.id)).toEqual(["a"]);
             });
 
-            it("preserves workspace settings for flags it does not force", () => {
+            it("evaluates requiredSettings against workspace settings in export mode", () => {
                 const result = resolveApplications({
                     localApps: [
                         externalApp({

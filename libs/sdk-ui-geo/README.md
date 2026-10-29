@@ -17,6 +17,6 @@ With GoodData.UI SDK version >=8.8, Geo Pushpin Chart is no longer supported in 
 
 ## License
 
-(C) 2017-2022 GoodData Corporation
+(C) 2017-2026 GoodData Corporation
 
 This project is under MIT License. See [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-geo/LICENSE).

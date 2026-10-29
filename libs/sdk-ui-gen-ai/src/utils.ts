@@ -38,7 +38,6 @@ export function getDashboardHref(
     wsId: string,
     dasId: string,
     status: "draft" | "saved",
-    useHostedDashboards?: boolean,
     conversationId?: string,
 ) {
     if (status === "draft") {
@@ -46,13 +45,9 @@ export function getDashboardHref(
         if (conversationId) {
             query.set("conversationId", conversationId);
         }
-        return useHostedDashboards
-            ? `/workspace/${wsId}/dashboards/#/new-dashboard/?${query.toString()}`
-            : `/dashboards/#/workspace/${wsId}/new-dashboard/?${query.toString()}`;
+        return `/workspace/${wsId}/dashboards/#/new-dashboard/?${query.toString()}`;
     }
-    return useHostedDashboards
-        ? `/workspace/${wsId}/dashboards/#/dashboard/${dasId}/tab/defaultTabId`
-        : `/dashboards/#/workspace/${wsId}/dashboard/${dasId}/tab/defaultTabId`;
+    return `/workspace/${wsId}/dashboards/#/dashboard/${dasId}/tab/defaultTabId`;
 }
 
 // Encoded like the Publisher app's own route builder, so an id with a slash stays one segment.

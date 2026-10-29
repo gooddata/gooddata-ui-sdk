@@ -9138,6 +9138,18 @@ export function LoadingSpinner(input: ILoadingSpinner): JSX.Element;
 export function LocaleSetting(input: ILocaleSettingProps): JSX.Element;
 
 // @internal (undocumented)
+export const makeGridKeyboardNavigation: <T extends KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
+    onFocusDown?: ((event: T) => void) | undefined;
+    onFocusFirst?: ((event: T) => void) | undefined;
+    onFocusLast?: ((event: T) => void) | undefined;
+    onFocusLeft?: ((event: T) => void) | undefined;
+    onFocusRight?: ((event: T) => void) | undefined;
+    onFocusUp?: ((event: T) => void) | undefined;
+    onSelect?: ((event: T) => void) | undefined;
+    onUnhandledKeyDown?: ((event: T) => void) | undefined;
+}, options?: IHandleActionOptions) => (event: T) => void;
+
+// @internal (undocumented)
 export const makeHorizontalKeyboardNavigation: <T extends KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
     onFocusFirst?: ((event: T) => void) | undefined;
     onFocusLast?: ((event: T) => void) | undefined;

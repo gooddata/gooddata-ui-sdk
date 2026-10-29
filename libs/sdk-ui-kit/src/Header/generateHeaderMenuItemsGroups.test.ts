@@ -19,7 +19,7 @@ describe("generateHeaderMenuItemsGroups", () => {
             [
                 {
                     className: "s-menu-kpis",
-                    href: "/dashboards/#/workspace/TestWorkspaceId",
+                    href: "/workspace/TestWorkspaceId/dashboards",
                     key: "gs.header.kpis.new",
                 },
                 {
@@ -56,7 +56,7 @@ describe("generateHeaderMenuItemsGroups", () => {
             [
                 {
                     className: "s-menu-kpis",
-                    href: "/dashboards/#/workspace/TestWorkspaceId",
+                    href: "/workspace/TestWorkspaceId/dashboards",
                     key: "gs.header.kpis.new",
                 },
                 {
@@ -92,7 +92,7 @@ describe("generateHeaderMenuItemsGroups", () => {
             [
                 {
                     className: "s-menu-kpis",
-                    href: "/dashboards/#/workspace/TestWorkspaceId",
+                    href: "/workspace/TestWorkspaceId/dashboards",
                     key: "gs.header.kpis.new",
                 },
                 {
@@ -128,7 +128,7 @@ describe("generateHeaderMenuItemsGroups", () => {
             [
                 {
                     className: "s-menu-kpis",
-                    href: "/dashboards/#/workspace/TestWorkspaceId",
+                    href: "/workspace/TestWorkspaceId/dashboards",
                     key: "gs.header.kpis.new",
                 },
                 {
@@ -164,7 +164,7 @@ describe("generateHeaderMenuItemsGroups", () => {
             [
                 {
                     className: "s-menu-kpis",
-                    href: "/dashboards/#/workspace/TestWorkspaceId",
+                    href: "/workspace/TestWorkspaceId/dashboards",
                     key: "gs.header.kpis.new",
                 },
                 {
@@ -200,7 +200,7 @@ describe("generateHeaderMenuItemsGroups", () => {
             [
                 {
                     className: "s-menu-kpis",
-                    href: "/dashboards/#/workspace/TestWorkspaceId",
+                    href: "/workspace/TestWorkspaceId/dashboards",
                     key: "gs.header.kpis.new",
                 },
                 {
@@ -236,7 +236,7 @@ describe("generateHeaderMenuItemsGroups", () => {
             [
                 {
                     className: "s-menu-kpis",
-                    href: "/dashboards/#/workspace/TestWorkspaceId",
+                    href: "/workspace/TestWorkspaceId/dashboards",
                     key: "gs.header.kpis.new",
                 },
                 {
@@ -265,7 +265,7 @@ describe("generateHeaderMenuItemsGroups", () => {
             [
                 {
                     className: "s-menu-kpis",
-                    href: "/dashboards/#/workspace/TestWorkspaceId",
+                    href: "/workspace/TestWorkspaceId/dashboards",
                     key: "gs.header.kpis.new",
                 },
                 {
@@ -295,7 +295,7 @@ describe("generateHeaderMenuItemsGroups", () => {
             [
                 {
                     className: "s-menu-kpis",
-                    href: "/dashboards/#/workspace/TestWorkspaceId",
+                    href: "/workspace/TestWorkspaceId/dashboards",
                     key: "gs.header.kpis.new",
                 },
                 {
@@ -325,7 +325,7 @@ describe("generateHeaderMenuItemsGroups", () => {
             [
                 {
                     className: "s-menu-kpis",
-                    href: "/dashboards/#/workspace/TestWorkspaceId",
+                    href: "/workspace/TestWorkspaceId/dashboards",
                     key: "gs.header.kpis.new",
                 },
                 {
@@ -356,7 +356,7 @@ describe("generateHeaderMenuItemsGroups", () => {
             [
                 {
                     className: "s-menu-kpis",
-                    href: "/dashboards/#/workspace/TestWorkspaceId",
+                    href: "/workspace/TestWorkspaceId/dashboards",
                     key: "gs.header.kpis.new",
                 },
                 {

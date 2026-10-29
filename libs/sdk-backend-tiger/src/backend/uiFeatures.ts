@@ -93,7 +93,6 @@ export const TigerFeatureDefinitions = {
     enableMeasureValueFilterKD: booleanFeature(true),
     enableVisualizationFilteringByTags: booleanFeature(false),
     enableShellApplication: booleanFeature(true),
-    enableShellApplication_dashboards: booleanFeature(true),
     enableLogicalModelExtensionsFromParentsCall: booleanFeature(false),
     enableDashboardDensitySetting: booleanFeature(false),
     enableDashboardsSearch: booleanFeature(false),
@@ -140,6 +139,7 @@ export const TigerFeatureDefinitions = {
     earlyAccessFeatures: jsonFeature<IEarlyAccessFeaturesConfig>(),
     enableAnalyticalDesignerCatalogSideload: booleanFeature(false),
     enableAiAssistantEmbedding: booleanFeature(false),
+    enableLocalizationValidations: booleanFeature(false),
 } as const;
 
 export type ITigerFeatureFlags = {

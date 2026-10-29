@@ -61,4 +61,14 @@ describe("ShareLink", () => {
         render(<Wrapped {...baseProps} dashboardParameters={dashboardParameters} />);
         expect(getShareUrl().searchParams.has("parameters")).toBe(false);
     });
+
+    it("uses dashboardLinkBasePath as the link path", () => {
+        render(<Wrapped {...baseProps} dashboardLinkBasePath="/workspace/ws1/dashboards/" />);
+        expect(getShareUrl().pathname).toBe("/workspace/ws1/dashboards/");
+    });
+
+    it("uses the current page path when dashboardLinkBasePath is omitted", () => {
+        render(<Wrapped {...baseProps} />);
+        expect(getShareUrl().pathname).toBe(window.location.pathname);
+    });
 });

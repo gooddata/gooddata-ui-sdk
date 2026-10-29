@@ -69,7 +69,7 @@ describe("getErrorHandler", () => {
         });
 
         it("should redirect to dashboard if user has role view, and backend is Tiger", () => {
-            expectError(ACCESS_DESIGNER_DENIED_ERROR, "/dashboards/#/project/my-project-123");
+            expectError(ACCESS_DESIGNER_DENIED_ERROR, "/workspace/my-project-123/dashboards");
         });
 
         it("should not redirect to dashboard if user has role view and can not create report, and backend is Tiger", () => {

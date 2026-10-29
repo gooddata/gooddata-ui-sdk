@@ -1,10 +1,11 @@
 // (C) 2026 GoodData Corporation
 
-import { describe, expect, it, vi } from "vitest";
+import { assert, describe, expect, it, vi } from "vitest";
 
 import { type AiConversationItemResponse, type AiDashboardOutput } from "@gooddata/api-client-tiger";
 import {
     type IChatConversationDashboardContent,
+    type IChatConversationError,
     type IChatConversationItem,
     type IChatConversationMultipartContent,
     type IChatConversationMultipartPart,
@@ -93,6 +94,7 @@ describe("genAIConvertor", () => {
             };
 
             const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            assert(converted.type === "item");
             const whatIfPart = (converted.content as IChatConversationMultipartContent)
                 .parts[0] as IChatConversationWhatIfContent;
 
@@ -158,6 +160,7 @@ describe("genAIConvertor", () => {
 
         const getFirstResult = (item: AiConversationItemResponse) => {
             const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            assert(converted.type === "item");
             const content = (converted.content as { parts: IChatConversationMultipartPart[] }).parts[0];
             if (!isChatConversationSearchContent(content)) {
                 throw new Error("Expected searchResults content");
@@ -281,6 +284,7 @@ describe("genAIConvertor", () => {
             };
 
             const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            assert(converted.type === "item");
 
             expect(converted.content).toEqual({
                 type: "toolResult",
@@ -309,6 +313,7 @@ describe("genAIConvertor", () => {
             };
 
             const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            assert(converted.type === "item");
 
             expect(converted.content).toEqual({
                 type: "toolResult",
@@ -336,6 +341,7 @@ describe("genAIConvertor", () => {
             } as unknown as AiConversationItemResponse;
 
             const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            assert(converted.type === "item");
 
             const parts = (converted.content as IChatConversationMultipartContent).parts;
             expect(parts.map((part) => part.type)).toEqual(["text", "publisherDocument"]);
@@ -367,6 +373,7 @@ describe("genAIConvertor", () => {
             } as unknown as AiConversationItemResponse;
 
             const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            assert(converted.type === "item");
 
             const parts = (converted.content as IChatConversationMultipartContent).parts;
             expect(parts.map((part) => part.type)).toEqual(["publisherDocument", "publisherDocumentV2"]);
@@ -393,6 +400,7 @@ describe("genAIConvertor", () => {
     describe("unrecognized content/part types", () => {
         it("drops the whole item when its content type is unrecognized", () => {
             const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+            const history: (IChatConversationItem | IChatConversationError)[] = [];
             const item: AiConversationItemResponse = {
                 conversationId: "conv-1",
                 itemIndex: 0,
@@ -402,15 +410,17 @@ describe("genAIConvertor", () => {
                 content: { type: "somethingNew" } as unknown as AiConversationItemResponse["content"],
             };
 
-            const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer);
+            const converted = convertChatConversationItemFromBackend(item, [], history, dateNormalizer);
 
             expect(converted).toBeUndefined();
+            expect(history).toEqual([]);
             expect(errorSpy).toHaveBeenCalled();
             errorSpy.mockRestore();
         });
 
         it("drops only the unrecognized part, keeping known parts in a multipart item", () => {
             const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+            const history: (IChatConversationItem | IChatConversationError)[] = [];
             const item = {
                 conversationId: "conv-1",
                 itemIndex: 0,
@@ -427,14 +437,308 @@ describe("genAIConvertor", () => {
                 },
             } as unknown as AiConversationItemResponse;
 
-            const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            const converted = convertChatConversationItemFromBackend(item, [], history, dateNormalizer)!;
+            assert(converted.type === "item");
 
             expect((converted.content as IChatConversationMultipartContent).parts).toEqual([
                 { type: "text", text: "known part" },
                 { type: "text", text: "another known part" },
             ]);
+            expect(history).toEqual([]);
             expect(errorSpy).toHaveBeenCalled();
             errorSpy.mockRestore();
+        });
+    });
+
+    describe("conversion failures", () => {
+        const makeItem = (content: object, itemIndex = 0): AiConversationItemResponse =>
+            ({
+                conversationId: "conv-1",
+                itemIndex,
+                itemId: `item-${itemIndex}`,
+                role: "assistant",
+                createdAt: "2024-01-01T00:00:00Z",
+                content,
+            }) as unknown as AiConversationItemResponse;
+
+        const brokenDashboardPart = {
+            type: "dashboard",
+            dashboard: {
+                type: "dashboard",
+                id: "broken-dashboard",
+                title: "Broken dashboard",
+                version: "3",
+                sections: [],
+            },
+            references: {
+                visualizations: [{ id: "incomplete-visualization", type: "bar_chart", query: null }],
+            },
+        };
+
+        it("keeps valid parts around a dashboard that fails conversion in a live item", () => {
+            const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+            const history: (IChatConversationItem | IChatConversationError)[] = [];
+            const item = makeItem({
+                type: "multipart",
+                parts: [
+                    { type: "text", text: "Before the dashboard" },
+                    brokenDashboardPart,
+                    { type: "text", text: "After the dashboard" },
+                ],
+            });
+
+            const converted = convertChatConversationItemFromBackend(item, [], history, dateNormalizer)!;
+            assert(converted.type === "item");
+
+            expect((converted.content as IChatConversationMultipartContent).parts).toEqual([
+                { type: "text", text: "Before the dashboard" },
+                { type: "text", text: "After the dashboard" },
+            ]);
+            expect(errorSpy).toHaveBeenCalledExactlyOnceWith(
+                "Failed to convert conversation part",
+                "dashboard",
+                expect.any(Error),
+            );
+            expect(history).toEqual([
+                { type: "error", code: 0, message: (errorSpy.mock.calls[0]![2] as Error).message },
+            ]);
+        });
+
+        it("loads history past failed parts and failed non-multipart items", () => {
+            const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+            const items = [
+                makeItem({ type: "text", text: "Earlier message" }),
+                makeItem({ type: "multipart", parts: [brokenDashboardPart] }, 1),
+                makeItem({ type: "skillsActivated", skills: null }, 2),
+                makeItem({ type: "text", text: "Later message" }, 3),
+            ];
+
+            const converted = convertChatConversationItemsFromBackend(items, [], dateNormalizer);
+
+            expect(converted).toMatchObject([
+                { type: "item", id: "item-0", content: { type: "text", text: "Earlier message" } },
+                {
+                    type: "item",
+                    id: "item-1",
+                    content: {
+                        type: "multipart",
+                        parts: [],
+                        suggestions: { actions: undefined, followUpQuestion: undefined },
+                    },
+                },
+                { type: "error", code: 0, message: expect.any(String) },
+                { type: "item", id: "item-3", content: { type: "text", text: "Later message" } },
+            ]);
+            expect(errorSpy).toHaveBeenCalledTimes(2);
+            expect(errorSpy).toHaveBeenNthCalledWith(
+                1,
+                "Failed to convert conversation part",
+                "dashboard",
+                expect.any(Error),
+            );
+            expect(errorSpy).toHaveBeenNthCalledWith(
+                2,
+                "Failed to convert conversation item",
+                "item-2",
+                expect.any(Error),
+            );
+            expect(converted[2]).toEqual({
+                type: "error",
+                code: 0,
+                message: (errorSpy.mock.calls[1]![2] as Error).message,
+            });
+        });
+
+        it.each([
+            { name: "non-multipart content", content: { type: "skillsActivated", skills: null } },
+            { name: "multipart structure", content: { type: "multipart", parts: null } },
+        ])("returns an error for failed $name without changing history", ({ content }) => {
+            const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+            const previousError: IChatConversationError = {
+                type: "error",
+                code: 500,
+                message: "Earlier error",
+            };
+            const history: (IChatConversationItem | IChatConversationError)[] = [previousError];
+
+            const converted = convertChatConversationItemFromBackend(
+                makeItem(content),
+                [],
+                history,
+                dateNormalizer,
+            );
+
+            expect(errorSpy).toHaveBeenCalledExactlyOnceWith(
+                "Failed to convert conversation item",
+                "item-0",
+                expect.any(Error),
+            );
+            expect(converted).toEqual({
+                type: "error",
+                code: 0,
+                message: (errorSpy.mock.calls[0]![2] as Error).message,
+            });
+            expect(history).toEqual([previousError]);
+            expect(history[0]).toBe(previousError);
+        });
+
+        it("appends one error per failed part in order while preserving existing history and valid parts", () => {
+            const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+            const previousItem = convertChatConversationItemFromBackend(
+                makeItem({ type: "text", text: "Earlier message" }),
+                [],
+                [],
+                dateNormalizer,
+            )!;
+            assert(previousItem.type === "item");
+            const previousError: IChatConversationError = {
+                type: "error",
+                code: 500,
+                message: "Earlier error",
+            };
+            const history: (IChatConversationItem | IChatConversationError)[] = [previousItem, previousError];
+            const converted = convertChatConversationItemFromBackend(
+                makeItem(
+                    {
+                        type: "multipart",
+                        parts: [
+                            brokenDashboardPart,
+                            { type: "text", text: "First surviving part" },
+                            { type: "whatIf", whatIf: { scenarios: null } },
+                            { type: "text", text: "Last surviving part" },
+                            brokenDashboardPart,
+                        ],
+                    },
+                    1,
+                ),
+                [],
+                history,
+                dateNormalizer,
+            )!;
+            assert(converted.type === "item");
+
+            expect(converted.content).toMatchObject({
+                type: "multipart",
+                parts: [
+                    { type: "text", text: "First surviving part" },
+                    { type: "text", text: "Last surviving part" },
+                ],
+            });
+            expect(errorSpy).toHaveBeenCalledTimes(3);
+            ["dashboard", "whatIf", "dashboard"].forEach((partType, index) => {
+                expect(errorSpy).toHaveBeenNthCalledWith(
+                    index + 1,
+                    "Failed to convert conversation part",
+                    partType,
+                    expect.any(Error),
+                );
+            });
+            expect(history).toEqual([
+                previousItem,
+                previousError,
+                ...errorSpy.mock.calls.map(([, , error]) => ({
+                    type: "error",
+                    code: 0,
+                    message: (error as Error).message,
+                })),
+            ]);
+            expect(history[0]).toBe(previousItem);
+            expect(history[1]).toBe(previousError);
+        });
+
+        it("keeps an empty multipart item and suggestions when all its parts fail", () => {
+            const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+            const history: (IChatConversationItem | IChatConversationError)[] = [];
+            const converted = convertChatConversationItemFromBackend(
+                makeItem({
+                    type: "multipart",
+                    parts: [brokenDashboardPart, brokenDashboardPart],
+                    suggestions: {
+                        followUpQuestion: "Try again?",
+                        actions: [{ label: "Retry", query: "Try again" }],
+                    },
+                }),
+                [],
+                history,
+                dateNormalizer,
+            );
+
+            expect(converted).toMatchObject({
+                type: "item",
+                id: "item-0",
+                content: {
+                    type: "multipart",
+                    parts: [],
+                    suggestions: {
+                        followUpQuestion: "Try again?",
+                        actions: [{ label: "Retry", query: "Try again" }],
+                    },
+                },
+            });
+            expect(history).toEqual([
+                { type: "error", code: 0, message: expect.any(String) },
+                { type: "error", code: 0, message: expect.any(String) },
+            ]);
+            expect(errorSpy).toHaveBeenCalledTimes(2);
+        });
+
+        it("does not record errors for optional parts with missing payloads", () => {
+            const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+            const history: (IChatConversationItem | IChatConversationError)[] = [];
+            const converted = convertChatConversationItemFromBackend(
+                makeItem({
+                    type: "multipart",
+                    parts: [
+                        { type: "dashboardPatch" },
+                        { type: "dashboardPatch", patch: null },
+                        { type: "kda" },
+                        { type: "kda", kda: null },
+                        { type: "whatIf" },
+                        { type: "whatIf", whatIf: null },
+                        { type: "text", text: "Valid part" },
+                    ],
+                }),
+                [],
+                history,
+                dateNormalizer,
+            );
+
+            expect(converted).toMatchObject({
+                type: "item",
+                content: { type: "multipart", parts: [{ type: "text", text: "Valid part" }] },
+            });
+            expect(history).toEqual([]);
+            expect(errorSpy).not.toHaveBeenCalled();
+        });
+
+        it("keeps consecutive item errors in replay order and skips unknown content", () => {
+            const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+            const converted = convertChatConversationItemsFromBackend(
+                [
+                    makeItem({ type: "skillsActivated", skills: null }),
+                    makeItem({ type: "somethingNew" }, 1),
+                    makeItem({ type: "skillsActivated", skills: null }, 2),
+                    makeItem({ type: "text", text: "Recovered" }, 3),
+                ],
+                [],
+                dateNormalizer,
+            );
+
+            expect(converted).toMatchObject([
+                { type: "error", code: 0, message: expect.any(String) },
+                { type: "error", code: 0, message: expect.any(String) },
+                { type: "item", id: "item-3", content: { type: "text", text: "Recovered" } },
+            ]);
+            expect(errorSpy).toHaveBeenCalledWith(
+                "Failed to convert conversation item",
+                "item-0",
+                expect.any(Error),
+            );
+            expect(errorSpy).toHaveBeenCalledWith(
+                "Failed to convert conversation item",
+                "item-2",
+                expect.any(Error),
+            );
         });
     });
 
@@ -519,10 +823,12 @@ describe("genAIConvertor", () => {
                 },
             }) as unknown as IChatConversationItem;
 
-        const dashboardParts = (item: IChatConversationItem) =>
-            (item.content as IChatConversationMultipartContent).parts.filter(
+        const dashboardParts = (item: IChatConversationItem | IChatConversationError) => {
+            assert(item.type === "item");
+            return (item.content as IChatConversationMultipartContent).parts.filter(
                 (part): part is IChatConversationDashboardContent => part.type === "dashboard",
             );
+        };
 
         /** Ids of the visualizations the dashboard's widgets point at, in layout order. */
         const widgetVisualizations = (part: IChatConversationDashboardContent) =>
@@ -532,6 +838,47 @@ describe("genAIConvertor", () => {
                     return (widget?.insight as IdentifierRef)?.identifier;
                 }),
             );
+
+        it.each([
+            { type: "attribute_filter", filterKey: "attributeFilter" },
+            { type: "text_filter", filterKey: "arbitraryAttributeFilter" },
+        ] as const)("converts a dashboard edit with metric-validated $type", ({ type, filterKey }) => {
+            const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+            const converted = convertChatConversationItemFromBackend(
+                makeItem([
+                    {
+                        ...basePart(),
+                        dashboard: {
+                            ...baseDocument(["chart1"]),
+                            filters: {
+                                region: {
+                                    type,
+                                    using: "label/region",
+                                    metric_filters: ["metric/revenue"],
+                                    ...(type === "text_filter" ? { condition: "is", values: ["US"] } : {}),
+                                },
+                            },
+                        },
+                    },
+                    patchPart("chart2"),
+                ]),
+                [],
+                [],
+                dateNormalizer,
+            )!;
+
+            const parts = dashboardParts(converted);
+            expect(parts).toHaveLength(1);
+            expect(widgetVisualizations(parts[0]!)).toEqual(["chart1", "chart2"]);
+            expect(parts[0]!.dashboard?.filterContext?.filters).toMatchObject([
+                {
+                    [filterKey]: {
+                        validateElementsBy: [{ identifier: "revenue", type: "measure" }],
+                    },
+                },
+            ]);
+            expect(errorSpy).not.toHaveBeenCalled();
+        });
 
         it("applies a patch against the base sent as a sibling part in the same message", () => {
             const converted = convertChatConversationItemFromBackend(
@@ -587,6 +934,7 @@ describe("genAIConvertor", () => {
                 history,
                 dateNormalizer,
             )!;
+            assert(first.type === "item");
             history.push(first);
 
             const second = convertChatConversationItemFromBackend(
@@ -643,6 +991,7 @@ describe("genAIConvertor", () => {
                 history,
                 dateNormalizer,
             )!;
+            assert(first.type === "item");
             history.push(first);
 
             // The user edited the dashboard in between, so gen-ai relays the changed document.
@@ -671,6 +1020,67 @@ describe("genAIConvertor", () => {
 
             expect(parts).toHaveLength(1);
             expect(parts[0]!.dashboard).toBeNull();
+        });
+
+        it.each(["item", "part"] as const)(
+            "applies a replayed patch past a failed %s in history",
+            (failure) => {
+                const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+                const failedItem =
+                    failure === "item"
+                        ? ({
+                              ...makeItem([], 1),
+                              content: { type: "skillsActivated", skills: null },
+                          } as unknown as AiConversationItemResponse)
+                        : makeItem([{ type: "whatIf", whatIf: { scenarios: null } }], 1);
+
+                const converted = convertChatConversationItemsFromBackend(
+                    [makeItem([basePart()]), failedItem, makeItem([patchPart("chart2")], 2)],
+                    [],
+                    dateNormalizer,
+                );
+
+                expect(converted).toHaveLength(3);
+                expect(converted[1]).toMatchObject(
+                    failure === "item"
+                        ? { type: "error", code: 0, message: expect.any(String) }
+                        : { type: "item", content: { type: "multipart", parts: [] } },
+                );
+                const parts = dashboardParts(converted[2]!);
+                expect(parts).toHaveLength(1);
+                expect(widgetVisualizations(parts[0]!)).toEqual(["chart1", "chart2"]);
+                expect(errorSpy).toHaveBeenCalledExactlyOnceWith(
+                    `Failed to convert conversation ${failure}`,
+                    failure === "item" ? "item-1" : "whatIf",
+                    expect.any(Error),
+                );
+            },
+        );
+
+        it("applies a sibling patch after a failed part appends an error to history", () => {
+            const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+            const previousError: IChatConversationError = {
+                type: "error",
+                code: 500,
+                message: "Earlier error",
+            };
+            const history: (IChatConversationItem | IChatConversationError)[] = [previousError];
+            const converted = convertChatConversationItemFromBackend(
+                makeItem([basePart(), { type: "whatIf", whatIf: { scenarios: null } }, patchPart("chart2")]),
+                [],
+                history,
+                dateNormalizer,
+            )!;
+
+            const parts = dashboardParts(converted);
+            expect(parts).toHaveLength(1);
+            expect(widgetVisualizations(parts[0]!)).toEqual(["chart1", "chart2"]);
+            expect(history).toEqual([previousError, { type: "error", code: 0, message: expect.any(String) }]);
+            expect(errorSpy).toHaveBeenCalledExactlyOnceWith(
+                "Failed to convert conversation part",
+                "whatIf",
+                expect.any(Error),
+            );
         });
     });
 
@@ -731,6 +1141,7 @@ describe("genAIConvertor", () => {
             };
 
             const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            assert(converted.type === "item");
             const [part] = (converted.content as IChatConversationMultipartContent)
                 .parts as IChatConversationDashboardContent[];
 
@@ -825,6 +1236,7 @@ describe("genAIConvertor", () => {
             };
 
             const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            assert(converted.type === "item");
             const [part] = (converted.content as IChatConversationMultipartContent)
                 .parts as IChatConversationDashboardContent[];
 
@@ -887,6 +1299,7 @@ describe("genAIConvertor", () => {
             };
 
             const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            assert(converted.type === "item");
             const [part] = (converted.content as IChatConversationMultipartContent)
                 .parts as IChatConversationDashboardContent[];
 
@@ -975,6 +1388,7 @@ describe("genAIConvertor", () => {
             };
 
             const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            assert(converted.type === "item");
             const [part] = (converted.content as IChatConversationMultipartContent)
                 .parts as IChatConversationDashboardContent[];
 
@@ -1067,6 +1481,7 @@ describe("genAIConvertor", () => {
             };
 
             const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            assert(converted.type === "item");
             const [part] = (converted.content as IChatConversationMultipartContent)
                 .parts as IChatConversationDashboardContent[];
 
@@ -1163,6 +1578,7 @@ describe("genAIConvertor", () => {
             };
 
             const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            assert(converted.type === "item");
             const [part] = (converted.content as IChatConversationMultipartContent)
                 .parts as IChatConversationDashboardContent[];
 
@@ -1361,6 +1777,7 @@ describe("genAIConvertor", () => {
             } as unknown as AiConversationItemResponse;
 
             const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            assert(converted.type === "item");
 
             expect(converted.content).toEqual({
                 type: "clarifyingAnswers",
@@ -1393,6 +1810,7 @@ describe("genAIConvertor", () => {
             };
 
             const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            assert(converted.type === "item");
             expect(converted.content).toEqual({
                 type: "reasoning",
                 summary: "Reasoning summary text",
@@ -1416,6 +1834,7 @@ describe("genAIConvertor", () => {
             };
 
             const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            assert(converted.type === "item");
             expect(converted.content).toEqual({
                 type: "toolCall",
                 id: "tool-id-1",
@@ -1449,6 +1868,7 @@ describe("genAIConvertor", () => {
             };
 
             const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            assert(converted.type === "item");
             expect((converted.content as IChatConversationMultipartContent).parts).toEqual([
                 {
                     type: "clarifyingQuestions",
@@ -1522,6 +1942,7 @@ describe("genAIConvertor", () => {
             };
 
             const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            assert(converted.type === "item");
             const [part] = (converted.content as IChatConversationMultipartContent).parts;
 
             expect(part.type === "visualization" && part.visualization?.insight.properties).toMatchObject({
@@ -1588,6 +2009,7 @@ describe("genAIConvertor", () => {
             };
 
             const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            assert(converted.type === "item");
             const [part] = (converted.content as IChatConversationMultipartContent).parts;
             expect(part.type).toBe("alertProposal");
             if (part.type === "alertProposal") {
@@ -1635,6 +2057,7 @@ describe("genAIConvertor", () => {
             };
 
             const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            assert(converted.type === "item");
             const [part] = (converted.content as IChatConversationMultipartContent).parts;
             expect(part.type).toBe("kda");
             if (part.type === "kda") {
@@ -1676,6 +2099,7 @@ describe("genAIConvertor", () => {
             ];
 
             const converted = convertChatConversationItemFromBackend(item, responses, [], dateNormalizer)!;
+            assert(converted.type === "item");
             expect(converted.agentId).toBe("agent-new");
             expect(converted.oldAgentId).toBe("agent-old");
             expect(converted.reasoningEffort).toBe("HIGH");
@@ -1722,6 +2146,7 @@ describe("genAIConvertor", () => {
             };
 
             const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            assert(converted.type === "item");
             const [part] = (converted.content as IChatConversationMultipartContent).parts;
             if (isChatConversationSearchContent(part)) {
                 expect(part.relationships).toEqual([
@@ -1811,6 +2236,7 @@ describe("genAIConvertor", () => {
 
             const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
             const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+            assert(converted.type === "item");
             consoleErrorSpy.mockRestore();
 
             const [part] = (converted.content as IChatConversationMultipartContent)
@@ -1880,6 +2306,7 @@ describe("genAIConvertor", () => {
             };
 
             const converted1 = convertChatConversationItemFromBackend(item1, [], history, dateNormalizer)!;
+            assert(converted1.type === "item");
             history.push(converted1);
 
             // Turn 2: patch 2 adding chart 2, relying on history
@@ -1920,6 +2347,7 @@ describe("genAIConvertor", () => {
             };
 
             const converted2 = convertChatConversationItemFromBackend(item2, [], history, dateNormalizer)!;
+            assert(converted2.type === "item");
             const [part2] = (converted2.content as IChatConversationMultipartContent)
                 .parts as IChatConversationDashboardContent[];
 

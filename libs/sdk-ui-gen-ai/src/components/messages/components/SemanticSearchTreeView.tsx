@@ -20,7 +20,6 @@ import {
     buildSemanticSearchTreeViewItems,
 } from "@gooddata/sdk-ui-semantic-search/internal";
 
-import { settingsSelector } from "../../../store/chatWindow/chatWindowSelectors.js";
 import { conversationSelector } from "../../../store/messages/messagesSelectors.js";
 import { useConfig } from "../../ConfigContext.js";
 
@@ -50,11 +49,9 @@ export function SemanticSearchTreeViewImpl({
     const intl = useIntl();
     const backend = useBackendStrict();
     const { canFullControl, canManage, canAnalyze, linkHandler } = useConfig();
-    const settings = useSelector(settingsSelector);
     const conversation = useSelector(conversationSelector);
 
     const canEdit = canFullControl || canManage || canAnalyze;
-    const useHostDashboards = Boolean(settings?.enableShellApplication_dashboards);
 
     const items = buildSemanticSearchTreeViewItems({
         intl,
@@ -66,7 +63,6 @@ export function SemanticSearchTreeViewImpl({
         uiPathOptions: {
             useHostedMetricEditor: true,
             useHostedLdmModeler: true,
-            useHostedDashboards: useHostDashboards,
         },
     });
     const id = useId();

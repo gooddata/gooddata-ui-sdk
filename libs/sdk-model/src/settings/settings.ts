@@ -1055,14 +1055,6 @@ export interface IFeatureFlags {
     enableShellApplication?: boolean;
 
     /**
-     * Per-app sub-flag under enableShellApplication. When true (and
-     * enableShellApplication is also true), KPI Dashboards runs as a pluggable
-     * app inside the host. When false, the legacy standalone app at
-     * `/dashboards/#/workspace/{id}/...` is rendered instead.
-     */
-    enableShellApplication_dashboards?: boolean;
-
-    /**
      * Enable reading logical model dataset extensions (WDF references) directly from the
      * includeParents=true /logicalModel response, instead of collecting them via additional
      * recursive includeParents=false calls up the parent-workspace chain.
@@ -1273,4 +1265,13 @@ export interface IFeatureFlags {
      * Enable the option of setting user language in the user menu.
      */
     enableUserLanguageChange?: boolean;
+
+    /**
+     * Enable the localization validations on top of the localization overview: a status per language
+     * and the checks behind it.
+     *
+     * @remarks
+     * Takes effect only together with `enableLocalizationOverview`. Disabled by default.
+     */
+    enableLocalizationValidations?: boolean;
 }

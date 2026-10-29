@@ -652,7 +652,7 @@ class ServerSentEventsDataConverter extends TransformStream<
         locale?: FormattingLocale,
         timezone?: string,
     ) {
-        const current: IChatConversationItem[] = [];
+        const current: (IChatConversationItem | IChatConversationError)[] = [];
         super({
             transform(event, controller) {
                 if (event.type === "error") {

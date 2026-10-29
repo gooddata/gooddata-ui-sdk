@@ -94,9 +94,9 @@ describe("routing", () => {
 
     describe("external app URL", () => {
         it("substitutes {workspaceId} placeholder from ctx.currentWorkspaceId", () => {
-            const app = externalApp("/dashboards/#/project/{workspaceId}");
+            const app = externalApp("/external/#/project/{workspaceId}");
             const href = getApplicationHref(app, context({ currentWorkspaceId: "ws-1" }), "/workspace/ws-1");
-            expect(href).toBe("/dashboards/#/project/ws-1");
+            expect(href).toBe("/external/#/project/ws-1");
         });
 
         it("falls back to the workspace id from pathname when ctx.currentWorkspaceId is unset", () => {

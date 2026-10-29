@@ -9,7 +9,7 @@ import {
     NOT_AUTHENTICATED_ERROR,
     NOT_AUTHORIZED_ERROR,
 } from "../constants/errors.js";
-import { getFeatureFlags, isFreemiumEdition } from "../selectors/feature_flag_selector.js";
+import { isFreemiumEdition } from "../selectors/feature_flag_selector.js";
 import { getIsEmbedded } from "../selectors/meta_selector.js";
 import { type IAppState } from "../store/types.js";
 import { type IUriResolverParams, type UriResolver, getInfoUri, redirectTo } from "../utils/location.js";
@@ -31,17 +31,7 @@ const getDashboardUri: UriResolver = ({ projectId, isRenamingProjectToWorkspace 
     return `/#s=/gdc/${workspaceRef}/${projectId}|${workspaceSuf}DashboardPage`;
 };
 
-// When the dashboards shell-application FF is on, the host shell route (/workspace/{id}/dashboards)
-// is the canonical KD home; otherwise fall back to the legacy standalone /dashboards/# app.
-const makeGetTigerDashboardUri =
-    (useHostRoute: boolean): UriResolver =>
-    ({ projectId, isRenamingProjectToWorkspace }) => {
-        if (useHostRoute) {
-            return `/workspace/${projectId}/dashboards`;
-        }
-        const workspaceRef = getWorkspaceRef(isRenamingProjectToWorkspace, false);
-        return `/dashboards/#/${workspaceRef}/${projectId}`;
-    };
+const getTigerDashboardUri: UriResolver = ({ projectId }) => `/workspace/${projectId}/dashboards`;
 
 const getUnauthorizedUri = partial(getInfoUri, "ssoUnauthorized");
 
@@ -75,7 +65,6 @@ function buildErrorHandler(
     type: string,
     workspacesRef: string,
     isFreeGrowthUser: boolean,
-    useHostDashboardsRoute: boolean,
 ) {
     const errorHandlers: IErrorHandlersByAdTypeAndLoginType = {
         main: {
@@ -89,10 +78,7 @@ function buildErrorHandler(
                     redirectTo,
                     partial(getProjectPageUri, isFreeGrowthUser, "cannotAccessWorkbench", workspacesRef),
                 ),
-                [ACCESS_DESIGNER_DENIED_ERROR]: partial(
-                    redirectTo,
-                    makeGetTigerDashboardUri(useHostDashboardsRoute),
-                ),
+                [ACCESS_DESIGNER_DENIED_ERROR]: partial(redirectTo, getTigerDashboardUri),
                 [CREATE_REPORT_DENIED_ERROR]: () => {},
             },
             sso: {
@@ -128,13 +114,5 @@ export function getErrorHandler(
     const loginType: keyof IErrorHandlersByLoginType = loggedInViaSso ? "sso" : "normal";
     const { type } = payload.error;
     const isFreeGrowthUser = isFreemiumEdition(state);
-    const useHostDashboardsRoute = Boolean(getFeatureFlags(state).enableShellApplication_dashboards);
-    return buildErrorHandler(
-        adType,
-        loginType,
-        type,
-        getWorkspaceRef(true),
-        isFreeGrowthUser,
-        useHostDashboardsRoute,
-    );
+    return buildErrorHandler(adType, loginType, type, getWorkspaceRef(true), isFreeGrowthUser);
 }

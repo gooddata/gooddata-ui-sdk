@@ -92,6 +92,30 @@ describe("useExploreFilterTransfer", () => {
         return renderHook(() => useExploreFilterTransfer(TARGET, true, apiRef), { wrapper: Wrapper }).result;
     }
 
+    it("transfers the filters when the opened insight renders, not when it opens", async () => {
+        vi.mocked(loadInsightAvailableAttributes).mockResolvedValue([]);
+        const transfer = renderTransfer();
+
+        await act(async () => transfer.current.onInsightOpened());
+
+        expect(setFilterContext).not.toHaveBeenCalled();
+
+        await act(async () => transfer.current.onInsightRendered());
+        await act(async () => transfer.current.onInsightRendered());
+
+        expect(setFilterContext).toHaveBeenCalledTimes(1);
+        expect(setFilterContext).toHaveBeenCalledWith({ filters: FILTERS }, "keepFilterContext");
+    });
+
+    it("does not transfer the filters on a render before the insight opens", async () => {
+        vi.mocked(loadInsightAvailableAttributes).mockResolvedValue([]);
+        const transfer = renderTransfer();
+
+        await act(async () => transfer.current.onInsightRendered());
+
+        expect(setFilterContext).not.toHaveBeenCalled();
+    });
+
     it("warns once when the attributes do not load, and transfers the filters on a later render", async () => {
         vi.mocked(loadInsightAvailableAttributes)
             .mockRejectedValueOnce(new Error("catalog down"))

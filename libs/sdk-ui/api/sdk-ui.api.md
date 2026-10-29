@@ -699,7 +699,6 @@ export type IAutomationUrlBuilder = (params: {
     dashboardId?: string;
     automationId?: string;
     isEmbedded?: boolean;
-    useHostRoute?: boolean;
     queryParams?: IAutomationUrlQueryParams;
 }) => string | undefined;
 
@@ -863,7 +862,6 @@ export type IDashboardUrlBuilder = (params: {
     dashboardId?: string;
     tabId?: string;
     isEmbedded?: boolean;
-    useHostRoute?: boolean;
     queryParams?: IDashboardUrlQueryParams;
 }) => string | undefined;
 
@@ -2185,7 +2183,6 @@ export type IWidgetUrlBuilder = (params: {
     widgetId?: string;
     tabId?: string;
     isEmbedded?: boolean;
-    useHostRoute?: boolean;
     queryParams?: IWidgetUrlQueryParams;
 }) => string | undefined;
 

@@ -18,7 +18,6 @@ export type UIPathObjectTypes =
 export type UIPathOptions = {
     useHostedMetricEditor?: boolean;
     useHostedLdmModeler?: boolean;
-    useHostedDashboards?: boolean;
 };
 
 /**
@@ -37,13 +36,9 @@ export const getUIPath = (
 ): string => {
     switch (objectType) {
         case "dashboard":
-            return options.useHostedDashboards
-                ? `/workspace/${workspaceId}/dashboards/#/dashboard/${objectId}`
-                : `/dashboards/#/workspace/${workspaceId}/dashboard/${objectId}`;
+            return `/workspace/${workspaceId}/dashboards/#/dashboard/${objectId}`;
         case "dashboardVisualization":
-            return options.useHostedDashboards
-                ? `/workspace/${workspaceId}/dashboards/#/dashboard/${objectId}?visualizationId=${visualizationId}`
-                : `/dashboards/#/workspace/${workspaceId}/dashboard/${objectId}?visualizationId=${visualizationId}`;
+            return `/workspace/${workspaceId}/dashboards/#/dashboard/${objectId}?visualizationId=${visualizationId}`;
         case "visualization":
             return `/workspace/${workspaceId}/analyze/#/${objectId}/edit`;
         case "metric":

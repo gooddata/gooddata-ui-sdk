@@ -13,12 +13,13 @@ import { type IInsightUsageOnDashboard } from "../store/insight_usage/insight_us
 import { type IAppState } from "../store/types.js";
 import { withBucketItems } from "../tests/buckets_builder.test.helpers.js";
 import {
+    closedDateDataset,
     setupAppStateWithDateDatasetMeta,
     tableVisualizationClass,
 } from "../tests/constants.test.helpers.js";
 import { withMdObjectContent } from "../tests/report_builder.test.helpers.js";
 import { getInitializedState } from "../tests/state.test.helpers.js";
-import { withData, withReport } from "../tests/state_builder.test.helpers.js";
+import { withData, withReport, withRoot } from "../tests/state_builder.test.helpers.js";
 import { visualizationClassMock } from "../tests/visualization_class.test.helpers.js";
 import { type IReportContent } from "../typings/report.js";
 import { convertModelInsightToADRep } from "../utils/sdkModelToADRep/InsightConverter.js";
@@ -844,6 +845,64 @@ describe("Save selectors", () => {
     });
 
     describe("isSavedReportCurrentReport", () => {
+        describe("empty date values mode", () => {
+            const dataSet = closedDateDataset.ref;
+            // the legacy shape: All time plus the single "" attribute filter on a date attribute
+            const legacyContent: IReportContent = {
+                visualizationClass: { uri: LOCAL_TABLE },
+                buckets: [],
+                filters: [
+                    { relativeDateFilter: { dataSet, granularity: "GDC.time.year" } },
+                    {
+                        negativeAttributeFilter: {
+                            displayForm: closedDateDataset.attributes![0].dfRef!,
+                            notIn: [""],
+                        },
+                    },
+                ],
+            };
+            const openedWith = (content: IReportContent, mode: "exclude" | "only") => {
+                const withDateDatasets = withData(validReportWithoutChanges, {
+                    dateDatasets: {
+                        ...validReportWithoutChanges.data.dateDatasets,
+                        available: [closedDateDataset],
+                    },
+                    filterBar: {
+                        ...validReportWithoutChanges.data.filterBar,
+                        items: [
+                            {
+                                type: "date",
+                                localIdentifier: "date",
+                                cacheItemIdentifier: "date",
+                                overTimeComparisonType: "nothing",
+                                dateDatasetRef: dataSet,
+                                emptyDateValuesFilter: mode,
+                            },
+                        ],
+                    },
+                });
+                return withReport(
+                    withRoot(withDateDatasets, { featureFlags: { enableImprovedMetricDateFilter: true } }),
+                    {
+                        lastSavedObject: {
+                            visualizationObject: {
+                                ...validReportWithoutChanges.report.lastSavedObject.visualizationObject,
+                                content,
+                            },
+                        },
+                    },
+                );
+            };
+
+            it("treats an insight stored in the legacy shape and opened without edits as saved", () => {
+                expect(isSavedReportCurrentReport(openedWith(legacyContent, "exclude"))).toBe(true);
+            });
+
+            it("still sees a changed mode", () => {
+                expect(isSavedReportCurrentReport(openedWith(legacyContent, "only"))).toBe(false);
+            });
+        });
+
         it.each([
             {
                 ref: idRef("missing_metric"),

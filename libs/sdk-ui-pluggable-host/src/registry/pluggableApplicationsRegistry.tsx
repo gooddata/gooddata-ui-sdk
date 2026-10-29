@@ -155,19 +155,6 @@ function toPluggableApplicationOrganizationPermissions(
     };
 }
 
-// Forces the dashboards shell flag on. A flag source that cannot be reached resolves it false, which
-// leaves only the legacy external twin eligible; route matching skips external apps, so an embedded
-// or export URL would then match nothing.
-function settingsForRequirements(ctx: IPlatformContext): IPlatformContext["settings"] {
-    if (ctx.embeddingMode !== "iframe" && ctx.isExportMode !== true) {
-        return ctx.settings;
-    }
-    return {
-        ...ctx.settings,
-        enableShellApplication_dashboards: true,
-    };
-}
-
 function workspacePermissionsForRequirements(
     {
         requiredWorkspacePermissions,
@@ -192,7 +179,7 @@ function appMeetsRequirements(
     if (
         requiredSettings !== undefined &&
         !skipSettings &&
-        !evaluateCondition(requiredSettings, settingsForRequirements(ctx))
+        !evaluateCondition(requiredSettings, ctx.settings)
     ) {
         return false;
     }
@@ -308,7 +295,7 @@ interface IResolveApplicationsOptions {
  * 4. Apply overrides from the remote registry to the merged list
  * 5. Filter out disabled applications (isEnabled: false)
  * 6. Filter by application scope - keep only apps whose applicationScope matches scope; if scope is undefined, no apps pass through
- * 7. Filter by requirements - check requiredSettings, requiredWorkspacePermissions, requiredOrganizationPermissions, and requiredEntitlements (embedded and export modes force the shell application flags on; export mode checks requiredWorkspacePermissionsInExportMode, when declared, in place of requiredWorkspacePermissions; `skipWorkspacePermissions` leaves requiredWorkspacePermissions to the caller)
+ * 7. Filter by requirements - check requiredSettings, requiredWorkspacePermissions, requiredOrganizationPermissions, and requiredEntitlements (export mode checks requiredWorkspacePermissionsInExportMode, when declared, in place of requiredWorkspacePermissions; `skipWorkspacePermissions` leaves requiredWorkspacePermissions to the caller)
  * 8. Sort by menuOrder (ascending)
  *
  * @param options - Resolution options; see {@link IResolveApplicationsOptions}

@@ -7,6 +7,8 @@ import { type IInsightDefinition, type VisualizationProperties } from "@gooddata
 
 import { CHOROPLETH, LOCAL_CHOROPLETH, LOCAL_PUSHPIN, PUSHPIN } from "../constants/visualization_types.js";
 import { BackendToBearConvertors } from "../convertors/index.js";
+import { normalizeEmptyDateValuesFilters } from "../models/metadata.js";
+import { DateDatasetsService } from "../services/date_datasets_service.js";
 import { getVisualizationObjectForSave } from "../services/report_service.js";
 import { getVisualizationClassTypeFromState } from "../services/visualization_class_service.js";
 import { getInsightSummary, getInsightTitle } from "../store/insight/insight_selectors.js";
@@ -20,6 +22,7 @@ import {
     type IVisualizationObjectMeasureValueFilter,
     type VisualizationObjectExtendedFilter,
 } from "../typings/bear/bearTypes.js";
+import { type IDateDatasets } from "../typings/datasets.js";
 import { type IReportContent } from "../typings/report.js";
 import { getVisualizationPropertiesWithDefaultValues } from "../utils/visualization_properties.js";
 
@@ -161,8 +164,25 @@ function stripLocalIdsInFilters(reportContent: IComparableReportContent): ICompa
     };
 }
 
+// the empty date values mode has several stored shapes (legacy "" attribute filter, flag on/off writer)
+function normalizeEmptyDateValues(
+    reportContent: IComparableReportContent,
+    dateDatasets: IDateDatasets | undefined,
+): IComparableReportContent {
+    if (!has(reportContent, "filters")) {
+        return reportContent;
+    }
+
+    return {
+        ...reportContent,
+        filters: normalizeEmptyDateValuesFilters(reportContent.filters ?? [], dateDatasets),
+    };
+}
+
 type PrepareForComparisonOptions = {
     ignoreGeoTooltipText?: boolean;
+    /** needed to recognize the legacy empty date values attribute filter */
+    dateDatasets?: IDateDatasets;
 };
 
 function shouldIgnoreGeoTooltipTextInSaveComparison(state: IAppState): boolean {
@@ -210,6 +230,7 @@ export function prepareForComparison(
     updatedReportContent = reorderBuckets(updatedReportContent);
     updatedReportContent = sanitizeMeasureValueFilters(updatedReportContent);
     updatedReportContent = stripLocalIdsInFilters(updatedReportContent);
+    updatedReportContent = normalizeEmptyDateValues(updatedReportContent, options.dateDatasets);
 
     updatedReportContent = {
         ...updatedReportContent,
@@ -255,11 +276,14 @@ export function isSavedReportCurrentReport(state: IAppState): boolean {
     const savedReportContent = getLastSavedObject(state).visualizationObject?.content;
     const currentReportContent = getVisualizationObjectForSaveContent(state);
 
-    const ignoreGeoTooltipText = shouldIgnoreGeoTooltipTextInSaveComparison(state);
+    const options: PrepareForComparisonOptions = {
+        ignoreGeoTooltipText: shouldIgnoreGeoTooltipTextInSaveComparison(state),
+        dateDatasets: DateDatasetsService.getPlainDateDatasets(state),
+    };
 
     return isEqual(
-        prepareForComparison(savedReportContent, { ignoreGeoTooltipText }),
-        prepareForComparison(currentReportContent, { ignoreGeoTooltipText }),
+        prepareForComparison(savedReportContent, options),
+        prepareForComparison(currentReportContent, options),
     );
 }
 

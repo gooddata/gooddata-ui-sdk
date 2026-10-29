@@ -11,6 +11,6 @@ This project implements the Theming support (see [documentation](https://sdk.goo
 
 ## License
 
-(C) 2017-2022 GoodData Corporation
+(C) 2017-2026 GoodData Corporation
 
 This project is under MIT License. See [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-theme-provider/LICENSE).

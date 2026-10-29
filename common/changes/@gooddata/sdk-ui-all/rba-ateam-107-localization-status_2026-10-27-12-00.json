@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-model, sdk-backend-spi, sdk-backend-tiger: Add the `enableLocalizationValidations` feature flag; translation usage reports `variant` and `LOCALE` `missing`",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

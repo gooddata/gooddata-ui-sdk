@@ -20,9 +20,11 @@ import {
     cancelAsyncAction,
     clearConversationLoadingAction,
     clearThreadAction,
+    clearThreadErrorAction,
     dashboardSavedAction,
     evaluateMessageErrorAction,
     loadConversationSuccessAction,
+    loadThreadErrorAction,
     messagesSliceName,
     messagesSliceReducer,
     publisherDocumentSavedAction,
@@ -61,6 +63,28 @@ describe("messagesSlice", () => {
         expect(selected.loaded).toBe(true);
         expect(selected.conversationsData).toEqual(away.conversationsData);
     });
+
+    it.each([loadThreadErrorAction, clearThreadErrorAction])(
+        "clears a global error when starting a new conversation after %s",
+        (errorAction) => {
+            const conversation = makeConversation("failed-conversation");
+            const cached = messagesSliceReducer(undefined, setCurrentConversationAction({ conversation }));
+            const failed = messagesSliceReducer(cached, errorAction({ error: new Error("Load failed") }));
+            expect(failed.globalError).toBeDefined();
+
+            const restarted = messagesSliceReducer(
+                messagesSliceReducer(failed, clearThreadAction()),
+                startNewConversationAction(),
+            );
+
+            expect(restarted.globalError).toBeUndefined();
+            expect(restarted.currentConversation?.id).toBeFalsy();
+            expect(restarted.currentConversation?.localId).not.toBe(conversation.localId);
+            expect(restarted.loaded).toBe(true);
+            expect(restarted.conversations).toEqual(cached.conversations);
+            expect(restarted.conversationsData[conversation.localId]?.asyncProcess).toBeUndefined();
+        },
+    );
 
     it("ignores an unknown conversation activation", () => {
         const state = messagesSliceReducer(undefined, { type: "test/init" });

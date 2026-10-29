@@ -3,8 +3,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-
 import { ConfigProvider, type LinkHandlerEvent } from "../../ConfigContext.js";
 
 import { CustomHyperlinkComponent } from "./CustomHyperlink.js";
@@ -19,7 +17,6 @@ type RenderCustomHyperlinkOptions = {
     canManage?: boolean;
     canAnalyze?: boolean;
     linkHandler?: (event: LinkHandlerEvent) => string | undefined;
-    settings?: IUserWorkspaceSettings;
 };
 
 function renderCustomHyperlinkComponent({
@@ -29,7 +26,6 @@ function renderCustomHyperlinkComponent({
     canManage = true,
     canAnalyze = false,
     linkHandler,
-    settings,
 }: RenderCustomHyperlinkOptions = {}) {
     return render(
         <ConfigProvider
@@ -38,7 +34,7 @@ function renderCustomHyperlinkComponent({
             canAnalyze={canAnalyze}
             linkHandler={linkHandler}
         >
-            <CustomHyperlinkComponent href={href} text={text} settings={settings} />
+            <CustomHyperlinkComponent href={href} text={text} />
         </ConfigProvider>,
     );
 }
@@ -94,55 +90,29 @@ describe("CustomHyperlinkComponent", () => {
         );
     });
 
-    it.each<[string, string, Partial<IUserWorkspaceSettings>, string]>([
+    it.each<[string, string, string]>([
         [
-            "dashboard using legacy shell URL",
+            "dashboard",
             "gooddata://dashboard?ws=workspace_1&id=dashboard_1",
-            {},
-            "/dashboards/#/workspace/workspace_1/dashboard/dashboard_1",
-        ],
-        [
-            "dashboard using workspace shell URL",
-            "gooddata://dashboard?ws=workspace_1&id=dashboard_1",
-            { enableShellApplication_dashboards: true },
             "/workspace/workspace_1/dashboards/#/dashboard/dashboard_1",
         ],
         [
             "visualization",
             "gooddata://visualization?ws=workspace_1&id=insight_1",
-            {},
             "/workspace/workspace_1/analyze/#/insight_1/edit",
         ],
         [
             "metric",
             "gooddata://metric?ws=workspace_1&id=metric_1",
-            {},
             "/workspace/workspace_1/metrics/metric/metric_1",
         ],
         [
             "report",
             "gooddata://report?ws=workspace_1&id=report/1",
-            {},
             "/workspace/workspace_1/publisher/report/report%2F1",
         ],
-        [
-            "report without Publisher v2",
-            "gooddata://report?ws=workspace_1&id=report_1",
-            { enablePublisherV2: false },
-            "/workspace/workspace_1/publisher/report/report_1",
-        ],
-        [
-            "report with Publisher v2",
-            "gooddata://report?ws=workspace_1&id=report/1",
-            { enablePublisherV2: true },
-            "/workspace/workspace_1/publisher/report/report%2F1",
-        ],
-    ])("renders native link for %s", (_description, href, settings, expectedHref) => {
-        renderCustomHyperlinkComponent({
-            href,
-            allowNativeLinks: true,
-            settings: settings as IUserWorkspaceSettings,
-        });
+    ])("renders native link for %s", (_description, href, expectedHref) => {
+        renderCustomHyperlinkComponent({ href, allowNativeLinks: true });
 
         expect(screen.getByRole("link")).toHaveAttribute("href", expectedHref);
         expect(screen.getByText(plainText)).toBeInTheDocument();
@@ -169,7 +139,7 @@ describe("CustomHyperlinkComponent", () => {
                 type: "dashboard",
                 id: "dashboard_1",
                 workspaceId: "workspace_1",
-                itemUrl: "/dashboards/#/workspace/workspace_1/dashboard/dashboard_1",
+                itemUrl: "/workspace/workspace_1/dashboards/#/dashboard/dashboard_1",
                 newTab: true,
                 action: "open",
             }),
@@ -192,7 +162,7 @@ describe("CustomHyperlinkComponent", () => {
 
         expect(screen.getByRole("link")).toHaveAttribute(
             "href",
-            "/dashboards/#/workspace/workspace_1/dashboard/dashboard_1",
+            "/workspace/workspace_1/dashboards/#/dashboard/dashboard_1",
         );
     });
 

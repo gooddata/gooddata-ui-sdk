@@ -91,6 +91,6 @@ After creating this, run the `npm run refresh-md` script to obtain data from the
 
 ## License
 
-(C) 2017-2024 GoodData Corporation
+(C) 2017-2026 GoodData Corporation
 
 This project is licensed under the MIT License. See [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/tools/reference-workspace/LICENSE).
