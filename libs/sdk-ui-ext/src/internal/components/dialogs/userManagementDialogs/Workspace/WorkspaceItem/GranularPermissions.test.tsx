@@ -106,11 +106,11 @@ describe("GranularPermissions with MANAGE_VISUALIZATIONS", () => {
         expect(createVisualizations().disabled).toBe(true);
     });
 
-    it("brings back an explicit Create visualizations when the permission is unchecked", () => {
+    it("stores an explicit Create visualizations with the permission and keeps it when unchecked", () => {
         render(<Harness permissions={["VIEW", "CREATE_VISUALIZATION"]} />);
 
         fireEvent.click(manageVisualizations());
-        expect(saved()).toEqual(["VIEW", "MANAGE_VISUALIZATIONS"]);
+        expect(saved()).toEqual(["VIEW", "CREATE_VISUALIZATION", "MANAGE_VISUALIZATIONS"]);
 
         fireEvent.click(manageVisualizations());
         expect(saved()).toEqual(["VIEW", "CREATE_VISUALIZATION"]);

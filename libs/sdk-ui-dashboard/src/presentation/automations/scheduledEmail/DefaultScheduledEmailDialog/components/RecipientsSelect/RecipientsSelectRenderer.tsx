@@ -277,6 +277,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
         onFocusNext: [{ code: ["ArrowRight"] }],
         onSubmit: [{ code: ["Enter"] }],
         onRecipientRemove: [{ code: ["Delete", "Backspace", "Enter"] }],
+        onFocusedRecipientRemove: [{ code: ["Space"] }],
     });
 
     useEffect(() => {
@@ -771,6 +772,11 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
                         handleKeyboardRecipientRemove(focusedRecipientIndex);
                     }
                 },
+                // Undefined while typing, so Space still reaches the input.
+                onFocusedRecipientRemove:
+                    focusedRecipientIndex === -1
+                        ? undefined
+                        : () => handleKeyboardRecipientRemove(focusedRecipientIndex),
                 onUnhandledKeyDown: () => {
                     setState((prev) => ({ ...prev, focusedRecipientIndex: -1 }));
                 },
@@ -971,6 +977,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
                         onInputChange={handleSearchChange}
                         onMenuOpen={onMenuOpen}
                         onMenuClose={() => setState((prev) => ({ ...prev, menuOpen: false }))}
+                        onFocus={() => setState((prev) => ({ ...prev, focusedRecipientIndex: -1 }))}
                         onKeyDown={handleKeyDown}
                         options={options}
                         onBlur={onBlur}
