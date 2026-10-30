@@ -2,7 +2,7 @@
 
 [project]
 name = "gooddata-code-convertors"
-version = "11.65.2a0"
+version = "11.65.2a1"
 description = "GoodData AAC YAML / Declarative API code converters (WASM-powered)"
 readme = "README.md"
 license = { file = "LICENSE" }

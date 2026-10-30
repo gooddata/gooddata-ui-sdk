@@ -81,8 +81,8 @@ function jsxExtensionAlias(): Plugin {
 // ---------------------------------------------------------------------------------------------------
 // Geo style proxy. MapLibre style documents carry absolute backend URLs for glyphs and tiles; the proxy
 // rewrites them to the dev-server origin so the browser fetches them through the proxy (same-origin and
-// authenticated) instead of directly. A copy of common/dev-server/locationStyleProxy.js from the
-// gooddata-ui-sdk monorepo (the template ships standalone, so it cannot import it) plus the response
+// authenticated) instead of directly. A copy of the `locationStyleProxy` from the gooddata-ui-sdk monorepo
+// (`@gooddata/toolchain-config/vite`; the template ships standalone, so it cannot import it) plus the response
 // header sanitising that Vite's HTTP/2 server needs - keep the rest in sync with the original. The
 // original's response decompression is deliberately left out: the request below asks for "identity", so
 // the body arrives as plain JSON - same as in the dashboard-plugin-template dev server.

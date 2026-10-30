@@ -5,6 +5,7 @@ import { put } from "redux-saga/effects";
 import {
     type IChatConversationContent,
     type IChatConversationMultipartPart,
+    isChatConversationAlertProposalContent,
     isChatConversationDashboardContent,
     isChatConversationMultipartContent,
     isChatConversationPublisherDocumentContent,
@@ -93,6 +94,19 @@ export function* notifyDefinitionReceived(
                     itemId: item.id,
                     definitionType: "visualization",
                     visualization: multipartContent.visualization,
+                }),
+            );
+        } else if (
+            isChatConversationAlertProposalContent(multipartContent) &&
+            multipartContent.alertProposal
+        ) {
+            yield put(
+                onDefinitionReceivedAction({
+                    conversationId,
+                    interactionId,
+                    itemId: item.id,
+                    definitionType: "alert",
+                    alertProposal: multipartContent.alertProposal,
                 }),
             );
         }
