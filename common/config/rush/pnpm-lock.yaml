@@ -9139,6 +9139,9 @@ importers:
       '@gooddata/oxlint-config':
         specifier: workspace:*
         version: link:../oxlint-config
+      '@module-federation/vite':
+        specifier: 1.16.11
+        version: 1.16.11(node-fetch@2.7.0)(typescript@7.0.2)(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.2)(jiti@2.6.1)(sass@1.104.1)(terser@5.51.2)(yaml@2.8.3))
       '@playwright/test':
         specifier: 1.62.1
         version: 1.62.1
@@ -9151,6 +9154,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.58.0
         version: 8.58.0(eslint@9.39.5(jiti@2.6.1))
+      '@vitejs/plugin-react':
+        specifier: 6.0.5
+        version: 6.0.5(vite@8.0.16(@types/node@24.12.0)(esbuild@0.28.2)(jiti@2.6.1)(sass@1.104.1)(terser@5.51.2)(yaml@2.8.3))
       eslint:
         specifier: ^9.39.2
         version: 9.39.5(jiti@2.6.1)
@@ -9199,6 +9205,9 @@ importers:
       typescript:
         specifier: 7.0.2
         version: 7.0.2
+      vite:
+        specifier: 8.0.16
+        version: 8.0.16(@types/node@24.12.0)(esbuild@0.28.2)(jiti@2.6.1)(sass@1.104.1)(terser@5.51.2)(yaml@2.8.3)
 
 packages:
 

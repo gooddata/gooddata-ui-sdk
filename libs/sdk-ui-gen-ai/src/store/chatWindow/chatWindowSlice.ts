@@ -2,7 +2,7 @@
 
 import { type PayloadAction, type Reducer, createSlice } from "@reduxjs/toolkit";
 
-import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { type IAlertProposal, type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
     type CatalogItem,
     type GenAIObjectType,
@@ -387,13 +387,15 @@ const chatWindowSlice = createSlice({
                         | "dashboard"
                         | "visualization"
                         | "publisherDocument"
-                        | "publisherDocumentV2";
+                        | "publisherDocumentV2"
+                        | "alert";
                     conversationId: string;
                     itemId: string;
                     interactionId?: string;
                     dashboard?: IDashboard;
                     insights?: IInsight[];
                     visualization?: IInsight;
+                    alertProposal?: IAlertProposal;
                 } & Partial<IAiAssistantPublisherDocumentDefinition> &
                     Partial<Pick<IAiAssistantPublisherDocumentDefinitionV2, "publisherDocumentV2">>
             >,

@@ -1,6 +1,7 @@
 // (C) 2024-2026 GoodData Corporation
 
 import {
+    type IAlertProposal,
     type IChatConversation,
     type IChatConversationVisualisationContent,
 } from "@gooddata/sdk-backend-spi";
@@ -498,13 +499,14 @@ export const isChatConversationChangedEvent = (event: ChatEvent): event is ChatC
  */
 export type ChatDefinitionReceivedEvent = BaseEvent & {
     type: "onDefinitionReceived";
-    definitionType: "dashboard" | "visualization" | "publisherDocument" | "publisherDocumentV2";
+    definitionType: "dashboard" | "visualization" | "publisherDocument" | "publisherDocumentV2" | "alert";
     itemId: string;
     conversationId: string;
     interactionId?: string;
     dashboard?: IDashboard;
     insights?: IInsight[];
     visualization?: NonNullable<IChatConversationVisualisationContent["visualization"]>;
+    alertProposal?: IAlertProposal;
 } & Partial<IAiAssistantPublisherDocumentDefinition> &
     Partial<Pick<IAiAssistantPublisherDocumentDefinitionV2, "publisherDocumentV2">>;
 

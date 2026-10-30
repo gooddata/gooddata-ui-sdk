@@ -190,7 +190,7 @@ Leave out `insight` to open a new insight. The AnalyticalDesigner component sect
     The stylesheet is compiled from `styles/scss/main.scss` by the build, like every SDK package; the
     images it references live in `styles/images` and ship with the package. The pluggable-app dev
     servers in gdc-ui serve `styles/css/main.css` from that SCSS source
-    (`common/dev-server/gooddataSdkSourcePlugin.js`), so style changes reload without a rebuild.
+    (the `gooddataSdkSourcePlugin` from `@gooddata/toolchain-config/vite`), so style changes reload without a rebuild.
     Other hosts, such as the webpack Dashboards app, use the compiled file and need a lib rebuild.
 
 - **One instance per page**: the redux store is a module-level singleton, so mounting a second

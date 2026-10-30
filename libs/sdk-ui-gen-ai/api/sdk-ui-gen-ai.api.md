@@ -17,6 +17,7 @@ import { GenAIObjectType } from '@gooddata/sdk-model';
 import { GenAIPublisherDocumentFormat } from '@gooddata/sdk-backend-spi';
 import { IAiAssistantPublisherDocumentDefinition } from '@gooddata/sdk-pluggable-application-model';
 import { IAiAssistantPublisherDocumentDefinitionV2 } from '@gooddata/sdk-pluggable-application-model';
+import { IAlertProposal } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IChatConversation } from '@gooddata/sdk-backend-spi';
 import { IChatConversationContent } from '@gooddata/sdk-backend-spi';
@@ -185,13 +186,14 @@ export type ChatCopyToClipboardEvent = BaseEvent & {
 // @public
 export type ChatDefinitionReceivedEvent = BaseEvent & {
     type: "onDefinitionReceived";
-    definitionType: "dashboard" | "visualization" | "publisherDocument" | "publisherDocumentV2";
+    definitionType: "dashboard" | "visualization" | "publisherDocument" | "publisherDocumentV2" | "alert";
     itemId: string;
     conversationId: string;
     interactionId?: string;
     dashboard?: IDashboard;
     insights?: IInsight[];
     visualization?: NonNullable<IChatConversationVisualisationContent["visualization"]>;
+    alertProposal?: IAlertProposal;
 } & Partial<IAiAssistantPublisherDocumentDefinition> & Partial<Pick<IAiAssistantPublisherDocumentDefinitionV2, "publisherDocumentV2">>;
 
 // @public

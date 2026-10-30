@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/toolchain-config",
-    "version": "11.65.2-alpha.0",
+    "version": "11.65.2-alpha.1",
     "description": "Shared build and test toolchain configuration (rolldown, vite, vitest, playwright) for gdc-ui packages",
     "license": "MIT",
     "author": "GoodData",
@@ -23,6 +23,10 @@
         "./rolldown": {
             "types": "./esm/rolldown/index.d.ts",
             "import": "./esm/rolldown/index.js"
+        },
+        "./vite": {
+            "types": "./esm/vite/index.d.ts",
+            "import": "./esm/vite/index.js"
         }
     },
     "scripts": {
@@ -41,10 +45,12 @@
     "devDependencies": {
         "@gooddata/eslint-config": "workspace:*",
         "@gooddata/oxlint-config": "workspace:*",
+        "@module-federation/vite": "1.16.11",
         "@playwright/test": "1.62.1",
         "@types/node": "24.12.0",
         "@typescript-eslint/eslint-plugin": "8.58.0",
         "@typescript-eslint/parser": "8.58.0",
+        "@vitejs/plugin-react": "6.0.5",
         "eslint": "^9.39.2",
         "eslint-plugin-headers": "1.3.3",
         "eslint-plugin-import-esm": "1.2.1",
@@ -60,18 +66,7 @@
         "oxlint-plugin-eslint": "1.82.0",
         "oxlint-tsgolint": "7.0.2001",
         "rolldown": "1.0.3",
-        "typescript": "7.0.2"
-    },
-    "peerDependencies": {
-        "@playwright/test": "^1.62.1",
-        "rolldown": "^1.0.3"
-    },
-    "peerDependenciesMeta": {
-        "@playwright/test": {
-            "optional": true
-        },
-        "rolldown": {
-            "optional": true
-        }
+        "typescript": "7.0.2",
+        "vite": "8.0.16"
     }
 }
