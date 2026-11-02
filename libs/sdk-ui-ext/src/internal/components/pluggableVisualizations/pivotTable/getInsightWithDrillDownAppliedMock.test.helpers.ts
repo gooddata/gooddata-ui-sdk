@@ -64,8 +64,15 @@ const sourceInsightDefinitionWithTotals: IInsightDefinition = newInsightDefiniti
         return b
             .title("sourceInsight")
             .buckets([
-                newBucket("attribute", Region.Default, Status, Department.Default),
-                newBucket("measure", Won, newTotal("nat", Won, Region.Default), newTotal("nat", Won, Status)),
+                newBucket(
+                    "attribute",
+                    Region.Default,
+                    Status,
+                    Department.Default,
+                    newTotal("nat", Won, Region.Default),
+                    newTotal("nat", Won, Status),
+                ),
+                newBucket("measure", Won),
             ])
             .filters(filters)
             .sorts(sorts)
@@ -261,8 +268,9 @@ const expectedInsightDefinitionWithTotals: IInsightDefinition = newInsightDefini
                     "attribute",
                     newAttribute(implicitTargetDF, (attr) => attr.localId(Status.attribute.localIdentifier)),
                     Department.Default,
+                    newTotal("nat", Won, Status),
                 ),
-                newBucket("measure", Won, newTotal("nat", Won, Status)),
+                newBucket("measure", Won),
             ])
             .filters(expectedFilters)
             .sorts([newAttributeSort(Department.Default)])

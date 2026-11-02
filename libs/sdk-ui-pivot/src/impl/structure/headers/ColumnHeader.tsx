@@ -162,6 +162,7 @@ export function ColumnHeader(props: IColumnHeaderProps) {
             colId={column.getColDef().field}
             getTableDescriptor={getTableDescriptor}
             getExecutionDefinition={props.getExecutionDefinition}
+            getSortItems={props.getSortItems}
             getColumnTotals={props.getColumnTotals}
             getRowTotals={props.getRowTotals}
             intl={props.intl}

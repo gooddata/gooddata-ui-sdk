@@ -139,6 +139,16 @@ export function groupedCategories(HC) {
         }
     }
 
+    /* GoodData change - added following lines #3 */
+    /* Since Highcharts 12.3 the `visibility` attribute is no longer mirrored into CSS for HTML (useHTML) */
+    /* text elements that are not themselves wrapped in a div, so `label.hide()` left grouped labels */
+    /* rendered as HTML visible. Set both the attribute and the CSS property. */
+    function setLabelVisibility(label, visible) {
+        var visibility = visible ? "visible" : "hidden";
+        label.attr({ visibility: visibility }).css({ visibility: visibility });
+    }
+    /* end of GoodData change #3 */
+
     // Create local function `fontMetrics` to provide compatibility with HC 11 (#200)
     function fontMetrics(fontSize, elem) {
         if (
@@ -309,19 +319,17 @@ export function groupedCategories(HC) {
                 return false;
             }
             if (tick.startAt + tick.leaves - 1 < axis.min || tick.startAt > axis.max) {
-                tick.label.hide();
+                setLabelVisibility(tick.label, false);
                 tick.destroyed = 0;
                 /* GoodData change - added following lines #2 */
                 /* https://jira.intgdc.com/browse/ONE-4988 */
                 /* Hide parent label once non of its children is rendered */
                 /* Can be removed once https://github.com/blacklabel/grouped_categories/issues/177 is solved */
             } else if (Object.keys(tick.renderedChildren).length === 0) {
-                tick.label.hide();
+                setLabelVisibility(tick.label, false);
                 /* end of GoodData change #2 */
             } else {
-                tick.label.attr({
-                    visibility: visible ? "visible" : "hidden",
-                });
+                setLabelVisibility(tick.label, visible);
             }
             return true;
         });
@@ -668,7 +676,7 @@ export function groupedCategories(HC) {
         /* https://jira.intgdc.com/browse/ONE-4985 */
         /* Hide parent label once non of its children is rendered */
         if (this.parent && Object.keys(this.parent.renderedChildren).length === 0) {
-            this.parent.label.hide();
+            setLabelVisibility(this.parent.label, false);
         }
         /* end of GoodData change #2 */
 

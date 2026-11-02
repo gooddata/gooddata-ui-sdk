@@ -85,4 +85,15 @@ describe("notifyDefinitionReceived", () => {
     it("raises nothing for a v2 part without a document", () => {
         expect(putActions(itemWith({ type: "publisherDocumentV2", publisherDocument: null }))).toEqual([]);
     });
+
+    it("raises an alert proposal", () => {
+        const alertProposal = { id: "alert-1", title: "Revenue alert", description: "" };
+        const [action] = putActions(itemWith({ type: "alertProposal", alertProposal }));
+
+        expect(action.payload).toMatchObject({
+            definitionType: "alert",
+            conversationId: "conv-1",
+            alertProposal,
+        });
+    });
 });

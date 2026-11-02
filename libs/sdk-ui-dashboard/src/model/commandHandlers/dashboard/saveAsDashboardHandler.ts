@@ -22,6 +22,7 @@ import {
     dashboardLayoutRemoveIdentity,
     dashboardLayoutWidgetIdentityMap,
 } from "../../../_staging/dashboard/dashboardLayout.js";
+import { truncateDashboardTitle } from "../../../_staging/dashboard/dashboardTitle.js";
 import { createListedDashboard } from "../../../_staging/listedDashboard/listedDashboardUtils.js";
 import { type SaveDashboardAs } from "../../commands/dashboard.js";
 import { changeRenderMode } from "../../commands/renderMode.js";
@@ -170,7 +171,8 @@ function processExistingTabsForSaveAs(
  */
 function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<DashboardSaveAsContext> {
     const { title, useOriginalFilterContext } = cmd.payload;
-    const titleProp = title ? { title } : {};
+    const truncatedTitle = title && truncateDashboardTitle(title);
+    const titleProp = truncatedTitle ? { title: truncatedTitle } : {};
 
     const persistedDashboard: ReturnType<typeof selectPersistedDashboard> =
         yield select(selectPersistedDashboard);

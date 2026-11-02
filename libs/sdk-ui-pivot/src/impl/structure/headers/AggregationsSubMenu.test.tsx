@@ -195,4 +195,42 @@ describe("AggregationsSubMenu", () => {
             isColumn: false,
         });
     });
+    it("disables only unselected row subtotals with an explanation while metric sorting is active", async () => {
+        const onAggregationSelect = vi.fn();
+        renderComponent({
+            rowSubtotalTooltip: "Clear metric sorting to show subtotals.",
+            onAggregationSelect,
+        });
+        const subtotal = screen.getByText("within Department");
+        expect(document.querySelectorAll(".is-disabled")).toHaveLength(1);
+        fireEvent.click(subtotal);
+        expect(onAggregationSelect).not.toHaveBeenCalled();
+        fireEvent.mouseEnter(subtotal);
+        expect(await screen.findByText("Clear metric sorting to show subtotals.")).toBeInTheDocument();
+        fireEvent.click(screen.getByText("within Forecast Category"));
+        expect(onAggregationSelect).toHaveBeenCalledWith(
+            expect.objectContaining({ isColumn: false, include: true }),
+        );
+    });
+
+    it("explains partially selected row subtotals and allows removing them during metric sorting", async () => {
+        const onAggregationSelect = vi.fn();
+        renderComponent({
+            rowSubtotalTooltip: "Clear metric sorting to show subtotals.",
+            existingRowTotals: [
+                { type: "sum", attributeIdentifier: "2nd_attr_df_local_identifier", measureIdentifier: "m1" },
+            ],
+            measureLocalIdentifiers: ["m1", "m2"],
+            onAggregationSelect,
+        });
+        const subtotal = screen.getByText("within Department");
+        expect(subtotal).toHaveClass("s-menu-aggregation-inner-selected");
+        expect(document.querySelectorAll(".is-disabled")).toHaveLength(0);
+        fireEvent.mouseEnter(subtotal);
+        expect(await screen.findByText("Clear metric sorting to show subtotals.")).toBeInTheDocument();
+        fireEvent.click(subtotal);
+        expect(onAggregationSelect).toHaveBeenCalledWith(
+            expect.objectContaining({ isColumn: true, include: false, measureIdentifiers: ["m1", "m2"] }),
+        );
+    });
 });

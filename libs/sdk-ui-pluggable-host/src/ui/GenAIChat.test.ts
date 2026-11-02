@@ -6,11 +6,30 @@ import {
     type ChatClarificationQuestionsEvent,
     type ChatConversationChangedEvent,
     type ChatReasoningEvent,
+    type ChatUserAnswersEvent,
 } from "@gooddata/sdk-ui-gen-ai";
 
 import { toHostGenAIChatEvent } from "./GenAIChat.js";
 
 describe("toHostGenAIChatEvent", () => {
+    it("forwards clarification answers once without changing their payload", () => {
+        const event: ChatUserAnswersEvent = {
+            type: "chatUserAnswers",
+            conversationId: "local",
+            threadId: "server",
+            interactionId: "question-item",
+            answers: [
+                {
+                    questionIndex: 0,
+                    questionText: "Choose",
+                    answer: { type: "singleChoice", optionIndex: 1, optionText: "Yes" },
+                },
+            ],
+        };
+        const forwarded = toHostGenAIChatEvent({ name: "user-answers", payload: event });
+        expect(forwarded).toEqual({ name: "chat.user-answers", payload: event });
+        expect(forwarded?.payload).toBe(event);
+    });
     it.each(["Choosing visualizations", undefined])("forwards reasoning title %s unchanged", (title) => {
         const event: ChatReasoningEvent = { type: "chatReasoning", threadId: "thread-1", title };
         const forwarded = toHostGenAIChatEvent({ name: "reasoning", payload: event });

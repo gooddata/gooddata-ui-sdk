@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/react-app-template",
-    "version": "11.65.1",
+    "version": "11.66.0",
     "private": true,
     "description": "GoodData Template for React App",
     "license": "LicenseRef-LICENSE",
@@ -75,7 +75,7 @@
         "oxlint-plugin-eslint": "1.82.0",
         "oxlint-tsgolint": "7.0.2001",
         "typescript": "7.0.2",
-        "vite": "8.0.16"
+        "vite": "8.3.5"
     },
     "gooddata": {
         "hostname": "https://public-examples.gooddata.com",

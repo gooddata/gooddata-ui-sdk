@@ -1,6 +1,44 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 29 Oct 2026 14:43:57 GMT and should not be manually modified.
+This log was last generated on Mon, 02 Nov 2026 10:22:02 GMT and should not be manually modified.
+
+## 11.66.0
+
+Mon, 02 Nov 2026 10:22:02 GMT
+
+### Patches
+
+- sdk-ui-pivot: Allow grouped totals after sorting by attributes, preserve them when saving insights, and explain why adding subtotals is unavailable with metric sorting.
+- sdk-ui-charts: Fix scatter plot legend toggles when NULL coordinates leave gaps in cluster or segment indices.
+
+### Updates
+
+- sdk-ui-all: Added current language indicator to the user account menu both on desktop and mobile.
+- sdk-ui-pluggable-host: Preloaded the default language right away on site visit to improve the perceived performance when opening the user language change dialog.
+- sdk-ui-kit: New UiKit component `UiGrid`, an accessible grid of pickable cells.
+- sdk-model: Add optional retiredEarlyAccessValues to early access and production feature configs.
+- sdk-ui-metric-component: Keep metric descriptions read-only when the metric is locked or the user does not have edit permission.
+- sdk-backend-tiger: Report the visualizations of a Publisher v2 document that the viewer may not see.
+- sdk-ui: Remove the unused `histogram`, `pareto` and `alluvial` placeholders from the `ChartType` union and `VisualizationTypes`
+- chore: Upgrade fast-uri to 3.1.9 to fix security vulnerabilities (GHSA-333x-w4r6-6crp, GHSA-xhq7-xmqj-769h, GHSA-w74x-v6f9-j3xg, GHSA-wjr9-j795-jxcr).
+- chore: Upgrade follow-redirects to 1.16.2 to fix a security vulnerability (GHSA-mrwp-f3q8-3g9p).
+- sdk-ui-charts: Bump highcharts from 12.2.0 to 12.6.2 to fix security vulnerabilities (CVE-2026-116796, CVE-2026-118244, CVE-2026-118250, CVE-2026-118251 and unfiltered breadcrumbs.style SVG event-handler attributes).
+- chore: Upgrade ip-address to 10.7.4 to fix security vulnerability (GHSA-rxp7-6hxx-x8q5).
+- chore: Upgrade query-string to 7.1.3
+- chore: Upgrade query-string to 8.2.0
+- chore: Upgrade query-string to 9.5.1 to fix security vulnerabilities in decode-uri-component (GHSA-qr28-fpjm-wq7f, GHSA-vcc3-ghjq-m6fr).
+- chore: Upgrade vite to 8.3.5 to fix security vulnerabilities (GHSA-587h-7wmj-h5pm, GHSA-698v-4r3x-3vcv, GHSA-r825-w8mm-5pxw, GHSA-rq7h-c2jc-7f22, GHSA-9jrq-w75r-8gcw).
+- chore: Upgrade zod to 4.6.7 to fix security vulnerability (GHSA-mrhx-c7xc-m3w5).
+- chore: Upgrade happy-dom to 21.0.4 to fix security vulnerabilities (GHSA-834v-8h66-3h79, GHSA-c8p4-j97h-3vg8, GHSA-5fpq-26gf-qwcr).
+- sdk-code-convertors, sdk-code-schemas: Analytics as code keeps the legend of scatter charts and the kind of the geo collection of GEO_AREA labels.
+- sdk-ui-ext: The user detail names languages from the shared language list, shows "Not set, follows each workspace" for a language the user did not set, and offers Delete user in edit mode. sdk-ui-kit: The modal mask covers an open drawer.
+- sdk-ui-gen-ai: Report alert proposals in ChatDefinitionReceivedEvent.
+- sdk-ui-dashboard: Key driver analysis on a Mekko chart now explains the Height measure the columns show instead of the Width measure, and compares neighbouring dates of the same measure when the chart has a Stack by attribute; key driver analysis also skips measures it is disabled on
+- sdk-ui-gen-ai: Add conversation ID support and improve dashboard editing.
+- sdk-backend-tiger: A failed AI conversation message request no longer throws an unhandled "Cannot close an errored readable stream" error.
+- sdk-ui-dashboard: Save as new no longer fails when the copy title would exceed 255 characters; the title is shortened instead.
+- sdk-ui-dashboard: Save as new is disabled only when the whole dashboard is empty, for viewers and editors alike.
+- sdk-ui-dashboard: Changing filters in the alert dialog keeps the selected comparison period.
 
 ## 11.65.1
 

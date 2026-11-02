@@ -4,7 +4,7 @@ import { useCallback } from "react";
 
 import { uniqWith } from "lodash-es";
 
-import { type ITotal, bucketsFind, sanitizeBucketTotals } from "@gooddata/sdk-model";
+import { type ITotal } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
@@ -19,7 +19,7 @@ import { useIsTransposed } from "../shared/useIsTransposed.js";
  * @internal
  */
 export function useUpdateTotals() {
-    const { pushData, execution } = usePivotTableProps();
+    const { pushData } = usePivotTableProps();
     const isTransposed = useIsTransposed();
 
     const onUpdateTotals = useCallback(
@@ -45,32 +45,15 @@ export function useUpdateTotals() {
             // Apply consistent ordering to ensure external consumers receive properly ordered totals
             const orderedTotals = orderTotals(updatedTotals);
 
-            if (isColumn) {
-                // Column totals (COLUMNS bucket) are not affected by sorting
-                pushData({
-                    properties: {
-                        totals: orderedTotals,
-                        bucketType: BucketNames.COLUMNS,
-                    },
-                });
-            } else {
-                // Row totals (ATTRIBUTE bucket) need to be sanitized based on sorting.
-                // Changing sort may cause subtotals to no longer be reasonably placed - remove them if that is the case.
-                const { buckets, sortBy } = execution.definition;
-                const attributeBucket = bucketsFind(buckets, BucketNames.ATTRIBUTE);
-                const sanitizedTotals = attributeBucket
-                    ? sanitizeBucketTotals(attributeBucket, sortBy, orderedTotals)
-                    : orderedTotals;
-
-                pushData({
-                    properties: {
-                        totals: sanitizedTotals,
-                        bucketType: BucketNames.ATTRIBUTE,
-                    },
-                });
-            }
+            // Sorting determines subtotal placement in the execution result, not whether a total is valid.
+            pushData({
+                properties: {
+                    totals: orderedTotals,
+                    bucketType: isColumn ? BucketNames.COLUMNS : BucketNames.ATTRIBUTE,
+                },
+            });
         },
-        [pushData, execution, isTransposed],
+        [pushData, isTransposed],
     );
 
     return {

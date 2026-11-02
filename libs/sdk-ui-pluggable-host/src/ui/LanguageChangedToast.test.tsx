@@ -17,11 +17,11 @@ afterEach(() => {
 
 describe("LanguageChangedToast", () => {
     it("should show a success toast after the page reloads following a language change", () => {
-        vi.setSystemTime(new Date("2026-10-26T12:00:00Z"));
+        vi.useFakeTimers({ now: new Date("2026-10-26T12:00:00Z") });
         rememberLanguageChange();
 
         // The page after the reload, which started loading a second later
-        vi.spyOn(performance, "timeOrigin", "get").mockReturnValue(Date.parse("2026-10-26T12:00:01Z"));
+        vi.useFakeTimers({ now: new Date("2026-10-26T12:00:01Z") });
         render(<LanguageChangedToast />);
 
         /**
@@ -35,10 +35,10 @@ describe("LanguageChangedToast", () => {
     });
 
     it("should show the success toast only once", () => {
-        vi.setSystemTime(new Date("2026-10-26T12:00:00Z"));
+        vi.useFakeTimers({ now: new Date("2026-10-26T12:00:00Z") });
         rememberLanguageChange();
         // The page after the reload, which started loading a second later
-        vi.spyOn(performance, "timeOrigin", "get").mockReturnValue(Date.parse("2026-10-26T12:00:01Z"));
+        vi.useFakeTimers({ now: new Date("2026-10-26T12:00:01Z") });
         const { unmount } = render(<LanguageChangedToast />);
         unmount();
 
@@ -52,12 +52,12 @@ describe("LanguageChangedToast", () => {
     });
 
     it("should not show a success toast when the user stays on the page and reloads it much later", () => {
-        vi.setSystemTime(new Date("2026-10-26T12:00:00Z"));
+        vi.useFakeTimers({ now: new Date("2026-10-26T12:00:00Z") });
         // Saved, but at the browser's "Leave site?" the user chose to stay, e.g. to keep unsaved edits
         rememberLanguageChange();
 
         // The user reloads the page themselves two minutes later
-        vi.spyOn(performance, "timeOrigin", "get").mockReturnValue(Date.parse("2026-10-26T12:02:00Z"));
+        vi.useFakeTimers({ now: new Date("2026-10-26T12:02:00Z") });
         render(<LanguageChangedToast />);
 
         expect(screen.queryByRole("region")).not.toBeInTheDocument();
@@ -82,5 +82,23 @@ describe("LanguageChangedToast", () => {
         await user.click(screen.getByRole("button", { name: "Switch workspace" }));
 
         expect(screen.queryByRole("region")).not.toBeInTheDocument();
+    });
+
+    it("should show a success toast after a language change when the computer slept before", () => {
+        vi.useFakeTimers({ now: new Date("2026-10-26T12:00:00Z") });
+        rememberLanguageChange();
+
+        // The page after the reload, which started loading a second later
+        vi.useFakeTimers({ now: new Date("2026-10-26T12:00:01Z") });
+        /**
+         * Firefox counts `timeOrigin` from when its content process started, with a clock that stops while
+         * the computer sleeps, so after two minutes of sleep, it is two minutes behind.
+         */
+        vi.spyOn(performance, "timeOrigin", "get").mockReturnValue(Date.parse("2026-10-26T11:58:01Z"));
+        render(<LanguageChangedToast />);
+
+        expect(within(screen.getByRole("region")).getByRole("status")).toHaveTextContent(
+            "Great! We changed the language!",
+        );
     });
 });

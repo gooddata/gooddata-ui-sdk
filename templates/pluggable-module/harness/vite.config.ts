@@ -103,7 +103,7 @@ export default defineConfig(({ mode }): UserConfig => {
             target: "es2022",
             chunkSizeWarningLimit: 15000,
             rolldownOptions: {
-                input: resolve(__dirname, "index.html"),
+                input: resolve(import.meta.dirname, "index.html"),
                 checks: {
                     pluginTimings: false,
                 },

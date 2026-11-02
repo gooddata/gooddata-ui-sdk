@@ -8,6 +8,7 @@ import { type ILocalizationStatistics, type IUserLocalizationSettings } from "@g
 import { type IUser } from "@gooddata/sdk-model";
 import { BackButton, ConfirmDialogBase } from "@gooddata/sdk-ui-kit";
 
+import { DeleteLink } from "../DeleteLink.js";
 import { messages } from "../locales.js";
 import { extractUserName } from "../utils.js";
 
@@ -26,6 +27,7 @@ export interface IEditUserDetailsProps {
     isLanguagesError?: boolean;
     statistics?: ILocalizationStatistics;
     onLanguagesSaveFailed?: () => void;
+    onOpenDeleteDialog?: () => void;
     onSubmit: (user: IUser, isAdmin: boolean, languages?: IUserLocalizationSettings) => void;
     onCancel: () => void;
     onClose: () => void;
@@ -44,6 +46,7 @@ export function EditUserDetails({
     isLanguagesError,
     statistics,
     onLanguagesSaveFailed,
+    onOpenDeleteDialog,
     onSubmit,
     onCancel,
     onClose,
@@ -82,9 +85,23 @@ export function EditUserDetails({
         return <BackButton onClick={onCancel} className="s-user-management-navigate-back" />;
     }, [onCancel]);
 
+    const deleteLinkRenderer = useCallback(
+        () => (
+            <div className="gd-user-management-dialog-footer-delete">
+                <DeleteLink
+                    deleteLinkText={intl.formatMessage(messages.deleteUserLink)}
+                    onOpenDeleteDialog={onOpenDeleteDialog ?? (() => {})}
+                    isDeleteLinkEnabled={!isBootstrapUser}
+                    disabledLinkTooltipTextId={messages.deleteUserDisabledTooltip.id}
+                />
+            </div>
+        ),
+        [intl, isBootstrapUser, onOpenDeleteDialog],
+    );
+
     return (
         <ConfirmDialogBase
-            className="gd-share-dialog gd-share-dialog-add-users s-user-management-edit-user"
+            className="gd-share-dialog gd-share-dialog-add-users gd-user-management-dialog-edit-detail s-user-management-edit-user"
             displayCloseButton
             isPositive
             isSubmitDisabled={!isDirty || isProcessing}
@@ -96,6 +113,7 @@ export function EditUserDetails({
             onSubmit={onSave}
             onClose={onClose}
             headerLeftButtonRenderer={enableBackButton ? backButtonRenderer : undefined}
+            footerLeftRenderer={onOpenDeleteDialog ? deleteLinkRenderer : undefined}
         >
             <UserDetailsView
                 user={updatedUser}

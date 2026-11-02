@@ -5,9 +5,13 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { idRef, isInsightWidget } from "@gooddata/sdk-model";
 
 import { TestCorrelation } from "../../../tests/Dashboard.test.helpers.js";
-import { SimpleDashboardIdentifier } from "../../../tests/SimpleDashboard.test.helpers.js";
+import {
+    SimpleDashboardIdentifier,
+    SimpleDashboardLayout,
+} from "../../../tests/SimpleDashboard.test.helpers.js";
 import { saveDashboard, saveDashboardAs } from "../../commands/dashboard.js";
 import { addLayoutSection } from "../../commands/layout.js";
+import { createDashboardTab } from "../../commands/tabs.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type DashboardCopySaved, type DashboardSaved } from "../../events/dashboard.js";
 import { selectDashboardTitle, selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
@@ -145,6 +149,28 @@ describe("save as dashboard handler", () => {
             );
         });
 
+        it("should keep the first 255 characters of a longer title", async () => {
+            const title = "a".repeat(255);
+
+            const event: DashboardCopySaved = await Tester.dispatchAndWaitFor(
+                saveDashboardAs(`${title}b`, false),
+                "GDC.DASH/EVT.COPY_SAVED",
+            );
+
+            expect(event.payload.dashboard.title).toEqual(title);
+        });
+
+        it("should keep a title of exactly 255 characters", async () => {
+            const title = "a".repeat(255);
+
+            const event: DashboardCopySaved = await Tester.dispatchAndWaitFor(
+                saveDashboardAs(title, false),
+                "GDC.DASH/EVT.COPY_SAVED",
+            );
+
+            expect(event.payload.dashboard.title).toEqual(title);
+        });
+
         it("should emit correct events", async () => {
             await Tester.dispatchAndWaitFor(
                 saveDashboardAs("My Dashboard Copy", false, true, TestCorrelation),
@@ -166,6 +192,18 @@ describe("save as dashboard handler", () => {
 
         const TestDashboardTitle = "My Dashboard Copy";
 
+        it("should use the original title when the cut leaves only whitespace", async () => {
+            const originalTitle = selectDashboardTitle(Tester.state());
+            expect(originalTitle).not.toEqual("");
+
+            const event: DashboardCopySaved = await Tester.dispatchAndWaitFor(
+                saveDashboardAs(" ".repeat(300), false),
+                "GDC.DASH/EVT.COPY_SAVED",
+            );
+
+            expect(event.payload.dashboard.title).toEqual(originalTitle);
+        });
+
         it("should save an existing emit correct events", async () => {
             await Tester.dispatchAndWaitFor(
                 saveDashboardAs(TestDashboardTitle, true, undefined, TestCorrelation),
@@ -173,6 +211,24 @@ describe("save as dashboard handler", () => {
             );
 
             expect(Tester.emittedEventsDigest()).toMatchSnapshot();
+        });
+
+        it("should copy every tab when saved from an empty tab", async () => {
+            Tester.dispatch(createDashboardTab());
+            await Tester.waitFor("GDC.DASH/EVT.TAB.SWITCHED");
+
+            const event: DashboardCopySaved = await Tester.dispatchAndWaitFor(
+                saveDashboardAs(TestDashboardTitle, false),
+                "GDC.DASH/EVT.COPY_SAVED",
+            );
+
+            const copiedTabs = event.payload.dashboard.tabs ?? [];
+            expect(copiedTabs).toHaveLength(2);
+            expect(copiedTabs[0].layout?.sections.length).toBeGreaterThan(0);
+            expect(copiedTabs[0].layout?.sections[0].items ?? []).toHaveLength(
+                SimpleDashboardLayout.sections[0].items.length,
+            );
+            expect(copiedTabs[1].layout?.sections ?? []).toHaveLength(0);
         });
     });
 });

@@ -1306,6 +1306,7 @@ interface GeoAreaConfig {
     // (undocumented)
     collection: {
         id: string;
+        kind?: "STATIC" | "CUSTOM";
     };
 }
 
@@ -11104,6 +11105,10 @@ export const metadata_v1: {
                             type: string;
                             description: string;
                         };
+                        kind: {
+                            $ref: string;
+                            description: string;
+                        };
                     };
                     required: string[];
                 };
@@ -11162,6 +11167,10 @@ export const metadata_v1: {
                 };
             };
             required: string[];
+        };
+        geoCollectionKind: {
+            type: string;
+            enum: string[];
         };
         publisherDocumentV2: {
             title: string;

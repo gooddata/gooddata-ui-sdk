@@ -8,6 +8,13 @@ import { type IHeaderMenuItem } from "@gooddata/sdk-ui-kit";
 
 import { getActiveInternalApplication, getApplicationHref } from "../loader/routing.js";
 
+export function isHeaderHidden({
+    embeddingMode,
+    isExportMode,
+}: Pick<IPlatformContext, "embeddingMode" | "isExportMode">): boolean {
+    return embeddingMode === "iframe" || isExportMode === true;
+}
+
 /**
  * Builds the display name shown for the current user in the host header.
  *

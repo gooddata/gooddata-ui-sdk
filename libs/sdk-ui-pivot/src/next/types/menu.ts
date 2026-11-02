@@ -96,6 +96,8 @@ export interface IAggregationsSubMenuItem {
     isActive: boolean;
     isColumn: boolean;
     totalDefinitions: ITotal[];
+    isDisabled?: boolean;
+    disabledTooltip?: string;
 }
 
 /**

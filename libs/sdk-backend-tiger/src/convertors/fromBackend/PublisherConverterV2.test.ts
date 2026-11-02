@@ -189,6 +189,51 @@ describe("convertPublisherDocumentV2", () => {
     });
 });
 
+describe("convertPublisherDocumentV2 unavailable references", () => {
+    const usingVisualizations = {
+        ...documentOutV2("doc1"),
+        relationships: {
+            visualizationObjects: {
+                data: [
+                    { id: "revenue", type: "visualizationObject" as const },
+                    { id: "orders", type: "visualizationObject" as const },
+                ],
+            },
+        },
+    };
+
+    it("marks a visualization the document uses and the user may not read as forbidden", () => {
+        const loaded = convertPublisherDocumentV2(
+            usingVisualizations,
+            [],
+            [{ id: "revenue", type: "visualizationObject" }],
+        );
+
+        expect(loaded.unavailable).toEqual([
+            { ref: idRef("revenue", "insight"), type: "insight", reason: "forbidden" },
+        ]);
+    });
+
+    it("ignores a restricted object the document does not use", () => {
+        const loaded = convertPublisherDocumentV2(
+            usingVisualizations,
+            [],
+            [
+                { id: "margin", type: "visualizationObject" },
+                { id: "revenue", type: "label" },
+            ],
+        );
+
+        expect(loaded.unavailable).toEqual([]);
+    });
+
+    it("leaves the unavailable references out when the permissions were not checked", () => {
+        const loaded = convertPublisherDocumentV2(usingVisualizations);
+
+        expect(loaded).not.toHaveProperty("unavailable");
+    });
+});
+
 describe("convertPublisherPageTemplateV2", () => {
     it("marks a page template whose id starts with default. as a default", () => {
         expect(convertPublisherPageTemplateV2(pageTemplateOutV2("default.cover")).isDefault).toBe(true);

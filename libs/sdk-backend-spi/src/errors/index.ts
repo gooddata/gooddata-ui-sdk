@@ -5,7 +5,9 @@ import { isEmpty } from "lodash-es";
 import {
     type IPublisherDocumentDefinitionV2,
     type IPublisherDocumentTemplateDefinitionV2,
+    type IPublisherDocumentV2,
     type IPublisherPageTemplateDefinitionV2,
+    type IPublisherPageTemplateV2,
     type IPublisherValidationIssueV2,
     type ObjRef,
     validatePublisherEntityV2,
@@ -503,12 +505,15 @@ const publisherEntityKinds: Record<PublisherEntityDefinitionV2["type"], string> 
     pageTemplate: "page template",
 };
 
-// A loaded default page template carries isDefault; leaving it out makes the reserved-id rule reject saving one.
+// What a loaded entity carries beside its definition: isDefault on a default page template, which the
+// reserved-id rule would reject saving, and the references a document's user may not read.
 function savedShape(entity: PublisherEntityDefinitionV2): PublisherEntityDefinitionV2 {
-    if (!("isDefault" in entity)) {
-        return entity;
-    }
-    const { isDefault: _isDefault, ...saved } = entity;
+    const {
+        isDefault: _isDefault,
+        unavailable: _unavailable,
+        ...saved
+    } = entity as PublisherEntityDefinitionV2 &
+        Partial<Pick<IPublisherPageTemplateV2, "isDefault"> & Pick<IPublisherDocumentV2, "unavailable">>;
     return saved;
 }
 

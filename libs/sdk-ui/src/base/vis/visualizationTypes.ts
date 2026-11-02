@@ -20,14 +20,11 @@ export const VisualizationTypes = {
     CHOROPLETH: "choropleth" as const,
     COMBO: "combo" as const,
     COMBO2: "combo2" as const,
-    HISTOGRAM: "histogram" as const,
     BULLET: "bullet" as const,
     TREEMAP: "treemap" as const,
     WATERFALL: "waterfall" as const,
     FUNNEL: "funnel" as const,
     PYRAMID: "pyramid" as const,
-    PARETO: "pareto" as const,
-    ALLUVIAL: "alluvial" as const,
     SANKEY: "sankey" as const,
     DEPENDENCY_WHEEL: "dependencywheel" as const,
     XIRR: "xirr" as const,
@@ -54,14 +51,11 @@ export type ChartType =
     | "choropleth"
     | "combo"
     | "combo2"
-    | "histogram"
     | "bullet"
     | "treemap"
     | "waterfall"
     | "funnel"
     | "pyramid"
-    | "pareto"
-    | "alluvial"
     | "sankey"
     | "dependencywheel"
     | "repeater"

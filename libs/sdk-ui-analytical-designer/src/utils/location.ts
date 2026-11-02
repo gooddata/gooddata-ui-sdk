@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { stringify as queryStringStringify } from "query-string";
+import queryString from "query-string";
 
 import { DEFAULT_REPORT_ID, defaultRouteParams } from "../constants/route_params.js";
 import { getVirtualNavigate } from "../embedding/virtualLocation.js";
@@ -49,7 +49,7 @@ export function getBaseUri(params: Partial<ICustomRouteParams>) {
 }
 
 function getQueryParams(params: Partial<ICustomRouteParams>) {
-    const query = queryStringStringify(
+    const query = queryString.stringify(
         omitNil({
             dataset: params.dataset,
             includeObjectsWithTags: params.includeObjectsWithTags,

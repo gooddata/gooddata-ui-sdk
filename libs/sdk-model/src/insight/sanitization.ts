@@ -8,17 +8,12 @@ import { type ITotal } from "../execution/base/totals.js";
 import {
     type IBucket,
     bucketAttributeIndex,
+    bucketAttributes,
     bucketSetTotals,
     bucketTotals,
 } from "../execution/buckets/index.js";
 
-import {
-    type IInsightDefinition,
-    insightAttributes,
-    insightBuckets,
-    insightSetBuckets,
-    insightSorts,
-} from "./index.js";
+import { type IInsightDefinition, insightBuckets, insightSetBuckets } from "./index.js";
 
 const COLUMNS_BUCKET_ID = "columns";
 /**
@@ -31,12 +26,14 @@ export function insightSanitize<T extends IInsightDefinition>(insight: T): T {
     return removeInvalidTotalsFromInsight(insight);
 }
 
+/**
+ * Removes totals whose attributes no longer belong to their bucket, independently of sorting.
+ */
 function removeInvalidTotalsFromInsight<T extends IInsightDefinition>(insight: T): T {
-    const sortItems = insightSorts(insight);
-
-    const attributeIdentifiers = insightAttributes(insight).map(attributeLocalId);
     const sanitizedBuckets = insightBuckets(insight).map((bucket) => {
-        const sanitizedTotals = sanitizeBucketTotals(bucket, sortItems).filter((total) =>
+        const attributeIdentifiers = bucketAttributes(bucket).map(attributeLocalId);
+        // Sorting affects where subtotals are rendered, but must not discard them from saved insights.
+        const sanitizedTotals = bucketTotals(bucket).filter((total) =>
             attributeIdentifiers.includes(total.attributeIdentifier),
         );
 

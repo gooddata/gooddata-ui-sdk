@@ -5,7 +5,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import cx from "classnames";
 import { type IntlShape } from "react-intl";
 
-import { type IExecutionDefinition, type ITotal, type SortDirection } from "@gooddata/sdk-model";
+import {
+    type IExecutionDefinition,
+    type ISortItem,
+    type ITotal,
+    type SortDirection,
+} from "@gooddata/sdk-model";
 import { type IOnOpenedChangeParams } from "@gooddata/sdk-ui-kit";
 
 import { type IMenu } from "../../../publicTypes.js";
@@ -23,6 +28,7 @@ export interface ICommonHeaderParams {
     getTableDescriptor: () => TableDescriptor;
     onMenuAggregationClick?: (config: IMenuAggregationClickConfig) => void;
     getExecutionDefinition?: () => IExecutionDefinition;
+    getSortItems?: () => ISortItem[];
     getColumnTotals?: () => ITotal[];
     getRowTotals?: () => ITotal[];
     intl?: IntlShape;
@@ -58,6 +64,7 @@ export function HeaderCell({
     colId,
     getTableDescriptor,
     getExecutionDefinition,
+    getSortItems,
     getColumnTotals,
     getRowTotals,
     isFocused,
@@ -151,6 +158,7 @@ export function HeaderCell({
                 availableTotalTypes={menu.aggregationTypes ?? AVAILABLE_TOTALS}
                 getTableDescriptor={getTableDescriptor}
                 getExecutionDefinition={getExecutionDefinition!}
+                getSortItems={getSortItems}
                 getColumnTotals={getColumnTotals}
                 getRowTotals={getRowTotals}
                 onMenuOpenedChange={handleMenuOpenedChange}
@@ -161,6 +169,7 @@ export function HeaderCell({
         colId,
         getColumnTotals,
         getExecutionDefinition,
+        getSortItems,
         getRowTotals,
         getTableDescriptor,
         handleMenuOpenedChange,

@@ -72,6 +72,9 @@ function processDeclarativeLabel(
         const geoAreaMap = new YAMLMap();
         const geoAreaCollection = new YAMLMap();
         geoAreaCollection.add(new Pair("id", geoAreaCollectionId));
+        if (label.geoAreaConfig?.collection?.kind) {
+            geoAreaCollection.add(new Pair("kind", label.geoAreaConfig.collection.kind));
+        }
         geoAreaMap.add(new Pair("collection", geoAreaCollection));
         map.add(new Pair("geo_area_config", geoAreaMap));
     }

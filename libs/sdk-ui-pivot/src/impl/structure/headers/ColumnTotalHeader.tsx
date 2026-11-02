@@ -16,6 +16,7 @@ export interface IColumnHeaderProps extends ICommonHeaderParams, IHeaderParams {
 export function ColumnTotalHeader({
     getTableDescriptor,
     getExecutionDefinition,
+    getSortItems,
     getColumnTotals,
     getRowTotals,
     displayName,
@@ -38,6 +39,7 @@ export function ColumnTotalHeader({
             colId={column.getColDef().field}
             getTableDescriptor={getTableDescriptor}
             getExecutionDefinition={getExecutionDefinition}
+            getSortItems={getSortItems}
             getColumnTotals={getColumnTotals}
             getRowTotals={getRowTotals}
             intl={intl}

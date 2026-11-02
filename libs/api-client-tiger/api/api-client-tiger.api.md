@@ -20684,7 +20684,7 @@ export interface EntitiesApiCreateEntityDataSourcesRequest {
 
 // @public
 export interface EntitiesApiCreateEntityDocumentsRequest {
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly jsonApiPublisherDocumentPostOptionalIdDocument: JsonApiPublisherDocumentPostOptionalIdDocument;
     readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
     readonly workspaceId: string;
@@ -21391,7 +21391,7 @@ export interface EntitiesApiGetAllEntitiesDataSourcesRequest {
 // @public
 export interface EntitiesApiGetAllEntitiesDocumentsRequest {
     readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
     readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
     readonly page?: number;
@@ -21996,7 +21996,7 @@ export interface EntitiesApiGetEntityDataSourcesRequest {
 // @public
 export interface EntitiesApiGetEntityDocumentsRequest {
     readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
     readonly objectId: string;
     readonly workspaceId: string;
@@ -22817,7 +22817,7 @@ export interface EntitiesApiPatchEntityDataSourcesRequest {
 // @public
 export interface EntitiesApiPatchEntityDocumentsRequest {
     readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly jsonApiPublisherDocumentPatchDocument: JsonApiPublisherDocumentPatchDocument;
     readonly objectId: string;
     readonly workspaceId: string;
@@ -23410,7 +23410,7 @@ export interface EntitiesApiUpdateEntityDataSourcesRequest {
 // @public
 export interface EntitiesApiUpdateEntityDocumentsRequest {
     readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly jsonApiPublisherDocumentInDocument: JsonApiPublisherDocumentInDocument;
     readonly objectId: string;
     readonly workspaceId: string;
@@ -36661,7 +36661,7 @@ export type JsonApiPublisherDocumentOutAttributesPeriod = ({
 export interface JsonApiPublisherDocumentOutDocument {
     // (undocumented)
     'data': JsonApiPublisherDocumentOut;
-    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    'included'?: Array<JsonApiPublisherDocumentOutIncludes>;
     // (undocumented)
     'links'?: ObjectLinks;
     // (undocumented)
@@ -36674,10 +36674,13 @@ export interface JsonApiPublisherDocumentOutDocumentMeta {
 }
 
 // @public
+export type JsonApiPublisherDocumentOutIncludes = JsonApiDatasetOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiUserIdentifierOutWithLinks | JsonApiVisualizationObjectOutWithLinks;
+
+// @public
 export interface JsonApiPublisherDocumentOutList {
     // (undocumented)
     'data': Array<JsonApiPublisherDocumentOutWithLinks>;
-    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    'included'?: Array<JsonApiPublisherDocumentOutIncludes>;
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
@@ -36711,7 +36714,15 @@ export interface JsonApiPublisherDocumentOutRelationships {
     // (undocumented)
     'createdBy'?: JsonApiPublisherDocumentOutRelationshipsCreatedBy;
     // (undocumented)
+    'datasets'?: JsonApiPublisherDocumentOutRelationshipsDatasets;
+    // (undocumented)
+    'labels'?: JsonApiPublisherDocumentOutRelationshipsLabels;
+    // (undocumented)
+    'metrics'?: JsonApiPublisherDocumentOutRelationshipsMetrics;
+    // (undocumented)
     'modifiedBy'?: JsonApiPublisherDocumentOutRelationshipsModifiedBy;
+    // (undocumented)
+    'visualizationObjects'?: JsonApiPublisherDocumentOutRelationshipsVisualizationObjects;
 }
 
 // @public (undocumented)
@@ -36721,9 +36732,29 @@ export interface JsonApiPublisherDocumentOutRelationshipsCreatedBy {
 }
 
 // @public (undocumented)
+export interface JsonApiPublisherDocumentOutRelationshipsDatasets {
+    'data': Array<JsonApiDatasetLinkage>;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentOutRelationshipsLabels {
+    'data': Array<JsonApiLabelLinkage>;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentOutRelationshipsMetrics {
+    'data': Array<JsonApiMetricLinkage>;
+}
+
+// @public (undocumented)
 export interface JsonApiPublisherDocumentOutRelationshipsModifiedBy {
     // (undocumented)
     'data': JsonApiUserIdentifierLinkage | null;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentOutRelationshipsVisualizationObjects {
+    'data': Array<JsonApiVisualizationObjectLinkage>;
 }
 
 // @public (undocumented)

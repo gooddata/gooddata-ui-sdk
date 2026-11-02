@@ -299,6 +299,11 @@ export interface IEarlyAccessFeatureConfig {
  */
 export interface IEarlyAccessFeaturesConfig {
     features: IEarlyAccessFeatureConfig[];
+    /**
+     * Retired early-access values eligible for removal when organization or workspace settings are saved.
+     * Values still present in either active feature catalog are preserved. Omit to disable cleanup for this catalog.
+     */
+    retiredEarlyAccessValues?: string[];
 }
 
 /**
@@ -320,6 +325,11 @@ export interface IProductionFeatureConfig {
  */
 export interface IProductionFeaturesConfig {
     features?: IProductionFeatureConfig[];
+    /**
+     * Retired early-access values eligible for removal when organization or workspace settings are saved.
+     * Values still present in either active feature catalog are preserved. Omit to disable cleanup for this catalog.
+     */
+    retiredEarlyAccessValues?: string[];
 }
 
 /**

@@ -47,15 +47,17 @@ export function computeDevPort(repoRoot: string, extraDirs: readonly string[] = 
             const viteConfig = join(root, entry.name, viteRelativePath);
             if (!existsSync(viteConfig)) continue;
             const content = readFileSync(viteConfig, "utf-8");
-            const portMatch = content.match(/["']PORT["']\]?\)?\s*\|\|\s*["'](\d+)["']/);
+            // Either the template's `env["PORT"] || "NNNN"` literal or the `port: NNNN` option of a
+            // harness built from the @gooddata/toolchain-config `harness` preset.
+            const portMatch = content.match(/["']PORT["']\]?\)?\s*\|\|\s*["'](\d+)["']|\bport:\s*(\d+)\b/);
             if (portMatch) {
-                const port = parseInt(portMatch[1], 10);
+                const port = parseInt(portMatch[1] ?? portMatch[2]!, 10);
                 if (port > maxPort) maxPort = port;
             } else {
-                // The regex is tuned to the harness template shape
-                // (`env["PORT"] || "NNNN"`). A miss usually means the harness
-                // was hand-refactored — warn so the next scaffolded app's port
-                // collision doesn't surprise the user at dev-server start time.
+                // The regex is tuned to the two harness shapes above. A miss
+                // usually means the harness was hand-refactored — warn so the
+                // next scaffolded app's port collision doesn't surprise the user
+                // at dev-server start time.
                 console.warn(
                     `  Warning: could not detect port literal in ${viteConfig} — port collision possible.`,
                 );

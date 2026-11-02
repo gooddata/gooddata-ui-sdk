@@ -3,7 +3,7 @@
 // @vitest-environment node
 
 import { parseISO } from "date-fns";
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { normalizeTime } from "@gooddata/sdk-ui-kit";
 
@@ -25,6 +25,18 @@ function isoDate(year: number, month: number, day: number, hours: number = 0, mi
 function cronDaily(hours: number) {
     return `0 0 ${hours} ? * *`;
 }
+
+// The "now" based cases derive their expectations from the real clock. Within a few hours of a DST
+// transition in one of the zones under test (e.g. America/Nassau, first Sunday of November), the zone
+// offset differs between the normalized first run and its UTC counterpart, so the cases disagree with
+// the implementation. A fixed instant away from any transition keeps them deterministic.
+beforeEach(() => {
+    vi.useFakeTimers({ now: new Date("2026-06-15T10:20:00Z"), toFake: ["Date"] });
+});
+
+afterEach(() => {
+    vi.useRealTimers();
+});
 
 describe("toNormalizedFirstRunAndCron", () => {
     let now: Date;

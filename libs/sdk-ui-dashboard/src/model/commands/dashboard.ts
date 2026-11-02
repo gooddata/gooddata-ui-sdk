@@ -210,6 +210,7 @@ export function saveDashboard(title?: string, correlationId?: string): ISaveDash
 export type SaveDashboardAsPayload = {
     /**
      * Specify new title for the dashboard that will be created during the Save As operation.
+     * A title longer than 255 characters is shortened to at most 255 characters.
      */
     readonly title?: string;
 
@@ -245,7 +246,8 @@ export type SaveDashboardAs = IDashboardCommand & {
  * Upon success, a copy of the dashboard will be persisted on the backend. The context of the dashboard component
  * that processed the command is unchanged - it still works with the original dashboard.
  *
- * @param title - new title for the dashboard; if not specified, the title of original dashboard will be used
+ * @param title - new title for the dashboard; if not specified, the title of original dashboard will be used.
+ *  A title longer than 255 characters is shortened to at most 255 characters.
  * @param switchToCopy - indicate whether the dashboard component should switch to the dashboard that will
  *  be created during save-as; the default is false
  * @param correlationId - specify correlation id to use for this command. this will be included in all

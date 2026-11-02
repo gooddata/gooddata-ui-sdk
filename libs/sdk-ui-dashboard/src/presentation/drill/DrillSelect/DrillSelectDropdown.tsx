@@ -24,6 +24,7 @@ import {
     isDrillToInsight,
     isDrillToLegacyDashboard,
     isIdentifierRef,
+    isInsightWidget,
     isKeyDriveAnalysis,
     objRefToString,
 } from "@gooddata/sdk-model";
@@ -40,7 +41,10 @@ import { selectInsightsMap } from "../../../model/store/insights/insightsSelecto
 import { selectDashboardTitle } from "../../../model/store/meta/metaSelectors.js";
 import { selectWidgetByRef } from "../../../model/store/tabs/layout/layoutSelectors.js";
 import { selectIsDrillRestricted } from "../../../model/store/widgetDrills/drillRestrictionSelectors.js";
-import { type IRestrictedDrillDown } from "../../../model/store/widgetDrills/widgetDrillSelectors.js";
+import {
+    type IRestrictedDrillDown,
+    getMetricDisabled,
+} from "../../../model/store/widgetDrills/widgetDrillSelectors.js";
 import { type DashboardDrillDefinition, isDrillDownDefinition } from "../../../types.js";
 import { useDrillSelectDropdownMenuItems } from "../hooks/useDrillSelectDropdownMenuItems.js";
 import { isDrillToUrl } from "../types.js";
@@ -505,7 +509,13 @@ export const createDrillSelectItems = ({
         }
 
         if (isKeyDriveAnalysis(drillDefinition)) {
-            const items = getKdaKeyDriverCombinations(drillDefinition, drillEvent, enableSecondGranularities);
+            const widgetInsight = isInsightWidget(widget) ? insights.get(widget.insight) : undefined;
+            const items = getKdaKeyDriverCombinations(
+                drillDefinition,
+                drillEvent,
+                enableSecondGranularities,
+                (localIdentifier) => getMetricDisabled(widgetInsight, localIdentifier),
+            );
             return items.map((item) => {
                 return {
                     name: getKeyDriverCombinationItemTitle(intl, item),

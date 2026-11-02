@@ -31,6 +31,12 @@ import {
 
 import { ConversationVisualizationContent } from "./ConversationVisualizationContent.js";
 
+// With `isolate: false`, earlier test files may have cached the component with real dependencies.
+// Reset before imports so the visualization and save-check mocks below are used regardless of file order.
+vi.hoisted(() => {
+    vi.resetModules();
+});
+
 const messages = Object.fromEntries(Object.entries(en_US).map(([id, message]) => [id, message.text]));
 
 const visualisationMock = vi.hoisted(() => ({

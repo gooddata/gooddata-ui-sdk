@@ -2,12 +2,21 @@
 
 import { describe, expect, it } from "vitest";
 
-import { generateHeaderAccountMenuItems } from "./generateHeaderAccountMenuItems.js";
+import {
+    type IGenerateHeaderAccountMenuItemsOptions,
+    generateHeaderAccountMenuItems,
+} from "./generateHeaderAccountMenuItems.js";
 import { makeWorkspacePermissions } from "./Header.test.helpers.js";
+
+const requiredOptions = {
+    featureFlags: {},
+    currentLanguage: "en-US",
+} satisfies IGenerateHeaderAccountMenuItemsOptions;
 
 describe("generateHeaderAccountMenuItems", () => {
     it("should return workspace link and logout item if feature flag is on and permission is available", () => {
         const items = generateHeaderAccountMenuItems(makeWorkspacePermissions({ canManageProject: true }), {
+            ...requiredOptions,
             workspaceId: "TestWorkspaceId",
             featureFlags: { enableWorkspaceSettingsAppHeaderMenuItem: true },
         });
@@ -23,6 +32,7 @@ describe("generateHeaderAccountMenuItems", () => {
 
     it("should prefix the workspace settings link with the host base path when the shell application is enabled", () => {
         const items = generateHeaderAccountMenuItems(makeWorkspacePermissions({ canManageProject: true }), {
+            ...requiredOptions,
             workspaceId: "TestWorkspaceId",
             featureFlags: { enableWorkspaceSettingsAppHeaderMenuItem: true, enableShellApplication: true },
         });
@@ -38,13 +48,14 @@ describe("generateHeaderAccountMenuItems", () => {
 
     it("should return only logout item when workspace settings feature flag is on but permission is not available", () => {
         const items = generateHeaderAccountMenuItems(makeWorkspacePermissions(), {
+            ...requiredOptions,
             featureFlags: { enableWorkspaceSettingsAppHeaderMenuItem: true },
         });
         expect(items).toEqual([{ className: "s-logout", key: "gs.header.logout" }]);
     });
 
     it("should return only logout item when workspace settings feature flag is off and permission is not available", () => {
-        const items = generateHeaderAccountMenuItems(makeWorkspacePermissions());
+        const items = generateHeaderAccountMenuItems(makeWorkspacePermissions(), requiredOptions);
         expect(items).toEqual([{ className: "s-logout", key: "gs.header.logout" }]);
     });
 });

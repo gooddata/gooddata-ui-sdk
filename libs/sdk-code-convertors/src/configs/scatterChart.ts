@@ -27,6 +27,10 @@ export type ScatterChartConfigProperties = {
         visible: boolean | "auto";
         style: "auto" | "backplate";
     };
+    legend: {
+        enabled: boolean;
+        position: "top" | "bottom" | "left" | "right" | "auto";
+    };
     xaxis: {
         format: "inherit" | "auto";
         max: number | string;
@@ -73,6 +77,10 @@ const DEFAULTS: ConfigDefaults<ScatterChartConfigProperties> = {
     dataLabels: {
         visible: false,
         style: "auto",
+    },
+    legend: {
+        enabled: true,
+        position: "auto",
     },
     xaxis: {
         format: "auto",
@@ -130,6 +138,12 @@ export function scatterChartLoad(props: VisualisationConfig<ScatterChartConfigPr
                         getValueOrDefault(value.visible, DEFAULTS.dataLabels.visible, "bool_auto"),
                     ],
                     ["data_labels_style", getValueOrDefault(value.style, DEFAULTS.dataLabels.style)],
+                ];
+            }
+            case "legend": {
+                return [
+                    ["legend_enabled", getValueOrDefault(value.enabled, DEFAULTS.legend.enabled, "bool")],
+                    ["legend_position", getValueOrDefault(value.position, DEFAULTS.legend.position)],
                 ];
             }
             case "xaxis": {
@@ -236,6 +250,10 @@ export function scatterChartSave(
         dataLabels: saveConfigObject({
             visible: getValueOrDefault(config.data_labels, DEFAULTS.dataLabels.visible, "bool_auto"),
             style: getValueOrDefault(config.data_labels_style, DEFAULTS.dataLabels.style),
+        }),
+        legend: saveConfigObject({
+            enabled: getValueOrDefault(config.legend_enabled, DEFAULTS.legend.enabled, "bool"),
+            position: getValueOrDefault(config.legend_position, DEFAULTS.legend.position),
         }),
         xaxis: saveConfigObject({
             format: getValueOrDefault(config.xaxis_format, DEFAULTS.xaxis.format),

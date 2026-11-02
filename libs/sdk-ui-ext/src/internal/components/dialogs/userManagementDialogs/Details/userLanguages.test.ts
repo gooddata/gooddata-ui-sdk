@@ -10,9 +10,9 @@ import { changedLanguageSettings, languageName, languageNotice, languageOptions 
 describe("languageName", () => {
     it.each([
         ["es-ES", "Spanish (Spain)"],
-        ["ko-KR", "Korean (South Korea)"],
+        ["ko-KR", "Korean"],
         ["es-MX", "Spanish (Mexico)"],
-        ["en-US-x-24h", "English (United States)"],
+        ["en-US-x-24h", "English (US, 24-hour)"],
     ])("names %s", (code, name) => {
         expect(languageName(code, "en-US")).toBe(name);
     });

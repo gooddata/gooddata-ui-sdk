@@ -34,6 +34,7 @@ import {
     type IHeaderWorkspace,
     generateHeaderAccountMenuItems,
     generateHeaderCommonHelpMenuItems,
+    LANGUAGE_MENU_ITEM_ID,
     generateHeaderStaticHelpMenuItems,
 } from "@gooddata/sdk-ui-kit";
 import { defaultHeaderTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -48,6 +49,7 @@ import {
     getUserDisplayName,
     getWorkspaceSwitchPath,
     isBrowserHandledMenuClick,
+    isHeaderHidden,
     isPlainLeftClick,
 } from "./chromeHelpers.js";
 import { b, e } from "./hostChromeBem.js";
@@ -71,7 +73,7 @@ import "@gooddata/sdk-ui-gen-ai/styles/css/main.css";
 import "@gooddata/sdk-ui-semantic-search/styles/css/main.css";
 import "@gooddata/sdk-ui-semantic-search/styles/css/internal.css";
 
-import { useLanguages } from "./useLanguages.js";
+import { type ILanguages, useLanguages } from "./useLanguages.js";
 import { AppHeaderWorkspacePicker } from "./WorkspacePicker.js";
 
 const LOGOUT_MENU_ITEM_KEY = "gs.header.logout";
@@ -170,6 +172,15 @@ export function HostChrome({
         };
     }, [openPricingDialogRef, isTrial, onUpsellButtonClick]);
     const [isLanguageDialogOpen, setIsLanguageDialogOpen] = useState(false);
+    const [languageDialogWorkspaceId, setLanguageDialogWorkspaceId] = useState(ctx.currentWorkspaceId);
+    if (languageDialogWorkspaceId !== ctx.currentWorkspaceId) {
+        setLanguageDialogWorkspaceId(ctx.currentWorkspaceId);
+        // Close dialog on workspace change (such as navigating back from workspace to an organization)
+        setIsLanguageDialogOpen(false);
+    }
+
+    // loaded with the chrome, so that the dialog opens without waiting for the default language
+    const languages = useLanguages(ctx, shellTelemetry);
 
     // The host's single GenAI chat is owned by the runtime (HostChat), not the chrome — so it survives
     // a custom UI module and stays mounted when the chrome is hidden (embedded/export). The chrome only
@@ -213,8 +224,9 @@ export function HostChrome({
             generateHeaderAccountMenuItems(ctx.workspacePermissions ?? ({} as IWorkspacePermissions), {
                 workspaceId: features.workspaceId,
                 featureFlags: ctx.settings,
+                currentLanguage: locale,
             }),
-        [ctx.workspacePermissions, features.workspaceId, ctx.settings],
+        [ctx.workspacePermissions, features.workspaceId, ctx.settings, locale],
     );
 
     const handleMenuItemClick = useCallback(
@@ -228,7 +240,7 @@ export function HostChrome({
                 item.onClick(e ?? null);
                 return;
             }
-            if (item.key === "userMenu.language") {
+            if (item.key === LANGUAGE_MENU_ITEM_ID) {
                 setIsLanguageDialogOpen(true);
                 return;
             }
@@ -328,8 +340,6 @@ export function HostChrome({
     const headerTextColor = ctx.theme?.header?.color ?? defaultHeaderTheme.color;
     const activeColor = ctx.theme?.header?.activeColor ?? defaultHeaderTheme.activeColor;
 
-    const hideChrome = ctx.embeddingMode === "iframe" || ctx.isExportMode === true;
-
     const enablePanel = useGenAiRightPanel(
         features.settings["enableGenAiRightPanel"] as boolean,
         ctx.embeddingMode !== "none",
@@ -367,7 +377,7 @@ export function HostChrome({
                     faviconUrl={faviconUrl}
                     appleTouchIconUrl={ctx.whiteLabeling?.appleTouchIconUrl}
                 />
-                {hideChrome ? null : (
+                {isHeaderHidden(ctx) ? null : (
                     <div
                         className={e("header")}
                         onMouseOver={appPreloadOnHover.onMouseOver}
@@ -414,8 +424,9 @@ export function HostChrome({
                     {children}
                 </Wrapper>
                 {pricing.element}
-                {isLanguageDialogOpen ? (
+                {isLanguageDialogOpen && languages ? (
                     <HostLanguageDialog
+                        languages={languages}
                         ctx={ctx}
                         telemetry={shellTelemetry}
                         onClose={() => setIsLanguageDialogOpen(false)}
@@ -429,19 +440,18 @@ export function HostChrome({
 }
 
 interface IHostLanguageDialogProps {
+    languages: ILanguages;
     ctx: IPlatformContext;
     telemetry: IPluggableAppTelemetryCallbacks | undefined;
     onClose: () => void;
 }
 
-// the languages, and so the default one, load only once the dialog opens
-function HostLanguageDialog({ ctx, telemetry, onClose }: IHostLanguageDialogProps) {
-    const languages = useLanguages(ctx, telemetry);
+function HostLanguageDialog({ languages, ctx, telemetry, onClose }: IHostLanguageDialogProps) {
     const isOpenTracked = useRef(false);
 
-    // The open is tracked once the default language loads, as the event names the language the user sees.
+    // The event names the language the user sees. Tracked once, as `languages` changes on every render.
     useEffect(() => {
-        if (!languages || isOpenTracked.current) {
+        if (isOpenTracked.current) {
             return;
         }
         isOpenTracked.current = true;
@@ -456,5 +466,5 @@ function HostLanguageDialog({ ctx, telemetry, onClose }: IHostLanguageDialogProp
         );
     }, [languages, telemetry, ctx.currentWorkspaceId]);
 
-    return languages ? <LanguageDialog {...languages} onClose={onClose} /> : null;
+    return <LanguageDialog {...languages} onClose={onClose} />;
 }

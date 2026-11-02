@@ -7,6 +7,7 @@ import {
     type ChatClarificationQuestionsEvent,
     type ChatConversationChangedEvent,
     type ChatReasoningEvent,
+    type ChatUserAnswersEvent,
     isChatReasoningEvent,
 } from "../store/events.js";
 import {
@@ -20,6 +21,24 @@ import {
 import { type SeedInput, buildSeedActions, toGenAIChatConnectedEvent } from "./GenAIChatDialogConnected.js";
 
 describe("toGenAIChatConnectedEvent", () => {
+    it("forwards clarification answers once with the original correlated payload", () => {
+        const event: ChatUserAnswersEvent = {
+            type: "chatUserAnswers",
+            conversationId: "local",
+            threadId: "server",
+            interactionId: "question-item",
+            answers: [
+                {
+                    questionIndex: 0,
+                    questionText: "Choose",
+                    answer: { type: "singleChoice", optionIndex: 1, optionText: "Yes" },
+                },
+            ],
+        };
+        const connected = toGenAIChatConnectedEvent(event);
+        expect(connected).toEqual({ name: "user-answers", payload: event });
+        expect(connected?.payload).toBe(event);
+    });
     it("forwards conversation changes for reasoning cleanup", () => {
         const event: ChatConversationChangedEvent = {
             type: "chatConversationChanged",

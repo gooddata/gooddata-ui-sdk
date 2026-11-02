@@ -37,7 +37,7 @@ function takeLanguageChange() {
     try {
         const changedAt = Number(sessionStorage.getItem(LANGUAGE_CHANGED_KEY));
         sessionStorage.removeItem(LANGUAGE_CHANGED_KEY);
-        const pageLoadedAt = performance.timeOrigin; // `timeOrigin` is when this page started loading
+        const pageLoadedAt = Date.now() - performance.now(); // When this page started loading.
         return changedAt < pageLoadedAt && pageLoadedAt - changedAt < MAX_RELOAD_DURATION_MS;
     } catch {
         // sessionStorage unavailable (privacy mode, sandboxed iframe): no success toast

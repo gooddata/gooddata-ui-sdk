@@ -48,6 +48,7 @@ import { getRestrictedDashboardFilters } from "../../../store/filtering/restrict
 import {
     applyMirroredFilterValue,
     findCounterpartFilter,
+    targetAcceptsAttributeFilterValue,
 } from "../../../store/tabs/filterContext/filterSync.js";
 import { type ITabState } from "../../../store/tabs/tabsState.js";
 import { isFilterTypeCompatibleWithSelectionType } from "../../../utils/attributeFilterSelectionTypeCompatibility.js";
@@ -734,9 +735,17 @@ function mirrorTabSelection(
             continue;
         }
         const counterpart = findCounterpartFilter(sourceState, before, targetState, attributesWithReferences);
-        if (counterpart && !isRestricted(targetRestricted, counterpart)) {
-            replacements.set(counterpart, applyMirroredFilterValue(after, counterpart));
+        // a filter keeps its own value when its selection type cannot store the mirrored one
+        if (
+            !counterpart ||
+            isRestricted(targetRestricted, counterpart) ||
+            (isDashboardAttributeFilterItem(counterpart) &&
+                isDashboardAttributeFilterItem(after) &&
+                !targetAcceptsAttributeFilterValue(targetState, counterpart, after))
+        ) {
+            continue;
         }
+        replacements.set(counterpart, applyMirroredFilterValue(after, counterpart));
     }
 
     const mirroredFilters = target.filterContext.filters

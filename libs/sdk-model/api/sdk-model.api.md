@@ -3674,6 +3674,7 @@ export interface IEarlyAccessFeatureConfig {
 export interface IEarlyAccessFeaturesConfig {
     // (undocumented)
     features: IEarlyAccessFeatureConfig[];
+    retiredEarlyAccessValues?: string[];
 }
 
 // @alpha
@@ -4843,6 +4844,14 @@ export interface IKpiWithPreviousPeriodComparison extends IKpiBase {
     comparisonType: "previousPeriod";
 }
 
+// @internal (undocumented)
+export interface ILanguageNames {
+    // (undocumented)
+    englishName: string;
+    // (undocumented)
+    nativeName: string;
+}
+
 // @alpha
 export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
     readonly availability: ListedDashboardAvailability;
@@ -5894,6 +5903,7 @@ export interface IProductionFeatureConfig {
 export interface IProductionFeaturesConfig {
     // (undocumented)
     features?: IProductionFeatureConfig[];
+    retiredEarlyAccessValues?: string[];
 }
 
 // @alpha
@@ -6266,6 +6276,7 @@ export interface IPublisherDocumentV1 extends IPublisherDocumentDefinitionV1, IA
 export interface IPublisherDocumentV2 extends IPublisherDocumentDefinitionV2, IPublisherEntityMetadataV2 {
     // (undocumented)
     ref: ObjRef;
+    unavailable?: IUnavailableReference[];
 }
 
 // @alpha
@@ -9491,6 +9502,9 @@ export type KpiDrillDefinition = IDrillToLegacyDashboard;
 // @public (undocumented)
 export type KpiWidgetDescriptionSourceType = "kpi" | "metric";
 
+// @internal
+export const LANGUAGE_NAMES: Record<ILocale, ILanguageNames>;
+
 // @alpha
 export type ListedDashboardAvailability = "full" | "viaLink";
 
@@ -9528,7 +9542,7 @@ export type LlmProviderTestResults = {
 };
 
 // @internal
-export const LOCALES: string[];
+export const LOCALES: ("de-DE" | "en-AU" | "en-GB" | "en-US" | "en-US-x-24h" | "es-419" | "es-ES" | "fi-FI" | "fr-CA" | "fr-FR" | "id-ID" | "it-IT" | "ja-JP" | "ko-KR" | "nl-NL" | "pl-PL" | "pt-BR" | "pt-PT" | "ru-RU" | "sl-SI" | "th-TH" | "tr-TR" | "uk-UA" | "vi-VN" | "zh-HK" | "zh-Hans" | "zh-Hant")[];
 
 // @public
 export type LocalIdRef = {

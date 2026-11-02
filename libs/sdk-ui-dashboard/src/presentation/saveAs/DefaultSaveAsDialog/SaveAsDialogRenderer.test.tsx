@@ -77,6 +77,51 @@ describe("Test SaveAsNewDashboardDialog:", () => {
         });
     });
 
+    describe("long titles", () => {
+        const prefix = "Copy of ";
+        const maxTitleLength = 255 - prefix.length;
+
+        it("Should not shorten a title that fits the limit with the prefix", () => {
+            const dashboardTitle = "a".repeat(maxTitleLength);
+            renderComponent({ ...defaultProps, dashboardTitle });
+
+            expect(screen.getByDisplayValue(`${prefix}${dashboardTitle}`)).toBeInTheDocument();
+        });
+
+        it("Should shorten a 255 character title so the prefilled title has 255 characters", () => {
+            const dashboardTitle = "a".repeat(maxTitleLength) + "b".repeat(255 - maxTitleLength);
+            renderComponent({ ...defaultProps, dashboardTitle });
+
+            const expected = `${prefix}${"a".repeat(maxTitleLength)}`;
+            expect(screen.getByDisplayValue(expected)).toBeInTheDocument();
+            expect(screen.getByPlaceholderText(expected)).toBeInTheDocument();
+        });
+
+        it("Should submit the shortened title", async () => {
+            const onSubmit = vi.fn();
+            renderComponent({ ...defaultProps, dashboardTitle: "a".repeat(255), onSubmit });
+
+            await userEvent.click(screen.getByText("Create dashboard"));
+
+            await waitFor(() => {
+                expect(onSubmit).toHaveBeenCalledWith(`${prefix}${"a".repeat(maxTitleLength)}`, true, true);
+            });
+        });
+
+        it("Should keep the whole localized text in a locale where the title goes first", async () => {
+            // ja-JP puts the title before the localized text; read that text from the rendered dialog
+            const { unmount } = renderComponent({ ...defaultProps, dashboardTitle: "§", locale: "ja-JP" });
+            const shortTitle = (await screen.findByPlaceholderText(/§/)).getAttribute("placeholder") ?? "";
+            unmount();
+
+            renderComponent({ ...defaultProps, dashboardTitle: "a".repeat(255), locale: "ja-JP" });
+
+            const expected = shortTitle.replace("§", "a".repeat(255 - (shortTitle.length - 1)));
+            expect(expected).toHaveLength(255);
+            expect(await screen.findByDisplayValue(expected)).toBeInTheDocument();
+        });
+    });
+
     it("Should not render note if isKpiWidgetEnabled is not true", () => {
         renderComponent({
             ...defaultProps,

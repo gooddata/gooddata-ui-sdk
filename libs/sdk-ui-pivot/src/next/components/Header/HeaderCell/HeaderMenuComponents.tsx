@@ -141,6 +141,8 @@ function buildUiAggregationMenuItems(
                     id: rowItem.id,
                     stringTitle: rowItem.title,
                     isSelected: rowItem.isActive,
+                    isDisabled: rowItem.isDisabled,
+                    tooltip: rowItem.disabledTooltip,
                     data: rowItem,
                 });
             });

@@ -1181,7 +1181,7 @@ export const selectDrillableItemsByAvailableDrillTargets: (
         ),
 );
 
-function getMetricDisabled(insight: IInsight | undefined | null, localIdentifier: string): boolean {
+export function getMetricDisabled(insight: IInsight | undefined | null, localIdentifier: string): boolean {
     return (
         insight?.insight.properties?.["controls"]?.["disableKeyDriveAnalysisOn"]?.[localIdentifier] ?? false
     );

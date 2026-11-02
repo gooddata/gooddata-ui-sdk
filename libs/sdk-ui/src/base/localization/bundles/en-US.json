@@ -391,6 +391,10 @@
         "text": "Rollup (Total) aggregation is not available when filtering the visualization by ranking filter. To use Rollup (Total), remove ranking filter from the filter bar.",
         "crowdinContext": "The tooltip that is shown in pivot's table totals menu when rollup (native) total is disabled because ranking filters are configured for the pivot."
     },
+    "visualizations.totals.dropdown.tooltip.subtotal.disabled.measureSort": {
+        "text": "Row subtotals are not available when sorting by a metric. Clear metric sorting to show subtotals.",
+        "crowdinContext": "Tooltip for a disabled grouped row aggregation in the pivot table when a metric sort prevents the backend from returning subtotals. Grand totals remain available."
+    },
     "visualizations.totals.dropdown.title.med": {
         "text": "Median",
         "crowdinContext": "Total of type 'Median'. Showed in menu before adding to table."
@@ -3772,8 +3776,8 @@
         "crowdinContext": "Title of dialog used for granting data source permission to users or groups."
     },
     "userManagement.tab.dataSources": {
-        "text": "Data Sources ({count})",
-        "crowdinContext": "Label of tab that lists data sources assigned to a user. The placeholder {count} will be replaced with a number, e.g., 'Data Sources (5)' when user has 5 data source assignments."
+        "text": "Data sources ({count})",
+        "crowdinContext": "Label of tab that lists data sources assigned to a user. The placeholder {count} will be replaced with a number, e.g., 'Data sources (5)' when user has 5 data source assignments."
     },
     "userManagement.buttons.addDataSourcePermission": {
         "text": "Add data source permission",
@@ -4237,7 +4241,7 @@
     },
     "userManagement.userDetail.language.notSetOption": {
         "text": "Not set, follows each workspace",
-        "crowdinContext": "First item in the list of languages. Choosing it removes the user's own language, so each workspace's language applies"
+        "crowdinContext": "Shown instead of a language when the user did not set one for themselves, and as the first item in the list of languages. Choosing it removes the user's own language, so each workspace's language applies"
     },
     "userManagement.userDetail.interfaceLanguage.notSet.tooltip": {
         "text": "Interface language follows each workspace",

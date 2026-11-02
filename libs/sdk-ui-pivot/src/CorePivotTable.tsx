@@ -70,7 +70,7 @@ import { StickyRowManager } from "./impl/stickyRow/stickyRowManager.js";
 import { type IScrollPosition } from "./impl/stickyRowHandler.js";
 import { TableFacadeInitializer } from "./impl/tableFacadeInitializer.js";
 import { ComponentUpdateAnalyzer } from "./impl/updates/componentUpdateAnalyzer.js";
-import { getTotalsForColumnsBucket, sanitizeDefTotals } from "./impl/utils.js";
+import { getTotalsForAttributeBucket, getTotalsForColumnsBucket } from "./impl/utils.js";
 import { type ICorePivotTableProps } from "./publicTypes.js";
 import { type ICorePivotTableState, InternalTableState } from "./tableState.js";
 
@@ -276,7 +276,7 @@ export function CorePivotTableAgImpl(props: ICorePivotTableProps) {
 
         return {
             readyToRender: false,
-            columnTotals: cloneDeep(sanitizeDefTotals(execution.definition)),
+            columnTotals: cloneDeep(getTotalsForAttributeBucket(execution.definition)),
             rowTotals: getTotalsForColumnsBucket(execution.definition),
             desiredHeight: config!.maxHeight,
             resized: false,
@@ -860,14 +860,13 @@ export function CorePivotTableAgImpl(props: ICorePivotTableProps) {
 
             sortingEventHandlers: new SortingEventHandlers({
                 internal,
-                getExecutionDefinition,
+                getColumnTotals,
                 pushDataGuard,
                 setState,
             }),
 
             aggregationEventHandlers: new AggregationEventHandlers({
                 internal,
-                getExecutionDefinition,
                 getColumnTotals,
                 getRowTotals,
                 pushDataGuard,
@@ -885,7 +884,6 @@ export function CorePivotTableAgImpl(props: ICorePivotTableProps) {
     }, [
         autoresizeColumns,
         getColumnTotals,
-        getExecutionDefinition,
         getGroupRows,
         getLastSortedColId,
         getResizingConfig,
@@ -1025,7 +1023,7 @@ export function CorePivotTableAgImpl(props: ICorePivotTableProps) {
             setState(
                 {
                     readyToRender: false,
-                    columnTotals: cloneDeep(sanitizeDefTotals(execution.definition)),
+                    columnTotals: cloneDeep(getTotalsForAttributeBucket(execution.definition)),
                     rowTotals: getTotalsForColumnsBucket(execution.definition),
                     error: undefined,
                     desiredHeight: propsRef.current.config!.maxHeight,

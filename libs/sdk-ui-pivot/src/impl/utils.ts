@@ -1,14 +1,13 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { once } from "lodash-es";
 
 import {
     type IAttributeDescriptor,
     type IExecutionDefinition,
-    type ISortItem,
     type ITotal,
     bucketTotals,
     bucketsFind,
-    sanitizeBucketTotals,
 } from "@gooddata/sdk-model";
 import { BucketNames, type DataViewFacade } from "@gooddata/sdk-ui";
 
@@ -56,23 +55,11 @@ export async function sleep(delay: number): Promise<void> {
 }
 
 /**
- * Get only valid totals from an execution definition given a list of sort items
- * Use provided totals, if not given, use totals from ATTRIBUTE bucket
- *
- * @param definition - an execution definition to sanitize
- * @param sortItems - a specification of the sort, if not provided definition.sortBy will be used
- * @param totals - totals to be sanitized, if not provided ATTRIBUTE bucket totals will be used
+ * Get totals from an execution definition for the ATTRIBUTE bucket, independently of sorting.
  */
-export function sanitizeDefTotals(
-    definition: IExecutionDefinition,
-    sortItems?: ISortItem[],
-    totals?: ITotal[],
-): ITotal[] {
-    const { buckets, sortBy } = definition;
+export function getTotalsForAttributeBucket({ buckets }: IExecutionDefinition): ITotal[] {
     const attributeBucket = bucketsFind(buckets, BucketNames.ATTRIBUTE);
-    return attributeBucket
-        ? sanitizeBucketTotals(attributeBucket, sortItems ?? sortBy, totals ?? bucketTotals(attributeBucket))
-        : [];
+    return attributeBucket ? bucketTotals(attributeBucket) : [];
 }
 
 /**

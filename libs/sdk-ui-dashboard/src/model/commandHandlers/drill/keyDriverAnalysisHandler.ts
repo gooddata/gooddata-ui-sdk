@@ -50,7 +50,7 @@ export function* keyDriverAnalysisHandler(
     });
 
     const metric = drillEvent.dataView.definition.measures.find((m) => {
-        return localIdentifiers.includes(m.measure.localIdentifier);
+        return m.measure.localIdentifier === keyDriveItem.measure.measureHeaderItem.localIdentifier;
     });
     const metrics = drillEvent.dataView.definition.measures.filter((m) => m !== metric);
 

@@ -317,7 +317,7 @@ describe("getCustomizedConfiguration", () => {
                     enabled: false,
                 },
                 title: {
-                    text: null,
+                    text: "",
                 },
             };
             expect(result.yAxis).toMatchObject([expectedResult]);

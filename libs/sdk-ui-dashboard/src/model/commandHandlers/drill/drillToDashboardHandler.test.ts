@@ -9,6 +9,7 @@ import {
     type IDrillToCustomUrl,
     type IDrillToDashboard,
     idRef,
+    measureLocalId,
     newAttribute,
     newDefForItems,
     newMeasure,
@@ -54,6 +55,57 @@ describe("drillToDashboardHandler parameter inheritance", () => {
     } as IDashboardDrillEvent;
 
     let Tester: DashboardTester;
+
+    function getDateDescriptor(): IAttributeDescriptor {
+        const dateAttribute = Tester.select(selectCatalogDateAttributes)[0];
+        return {
+            attributeHeader: {
+                uri: dateAttribute.defaultDisplayForm.uri,
+                identifier: dateAttribute.defaultDisplayForm.id,
+                ref: dateAttribute.defaultDisplayForm.ref,
+                primaryLabel: dateAttribute.defaultDisplayForm.ref,
+                localIdentifier: "date",
+                name: dateAttribute.attribute.title,
+                granularity: dateAttribute.granularity,
+                formOf: {
+                    ref: dateAttribute.attribute.ref,
+                    uri: dateAttribute.attribute.uri,
+                    identifier: dateAttribute.attribute.id,
+                    name: dateAttribute.attribute.title,
+                },
+            },
+        };
+    }
+
+    function createKeyDriveItem(
+        descriptor: IAttributeDescriptor,
+        localIdentifier: string,
+    ): IDashboardKeyDriverCombinationItem {
+        return {
+            where: "after",
+            type: "comparative",
+            difference: 1,
+            values: [1, 2],
+            measure: { measureHeaderItem: { localIdentifier, name: "Metric", format: "#,##0" } },
+            range: [
+                {
+                    type: "attributeScope",
+                    descriptor,
+                    header: {
+                        attributeHeaderItem: { uri: "from", name: "From", normalizedValue: "2025-01-01" },
+                    },
+                },
+                {
+                    type: "attributeScope",
+                    descriptor,
+                    header: {
+                        attributeHeaderItem: { uri: "to", name: "To", normalizedValue: "2025-02-01" },
+                    },
+                },
+            ],
+        };
+    }
+
     beforeEach(async () => {
         await preloadedTesterFactory((tester) => {
             Tester = tester;
@@ -169,46 +221,8 @@ describe("drillToDashboardHandler parameter inheritance", () => {
 
             const savedFilters = Tester.select(selectFilterContextFilters);
             const dateAttribute = Tester.select(selectCatalogDateAttributes)[0];
-            const descriptor: IAttributeDescriptor = {
-                attributeHeader: {
-                    uri: dateAttribute.defaultDisplayForm.uri,
-                    identifier: dateAttribute.defaultDisplayForm.id,
-                    ref: dateAttribute.defaultDisplayForm.ref,
-                    primaryLabel: dateAttribute.defaultDisplayForm.ref,
-                    localIdentifier: "date",
-                    name: dateAttribute.attribute.title,
-                    granularity: dateAttribute.granularity,
-                    formOf: {
-                        ref: dateAttribute.attribute.ref,
-                        uri: dateAttribute.attribute.uri,
-                        identifier: dateAttribute.attribute.id,
-                        name: dateAttribute.attribute.title,
-                    },
-                },
-            };
-            const keyDriveItem: IDashboardKeyDriverCombinationItem = {
-                where: "after",
-                type: "comparative",
-                difference: 1,
-                values: [1, 2],
-                measure: { measureHeaderItem: { localIdentifier: "m1", name: "Metric", format: "#,##0" } },
-                range: [
-                    {
-                        type: "attributeScope",
-                        descriptor,
-                        header: {
-                            attributeHeaderItem: { uri: "from", name: "From", normalizedValue: "2025-01-01" },
-                        },
-                    },
-                    {
-                        type: "attributeScope",
-                        descriptor,
-                        header: {
-                            attributeHeaderItem: { uri: "to", name: "To", normalizedValue: "2025-02-01" },
-                        },
-                    },
-                ],
-            };
+            const descriptor = getDateDescriptor();
+            const keyDriveItem = createKeyDriveItem(descriptor, "m1");
             const event = await Tester.dispatchAndWaitFor(
                 keyDriverAnalysis(
                     {
@@ -277,6 +291,54 @@ describe("drillToDashboardHandler parameter inheritance", () => {
             expect(Tester.select(selectFilterContextFilters)).toEqual(savedFilters);
         },
     );
+
+    it("analyses the measure the key driver item was computed from, not the first measure in the definition", async () => {
+        const dateAttribute = Tester.select(selectCatalogDateAttributes)[0];
+        const descriptor = getDateDescriptor();
+        const keyDriveItem = createKeyDriveItem(descriptor, "height");
+        const event = await Tester.dispatchAndWaitFor(
+            keyDriverAnalysis(
+                {
+                    type: "keyDriveAnalysis",
+                    origin: selfDrillDefinition.origin,
+                    transition: "in-place",
+                },
+                {
+                    ...drillEvent,
+                    dataView: dummyDataView(
+                        newDefForItems("reference-workspace", [
+                            newAttribute(dateAttribute.defaultDisplayForm.ref, (a) => a.localId("date")),
+                            newMeasure("days", (m) => m.localId("width")),
+                            newMeasure("probability", (m) => m.localId("height")),
+                        ]),
+                    ),
+                    drillContext: {
+                        type: "mekko",
+                        element: "point",
+                        intersection: [
+                            { header: keyDriveItem.measure },
+                            {
+                                header: {
+                                    measureHeaderItem: {
+                                        localIdentifier: "width",
+                                        name: "Width",
+                                        format: "#,##0",
+                                    },
+                                },
+                            },
+                            { header: descriptor },
+                        ],
+                    },
+                },
+                [],
+                keyDriveItem,
+            ),
+            "GDC.DASH/EVT.DRILL.KEY_DRIVER_ANALYSIS.RESOLVED",
+        );
+
+        expect(measureLocalId(event.payload.keyDriveDefinition.metric)).toBe("height");
+        expect(event.payload.keyDriveDefinition.metrics.map(measureLocalId)).toEqual(["width"]);
+    });
 
     it("carries the source tab's active parameter overrides in the resolved payload (drill to self)", async () => {
         const event = await Tester.dispatchAndWaitFor(

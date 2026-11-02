@@ -111,7 +111,7 @@ export default defineConfig(({ mode, command }): UserConfig => {
             target: "es2022",
             chunkSizeWarningLimit: 10000,
             rolldownOptions: {
-                input: resolve(__dirname, "src/pluggableApp.tsx"),
+                input: resolve(import.meta.dirname, "src/pluggableApp.tsx"),
                 output: {
                     entryFileNames: "static/js/[name].[hash].js",
                     chunkFileNames: "static/js/[name].[hash].chunk.js",

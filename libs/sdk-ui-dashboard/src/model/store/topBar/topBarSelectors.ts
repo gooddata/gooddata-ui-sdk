@@ -33,7 +33,10 @@ import {
     selectCanExportPdf,
 } from "../permissions/permissionsSelectors.js";
 import { selectIsInEditMode, selectIsInViewMode } from "../renderMode/renderModeSelectors.js";
-import { selectIsLayoutEmpty } from "../tabs/layout/layoutSelectors.js";
+import {
+    selectIsLayoutEmpty,
+    selectLayoutHasAnalyticalWidgetsAcrossTabs,
+} from "../tabs/layout/layoutSelectors.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
 import { selectMenuButtonItemsVisibility } from "../ui/uiSelectors.js";
 import { selectHasCopyBlockingReferences } from "../unavailableObjects/copyBlockingReferences.js";
@@ -188,6 +191,21 @@ export const selectIsSaveAsNewButtonVisible: DashboardSelector<boolean> = create
             !isCopyBlocked
         );
     },
+);
+
+/**
+ * Selects whether Save as new is enabled. Visibility and permissions are checked by
+ * {@link selectIsSaveAsNewButtonVisible} and {@link selectSaveAsVisible}.
+ *
+ * @internal
+ */
+export const selectIsSaveAsNewEnabled: DashboardSelector<boolean> = createSelector(
+    selectLayoutHasAnalyticalWidgetsAcrossTabs,
+    selectIsNewDashboard,
+    selectIsReadOnly,
+    // save as copies every tab
+    (hasAnalyticalWidgets, isNewDashboard, isReadOnly) =>
+        hasAnalyticalWidgets && !isNewDashboard && !isReadOnly,
 );
 
 /**

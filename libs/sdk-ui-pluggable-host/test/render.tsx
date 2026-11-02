@@ -21,13 +21,16 @@ import { HostChromeProviders } from "../src/ui/HostChromeProviders.js";
  * If you feel that they are missing here some additional providers (of global relevance), feel free to add them here.
  */
 export function render(jsx: ReactNode, options: RenderOptions = {}): RenderResult & { user: UserEvent } {
+    const backend = dummyBackend();
     return {
         user: userEvent.setup(),
-        ...testingLibraryRender(
-            <HostChromeProviders locale="en-US" backend={dummyBackend()}>
-                {jsx}
-            </HostChromeProviders>,
-            options,
-        ),
+        ...testingLibraryRender(jsx, {
+            wrapper: ({ children }) => (
+                <HostChromeProviders locale="en-US" backend={backend}>
+                    {children}
+                </HostChromeProviders>
+            ),
+            ...options,
+        }),
     };
 }

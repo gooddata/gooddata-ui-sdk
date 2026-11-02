@@ -55,6 +55,7 @@ import {
     isScatterPlot,
     isSupportingJoinedAttributeAxisName,
     isTreeCategories,
+    isTreemap,
     percentFormatter,
 } from "../_util/common.js";
 import { canComboChartBeStackedInPercent } from "../comboChart/comboChartOptions.js";
@@ -1457,6 +1458,12 @@ function getYAxisTickConfiguration(
         return {};
     }
 
+    if (isTreemap(type)) {
+        // treemap lays out its points on hidden 0-100 axes with no ticks; since Highcharts 12.5 user axis
+        // options override its defaults, and startOnTick/endOnTick would make the axis extremes undefined
+        return {};
+    }
+
     return {
         startOnTick: shouldStartOnTick(chartOptions, axisPropsKey),
         endOnTick: shouldEndOnTick(chartOptions, axisPropsKey),
@@ -1539,7 +1546,9 @@ const getYAxisConfiguration = (
         const allowDecimalsProp =
             useCustomFormat && isMeasureFormatInteger(axis.format) ? { allowDecimals: false } : {};
 
-        const titleTextProp = visible ? {} : { text: null }; // new way how to hide title instead of deprecated 'enabled'
+        // empty text hides the title; yAxis title no longer accepts null since Highcharts 12.3
+        // and undefined would be dropped by lodash merge
+        const titleTextProp = visible ? {} : { text: "" };
         const isInvertedChart = isInvertedChartType(chartOptions.type, chartConfig?.orientation?.position);
 
         return {

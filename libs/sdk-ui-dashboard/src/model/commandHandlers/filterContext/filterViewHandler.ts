@@ -203,7 +203,7 @@ function* applyFilterViewSelection(
     ctx: DashboardContext,
     cmd: IDashboardCommand,
     filterView: IDashboardFilterView,
-    options?: { adoptAsOriginal?: boolean },
+    options?: { setAsOriginalToo?: boolean },
 ): SagaIterator<void> {
     const attributeFilterConfigs: IDashboardAttributeFilterConfig[] = yield select(
         selectAttributeFilterConfigsOverrides,
@@ -230,7 +230,7 @@ function* applyFilterViewSelection(
                 workspaceParameters,
             ),
             correlationId: cmd.correlationId,
-            adoptAsOriginal: options?.adoptAsOriginal,
+            setAsOriginalToo: options?.setAsOriginalToo,
         }),
     );
     // inline, so the view is applied before the caller continues: a queued command would run after
@@ -244,7 +244,7 @@ function* applyFilterViewSelection(
             resetOthers: true,
             correlationId: cmd.correlationId,
             // a default view initializes the shared state, so the applied values are what a reset restores
-            adoptAsOriginal: options?.adoptAsOriginal,
+            setAsOriginalToo: options?.setAsOriginalToo,
             // a filter view snapshots this dashboard's own filter context, so its localIdentifiers
             // are authoritative; display form matching alone cannot tell apart filters that share
             // a display form
@@ -300,7 +300,7 @@ export function* applyDefaultFilterViewOnFirstTabVisit(
     // The tab stays unmarked, so its next visit retries the view.
     try {
         if (defaultFilterView) {
-            yield call(applyFilterViewSelection, ctx, cmd, defaultFilterView, { adoptAsOriginal: true });
+            yield call(applyFilterViewSelection, ctx, cmd, defaultFilterView, { setAsOriginalToo: true });
         }
         yield put(filterViewsActions.markDefaultFilterViewApplied(tabLocalIdentifier));
     } catch (error) {

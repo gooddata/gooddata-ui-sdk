@@ -2,11 +2,15 @@
 
 import { defineMessage } from "react-intl";
 
-import { type IFeatureFlags, type IWorkspacePermissions } from "@gooddata/sdk-model";
+import { type IFeatureFlags, type IWorkspacePermissions, LANGUAGE_NAMES } from "@gooddata/sdk-model";
+import { type ILocale } from "@gooddata/sdk-ui";
 
 import { type IHeaderMenuItem } from "./typings.js";
 
 // Use a constant with defineMessage so that i18n validation does not mark it as unused
+/**
+ * @internal
+ */
 export const LANGUAGE_MENU_ITEM_ID = defineMessage({ id: "userMenu.language" }).id;
 const WORKSPACE_SETTINGS_MENU_ITEM_ID = defineMessage({ id: "gs.header.workspaceSettings" }).id;
 /**
@@ -26,7 +30,8 @@ export interface IUiSettings {
  */
 export interface IGenerateHeaderAccountMenuItemsOptions {
     workspaceId?: string;
-    featureFlags?: IFeatureFlags;
+    featureFlags: IFeatureFlags;
+    currentLanguage: ILocale;
 }
 
 /**
@@ -34,7 +39,7 @@ export interface IGenerateHeaderAccountMenuItemsOptions {
  */
 export function generateHeaderAccountMenuItems(
     workspacePermissions: IWorkspacePermissions,
-    { workspaceId, featureFlags }: IGenerateHeaderAccountMenuItemsOptions = {},
+    { workspaceId, featureFlags, currentLanguage }: IGenerateHeaderAccountMenuItemsOptions,
 ): IHeaderMenuItem[] {
     const { canManageProject } = workspacePermissions;
     const accountMenuItems: IHeaderMenuItem[] = [];
@@ -44,7 +49,7 @@ export function generateHeaderAccountMenuItems(
     // ".../workspaces/:workspaceId/settings" onto the configuration page. In legacy standalone
     // mode the same path is served directly from the root. This mirrors the logoHref convention
     // used by the app runtimes (enableShellApplication ? "/organization/settings" : "/").
-    const workspaceSettingsBasePath = featureFlags?.enableShellApplication ? "/organization/settings" : "";
+    const workspaceSettingsBasePath = featureFlags.enableShellApplication ? "/organization/settings" : "";
     const workspaceSettingsItem = {
         key: WORKSPACE_SETTINGS_MENU_ITEM_ID,
         className: "s-workspace-settings",
@@ -55,10 +60,13 @@ export function generateHeaderAccountMenuItems(
         className: "s-logout",
     };
 
-    if (featureFlags?.enableUserLanguageChange) {
-        accountMenuItems.push({ key: LANGUAGE_MENU_ITEM_ID });
+    if (featureFlags.enableUserLanguageChange) {
+        accountMenuItems.push({
+            key: LANGUAGE_MENU_ITEM_ID,
+            value: LANGUAGE_NAMES[currentLanguage].nativeName,
+        });
     }
-    if (canManageProject && featureFlags?.enableWorkspaceSettingsAppHeaderMenuItem) {
+    if (canManageProject && featureFlags.enableWorkspaceSettingsAppHeaderMenuItem) {
         accountMenuItems.push(workspaceSettingsItem);
     }
     accountMenuItems.push(logoutItem);
