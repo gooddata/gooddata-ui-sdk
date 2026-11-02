@@ -1,6 +1,6 @@
 # (C) 2026 GoodData Corporation
 # /// script
-# dependencies = ["datamodel-code-generator[ruff]>=0.66.1"]
+# dependencies = ["datamodel-code-generator[ruff]==0.83.0"]
 # requires-python = ">=3.10"
 # ///
 

@@ -607,23 +607,24 @@ function findMeasureValueCounterpart(
     sourceFilter: IDashboardMeasureValueFilter,
     targets: FilterContextItem[],
 ): IDashboardMeasureValueFilter | undefined {
-    return targets
-        .filter(isDashboardMeasureValueFilter)
-        .find(
-            (filter) =>
-                areObjRefsEqual(
-                    filter.dashboardMeasureValueFilter.measure,
-                    sourceFilter.dashboardMeasureValueFilter.measure,
-                ) &&
-                dimensionalityCompatible(
-                    filter.dashboardMeasureValueFilter.dimensionality,
-                    sourceFilter.dashboardMeasureValueFilter.dimensionality,
-                ),
-        );
+    const compatible = targets.filter(
+        (filter): filter is IDashboardMeasureValueFilter =>
+            isDashboardMeasureValueFilter(filter) &&
+            areObjRefsEqual(
+                filter.dashboardMeasureValueFilter.measure,
+                sourceFilter.dashboardMeasureValueFilter.measure,
+            ) &&
+            dimensionalityCompatible(
+                filter.dashboardMeasureValueFilter.dimensionality,
+                sourceFilter.dashboardMeasureValueFilter.dimensionality,
+            ),
+    );
+    return compatible.length === 1 ? compatible[0] : undefined;
 }
 
 /**
  * A measure value filter syncs only with a filter on the same measure and the same dimensionality.
+ * The attributes are compared as a set, because their order does not change the filter result.
  * Missing dimensionality matches only another missing dimensionality.
  */
 function dimensionalityCompatible(left: ObjRef[] | undefined, right: ObjRef[] | undefined): boolean {
@@ -632,5 +633,6 @@ function dimensionalityCompatible(left: ObjRef[] | undefined, right: ObjRef[] | 
     if (leftRefs.length !== rightRefs.length) {
         return false;
     }
-    return leftRefs.every((ref, index) => areObjRefsEqual(ref, rightRefs[index]));
+
+    return leftRefs.every((leftRef) => rightRefs.some((rightRef) => areObjRefsEqual(leftRef, rightRef)));
 }

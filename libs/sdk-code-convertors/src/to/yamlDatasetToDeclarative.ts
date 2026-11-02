@@ -480,6 +480,9 @@ export function buildAttributeLabels(
             output.geoAreaConfig = {
                 collection: {
                     id: label.geo_area_config.collection.id,
+                    ...(label.geo_area_config.collection.kind
+                        ? { kind: label.geo_area_config.collection.kind }
+                        : {}),
                 },
             };
         }

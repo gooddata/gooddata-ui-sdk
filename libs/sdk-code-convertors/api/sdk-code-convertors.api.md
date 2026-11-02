@@ -3758,6 +3758,10 @@ export type ScatterChartConfigProperties = {
         visible: boolean | "auto";
         style: "auto" | "backplate";
     };
+    legend: {
+        enabled: boolean;
+        position: "top" | "bottom" | "left" | "right" | "auto";
+    };
     xaxis: {
         format: "inherit" | "auto";
         max: number | string;
@@ -3807,6 +3811,10 @@ export function scatterChartSave(_fields: Visualisation["query"]["fields"] | und
     dataLabels: {
         visible: "auto" | boolean | undefined;
         style: "auto" | "backplate" | undefined;
+    } | undefined;
+    legend: {
+        enabled: boolean | undefined;
+        position: string | undefined;
     } | undefined;
     xaxis: {
         format: string | undefined;

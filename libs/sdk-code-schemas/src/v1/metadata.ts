@@ -1932,6 +1932,10 @@ export interface GeoAreaConfig {
          * Identifier of a GEO collection describing valid areas.
          */
         id: string;
+        /**
+         * Type of the GEO collection. When omitted, the backend uses its default.
+         */
+        kind?: "STATIC" | "CUSTOM";
     };
 }
 export interface LabelTranslation {

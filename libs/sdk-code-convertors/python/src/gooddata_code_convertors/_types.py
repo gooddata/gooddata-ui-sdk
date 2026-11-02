@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: d2aab5e374ec09cfd67a1e6679aba2eacf4421c9e84950f8e0d2e77c5c6320d7
+# schema-hash: 582442dbcf1e97fa695a65710a31333730a92ec74b68760d83bcb1180004fd0c
 
 from __future__ import annotations
 
@@ -73,6 +73,7 @@ __all__ = [
     "Fields",
     "Format",
     "GeoAreaConfig",
+    "GeoCollectionKind",
     "Gridlines",
     "HeadingSlot",
     "Identifier",
@@ -622,20 +623,15 @@ SourceColumn: TypeAlias = str
 DataType: TypeAlias = Literal['INT', 'STRING', 'DATE', 'NUMERIC', 'TIMESTAMP', 'TIMESTAMP_TZ', 'BOOLEAN', 'HLL']
 
 
-class Collection(TypedDict):
-    id: str
-
-
-class GeoAreaConfig(TypedDict):
-    collection: Collection
-
-
 class Source(TypedDict):
     source_column: SourceColumn
     data_type: DataType
     target: str
     is_nullable: NotRequired[bool]
     null_value_join_replacement: NotRequired[str]
+
+
+GeoCollectionKind: TypeAlias = Literal['STATIC', 'CUSTOM']
 
 
 class Name(TypedDict):
@@ -1295,6 +1291,15 @@ class AggregatedFact(TypedDict):
     assigned_to: str
     is_nullable: NotRequired[bool]
     null_value_join_replacement: NotRequired[str]
+
+
+class Collection(TypedDict):
+    id: str
+    kind: NotRequired[GeoCollectionKind]
+
+
+class GeoAreaConfig(TypedDict):
+    collection: Collection
 
 
 class LabelTranslation(TypedDict):

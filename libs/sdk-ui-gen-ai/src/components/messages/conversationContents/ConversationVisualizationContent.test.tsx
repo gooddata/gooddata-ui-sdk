@@ -31,6 +31,12 @@ import {
 
 import { ConversationVisualizationContent } from "./ConversationVisualizationContent.js";
 
+// With `isolate: false`, earlier test files may have cached the component with real dependencies.
+// Reset before imports so the visualization and save-check mocks below are used regardless of file order.
+vi.hoisted(() => {
+    vi.resetModules();
+});
+
 const messages = Object.fromEntries(Object.entries(en_US).map(([id, message]) => [id, message.text]));
 
 const visualisationMock = vi.hoisted(() => ({
@@ -329,10 +335,12 @@ describe("ConversationVisualizationContent - VisualizationMenu slot", () => {
         slots,
         canAnalyze = true,
         linkHandler,
+        part = mockPart,
     }: {
         slots?: IGenAIAssistantSlots;
         canAnalyze?: boolean;
         linkHandler?: (event: LinkHandlerEvent) => string | undefined;
+        part?: IChatConversationMultipartLocalPart;
     }) {
         const store = configureStore({
             reducer: {
@@ -361,7 +369,7 @@ describe("ConversationVisualizationContent - VisualizationMenu slot", () => {
         return render(
             <ConversationVisualizationContent
                 message={mockMessage}
-                part={mockPart}
+                part={part}
                 visualization={mockVisualization}
             />,
             { wrapper: Wrapper },
@@ -383,6 +391,7 @@ describe("ConversationVisualizationContent - VisualizationMenu slot", () => {
 
     beforeEach(() => {
         saveCheck.visualisationSaved = false;
+        visualisationMock.props = undefined;
     });
 
     it("renders the built-in menu items by default", () => {
@@ -390,6 +399,62 @@ describe("ConversationVisualizationContent - VisualizationMenu slot", () => {
         openMenu();
 
         expect(menuItemTitles()).toEqual(["Save visualization", "Open in Analyze"]);
+    });
+
+    it.each(["save check", "conversation part"])(
+        "keeps open and copy actions after a fatal error when saved via %s",
+        (savedVia) => {
+            saveCheck.visualisationSaved = savedVia === "save check";
+            renderContent({
+                part: {
+                    ...mockPart,
+                    saved:
+                        savedVia === "conversation part" ? mockVisualization.insight.identifier : undefined,
+                },
+            });
+            expect(screen.getByTestId("gen-ai-visualization-toggle-button")).toBeInTheDocument();
+
+            act(() => visualisationMock.props?.onVisualisationError?.(new UnexpectedSdkError()));
+            openMenu();
+
+            expect(menuItemTitles()).toEqual(["Open in Analyze", COPY_LINK_TITLE]);
+            expect(screen.queryByTestId("gen-ai-visualization-toggle-button")).not.toBeInTheDocument();
+        },
+    );
+
+    it("hides the menu and table toggle after a fatal error for an unsaved visualization", () => {
+        renderContent({});
+
+        act(() => visualisationMock.props?.onVisualisationError?.(new UnexpectedSdkError()));
+
+        expect(screen.queryByTestId("gen-ai-visualization-menu-button")).not.toBeInTheDocument();
+        expect(screen.queryByTestId("gen-ai-visualization-toggle-button")).not.toBeInTheDocument();
+    });
+
+    it("hides saved visualization actions after a fatal error without analyze permission", () => {
+        saveCheck.visualisationSaved = true;
+        renderContent({ canAnalyze: false });
+
+        act(() => visualisationMock.props?.onVisualisationError?.(new UnexpectedSdkError()));
+
+        expect(screen.queryByTestId("gen-ai-visualization-menu-button")).not.toBeInTheDocument();
+        expect(screen.queryByTestId("gen-ai-visualization-toggle-button")).not.toBeInTheDocument();
+    });
+
+    it.each([
+        { action: "open", title: "Open in Analyze" },
+        { action: "copy", title: COPY_LINK_TITLE },
+    ])("handles $action for a saved visualization after a fatal error", ({ action, title }) => {
+        saveCheck.visualisationSaved = true;
+        const linkHandler = vi.fn();
+        renderContent({ linkHandler });
+
+        act(() => visualisationMock.props?.onVisualisationError?.(new UnexpectedSdkError()));
+        openMenu();
+        fireEvent.click(screen.getByText(title));
+
+        expect(linkHandler).toHaveBeenCalledTimes(1);
+        expect(linkHandler).toHaveBeenCalledWith(expect.objectContaining({ action }));
     });
 
     it("renders a custom item and closes the menu after it is selected", () => {

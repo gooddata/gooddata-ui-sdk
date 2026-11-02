@@ -33,10 +33,10 @@ import {
     selectIsInEditMode,
     selectIsInViewMode,
 } from "../../../model/store/renderMode/renderModeSelectors.js";
-import { selectLayoutHasAnalyticalWidgets } from "../../../model/store/tabs/layout/layoutSelectors.js";
 import {
     selectDeleteVisible,
     selectFilterViewsVisible,
+    selectIsSaveAsNewEnabled,
     selectPdfExportVisible,
     selectSaveAsVisible,
     selectSettingsVisible,
@@ -84,7 +84,6 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
     const isMobile = useMediaQuery("mobileDevice");
     const isSmall = useMediaQuery("<=md");
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
-    const isEmptyLayout = !useDashboardSelector(selectLayoutHasAnalyticalWidgets); // we need at least one non-custom widget there
     const settings = useDashboardSelector(selectSettings);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
     const hasAnyLimitBreaks = useDashboardSelector(selectHasAnyExecutionResultLimitBreaks);
@@ -239,7 +238,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
 
     // Do not show save as new button in menu item when it is already shown as a standalone top bar button.
     const isSaveAsVisible = useDashboardSelector(selectSaveAsVisible);
-    const isSaveAsDisabled = isEmptyLayout || isNewDashboard || isReadOnly;
+    const isSaveAsDisabled = !useDashboardSelector(selectIsSaveAsNewEnabled);
 
     const isSettingsVisible = useDashboardSelector(selectSettingsVisible);
     const isSettingsDisabled = isReadOnly;

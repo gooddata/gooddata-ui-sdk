@@ -27,6 +27,7 @@ import {
     type ChatResetEvent,
     type ChatSaveVisualizationErrorEvent,
     type ChatSaveVisualizationSuccessEvent,
+    type ChatUserAnswersEvent,
     type ChatUserMessageEvent,
     isChatAssistantMessageEvent,
     isChatClarificationQuestionsEvent,
@@ -42,6 +43,7 @@ import {
     isChatResetEvent,
     isChatSaveVisualizationErrorEvent,
     isChatSaveVisualizationSuccessEvent,
+    isChatUserAnswersEvent,
     isChatUserMessageEvent,
 } from "../store/events.js";
 import {
@@ -77,6 +79,7 @@ export type GenAIChatConnectedEvent =
     | { name: "reset"; payload: ChatResetEvent }
     | { name: "conversation-changed"; payload: ChatConversationChangedEvent }
     | { name: "user-message"; payload: ChatUserMessageEvent }
+    | { name: "user-answers"; payload: ChatUserAnswersEvent }
     | { name: "assistant-message"; payload: ChatAssistantMessageEvent }
     | { name: "reasoning"; payload: ChatReasoningEvent }
     | { name: "feedback"; payload: ChatFeedbackEvent }
@@ -99,6 +102,8 @@ export function toGenAIChatConnectedEvent(event: ChatEvent): GenAIChatConnectedE
         return { name: "conversation-changed", payload: event };
     } else if (isChatUserMessageEvent(event)) {
         return { name: "user-message", payload: event };
+    } else if (isChatUserAnswersEvent(event)) {
+        return { name: "user-answers", payload: event };
     } else if (isChatAssistantMessageEvent(event)) {
         return { name: "assistant-message", payload: event };
     } else if (isChatReasoningEvent(event)) {

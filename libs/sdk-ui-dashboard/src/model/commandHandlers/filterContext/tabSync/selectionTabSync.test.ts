@@ -898,6 +898,33 @@ describe("view mode tab sync", () => {
         );
     });
 
+    it("mirrors a measure value filter when the same dimensionality attributes are in a different order", () => {
+        const region = idRef("region", "attribute");
+        const product = idRef("product", "attribute");
+        const initial = makeState([
+            {
+                localIdentifier: "tab-a",
+                filterContext: filterContext([measureFilter("mvf_0", 1, [region, product])]),
+            },
+            {
+                localIdentifier: "tab-d",
+                filterContext: filterContext([measureFilter("mvf-d", 1, [product, region])]),
+            },
+        ]);
+
+        const next = sync(
+            initial,
+            tabsActions.changeMeasureValueFilterCondition({
+                localIdentifier: "mvf_0",
+                conditions: [{ comparison: { operator: "GREATER_THAN", value: 1000 } }],
+            }),
+        );
+
+        expect(next.tabs?.[1]?.filterContext?.filterContextDefinition?.filters[0]).toEqual(
+            measureFilter("mvf-d", 1000, [product, region]),
+        );
+    });
+
     it("does not mirror a measure value filter when only one side has dimensionality", () => {
         const region = idRef("region", "attribute");
         const target = measureFilter("mvf-b", 1, [region]);
@@ -915,6 +942,55 @@ describe("view mode tab sync", () => {
         );
 
         expect(next.tabs?.[1]?.filterContext?.filterContextDefinition?.filters).toEqual([target]);
+    });
+
+    it("mirrors the single compatible measure value filter when another filter uses the same measure", () => {
+        const region = idRef("region", "attribute");
+        const product = idRef("product", "attribute");
+        const other = measureFilter("mvf-other", 2, [product]);
+        const initial = makeState([
+            {
+                localIdentifier: "tab-a",
+                filterContext: filterContext([measureFilter("mvf_0", 1, [region])]),
+            },
+            {
+                localIdentifier: "tab-b",
+                filterContext: filterContext([other, measureFilter("mvf-b", 1, [region])]),
+            },
+        ]);
+        const next = sync(
+            initial,
+            tabsActions.changeMeasureValueFilterCondition({
+                localIdentifier: "mvf_0",
+                conditions: [{ comparison: { operator: "GREATER_THAN", value: 50 } }],
+            }),
+        );
+        expect(next.tabs?.[1]?.filterContext?.filterContextDefinition?.filters).toEqual([
+            other,
+            measureFilter("mvf-b", 50, [region]),
+        ]);
+    });
+
+    it("does not mirror a measure value filter when two target filters share the measure and dimensionality", () => {
+        const region = idRef("region", "attribute");
+        const product = idRef("product", "attribute");
+        const first = measureFilter("mvf-first", 2, [region, product]);
+        const second = measureFilter("mvf-second", 3, [product, region]);
+        const initial = makeState([
+            {
+                localIdentifier: "tab-a",
+                filterContext: filterContext([measureFilter("mvf_0", 1, [region, product])]),
+            },
+            { localIdentifier: "tab-b", filterContext: filterContext([first, second]) },
+        ]);
+        const next = sync(
+            initial,
+            tabsActions.changeMeasureValueFilterCondition({
+                localIdentifier: "mvf_0",
+                conditions: [{ comparison: { operator: "GREATER_THAN", value: 50 } }],
+            }),
+        );
+        expect(next.tabs?.[1]?.filterContext?.filterContextDefinition?.filters).toEqual([first, second]);
     });
 
     it("does not mirror a measure value filter onto a different dimensionality of the same measure", () => {

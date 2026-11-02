@@ -19,10 +19,15 @@ import { messagesSliceName, messagesSliceReducer } from "../store/messages/messa
 
 import { GenAiKeyDriverAnalysis } from "./GenAiKeyDriverAnalysis.js";
 
-const { intlWrapperMock, kdaDialogControllerMock } = vi.hoisted(() => ({
-    intlWrapperMock: vi.fn(),
-    kdaDialogControllerMock: vi.fn(),
-}));
+// With `isolate: false`, earlier test files may have cached the component with real dependencies.
+// Reset before imports so the dashboard mocks below are used regardless of file order.
+const { intlWrapperMock, kdaDialogControllerMock } = vi.hoisted(() => {
+    vi.resetModules();
+    return {
+        intlWrapperMock: vi.fn(),
+        kdaDialogControllerMock: vi.fn(),
+    };
+});
 
 vi.mock("@gooddata/sdk-ui-dashboard/internal", () => ({
     IntlWrapper: ({ children, locale }: { children: ReactNode; locale: string }) => {

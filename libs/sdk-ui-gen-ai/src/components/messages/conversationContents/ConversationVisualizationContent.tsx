@@ -433,13 +433,9 @@ function VisualisationMenu({
         onCopy,
     ]);
 
-    if (hasError) {
-        return null;
-    }
-
     return (
         <div className="gd-gen-ai-chat__conversation__visualization__buttons">
-            {config.canAnalyze && canConvertToTable(type) ? (
+            {!hasError && config.canAnalyze && canConvertToTable(type) ? (
                 <div className={cx("gd-gen-ai-chat__conversation__visualization__table")}>
                     <UiTooltip
                         triggerBy={["focus", "hover"]}

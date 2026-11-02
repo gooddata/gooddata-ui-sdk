@@ -7,7 +7,11 @@ import { type FilterContextItem, areObjRefsEqual, idRef } from "@gooddata/sdk-mo
 import { type DashboardState } from "../../types.js";
 import { unavailableObjectsEntityAdapter } from "../../unavailableObjects/unavailableObjectsEntityAdapter.js";
 
-import { selectAllFiltersForWidgetByRefAcrossTabs, selectAllInsightWidgetRefs } from "./layoutSelectors.js";
+import {
+    selectAllFiltersForWidgetByRefAcrossTabs,
+    selectAllInsightWidgetRefs,
+    selectLayoutHasAnalyticalWidgetsAcrossTabs,
+} from "./layoutSelectors.js";
 
 function attributeFilter(
     localIdentifier: string,
@@ -238,6 +242,67 @@ describe("layoutSelectors", () => {
                 [],
                 [],
             ]);
+        });
+    });
+
+    describe("selectLayoutHasAnalyticalWidgetsAcrossTabs", () => {
+        function stateWithNestedLayout(nestedItems: unknown[]) {
+            return {
+                tabs: {
+                    tabs: [
+                        {
+                            localIdentifier: "tab-1",
+                            layout: {
+                                layout: {
+                                    type: "IDashboardLayout",
+                                    sections: [
+                                        {
+                                            type: "IDashboardLayoutSection",
+                                            items: [
+                                                {
+                                                    type: "IDashboardLayoutItem",
+                                                    size: { xl: { gridWidth: 12 } },
+                                                    widget: {
+                                                        type: "IDashboardLayout",
+                                                        sections: [
+                                                            {
+                                                                type: "IDashboardLayoutSection",
+                                                                items: nestedItems,
+                                                            },
+                                                        ],
+                                                    },
+                                                },
+                                            ],
+                                        },
+                                    ],
+                                },
+                            },
+                        },
+                    ],
+                    activeTabLocalIdentifier: "tab-1",
+                },
+            } as unknown as DashboardState;
+        }
+
+        it("should be false when the only nested layout is empty", () => {
+            expect(selectLayoutHasAnalyticalWidgetsAcrossTabs(stateWithNestedLayout([]))).toBe(false);
+        });
+
+        it("should be true when a nested layout contains an insight widget", () => {
+            const state = stateWithNestedLayout([
+                {
+                    type: "IDashboardLayoutItem",
+                    size: { xl: { gridWidth: 12 } },
+                    widget: {
+                        type: "insight",
+                        identifier: "nested-widget",
+                        ref: idRef("nested-widget", "insight"),
+                        insight: idRef("target-insight", "insight"),
+                    },
+                },
+            ]);
+
+            expect(selectLayoutHasAnalyticalWidgetsAcrossTabs(state)).toBe(true);
         });
     });
 });

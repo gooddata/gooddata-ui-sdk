@@ -26,6 +26,12 @@ import { type IChatConversationLocalItem } from "../../../model.js";
 
 import { ConversationVisualisation } from "./ConversationVisualisation.js";
 
+// With `isolate: false`, earlier test files may have cached the component with real dependencies.
+// Reset before imports so the visualization mocks below are used regardless of file order.
+vi.hoisted(() => {
+    vi.resetModules();
+});
+
 type RecordedProps = {
     config?: {
         separators?: ISeparators;

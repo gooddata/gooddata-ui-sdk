@@ -206,7 +206,7 @@ export class CancelledSdkError extends GoodDataSdkError {
 export type ChartElementType = "slice" | "bar" | "point" | "label" | "cell" | "target" | "primary" | "comparative";
 
 // @public (undocumented)
-export type ChartType = "bar" | "column" | "pie" | "line" | "area" | "donut" | "scatter" | "bubble" | "heatmap" | "geo" | "pushpin" | "choropleth" | "combo" | "combo2" | "histogram" | "bullet" | "treemap" | "waterfall" | "funnel" | "pyramid" | "pareto" | "alluvial" | "sankey" | "dependencywheel" | "repeater" | "radar" | "mekko";
+export type ChartType = "bar" | "column" | "pie" | "line" | "area" | "donut" | "scatter" | "bubble" | "heatmap" | "geo" | "pushpin" | "choropleth" | "combo" | "combo2" | "bullet" | "treemap" | "waterfall" | "funnel" | "pyramid" | "sankey" | "dependencywheel" | "repeater" | "radar" | "mekko";
 
 // @alpha
 export function ClientWorkspaceProvider(props: IClientWorkspaceProviderProps): JSX.Element;
@@ -2661,14 +2661,11 @@ export const VisualizationTypes: {
     CHOROPLETH: "choropleth";
     COMBO: "combo";
     COMBO2: "combo2";
-    HISTOGRAM: "histogram";
     BULLET: "bullet";
     TREEMAP: "treemap";
     WATERFALL: "waterfall";
     FUNNEL: "funnel";
     PYRAMID: "pyramid";
-    PARETO: "pareto";
-    ALLUVIAL: "alluvial";
     SANKEY: "sankey";
     DEPENDENCY_WHEEL: "dependencywheel";
     XIRR: "xirr";

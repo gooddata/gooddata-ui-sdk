@@ -40,7 +40,7 @@ export function* changeParameterValuesHandler(
         return;
     }
 
-    const { parameters, tabLocalIdentifier, restorePerTabOriginals, adoptAsOriginal } = cmd.payload;
+    const { parameters, tabLocalIdentifier, restorePerTabOriginals, setAsOriginalToo } = cmd.payload;
     const tabId: string = tabLocalIdentifier ?? (yield select(selectActiveOrDefaultTabLocalIdentifier));
     const valuesBefore: ReturnType<typeof selectParameterValuesByTab> =
         yield select(selectParameterValuesByTab);
@@ -56,7 +56,7 @@ export function* changeParameterValuesHandler(
         tabsActions.setParameterRuntimeValues({ values: parameters, tabLocalIdentifier }),
         ...restoreActions,
     ]);
-    if (adoptAsOriginal) {
+    if (setAsOriginalToo) {
         yield put(tabsActions.adoptRuntimeValuesAsResetBaseline(writtenParametersOf(dispatchedActions)));
     }
 

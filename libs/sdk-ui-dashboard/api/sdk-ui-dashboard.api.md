@@ -668,7 +668,8 @@ export type ChangeFilterContextSelectionParams = {
     tabLocalIdentifier?: string;
     matchByLocalIdentifier?: boolean;
     restorePerTabOriginals?: boolean;
-    adoptAsOriginal?: boolean;
+    setAsOriginalToo?: boolean;
+    skipSync?: boolean;
 };
 
 // @public
@@ -679,7 +680,8 @@ export type ChangeFilterContextSelectionPayload = {
     tabLocalIdentifier?: string;
     matchByLocalIdentifier?: boolean;
     restorePerTabOriginals?: boolean;
-    adoptAsOriginal?: boolean;
+    setAsOriginalToo?: boolean;
+    skipSync?: boolean;
 };
 
 // @alpha
@@ -764,7 +766,7 @@ export type ChangeParameterValuesParams = {
     tabLocalIdentifier?: string;
     correlationId?: string;
     restorePerTabOriginals?: boolean;
-    adoptAsOriginal?: boolean;
+    setAsOriginalToo?: boolean;
 };
 
 // @beta
@@ -3609,10 +3611,10 @@ export interface IChangeParameterValues extends IDashboardCommand {
 
 // @internal
 export interface IChangeParameterValuesPayload {
-    readonly adoptAsOriginal?: boolean;
     // (undocumented)
     readonly parameters: IParameterValueChange[];
     readonly restorePerTabOriginals?: boolean;
+    readonly setAsOriginalToo?: boolean;
     // (undocumented)
     readonly tabLocalIdentifier?: string;
 }
