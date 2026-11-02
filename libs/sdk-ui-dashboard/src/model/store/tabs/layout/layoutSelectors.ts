@@ -841,6 +841,18 @@ export function isInsightWidgetTabContext(context: IWidgetTabContext): context i
 }
 
 /**
+ * Selects whether any tab of the dashboard contains at least one analytical widget. Nested layouts
+ * count only through the widgets they contain.
+ *
+ * @internal
+ */
+export const selectLayoutHasAnalyticalWidgetsAcrossTabs: DashboardSelector<boolean> = createSelector(
+    selectAllTabsWidgetContexts,
+    (contexts) =>
+        contexts.some(({ widget }) => !isCustomWidget(widget) && !isExtendedDashboardLayoutWidget(widget)),
+);
+
+/**
  * Selects the local identifier of the tab that contains the specified widget.
  * Returns undefined if the widget is not found in any tab.
  *

@@ -17,6 +17,7 @@ import {
     type ChatOpenedEvent,
     type ChatReasoningEvent,
     type ChatResetEvent,
+    type ChatUserAnswersEvent,
     type ChatUserMessageEvent,
     type LinkHandlerEvent,
     type ChatModeChangeEvent,
@@ -54,6 +55,7 @@ export type GenAIChatEvent =
     | { name: "chat.conversation-changed"; payload: ChatConversationChangedEvent }
     | { name: "chat.feedback"; payload: ChatFeedbackEvent }
     | { name: "chat.user-message"; payload: ChatUserMessageEvent }
+    | { name: "chat.user-answers"; payload: ChatUserAnswersEvent }
     | { name: "chat.mode-changed"; payload: ChatModeChangeEvent }
     | { name: "chat.definition-received"; payload: ChatDefinitionReceivedEvent }
     | { name: "chat.clarification-questions"; payload: ChatClarificationQuestionsEvent }
@@ -74,6 +76,8 @@ export function toHostGenAIChatEvent(event: GenAIChatConnectedEvent): GenAIChatE
             return { name: "chat.feedback", payload: event.payload };
         case "user-message":
             return { name: "chat.user-message", payload: event.payload };
+        case "user-answers":
+            return { name: "chat.user-answers", payload: event.payload };
         case "assistant-message":
             return { name: "chat.assistant-message", payload: event.payload };
         case "reasoning":

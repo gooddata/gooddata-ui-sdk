@@ -19,6 +19,12 @@ import {
     type ConversationVisualisationProps,
 } from "./ConversationVisualisationV2.js";
 
+// With `isolate: false`, earlier test files may have cached the component with real dependencies.
+// Reset before imports so the visualization mocks below are used regardless of file order.
+vi.hoisted(() => {
+    vi.resetModules();
+});
+
 type RecordedProps = {
     insight?: IInsight["insight"];
     locale?: string;

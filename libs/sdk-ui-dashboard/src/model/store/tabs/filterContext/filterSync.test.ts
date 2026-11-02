@@ -17,7 +17,7 @@ import {
 import { type ITabState } from "../tabsState.js";
 
 import { type FilterContextState, type WorkingFilterContextItem } from "./filterContextState.js";
-import { seedSyncedTabFilters } from "./filterSync.js";
+import { findCounterpartFilter, seedSyncedTabFilters } from "./filterSync.js";
 
 const displayForm = idRef("region.name", "displayForm");
 const otherDisplayForm = idRef("region.code", "displayForm");
@@ -100,6 +100,40 @@ function filterContext(
             : {}),
     };
 }
+
+function tab(localIdentifier: string, filters: FilterContextItem[]): ITabState {
+    return { localIdentifier, filterContext: filterContext(filters) };
+}
+
+describe("findCounterpartFilter", () => {
+    const region = idRef("region", "attribute");
+    const product = idRef("product", "attribute");
+
+    it("matches the only measure-value filter with the same measure and dimensionality", () => {
+        const sourceFilter = measureFilter("mvf-a", 1, [region, product]);
+        const differentDimensionality = measureFilter("mvf-other", 3, [product]);
+        const counterpart = measureFilter("mvf-b", 2, [product, region]);
+        const source = tab("tab-a", [sourceFilter]);
+        const target = tab("tab-b", [differentDimensionality, counterpart]);
+        expect(findCounterpartFilter(source, sourceFilter, target)).toBe(counterpart);
+    });
+
+    it("does not match when two target filters share the measure and dimensionality", () => {
+        const sourceFilter = measureFilter("mvf-a", 1, [region, product]);
+        const first = measureFilter("mvf-b", 2, [region, product]);
+        const second = measureFilter("mvf-c", 3, [product, region]);
+        const source = tab("tab-a", [sourceFilter]);
+        expect(findCounterpartFilter(source, sourceFilter, tab("tab-b", [first, second]))).toBeUndefined();
+        expect(findCounterpartFilter(source, sourceFilter, tab("tab-c", [second, first]))).toBeUndefined();
+    });
+
+    it("does not match two measure-value filters that both omit dimensionality", () => {
+        const sourceFilter = measureFilter("mvf-a", 1);
+        const source = tab("tab-a", [sourceFilter]);
+        const target = tab("tab-b", [measureFilter("mvf-b", 2), measureFilter("mvf-c", 3)]);
+        expect(findCounterpartFilter(source, sourceFilter, target)).toBeUndefined();
+    });
+});
 
 describe("seedSyncedTabFilters", () => {
     const base = { title: "filterContext", description: "", filters: [] };

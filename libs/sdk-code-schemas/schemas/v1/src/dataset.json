@@ -806,12 +806,20 @@
                         "id": {
                             "type": "string",
                             "description": "Identifier of a GEO collection describing valid areas."
+                        },
+                        "kind": {
+                            "$ref": "#/$defs/geoCollectionKind",
+                            "description": "Type of the GEO collection. When omitted, the backend uses its default."
                         }
                     },
                     "required": ["id"]
                 }
             },
             "required": ["collection"]
+        },
+        "geoCollectionKind": {
+            "type": "string",
+            "enum": ["STATIC", "CUSTOM"]
         },
         "workspace_data_filter": {
             "type": "object",

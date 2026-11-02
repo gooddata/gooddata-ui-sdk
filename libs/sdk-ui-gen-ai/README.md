@@ -20,6 +20,50 @@ const App = () => {
 };
 ```
 
+## Headless copilot workflow (alpha)
+
+`CopilotHandler` owns plain immutable workflow state; it requires no Redux setup.
+Register each build type with its reacting skills, pure definition acceptance policy,
+and host application callback. Create one instance per editor/runtime, not a singleton.
+
+```typescript
+import { CopilotBuildType, CopilotHandler } from "@gooddata/sdk-ui-gen-ai/copilot";
+
+const copilot = new CopilotHandler({
+    registrations: [
+        {
+            type: CopilotBuildType.Dashboard,
+            skills: ["dashboard_builder", "dashboard_editor"],
+            resolveDefinition: (event) =>
+                event.definitionType === "dashboard" && event.dashboard
+                    ? { type: CopilotBuildType.Dashboard, objectId: event.dashboard.identifier }
+                    : undefined,
+            onApplyDefinition: (event, applicationId, target) => {
+                // Install in the host. Dispatching a host action is not completion.
+                installDefinition(event).then(
+                    () => copilot.definitionApplied(applicationId, target),
+                    () => copilot.definitionApplicationInterrupted(applicationId),
+                );
+            },
+        },
+    ],
+});
+
+const unsubscribe = copilot.subscribe(() => {
+    renderProgress(copilot.getStatus({ type: CopilotBuildType.Dashboard }));
+});
+copilot.startGeneration(CopilotBuildType.Dashboard);
+// Forward each existing ChatEvent once: copilot.handleEvent(event).
+// On teardown:
+unsubscribe();
+copilot.dispose();
+```
+
+`installDefinition` and `renderProgress` above are application functions. Pure consumers can use
+`transitionCopilot` and the exported selectors directly. React consumers may subscribe with
+`useCopilotSnapshot(copilot)`; the hook adds no workflow owner. Application-owned string enums
+can replace the built-in `CopilotBuildType` without changing the lifecycle algorithm.
+
 ## License
 
 (C) 2017-2026 GoodData Corporation

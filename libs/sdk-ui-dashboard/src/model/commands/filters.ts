@@ -1204,7 +1204,15 @@ export type ChangeFilterContextSelectionPayload = {
      *
      * @internal
      */
-    adoptAsOriginal?: boolean;
+    setAsOriginalToo?: boolean;
+
+    /**
+     * When true, only the tab this command addresses is changed, even when filters persist across
+     * tabs. Used when restoring a state that was saved separately for each tab.
+     *
+     * @internal
+     */
+    skipSync?: boolean;
 };
 
 /**
@@ -1286,11 +1294,19 @@ export type ChangeFilterContextSelectionParams = {
     restorePerTabOriginals?: boolean;
     /**
      * When true, the applied values become the initial state a reset restores.
-     * See {@link ChangeFilterContextSelectionPayload.adoptAsOriginal}.
+     * See {@link ChangeFilterContextSelectionPayload.setAsOriginalToo}.
      *
      * @internal
      */
-    adoptAsOriginal?: boolean;
+    setAsOriginalToo?: boolean;
+
+    /**
+     * When true, only the addressed tab is changed.
+     * See {@link ChangeFilterContextSelectionPayload.skipSync}.
+     *
+     * @internal
+     */
+    skipSync?: boolean;
 };
 
 /**
@@ -1316,7 +1332,8 @@ export function changeFilterContextSelectionByParams({
     tabLocalIdentifier,
     matchByLocalIdentifier,
     restorePerTabOriginals,
-    adoptAsOriginal,
+    setAsOriginalToo,
+    skipSync,
 }: ChangeFilterContextSelectionParams): ChangeFilterContextSelection {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION",
@@ -1328,7 +1345,8 @@ export function changeFilterContextSelectionByParams({
             tabLocalIdentifier,
             matchByLocalIdentifier,
             restorePerTabOriginals,
-            adoptAsOriginal,
+            setAsOriginalToo,
+            ...(skipSync ? { skipSync } : {}),
         },
     };
 }

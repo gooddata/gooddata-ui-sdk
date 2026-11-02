@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: d2aab5e374ec09cfd67a1e6679aba2eacf4421c9e84950f8e0d2e77c5c6320d7
+# schema-hash: 582442dbcf1e97fa695a65710a31333730a92ec74b68760d83bcb1180004fd0c
 
 from __future__ import annotations
 
@@ -141,6 +141,7 @@ __all__ = [
     "Format",
     "Function",
     "GeoAreaConfig",
+    "GeoCollectionKind",
     "GrandTotalsPosition",
     "Granularity",
     "Granularity1",
@@ -1514,22 +1515,6 @@ class ValueType1(Enum):
     GEO_AREA = 'GEO_AREA'
 
 
-class Collection(BaseModel):
-    model_config = ConfigDict(
-        extra='forbid',
-    )
-    id: str = Field(
-        ..., description='Identifier of a GEO collection describing valid areas.'
-    )
-
-
-class GeoAreaConfig(BaseModel):
-    model_config = ConfigDict(
-        extra='forbid',
-    )
-    collection: Collection
-
-
 class Source(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
@@ -1547,6 +1532,11 @@ class Source(BaseModel):
         None,
         description='Optional value which can be used as replacement for NULL in join conditions.',
     )
+
+
+class GeoCollectionKind(Enum):
+    STATIC = 'STATIC'
+    CUSTOM = 'CUSTOM'
 
 
 class Type29(Enum):
@@ -4032,6 +4022,26 @@ class AggregatedFact(BaseModel):
         None,
         description='Optional value which can be used as replacement for NULL in join conditions.',
     )
+
+
+class Collection(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    id: str = Field(
+        ..., description='Identifier of a GEO collection describing valid areas.'
+    )
+    kind: GeoCollectionKind | None = Field(
+        None,
+        description='Type of the GEO collection. When omitted, the backend uses its default.',
+    )
+
+
+class GeoAreaConfig(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    collection: Collection
 
 
 class LabelTranslation(BaseModel):

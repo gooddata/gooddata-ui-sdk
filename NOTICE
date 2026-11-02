@@ -11,9 +11,9 @@ This product includes a number of subcomponents with separate copyright notices 
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2026-11-1
+Date generated: 2026-11-2
 
-Revision ID: 1835909e15eea088abc2ecfb2ec865d9983e0b38
+Revision ID: 9001a1d462cb431babb8fe0d38bf2c318a67b3ff
 
 ================================================================================
 ================================================================================
@@ -418,7 +418,6 @@ Revision ID: 1835909e15eea088abc2ecfb2ec865d9983e0b38
 - debug (4.4.3) [MIT]
 - decimal.js (10.6.0) [MIT]
 - decode-named-character-reference (1.3.0) [MIT]
-- decode-uri-component (0.2.2) [MIT]
 - deep-eql (5.0.2) [MIT]
 - default-import (1.1.5) [MIT]
 - defaults (1.0.4) [MIT]
@@ -464,13 +463,13 @@ Revision ID: 1835909e15eea088abc2ecfb2ec865d9983e0b38
 - fast-equals (5.4.3) [MIT]
 - fast-glob (3.3.3) [MIT]
 - fast-json-patch (3.1.1) [MIT]
-- fast-uri (3.1.8) [BSD-3-Clause, bsd-2-clause-views]
+- fast-uri (3.1.9) [BSD-3-Clause, bsd-2-clause-views]
 - fastest-levenshtein (1.0.16) [MIT]
 - fastq (1.20.3) [ISC]
 - fdir (6.5.0) [MIT]
 - file-entry-cache (11.1.5) [MIT]
 - fill-range (7.1.1) [MIT]
-- filter-obj (1.1.0) [MIT]
+- filter-obj (6.1.0) [MIT]
 - find-root (1.1.0) [MIT]
 - flat-cache (6.1.23) [MIT]
 - flatted (3.4.4) [ISC]
@@ -667,7 +666,7 @@ Revision ID: 1835909e15eea088abc2ecfb2ec865d9983e0b38
 - minipass (7.1.3) [ISC]
 - minizlib (3.1.0) [MIT]
 - moment (2.31.0) [MIT]
-- moment-timezone (0.5.35) [MIT]
+- moment-timezone (0.5.35) [MIT, unknown, public-domain]
 - monaco-editor (0.56.0) [MIT, Apache-2.0]
 - moo (0.5.3) [BSD-3-Clause]
 - ms (2.1.3) [MIT]
@@ -726,7 +725,7 @@ Revision ID: 1835909e15eea088abc2ecfb2ec865d9983e0b38
 - protocol-buffers-schema (3.6.1) [MIT]
 - proxy-from-env (2.1.0) [MIT]
 - qified (0.10.1) [MIT]
-- query-string (7.1.3) [MIT]
+- query-string (10.0.0) [MIT]
 - queue-microtask (1.2.3) [MIT]
 - quickselect (2.0.0) [ISC]
 - quickselect (3.0.0) [ISC]
@@ -809,10 +808,9 @@ Revision ID: 1835909e15eea088abc2ecfb2ec865d9983e0b38
 - source-map-support (0.5.21) [MIT]
 - space-separated-tokens (2.0.2) [MIT]
 - spark-md5 (3.0.2) [Multi-license: WTFPL OR MIT]
-- split-on-first (1.1.0) [MIT]
+- split-on-first (4.0.0) [MIT]
 - sql-formatter (12.2.4) [MIT]
 - std-env (4.3.0) [MIT]
-- strict-uri-encode (2.0.0) [MIT]
 - string_decoder (1.3.0) [MIT]
 - string-width (4.2.3) [MIT]
 - stringify-entities (4.0.4) [MIT]
@@ -31703,41 +31701,6 @@ MIT
 - Copyright (c)  Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
-Package Title: decode-uri-component (0.2.2)
-
-Package Locator: npm+decode-uri-component$0.2.2
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-* License Header *
-Copyright (c) 2017 Sam Verschueren <sam.verschueren@gmail.com> (github.com/SamVerschueren)
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-* Copyrights *
-MIT
-- Copyright (c) 2017 Sam Verschueren <sam.verschueren@gmail.com> (github.com/SamVerschueren)
-
---------------------------------------------------------------------------------
 Package Title: deep-eql (5.0.2)
 
 Package Locator: npm+deep-eql$5.0.2
@@ -34487,9 +34450,9 @@ MIT
 - Copyright (c) 2013, 2014, 2020 Joachim Wester
 
 --------------------------------------------------------------------------------
-Package Title: fast-uri (3.1.8)
+Package Title: fast-uri (3.1.9)
 
-Package Locator: npm+fast-uri$3.1.8
+Package Locator: npm+fast-uri$3.1.9
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -34729,9 +34692,9 @@ MIT
 - Copyright (c) 2014 present, Jon Schlinkert.
 
 --------------------------------------------------------------------------------
-Package Title: filter-obj (1.1.0)
+Package Title: filter-obj (6.1.0)
 
-Package Locator: npm+filter-obj$1.1.0
+Package Locator: npm+filter-obj$6.1.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -34740,7 +34703,7 @@ Package Depth: Transitive
 MIT
 
 * License Header *
-Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -34761,7 +34724,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: find-root (1.1.0)
@@ -47076,33 +47039,34 @@ Package Depth: Direct
 --------------------------------------------------------------------------------
 
 * Declared Licenses *
-MIT
+MIT, unknown
+
+* MIT *
 
 * License Header *
-The MIT License (MIT)
-
-Copyright (c) JS Foundation and other contributors
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
+Copyright (c) <year> <copyright holders>
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
-* Copyrights *
-MIT
-- Copyright (c)  JS Foundation and other contributors
+* unknown *
+
+* Other Licenses *
+public-domain
 
 --------------------------------------------------------------------------------
 Package Title: monaco-editor (0.56.0)
@@ -50969,9 +50933,9 @@ SOFTWARE.
 
 
 --------------------------------------------------------------------------------
-Package Title: query-string (7.1.3)
+Package Title: query-string (10.0.0)
 
-Package Locator: npm+query-string$7.1.3
+Package Locator: npm+query-string$10.0.0
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -50980,7 +50944,7 @@ Package Depth: Direct
 MIT
 
 * License Header *
-Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (http://sindresorhus.com)
+Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -51001,7 +50965,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (http://sindresorhus.com)
+- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: queue-microtask (1.2.3)
@@ -55993,9 +55957,9 @@ The reason to have two licenses is that some entities refuse to use the master l
 bad language. If that's also your case, you can choose the alternative license.
 
 --------------------------------------------------------------------------------
-Package Title: split-on-first (1.1.0)
+Package Title: split-on-first (4.0.0)
 
-Package Locator: npm+split-on-first$1.1.0
+Package Locator: npm+split-on-first$4.0.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -56004,7 +55968,7 @@ Package Depth: Transitive
 MIT
 
 * License Header *
-Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -56025,7 +55989,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: sql-formatter (12.2.4)
@@ -56107,41 +56071,6 @@ SOFTWARE.
 * Copyrights *
 MIT
 - Copyright (c)  Pooya Parsa <pooya@pi0.io>
-
---------------------------------------------------------------------------------
-Package Title: strict-uri-encode (2.0.0)
-
-Package Locator: npm+strict-uri-encode$2.0.0
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-* License Header *
-Copyright (c)  Kevin Martensson <kevinmartensson@gmail.com> (github.com/kevva)
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-* Copyrights *
-MIT
-- Copyright (c)  Kevin Martensson <kevinmartensson@gmail.com> (github.com/kevva)
 
 --------------------------------------------------------------------------------
 Package Title: string_decoder (1.3.0)
@@ -71093,4 +71022,4 @@ MIT
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2026-11-1
+Report Generated by FOSSA on 2026-11-2

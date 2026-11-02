@@ -7975,6 +7975,10 @@
                         "id": {
                             "type": "string",
                             "description": "Identifier of a GEO collection describing valid areas."
+                        },
+                        "kind": {
+                            "$ref": "#/$defs/geoCollectionKind",
+                            "description": "Type of the GEO collection. When omitted, the backend uses its default."
                         }
                     },
                     "required": ["id"]
@@ -8030,6 +8034,7 @@
             },
             "required": ["source_column", "data_type", "target"]
         },
+        "geoCollectionKind": { "type": "string", "enum": ["STATIC", "CUSTOM"] },
         "publisherDocumentV2": {
             "title": "Publisher Document V2",
             "type": "object",

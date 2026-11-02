@@ -2,6 +2,101 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.66.0",
+            "tag": "@gooddata/sdk-ui-all_v11.66.0",
+            "date": "Mon, 02 Nov 2026 10:22:02 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-ui-all: Added current language indicator to the user account menu both on desktop and mobile."
+                    },
+                    {
+                        "comment": "sdk-ui-pluggable-host: Preloaded the default language right away on site visit to improve the perceived performance when opening the user language change dialog."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: New UiKit component `UiGrid`, an accessible grid of pickable cells."
+                    },
+                    {
+                        "comment": "sdk-model: Add optional retiredEarlyAccessValues to early access and production feature configs."
+                    },
+                    {
+                        "comment": "sdk-ui-metric-component: Keep metric descriptions read-only when the metric is locked or the user does not have edit permission."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Report the visualizations of a Publisher v2 document that the viewer may not see."
+                    },
+                    {
+                        "comment": "sdk-ui: Remove the unused `histogram`, `pareto` and `alluvial` placeholders from the `ChartType` union and `VisualizationTypes`"
+                    },
+                    {
+                        "comment": "chore: Upgrade fast-uri to 3.1.9 to fix security vulnerabilities (GHSA-333x-w4r6-6crp, GHSA-xhq7-xmqj-769h, GHSA-w74x-v6f9-j3xg, GHSA-wjr9-j795-jxcr)."
+                    },
+                    {
+                        "comment": "chore: Upgrade follow-redirects to 1.16.2 to fix a security vulnerability (GHSA-mrwp-f3q8-3g9p)."
+                    },
+                    {
+                        "comment": "sdk-ui-charts: Bump highcharts from 12.2.0 to 12.6.2 to fix security vulnerabilities (CVE-2026-116796, CVE-2026-118244, CVE-2026-118250, CVE-2026-118251 and unfiltered breadcrumbs.style SVG event-handler attributes)."
+                    },
+                    {
+                        "comment": "chore: Upgrade ip-address to 10.7.4 to fix security vulnerability (GHSA-rxp7-6hxx-x8q5)."
+                    },
+                    {
+                        "comment": "chore: Upgrade query-string to 7.1.3"
+                    },
+                    {
+                        "comment": "chore: Upgrade query-string to 8.2.0"
+                    },
+                    {
+                        "comment": "chore: Upgrade query-string to 9.5.1 to fix security vulnerabilities in decode-uri-component (GHSA-qr28-fpjm-wq7f, GHSA-vcc3-ghjq-m6fr)."
+                    },
+                    {
+                        "comment": "chore: Upgrade vite to 8.3.5 to fix security vulnerabilities (GHSA-587h-7wmj-h5pm, GHSA-698v-4r3x-3vcv, GHSA-r825-w8mm-5pxw, GHSA-rq7h-c2jc-7f22, GHSA-9jrq-w75r-8gcw)."
+                    },
+                    {
+                        "comment": "chore: Upgrade zod to 4.6.7 to fix security vulnerability (GHSA-mrhx-c7xc-m3w5)."
+                    },
+                    {
+                        "comment": "chore: Upgrade happy-dom to 21.0.4 to fix security vulnerabilities (GHSA-834v-8h66-3h79, GHSA-c8p4-j97h-3vg8, GHSA-5fpq-26gf-qwcr)."
+                    },
+                    {
+                        "comment": "sdk-code-convertors, sdk-code-schemas: Analytics as code keeps the legend of scatter charts and the kind of the geo collection of GEO_AREA labels."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: The user detail names languages from the shared language list, shows \"Not set, follows each workspace\" for a language the user did not set, and offers Delete user in edit mode. sdk-ui-kit: The modal mask covers an open drawer."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Report alert proposals in ChatDefinitionReceivedEvent."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Key driver analysis on a Mekko chart now explains the Height measure the columns show instead of the Width measure, and compares neighbouring dates of the same measure when the chart has a Stack by attribute; key driver analysis also skips measures it is disabled on"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Add conversation ID support and improve dashboard editing."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: A failed AI conversation message request no longer throws an unhandled \"Cannot close an errored readable stream\" error."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Save as new no longer fails when the copy title would exceed 255 characters; the title is shortened instead."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Save as new is disabled only when the whole dashboard is empty, for viewers and editors alike."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Changing filters in the alert dialog keeps the selected comparison period."
+                    }
+                ],
+                "patch": [
+                    {
+                        "comment": "sdk-ui-pivot: Allow grouped totals after sorting by attributes, preserve them when saving insights, and explain why adding subtotals is unavailable with metric sorting."
+                    },
+                    {
+                        "comment": "sdk-ui-charts: Fix scatter plot legend toggles when NULL coordinates leave gaps in cluster or segment indices."
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.65.1",
             "tag": "@gooddata/sdk-ui-all_v11.65.1",
             "date": "Thu, 29 Oct 2026 14:43:57 GMT",

@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { parse as queryStringParse } from "query-string";
+import queryString from "query-string";
 
 export interface IHashFragments {
     reportId: string;
@@ -47,7 +47,7 @@ function extract(str: string) {
 
 function parseQuery(hash: string) {
     const queryPart = extract(hash);
-    return queryStringParse(queryPart);
+    return queryString.parse(queryPart);
 }
 
 // The hash carries no workspace prefix (the host owns the workspace in the pathname), so the

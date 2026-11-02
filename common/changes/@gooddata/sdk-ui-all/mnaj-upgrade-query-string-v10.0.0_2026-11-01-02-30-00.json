@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "sdk-ui-dashboard: Changing filters in the alert dialog keeps the selected comparison period.",
+            "comment": "chore: Upgrade query-string to 10.0.0",
             "type": "none"
         }
     ],

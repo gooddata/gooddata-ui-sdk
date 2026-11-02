@@ -317,7 +317,8 @@ export function* changeFilterContextSelectionHandler(
         tabLocalIdentifier,
         matchByLocalIdentifier = false,
         restorePerTabOriginals = false,
-        adoptAsOriginal = false,
+        setAsOriginalToo = false,
+        skipSync = false,
     } = cmd.payload;
 
     // Validate that the target tab exists if tabLocalIdentifier is provided
@@ -508,7 +509,7 @@ export function* changeFilterContextSelectionHandler(
         call(getMeasureValueFiltersUpdateActions, measureValueFilters, resetOthers, tabLocalIdentifier),
     ]);
 
-    const session: ITabSyncSession = yield call(beginTabSync, { tabLocalIdentifier });
+    const session: ITabSyncSession = yield call(beginTabSync, { tabLocalIdentifier, enabled: !skipSync });
 
     // Ensure display form metadata is loaded for filters that will actually be applied.
     // This handles the case where a default saved view changed filter types (e.g., list→text)
@@ -542,7 +543,7 @@ export function* changeFilterContextSelectionHandler(
 
     // A default filter view initializes the shared state. The values it wrote are that initial state,
     // on this tab and on every tab they were synced to, so a reset restores them.
-    if (adoptAsOriginal) {
+    if (setAsOriginalToo) {
         yield put(tabsActions.adoptAppliedFiltersAsOriginal(writtenFiltersOf(dispatchedActions)));
     }
 }
