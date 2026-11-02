@@ -188,11 +188,11 @@ export function DefaultDashboardSettingsDialog({
                             tooltip={intl.formatMessage({
                                 id: "filters.configurationPanel.persistentFiltersAcrossTabs.toggle.tooltip",
                             })}
-                            isChecked={!currentData.disablePersistentFiltersAcrossTabs}
+                            isChecked={currentData.enablePersistentFiltersAcrossTabs}
                             onChange={(isChecked: boolean) => {
                                 setCurrentData({
                                     ...currentData,
-                                    disablePersistentFiltersAcrossTabs: !isChecked,
+                                    enablePersistentFiltersAcrossTabs: isChecked,
                                 });
                             }}
                         />

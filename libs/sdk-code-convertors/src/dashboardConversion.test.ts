@@ -360,7 +360,7 @@ describe("dashboard conversion", () => {
             expect(content.disableUserFilterSave).toBe(true);
             expect(content.disableUserFilterReset).toBe(true);
             expect(content.disableFilterViews).toBe(true);
-            expect(content.disablePersistentFiltersAcrossTabs).toBe(true);
+            expect(content.enablePersistentFiltersAcrossTabs).toBe(false);
         });
 
         it("should convert dashboard timezone config as one content object", () => {
@@ -610,6 +610,33 @@ describe("dashboard conversion", () => {
             );
 
             expect(json.cross_filtering).toBe(false);
+        });
+
+        it.each([true, false])("should round-trip persistent_filters_across_tabs=%s", (value) => {
+            const input = makeDashboard({ persistent_filters_across_tabs: value });
+
+            const { dashboard, filterContext } = yamlDashboardToDeclarative(emptyEntities, input);
+            const { json } = declarativeDashboardToYaml(
+                emptyFromEntities,
+                dashboard,
+                filterContext ? [filterContext] : [],
+            );
+
+            expect(json.persistent_filters_across_tabs).toBe(value);
+        });
+
+        it("should not emit persistent_filters_across_tabs for a stored null", () => {
+            const { dashboard, filterContext } = yamlDashboardToDeclarative(emptyEntities, makeDashboard({}));
+            dashboard.content = { ...dashboard.content, enablePersistentFiltersAcrossTabs: null } as any;
+
+            const { json, content } = declarativeDashboardToYaml(
+                emptyFromEntities,
+                dashboard,
+                filterContext ? [filterContext] : [],
+            );
+
+            expect(json).not.toHaveProperty("persistent_filters_across_tabs");
+            expect(content).not.toContain("persistent_filters_across_tabs");
         });
 
         it("should round-trip dashboard timezone config", () => {

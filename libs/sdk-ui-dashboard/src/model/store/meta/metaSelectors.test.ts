@@ -74,24 +74,24 @@ describe("selectPersistedEnablePersistentFiltersAcrossTabs", () => {
         );
     });
 
-    function persistSetting(disablePersistentFiltersAcrossTabs: boolean): void {
+    function persistSetting(enablePersistentFiltersAcrossTabs: boolean): void {
         const dashboard = selectPersistedDashboard(Tester.state())!;
         Tester.dispatch(
-            metaActions.setMeta({ dashboard: { ...dashboard, disablePersistentFiltersAcrossTabs } }),
+            metaActions.setMeta({ dashboard: { ...dashboard, enablePersistentFiltersAcrossTabs } }),
         );
     }
 
     it("ignores an unsaved enablement", () => {
-        persistSetting(true);
-        Tester.dispatch(metaActions.setDisablePersistentFiltersAcrossTabs(false));
+        persistSetting(false);
+        Tester.dispatch(metaActions.setEnablePersistentFiltersAcrossTabs(true));
 
         expect(Tester.select(selectEnablePersistentFiltersAcrossTabs)).toBe(true);
         expect(Tester.select(selectPersistedEnablePersistentFiltersAcrossTabs)).toBe(false);
     });
 
     it("ignores an unsaved disablement", () => {
-        persistSetting(false);
-        Tester.dispatch(metaActions.setDisablePersistentFiltersAcrossTabs(true));
+        persistSetting(true);
+        Tester.dispatch(metaActions.setEnablePersistentFiltersAcrossTabs(false));
 
         expect(Tester.select(selectEnablePersistentFiltersAcrossTabs)).toBe(false);
         expect(Tester.select(selectPersistedEnablePersistentFiltersAcrossTabs)).toBe(true);

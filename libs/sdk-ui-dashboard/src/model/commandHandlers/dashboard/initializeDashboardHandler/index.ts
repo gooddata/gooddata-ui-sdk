@@ -368,7 +368,7 @@ function* loadExistingDashboard(
     // same rule as selectEnablePersistentFiltersAcrossTabs, which cannot be selected before init
     const persistFiltersAcrossTabs =
         !!config.settings.enableDashboardPersistentFiltersAcrossTabs &&
-        loadedDashboard.disablePersistentFiltersAcrossTabs === false;
+        loadedDashboard.enablePersistentFiltersAcrossTabs === true;
     const filterViewOptions = { persistFiltersAcrossTabs, activeTabLocalIdentifier: resolvedActiveTabId };
     const preloadedAttributeFilters: SagaReturnType<typeof loadAttributesForSharedDefaultFilterView> =
         yield call(

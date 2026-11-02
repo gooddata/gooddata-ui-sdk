@@ -27249,11 +27249,11 @@ interface IAnalyticalDashboardCommonProps {
     // (undocumented)
     disableFilterViews?: boolean;
     // (undocumented)
-    disablePersistentFiltersAcrossTabs?: boolean;
-    // (undocumented)
     disableUserFilterReset?: boolean;
     // (undocumented)
     disableUserFilterSave?: boolean;
+    // (undocumented)
+    enablePersistentFiltersAcrossTabs?: boolean;
     // (undocumented)
     evaluationFrequency?: string;
     // (undocumented)

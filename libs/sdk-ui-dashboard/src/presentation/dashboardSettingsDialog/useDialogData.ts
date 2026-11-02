@@ -8,9 +8,9 @@ import { normalizeDashboardTimezoneConfig } from "@gooddata/sdk-model";
 
 import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
 import {
+    selectDashboardPersistentFiltersAcrossTabs,
     selectDashboardTimezoneConfig,
     selectDisableDashboardCrossFiltering,
-    selectDisableDashboardPersistentFiltersAcrossTabs,
     selectDisableDashboardUserFilterReset,
     selectDisableDashboardUserFilterSave,
     selectDisableFilterViews,
@@ -25,8 +25,9 @@ export function useDialogData() {
     const disableUserFilterReset = useDashboardSelector(selectDisableDashboardUserFilterReset) ?? false;
     const disableFilterViews = useDashboardSelector(selectDisableFilterViews) ?? false;
     const disableUserFilterSave = useDashboardSelector(selectDisableDashboardUserFilterSave) ?? false;
-    const disablePersistentFiltersAcrossTabs =
-        useDashboardSelector(selectDisableDashboardPersistentFiltersAcrossTabs) ?? true;
+    const enablePersistentFiltersAcrossTabs = useDashboardSelector(
+        selectDashboardPersistentFiltersAcrossTabs,
+    );
     const evaluationFrequency = useDashboardSelector(selectEvaluationFrequency) ?? undefined;
     const sectionHeadersDateDataSet = useDashboardSelector(selectSectionHeadersDateDataSet) ?? undefined;
     const timezoneConfig = normalizeDashboardTimezoneConfig(
@@ -38,7 +39,7 @@ export function useDialogData() {
         disableUserFilterSave,
         disableUserFilterReset,
         disableFilterViews,
-        disablePersistentFiltersAcrossTabs,
+        enablePersistentFiltersAcrossTabs,
         evaluationFrequency,
         sectionHeadersDateDataSet,
         timezoneConfig,

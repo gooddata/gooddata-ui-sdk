@@ -1172,7 +1172,7 @@ export type DashboardConfig = {
     exportMetadata?: Record<string, string>;
     disableCrossFiltering?: boolean;
     disableUserFilterReset?: boolean;
-    disablePersistentFiltersAcrossTabs?: boolean;
+    enablePersistentFiltersAcrossTabs?: boolean;
     hideAddTabButton?: boolean;
     openAutomationOnLoad?: boolean;
     focusObject?: IDashboardFocusObject;
@@ -1245,7 +1245,7 @@ export type DashboardDeinitializedPayload = {
 export type DashboardDensity = "comfortable" | "compact";
 
 // @public (undocumented)
-export type DashboardDescriptor = Pick<IDashboard, "title" | "description" | "tags" | "disableCrossFiltering" | "disableUserFilterReset" | "disableUserFilterSave" | "disableFilterViews" | "disablePersistentFiltersAcrossTabs" | "evaluationFrequency" | "sectionHeadersDateDataSet" | "timezoneConfig"> & IAccessControlAware;
+export type DashboardDescriptor = Pick<IDashboard, "title" | "description" | "tags" | "disableCrossFiltering" | "disableUserFilterReset" | "disableUserFilterSave" | "disableFilterViews" | "enablePersistentFiltersAcrossTabs" | "evaluationFrequency" | "sectionHeadersDateDataSet" | "timezoneConfig"> & IAccessControlAware;
 
 // @public (undocumented)
 export type DashboardDispatch = Dispatch<AnyAction>;
@@ -5996,11 +5996,11 @@ export interface IDashboardSettingsApplyPayload {
     // (undocumented)
     disableFilterViews: boolean;
     // (undocumented)
-    disablePersistentFiltersAcrossTabs: boolean;
-    // (undocumented)
     disableUserFilterReset: boolean;
     // (undocumented)
     disableUserFilterSave: boolean;
+    // (undocumented)
+    enablePersistentFiltersAcrossTabs: boolean;
     // (undocumented)
     evaluationFrequency: string | undefined;
     // (undocumented)
@@ -11000,7 +11000,7 @@ export const metaActions: {
     setDashboardTitle: ActionCreatorWithPayload<string, "meta/setDashboardTitle">;
     setDashboardTimezoneConfig: ActionCreatorWithOptionalPayload<IDashboardTimezoneConfig | undefined, "meta/setDashboardTimezoneConfig">;
     setDisableCrossFiltering: ActionCreatorWithPayload<boolean, "meta/setDisableCrossFiltering">;
-    setDisablePersistentFiltersAcrossTabs: ActionCreatorWithPayload<boolean, "meta/setDisablePersistentFiltersAcrossTabs">;
+    setEnablePersistentFiltersAcrossTabs: ActionCreatorWithPayload<boolean, "meta/setEnablePersistentFiltersAcrossTabs">;
     setDisableUserFilterReset: ActionCreatorWithPayload<boolean, "meta/setDisableUserFilterReset">;
     setDisableUserFilterSave: ActionCreatorWithPayload<boolean, "meta/setDisableUserFilterSave">;
     setDisableFilterViews: ActionCreatorWithPayload<boolean, "meta/setDisableFilterViews">;
@@ -12267,6 +12267,9 @@ export const selectDashboardParametersByTab: DashboardSelector<Record<string, ID
 // @public
 export const selectDashboardPermissions: DashboardSelector<IDashboardPermissions>;
 
+// @alpha
+export const selectDashboardPersistentFiltersAcrossTabs: DashboardSelector<boolean>;
+
 // @public
 export const selectDashboardRef: DashboardSelector<ObjRef | undefined>;
 
@@ -12362,9 +12365,6 @@ export const selectDeleteVisible: DashboardSelector<boolean>;
 
 // @public
 export const selectDisableDashboardCrossFiltering: DashboardSelector<boolean>;
-
-// @alpha
-export const selectDisableDashboardPersistentFiltersAcrossTabs: DashboardSelector<boolean>;
 
 // @public
 export const selectDisableDashboardUserFilterReset: DashboardSelector<boolean>;
@@ -12470,6 +12470,9 @@ export const selectEnableDashboardFilterGroups: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableDashboardPartialRendering: DashboardSelector<boolean>;
+
+// @alpha
+export const selectEnableDashboardPersistentFiltersAcrossTabs: DashboardSelector<boolean>;
 
 // @alpha
 export const selectEnableDashboardSectionHeadersDateDataSet: DashboardSelector<boolean>;

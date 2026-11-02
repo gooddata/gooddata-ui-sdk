@@ -281,28 +281,6 @@ export type AllTimeDateFilterAllTimeDateFilterEmptyValueHandlingEnum = 'INCLUDE'
 export type AllTimeDateFilterAllTimeDateFilterGranularityEnum = 'SECOND' | 'SECOND_OF_MINUTE' | 'SECOND_OF_DAY' | 'MINUTE' | 'MINUTE_OF_HOUR' | 'MINUTE_OF_DAY' | 'HOUR' | 'HOUR_OF_DAY' | 'DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK' | 'WEEK_OF_YEAR' | 'MONTH' | 'MONTH_OF_YEAR' | 'QUARTER' | 'QUARTER_OF_YEAR' | 'YEAR' | 'FISCAL_DAY_OF_FISCAL_WEEK' | 'FISCAL_DAY_OF_FISCAL_MONTH' | 'FISCAL_DAY_OF_FISCAL_QUARTER' | 'FISCAL_DAY_OF_FISCAL_SEMESTER' | 'FISCAL_DAY_OF_FISCAL_YEAR' | 'FISCAL_WEEK' | 'FISCAL_WEEK_OF_FISCAL_MONTH' | 'FISCAL_WEEK_OF_FISCAL_QUARTER' | 'FISCAL_WEEK_OF_FISCAL_SEMESTER' | 'FISCAL_WEEK_OF_FISCAL_YEAR' | 'FISCAL_MONTH' | 'FISCAL_MONTH_OF_FISCAL_QUARTER' | 'FISCAL_MONTH_OF_FISCAL_SEMESTER' | 'FISCAL_MONTH_OF_FISCAL_YEAR' | 'FISCAL_QUARTER' | 'FISCAL_QUARTER_OF_FISCAL_SEMESTER' | 'FISCAL_QUARTER_OF_FISCAL_YEAR' | 'FISCAL_SEMESTER' | 'FISCAL_SEMESTER_OF_FISCAL_YEAR' | 'FISCAL_YEAR';
 
 /**
- * Amplitude service.
- */
-export interface AmplitudeService {
-    /**
-     * API key for AI project - intended for frontend use.
-     */
-    'aiProjectApiKey': string;
-    /**
-     * Amplitude endpoint URL.
-     */
-    'endpoint': string;
-    /**
-     * API key for GoodData common project - used by backend.
-     */
-    'gdCommonApiKey': string;
-    /**
-     * Optional reporting endpoint for proxying telemetry events.
-     */
-    'reportingEndpoint'?: string;
-}
-
-/**
  * List of users who created catalog objects in the workspace hierarchy.
  */
 export interface AnalyticsCatalogCreatedBy {
@@ -19203,7 +19181,6 @@ export interface TelemetryContext {
  * Available telemetry services.
  */
 export interface TelemetryServices {
-    'amplitude'?: AmplitudeService;
     'matomo'?: MatomoService;
     'openTelemetry'?: OpenTelemetryService;
 }

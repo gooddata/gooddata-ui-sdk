@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 582442dbcf1e97fa695a65710a31333730a92ec74b68760d83bcb1180004fd0c
+# schema-hash: acb0fdf12721d2d96de458b3c85af98942b972e7ca31a3621402f9565fd2b013
 
 from __future__ import annotations
 
@@ -1428,7 +1428,7 @@ class QueryField11(TypedDict):
     operator: NotRequired[
         Literal['SUM', 'DIFFERENCE', 'MULTIPLICATION', 'RATIO', 'CHANGE']
     ]
-    type: Literal['PREVIOUS_YEAR', 'PREVIOUS_PERIOD']
+    type: Literal['PREVIOUS_YEAR']
     date_filter: str
     title: NotRequired[Title]
 
@@ -1442,7 +1442,7 @@ class QueryField13(TypedDict):
     operator: NotRequired[
         Literal['SUM', 'DIFFERENCE', 'MULTIPLICATION', 'RATIO', 'CHANGE']
     ]
-    type: Literal['PREVIOUS_YEAR', 'PREVIOUS_PERIOD']
+    type: Literal['PREVIOUS_PERIOD']
     date_filter: str
     title: NotRequired[Title]
     period: NotRequired[float]
@@ -2202,17 +2202,11 @@ QueryField: TypeAlias = (
     | QueryField1
     | QueryField2
     | QueryField3
-    | QueryField2
     | QueryField5
-    | QueryField2
     | QueryField7
-    | QueryField2
     | QueryField9
-    | QueryField2
     | QueryField11
-    | QueryField2
     | QueryField13
-    | QueryField2
 )
 
 

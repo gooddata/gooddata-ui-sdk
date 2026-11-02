@@ -16,6 +16,7 @@ import {
 } from "@gooddata/api-client-tiger";
 import type {
     ComparisonCondition,
+    DateFilter,
     Query,
     QueryFilters,
     RangeCondition,
@@ -30,6 +31,7 @@ import { parseDateValues, yamlConditionToMatch } from "../utils/filterUtils.js";
 import { getFullField } from "../utils/sharedUtils.js";
 import {
     isAbsoluteDateFilter,
+    isAllTimeDateFilter,
     isArbitraryTextFilter,
     isArithmeticMetricField,
     isAttributeField,
@@ -254,12 +256,30 @@ function buildDimensions(
     };
 }
 
+/**
+ * `empty_values` is the date filter's own mode; the AFM spells it in upper case.
+ */
+function dateFilterEmptyValueHandling(filter: DateFilter): {
+    emptyValueHandling?: "INCLUDE" | "EXCLUDE" | "ONLY";
+} {
+    const { empty_values } = filter;
+    return empty_values === "include" || empty_values === "exclude" || empty_values === "only"
+        ? { emptyValueHandling: empty_values.toUpperCase() as "INCLUDE" | "EXCLUDE" | "ONLY" }
+        : {};
+}
+
+/**
+ * Converts AaC `filter_by` into AFM filters for the query preview.
+ *
+ * sdk-backend-tiger's `convertFilter` converts the equivalent model filters for a stored insight. When
+ * you add or change a date filter property here, change it there too, and extend
+ * `AacFilterParity.test.ts` in sdk-backend-tiger, which fails if the two diverge.
+ */
 function buildFilters(entities: ExportEntities, filters_by: QueryFilters | undefined): FilterDefinition[] {
     if (!filters_by) {
         return [];
     }
 
-    // TODO
     const filters: FilterDefinition[] = [];
 
     Object.keys(filters_by ?? {}).forEach((key) => {
@@ -270,10 +290,23 @@ function buildFilters(entities: ExportEntities, filters_by: QueryFilters | undef
                     dataset: createIdentifier<any>(filter.using, { forceType: "dataset" }),
                     from: filter.from as string,
                     to: filter.to as string,
+                    ...dateFilterEmptyValueHandling(filter),
                 },
             });
         }
-        if (isRelativeDateFilter(filter)) {
+        if (isAllTimeDateFilter(filter)) {
+            // Mirrors convertFilter in sdk-backend-tiger: All time only has an effect with an empty
+            // values mode that filters, anything else is a no-op and is not sent. The relative filter
+            // is not an option, it requires from/to/granularity.
+            if (filter.empty_values === "exclude" || filter.empty_values === "only") {
+                filters.push({
+                    allTimeDateFilter: {
+                        dataset: createIdentifier<any>(filter.using, { forceType: "dataset" }),
+                        ...dateFilterEmptyValueHandling(filter),
+                    },
+                });
+            }
+        } else if (isRelativeDateFilter(filter)) {
             filters.push({
                 relativeDateFilter: {
                     dataset: createIdentifier<any>(filter.using, { forceType: "dataset" }),
@@ -281,6 +314,7 @@ function buildFilters(entities: ExportEntities, filters_by: QueryFilters | undef
                         undefined) as RelativeDateFilterRelativeDateFilterGranularityEnum,
                     from: filter.from as number,
                     to: filter.to as number,
+                    ...dateFilterEmptyValueHandling(filter),
                 },
             });
         }

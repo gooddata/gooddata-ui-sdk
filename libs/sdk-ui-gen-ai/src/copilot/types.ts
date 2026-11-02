@@ -10,6 +10,7 @@ import {
 
 /** Built-in copilot workflows. Applications may supply their own string enum. @alpha */
 export enum CopilotBuildType {
+    /** Dashboard creation and editing. */
     Dashboard = "dashboard",
 }
 
@@ -98,7 +99,7 @@ export interface ICopilotRequest<TBuild extends string = CopilotBuildType> {
     readonly awaitingClarification?: boolean;
     /** Unanswered clarification item identifiers for this response. */
     readonly pendingClarificationIds?: readonly string[];
-    /** Response ended while its definitions were being applied. */
+    /** No response remains in flight while definitions are being applied. */
     readonly responseFinished?: boolean;
     /** In-progress host applications. */
     readonly applicationIds: readonly string[];

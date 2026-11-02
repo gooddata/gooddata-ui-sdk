@@ -282,6 +282,66 @@ export type ChatVisualizationErrorEvent = BaseEvent & {
 // @public (undocumented)
 export const clearThreadAction: ActionCreatorWithoutPayload<"messages/clearThreadAction">;
 
+// @alpha
+export enum CopilotBuildType {
+    Dashboard = "dashboard"
+}
+
+// @alpha
+export class CopilotHandler<TBuild extends string = CopilotBuildType> {
+    constructor(configuration: ICopilotConfiguration<TBuild>);
+    cancelGeneration: (type: TBuild) => void;
+    definitionApplicationInterrupted: (applicationId: string) => void;
+    definitionApplicationStarted: (source: ICopilotApplicationSource<TBuild>) => string;
+    definitionApplied: (applicationId: string, target: ICopilotTarget<TBuild>) => void;
+    dispose: () => void;
+    getAppliedSource: (target: ICopilotTarget<TBuild>) => ICopilotSource | undefined;
+    getReasoningTitle: () => string | undefined;
+    getSnapshot: () => ICopilotSnapshot<TBuild>;
+    getStatus: (scope: ICopilotScope<TBuild>) => CopilotStatus;
+    handleEvent: (event: ChatEvent) => void;
+    isGenerationPending: (type: TBuild) => boolean;
+    resetInteraction: () => void;
+    resetTarget: (target: ICopilotTarget<TBuild>) => void;
+    setContext: (context: ICopilotContext<TBuild>) => void;
+    startGeneration: (type: TBuild) => void;
+    subscribe: (listener: () => void) => (() => void);
+}
+
+// @alpha
+export type CopilotInput<TBuild extends string = CopilotBuildType> = {
+    readonly kind: "event";
+    readonly event: ChatEvent;
+} | {
+    readonly kind: "context";
+    readonly context: ICopilotContext<TBuild>;
+} | {
+    readonly kind: "startGeneration" | "cancelGeneration";
+    readonly type: TBuild;
+} | {
+    readonly kind: "resetInteraction";
+} | {
+    readonly kind: "resetTarget";
+    readonly target: ICopilotTarget<TBuild>;
+} | {
+    readonly kind: "applicationStarted";
+    readonly id: string;
+    readonly source: ICopilotApplicationSource<TBuild>;
+} | {
+    readonly kind: "applicationApplied";
+    readonly id: string;
+    readonly target: ICopilotTarget<TBuild>;
+} | {
+    readonly kind: "applicationInterrupted";
+    readonly id: string;
+};
+
+// @alpha
+export type CopilotStatus = "idle" | "generating" | "building" | "waiting";
+
+// @alpha
+export function createCopilotState<TBuild extends string = CopilotBuildType>(): ICopilotSnapshot<TBuild>;
+
 // @alpha (undocumented)
 export const dashboardSavedAction: ActionCreatorWithPayload<    {
 conversationId: string;
@@ -524,6 +584,104 @@ export interface IChatMessagesGroup {
     messages: IChatConversationLocalItem[];
     // (undocumented)
     type: "reasoning" | "user" | "assistant" | "error" | "system";
+}
+
+// @alpha
+export interface ICopilotApplication<TBuild extends string = CopilotBuildType> extends ICopilotApplicationSource<TBuild> {
+    readonly id: string;
+    readonly requestRevision: number;
+    readonly revision: number;
+}
+
+// @alpha
+export interface ICopilotApplicationSource<TBuild extends string = CopilotBuildType> {
+    readonly conversationId?: string;
+    readonly target: ICopilotTarget<TBuild>;
+    readonly threadId?: string;
+}
+
+// @alpha
+export interface ICopilotConfiguration<TBuild extends string = CopilotBuildType> {
+    readonly onClarificationQuestions?: (event: ChatClarificationQuestionsEvent) => void;
+    readonly registrations: readonly ICopilotRegistration<TBuild>[];
+}
+
+// @alpha
+export interface ICopilotContext<TBuild extends string = CopilotBuildType> {
+    readonly builderTarget?: ICopilotTarget<TBuild>;
+    readonly isEditing?: boolean;
+    readonly objectId?: string;
+    readonly type?: TBuild;
+}
+
+// @alpha
+export interface ICopilotInteraction<TBuild extends string = CopilotBuildType> {
+    readonly build?: {
+        readonly type: TBuild;
+        readonly intent: "create" | "edit";
+    };
+    readonly conversationId?: string;
+    readonly pendingClarificationIds: readonly string[];
+    readonly reasoningTitle?: string;
+    readonly threadId?: string;
+    readonly waitingForUserInput: boolean;
+}
+
+// @alpha
+export interface ICopilotRegistration<TBuild extends string = CopilotBuildType> {
+    readonly onApplyDefinition: (event: ChatDefinitionReceivedEvent, applicationId: string, target: ICopilotTarget<TBuild>) => void;
+    readonly resolveDefinition: (event: ChatDefinitionReceivedEvent, context: ICopilotContext<TBuild>, snapshot: ICopilotSnapshot<TBuild>) => ICopilotTarget<TBuild> | undefined;
+    readonly skills: readonly AgentCustomSkill[];
+    readonly type: TBuild;
+}
+
+// @alpha
+export interface ICopilotRequest<TBuild extends string = CopilotBuildType> {
+    readonly applicationIds: readonly string[];
+    readonly awaitingClarification?: boolean;
+    readonly conversationId?: string;
+    readonly objectId?: string;
+    readonly pendingClarificationIds?: readonly string[];
+    readonly responseFinished?: boolean;
+    readonly revision: number;
+    readonly threadId?: string;
+    readonly type?: TBuild;
+}
+
+// @alpha
+export interface ICopilotScope<TBuild extends string = CopilotBuildType> {
+    readonly isBuilder?: boolean;
+    readonly isEditing?: boolean;
+    readonly objectId?: string;
+    readonly type: TBuild;
+}
+
+// @alpha
+export interface ICopilotSnapshot<TBuild extends string = CopilotBuildType> {
+    readonly applications: readonly ICopilotApplication<TBuild>[];
+    readonly context: ICopilotContext<TBuild>;
+    readonly generation?: TBuild;
+    readonly generationRevision?: number;
+    readonly interaction: ICopilotInteraction<TBuild>;
+    readonly requests: readonly ICopilotRequest<TBuild>[];
+    readonly revision: number;
+    readonly sources: readonly {
+        readonly target: ICopilotTarget<TBuild>;
+        readonly source?: ICopilotSource;
+        readonly revision: number;
+    }[];
+}
+
+// @alpha
+export interface ICopilotSource {
+    readonly conversationId: string;
+    readonly threadId?: string;
+}
+
+// @alpha
+export interface ICopilotTarget<TBuild extends string = CopilotBuildType> {
+    readonly objectId: string;
+    readonly type: TBuild;
 }
 
 // @alpha
@@ -922,6 +1080,18 @@ conversation: IChatConversationLocal;
 title: string;
 }, "messages/renameConversationAction">;
 
+// @alpha
+export function selectCopilotGenerationPending<TBuild extends string = CopilotBuildType>(state: ICopilotSnapshot<TBuild>, type: TBuild): boolean;
+
+// @alpha
+export function selectCopilotReasoningTitle<TBuild extends string = CopilotBuildType>(state: ICopilotSnapshot<TBuild>): string | undefined;
+
+// @alpha
+export function selectCopilotSource<TBuild extends string = CopilotBuildType>(state: ICopilotSnapshot<TBuild>, target: ICopilotTarget<TBuild>): ICopilotSource | undefined;
+
+// @alpha
+export function selectCopilotStatus<TBuild extends string = CopilotBuildType>(state: ICopilotSnapshot<TBuild>, scope: ICopilotScope<TBuild>): CopilotStatus;
+
 // @public (undocumented)
 export const setAmbientUserContextAction: ActionCreatorWithPayload<    {
 userContext?: IGenAIUserContext;
@@ -960,6 +1130,12 @@ export type TextContentObject = {
     type: "metric" | "attribute" | "fact" | "date" | "label" | "dashboard" | "visualization" | "dataset";
     title: string;
 };
+
+// @alpha
+export function transitionCopilot<TBuild extends string = CopilotBuildType>(state: ICopilotSnapshot<TBuild>, input: CopilotInput<TBuild>, configuration: ICopilotConfiguration<TBuild>): ICopilotSnapshot<TBuild>;
+
+// @alpha
+export function useCopilotSnapshot<TBuild extends string = CopilotBuildType>(handler: CopilotHandler<TBuild>): ICopilotSnapshot<TBuild>;
 
 // @internal (undocumented)
 export function useGenAiChatAvailability(backend: IAnalyticalBackend, workspaceId?: string, enabled?: boolean, canManage?: boolean): boolean;

@@ -2510,7 +2510,7 @@ export interface Dashboard {
      */
     filter_views?: boolean;
     /**
-     * Whether persistent filters across tabs are enabled for this dashboard. Defaults to true.
+     * Whether persistent filters across tabs are enabled for this dashboard. When omitted, the setting is off.
      */
     persistent_filters_across_tabs?: boolean;
     timezone_config?: TimezoneConfig;

@@ -266,6 +266,9 @@ export function* actionsToInitializeNewDashboard(
         displayForms,
     );
 
+    const enablePersistentFiltersAcrossTabsAction =
+        settings?.enableDashboardPersistentFiltersAcrossTabs ?? false;
+
     const tabs: IDashboardTab[] = dashboard?.tabs ?? [
         {
             localIdentifier: DEFAULT_TAB_ID,
@@ -339,6 +342,9 @@ export function* actionsToInitializeNewDashboard(
                       insightsActions.setInsights(insights),
                       drillActions.resetCrossFiltering(),
                   ]),
+            ...(enablePersistentFiltersAcrossTabsAction
+                ? [metaActions.setEnablePersistentFiltersAcrossTabs(true)]
+                : []),
         ],
         dashboard: initialContent ? dashboard : undefined,
         insights: initialContent ? insights : [],

@@ -27,7 +27,11 @@ import { type DashboardEvents } from "./events/index.js";
 import { HeadlessDashboard, type IHeadlessDashboardConfig } from "./headlessDashboard/HeadlessDashboard.js";
 import { type IDashboardQueryService } from "./store/_infra/queryService.js";
 import { type DashboardState } from "./store/types.js";
-import { type DashboardContext, type DashboardModelCustomizationFns } from "./types/commonTypes.js";
+import {
+    type DashboardConfig,
+    type DashboardContext,
+    type DashboardModelCustomizationFns,
+} from "./types/commonTypes.js";
 
 type DashboardTesterConfig = {
     queryServices?: IDashboardQueryService<any, any>[];
@@ -94,6 +98,7 @@ export class DashboardTester extends HeadlessDashboard {
     public static forNewDashboard(
         testerConfig?: DashboardTesterConfig,
         backendConfig?: RecordedBackendConfig,
+        contextConfig?: DashboardConfig,
     ): DashboardTester {
         const ctx: DashboardContext = {
             backend: recordedBackend(ReferenceRecordings.Recordings, {
@@ -104,6 +109,7 @@ export class DashboardTester extends HeadlessDashboard {
                 },
             }),
             workspace: "reference-workspace",
+            config: contextConfig,
         };
 
         return new DashboardTester(ctx, testerConfig);
@@ -253,6 +259,14 @@ export interface IPreloadedTesterOptions {
      * Default is no customization.
      */
     customizationFns?: DashboardModelCustomizationFns;
+
+    /**
+     * Config to put on the dashboard context of a new dashboard (e.g. `initialContent`).
+     * Ignored when a dashboard identifier is provided.
+     *
+     * Default is no config.
+     */
+    newDashboardContextConfig?: DashboardConfig;
 }
 
 /**
@@ -298,6 +312,7 @@ export async function preloadedTesterFactory(
         backendConfig,
         customCapabilities,
         customizationFns,
+        newDashboardContextConfig,
     } = options;
 
     const tester = identifier
@@ -316,6 +331,7 @@ export async function preloadedTesterFactory(
               {
                   ...backendConfig,
               },
+              newDashboardContextConfig,
           );
 
     tester.dispatch(initCommand);

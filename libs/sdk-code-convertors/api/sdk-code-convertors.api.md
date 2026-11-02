@@ -1371,7 +1371,7 @@ export interface CustomTooltip {
 export type CustomTooltipPlacement = "above" | "below" | "replace";
 
 // @internal (undocumented)
-export type DashboardDefinition = Pick<OverrideDashboardDefinition, "layout" | "plugins" | "dateFilterConfig" | "dateFilterConfigs" | "timezoneConfig" | "disableCrossFiltering" | "disableUserFilterSave" | "disableUserFilterReset" | "disableFilterViews" | "disablePersistentFiltersAcrossTabs" | "attributeFilterConfigs" | "measureValueFilterConfigs" | "filterContextRef" | "tabs" | "activeTabLocalIdentifier"> & {
+export type DashboardDefinition = Pick<OverrideDashboardDefinition, "layout" | "plugins" | "dateFilterConfig" | "dateFilterConfigs" | "timezoneConfig" | "disableCrossFiltering" | "disableUserFilterSave" | "disableUserFilterReset" | "disableFilterViews" | "enablePersistentFiltersAcrossTabs" | "attributeFilterConfigs" | "measureValueFilterConfigs" | "filterContextRef" | "tabs" | "activeTabLocalIdentifier"> & {
     version: string;
 };
 

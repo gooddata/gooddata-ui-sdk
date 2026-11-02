@@ -149,7 +149,7 @@ function convertDashboardTabToBackend(
  * @param useWidgetLocalIdentifiers - Whether to preserve widget local identifiers
  * @param enableDashboardSectionHeadersDateDataSet - Whether to include section headers date data set
  * @param enableAnalyticalDashboardVersion3 - When true and the dashboard has tabs, produce a V3 analytical
- * @param enableDashboardPersistentFiltersAcrossTabs - Whether to include disable persistent filters across tabs
+ * @param enableDashboardPersistentFiltersAcrossTabs - Whether to include persistent filters across tabs
  *   dashboard: tabs-only, no root-level layout / filter configs / parameters. V3 cannot be read
  *   by SDK versions that only know V2 root-level properties. Opt-in.
  * @returns Tiger analytical dashboard (V2 by default, V3 when the flag is on and tabs are present).
@@ -196,7 +196,7 @@ export function convertAnalyticalDashboard(
             disableUserFilterSave: dashboard.disableUserFilterSave,
             disableFilterViews: dashboard.disableFilterViews,
             ...(enableDashboardPersistentFiltersAcrossTabs
-                ? { disablePersistentFiltersAcrossTabs: dashboard.disablePersistentFiltersAcrossTabs }
+                ? { enablePersistentFiltersAcrossTabs: dashboard.enablePersistentFiltersAcrossTabs }
                 : {}),
             evaluationFrequency: dashboard.evaluationFrequency,
             timezoneConfig: dashboard.timezoneConfig,
@@ -258,7 +258,7 @@ export function convertAnalyticalDashboard(
         disableUserFilterSave: dashboard.disableUserFilterSave,
         disableFilterViews: dashboard.disableFilterViews,
         ...(enableDashboardPersistentFiltersAcrossTabs
-            ? { disablePersistentFiltersAcrossTabs: dashboard.disablePersistentFiltersAcrossTabs }
+            ? { enablePersistentFiltersAcrossTabs: dashboard.enablePersistentFiltersAcrossTabs }
             : {}),
         evaluationFrequency: dashboard.evaluationFrequency,
         timezoneConfig: dashboard.timezoneConfig,

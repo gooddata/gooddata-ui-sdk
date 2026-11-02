@@ -196,7 +196,7 @@ export const ChartTransformation = memo(
             if (validationResult.dataTooLarge) {
                 // always force onDataTooLarge error handling
                 invariant(onDataTooLarge, "Visualization's onDataTooLarge callback is missing.");
-                onDataTooLarge(chartOptions, getDataTooLargeErrorMessage(config.limits!, chartOptions));
+                onDataTooLarge(chartOptions, getDataTooLargeErrorMessage(config.limits, chartOptions));
             } else if (validationResult.hasNegativeValue) {
                 // ignore hasNegativeValue if validation already fails on dataTooLarge.
                 // hasNegativeValue is true for pie-family charts (any negative value) and for Mekko

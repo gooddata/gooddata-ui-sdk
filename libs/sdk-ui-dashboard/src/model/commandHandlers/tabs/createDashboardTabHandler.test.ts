@@ -70,7 +70,7 @@ describe("createDashboardTabHandler", () => {
                 },
             );
 
-            Tester.dispatch(metaActions.setDisablePersistentFiltersAcrossTabs(false));
+            Tester.dispatch(metaActions.setEnablePersistentFiltersAcrossTabs(true));
         }
 
         function createTab() {

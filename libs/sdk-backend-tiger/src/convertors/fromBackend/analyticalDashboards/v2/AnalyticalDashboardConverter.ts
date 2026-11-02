@@ -132,7 +132,7 @@ interface IAnalyticalDashboardContent {
     disableUserFilterReset?: boolean;
     disableUserFilterSave?: boolean;
     disableFilterViews?: boolean;
-    disablePersistentFiltersAcrossTabs?: boolean;
+    enablePersistentFiltersAcrossTabs?: boolean;
     evaluationFrequency?: string;
     sectionHeadersDateDataSet?: IdentifierRef;
     timezoneConfig?: IDashboardTimezoneConfig;
@@ -225,6 +225,11 @@ function getConvertedAnalyticalDashboardContent(
     filterContextsList: IFilterContext[],
     filterContextOverride?: IFilterContext,
 ): IAnalyticalDashboardContent {
+    const legacyDisablePersistentFiltersAcrossTabs = (
+        analyticalDashboard as AnalyticalDashboardModelV2.IAnalyticalDashboard & {
+            disablePersistentFiltersAcrossTabs?: boolean;
+        }
+    ).disablePersistentFiltersAcrossTabs;
     const tabs = analyticalDashboard.tabs?.map((tab) => {
         return convertDashboardTab(tab, filterContextsList, filterContextOverride);
     });
@@ -270,7 +275,11 @@ function getConvertedAnalyticalDashboardContent(
         disableUserFilterReset: analyticalDashboard.disableUserFilterReset,
         disableUserFilterSave: analyticalDashboard.disableUserFilterSave,
         disableFilterViews: analyticalDashboard.disableFilterViews,
-        disablePersistentFiltersAcrossTabs: analyticalDashboard.disablePersistentFiltersAcrossTabs,
+        enablePersistentFiltersAcrossTabs:
+            analyticalDashboard.enablePersistentFiltersAcrossTabs ??
+            (typeof legacyDisablePersistentFiltersAcrossTabs === "boolean"
+                ? !legacyDisablePersistentFiltersAcrossTabs
+                : undefined),
         evaluationFrequency: analyticalDashboard.evaluationFrequency,
         sectionHeadersDateDataSet: cloneWithSanitizedIds(analyticalDashboard.sectionHeadersDateDataSet),
         timezoneConfig: analyticalDashboard.timezoneConfig,
@@ -326,7 +335,7 @@ export function convertDashboard(
         disableUserFilterReset,
         disableUserFilterSave,
         disableFilterViews,
-        disablePersistentFiltersAcrossTabs,
+        enablePersistentFiltersAcrossTabs,
         evaluationFrequency,
         sectionHeadersDateDataSet,
         timezoneConfig,
@@ -368,7 +377,7 @@ export function convertDashboard(
         disableUserFilterReset,
         disableUserFilterSave,
         disableFilterViews,
-        disablePersistentFiltersAcrossTabs,
+        enablePersistentFiltersAcrossTabs,
         evaluationFrequency,
         sectionHeadersDateDataSet,
         timezoneConfig,

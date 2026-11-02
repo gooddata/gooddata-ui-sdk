@@ -128,7 +128,7 @@ describe("switchDashboardTab handler", () => {
                 settings: { ...config.settings, enableDashboardPersistentFiltersAcrossTabs: true },
             }),
         );
-        Tester.dispatch(metaActions.setDisablePersistentFiltersAcrossTabs(false));
+        Tester.dispatch(metaActions.setEnablePersistentFiltersAcrossTabs(true));
     }
 
     async function switchTo(tabId: string): Promise<void> {

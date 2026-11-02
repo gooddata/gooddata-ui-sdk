@@ -264,3 +264,87 @@ describe("buildAfmExecution dimensions", () => {
         ]);
     });
 });
+
+describe("buildAfmExecution date filter empty values", () => {
+    const dataset = { identifier: { id: "expected_ship_date", type: "dataset" } };
+    const filtersOf = (filter_by: unknown) =>
+        buildAfmExecution(emptyEntities, buildQueryWithFilters(filter_by)).execution.execution.filters;
+
+    it("emits allTimeDateFilter carrying emptyValueHandling for All time", () => {
+        expect(
+            filtersOf({ f: { type: "date_filter", using: "expected_ship_date", empty_values: "only" } }),
+        ).toEqual([{ allTimeDateFilter: { dataset, emptyValueHandling: "ONLY" } }]);
+    });
+
+    it.each([undefined, "include"])("sends no filter for a no-op All time (empty_values: %s)", (mode) => {
+        expect(
+            filtersOf({ f: { type: "date_filter", using: "expected_ship_date", empty_values: mode } }),
+        ).toEqual([]);
+    });
+
+    it("maps empty_values on a relative date filter", () => {
+        expect(
+            filtersOf({
+                f: {
+                    type: "date_filter",
+                    using: "expected_ship_date",
+                    granularity: "YEAR",
+                    from: -10,
+                    to: 0,
+                    empty_values: "include",
+                },
+            }),
+        ).toEqual([
+            {
+                relativeDateFilter: {
+                    dataset,
+                    granularity: "YEAR",
+                    from: -10,
+                    to: 0,
+                    emptyValueHandling: "INCLUDE",
+                },
+            },
+        ]);
+    });
+
+    it("maps empty_values on an absolute date filter", () => {
+        expect(
+            filtersOf({
+                f: {
+                    type: "date_filter",
+                    using: "expected_ship_date",
+                    from: "2020-01-01",
+                    to: "2020-12-31",
+                    empty_values: "exclude",
+                },
+            }),
+        ).toEqual([
+            {
+                absoluteDateFilter: {
+                    dataset,
+                    from: "2020-01-01",
+                    to: "2020-12-31",
+                    emptyValueHandling: "EXCLUDE",
+                },
+            },
+        ]);
+    });
+
+    it("applies empty_values to metric-level filter_by", () => {
+        const query = {
+            fields: {
+                m1: {
+                    aggregation: "COUNT",
+                    using: "attribute/order_item_id",
+                    filter_by: {
+                        f: { type: "date_filter", using: "expected_ship_date", empty_values: "only" },
+                    },
+                },
+            },
+        } as unknown as Query;
+        const { measures } = buildAfmExecution(emptyEntities, query).execution.execution;
+        expect((measures[0].definition as any).measure.filters).toEqual([
+            { allTimeDateFilter: { dataset, emptyValueHandling: "ONLY" } },
+        ]);
+    });
+});

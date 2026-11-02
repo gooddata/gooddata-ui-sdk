@@ -85,7 +85,7 @@
                 },
                 "persistent_filters_across_tabs": {
                     "type": "boolean",
-                    "description": "Whether persistent filters across tabs are enabled for this dashboard. Defaults to true."
+                    "description": "Whether persistent filters across tabs are enabled for this dashboard. When omitted, the setting is off."
                 },
                 "timezone_config": {
                     "$ref": "#/$defs/timezoneConfig",

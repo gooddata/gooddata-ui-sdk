@@ -693,10 +693,15 @@ export interface IDashboard<TWidget = IDashboardWidget>
     readonly disableFilterViews?: boolean;
 
     /**
-     * Disables persistent filters across tabs for this dashboard.
+     * Enables persistent filters across tabs for this dashboard.
+     *
+     * @remarks
+     * When omitted, the feature stays off. Dashboards saved before this setting
+     * existed keep a separate filter selection on each tab.
+     *
      * @alpha
      */
-    readonly disablePersistentFiltersAcrossTabs?: boolean;
+    readonly enablePersistentFiltersAcrossTabs?: boolean;
 
     /**
      * Data sets related to the dashboard, as defined by the includes directive
@@ -803,9 +808,13 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget>
     readonly disableFilterViews?: boolean;
 
     /**
-     * Disables persistent filters across tabs for this dashboard.
+     * Enables persistent filters across tabs for this dashboard.
+     *
+     * @remarks
+     * When omitted, the feature stays off. Dashboards saved before this setting
+     * existed keep a separate filter selection on each tab.
      */
-    readonly disablePersistentFiltersAcrossTabs?: boolean;
+    readonly enablePersistentFiltersAcrossTabs?: boolean;
 
     /**
      * Evaluation frequency of alerts for the dashboard.

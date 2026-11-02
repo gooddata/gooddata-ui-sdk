@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 582442dbcf1e97fa695a65710a31333730a92ec74b68760d83bcb1180004fd0c
+# schema-hash: acb0fdf12721d2d96de458b3c85af98942b972e7ca31a3621402f9565fd2b013
 
 from __future__ import annotations
 
@@ -2132,8 +2132,6 @@ class Operator10(Enum):
 
 class Type54(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
-    PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
 
 
 class Aggregation11(Enum):
@@ -2213,9 +2211,7 @@ class Operator12(Enum):
 
 
 class Type56(Enum):
-    PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
-    PREVIOUS_PERIOD_1 = 'PREVIOUS_PERIOD'
 
 
 class Aggregation13(Enum):
@@ -7145,7 +7141,7 @@ class Dashboard1(BaseModel):
     )
     persistent_filters_across_tabs: bool | None = Field(
         None,
-        description='Whether persistent filters across tabs are enabled for this dashboard. Defaults to true.',
+        description='Whether persistent filters across tabs are enabled for this dashboard. When omitted, the setting is off.',
     )
     timezone_config: TimezoneConfig | None = Field(
         None,
@@ -7471,7 +7467,7 @@ class Dashboard(BaseModel):
     )
     persistent_filters_across_tabs: bool | None = Field(
         None,
-        description='Whether persistent filters across tabs are enabled for this dashboard. Defaults to true.',
+        description='Whether persistent filters across tabs are enabled for this dashboard. When omitted, the setting is off.',
     )
     timezone_config: TimezoneConfig | None = Field(
         None,

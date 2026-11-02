@@ -23,7 +23,10 @@ import { initializeDashboard } from "../../../commands/dashboard.js";
 import { DashboardTester, preloadedTesterFactory } from "../../../DashboardTester.js";
 import { type DashboardInitialized } from "../../../events/dashboard.js";
 import { selectConfig } from "../../../store/config/configSelectors.js";
-import { selectPersistedDashboard } from "../../../store/meta/metaSelectors.js";
+import {
+    selectEnablePersistentFiltersAcrossTabs,
+    selectPersistedDashboard,
+} from "../../../store/meta/metaSelectors.js";
 import { selectPermissions } from "../../../store/permissions/permissionsSelectors.js";
 import { selectEffectiveDateFilterConfig } from "../../../store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
 import {
@@ -32,6 +35,7 @@ import {
     selectFilterContextIdentity,
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectLayout } from "../../../store/tabs/layout/layoutSelectors.js";
+import { PivotTableWithDateFilter } from "../../../tests/Insights.test.helpers.js";
 import { type PrivateDashboardContext } from "../../../types/commonTypes.js";
 import { EmptyDashboardLayout } from "../../dashboard/common/dashboardInitialize.js";
 
@@ -281,6 +285,51 @@ describe("initialize dashboard handler", () => {
             expect(selectConfig(tester!.state()).aiMode).toBe(aiMode);
         },
     );
+
+    describe("persistent filters across tabs default for a new dashboard", () => {
+        async function initNewDashboard(featureEnabled: boolean, withInitialContent: boolean) {
+            let Tester: DashboardTester;
+            await preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
+                },
+                undefined,
+                {
+                    backendConfig: {
+                        globalSettings: { enableDashboardPersistentFiltersAcrossTabs: featureEnabled },
+                    },
+                    newDashboardContextConfig: withInitialContent
+                        ? { initialContent: [{ visualizationContent: PivotTableWithDateFilter }] }
+                        : undefined,
+                },
+            );
+            return Tester!;
+        }
+
+        it.each([
+            ["without initial content", false],
+            ["with initial content", true],
+        ])(
+            "should enable persistent filters across tabs %s when the feature is enabled",
+            async (_, withInitialContent) => {
+                const Tester = await initNewDashboard(true, withInitialContent);
+
+                expect(selectEnablePersistentFiltersAcrossTabs(Tester.state())).toBe(true);
+            },
+        );
+
+        it.each([
+            ["without initial content", false],
+            ["with initial content", true],
+        ])(
+            "should keep persistent filters across tabs off %s when the feature is disabled",
+            async (_, withInitialContent) => {
+                const Tester = await initNewDashboard(false, withInitialContent);
+
+                expect(selectEnablePersistentFiltersAcrossTabs(Tester.state())).toBe(false);
+            },
+        );
+    });
 
     describe("absolute date filter granularity derivation for a new dashboard", () => {
         const dateFilterConfig = {
