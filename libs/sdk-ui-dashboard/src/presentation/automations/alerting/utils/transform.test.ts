@@ -17,7 +17,10 @@ import {
     newAttribute,
     newInsightDefinition,
     newMatchAttributeFilter,
+    newMeasure,
     newMeasureValueFilter,
+    newPopMeasure,
+    newPreviousPeriodMeasure,
 } from "@gooddata/sdk-model";
 import { createIntlMock } from "@gooddata/sdk-ui-ext/internal";
 
@@ -828,6 +831,74 @@ describe("alert transforms", () => {
                     },
                 },
             });
+        });
+
+        function metricWithPeriodComparators(localIdentifier: string): AlertMetric {
+            const dataset = previousPeriodMetric.comparators[0].dataset;
+            return {
+                measure: newMeasure("simple_metric_1", (m) => m.localId(localIdentifier)),
+                isPrimary: true,
+                comparators: [
+                    {
+                        comparator: AlertMetricComparatorType.PreviousPeriod,
+                        isPrimary: false,
+                        measure: newPreviousPeriodMeasure(
+                            localIdentifier,
+                            [{ dataSet: idRef("date", "dataSet"), periodsAgo: 1 }],
+                            (m) => m.localId(`${localIdentifier}_previous_period_GDC.time.month`),
+                        ),
+                        dataset,
+                        granularity: "GDC.time.month",
+                    },
+                    {
+                        comparator: AlertMetricComparatorType.SamePeriodPreviousYear,
+                        isPrimary: false,
+                        measure: newPopMeasure(localIdentifier, idRef("date.year", "attribute"), (m) =>
+                            m.localId(`${localIdentifier}_pop_GDC.time.month`),
+                        ),
+                        dataset,
+                        granularity: "GDC.time.month",
+                    },
+                ],
+            };
+        }
+
+        it("transformAlertByMetric, relative with the same metric keeps the alert's comparator", () => {
+            const metric = metricWithPeriodComparators("localMetric1");
+            const alert = transformAlertByRelativeOperator(
+                [metric],
+                baseRelative,
+                metric,
+                "INCREASES_BY",
+                "CHANGE",
+                undefined,
+                AlertMetricComparatorType.SamePeriodPreviousYear,
+                "GDC.time.month",
+            );
+
+            const res = transformAlertByMetric([metric], alert, metric);
+
+            expect(getAlertComparison(metric, res.alert)).toBe(metric.comparators[1]);
+            expect(res).toEqual(alert);
+        });
+
+        it("transformAlertByMetric, relative with another metric uses that metric's first comparator", () => {
+            const metric = metricWithPeriodComparators("localMetric1");
+            const otherMetric = metricWithPeriodComparators("localMetric2");
+            const alert = transformAlertByRelativeOperator(
+                [metric, otherMetric],
+                baseRelative,
+                metric,
+                "INCREASES_BY",
+                "CHANGE",
+                undefined,
+                AlertMetricComparatorType.SamePeriodPreviousYear,
+                "GDC.time.month",
+            );
+
+            const res = transformAlertByMetric([metric, otherMetric], alert, otherMetric);
+
+            expect(getAlertComparison(otherMetric, res.alert)).toBe(otherMetric.comparators[0]);
         });
     });
 

@@ -12,7 +12,7 @@ import {
 } from "@gooddata/sdk-ui";
 import { Input, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
-import { DASHBOARD_TITLE_MAX_LENGTH } from "../../../../../constants/dashboard.js";
+import { truncateDashboardTitle } from "../../../../../../_staging/dashboard/dashboardTitle.js";
 import { type IScheduledEmailDialogSubjectProps } from "../../../types.js";
 import { ErrorWrapper } from "../ErrorWrapper/ErrorWrapper.js";
 
@@ -93,11 +93,7 @@ export function SubjectForm({
                     hasError={!isValid}
                     maxlength={300}
                     type="text"
-                    placeholder={
-                        dashboardTitle.length > DASHBOARD_TITLE_MAX_LENGTH
-                            ? dashboardTitle.substring(0, DASHBOARD_TITLE_MAX_LENGTH)
-                            : dashboardTitle
-                    }
+                    placeholder={truncateDashboardTitle(dashboardTitle)}
                     value={editedAutomation.details?.subject ?? ""}
                     onChange={
                         // as any, the value will indeed always be string

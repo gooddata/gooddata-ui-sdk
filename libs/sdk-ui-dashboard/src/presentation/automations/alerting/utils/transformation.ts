@@ -42,6 +42,7 @@ import {
 import { createCronFromGranularity } from "./cron.js";
 import {
     type IMeasureFormatMap,
+    getAlertComparison,
     getAttributeRelatedFilterInfo,
     getMeasureFormat,
     getMeasureTitle,
@@ -66,11 +67,14 @@ export function transformAlertByMetric(
     weekStart?: WeekStart,
     timezone?: string,
 ): IAutomationMetadataObject {
-    const periodMeasure = measure.comparators.find(
-        (c) =>
-            c.comparator === AlertMetricComparatorType.PreviousPeriod ||
-            c.comparator === AlertMetricComparatorType.SamePeriodPreviousYear,
-    );
+    // filter changes call this with the same metric, so keep the alert's comparison
+    const periodMeasure =
+        getAlertComparison(measure, alert.alert) ??
+        measure.comparators.find(
+            (c) =>
+                c.comparator === AlertMetricComparatorType.PreviousPeriod ||
+                c.comparator === AlertMetricComparatorType.SamePeriodPreviousYear,
+        );
 
     if (alert.alert?.condition.type === "anomalyDetection" && periodMeasure?.dataset) {
         const cond = transformToAnomalyDetectionCondition(alert.alert.condition, periodMeasure);

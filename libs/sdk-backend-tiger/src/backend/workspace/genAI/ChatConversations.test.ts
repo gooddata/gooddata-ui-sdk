@@ -213,6 +213,32 @@ describe("ChatConversationThreadQuery.stream", () => {
         const end = await reader.read();
         expect(end.done).toBe(true);
     });
+
+    it("should error the stream without an unhandled rejection when the request fails", async () => {
+        const requestError = new Error("Network Error");
+        vi.mocked(GenAiApi_PostMessages).mockRejectedValue(requestError);
+        const unhandledRejections: unknown[] = [];
+        const onUnhandledRejection = (reason: unknown) => unhandledRejections.push(reason);
+        process.on("unhandledRejection", onUnhandledRejection);
+
+        try {
+            const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
+                workspaceId: "workspace",
+                conversationId: "conversation",
+                documentFormat: "aac-v1",
+                userQuestion: "Hello",
+            });
+
+            const reader = query.stream([]).getReader();
+
+            await expect(reader.read()).rejects.toBe(requestError);
+            // Unhandled rejections are reported only after the microtask queue drains.
+            await new Promise((resolve) => setTimeout(resolve, 0));
+            expect(unhandledRejections).toEqual([]);
+        } finally {
+            process.off("unhandledRejection", onUnhandledRejection);
+        }
+    });
 });
 
 describe("ChatConversationThreadQuery userContext conversion", () => {

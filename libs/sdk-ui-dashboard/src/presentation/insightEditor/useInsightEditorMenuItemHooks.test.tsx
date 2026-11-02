@@ -28,6 +28,12 @@ import { uiActions } from "../../model/store/ui/index.js";
 import { useInsightEditorPermissions } from "./InsightEditorPermissionsContext.js";
 import { useEditInsightMenuItem, useExploreInsightMenuItem } from "./useInsightEditorMenuItems.js";
 
+// vitest runs with isolate: false; reset the module registry so the mocks below apply
+// even when another test file already loaded useInsightEditorMenuItems in this worker.
+vi.hoisted(() => {
+    vi.resetModules();
+});
+
 vi.mock("../../model/react/DashboardStoreProvider.js", () => ({
     useDashboardDispatch: vi.fn<() => unknown>(),
     useDashboardSelector: vi.fn<() => unknown>(),

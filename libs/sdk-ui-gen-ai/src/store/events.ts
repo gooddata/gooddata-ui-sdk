@@ -233,6 +233,10 @@ export const isChatConversationRenamedErrorEvent = (
  */
 export type ChatUserMessageEvent = BaseEvent & {
     type: "chatUserMessage";
+    /**
+     * Local conversation ID, which remains stable when a new conversation receives its server-side threadId.
+     */
+    conversationId?: string;
     question: string;
     objects: TextContentObject[];
 };
@@ -284,6 +288,10 @@ export type ChatClarificationAnswer = {
  */
 export type ChatUserAnswersEvent = BaseEvent & {
     type: "chatUserAnswers";
+    /**
+     * Local conversation ID, which remains stable when a new conversation receives its server-side threadId.
+     */
+    conversationId?: string;
     interactionId: string;
     answers: ChatClarificationAnswer[];
 };
@@ -313,7 +321,8 @@ export type ChatAssistantMessageEvent = BaseEvent & {
      */
     responseCompleted?: boolean;
     /**
-     * Skills activated while processing the message.
+     * Skills activated while processing the message. Reported as soon as the skill item is streamed
+     * and may be repeated when that item completes; activation alone does not mean the response has ended.
      */
     skills?: {
         /**
@@ -494,18 +503,63 @@ export const isChatConversationChangedEvent = (event: ChatEvent): event is ChatC
 };
 
 /**
- * A chat definition received event.
+ * An event emitted when a definition is received in a live assistant response or replayed from chat history.
+ *
+ * @remarks
+ * The payload fields depend on `definitionType`; not every optional field is populated for every event.
+ * Publisher document payloads and their metadata (`documentRef`, `refines`, `reworksOpenDocument`, and
+ * `baseDocumentId`) are inherited from IAiAssistantPublisherDocumentDefinition.
+ * The v2 payload is inherited from IAiAssistantPublisherDocumentDefinitionV2.publisherDocumentV2.
+ *
  * @public
  */
 export type ChatDefinitionReceivedEvent = BaseEvent & {
+    /**
+     * The type of the event.
+     */
     type: "onDefinitionReceived";
+    /**
+     * The kind of definition received and the corresponding payload fields.
+     *
+     * @remarks
+     * - `dashboard`: a dashboard definition in `dashboard` and its referenced insights in `insights`.
+     * - `visualization`: a visualization definition in `visualization`.
+     * - `publisherDocument`: a Publisher document definition in `publisherDocument`.
+     * - `publisherDocumentV2`: a Publisher v2 document definition in `publisherDocumentV2`.
+     * - `alert`: an alert proposal in `alertProposal`.
+     */
     definitionType: "dashboard" | "visualization" | "publisherDocument" | "publisherDocumentV2" | "alert";
+    /**
+     * Identifier of the item containing the definition: the streamed interaction ID for live responses,
+     * or the stored conversation item ID for history replays.
+     */
     itemId: string;
+    /**
+     * Local identifier of the conversation containing the definition, not the backend thread ID.
+     * The backend thread ID is available in the inherited `threadId` property when known.
+     */
     conversationId: string;
+    /**
+     * Stored response ID for a definition replayed from chat history.
+     * Live definitions leave this unset or empty, which distinguishes them from history replays.
+     */
     interactionId?: string;
+    /**
+     * Dashboard definition, populated when `definitionType` is `dashboard`.
+     */
     dashboard?: IDashboard;
+    /**
+     * Insights referenced by the dashboard, populated when `definitionType` is `dashboard`.
+     * An empty array is emitted if the dashboard content contains no insights.
+     */
     insights?: IInsight[];
+    /**
+     * Visualization definition, populated when `definitionType` is `visualization`.
+     */
     visualization?: NonNullable<IChatConversationVisualisationContent["visualization"]>;
+    /**
+     * Alert proposal, populated when `definitionType` is `alert`.
+     */
     alertProposal?: IAlertProposal;
 } & Partial<IAiAssistantPublisherDocumentDefinition> &
     Partial<Pick<IAiAssistantPublisherDocumentDefinitionV2, "publisherDocumentV2">>;

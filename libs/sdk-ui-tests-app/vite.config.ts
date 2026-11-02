@@ -55,21 +55,21 @@ function makePackageEsmAlias(packageName: string) {
     // background-image: url("@gooddata/sdk-ui-kit/esm/assets/loading.svg");
     return {
         find: `${packageName}/esm`,
-        replacement: path.resolve(__dirname, `./../${packageName.split("/")[1]}/esm`),
+        replacement: path.resolve(import.meta.dirname, `./../${packageName.split("/")[1]}/esm`),
     };
 }
 
 function makePackageSourceAlias(packageName: string) {
     return {
         find: packageName,
-        replacement: path.resolve(__dirname, `./../${packageName.split("/")[1]}/src`),
+        replacement: path.resolve(import.meta.dirname, `./../${packageName.split("/")[1]}/src`),
     };
 }
 
 function makePackageStylesAlias(packageName: string) {
     return {
         find: `${packageName}/styles`,
-        replacement: path.resolve(__dirname, `./../${packageName.split("/")[1]}/styles`),
+        replacement: path.resolve(import.meta.dirname, `./../${packageName.split("/")[1]}/styles`),
     };
 }
 
@@ -78,7 +78,7 @@ function getDevelopmentAliases() {
         // This is required to make fonts work
         {
             find: "@gooddata/sdk-ui-kit/src/@ui",
-            replacement: path.resolve(__dirname, "../sdk-ui-kit/src/@ui"),
+            replacement: path.resolve(import.meta.dirname, "../sdk-ui-kit/src/@ui"),
         },
         ...packagesWithoutStyles.map(makePackageSourceAlias),
         ...packagesWithStyles.flatMap((pkg) => [
@@ -94,14 +94,14 @@ function getProductionAliases() {
         // This is required to make fonts work
         {
             find: "@gooddata/sdk-ui-kit/src/@ui",
-            replacement: path.resolve(__dirname, "../../sdk-ui-kit/src/@ui"),
+            replacement: path.resolve(import.meta.dirname, "../../sdk-ui-kit/src/@ui"),
         },
     ];
 }
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-    const env = loadEnv(mode, path.resolve(__dirname), "");
+    const env = loadEnv(mode, path.resolve(import.meta.dirname), "");
     // Fallback to process.env if not found in .env file
     const backendUrl = env["BACKEND_URL"] || process.env["BACKEND_URL"] || "";
     const workspace = env["TEST_WORKSPACE_ID"] || process.env["TEST_WORKSPACE_ID"] || "";
@@ -126,7 +126,7 @@ export default defineConfig(({ mode }) => {
 
     return {
         plugins: [react(), runtimeConfigPlugin()],
-        root: path.resolve(__dirname),
+        root: path.resolve(import.meta.dirname),
         publicDir: "public",
         base: mode === "production" ? "./" : "/",
         build: {
@@ -147,6 +147,7 @@ export default defineConfig(({ mode }) => {
                 },
                 checks: {
                     pluginTimings: false,
+                    moduleLevelDirective: false,
                 },
             },
         },

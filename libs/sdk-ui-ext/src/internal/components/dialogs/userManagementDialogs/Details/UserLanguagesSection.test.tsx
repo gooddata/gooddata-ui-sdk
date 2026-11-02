@@ -45,8 +45,9 @@ describe("UserLanguagesSection", () => {
 
         expect(row("Metadata language")).toHaveTextContent("Spanish (Spain)");
         expect(row("Metadata language")).toHaveTextContent("es-ES");
-        expect(row("Interface language")).toHaveTextContent("Not set");
-        expect(row("Data language")).toHaveTextContent("Not set");
+        expect(row("Interface language")).toHaveTextContent("Not set, follows each workspace");
+        expect(row("Data language")).toHaveTextContent("Not set, follows each workspace");
+        expect(row("Data language").querySelector(".gd-bubble-trigger")).toBeNull();
     });
 
     it("shows an error for an interface language GoodData does not offer", () => {
@@ -159,7 +160,7 @@ describe("UserLanguagesSection", () => {
         const onChange = renderSection({ LOCALE: "ko-KR" }, "EDIT");
 
         fireEvent.click(dropdownOf("Metadata language"));
-        fireEvent.click(within(option("German (Germany) (de-DE)")).getByText("German (Germany) (de-DE)"));
+        fireEvent.click(within(option("German de-DE")).getByText("de-DE"));
 
         expect(onChange).toHaveBeenCalledWith({
             LOCALE: "ko-KR",
@@ -201,7 +202,7 @@ describe("UserLanguagesSection", () => {
 
         expect(screen.getAllByRole("option").map((item) => item.textContent)).toEqual([
             "Not set, follows each workspace",
-            "German (Germany) (de-DE)",
+            "German de-DE",
         ]);
     });
 
@@ -210,6 +211,25 @@ describe("UserLanguagesSection", () => {
 
         fireEvent.click(dropdownOf("Interface language"));
 
-        expect(option("Spanish (Mexico) (es-MX)")).toBeInTheDocument();
+        expect(option("Spanish (Mexico) es-MX")).toBeInTheDocument();
+    });
+
+    it("shows the language code muted next to the name in each option", () => {
+        renderSection({}, "EDIT", vi.fn(), false, {
+            metadata: { locales: [{ locale: "es-ES" }] },
+            data: { locales: [] },
+        });
+
+        fireEvent.click(dropdownOf("Metadata language"));
+
+        expect(within(option("Spanish (Spain) es-ES")).getByText("es-ES")).toHaveClass(
+            "gd-user-management-dialog-detail-code",
+        );
+    });
+
+    it("shows the long Not set text in a closed dropdown", () => {
+        renderSection({}, "EDIT");
+
+        expect(dropdownOf("Data language")).toHaveTextContent("Not set, follows each workspace");
     });
 });

@@ -11,7 +11,7 @@ import { clientConditions } from "../parts/conditions.js";
 import { harnessDefines } from "../parts/define.js";
 import { devServerHttps } from "../parts/https.js";
 import { reactPlugin } from "../parts/react.js";
-import { NO_PLUGIN_TIMINGS, WORKER_NO_PLUGIN_TIMINGS } from "../parts/rolldownChecks.js";
+import { ROLLDOWN_CHECKS, WORKER_ROLLDOWN_CHECKS } from "../parts/rolldownChecks.js";
 import { CSS_QUIET_DEPS } from "../parts/scss.js";
 import { devAppLoginPlugin } from "../plugins/devAppLogin.js";
 import { gooddataSdkSourcePlugin } from "../plugins/gooddataSdkSource.js";
@@ -129,7 +129,7 @@ export const harness = createVitePreset(
                         allow: [findRepoRoot()],
                     },
                 },
-                worker: WORKER_NO_PLUGIN_TIMINGS,
+                worker: WORKER_ROLLDOWN_CHECKS,
                 build: {
                     outDir: "dist",
                     sourcemap: !isProduction,
@@ -137,7 +137,7 @@ export const harness = createVitePreset(
                     chunkSizeWarningLimit: 15000,
                     rolldownOptions: {
                         input: resolve(process.cwd(), "index.html"),
-                        checks: NO_PLUGIN_TIMINGS,
+                        checks: ROLLDOWN_CHECKS,
                     },
                 },
                 css: CSS_QUIET_DEPS,

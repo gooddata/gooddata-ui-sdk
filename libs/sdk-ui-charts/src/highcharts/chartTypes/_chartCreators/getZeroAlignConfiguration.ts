@@ -16,7 +16,7 @@ import { compact, partial, sum, zip } from "lodash-es";
 import { type StackingType } from "../../constants/stacking.js";
 import { type HighchartsOptions, type SeriesOptionsType } from "../../lib/index.js";
 import { type IHighChartAxis } from "../../typings/unsafe.js";
-import { isComboChart, isLineChart } from "../_util/common.js";
+import { type AnySeriesOptions, isComboChart, isLineChart, isSeriesOptionsType } from "../_util/common.js";
 
 import { type IConfiguratorContext } from "./configuratorContext.js";
 
@@ -202,14 +202,14 @@ export function getMinMaxInfo(config: any, stacking: StackingType, type: string 
 /**
  * Get series on related axis
  */
-function getSeriesOnAxis(series: SeriesOptionsType[], axisIndex: number): SeriesOptionsType[] {
+function getSeriesOnAxis<T extends AnySeriesOptions>(series: T[], axisIndex: number): T[] {
     return series.filter((item): boolean => item.yAxis === axisIndex);
 }
 
 /**
  * Get y value in series
  */
-function getYDataInSeries(series: SeriesOptionsType): number[] {
+function getYDataInSeries(series: AnySeriesOptions): number[] {
     if ("data" in series && Array.isArray(series.data)) {
         return series.data.map((item) =>
             typeof item === "object" && item !== null && !Array.isArray(item) && "y" in item
@@ -295,7 +295,7 @@ export function convertNumberToPercent(yData: number[][]): number[][] {
  * By comparing total of positive value to get max and total of negative value to get min
  */
 function getDataMinMaxOnStackedChart(
-    series: SeriesOptionsType[],
+    series: AnySeriesOptions[],
     stacking: StackingType,
     opposite: boolean,
 ): IMinMax {
@@ -312,7 +312,7 @@ function getDataMinMaxOnStackedChart(
  * Get data min/max in normal chart
  * By comparing min max value in all series in axis
  */
-function getDataMinMax(series: SeriesOptionsType[], isLineChart: boolean): IMinMax {
+function getDataMinMax(series: AnySeriesOptions[], isLineChart: boolean): IMinMax {
     const { min, max } = series.reduce(
         (result: IMinMax, item): IMinMax => {
             const yData = getYDataInSeries(item);
@@ -332,19 +332,22 @@ function getDataMinMax(series: SeriesOptionsType[], isLineChart: boolean): IMinM
     };
 }
 
-function isLineChartType(series: SeriesOptionsType[], axisIndex: number, type: string | undefined): boolean {
+function isLineChartType(series: AnySeriesOptions[], axisIndex: number, type: string | undefined): boolean {
     if (isLineChart(type)) {
         return true;
     }
     if (isComboChart(type)) {
-        return getSeriesOnAxis(series, axisIndex).every((item) => isLineChart(item.type));
+        // a series without its own type is not a line series, same as before Highcharts 12.5 typings
+        return getSeriesOnAxis(series, axisIndex).every(
+            (item) => isSeriesOptionsType(item) && isLineChart(item.type),
+        );
     }
     return false;
 }
 
 function getExtremeByChartTypeOnAxis(
     extreme: number,
-    series: SeriesOptionsType[],
+    series: AnySeriesOptions[],
     axisIndex: number,
     type: string | undefined,
 ): number {
@@ -445,12 +448,13 @@ export function getZeroAlignConfiguration({
     }
 
     // calculate min/max on both Y axes and set it to HighCharts yAxis config
+    const series = config.series ?? [];
     const yAxisWithMinMax = [0, 1].map((axisIndex: number) => {
         const { min, max } = minmax[axisIndex];
         const newMinMax = getMinMax(
             axisIndex,
-            getExtremeByChartTypeOnAxis(min!, config.series ?? [], axisIndex, type),
-            getExtremeByChartTypeOnAxis(max!, config.series ?? [], axisIndex, type),
+            getExtremeByChartTypeOnAxis(min!, series, axisIndex, type),
+            getExtremeByChartTypeOnAxis(max!, series, axisIndex, type),
             minmax,
         );
         return {

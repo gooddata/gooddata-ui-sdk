@@ -56,7 +56,14 @@ export {
 } from "./base/metadata.js";
 export type { ComparatorDirection, IComparator } from "./base/comparators.js";
 export { assertNever, throwUnexpected } from "./base/typeUtils.js";
-export { type ILocale, DefaultLocale, isLocale, LOCALES } from "./base/localization.js";
+export {
+    type ILocale,
+    type ILanguageNames,
+    DefaultLocale,
+    isLocale,
+    LANGUAGE_NAMES,
+    LOCALES,
+} from "./base/localization.js";
 
 export {
     type IAttribute,

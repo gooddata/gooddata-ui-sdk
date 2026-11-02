@@ -30943,13 +30943,17 @@
                                 "type": "string",
                                 "enum": [
                                     "userIdentifiers",
+                                    "visualizationObjects",
+                                    "labels",
+                                    "datasets",
+                                    "metrics",
                                     "createdBy",
                                     "modifiedBy",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy"
+                        "example": "createdBy,modifiedBy,visualizationObjects,labels,datasets,metrics"
                     },
                     {
                         "$ref": "#/components/parameters/page"
@@ -31047,13 +31051,17 @@
                                 "type": "string",
                                 "enum": [
                                     "userIdentifiers",
+                                    "visualizationObjects",
+                                    "labels",
+                                    "datasets",
+                                    "metrics",
                                     "createdBy",
                                     "modifiedBy",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy"
+                        "example": "createdBy,modifiedBy,visualizationObjects,labels,datasets,metrics"
                     },
                     {
                         "name": "metaInclude",
@@ -31166,13 +31174,17 @@
                                 "type": "string",
                                 "enum": [
                                     "userIdentifiers",
+                                    "visualizationObjects",
+                                    "labels",
+                                    "datasets",
+                                    "metrics",
                                     "createdBy",
                                     "modifiedBy",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy"
+                        "example": "createdBy,modifiedBy,visualizationObjects,labels,datasets,metrics"
                     },
                     {
                         "name": "X-GDC-VALIDATE-RELATIONS",
@@ -31277,13 +31289,17 @@
                                 "type": "string",
                                 "enum": [
                                     "userIdentifiers",
+                                    "visualizationObjects",
+                                    "labels",
+                                    "datasets",
+                                    "metrics",
                                     "createdBy",
                                     "modifiedBy",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy"
+                        "example": "createdBy,modifiedBy,visualizationObjects,labels,datasets,metrics"
                     }
                 ],
                 "requestBody": {
@@ -31410,13 +31426,17 @@
                                 "type": "string",
                                 "enum": [
                                     "userIdentifiers",
+                                    "visualizationObjects",
+                                    "labels",
+                                    "datasets",
+                                    "metrics",
                                     "createdBy",
                                     "modifiedBy",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy"
+                        "example": "createdBy,modifiedBy,visualizationObjects,labels,datasets,metrics"
                     }
                 ],
                 "requestBody": {
@@ -57803,6 +57823,25 @@
                     }
                 }
             },
+            "JsonApiPublisherDocumentOutIncludes": {
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiLabelOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiMetricOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiUserIdentifierOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiVisualizationObjectOutWithLinks"
+                    }
+                ]
+            },
             "JsonApiPublisherDocumentOutList": {
                 "required": [
                     "data"
@@ -58036,6 +58075,39 @@
                                     }
                                 }
                             },
+                            "datasets": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiDatasetToManyLinkage"
+                                    }
+                                }
+                            },
+                            "labels": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiLabelToManyLinkage"
+                                    }
+                                }
+                            },
+                            "metrics": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiMetricToManyLinkage"
+                                    }
+                                }
+                            },
                             "modifiedBy": {
                                 "required": [
                                     "data"
@@ -58044,6 +58116,17 @@
                                 "properties": {
                                     "data": {
                                         "$ref": "#/components/schemas/JsonApiUserIdentifierToOneLinkage"
+                                    }
+                                }
+                            },
+                            "visualizationObjects": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiVisualizationObjectToManyLinkage"
                                     }
                                 }
                             }
@@ -58074,7 +58157,7 @@
                         "type": "array",
                         "description": "Included resources",
                         "items": {
-                            "$ref": "#/components/schemas/JsonApiUserIdentifierOutWithLinks"
+                            "$ref": "#/components/schemas/JsonApiPublisherDocumentOutIncludes"
                         }
                     },
                     "links": {
@@ -58113,7 +58196,7 @@
                         "type": "array",
                         "description": "Included resources",
                         "items": {
-                            "$ref": "#/components/schemas/JsonApiUserIdentifierOutWithLinks"
+                            "$ref": "#/components/schemas/JsonApiPublisherDocumentOutIncludes"
                         }
                     },
                     "links": {

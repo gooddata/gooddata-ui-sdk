@@ -5,7 +5,7 @@ import {
     type IUserLocalizationSettings,
     type LocalizationSettingType,
 } from "@gooddata/sdk-backend-spi";
-import { LOCALES } from "@gooddata/sdk-model";
+import { LANGUAGE_NAMES, LOCALES, isLocale } from "@gooddata/sdk-model";
 
 export const USER_LANGUAGE_SETTINGS: LocalizationSettingType[] = ["LOCALE", "METADATA_LOCALE", "DATA_LOCALE"];
 
@@ -43,6 +43,9 @@ function displayNamesFor(uiLocale: string): Intl.DisplayNames | undefined {
 }
 
 export function languageName(code: string, uiLocale: string): string {
+    if (isLocale(code)) {
+        return LANGUAGE_NAMES[code].englishName;
+    }
     try {
         return displayNamesFor(uiLocale)?.of(code.split("-x-")[0]) ?? code;
     } catch {

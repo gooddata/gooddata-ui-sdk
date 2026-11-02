@@ -4,7 +4,7 @@ import { type ReactNode, useId, useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { isLocale } from "@gooddata/sdk-model";
+import { LANGUAGE_NAMES, isLocale } from "@gooddata/sdk-model";
 import {
     Message,
     UiButton,
@@ -21,7 +21,7 @@ import {
     useUiToast,
 } from "@gooddata/sdk-ui-kit";
 
-import { LANGUAGE_NAMES, type LanguageChoice, matchesLanguage } from "./languages.js";
+import { type LanguageChoice, matchesLanguage } from "./languages.js";
 import { type ILanguages } from "./useLanguages.js";
 import "./LanguageDialog.scss";
 

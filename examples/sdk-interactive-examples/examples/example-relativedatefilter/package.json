@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-relativedatefilter",
-    "version": "11.65.2-alpha.1",
+    "version": "11.65.2-alpha.2",
     "private": false,
     "description": "Example demonstrates how to set relative DateFilter for visualization.",
     "license": "LicenseRef-LICENSE",
@@ -64,9 +64,9 @@
         "oxlint-plugin-eslint": "1.82.0",
         "oxlint-tsgolint": "7.0.2001",
         "process": "0.11.10",
-        "rolldown": "1.0.3",
+        "rolldown": "1.2.14",
         "typescript": "7.0.2",
-        "vite": "8.0.16",
+        "vite": "8.3.5",
         "vite-plugin-html": "~3.2.0"
     },
     "exampleDependencies": [],

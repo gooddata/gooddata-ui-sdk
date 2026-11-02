@@ -12,6 +12,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import {
     DropdownButton,
+    type IUiListboxInteractiveItemProps,
     type IUiListboxItem,
     Message,
     type MessageType,
@@ -21,7 +22,6 @@ import {
 
 import { messages } from "../locales.js";
 import { type ListMode } from "../types.js";
-import { QuestionMarkIcon } from "../Workspace/WorkspaceItem/QuestionMarkIcon.js";
 
 import {
     type LanguageNotice,
@@ -38,12 +38,6 @@ const LABELS: Record<LocalizationSettingType, MessageDescriptor> = {
     LOCALE: messages.userInterfaceLanguage,
     METADATA_LOCALE: messages.userMetadataLanguage,
     DATA_LOCALE: messages.userDataLanguage,
-};
-
-const NOT_SET_TOOLTIPS: Record<LocalizationSettingType, MessageDescriptor> = {
-    LOCALE: messages.userInterfaceLanguageNotSetTooltip,
-    METADATA_LOCALE: messages.userMetadataLanguageNotSetTooltip,
-    DATA_LOCALE: messages.userDataLanguageNotSetTooltip,
 };
 
 const NOTICE_TYPES: Record<LanguageNotice["type"], MessageType> = {
@@ -138,7 +132,7 @@ export function UserLanguagesSection({
                                     {intl.formatMessage(LABELS[type])}
                                 </div>
                                 {mode === "VIEW" ? (
-                                    <LanguageValue type={type} code={languages?.[type]} />
+                                    <LanguageValue code={languages?.[type]} />
                                 ) : (
                                     <LanguageDropdown
                                         type={type}
@@ -194,21 +188,51 @@ function LanguageCode({ code }: { code: string }) {
     return <span className="gd-user-management-dialog-detail-code">{code}</span>;
 }
 
-function LanguageValue({ type, code }: { type: LocalizationSettingType; code: string | undefined }) {
+function LanguageLabel({ code }: { code: string | undefined }) {
     const intl = useIntl();
 
     if (!code) {
-        return (
-            <div className="gd-user-management-dialog-detail-value gd-user-management-dialog-detail-value-not-set">
-                {intl.formatMessage(messages.userLanguageNotSet)}
-                <QuestionMarkIcon bubbleTextId={NOT_SET_TOOLTIPS[type].id} />
-            </div>
-        );
+        return <>{intl.formatMessage(messages.userLanguageNotSetOption)}</>;
     }
 
     return (
-        <div className="gd-user-management-dialog-detail-value">
+        <>
             {languageName(code, intl.locale)} <LanguageCode code={code} />
+        </>
+    );
+}
+
+function LanguageValue({ code }: { code: string | undefined }) {
+    return (
+        <div
+            className={cx("gd-user-management-dialog-detail-value", {
+                "gd-user-management-dialog-detail-value-not-set": !code,
+            })}
+        >
+            <LanguageLabel code={code} />
+        </div>
+    );
+}
+
+function LanguageListItem({
+    item,
+    isFocused,
+    isSelected,
+    isCompact,
+    onSelect,
+}: IUiListboxInteractiveItemProps<string | undefined>) {
+    return (
+        <div
+            className={cx("gd-ui-kit-listbox__item", {
+                "gd-ui-kit-listbox__item--isFocused": isFocused,
+                "gd-ui-kit-listbox__item--isSelected": isSelected,
+                "gd-ui-kit-listbox__item--isCompact": isCompact,
+            })}
+            onClick={onSelect}
+        >
+            <span className="gd-ui-kit-listbox__item-title">
+                <LanguageLabel code={item.data} />
+            </span>
         </div>
     );
 }
@@ -257,15 +281,7 @@ function LanguageDropdown({
             }}
             renderButton={({ isOpen, toggleDropdown, ref, dropdownId }) => (
                 <DropdownButton
-                    value={
-                        code ? (
-                            <>
-                                {languageName(code, intl.locale)} <LanguageCode code={code} />
-                            </>
-                        ) : (
-                            intl.formatMessage(messages.userLanguageNotSet)
-                        )
-                    }
+                    value={<LanguageLabel code={code} />}
                     title={optionLabel(code)}
                     isOpen={isOpen}
                     isSmall={false}
@@ -284,6 +300,7 @@ function LanguageDropdown({
                     items={items}
                     selectedItemId={code ?? NOT_SET_ID}
                     maxHeight={LIST_MAX_HEIGHT}
+                    InteractiveItemComponent={LanguageListItem}
                     ariaAttributes={{
                         ...ariaAttributes,
                         "aria-labelledby": labelId,

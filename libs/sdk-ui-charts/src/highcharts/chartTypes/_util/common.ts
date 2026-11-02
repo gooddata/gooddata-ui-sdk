@@ -8,7 +8,7 @@ import { type ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { type ChartOrientationType, type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { DEFAULT_DECIMAL_SEPARATOR } from "../../constants/format.js";
-import { type SeriesType } from "../../lib/index.js";
+import { type HighchartsOptions, type SeriesOptionsType, type SeriesType } from "../../lib/index.js";
 import {
     type IChartOptions,
     type IChartOptionsData,
@@ -57,6 +57,19 @@ export function decodeHtmlEntities(value: unknown): string {
         return Number.isFinite(value) ? String(value) : "";
     }
     return value.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
+}
+
+/**
+ * Highcharts 12.5 types `Options.series` as `SeriesOptionsType | UnknownSeriesOptions`, where the latter
+ * has no own `type` (it inherits the chart-level type).
+ */
+export type AnySeriesOptions = NonNullable<HighchartsOptions["series"]>[number];
+
+/**
+ * Narrows a series item to the typed series our code works with.
+ */
+export function isSeriesOptionsType(series: AnySeriesOptions): series is SeriesOptionsType {
+    return "type" in series;
 }
 
 export function isRotationInRange(rotation: number, min: number, max: number): boolean {

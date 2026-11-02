@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type IPublisherPageTemplateV2, idRef } from "@gooddata/sdk-model";
+import { type IPublisherDocumentV2, type IPublisherPageTemplateV2, idRef } from "@gooddata/sdk-model";
 
 import { PublisherContentNotSupportedError, assertPublisherEntitySupportedV2 } from "./index.js";
 
@@ -39,6 +39,20 @@ describe("assertPublisherEntitySupportedV2", () => {
         const error = thrown(() => assertPublisherEntitySupportedV2(loadedDefault));
 
         expect(error.details.issues.map((issue) => issue.path)).toEqual(["ref"]);
+    });
+
+    it("accepts a loaded document with the references its user may not read", () => {
+        const loaded: IPublisherDocumentV2 = {
+            type: "document",
+            ref: idRef("doc1", "document"),
+            title: "Review",
+            version: "2",
+            period: { type: "relative", granularity: "GDC.time.month", from: -1, to: -1 },
+            content: { pages: [{ id: "page", layout: { type: "text", id: "text" } }] },
+            unavailable: [{ ref: idRef("revenue", "insight"), type: "insight", reason: "forbidden" }],
+        };
+
+        expect(() => assertPublisherEntitySupportedV2(loaded)).not.toThrow();
     });
 
     it("names the kind and the title in the message", () => {

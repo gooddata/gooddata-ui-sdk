@@ -19,7 +19,7 @@ export {
 } from "./presentation/constants/automations.js";
 export { IGNORED_CONFIGURATION_MENU_CLICK_CLASS } from "./presentation/constants/classes.js";
 export { gdColorStateBlank, gdColorDisabled, gdColorNegative } from "./presentation/constants/colors.js";
-export { DASHBOARD_TITLE_MAX_LENGTH } from "./presentation/constants/dashboard.js";
+export { DASHBOARD_TITLE_MAX_LENGTH } from "./_staging/dashboard/dashboardTitle.js";
 export {
     ALL_SCREENS,
     SCREEN_BREAKPOINT_XS,

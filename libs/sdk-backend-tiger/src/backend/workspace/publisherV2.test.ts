@@ -14,7 +14,12 @@ import {
     type IWorkspacePublisherServiceV2,
     PublisherContentNotSupportedError,
 } from "@gooddata/sdk-backend-spi";
-import { type IPublisherDocumentDefinitionV2, type ObjRef, idRef } from "@gooddata/sdk-model";
+import {
+    type IPublisherDocumentDefinitionV2,
+    type IPublisherDocumentV2,
+    type ObjRef,
+    idRef,
+} from "@gooddata/sdk-model";
 
 import {
     absolutePeriodDocumentV2,
@@ -246,12 +251,13 @@ function expectRequest(endpointName: string, request: Record<string, unknown>): 
 
 const originAndAudit = { metaInclude: ["origin"], include: ["createdBy", "modifiedBy"] };
 const audit = { include: ["createdBy", "modifiedBy"] };
+const auditAndVisualizations = { include: ["createdBy", "modifiedBy", "visualizationObjects"] };
 const byLastChange = { sort: ["modifiedAt,desc"] };
 
 describe("TigerWorkspacePublisherServiceV2 requests", () => {
     it.each<[keyof IWorkspacePublisherServiceV2, string, Record<string, unknown>]>([
         ["getDocuments", "EntitiesApi_GetAllEntitiesDocuments", { ...originAndAudit, ...byLastChange }],
-        ["getDocument", "EntitiesApi_GetEntityDocuments", originAndAudit],
+        ["getDocument", "EntitiesApi_GetEntityDocuments", { ...originAndAudit, ...auditAndVisualizations }],
         [
             "getDocumentTemplates",
             "EntitiesApi_GetAllEntitiesDocumentTemplates",
@@ -260,8 +266,8 @@ describe("TigerWorkspacePublisherServiceV2 requests", () => {
         ["getDocumentTemplate", "EntitiesApi_GetEntityDocumentTemplates", originAndAudit],
         ["getPageTemplates", "EntitiesApi_GetAllEntitiesPageTemplates", originAndAudit],
         ["getPageTemplate", "EntitiesApi_GetEntityPageTemplates", originAndAudit],
-        ["createDocument", "EntitiesApi_CreateEntityDocuments", audit],
-        ["updateDocument", "EntitiesApi_UpdateEntityDocuments", audit],
+        ["createDocument", "EntitiesApi_CreateEntityDocuments", auditAndVisualizations],
+        ["updateDocument", "EntitiesApi_UpdateEntityDocuments", auditAndVisualizations],
         ["createDocumentTemplate", "EntitiesApi_CreateEntityDocumentTemplates", audit],
         ["updateDocumentTemplate", "EntitiesApi_UpdateEntityDocumentTemplates", audit],
         ["createPageTemplate", "EntitiesApi_CreateEntityPageTemplates", audit],
@@ -289,6 +295,36 @@ describe("TigerWorkspacePublisherServiceV2 requests", () => {
         expect(loaded.createdBy?.login).toBe("alice");
         expect(loaded.updatedBy?.login).toBe("bob");
         expect(loaded.isLocked).toBe(true);
+    });
+
+    it.each<
+        [string, string, (service: TigerWorkspacePublisherServiceV2Type) => Promise<IPublisherDocumentV2>]
+    >([
+        ["loads", "EntitiesApi_GetEntityDocuments", (service) => service.getDocument(documentRef)],
+        [
+            "creates",
+            "EntitiesApi_CreateEntityDocuments",
+            (service) => service.createDocument(absolutePeriodDocumentV2),
+        ],
+        ["updates", "EntitiesApi_UpdateEntityDocuments", (service) => service.updateDocument(storedDocument)],
+    ])("%s a document with the visualizations its user may not read", async (_, endpointName, call) => {
+        endpoint(endpointName).mockResolvedValue({
+            data: {
+                data: {
+                    ...documentOutV2("doc1"),
+                    relationships: {
+                        visualizationObjects: { data: [{ id: "revenue", type: "visualizationObject" }] },
+                    },
+                },
+                meta: { restricted: [{ id: "revenue", type: "visualizationObject" }] },
+            },
+        });
+
+        const loaded = await call(newService());
+
+        expect(loaded.unavailable).toEqual([
+            { ref: idRef("revenue", "insight"), type: "insight", reason: "forbidden" },
+        ]);
     });
 
     it("lists documents with their creators and their parent origin", async () => {

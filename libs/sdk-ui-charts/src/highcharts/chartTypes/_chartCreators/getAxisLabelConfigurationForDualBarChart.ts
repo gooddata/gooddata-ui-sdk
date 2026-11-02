@@ -15,7 +15,7 @@ import { isBarChart } from "../_util/common.js";
 
 import { type IConfiguratorContext } from "./configuratorContext.js";
 
-function getLabelOptions(index: number, aligns: Highcharts.AlignValue[]): Highcharts.XAxisOptions {
+function getLabelOptions(index: number, aligns: Highcharts.AlignValue[]): Highcharts.YAxisOptions {
     const isOppositeAxis: boolean = index === 1;
     const align: Highcharts.AlignValue = aligns[index];
     const y: number | undefined = isOppositeAxis ? undefined : BOTTOM_AXIS_MARGIN;
@@ -41,7 +41,7 @@ export function getAxisLabelConfigurationForDualBarChart({
 
     const { yAxisProps, secondary_yAxisProps } = chartOptions;
     const yAxesConfig = [yAxisProps, secondary_yAxisProps].map(
-        (axis: IAxisConfig = {}, index: number): Highcharts.XAxisOptions => {
+        (axis: IAxisConfig = {}, index: number): Highcharts.YAxisOptions => {
             const { rotation } = axis;
 
             switch (rotation) {

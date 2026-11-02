@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 @use "Dialog/_mixins" as dialog-mixins;
 @use "variables";
 @use "Dialog/variables" as dialog-variables;
@@ -8,7 +8,8 @@
 // STYLES FROM GOODSTRAP
 .modalityPlugin-mask {
     position: fixed;
-    z-index: 5000;
+    // Same layer as .overlay-wrapper. The later mask then covers open drawers and overlays.
+    z-index: 5001;
     top: 0;
     left: 0;
     display: none;

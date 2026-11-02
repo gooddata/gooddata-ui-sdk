@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { screen, waitFor } from "@testing-library/react";
+import { act, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IUserSettings, idRef } from "@gooddata/sdk-model";
@@ -64,7 +64,7 @@ describe("HostChrome", () => {
         const { user } = render(<HostChrome {...requiredProps} />);
 
         await user.click(await screen.findByRole("button", { name: "Jane Doe" }));
-        await user.click(await screen.findByRole("button", { name: "Language" }));
+        await user.click(await screen.findByRole("button", { name: "Language, English (US)" }));
 
         expect(await screen.findByRole("dialog", { name: "Change language" })).toBeVisible();
     });
@@ -133,7 +133,7 @@ describe("HostChrome", () => {
         async function applyGerman() {
             const { user } = render(<HostChrome {...requiredProps} />);
             await user.click(await screen.findByRole("button", { name: "Jane Doe" }));
-            await user.click(await screen.findByRole("button", { name: "Language" }));
+            await user.click(await screen.findByRole("button", { name: /Language/ }));
             await user.click(
                 await screen.findByRole("button", { name: "Default (English US) Change language" }),
             );
@@ -153,7 +153,7 @@ describe("HostChrome", () => {
                 const { user } = render(<HostChrome {...requiredProps} ctx={platformContext} />);
 
                 await user.click(await screen.findByRole("button", { name: "Jane Doe" }));
-                await user.click(await screen.findByRole("button", { name: "Language" }));
+                await user.click(await screen.findByRole("button", { name: /Language/ }));
 
                 await waitFor(() =>
                     expect(trackEvent).toHaveBeenCalledWith("user_settings_open", {
@@ -194,5 +194,22 @@ describe("HostChrome", () => {
             expect(reload).not.toHaveBeenCalled();
             expect(screen.getByRole("dialog", { name: "Change language" })).toBeVisible();
         });
+    });
+
+    it("should close the change language dialog when the workspace changes", async () => {
+        const { user, rerender } = render(
+            <HostChrome {...requiredProps} ctx={{ ...ctx, currentWorkspaceId: "ws1" }} />,
+        );
+
+        await user.click(await screen.findByRole("button", { name: "Jane Doe" }));
+        await user.click(await screen.findByRole("button", { name: /Language/ }));
+
+        expect(await screen.findByRole("dialog", { name: "Change language" })).toBeVisible();
+
+        rerender(<HostChrome {...requiredProps} />);
+        // Flush promises
+        await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
+
+        expect(screen.queryByRole("dialog", { name: "Change language" })).not.toBeInTheDocument();
     });
 });

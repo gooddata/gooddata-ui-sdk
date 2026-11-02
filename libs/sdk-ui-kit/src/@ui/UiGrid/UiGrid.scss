@@ -1,0 +1,28 @@
+// (C) 2026 GoodData Corporation
+
+.gd-ui-kit-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ui-grid-gap, 0);
+
+    &__row {
+        display: grid;
+        grid-template-columns: repeat(var(--ui-grid-columns), var(--ui-grid-cell-width, minmax(0, 1fr)));
+        gap: var(--ui-grid-gap, 0);
+    }
+
+    &__cell {
+        cursor: pointer;
+
+        &:focus {
+            outline: none;
+        }
+
+        // Drawn outside the cell, so it never covers a selected look the cell draws on its own edge. It reaches
+        // 4px past the cell, so the grid needs that much room around it, or the ring is clipped on edge cells.
+        &:focus-visible {
+            outline: 2px solid var(--gd-palette-primary-base);
+            outline-offset: 2px;
+        }
+    }
+}

@@ -372,6 +372,7 @@ function UserEditDialogComponent({
                                     isLanguagesError={isLanguagesError}
                                     statistics={statistics}
                                     onLanguagesSaveFailed={reloadLanguages}
+                                    onOpenDeleteDialog={onOpenDeleteDialog}
                                     onSubmit={(updatedUser, isUpdatedAdmin, updatedLanguages) => {
                                         setLanguages(updatedLanguages);
                                         onUserDetailsChanged(updatedUser, isUpdatedAdmin);

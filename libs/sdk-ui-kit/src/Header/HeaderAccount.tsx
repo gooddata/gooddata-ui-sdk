@@ -11,6 +11,7 @@ import { Overlay } from "../Overlay/Overlay.js";
 import { isActionKey } from "../utils/events.js";
 import { useIdPrefixed } from "../utils/useId.js";
 
+import { LANGUAGE_MENU_ITEM_ID } from "./generateHeaderAccountMenuItems.js";
 import { type IHeaderAccountProps, type IHeaderMenuItem } from "./typings.js";
 
 export function HeaderAccount({
@@ -115,6 +116,7 @@ function MenuItem({
     toggleMenu: (isOpen: boolean) => void;
     onMenuItemClick: (item: IHeaderMenuItem, e: MouseEvent<HTMLElement> | KeyboardEvent) => void;
 }) {
+    const intl = useIntl();
     const handleClick = useCallback(
         (e: MouseEvent<HTMLElement>): void => {
             toggleMenu(false);
@@ -138,8 +140,17 @@ function MenuItem({
 
     if (!item.href) {
         return (
-            <button type="button" onClick={handleClick} className={className}>
-                <FormattedMessage id={item.key} />
+            <button
+                type="button"
+                onClick={handleClick}
+                className={className}
+                aria-label={item.value ? `${intl.formatMessage({ id: item.key })}, ${item.value}` : undefined}
+                aria-haspopup={item.key === LANGUAGE_MENU_ITEM_ID ? "dialog" : undefined}
+            >
+                <span>
+                    <FormattedMessage id={item.key} />
+                </span>
+                {item.value ? <span className="gd-header-account-item-value">{item.value}</span> : null}
             </button>
         );
     }

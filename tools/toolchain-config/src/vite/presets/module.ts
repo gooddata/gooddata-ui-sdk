@@ -12,7 +12,7 @@ import { moduleDefines } from "../parts/define.js";
 import { federationRemote } from "../parts/federationRemote.js";
 import { devServerHttps } from "../parts/https.js";
 import { reactPlugin } from "../parts/react.js";
-import { NO_PLUGIN_TIMINGS, WORKER_NO_PLUGIN_TIMINGS } from "../parts/rolldownChecks.js";
+import { ROLLDOWN_CHECKS, WORKER_ROLLDOWN_CHECKS } from "../parts/rolldownChecks.js";
 import { CSS_QUIET_DEPS } from "../parts/scss.js";
 import { gitRevisionPlugin } from "../plugins/gitRevision.js";
 
@@ -121,7 +121,7 @@ export const module = createVitePreset(
                     cors: true,
                 },
                 css: CSS_QUIET_DEPS,
-                worker: WORKER_NO_PLUGIN_TIMINGS,
+                worker: WORKER_ROLLDOWN_CHECKS,
                 build: {
                     outDir: "dist",
                     sourcemap: mode !== "production",
@@ -130,7 +130,7 @@ export const module = createVitePreset(
                     rolldownOptions: {
                         input: resolve(process.cwd(), entry),
                         output: STATIC_OUTPUT_FILE_NAMES,
-                        checks: NO_PLUGIN_TIMINGS,
+                        checks: ROLLDOWN_CHECKS,
                     },
                 },
                 plugins: [

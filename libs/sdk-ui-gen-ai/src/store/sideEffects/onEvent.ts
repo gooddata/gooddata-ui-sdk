@@ -29,6 +29,7 @@ import {
     conversationByIdOrLocalIdSelector,
     conversationMessagesByIdSelector,
     conversationMessagesSelector,
+    conversationSelector,
     threadIdSelector,
 } from "../messages/messagesSelectors.js";
 import {
@@ -302,12 +303,14 @@ export function* onNewMessage({ payload: message }: ReturnType<typeof newMessage
 
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
     const threadId: string | undefined = yield select(threadIdSelector);
+    const conversation: IChatConversationLocal | undefined = yield select(conversationSelector);
 
     switch (messageContent.type) {
         case "text":
             eventDispatcher.dispatch({
                 type: "chatUserMessage",
                 threadId,
+                ...(conversation ? { conversationId: conversation.localId } : {}),
                 question: messageContent.text,
                 objects: messageContent.objects ?? [],
             });
@@ -316,6 +319,7 @@ export function* onNewMessage({ payload: message }: ReturnType<typeof newMessage
             eventDispatcher.dispatch({
                 type: "chatUserAnswers",
                 threadId,
+                ...(conversation ? { conversationId: conversation.localId } : {}),
                 interactionId: messageContent.questionsItemId,
                 answers: convertToChatClarificationAnswers(messageContent.answers),
             });
@@ -356,7 +360,7 @@ export function* onEvaluateMessageStreaming({
 }: ReturnType<typeof evaluateMessageStreamingAction>) {
     const message: MessageInfo | null = yield call(loadMessage, assistantMessageId, conversationId);
 
-    if (!message?.clarificationQuestions?.length || message.filled) {
+    if (!message) {
         return;
     }
 
@@ -366,12 +370,25 @@ export function* onEvaluateMessageStreaming({
         : undefined;
     const threadId: string | undefined = conversation?.id || conversationId;
 
-    eventDispatcher.dispatch({
-        type: "chatClarificationQuestions",
-        interactionId: message.id,
-        threadId,
-        questions: message.clarificationQuestions,
-    });
+    if (message.skills?.length) {
+        eventDispatcher.dispatch({
+            type: "chatAssistantMessage",
+            interactionId: message.id,
+            threadId,
+            useCase: message.useCase ?? "GENERAL",
+            skills: message.skills,
+        });
+        return;
+    }
+
+    if (message.clarificationQuestions?.length && !message.filled) {
+        eventDispatcher.dispatch({
+            type: "chatClarificationQuestions",
+            interactionId: message.id,
+            threadId,
+            questions: message.clarificationQuestions,
+        });
+    }
 }
 
 export function* onClarificationQuestionsAnswered({

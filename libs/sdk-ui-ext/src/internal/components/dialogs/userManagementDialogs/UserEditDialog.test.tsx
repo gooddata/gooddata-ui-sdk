@@ -10,7 +10,7 @@ import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
 import { useLanguageNoticeData } from "./dialogHooks.js";
 import { type IGrantedWorkspace } from "./types.js";
-import { UserEditDialog } from "./UserEditDialog.js";
+import { type IUserEditDialogProps, UserEditDialog } from "./UserEditDialog.js";
 
 const grantedWorkspaces: IGrantedWorkspace[] = [
     { id: "sales", title: "Sales", permissions: ["VIEW"], isHierarchical: false },
@@ -65,25 +65,30 @@ vi.mock("./dialogHooks.js", async (importOriginal) => {
     };
 });
 
+function renderDialog(props: Partial<IUserEditDialogProps> = {}) {
+    return render(
+        <BackendProvider backend={dummyBackendEmptyData()}>
+            <IntlWrapper>
+                <ToastsCenterContextProvider skipAutomaticMessageRendering>
+                    <UserEditDialog
+                        userId="john"
+                        organizationId="org"
+                        isAdmin={false}
+                        isLocalizationEnabled
+                        onSuccess={vi.fn()}
+                        onClose={vi.fn()}
+                        onEvent={vi.fn()}
+                        {...props}
+                    />
+                </ToastsCenterContextProvider>
+            </IntlWrapper>
+        </BackendProvider>,
+    );
+}
+
 describe("UserEditDialog", () => {
     it("loads the language notice data only once the Details tab is shown", () => {
-        render(
-            <BackendProvider backend={dummyBackendEmptyData()}>
-                <IntlWrapper>
-                    <ToastsCenterContextProvider skipAutomaticMessageRendering>
-                        <UserEditDialog
-                            userId="john"
-                            organizationId="org"
-                            isAdmin={false}
-                            isLocalizationEnabled
-                            onSuccess={vi.fn()}
-                            onClose={vi.fn()}
-                            onEvent={vi.fn()}
-                        />
-                    </ToastsCenterContextProvider>
-                </IntlWrapper>
-            </BackendProvider>,
-        );
+        renderDialog();
         const loadNoticeData = vi.mocked(useLanguageNoticeData);
 
         expect(loadNoticeData).toHaveBeenCalled();
@@ -92,5 +97,26 @@ describe("UserEditDialog", () => {
         fireEvent.click(screen.getByText("Details"));
 
         expect(loadNoticeData).toHaveBeenLastCalledWith("org", grantedWorkspaces, true);
+    });
+
+    it("labels the data sources tab in sentence case", () => {
+        renderDialog();
+
+        expect(screen.getByText("Data sources (0)")).toBeInTheDocument();
+    });
+
+    it("offers Delete user next to Cancel while editing the details", () => {
+        renderDialog({ initialView: "DETAIL" });
+
+        const footer = document.querySelector<HTMLElement>(".s-user-management-edit-user .gd-dialog-footer")!;
+        const deleteLink = footer.querySelector(".s-user-management-delete-link")!;
+        expect(deleteLink).toHaveTextContent("Delete user");
+        expect(deleteLink.compareDocumentPosition(footer.querySelector(".s-dialog-cancel-button")!)).toBe(
+            Node.DOCUMENT_POSITION_FOLLOWING,
+        );
+
+        fireEvent.click(deleteLink);
+
+        expect(document.querySelector(".gd-user-management-dialog-hidden")).toBeInTheDocument();
     });
 });

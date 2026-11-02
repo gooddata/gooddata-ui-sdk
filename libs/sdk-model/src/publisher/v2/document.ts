@@ -4,6 +4,7 @@ import { isEmpty } from "lodash-es";
 
 import { type IAuditableDates, type IAuditableUsers } from "../../base/metadata.js";
 import { type ObjRef, isObjRef } from "../../objRef/index.js";
+import { type IUnavailableReference } from "../../objRef/unavailableReference.js";
 
 import {
     type PublisherContentVersionV2,
@@ -63,6 +64,14 @@ export interface IPublisherDocumentDefinitionV2 extends IPublisherEntityDefiniti
  */
 export interface IPublisherDocumentV2 extends IPublisherDocumentDefinitionV2, IPublisherEntityMetadataV2 {
     ref: ObjRef;
+
+    /**
+     * Visualizations the document uses that the current user may not read.
+     *
+     * @remarks
+     * Undefined when object permissions were not checked. Not part of what is saved.
+     */
+    unavailable?: IUnavailableReference[];
 }
 
 /**
