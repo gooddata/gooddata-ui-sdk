@@ -36,7 +36,7 @@ const setMeta: MetaReducer<PayloadAction<SetMetaPayload>> = (state, action) => {
               disableUserFilterReset: descriptorDashboard.disableUserFilterReset,
               disableUserFilterSave: descriptorDashboard.disableUserFilterSave,
               disableFilterViews: descriptorDashboard.disableFilterViews,
-              disablePersistentFiltersAcrossTabs: descriptorDashboard.disablePersistentFiltersAcrossTabs,
+              enablePersistentFiltersAcrossTabs: descriptorDashboard.enablePersistentFiltersAcrossTabs,
               sectionHeadersDateDataSet: descriptorDashboard.sectionHeadersDateDataSet,
               timezoneConfig: descriptorDashboard.timezoneConfig,
           }
@@ -67,10 +67,10 @@ const setDashboardTimezoneConfig: MetaReducer<PayloadAction<IDashboardTimezoneCo
     state.descriptor.timezoneConfig = normalizeDashboardTimezoneConfig(action.payload);
 };
 
-const setDisablePersistentFiltersAcrossTabs: MetaReducer<PayloadAction<boolean>> = (state, action) => {
+const setEnablePersistentFiltersAcrossTabs: MetaReducer<PayloadAction<boolean>> = (state, action) => {
     invariant(state.descriptor);
 
-    state.descriptor.disablePersistentFiltersAcrossTabs = action.payload;
+    state.descriptor.enablePersistentFiltersAcrossTabs = action.payload;
 };
 
 const setDisableUserFilterReset: MetaReducer<PayloadAction<boolean>> = (state, action) => {
@@ -108,7 +108,7 @@ export const metaReducers = {
     setDashboardTitle,
     setDashboardTimezoneConfig,
     setDisableCrossFiltering,
-    setDisablePersistentFiltersAcrossTabs,
+    setEnablePersistentFiltersAcrossTabs,
     setDisableUserFilterReset,
     setDisableUserFilterSave,
     setDisableFilterViews,

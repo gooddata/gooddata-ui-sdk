@@ -407,13 +407,13 @@ export type DashboardConfig = {
     disableUserFilterReset?: boolean;
 
     /**
-     * Disable persisted filters
+     * Enable persistent filters across tabs.
      *
      * @remarks
-     * If set to true, persistent filters across tabs will be disabled even if the dashboard is configured to support it.
-     * If set to false or not set, persisted filters will be enabled if the dashboard is configured to support it.
+     * If set to true, filter selections are kept when switching tabs.
+     * If set to false or not set, each tab keeps its own filter selection.
      */
-    disablePersistentFiltersAcrossTabs?: boolean;
+    enablePersistentFiltersAcrossTabs?: boolean;
 
     /**
      * Hide the add tab button in dashboard edit mode.

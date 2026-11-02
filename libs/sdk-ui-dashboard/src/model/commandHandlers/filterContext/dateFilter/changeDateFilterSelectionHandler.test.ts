@@ -105,7 +105,7 @@ describe("changeDateFilterSelectionHandler", () => {
                     settings: { ...config.settings, enableDashboardPersistentFiltersAcrossTabs: true },
                 }),
             );
-            Tester.dispatch(metaActions.setDisablePersistentFiltersAcrossTabs(false));
+            Tester.dispatch(metaActions.setEnablePersistentFiltersAcrossTabs(true));
         });
 
         it("emits one filter context changed event for the changed source tab", async () => {

@@ -9,6 +9,31 @@
  */
 
 export {
+    CopilotHandler,
+    useCopilotSnapshot,
+    createCopilotState,
+    transitionCopilot,
+    selectCopilotGenerationPending,
+    selectCopilotStatus,
+    selectCopilotReasoningTitle,
+    selectCopilotSource,
+    CopilotBuildType,
+    type CopilotStatus,
+    type CopilotInput,
+    type ICopilotTarget,
+    type ICopilotContext,
+    type ICopilotScope,
+    type ICopilotSource,
+    type ICopilotApplicationSource,
+    type ICopilotInteraction,
+    type ICopilotRequest,
+    type ICopilotApplication,
+    type ICopilotSnapshot,
+    type ICopilotRegistration,
+    type ICopilotConfiguration,
+} from "./copilot.js";
+
+export {
     GenAIChat,
     GenAIAssistant,
     type GenAIChatProps,

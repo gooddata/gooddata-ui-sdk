@@ -618,15 +618,17 @@ export const selectDisableDashboardCrossFiltering: DashboardSelector<boolean> = 
 );
 
 /**
- * Selects whether dashboard persisted filters are disabled.
+ * Selects whether the dashboard keeps filter selections when switching tabs.
+ *
+ * @remarks
+ * Missing means a dashboard saved before this setting existed: the feature stays off.
  *
  * @alpha
  */
-export const selectDisableDashboardPersistentFiltersAcrossTabs: DashboardSelector<boolean> = createSelector(
+export const selectDashboardPersistentFiltersAcrossTabs: DashboardSelector<boolean> = createSelector(
     selectDashboardDescriptor,
     (state) => {
-        // Missing means a dashboard saved before this setting existed: the feature stays off.
-        return state.disablePersistentFiltersAcrossTabs ?? true;
+        return state.enablePersistentFiltersAcrossTabs ?? false;
     },
 );
 
@@ -637,12 +639,9 @@ export const selectDisableDashboardPersistentFiltersAcrossTabs: DashboardSelecto
  */
 export const selectEnablePersistentFiltersAcrossTabs: DashboardSelector<boolean> = createSelector(
     selectEnableDashboardPersistentFiltersAcrossTabs,
-    selectDisableDashboardPersistentFiltersAcrossTabs,
-    (enableDashboardPersistentFiltersAcrossTabs, disableDashboardPersistentFiltersAcrossTabs) => {
-        return (
-            enableDashboardPersistentFiltersAcrossTabs &&
-            disableDashboardPersistentFiltersAcrossTabs === false
-        );
+    selectDashboardPersistentFiltersAcrossTabs,
+    (enableDashboardPersistentFiltersAcrossTabs, persistentFiltersAcrossTabs) => {
+        return enableDashboardPersistentFiltersAcrossTabs && persistentFiltersAcrossTabs;
     },
 );
 
@@ -650,8 +649,8 @@ export const selectEnablePersistentFiltersAcrossTabs: DashboardSelector<boolean>
  * Selects persisted persistent filters across tabs - that is the value that was used to initialize
  * the dashboard state during the initial load of the dashboard.
  */
-const selectPersistedDashboardDisablePersistentFiltersAcrossTabs = createSelector(selectSelf, (state) => {
-    return state.persistedDashboard?.disablePersistentFiltersAcrossTabs ?? true;
+const selectPersistedDashboardPersistentFiltersAcrossTabs = createSelector(selectSelf, (state) => {
+    return state.persistedDashboard?.enablePersistentFiltersAcrossTabs ?? false;
 });
 
 /**
@@ -662,25 +661,24 @@ const selectPersistedDashboardDisablePersistentFiltersAcrossTabs = createSelecto
  */
 export const selectPersistedEnablePersistentFiltersAcrossTabs: DashboardSelector<boolean> = createSelector(
     selectEnableDashboardPersistentFiltersAcrossTabs,
-    selectPersistedDashboardDisablePersistentFiltersAcrossTabs,
-    (enableDashboardPersistentFiltersAcrossTabs, persistedDisablePersistentFiltersAcrossTabs) => {
-        return (
-            enableDashboardPersistentFiltersAcrossTabs &&
-            persistedDisablePersistentFiltersAcrossTabs === false
-        );
+    selectPersistedDashboardPersistentFiltersAcrossTabs,
+    (enableDashboardPersistentFiltersAcrossTabs, persistedEnablePersistentFiltersAcrossTabs) => {
+        return enableDashboardPersistentFiltersAcrossTabs && persistedEnablePersistentFiltersAcrossTabs;
     },
 );
 
 /**
  * Selects a boolean indication if the dashboard has any changes to the persistent filters across tabs compared to the persisted version (if any)
+ * Selects a boolean indication if the dashboard has any changes to persistent filters across tabs
+ * compared to the persisted version (if any).
  *
  * @internal
  */
-export const selectIsDisablePersistentFiltersAcrossTabsChanged: DashboardSelector<boolean> = createSelector(
-    selectPersistedDashboardDisablePersistentFiltersAcrossTabs,
-    selectDisableDashboardPersistentFiltersAcrossTabs,
-    (persistedDisablePersistentFiltersAcrossTabs, currentDisablePersistentFiltersAcrossTabs) => {
-        return persistedDisablePersistentFiltersAcrossTabs !== currentDisablePersistentFiltersAcrossTabs;
+export const selectIsPersistentFiltersAcrossTabsChanged: DashboardSelector<boolean> = createSelector(
+    selectPersistedDashboardPersistentFiltersAcrossTabs,
+    selectDashboardPersistentFiltersAcrossTabs,
+    (persistedPersistentFiltersAcrossTabs, currentPersistentFiltersAcrossTabs) => {
+        return persistedPersistentFiltersAcrossTabs !== currentPersistentFiltersAcrossTabs;
     },
 );
 
@@ -1307,7 +1305,7 @@ export const selectIsDashboardDirty: DashboardSelector<boolean> = createSelector
     selectIsDisableUserFilterResetChanged,
     selectIsDisableUserFilterSaveChanged,
     selectIsDisableFilterViewsChanged,
-    selectIsDisablePersistentFiltersAcrossTabsChanged,
+    selectIsPersistentFiltersAcrossTabsChanged,
     selectEvaluationFrequencyChanged,
     selectIsSectionHeadersDateDataSetChanged,
     selectIsTimezoneConfigChanged,
@@ -1324,7 +1322,7 @@ export const selectIsDashboardDirty: DashboardSelector<boolean> = createSelector
         isDisableUserFilterResetChanged,
         isDisableUserFilterSaveChanged,
         isDisableFilterViewsChanged,
-        isDisablePersistentFiltersAcrossTabsChanged,
+        isPersistentFiltersAcrossTabsChanged,
         isEvaluationFrequencyChanged,
         isSectionHeadersDateDataSetChanged,
         isTimezoneConfigChanged,
@@ -1344,7 +1342,7 @@ export const selectIsDashboardDirty: DashboardSelector<boolean> = createSelector
             isDisableUserFilterResetChanged,
             isDisableUserFilterSaveChanged,
             isDisableFilterViewsChanged,
-            isDisablePersistentFiltersAcrossTabsChanged,
+            isPersistentFiltersAcrossTabsChanged,
             isEvaluationFrequencyChanged,
             isSectionHeadersDateDataSetChanged,
             isTimezoneConfigChanged,

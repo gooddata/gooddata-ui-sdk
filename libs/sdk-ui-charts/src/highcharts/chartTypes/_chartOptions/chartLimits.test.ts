@@ -8,7 +8,7 @@ import { type ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { type IChartOptions } from "../../typings/unsafe.js";
 
-import { getIsFilteringRecommended, validateData } from "./chartLimits.js";
+import { getDataTooLargeErrorMessage, getIsFilteringRecommended, validateData } from "./chartLimits.js";
 
 function makeChartOptions({
     type,
@@ -72,11 +72,11 @@ describe("stacked column/bar series limit", () => {
             expect(validateData(undefined, options).dataTooLarge).toBe(false);
         });
 
-        it("does NOT affect LINE chart with 1200 series", () => {
+        it("does NOT affect AREA chart with 1200 series", () => {
             const options = makeChartOptions({
-                type: VisualizationTypes.LINE,
+                type: VisualizationTypes.AREA,
                 seriesCount: 1200,
-                stacking: "normal", // would not normally apply to line, but guards against future regression
+                stacking: "normal",
             });
             expect(validateData(undefined, options).dataTooLarge).toBe(false);
         });
@@ -100,6 +100,60 @@ describe("stacked column/bar series limit", () => {
             });
             expect(getIsFilteringRecommended(options)).toBe(false);
         });
+    });
+});
+
+describe("line chart series limit", () => {
+    it.each([
+        [144, false],
+        [1000, false],
+        [1001, true],
+        [1750, true],
+        [2500, true],
+        [9161, true],
+    ])("validates %i line series as dataTooLarge: %s", (seriesCount, dataTooLarge) => {
+        const options = makeChartOptions({
+            type: VisualizationTypes.LINE,
+            seriesCount,
+            stacking: null,
+            dataPointsPerSeries: 4,
+        });
+
+        expect(validateData(undefined, options).dataTooLarge).toBe(dataTooLarge);
+    });
+
+    it("reports the exceeded series limit in the error message", () => {
+        const options = makeChartOptions({
+            type: VisualizationTypes.LINE,
+            seriesCount: 1750,
+            stacking: null,
+        });
+
+        expect(getDataTooLargeErrorMessage(undefined, options)).toBe("Series limit: 1000 actual: 1750.");
+    });
+
+    it("keeps the default category limit for line charts", () => {
+        const options = makeChartOptions({
+            type: VisualizationTypes.LINE,
+            seriesCount: 1,
+            stacking: null,
+            dataPointsPerSeries: 10001,
+        });
+
+        expect(validateData(undefined, options).dataTooLarge).toBe(true);
+    });
+
+    it("allows consumer-supplied limits to replace the line defaults", () => {
+        const options = makeChartOptions({
+            type: VisualizationTypes.LINE,
+            seriesCount: 1750,
+            stacking: null,
+        });
+        const limits = { series: 2000, categories: 10000 };
+
+        expect(validateData(limits, options).dataTooLarge).toBe(false);
+        expect(getDataTooLargeErrorMessage(limits, options)).toBe("");
+        expect(validateData({ series: 100 }, options).dataTooLarge).toBe(true);
     });
 });
 

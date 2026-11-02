@@ -2318,9 +2318,9 @@ export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, 
     readonly dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     readonly disableCrossFiltering?: boolean;
     readonly disableFilterViews?: boolean;
-    readonly disablePersistentFiltersAcrossTabs?: boolean;
     readonly disableUserFilterReset?: boolean;
     readonly disableUserFilterSave?: boolean;
+    readonly enablePersistentFiltersAcrossTabs?: boolean;
     readonly evaluationFrequency?: string;
     readonly filterContext?: IFilterContext | ITempFilterContext;
     readonly layout?: IDashboardLayout<TWidget>;
@@ -2462,9 +2462,9 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashb
     readonly dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     readonly disableCrossFiltering?: boolean;
     readonly disableFilterViews?: boolean;
-    readonly disablePersistentFiltersAcrossTabs?: boolean;
     readonly disableUserFilterReset?: boolean;
     readonly disableUserFilterSave?: boolean;
+    readonly enablePersistentFiltersAcrossTabs?: boolean;
     readonly evaluationFrequency?: string;
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
     readonly layout?: IDashboardLayout<TWidget>;

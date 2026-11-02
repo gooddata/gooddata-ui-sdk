@@ -295,6 +295,15 @@ function isForegroundResponse<TBuild extends string>(
 ): boolean {
     return (
         foreground ||
+        (event.type === "chatAssistantMessage" &&
+            failedResponse(event) &&
+            !state.interaction.threadId &&
+            !!pending &&
+            !pending.threadId &&
+            !pending.responseFinished &&
+            !!event.threadId &&
+            event.threadId === state.interaction.conversationId &&
+            pending.conversationId === state.interaction.conversationId) ||
         (!event.threadId &&
             !state.interaction.threadId &&
             (!!pending || state.generation !== undefined || !!state.interaction.build))
@@ -432,6 +441,7 @@ function transitionApplicationStarted<TBuild extends string>(
         objectId: source.target.objectId,
         conversationId: source.conversationId ?? pending?.conversationId,
         threadId: source.threadId ?? pending?.threadId,
+        responseFinished: pending ? pending.responseFinished : true,
         awaitingClarification: false,
         applicationIds: [...(pending?.applicationIds ?? []), input.id],
     };

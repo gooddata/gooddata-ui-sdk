@@ -11,6 +11,9 @@ export const WATERFALL_CHART_DATA_POINT_LIMIT = 10000;
 // Stacked column/bar charts freeze the main thread well before the generic 10k series cap
 // (Highcharts can't draw more than ~1500 stacks), so they need a tighter limit than other chart types.
 export const STACKED_COLUMN_BAR_SERIES_LIMIT = 1000;
+// Highcharts repeatedly scans SVG siblings while inserting series groups and exposing them to assistive
+// technology. That work grows quadratically with series count; cap it before the browser becomes unresponsive.
+export const LINE_CHART_SERIES_LIMIT = 1000;
 // Column/bar charts render one SVG element per data point, and the point count is categories x series.
 // That total can hang the browser even when neither dimension alone hits its cap, so cap the total too.
 export const COLUMN_BAR_TOTAL_DATA_POINTS_LIMIT = 6000;

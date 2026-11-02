@@ -10,7 +10,12 @@ import {
 
 import { selectCopilotGenerationPending, selectCopilotSource, selectCopilotStatus } from "./selectors.js";
 import { createCopilotState, transitionCopilot } from "./transitions.js";
-import { type CopilotInput, type ICopilotConfiguration, type ICopilotSnapshot } from "./types.js";
+import {
+    CopilotBuildType,
+    type CopilotInput,
+    type ICopilotConfiguration,
+    type ICopilotSnapshot,
+} from "./types.js";
 
 enum Build {
     Board = "board",
@@ -182,6 +187,59 @@ describe("pure copilot lifecycle", () => {
             next,
         );
     });
+
+    it.each([false, true])("ignores old equal-ID events after navigation to a builder: %s", (isBuilder) => {
+        let state = initial();
+        for (const [objectId, threadId] of [
+            ["new-object", "new-thread"],
+            ["old-object", "old-thread"],
+        ]) {
+            state = transition(state, {
+                kind: "context",
+                context: { type: Build.Board, objectId, isEditing: true },
+            });
+            state = transition(state, event(user(threadId, threadId)));
+            state = transition(
+                state,
+                event({
+                    type: "chatAssistantMessage",
+                    threadId,
+                    useCase: "GENERAL",
+                    skills: [{ name: "dashboard_editor", title: "Edit" }],
+                }),
+            );
+            state = transition(state, event({ type: "chatReasoning", threadId, title: "Planning" }));
+        }
+        const newRequest = state.requests[0];
+        const build = state.interaction.build;
+        state = transition(state, {
+            kind: "resetTarget",
+            target: { type: Build.Board, objectId: "old-object" },
+        });
+        state = transition(state, {
+            kind: "context",
+            context: isBuilder
+                ? { builderTarget: { type: Build.Board, objectId: "new-object" } }
+                : { type: Build.Board, objectId: "new-object", isEditing: true },
+        });
+        expect(state.requests).toEqual([newRequest]);
+        expect(state.requests[0]).toBe(newRequest);
+        expect(state.interaction.conversationId).toBe("old-thread");
+        expect(state.interaction.threadId).toBeUndefined();
+        expect(state.interaction.reasoningTitle).toBeUndefined();
+        expect(state.interaction.build).toBe(build);
+        for (const value of [
+            { type: "chatReasoning", threadId: "old-thread", title: "Late" },
+            skill("old-thread"),
+            completed("old-thread"),
+            { type: "chatAssistantMessage", threadId: "old-thread", useCase: "INVALID" },
+            { type: "chatAssistantMessage", threadId: "old-thread", useCase: "GENERAL", cancelled: true },
+            questions("old-thread"),
+        ] satisfies ChatEvent[]) {
+            expect(transition(state, event(value))).toBe(state);
+        }
+    });
+
     it("transfers generation intent to a skill, waits, continues, and applies", () => {
         let state = started();
         expect(selectCopilotStatus(state, scope)).toBe("generating");
@@ -322,20 +380,77 @@ describe("pure copilot lifecycle", () => {
     it("interruption preserves a still-running request until completion", () => {
         let state = transition(applying(), { kind: "applicationInterrupted", id: "application" });
         expect(state.requests[0].applicationIds).toEqual([]);
+        expect(state.requests[0].responseFinished).toBeUndefined();
+        expect(state.applications).toEqual([]);
         expect(selectCopilotStatus(state, scope)).toBe("building");
         state = transition(state, event(completed()));
         expect(state.requests).toEqual([]);
     });
 
-    it("matches an early failure by local ID or no ID", () => {
+    it.each([{ target }, { target, conversationId: "draft-local", threadId: "draft-thread" }])(
+        "clears an interrupted standalone application from $conversationId",
+        (source) => {
+            let state = transition(initial(), { kind: "applicationStarted", id: "standalone", source });
+            expect(selectCopilotStatus(state, scope)).toBe("building");
+            state = transition(state, { kind: "applicationInterrupted", id: "standalone" });
+            expect(state.requests).toEqual([]);
+            expect(state.applications).toEqual([]);
+            expect(selectCopilotStatus(state, scope)).toBe("idle");
+        },
+    );
+
+    it.each([
+        { type: "chatAssistantMessage", useCase: "INVALID" },
+        { type: "chatAssistantMessage", useCase: "GENERAL", cancelled: true },
+    ] satisfies ChatEvent[])("clears early generation after $useCase by local ID or no ID", (value) => {
+        const config: ICopilotConfiguration = { registrations: [] };
         for (const conversationId of ["local", undefined]) {
-            let state = transition(initial(), event({ ...user(), conversationId, threadId: undefined }));
-            state = transition(
+            let state = transitionCopilot(
+                createCopilotState(),
+                { kind: "startGeneration", type: CopilotBuildType.Dashboard },
+                config,
+            );
+            state = transitionCopilot(
                 state,
-                event({ type: "chatAssistantMessage", threadId: conversationId, useCase: "INVALID" }),
+                { kind: "event", event: { ...user(), conversationId, threadId: undefined } },
+                config,
+            );
+            state = transitionCopilot(
+                state,
+                { kind: "event", event: { ...value, threadId: conversationId } },
+                config,
             );
             expect(state.requests).toEqual([]);
+            expect(state.generation).toBeUndefined();
+            expect(selectCopilotGenerationPending(state, CopilotBuildType.Dashboard)).toBe(false);
+            expect(selectCopilotStatus(state, { type: CopilotBuildType.Dashboard })).toBe("idle");
         }
+    });
+
+    it.each([
+        { type: "chatReasoning", threadId: "local", title: "Early" },
+        skill("local"),
+        completed("local"),
+        questions("local"),
+    ] satisfies ChatEvent[])("does not accept local-ID $type as foreground before assignment", (value) => {
+        const state = transition(
+            transition(initial(), { kind: "startGeneration", type: Build.Board }),
+            event({ ...user(), threadId: undefined }),
+        );
+        const next = transition(state, event(value));
+        expect(next.interaction).toBe(state.interaction);
+        expect(next.generation).toBe(state.generation);
+    });
+
+    it.each([
+        { type: "chatAssistantMessage", useCase: "INVALID" },
+        { type: "chatAssistantMessage", useCase: "GENERAL", cancelled: true },
+    ] satisfies ChatEvent[])("ignores stale local-ID $useCase after backend thread assignment", (value) => {
+        const state = activated();
+        const next = transition(state, event({ ...value, threadId: "local" }));
+        expect(next.interaction).toBe(state.interaction);
+        expect(next.generation).toBe(state.generation);
+        expect(selectCopilotStatus(next, scope)).toBe("building");
     });
 
     it("keeps multiple applications locked and ignores duplicate and stale acknowledgements", () => {

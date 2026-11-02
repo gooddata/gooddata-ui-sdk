@@ -212,6 +212,50 @@ describe("ChartTransformation", () => {
     });
 
     describe("onDataTooLarge", () => {
+        it.each([1001, 1750, 9161])(
+            "rejects a line chart with %i segments before invoking its renderer",
+            (seriesCount) => {
+                const { dataView } = recordedDataFacade(
+                    ReferenceRecordings.Scenarios.LineChart
+                        .SingleMeasureWithTrendByAndSegmentBy as unknown as ScenarioRecording,
+                );
+                const onDataTooLarge = vi.fn();
+                const renderer = vi.fn().mockReturnValue(<div />);
+                const segmentHeaders = Array.from({ length: seriesCount }, (_, index) => ({
+                    attributeHeaderItem: { uri: `segment-${index}`, name: `Segment ${index}` },
+                }));
+
+                render(
+                    createComponent({
+                        dataView: localDataView({
+                            definition: dataView.definition,
+                            response: { executionResponse: { dimensions: dataView.result.dimensions } },
+                            result: {
+                                executionResult: {
+                                    data: Array.from({ length: seriesCount }, () => dataView.data[0]),
+                                    headerItems: [[segmentHeaders], dataView.headerItems[1]],
+                                    paging: {
+                                        count: [seriesCount, dataView.count[1]],
+                                        offset: [0, 0],
+                                        total: [seriesCount, dataView.totalCount[1]],
+                                    },
+                                },
+                            },
+                        }),
+                        config: { type: VisualizationTypes.LINE },
+                        onDataTooLarge,
+                        renderer,
+                    }),
+                );
+
+                expect(onDataTooLarge).toHaveBeenCalledExactlyOnceWith(
+                    expect.anything(),
+                    `Series limit: 1000 actual: ${seriesCount}.`,
+                );
+                expect(renderer).not.toHaveBeenCalled();
+            },
+        );
+
         it("should be invoked if data series is over limit", () => {
             const onDataTooLarge = vi.fn();
             const props = {

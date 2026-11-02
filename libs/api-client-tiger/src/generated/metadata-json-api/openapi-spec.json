@@ -32694,33 +32694,6 @@
                 },
                 "description": "An all-time date filter that does not restrict by date range. Controls how rows with empty (null/missing) date values are handled."
             },
-            "AmplitudeService": {
-                "required": [
-                    "aiProjectApiKey",
-                    "endpoint",
-                    "gdCommonApiKey"
-                ],
-                "type": "object",
-                "properties": {
-                    "aiProjectApiKey": {
-                        "type": "string",
-                        "description": "API key for AI project - intended for frontend use."
-                    },
-                    "endpoint": {
-                        "type": "string",
-                        "description": "Amplitude endpoint URL."
-                    },
-                    "gdCommonApiKey": {
-                        "type": "string",
-                        "description": "API key for GoodData common project - used by backend."
-                    },
-                    "reportingEndpoint": {
-                        "type": "string",
-                        "description": "Optional reporting endpoint for proxying telemetry events."
-                    }
-                },
-                "description": "Amplitude service."
-            },
             "AnalyticsCatalogCreatedBy": {
                 "required": [
                     "reasoning",
@@ -71717,9 +71690,6 @@
             "TelemetryServices": {
                 "type": "object",
                 "properties": {
-                    "amplitude": {
-                        "$ref": "#/components/schemas/AmplitudeService"
-                    },
                     "matomo": {
                         "$ref": "#/components/schemas/MatomoService"
                     },

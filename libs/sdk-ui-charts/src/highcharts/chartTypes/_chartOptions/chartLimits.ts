@@ -9,6 +9,7 @@ import {
     DEFAULT_DATA_POINTS_LIMIT,
     DEFAULT_SERIES_LIMIT,
     HEATMAP_DATA_POINTS_LIMIT,
+    LINE_CHART_SERIES_LIMIT,
     PIE_CHART_LIMIT,
     SANKEY_CHART_DATA_POINT_LIMIT,
     SANKEY_CHART_NODE_LIMIT,
@@ -46,6 +47,11 @@ export interface IValidationResult {
 function getChartLimits(type: string | undefined, chartOptions?: IChartOptions): IChartLimits {
     const isStacked = !!chartOptions?.stacking;
     switch (type) {
+        case VisualizationTypes.LINE:
+            return {
+                series: LINE_CHART_SERIES_LIMIT,
+                categories: DEFAULT_CATEGORIES_LIMIT,
+            };
         case VisualizationTypes.SCATTER:
             return {
                 series: DEFAULT_SERIES_LIMIT,
@@ -198,7 +204,7 @@ export function validateData(
     const type = chartOptions.type;
     const { isViewByTwoAttributes } = chartOptions;
     // Consumer-supplied limits intentionally replace per-type defaults.
-    // The stacked column/bar series cap applies only when default limits are used.
+    // Chart-specific series caps apply only when default limits are used.
     const finalLimits = limits || getChartLimits(type, chartOptions);
     let dataToValidate = chartOptions.data;
     if (isTreemap(type)) {
@@ -235,7 +241,7 @@ export function getIsFilteringRecommended(chartOptions: IChartOptions): boolean 
 /**
  * Creates a message for onDataTooLarge error, which contains the limits which were exceeded.
  */
-export function getDataTooLargeErrorMessage(limits: IChartLimits, chartOptions: IChartOptions) {
+export function getDataTooLargeErrorMessage(limits: IChartLimits | undefined, chartOptions: IChartOptions) {
     const { type, isViewByTwoAttributes } = chartOptions;
     const {
         series: seriesLimit,

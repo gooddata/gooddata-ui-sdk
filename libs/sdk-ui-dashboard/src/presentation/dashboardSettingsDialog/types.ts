@@ -16,7 +16,7 @@ export interface IDashboardSettingsApplyPayload {
     disableFilterViews: boolean;
     evaluationFrequency: string | undefined;
     sectionHeadersDateDataSet: ObjRef | undefined;
-    disablePersistentFiltersAcrossTabs: boolean;
+    enablePersistentFiltersAcrossTabs: boolean;
     timezoneConfig?: IDashboardTimezoneConfig;
 }
 

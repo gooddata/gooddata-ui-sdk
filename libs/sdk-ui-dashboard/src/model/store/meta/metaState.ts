@@ -14,7 +14,7 @@ export type DashboardDescriptor = Pick<
     | "disableUserFilterReset"
     | "disableUserFilterSave"
     | "disableFilterViews"
-    | "disablePersistentFiltersAcrossTabs"
+    | "enablePersistentFiltersAcrossTabs"
     | "evaluationFrequency"
     | "sectionHeadersDateDataSet"
     | "timezoneConfig"

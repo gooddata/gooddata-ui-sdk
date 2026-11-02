@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "api-client-tiger: Removed the AmplitudeService type and the amplitude property of TelemetryServices. The backend no longer returns Amplitude telemetry configuration in the user profile.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

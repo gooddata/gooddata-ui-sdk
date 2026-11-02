@@ -17848,12 +17848,6 @@
                             "userHash": "1068484ba1a28ec9c53a612c58aef9f6c73eade0"
                         },
                         "services": {
-                            "amplitude": {
-                                "aiProjectApiKey": "f2db721bd53a2b2bd4d3b4c653f368ab",
-                                "endpoint": "https://api2.amplitude.com/2/httpapi",
-                                "gdCommonApiKey": "d5bfd1166bfb74cca8adf0f8a9656751",
-                                "reportingEndpoint": "/tlm/amp"
-                            },
                             "matomo": {
                                 "host": "https://matomo.anywhere.gooddata.com/matomo.php",
                                 "reportingEndpoint": "/tlm/mat",

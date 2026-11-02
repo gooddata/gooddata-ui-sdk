@@ -137,8 +137,8 @@ export function declarativeDashboardToYaml(
         doc.add(entryWithSpace("filter_views", false));
     }
 
-    if (content.disablePersistentFiltersAcrossTabs) {
-        doc.add(entryWithSpace("persistent_filters_across_tabs", false));
+    if (typeof content.enablePersistentFiltersAcrossTabs === "boolean") {
+        doc.add(entryWithSpace("persistent_filters_across_tabs", content.enablePersistentFiltersAcrossTabs));
     }
     if (content.timezoneConfig) {
         doc.add(entryWithSpace("timezone_config", declarativeTimezoneConfigToYaml(content.timezoneConfig)));

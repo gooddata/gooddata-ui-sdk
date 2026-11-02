@@ -166,7 +166,7 @@ describe("changeParameterValues handler", () => {
                     },
                 }),
             );
-            Tester.dispatch(metaActions.setDisablePersistentFiltersAcrossTabs(false));
+            Tester.dispatch(metaActions.setEnablePersistentFiltersAcrossTabs(true));
         }
 
         function appendTab(parameters?: { parameter: IDashboardParameter; runtimeOverride: number }[]): void {
