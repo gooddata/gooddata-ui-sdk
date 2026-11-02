@@ -5,6 +5,7 @@ import { useCallback } from "react";
 import { type IDashboard } from "@gooddata/sdk-model";
 import { type ILocale } from "@gooddata/sdk-ui";
 
+import { truncateDashboardTitle } from "../../../_staging/dashboard/dashboardTitle.js";
 import { saveDashboardAs } from "../../../model/commands/dashboard.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import {
@@ -85,7 +86,12 @@ export const useSaveAs = (props: IUseSaveAsProps): IUseSaveAsResult => {
 
     const handleSaveAs = useCallback(
         (title?: string, switchToDashboard = false, useOriginalFilterContext = true) => {
-            saveAsCommandProcessing.run(title, switchToDashboard, useOriginalFilterContext);
+            // cut here too so onSubmit reports the title that gets saved
+            saveAsCommandProcessing.run(
+                title && truncateDashboardTitle(title),
+                switchToDashboard,
+                useOriginalFilterContext,
+            );
         },
         // oxlint-disable-next-line react-hooks/exhaustive-deps
         [],

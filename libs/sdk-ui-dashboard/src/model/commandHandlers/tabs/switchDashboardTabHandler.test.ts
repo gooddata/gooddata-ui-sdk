@@ -38,6 +38,12 @@ import {
 import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { changeParameterValuesHandler } from "../parameters/changeParameterValuesHandler.js";
 
+// isolate: false shares the module graph, so reset it before the mock below applies: otherwise a file
+// that ran earlier in the worker already evaluated the filter view saga against the unmocked handler.
+vi.hoisted(() => {
+    vi.resetModules();
+});
+
 vi.mock("../parameters/changeParameterValuesHandler.js", async (importOriginal) => {
     const original = await importOriginal<{
         changeParameterValuesHandler: typeof changeParameterValuesHandler;

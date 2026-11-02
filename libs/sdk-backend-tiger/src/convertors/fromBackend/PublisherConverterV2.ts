@@ -2,12 +2,14 @@
 
 import {
     type JsonApiPublisherDocumentOut,
+    type JsonApiPublisherDocumentOutIncludes,
     type JsonApiPublisherDocumentOutWithLinks,
     type JsonApiPublisherDocumentPageTemplateOut,
     type JsonApiPublisherDocumentPageTemplateOutWithLinks,
     type JsonApiPublisherDocumentTemplateOut,
     type JsonApiPublisherDocumentTemplateOutWithLinks,
     type JsonApiUserIdentifierOutWithLinks,
+    type RestrictedObject,
 } from "@gooddata/api-client-tiger";
 import {
     type IPublisherDocumentSummaryV2,
@@ -26,6 +28,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { isInheritedObject } from "./ObjectInheritance.js";
+import { getForbiddenReferences, getRelationshipIds } from "./RestrictedReferencesConverter.js";
 import { convertUserIdentifier } from "./UsersConverter.js";
 
 type PublisherEntityOutV2 =
@@ -41,7 +44,7 @@ function distinctPresentTags(tags: string[] | undefined): string[] | undefined {
     return present.length ? present : undefined;
 }
 
-function entityMetadata(entity: PublisherEntityOutV2, included: JsonApiUserIdentifierOutWithLinks[]) {
+function entityMetadata(entity: PublisherEntityOutV2, included: JsonApiPublisherDocumentOutIncludes[]) {
     const { description } = entity.attributes;
     const tags = distinctPresentTags(entity.attributes.tags);
     return {
@@ -119,7 +122,7 @@ function readValidated<C extends IEntityCandidateV2>(
 
 function documentCandidate(
     entity: JsonApiPublisherDocumentOut | JsonApiPublisherDocumentOutWithLinks,
-    included: JsonApiUserIdentifierOutWithLinks[],
+    included: JsonApiPublisherDocumentOutIncludes[],
 ) {
     return {
         type: "document" as const,
@@ -130,16 +133,37 @@ function documentCandidate(
     };
 }
 
+// Only the visualizations are read: they are the only relationship the document is loaded with.
+function unavailableVisualizations(
+    entity: JsonApiPublisherDocumentOut | JsonApiPublisherDocumentOutWithLinks,
+    restricted: RestrictedObject[] | undefined,
+): Pick<IPublisherDocumentV2, "unavailable"> {
+    if (!restricted) {
+        return {};
+    }
+    const related = getRelationshipIds(entity.relationships, "visualizationObjects");
+    return { unavailable: getForbiddenReferences("insight", related, restricted) };
+}
+
+/**
+ * @param restricted - the response's `meta.restricted`; without it the document lists no unavailable
+ *  references.
+ */
 export function convertPublisherDocumentV2(
     entity: JsonApiPublisherDocumentOut | JsonApiPublisherDocumentOutWithLinks,
-    included: JsonApiUserIdentifierOutWithLinks[] = [],
+    included: JsonApiPublisherDocumentOutIncludes[] = [],
+    restricted?: RestrictedObject[],
 ): IPublisherDocumentV2 {
-    return readValidated(entity, documentCandidate(entity, included));
+    // Added after the validation, which checks the stored document and nothing the response adds.
+    return {
+        ...readValidated(entity, documentCandidate(entity, included)),
+        ...unavailableVisualizations(entity, restricted),
+    };
 }
 
 export function convertPublisherDocumentListItemV2(
     entity: JsonApiPublisherDocumentOut | JsonApiPublisherDocumentOutWithLinks,
-    included: JsonApiUserIdentifierOutWithLinks[] = [],
+    included: JsonApiPublisherDocumentOutIncludes[] = [],
 ): PublisherDocumentListItemV2 {
     const result = validate(documentCandidate(entity, included));
     if (result.valid) {

@@ -55,6 +55,9 @@ import { handleExportResultPolling } from "../../utils/exportPolling.js";
 
 const auditInclude = ["createdBy" as const, "modifiedBy" as const];
 
+// The response then lists the visualizations the document uses that its user may not read.
+const documentInclude = [...auditInclude, "visualizationObjects" as const];
+
 // The backend orders a never-modified object by its creation time.
 const byLastChange = ["modifiedAt,desc"];
 
@@ -260,9 +263,13 @@ export class TigerWorkspacePublisherServiceV2 implements IWorkspacePublisherServ
                 workspaceId: this.workspace,
                 objectId,
                 metaInclude: ["origin"],
-                include: auditInclude,
+                include: documentInclude,
             });
-            return convertPublisherDocumentV2(response.data.data, response.data.included);
+            return convertPublisherDocumentV2(
+                response.data.data,
+                response.data.included,
+                response.data.meta?.restricted,
+            );
         });
     };
 
@@ -274,12 +281,16 @@ export class TigerWorkspacePublisherServiceV2 implements IWorkspacePublisherServ
         return this.authCall(async (client) => {
             const response = await EntitiesApi_CreateEntityDocuments(client.axios, client.basePath, {
                 workspaceId: this.workspace,
-                include: auditInclude,
+                include: documentInclude,
                 jsonApiPublisherDocumentPostOptionalIdDocument: {
                     data: { type: "document", id, attributes },
                 },
             });
-            return convertPublisherDocumentV2(response.data.data, response.data.included);
+            return convertPublisherDocumentV2(
+                response.data.data,
+                response.data.included,
+                response.data.meta?.restricted,
+            );
         });
     };
 
@@ -292,12 +303,16 @@ export class TigerWorkspacePublisherServiceV2 implements IWorkspacePublisherServ
             const response = await EntitiesApi_UpdateEntityDocuments(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 objectId,
-                include: auditInclude,
+                include: documentInclude,
                 jsonApiPublisherDocumentInDocument: {
                     data: { type: "document", id: objectId, attributes },
                 },
             });
-            return convertPublisherDocumentV2(response.data.data, response.data.included);
+            return convertPublisherDocumentV2(
+                response.data.data,
+                response.data.included,
+                response.data.meta?.restricted,
+            );
         });
     };
 

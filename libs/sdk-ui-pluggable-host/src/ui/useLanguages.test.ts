@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { changeOwnLanguage } from "./useLanguages.js";
+import { changeOwnLanguage, getDefaultLanguage } from "./useLanguages.js";
 
 describe("changeOwnLanguage", () => {
     it("should save the language, track it, remember the change and then reload the page", async () => {
@@ -70,5 +70,56 @@ describe("changeOwnLanguage", () => {
 
         await expect(change).rejects.toThrow("Saving failed");
         expect(timeline).toEqual([{ type: "track", language: "de-DE", outcome: "error" }]);
+    });
+});
+
+describe("getDefaultLanguage", () => {
+    it("should return the language of the workspace on a workspace route", async () => {
+        const language = await getDefaultLanguage(
+            { currentWorkspaceId: "workspace-id-1" },
+            {
+                getWorkspaceSettings: async (workspaceId) =>
+                    workspaceId === "workspace-id-1" ? { locale: "de-DE" } : {},
+                getOrganizationSettings: async () => ({ locale: "fr-FR" }),
+            },
+        );
+
+        expect(language).toBe("de-DE");
+    });
+
+    it("should return the language of the organization on an organization route", async () => {
+        const language = await getDefaultLanguage(
+            {}, // Note that there is no currentWorkspaceId here
+            {
+                getWorkspaceSettings: async () => ({ locale: "de-DE" }),
+                getOrganizationSettings: async () => ({ locale: "fr-FR" }),
+            },
+        );
+
+        expect(language).toBe("fr-FR");
+    });
+
+    it("should return the platform default if the settings have no language", async () => {
+        const language = await getDefaultLanguage(
+            {},
+            {
+                getWorkspaceSettings: async () => ({}),
+                getOrganizationSettings: async () => ({}),
+            },
+        );
+
+        expect(language).toBe("en-US");
+    });
+
+    it("should return the platform default if the settings can't be read", async () => {
+        const language = await getDefaultLanguage(
+            {},
+            {
+                getWorkspaceSettings: async () => ({}),
+                getOrganizationSettings: () => Promise.reject(new Error("Network Error")),
+            },
+        );
+
+        expect(language).toBe("en-US");
     });
 });

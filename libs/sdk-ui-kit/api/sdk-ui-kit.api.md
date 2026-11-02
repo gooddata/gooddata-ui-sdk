@@ -410,6 +410,9 @@ export const defaultSyntaxHighlightStyle: HighlightStyle;
 export const defaultThemeMetadataObject: IThemeDefinition;
 
 // @internal (undocumented)
+export function DefaultUiGridCellWrapper<T>(input: IUiGridCellWrapperProps<T>): ReactNode;
+
+// @internal (undocumented)
 export function DefaultUiListboxInteractiveItemComponent<T>(input: IUiListboxInteractiveItemProps<T>): ReactNode;
 
 // @internal
@@ -669,7 +672,7 @@ export const GD_COLOR_WHITE = "#fff";
 export type GeneralAccessValue = "RESTRICTED" | "WORKSPACE";
 
 // @internal (undocumented)
-export function generateHeaderAccountMenuItems(workspacePermissions: IWorkspacePermissions, input?: IGenerateHeaderAccountMenuItemsOptions): IHeaderMenuItem[];
+export function generateHeaderAccountMenuItems(workspacePermissions: IWorkspacePermissions, input: IGenerateHeaderAccountMenuItemsOptions): IHeaderMenuItem[];
 
 // @internal
 export function generateHeaderCommonHelpMenuItems(): IHeaderMenuItem[];
@@ -2982,7 +2985,9 @@ export interface IFormatTemplate {
 // @internal (undocumented)
 export interface IGenerateHeaderAccountMenuItemsOptions {
     // (undocumented)
-    featureFlags?: IFeatureFlags;
+    currentLanguage: ILocale;
+    // (undocumented)
+    featureFlags: IFeatureFlags;
     // (undocumented)
     workspaceId?: string;
 }
@@ -3193,6 +3198,8 @@ export interface IHeaderMenuItem {
     onClick?: (obj: any) => void;
     // (undocumented)
     target?: string;
+    // (undocumented)
+    value?: string;
 }
 
 // @internal (undocumented)
@@ -7031,6 +7038,56 @@ export interface IUiGranteeRowProps {
 }
 
 // @internal (undocumented)
+export interface IUiGridCellProps<T> {
+    isKeyboardFocused: boolean;
+    // (undocumented)
+    isSelected: boolean;
+    // (undocumented)
+    item: T;
+}
+
+// @internal (undocumented)
+export interface IUiGridCellWrapperProps<T> extends IUiGridCellProps<T> {
+    // (undocumented)
+    Cell: ComponentType<IUiGridCellProps<T>>;
+    cellRef: (element: HTMLElement | null) => void;
+    // (undocumented)
+    isTabStop: boolean;
+    // (undocumented)
+    onBlur: () => void;
+    // (undocumented)
+    onFocus: () => void;
+    // (undocumented)
+    onPick: () => void;
+}
+
+// @internal (undocumented)
+export interface IUiGridPluggableComponents<T> {
+    // (undocumented)
+    Cell: ComponentType<IUiGridCellProps<T>>;
+    CellWrapper: ComponentType<IUiGridCellWrapperProps<T>>;
+}
+
+// @internal (undocumented)
+export interface IUiGridProps<T> extends Pick<IUiGridPluggableComponents<T>, "Cell">, Partial<Pick<IUiGridPluggableComponents<T>, "CellWrapper">> {
+    // (undocumented)
+    accessibilityConfig: UiGridNamingConfig;
+    cellWidth?: number;
+    columns: number;
+    // (undocumented)
+    dataTestId?: string;
+    gap?: number;
+    getItemId: (item: T) => string;
+    groups: ReadonlyArray<ReadonlyArray<T>>;
+    // (undocumented)
+    id?: string;
+    onEscape?: (event: KeyboardEvent_2) => void;
+    // (undocumented)
+    onPick: (item: T) => void;
+    selectedItemId?: string;
+}
+
+// @internal (undocumented)
 export interface IUiIconButtonPublicProps {
     // (undocumented)
     accessibilityConfig?: IDropdownButtonRenderProps["accessibilityConfig"];
@@ -9095,6 +9152,9 @@ export type LabelRowKind = "primary" | "default";
 // @internal (undocumented)
 export type LabelSize = "small" | "normal";
 
+// @internal (undocumented)
+export const LANGUAGE_MENU_ITEM_ID: string;
+
 // @internal @deprecated (undocumented)
 export function LegacyInvertableList<T>(input: ILegacyInvertableListProps<T>): JSX.Element;
 
@@ -9935,6 +9995,12 @@ export function UiGranteeRow(input: IUiGranteeRowProps): JSX.Element;
 
 // @internal
 export function UiGranteeRowControls(input: IUiGranteeRowControlsProps): JSX.Element;
+
+// @internal (undocumented)
+export function UiGrid<T>(input: IUiGridProps<T>): ReactNode;
+
+// @internal (undocumented)
+export type UiGridNamingConfig = UiToolbarNamingConfig;
 
 // @internal (undocumented)
 export function UiIcon(input: IUiIconProps): JSX.Element;

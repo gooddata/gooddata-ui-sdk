@@ -259,6 +259,7 @@ export type ChatSaveVisualizationSuccessEvent = BaseEvent & {
 // @public
 export type ChatUserAnswersEvent = BaseEvent & {
     type: "chatUserAnswers";
+    conversationId?: string;
     interactionId: string;
     answers: ChatClarificationAnswer[];
 };
@@ -266,6 +267,7 @@ export type ChatUserAnswersEvent = BaseEvent & {
 // @public
 export type ChatUserMessageEvent = BaseEvent & {
     type: "chatUserMessage";
+    conversationId?: string;
     question: string;
     objects: TextContentObject[];
 };

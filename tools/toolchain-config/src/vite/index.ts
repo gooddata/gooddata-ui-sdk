@@ -27,7 +27,7 @@ export {
 } from "./parts/federationRemote.js";
 export { devServerHttps } from "./parts/https.js";
 export { reactPlugin } from "./parts/react.js";
-export { NO_PLUGIN_TIMINGS, WORKER_NO_PLUGIN_TIMINGS } from "./parts/rolldownChecks.js";
+export { ROLLDOWN_CHECKS, WORKER_ROLLDOWN_CHECKS } from "./parts/rolldownChecks.js";
 export { CSS_QUIET_DEPS } from "./parts/scss.js";
 export { devAppLoginPlugin } from "./plugins/devAppLogin.js";
 export { gitRevisionPlugin } from "./plugins/gitRevision.js";

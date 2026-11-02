@@ -145,6 +145,28 @@ describe("save as dashboard handler", () => {
             );
         });
 
+        it("should keep the first 255 characters of a longer title", async () => {
+            const title = "a".repeat(255);
+
+            const event: DashboardCopySaved = await Tester.dispatchAndWaitFor(
+                saveDashboardAs(`${title}b`, false),
+                "GDC.DASH/EVT.COPY_SAVED",
+            );
+
+            expect(event.payload.dashboard.title).toEqual(title);
+        });
+
+        it("should keep a title of exactly 255 characters", async () => {
+            const title = "a".repeat(255);
+
+            const event: DashboardCopySaved = await Tester.dispatchAndWaitFor(
+                saveDashboardAs(title, false),
+                "GDC.DASH/EVT.COPY_SAVED",
+            );
+
+            expect(event.payload.dashboard.title).toEqual(title);
+        });
+
         it("should emit correct events", async () => {
             await Tester.dispatchAndWaitFor(
                 saveDashboardAs("My Dashboard Copy", false, true, TestCorrelation),
@@ -165,6 +187,18 @@ describe("save as dashboard handler", () => {
         });
 
         const TestDashboardTitle = "My Dashboard Copy";
+
+        it("should use the original title when the cut leaves only whitespace", async () => {
+            const originalTitle = selectDashboardTitle(Tester.state());
+            expect(originalTitle).not.toEqual("");
+
+            const event: DashboardCopySaved = await Tester.dispatchAndWaitFor(
+                saveDashboardAs(" ".repeat(300), false),
+                "GDC.DASH/EVT.COPY_SAVED",
+            );
+
+            expect(event.payload.dashboard.title).toEqual(originalTitle);
+        });
 
         it("should save an existing emit correct events", async () => {
             await Tester.dispatchAndWaitFor(

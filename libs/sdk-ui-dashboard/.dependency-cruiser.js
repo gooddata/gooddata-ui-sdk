@@ -305,6 +305,7 @@ export default {
             },
         },
         moduleWithDependencies("saveAs", "src/presentation/saveAs", [
+            "src/_staging/*",
             "src/model/*",
             "src/presentation/dashboardContexts/*",
             "src/presentation/localization/*",

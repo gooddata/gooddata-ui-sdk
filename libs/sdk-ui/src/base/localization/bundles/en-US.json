@@ -3776,8 +3776,8 @@
         "crowdinContext": "Title of dialog used for granting data source permission to users or groups."
     },
     "userManagement.tab.dataSources": {
-        "text": "Data Sources ({count})",
-        "crowdinContext": "Label of tab that lists data sources assigned to a user. The placeholder {count} will be replaced with a number, e.g., 'Data Sources (5)' when user has 5 data source assignments."
+        "text": "Data sources ({count})",
+        "crowdinContext": "Label of tab that lists data sources assigned to a user. The placeholder {count} will be replaced with a number, e.g., 'Data sources (5)' when user has 5 data source assignments."
     },
     "userManagement.buttons.addDataSourcePermission": {
         "text": "Add data source permission",
@@ -4241,7 +4241,7 @@
     },
     "userManagement.userDetail.language.notSetOption": {
         "text": "Not set, follows each workspace",
-        "crowdinContext": "First item in the list of languages. Choosing it removes the user's own language, so each workspace's language applies"
+        "crowdinContext": "Shown instead of a language when the user did not set one for themselves, and as the first item in the list of languages. Choosing it removes the user's own language, so each workspace's language applies"
     },
     "userManagement.userDetail.interfaceLanguage.notSet.tooltip": {
         "text": "Interface language follows each workspace",

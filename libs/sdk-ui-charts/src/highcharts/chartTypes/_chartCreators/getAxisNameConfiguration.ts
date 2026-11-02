@@ -12,7 +12,9 @@ import { isOneOfTypes, isRadarChart } from "../_util/common.js";
 
 import { type IConfiguratorContext } from "./configuratorContext.js";
 
-type HighchartsAxisTitle = XAxisTitleOptions | YAxisTitleOptions;
+// intersection so the result is assignable to both xAxis and yAxis title options
+// (since Highcharts 12.3, yAxis title text no longer accepts null)
+type HighchartsAxisTitle = XAxisTitleOptions & YAxisTitleOptions;
 
 const axisNameConfigGetter = (chartOptions: IChartOptions) => (axisNamePrefix: string) =>
     ((chartOptions as Record<string, IAxis[]>)?.[`${axisNamePrefix}Axes`] ?? []).map((axis: IAxis) => {

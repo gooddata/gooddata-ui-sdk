@@ -3,13 +3,18 @@
 import { type FocusEvent, memo, useCallback, useState } from "react";
 
 import { compact } from "lodash-es";
-import { useIntl } from "react-intl";
+import { defineMessage, useIntl } from "react-intl";
 
 import { ConfirmDialog, Input, Message, Typography } from "@gooddata/sdk-ui-kit";
 
+import {
+    DASHBOARD_TITLE_MAX_LENGTH,
+    truncateDashboardTitle,
+} from "../../../_staging/dashboard/dashboardTitle.js";
 import { messages } from "../../../locales.js";
-import { DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/dashboard.js";
 import { IntlWrapper } from "../../localization/IntlWrapper.js";
+
+const defaultTitleMessage = defineMessage({ id: "dialogs.save.as.new.default.title" });
 
 export interface ISaveAsDialogRendererOwnProps {
     dashboardTitle: string;
@@ -38,12 +43,11 @@ export const SaveAsNewDashboardDialog = memo(function SaveAsNewDashboardDialog({
     const intl = useIntl();
 
     const getDefaultDashboardTitle = useCallback(() => {
-        return intl.formatMessage(
-            { id: "dialogs.save.as.new.default.title" },
-            {
-                title: dashboardTitleProp,
-            },
-        );
+        // shorten only the original title so the localized "Copy of" text stays whole
+        const affixLength = intl.formatMessage(defaultTitleMessage, { title: "" }).length;
+        return intl.formatMessage(defaultTitleMessage, {
+            title: truncateDashboardTitle(dashboardTitleProp, DASHBOARD_TITLE_MAX_LENGTH - affixLength),
+        });
     }, [dashboardTitleProp, intl]);
 
     const [dashboardTitle, setDashboardTitle] = useState(getDefaultDashboardTitle());

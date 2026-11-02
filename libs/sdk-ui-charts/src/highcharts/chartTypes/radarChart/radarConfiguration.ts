@@ -64,7 +64,7 @@ export function getRadarConfiguration(
             {
                 gridLineInterpolation: gridLineShape,
                 title: {
-                    text: null,
+                    text: "",
                 },
             },
         ],

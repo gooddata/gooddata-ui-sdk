@@ -29,6 +29,7 @@ vi.mock("../messages/messagesSelectors.js", () => ({
         state.messagesByConversation?.[conversationId] ?? [],
     conversationByIdOrLocalIdSelector: (state: TestState, conversationId: string) =>
         state.conversations?.find((conversation) => conversation.localId === conversationId),
+    conversationSelector: (state: TestState) => state.conversations?.[0],
     threadIdSelector: (state: TestState) => state.threadId,
 }));
 
@@ -66,6 +67,39 @@ const state: TestState = {
     threadId: "thread-id",
     messagesByConversation: { "thread-id": [clarificationMessage] },
 };
+
+describe("user message events", () => {
+    it.each(["text", "clarifyingAnswers"] as const)(
+        "includes the stable local conversation ID for %s before a server thread exists",
+        async (type) => {
+            const dispatch = vi.fn<(event: ChatEvent) => void>();
+            const conversation = { id: "", localId: "local-conversation" };
+
+            await runSaga(
+                {
+                    context: { eventDispatcher: { dispatch } },
+                    getState: () => ({ ...state, threadId: undefined, conversations: [conversation] }),
+                },
+                onNewMessage,
+                newMessageAction(
+                    makeUserItem(
+                        type === "text"
+                            ? { type, text: "Edit this dashboard" }
+                            : { type, questionsItemId: "questions", answers: [] },
+                    ),
+                ),
+            ).toPromise();
+
+            expect(dispatch).toHaveBeenCalledExactlyOnceWith(
+                expect.objectContaining({
+                    type: type === "text" ? "chatUserMessage" : "chatUserAnswers",
+                    conversationId: conversation.localId,
+                    threadId: undefined,
+                }),
+            );
+        },
+    );
+});
 
 describe("clarification question events", () => {
     it("reports questions from the originating conversation even when another one is active", async () => {
@@ -237,6 +271,64 @@ describe("clarification question events", () => {
 });
 
 describe("assistant message events", () => {
+    it.each(["dashboard_builder", "dashboard_editor"] as const)(
+        "reports %s activation while the skill item is still streaming",
+        async (name) => {
+            const dispatch = vi.fn<(event: ChatEvent) => void>();
+            const message = {
+                ...clarificationMessage,
+                content: { type: "skillsActivated", skills: [{ name, title: name }] },
+            } as IChatConversationLocalItem;
+
+            await runSaga(
+                {
+                    context: { eventDispatcher: { dispatch } },
+                    getState: () => ({
+                        messages: [],
+                        threadId: "unrelated-thread",
+                        messagesByConversation: { "local-conversation": [message] },
+                        conversations: [{ id: "origin-thread", localId: "local-conversation" }],
+                    }),
+                },
+                onEvaluateMessageStreaming,
+                evaluateMessageStreamingAction({
+                    assistantMessageId: message.localId,
+                    conversationId: "local-conversation",
+                }),
+            ).toPromise();
+
+            expect(dispatch).toHaveBeenCalledExactlyOnceWith({
+                type: "chatAssistantMessage",
+                interactionId: message.id,
+                threadId: "origin-thread",
+                useCase: "GENERAL",
+                skills: [{ name, title: name }],
+            });
+        },
+    );
+
+    it("does not report ordinary streamed text as a completed assistant message", async () => {
+        const dispatch = vi.fn<(event: ChatEvent) => void>();
+        const message = {
+            ...clarificationMessage,
+            content: { type: "text", text: "Working" },
+        } as IChatConversationLocalItem;
+
+        await runSaga(
+            {
+                context: { eventDispatcher: { dispatch } },
+                getState: () => ({ ...state, messagesByConversation: { "thread-id": [message] } }),
+            },
+            onEvaluateMessageStreaming,
+            evaluateMessageStreamingAction({
+                assistantMessageId: message.localId,
+                conversationId: "thread-id",
+            }),
+        ).toPromise();
+
+        expect(dispatch).not.toHaveBeenCalled();
+    });
+
     it.each([false, true])(
         "emits completion after the active conversation switches (cancelled: %s)",
         async (cancelled) => {

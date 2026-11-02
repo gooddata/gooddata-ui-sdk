@@ -186,21 +186,21 @@ function makePackageEsmAlias(packageName: string) {
     // background-image: url("@gooddata/sdk-ui-kit/esm/assets/loading.svg");
     return {
         find: `${packageName}/esm`,
-        replacement: path.resolve(__dirname, `./../../libs/${packageName.split("/")[1]}/esm`),
+        replacement: path.resolve(import.meta.dirname, `./../../libs/${packageName.split("/")[1]}/esm`),
     };
 }
 
 function makePackageSourceAlias(packageName: string) {
     return {
         find: packageName,
-        replacement: path.resolve(__dirname, `./../../libs/${packageName.split("/")[1]}/src`),
+        replacement: path.resolve(import.meta.dirname, `./../../libs/${packageName.split("/")[1]}/src`),
     };
 }
 
 function makePackageStylesAlias(packageName: string) {
     return {
         find: `${packageName}/styles`,
-        replacement: path.resolve(__dirname, `./../../libs/${packageName.split("/")[1]}/styles`),
+        replacement: path.resolve(import.meta.dirname, `./../../libs/${packageName.split("/")[1]}/styles`),
     };
 }
 
@@ -236,6 +236,7 @@ export default defineConfig(({ mode }) => {
             rolldownOptions: {
                 checks: {
                     pluginTimings: false,
+                    moduleLevelDirective: false,
                 },
             },
         },
@@ -286,7 +287,7 @@ export default defineConfig(({ mode }) => {
                 // This is also required to make fonts work.
                 {
                     find: "@gooddata/sdk-ui-kit/src",
-                    replacement: path.resolve(__dirname, "./../../libs/sdk-ui-kit/src"),
+                    replacement: path.resolve(import.meta.dirname, "./../../libs/sdk-ui-kit/src"),
                 },
                 ...packagesWithoutStyles.map(makePackageSourceAlias),
                 ...packagesWithStyles.flatMap((pkg) => [

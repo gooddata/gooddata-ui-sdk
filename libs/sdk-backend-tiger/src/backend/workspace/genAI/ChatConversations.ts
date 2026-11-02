@@ -564,12 +564,11 @@ export class ChatConversationThreadQuery implements IChatConversationThreadQuery
                 })
                     .then((response) => {
                         responseTraceId = responseTraceId ?? response.headers?.["x-gdc-trace-id"];
+                        controller.close();
                     })
                     .catch((error) => {
+                        // error() already ends the stream; calling close() after it throws.
                         controller.error(error);
-                    })
-                    .finally(() => {
-                        controller.close();
                     });
             },
         });

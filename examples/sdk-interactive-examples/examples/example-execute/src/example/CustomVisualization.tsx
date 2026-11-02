@@ -3,18 +3,13 @@
 import { defaultImport } from "default-import";
 import * as Highcharts from "highcharts";
 import DefaultHighchartsReact from "highcharts-react-official";
-import DefaultHighchartsWheel from "highcharts/modules/dependency-wheel.js";
-import DefaultHighchartSankey from "highcharts/modules/sankey.js";
+import "highcharts/modules/sankey.js";
+import "highcharts/modules/dependency-wheel.js";
 
 import { type IMeasure, type IMeasureDefinition, isResultAttributeHeader } from "@gooddata/sdk-model";
 import { type WithLoadingResult } from "@gooddata/sdk-ui";
 
-const HighchartSankey = defaultImport(DefaultHighchartSankey);
-const HighchartsWheel = defaultImport(DefaultHighchartsWheel);
 const HighchartsReact = defaultImport(DefaultHighchartsReact);
-
-HighchartSankey(Highcharts);
-HighchartsWheel(Highcharts);
 
 export interface ICustomVisualization {
     measure: IMeasure<IMeasureDefinition>;

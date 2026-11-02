@@ -30,6 +30,12 @@ const useStyles = makeStyles()((theme) => {
             "&:hover": {
                 border: `1px solid ${theme.tabs.colors.border}`,
             },
+            "&.readOnly": {
+                cursor: "default",
+                "&:hover": {
+                    borderColor: "transparent",
+                },
+            },
             textarea: {
                 lineHeight: "19px",
                 padding: 0,
@@ -82,6 +88,7 @@ function EditableRowComponent({
     onChange,
     placeholder = "",
     className,
+    readOnly = false,
     autoResize,
     onHeightChange,
     useReferences = false,
@@ -90,10 +97,13 @@ function EditableRowComponent({
     const { classes } = useStyles();
 
     const [richTextEditMode, setRichTextEditMode] = useState(false);
+    const isEditing = !readOnly && richTextEditMode;
 
     const handleRichTextClick = useCallback(() => {
-        setRichTextEditMode(true);
-    }, []);
+        if (!readOnly) {
+            setRichTextEditMode(true);
+        }
+    }, [readOnly]);
 
     const handleRichTextBlur = useCallback(() => {
         setRichTextEditMode(false);
@@ -106,12 +116,17 @@ function EditableRowComponent({
         }
     });
 
+    if (readOnly && value.length === 0) {
+        return null;
+    }
+
     return (
         <div className={cx(classes.root, className)} ref={element}>
             <div
                 className={cx(classes.richText, {
-                    active: richTextEditMode,
-                    [classes.richTextView]: !richTextEditMode && value,
+                    active: isEditing,
+                    readOnly,
+                    [classes.richTextView]: !isEditing && value,
                     [classes.richTextFit]: autoResize,
                 })}
                 onClick={handleRichTextClick}
@@ -119,10 +134,10 @@ function EditableRowComponent({
             >
                 <RichTextWithTooltip
                     value={value}
-                    renderMode={richTextEditMode ? "edit" : "view"}
+                    renderMode={isEditing ? "edit" : "view"}
                     editRows={5}
                     autoResize={autoResize}
-                    showTooltip={richTextEditMode}
+                    showTooltip={isEditing}
                     editPlaceholder={placeholder}
                     emptyElement={<div className={classes.richTextViewEmpty}>{placeholder}</div>}
                     tooltipAlignPoints={richTextTooltipAlignPoints}

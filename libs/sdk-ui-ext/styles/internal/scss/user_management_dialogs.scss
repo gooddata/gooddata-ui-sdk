@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
@@ -39,6 +39,17 @@
         margin-right: 0;
         padding-right: 0;
     }
+}
+
+.gd-user-management-dialog-edit-detail {
+    .gd-dialog-header {
+        margin-bottom: 20px;
+    }
+}
+
+.gd-user-management-dialog-footer-delete {
+    display: inline-block;
+    margin-right: 5px;
 }
 
 .gd-user-management-dialog-view {
@@ -83,7 +94,7 @@
 
 .gd-user-management-dialog-detail-label {
     width: 150px;
-    color: kit-variables.$default-gd-color-label;
+    color: var(--gd-palette-complementary-7, kit-variables.$default-gd-color-label);
 }
 
 .gd-user-management-dialog-detail-label-with-icon {
@@ -318,14 +329,7 @@
 }
 
 .gd-user-management-dialog-detail-value-not-set {
-    display: flex;
-    align-items: center;
-    gap: 5px;
     color: kit-variables.$gd-color-state-blank;
-
-    .gd-bubble-trigger {
-        display: inline-flex;
-    }
 }
 
 .gd-user-management-dialog-detail-notice-region {

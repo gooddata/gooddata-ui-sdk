@@ -4,10 +4,10 @@ import { defineMessage, useIntl } from "react-intl";
 
 import { EditableLabel } from "@gooddata/sdk-ui-kit";
 
+import { DASHBOARD_TITLE_MAX_LENGTH } from "../../../_staging/dashboard/dashboardTitle.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectIsAiLoading } from "../../../model/store/config/configSelectors.js";
 import { selectDashboardTitle } from "../../../model/store/meta/metaSelectors.js";
-import { DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/dashboard.js";
 
 import { DefaultTitle } from "./DefaultTitle.js";
 import { TitleWrapper } from "./TitleWrapper.js";
