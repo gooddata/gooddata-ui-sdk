@@ -1167,7 +1167,6 @@ export type DashboardConfig = {
     hideWidgetTitles?: boolean;
     widgetsOverlay?: Record<string, IDashboardWidgetOverlay>;
     aiMode?: "active" | "generating" | "waiting" | "building" | null;
-    aiReasoningTitle?: string;
     exportId?: string;
     exportType?: "visual" | "slides";
     exportMetadata?: Record<string, string>;
@@ -5794,8 +5793,6 @@ export type IDashboardPluginContract_V1 = DashboardPluginDescriptor & {
 export interface IDashboardProps extends IDashboardBaseProps, IDashboardExtensionProps {
     // (undocumented)
     children?: ReactElement | ((dashboard: any) => ReactElement);
-    // @internal
-    onReplyInChat?: () => void;
     // @internal
     persistedDashboard?: IDashboard;
 }
@@ -11679,7 +11676,7 @@ export type ResolveAsyncRenderPayload = {
 export function resolveDashboardTimezoneInfo(timezoneConfig: IDashboardTimezoneConfig | undefined, defaultTimezone?: string, effectiveTimezoneId?: string): IDashboardTimezoneInfo | undefined;
 
 // @public
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "agGridToken" | "maxZoomLevel" | "exportId" | "exportType" | "exportMetadata" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "user" | "overrideDefaultFilters" | "overrideDefaultParameters" | "overrideTitle" | "hideWidgetTitles" | "workspaceDescriptor" | "evaluationFrequency" | "externalRecipient" | "openAutomationOnLoad" | "hideAddTabButton" | "aiMode" | "aiReasoningTitle"> & DashboardConfig;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "agGridToken" | "maxZoomLevel" | "exportId" | "exportType" | "exportMetadata" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "user" | "overrideDefaultFilters" | "overrideDefaultParameters" | "overrideTitle" | "hideWidgetTitles" | "workspaceDescriptor" | "evaluationFrequency" | "externalRecipient" | "openAutomationOnLoad" | "hideAddTabButton" | "aiMode"> & DashboardConfig;
 
 // @alpha (undocumented)
 export type ResolvedDateFilterValues = IResolvedDateFilterValue[];
@@ -11917,9 +11914,6 @@ export const selectAdhocDateHierarchies: DashboardSelector<ICatalogDateAttribute
 
 // @internal
 export const selectAgGridToken: DashboardSelector<string | undefined>;
-
-// @internal
-export const selectAiReasoningTitle: DashboardSelector<string | undefined>;
 
 // @internal (undocumented)
 export const selectAlertingDialogReturnFocusTo: DashboardSelector<string | undefined>;

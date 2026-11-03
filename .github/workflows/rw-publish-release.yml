@@ -12,6 +12,11 @@ on:
         required: true
         description: "The type of version bump (major, minor, patch)"
         type: string
+      use-trusted-publishing:
+        required: false
+        default: true
+        description: "Publish to npm via trusted publishing (OIDC) only, without NPM_PUBLISH_TOKEN"
+        type: boolean
     outputs:
       version:
         description: "Version which was created"
@@ -115,6 +120,7 @@ jobs:
     with:
       source-branch: ${{ inputs.source-branch }}
       release-tag: ${{ needs.prape-release-releasde-tag.outputs.release_tag }}
+      use-trusted-publishing: ${{ inputs.use-trusted-publishing }}
 
   check-npm-package:
     outputs:

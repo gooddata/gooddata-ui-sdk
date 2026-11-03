@@ -6,6 +6,11 @@ on:
                 required: true
                 description: "Source branch to release from (release, rel/*)"
                 type: string
+            use-trusted-publishing:
+                required: false
+                default: true
+                description: "Publish to npm via trusted publishing (OIDC) only, without NPM_PUBLISH_TOKEN"
+                type: boolean
 
 jobs:
     publish-release:
@@ -17,6 +22,7 @@ jobs:
         with:
             bump: "patch"
             source-branch: ${{ inputs.source-branch }}
+            use-trusted-publishing: ${{ inputs.use-trusted-publishing }}
 
     prepare-variables:
         runs-on: [ubuntu-latest]

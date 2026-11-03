@@ -12,6 +12,11 @@ on:
                 required: true
                 description: "The release NPM tag e.g. prerelease, latest, hotfix ..."
                 type: string
+            use-trusted-publishing:
+                required: false
+                default: true
+                description: "Publish to npm via trusted publishing (OIDC) only, without NPM_PUBLISH_TOKEN"
+                type: boolean
 
 jobs:
     publish-version:
@@ -43,6 +48,7 @@ jobs:
               run: |
                   node common/scripts/install-run-rush.js publish --include-all --version-policy sdk --set-access-level public
             - name: Rush publish
+              if: ${{ !inputs.use-trusted-publishing }}
               uses: nick-fields/retry@v4.0.0
               env:
                   NPM_PUBLISH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
@@ -55,9 +61,35 @@ jobs:
                   command: |
                       node common/scripts/install-run-rush.js publish --publish --include-all --version-policy sdk --tag $TAG --set-access-level public
 
-    notify-publish-failed-to-slack:
-        if: ${{ !cancelled() && needs.publish-version.result  == 'failure' }}
+            # Trusted publishing: npm does not support self-hosted runners and the npm tokens
+            # work only on them. So pack here and publish in publish-version-trusted.
+            # The action comes from master, because the source branch (e.g. an old rel/X.Y)
+            # does not always have it.
+            - name: Pack for trusted publishing
+              if: ${{ inputs.use-trusted-publishing }}
+              uses: gooddata/gooddata-ui-sdk/.github/actions/rush/pack-for-publish@master
+              with:
+                  policies: "sdk"
+                  artifact-name: npm-tarballs-${{ inputs.release-tag }}
+                  npm-auth-token: ${{ secrets.NPM_TOKEN }}
+
+    publish-version-trusted:
+        if: ${{ inputs.use-trusted-publishing }}
         needs: publish-version
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            id-token: write
+        steps:
+            - name: Publish tarballs with trusted publishing
+              uses: gooddata/gooddata-ui-sdk/.github/actions/npm/publish-tarballs@master
+              with:
+                  artifact-name: npm-tarballs-${{ inputs.release-tag }}
+                  release-tag: ${{ inputs.release-tag }}
+
+    notify-publish-failed-to-slack:
+        if: ${{ !cancelled() && (needs.publish-version.result == 'failure' || needs.publish-version-trusted.result == 'failure') }}
+        needs: [publish-version, publish-version-trusted]
         runs-on: [ubuntu-latest]
         steps:
             - name: Checkout repository

@@ -7,26 +7,11 @@ import { defineMessage, useIntl } from "react-intl";
 import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import type { GenAIChatEffort, IGenAIUserContext } from "@gooddata/sdk-model";
 import { useBackendStrict } from "@gooddata/sdk-ui";
-import {
-    type ChatAssistantMessageEvent,
-    type ChatClarificationQuestionsEvent,
-    type ChatClosedEvent,
-    type ChatConversationChangedEvent,
-    type ChatDefinitionReceivedEvent,
-    type ChatFeedbackEvent,
-    type ChatOpenedEvent,
-    type ChatReasoningEvent,
-    type ChatResetEvent,
-    type ChatUserAnswersEvent,
-    type ChatUserMessageEvent,
-    type LinkHandlerEvent,
-    type ChatModeChangeEvent,
-} from "@gooddata/sdk-ui-gen-ai";
+import { type LinkHandlerEvent } from "@gooddata/sdk-ui-gen-ai";
 import {
     GenAIChatDialogConnected,
     type GenAIChatConnectedEvent,
-    type IDashboardSaved,
-    type IPublisherDocumentSaved,
+    type ISequencedAppEvent,
 } from "@gooddata/sdk-ui-gen-ai/internal";
 import { HEADER_CHAT_BUTTON_ID, useToastMessage } from "@gooddata/sdk-ui-kit";
 
@@ -40,57 +25,21 @@ const EMBEDDED_AI_TRIGGER_ID = "embed-ai-trigger";
 const EMBEDDED_CHAT_CLASS = "gd-gen-ai-chat-embedded";
 
 /**
- * Discriminated union of GenAI chat events that are forwarded to the host
- * caller via the `onEvent` callback.
- *
- * @remarks
- * The standalone home-ui `GenAIChat` component called gdc-home-ui-specific
- * `trackGenAIChat*` telemetry helpers directly. To keep the host runtime free
- * of those deps, the host caller wires this through `onEvent`.
+ * A chat event as the host hands it to the active application: the gen-ai event under its contract
+ * name. Every event the connected chat emits maps to exactly one member, so a new chat event is
+ * forwarded without the host learning about it. The payload types keep the host's own handling
+ * (telemetry, chat mode) typed.
  */
-export type GenAIChatEvent =
-    | { name: "chat.opened"; payload: ChatOpenedEvent }
-    | { name: "chat.closed"; payload: ChatClosedEvent }
-    | { name: "chat.reset"; payload: ChatResetEvent }
-    | { name: "chat.conversation-changed"; payload: ChatConversationChangedEvent }
-    | { name: "chat.feedback"; payload: ChatFeedbackEvent }
-    | { name: "chat.user-message"; payload: ChatUserMessageEvent }
-    | { name: "chat.user-answers"; payload: ChatUserAnswersEvent }
-    | { name: "chat.mode-changed"; payload: ChatModeChangeEvent }
-    | { name: "chat.definition-received"; payload: ChatDefinitionReceivedEvent }
-    | { name: "chat.clarification-questions"; payload: ChatClarificationQuestionsEvent }
-    | { name: "chat.reasoning"; payload: ChatReasoningEvent }
-    | { name: "chat.assistant-message"; payload: ChatAssistantMessageEvent };
+export type GenAIChatEvent = {
+    [K in GenAIChatConnectedEvent["name"]]: {
+        name: `chat.${K}`;
+        payload: Extract<GenAIChatConnectedEvent, { name: K }>["payload"];
+    };
+}[GenAIChatConnectedEvent["name"]];
 
-export function toHostGenAIChatEvent(event: GenAIChatConnectedEvent): GenAIChatEvent | undefined {
-    switch (event.name) {
-        case "opened":
-            return { name: "chat.opened", payload: event.payload };
-        case "closed":
-            return { name: "chat.closed", payload: event.payload };
-        case "reset":
-            return { name: "chat.reset", payload: event.payload };
-        case "conversation-changed":
-            return { name: "chat.conversation-changed", payload: event.payload };
-        case "feedback":
-            return { name: "chat.feedback", payload: event.payload };
-        case "user-message":
-            return { name: "chat.user-message", payload: event.payload };
-        case "user-answers":
-            return { name: "chat.user-answers", payload: event.payload };
-        case "assistant-message":
-            return { name: "chat.assistant-message", payload: event.payload };
-        case "reasoning":
-            return { name: "chat.reasoning", payload: event.payload };
-        case "definition-received":
-            return { name: "chat.definition-received", payload: event.payload };
-        case "clarification-questions":
-            return { name: "chat.clarification-questions", payload: event.payload };
-        case "mode-changed":
-            return { name: "chat.mode-changed", payload: event.payload };
-        default:
-            return undefined;
-    }
+export function toHostGenAIChatEvent(event: GenAIChatConnectedEvent): GenAIChatEvent {
+    // Sound: name and payload are read from the same member of the union.
+    return { name: `chat.${event.name}`, payload: event.payload } as GenAIChatEvent;
 }
 
 export interface IGenAIChatProps {
@@ -137,10 +86,8 @@ export interface IGenAIChatProps {
      * Whether the ambient user context is currently loading.
      */
     ambientUserContextLoading?: boolean;
-    /** The latest document of the conversation that the active application saved. */
-    publisherDocumentSaved: IPublisherDocumentSaved | undefined;
-    /** The latest dashboard save reported by the active application. */
-    dashboardSaved: IDashboardSaved | undefined;
+    /** Recent events the active application sent to the chat, oldest first, e.g. a save of an object the chat drafted. */
+    appEvents: ReadonlyArray<ISequencedAppEvent>;
     /**
      * Tag identifiers the assistant's object search/autocomplete should be restricted to,
      * reflecting the active hosted application's current view.
@@ -185,8 +132,7 @@ export function GenAIChat({
     replaceUserContext,
     ambientUserContext,
     ambientUserContextLoading,
-    publisherDocumentSaved,
-    dashboardSaved,
+    appEvents,
     includeTags,
     excludeTags,
     canManageProject,
@@ -212,11 +158,7 @@ export function GenAIChat({
 
     const handleEvent = useCallback(
         (event: GenAIChatConnectedEvent) => {
-            const hostEvent = toHostGenAIChatEvent(event);
-            if (hostEvent) {
-                onEvent?.(hostEvent);
-                return;
-            }
+            onEvent?.(toHostGenAIChatEvent(event));
             switch (event.name) {
                 case "save-visualization-success":
                     addSuccess(defineMessage({ id: "messages.genAi.visualisation.saved.success" }));
@@ -265,8 +207,7 @@ export function GenAIChat({
             effort={effort}
             replaceUserContext={replaceUserContext}
             ambientUserContext={ambientUserContext}
-            publisherDocumentSaved={publisherDocumentSaved}
-            dashboardSaved={dashboardSaved}
+            appEvents={appEvents}
             ambientUserContextLoading={ambientUserContextLoading}
             includeTags={includeTags}
             excludeTags={excludeTags}

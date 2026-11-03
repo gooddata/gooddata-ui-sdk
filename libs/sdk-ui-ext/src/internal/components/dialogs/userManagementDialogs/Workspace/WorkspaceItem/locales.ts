@@ -54,6 +54,7 @@ export const workspaceGranularPermissionMessages = defineMessages({
     CREATE_VISUALIZATION: { id: "userManagement.workspace.permission.createVisualization" },
     MANAGE_VISUALIZATIONS: { id: "userManagement.workspace.permission.manageVisualizations" },
     CREATE_COMPUTED_ATTRIBUTE: { id: "userManagement.workspace.permission.createComputedAttribute" },
+    CREATE_DOCUMENT: { id: "userManagement.workspace.permission.createDocument" },
     USE_AI_ASSISTANT: { id: "userManagement.workspace.permission.useAiAssistant" },
     viewDescription: { id: "userManagement.workspace.granularPermission.view.description" },
     analyzeDescription: { id: "userManagement.workspace.granularPermission.analyze.description" },
@@ -77,6 +78,7 @@ export const granularTooltipMessages = defineMessages({
     CREATE_COMPUTED_ATTRIBUTE: {
         id: "userManagement.workspace.permission.createComputedAttribute.tooltip",
     },
+    CREATE_DOCUMENT: { id: "userManagement.workspace.permission.createDocument.tooltip" },
     USE_AI_ASSISTANT: { id: "userManagement.workspace.permission.useAiAssistant.tooltip" },
 });
 
@@ -106,6 +108,8 @@ export const getGranularPermissionTitle = (permission: WorkspacePermission) => {
             return workspaceGranularPermissionMessages.MANAGE_VISUALIZATIONS;
         case "CREATE_COMPUTED_ATTRIBUTE":
             return workspaceGranularPermissionMessages.CREATE_COMPUTED_ATTRIBUTE;
+        case "CREATE_DOCUMENT":
+            return workspaceGranularPermissionMessages.CREATE_DOCUMENT;
         case "USE_AI_ASSISTANT":
             return workspaceGranularPermissionMessages.USE_AI_ASSISTANT;
         default:

@@ -32,6 +32,14 @@ export {
     type ICopilotRegistration,
     type ICopilotConfiguration,
 } from "./copilot.js";
+export {
+    CopilotInteractionComposing,
+    type ICopilotInteractionComposingProps,
+} from "./copilot/CopilotInteractionComposing.js";
+export {
+    CopilotInteractionComposingWithHandler,
+    type ICopilotInteractionComposingWithHandlerProps,
+} from "./copilot/CopilotInteractionComposingWithHandler.js";
 
 export {
     GenAIChat,

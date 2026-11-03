@@ -1,0 +1,66 @@
+name: Pack packages for npm publish
+description: |
+  Packs the packages of the given Rush version policies into tarballs, removes the
+  tarballs whose version is already on npm, and uploads the rest as an artifact.
+  Use it on the self-hosted runner, then publish the artifact with
+  gooddata/gooddata-ui-sdk/.github/actions/npm/publish-tarballs@master on a GitHub-hosted
+  runner (npm trusted publishing).
+  This action assumes that the packages are built.
+
+inputs:
+  policies:
+    required: true
+    description: "Space-separated Rush version policies, e.g. 'sdk aac gdc-ui-private'"
+  artifact-name:
+    required: true
+    description: "Name of the uploaded artifact (must be unique in the workflow run)"
+  npm-auth-token:
+    required: true
+    description: "npm token to read restricted packages when checking for already published versions"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Pack and remove already published versions
+      shell: bash
+      env:
+        POLICIES: ${{ inputs.policies }}
+        NPM_AUTH_TOKEN: ${{ inputs.npm-auth-token }}
+        TARBALLS: ${{ runner.temp }}/npm-tarballs
+      run: |
+        set -euo pipefail
+        rm -rf "$TARBALLS"
+
+        # --pack only writes tarballs; it never publishes.
+        for policy in $POLICIES; do
+          node common/scripts/install-run-rush.js publish --publish --pack --include-all \
+            --version-policy "$policy" --release-folder "$TARBALLS/$policy"
+        done
+
+        # Same as "rush publish": do not publish a version that is already on npm.
+        printf '//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}\n' > "$RUNNER_TEMP/pack-for-publish.npmrc"
+        export NPM_CONFIG_USERCONFIG="$RUNNER_TEMP/pack-for-publish.npmrc"
+        shopt -s nullglob
+        for tgz in "$TARBALLS"/*/*.tgz; do
+          spec=$(tar -xOzf "$tgz" package/package.json | node -p 'const p = JSON.parse(require("fs").readFileSync(0)); `${p.name}@${p.version}`')
+          if [ -n "$(npm view "$spec" version 2>/dev/null)" ]; then
+            echo "Skip $spec. Already published."
+            rm "$tgz"
+          else
+            echo "Publish $spec"
+          fi
+        done
+        rm "$NPM_CONFIG_USERCONFIG"
+
+        # The manifest makes sure that the artifact exists, also when there is nothing to publish.
+        (cd "$TARBALLS" && find . -name '*.tgz' | sort > manifest.txt)
+        echo "Tarballs to publish: $(wc -l < "$TARBALLS/manifest.txt")"
+        du -sh "$TARBALLS"
+
+    - name: Upload tarballs
+      uses: actions/upload-artifact@v7.0.2
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: ${{ runner.temp }}/npm-tarballs
+        retention-days: 1
+        overwrite: true

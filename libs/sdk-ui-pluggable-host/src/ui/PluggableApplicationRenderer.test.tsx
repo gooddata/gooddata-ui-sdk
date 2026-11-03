@@ -16,6 +16,7 @@ import {
     type IPluggableAppEvent,
     type IPluggableApplicationMountHandle,
     aiAssistantContextChanged,
+    aiAssistantEventSent,
     aiAssistantPublisherDocumentSaved,
     openAiAssistantRequested,
     openPricingDialogRequested,
@@ -113,8 +114,8 @@ vi.resetModules();
 const { HostIntlProvider } = await import("./HostIntlProvider.js");
 const { PluggableApplicationRenderer } = await import("./PluggableApplicationRenderer.js");
 
-type PublisherDocumentSaved = Parameters<
-    NonNullable<ComponentProps<typeof PluggableApplicationRenderer>["onAiAssistantPublisherDocumentSaved"]>
+type AiAssistantAppEvent = Parameters<
+    NonNullable<ComponentProps<typeof PluggableApplicationRenderer>["onAiAssistantAppEvent"]>
 >[0];
 
 type AiAssistantContext = Parameters<
@@ -128,9 +129,7 @@ function renderer(options: {
     app?: PluggableApplicationRegistryItem;
     onOpenAiAssistant?: ComponentProps<typeof PluggableApplicationRenderer>["onOpenAiAssistant"];
     onAiAssistantContext?: ComponentProps<typeof PluggableApplicationRenderer>["onAiAssistantContext"];
-    onAiAssistantPublisherDocumentSaved?: ComponentProps<
-        typeof PluggableApplicationRenderer
-    >["onAiAssistantPublisherDocumentSaved"];
+    onAiAssistantAppEvent?: ComponentProps<typeof PluggableApplicationRenderer>["onAiAssistantAppEvent"];
     onOpenPricingDialog?: () => void;
 }): ReactElement {
     return (
@@ -142,7 +141,7 @@ function renderer(options: {
                 navigationRequestRef={options.navigationRequestRef}
                 onOpenAiAssistant={options.onOpenAiAssistant}
                 onAiAssistantContext={options.onAiAssistantContext}
-                onAiAssistantPublisherDocumentSaved={options.onAiAssistantPublisherDocumentSaved}
+                onAiAssistantAppEvent={options.onAiAssistantAppEvent}
                 onOpenPricingDialog={options.onOpenPricingDialog}
             />
         </HostIntlProvider>
@@ -299,48 +298,72 @@ describe("PluggableApplicationRenderer", () => {
             return emitted;
         };
 
-        it("is handed to the host chat", async () => {
+        it("is handed to the host chat as sent", async () => {
             const emitted = mountEmitting();
-            const onAiAssistantPublisherDocumentSaved = vi.fn<(saved: PublisherDocumentSaved) => void>();
+            const onAiAssistantAppEvent = vi.fn<(event: AiAssistantAppEvent) => void>();
             render(
                 renderer({
                     pathname: WS1_PATHNAME,
                     ctx: context(),
                     navigationRequestRef,
-                    onAiAssistantPublisherDocumentSaved,
+                    onAiAssistantAppEvent,
                 }),
             );
             await flushMount();
 
             emitted.onEvent?.(aiAssistantPublisherDocumentSaved(payload));
 
-            expect(onAiAssistantPublisherDocumentSaved).toHaveBeenCalledExactlyOnceWith({
-                conversationId: "c1",
-                itemId: "i1",
-                documentRef: "report_1",
-                savedDocumentId: "r1",
+            expect(onAiAssistantAppEvent).toHaveBeenCalledExactlyOnceWith({
+                name: "app.publisher-document-saved",
+                payload: {
+                    conversationId: "c1",
+                    itemId: "i1",
+                    documentRef: "report_1",
+                    savedDocumentId: "r1",
+                },
             });
         });
 
-        it("is ignored when it is malformed", async () => {
+        it("is handed to the host chat even when the host does not know it", async () => {
             const emitted = mountEmitting();
-            const onAiAssistantPublisherDocumentSaved = vi.fn<(saved: PublisherDocumentSaved) => void>();
+            const onAiAssistantAppEvent = vi.fn<(event: AiAssistantAppEvent) => void>();
             render(
                 renderer({
                     pathname: WS1_PATHNAME,
                     ctx: context(),
                     navigationRequestRef,
-                    onAiAssistantPublisherDocumentSaved,
+                    onAiAssistantAppEvent,
+                }),
+            );
+            await flushMount();
+
+            emitted.onEvent?.(aiAssistantEventSent({ name: "app.something-new", payload: { any: 1 } }));
+
+            expect(onAiAssistantAppEvent).toHaveBeenCalledExactlyOnceWith({
+                name: "app.something-new",
+                payload: { any: 1 },
+            });
+        });
+
+        it("is ignored when its envelope is malformed", async () => {
+            const emitted = mountEmitting();
+            const onAiAssistantAppEvent = vi.fn<(event: AiAssistantAppEvent) => void>();
+            render(
+                renderer({
+                    pathname: WS1_PATHNAME,
+                    ctx: context(),
+                    navigationRequestRef,
+                    onAiAssistantAppEvent,
                 }),
             );
             await flushMount();
 
             emitted.onEvent?.({
-                type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.PUBLISHER_DOCUMENT_SAVED",
-                payload: { conversationId: 1 },
+                type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.EVENT_SENT",
+                payload: { name: 1 },
             } as unknown as IPluggableAppEvent);
 
-            expect(onAiAssistantPublisherDocumentSaved).not.toHaveBeenCalled();
+            expect(onAiAssistantAppEvent).not.toHaveBeenCalled();
         });
     });
 

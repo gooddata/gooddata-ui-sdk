@@ -27,6 +27,7 @@
         background-color: var(--gd-palette-complementary-0);
         border-radius: var(--gd-modal-borderRadius);
         box-shadow: 0 2px 8px var(--gd-shadow-color);
+        overflow-wrap: break-word;
 
         &--variant-confirmation {
             box-sizing: border-box;

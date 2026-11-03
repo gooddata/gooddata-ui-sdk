@@ -10,40 +10,16 @@ import { configReducers } from "./configReducers.js";
 import { type ConfigState } from "./configState.js";
 
 describe("configReducers", () => {
-    describe("setAiReasoningTitle", () => {
-        it.each(["Choosing charts", "", undefined])(
-            "should replace or clear the title with %s",
-            (aiReasoningTitle) => {
-                const initialState: ConfigState = {
-                    config: {
-                        aiMode: "building",
-                        aiReasoningTitle: "Exploring data",
-                        locale: "en-US",
-                    } as ResolvedDashboardConfig,
-                };
+    describe("setConfig", () => {
+        it("should replace the resolved config", () => {
+            const initialState: ConfigState = {
+                config: { aiMode: "building", locale: "en-US" } as ResolvedDashboardConfig,
+            };
+            const config = { aiMode: "active", locale: "fr-FR" } as ResolvedDashboardConfig;
 
-                configReducers.setAiReasoningTitle(initialState, {
-                    type: "config/setAiReasoningTitle",
-                    payload: aiReasoningTitle,
-                });
+            configReducers.setConfig(initialState, { type: "config/setConfig", payload: config });
 
-                expect(initialState.config).toEqual({
-                    aiMode: "building",
-                    aiReasoningTitle,
-                    locale: "en-US",
-                });
-            },
-        );
-
-        it("should do nothing if config is not initialized", () => {
-            const initialState: ConfigState = { config: undefined };
-
-            configReducers.setAiReasoningTitle(initialState, {
-                type: "config/setAiReasoningTitle",
-                payload: "Exploring data",
-            });
-
-            expect(initialState.config).toBeUndefined();
+            expect(initialState.config).toEqual(config);
         });
     });
 

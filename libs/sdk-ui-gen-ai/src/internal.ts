@@ -15,7 +15,6 @@ export {
     type IGenAIChatDialogConnectedProps,
     type GenAIChatConnectedEvent,
 } from "./components/GenAIChatDialogConnected.js";
-export { type IPublisherDocumentSaved } from "./components/hooks/usePublisherDocumentSavedSync.js";
-export { type IDashboardSaved } from "./components/hooks/useDashboardSavedSync.js";
+export { type ISequencedAppEvent } from "./components/hooks/useAppEventSync.js";
 export { clearThreadAction, newMessageAction, setSelectedAgentAction };
 export { GenAIStandaloneInput, type GenAIStandaloneInputProps } from "./components/GenAIStandaloneInput.js";

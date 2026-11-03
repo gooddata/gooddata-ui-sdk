@@ -6,7 +6,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-base";
 
-import { selectAiReasoningTitle } from "../store/config/configSelectors.js";
+import { selectIsAiLoading } from "../store/config/configSelectors.js";
 import { configSliceReducer } from "../store/config/index.js";
 import { type createDashboardStore } from "../store/dashboardStore.js";
 import { type DashboardConfig, type ResolvedDashboardConfig } from "../types/commonTypes.js";
@@ -25,10 +25,12 @@ vi.mock("../store/dashboardStore.js", async (importOriginal) => ({
 const { useInitializeDashboardStore } = await import("./useInitializeDashboardStore.js");
 
 describe("useInitializeDashboardStore AI mode config", () => {
-    it("should synchronize reasoning titles including clearing without reinitializing the dashboard", () => {
+    it("should update stored AI modes while preserving the remaining resolved config", () => {
         const store = configureStore({
             reducer: { config: configSliceReducer },
-            preloadedState: { config: { config: { aiMode: "building" } as ResolvedDashboardConfig } },
+            preloadedState: {
+                config: { config: { aiMode: "building", locale: "en-US" } as ResolvedDashboardConfig },
+            },
             middleware: (getDefaultMiddleware) =>
                 getDefaultMiddleware({ serializableCheck: { ignoredActionPaths: ["ctx"] } }),
         });
@@ -40,30 +42,26 @@ describe("useInitializeDashboardStore AI mode config", () => {
                 useInitializeDashboardStore({ backend, workspace: "test-workspace", config }),
             {
                 initialProps: {
-                    config: { aiMode: "building", aiReasoningTitle: "Exploring data" } as
-                        | DashboardConfig
-                        | undefined,
+                    config: { aiMode: "building" } as DashboardConfig | undefined,
                 },
             },
         );
 
-        const getTitle = () => selectAiReasoningTitle(result.current!.store.getState());
-        expect(getTitle()).toBe("Exploring data");
-        rerender({ config: { aiMode: "building", aiReasoningTitle: "Choosing charts" } });
-        expect(getTitle()).toBe("Choosing charts");
-        expect(store.getState().config.config?.aiMode).toBe("building");
-        rerender({ config: { aiMode: "waiting", aiReasoningTitle: "Choosing charts" } });
-        expect(getTitle()).toBe("Choosing charts");
-        rerender({ config: { aiMode: "building", aiReasoningTitle: undefined } });
-        expect(getTitle()).toBeUndefined();
-        rerender({ config: { aiMode: "building", aiReasoningTitle: "Exploring data" } });
-        expect(getTitle()).toBe("Exploring data");
+        expect(selectIsAiLoading(result.current!.store.getState())).toBe(true);
+        for (const aiMode of ["generating", "waiting", "building", "active", null, undefined] as const) {
+            rerender({ config: { aiMode } });
+            expect(store.getState().config.config).toEqual({ aiMode, locale: "en-US" });
+            expect(selectIsAiLoading(result.current!.store.getState())).toBe(
+                aiMode === "generating" || aiMode === "waiting" || aiMode === "building",
+            );
+        }
         rerender({ config: { aiMode: "building" } });
-        expect(getTitle()).toBeUndefined();
-        rerender({ config: { aiReasoningTitle: "Choosing charts" } });
-        expect(getTitle()).toBe("Choosing charts");
+        rerender({ config: {} });
+        expect(store.getState().config.config).toEqual({ aiMode: undefined, locale: "en-US" });
+        rerender({ config: { aiMode: "waiting" } });
         rerender({ config: undefined });
-        expect(getTitle()).toBeUndefined();
+        expect(store.getState().config.config).toEqual({ aiMode: undefined, locale: "en-US" });
+        expect(selectIsAiLoading(result.current!.store.getState())).toBe(false);
         expect(result.current).toBe(dashboardStore);
         expect(createStore).toHaveBeenCalledTimes(1);
         expect(dashboardStore.rootSagaTask.cancel).not.toHaveBeenCalled();

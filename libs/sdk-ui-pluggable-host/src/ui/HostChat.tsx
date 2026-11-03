@@ -7,16 +7,15 @@ import {
     type IGenAIUserContext,
     type PluggableApplicationRegistryItem,
 } from "@gooddata/sdk-model";
-import { type IPlatformContext } from "@gooddata/sdk-pluggable-application-model";
+import { type IAiAssistantChatEvent, type IPlatformContext } from "@gooddata/sdk-pluggable-application-model";
 import { BackendProvider, resolveLocale } from "@gooddata/sdk-ui";
 import { GenAIAssistantMode } from "@gooddata/sdk-ui-gen-ai";
-import { type IDashboardSaved, type IPublisherDocumentSaved } from "@gooddata/sdk-ui-gen-ai/internal";
+import { type ISequencedAppEvent } from "@gooddata/sdk-ui-gen-ai/internal";
 import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
 import { getAppLifecycleCallbacks } from "../loader/pluggableApplicationsLoader.js";
 import { getBackend } from "../platformContext/backend.js";
 
-import { GenAIChatEvent } from "./GenAIChat.js";
 import { e } from "./hostChromeBem.js";
 import { HostIntlProvider } from "./HostIntlProvider.js";
 import "./HostChat.scss";
@@ -88,13 +87,11 @@ export interface IHostChatProps {
      */
     onAppLinkClick?: (link: IHostChatLink) => boolean;
     /**
-     * Delegates a chat event receive to the active application.
+     * Hands every chat event to the active application.
      */
-    onAppEventReceive?: (event: GenAIChatEvent) => void;
-    /** The latest document of the conversation that the active application saved. */
-    publisherDocumentSaved: IPublisherDocumentSaved | undefined;
-    /** The latest dashboard save reported by the active application. */
-    dashboardSaved: IDashboardSaved | undefined;
+    onAppEventReceive?: (event: IAiAssistantChatEvent) => void;
+    /** Recent events the active application sent to the chat, oldest first, e.g. a save of an object the chat drafted. */
+    appEvents: ReadonlyArray<ISequencedAppEvent>;
 }
 
 /**
@@ -117,8 +114,7 @@ export function HostChat({
     onChatStateChange,
     onAppLinkClick,
     onAppEventReceive,
-    publisherDocumentSaved,
-    dashboardSaved,
+    appEvents,
 }: IHostChatProps) {
     const features = useHostChromeWorkspaceFeatures(resolvedApplications, ctx, pathname);
 
@@ -136,8 +132,7 @@ export function HostChat({
         disabled: context?.disabled,
         onAppLinkClick,
         onAppEventReceive,
-        publisherDocumentSaved,
-        dashboardSaved,
+        appEvents,
     });
     const {
         askAiAssistant: chatAskAiAssistant,

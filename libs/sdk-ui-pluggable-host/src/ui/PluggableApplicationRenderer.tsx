@@ -10,16 +10,16 @@ import {
     type PluggableApplicationRegistryItem,
 } from "@gooddata/sdk-model";
 import {
+    type IAiAssistantAppEvent,
+    type IAiAssistantChatEvent,
     type IAppHeaderOptions,
-    type IAiAssistantPublisherDocumentSavedEvent,
     type IHostNavigationRequest,
     type IPlatformContext,
     type IPluggableApp,
     type IPluggableAppEvent,
     type IPluggableApplicationMountHandle,
     isAiAssistantContextChangedEvent,
-    isAiAssistantDashboardSavedEvent,
-    isAiAssistantPublisherDocumentSavedEvent,
+    isAiAssistantEventSentEvent,
     isCloseAiAssistantRequestedEvent,
     isDocumentTitleChangedEvent,
     isOpenAiAssistantRequestedEvent,
@@ -42,7 +42,6 @@ import { getApplicationHref } from "../loader/routing.js";
 import { BackendPlatformContextProvider } from "../platformContext/useLoadPlatformContext.js";
 
 import "./PluggableApplicationRenderer.scss";
-import { GenAIChatEvent } from "./GenAIChat.js";
 
 const { b, e } = bemFactory("gd-pluggable-application-renderer");
 
@@ -88,18 +87,8 @@ export interface IPluggableApplicationRendererProps {
         userContext?: IGenAIUserContext;
         userContextLoading?: boolean;
     }) => void;
-    /** Tell the host-owned chat that the active app saved a document the chat had drafted. */
-    onAiAssistantPublisherDocumentSaved?: (saved: IAiAssistantPublisherDocumentSavedEvent["payload"]) => void;
-    /** Tell the host-owned chat that the active app saved a dashboard the chat had drafted. */
-    onAiAssistantDashboardSaved?: (saved: {
-        conversationId: string;
-        originalDashboardId: string;
-        savedDashboardId: string;
-        savedInsights: ReadonlyArray<{
-            originalInsightId: string;
-            savedInsightId: string;
-        }>;
-    }) => void;
+    /** Hand an event the active app sent to the host-owned chat, without reading it. */
+    onAiAssistantAppEvent?: (event: IAiAssistantAppEvent) => void;
     /**
      * Ref the renderer populates with a handler that delegates a host-chat link click to the active
      * app's mount handle (`onAiAssistantLinkClicked`), so an embedded app can handle it in-app.
@@ -111,7 +100,7 @@ export interface IPluggableApplicationRendererProps {
      * Ref the renderer populates with a handler that delegates a host-chat event to the active
      * app's mount handle (`onAiAssistantEventReceive`), so an embedded app can handle it in-app.
      */
-    aiEventReceiveRef?: RefObject<((event: GenAIChatEvent) => void) | undefined>;
+    aiEventReceiveRef?: RefObject<((event: IAiAssistantChatEvent) => void) | undefined>;
     /**
      * Ref the renderer populates with a handler that asks the active app's mount handle
      * (`onHostNavigationRequested`) whether the host may navigate away. Must be referentially
@@ -132,8 +121,7 @@ export function PluggableApplicationRenderer({
     onOpenAiAssistant,
     onCloseAiAssistant,
     onAiAssistantContext,
-    onAiAssistantPublisherDocumentSaved,
-    onAiAssistantDashboardSaved,
+    onAiAssistantAppEvent,
     aiLinkClickHandlerRef,
     aiEventReceiveRef,
     navigationRequestRef,
@@ -149,8 +137,7 @@ export function PluggableApplicationRenderer({
     const onOpenAiAssistantRef = useAutoupdateRef(onOpenAiAssistant);
     const onCloseAiAssistantRef = useAutoupdateRef(onCloseAiAssistant);
     const onAiAssistantContextRef = useAutoupdateRef(onAiAssistantContext);
-    const onAiAssistantPublisherDocumentSavedRef = useAutoupdateRef(onAiAssistantPublisherDocumentSaved);
-    const onAiAssistantDashboardSavedRef = useAutoupdateRef(onAiAssistantDashboardSaved);
+    const onAiAssistantAppEventRef = useAutoupdateRef(onAiAssistantAppEvent);
     const onOpenPricingDialogRef = useAutoupdateRef(onOpenPricingDialog);
     const containerRef = useRef<HTMLDivElement>(null);
     const mountHandleRef = useRef<IPluggableApplicationMountHandle | undefined>(undefined);
@@ -202,12 +189,8 @@ export function PluggableApplicationRenderer({
                 onAiAssistantContextRef.current?.(event.payload);
                 return;
             }
-            if (isAiAssistantPublisherDocumentSavedEvent(event)) {
-                onAiAssistantPublisherDocumentSavedRef.current?.(event.payload);
-                return;
-            }
-            if (isAiAssistantDashboardSavedEvent(event)) {
-                onAiAssistantDashboardSavedRef.current?.(event.payload);
+            if (isAiAssistantEventSentEvent(event)) {
+                onAiAssistantAppEventRef.current?.(event.payload);
                 return;
             }
             if (isOpenPricingDialogRequestedEvent(event)) {
@@ -224,8 +207,7 @@ export function PluggableApplicationRenderer({
             onOpenAiAssistantRef,
             onCloseAiAssistantRef,
             onAiAssistantContextRef,
-            onAiAssistantPublisherDocumentSavedRef,
-            onAiAssistantDashboardSavedRef,
+            onAiAssistantAppEventRef,
             onOpenPricingDialogRef,
         ],
     );

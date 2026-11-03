@@ -27,7 +27,7 @@ Register each build type with its reacting skills, pure definition acceptance po
 and host application callback. Create one instance per editor/runtime, not a singleton.
 
 ```typescript
-import { CopilotBuildType, CopilotHandler } from "@gooddata/sdk-ui-gen-ai/copilot";
+import { CopilotBuildType, CopilotHandler } from "@gooddata/sdk-ui-gen-ai";
 
 const copilot = new CopilotHandler({
     registrations: [
@@ -63,6 +63,33 @@ copilot.dispose();
 `transitionCopilot` and the exported selectors directly. React consumers may subscribe with
 `useCopilotSnapshot(copilot)`; the hook adds no workflow owner. Application-owned string enums
 can replace the built-in `CopilotBuildType` without changing the lifecycle algorithm.
+
+## Composing overlay (alpha)
+
+Wrap any editor with loading, reasoning, and waiting-for-reply presentation. No dashboard
+configuration or Redux store is needed. The visibility predicate controls only composing UI;
+wrapped content stays mounted. It is evaluated during rendering, so rerender when its inputs change.
+The wrapper fills its host and positions the overlay relative to that host.
+
+```tsx
+import { CopilotInteractionComposing } from "@gooddata/sdk-ui-gen-ai";
+import "@gooddata/sdk-ui-gen-ai/styles/css/copilotInteractionComposing.css";
+
+<CopilotInteractionComposing
+    status="building"
+    reasoningTitle="Arranging visualizations"
+    isVisible={() => !isExporting}
+    onReplyInChat={openChat}
+>
+    <Editor />
+</CopilotInteractionComposing>;
+```
+
+Use `generating` or `building` for loading (optionally with a reasoning heading), `waiting`
+for the reply banner, and `idle` for no composing UI. Supply `locale` for localized labels.
+`CopilotInteractionComposingWithHandler` accepts `copilot` and `scope` instead of `status`
+and `reasoningTitle` and subscribes directly to the same runtime-owned handler. It does not
+dispose that handler when unmounted. Both variants also ship in `styles/css/main.css`.
 
 ## License
 

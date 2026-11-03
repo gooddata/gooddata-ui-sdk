@@ -3,6 +3,12 @@
 name: Release ~ Release minor version (complete)
 on:
   workflow_dispatch:
+    inputs:
+      use-npm-token:
+        required: false
+        default: false
+        description: "Publish to npm the old way with NPM_PUBLISH_TOKEN instead of trusted publishing (OIDC)"
+        type: boolean
 
 jobs:
   gate-approval:
@@ -92,6 +98,7 @@ jobs:
     with:
       bump: 'minor'
       source-branch: ${{ needs.get-version.outputs.branch }}
+      use-trusted-publishing: ${{ inputs.use-npm-token != true }}
 
   update-hugo-version:
     needs: [publish-release, get-version]

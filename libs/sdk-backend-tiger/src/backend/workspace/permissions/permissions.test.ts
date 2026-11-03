@@ -56,6 +56,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
             canCreateScheduledMail: false,
             canAnalyzeWorkspace: false,
             canCreateVisualization: false,
+            canCreateDocument: false,
             canCreateComputedAttribute: false,
             canManageVisualizations: false,
             canExecuteRaw: true,
@@ -98,6 +99,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
             canCreateScheduledMail: false,
             canAnalyzeWorkspace: true,
             canCreateVisualization: true,
+            canCreateDocument: false,
             canCreateComputedAttribute: false,
             canManageVisualizations: false,
             canExecuteRaw: true,
@@ -140,6 +142,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
             canCreateScheduledMail: false,
             canAnalyzeWorkspace: true,
             canCreateVisualization: true,
+            canCreateDocument: true,
             canCreateComputedAttribute: false,
             canManageVisualizations: true,
             canExecuteRaw: true,
@@ -206,5 +209,22 @@ describe("TigerWorkspacePermissionsFactory", () => {
 
         expect(granted.canCreateComputedAttribute).toBe(true);
         expect(analyst.canCreateComputedAttribute).toBe(false);
+    });
+
+    it("lets CREATE_DOCUMENT on top of VIEW or ANALYZE create documents, which only MANAGE includes", async () => {
+        const viewerGranted = await createFactory(["VIEW", "CREATE_DOCUMENT"]).getPermissionsForCurrentUser();
+        const analystGranted = await createFactory([
+            "ANALYZE",
+            "VIEW",
+            "CREATE_DOCUMENT",
+        ]).getPermissionsForCurrentUser();
+        const viewer = await createFactory(["VIEW"]).getPermissionsForCurrentUser();
+        const analyst = await createFactory(["ANALYZE", "VIEW"]).getPermissionsForCurrentUser();
+        const manager = await createFactory(["MANAGE", "ANALYZE", "VIEW"]).getPermissionsForCurrentUser();
+        expect(viewerGranted.canCreateDocument).toBe(true);
+        expect(analystGranted.canCreateDocument).toBe(true);
+        expect(viewer.canCreateDocument).toBe(false);
+        expect(analyst.canCreateDocument).toBe(false);
+        expect(manager.canCreateDocument).toBe(true);
     });
 });

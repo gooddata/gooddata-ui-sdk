@@ -5,16 +5,8 @@ import {
     type IChatConversation,
     type IChatConversationVisualisationContent,
 } from "@gooddata/sdk-backend-spi";
-import {
-    type AgentCustomSkill,
-    type IDashboard,
-    type IGenAIUserContext,
-    type IInsight,
-} from "@gooddata/sdk-model";
-import {
-    type IAiAssistantPublisherDocumentDefinition,
-    type IAiAssistantPublisherDocumentDefinitionV2,
-} from "@gooddata/sdk-pluggable-application-model";
+import { type AgentCustomSkill, type IGenAIUserContext } from "@gooddata/sdk-model";
+import { type IAiAssistantDefinitionReceivedPayload } from "@gooddata/sdk-pluggable-application-model";
 import { type SdkErrorType } from "@gooddata/sdk-ui";
 
 import { type GenAIAssistantMode } from "../components/ConfigContext.js";
@@ -507,62 +499,23 @@ export const isChatConversationChangedEvent = (event: ChatEvent): event is ChatC
  *
  * @remarks
  * The payload fields depend on `definitionType`; not every optional field is populated for every event.
- * Publisher document payloads and their metadata (`documentRef`, `refines`, `reworksOpenDocument`, and
- * `baseDocumentId`) are inherited from IAiAssistantPublisherDocumentDefinition.
- * The v2 payload is inherited from IAiAssistantPublisherDocumentDefinitionV2.publisherDocumentV2.
+ * The ids, the dashboard draft and the Publisher document drafts are inherited from
+ * IAiAssistantDefinitionReceivedPayload, which documents each of them.
  *
  * @public
  */
-export type ChatDefinitionReceivedEvent = BaseEvent & {
-    /**
-     * The type of the event.
-     */
-    type: "onDefinitionReceived";
-    /**
-     * The kind of definition received and the corresponding payload fields.
-     *
-     * @remarks
-     * - `dashboard`: a dashboard definition in `dashboard` and its referenced insights in `insights`.
-     * - `visualization`: a visualization definition in `visualization`.
-     * - `publisherDocument`: a Publisher document definition in `publisherDocument`.
-     * - `publisherDocumentV2`: a Publisher v2 document definition in `publisherDocumentV2`.
-     * - `alert`: an alert proposal in `alertProposal`.
-     */
-    definitionType: "dashboard" | "visualization" | "publisherDocument" | "publisherDocumentV2" | "alert";
-    /**
-     * Identifier of the item containing the definition: the streamed interaction ID for live responses,
-     * or the stored conversation item ID for history replays.
-     */
-    itemId: string;
-    /**
-     * Local identifier of the conversation containing the definition, not the backend thread ID.
-     * The backend thread ID is available in the inherited `threadId` property when known.
-     */
-    conversationId: string;
-    /**
-     * Stored response ID for a definition replayed from chat history.
-     * Live definitions leave this unset or empty, which distinguishes them from history replays.
-     */
-    interactionId?: string;
-    /**
-     * Dashboard definition, populated when `definitionType` is `dashboard`.
-     */
-    dashboard?: IDashboard;
-    /**
-     * Insights referenced by the dashboard, populated when `definitionType` is `dashboard`.
-     * An empty array is emitted if the dashboard content contains no insights.
-     */
-    insights?: IInsight[];
-    /**
-     * Visualization definition, populated when `definitionType` is `visualization`.
-     */
-    visualization?: NonNullable<IChatConversationVisualisationContent["visualization"]>;
-    /**
-     * Alert proposal, populated when `definitionType` is `alert`.
-     */
-    alertProposal?: IAlertProposal;
-} & Partial<IAiAssistantPublisherDocumentDefinition> &
-    Partial<Pick<IAiAssistantPublisherDocumentDefinitionV2, "publisherDocumentV2">>;
+export type ChatDefinitionReceivedEvent = BaseEvent &
+    IAiAssistantDefinitionReceivedPayload & {
+        type: "onDefinitionReceived";
+        /**
+         * Visualization definition, populated when `definitionType` is `visualization`.
+         */
+        visualization?: NonNullable<IChatConversationVisualisationContent["visualization"]>;
+        /**
+         * Alert proposal, populated when `definitionType` is `alert`.
+         */
+        alertProposal?: IAlertProposal;
+    };
 
 /**
  * Type guard for the ChatDefinitionReceivedEvent.

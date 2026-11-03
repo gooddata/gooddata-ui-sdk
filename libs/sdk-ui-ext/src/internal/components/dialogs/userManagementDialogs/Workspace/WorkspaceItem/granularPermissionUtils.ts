@@ -48,6 +48,7 @@ export const getImplicitGranularPermissions = (
                 "MANAGE_VISUALIZATIONS",
                 "CREATE_COMPUTED_ATTRIBUTE",
                 "CREATE_FILTER_VIEW",
+                "CREATE_DOCUMENT",
             ];
         default:
             return [];
@@ -235,6 +236,7 @@ const reorderPermissions = (permissions: WorkspacePermissions): WorkspacePermiss
         "CREATE_VISUALIZATION",
         "MANAGE_VISUALIZATIONS",
         "CREATE_COMPUTED_ATTRIBUTE",
+        "CREATE_DOCUMENT",
         "EXPORT",
         "EXPORT_PDF",
         "EXPORT_TABULAR",

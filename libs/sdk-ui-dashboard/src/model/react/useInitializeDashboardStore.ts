@@ -123,12 +123,6 @@ export const useInitializeDashboardStore = (
         }
     }, [dashboardStore, props.config?.aiMode]);
 
-    useEffect(() => {
-        if (dashboardStore) {
-            dashboardStore.store.dispatch(configActions.setAiReasoningTitle(props.config?.aiReasoningTitle));
-        }
-    }, [dashboardStore, props.config?.aiReasoningTitle]);
-
     // oxlint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         if (!shallowEqualObjects(previousInitProps, currentInitProps) || !dashboardStore) {

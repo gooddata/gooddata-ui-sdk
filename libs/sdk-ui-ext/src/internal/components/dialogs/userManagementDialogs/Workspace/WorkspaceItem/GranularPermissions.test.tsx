@@ -197,6 +197,33 @@ describe("GranularPermissions where Analyze includes MANAGE_VISUALIZATIONS", () 
     });
 });
 
+describe("GranularPermissions with CREATE_DOCUMENT", () => {
+    const documents = () => screen.getByLabelText<HTMLInputElement>("Documents");
+
+    it.each(["VIEW", "ANALYZE"] as const)("can be granted and cleared on top of %s", (permission) => {
+        render(<Harness permissions={[permission]} />);
+
+        expect(documents().checked).toBe(false);
+        expect(documents().disabled).toBe(false);
+
+        fireEvent.click(documents());
+        expect(saved()).toEqual([permission, "CREATE_DOCUMENT"]);
+
+        fireEvent.click(documents());
+        expect(saved()).toEqual([permission]);
+    });
+
+    it("shows as included under Manage and leaves it out of the save", () => {
+        render(<Harness permissions={["VIEW", "CREATE_DOCUMENT"]} />);
+
+        fireEvent.click(level("Manage"));
+
+        expect(documents().checked).toBe(true);
+        expect(documents().disabled).toBe(true);
+        expect(saved()).toEqual(["MANAGE"]);
+    });
+});
+
 describe("GranularPermissions existing behavior", () => {
     const checkbox = (name: string) => screen.getByLabelText<HTMLInputElement>(name);
 

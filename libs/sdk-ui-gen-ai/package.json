@@ -29,7 +29,6 @@
         ".": "./esm/index.js",
         "./internal": "./esm/internal.js",
         "./context": "./esm/context.js",
-        "./copilot": "./esm/copilot.js",
         "./styles/css/*": "./styles/css/*",
         "./styles/scss/*": "./styles/scss/*",
         "./esm/assets/*": "./esm/assets/*"

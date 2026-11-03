@@ -38,6 +38,7 @@ const noPermissions: IWorkspacePermissions = {
     canCreateFilterView: false,
     canCreateAutomation: false,
     canCreateComputedAttribute: false,
+    canCreateDocument: false,
     canManageVisualizations: false,
     canUseAiAssistant: false,
 };

@@ -40,7 +40,6 @@ import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeA
 import { useResizableSidebarState } from "../DashboardSidebar/useResizableSidebarState.js";
 import { type IDashboardProps } from "../types.js";
 
-import { DashboardInteractionComposing } from "./DashboardInteractionComposing.js";
 import { DashboardInteractionLock } from "./DashboardInteractionLock.js";
 import { DashboardScreenSizeProvider } from "./DashboardScreenSizeContext.js";
 
@@ -133,30 +132,28 @@ export function DashboardInner(props: IDashboardProps) {
                                     WrapInsightListItemWithDragComponent={WrapInsightListItemWithDrag}
                                 />
                                 <main className={dashboardContentClassNames} {...mainContentNavigationProps}>
-                                    <DashboardInteractionComposing onReplyInChat={props.onReplyInChat}>
-                                        {/* gd-dash-header-wrapper-sdk-8-12 style is added because we should keep old styles unchanged to not brake plugins */}
+                                    {/* gd-dash-header-wrapper-sdk-8-12 style is added because we should keep old styles unchanged to not brake plugins */}
+                                    <div
+                                        className="gd-dash-header-wrapper gd-dash-header-wrapper-sdk-8-12"
+                                        ref={headerRef}
+                                    >
+                                        {/* Header z-index start at  6000, so we need force all overlays z-indexes start at 6000 to be under header */}
+                                        <OverlayControllerProvider overlayController={overlayController}>
+                                            <DashboardHeader />
+                                        </OverlayControllerProvider>
+                                    </div>
+                                    <DashboardInteractionLock>
                                         <div
-                                            className="gd-dash-header-wrapper gd-dash-header-wrapper-sdk-8-12"
-                                            ref={headerRef}
+                                            className="gd-flex-item-stretch dash-section dash-section-kpis"
+                                            ref={layoutRef}
                                         >
-                                            {/* Header z-index start at  6000, so we need force all overlays z-indexes start at 6000 to be under header */}
-                                            <OverlayControllerProvider overlayController={overlayController}>
-                                                <DashboardHeader />
-                                            </OverlayControllerProvider>
+                                            <DashboardScreenSizeProvider>
+                                                <DashboardContent {...props} />
+                                            </DashboardScreenSizeProvider>
+                                            {enableEnhancedInsightPicker ? <FilterDeleteOverlay /> : null}
                                         </div>
-                                        <DashboardInteractionLock>
-                                            <div
-                                                className="gd-flex-item-stretch dash-section dash-section-kpis"
-                                                ref={layoutRef}
-                                            >
-                                                <DashboardScreenSizeProvider>
-                                                    <DashboardContent {...props} />
-                                                </DashboardScreenSizeProvider>
-                                                {enableEnhancedInsightPicker ? <FilterDeleteOverlay /> : null}
-                                            </div>
-                                            <div className="gd-dash-bottom-position-pixel" ref={bottomRef} />
-                                        </DashboardInteractionLock>
-                                    </DashboardInteractionComposing>
+                                        <div className="gd-dash-bottom-position-pixel" ref={bottomRef} />
+                                    </DashboardInteractionLock>
                                 </main>
                             </div>
                             <Toolbar />

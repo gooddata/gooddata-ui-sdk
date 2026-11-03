@@ -118,6 +118,7 @@ export const AssignedWorkspacePermissionValue: {
     readonly CREATE_VISUALIZATION: "CREATE_VISUALIZATION";
     readonly MANAGE_VISUALIZATIONS: "MANAGE_VISUALIZATIONS";
     readonly CREATE_COMPUTED_ATTRIBUTE: "CREATE_COMPUTED_ATTRIBUTE";
+    readonly CREATE_DOCUMENT: "CREATE_DOCUMENT";
     readonly USE_AI_ASSISTANT: "USE_AI_ASSISTANT";
 };
 
@@ -10062,6 +10063,11 @@ export type PluggableApplicationWorkspacePermission =
 */
 | "canCreateAutomation"
 /**
+* Whether the user can create Publisher documents, and edit and delete the ones they created.
+* Maps to Tiger `CREATE_DOCUMENT` permission, which MANAGE includes.
+*/
+| "canCreateDocument"
+/**
 * Whether the user can use AI Assistant.
 * Maps to Tiger `USE_AI_ASSISTANT` permission.
 */
@@ -10757,6 +10763,11 @@ export type WorkspacePermission =
 * a grant on it. Visualizations inherited from a parent workspace stay view-only.
 */
 | "canManageVisualizations"
+/**
+* Whether the current user may create Publisher documents, and edit and delete the ones they
+* created. Editing or deleting other people's documents needs workspace MANAGE.
+*/
+| "canCreateDocument"
 /**
 * Whether the current user has permissions to use AI Assistant.
 */

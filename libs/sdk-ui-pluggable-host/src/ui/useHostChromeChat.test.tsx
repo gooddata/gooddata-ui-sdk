@@ -54,8 +54,7 @@ function useChat() {
         features,
         ctx,
         telemetry: undefined,
-        publisherDocumentSaved: undefined,
-        dashboardSaved: undefined,
+        appEvents: [],
     });
 }
 

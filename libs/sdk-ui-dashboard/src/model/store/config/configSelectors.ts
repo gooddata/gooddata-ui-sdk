@@ -374,16 +374,6 @@ export const selectIsAiMode: DashboardSelector<boolean> = createSelector(selectC
 });
 
 /**
- * Returns the current AI reasoning title, if provided.
- *
- * @internal
- */
-export const selectAiReasoningTitle: DashboardSelector<string | undefined> = createSelector(
-    selectConfig,
-    (state) => state.aiReasoningTitle,
-);
-
-/**
  * Returns whether AI generates the dashboard.
  *
  * @internal

@@ -12,6 +12,8 @@ import {
     type PluggableApplicationRegistryItem,
 } from "@gooddata/sdk-model";
 import {
+    type IAiAssistantAppEvent,
+    type IAiAssistantChatEvent,
     type IAppHeaderOptions,
     type IHostNavigationRequest,
     type IPlatformContext,
@@ -19,13 +21,12 @@ import {
 } from "@gooddata/sdk-pluggable-application-model";
 import { resolveLocale, useAutoupdateRef } from "@gooddata/sdk-ui";
 import { GenAIAssistantMode } from "@gooddata/sdk-ui-gen-ai";
-import { type IDashboardSaved, type IPublisherDocumentSaved } from "@gooddata/sdk-ui-gen-ai/internal";
+import { type ISequencedAppEvent } from "@gooddata/sdk-ui-gen-ai/internal";
 
 import { now } from "../debug.js";
 import { setActiveHostHandle } from "../lib/hostNotifications.js";
 import { getAppLifecycleCallbacks } from "../loader/pluggableApplicationsLoader.js";
 import { getActiveInternalApplication } from "../loader/routing.js";
-import { GenAIChatEvent } from "../ui/GenAIChat.js";
 import {
     HostChat,
     type IHostChatContext,
@@ -48,6 +49,8 @@ export interface IHostUiContainerProps {
     routerNavigate: NavigateFunction;
     onError?: (error: string, context: string) => void;
 }
+
+const AI_APP_EVENT_QUEUE_LIMIT = 32;
 
 /**
  * Mounts the host UI module into a container div, then renders the active
@@ -119,21 +122,13 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate, onError }
     const [aiContext, setAiContext] = useState<IHostChatContext | null>(null);
     const aiVisibilitySeqRef = useRef(0);
 
-    // Publisher document saved event and sequence number.
-    const [aiPublisherDocumentSaved, setAiPublisherDocumentSaved] = useState<
-        IPublisherDocumentSaved | undefined
-    >(undefined);
-    const reportAiAssistantPublisherDocumentSaved = useCallback(
-        (saved: Omit<IPublisherDocumentSaved, "seq">) => {
-            setAiPublisherDocumentSaved({ ...saved, seq: (aiPublisherDocumentSaved?.seq ?? 0) + 1 });
-        },
-        [],
-    );
-
-    // Dashboard saved event and sequence number.
-    const [aiDashboardSaved, setAiDashboardSaved] = useState<IDashboardSaved | undefined>(undefined);
-    const reportAiAssistantDashboardSaved = useCallback((saved: Omit<IDashboardSaved, "seq">) => {
-        setAiDashboardSaved({ ...saved, seq: (aiDashboardSaved?.seq ?? 0) + 1 });
+    // A queue, not one slot: React batches two deliveries in one render, and the chat would see only
+    // the last. The chat consumes by `seq` and never acknowledges, so the queue is bounded instead.
+    const [aiAppEvents, setAiAppEvents] = useState<ReadonlyArray<ISequencedAppEvent>>([]);
+    const forwardAiAssistantAppEvent = useCallback((event: IAiAssistantAppEvent) => {
+        setAiAppEvents((previous) =>
+            [...previous, { seq: (previous.at(-1)?.seq ?? 0) + 1, event }].slice(-AI_APP_EVENT_QUEUE_LIMIT),
+        );
     }, []);
 
     const requestOpenAi = useCallback(
@@ -176,10 +171,13 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate, onError }
         (link: IHostChatLink) => appAiLinkClickRef.current?.(link) ?? false,
         [],
     );
-    // The active app's event handler, populated by PluggableApplicationRenderer (which holds the
-    // app mount handle) and read by HostChat's chat so embedded apps can handle events in-app.
-    const appEventReceiveRef = useRef<((event: GenAIChatEvent) => boolean) | undefined>(undefined);
-    const onAppEventReceive = useCallback((event: GenAIChatEvent) => appEventReceiveRef.current?.(event), []);
+    // The active app's chat-event handler, populated by PluggableApplicationRenderer (which holds the
+    // app mount handle) and read by HostChat's chat so the app can react to the chat in-app.
+    const appEventReceiveRef = useRef<((event: IAiAssistantChatEvent) => void) | undefined>(undefined);
+    const onAppEventReceive = useCallback(
+        (event: IAiAssistantChatEvent) => appEventReceiveRef.current?.(event),
+        [],
+    );
     const appNavigationRequestRef = useRef<((request: IHostNavigationRequest) => boolean) | undefined>(
         undefined,
     );
@@ -387,8 +385,7 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate, onError }
                             onOpenAiAssistant={requestOpenAi}
                             onCloseAiAssistant={requestCloseAi}
                             onAiAssistantContext={setAiAssistantContext}
-                            onAiAssistantPublisherDocumentSaved={reportAiAssistantPublisherDocumentSaved}
-                            onAiAssistantDashboardSaved={reportAiAssistantDashboardSaved}
+                            onAiAssistantAppEvent={forwardAiAssistantAppEvent}
                             aiLinkClickHandlerRef={appAiLinkClickRef}
                             navigationRequestRef={appNavigationRequestRef}
                             aiEventReceiveRef={appEventReceiveRef}
@@ -416,7 +413,7 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate, onError }
         requestOpenAi,
         requestCloseAi,
         setAiAssistantContext,
-        reportAiAssistantPublisherDocumentSaved,
+        forwardAiAssistantAppEvent,
     ]);
 
     return (
@@ -433,8 +430,7 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate, onError }
                     activeAppId={activeInternalApplication?.id}
                     visibility={aiVisibility}
                     context={aiContext}
-                    publisherDocumentSaved={aiPublisherDocumentSaved}
-                    dashboardSaved={aiDashboardSaved}
+                    appEvents={aiAppEvents}
                     onOpenChange={setAiAssistantOpen}
                     onChatStateChange={onChatStateChange}
                     onAppLinkClick={onAppLinkClick}

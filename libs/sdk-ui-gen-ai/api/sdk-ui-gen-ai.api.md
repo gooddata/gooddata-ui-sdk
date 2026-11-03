@@ -15,8 +15,7 @@ import { EnhancedStore } from '@reduxjs/toolkit';
 import { GenAIChatEffort } from '@gooddata/sdk-model';
 import { GenAIObjectType } from '@gooddata/sdk-model';
 import { GenAIPublisherDocumentFormat } from '@gooddata/sdk-backend-spi';
-import { IAiAssistantPublisherDocumentDefinition } from '@gooddata/sdk-pluggable-application-model';
-import { IAiAssistantPublisherDocumentDefinitionV2 } from '@gooddata/sdk-pluggable-application-model';
+import { IAiAssistantDefinitionReceivedPayload } from '@gooddata/sdk-pluggable-application-model';
 import { IAlertProposal } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IChatConversation } from '@gooddata/sdk-backend-spi';
@@ -34,6 +33,7 @@ import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IGenAIUserContext } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IListedDashboard } from '@gooddata/sdk-model';
+import { ILocale } from '@gooddata/sdk-ui';
 import { ISlotProps } from '@gooddata/sdk-ui-kit';
 import { IUiButtonProps } from '@gooddata/sdk-ui-kit';
 import { IUiMenuGroupItemProps } from '@gooddata/sdk-ui-kit';
@@ -184,17 +184,11 @@ export type ChatCopyToClipboardEvent = BaseEvent & {
 };
 
 // @public
-export type ChatDefinitionReceivedEvent = BaseEvent & {
+export type ChatDefinitionReceivedEvent = BaseEvent & IAiAssistantDefinitionReceivedPayload & {
     type: "onDefinitionReceived";
-    definitionType: "dashboard" | "visualization" | "publisherDocument" | "publisherDocumentV2" | "alert";
-    itemId: string;
-    conversationId: string;
-    interactionId?: string;
-    dashboard?: IDashboard;
-    insights?: IInsight[];
     visualization?: NonNullable<IChatConversationVisualisationContent["visualization"]>;
     alertProposal?: IAlertProposal;
-} & Partial<IAiAssistantPublisherDocumentDefinition> & Partial<Pick<IAiAssistantPublisherDocumentDefinitionV2, "publisherDocumentV2">>;
+};
 
 // @public
 export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatModeChangeEvent | ChatConversationPinnedEvent | ChatConversationPinErrorEvent | ChatConversationDeleteEvent | ChatConversationDeletedSuccessEvent | ChatConversationDeletedErrorEvent | ChatConversationRenameEvent | ChatConversationRenamedSuccessEvent | ChatConversationRenamedErrorEvent | ChatUserMessageEvent | ChatUserAnswersEvent | ChatAgentChangeEvent | ChatAssistantMessageEvent | ChatReasoningEvent | ChatFeedbackEvent | ChatFeedbackErrorEvent | ChatContextChangeEvent | ChatCopyToClipboardEvent | ChatVisualizationErrorEvent | ChatSaveVisualizationErrorEvent | ChatSaveVisualizationSuccessEvent | ChatConversationChangedEvent | ChatDefinitionReceivedEvent | ChatClarificationQuestionsEvent;
@@ -335,6 +329,12 @@ export type CopilotInput<TBuild extends string = CopilotBuildType> = {
     readonly kind: "applicationInterrupted";
     readonly id: string;
 };
+
+// @alpha
+export function CopilotInteractionComposing(input: ICopilotInteractionComposingProps): JSX.Element;
+
+// @alpha
+export function CopilotInteractionComposingWithHandler<TBuild extends string = CopilotBuildType>(input: ICopilotInteractionComposingWithHandlerProps<TBuild>): JSX.Element;
 
 // @alpha
 export type CopilotStatus = "idle" | "generating" | "building" | "waiting";
@@ -625,6 +625,22 @@ export interface ICopilotInteraction<TBuild extends string = CopilotBuildType> {
     readonly reasoningTitle?: string;
     readonly threadId?: string;
     readonly waitingForUserInput: boolean;
+}
+
+// @alpha
+export interface ICopilotInteractionComposingProps {
+    children: ReactNode;
+    isVisible?: () => boolean;
+    locale?: ILocale;
+    onReplyInChat?: () => void;
+    reasoningTitle?: string;
+    status: CopilotStatus;
+}
+
+// @alpha
+export interface ICopilotInteractionComposingWithHandlerProps<TBuild extends string = CopilotBuildType> extends Omit<ICopilotInteractionComposingProps, "status" | "reasoningTitle"> {
+    copilot: CopilotHandler<TBuild>;
+    scope: ICopilotScope<TBuild>;
 }
 
 // @alpha

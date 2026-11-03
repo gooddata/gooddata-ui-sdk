@@ -29,6 +29,7 @@ const permissions = (overrides: Partial<IWorkspacePermissions>): IWorkspacePermi
         canAnalyzeWorkspace: false,
         canCreateVisualization: false,
         canCreateComputedAttribute: false,
+        canCreateDocument: false,
         canManageProject: false,
         ...overrides,
     }) as IWorkspacePermissions;

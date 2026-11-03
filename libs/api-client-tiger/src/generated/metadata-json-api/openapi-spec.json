@@ -39109,6 +39109,7 @@
                             "MANAGE_VISUALIZATIONS",
                             "CREATE_VISUALIZATION",
                             "CREATE_COMPUTED_ATTRIBUTE",
+                            "CREATE_DOCUMENT",
                             "VIEW"
                         ]
                     }
@@ -40091,6 +40092,7 @@
                             "MANAGE_VISUALIZATIONS",
                             "CREATE_VISUALIZATION",
                             "CREATE_COMPUTED_ATTRIBUTE",
+                            "CREATE_DOCUMENT",
                             "VIEW"
                         ]
                     }
@@ -67368,6 +67370,7 @@
                                         "MANAGE_VISUALIZATIONS",
                                         "CREATE_VISUALIZATION",
                                         "CREATE_COMPUTED_ATTRIBUTE",
+                                        "CREATE_DOCUMENT",
                                         "VIEW"
                                     ]
                                 }
@@ -72040,6 +72043,7 @@
                                 "MANAGE_VISUALIZATIONS",
                                 "CREATE_VISUALIZATION",
                                 "CREATE_COMPUTED_ATTRIBUTE",
+                                "CREATE_DOCUMENT",
                                 "VIEW"
                             ]
                         }
@@ -72070,6 +72074,7 @@
                                 "MANAGE_VISUALIZATIONS",
                                 "CREATE_VISUALIZATION",
                                 "CREATE_COMPUTED_ATTRIBUTE",
+                                "CREATE_DOCUMENT",
                                 "VIEW"
                             ]
                         }
@@ -72526,6 +72531,7 @@
                                 "MANAGE_VISUALIZATIONS",
                                 "CREATE_VISUALIZATION",
                                 "CREATE_COMPUTED_ATTRIBUTE",
+                                "CREATE_DOCUMENT",
                                 "VIEW"
                             ]
                         }
@@ -72549,6 +72555,7 @@
                                 "MANAGE_VISUALIZATIONS",
                                 "CREATE_VISUALIZATION",
                                 "CREATE_COMPUTED_ATTRIBUTE",
+                                "CREATE_DOCUMENT",
                                 "VIEW"
                             ]
                         }
