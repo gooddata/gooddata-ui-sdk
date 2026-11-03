@@ -85,6 +85,7 @@ function createAutomationsContextValue(
         weekStart: "Sunday" as const,
         timezone: undefined,
         isWhiteLabeled: false,
+        isApplyFiltersAllAtOnceEnabledAndSet: false,
         isSecondaryTitleVisible: false,
         externalRecipient: undefined,
         features: {

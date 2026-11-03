@@ -116,7 +116,7 @@ describe("documentsThemeCssValues", () => {
         ["borderStyle", "dashed"],
         ["textTransform", "uppercase"],
         ["borderColor", "#ABCDEF80"],
-        ["textColor", "rgb(0, 0, 0, 0.5)"],
+        ["backgroundColor", "rgb(0, 0, 0, 0.5)"],
     ])("emits %s %s as written", (key, value) => {
         expect(takeawayVariable(key, value)).toBe(value);
     });
@@ -128,7 +128,7 @@ describe("documentsThemeCssValues", () => {
     it.each(["red; --gd-button-borderRadius: 0", "#fff}", "/*", '"unclosed', "red\\", "rgba(0, 0, 0, 0.5)"])(
         "emits nothing for %j, which is no documents value",
         (value) => {
-            expect(takeawayVariable("textColor", value)).toBeUndefined();
+            expect(takeawayVariable("backgroundColor", value)).toBeUndefined();
         },
     );
 

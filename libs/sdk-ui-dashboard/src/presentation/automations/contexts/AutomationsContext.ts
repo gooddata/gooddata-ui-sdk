@@ -203,6 +203,12 @@ export interface IAutomationsContextValue {
     };
     /** Whether the dashboard is white-labeled (hides GoodData branding and help links); from selectIsWhiteLabeled. */
     isWhiteLabeled: boolean;
+    /**
+     * Whether the dashboard applies filters all at once. Automation filter and parameter chips then
+     * stage each change with a Close-only footer, the same as the dashboard filter bar; from
+     * selectIsApplyFiltersAllAtOnceEnabledAndSet.
+     */
+    isApplyFiltersAllAtOnceEnabledAndSet: boolean;
     /** Whether the dialog header renders a secondary title row below the main title; always true in the current hydration. */
     isSecondaryTitleVisible: boolean;
     /** External (non-workspace) recipient the dialog is scoped to, when opened via an external share link; from selectExternalRecipient. */

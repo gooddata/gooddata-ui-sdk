@@ -8,7 +8,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
-    changeAttributeFilterSelection,
+    changeAttributeFilterSelectionForSelectionModeChange,
     setAttributeFilterSelectionMode,
 } from "../../../../../../model/commands/filters.js";
 import { useDashboardCommandProcessing } from "../../../../../../model/react/useDashboardCommandProcessing.js";
@@ -21,7 +21,7 @@ export const useSelectionModeConfiguration = (attributeFilter: IDashboardAttribu
     });
 
     const { run: changeSelection } = useDashboardCommandProcessing({
-        commandCreator: changeAttributeFilterSelection,
+        commandCreator: changeAttributeFilterSelectionForSelectionModeChange,
         successEvent: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_CHANGED",
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
     });

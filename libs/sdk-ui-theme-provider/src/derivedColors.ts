@@ -304,6 +304,9 @@ const getComplementaryPaletteDerivedColors = (palette: IThemePalette): (CssPrope
     palette?.complementary?.c9
         ? getCssProperty("palette-complementary-9-t90", transparentize(0.9, palette.complementary.c9))
         : null,
+    palette?.complementary?.c9
+        ? getCssProperty("palette-complementary-9-t95", transparentize(0.95, palette.complementary.c9))
+        : null,
 ];
 
 /**

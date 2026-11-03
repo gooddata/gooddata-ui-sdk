@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { screen, within } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { render } from "../../test/render.js";
@@ -22,7 +22,7 @@ const requiredProps = {
 } satisfies Omit<IHeaderLanguageButtonProps, "items">;
 
 describe("HeaderLanguageButton", () => {
-    it("should show language and the language in effect that opens a dialog", () => {
+    it("should show language that opens a dialog, announcing the language in effect", () => {
         const items = generateHeaderAccountMenuItems(makeWorkspacePermissions(), {
             ...requiredOptions,
             featureFlags: { enableUserLanguageChange: true },
@@ -33,7 +33,8 @@ describe("HeaderLanguageButton", () => {
 
         const language = screen.getByRole("button", { name: /Language/ });
         expect(language).toBeVisible();
-        expect(within(language).getByText("English (UK)")).toBeVisible();
+        // The language value should not be displayed on mobile (not much space there), but should be announced by screen readers
+        expect(screen.queryByText("English (UK)")).not.toBeInTheDocument();
         expect(language).toHaveAccessibleName("Language, English (UK)");
         expect(language).toHaveAttribute("aria-haspopup", "dialog");
     });

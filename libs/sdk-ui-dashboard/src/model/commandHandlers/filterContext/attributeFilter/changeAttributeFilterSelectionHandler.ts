@@ -36,6 +36,7 @@ export function* changeAttributeFilterSelectionHandler(
         isWorkingSelectionChange,
         isResultOfMigration,
         isSelectionInvalid,
+        skipSync,
     } = cmd.payload;
 
     // validate filterLocalId
@@ -52,7 +53,9 @@ export function* changeAttributeFilterSelectionHandler(
         typeof selectEnableImmediateAttributeFilterDisplayAsLabelMigration
     > = yield select(selectEnableImmediateAttributeFilterDisplayAsLabelMigration);
 
-    const session: ITabSyncSession = yield call(beginTabSync, { enabled: !isResultOfMigration });
+    const session: ITabSyncSession = yield call(beginTabSync, {
+        enabled: !isResultOfMigration && !skipSync,
+    });
 
     yield call(putTabSynced, session, [
         tabsActions.updateAttributeFilterSelection({

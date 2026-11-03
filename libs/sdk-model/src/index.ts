@@ -1195,6 +1195,7 @@ export {
     type IThemeDocumentsTextStyle,
     type IThemeDocumentsTypography,
     type ThemeDocumentsLength,
+    type ThemeDocumentsTakeawayStyle,
     type ImageUri,
     type IThemeAxis,
     type IThemeChartTooltip,

@@ -23,6 +23,7 @@ import {
     selectEnableStringParameters,
     selectEnableTimezoneChange,
     selectExternalRecipient,
+    selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectIsWhiteLabeled,
     selectLocale,
     selectSeparators,
@@ -166,6 +167,9 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
         [isTimezoneChangeEnabled, timezoneConfig, workspaceTimezone, customTimezone, scheduledExportTimezone],
     );
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
+    const isApplyFiltersAllAtOnceEnabledAndSet = useDashboardSelector(
+        selectIsApplyFiltersAllAtOnceEnabledAndSet,
+    );
     const externalRecipient = useDashboardSelector(selectExternalRecipient);
     const enableAlertOncePerInterval = useDashboardSelector(selectEnableAlertOncePerInterval);
     const enableAnomalyDetectionAlert = useDashboardSelector(selectEnableAnomalyDetectionAlert);
@@ -312,6 +316,7 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
             timezone,
             exportTimezones,
             isWhiteLabeled,
+            isApplyFiltersAllAtOnceEnabledAndSet,
             isSecondaryTitleVisible: true,
             externalRecipient,
             features,
@@ -357,6 +362,7 @@ export function useBuildAutomationsContext(): IAutomationsContextValue {
             timezone,
             exportTimezones,
             isWhiteLabeled,
+            isApplyFiltersAllAtOnceEnabledAndSet,
             externalRecipient,
             features,
             parameters,

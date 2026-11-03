@@ -7,6 +7,7 @@ import { describe, expect, it } from "vitest";
 import type { ParameterType } from "@gooddata/sdk-model";
 
 import { createParameterCompletions } from "./parameterCompletions.js";
+import { validateParameterYaml } from "./parameterValidation.js";
 
 const NUMBER_ONLY: ParameterType[] = ["NUMBER"];
 const ALL_TYPES: ParameterType[] = ["NUMBER", "STRING"];
@@ -25,18 +26,29 @@ function labelsOf(result: ReturnType<typeof completeAt>) {
 type ApplyView = { state: EditorState; dispatch: (transaction: Transaction) => void };
 type SnippetApply = (view: ApplyView, completion: Completion, from: number, to: number) => void;
 
-function applyCompletion(option: Completion, doc: string, from: number, to: number) {
-    const { apply } = option;
-    if (typeof apply !== "function") {
-        throw new Error("expected a snippet apply function");
+function applyAt(docWithCursor: string, label: string) {
+    const pos = docWithCursor.indexOf("|");
+    const doc = docWithCursor.replace("|", "");
+    const result = completeAt(docWithCursor);
+    const option = result?.options.find((candidate) => candidate.label === label);
+    if (!result || !option) {
+        throw new Error(`expected a "${label}" completion`);
     }
+    return applyCompletion(option, doc, result.from, pos);
+}
+
+function applyCompletion(option: Completion, doc: string, from: number, to: number) {
     const view: ApplyView = {
-        state: EditorState.create({ doc, selection: { anchor: from } }),
+        state: EditorState.create({ doc, selection: { anchor: to } }),
         dispatch(transaction) {
             view.state = transaction.state;
         },
     };
-    (apply as SnippetApply)(view, option, from, to);
+    if (typeof option.apply === "function") {
+        (option.apply as SnippetApply)(view, option, from, to);
+    } else {
+        view.dispatch(view.state.update({ changes: { from, to, insert: option.label } }));
+    }
     return { doc: view.state.doc.toString(), cursor: view.state.selection.main.head };
 }
 
@@ -49,7 +61,7 @@ describe("createParameterCompletions", () => {
     min: 0
     |`);
 
-        expect(labelsOf(result)).toEqual(["min", "max"]);
+        expect(labelsOf(result)).toEqual(["max"]);
     });
 
     it("offers constraint keys on a fresh line under constraints with no siblings", () => {
@@ -68,7 +80,7 @@ describe("createParameterCompletions", () => {
   defaultValue: 10
   |`);
 
-        expect(labelsOf(result)).toEqual(["type", "defaultValue", "constraints"]);
+        expect(labelsOf(result)).toEqual(["constraints"]);
     });
 
     it("offers root keys at column zero", () => {
@@ -77,7 +89,7 @@ describe("createParameterCompletions", () => {
   type: NUMBER
   defaultValue: 10`);
 
-        expect(labelsOf(result)).toEqual(["type", "id", "title", "description", "tags", "definition"]);
+        expect(labelsOf(result)).toEqual(["type", "title", "description", "tags", "definition"]);
     });
 
     it("completes a partially typed constraint key from the word start", () => {
@@ -265,7 +277,7 @@ definition:
   defaultValue: actual
   |`);
 
-        expect(labelsOf(result)).toEqual(["type", "defaultValue", "constraints", "cardinality"]);
+        expect(labelsOf(result)).toEqual(["constraints", "cardinality"]);
     });
 
     it("never offers cardinality when only NUMBER is enabled", () => {
@@ -277,7 +289,7 @@ definition:
             NUMBER_ONLY,
         );
 
-        expect(labelsOf(result)).toEqual(["type", "defaultValue", "constraints"]);
+        expect(labelsOf(result)).toEqual(["constraints"]);
     });
 
     it("offers entry keys on a fresh sequence item under allowedValues", () => {
@@ -304,7 +316,7 @@ definition:
         expect(result?.from).toBe(doc.indexOf("va|"));
     });
 
-    it("offers entry keys on a continuation line inside an allowedValues entry", () => {
+    it("offers only missing entry keys on a continuation line inside an allowedValues entry", () => {
         const result = completeAt(`definition:
   type: STRING
   defaultValue: actual
@@ -313,7 +325,85 @@ definition:
       - value: actual
         |`);
 
+        expect(labelsOf(result)).toEqual(["title", "- value"]);
+        expect(result?.options.find((option) => option.label === "- value")?.boost).toBe(-1);
+    });
+
+    it("offers no entry keys when the allowedValues entry has all of them", () => {
+        const result = completeAt(`definition:
+  type: STRING
+  defaultValue: actual
+  constraints:
+    allowedValues:
+      - value: actual
+        title: Actual
+        |`);
+
+        expect(labelsOf(result)).toEqual(["- value"]);
+    });
+
+    it("hides entry keys present below the cursor in the same entry", () => {
+        const result = completeAt(`definition:
+  type: STRING
+  defaultValue: actual
+  constraints:
+    allowedValues:
+      - value: actual
+        |
+        title: Actual`);
+
+        expect(labelsOf(result)).toEqual([]);
+    });
+
+    it("hides entry keys present below a fresh sequence item marker", () => {
+        const result = completeAt(`definition:
+  type: STRING
+  defaultValue: actual
+  constraints:
+    allowedValues:
+      - |
+        title: Actual`);
+
+        expect(labelsOf(result)).toEqual(["value"]);
+    });
+
+    it("offers all entry keys on a fresh item after a completed entry", () => {
+        const result = completeAt(`definition:
+  type: STRING
+  defaultValue: actual
+  constraints:
+    allowedValues:
+      - value: actual
+        title: Actual
+      - |
+      - value: forecast
+        title: Forecast`);
+
         expect(labelsOf(result)).toEqual(["value", "title"]);
+    });
+
+    it("hides constraint keys already present under constraints", () => {
+        const result = completeAt(`definition:
+  type: STRING
+  constraints:
+    minLength: 1
+    |`);
+
+        expect(labelsOf(result)).toEqual(["maxLength", "allowedValues"]);
+    });
+
+    it("hides definition keys present below the cursor", () => {
+        const result = completeAt(
+            `definition:
+  |
+  type: NUMBER
+  constraints:
+    min: 0
+id: threshold`,
+            NUMBER_ONLY,
+        );
+
+        expect(labelsOf(result)).toEqual(["defaultValue"]);
     });
 
     it("offers entry keys after a bare sequence item marker under allowedValues", () => {
@@ -338,7 +428,7 @@ definition:
         ti|`;
         const result = completeAt(doc);
 
-        expect(labelsOf(result)).toEqual(["value", "title"]);
+        expect(labelsOf(result)).toEqual(["title", "- value"]);
         expect(result?.from).toBe(doc.indexOf("ti|"));
     });
 
@@ -394,5 +484,104 @@ definition:
             "      - value: ";
         expect(applied.doc).toBe(expectedDoc);
         expect(applied.cursor).toBe(expectedDoc.length);
+    });
+
+    it("does not offer a new entry on the sequence item line itself", () => {
+        const result = completeAt(`definition:
+  type: STRING
+  defaultValue: actual
+  constraints:
+    allowedValues:
+      - value: actual
+      - |`);
+
+        expect(labelsOf(result)).toEqual(["value", "title"]);
+    });
+
+    it("does not offer a new entry under a mapping parent", () => {
+        const result = completeAt(`definition:
+  type: STRING
+  constraints:
+    |`);
+
+        expect(labelsOf(result)).toEqual(["minLength", "maxLength", "allowedValues"]);
+    });
+
+    it("inserts a new entry at the item indent when applying the new-entry completion", () => {
+        const applied = applyAt(
+            `definition:
+  type: STRING
+  defaultValue: actual
+  constraints:
+    allowedValues:
+      - value: actual
+        title: Actual
+        |`,
+            "- value",
+        );
+
+        const expectedDoc =
+            "definition:\n" +
+            "  type: STRING\n" +
+            "  defaultValue: actual\n" +
+            "  constraints:\n" +
+            "    allowedValues:\n" +
+            "      - value: actual\n" +
+            "        title: Actual\n" +
+            "      - value: ";
+        expect(applied.doc).toBe(expectedDoc);
+        expect(applied.cursor).toBe(expectedDoc.length);
+    });
+
+    it("replaces a typed word when applying the new-entry completion", () => {
+        const applied = applyAt(
+            `definition:
+  type: STRING
+  defaultValue: actual
+  constraints:
+    allowedValues:
+      - value: actual
+        ti|`,
+            "- value",
+        );
+
+        expect(applied.doc.endsWith("      - value: actual\n      - value: ")).toBe(true);
+        expect(applied.cursor).toBe(applied.doc.length);
+    });
+
+    it.each([
+        ["a blank continuation line", ""],
+        ["a partially typed key", "ti"],
+    ])("keeps the indent when applying an entry key on %s", (_, typed) => {
+        const prefix = `definition:
+  type: STRING
+  defaultValue: actual
+  constraints:
+    allowedValues:
+      - value: actual
+        `;
+        const applied = applyAt(`${prefix}${typed}|`, "title");
+
+        expect(applied.doc).toBe(`${prefix}title`);
+    });
+
+    it("produces valid YAML after entering a unique value into a new entry", () => {
+        const applied = applyAt(
+            `definition:
+  type: STRING
+  defaultValue: actual
+  constraints:
+    allowedValues:
+      - value: actual
+        title: Actual
+        |`,
+            "- value",
+        );
+
+        const result = validateParameterYaml(`id: scenario\n${applied.doc}forecast\n`, {
+            enabledTypes: ALL_TYPES,
+        });
+
+        expect(result.isValid).toBe(true);
     });
 });

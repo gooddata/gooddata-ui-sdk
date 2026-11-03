@@ -8,10 +8,15 @@ import { describe, expect, it, vi } from "vitest";
 import { idRef } from "@gooddata/sdk-model";
 
 import { IntlWrapper } from "../../../../localization/IntlWrapper.js";
+import { AutomationsContextProvider } from "../../../contexts/AutomationsContext.js";
+import { AUTOMATIONS_CONTEXT } from "../../../tests/shared.test.helpers.js";
 
 import { AutomationParameter } from "./AutomationParameter.js";
 
-function renderChip(custom: Partial<ComponentProps<typeof AutomationParameter>> = {}) {
+function renderChip(
+    custom: Partial<ComponentProps<typeof AutomationParameter>> = {},
+    isApplyFiltersAllAtOnceEnabledAndSet = false,
+) {
     const props: ComponentProps<typeof AutomationParameter> = {
         parameter: {
             ref: idRef("topN", "parameter"),
@@ -25,9 +30,11 @@ function renderChip(custom: Partial<ComponentProps<typeof AutomationParameter>> 
         ...custom,
     };
     render(
-        <IntlWrapper>
-            <AutomationParameter {...props} />
-        </IntlWrapper>,
+        <AutomationsContextProvider value={{ ...AUTOMATIONS_CONTEXT, isApplyFiltersAllAtOnceEnabledAndSet }}>
+            <IntlWrapper>
+                <AutomationParameter {...props} />
+            </IntlWrapper>
+        </AutomationsContextProvider>,
     );
     return props;
 }
@@ -83,6 +90,29 @@ describe("AutomationParameter", () => {
         fireEvent.click(screen.getByTestId("automation-parameter-topN-delete-button"));
 
         expect(onDelete).toHaveBeenCalledWith(idRef("topN", "parameter"));
+    });
+
+    it("commits the value on Apply when filters apply individually", () => {
+        const { onChange } = renderChip();
+
+        fireEvent.click(screen.getByTestId("automation-parameter-topN"));
+        fireEvent.change(screen.getByTestId("parameter-control-dropdown-input"), { target: { value: "7" } });
+        expect(onChange).not.toHaveBeenCalled();
+
+        fireEvent.click(screen.getByTestId("parameter-control-dropdown-apply"));
+
+        expect(onChange).toHaveBeenCalledWith(idRef("topN", "parameter"), 7);
+    });
+
+    it("stages each valid value with a Close-only footer when filters apply all at once", () => {
+        const { onChange } = renderChip({}, true);
+
+        fireEvent.click(screen.getByTestId("automation-parameter-topN"));
+        fireEvent.change(screen.getByTestId("parameter-control-dropdown-input"), { target: { value: "7" } });
+
+        expect(onChange).toHaveBeenCalledWith(idRef("topN", "parameter"), 7);
+        expect(screen.queryByTestId("parameter-control-dropdown-apply")).toBeNull();
+        expect(screen.getByTestId("parameter-control-dropdown-close")).toBeInTheDocument();
     });
 
     it("renders a readonly parameter as locked, without a delete button", () => {
