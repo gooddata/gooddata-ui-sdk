@@ -665,6 +665,14 @@ export type ChangeAttributeFilterSelectionPayload = {
      * When false, the filter's localId should be removed from filtersWithInvalidSelection array.
      */
     readonly isSelectionInvalid?: boolean;
+
+    /**
+     * Specifies that the selection is reset because the filter selection mode changes.
+     * The selection mode is filter configuration of a single tab, so the reset is not synced to other tabs.
+     *
+     * @internal
+     */
+    readonly skipSync?: boolean;
 };
 
 /**
@@ -780,6 +788,36 @@ export function changeMigratedAttributeFilterSelection(
             elements,
             selectionType,
             isResultOfMigration: true,
+        },
+    };
+}
+
+/**
+ * Creates the ChangeAttributeFilterSelection command that resets the selection of an attribute filter
+ * whose selection mode changes. The reset applies to the tab of the filter only.
+ *
+ * @param filterLocalId - dashboard attribute filter's local id
+ * @param elements - elements
+ * @param selectionType - selection type. either 'IN' or 'NOT_IN'
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @internal
+ */
+export function changeAttributeFilterSelectionForSelectionModeChange(
+    filterLocalId: string,
+    elements: IAttributeElements,
+    selectionType: AttributeFilterSelectionType,
+    correlationId?: string,
+): ChangeAttributeFilterSelection {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION",
+        correlationId,
+        payload: {
+            filterLocalId,
+            elements,
+            selectionType,
+            skipSync: true,
         },
     };
 }

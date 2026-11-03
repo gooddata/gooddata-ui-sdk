@@ -4,6 +4,7 @@ import {
     type Completion,
     type CompletionContext,
     type CompletionResult,
+    snippet,
     snippetCompletion,
 } from "@codemirror/autocomplete";
 import type { Text } from "@codemirror/state";
@@ -63,12 +64,19 @@ export function createParameterCompletions(enabledTypes: ParameterType[]) {
             (declaredType ? vocabularyByType.get(declaredType) : undefined) ?? fallbackVocabulary;
         const entry = vocabulary[parent.key];
         // A sequence's keys are valid only inside a `- ` item; a mapping's keys only outside one.
-        const inItem = itemMatch !== null || parent.inItem;
+        const inItem = itemMatch !== null || parent.itemIndent !== undefined;
         if (!entry || (entry.kind === "sequence") !== inItem) {
             return null;
         }
 
-        return { from, options: entry.options };
+        const siblings = getSiblingKeys(context.state.doc, line.number, from - line.from);
+        const usedKeys = new Set([...siblings.above, ...siblings.below]);
+        const options = entry.options.filter((option) => !usedKeys.has(option.label));
+        const atItemEnd = siblings.above.length > 0 && siblings.below.length === 0;
+        if (parent.itemIndent !== undefined && atItemEnd) {
+            options.push(toNewItemOption(entry.options[0].label, line.from + parent.itemIndent));
+        }
+        return { from, options };
     };
 }
 
@@ -86,26 +94,43 @@ function toVocabulary(schemaKeys: ParameterSchemaKeys): CompletionVocabulary {
 function toKeyOption(label: string, schemaKeys: ParameterSchemaKeys): Completion {
     const child = schemaKeys[label];
     if (child?.kind === "sequence") {
-        return snippetCompletion(`${label}:\n\t- ${child.keys[0]}: \${}`, { label, type: "property" });
+        return snippetCompletion(`${label}:\n\t${toItemTemplate(child.keys[0])}`, {
+            label,
+            type: "property",
+        });
     }
     return { label, type: "property" };
 }
 
-type ParentContext = { key: string; inItem: boolean };
+function toNewItemOption(firstKey: string, itemFrom: number): Completion {
+    const insertItem = snippet(toItemTemplate(firstKey));
+    return {
+        label: `- ${firstKey}`,
+        type: "property",
+        boost: -1,
+        apply: (view, completion, _from, to) => insertItem(view, completion, itemFrom, to),
+    };
+}
+
+function toItemTemplate(firstKey: string): string {
+    return `- ${firstKey}: \${}`;
+}
+
+type ParentContext = { key: string; itemIndent: number | undefined };
 
 /**
  * The key whose block a new entry at column `indent` would join: the nearest less-indented `key:` line
  * above. `key` is `""` only for the top-level mapping (`indent === 0`); the result is `null` when the
  * enclosing line is not a mapping key or an indented line has no less-indented ancestor above it (an
  * orphaned line, which is not top-level). When the nearest ancestor is a sequence item, it resolves
- * to the key owning that sequence with `inItem` set, so continuation lines inside an item
+ * to the key owning that sequence with the item's `itemIndent` set, so continuation lines inside an item
  * report the list's key (e.g. `allowedValues`). Derived purely from indentation, not from a parsed
  * syntax tree, so it also resolves the parent on a blank indented line; the flip side is that it does
  * not understand block scalars (`|`, `>`), whose literal content is scanned as if it were mapping keys.
  */
 function getParentKey(doc: Text, lineNumber: number, indent: number): ParentContext | null {
     if (indent === 0) {
-        return { key: "", inItem: false };
+        return { key: "", itemIndent: undefined };
     }
 
     for (let number = lineNumber - 1; number >= 1; number--) {
@@ -116,15 +141,56 @@ function getParentKey(doc: Text, lineNumber: number, indent: number): ParentCont
             continue;
         }
         if (content === "-" || content.startsWith("- ")) {
-            const parent = getParentKey(doc, number, text.length - content.length);
-            return parent && { key: parent.key, inItem: true };
+            const itemIndent = text.length - content.length;
+            const parent = getParentKey(doc, number, itemIndent);
+            return parent && { key: parent.key, itemIndent };
         }
         const key = content.match(/^([\w-]+):/)?.[1];
-        return key === undefined ? null : { key, inItem: false };
+        return key === undefined ? null : { key, itemIndent: undefined };
     }
 
     // Indented with no less-indented ancestor: an orphaned line, not top-level.
     return null;
+}
+
+function getSiblingKeys(doc: Text, lineNumber: number, column: number): { above: string[]; below: string[] } {
+    const isItemStart = getIndent(doc.line(lineNumber).text) < column;
+    return {
+        above: isItemStart ? [] : scanKeys(doc, lineNumber, column, -1),
+        below: scanKeys(doc, lineNumber, column, 1),
+    };
+}
+
+function scanKeys(doc: Text, lineNumber: number, column: number, step: 1 | -1): string[] {
+    const keys: string[] = [];
+    for (let number = lineNumber + step; number >= 1 && number <= doc.lines; number += step) {
+        const text = doc.line(number).text;
+        const content = text.trimStart();
+        if (content === "" || content.startsWith("#")) {
+            continue;
+        }
+        const isItemLine = getIndent(text) < column;
+        if (isItemLine && step === 1) {
+            break;
+        }
+        const key = getKeyAt(text, column);
+        if (key !== undefined) {
+            keys.push(key);
+        }
+        if (isItemLine) {
+            break;
+        }
+    }
+    return keys;
+}
+
+function getIndent(text: string): number {
+    return text.length - text.trimStart().length;
+}
+
+function getKeyAt(text: string, column: number): string | undefined {
+    const match = text.match(/^([\s-]*)([\w-]+):/);
+    return match?.[1].length === column ? match[2] : undefined;
 }
 
 /**
@@ -137,7 +203,7 @@ function getDeclaredType(doc: Text): string | undefined {
         const match = doc.line(number).text.match(/^(\s+)type:\s*(\w+)/);
         if (match) {
             const parent = getParentKey(doc, number, match[1].length);
-            if (parent?.key === "definition" && !parent.inItem) {
+            if (parent?.key === "definition" && parent.itemIndent === undefined) {
                 return match[2];
             }
         }

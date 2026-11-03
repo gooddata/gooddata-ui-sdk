@@ -624,6 +624,7 @@ export type ChangeAttributeFilterSelectionPayload = {
     readonly isWorkingSelectionChange?: boolean;
     readonly isResultOfMigration?: boolean;
     readonly isSelectionInvalid?: boolean;
+    readonly skipSync?: boolean;
 };
 
 // @alpha
@@ -3106,6 +3107,7 @@ export interface IAutomationsContextValue {
     getAttributeFilterDisplayForm: (displayForm: ObjRef) => IAttributeDisplayFormMetadataObject | undefined;
     getCatalogAttributeByRef: (ref: ObjRef) => ICatalogAttribute | ICatalogDateAttribute | undefined;
     hiddenFilters: FilterContextItem[];
+    isApplyFiltersAllAtOnceEnabledAndSet: boolean;
     isExecutionTimestampMode: boolean;
     isFilterRestricted: (filter: FilterContextItem, tabId?: string) => boolean;
     isSecondaryTitleVisible: boolean;

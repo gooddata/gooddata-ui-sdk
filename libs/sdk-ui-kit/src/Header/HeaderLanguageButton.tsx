@@ -41,9 +41,6 @@ export function HeaderLanguageButton({ items, onMenuItemClick }: IHeaderLanguage
             <span className="gd-header-language-label">
                 <FormattedMessage id={languageMenuItem.key} />
             </span>
-            {languageMenuItem.value ? (
-                <span className="gd-header-language-value">{languageMenuItem.value}</span>
-            ) : null}
             <UiIcon type="navigateRight" size={12} color="currentColor" />
         </button>
     );

@@ -1430,8 +1430,6 @@ export interface IThemeDocumentsTypography {
  * @alpha
  */
 export interface IThemeDocumentsTextGroup {
-    color?: PublisherColorValueV2;
-
     /**
      * A multiple of the font size.
      */
@@ -1531,6 +1529,13 @@ export interface IThemeDocumentsShadow {
 }
 
 /**
+ * The default look of a takeaway widget. Its text takes the theme's text colors, as every text does.
+ *
+ * @alpha
+ */
+export type ThemeDocumentsTakeawayStyle = Omit<IPublisherTextWidgetStyleV2, "textColor">;
+
+/**
  * Page defaults of documents.
  *
  * @alpha
@@ -1578,10 +1583,7 @@ export interface IThemeDocuments {
     headline?: IPublisherHeadlineStyleV2;
     shadows?: Record<string, IThemeDocumentsShadow>;
 
-    /**
-     * The default look of a takeaway widget.
-     */
-    takeaway?: IPublisherTextWidgetStyleV2;
+    takeaway?: ThemeDocumentsTakeawayStyle;
     page?: IThemeDocumentsPage;
     corners?: IThemeDocumentsCorners;
     spacing?: IThemeDocumentsSpacing;

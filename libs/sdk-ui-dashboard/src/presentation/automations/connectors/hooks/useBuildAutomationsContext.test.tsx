@@ -99,6 +99,7 @@ vi.mock("../../../../model/store/config/configSelectors.js", () => ({
     selectEnableSlideshowExports: () => false,
     selectEnableStringParameters: () => true,
     selectExternalRecipient: () => undefined,
+    selectIsApplyFiltersAllAtOnceEnabledAndSet: () => false,
     selectIsWhiteLabeled: () => false,
     selectLocale: () => "en-US",
     selectSeparators: () => selectors.separators,

@@ -124,6 +124,11 @@ export {
 } from "./to/yamlDashboardToDeclarative.js";
 export { yamlPluginToDeclarative } from "./to/yamlPluginToDeclarative.js";
 export { yamlAttributeHierarchyToDeclarative } from "./to/yamlAttributeHierarchyToDeclarative.js";
+export {
+    yamlDocumentsToDeclarativeWorkspace,
+    yamlEntitiesToDeclarativeWorkspace,
+    type YamlDocumentsToDeclarativeWorkspaceOptions,
+} from "./to/yamlDocumentsToDeclarativeWorkspace.js";
 // Entity converters: Declarative API → YAML
 export { declarativeDatasetToYaml } from "./from/declarativeDatasetToYaml.js";
 export { declarativeDateInstanceToYaml } from "./from/declarativeDateInstanceToYaml.js";

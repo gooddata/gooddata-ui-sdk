@@ -104,6 +104,7 @@ const AUTOMATIONS_CONTEXT: IAutomationsContextValue = {
     weekStart: "Sunday",
     timezone: undefined,
     isWhiteLabeled: false,
+    isApplyFiltersAllAtOnceEnabledAndSet: false,
     isSecondaryTitleVisible: false,
     externalRecipient: undefined,
     features: {

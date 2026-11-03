@@ -8660,7 +8660,8 @@ export interface IThemeDocuments {
     spacing?: IThemeDocumentsSpacing;
     // (undocumented)
     table?: IPublisherTableStyleV2;
-    takeaway?: IPublisherTextWidgetStyleV2;
+    // (undocumented)
+    takeaway?: ThemeDocumentsTakeawayStyle;
     // (undocumented)
     textStyle?: IThemeDocumentsTextStyle;
 }
@@ -8787,8 +8788,6 @@ export interface IThemeDocumentsText extends IThemeDocumentsTextGroup {
 
 // @alpha
 export interface IThemeDocumentsTextGroup {
-    // (undocumented)
-    color?: PublisherColorValueV2;
     lineHeight?: number;
 }
 
@@ -10510,6 +10509,9 @@ export type ThemeDashboardDensity = "comfortable" | "compact";
 
 // @alpha
 export type ThemeDocumentsLength = number;
+
+// @alpha
+export type ThemeDocumentsTakeawayStyle = Omit<IPublisherTextWidgetStyleV2, "textColor">;
 
 // @beta
 export type ThemeFontUri = string;

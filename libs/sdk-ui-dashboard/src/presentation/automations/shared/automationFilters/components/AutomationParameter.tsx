@@ -14,12 +14,14 @@ import {
     Dropdown,
     type OverlayPositionType,
     ParameterControl,
+    type ParameterSubmitModeProps,
     UiChip,
     UiTooltip,
     isActionKey,
     useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
 
+import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
 import { type IAutomationParameter } from "../automationParameters.js";
 
 /**
@@ -46,6 +48,7 @@ export function AutomationParameter({
     isReadOnly,
 }: IAutomationParameterProps): ReactNode {
     const intl = useIntl();
+    const { isApplyFiltersAllAtOnceEnabledAndSet } = useAutomationsContext();
     const { ref, title, value, mode, definition } = parameter;
     const testId = `automation-parameter-${ref.identifier}`;
     const label = intl.formatMessage(
@@ -56,6 +59,10 @@ export function AutomationParameter({
     const deleteAriaLabel = intl.formatMessage({ id: "dialogs.automation.filters.deleteAriaLabel" });
     const tooltipId = useIdPrefixed("automation-parameter-tooltip");
     const valueInputId = useIdPrefixed("parameter-value-input");
+    const submit = (next: ParameterValue) => onChange?.(ref, next);
+    const submitModeProps: ParameterSubmitModeProps<ParameterValue> = isApplyFiltersAllAtOnceEnabledAndSet
+        ? { mode: "staged", onStage: submit }
+        : { mode: "commit", onCommit: submit };
 
     if (isReadOnly) {
         // `isDisabled` renders a real disabled button — unfocusable, so keyboard users can't edit or
@@ -128,8 +135,7 @@ export function AutomationParameter({
                     value={value}
                     inputId={valueInputId}
                     ariaAttributes={ariaAttributes}
-                    mode="commit"
-                    onCommit={(next) => onChange?.(ref, next)}
+                    {...submitModeProps}
                     onClose={closeDropdown}
                 />
             )}

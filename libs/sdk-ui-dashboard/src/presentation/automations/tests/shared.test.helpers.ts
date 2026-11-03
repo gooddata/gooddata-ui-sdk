@@ -91,6 +91,7 @@ export const AUTOMATIONS_CONTEXT: IAutomationsContextValue = {
     weekStart: "Monday",
     timezone: "Europe/Prague",
     isWhiteLabeled: false,
+    isApplyFiltersAllAtOnceEnabledAndSet: false,
     isSecondaryTitleVisible: false,
     externalRecipient: undefined,
     features: {

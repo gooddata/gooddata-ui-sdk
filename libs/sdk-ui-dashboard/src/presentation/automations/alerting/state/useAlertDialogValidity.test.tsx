@@ -180,6 +180,7 @@ const AUTOMATIONS_FIXTURE: IAutomationsContextValue = {
     weekStart: "Monday",
     timezone: undefined,
     isWhiteLabeled: false,
+    isApplyFiltersAllAtOnceEnabledAndSet: false,
     isSecondaryTitleVisible: false,
     externalRecipient: undefined,
     features: {

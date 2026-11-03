@@ -46,4 +46,9 @@ export const derivedPaletteComplementaryThemeVariables: ThemeDerivedCssVariable[
         variableName: "--gd-palette-complementary-9-t90",
         defaultValue: "rgba(0, 0, 0, 0.1)",
     },
+    {
+        type: "derived",
+        variableName: "--gd-palette-complementary-9-t95",
+        defaultValue: "rgba(0, 0, 0, 0.05)",
+    },
 ];

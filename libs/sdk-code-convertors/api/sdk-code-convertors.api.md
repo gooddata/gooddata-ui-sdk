@@ -40,6 +40,7 @@ import { DeclarativeReport } from '@gooddata/api-client-tiger';
 import { DeclarativeReportPageLayout } from '@gooddata/api-client-tiger';
 import { DeclarativeTable } from '@gooddata/api-client-tiger';
 import { DeclarativeVisualizationObject } from '@gooddata/api-client-tiger';
+import { DeclarativeWorkspaceModel } from '@gooddata/api-client-tiger';
 import { EmptyValues } from '@gooddata/sdk-model';
 import type { Fields } from '@gooddata/sdk-code-schemas/v1';
 import type { Filter } from '@gooddata/sdk-code-schemas/v1';
@@ -4463,6 +4464,17 @@ export function yamlDatasetToDeclarative(entities: ExportEntities, input: Datase
 
 // @public (undocumented)
 export function yamlDateDatesetToDeclarative(input: DateDataset): DeclarativeDateDataset;
+
+// @public
+export function yamlDocumentsToDeclarativeWorkspace(documents: EntityData[], options?: YamlDocumentsToDeclarativeWorkspaceOptions): Required<DeclarativeWorkspaceModel>;
+
+// @public
+export type YamlDocumentsToDeclarativeWorkspaceOptions = {
+    dataSourceId?: string;
+};
+
+// @internal
+export function yamlEntitiesToDeclarativeWorkspace(entities: ExportEntities, input?: YamlDocumentsToDeclarativeWorkspaceOptions): Required<DeclarativeWorkspaceModel>;
 
 // @internal (undocumented)
 export type YamlFieldData = {
