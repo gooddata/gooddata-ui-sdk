@@ -35,6 +35,7 @@ const granularPermissions: IPermissionsItem[] = [
     { id: "CREATE_METRIC", enabled: true },
     { id: "CREATE_VISUALIZATION", enabled: true },
     { id: "MANAGE_VISUALIZATIONS", enabled: true },
+    { id: "CREATE_DOCUMENT", enabled: true },
     { id: "CREATE_FILTER_VIEW", enabled: true },
 ];
 

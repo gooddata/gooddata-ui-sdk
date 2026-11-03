@@ -6,14 +6,28 @@ on:
       inputs:
         version:
             required: true
-            description: "Specify the minor version to patch (example: 9.5.0)"
+            description: "Specify the 9.x minor version to patch (example: 9.9.0). gooddata-ui-sdk releases only 9.x, release the newer versions from gdc-ui."
             type: string
+        use-npm-token:
+            required: false
+            default: false
+            description: "Publish to npm the old way with NPM_PUBLISH_TOKEN instead of trusted publishing (OIDC)"
+            type: boolean
 jobs:
     check-input-version-param:
         runs-on: ubuntu-latest
         outputs:
             branch: ${{ steps.check-input-version-param.outputs.branch }}
         steps:
+            # gooddata-ui-sdk releases only the 9.x (bear) versions. Release the newer versions from gdc-ui.
+            - name: Check that the version is 9.x
+              run: |
+                  if [[ ! "$VERSION" =~ ^9\.[0-9]+\.[0-9]+$ ]]; then
+                    echo "::error::gooddata-ui-sdk releases only the 9.x (bear) versions, not ${VERSION}. Release the newer versions from gdc-ui."
+                    exit 1
+                  fi
+              env:
+                  VERSION: ${{ inputs.version }}
             - name: Checkout code
               uses: actions/checkout@v7.0.1
             - name: Check if branch for version exists
@@ -38,3 +52,4 @@ jobs:
         secrets: inherit
         with:
             source-branch: ${{ needs.check-input-version-param.outputs.branch }}
+            use-trusted-publishing: ${{ inputs.use-npm-token != true }}

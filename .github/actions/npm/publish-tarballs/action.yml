@@ -1,0 +1,76 @@
+name: Publish tarballs to npm with trusted publishing
+description: |
+  Downloads the artifact from gooddata/gooddata-ui-sdk/.github/actions/rush/pack-for-publish@master
+  and publishes each tarball to npm. There is no npm token, so npm must use trusted
+  publishing (OIDC). Use it only on a GitHub-hosted runner (npm does not support self-hosted
+  runners for trusted publishing) in a job with the "id-token: write" permission.
+
+inputs:
+  artifact-name:
+    required: true
+    description: "Name of the artifact with the tarballs"
+  release-tag:
+    required: true
+    description: "npm dist-tag, e.g. prerelease, latest"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Node.js
+      uses: actions/setup-node@v7.1.0
+      with:
+        # npm trusted publishing requires npm >= 11.5.1 (Node 24.12.0 bundles npm 11.6.2)
+        node-version: 24.12.0
+
+    - name: Download tarballs
+      uses: actions/download-artifact@v8.0.2
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: ${{ runner.temp }}/npm-tarballs
+
+    - name: Publish tarballs
+      shell: bash
+      env:
+        TAG: ${{ inputs.release-tag }}
+        TARBALLS: ${{ runner.temp }}/npm-tarballs
+      run: |
+        set -uo pipefail
+        echo "npm $(npm --version)"
+        cat "$TARBALLS/manifest.txt"
+
+        failed=()
+        while read -r tgz; do
+          # The folder name is the Rush version policy.
+          policy=$(basename "$(dirname "$tgz")")
+          access=public
+          if [ "$policy" = "gdc-ui-private" ]; then
+            access=restricted
+          fi
+
+          for attempt in 1 2 3; do
+            echo "::group::npm publish $tgz --tag $TAG --access $access (attempt $attempt)"
+            # The shell runs with -e. "|| status=$?" keeps a failed publish from ending the script.
+            status=0
+            out=$(npm publish "$TARBALLS/$tgz" --tag "$TAG" --access "$access" --ignore-scripts 2>&1 < /dev/null) || status=$?
+            echo "$out"
+            echo "::endgroup::"
+            if [ $status -eq 0 ]; then
+              break
+            fi
+            # A retry after a publish that worked, but reported an error.
+            if grep -q "cannot publish over the previously published version" <<< "$out"; then
+              echo "Skip $tgz. Already published."
+              break
+            fi
+            if [ $attempt -eq 3 ]; then
+              failed+=("$tgz")
+            else
+              sleep 10
+            fi
+          done
+        done < "$TARBALLS/manifest.txt"
+
+        if [ ${#failed[@]} -gt 0 ]; then
+          echo "::error::Publish failed for: ${failed[*]}"
+          exit 1
+        fi

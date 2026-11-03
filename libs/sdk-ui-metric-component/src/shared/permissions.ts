@@ -22,6 +22,7 @@ export function emptyWorkspacePermissions(): IWorkspacePermissions {
         canAnalyzeWorkspace: false,
         canCreateVisualization: false,
         canCreateComputedAttribute: false,
+        canCreateDocument: false,
         canManageVisualizations: false,
         canExecuteRaw: false,
         canExportReport: false,

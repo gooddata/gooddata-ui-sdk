@@ -348,19 +348,6 @@ export type DashboardConfig = {
     aiMode?: "active" | "generating" | "waiting" | "building" | null;
 
     /**
-     * Current AI reasoning title shown while the dashboard is generating or building.
-     *
-     * @remarks
-     * Provide only the title, not the reasoning body. The title is rendered as plain text,
-     * without interpreting HTML or Markdown. The waiting-for-input message takes precedence
-     * while AI is waiting. Updating this value updates the status without reinitializing the
-     * dashboard; setting it to `undefined` clears the title.
-     *
-     * @public
-     */
-    aiReasoningTitle?: string;
-
-    /**
      * @internal
      * Identifier of the export
      *
@@ -593,7 +580,6 @@ export type ResolvedDashboardConfig = Omit<
     | "openAutomationOnLoad"
     | "hideAddTabButton"
     | "aiMode"
-    | "aiReasoningTitle"
 > &
     DashboardConfig;
 

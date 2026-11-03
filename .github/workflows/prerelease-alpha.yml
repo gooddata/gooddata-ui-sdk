@@ -3,6 +3,12 @@
 name: Prerelease ~ Publish alpha
 on:
     workflow_dispatch:
+        inputs:
+            use-npm-token:
+                required: false
+                default: false
+                description: "Publish to npm the old way with NPM_PUBLISH_TOKEN instead of trusted publishing (OIDC)"
+                type: boolean
 jobs:
     publish-pre-release:
         uses: ./.github/workflows/rw-publish-prerelease.yml
@@ -12,3 +18,4 @@ jobs:
         secrets: inherit
         with:
             source-branch: "master"
+            use-trusted-publishing: ${{ inputs.use-npm-token != true }}

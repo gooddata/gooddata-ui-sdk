@@ -14,6 +14,7 @@
 @use "animation";
 @use "intelligence";
 @use "tooltip";
+@use "copilotInteractionComposing";
 
 .gd-gen-ai-chat__context-chooser {
     display: flex;

@@ -13,6 +13,11 @@ on:
         default: false
         description: "Skip bumping the version"
         type: boolean
+      use-trusted-publishing:
+        required: false
+        default: true
+        description: "Publish to npm via trusted publishing (OIDC) only, without NPM_PUBLISH_TOKEN"
+        type: boolean
     outputs:
       version:
         description: "The version that was published"
@@ -113,6 +118,7 @@ jobs:
     with:
       source-branch: ${{ inputs.source-branch }}
       release-tag: ${{ needs.setup-params.outputs.prerelease-tag }}
+      use-trusted-publishing: ${{ inputs.use-trusted-publishing }}
 
   slack-notification:
     runs-on:

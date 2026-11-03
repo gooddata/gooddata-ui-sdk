@@ -2,7 +2,9 @@
 
 import {
     type GenAIChatEffort,
+    type IDashboard,
     type IGenAIUserContext,
+    type IInsight,
     type IPublisherDocumentDefinition,
     type IPublisherDocumentDefinitionV2,
 } from "@gooddata/sdk-model";
@@ -20,8 +22,7 @@ export const PluggableAppEventType = {
     AI_ASSISTANT_OPEN_REQUESTED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.OPEN_REQUESTED",
     AI_ASSISTANT_CLOSE_REQUESTED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CLOSE_REQUESTED",
     AI_ASSISTANT_CONTEXT_CHANGED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CONTEXT_CHANGED",
-    AI_ASSISTANT_PUBLISHER_DOCUMENT_SAVED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.PUBLISHER_DOCUMENT_SAVED",
-    AI_ASSISTANT_DASHBOARD_SAVED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.DASHBOARD_SAVED",
+    AI_ASSISTANT_EVENT_SENT: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.EVENT_SENT",
     PRICING_DIALOG_OPEN_REQUESTED: "GDC.PLUGGABLE_APP/EVT.PRICING_DIALOG.OPEN_REQUESTED",
 } as const;
 
@@ -431,96 +432,66 @@ export function isAiAssistantContextChangedEvent(obj: unknown): obj is IAiAssist
 }
 
 /**
- * Event telling the host assistant that a document it drafted was saved.
+ * Known events the host-owned AI assistant chat sends to the active application.
  *
  * @remarks
- * The assistant keeps its own copy of the conversation, which only learns about a save when the
- * thread is loaded again. The application that saved the document emits this once per save, so the
- * document in the chat reads as saved and links to the saved document right away.
+ * The host forwards every chat event to the active application through
+ * {@link IPluggableApplicationMountHandle.onAiAssistantEventReceive} without reading it. The
+ * application picks the events it acts on by `name`.
  *
  * @alpha
  */
-export interface IAiAssistantPublisherDocumentSavedEvent extends IPluggableAppEvent {
-    readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.PUBLISHER_DOCUMENT_SAVED";
-    readonly payload: {
-        /**
-         * Conversation the document was drafted in.
-         */
-        readonly conversationId: string;
-        /**
-         * Conversation item that holds the drafted document.
-         */
-        readonly itemId: string;
-        /**
-         * Name of the document within the item. Omitted when the draft carries none; the item's only
-         * document is meant then.
-         */
-        readonly documentRef?: string;
-        /**
-         * Identifier of the document the draft was saved as.
-         */
-        readonly savedDocumentId: string;
-        /**
-         * Publisher content version of the saved draft, which decides where the conversation records the
-         * save. Omitted by applications that predate it.
-         */
-        readonly format?: "aac-v1" | "aac-v2";
-    };
-}
+export const AiAssistantChatEventName = {
+    OPENED: "chat.opened",
+    CLOSED: "chat.closed",
+    RESET: "chat.reset",
+    CONVERSATION_CHANGED: "chat.conversation-changed",
+    FEEDBACK: "chat.feedback",
+    FEEDBACK_ERROR: "chat.feedback-error",
+    USER_MESSAGE: "chat.user-message",
+    USER_ANSWERS: "chat.user-answers",
+    ASSISTANT_MESSAGE: "chat.assistant-message",
+    REASONING: "chat.reasoning",
+    MODE_CHANGED: "chat.mode-changed",
+    DEFINITION_RECEIVED: "chat.definition-received",
+    CLARIFICATION_QUESTIONS: "chat.clarification-questions",
+    SAVE_VISUALIZATION_SUCCESS: "chat.save-visualization-success",
+    SAVE_VISUALIZATION_ERROR: "chat.save-visualization-error",
+    COPY_TO_CLIPBOARD: "chat.copy-to-clipboard",
+} as const;
 
 /**
- * Creates an {@link IAiAssistantPublisherDocumentSavedEvent}.
+ * Union of known chat event names.
  *
  * @alpha
  */
-export function aiAssistantPublisherDocumentSaved(
-    payload: IAiAssistantPublisherDocumentSavedEvent["payload"],
-): IAiAssistantPublisherDocumentSavedEvent {
-    return { type: PluggableAppEventType.AI_ASSISTANT_PUBLISHER_DOCUMENT_SAVED, payload };
-}
+export type KnownAiAssistantChatEventName =
+    (typeof AiAssistantChatEventName)[keyof typeof AiAssistantChatEventName];
 
 /**
- * Type guard for {@link IAiAssistantPublisherDocumentSavedEvent}.
+ * Name of an event the host-owned chat sends to the active application.
  *
  * @remarks
- * Validates the payload shape too, so a malformed event is rejected rather than narrowed to a type
- * whose later `payload.conversationId` access would be wrong.
+ * Open for extension (`string & {}`) so that a chat newer than the application can send events the
+ * application does not know yet. For known events, prefer values from {@link (AiAssistantChatEventName:variable)}.
  *
  * @alpha
  */
-export function isAiAssistantPublisherDocumentSavedEvent(
-    obj: unknown,
-): obj is IAiAssistantPublisherDocumentSavedEvent {
-    if (
-        typeof obj !== "object" ||
-        obj === null ||
-        (obj as { type?: unknown }).type !== PluggableAppEventType.AI_ASSISTANT_PUBLISHER_DOCUMENT_SAVED
-    ) {
-        return false;
-    }
-    const payload = (obj as { payload?: unknown }).payload;
-    if (typeof payload !== "object" || payload === null || Array.isArray(payload)) {
-        return false;
-    }
-    const { conversationId, itemId, documentRef, savedDocumentId, format } = payload as {
-        conversationId?: unknown;
-        itemId?: unknown;
-        documentRef?: unknown;
-        savedDocumentId?: unknown;
-        format?: unknown;
-    };
-    return (
-        typeof conversationId === "string" &&
-        typeof itemId === "string" &&
-        (documentRef === undefined || typeof documentRef === "string") &&
-        typeof savedDocumentId === "string" &&
-        (format === undefined || format === "aac-v1" || format === "aac-v2")
-    );
+export type AiAssistantChatEventName = KnownAiAssistantChatEventName | (string & {});
+
+/**
+ * An event of the host-owned AI assistant chat, as the host relays it to the active application.
+ *
+ * @alpha
+ */
+export interface IAiAssistantChatEvent {
+    readonly name: AiAssistantChatEventName;
+    readonly payload: Record<string, unknown>;
 }
 
 /**
- * A document version the host assistant drafted, carried by the `chat.definition-received` event an
- * application receives through {@link IPluggableApplicationMountHandle.onAiAssistantEventReceive}.
+ * A document version the host assistant drafted, carried by a {@link (AiAssistantChatEventName:variable).DEFINITION_RECEIVED}
+ * event whose `definitionType` is `"publisherDocument"`.
  *
  * @remarks
  * The assistant writes these fields and the editor applies the version from them, so both type them
@@ -587,9 +558,9 @@ export function isAiAssistantPublisherDocumentDefinition(obj: unknown): obj is O
 }
 
 /**
- * A document version of Publisher content v2 the host assistant drafted, carried by the
- * `chat.definition-received` event an application receives through
- * {@link IPluggableApplicationMountHandle.onAiAssistantEventReceive}.
+ * A document version of Publisher content v2 the host assistant drafted, carried by a
+ * {@link (AiAssistantChatEventName:variable).DEFINITION_RECEIVED} event whose `definitionType` is
+ * `"publisherDocumentV2"`.
  *
  * @remarks
  * The document is in `publisherDocumentV2`, not `publisherDocument`, so one event can type both
@@ -656,12 +627,205 @@ export function isAiAssistantPublisherDocumentDefinitionV2(obj: unknown): obj is
 }
 
 /**
- * Event telling the host assistant that a dashboard and its draft insights were saved.
+ * Payload of a {@link (AiAssistantChatEventName:variable).DEFINITION_RECEIVED} event: an object the assistant
+ * drafted in a conversation.
+ *
+ * @remarks
+ * `definitionType` says which of the optional members carries the draft: `dashboard` (with its
+ * `insights`) for `"dashboard"`, the {@link IAiAssistantPublisherDocumentDefinition} fields for
+ * `"publisherDocument"`, the {@link IAiAssistantPublisherDocumentDefinitionV2} fields for
+ * `"publisherDocumentV2"`. A `"visualization"` or `"alert"` draft is carried in the chat's own
+ * members beyond this type.
  *
  * @alpha
  */
-export interface IAiAssistantDashboardSavedEvent extends IPluggableAppEvent {
-    readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.DASHBOARD_SAVED";
+export type IAiAssistantDefinitionReceivedPayload = {
+    readonly definitionType:
+        | "dashboard"
+        | "visualization"
+        | "publisherDocument"
+        | "publisherDocumentV2"
+        | "alert";
+    /**
+     * Identifier of the item that holds the draft: the streamed interaction id for a live response,
+     * or the stored conversation item id for a history replay.
+     */
+    readonly itemId: string;
+    /**
+     * Local identifier of the conversation that holds the draft, not the backend thread id.
+     */
+    readonly conversationId: string;
+    /**
+     * Backend thread id of the conversation, when known.
+     */
+    readonly threadId?: string;
+    /**
+     * Stored response id of a draft replayed from chat history.
+     * A live draft leaves this unset or empty, which tells a replay from a live response.
+     */
+    readonly interactionId?: string;
+    /**
+     * Dashboard draft, populated when `definitionType` is `"dashboard"`.
+     */
+    readonly dashboard?: IDashboard;
+    /**
+     * Insights the dashboard draft references, populated when `definitionType` is `"dashboard"`.
+     * An empty array means the dashboard content references no insights.
+     */
+    readonly insights?: IInsight[];
+} & Partial<IAiAssistantPublisherDocumentDefinition> &
+    Partial<Pick<IAiAssistantPublisherDocumentDefinitionV2, "publisherDocumentV2">>;
+
+/**
+ * Chat event carrying an object the assistant drafted.
+ *
+ * @alpha
+ */
+export interface IAiAssistantDefinitionReceivedChatEvent extends IAiAssistantChatEvent {
+    readonly name: "chat.definition-received";
+    readonly payload: IAiAssistantDefinitionReceivedPayload;
+}
+
+/**
+ * Type guard for {@link IAiAssistantDefinitionReceivedChatEvent}.
+ *
+ * @remarks
+ * Validates the discriminator and the ids, so a malformed event is rejected rather than narrowed to a
+ * type whose later `payload.conversationId` access would be wrong. The draft itself stays as the chat
+ * sent it: whoever applies it validates it.
+ *
+ * @alpha
+ */
+export function isAiAssistantDefinitionReceivedChatEvent(
+    event: IAiAssistantChatEvent,
+): event is IAiAssistantDefinitionReceivedChatEvent {
+    if (event.name !== AiAssistantChatEventName.DEFINITION_RECEIVED) {
+        return false;
+    }
+    const { definitionType, itemId, conversationId, threadId, interactionId } = event.payload;
+    return (
+        (definitionType === "dashboard" ||
+            definitionType === "visualization" ||
+            definitionType === "publisherDocument" ||
+            definitionType === "publisherDocumentV2" ||
+            definitionType === "alert") &&
+        typeof itemId === "string" &&
+        typeof conversationId === "string" &&
+        (threadId === undefined || typeof threadId === "string") &&
+        (interactionId === undefined || typeof interactionId === "string")
+    );
+}
+
+/**
+ * Known events the active application sends to the host-owned AI assistant chat.
+ *
+ * @remarks
+ * The application wraps one in {@link aiAssistantEventSent} and emits it through the `onEvent`
+ * mount option. The host hands it to its chat without reading it; the chat picks the events it
+ * acts on by `name`.
+ *
+ * @alpha
+ */
+export const AiAssistantAppEventName = {
+    PUBLISHER_DOCUMENT_SAVED: "app.publisher-document-saved",
+    DASHBOARD_SAVED: "app.dashboard-saved",
+} as const;
+
+/**
+ * Union of known application event names.
+ *
+ * @alpha
+ */
+export type KnownAiAssistantAppEventName =
+    (typeof AiAssistantAppEventName)[keyof typeof AiAssistantAppEventName];
+
+/**
+ * Name of an event the active application sends to the host-owned chat.
+ *
+ * @remarks
+ * Open for extension (`string & {}`) so that an application newer than the chat can send events the
+ * chat does not know yet. For known events, prefer values from {@link (AiAssistantAppEventName:variable)}.
+ *
+ * @alpha
+ */
+export type AiAssistantAppEventName = KnownAiAssistantAppEventName | (string & {});
+
+/**
+ * An event of the active application, as the host relays it to its AI assistant chat.
+ *
+ * @alpha
+ */
+export interface IAiAssistantAppEvent {
+    readonly name: AiAssistantAppEventName;
+    readonly payload: Record<string, unknown>;
+}
+
+/**
+ * Application event telling the chat that a document it drafted was saved.
+ *
+ * @remarks
+ * The chat keeps its own copy of the conversation, which only learns about a save when the thread is
+ * loaded again. The application that saved the document sends this once per save, so the document in
+ * the chat reads as saved and links to the saved document right away.
+ *
+ * @alpha
+ */
+export interface IAiAssistantPublisherDocumentSavedAppEvent extends IAiAssistantAppEvent {
+    readonly name: "app.publisher-document-saved";
+    readonly payload: {
+        /**
+         * Conversation the document was drafted in.
+         */
+        readonly conversationId: string;
+        /**
+         * Conversation item that holds the drafted document.
+         */
+        readonly itemId: string;
+        /**
+         * Name of the document within the item. Omitted when the draft carries none; the item's only
+         * document is meant then.
+         */
+        readonly documentRef?: string;
+        /**
+         * Identifier of the document the draft was saved as.
+         */
+        readonly savedDocumentId: string;
+        /**
+         * Publisher content version of the saved draft, which decides where the conversation records the
+         * save. Omitted by applications that predate it.
+         */
+        readonly format?: "aac-v1" | "aac-v2";
+    };
+}
+
+/**
+ * Type guard for {@link IAiAssistantPublisherDocumentSavedAppEvent}.
+ *
+ * @alpha
+ */
+export function isAiAssistantPublisherDocumentSavedAppEvent(
+    event: IAiAssistantAppEvent,
+): event is IAiAssistantPublisherDocumentSavedAppEvent {
+    if (event.name !== AiAssistantAppEventName.PUBLISHER_DOCUMENT_SAVED) {
+        return false;
+    }
+    const { conversationId, itemId, documentRef, savedDocumentId, format } = event.payload;
+    return (
+        typeof conversationId === "string" &&
+        typeof itemId === "string" &&
+        (documentRef === undefined || typeof documentRef === "string") &&
+        typeof savedDocumentId === "string" &&
+        (format === undefined || format === "aac-v1" || format === "aac-v2")
+    );
+}
+
+/**
+ * Application event telling the chat that a dashboard it drafted was saved, with its draft insights.
+ *
+ * @alpha
+ */
+export interface IAiAssistantDashboardSavedAppEvent extends IAiAssistantAppEvent {
+    readonly name: "app.dashboard-saved";
     readonly payload: {
         readonly conversationId: string;
         readonly originalDashboardId: string;
@@ -674,39 +838,17 @@ export interface IAiAssistantDashboardSavedEvent extends IPluggableAppEvent {
 }
 
 /**
- * Creates an {@link IAiAssistantDashboardSavedEvent}.
+ * Type guard for {@link IAiAssistantDashboardSavedAppEvent}.
  *
  * @alpha
  */
-export function aiAssistantDashboardSaved(
-    payload: IAiAssistantDashboardSavedEvent["payload"],
-): IAiAssistantDashboardSavedEvent {
-    return { type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.DASHBOARD_SAVED", payload };
-}
-
-/**
- * Type guard for {@link IAiAssistantDashboardSavedEvent}.
- *
- * @alpha
- */
-export function isAiAssistantDashboardSavedEvent(obj: unknown): obj is IAiAssistantDashboardSavedEvent {
-    if (
-        typeof obj !== "object" ||
-        obj === null ||
-        (obj as { type?: unknown }).type !== "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.DASHBOARD_SAVED"
-    ) {
+export function isAiAssistantDashboardSavedAppEvent(
+    event: IAiAssistantAppEvent,
+): event is IAiAssistantDashboardSavedAppEvent {
+    if (event.name !== AiAssistantAppEventName.DASHBOARD_SAVED) {
         return false;
     }
-    const payload = (obj as { payload?: unknown }).payload;
-    if (typeof payload !== "object" || payload === null || Array.isArray(payload)) {
-        return false;
-    }
-    const { conversationId, originalDashboardId, savedDashboardId, savedInsights } = payload as {
-        conversationId?: unknown;
-        originalDashboardId?: unknown;
-        savedDashboardId?: unknown;
-        savedInsights?: unknown;
-    };
+    const { conversationId, originalDashboardId, savedDashboardId, savedInsights } = event.payload;
     return (
         typeof conversationId === "string" &&
         typeof originalDashboardId === "string" &&
@@ -719,6 +861,78 @@ export function isAiAssistantDashboardSavedEvent(obj: unknown): obj is IAiAssist
                 typeof (insight as { originalInsightId?: unknown }).originalInsightId === "string" &&
                 typeof (insight as { savedInsightId?: unknown }).savedInsightId === "string",
         )
+    );
+}
+
+/**
+ * Event carrying an {@link IAiAssistantAppEvent} from the application to the host-owned chat.
+ *
+ * @remarks
+ * Counterpart of {@link IPluggableApplicationMountHandle.onAiAssistantEventReceive}. The host checks
+ * only the envelope and hands the application event to its chat as is.
+ *
+ * @alpha
+ */
+export interface IAiAssistantEventSentEvent extends IPluggableAppEvent {
+    readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.EVENT_SENT";
+    readonly payload: IAiAssistantAppEvent;
+}
+
+/**
+ * Creates an {@link IAiAssistantEventSentEvent}.
+ *
+ * @alpha
+ */
+export function aiAssistantEventSent(event: IAiAssistantAppEvent): IAiAssistantEventSentEvent {
+    return { type: PluggableAppEventType.AI_ASSISTANT_EVENT_SENT, payload: event };
+}
+
+/**
+ * Creates an {@link IAiAssistantEventSentEvent} carrying an {@link IAiAssistantPublisherDocumentSavedAppEvent}.
+ *
+ * @alpha
+ */
+export function aiAssistantPublisherDocumentSaved(
+    payload: IAiAssistantPublisherDocumentSavedAppEvent["payload"],
+): IAiAssistantEventSentEvent {
+    return aiAssistantEventSent({ name: AiAssistantAppEventName.PUBLISHER_DOCUMENT_SAVED, payload });
+}
+
+/**
+ * Creates an {@link IAiAssistantEventSentEvent} carrying an {@link IAiAssistantDashboardSavedAppEvent}.
+ *
+ * @alpha
+ */
+export function aiAssistantDashboardSaved(
+    payload: IAiAssistantDashboardSavedAppEvent["payload"],
+): IAiAssistantEventSentEvent {
+    return aiAssistantEventSent({ name: AiAssistantAppEventName.DASHBOARD_SAVED, payload });
+}
+
+/**
+ * Type guard for {@link IAiAssistantEventSentEvent}.
+ *
+ * @remarks
+ * Validates the envelope only (a string `name` and an object `payload`), so a malformed event is
+ * rejected before it reaches the chat. The chat validates the application event it acts on.
+ *
+ * @alpha
+ */
+export function isAiAssistantEventSentEvent(obj: unknown): obj is IAiAssistantEventSentEvent {
+    if (
+        typeof obj !== "object" ||
+        obj === null ||
+        (obj as { type?: unknown }).type !== PluggableAppEventType.AI_ASSISTANT_EVENT_SENT
+    ) {
+        return false;
+    }
+    const event = (obj as { payload?: unknown }).payload;
+    if (typeof event !== "object" || event === null || Array.isArray(event)) {
+        return false;
+    }
+    const { name, payload } = event as { name?: unknown; payload?: unknown };
+    return (
+        typeof name === "string" && typeof payload === "object" && payload !== null && !Array.isArray(payload)
     );
 }
 
@@ -886,6 +1100,11 @@ export interface IAppHeaderOptions {
 /**
  * Options passed by the host into a pluggable application's mount function.
  *
+ * @remarks
+ * Do not add a callback here for a message the host only hands on between the application and the
+ * chat. Send it as an {@link IAiAssistantAppEvent} through `onEvent` instead and name it in
+ * {@link (AiAssistantAppEventName:variable)}; the host must stay unaware of the chat vocabulary.
+ *
  * @alpha
  */
 export interface IPluggableApplicationMountOptions {
@@ -972,6 +1191,11 @@ export interface IHostNavigationRequest {
 /**
  * Handle returned from mount for lifecycle management and host -\> module interaction.
  *
+ * @remarks
+ * Do not add a callback here for a message the host only hands on from the chat to the application.
+ * The chat's events all arrive through `onAiAssistantEventReceive`; name a new one in
+ * {@link (AiAssistantChatEventName:variable)} and decode it in the application.
+ *
  * @alpha
  */
 export interface IPluggableApplicationMountHandle {
@@ -1038,17 +1262,18 @@ export interface IPluggableApplicationMountHandle {
     }) => boolean;
 
     /**
-     * Ref the renderer populates with a handler that delegates a host-chat event to the active
-     * app's mount handle (`onAiAssistantEventReceive`), so an embedded app can handle it in-app.
+     * Hands an event of the host-owned AI assistant chat to the application.
      *
      * @remarks
-     * On hosted routes the host owns the single chat instance; an application that exposes its own
-     * assistant controls (e.g. an embedded AI button, or the `toggleAIAssistant` postMessage command
-     * whose result is echoed to an embedding client) needs to know the real open-state to keep those
-     * controls and their reported results aligned with what the user sees. The host calls this
-     * when event is received.
+     * On hosted routes the host owns the single chat instance, so the application only learns what
+     * happens in the chat (an answer with a drafted object, a reset, clarification questions, …)
+     * through this callback. The host calls it with every chat event without reading it; the
+     * application picks the events it acts on by `name` — see {@link (AiAssistantChatEventName:variable)} and
+     * the typed guards such as {@link isAiAssistantDefinitionReceivedChatEvent}. Applications that
+     * do not react to the chat may omit it. The opposite direction is
+     * {@link IAiAssistantEventSentEvent}.
      */
-    onAiAssistantEventReceive?: (event: { name: string; payload: Record<string, unknown> }) => void;
+    onAiAssistantEventReceive?: (event: IAiAssistantChatEvent) => void;
 }
 
 /**

@@ -1,4 +1,12 @@
 {
+    "gd.gen-ai.copilot.composing.waiting": {
+        "text": "Waiting for your reply",
+        "crowdinContext": "Status banner shown over content when an AI workflow needs the user to reply in chat."
+    },
+    "gd.gen-ai.copilot.composing.replyNow": {
+        "text": "Reply now",
+        "crowdinContext": "Button in the AI composing status banner that opens the chat to answer a pending question."
+    },
     "gd.gen-ai.global-error": {
         "text": "Something went wrong",
         "crowdinContext": "Generic error message displayed when the AI chatbot encounters an unexpected error"

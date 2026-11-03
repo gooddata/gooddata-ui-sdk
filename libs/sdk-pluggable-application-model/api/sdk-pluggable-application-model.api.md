@@ -7,8 +7,10 @@
 import { ApplicationScope } from '@gooddata/sdk-model';
 import { GenAIChatEffort } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
+import { IDashboard } from '@gooddata/sdk-model';
 import { IEntitlementDescriptor } from '@gooddata/sdk-model';
 import { IGenAIUserContext } from '@gooddata/sdk-model';
+import { IInsight } from '@gooddata/sdk-model';
 import { ILocale } from '@gooddata/sdk-model';
 import { IPublisherDocumentDefinition } from '@gooddata/sdk-model';
 import { IPublisherDocumentDefinitionV2 } from '@gooddata/sdk-model';
@@ -22,6 +24,38 @@ import { ObjRef } from '@gooddata/sdk-model';
 import { PluggableApplicationRegistryItem } from '@gooddata/sdk-model';
 
 // @alpha
+export const AiAssistantAppEventName: {
+    readonly PUBLISHER_DOCUMENT_SAVED: "app.publisher-document-saved";
+    readonly DASHBOARD_SAVED: "app.dashboard-saved";
+};
+
+// @alpha
+export type AiAssistantAppEventName = KnownAiAssistantAppEventName | (string & {});
+
+// @alpha
+export const AiAssistantChatEventName: {
+    readonly OPENED: "chat.opened";
+    readonly CLOSED: "chat.closed";
+    readonly RESET: "chat.reset";
+    readonly CONVERSATION_CHANGED: "chat.conversation-changed";
+    readonly FEEDBACK: "chat.feedback";
+    readonly FEEDBACK_ERROR: "chat.feedback-error";
+    readonly USER_MESSAGE: "chat.user-message";
+    readonly USER_ANSWERS: "chat.user-answers";
+    readonly ASSISTANT_MESSAGE: "chat.assistant-message";
+    readonly REASONING: "chat.reasoning";
+    readonly MODE_CHANGED: "chat.mode-changed";
+    readonly DEFINITION_RECEIVED: "chat.definition-received";
+    readonly CLARIFICATION_QUESTIONS: "chat.clarification-questions";
+    readonly SAVE_VISUALIZATION_SUCCESS: "chat.save-visualization-success";
+    readonly SAVE_VISUALIZATION_ERROR: "chat.save-visualization-error";
+    readonly COPY_TO_CLIPBOARD: "chat.copy-to-clipboard";
+};
+
+// @alpha
+export type AiAssistantChatEventName = KnownAiAssistantChatEventName | (string & {});
+
+// @alpha
 export function aiAssistantContextChanged(payload?: {
     includeTags?: string[];
     excludeTags?: string[];
@@ -33,10 +67,13 @@ export function aiAssistantContextChanged(payload?: {
 }): IAiAssistantContextChangedEvent;
 
 // @alpha
-export function aiAssistantDashboardSaved(payload: IAiAssistantDashboardSavedEvent["payload"]): IAiAssistantDashboardSavedEvent;
+export function aiAssistantDashboardSaved(payload: IAiAssistantDashboardSavedAppEvent["payload"]): IAiAssistantEventSentEvent;
 
 // @alpha
-export function aiAssistantPublisherDocumentSaved(payload: IAiAssistantPublisherDocumentSavedEvent["payload"]): IAiAssistantPublisherDocumentSavedEvent;
+export function aiAssistantEventSent(event: IAiAssistantAppEvent): IAiAssistantEventSentEvent;
+
+// @alpha
+export function aiAssistantPublisherDocumentSaved(payload: IAiAssistantPublisherDocumentSavedAppEvent["payload"]): IAiAssistantEventSentEvent;
 
 // @alpha
 export function closeAiAssistantRequested(): ICloseAiAssistantRequestedEvent;
@@ -61,6 +98,22 @@ export type EmbeddingMode = "none" | "iframe";
 export type HostUiMount = (options: IHostUiMountOptions) => IHostUiMountHandle;
 
 // @alpha
+export interface IAiAssistantAppEvent {
+    // (undocumented)
+    readonly name: AiAssistantAppEventName;
+    // (undocumented)
+    readonly payload: Record<string, unknown>;
+}
+
+// @alpha
+export interface IAiAssistantChatEvent {
+    // (undocumented)
+    readonly name: AiAssistantChatEventName;
+    // (undocumented)
+    readonly payload: Record<string, unknown>;
+}
+
+// @alpha
 export interface IAiAssistantContextChangedEvent extends IPluggableAppEvent {
     // (undocumented)
     readonly payload: {
@@ -77,7 +130,9 @@ export interface IAiAssistantContextChangedEvent extends IPluggableAppEvent {
 }
 
 // @alpha
-export interface IAiAssistantDashboardSavedEvent extends IPluggableAppEvent {
+export interface IAiAssistantDashboardSavedAppEvent extends IAiAssistantAppEvent {
+    // (undocumented)
+    readonly name: "app.dashboard-saved";
     // (undocumented)
     readonly payload: {
         readonly conversationId: string;
@@ -88,8 +143,33 @@ export interface IAiAssistantDashboardSavedEvent extends IPluggableAppEvent {
             readonly savedInsightId: string;
         }>;
     };
+}
+
+// @alpha
+export interface IAiAssistantDefinitionReceivedChatEvent extends IAiAssistantChatEvent {
     // (undocumented)
-    readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.DASHBOARD_SAVED";
+    readonly name: "chat.definition-received";
+    // (undocumented)
+    readonly payload: IAiAssistantDefinitionReceivedPayload;
+}
+
+// @alpha
+export type IAiAssistantDefinitionReceivedPayload = {
+    readonly definitionType: "dashboard" | "visualization" | "publisherDocument" | "publisherDocumentV2" | "alert";
+    readonly itemId: string;
+    readonly conversationId: string;
+    readonly threadId?: string;
+    readonly interactionId?: string;
+    readonly dashboard?: IDashboard;
+    readonly insights?: IInsight[];
+} & Partial<IAiAssistantPublisherDocumentDefinition> & Partial<Pick<IAiAssistantPublisherDocumentDefinitionV2, "publisherDocumentV2">>;
+
+// @alpha
+export interface IAiAssistantEventSentEvent extends IPluggableAppEvent {
+    // (undocumented)
+    readonly payload: IAiAssistantAppEvent;
+    // (undocumented)
+    readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.EVENT_SENT";
 }
 
 // @alpha
@@ -111,7 +191,9 @@ export interface IAiAssistantPublisherDocumentDefinitionV2 {
 }
 
 // @alpha
-export interface IAiAssistantPublisherDocumentSavedEvent extends IPluggableAppEvent {
+export interface IAiAssistantPublisherDocumentSavedAppEvent extends IAiAssistantAppEvent {
+    // (undocumented)
+    readonly name: "app.publisher-document-saved";
     // (undocumented)
     readonly payload: {
         readonly conversationId: string;
@@ -120,8 +202,6 @@ export interface IAiAssistantPublisherDocumentSavedEvent extends IPluggableAppEv
         readonly savedDocumentId: string;
         readonly format?: "aac-v1" | "aac-v2";
     };
-    // (undocumented)
-    readonly type: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.PUBLISHER_DOCUMENT_SAVED";
 }
 
 // @alpha
@@ -348,10 +428,7 @@ export interface IPluggableAppEvent {
 
 // @alpha
 export interface IPluggableApplicationMountHandle {
-    onAiAssistantEventReceive?: (event: {
-        name: string;
-        payload: Record<string, unknown>;
-    }) => void;
+    onAiAssistantEventReceive?: (event: IAiAssistantChatEvent) => void;
     onAiAssistantLinkClicked?: (link: {
         type?: string;
         id?: string;
@@ -417,7 +494,13 @@ export interface IReloadPlatformContextRequestedEvent extends IPluggableAppEvent
 export function isAiAssistantContextChangedEvent(obj: unknown): obj is IAiAssistantContextChangedEvent;
 
 // @alpha
-export function isAiAssistantDashboardSavedEvent(obj: unknown): obj is IAiAssistantDashboardSavedEvent;
+export function isAiAssistantDashboardSavedAppEvent(event: IAiAssistantAppEvent): event is IAiAssistantDashboardSavedAppEvent;
+
+// @alpha
+export function isAiAssistantDefinitionReceivedChatEvent(event: IAiAssistantChatEvent): event is IAiAssistantDefinitionReceivedChatEvent;
+
+// @alpha
+export function isAiAssistantEventSentEvent(obj: unknown): obj is IAiAssistantEventSentEvent;
 
 // @alpha
 export function isAiAssistantPublisherDocumentDefinition(obj: unknown): obj is Omit<IAiAssistantPublisherDocumentDefinition, "publisherDocument"> & {
@@ -430,7 +513,7 @@ export function isAiAssistantPublisherDocumentDefinitionV2(obj: unknown): obj is
 };
 
 // @alpha
-export function isAiAssistantPublisherDocumentSavedEvent(obj: unknown): obj is IAiAssistantPublisherDocumentSavedEvent;
+export function isAiAssistantPublisherDocumentSavedAppEvent(event: IAiAssistantAppEvent): event is IAiAssistantPublisherDocumentSavedAppEvent;
 
 // @alpha
 export function isCloseAiAssistantRequestedEvent(obj: unknown): obj is ICloseAiAssistantRequestedEvent;
@@ -467,6 +550,12 @@ export interface ITelemetryPropertySlot {
     // (undocumented)
     scope: TelemetryPropertyScope;
 }
+
+// @alpha
+export type KnownAiAssistantAppEventName = (typeof AiAssistantAppEventName)[keyof typeof AiAssistantAppEventName];
+
+// @alpha
+export type KnownAiAssistantChatEventName = (typeof AiAssistantChatEventName)[keyof typeof AiAssistantChatEventName];
 
 // @alpha
 export type KnownPluggableAppEventTypeName = (typeof PluggableAppEventType)[keyof typeof PluggableAppEventType];
@@ -515,8 +604,7 @@ export const PluggableAppEventType: {
     readonly AI_ASSISTANT_OPEN_REQUESTED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.OPEN_REQUESTED";
     readonly AI_ASSISTANT_CLOSE_REQUESTED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CLOSE_REQUESTED";
     readonly AI_ASSISTANT_CONTEXT_CHANGED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.CONTEXT_CHANGED";
-    readonly AI_ASSISTANT_PUBLISHER_DOCUMENT_SAVED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.PUBLISHER_DOCUMENT_SAVED";
-    readonly AI_ASSISTANT_DASHBOARD_SAVED: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.DASHBOARD_SAVED";
+    readonly AI_ASSISTANT_EVENT_SENT: "GDC.PLUGGABLE_APP/EVT.AI_ASSISTANT.EVENT_SENT";
     readonly PRICING_DIALOG_OPEN_REQUESTED: "GDC.PLUGGABLE_APP/EVT.PRICING_DIALOG.OPEN_REQUESTED";
 };
 

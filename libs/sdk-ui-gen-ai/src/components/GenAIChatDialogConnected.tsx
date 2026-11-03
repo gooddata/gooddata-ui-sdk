@@ -56,11 +56,9 @@ import {
 
 import { type GenAIAssistantDisplayMode, type LinkHandlerEvent } from "./ConfigContext.js";
 import { GenAIChatDialog, type GenAIChatDialogProps } from "./GenAIChatDialog.js";
-import { type IDashboardSaved, useDashboardSavedSync } from "./hooks/useDashboardSavedSync.js";
-import {
-    type IPublisherDocumentSaved,
-    usePublisherDocumentSavedSync,
-} from "./hooks/usePublisherDocumentSavedSync.js";
+import { type ISequencedAppEvent, useAppEventSync } from "./hooks/useAppEventSync.js";
+
+const NO_APP_EVENTS: ReadonlyArray<ISequencedAppEvent> = [];
 import { sanitizeEffort } from "./utils/effortSelection.js";
 
 /**
@@ -253,12 +251,10 @@ export interface IGenAIChatDialogConnectedProps {
      */
     ambientUserContextLoading?: boolean;
     /**
-     * A document of the conversation that an application saved. The document in the chat then reads as
-     * saved without the conversation being loaded again. Each save carries a new `seq`.
+     * Recent events of the application the chat runs beside, such as a save of an object the chat
+     * drafted, oldest first. Each delivery carries a new `seq`. Events the chat does not know are ignored.
      */
-    publisherDocumentSaved?: IPublisherDocumentSaved;
-    /** A dashboard save reported by an application. Each save carries a new `seq`. */
-    dashboardSaved?: IDashboardSaved;
+    appEvents?: ReadonlyArray<ISequencedAppEvent>;
     /**
      * Agent ID to use for the seeded question. If not provided, the default agent will be used.
      */
@@ -324,8 +320,7 @@ export function GenAIChatDialogConnected({
     userContext,
     ambientUserContext,
     ambientUserContextLoading,
-    publisherDocumentSaved,
-    dashboardSaved,
+    appEvents = NO_APP_EVENTS,
     appendToChat,
     replaceUserContext,
     includeTags,
@@ -413,8 +408,7 @@ export function GenAIChatDialogConnected({
         );
     }, [chatDispatcher, ambientUserContext, ambientUserContextLoading]);
 
-    usePublisherDocumentSavedSync(chatDispatcher, publisherDocumentSaved);
-    useDashboardSavedSync(chatDispatcher, dashboardSaved);
+    useAppEventSync(chatDispatcher, appEvents);
 
     // The token of the last seed we applied. Each ask is identified by `askSeq` (bumped on every ask,
     // so even a repeated identical question re-seeds); we seed once per token. Without this guard the

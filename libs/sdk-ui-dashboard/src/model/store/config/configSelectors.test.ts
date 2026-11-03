@@ -8,7 +8,6 @@ import { type DashboardConfig } from "../../types/commonTypes.js";
 import { type DashboardState } from "../types.js";
 
 import {
-    selectAiReasoningTitle,
     selectIsAiBuilding,
     selectIsAiGenerating,
     selectIsAiLoading,
@@ -21,14 +20,6 @@ function stateWithConfig(config: DashboardConfig): DashboardState {
 }
 
 describe("AI mode config selectors", () => {
-    it.each(["Exploring data", "", undefined])("should select the reasoning title %s", (aiReasoningTitle) => {
-        expect(selectAiReasoningTitle(stateWithConfig({ aiReasoningTitle }))).toBe(aiReasoningTitle);
-    });
-
-    it("should return undefined when the reasoning title is omitted", () => {
-        expect(selectAiReasoningTitle(stateWithConfig({}))).toBeUndefined();
-    });
-
     it.each([
         {
             aiMode: undefined,

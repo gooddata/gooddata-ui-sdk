@@ -57,6 +57,11 @@ export type PluggableApplicationWorkspacePermission =
      */
     | "canCreateAutomation"
     /**
+     * Whether the user can create Publisher documents, and edit and delete the ones they created.
+     * Maps to Tiger `CREATE_DOCUMENT` permission, which MANAGE includes.
+     */
+    | "canCreateDocument"
+    /**
      * Whether the user can use AI Assistant.
      * Maps to Tiger `USE_AI_ASSISTANT` permission.
      */
@@ -89,6 +94,7 @@ export function toPluggableApplicationWorkspacePermissions(
         canExportPdf: permissions.canExportPdf,
         canCreateFilterView: permissions.canCreateFilterView,
         canCreateAutomation: permissions.canCreateAutomation,
+        canCreateDocument: permissions.canCreateDocument,
         canUseAiAssistant: permissions.canUseAiAssistant,
     };
 }

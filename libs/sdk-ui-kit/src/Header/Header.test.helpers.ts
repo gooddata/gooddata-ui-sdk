@@ -36,6 +36,7 @@ export const makeWorkspacePermissions = (
         canAnalyzeWorkspace: false,
         canCreateVisualization: false,
         canCreateComputedAttribute: false,
+        canCreateDocument: false,
         canManageVisualizations: false,
         canExecuteRaw: false,
         canExportReport: false,

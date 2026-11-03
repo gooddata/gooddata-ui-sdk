@@ -34,6 +34,7 @@
     border-radius: dialog-variables.$gd-modal-borderRadius;
     border-width: dialog-variables.$gd-modal-borderWidth;
     box-shadow: dialog-variables.$gd-modal-boxShadow dialog-variables.$modal-shadow-darker;
+    overflow-wrap: break-word;
 
     &.gd-dialog--wide {
         max-width: dialog-variables.$modalDialog-wide-maxWidth;

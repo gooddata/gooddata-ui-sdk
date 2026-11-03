@@ -1,6 +1,13 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type ComponentType, type MouseEvent, useCallback, useEffect, useRef } from "react";
+import {
+    type ComponentType,
+    type KeyboardEvent,
+    type MouseEvent,
+    useCallback,
+    useEffect,
+    useRef,
+} from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -13,6 +20,7 @@ import { UiIconButton } from "../@ui/UiIconButton/UiIconButton.js";
 import { DESCRIPTION_PANEL_ARROW_OFFSETS, DescriptionPanel } from "../DescriptionPanel/DescriptionPanel.js";
 import { type IShortenedTextHandle, ShortenedText } from "../ShortenedText/ShortenedText.js";
 import { getDateTimeConfig } from "../utils/dateTimeConfig.js";
+import { isActionKey } from "../utils/events.js";
 
 import { InsightListItemDate } from "./InsightListItemDate.js";
 
@@ -172,6 +180,7 @@ export function InsightListItem({
                                 isDesctructive
                                 label={deleteLabel}
                                 onClick={handleClickDelete}
+                                onKeyDown={stopActionKeyPropagation}
                                 accessibilityConfig={{ ariaLabel: deleteLabel }}
                             />
                         </span>
@@ -180,6 +189,13 @@ export function InsightListItem({
             ) : null}
         </div>
     );
+}
+
+// The enclosing list handles Enter and Space itself and would cancel the button's own activation.
+function stopActionKeyPropagation(e: KeyboardEvent) {
+    if (isActionKey(e)) {
+        e.stopPropagation();
+    }
 }
 
 function UpdatedDateTime({

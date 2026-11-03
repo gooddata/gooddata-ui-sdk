@@ -1,17 +1,26 @@
 // (C) 2026 GoodData Corporation
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, expectTypeOf, it } from "vitest";
 
+import {
+    AiAssistantChatEventName,
+    type KnownAiAssistantChatEventName,
+} from "@gooddata/sdk-pluggable-application-model";
 import {
     type ChatClarificationQuestionsEvent,
     type ChatConversationChangedEvent,
+    type ChatCopyToClipboardEvent,
     type ChatReasoningEvent,
     type ChatUserAnswersEvent,
 } from "@gooddata/sdk-ui-gen-ai";
 
-import { toHostGenAIChatEvent } from "./GenAIChat.js";
+import { type GenAIChatEvent, toHostGenAIChatEvent } from "./GenAIChat.js";
 
 describe("toHostGenAIChatEvent", () => {
+    it("produces every event name the contract knows, so no module decodes an event that never comes", () => {
+        expectTypeOf<KnownAiAssistantChatEventName>().toExtend<GenAIChatEvent["name"]>();
+    });
+
     it("forwards clarification answers once without changing their payload", () => {
         const event: ChatUserAnswersEvent = {
             type: "chatUserAnswers",
@@ -28,14 +37,14 @@ describe("toHostGenAIChatEvent", () => {
         };
         const forwarded = toHostGenAIChatEvent({ name: "user-answers", payload: event });
         expect(forwarded).toEqual({ name: "chat.user-answers", payload: event });
-        expect(forwarded?.payload).toBe(event);
+        expect(forwarded.payload).toBe(event);
     });
     it.each(["Choosing visualizations", undefined])("forwards reasoning title %s unchanged", (title) => {
         const event: ChatReasoningEvent = { type: "chatReasoning", threadId: "thread-1", title };
         const forwarded = toHostGenAIChatEvent({ name: "reasoning", payload: event });
 
         expect(forwarded).toEqual({ name: "chat.reasoning", payload: event });
-        expect(forwarded?.payload).toBe(event);
+        expect(forwarded.payload).toBe(event);
     });
 
     it("forwards conversation changes for reasoning cleanup", () => {
@@ -65,6 +74,15 @@ describe("toHostGenAIChatEvent", () => {
 
         expect(toHostGenAIChatEvent({ name: "clarification-questions", payload: event })).toEqual({
             name: "chat.clarification-questions",
+            payload: event,
+        });
+    });
+
+    it("forwards an event the host itself does nothing with, under its contract name", () => {
+        const event: ChatCopyToClipboardEvent = { type: "chatCopyToClipboard", content: "link" };
+
+        expect(toHostGenAIChatEvent({ name: "copy-to-clipboard", payload: event })).toEqual({
+            name: AiAssistantChatEventName.COPY_TO_CLIPBOARD,
             payload: event,
         });
     });

@@ -18,17 +18,7 @@ const setAiMode: ConfigReducer<PayloadAction<ResolvedDashboardConfig["aiMode"]>>
     }
 };
 
-const setAiReasoningTitle: ConfigReducer<PayloadAction<ResolvedDashboardConfig["aiReasoningTitle"]>> = (
-    state,
-    action,
-) => {
-    if (state.config) {
-        state.config.aiReasoningTitle = action.payload;
-    }
-};
-
 export const configReducers = {
     setConfig,
     setAiMode,
-    setAiReasoningTitle,
 };

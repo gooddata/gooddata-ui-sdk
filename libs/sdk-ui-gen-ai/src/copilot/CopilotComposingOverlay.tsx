@@ -77,7 +77,7 @@ export function DashboardAiComposingOverlay({ isWaiting }: { isWaiting: boolean 
                     state.velocity = speed;
                 }
             } else if (state.mode === "spring") {
-                // Keep the spring target aligned with the top center while the dashboard resizes.
+                // Keep the spring target aligned with the top center while the container resizes.
                 const target = state.lap + top;
                 const steps = Math.max(1, Math.ceil(dt * 240));
                 const step = dt / steps;
@@ -172,13 +172,13 @@ export function DashboardAiComposingOverlay({ isWaiting }: { isWaiting: boolean 
 
     return (
         <div
-            data-testid="gd-dashboard-ai-composing-overlay"
-            className="gd-dashboard-ai-composing-overlay"
+            data-testid="gd-copilot-composing-overlay"
+            className="gd-copilot-composing-overlay"
             ref={overlayRef}
             aria-hidden="true"
         >
             {["bloom", "glow", "tail", "core"].map((layer) => (
-                <svg key={layer} className={`gd-dashboard-ai-composing-overlay__${layer}`} focusable="false">
+                <svg key={layer} className={`gd-copilot-composing-overlay__${layer}`} focusable="false">
                     <rect x="1" y="1" width="0" height="0" />
                 </svg>
             ))}

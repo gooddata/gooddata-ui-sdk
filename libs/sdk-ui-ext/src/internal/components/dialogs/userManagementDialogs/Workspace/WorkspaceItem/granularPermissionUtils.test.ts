@@ -123,6 +123,27 @@ describe("granularPermissionUtils", () => {
         });
     });
 
+    describe("CREATE_DOCUMENT", () => {
+        it.each(["VIEW", "ANALYZE"] as const)(
+            "stays grantable on top of %s and survives sanitization there",
+            (permission) => {
+                expect(isPermissionDisabled("CREATE_DOCUMENT", permission, [])).toBe(false);
+                expect(getGranularPermissions([permission])).not.toContain("CREATE_DOCUMENT");
+                expect(getGranularPermissions([permission, "CREATE_DOCUMENT"])).toContain("CREATE_DOCUMENT");
+                expect(removeRedundantPermissions([permission, "CREATE_DOCUMENT"])).toEqual([
+                    permission,
+                    "CREATE_DOCUMENT",
+                ]);
+            },
+        );
+
+        it("is collapsed into MANAGE, which already implies it", () => {
+            expect(getGranularPermissions(["MANAGE"])).toContain("CREATE_DOCUMENT");
+            expect(isPermissionDisabled("CREATE_DOCUMENT", "MANAGE", [])).toBe(true);
+            expect(removeRedundantPermissions(["MANAGE", "CREATE_DOCUMENT"])).toEqual(["MANAGE"]);
+        });
+    });
+
     describe("MANAGE_VISUALIZATIONS", () => {
         it("is implied by MANAGE but not by ANALYZE by default", () => {
             expect(getImplicitGranularPermissions("MANAGE")).toContain("MANAGE_VISUALIZATIONS");
@@ -212,6 +233,12 @@ describe("granularPermissionUtils", () => {
         it("resolves the CREATE_COMPUTED_ATTRIBUTE label", () => {
             expect(getGranularPermissionTitle("CREATE_COMPUTED_ATTRIBUTE").id).toBe(
                 "userManagement.workspace.permission.createComputedAttribute",
+            );
+        });
+
+        it("resolves the CREATE_DOCUMENT label", () => {
+            expect(getGranularPermissionTitle("CREATE_DOCUMENT").id).toBe(
+                "userManagement.workspace.permission.createDocument",
             );
         });
     });

@@ -1,11 +1,14 @@
 // (C) 2026 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { userEvent } from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { idRef } from "@gooddata/sdk-model";
 import { BackendProvider, IntlWrapper, WorkspaceProvider } from "@gooddata/sdk-ui";
+
+import { makeLinearKeyboardNavigationWithConfirm } from "../@ui/@utils/keyboardNavigation.js";
 
 import { InsightListItem } from "./InsightListItem.js";
 
@@ -41,4 +44,29 @@ describe("InsightListItem", () => {
 
         expect(container.querySelector(".s-delete-item svg")?.getAttribute("width")).toBe("14");
     });
+
+    it.each(["{Enter}", " "])(
+        "opens the delete action with %j inside a keyboard navigable list",
+        async (key) => {
+            const onDelete = vi.fn<() => void>();
+            const handleListKeyDown = makeLinearKeyboardNavigationWithConfirm({
+                onSelect: () => {},
+                onConfirm: () => {},
+            });
+            render(
+                <IntlWrapper>
+                    <ul tabIndex={0} onKeyDown={handleListKeyDown}>
+                        <li>
+                            <InsightListItem title="Sales" onDelete={onDelete} />
+                        </li>
+                    </ul>
+                </IntlWrapper>,
+            );
+
+            screen.getByRole("button").focus();
+            await userEvent.keyboard(key);
+
+            expect(onDelete).toHaveBeenCalledTimes(1);
+        },
+    );
 });

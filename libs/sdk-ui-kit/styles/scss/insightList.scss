@@ -150,8 +150,9 @@ $visualization-types:
 .gd-visualizations-list-item-actions {
     opacity: 0;
 
+    // Not :focus-within: focus returned after a mouse-closed dialog would keep the actions shown.
     .gd-visualizations-list-item:hover &,
-    .gd-visualizations-list-item:focus-within & {
+    .gd-visualizations-list-item:has(:focus-visible) & {
         opacity: 1;
     }
 }

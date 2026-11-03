@@ -117,6 +117,11 @@ export type WorkspacePermission =
      */
     | "canManageVisualizations"
     /**
+     * Whether the current user may create Publisher documents, and edit and delete the ones they
+     * created. Editing or deleting other people's documents needs workspace MANAGE.
+     */
+    | "canCreateDocument"
+    /**
      * Whether the current user has permissions to use AI Assistant.
      */
     | "canUseAiAssistant";

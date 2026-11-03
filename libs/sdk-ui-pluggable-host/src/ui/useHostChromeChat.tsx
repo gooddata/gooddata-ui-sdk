@@ -4,11 +4,12 @@ import { type ReactNode, useCallback, useState } from "react";
 
 import { type GenAIChatEffort, type IGenAIUserContext } from "@gooddata/sdk-model";
 import {
+    type IAiAssistantChatEvent,
     type IPlatformContext,
     type IPluggableAppTelemetryCallbacks,
 } from "@gooddata/sdk-pluggable-application-model";
 import { GenAIAssistantMode, useGenAiChatAvailability } from "@gooddata/sdk-ui-gen-ai";
-import { type IDashboardSaved, type IPublisherDocumentSaved } from "@gooddata/sdk-ui-gen-ai/internal";
+import { type ISequencedAppEvent } from "@gooddata/sdk-ui-gen-ai/internal";
 
 import { getBackend } from "../platformContext/backend.js";
 
@@ -87,12 +88,10 @@ export interface IUseHostChromeChatArgs {
     disabled?: boolean;
     /** Delegates a chat link click to the active app; returns true if the app handled it. */
     onAppLinkClick?: (link: { type?: string; id?: string; itemUrl?: string; newTab?: boolean }) => boolean;
-    /** Delegates a chat event receive to the active app. */
-    onAppEventReceive?: (event: GenAIChatEvent) => void;
-    /** The latest document of the conversation that the active app saved. */
-    publisherDocumentSaved: IPublisherDocumentSaved | undefined;
-    /** The latest dashboard save reported by the active application. */
-    dashboardSaved: IDashboardSaved | undefined;
+    /** Hands every chat event to the active app. */
+    onAppEventReceive?: (event: IAiAssistantChatEvent) => void;
+    /** Recent events the active application sent to the chat, oldest first, e.g. a save of an object the chat drafted. */
+    appEvents: ReadonlyArray<ISequencedAppEvent>;
 }
 
 /**
@@ -111,8 +110,7 @@ export function useHostChromeChat({
     disabled,
     onAppLinkClick,
     onAppEventReceive,
-    publisherDocumentSaved,
-    dashboardSaved,
+    appEvents,
 }: IUseHostChromeChatArgs): IHostChromeChat {
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [askedQuestion, setAskedQuestion] = useState<string | null>(null);
@@ -230,8 +228,7 @@ export function useHostChromeChat({
                 userContext={userContext}
                 ambientUserContext={ambientUserContext}
                 ambientUserContextLoading={ambientUserContextLoading}
-                publisherDocumentSaved={publisherDocumentSaved}
-                dashboardSaved={dashboardSaved}
+                appEvents={appEvents}
                 includeTags={includeTags}
                 excludeTags={excludeTags}
                 canManageProject={features.canManageProject}
