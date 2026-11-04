@@ -2,30 +2,33 @@
 
 import { type Ref, forwardRef, useImperativeHandle, useMemo, useRef } from "react";
 
+import { type Extension } from "@codemirror/state";
+import { type Command, EditorView, keymap } from "@codemirror/view";
 import classNames from "classnames";
+import { useIntl } from "react-intl";
 
+import { CodeEditor } from "../codemirror/CodeEditor.js";
+import { type IContextMenuItem, platformShortcut, useCommonMenuItems } from "../codemirror/ContextMenu.js";
+import { type MaqlEditorView } from "../codemirror/types.js";
 import { useCodeTheme } from "../hooks/useCodeTheme.js";
 import { useCopyToClipboard } from "../hooks/useCopyToClipboard.js";
-import {
-    type IStandaloneCodeEditor,
-    type IStandaloneEditorConstructionOptions,
-    type Monaco,
-    MonacoEditor,
-} from "../monaco/MonacoEditor.js";
 import { type MaqlEditorDefaultTheme } from "../theme/default.js";
 import { ThemeProvider } from "../theme/theme.js";
 
-import { LANGUAGE } from "./constants.js";
 import { formatValue } from "./formatter.js";
-import { useLanguageConfiguration } from "./hooks/useLanguageConfiguration.js";
-import { type MonacoHandlers, useMonaco } from "./hooks/useMonaco.js";
 import { SqlEditorClass, SqlEditorTestClass } from "./SqlEditor.styles.js";
+import { sqlLanguageSupport } from "./sqlLanguage.js";
 
 /**
  * @internal
  */
 export interface ISqlEditorApi {
-    copy: () => boolean;
+    /**
+     * Copies the SQL to the clipboard.
+     *
+     * @returns whether the text reached the clipboard
+     */
+    copy: () => Promise<boolean>;
 }
 
 /**
@@ -37,13 +40,29 @@ export interface ISqlEditorProps {
     defaultValue?: string;
     readonly?: boolean;
     inline?: boolean;
-    onFocus?: (editor: IStandaloneCodeEditor, monaco: Monaco) => void;
-    onBlur?: (editor: IStandaloneCodeEditor, monaco: Monaco) => void;
-    onEditorMount?: (editor: IStandaloneCodeEditor, monaco: Monaco) => void;
-    onChange?: (editor: IStandaloneCodeEditor, monaco: Monaco, value: string) => void;
-    onValid?: (editor: IStandaloneCodeEditor, monaco: Monaco, valid: boolean) => void;
+    /**
+     * The accessible name of the editor.
+     */
+    ariaLabel?: string;
+    onFocus?: (editor: MaqlEditorView) => void;
+    onBlur?: (editor: MaqlEditorView) => void;
+    onEditorMount?: (editor: MaqlEditorView) => void;
+    onChange?: (editor: MaqlEditorView, value: string) => void;
     ref?: Ref<ISqlEditorApi | null>;
 }
+
+/**
+ * Replaces the SQL with its formatted version.
+ */
+const formatDocument: Command = (view) => {
+    // The read-only facet stops the user's edits, not a dispatched change.
+    if (view.state.readOnly) {
+        return false;
+    }
+    const text = view.state.doc.toString();
+    view.dispatch({ changes: { from: 0, to: text.length, insert: formatValue(text) } });
+    return true;
+};
 
 /**
  * @internal
@@ -55,73 +74,82 @@ export const SqlEditor = forwardRef<ISqlEditorApi, ISqlEditorProps>(function Sql
         autofocus = false,
         defaultValue = "",
         cssTheme,
+        ariaLabel,
         onFocus,
         onBlur,
         onEditorMount,
-        onValid,
         onChange,
     },
     ref,
 ) {
-    const [theme, themeData] = useCodeTheme();
-
-    const handlers = useMemo<MonacoHandlers>(
-        () => ({
-            onFocus,
-            onBlur,
-            onEditorMount,
-            onValid,
-            onChange,
-        }),
-        [onBlur, onChange, onEditorMount, onFocus, onValid],
-    );
-    const { onMount, onUpdate } = useMonaco(LANGUAGE, handlers);
-    const languageConfiguration = useLanguageConfiguration();
-    const options = useEditorOptions();
-    const formattedValue = useFormattedValue(defaultValue);
-
+    const intl = useIntl();
+    const codeTheme = useCodeTheme();
+    const formattedValue = useMemo(() => formatValue(defaultValue), [defaultValue]);
     const copyToClipboard = useCopyToClipboard();
+    const editor = useRef<EditorView | null>(null);
+    const commonMenuItems = useCommonMenuItems();
 
-    const editor = useRef<IStandaloneCodeEditor | null>(null);
+    const handlers = useRef({ onFocus, onBlur, onChange });
+    handlers.current = { onFocus, onBlur, onChange };
+
+    const contextMenu = useMemo<IContextMenuItem[]>(
+        () => [
+            commonMenuItems.changeAllOccurrences,
+            {
+                id: "format-document",
+                group: "edit",
+                label: intl.formatMessage({ id: "metricComponent.editMetric.contextMenu.formatDocument" }),
+                shortcut: platformShortcut("⇧⌥F", "Shift+Alt+F"),
+                run: formatDocument,
+            },
+            ...commonMenuItems.clipboard,
+        ],
+        [intl, commonMenuItems],
+    );
+
+    const extensions = useMemo<Extension>(
+        () => [
+            sqlLanguageSupport(),
+            keymap.of([{ key: "Shift-Alt-f", run: formatDocument }]),
+            EditorView.updateListener.of((update) => {
+                if (update.docChanged) {
+                    handlers.current.onChange?.(update.view, update.state.doc.toString());
+                }
+            }),
+            EditorView.domEventHandlers({
+                focus: (_event, view) => {
+                    handlers.current.onFocus?.(view);
+                    return false;
+                },
+                blur: (_event, view) => {
+                    handlers.current.onBlur?.(view);
+                    return false;
+                },
+            }),
+        ],
+        [],
+    );
+
     useImperativeHandle(ref, () => ({
         copy: () => copyToClipboard(editor.current),
     }));
 
     return (
         <ThemeProvider theme={cssTheme}>
-            <MonacoEditor
+            <CodeEditor
                 inline={inline}
-                options={options}
+                lineNumbers={false}
                 readonly={readonly}
                 autofocus={autofocus}
                 className={classNames(SqlEditorClass, SqlEditorTestClass)}
                 defaultValue={formattedValue}
-                language={LANGUAGE}
-                languageConfiguration={languageConfiguration}
-                themeName={theme}
-                themeData={themeData}
-                onEditorMount={onMount}
-                onEditorUpdate={onUpdate}
+                codeTheme={codeTheme}
+                ariaLabel={ariaLabel}
+                extensions={extensions}
+                contextMenu={contextMenu}
+                onEditorMount={onEditorMount}
                 ref={editor}
             />
         </ThemeProvider>
     );
 });
-
-function useEditorOptions() {
-    return useMemo(
-        () =>
-            ({
-                lineNumbers: "off",
-                lineNumbersMinChars: 0,
-                folding: false,
-            }) as Partial<IStandaloneEditorConstructionOptions>,
-        [],
-    );
-}
-
-function useFormattedValue(value: string) {
-    return useMemo(() => {
-        return formatValue(value, { tabSize: 4, insertSpaces: true });
-    }, [value]);
-}

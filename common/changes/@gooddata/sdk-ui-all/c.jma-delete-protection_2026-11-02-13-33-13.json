@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@gooddata/sdk-ui-all",
+      "comment": "api-client-tiger, sdk-backend-spi, sdk-backend-tiger, sdk-ui-analytical-designer, sdk-ui-dashboard, sdk-ui-catalog: Insight delete dialogs count Publisher documents that use the visualization.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@gooddata/sdk-ui-all"
+}

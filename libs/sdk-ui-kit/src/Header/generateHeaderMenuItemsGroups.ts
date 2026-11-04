@@ -147,7 +147,7 @@ function createInsightsItemsGroup(
         createIHeaderMenuItem(
             HEADER_ITEM_ID_CATALOG,
             "s-menu-workspace-catalog",
-            catalogItemUrl(workspaceId, featureFlags),
+            catalogItemUrl(workspaceId),
             true, // isActiveByStartWith: true for catalog to match sub-routes
         ),
         canShowCatalogItem(featureFlags, workspacePermissions),
@@ -178,12 +178,7 @@ function pushConditionally<T>(items: T[], item: T, cond: boolean) {
 const withBaseUrl = (baseUrl: string, uri: string): string =>
     `${baseUrl.endsWith("/") ? baseUrl.substring(0, baseUrl.length - 2) : baseUrl}${uri}`;
 
-function catalogItemUrl(workspaceId: string, featureFlags: ISettings): string {
-    // Without the host shell the hosted route cannot boot (HostApplicationDisabledError),
-    // so standalone deployments keep the legacy plural URL gdc-home-ui still serves.
-    if (!featureFlags.enableShellApplication) {
-        return `/workspaces/${workspaceId}/catalog`;
-    }
+function catalogItemUrl(workspaceId: string): string {
     return `/workspace/${workspaceId}/catalog`;
 }
 function canShowCatalogItem(featureFlags: ISettings, workspacePermissions: IWorkspacePermissions): boolean {

@@ -58,20 +58,14 @@ export {
 export type { ConflictChecker } from "./MetricComponent/ConflictContext/useConflictDetection.js";
 export { type ISqlEditorApi, type ISqlEditorProps, SqlEditor } from "./MaqlEditor/sql/SqlEditor.js";
 export { type IMaqlEditorApi, type IMaqlEditorProps, MaqlEditor } from "./MaqlEditor/maql/MaqlEditor.js";
-export type { IMaqlEditorIcon, IMaqlEditorIcons } from "./MaqlEditor/monaco/MonacoEditor.styles.js";
+export type { IMaqlEditorIcon, IMaqlEditorIcons } from "./MaqlEditor/codemirror/CodeEditor.styles.js";
 export { type MaqlEditorDefaultTheme, createDefaultTheme } from "./MaqlEditor/theme/default.js";
-export type {
-    IStandaloneCodeEditor,
-    IDisposable,
-    IStandaloneEditorConstructionOptions,
-    IEditorContribution,
-    Monaco,
-} from "./MaqlEditor/monaco/MonacoEditor.js";
+export type { MaqlEditorView } from "./MaqlEditor/codemirror/types.js";
 export {
     type ILanguageServiceProviderProps,
     LanguageServiceProvider,
 } from "./MaqlEditor/languageService/LanguageServiceContext.js";
-export { shimMaqlEditor } from "./MaqlEditor/mock/monaco-shim.js";
+export { shimMaqlEditor } from "./MaqlEditor/mock/editor-shim.js";
 export { type IIntlWrapperProps, IntlWrapper } from "./translations/IntlWrapper.js";
 export { GlobalLoading } from "./shared/GlobalLoading/GlobalLoading.js";
 export { useMetrics, type IUseMetricsOptions } from "./shared/metrics/useMetrics.js";

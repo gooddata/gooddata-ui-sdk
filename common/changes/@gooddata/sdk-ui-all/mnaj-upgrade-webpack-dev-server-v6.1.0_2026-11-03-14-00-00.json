@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "chore: Upgrade webpack-dev-server to 6.1.0 to fix security vulnerability (GHSA-27r3-jxmh-p828).",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

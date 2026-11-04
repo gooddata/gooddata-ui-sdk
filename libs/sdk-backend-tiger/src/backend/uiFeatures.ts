@@ -92,7 +92,6 @@ export const TigerFeatureDefinitions = {
     enableDashboardTimezone: booleanFeature(false),
     enableMeasureValueFilterKD: booleanFeature(true),
     enableVisualizationFilteringByTags: booleanFeature(false),
-    enableShellApplication: booleanFeature(true),
     enableLogicalModelExtensionsFromParentsCall: booleanFeature(false),
     enableDashboardDensitySetting: booleanFeature(false),
     enableDashboardsSearch: booleanFeature(false),

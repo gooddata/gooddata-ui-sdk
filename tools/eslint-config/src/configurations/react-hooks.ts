@@ -6,7 +6,7 @@ import type { IDualConfiguration } from "../types.js";
 
 const reactHooksPlugin: IPackage = {
     name: "eslint-plugin-react-hooks",
-    version: "5.2.0",
+    version: "7.1.1",
 };
 
 export const reactHooks: IDualConfiguration<"react-hooks"> = {

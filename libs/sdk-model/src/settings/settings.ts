@@ -1060,11 +1060,6 @@ export interface IFeatureFlags {
     enableVisualizationFilteringByTags?: boolean;
 
     /**
-     * Enable shell application.
-     */
-    enableShellApplication?: boolean;
-
-    /**
      * Enable reading logical model dataset extensions (WDF references) directly from the
      * includeParents=true /logicalModel response, instead of collecting them via additional
      * recursive includeParents=false calls up the parent-workspace chain.

@@ -2,6 +2,8 @@
 
 import { useRef } from "react";
 
+import { useIntl } from "react-intl";
+
 import { ErrorComponent } from "@gooddata/sdk-ui";
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 
@@ -47,6 +49,7 @@ export interface IMaqlSqlProps {
 
 export function MaqlSql({ explain, onClose, onCopy }: IMaqlSqlProps) {
     const { classes, cx } = useStyles();
+    const intl = useIntl();
     const { sql, status, error } = explain;
     const api = useRef<ISqlEditorApi | null>(null);
 
@@ -59,7 +62,7 @@ export function MaqlSql({ explain, onClose, onCopy }: IMaqlSqlProps) {
                         switch (action) {
                             case HeaderAction.Copy:
                                 if (onCopy) {
-                                    onCopy(api.current?.copy() ?? false);
+                                    void (api.current?.copy() ?? Promise.resolve(false)).then(onCopy);
                                 }
                                 break;
                             case HeaderAction.Close:
@@ -76,7 +79,13 @@ export function MaqlSql({ explain, onClose, onCopy }: IMaqlSqlProps) {
                     <LoadingSpinner className={cx(classes.loading, "large")} />
                 )}
                 {status === "success" && sql && (
-                    <SqlEditor defaultValue={sql} readonly inline={false} ref={api} />
+                    <SqlEditor
+                        defaultValue={sql}
+                        readonly
+                        inline={false}
+                        ariaLabel={intl.formatMessage({ id: "metricComponent.editMetric.metric.sql" })}
+                        ref={api}
+                    />
                 )}
                 {status === "error" && error && (
                     <ErrorComponent message={error.name} description={error.message} />

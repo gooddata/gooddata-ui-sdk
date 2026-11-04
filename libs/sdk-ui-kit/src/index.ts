@@ -897,6 +897,7 @@ export type {
 } from "./@ui/@types/variant.js";
 export type { ThemeColor } from "./@ui/@types/themeColors.js";
 export { useElementSize } from "./@ui/hooks/useElementSize.js";
+export { useIsTextTruncated } from "./@ui/hooks/useIsTextTruncated.js";
 export type { IconType } from "./@ui/@types/icon.js";
 export { UiButton, type IUiButtonProps, type IUiButtonAccessibilityConfig } from "./@ui/UiButton/UiButton.js";
 export {

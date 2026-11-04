@@ -64,6 +64,20 @@ copilot.dispose();
 `useCopilotSnapshot(copilot)`; the hook adds no workflow owner. Application-owned string enums
 can replace the built-in `CopilotBuildType` without changing the lifecycle algorithm.
 
+Switching conversations clears foreground reasoning, not outstanding workflow ownership.
+Activated creation requests continue to contribute progress across chats; edit and builder
+scopes also include their matching background requests. Unanswered clarification questions keep
+waiting across conversation switches, as do creation/builder workflows awaiting a general follow-up
+reply. Ordinary completed edits without pending questions still release their lock.
+Replying resumes the same workflow; failure, cancellation, target reset, or definition
+application acknowledgement releases it. In-progress applications stay building until acknowledgement.
+Clarifications can be answered through the form or by typing in chat. A clarification event with
+`responses: null` dismisses the form before a typed reply; it does not cancel the workflow or release its lock.
+The originating conversation owns its loader: ordinary messages, reasoning, completion, or failure in
+another chat cannot replace its progress or release its lock. Ownership transfers only when another
+conversation activates a configured skill for the same workflow and target. Superseded responses cannot
+reclaim ownership or restore an old wait after the new workflow finishes; other targets remain independent.
+
 ## Composing overlay (alpha)
 
 Wrap any editor with loading, reasoning, and waiting-for-reply presentation. No dashboard
@@ -88,8 +102,10 @@ import "@gooddata/sdk-ui-gen-ai/styles/css/copilotInteractionComposing.css";
 Use `generating` or `building` for loading (optionally with a reasoning heading), `waiting`
 for the reply banner, and `idle` for no composing UI. Supply `locale` for localized labels.
 `CopilotInteractionComposingWithHandler` accepts `copilot` and `scope` instead of `status`
-and `reasoningTitle` and subscribes directly to the same runtime-owned handler. It does not
-dispose that handler when unmounted. Both variants also ship in `styles/css/main.css`.
+and `reasoningTitle` and subscribes directly to the same runtime-owned handler. Its optional
+`onReplyInChat(threadId)` receives the owning waiting workflow's thread, not whichever
+chat is currently selected. It does not dispose that handler when unmounted. Both variants also
+ship in `styles/css/main.css`.
 
 ## License
 

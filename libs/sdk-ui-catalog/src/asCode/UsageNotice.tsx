@@ -19,6 +19,7 @@ const messages = defineMessages({
     showLess: { id: "analyticsCatalog.asCode.dialog.delete.showLess" },
     visualizations: { id: "analyticsCatalog.asCode.dialog.delete.usageGroup.visualizations" },
     dashboards: { id: "analyticsCatalog.asCode.dialog.delete.usageGroup.dashboards" },
+    documents: { id: "analyticsCatalog.asCode.dialog.delete.usageGroup.documents" },
     metrics: { id: "analyticsCatalog.asCode.dialog.delete.usageGroup.metrics" },
     attributes: { id: "analyticsCatalog.asCode.dialog.delete.usageGroup.attributes" },
     otherObjects: { id: "analyticsCatalog.asCode.dialog.delete.usageGroup.otherObjects" },
@@ -31,15 +32,23 @@ const usageGroupLabels: Partial<Record<FilterableObjectType, MessageDescriptor>>
     attribute: messages.attributes,
 };
 
-// The usage groups and their order follow the catalog filter bar on purpose.
-const usageGroupLabelByType = new Map(
-    FILTER_GROUPS.flatMap(({ id, types }) => {
+const usageGroupLabelByType = new Map<ObjectType, MessageDescriptor>([
+    ...FILTER_GROUPS.flatMap(({ id, types }) => {
         const label = usageGroupLabels[id];
         return label ? types.map((type): [ObjectType, MessageDescriptor] => [type, label]) : [];
     }),
-);
+    ["document", messages.documents],
+]);
 
-const usageGroupOrder = [...new Set(usageGroupLabelByType.values()), messages.otherObjects];
+// Mirrors the catalog filter bar order, with documents right after dashboards.
+const usageGroupOrder = [
+    messages.dashboards,
+    messages.documents,
+    messages.visualizations,
+    messages.metrics,
+    messages.attributes,
+    messages.otherObjects,
+];
 
 interface IUsageErrorProps {
     onRetry: () => void;

@@ -307,6 +307,32 @@ describe("AsCodeDeleteDialog with a blocking referencing lookup (computed attrib
         );
     });
 
+    it("groups the referencing documents right after the dashboards", async () => {
+        renderComputedAttribute(
+            computedAttributeDescriptorWithReferences(
+                vi.fn().mockResolvedValue([
+                    { identifier: "viz.a", type: "insight", title: "Revenue" },
+                    { identifier: "doc.a", type: "document", title: "Board pack" },
+                    { identifier: "dash.a", type: "analyticalDashboard", title: "Sales dashboard" },
+                ]),
+            ),
+        );
+
+        fireEvent.click(await screen.findByText("Show more"));
+
+        const documents = screen.getByText("Documents (1)");
+        expect(screen.getByText("Dashboards (1)").compareDocumentPosition(documents)).toBe(
+            Node.DOCUMENT_POSITION_FOLLOWING,
+        );
+        expect(documents.compareDocumentPosition(screen.getByText("Visualizations (1)"))).toBe(
+            Node.DOCUMENT_POSITION_FOLLOWING,
+        );
+        expect(documents.compareDocumentPosition(screen.getByText("Board pack"))).toBe(
+            Node.DOCUMENT_POSITION_FOLLOWING,
+        );
+        expect(screen.queryByText("Other objects (1)")).toBeNull();
+    });
+
     it("lists each referencing object even when two share a title", async () => {
         const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
         renderComputedAttribute(

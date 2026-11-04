@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "chore: Upgrade react-router to 7.18.5 to fix security vulnerability (GHSA-qwww-vcr4-c8h2).",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

@@ -69,6 +69,43 @@ const state: TestState = {
 };
 
 describe("user message events", () => {
+    describe.each(["text", "clarifyingAnswers"] as const)("%s conversation identity", (type) => {
+        it.each([
+            { id: "", expectedThreadId: undefined },
+            { id: "current-thread", expectedThreadId: "current-thread" },
+        ])("does not reuse the previous thread for conversation '$id'", async ({ id, expectedThreadId }) => {
+            const dispatch = vi.fn<(event: ChatEvent) => void>();
+            const conversation = { id, localId: "new-local-conversation" };
+
+            await runSaga(
+                {
+                    context: { eventDispatcher: { dispatch } },
+                    getState: () => ({
+                        ...state,
+                        threadId: "previous-thread",
+                        conversations: [conversation],
+                    }),
+                },
+                onNewMessage,
+                newMessageAction(
+                    makeUserItem(
+                        type === "text"
+                            ? { type, text: "Explain my data" }
+                            : { type, questionsItemId: "questions", answers: [] },
+                    ),
+                ),
+            ).toPromise();
+
+            expect(dispatch).toHaveBeenCalledExactlyOnceWith(
+                expect.objectContaining({
+                    type: type === "text" ? "chatUserMessage" : "chatUserAnswers",
+                    conversationId: conversation.localId,
+                    threadId: expectedThreadId,
+                }),
+            );
+        });
+    });
+
     it.each(["text", "clarifyingAnswers"] as const)(
         "includes the stable local conversation ID for %s before a server thread exists",
         async (type) => {

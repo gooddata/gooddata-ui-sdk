@@ -24,22 +24,6 @@ describe("generateHeaderAccountMenuItems", () => {
             {
                 className: "s-workspace-settings",
                 key: "gs.header.workspaceSettings",
-                href: "/workspaces/TestWorkspaceId/settings",
-            },
-            { className: "s-logout", key: "gs.header.logout" },
-        ]);
-    });
-
-    it("should prefix the workspace settings link with the host base path when the shell application is enabled", () => {
-        const items = generateHeaderAccountMenuItems(makeWorkspacePermissions({ canManageProject: true }), {
-            ...requiredOptions,
-            workspaceId: "TestWorkspaceId",
-            featureFlags: { enableWorkspaceSettingsAppHeaderMenuItem: true, enableShellApplication: true },
-        });
-        expect(items).toEqual([
-            {
-                className: "s-workspace-settings",
-                key: "gs.header.workspaceSettings",
                 href: "/organization/settings/workspaces/TestWorkspaceId/settings",
             },
             { className: "s-logout", key: "gs.header.logout" },

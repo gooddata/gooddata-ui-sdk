@@ -6,7 +6,7 @@ import type { IDualConfiguration } from "../types.js";
 
 const jsdocPlugin: IPackage = {
     name: "eslint-plugin-jsdoc",
-    version: "62.1.0",
+    version: "65.4.2",
 };
 
 const settings = {

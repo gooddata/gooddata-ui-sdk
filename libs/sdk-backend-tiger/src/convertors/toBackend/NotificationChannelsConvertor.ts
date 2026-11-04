@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import {
     type DeclarativeNotificationChannelDestinationTypeEnum,
@@ -33,17 +33,22 @@ type BackendReturnType<T> = T extends INotificationChannelMetadataObject
     ? JsonApiNotificationChannelIn
     : JsonApiNotificationChannelPostOptionalId;
 
+type NotificationChannelConversionMode = "replace" | "merge";
+
 /**
  * Converts notification channel from SDK model to backend format.
+ *
+ * @param channel - notification channel to convert
+ * @param mode - whether the backend replaces the destination or merges it with stored credentials
  *
  * @internal
  */
 export function convertNotificationChannelToBackend<
     T extends INotificationChannelMetadataObject | INotificationChannelMetadataObjectDefinition,
->(channel: T): BackendReturnType<T> {
+>(channel: T, mode: NotificationChannelConversionMode = "replace"): BackendReturnType<T> {
     switch (channel.destinationType) {
         case "webhook":
-            return convertWebhookNotificationChannelToBackend(channel) as BackendReturnType<T>;
+            return convertWebhookNotificationChannelToBackend(channel, mode) as BackendReturnType<T>;
         case "smtp":
             return channel.destinationConfig?.type === "customSmtp"
                 ? (convertCustomSmtpNotificationChannelToBackend(channel) as BackendReturnType<T>)
@@ -146,7 +151,7 @@ function convertDefaultSmtpNotificationChannelToBackend<
 
 function convertWebhookNotificationChannelToBackend<
     T extends IWebhookNotificationChannelMetadataObject | IWebhookNotificationChannelMetadataObjectDefinition,
->(channel: T): BackendReturnType<T> {
+>(channel: T, mode: NotificationChannelConversionMode): BackendReturnType<T> {
     const shared = convertSharedNotificationChannelPropertiesToBackend(channel);
     const config = channel.destinationConfig;
 
@@ -159,8 +164,10 @@ function convertWebhookNotificationChannelToBackend<
                 ? ({
                       type: "WEBHOOK",
                       url: config.endpoint,
-                      token: config.token,
+                      token: mode === "replace" && config.token === "" ? undefined : config.token,
                       hasToken: config.hasToken,
+                      secretKey: mode === "replace" && config.secretKey === "" ? undefined : config.secretKey,
+                      hasSecretKey: config.hasSecretKey,
                   } as Webhook)
                 : { type: "WEBHOOK" },
         },

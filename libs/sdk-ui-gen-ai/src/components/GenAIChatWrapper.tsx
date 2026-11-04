@@ -84,7 +84,7 @@ function GenAIChatWrapperComponent({
         tabIndex: -1,
     });
 
-    const onSettingClick = useSettingsClick(settings);
+    const onSettingClick = useSettingsClick();
 
     if (evaluated && hasUnsupportedOpenAiModel) {
         return (

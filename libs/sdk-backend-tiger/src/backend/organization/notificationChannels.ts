@@ -51,7 +51,10 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
         channel: INotificationChannelMetadataObject | INotificationChannelMetadataObjectDefinition,
         externalRecipients?: INotificationChannelExternalRecipient[],
     ): Promise<INotificationChannelTestResponse> => {
-        const convertedChannel = convertNotificationChannelToBackend(channel);
+        const convertedChannel = convertNotificationChannelToBackend(
+            channel,
+            "id" in channel && channel.id ? "merge" : "replace",
+        );
 
         const destination = convertedChannel.attributes?.destination;
         if (!destination) {
@@ -263,9 +266,12 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
     private updateWebhookNotificationChannel = async (
         webhook: IWebhookNotificationChannelMetadataObject,
     ): Promise<IWebhookNotificationChannelMetadataObject> => {
-        //NOTE: If webhook has token but token is undefined, we need to patch the webhook
-        // instead of updating it because we want to keep the token on the backend
-        if (webhook.destinationConfig?.hasToken && !webhook.destinationConfig?.token) {
+        const config = webhook.destinationConfig;
+        const preserveToken = config?.hasToken && config.token === undefined;
+        const preserveSecretKey = config?.hasSecretKey && config.secretKey === undefined;
+
+        // PATCH preserves write-only credentials that the caller has not changed.
+        if (preserveToken || preserveSecretKey) {
             return this.authCall(async (client: ITigerClientBase) => {
                 const channel = await EntitiesApi_PatchEntityNotificationChannels(
                     client.axios,
@@ -273,7 +279,7 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
                     {
                         id: webhook.id,
                         jsonApiNotificationChannelPatchDocument: {
-                            data: convertNotificationChannelToBackend(webhook),
+                            data: convertNotificationChannelToBackend(webhook, "merge"),
                         },
                     },
                 );

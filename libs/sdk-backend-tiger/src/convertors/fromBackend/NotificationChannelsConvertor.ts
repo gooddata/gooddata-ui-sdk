@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import {
     type DefaultSmtp,
@@ -186,6 +186,8 @@ function convertWebhookNotificationChannelFromBackend(
                   endpoint: destination.url,
                   token: destination.token ?? undefined,
                   hasToken: destination.hasToken ?? undefined,
+                  secretKey: destination.secretKey ?? undefined,
+                  hasSecretKey: destination.hasSecretKey ?? undefined,
               }
             : undefined,
     };

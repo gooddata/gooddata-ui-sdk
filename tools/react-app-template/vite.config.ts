@@ -288,20 +288,6 @@ export default defineConfig(({ mode }): UserConfig => {
             // Dedupe packages to avoid duplicate instances
             dedupe: ["@codemirror/state", "@codemirror/view", "react", "react-dom"],
         },
-        optimizeDeps: {
-            rolldownOptions: {
-                // The dashboard can embed Analytical Designer, whose metric editor imports its Monaco worker with
-                // `?worker&url`. The dependency pre-bundler cannot load it, so the import stays external and
-                // Vite resolves it to the worker URL when it serves the pre-bundled chunk.
-                plugins: [
-                    {
-                        name: "external-worker-url",
-                        resolveId: (id: string) =>
-                            /\?worker(&url)?$/.test(id) ? { id, external: true } : null,
-                    },
-                ],
-            },
-        },
         build: {
             target: "es2022",
             // The sample app imports the whole GoodData.UI SDK, so its main chunk is several MB. Raise the limit

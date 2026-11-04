@@ -12,7 +12,12 @@ const v9 = {
 
 export const importEsm: IDualConfiguration<"import-esm"> = {
     v8: {
-        packages: [importEsmPlugin],
+        packages: [
+            {
+                name: "eslint-plugin-import-esm",
+                version: "1.2.1",
+            },
+        ],
         plugins: ["import-esm"],
         rules: importEsmRules,
     },

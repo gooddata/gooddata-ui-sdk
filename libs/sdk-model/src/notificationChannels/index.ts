@@ -1,4 +1,5 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
 import {
     type IMdObject,
     type ToMdObjectDefinition,
@@ -117,7 +118,7 @@ export interface IWebhookDestinationConfiguration {
     endpoint?: string;
 
     /**
-     * Optional token to be used for authentication as bearer token.
+     * Optional bearer token. An empty string disables bearer authentication.
      */
     token?: string;
 
@@ -125,6 +126,17 @@ export interface IWebhookDestinationConfiguration {
      * Flag indicating whether the webhook has setup a token.
      */
     hasToken?: boolean;
+
+    /**
+     * Optional shared secret used to sign outgoing webhooks. An empty string disables signing.
+     * Omit the value and set `hasSecretKey` to true to preserve a stored secret when updating the channel.
+     */
+    secretKey?: string;
+
+    /**
+     * Flag indicating whether the webhook has a stored signing secret.
+     */
+    hasSecretKey?: boolean;
 }
 
 /**

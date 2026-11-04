@@ -8,16 +8,11 @@ import { isNotAuthenticated } from "@gooddata/sdk-backend-spi";
 import { type ILocale, isLocale } from "@gooddata/sdk-model";
 import { type IEffectiveSettings, type IPlatformContext } from "@gooddata/sdk-pluggable-application-model";
 
-import { isProduction } from "../lib/isProduction.js";
 import { getApplicationScopeFromPath, getWorkspaceIdFromPath } from "../loader/routing.js";
 import { resolveAvailableWorkspaceApplications } from "../registry/pluggableApplicationsRegistry.js";
 
 import { getBackend } from "./backend.js";
-import {
-    type ILoadPlatformContextCallbacks,
-    HostApplicationDisabledError,
-    loadPlatformContext,
-} from "./loadPlatformContext.js";
+import { type ILoadPlatformContextCallbacks, loadPlatformContext } from "./loadPlatformContext.js";
 import { waitForNotAuthenticatedGrace } from "./notAuthenticatedGrace.js";
 import {
     type IBackendPlatformContext,
@@ -29,11 +24,6 @@ import { useWorkspacePermissions } from "./useWorkspacePermissions.js";
 import { useWorkspaceSettings } from "./useWorkspaceSettings.js";
 import { useWorkspaceTheme } from "./useWorkspaceTheme.js";
 import { shouldWaitForInjectedApiToken, waitForInjectedApiToken } from "./waitForInjectedApiToken.js";
-
-function redirectToAppRoot(): void {
-    const rootUrl = new URL("/", window.location.origin).toString();
-    window.location.assign(rootUrl);
-}
 
 /**
  * Builds the platform context inside the host application.
@@ -259,10 +249,6 @@ class BackendPlatformContextProviderClass implements IBackendPlatformContextProv
                 this._setResult({ state: "ready", ctx });
             }
         } catch (e) {
-            if (e instanceof HostApplicationDisabledError && isProduction) {
-                redirectToAppRoot(); // In dev env, this would just loop due to app routing
-                return;
-            }
             if (e instanceof DOMException && e.name === "AbortError") {
                 return;
             }

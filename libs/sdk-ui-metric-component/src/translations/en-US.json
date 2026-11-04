@@ -179,6 +179,42 @@
         "text": "Less",
         "crowdinContext": "Button to collapse and show less content in metric editor"
     },
+    "metricComponent.editMetric.hover.definition": {
+        "text": "Definition of {title}",
+        "crowdinContext": "Accessible name of the read-only MAQL definition shown in the tooltip of a referenced metric; {title} is the metric's title"
+    },
+    "metricComponent.editMetric.suggestion.documentation": {
+        "text": "Documentation",
+        "crowdinContext": "Accessible name of the button on a suggestion in the MAQL editor that shows the documentation of the suggested function or object"
+    },
+    "metricComponent.editMetric.suggestion.closeDocumentation": {
+        "text": "Close",
+        "crowdinContext": "Accessible name of the button that closes the documentation of a suggestion in the MAQL editor"
+    },
+    "metricComponent.editMetric.contextMenu.changeAllOccurrences": {
+        "text": "Change All Occurrences",
+        "crowdinContext": "Item of the right-click menu of the code editor; puts a cursor on every occurrence of the selected text so they are edited together"
+    },
+    "metricComponent.editMetric.contextMenu.formatDocument": {
+        "text": "Format Document",
+        "crowdinContext": "Item of the right-click menu of the code editor; reformats the whole code"
+    },
+    "metricComponent.editMetric.contextMenu.formatSelection": {
+        "text": "Format Selection",
+        "crowdinContext": "Item of the right-click menu of the code editor; reformats the selected code"
+    },
+    "metricComponent.editMetric.contextMenu.cut": {
+        "text": "Cut",
+        "crowdinContext": "Item of the right-click menu of the code editor; cuts the selected text to the clipboard"
+    },
+    "metricComponent.editMetric.contextMenu.copy": {
+        "text": "Copy",
+        "crowdinContext": "Item of the right-click menu of the code editor; copies the selected text to the clipboard"
+    },
+    "metricComponent.editMetric.contextMenu.paste": {
+        "text": "Paste",
+        "crowdinContext": "Item of the right-click menu of the code editor; pastes the text from the clipboard"
+    },
     "metricComponent.editMetric.metric.definition": {
         "text": "Metric definition",
         "crowdinContext": "Section title for metric definition area"

@@ -107,9 +107,7 @@ vi.mock("../../../model/react/useDashboardAlerting/useDashboardAlerts.js", () =>
 vi.mock("../../../model/store/config/configSelectors.js", () => ({
     selectExternalRecipient: () => "recipient@example.com",
     selectIsEmbedded: () => false,
-    selectSettings: () => ({
-        enableShellApplication: true,
-    }),
+    selectSettings: () => ({}),
 }));
 
 vi.mock("../../../model/store/meta/metaSelectors.js", () => ({

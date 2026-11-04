@@ -94,7 +94,7 @@ function* onConversationPinUpdated({
     payload: { conversation, pinned },
 }: ReturnType<typeof pinConversationSuccessAction>) {
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield select(threadIdSelector);
+    const threadId: string | undefined = yield selectRightThreadId();
 
     eventDispatcher.dispatch({
         type: "chatConversationPinned",
@@ -108,7 +108,7 @@ function* onConversationPinError({
     payload: { conversation, error },
 }: ReturnType<typeof pinConversationFailureAction>) {
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield select(threadIdSelector);
+    const threadId: string | undefined = yield selectRightThreadId();
 
     eventDispatcher.dispatch({
         type: "chatConversationPinError",
@@ -120,7 +120,7 @@ function* onConversationPinError({
 
 function* onConversationDelete({ payload: { conversation } }: ReturnType<typeof deleteConversationAction>) {
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield select(threadIdSelector);
+    const threadId: string | undefined = yield selectRightThreadId();
 
     eventDispatcher.dispatch({
         type: "chatConversationDelete",
@@ -133,7 +133,7 @@ function* onConversationDeletedSuccess({
     payload: { conversation },
 }: ReturnType<typeof deleteConversationSuccessAction>) {
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield select(threadIdSelector);
+    const threadId: string | undefined = yield selectRightThreadId();
 
     eventDispatcher.dispatch({
         type: "chatConversationDeletedSuccess",
@@ -146,7 +146,7 @@ function* onConversationDeletedError({
     payload: { conversation, error },
 }: ReturnType<typeof deleteConversationFailureAction>) {
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield select(threadIdSelector);
+    const threadId: string | undefined = yield selectRightThreadId();
 
     eventDispatcher.dispatch({
         type: "chatConversationDeletedError",
@@ -160,7 +160,7 @@ function* onConversationRename({
     payload: { conversation, title },
 }: ReturnType<typeof renameConversationAction>) {
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield select(threadIdSelector);
+    const threadId: string | undefined = yield selectRightThreadId();
 
     eventDispatcher.dispatch({
         type: "chatConversationRename",
@@ -174,7 +174,7 @@ function* onConversationRenamedSuccess({
     payload: { conversation, title },
 }: ReturnType<typeof renameConversationSuccessAction>) {
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield select(threadIdSelector);
+    const threadId: string | undefined = yield selectRightThreadId();
 
     eventDispatcher.dispatch({
         type: "chatConversationRenamedSuccess",
@@ -188,7 +188,7 @@ function* onConversationRenamedError({
     payload: { conversation, title, error },
 }: ReturnType<typeof renameConversationFailureAction>) {
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield select(threadIdSelector);
+    const threadId: string | undefined = yield selectRightThreadId();
 
     eventDispatcher.dispatch({
         type: "chatConversationRenamedError",
@@ -203,7 +203,7 @@ function* onConversationChanged({
     payload: { conversation },
 }: ReturnType<typeof setCurrentConversationAction>) {
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield select(threadIdSelector);
+    const threadId: string | undefined = yield selectRightThreadId();
 
     eventDispatcher.dispatch({
         type: "chatConversationChanged",
@@ -216,7 +216,7 @@ function* onConversationLoaded({
     payload: { currentConversation },
 }: ReturnType<typeof loadConversationSuccessAction>) {
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield select(threadIdSelector);
+    const threadId: string | undefined = yield selectRightThreadId();
 
     eventDispatcher.dispatch({
         type: "chatConversationChanged",
@@ -234,7 +234,7 @@ function* onSetOpen({ payload: { isOpen } }: ReturnType<typeof setOpenAction>) {
     }
 
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield select(threadIdSelector);
+    const threadId: string | undefined = yield selectRightThreadId();
 
     eventDispatcher.dispatch({
         type: "chatClosed",
@@ -244,7 +244,7 @@ function* onSetOpen({ payload: { isOpen } }: ReturnType<typeof setOpenAction>) {
 
 function* onFullscreenChanged({ payload: { isFullscreen } }: ReturnType<typeof setFullscreenAction>) {
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield select(threadIdSelector);
+    const threadId: string | undefined = yield selectRightThreadId();
 
     eventDispatcher.dispatch({
         type: "onModeChange",
@@ -257,7 +257,7 @@ function* onSelectedAgentChanged({
     payload: { previousAgentId, agentId },
 }: ReturnType<typeof setSelectedAgentAction>) {
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield select(threadIdSelector);
+    const threadId: string | undefined = yield selectRightThreadId();
 
     eventDispatcher.dispatch({
         type: "onSelectedAgentAction",
@@ -283,7 +283,7 @@ function* onThreadLoaded({ payload: { threadId } }: ReturnType<typeof loadConver
 
 function* onClearThread(_action: ReturnType<typeof clearThreadAction>) {
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield select(threadIdSelector);
+    const threadId: string | undefined = yield selectRightThreadId();
 
     eventDispatcher.dispatch({
         type: "chatReset",
@@ -302,8 +302,8 @@ export function* onNewMessage({ payload: message }: ReturnType<typeof newMessage
     }
 
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield select(threadIdSelector);
     const conversation: IChatConversationLocal | undefined = yield select(conversationSelector);
+    const threadId: string | undefined = yield selectRightThreadId();
 
     switch (messageContent.type) {
         case "text":
@@ -401,7 +401,7 @@ export function* onClarificationQuestionsAnswered({
     }
 
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield select(threadIdSelector);
+    const threadId: string | undefined = yield selectRightThreadId();
 
     eventDispatcher.dispatch({
         type: "chatClarificationQuestions",
@@ -422,7 +422,7 @@ function* onUserFeedback({
     }
 
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield select(threadIdSelector);
+    const threadId: string | undefined = yield selectRightThreadId();
 
     eventDispatcher.dispatch({
         type: "chatFeedback",
@@ -443,7 +443,7 @@ function* onUserFeedbackError({
     }
 
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield select(threadIdSelector);
+    const threadId: string | undefined = yield selectRightThreadId();
 
     eventDispatcher.dispatch({
         type: "chatFeedbackError",
@@ -457,7 +457,7 @@ function* onVisualizationError({
     payload: { errorMessage, errorType },
 }: ReturnType<typeof visualizationErrorAction>) {
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield select(threadIdSelector);
+    const threadId: string | undefined = yield selectRightThreadId();
 
     eventDispatcher.dispatch({
         type: "chatVisualizationError",
@@ -469,7 +469,7 @@ function* onVisualizationError({
 
 function* onSaveVisualizationError({ payload: { error } }: ReturnType<typeof saveVisualizationErrorAction>) {
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield select(threadIdSelector);
+    const threadId: string | undefined = yield selectRightThreadId();
 
     eventDispatcher.dispatch({
         type: "chatSaveVisualizationError",
@@ -483,7 +483,7 @@ function* onSaveVisualizationSuccess({
     payload: { savedVisualizationId },
 }: ReturnType<typeof saveVisualizationSuccessAction>) {
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield select(threadIdSelector);
+    const threadId: string | undefined = yield selectRightThreadId();
 
     eventDispatcher.dispatch({
         type: "chatSaveVisualizationSuccess",
@@ -494,7 +494,7 @@ function* onSaveVisualizationSuccess({
 
 function* onCopyToClipboard({ payload: { content } }: ReturnType<typeof copyToClipboardAction>) {
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield select(threadIdSelector);
+    const threadId: string | undefined = yield selectRightThreadId();
 
     eventDispatcher.dispatch({
         type: "chatCopyToClipboard",
@@ -505,7 +505,7 @@ function* onCopyToClipboard({ payload: { content } }: ReturnType<typeof copyToCl
 
 function* onDefinitionReceived({ payload }: ReturnType<typeof onDefinitionReceivedAction>) {
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield select(threadIdSelector);
+    const threadId: string | undefined = yield selectRightThreadId();
 
     eventDispatcher.dispatch({
         type: "onDefinitionReceived",
@@ -572,7 +572,7 @@ function convertMessageTypeTo(
 
 function* onAmbientUserContextChanged({ payload }: ReturnType<typeof setAmbientUserContextAction>) {
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield select(threadIdSelector);
+    const threadId: string | undefined = yield selectRightThreadId();
 
     eventDispatcher.dispatch({
         type: "onContextChange",
@@ -584,7 +584,7 @@ function* onAmbientUserContextChanged({ payload }: ReturnType<typeof setAmbientU
 
 function* onUserContextChanged({ payload }: ReturnType<typeof setUserContextAction>) {
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield select(threadIdSelector);
+    const threadId: string | undefined = yield selectRightThreadId();
 
     eventDispatcher.dispatch({
         type: "onContextChange",
@@ -592,4 +592,13 @@ function* onUserContextChanged({ payload }: ReturnType<typeof setUserContextActi
         contextType: "user",
         ...payload,
     });
+}
+
+function* selectRightThreadId() {
+    const conversation: IChatConversationLocal | undefined = yield select(conversationSelector);
+    const threadId: string | undefined = conversation
+        ? conversation.id || undefined
+        : yield select(threadIdSelector);
+
+    return threadId;
 }

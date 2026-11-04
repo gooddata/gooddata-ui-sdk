@@ -41,11 +41,11 @@ export interface ICopilotContext<TBuild extends string = CopilotBuildType> {
 export interface ICopilotScope<TBuild extends string = CopilotBuildType> {
     /** Workflow to query. */
     readonly type: TBuild;
-    /** Restrict edit requests to this object. */
+    /** Restrict activated requests to this object. */
     readonly objectId?: string;
     /** Include activated edit requests. */
     readonly isEditing?: boolean;
-    /** Include an existing foreground edit build. */
+    /** Include activated requests and an existing foreground edit build. */
     readonly isBuilder?: boolean;
 }
 
@@ -93,13 +93,19 @@ export interface ICopilotRequest<TBuild extends string = CopilotBuildType> {
     readonly threadId?: string;
     /** Resolved skill's workflow; absent until activation. */
     readonly type?: TBuild;
+    /** Creation workflow requested for this response, even before skill activation. */
+    readonly generation?: TBuild;
+    /** Workflow intent captured at skill activation, independent of the selected conversation. */
+    readonly intent?: "create" | "edit";
     /** Resolved object identifier. */
     readonly objectId?: string;
+    /** Another conversation activated this workflow; late events must not regain ownership. */
+    readonly superseded?: boolean;
     /** Whether this response awaits clarification. */
     readonly awaitingClarification?: boolean;
     /** Unanswered clarification item identifiers for this response. */
     readonly pendingClarificationIds?: readonly string[];
-    /** No response remains in flight while definitions are being applied. */
+    /** Response ended; waiting for a user reply or in-progress definition application. */
     readonly responseFinished?: boolean;
     /** In-progress host applications. */
     readonly applicationIds: readonly string[];
@@ -127,7 +133,7 @@ export interface ICopilotSnapshot<TBuild extends string = CopilotBuildType> {
     readonly generationRevision?: number;
     /** Foreground chat interaction. */
     readonly interaction: ICopilotInteraction<TBuild>;
-    /** Outstanding responses across conversations. */
+    /** Running responses and workflows waiting for user input across conversations. */
     readonly requests: readonly ICopilotRequest<TBuild>[];
     /** In-progress host installations. */
     readonly applications: readonly ICopilotApplication<TBuild>[];

@@ -133,7 +133,7 @@ Thu, 29 Oct 2026 14:21:52 GMT
 - sdk-ui-gen-ai: Add the `VisualizationMenu` slot to add, remove or reorder items of the visualization menu in AI Assistant messages
 - sdk-ui-pluggable-host: Legacy KPI Dashboards URLs with #/p/ routes map to the hosted dashboards. Client and product/client URLs land on the bare dashboards landing. Embedded KD and AD client URLs stay in the embedding and show the not-found page. /dashboards/403.html goes to the root. sdk-ui-gen-ai: The legacy dashboard link includes the dashboard route segment.
 - sdk-ui-kit, sdk-ui-filters, sdk-ui-pluggable-host: Native buttons and inputs in overlays use the page font instead of the browser default font.
-- sdk-ui-dashboard: The alpha `enableInsightEditing` config option opens visualizations in the embedded Analytical Designer from the widget menu, the edit mode panel and the empty visualization list. sdk-ui-dashboard now depends on sdk-ui-analytical-designer, so every app that bundles the dashboard must meet its bundler requirements, also with the option off: webpack needs a loader for the `?worker&url` Monaco worker import, and Vite needs the external worker URL optimizeDeps plugin and the `global` and `process.env` defines. The Analytical Designer README and the dashboard-plugin-template and react-app-template show the setup.
+- sdk-ui-dashboard: The alpha `enableInsightEditing` config option opens visualizations in the embedded Analytical Designer from the widget menu, the edit mode panel and the empty visualization list. sdk-ui-dashboard now depends on sdk-ui-analytical-designer, so every app that bundles the dashboard must meet its bundler requirements, also with the option off: define `process.env` as `{}` for the MAQL parser dependencies. The metric component ships a bundled Monaco worker, so no worker-specific webpack loader, Vite optimizeDeps plugin or `global` define is needed. See the Analytical Designer README for CSP and Trusted Types requirements. The Analytical Designer README and the dashboard-plugin-template and react-app-template show the setup.
 - sdk-ui-dashboard: Explore from here passes the dashboard filters to Analytical Designer when the explored insight first renders, so a late visualization update no longer drops them.
 - sdk-backend-spi: Add data source management, data source files (CSV upload, analysis and import) and data filter settings to the backend SPI. sdk-model: Add data source and CSV file types.
 - sdk-ui-pluggable-application: Remove the mention of backend-specific functions from the client platform context documentation.
@@ -2993,6 +2993,18 @@ Thu, 18 Apr 2024 08:07:32 GMT
 - Removed GoodData Platform (Bear) related packages: @gooddata/api-client-bear, @gooddata/sdk-backend-bear, @gooddata/api-model-bear.
 - Introduced a new visualization type - Repeater, currently in the @beta stage.
 - Introduce ability to limit attribute filter values by dependent date filters on GoodData Cloud dashboards.
+
+## 9.9.3
+
+Tue, 03 Nov 2026 09:53:01 GMT
+
+### Updates
+
+- Fix an infinite render loop on the dashboard when a visualization shows a custom error.
+- Fix the raw (CSV) export of a dashboard visualization widget. The export now applies the dashboard filters.
+- Register the visualization widgets for async rendering on mount, and count the visualization switcher widgets in the expected async render count.
+- Fix translations.
+- Upgrade axios to ^1.10.0 and axios-cache-interceptor to ^1.8.0.
 
 ## 9.9.2
 

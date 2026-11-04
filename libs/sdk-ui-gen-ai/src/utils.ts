@@ -127,33 +127,9 @@ export function getAbsoluteVisualizationHref(wsId: string, visId: string, status
     return `${window.location.origin}${getVisualizationHref(wsId, visId, status)}`;
 }
 
-export function getSettingHref(section: string, action?: string) {
-    if (!action) {
-        return `/ai-hub#/${section}`;
-    }
-    return `/ai-hub#/${section}/${action}`;
-}
-
-export function getAbsoluteSettingHref(section: string, action?: string) {
-    return `${window.location.origin}${getSettingHref(section, action)}`;
-}
-
-export function getWorkspaceSettingHref(workspaceId: string, section: string, action?: string) {
-    if (!action) {
-        return `/workspaces/${workspaceId}/settings/#/${section}`;
-    }
-    return `/workspaces/${workspaceId}/settings/#/${section}/${action}`;
-}
-
-export function getAbsoluteWorkspaceSettingHref(workspaceId: string, section: string, action?: string) {
-    return `${window.location.origin}${getWorkspaceSettingHref(workspaceId, section, action)}`;
-}
-
 // Shell-host route shape: the host serves the home-ui module under
 // `/organization/settings`, and uses `configuration` (not `settings`) for the
-// workspace detail route. Used when `enableShellApplication` is on, so
-// standalone `/settings`/`/workspaces/{id}/settings` URLs aren't bounced to the
-// workspaces list.
+// workspace detail route.
 export function getShellAppOrgSettingHref(section: string, action?: string) {
     if (!action) {
         return `/organization/settings/ai-hub#/${section}`;

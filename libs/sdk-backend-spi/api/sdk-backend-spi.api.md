@@ -1975,6 +1975,7 @@ export interface IInsightReferences {
 // @public
 export interface IInsightReferencing {
     analyticalDashboards?: IMetadataObject[];
+    documents?: IMetadataObject[];
 }
 
 // @public

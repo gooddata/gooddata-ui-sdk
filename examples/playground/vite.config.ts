@@ -258,18 +258,6 @@ export default defineConfig(({ mode }) => {
                 ...packagesWithoutStyles,
                 ...packagesWithStyles,
             ],
-            rolldownOptions: {
-                // The dashboard can embed Analytical Designer, whose metric editor imports its Monaco worker with
-                // `?worker&url`. The dependency pre-bundler cannot load it, so the import stays external and
-                // Vite resolves it to the worker URL when it serves the pre-bundled chunk.
-                plugins: [
-                    {
-                        name: "external-worker-url",
-                        resolveId: (id: string) =>
-                            /\?worker(&url)?$/.test(id) ? { id, external: true } : null,
-                    },
-                ],
-            },
         },
         css: {
             preprocessorOptions: {

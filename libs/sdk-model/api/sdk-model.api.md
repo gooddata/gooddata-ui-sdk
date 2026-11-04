@@ -4084,7 +4084,6 @@ export interface IFeatureFlags {
     enableSecondGranularities?: boolean;
     enableSemanticConditionalFormatting?: boolean;
     enableSemanticSearch?: boolean;
-    enableShellApplication?: boolean;
     // (undocumented)
     enableSingleStoreDataSource?: boolean;
     enableSlidesExport?: boolean;
@@ -9286,7 +9285,9 @@ export interface IWebhookAutomationInfo {
 // @beta (undocumented)
 export interface IWebhookDestinationConfiguration {
     endpoint?: string;
+    hasSecretKey?: boolean;
     hasToken?: boolean;
+    secretKey?: string;
     token?: string;
 }
 

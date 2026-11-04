@@ -2,9 +2,11 @@
 
 import { Children, type PropsWithChildren } from "react";
 
+import { completionStatus } from "@codemirror/autocomplete";
+import { type Extension } from "@codemirror/state";
+import { EditorView } from "@codemirror/view";
 import { createPortal } from "react-dom";
 
-import { type IStandaloneCodeEditor, type ISuggestContribution } from "../monaco/MonacoEditor.js";
 import { makeStyles } from "../theme/styles.js";
 
 type StatusBarProps = {
@@ -16,7 +18,6 @@ const useStyles = makeStyles()((theme) => ({
         width: "100%",
         position: "relative",
         fontFamily: theme.globals.font,
-        borderLeft: theme.statusBar.borders.default,
         borderTop: theme.statusBar.borders.default,
         background: theme.statusBar.colors.background,
     },
@@ -44,15 +45,27 @@ export function StatusBar({ where, children }: PropsWithChildren<StatusBarProps>
     return null;
 }
 
-export function onSuggestionElement(
-    editor: IStandaloneCodeEditor,
-    setSuggestionsElement: (el: HTMLElement | null) => void,
-): void {
-    const suggestionWidget = editor.getContribution<ISuggestContribution>("editor.contrib.suggestController");
-    const widget = suggestionWidget?.widget;
+const SUGGESTION_TOOLTIP_SELECTOR = ".cm-tooltip-autocomplete";
 
-    if (widget) {
-        widget.value.onDidShow(() => setSuggestionsElement(widget.value.element.domNode));
-        widget.value.onDidHide(() => setSuggestionsElement(null));
-    }
+/**
+ * Reports the suggestion list element while it is open, so the status bar can render into it.
+ */
+export function suggestionElementObserver(
+    setSuggestionsElement: (el: HTMLElement | null) => void,
+): Extension {
+    return EditorView.updateListener.of((update) => {
+        const was = completionStatus(update.startState);
+        const is = completionStatus(update.state);
+        if (was === is) {
+            return;
+        }
+        if (is === null) {
+            setSuggestionsElement(null);
+            return;
+        }
+        // The tooltip renders right after this update.
+        queueMicrotask(() =>
+            setSuggestionsElement(update.view.dom.querySelector<HTMLElement>(SUGGESTION_TOOLTIP_SELECTOR)),
+        );
+    });
 }

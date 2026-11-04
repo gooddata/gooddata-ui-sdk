@@ -40263,7 +40263,8 @@
                             "knowledgeRecommendation",
                             "visualizationObject",
                             "filterContext",
-                            "filterView"
+                            "filterView",
+                            "document"
                         ]
                     }
                 }
@@ -40386,7 +40387,8 @@
                             "knowledgeRecommendation",
                             "visualizationObject",
                             "filterContext",
-                            "filterView"
+                            "filterView",
+                            "document"
                         ]
                     }
                 }

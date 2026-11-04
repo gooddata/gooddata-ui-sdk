@@ -1,20 +1,16 @@
 // (C) 2021-2026 GoodData Corporation
 
-//more info in README.md
 import { type MutableRefObject } from "react";
 
-import type * as monaco from "monaco-editor/editor/editor.api.js";
+import { type EditorView } from "@codemirror/view";
 
-import { type ObjectContent } from "@gooddata/sdk-maql-language-server";
+import { type HoverWithData, type ObjectContent } from "@gooddata/sdk-maql-language-server";
 import { type IMetadataObject } from "@gooddata/sdk-model";
 
+import { DecoratorClassName, DecoratorItemClassName } from "../../../codemirror/CodeEditor.styles.js";
+import { rangeToSpan } from "../../../codemirror/lsp.js";
 import { type IRootRef } from "../../../components/ExpandableTooltip.js";
-import { type IStandaloneCodeEditor } from "../../../monaco/MonacoEditor.js";
-import {
-    DecoratorClassName,
-    DecoratorHovered,
-    DecoratorItemClassName,
-} from "../../../monaco/MonacoEditor.styles.js";
+import { setHoveredSpan } from "../../extensions/decorations.js";
 import { type MaqlTooltipSettings, renderMaqlTooltip } from "../../MaqlEditor.tooltip.js";
 
 // Cache to store element positions
@@ -28,34 +24,30 @@ interface ICachedPosition {
 // Position cache using WeakMap to avoid modifying elements directly
 const positionCache = new WeakMap<HTMLElement, ICachedPosition>();
 
-// Remove empty interface that was causing the linter error
-// and use HTMLElement directly instead
-
 export type HoverSettings = Omit<MaqlTooltipSettings, "elements" | "content"> & {
     content: ObjectContent | null | undefined;
 };
 
+/**
+ * Opens the metric tooltip over the hovered reference.
+ *
+ * @param target - the element under the pointer, or at the cursor for the keyboard shortcut
+ */
 export function doHover(
-    event: MouseEvent | KeyboardEvent | null,
+    target: HTMLElement | null,
     tooltip: MutableRefObject<IRootRef | null>,
-    editor: IStandaloneCodeEditor,
-    hover: monaco.languages.Hover | null,
+    editor: EditorView,
+    hover: HoverWithData,
     settings: HoverSettings,
-    onOpen?: (editor: IStandaloneCodeEditor, object: IMetadataObject) => void,
-): monaco.languages.Hover | null {
-    // Early return cases
-    if (!hover || !event || tooltip.current || !settings.content) {
-        return settings.content ? null : hover;
-    }
-
-    const containerNode = editor.getContainerDomNode();
-    if (!containerNode) {
-        return null;
+    onOpen?: (editor: EditorView, object: IMetadataObject) => void,
+): void {
+    if (!target || tooltip.current || !settings.content) {
+        return;
     }
 
     try {
         // Collect valid DOM elements and ensure they have valid dimensions
-        const rawElements = collectElements(containerNode, event);
+        const rawElements = collectElements(target);
 
         const elements = rawElements.filter((el) => {
             const isValid = el && document.body.contains(el);
@@ -76,11 +68,11 @@ export function doHover(
         });
 
         if (elements.length === 0) {
-            return null;
+            return;
         }
 
-        // Create a decorator for the hovered element
-        const decorator = createDecorator(editor, hover);
+        // Highlight the hovered reference
+        createDecorator(editor, hover);
 
         // Prepare the callback for when the tooltip is opened
         const handleOpen = () => {
@@ -98,7 +90,7 @@ export function doHover(
 
         // Prepare the cleanup callback for when the tooltip is closed
         const handleDestroy = () => {
-            removeDecorator(editor, decorator);
+            removeDecorator(editor);
         };
 
         // Render the tooltip immediately
@@ -107,9 +99,9 @@ export function doHover(
             {
                 ...settings,
                 elements,
-                // the hovered spans are re-rendered by Monaco (the hover decoration added above
+                // the hovered spans are re-rendered by the editor (the hover decoration added above
                 // already triggers that), so the editor node is the stable owner of the tooltip
-                anchor: containerNode,
+                anchor: editor.dom,
                 content: settings.content,
                 cachedPositions: elements.map((el) => positionCache.get(el)),
             },
@@ -119,78 +111,82 @@ export function doHover(
     } catch {
         // Silent error handling
     }
-
-    // Return null to prevent monaco from showing its default tooltip
-    return null;
 }
 
-function collectElements(parent: HTMLElement, event: MouseEvent | KeyboardEvent): Array<HTMLElement> {
-    const element = collectTarget(parent, event);
+/**
+ * The element at a document position: the span that renders the character before it, so a
+ * cursor right after a reference still finds the reference.
+ */
+export function elementAtPosition(editor: EditorView, pos: number): HTMLElement | null {
+    const { node } = editor.domAtPos(Math.max(pos - 1, 0));
+    const element = node instanceof HTMLElement ? node : node.parentElement;
 
-    if (!element) return [];
-
-    const items: HTMLElement[] = [];
-
-    if (isDecorator(element)) {
-        items.push(element);
-    }
-
-    if (element) {
-        let current = element.previousElementSibling;
-
-        while (current && isDecorator(current)) {
-            items.unshift(current as HTMLElement);
-
-            current = current.previousElementSibling;
-        }
-
-        current = element.nextElementSibling;
-
-        while (current && isDecorator(current)) {
-            items.push(current as HTMLElement);
-            current = current.nextElementSibling;
-        }
-    }
-
-    return items;
+    return element ?? null;
 }
 
-function collectTarget(parent: HTMLElement, event: MouseEvent | KeyboardEvent): HTMLElement | null {
-    if (event.type === "keydown") {
-        const cursor = parent.querySelector(".cursor.monaco-mouse-cursor-text");
-        if (cursor) {
-            const { x, y, height } = cursor.getBoundingClientRect();
-            const elementFromPoint = document.elementFromPoint(x - 1, y + height / 2);
-            return (elementFromPoint as HTMLElement) || null;
-        }
-    }
+const DECORATOR_SELECTOR = `.${DecoratorClassName}, .${DecoratorItemClassName}`;
+const LINE_SELECTOR = ".cm-line";
+const WIDGET_BUFFER_CLASS = "cm-widgetBuffer";
 
-    const target = event.target as HTMLElement;
-    return target || null;
-}
-
-function isDecorator(el: Element | null): boolean {
-    if (!el) return false;
-    return el.classList.contains(DecoratorClassName) || el.classList.contains(DecoratorItemClassName);
-}
-
-function createDecorator(editor: IStandaloneCodeEditor, hover: monaco.languages.Hover): Array<string> {
-    if (!hover.range) {
+/**
+ * The spans of the reference the element is part of: its badge and its text. The editor nests the
+ * spans of overlapping marks, so each is looked for inside its line-level ancestor, and the buffers
+ * the editor places around widgets are stepped over.
+ */
+export function collectElements(element: HTMLElement): Array<HTMLElement> {
+    const line = element.closest<HTMLElement>(LINE_SELECTOR);
+    const start = line ? lineLevelAncestor(element, line) : null;
+    const target = start ? decoratorIn(start) : null;
+    if (!start || !target) {
         return [];
     }
-    return editor.deltaDecorations(
-        [],
-        [
-            {
-                range: hover.range,
-                options: {
-                    inlineClassName: DecoratorHovered,
-                },
-            },
-        ],
-    );
+
+    const before = neighbours(start, (el) => el.previousElementSibling).reverse();
+    const after = neighbours(start, (el) => el.nextElementSibling);
+
+    return [...before, target, ...after];
 }
 
-function removeDecorator(editor: IStandaloneCodeEditor, decorator: Array<string>) {
-    editor.deltaDecorations(decorator, []);
+function lineLevelAncestor(element: HTMLElement, line: HTMLElement): HTMLElement | null {
+    let current = element;
+    while (current.parentElement && current.parentElement !== line) {
+        current = current.parentElement;
+    }
+    return current.parentElement === line ? current : null;
+}
+
+function decoratorIn(element: Element): HTMLElement | null {
+    if (element.matches(DECORATOR_SELECTOR)) {
+        return element as HTMLElement;
+    }
+    return element.querySelector<HTMLElement>(DECORATOR_SELECTOR);
+}
+
+function neighbours(start: Element, next: (el: Element) => Element | null): HTMLElement[] {
+    const found: HTMLElement[] = [];
+    let current = next(start);
+
+    while (current) {
+        if (!current.classList.contains(WIDGET_BUFFER_CLASS)) {
+            const decorator = decoratorIn(current);
+            if (!decorator) {
+                break;
+            }
+            found.push(decorator);
+        }
+        current = next(current);
+    }
+
+    return found;
+}
+
+function createDecorator(editor: EditorView, hover: HoverWithData): void {
+    if (!hover.range) {
+        return;
+    }
+    editor.dispatch({ effects: setHoveredSpan.of(rangeToSpan(editor.state.doc, hover.range)) });
+}
+
+function removeDecorator(editor: EditorView): void {
+    editor.dispatch({ effects: setHoveredSpan.of(null) });
 }

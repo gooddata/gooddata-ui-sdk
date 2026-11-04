@@ -43,10 +43,10 @@ function mockGraphOnce(nodes: TigerNode[] = [], edges: TigerEdge[] = []) {
     );
 }
 
-function graphResponse(nodes: TigerNode[], edges: TigerEdge[]): AxiosResponse {
+function graphResponse(nodes: TigerNode[], edges: TigerEdge[]): AxiosResponse<api.DependentEntitiesResponse> {
     return {
         data: { graph: { nodes, edges } },
-    } as unknown as AxiosResponse;
+    } as unknown as AxiosResponse<api.DependentEntitiesResponse>;
 }
 
 const mockAuthCall = vi.fn((callback) => callback({ axios: {}, basePath: "" }));
@@ -216,5 +216,23 @@ describe("TigerReferencesService", () => {
             { from: dashboardRef, to: metricRef },
             { from: automationRef, to: dashboardRef },
         ]);
+    });
+
+    it("keeps documents and their edges in the references of the workspace", async () => {
+        const visualizationNode = { id: "v1", type: "visualizationObject", title: "V1" };
+        const documentNode = { id: "doc1", type: "document", title: "Doc 1" };
+        vi.mocked(api.ActionsApi_GetDependentEntitiesGraph).mockResolvedValue(
+            graphResponse([visualizationNode, documentNode], [[visualizationNode, documentNode]]),
+        );
+
+        const result = await makeService().getAllReferences();
+
+        const visualizationRef = idRef("v1", "insight");
+        const documentRef = idRef("doc1", "document");
+        expect(result.nodes).toEqual([
+            { ...visualizationRef, title: "V1", isRoot: false },
+            { ...documentRef, title: "Doc 1", isRoot: false },
+        ]);
+        expect(result.edges).toEqual([{ from: documentRef, to: visualizationRef }]);
     });
 });

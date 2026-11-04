@@ -9,12 +9,15 @@ import {
     useCallback,
     useEffect,
     useImperativeHandle,
+    useMemo,
     useState,
 } from "react";
 
+import { type KeyBinding } from "@codemirror/view";
 import { isEmpty } from "lodash-es";
 import { flushSync } from "react-dom";
 import { type Root, createRoot } from "react-dom/client";
+import { useIntl } from "react-intl";
 
 import { type IMetadataObject } from "@gooddata/sdk-model";
 import {
@@ -32,13 +35,8 @@ import {
     IconQuestionMark,
 } from "@gooddata/sdk-ui-kit";
 
+import { type IMaqlEditorIcon } from "../../../MaqlEditor/codemirror/CodeEditor.styles.js";
 import { type IMaqlEditorApi, MaqlEditor } from "../../../MaqlEditor/maql/MaqlEditor.js";
-import {
-    type IDisposable,
-    type IStandaloneCodeEditor,
-    type Monaco,
-} from "../../../MaqlEditor/monaco/MonacoEditor.js";
-import { type IMaqlEditorIcon } from "../../../MaqlEditor/monaco/MonacoEditor.styles.js";
 import { useEvents } from "../../../shared/eventing/useEvents.js";
 import { makeStyles } from "../../../shared/theme/index.js";
 import { FormField } from "../data.js";
@@ -48,10 +46,7 @@ import { Placeholder } from "../MaqlEditorUtils/Placeholder.js";
 import { type MaqlValue, getMaqlValue, useMaqlField } from "../maqlFieldFunctions.js";
 
 import { events } from "./MaqlEditorField.events.js";
-import {
-    useDocumentationLinkContextMenuProcessing,
-    useDocumentationLinkProcessing,
-} from "./suggestionDetailsFunctions.js";
+import { useDocumentationLinkProcessing } from "./suggestionDetailsFunctions.js";
 
 const useStyles = makeStyles()(() => ({
     root: {
@@ -115,6 +110,7 @@ export const MaqlEditorEditor = forwardRef<IMaqlEditorApi, IMaqlEditorEditorProp
     ref,
 ) {
     const { classes, cx } = useStyles();
+    const intl = useIntl();
     const { value, valid, element, isReadOnly, onBlur, onChange } = useMetricFormField(FormField.expression);
 
     const [autofocus, setAutofocus] = useState(false);
@@ -125,13 +121,13 @@ export const MaqlEditorEditor = forwardRef<IMaqlEditorApi, IMaqlEditorEditorProp
     const [onChanged, onValidation] = useMaqlField(value, onChange);
     const onBlurHandler = useBlur(value, onBlur, setAutoHints, setAutofocus);
     const onMetricOpenHandler = useCallback(
-        // oxlint-disable-next-line @typescript-eslint/no-explicit-any
-        (_: any, object: IMetadataObject) => onMetricOpen?.(object),
+        (_editor: unknown, object: IMetadataObject) => onMetricOpen?.(object),
         [onMetricOpen],
     );
 
     const onEditorMount = useEditorMount();
-    const onEditorUpdate = useEditorUpdate(onRun);
+    const onToggleSuggestionDetails = useTrackSuggestionDetails();
+    const keyBindings = useRunKeyBinding(onRun);
 
     useImperativeHandle<Pick<HTMLTextAreaElement, "focus">, { focus: () => void }>(element, () => ({
         focus: () => setAutofocus(true),
@@ -142,7 +138,7 @@ export const MaqlEditorEditor = forwardRef<IMaqlEditorApi, IMaqlEditorEditorProp
             <Placeholder
                 visible={isMaqlEditorEmpty}
                 readonly={isReadOnly}
-                selector={".monaco-editor .view-lines .view-line"}
+                selector={".cm-editor .cm-content .cm-line"}
             />
             <MaqlEditor
                 autohint={autohints}
@@ -151,29 +147,27 @@ export const MaqlEditorEditor = forwardRef<IMaqlEditorApi, IMaqlEditorEditorProp
                 readonly={isReadOnly}
                 defaultValue={getMaqlValue(value)}
                 icons={icons}
+                ariaLabel={intl.formatMessage({ id: "metricComponent.editMetric.metric.definition" })}
+                keyBindings={keyBindings}
                 onBlur={onBlurHandler}
                 onValid={onValidation}
                 onChange={onChanged}
                 onEditorMount={onEditorMount}
-                onEditorUpdate={onEditorUpdate}
                 onMetricOpen={onMetricOpenHandler}
+                onToggleSuggestionDetails={onToggleSuggestionDetails}
                 ref={ref}
             />
         </div>
     );
 });
 
-function useTrackMonacoCommands() {
+/**
+ * Reports to the telemetry that the user showed or hid the documentation of the suggestions.
+ */
+function useTrackSuggestionDetails(): () => void {
     const { editorToggleSuggestionDetailsEvent } = useEvents(events);
 
-    return useCallback(
-        ({ commandId }: { commandId: string }): void => {
-            if (commandId === "toggleSuggestionDetails") {
-                editorToggleSuggestionDetailsEvent();
-            }
-        },
-        [editorToggleSuggestionDetailsEvent],
-    );
+    return useCallback(() => editorToggleSuggestionDetailsEvent(), [editorToggleSuggestionDetailsEvent]);
 }
 
 function useBlur(
@@ -197,33 +191,31 @@ function useBlur(
 
 function useEditorMount() {
     const processDocumentationClick = useDocumentationLinkProcessing();
-    const processDocumentationContextMenu = useDocumentationLinkContextMenuProcessing();
-    const trackMonacoCommands = useTrackMonacoCommands();
 
-    return useCallback(
-        (editor: IStandaloneCodeEditor) => {
-            const disposable: Array<IDisposable> = [];
+    useEffect(() => {
+        document.body.addEventListener("click", processDocumentationClick);
 
-            // @ts-expect-error command service is not in public API
-            disposable.push(editor._commandService.onDidExecuteCommand(trackMonacoCommands));
-            document.body.addEventListener("click", processDocumentationClick);
-            document.body.addEventListener("contextmenu", processDocumentationContextMenu);
+        return () => {
+            document.body.removeEventListener("click", processDocumentationClick);
+        };
+    }, [processDocumentationClick]);
 
-            return () => {
-                document.body.removeEventListener("click", processDocumentationClick);
-                document.body.removeEventListener("contextmenu", processDocumentationContextMenu);
-                disposable.forEach((dispose) => dispose.dispose());
-            };
-        },
-        [processDocumentationClick, processDocumentationContextMenu, trackMonacoCommands],
-    );
+    return useCallback(() => {
+        // nothing to set up on the editor itself
+    }, []);
 }
 
-function useEditorUpdate(onRun?: () => void) {
-    return useCallback(
-        (editor: IStandaloneCodeEditor, monaco: Monaco) => {
-            editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyR, () => onRun?.());
-        },
+function useRunKeyBinding(onRun?: () => void): KeyBinding[] {
+    return useMemo(
+        () => [
+            {
+                key: "Mod-r",
+                run: () => {
+                    onRun?.();
+                    return true;
+                },
+            },
+        ],
         [onRun],
     );
 }

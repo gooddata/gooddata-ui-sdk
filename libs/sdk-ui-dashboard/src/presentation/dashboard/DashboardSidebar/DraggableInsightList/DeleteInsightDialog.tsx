@@ -2,7 +2,7 @@
 
 import { type ReactNode, useState } from "react";
 
-import { FormattedMessage, defineMessages, useIntl } from "react-intl";
+import { FormattedMessage, type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 
 import { type IInsight, type ObjRef, insightRef, insightTitle, serializeObjRef } from "@gooddata/sdk-model";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
@@ -24,7 +24,11 @@ const messages = defineMessages({
     notUsed: { id: "deleteInsightDialog.notUsed" },
     checkFailed: { id: "deleteInsightDialog.checkFailed" },
     usedOnDashboards: { id: "deleteInsightDialog.usedOnDashboards" },
+    usedInDocuments: { id: "deleteInsightDialog.usedInDocuments" },
+    usedInDocumentsAndDashboards: { id: "deleteInsightDialog.usedInDocumentsAndDashboards" },
+    usedInDocumentsAndThisDashboard: { id: "deleteInsightDialog.usedInDocumentsAndThisDashboard" },
     usage: { id: "deleteInsightDialog.usage" },
+    documentsUsage: { id: "deleteInsightDialog.documentsUsage" },
     showMore: { id: "deleteInsightDialog.usage.showMore" },
     showLess: { id: "deleteInsightDialog.usage.showLess" },
     inaccessibleDashboards: { id: "deleteInsightDialog.inaccessibleDashboards" },
@@ -46,20 +50,21 @@ export interface IDeleteInsightDialogProps {
 }
 
 interface IUsageWarningProps {
-    accessibleTitles: string[];
-    inaccessibleCount: number;
+    usage: MessageDescriptor;
+    titles: string[];
+    inaccessibleCount?: number;
 }
 
-function UsageWarning({ accessibleTitles, inaccessibleCount }: IUsageWarningProps) {
+function UsageWarning({ usage, titles, inaccessibleCount = 0 }: IUsageWarningProps) {
     const intl = useIntl();
     const [isExpanded, setIsExpanded] = useState(false);
-    const count = accessibleTitles.length + inaccessibleCount;
+    const count = titles.length + inaccessibleCount;
 
     return (
         <Message type="warning" className="gd-delete-insight-dialog__usage s-delete-insight-dialog-usage">
             <div className="gd-delete-insight-dialog__usage-header">
                 <span>
-                    <FormattedMessage {...messages.usage} values={{ count, strong }} />
+                    <FormattedMessage {...usage} values={{ count, strong }} />
                 </span>
                 <button
                     type="button"
@@ -72,17 +77,17 @@ function UsageWarning({ accessibleTitles, inaccessibleCount }: IUsageWarningProp
             </div>
             {isExpanded ? (
                 <div className="gd-delete-insight-dialog__usage-details">
-                    {accessibleTitles.length > 0 ? (
+                    {titles.length > 0 ? (
                         <ul className="gd-delete-insight-dialog__usage-list">
-                            {accessibleTitles.map((dashboardTitle, index) => (
-                                <li key={index}>{dashboardTitle}</li>
+                            {titles.map((itemTitle, index) => (
+                                <li key={index}>{itemTitle}</li>
                             ))}
                         </ul>
                     ) : null}
                     {inaccessibleCount > 0 ? (
                         <p className="gd-delete-insight-dialog__usage-inaccessible s-delete-insight-dialog-inaccessible">
                             <FormattedMessage
-                                {...(accessibleTitles.length > 0
+                                {...(titles.length > 0
                                     ? messages.inaccessibleDashboards
                                     : messages.inaccessibleDashboardsOnly)}
                                 values={{ count: inaccessibleCount, strong }}
@@ -112,7 +117,10 @@ export function DeleteInsightDialog({ insight, onClose, onDeleted }: IDeleteInsi
                     .workspace(workspace)
                     .insights()
                     .getInsightReferencingObjects(ref)
-                    .then((references) => references.analyticalDashboards ?? []),
+                    .then((references) => ({
+                        dashboards: references.analyticalDashboards ?? [],
+                        documents: references.documents ?? [],
+                    })),
         },
         [backend, workspace, refKey],
     );
@@ -134,7 +142,8 @@ export function DeleteInsightDialog({ insight, onClose, onDeleted }: IDeleteInsi
         },
     });
 
-    const dashboards = usage.result ?? [];
+    const dashboards = usage.result?.dashboards ?? [];
+    const documentTitles = (usage.result?.documents ?? []).map((document) => document.title);
     const otherDashboards = dashboards.filter((dashboard) => dashboard.id !== dashboardId);
     const accessibleTitles = otherDashboards
         .map((dashboard) => accessibleDashboards.get(dashboard.ref)?.title)
@@ -142,7 +151,15 @@ export function DeleteInsightDialog({ insight, onClose, onDeleted }: IDeleteInsi
     const inaccessibleCount = otherDashboards.length - accessibleTitles.length;
 
     const isChecking = usage.status === "pending" || usage.status === "loading";
-    const canDelete = usage.status === "success" && otherDashboards.length === 0 && !usedOnThisDashboard;
+    const canDelete =
+        usage.status === "success" &&
+        otherDashboards.length === 0 &&
+        documentTitles.length === 0 &&
+        !usedOnThisDashboard;
+    const documentsWarning =
+        documentTitles.length > 0 ? (
+            <UsageWarning usage={messages.documentsUsage} titles={documentTitles} />
+        ) : null;
     const isDeleting = status === "running";
 
     let body: ReactNode;
@@ -166,9 +183,33 @@ export function DeleteInsightDialog({ insight, onClose, onDeleted }: IDeleteInsi
         body = (
             <>
                 <p className="s-delete-insight-dialog-used-on-dashboards">
-                    <FormattedMessage {...messages.usedOnDashboards} values={{ title, strong }} />
+                    <FormattedMessage
+                        {...(documentTitles.length > 0
+                            ? messages.usedInDocumentsAndDashboards
+                            : messages.usedOnDashboards)}
+                        values={{ title, strong }}
+                    />
                 </p>
-                <UsageWarning accessibleTitles={accessibleTitles} inaccessibleCount={inaccessibleCount} />
+                <UsageWarning
+                    usage={messages.usage}
+                    titles={accessibleTitles}
+                    inaccessibleCount={inaccessibleCount}
+                />
+                {documentsWarning}
+            </>
+        );
+    } else if (documentTitles.length > 0) {
+        body = (
+            <>
+                <p className="s-delete-insight-dialog-used-in-documents">
+                    <FormattedMessage
+                        {...(usedOnThisDashboard
+                            ? messages.usedInDocumentsAndThisDashboard
+                            : messages.usedInDocuments)}
+                        values={{ title, strong }}
+                    />
+                </p>
+                {documentsWarning}
             </>
         );
     } else if (usedOnThisDashboard) {

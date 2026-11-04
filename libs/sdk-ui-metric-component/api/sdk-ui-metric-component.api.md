@@ -8,6 +8,7 @@ import { Context } from 'react';
 import { Css } from 'tss-react';
 import { CSSObject } from 'tss-react';
 import { Cx } from 'tss-react';
+import { EditorView } from '@codemirror/view';
 import { ForwardRefExoticComponent } from 'react';
 import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { ICatalogAttribute } from '@gooddata/sdk-model';
@@ -24,7 +25,7 @@ import { ISeparators } from '@gooddata/sdk-model';
 import { ITranslations } from '@gooddata/sdk-ui';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { JSX } from 'react/jsx-runtime';
-import type * as monaco from 'monaco-editor/editor/editor.api.js';
+import { KeyBinding } from '@codemirror/view';
 import { NotAuthenticated } from '@gooddata/sdk-backend-spi';
 import { ObjectVisibility } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
@@ -504,9 +505,6 @@ export interface IDeleteMetricProps {
 }
 
 // @internal (undocumented)
-export type IDisposable = monaco.IDisposable;
-
-// @internal (undocumented)
 export interface IEditMetricApi {
     // (undocumented)
     close: () => void;
@@ -578,9 +576,6 @@ export interface IEditMetricProps {
     // (undocumented)
     useReferences?: boolean;
 }
-
-// @internal (undocumented)
-export type IEditorContribution = monaco.editor.IEditorContribution;
 
 // @internal (undocumented)
 export interface IEvent {
@@ -801,14 +796,20 @@ export interface IMaqlEditorIcons {
     // (undocumented)
     next?: IMaqlEditorIcon;
     // (undocumented)
+    operator?: IMaqlEditorIcon;
+    // (undocumented)
     prev?: IMaqlEditorIcon;
+    // (undocumented)
+    snippet?: IMaqlEditorIcon;
+    // (undocumented)
+    value?: IMaqlEditorIcon;
 }
 
 // @internal (undocumented)
 export interface IMaqlEditorProps {
+    ariaLabel?: string;
     // (undocumented)
     autofocus?: boolean;
-    // (undocumented)
     autohint?: boolean;
     // (undocumented)
     cssTheme?: MaqlEditorDefaultTheme;
@@ -820,20 +821,22 @@ export interface IMaqlEditorProps {
     icons?: IMaqlEditorIcons;
     // (undocumented)
     inline?: boolean;
+    keyBindings?: readonly KeyBinding[];
     // (undocumented)
-    onBlur?: (editor: IStandaloneCodeEditor, monaco: Monaco) => void;
+    onBlur?: (editor: MaqlEditorView) => void;
     // (undocumented)
-    onChange?: (editor: IStandaloneCodeEditor, monaco: Monaco, value: string) => void;
+    onChange?: (editor: MaqlEditorView, value: string) => void;
     // (undocumented)
-    onEditorMount?: (editor: IStandaloneCodeEditor, monaco: Monaco) => void;
+    onEditorMount?: (editor: MaqlEditorView) => void;
     // (undocumented)
-    onEditorUpdate?: (editor: IStandaloneCodeEditor, monaco: Monaco) => void;
+    onEditorUpdate?: (editor: MaqlEditorView) => void;
     // (undocumented)
-    onFocus?: (editor: IStandaloneCodeEditor, monaco: Monaco) => void;
+    onFocus?: (editor: MaqlEditorView) => void;
     // (undocumented)
-    onMetricOpen?: (editor: IStandaloneCodeEditor, object: IMetadataObject) => void;
+    onMetricOpen?: (editor: MaqlEditorView, object: IMetadataObject) => void;
+    onToggleSuggestionDetails?: (editor: MaqlEditorView, visible: boolean) => void;
     // (undocumented)
-    onValid?: (editor: IStandaloneCodeEditor, monaco: Monaco, valid: boolean) => void;
+    onValid?: (editor: MaqlEditorView, valid: boolean) => void;
     // (undocumented)
     readonly?: boolean;
     // (undocumented)
@@ -1026,12 +1029,12 @@ export interface ISaveMetricInfo {
 
 // @internal (undocumented)
 export interface ISqlEditorApi {
-    // (undocumented)
-    copy: () => boolean;
+    copy: () => Promise<boolean>;
 }
 
 // @internal (undocumented)
 export interface ISqlEditorProps {
+    ariaLabel?: string;
     // (undocumented)
     autofocus?: boolean;
     // (undocumented)
@@ -1041,26 +1044,18 @@ export interface ISqlEditorProps {
     // (undocumented)
     inline?: boolean;
     // (undocumented)
-    onBlur?: (editor: IStandaloneCodeEditor, monaco: Monaco) => void;
+    onBlur?: (editor: MaqlEditorView) => void;
     // (undocumented)
-    onChange?: (editor: IStandaloneCodeEditor, monaco: Monaco, value: string) => void;
+    onChange?: (editor: MaqlEditorView, value: string) => void;
     // (undocumented)
-    onEditorMount?: (editor: IStandaloneCodeEditor, monaco: Monaco) => void;
+    onEditorMount?: (editor: MaqlEditorView) => void;
     // (undocumented)
-    onFocus?: (editor: IStandaloneCodeEditor, monaco: Monaco) => void;
-    // (undocumented)
-    onValid?: (editor: IStandaloneCodeEditor, monaco: Monaco, valid: boolean) => void;
+    onFocus?: (editor: MaqlEditorView) => void;
     // (undocumented)
     readonly?: boolean;
     // (undocumented)
     ref?: Ref<ISqlEditorApi | null>;
 }
-
-// @internal (undocumented)
-export type IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
-
-// @internal (undocumented)
-export type IStandaloneEditorConstructionOptions = monaco.editor.IStandaloneEditorConstructionOptions;
 
 // @internal (undocumented)
 export interface IUseMetricList {
@@ -1386,6 +1381,9 @@ export const MaqlEditor: ForwardRefExoticComponent<Omit<IMaqlEditorProps, "ref">
 // @internal (undocumented)
 export type MaqlEditorDefaultTheme = ReturnType<typeof createDefaultTheme>;
 
+// @internal
+export type MaqlEditorView = EditorView;
+
 // @internal (undocumented)
 export const maqlStartingLink = "https://university.gooddata.com/getting-started-with-maql-in-gooddatacn";
 
@@ -1411,9 +1409,6 @@ export function MetricTooltip(input: IMetricTooltipProps): JSX.Element;
 
 // @internal (undocumented)
 export const MinimizeMetrics: ForwardRefExoticComponent<Omit<IMinimizedMetricsProps, "ref"> & RefAttributes<HTMLElement | undefined>>;
-
-// @internal (undocumented)
-export type Monaco = typeof monaco;
 
 // @internal (undocumented)
 export function MultipleMetricsState(input: IMultipleMetricsProps): JSX.Element;
@@ -1456,7 +1451,7 @@ export enum SaveNameMode {
     saveAsNew = "save_as_new"
 }
 
-// @internal (undocumented)
+// @internal
 export function shimMaqlEditor(): void;
 
 // @internal (undocumented)

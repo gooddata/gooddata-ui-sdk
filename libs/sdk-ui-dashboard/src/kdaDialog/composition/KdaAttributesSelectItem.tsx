@@ -5,9 +5,16 @@ import { type MouseEvent, type ReactNode, useCallback } from "react";
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { SELECT_ITEM_ACTION, ScopedIdStore, UiLink } from "@gooddata/sdk-ui-kit";
+import {
+    SELECT_ITEM_ACTION,
+    ScopedIdStore,
+    UiLink,
+    UiTooltip,
+    useIsTextTruncated,
+} from "@gooddata/sdk-ui-kit";
 
 const ONLY_ACTION = "only";
+const LABEL_ANCHOR_STYLE = { display: "block", width: "auto" } as const;
 
 export interface IKdaAttributesSelectItemProps<T> {
     item: T;
@@ -34,6 +41,7 @@ export function KdaAttributesSelectItem<T>({
 }: IKdaAttributesSelectItemProps<T>) {
     const intl = useIntl();
     const makeId = ScopedIdStore.useContextStoreOptional((ctx) => ctx.makeId);
+    const label = useIsTextTruncated(title);
 
     const onItemClick = useCallback(() => {
         if (isSelected) {
@@ -73,17 +81,31 @@ export function KdaAttributesSelectItem<T>({
             aria-label={title}
         >
             <div role="gridcell" className="gd-attribute-filter-list-item-label">
-                <label className="input-checkbox-label">
-                    <input
-                        tabIndex={focusedAction === SELECT_ITEM_ACTION ? 0 : -1}
-                        id={makeId?.({ item, specifier: SELECT_ITEM_ACTION })}
-                        type="checkbox"
-                        className="input-checkbox"
-                        readOnly
-                        checked={isSelected}
-                    />
-                    <span className="input-label-text">{title}</span>
-                </label>
+                <UiTooltip
+                    anchor={
+                        <label className="input-checkbox-label">
+                            <input
+                                tabIndex={focusedAction === SELECT_ITEM_ACTION ? 0 : -1}
+                                id={makeId?.({ item, specifier: SELECT_ITEM_ACTION })}
+                                type="checkbox"
+                                className="input-checkbox"
+                                readOnly
+                                checked={isSelected}
+                            />
+                            <span ref={label.ref} className="input-label-text">
+                                {title}
+                            </span>
+                        </label>
+                    }
+                    content={title}
+                    disabled={!label.isTruncated}
+                    triggerBy={["hover", "focus"]}
+                    accessibilityHidden
+                    arrowPlacement="left"
+                    optimalPlacement
+                    offset={10}
+                    anchorWrapperStyles={LABEL_ANCHOR_STYLE}
+                />
             </div>
             <div
                 className={cx("gd-list-item-only", {
