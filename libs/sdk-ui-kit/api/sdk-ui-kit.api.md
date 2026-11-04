@@ -10421,6 +10421,12 @@ export function useInvertableSelectionStatusText<T>(selectedItems: T[], isInvert
 };
 
 // @internal
+export function useIsTextTruncated(text: string): {
+    ref: (element: HTMLElement | null) => void;
+    isTruncated: boolean;
+};
+
+// @internal
 export const useIsZoomed: (baseZoomLevel?: number) => boolean;
 
 // @internal (undocumented)

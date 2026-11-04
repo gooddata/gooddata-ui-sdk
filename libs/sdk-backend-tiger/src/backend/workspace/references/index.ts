@@ -32,6 +32,7 @@ const workspaceGraphNodeTypeToObjectType: NodeTypeMapping = {
     filterView: "filterView",
     userDataFilter: "userDataFilter",
     memoryItem: "memoryItem",
+    document: "document",
 };
 
 export class TigerReferencesService implements IReferencesService {

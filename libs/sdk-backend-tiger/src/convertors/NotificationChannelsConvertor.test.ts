@@ -15,6 +15,7 @@ describe("NotificationChannelsConvertor", () => {
             sendInPlatformNotifications: false,
             destinationConfig: {
                 token: "token",
+                secretKey: "secret",
                 endpoint: "endpoint",
             },
             customDashboardUrl: "dashboardUrl",
@@ -27,6 +28,7 @@ describe("NotificationChannelsConvertor", () => {
                 destination: {
                     type: "WEBHOOK",
                     token: "token",
+                    secretKey: "secret",
                     url: "endpoint",
                 },
                 customDashboardUrl: "dashboardUrl",
@@ -50,6 +52,7 @@ describe("NotificationChannelsConvertor", () => {
                     url: "endpoint",
                     token: "token",
                     hasToken: true,
+                    hasSecretKey: true,
                 },
                 allowedRecipients: "CREATOR",
                 customDashboardUrl: "dashboardUrl",
@@ -67,10 +70,26 @@ describe("NotificationChannelsConvertor", () => {
                 endpoint: "endpoint",
                 token: "token",
                 hasToken: true,
+                hasSecretKey: true,
             },
             customDashboardUrl: "dashboardUrl",
             tags: [],
             allowedRecipients: "creator",
         });
+    });
+    it("normalizes nullable signing fields from backend", () => {
+        const data = convertNotificationChannelFromBackend({
+            id: "id",
+            type: "notificationChannel",
+            attributes: {
+                destinationType: "WEBHOOK",
+                destination: { type: "WEBHOOK", secretKey: null, hasSecretKey: null },
+            },
+        });
+        expect(data).toEqual(
+            expect.objectContaining({
+                destinationConfig: expect.objectContaining({ secretKey: undefined, hasSecretKey: undefined }),
+            }),
+        );
     });
 });

@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 
-import { FormattedMessage, useIntl } from "react-intl";
+import { sortBy } from "lodash-es";
+import { FormattedMessage, type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 
 import { type ObjRef } from "@gooddata/sdk-model";
@@ -12,7 +13,10 @@ import { ConfirmDialog as ConfirmDialogComponent } from "@gooddata/sdk-ui-kit";
 import { deleteReport } from "../actions/delete_actions.js";
 import { hideDialog } from "../actions/dialogs_actions.js";
 import { deleteReportDialogSelector } from "../selectors/dialogs_selector.js";
-import { getInsightUsageOnDashboards } from "../store/insight_usage/insight_usage_helpers.js";
+import {
+    EMPTY_INSIGHT_USAGE_ON_DASHBOARDS,
+    getInsightUsageOnDashboards,
+} from "../store/insight_usage/insight_usage_helpers.js";
 import { type AppDispatch } from "../store/types.js";
 import { getAnalyticalDashboards, getInsightReferences } from "../utils/api.js";
 import { shortenText } from "../utils/base.js";
@@ -21,12 +25,30 @@ import { DeleteReportDialogUsageList } from "./DeleteReportDialogUsageList.js";
 
 const MAX_TITLE_LENGTH = 28;
 
+const deleteProhibitedMessages = defineMessages({
+    dashboards: { id: "dialogs.deleteReportConfirmation.deleteProhibited" },
+    documents: { id: "dialogs.deleteReportConfirmation.deleteProhibitedDocuments" },
+    documentsAndDashboards: { id: "dialogs.deleteReportConfirmation.deleteProhibitedDocumentsAndDashboards" },
+});
+
+function getDeleteProhibitedMessage(
+    isUsedOnDashboards: boolean,
+    isUsedInDocuments: boolean,
+): MessageDescriptor {
+    if (!isUsedInDocuments) {
+        return deleteProhibitedMessages.dashboards;
+    }
+    return isUsedOnDashboards
+        ? deleteProhibitedMessages.documentsAndDashboards
+        : deleteProhibitedMessages.documents;
+}
+
 export interface IDeleteReportDialogProps {
     /** test seam: defaults to the ui-kit dialog */
     ConfirmDialog?: typeof ConfirmDialogComponent;
 }
 
-const useReferencingDashboards = (projectId: string, insightRef: ObjRef, isActive: boolean) => {
+const useReferencingObjects = (projectId: string, insightRef: ObjRef, isActive: boolean) => {
     return useCancelablePromise(
         {
             promise: async () => {
@@ -34,10 +56,13 @@ const useReferencingDashboards = (projectId: string, insightRef: ObjRef, isActiv
                     return null;
                 }
 
-                const { analyticalDashboards } = await getInsightReferences(projectId, insightRef);
+                const { analyticalDashboards, documents } = await getInsightReferences(projectId, insightRef);
                 const userDashboards = await getAnalyticalDashboards(projectId);
 
-                return getInsightUsageOnDashboards(analyticalDashboards || [], userDashboards);
+                return {
+                    dashboards: getInsightUsageOnDashboards(analyticalDashboards || [], userDashboards),
+                    documents: sortBy(documents ?? [], (document) => document.title.trim().toLowerCase()),
+                };
             },
         },
         [projectId, insightRef, isActive],
@@ -47,7 +72,7 @@ const useReferencingDashboards = (projectId: string, insightRef: ObjRef, isActiv
 export function DeleteReportDialog({ ConfirmDialog = ConfirmDialogComponent }: IDeleteReportDialogProps) {
     const intl = useIntl();
 
-    const { deleteReportDialog, projectId, isEmbedded, analyticalDashboardUriFactory } =
+    const { deleteReportDialog, projectId, isEmbedded, analyticalDashboardUriFactory, documentUriFactory } =
         useSelector(deleteReportDialogSelector);
     const dispatch = useDispatch<AppDispatch>();
 
@@ -64,7 +89,7 @@ export function DeleteReportDialog({ ConfirmDialog = ConfirmDialogComponent }: I
         }
     }, [active]);
 
-    const { result: referencingDashboards, status } = useReferencingDashboards(projectId, insightRef, active);
+    const { result: referencing, status } = useReferencingObjects(projectId, insightRef, active);
 
     const isLoadingUsages = status === "loading" || status === "pending";
 
@@ -79,8 +104,10 @@ export function DeleteReportDialog({ ConfirmDialog = ConfirmDialogComponent }: I
     };
 
     // TODO it might make sense to unify this and use the tiger way also on bear
-    // on tiger we enable the delete once we are sure the insight is not used on any dashboard
-    const canDelete = !isLoadingUsages && !referencingDashboards?.allDashboardsCount;
+    // on tiger we enable the delete once we are sure the insight is not used on any dashboard or in any document
+    const isUsedOnDashboards = (referencing?.dashboards.allDashboardsCount ?? 0) > 0;
+    const isUsedInDocuments = (referencing?.documents.length ?? 0) > 0;
+    const canDelete = !isLoadingUsages && !isUsedOnDashboards && !isUsedInDocuments;
 
     const shouldDisableDelete = isDeleting || !canDelete;
 
@@ -115,7 +142,7 @@ export function DeleteReportDialog({ ConfirmDialog = ConfirmDialogComponent }: I
                 {!isLoadingUsages && !canDelete && (
                     <p className="s-delete-report-dialog-title">
                         <FormattedMessage
-                            id="dialogs.deleteReportConfirmation.deleteProhibited"
+                            {...getDeleteProhibitedMessage(isUsedOnDashboards, isUsedInDocuments)}
                             values={{
                                 deletedReportTitle: decoratedTitle,
                                 strong: (chunks) => <strong>{chunks}</strong>,
@@ -126,8 +153,10 @@ export function DeleteReportDialog({ ConfirmDialog = ConfirmDialogComponent }: I
                 <DeleteReportDialogUsageList
                     isLoading={isLoadingUsages}
                     isEmbedded={isEmbedded}
-                    referencingDashboards={referencingDashboards}
+                    referencingDashboards={referencing?.dashboards ?? EMPTY_INSIGHT_USAGE_ON_DASHBOARDS}
+                    referencingDocuments={referencing?.documents ?? []}
                     analyticalDashboardUriFactory={analyticalDashboardUriFactory}
+                    documentUriFactory={documentUriFactory}
                 />
             </ConfirmDialog>
         );

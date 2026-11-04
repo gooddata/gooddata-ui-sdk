@@ -6,7 +6,7 @@ import type { IDualConfiguration } from "../types.js";
 
 const importXPlugin: IPackage = {
     name: "eslint-plugin-import-x",
-    version: "4.16.1",
+    version: "4.17.1",
 };
 
 const commonConfiguration = {

@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-model, sdk-backend-tiger: remove the enableShellApplication feature flag; sdk-ui-pluggable-host: the host no longer redirects when the flag is off; sdk-ui-kit, sdk-ui-gen-ai: settings and catalog links always target the host-application routes",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

@@ -162,6 +162,125 @@ describe("CopilotInteractionComposing", () => {
 });
 
 describe("CopilotInteractionComposingWithHandler", () => {
+    describe.each([false, true])("background waiting (clarification: %s)", (clarification) => {
+        it.each([false, true])(
+            "keeps the overlay and replies to its source (switch before completion: %s)",
+            (switchFirst) => {
+                const copilot = new CopilotHandler<"report">({
+                    registrations: [
+                        {
+                            type: "report",
+                            skills: ["dashboard_builder"],
+                            resolveDefinition: () => undefined,
+                            onApplyDefinition: vi.fn(),
+                        },
+                    ],
+                });
+                copilot.setContext({ type: "report", objectId: "report" });
+                copilot.startGeneration("report");
+                copilot.handleEvent({
+                    type: "chatUserMessage",
+                    threadId: "original",
+                    question: "Build",
+                    objects: [],
+                });
+                copilot.handleEvent({
+                    type: "chatAssistantMessage",
+                    threadId: "original",
+                    useCase: "GENERAL",
+                    skills: [{ name: "dashboard_builder", title: "Build" }],
+                });
+                if (clarification) {
+                    copilot.handleEvent({
+                        type: "chatClarificationQuestions",
+                        threadId: "original",
+                        interactionId: "question",
+                        questions: [],
+                    });
+                }
+                const onReplyInChat = vi.fn();
+                render(
+                    <CopilotInteractionComposingWithHandler
+                        copilot={copilot}
+                        scope={{ type: "report", objectId: "report" }}
+                        onReplyInChat={onReplyInChat}
+                    >
+                        <div>Editor</div>
+                    </CopilotInteractionComposingWithHandler>,
+                );
+                const switchConversation = () =>
+                    copilot.handleEvent({
+                        type: "chatConversationChanged",
+                        threadId: "other",
+                        conversation: { id: "other", localId: "other", createdAt: "", updatedAt: "" },
+                    });
+                const complete = () =>
+                    copilot.handleEvent({
+                        type: "chatAssistantMessage",
+                        threadId: "original",
+                        useCase: "GENERAL",
+                        responseCompleted: true,
+                    });
+                act(() => {
+                    if (switchFirst) {
+                        switchConversation();
+                        complete();
+                    } else {
+                        complete();
+                        switchConversation();
+                    }
+                });
+                expect(screen.getByTestId("gd-copilot-composing-overlay")).toBeInTheDocument();
+                expect(screen.getByRole("status")).toHaveTextContent("Waiting for your reply");
+                fireEvent.click(screen.getByRole("button", { name: "Reply now" }));
+                expect(onReplyInChat).toHaveBeenCalledExactlyOnceWith("original");
+                const overlay = screen.getByTestId("gd-copilot-composing-overlay");
+                act(() => {
+                    if (clarification) {
+                        copilot.handleEvent({
+                            type: "chatClarificationQuestions",
+                            threadId: "original",
+                            interactionId: "question",
+                            questions: [],
+                            responses: { Region: "West" },
+                        });
+                    }
+                    copilot.handleEvent(
+                        clarification
+                            ? {
+                                  type: "chatUserAnswers",
+                                  threadId: "original",
+                                  interactionId: "question",
+                                  answers: [],
+                              }
+                            : {
+                                  type: "chatUserMessage",
+                                  threadId: "original",
+                                  question: "Continue",
+                                  objects: [],
+                              },
+                    );
+                });
+                expect(copilot.getStatus({ type: "report", objectId: "report" })).toBe("building");
+                expect(screen.getByTestId("gd-copilot-composing-overlay")).toBe(overlay);
+                expect(screen.queryByRole("status")).not.toBeInTheDocument();
+                expect(screen.queryByRole("button", { name: "Reply now" })).not.toBeInTheDocument();
+                act(() =>
+                    copilot.handleEvent({ type: "chatReasoning", threadId: "original", title: "Resuming" }),
+                );
+                expect(screen.getByRole("status")).toHaveTextContent("Resuming");
+                act(() =>
+                    copilot.handleEvent({
+                        type: "chatAssistantMessage",
+                        threadId: "original",
+                        useCase: "INVALID",
+                    }),
+                );
+                expect(screen.queryByTestId("gd-copilot-composing-overlay")).not.toBeInTheDocument();
+            },
+        );
+    });
+
     it("subscribes to a custom workflow, reasoning, waiting, and continuation", () => {
         const copilot = new CopilotHandler<"report">({ registrations: [] });
         const scope = { type: "report" as const };

@@ -4007,7 +4007,7 @@ export interface DependentEntitiesNode {
     'type': DependentEntitiesNodeTypeEnum;
 }
 
-export type DependentEntitiesNodeTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'automation' | 'memoryItem' | 'knowledgeRecommendation' | 'visualizationObject' | 'filterContext' | 'filterView';
+export type DependentEntitiesNodeTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'automation' | 'memoryItem' | 'knowledgeRecommendation' | 'visualizationObject' | 'filterContext' | 'filterView' | 'document';
 
 export interface DependentEntitiesRequest {
     'identifiers': Array<EntityIdentifier>;
@@ -4040,7 +4040,7 @@ export interface EntityIdentifier {
     'type': EntityIdentifierTypeEnum;
 }
 
-export type EntityIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'automation' | 'memoryItem' | 'knowledgeRecommendation' | 'visualizationObject' | 'filterContext' | 'filterView';
+export type EntityIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'automation' | 'memoryItem' | 'knowledgeRecommendation' | 'visualizationObject' | 'filterContext' | 'filterView' | 'document';
 
 /**
  * Request body for entity search operations

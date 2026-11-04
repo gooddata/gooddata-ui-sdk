@@ -4,6 +4,7 @@ import { useMemo } from "react";
 
 import { type CSSInterpolation, GlobalStyles } from "tss-react";
 
+import { DOCS_CLASS } from "../codemirror/CodeEditor.styles.js";
 import { ExpandedClass } from "../components/ExpandableTooltip.js";
 import { makeStyles } from "../theme/styles.js";
 
@@ -62,11 +63,7 @@ function useMaqlStyles() {
             fontSize: `${theme.doc.code.fontSize}px`,
             lineHeight: `${theme.doc.code.lineHeight}px`,
             color: theme.doc.code.color,
-
-            ".mkt1": {
-                paddingBottom: "5px",
-                color: theme.doc.code.color,
-            },
+            whiteSpace: "pre-wrap",
         };
         const img = {
             maxWidth: "100%",
@@ -87,22 +84,20 @@ function useMaqlStyles() {
         }
 
         return {
-            ".monaco-editor.vs": {
-                ".suggest-details .docs": {
-                    fontFamily: theme.doc.font,
+            [`.cm-completionInfo .${DOCS_CLASS}`]: {
+                fontFamily: theme.doc.font,
 
-                    "& > div": {
-                        padding: "0 !important",
-                    },
-
-                    h1: h1,
-                    h2: h2,
-                    h3: h3,
-                    "p, ul": p,
-                    ".code": code,
-                    img: img,
-                    [h1pSelector("h1")]: h1p,
+                "& > :first-child": {
+                    marginTop: 0,
                 },
+
+                h1: h1,
+                h2: h2,
+                h3: h3,
+                "p, ul": p,
+                "pre, code": code,
+                img: img,
+                [h1pSelector("h1")]: h1p,
             } as CSSInterpolation,
         };
     }, [

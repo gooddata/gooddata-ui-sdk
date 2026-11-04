@@ -67,7 +67,10 @@ import {
     convertMeasure,
 } from "../../../convertors/fromBackend/CatalogConverter.js";
 import { convertCertificationFromBackend } from "../../../convertors/fromBackend/CertificationConverter.js";
-import { convertGraphEntityNodeToAnalyticalDashboard } from "../../../convertors/fromBackend/GraphConverter.js";
+import {
+    convertGraphEntityNodeToAnalyticalDashboard,
+    convertGraphEntityNodeToDocument,
+} from "../../../convertors/fromBackend/GraphConverter.js";
 import {
     convertVisualizationObjectsToInsights,
     insightFromInsightDefinition,
@@ -410,13 +413,16 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                         },
                     ],
                 },
-            }).then((res: any) => res.data.graph),
+            }).then((res) => res.data.graph),
         );
         const analyticalDashboards = entitiesGraph.nodes
-            .filter(({ type }: { type: string }) => type === "analyticalDashboard")
+            .filter(({ type }) => type === "analyticalDashboard")
             .map(convertGraphEntityNodeToAnalyticalDashboard);
+        const documents = entitiesGraph.nodes
+            .filter(({ type }) => type === "document")
+            .map(convertGraphEntityNodeToDocument);
 
-        return { analyticalDashboards };
+        return { analyticalDashboards, documents };
     };
 
     public getInsightWithAddedFilters = async <T extends IInsightDefinition>(

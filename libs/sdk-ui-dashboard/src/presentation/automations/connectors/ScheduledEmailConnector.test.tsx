@@ -113,9 +113,7 @@ vi.mock("../../../model/react/useDasboardScheduledEmails/useDashboardScheduledEm
 vi.mock("../../../model/store/config/configSelectors.js", () => ({
     selectExternalRecipient: () => "recipient@example.com",
     selectIsEmbedded: () => false,
-    selectSettings: () => ({
-        enableShellApplication: true,
-    }),
+    selectSettings: () => ({}),
     selectEnableAccessibilityMode: () => false,
 }));
 

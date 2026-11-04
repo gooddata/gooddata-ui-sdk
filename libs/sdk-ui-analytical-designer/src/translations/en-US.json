@@ -2228,8 +2228,12 @@
         "crowdinContext": "Link to collapse and show fewer visualization usage details"
     },
     "dialogs.deleteReportConfirmation.usage.notUsed": {
-        "text": "The visualization is not used on any dashboard.",
-        "crowdinContext": "Message indicating visualization is not currently used on any dashboards"
+        "text": "The visualization is not used on any dashboard or in any document.",
+        "crowdinContext": "Message indicating visualization is not currently used on any dashboards or in any Publisher documents"
+    },
+    "dialogs.deleteReportConfirmation.usage.documents": {
+        "text": "The visualization is used in <strong>{documentsCount, plural, one {# document} other {# documents}}</strong>.",
+        "crowdinContext": "Shows number of Publisher documents using the visualization. Example: 'used in 1 document' or 'used in 3 documents'"
     },
     "dialogs.deleteReportConfirmation.usage.inaccessibleDashboards": {
         "text": "and <b>{count} more</b> not shared with you.",
@@ -2250,6 +2254,14 @@
     "dialogs.deleteReportConfirmation.deleteProhibited": {
         "text": "The visualization <strong>{deletedReportTitle}</strong> cannot be deleted because it is used on some dashboards. To delete this visualization, remove it from all dashboards first.",
         "crowdinContext": "Error message when visualization cannot be deleted due to usage. {deletedReportTitle} is replaced with the visualization name"
+    },
+    "dialogs.deleteReportConfirmation.deleteProhibitedDocuments": {
+        "text": "The visualization <strong>{deletedReportTitle}</strong> cannot be deleted because it is used in some documents. To delete this visualization, remove it from all documents first.",
+        "crowdinContext": "Error message when visualization cannot be deleted because Publisher documents use it. {deletedReportTitle} is replaced with the visualization name"
+    },
+    "dialogs.deleteReportConfirmation.deleteProhibitedDocumentsAndDashboards": {
+        "text": "The visualization <strong>{deletedReportTitle}</strong> cannot be deleted because it is used in some documents or dashboards. To delete this visualization, remove it from them first.",
+        "crowdinContext": "Error message when visualization cannot be deleted because both Publisher documents and dashboards use it. {deletedReportTitle} is replaced with the visualization name"
     },
     "dialogs.savingUntitledReportConfirmation.headline": {
         "text": "Name your visualization",

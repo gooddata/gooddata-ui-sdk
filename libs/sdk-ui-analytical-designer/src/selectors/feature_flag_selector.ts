@@ -51,7 +51,6 @@ type FeatureFlag =
     | "exportResultPollingTimeoutSeconds"
     | "enableVisualizationFilteringByTags"
     | "restrictBaseUi"
-    | "enableShellApplication"
     | "enableParameters"
     | "enableStringParameters"
     | "enableEnhancedInsightPicker"
@@ -98,7 +97,6 @@ type FeatureFlagKey =
     | "EXPORT_RESULT_POLLING_TIMEOUT_SECONDS"
     | "ENABLE_VISUALIZATION_FILTERING_BY_TAGS"
     | "RESTRICT_BASE_UI"
-    | "ENABLE_SHELL_APPLICATION"
     | "ENABLE_PARAMETERS"
     | "ENABLE_STRING_PARAMETERS"
     | "ENABLE_ENHANCED_INSIGHT_PICKER"
@@ -146,7 +144,6 @@ export const FEATURE_FLAGS: {
     EXPORT_RESULT_POLLING_TIMEOUT_SECONDS: "exportResultPollingTimeoutSeconds",
     ENABLE_VISUALIZATION_FILTERING_BY_TAGS: "enableVisualizationFilteringByTags",
     RESTRICT_BASE_UI: "restrictBaseUi",
-    ENABLE_SHELL_APPLICATION: "enableShellApplication",
     ENABLE_PARAMETERS: "enableParameters",
     ENABLE_STRING_PARAMETERS: "enableStringParameters",
     ENABLE_ENHANCED_INSIGHT_PICKER: "enableEnhancedInsightPicker",
@@ -446,11 +443,6 @@ const AVAILABLE_SELECTION_TYPES: AttributeFilterAvailableSelectionType[] = ["ele
 
 export const getAvailableSelectionTypes = (): AttributeFilterAvailableSelectionType[] =>
     AVAILABLE_SELECTION_TYPES;
-
-export const enableShellApplication = createSelector(
-    [getFeatureFlags],
-    (flags) => (flags?.[FEATURE_FLAGS.ENABLE_SHELL_APPLICATION] ?? true) as boolean,
-);
 
 export const enableEnhancedInsightPicker = createSelector(
     [getFeatureFlags],

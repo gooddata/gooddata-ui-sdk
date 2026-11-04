@@ -331,7 +331,7 @@
                         "comment": "sdk-ui-kit, sdk-ui-filters, sdk-ui-pluggable-host: Native buttons and inputs in overlays use the page font instead of the browser default font."
                     },
                     {
-                        "comment": "sdk-ui-dashboard: The alpha `enableInsightEditing` config option opens visualizations in the embedded Analytical Designer from the widget menu, the edit mode panel and the empty visualization list. sdk-ui-dashboard now depends on sdk-ui-analytical-designer, so every app that bundles the dashboard must meet its bundler requirements, also with the option off: webpack needs a loader for the `?worker&url` Monaco worker import, and Vite needs the external worker URL optimizeDeps plugin and the `global` and `process.env` defines. The Analytical Designer README and the dashboard-plugin-template and react-app-template show the setup."
+                        "comment": "sdk-ui-dashboard: The alpha `enableInsightEditing` config option opens visualizations in the embedded Analytical Designer from the widget menu, the edit mode panel and the empty visualization list. sdk-ui-dashboard now depends on sdk-ui-analytical-designer, so every app that bundles the dashboard must meet its bundler requirements, also with the option off: define `process.env` as `{}` for the MAQL parser dependencies. The metric component ships a bundled Monaco worker, so no worker-specific webpack loader, Vite optimizeDeps plugin or `global` define is needed. See the Analytical Designer README for CSP and Trusted Types requirements. The Analytical Designer README and the dashboard-plugin-template and react-app-template show the setup."
                     },
                     {
                         "comment": "sdk-ui-dashboard: Explore from here passes the dashboard filters to Analytical Designer when the explored insight first renders, so a late visualization update no longer drops them."
@@ -7403,6 +7403,30 @@
                     },
                     {
                         "comment": "Introduce ability to limit attribute filter values by dependent date filters on GoodData Cloud dashboards."
+                    }
+                ]
+            }
+        },
+        {
+            "version": "9.9.3",
+            "tag": "@gooddata/sdk-ui-all_v9.9.3",
+            "date": "Tue, 03 Nov 2026 09:53:01 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Fix an infinite render loop on the dashboard when a visualization shows a custom error."
+                    },
+                    {
+                        "comment": "Fix the raw (CSV) export of a dashboard visualization widget. The export now applies the dashboard filters."
+                    },
+                    {
+                        "comment": "Register the visualization widgets for async rendering on mount, and count the visualization switcher widgets in the expected async render count."
+                    },
+                    {
+                        "comment": "Fix translations."
+                    },
+                    {
+                        "comment": "Upgrade axios to ^1.10.0 and axios-cache-interceptor to ^1.8.0."
                     }
                 ]
             }

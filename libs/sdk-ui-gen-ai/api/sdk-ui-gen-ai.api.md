@@ -638,8 +638,9 @@ export interface ICopilotInteractionComposingProps {
 }
 
 // @alpha
-export interface ICopilotInteractionComposingWithHandlerProps<TBuild extends string = CopilotBuildType> extends Omit<ICopilotInteractionComposingProps, "status" | "reasoningTitle"> {
+export interface ICopilotInteractionComposingWithHandlerProps<TBuild extends string = CopilotBuildType> extends Omit<ICopilotInteractionComposingProps, "status" | "reasoningTitle" | "onReplyInChat"> {
     copilot: CopilotHandler<TBuild>;
+    onReplyInChat?: (threadId?: string) => void;
     scope: ICopilotScope<TBuild>;
 }
 
@@ -656,10 +657,13 @@ export interface ICopilotRequest<TBuild extends string = CopilotBuildType> {
     readonly applicationIds: readonly string[];
     readonly awaitingClarification?: boolean;
     readonly conversationId?: string;
+    readonly generation?: TBuild;
+    readonly intent?: "create" | "edit";
     readonly objectId?: string;
     readonly pendingClarificationIds?: readonly string[];
     readonly responseFinished?: boolean;
     readonly revision: number;
+    readonly superseded?: boolean;
     readonly threadId?: string;
     readonly type?: TBuild;
 }
@@ -1100,7 +1104,7 @@ title: string;
 export function selectCopilotGenerationPending<TBuild extends string = CopilotBuildType>(state: ICopilotSnapshot<TBuild>, type: TBuild): boolean;
 
 // @alpha
-export function selectCopilotReasoningTitle<TBuild extends string = CopilotBuildType>(state: ICopilotSnapshot<TBuild>): string | undefined;
+export function selectCopilotReasoningTitle<TBuild extends string = CopilotBuildType>(state: ICopilotSnapshot<TBuild>, scope?: ICopilotScope<TBuild>): string | undefined;
 
 // @alpha
 export function selectCopilotSource<TBuild extends string = CopilotBuildType>(state: ICopilotSnapshot<TBuild>, target: ICopilotTarget<TBuild>): ICopilotSource | undefined;

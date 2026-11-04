@@ -4,7 +4,7 @@ import { IPackage, Rules } from "../types.js";
 
 export const importEsmPlugin: IPackage = {
     name: "eslint-plugin-import-esm",
-    version: "1.2.1",
+    version: "3.0.1",
 };
 
 export const importEsmRules: Rules<"import-esm"> = {

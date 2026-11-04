@@ -166,6 +166,21 @@ describe("insight references", () => {
         ]);
     });
 
+    it("listInsightReferences returns the referencing documents after the dashboards", async () => {
+        const { backend, getInsightReferencingObjects } = createFakeBackend();
+        getInsightReferencingObjects.mockResolvedValueOnce({
+            analyticalDashboards: [
+                { id: "dash.sales", type: "analyticalDashboard", title: "Sales overview" },
+            ],
+            documents: [{ id: "doc.board", type: "document", title: "Board pack" }],
+        });
+
+        expect(await listInsightReferences(backend, "ws-1", insightItem)).toEqual([
+            { identifier: "dash.sales", type: "analyticalDashboard", title: "Sales overview" },
+            { identifier: "doc.board", type: "document", title: "Board pack" },
+        ]);
+    });
+
     it("listInsightReferences reports nothing when the response carries no dashboard array", async () => {
         const { backend, getInsightReferencingObjects } = createFakeBackend();
         getInsightReferencingObjects.mockResolvedValueOnce({});

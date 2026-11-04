@@ -38,6 +38,7 @@ import {
     isAttributeSort,
     isCalculatedMetricField,
     isComputedAttributeReference,
+    isDateFilter,
     isInlineMetricField,
     isMatchTextFilter,
     isMetricAllValueFilter,
@@ -318,6 +319,11 @@ function buildFilters(entities: ExportEntities, filters_by: QueryFilters | undef
                 },
             });
         }
+        if (isDateFilter(filter) && filter.with) {
+            // Mirrors yamlVisualisationToDeclarative: the attribute filters under `with:` are applied
+            // together with the date filter, right after it.
+            filters.push(...buildFilters(entities, filter.with));
+        }
         if (isPositiveAttributeFilter(filter)) {
             filters.push({
                 positiveAttributeFilter: {
@@ -495,6 +501,9 @@ function buildFilters(entities: ExportEntities, filters_by: QueryFilters | undef
                         : {}),
                     operator: filter.top === undefined ? "BOTTOM" : "TOP",
                     value: filter.top === undefined ? filter.bottom! : filter.top,
+                    ...(filter.strict_limit_of_rows === undefined
+                        ? {}
+                        : { strictLimitOfRows: filter.strict_limit_of_rows }),
                 },
             });
         }

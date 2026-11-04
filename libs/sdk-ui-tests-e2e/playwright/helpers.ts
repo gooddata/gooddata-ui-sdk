@@ -468,15 +468,10 @@ async function htmlDragAndDropFromParent(
     await page.mouse.down();
     await page.mouse.move(srcX + 10, srcY + 10, { steps: 3 });
 
-    // Wait for target to appear (drop zones render during active drag)
-    await page.locator(targetSelector).waitFor({ state: "visible" });
-
-    // Move to target center and release to trigger drop
-    const targetBBox = await page.locator(targetSelector).boundingBox();
-    if (!targetBBox) throw new Error(`DnD target not visible: ${targetSelector}`);
-    const tgtX = targetBBox.x + targetBBox.width / 2;
-    const tgtY = targetBBox.y + targetBBox.height / 2;
-    await page.mouse.move(tgtX, tgtY, { steps: 5 });
+    // Drop zones mount when the drag starts and shift the layout, so a box measured
+    // right away can be stale. hover() waits for the target to be stable and hit-testable
+    // before moving the mouse onto it, then release to trigger drop.
+    await page.locator(targetSelector).hover();
     await page.mouse.up();
 }
 

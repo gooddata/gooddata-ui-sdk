@@ -69,40 +69,84 @@ function matches(
     threadId?: string,
     conversationId?: string,
 ): boolean {
-    if (conversationId && request.conversationId === conversationId) {
-        return true;
+    // Local IDs take precedence: a new draft can still report the previous backend thread.
+    if (conversationId && request.conversationId) {
+        return request.conversationId === conversationId;
     }
     return threadId
         ? request.threadId === threadId || request.conversationId === threadId
         : !conversationId && !request.threadId && !request.conversationId;
 }
 
+/** Both text and clarification answers start a new response revision. */
+function isUserInputEvent(
+    event: ChatEvent,
+): event is Extract<ChatEvent, { type: "chatUserMessage" | "chatUserAnswers" }> {
+    return event.type === "chatUserMessage" || event.type === "chatUserAnswers";
+}
+
 function conversationId(event: ChatEvent): string | undefined {
     if (event.type === "chatConversationChanged") {
         return event.conversation.localId;
     }
-    return event.type === "chatUserMessage" || event.type === "chatUserAnswers"
-        ? event.conversationId
-        : undefined;
+    return isUserInputEvent(event) ? event.conversationId : undefined;
 }
 
 function failedResponse(event: ChatAssistantMessageEvent): boolean {
-    return !!(event.cancelled || event.useCase === "INVALID");
+    return Boolean(event.cancelled || event.useCase === "INVALID");
 }
 
-function finishedResponse(event: ChatEvent): boolean {
+/** A background creation can supply intent when another conversation activates the same target. */
+function hasOngoingCreation<TBuild extends string>(state: ICopilotSnapshot<TBuild>, type: TBuild): boolean {
     return (
-        (event.type === "chatAssistantMessage" && (event.responseCompleted || failedResponse(event))) ||
-        (event.type === "chatClarificationQuestions" && event.responses === null)
+        !state.context.isEditing &&
+        state.requests.some(
+            (request) =>
+                !request.superseded &&
+                (request.type ?? request.generation) === type &&
+                (request.intent === "create" || request.generation === type) &&
+                (request.objectId === undefined ||
+                    state.context.objectId === undefined ||
+                    request.objectId === state.context.objectId),
+        )
     );
 }
 
+/** Foreground intent is reusable only for the same workflow and originating conversation. */
+function foregroundBuildIntent<TBuild extends string>(
+    state: ICopilotSnapshot<TBuild>,
+    type: TBuild,
+    pending?: ICopilotRequest<TBuild>,
+): "create" | "edit" | undefined {
+    return state.interaction.build?.type === type &&
+        (!pending || matches(state.interaction, pending.threadId, pending.conversationId))
+        ? state.interaction.build.intent
+        : undefined;
+}
+
+/** Prefer request intent, then the owning foreground build, before inferring creation from other work. */
+function buildIntent<TBuild extends string>(
+    state: ICopilotSnapshot<TBuild>,
+    type: TBuild,
+    pending?: ICopilotRequest<TBuild>,
+): "create" | "edit" {
+    return (
+        (pending?.type === type ? pending.intent : undefined) ??
+        (pending?.generation === type ? "create" : undefined) ??
+        foregroundBuildIntent(state, type, pending) ??
+        (requestedGeneration(state) === type || hasOngoingCreation(state, type) ? "create" : "edit")
+    );
+}
+
+function finishedResponse(event: ChatEvent): boolean {
+    return event.type === "chatAssistantMessage" && (event.responseCompleted || failedResponse(event));
+}
+
 function clarificationIds(ids: readonly string[], event: ChatClarificationQuestionsEvent): readonly string[] {
-    return event.responses === undefined
-        ? ids.includes(event.interactionId)
-            ? ids
-            : [...ids, event.interactionId]
-        : ids.filter((id) => id !== event.interactionId);
+    if (event.responses !== undefined) {
+        return ids.filter((id) => id !== event.interactionId);
+    }
+    return ids.includes(event.interactionId) ? ids : [...ids, event.interactionId];
 }
 
 function transitionRequestClarification<TBuild extends string>(
@@ -111,14 +155,11 @@ function transitionRequestClarification<TBuild extends string>(
 ): ICopilotRequest<TBuild> {
     const ids = pending.pendingClarificationIds ?? [];
     const pendingClarificationIds = clarificationIds(ids, event);
-    return pending.awaitingClarification !== pendingClarificationIds.length > 0 ||
-        pendingClarificationIds !== ids
-        ? {
-              ...pending,
-              awaitingClarification: pendingClarificationIds.length > 0,
-              pendingClarificationIds,
-          }
-        : pending;
+    const awaitingClarification = pendingClarificationIds.length > 0;
+    if (pending.awaitingClarification === awaitingClarification && pendingClarificationIds === ids) {
+        return pending;
+    }
+    return { ...pending, awaitingClarification, pendingClarificationIds };
 }
 
 function transitionPendingRequest<TBuild extends string>(
@@ -127,8 +168,15 @@ function transitionPendingRequest<TBuild extends string>(
     event: ChatEvent,
     registration: ICopilotRegistration<TBuild> | undefined,
 ): ICopilotRequest<TBuild> {
-    if (event.type === "chatConversationChanged" && event.threadId && event.threadId !== pending.threadId) {
-        return { ...pending, threadId: event.threadId };
+    if (
+        event.type === "chatConversationChanged" &&
+        event.threadId &&
+        (event.threadId !== pending.threadId || event.conversation.localId !== pending.conversationId)
+    ) {
+        return { ...pending, threadId: event.threadId, conversationId: event.conversation.localId };
+    }
+    if (pending.superseded) {
+        return pending;
     }
     if (event.type === "chatClarificationQuestions") {
         return transitionRequestClarification(pending, event);
@@ -138,10 +186,69 @@ function transitionPendingRequest<TBuild extends string>(
             ...pending,
             threadId: event.threadId,
             type: registration.type,
+            intent: buildIntent(state, registration.type, pending),
             objectId: state.context.type === registration.type ? state.context.objectId : undefined,
         };
     }
     return pending;
+}
+
+function requestedGeneration<TBuild extends string>(state: ICopilotSnapshot<TBuild>): TBuild | undefined {
+    return state.requests.some(
+        (request) =>
+            request.generation === state.generation && request.revision > (state.generationRevision ?? 0),
+    )
+        ? undefined
+        : state.generation;
+}
+
+function generationAfterRequests<TBuild extends string>(
+    state: ICopilotSnapshot<TBuild>,
+    requests: readonly ICopilotRequest<TBuild>[],
+): TBuild | undefined {
+    const ownsGeneration = (request: ICopilotRequest<TBuild>) =>
+        !request.superseded &&
+        request.generation === state.generation &&
+        request.revision > (state.generationRevision ?? 0);
+    return state.requests.some(ownsGeneration) && !requests.some(ownsGeneration)
+        ? undefined
+        : state.generation;
+}
+
+/** A reply resumes known work even after its clarification form was dismissed, unless superseded. */
+function canContinueRequest<TBuild extends string>(
+    pending: ICopilotRequest<TBuild> | undefined,
+    event: ChatEvent,
+): boolean {
+    return !!(
+        pending &&
+        !pending.superseded &&
+        (pending.type !== undefined ||
+            pending.generation !== undefined ||
+            pending.responseFinished ||
+            pending.awaitingClarification ||
+            event.type === "chatUserAnswers")
+    );
+}
+
+/** Successful creation, clarification, and builder responses retain ownership while awaiting a reply. */
+function waitsForReplyAfterResponse<TBuild extends string>(
+    state: ICopilotSnapshot<TBuild>,
+    request: ICopilotRequest<TBuild>,
+    event: ChatEvent,
+): boolean {
+    if (request.superseded || event.type !== "chatAssistantMessage" || failedResponse(event)) {
+        return false;
+    }
+    if (request.type === undefined) {
+        return request.generation !== undefined;
+    }
+    return Boolean(
+        request.awaitingClarification ||
+        request.intent === "create" ||
+        (state.context.builderTarget?.type === request.type &&
+            (request.objectId === undefined || state.context.builderTarget.objectId === request.objectId)),
+    );
 }
 
 function transitionRequests<TBuild extends string>(
@@ -152,9 +259,15 @@ function transitionRequests<TBuild extends string>(
 ): readonly ICopilotRequest<TBuild>[] {
     const requests = state.requests;
     const pending = requests[index];
-    if (event.type === "chatUserMessage" || event.type === "chatUserAnswers") {
+    if (isUserInputEvent(event)) {
         // An old acknowledgement must not replace a newer request still applying a definition.
         const retained = pending?.applicationIds.length ? [pending] : [];
+        const continuation = canContinueRequest(pending, event) ? pending : undefined;
+        const generation = continuation?.generation ?? requestedGeneration(state);
+        const pendingClarificationIds =
+            event.type === "chatUserAnswers"
+                ? continuation?.pendingClarificationIds?.filter((id) => id !== event.interactionId)
+                : undefined;
         return [
             ...requests.filter((_, i) => i !== index),
             ...retained,
@@ -162,6 +275,16 @@ function transitionRequests<TBuild extends string>(
                 revision: state.revision + 1,
                 conversationId: conversationId(event),
                 threadId: event.threadId,
+                type: continuation?.type,
+                generation,
+                intent: continuation?.intent,
+                objectId:
+                    continuation?.objectId ??
+                    (generation !== undefined && state.context.type === generation
+                        ? state.context.objectId
+                        : undefined),
+                pendingClarificationIds,
+                awaitingClarification: !!pendingClarificationIds?.length,
                 applicationIds: [],
             },
         ];
@@ -169,13 +292,29 @@ function transitionRequests<TBuild extends string>(
     if (!pending || event.type === "chatReset") {
         return requests;
     }
+    const updated = transitionPendingRequest(state, pending, event, registration);
     if (finishedResponse(event)) {
-        return pending.applicationIds.length
-            ? requests.map((request, i) => (i === index ? { ...pending, responseFinished: true } : request))
+        const waitingForReply = waitsForReplyAfterResponse(state, updated, event);
+        return updated.applicationIds.length || waitingForReply
+            ? requests.map((request, i) => (i === index ? { ...updated, responseFinished: true } : request))
             : requests.filter((_, i) => i !== index);
     }
-    const updated = transitionPendingRequest(state, pending, event, registration);
     return updated === pending ? requests : requests.map((request, i) => (i === index ? updated : request));
+}
+
+/** Assigning a draft's first backend thread must preserve its foreground progress. */
+function isInitialThreadAssignment<TBuild extends string>(
+    state: ICopilotSnapshot<TBuild>,
+    event: ChatConversationChangedEvent,
+    foreground: boolean,
+): boolean {
+    const origin = conversationId(event);
+    return (
+        !!origin &&
+        state.requests.some((request) => request.conversationId === origin) &&
+        (!state.interaction.threadId || foreground) &&
+        (!state.interaction.conversationId || state.interaction.conversationId === origin)
+    );
 }
 
 function transitionConversation<TBuild extends string>(
@@ -185,11 +324,7 @@ function transitionConversation<TBuild extends string>(
 ): ICopilotInteraction<TBuild> {
     const interaction = state.interaction;
     const origin = conversationId(event);
-    const initialAssignment =
-        !!origin &&
-        state.requests.some((request) => request.conversationId === origin) &&
-        (!interaction.threadId || foreground) &&
-        (!interaction.conversationId || interaction.conversationId === origin);
+    const initialAssignment = isInitialThreadAssignment(state, event, foreground);
     return {
         ...(initialAssignment ? interaction : emptyInteraction<TBuild>()),
         conversationId: origin,
@@ -209,23 +344,25 @@ function transitionInteraction<TBuild extends string>(
                 ? { ...interaction, reasoningTitle: event.title }
                 : interaction;
         case "chatUserMessage":
+        case "chatUserAnswers": {
+            const ongoing = matches(interaction, event.threadId, conversationId(event))
+                ? interaction
+                : emptyInteraction<TBuild>();
             return {
-                ...interaction,
+                ...ongoing,
                 conversationId: conversationId(event),
                 threadId: event.threadId,
                 reasoningTitle: undefined,
                 waitingForUserInput: false,
+                ...(event.type === "chatUserAnswers"
+                    ? {
+                          pendingClarificationIds: ongoing.pendingClarificationIds.filter(
+                              (id) => id !== event.interactionId,
+                          ),
+                      }
+                    : {}),
             };
-        case "chatUserAnswers":
-            return foreground
-                ? {
-                      ...interaction,
-                      waitingForUserInput: false,
-                      pendingClarificationIds: interaction.pendingClarificationIds.filter(
-                          (id) => id !== event.interactionId,
-                      ),
-                  }
-                : interaction;
+        }
         case "chatReset":
             return emptyInteraction();
         case "chatConversationChanged":
@@ -239,6 +376,7 @@ function transitionAssistant<TBuild extends string>(
     state: ICopilotSnapshot<TBuild>,
     event: ChatAssistantMessageEvent,
     registration: ICopilotRegistration<TBuild> | undefined,
+    pending: ICopilotRequest<TBuild> | undefined,
 ): Pick<ICopilotSnapshot<TBuild>, "interaction" | "generation"> {
     let interaction = state.interaction;
     let generation = state.generation;
@@ -250,9 +388,7 @@ function transitionAssistant<TBuild extends string>(
             ...interaction,
             build: {
                 type: registration.type,
-                intent:
-                    (interaction.build?.type === registration.type ? interaction.build.intent : undefined) ??
-                    (generation === registration.type ? "create" : "edit"),
+                intent: buildIntent(state, registration.type, pending),
             },
             waitingForUserInput:
                 interaction.waitingForUserInput ||
@@ -273,9 +409,7 @@ function transitionClarification<TBuild extends string>(
     state: ICopilotSnapshot<TBuild>,
     event: ChatClarificationQuestionsEvent,
 ): Pick<ICopilotSnapshot<TBuild>, "interaction" | "generation"> {
-    if (event.responses === null) {
-        return { generation: undefined, interaction: emptyInteraction() };
-    }
+    // Null dismisses the form before a typed reply; it does not cancel the owning workflow.
     const interaction = state.interaction;
     return {
         generation: state.generation,
@@ -287,26 +421,54 @@ function transitionClarification<TBuild extends string>(
     };
 }
 
+/** Before backend assignment, failures may identify the draft using its local conversation ID. */
+function isDraftFailure<TBuild extends string>(
+    state: ICopilotSnapshot<TBuild>,
+    event: ChatEvent,
+    pending: ICopilotRequest<TBuild> | undefined,
+): boolean {
+    return (
+        event.type === "chatAssistantMessage" &&
+        failedResponse(event) &&
+        !state.interaction.threadId &&
+        !!pending &&
+        !pending.threadId &&
+        !pending.responseFinished &&
+        !!event.threadId &&
+        event.threadId === state.interaction.conversationId &&
+        pending.conversationId === state.interaction.conversationId
+    );
+}
+
+/** Threadless events can update foreground work only while the foreground is also unassigned. */
+function isUnassignedForegroundResponse<TBuild extends string>(
+    state: ICopilotSnapshot<TBuild>,
+    event: ChatEvent,
+    pending: ICopilotRequest<TBuild> | undefined,
+): boolean {
+    return (
+        !event.threadId &&
+        !state.interaction.threadId &&
+        (!!pending || state.generation !== undefined || !!state.interaction.build)
+    );
+}
+
 function isForegroundResponse<TBuild extends string>(
     state: ICopilotSnapshot<TBuild>,
     event: ChatEvent,
     pending: ICopilotRequest<TBuild> | undefined,
     foreground: boolean,
 ): boolean {
+    // Target navigation clears the thread but retains the local owner while an application is pending.
+    const retainedForeground =
+        !state.interaction.threadId &&
+        !!pending?.threadId &&
+        matches(state.interaction, pending.threadId, pending.conversationId);
     return (
         foreground ||
-        (event.type === "chatAssistantMessage" &&
-            failedResponse(event) &&
-            !state.interaction.threadId &&
-            !!pending &&
-            !pending.threadId &&
-            !pending.responseFinished &&
-            !!event.threadId &&
-            event.threadId === state.interaction.conversationId &&
-            pending.conversationId === state.interaction.conversationId) ||
-        (!event.threadId &&
-            !state.interaction.threadId &&
-            (!!pending || state.generation !== undefined || !!state.interaction.build))
+        retainedForeground ||
+        isDraftFailure(state, event, pending) ||
+        isUnassignedForegroundResponse(state, event, pending)
     );
 }
 
@@ -316,10 +478,18 @@ function transitionForegroundEvent<TBuild extends string>(
     pending: ICopilotRequest<TBuild> | undefined,
     registration: ICopilotRegistration<TBuild> | undefined,
 ): Pick<ICopilotSnapshot<TBuild>, "interaction" | "generation"> {
+    if (
+        pending?.superseded &&
+        !isUserInputEvent(event) &&
+        event.type !== "chatConversationChanged" &&
+        event.type !== "chatReset"
+    ) {
+        return { interaction: state.interaction, generation: state.generation };
+    }
     const foreground = !!event.threadId && event.threadId === state.interaction.threadId;
     const foregroundResponse = isForegroundResponse(state, event, pending, foreground);
     if (event.type === "chatAssistantMessage" && foregroundResponse) {
-        return transitionAssistant(state, event, registration);
+        return transitionAssistant(state, event, registration, pending);
     }
     if (event.type === "chatClarificationQuestions" && foregroundResponse) {
         return transitionClarification(state, event);
@@ -330,26 +500,130 @@ function transitionForegroundEvent<TBuild extends string>(
     };
 }
 
+/** A new owner displaces only other conversations managing the same workflow and compatible target. */
+function shouldSupersedeRequest<TBuild extends string>(
+    request: ICopilotRequest<TBuild>,
+    owner: ICopilotRequest<TBuild>,
+    type: TBuild,
+): boolean {
+    return (
+        request !== owner &&
+        !request.superseded &&
+        (request.type ?? request.generation) === type &&
+        (request.objectId === owner.objectId ||
+            request.objectId === undefined ||
+            owner.objectId === undefined) &&
+        !matches(request, owner.threadId, owner.conversationId)
+    );
+}
+
+function transferWorkflow<TBuild extends string>(
+    state: ICopilotSnapshot<TBuild>,
+    event: ChatEvent,
+    requests: readonly ICopilotRequest<TBuild>[],
+    pending: ICopilotRequest<TBuild> | undefined,
+    registration: ICopilotRegistration<TBuild> | undefined,
+): readonly ICopilotRequest<TBuild>[] {
+    if (!pending || pending.type || !registration) {
+        return requests;
+    }
+    const owner =
+        requests.find((request) => request.revision === pending.revision) ??
+        transitionPendingRequest(state, pending, event, registration);
+    return requests.map((request) =>
+        shouldSupersedeRequest(request, owner, registration.type)
+            ? { ...request, superseded: true }
+            : request,
+    );
+}
+
+/** Reloads match the assigned backend thread first because a reload may replace its local ID. */
+function eventRequestIndex<TBuild extends string>(state: ICopilotSnapshot<TBuild>, event: ChatEvent): number {
+    const assignedThreadIndex =
+        event.type === "chatConversationChanged" && event.threadId
+            ? matchingRequestIndex(state.requests, event.threadId)
+            : -1;
+    return assignedThreadIndex >= 0
+        ? assignedThreadIndex
+        : matchingRequestIndex(state.requests, event.threadId, conversationId(event));
+}
+
+/** Only a live request or an unclaimed foreground generation can activate a configured workflow. */
+function eventRegistration<TBuild extends string>(
+    state: ICopilotSnapshot<TBuild>,
+    event: ChatEvent,
+    pending: ICopilotRequest<TBuild> | undefined,
+    configuration: ICopilotConfiguration<TBuild>,
+): ICopilotRegistration<TBuild> | undefined {
+    if (event.type !== "chatAssistantMessage" || failedResponse(event)) {
+        return undefined;
+    }
+    const canActivate = pending
+        ? !pending.superseded
+        : event.threadId === state.interaction.threadId && requestedGeneration(state) !== undefined;
+    return canActivate
+        ? configuration.registrations.find((entry) =>
+              event.skills?.some((skill) => entry.skills.includes(skill.name)),
+          )
+        : undefined;
+}
+
+/** Clear foreground progress only when this event newly supersedes its owning request. */
+function hasNewlySupersededForeground<TBuild extends string>(
+    state: ICopilotSnapshot<TBuild>,
+    requests: readonly ICopilotRequest<TBuild>[],
+): boolean {
+    return requests.some(
+        (request) =>
+            request.superseded &&
+            !state.requests.find((previous) => previous.revision === request.revision)?.superseded &&
+            matches(state.interaction, request.threadId, request.conversationId),
+    );
+}
+
 function transitionEvent<TBuild extends string>(
     state: ICopilotSnapshot<TBuild>,
     event: ChatEvent,
     configuration: ICopilotConfiguration<TBuild>,
 ): ICopilotSnapshot<TBuild> {
-    if (event.type === "chatUserAnswers" && event.threadId !== state.interaction.threadId) {
+    const index = eventRequestIndex(state, event);
+    const pending = state.requests[index];
+    if (
+        event.type === "chatUserAnswers" &&
+        !pending &&
+        !matches(state.interaction, event.threadId, conversationId(event))
+    ) {
         return state;
     }
-    const index = matchingRequestIndex(state.requests, event.threadId, conversationId(event));
-    const pending = state.requests[index];
-    const registration =
-        event.type === "chatAssistantMessage"
-            ? configuration.registrations.find((entry) =>
-                  event.skills?.some((skill) => entry.skills.includes(skill.name)),
-              )
-            : undefined;
-    const requests = transitionRequests(state, event, index, registration);
-    const foregroundState = transitionForegroundEvent(state, event, pending, registration);
+    const registration = eventRegistration(state, event, pending, configuration);
+    const requests = transferWorkflow(
+        state,
+        event,
+        transitionRequests(state, event, index, registration),
+        pending,
+        registration,
+    );
+    const supersededForeground = hasNewlySupersededForeground(state, requests);
+    const foregroundState = transitionForegroundEvent(
+        supersededForeground
+            ? {
+                  ...state,
+                  interaction: {
+                      ...emptyInteraction<TBuild>(),
+                      conversationId: state.interaction.conversationId,
+                      threadId: state.interaction.threadId,
+                  },
+              }
+            : state,
+        event,
+        pending,
+        registration,
+    );
     let interaction = foregroundState.interaction;
-    const generation = foregroundState.generation;
+    const generation =
+        foregroundState.generation === state.generation
+            ? generationAfterRequests(state, requests)
+            : foregroundState.generation;
     if (sameInteraction(interaction, state.interaction)) {
         interaction = state.interaction;
     }
@@ -360,10 +634,7 @@ function transitionEvent<TBuild extends string>(
               requests,
               interaction,
               generation,
-              revision:
-                  event.type === "chatUserMessage" || event.type === "chatUserAnswers"
-                      ? state.revision + 1
-                      : state.revision,
+              revision: isUserInputEvent(event) ? state.revision + 1 : state.revision,
           };
 }
 
@@ -385,23 +656,37 @@ function transitionContext<TBuild extends string>(
           };
 }
 
+/** Definition installation outlives navigation and must retain its request until acknowledgement. */
+function isApplyingToTarget<TBuild extends string>(
+    request: ICopilotRequest<TBuild>,
+    target: ICopilotTarget<TBuild>,
+): boolean {
+    return (
+        request.applicationIds.length > 0 &&
+        request.type === target.type &&
+        (request.objectId === undefined || request.objectId === target.objectId)
+    );
+}
+
+/** Only work explicitly bound to another workflow or object survives a target reset. */
+function belongsToOtherTarget<TBuild extends string>(
+    request: ICopilotRequest<TBuild>,
+    target: ICopilotTarget<TBuild>,
+): boolean {
+    const type = request.type ?? request.generation;
+    return (
+        type !== undefined &&
+        (type !== target.type || (request.objectId !== undefined && request.objectId !== target.objectId))
+    );
+}
+
 function requestsAfterTargetReset<TBuild extends string>(
     requests: readonly ICopilotRequest<TBuild>[],
     target: ICopilotTarget<TBuild>,
 ): readonly ICopilotRequest<TBuild>[] {
-    return requests.some(
-        (request) =>
-            request.applicationIds.length &&
-            request.type === target.type &&
-            (request.objectId === undefined || request.objectId === target.objectId),
-    )
+    return requests.some((request) => isApplyingToTarget(request, target))
         ? requests
-        : requests.filter(
-              (request) =>
-                  request.type !== undefined &&
-                  (request.type !== target.type ||
-                      (request.objectId !== undefined && request.objectId !== target.objectId)),
-          );
+        : requests.filter((request) => belongsToOtherTarget(request, target));
 }
 
 function transitionTargetReset<TBuild extends string>(
@@ -548,7 +833,7 @@ function transitionApplicationFinished<TBuild extends string>(
     const applications = state.applications.filter((entry) => entry !== application);
     const requests = requestsAfterApplicationFinished(state.requests, input);
     if (input.kind === "applicationInterrupted") {
-        return { ...state, applications, requests };
+        return { ...state, applications, requests, generation: generationAfterRequests(state, requests) };
     }
     const sources = sourcesAfterApplicationApplied(state.sources, application, input.target);
     const isForeground = isForegroundApplication(state, application);
@@ -558,10 +843,23 @@ function transitionApplicationFinished<TBuild extends string>(
         applications,
         requests,
         sources,
+        generation: generationAfterRequests(state, requests),
         ...(isForeground && !hasNewer
             ? { generation: undefined, interaction: emptyInteraction<TBuild>() }
             : {}),
     };
+}
+
+/** Cancelling generation drops completed waits, but running responses and host installations still need cleanup. */
+function isCompletedGenerationRequest<TBuild extends string>(
+    request: ICopilotRequest<TBuild>,
+    type: TBuild,
+): boolean {
+    return !!(
+        (request.type ?? request.generation) === type &&
+        request.responseFinished &&
+        !request.applicationIds.length
+    );
 }
 
 /** Deterministic immutable transition; never allocates IDs, invokes effects, or performs I/O. @alpha */
@@ -583,10 +881,22 @@ export function transitionCopilot<TBuild extends string = CopilotBuildType>(
                 revision: state.revision + 1,
                 interaction: emptyInteraction(),
             };
-        case "cancelGeneration":
-            return state.generation === input.type || state.interaction.build?.type === input.type
-                ? { ...state, generation: undefined, interaction: emptyInteraction() }
+        case "cancelGeneration": {
+            const requests = state.requests.filter(
+                (request) => !isCompletedGenerationRequest(request, input.type),
+            );
+            const clearForeground =
+                state.generation === input.type || state.interaction.build?.type === input.type;
+            return clearForeground || requests.length !== state.requests.length
+                ? {
+                      ...state,
+                      ...(clearForeground
+                          ? { generation: undefined, interaction: emptyInteraction<TBuild>() }
+                          : {}),
+                      requests,
+                  }
                 : state;
+        }
         case "resetInteraction":
             return sameInteraction(state.interaction, emptyInteraction<TBuild>())
                 ? state

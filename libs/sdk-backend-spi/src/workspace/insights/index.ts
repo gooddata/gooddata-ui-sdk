@@ -218,6 +218,11 @@ export interface IInsightReferencing {
      * If requested, metadata about analytical dashboards from which this insight queries data will be returned here.
      */
     analyticalDashboards?: IMetadataObject[];
+
+    /**
+     * Publisher documents that show this insight.
+     */
+    documents?: IMetadataObject[];
 }
 
 /**

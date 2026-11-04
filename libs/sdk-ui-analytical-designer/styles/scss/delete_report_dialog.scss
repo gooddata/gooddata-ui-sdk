@@ -20,12 +20,18 @@ $max-list-height: 120px;
         &.warning {
             width: 100%;
         }
+
+        & + .gd-message {
+            margin-top: var(--gd-spacing-10px);
+        }
     }
 
     .gd-delete-report-dialog-usage-more {
-        cursor: pointer;
-        text-decoration: underline;
         margin-left: 5px;
+
+        .gd-ui-kit-button--variant-link {
+            color: var(--local_linkButtonColor);
+        }
     }
 
     .gd-delete-report-dialog-usage-list-wrapper {

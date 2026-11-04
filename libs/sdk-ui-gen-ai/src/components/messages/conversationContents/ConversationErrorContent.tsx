@@ -4,12 +4,10 @@ import { type ReactNode, useMemo, useState } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useSelector } from "react-redux";
 
 import { UiButton } from "@gooddata/sdk-ui-kit";
 
 import { type IChatConversationErrorContent } from "../../../model.js";
-import { settingsSelector } from "../../../store/chatWindow/chatWindowSelectors.js";
 import { useSettingsClick } from "../../hooks/useSettingsClick.js";
 import { MarkdownComponent } from "../contents/Markdown.js";
 
@@ -31,11 +29,10 @@ export function ConversationErrorContent({
     className,
     reason,
 }: ConversationErrorContentProps) {
-    const settings = useSelector(settingsSelector);
     const [showMore, setShowMore] = useState(false);
     const { formatMessage } = useIntl();
 
-    const onSettings = useSettingsClick(settings);
+    const onSettings = useSettingsClick();
 
     const components = useMemo(
         () => ({

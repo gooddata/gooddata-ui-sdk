@@ -2,27 +2,24 @@
 
 import { type MutableRefObject, useEffect, useMemo, useRef, useState } from "react";
 
+import { type Extension } from "@codemirror/state";
 import classNames from "classnames";
-import { FormattedMessage, IntlProvider, type IntlShape } from "react-intl";
+import { FormattedMessage, IntlProvider, type IntlShape, useIntl } from "react-intl";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type ObjectContent } from "@gooddata/sdk-maql-language-server";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 
+import { CodeEditor, MainClassContent } from "../codemirror/CodeEditor.js";
 import { type IRootRef, destroyTooltip, renderTooltip } from "../components/ExpandableTooltip.js";
 import { useExpandableTooltip } from "../components/hooks/useExpandableTooltip.js";
 import { useCodeTheme } from "../hooks/useCodeTheme.js";
-import {
-    type IStandaloneEditorConstructionOptions,
-    MainClassContent,
-    MonacoEditor,
-} from "../monaco/MonacoEditor.js";
 import { makeStyles } from "../theme/styles.js";
 
-import { LANGUAGE } from "./constants.js";
-import { useDecoration } from "./hooks/useDecoration.js";
+import { decorationsPlugin, maqlDecorations } from "./extensions/decorations.js";
 import { useLanguageService } from "./hooks/useLanguageService.js";
 import { MaqlTooltip, MaqlTooltipEditorClass, TooltipMaqlStyles } from "./MaqlEditor.styles.js";
+import { maqlLanguageSupport } from "./maqlLanguage.js";
 
 const BiggerClass = "bigger";
 const SmallerClass = "smaller";
@@ -132,12 +129,10 @@ const useStyles = makeStyles()((theme) => {
                 maxWidth: "100%",
                 minHeight: `0 !important`,
                 maxHeight: `${normalSize}px !important`,
+                overflow: "auto",
 
-                ".lines-content": {
+                ".cm-content": {
                     paddingLeft: `${padding}px !important`,
-                },
-                textarea: {
-                    marginLeft: `${padding + 1}px !important`,
                 },
             },
 
@@ -187,13 +182,19 @@ export interface IMaqlEditorTooltipContentProps {
 
 function MaqlEditorTooltipContent({ content }: IMaqlEditorTooltipContentProps) {
     const { classes, cx } = useStyles();
+    const intl = useIntl();
     const { title, description, maql } = content;
 
-    const ls = useLanguageService();
-    const decoration = useDecoration(ls, true);
-
-    const [theme, themeData] = useCodeTheme();
-    const options = useEditorOptions();
+    const languageService = useLanguageService();
+    const codeTheme = useCodeTheme();
+    const extensions = useMemo<Extension>(
+        () => [
+            maqlLanguageSupport(),
+            maqlDecorations(),
+            languageService ? decorationsPlugin(languageService, true) : [],
+        ],
+        [languageService],
+    );
 
     const { expanded, setHasScrollbar } = useExpandableTooltip();
 
@@ -256,17 +257,19 @@ function MaqlEditorTooltipContent({ content }: IMaqlEditorTooltipContentProps) {
                 <div
                     className={cx(classes.maql, descriptionOpened && SmallerClass, expanded && ExpandedClass)}
                 >
-                    <MonacoEditor
+                    <CodeEditor
                         className={MaqlTooltipEditorClass}
                         inline
-                        options={options}
+                        lineNumbers={false}
                         readonly
                         autofocus={false}
                         defaultValue={maql}
-                        language={LANGUAGE}
-                        themeName={theme}
-                        themeData={themeData}
-                        onEditorMount={(editor) => decoration(editor)}
+                        codeTheme={codeTheme}
+                        ariaLabel={intl.formatMessage(
+                            { id: "metricComponent.editMetric.hover.definition" },
+                            { title },
+                        )}
+                        extensions={extensions}
                     />
                 </div>
             </div>
@@ -331,16 +334,4 @@ export function renderMaqlTooltip(
 
 export function destroyMaqlTooltip(ref: MutableRefObject<IRootRef | null>): void {
     destroyTooltip(ref);
-}
-
-function useEditorOptions() {
-    return useMemo(
-        () =>
-            ({
-                lineNumbers: "off",
-                lineNumbersMinChars: 0,
-                folding: false,
-            }) as Partial<IStandaloneEditorConstructionOptions>,
-        [],
-    );
 }

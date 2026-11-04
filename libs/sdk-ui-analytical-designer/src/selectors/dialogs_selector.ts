@@ -6,7 +6,7 @@ import { getDialogsState } from "../store/dialogs/dialogs_selectors.js";
 
 import { getProjectId } from "./bootstrap_selector.js";
 import { getIsEmbedded } from "./meta_selector.js";
-import { analyticalDashboardUriFactorySelector } from "./uri_selector.js";
+import { analyticalDashboardUriFactorySelector, documentUriFactorySelector } from "./uri_selector.js";
 
 const getOpenReportDialog = createSelector(getDialogsState, (dialogs) => dialogs.openReportConfirmation);
 
@@ -31,11 +31,13 @@ export const deleteReportDialogSelector = createSelector(
     getProjectId,
     getIsEmbedded,
     analyticalDashboardUriFactorySelector,
-    (deleteReportDialog, projectId, isEmbedded, analyticalDashboardUriFactory) => ({
+    documentUriFactorySelector,
+    (deleteReportDialog, projectId, isEmbedded, analyticalDashboardUriFactory, documentUriFactory) => ({
         deleteReportDialog,
         projectId,
         isEmbedded,
         analyticalDashboardUriFactory,
+        documentUriFactory,
     }),
 );
 

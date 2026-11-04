@@ -8,13 +8,6 @@ import { getAuthCredentials, getBackend, reinitializeBackend } from "./backend.j
 import { PLATFORM_CONTEXT_VERSION, bootstrapApplication } from "./bootstrap.js";
 import { type IBackendPlatformContext } from "./types.js";
 
-export class HostApplicationDisabledError extends Error {
-    constructor() {
-        super("Host application is disabled by feature flag.");
-        this.name = "HostApplicationDisabledError";
-    }
-}
-
 /**
  * @alpha
  */
@@ -92,10 +85,6 @@ export async function loadPlatformContext(
     }
 
     throwIfAborted(options.signal);
-
-    if (bootstrap.userSettings["enableShellApplication"] !== true) {
-        throw new HostApplicationDisabledError();
-    }
 
     const elapsed = now() - start;
     options.callbacks?.onLoaded?.(elapsed);

@@ -15,7 +15,6 @@ async function loadProvider(): Promise<IBackendPlatformContextProvider> {
     vi.resetModules();
     vi.doMock("./loadPlatformContext.js", () => ({
         loadPlatformContext,
-        HostApplicationDisabledError: class extends Error {},
     }));
     vi.doMock("./waitForInjectedApiToken.js", () => ({
         shouldWaitForInjectedApiToken: () => false,

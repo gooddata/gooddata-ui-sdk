@@ -1,37 +1,8 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { readFileSync } from "fs";
-
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-    // exclude monaco-editor from optimization to prevent source map loading errors in test runs
-    optimizeDeps: {
-        exclude: ["monaco-editor"],
-    },
-    // also add plugin to strip source map references from monaco-editor files before Vite processes them
-    plugins: [
-        {
-            name: "strip-monaco-sourcemaps",
-            enforce: "pre",
-            load(id) {
-                if (id.includes("monaco-editor") && (id.endsWith(".js") || id.endsWith(".mjs"))) {
-                    try {
-                        const code = readFileSync(id, "utf-8");
-                        if (code.includes("sourceMappingURL")) {
-                            return {
-                                code: code.replace(/\/\/# sourceMappingURL=.*/g, ""),
-                                map: null,
-                            };
-                        }
-                    } catch {
-                        // noop
-                    }
-                }
-                return undefined;
-            },
-        },
-    ],
     test: {
         // Use happy-dom for faster performance than jsdom
         environment: "happy-dom",

@@ -1031,6 +1031,10 @@
         "text": "Dashboards ({count})",
         "crowdinContext": "Heading of a group in the list of objects that use the object being deleted. {count} is the number of dashboards in the group."
     },
+    "analyticsCatalog.asCode.dialog.delete.usageGroup.documents": {
+        "text": "Documents ({count})",
+        "crowdinContext": "Heading of a group in the list of objects that use the object being deleted. {count} is the number of Publisher documents in the group."
+    },
     "analyticsCatalog.asCode.dialog.delete.usageGroup.metrics": {
         "text": "Metrics ({count})",
         "crowdinContext": "Heading of a group in the list of objects that use the object being deleted. {count} is the number of metrics in the group."
@@ -1160,8 +1164,8 @@
         "crowdinContext": "Body of the confirmation dialog for deleting a visualization. {name} is the visualization title."
     },
     "analyticsCatalog.visualization.dialog.delete.usageWarning": {
-        "text": "This visualization is used by {count, plural, one {# dashboard} other {# dashboards}}. Deleting it may break them.",
-        "crowdinContext": "Warning shown in the visualization delete dialog when the visualization is referenced by dashboards."
+        "text": "This visualization is used by {count, plural, one {# object} other {# objects}}. Deleting it may break them.",
+        "crowdinContext": "Warning shown in the visualization delete dialog when the visualization is referenced by other objects. {count} is the number of referencing dashboards and Publisher documents."
     },
     "analyticsCatalog.visualization.dialog.delete.submit": {
         "text": "Delete",

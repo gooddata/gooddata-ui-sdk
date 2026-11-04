@@ -1876,8 +1876,8 @@
         "crowdinContext": "Body of the delete visualization dialog when the visualization can be deleted; {title} is the visualization name"
     },
     "deleteInsightDialog.notUsed": {
-        "text": "The visualization is not used on any dashboard.",
-        "crowdinContext": "Info line in the delete visualization dialog when no dashboard uses the visualization"
+        "text": "The visualization is not used on any dashboard or in any document.",
+        "crowdinContext": "Info line in the delete visualization dialog when no dashboard or Publisher document uses the visualization"
     },
     "deleteInsightDialog.checking": {
         "text": "Checking where the visualization is used…",
@@ -1891,17 +1891,33 @@
         "text": "The visualization <strong>{title}</strong> cannot be deleted because it is used in some dashboards. To delete this visualization, remove it from all dashboards first.",
         "crowdinContext": "Shown in the delete visualization dialog when other saved dashboards still use the visualization; {title} is the visualization name"
     },
+    "deleteInsightDialog.usedInDocumentsAndDashboards": {
+        "text": "The visualization <strong>{title}</strong> cannot be deleted because it is used in some documents or dashboards. To delete this visualization, remove it from them first.",
+        "crowdinContext": "Shown in the delete visualization dialog when both other saved dashboards and Publisher documents use the visualization; {title} is the visualization name"
+    },
+    "deleteInsightDialog.usedInDocumentsAndThisDashboard": {
+        "text": "The visualization <strong>{title}</strong> cannot be deleted because it is used in some documents and on the dashboard you are currently editing. To delete this visualization, remove it from them first.",
+        "crowdinContext": "Shown in the delete visualization dialog when Publisher documents and the dashboard currently being edited use the visualization, and no other saved dashboard does; {title} is the visualization name"
+    },
+    "deleteInsightDialog.usedInDocuments": {
+        "text": "The visualization <strong>{title}</strong> cannot be deleted because it is used in some documents. To delete this visualization, remove it from all documents first.",
+        "crowdinContext": "Shown in the delete visualization dialog when Publisher documents use the visualization; {title} is the visualization name"
+    },
+    "deleteInsightDialog.documentsUsage": {
+        "text": "This visualization is used in <strong>{count, plural, one {# document} other {# documents}}</strong>.",
+        "crowdinContext": "Warning line in the delete visualization dialog with the number of Publisher documents using the visualization"
+    },
     "deleteInsightDialog.usage": {
         "text": "This visualization is used in <strong>{count, plural, one {# dashboard} other {# dashboards}}</strong>.",
         "crowdinContext": "Warning line in the delete visualization dialog with the number of dashboards using the visualization"
     },
     "deleteInsightDialog.usage.showMore": {
         "text": "Show more",
-        "crowdinContext": "Link in the delete visualization dialog that reveals the list of dashboards using the visualization"
+        "crowdinContext": "Link in the delete visualization dialog that reveals the list of dashboards or documents using the visualization"
     },
     "deleteInsightDialog.usage.showLess": {
         "text": "Show less",
-        "crowdinContext": "Link in the delete visualization dialog that hides the list of dashboards using the visualization"
+        "crowdinContext": "Link in the delete visualization dialog that hides the list of dashboards or documents using the visualization"
     },
     "deleteInsightDialog.inaccessibleDashboards": {
         "text": "and <strong>{count} more</strong> not shared with you",

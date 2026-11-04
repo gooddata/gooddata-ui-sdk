@@ -3,12 +3,19 @@
 import { describe, expect, it } from "vitest";
 
 import {
+    type ChatAssistantMessageEvent,
     type ChatClarificationQuestionsEvent,
     type ChatEvent,
     type ChatUserMessageEvent,
 } from "../store/events.js";
 
-import { selectCopilotGenerationPending, selectCopilotSource, selectCopilotStatus } from "./selectors.js";
+import {
+    selectCopilotGenerationPending,
+    selectCopilotReasoningTitle,
+    selectCopilotReplyThreadId,
+    selectCopilotSource,
+    selectCopilotStatus,
+} from "./selectors.js";
 import { createCopilotState, transitionCopilot } from "./transitions.js";
 import {
     CopilotBuildType,
@@ -47,7 +54,7 @@ const user = (threadId = "thread", conversationId = "local"): ChatUserMessageEve
     question: "Build",
     objects: [],
 });
-const skill = (threadId = "thread", responseCompleted = false): ChatEvent => ({
+const skill = (threadId = "thread", responseCompleted = false): ChatAssistantMessageEvent => ({
     type: "chatAssistantMessage",
     threadId,
     useCase: "GENERAL",
@@ -64,7 +71,7 @@ const questions = (
     questions: [],
     responses,
 });
-const completed = (threadId = "thread"): ChatEvent => ({
+const completed = (threadId = "thread"): ChatAssistantMessageEvent => ({
     type: "chatAssistantMessage",
     threadId,
     useCase: "GENERAL",
@@ -94,6 +101,488 @@ function freeze<T>(value: T): T {
 }
 
 describe("pure copilot lifecycle", () => {
+    it("keeps late thread assignment for superseded drafts without restoring ownership", () => {
+        let state = transition(initial(), { kind: "startGeneration", type: Build.Board });
+        state = transition(state, event(user("", "draft-local")));
+        state = transition(state, event(user("other", "other-local")));
+        state = transition(state, event(skill("other")));
+        expect(state.requests[0].superseded).toBe(true);
+        state = transition(
+            state,
+            event({
+                type: "chatConversationChanged",
+                threadId: "assigned",
+                conversation: { id: "assigned", localId: "draft-local", createdAt: "", updatedAt: "" },
+            }),
+        );
+        expect(state.requests[0]).toMatchObject({
+            conversationId: "draft-local",
+            threadId: "assigned",
+            superseded: true,
+        });
+        expect(selectCopilotStatus(state, scope)).toBe("building");
+        state = transition(state, event(completed("assigned")));
+        expect(state.requests).toHaveLength(1);
+        expect(state.requests[0].threadId).toBe("other");
+        expect(selectCopilotStatus(state, scope)).toBe("building");
+    });
+
+    it.each([false, true])(
+        "keeps ownership independent across targets (completed activation: %s)",
+        (responseCompleted) => {
+            let state = transition(activated(), event(completed()));
+            const otherTarget = { ...target, objectId: "other-board" };
+            state = transition(state, { kind: "context", context: { ...otherTarget, isEditing: true } });
+            state = transition(state, event(user("other", "other-local")));
+            state = transition(state, event(skill("other", responseCompleted)));
+            expect(state.requests[0]).toMatchObject({
+                ...target,
+                threadId: "thread",
+                responseFinished: true,
+            });
+            expect(state.requests[0].superseded).not.toBe(true);
+            expect(selectCopilotStatus(state, target)).toBe("waiting");
+            expect(selectCopilotStatus(state, { ...otherTarget, isEditing: true })).toBe(
+                responseCompleted ? "idle" : "building",
+            );
+            expect(selectCopilotReplyThreadId(state, target)).toBe("thread");
+        },
+    );
+
+    it("keeps ownership independent across registered workflow types", () => {
+        let state = transition(activated(), event(completed()));
+        const otherTarget = { type: Build.Document, objectId: "document" };
+        state = transition(state, { kind: "context", context: { ...otherTarget, isEditing: true } });
+        state = transition(state, event(user("other", "other-local")));
+        state = transition(
+            state,
+            event({ ...skill("other"), skills: [{ name: "document_builder", title: "Document" }] }),
+        );
+        expect(state.requests[0].superseded).not.toBe(true);
+        expect(selectCopilotStatus(state, target)).toBe("waiting");
+        expect(selectCopilotStatus(state, { ...otherTarget, isEditing: true })).toBe("building");
+        expect(selectCopilotReplyThreadId(state, target)).toBe("thread");
+    });
+
+    describe.each([false, true])("loader ownership (clarification: %s)", (clarification) => {
+        it.each([false, true])(
+            "keeps the owner when a new chat initially reports the previous thread (skill already activated: %s)",
+            (activatedSkill) => {
+                let state = activatedSkill ? activated() : started();
+                if (clarification) {
+                    state = transition(state, event(questions()));
+                }
+                state = transition(state, event(completed()));
+                const owner = state.requests[0];
+                const updates: ChatEvent[] = [
+                    user("thread", "new-local"),
+                    {
+                        type: "chatConversationChanged",
+                        threadId: "new-thread",
+                        conversation: {
+                            id: "new-thread",
+                            localId: "new-local",
+                            createdAt: "",
+                            updatedAt: "",
+                        },
+                    },
+                    { type: "chatReasoning", threadId: "new-thread", title: "Unrelated reasoning" },
+                    completed("new-thread"),
+                ];
+                for (const value of updates) {
+                    state = transition(state, event(value));
+                    expect(state.requests[0]).toBe(owner);
+                    expect(selectCopilotStatus(state, scope)).toBe("waiting");
+                    expect(selectCopilotReplyThreadId(state, scope)).toBe("thread");
+                }
+                state = transition(state, event(user()));
+                expect(selectCopilotStatus(state, scope)).toBe(activatedSkill ? "building" : "generating");
+            },
+        );
+
+        it.each([false, true])(
+            "keeps creation mode when ownership transfers in a read-only host (skill already activated: %s)",
+            (activatedSkill) => {
+                let state = transition(activatedSkill ? activated() : started(), {
+                    kind: "context",
+                    context: target,
+                });
+                if (clarification) {
+                    state = transition(state, event(questions()));
+                }
+                state = transition(state, event(completed()));
+                state = transition(state, event(user("other", "other-local")));
+                expect(selectCopilotStatus(state, target)).toBe("waiting");
+                state = transition(state, event(skill("other")));
+                expect(selectCopilotStatus(state, target)).toBe("building");
+                expect(selectCopilotGenerationPending(state, Build.Board)).toBe(true);
+                state = transition(state, event(completed("other")));
+                expect(selectCopilotStatus(state, target)).toBe("waiting");
+                expect(selectCopilotReplyThreadId(state, target)).toBe("other");
+                state = transition(
+                    state,
+                    event({
+                        type: "chatAssistantMessage",
+                        threadId: "other",
+                        useCase: "GENERAL",
+                        cancelled: true,
+                    }),
+                );
+                expect(selectCopilotStatus(state, target)).toBe("idle");
+                state = transition(state, event(skill()));
+                expect(selectCopilotStatus(state, target)).toBe("idle");
+            },
+        );
+
+        it.each([false, true])(
+            "ignores unrelated chat activity (skill already activated: %s)",
+            (activatedSkill) => {
+                let state = activatedSkill ? activated() : started();
+                if (clarification) {
+                    state = transition(state, event(questions()));
+                }
+                state = transition(state, event(completed()));
+                state = transition(state, event(user("other", "other-local")));
+                const unrelated: ChatEvent[] = [
+                    { type: "chatReasoning", threadId: "other", title: "Unrelated" },
+                    {
+                        type: "chatAssistantMessage",
+                        threadId: "other",
+                        useCase: "GENERAL",
+                        skills: [{ name: "alert", title: "Alert" }],
+                    },
+                    questions("other"),
+                    completed("other"),
+                    { type: "chatAssistantMessage", threadId: "other", useCase: "INVALID" },
+                    { type: "chatAssistantMessage", threadId: "other", useCase: "GENERAL", cancelled: true },
+                ];
+                for (const value of unrelated) {
+                    state = transition(state, event(value));
+                    expect(selectCopilotStatus(state, scope)).toBe("waiting");
+                    expect(selectCopilotReplyThreadId(state, scope)).toBe("thread");
+                    expect(selectCopilotReasoningTitle(state, scope)).toBeUndefined();
+                    expect(selectCopilotGenerationPending(state, Build.Board)).toBe(true);
+                }
+                state = transition(state, event(user()));
+                expect(selectCopilotStatus(state, scope)).toBe(activatedSkill ? "building" : "generating");
+                state = transition(
+                    state,
+                    event({ type: "chatAssistantMessage", threadId: "thread", useCase: "INVALID" }),
+                );
+                expect(selectCopilotStatus(state, scope)).toBe("idle");
+            },
+        );
+
+        it.each(["dashboard_builder", "dashboard_editor"] as const)(
+            "transfers ownership only on %s and never resurrects the old wait",
+            (name) => {
+                let state = activated();
+                if (clarification) {
+                    state = transition(state, event(questions()));
+                }
+                state = transition(state, event(completed()));
+                state = transition(state, event(user("other", "other-local")));
+                state = transition(state, event({ ...skill("other"), skills: [{ name, title: "Build" }] }));
+                expect(selectCopilotStatus(state, scope)).toBe("building");
+                state = transition(state, event(questions("other")));
+                expect(selectCopilotStatus(state, scope)).toBe("waiting");
+                expect(selectCopilotReplyThreadId(state, scope)).toBe("other");
+                for (const value of [skill(), questions(), completed()]) {
+                    state = transition(state, event(value));
+                    expect(selectCopilotStatus(state, scope)).toBe("waiting");
+                    expect(selectCopilotReplyThreadId(state, scope)).toBe("other");
+                }
+                const failed = transition(
+                    state,
+                    event({ type: "chatAssistantMessage", threadId: "other", useCase: "INVALID" }),
+                );
+                expect(selectCopilotStatus(failed, scope)).toBe("idle");
+                expect(selectCopilotGenerationPending(failed, Build.Board)).toBe(false);
+                state = transition(state, {
+                    kind: "applicationStarted",
+                    id: "other-application",
+                    source: { target, threadId: "other", conversationId: "other-local" },
+                });
+                state = transition(state, { kind: "applicationApplied", id: "other-application", target });
+                expect(selectCopilotStatus(state, scope)).toBe("idle");
+                expect(selectCopilotGenerationPending(state, Build.Board)).toBe(false);
+                state = transition(state, event(user()));
+                expect(selectCopilotStatus(state, scope)).toBe("idle");
+                state = transition(state, event(skill()));
+                expect(selectCopilotStatus(state, scope)).toBe("building");
+            },
+        );
+    });
+
+    describe.each([false, true])("creation before skill activation (clarification: %s)", (clarification) => {
+        it.each([
+            { type: "chatAssistantMessage", threadId: "thread", useCase: "INVALID" },
+            { type: "chatAssistantMessage", threadId: "thread", useCase: "GENERAL", cancelled: true },
+        ] satisfies ChatEvent[])("releases its background wait on $useCase", (value) => {
+            let state = started();
+            if (clarification) {
+                state = transition(state, event(questions()));
+            }
+            state = transition(state, event(completed()));
+            state = transition(state, event({ type: "chatReset" }));
+            expect(selectCopilotStatus(state, target)).toBe("waiting");
+            state = transition(state, event(value));
+            expect(selectCopilotStatus(state, target)).toBe("idle");
+            expect(selectCopilotGenerationPending(state, Build.Board)).toBe(false);
+        });
+
+        it("releases its background wait when the definition is applied", () => {
+            let state = started();
+            if (clarification) {
+                state = transition(state, event(questions()));
+            }
+            state = transition(state, event(completed()));
+            state = transition(state, event({ type: "chatReset" }));
+            state = transition(state, event(user("other", "other-local")));
+            state = applying(state);
+            expect(selectCopilotStatus(state, target)).toBe("building");
+            state = transition(state, { kind: "applicationApplied", id: "application", target });
+            expect(selectCopilotStatus(state, target)).toBe("idle");
+            expect(selectCopilotGenerationPending(state, Build.Board)).toBe(false);
+        });
+
+        it.each([false, true])(
+            "preserves waiting in its original chat (switch before completion: %s)",
+            (switchFirst) => {
+                let state = started();
+                if (clarification) {
+                    state = transition(state, event(questions()));
+                }
+                if (switchFirst) {
+                    state = transition(state, event({ type: "chatReset" }));
+                }
+                state = transition(state, event(completed()));
+                state = transition(state, event({ type: "chatReset" }));
+                expect(selectCopilotStatus(state, target)).toBe("waiting");
+                state = transition(state, event(user("other", "other-local")));
+                expect(state.requests[1].generation).toBeUndefined();
+                expect(selectCopilotStatus(state, target)).toBe("waiting");
+                state = transition(state, event(user()));
+                expect(selectCopilotStatus(state, target)).toBe("generating");
+                state = transition(state, event(skill()));
+                expect(state.interaction.build?.intent).toBe("create");
+                expect(selectCopilotStatus(state, target)).toBe("building");
+                state = transition(state, event(completed()));
+                state = transition(state, { kind: "cancelGeneration", type: Build.Board });
+                expect(selectCopilotStatus(state, target)).toBe("idle");
+            },
+        );
+    });
+
+    describe.each(["clarification", "reply"] as const)("waiting for %s across chats", (waiting) => {
+        it.each(
+            waiting === "clarification"
+                ? (["create", "edit", "builder"] as const)
+                : (["create", "builder"] as const),
+        )("preserves and resumes a %s workflow", (workflow) => {
+            const query = {
+                ...target,
+                isEditing: workflow === "edit",
+                isBuilder: workflow === "builder",
+            };
+            let state =
+                workflow === "create"
+                    ? activated()
+                    : transition(transition(initial(), event(user())), event(skill()));
+            if (workflow === "builder") {
+                state = transition(state, { kind: "context", context: { ...target, builderTarget: target } });
+            }
+            if (waiting === "clarification") {
+                state = transition(state, event(questions()));
+            }
+            state = transition(state, event(completed()));
+            expect(selectCopilotStatus(state, query)).toBe("waiting");
+            state = transition(
+                state,
+                event({
+                    type: "chatConversationChanged",
+                    threadId: "other",
+                    conversation: { id: "other", localId: "other-local", createdAt: "", updatedAt: "" },
+                }),
+            );
+            expect(state.interaction.build).toBeUndefined();
+            expect(selectCopilotStatus(state, query)).toBe("waiting");
+            expect(state.requests[0]).toMatchObject({ type: Build.Board, responseFinished: true });
+            expect(selectCopilotStatus(state, { ...query, objectId: "unrelated" })).toBe("idle");
+            state = transition(
+                state,
+                event({
+                    type: "chatConversationChanged",
+                    threadId: "thread",
+                    conversation: { id: "thread", localId: "local", createdAt: "", updatedAt: "" },
+                }),
+            );
+            state = transition(
+                state,
+                event(
+                    waiting === "clarification"
+                        ? {
+                              type: "chatUserAnswers",
+                              threadId: "thread",
+                              conversationId: "local",
+                              interactionId: "question",
+                              answers: [],
+                          }
+                        : user(),
+                ),
+            );
+            expect(selectCopilotStatus(state, query)).toBe("building");
+            expect(state.requests[0].intent).toBe(workflow === "create" ? "create" : "edit");
+            state = transition(state, event(skill()));
+            expect(state.requests[0].intent).toBe(workflow === "create" ? "create" : "edit");
+            expect(state.interaction.build?.intent).toBe(workflow === "create" ? "create" : "edit");
+            state = applying(state);
+            state = transition(state, event(completed()));
+            expect(selectCopilotStatus(state, query)).toBe("building");
+            state = transition(state, { kind: "applicationApplied", id: "application", target });
+            expect(selectCopilotStatus(state, query)).toBe("idle");
+            expect(state.requests).toEqual([]);
+        });
+
+        it("releases a background wait on explicit cancellation", () => {
+            let state = activated();
+            if (waiting === "clarification") {
+                state = transition(state, event(questions()));
+            }
+            state = transition(state, event(completed()));
+            state = transition(state, event({ type: "chatReset" }));
+            expect(selectCopilotStatus(state, target)).toBe("waiting");
+            state = transition(state, { kind: "cancelGeneration", type: Build.Board });
+            expect(state.requests).toEqual([]);
+            expect(selectCopilotStatus(state, target)).toBe("idle");
+        });
+
+        it.each([
+            {
+                kind: "event",
+                event: { type: "chatAssistantMessage", threadId: "thread", useCase: "INVALID" },
+            },
+            {
+                kind: "event",
+                event: {
+                    type: "chatAssistantMessage",
+                    threadId: "thread",
+                    useCase: "GENERAL",
+                    cancelled: true,
+                },
+            },
+            { kind: "resetTarget", target },
+        ] satisfies CopilotInput<Build>[])("releases a background wait on $kind", (input) => {
+            let state = activated();
+            if (waiting === "clarification") {
+                state = transition(state, event(questions()));
+            }
+            state = transition(state, event(completed()));
+            state = transition(state, event({ type: "chatReset" }));
+            expect(selectCopilotStatus(state, target)).toBe("waiting");
+            state = transition(state, input);
+            expect(state.requests).toEqual([]);
+            expect(selectCopilotStatus(state, target)).toBe("idle");
+        });
+    });
+
+    it("retains a waiting request when skill activation arrives with completion", () => {
+        let state = transition(started(), event(questions()));
+        state = transition(state, event(skill("thread", true)));
+        state = transition(state, event({ type: "chatReset" }));
+        expect(selectCopilotStatus(state, target)).toBe("waiting");
+        expect(state.requests[0]).toMatchObject({
+            type: Build.Board,
+            intent: "create",
+            responseFinished: true,
+        });
+    });
+
+    it.each([false, true])(
+        "keeps creation owned by its request after switching chats (builder: %s)",
+        (isBuilder) => {
+            const query = { ...target, isBuilder };
+            let state = transition(
+                activated(),
+                event({ type: "chatReasoning", threadId: "thread", title: "Planning" }),
+            );
+            state = transition(
+                state,
+                event({
+                    type: "chatConversationChanged",
+                    threadId: "other",
+                    conversation: { id: "other", localId: "other-local", createdAt: "", updatedAt: "" },
+                }),
+            );
+            expect(state.interaction.build).toBeUndefined();
+            expect(state.interaction.reasoningTitle).toBeUndefined();
+            expect(selectCopilotStatus(state, query)).toBe("building");
+            expect(selectCopilotGenerationPending(state, Build.Board)).toBe(true);
+            expect(selectCopilotStatus(state, { type: Build.Board, objectId: "unrelated", isBuilder })).toBe(
+                "idle",
+            );
+            expect(selectCopilotStatus(state, { type: Build.Document, isBuilder })).toBe("idle");
+            state = transition(state, event(questions()));
+            expect(selectCopilotStatus(state, query)).toBe("waiting");
+            state = applying(state);
+            state = transition(state, event(completed()));
+            expect(selectCopilotStatus(state, query)).toBe("building");
+            state = transition(state, { kind: "applicationApplied", id: "application", target });
+            expect(selectCopilotStatus(state, query)).toBe("idle");
+            expect(selectCopilotGenerationPending(state, Build.Board)).toBe(false);
+        },
+    );
+
+    it.each([
+        completed(),
+        { type: "chatAssistantMessage", threadId: "thread", useCase: "INVALID" },
+        { type: "chatAssistantMessage", threadId: "thread", useCase: "GENERAL", cancelled: true },
+    ] satisfies ChatEvent[])(
+        "waits on normal background completion and releases on failure or cancellation: $type",
+        (value) => {
+            let state = transition(activated(), event({ type: "chatReset" }));
+            expect(selectCopilotStatus(state, { type: Build.Board })).toBe("building");
+            state = transition(state, event(value));
+            const waiting = value.type === "chatAssistantMessage" && value.responseCompleted === true;
+            expect(selectCopilotStatus(state, { type: Build.Board })).toBe(waiting ? "waiting" : "idle");
+            expect(selectCopilotGenerationPending(state, Build.Board)).toBe(waiting);
+            state = transition(state, { kind: "cancelGeneration", type: Build.Board });
+            expect(selectCopilotStatus(state, { type: Build.Board })).toBe("idle");
+            expect(selectCopilotGenerationPending(state, Build.Board)).toBe(false);
+        },
+    );
+
+    it("keeps an activated edit building in a builder after switching chats, but not in read-only scope", () => {
+        let state = transition(transition(initial(), event(user())), event(skill()));
+        state = transition(state, { kind: "context", context: { ...target, builderTarget: target } });
+        state = transition(state, event({ type: "chatReset" }));
+        expect(selectCopilotStatus(state, { ...target, isBuilder: true })).toBe("building");
+        expect(selectCopilotStatus(state, target)).toBe("idle");
+        expect(selectCopilotGenerationPending(state, Build.Board)).toBe(false);
+        state = transition(state, event(completed()));
+        expect(selectCopilotStatus(state, { ...target, isBuilder: true })).toBe("waiting");
+        expect(selectCopilotStatus(state, target)).toBe("idle");
+        state = transition(state, { kind: "cancelGeneration", type: Build.Board });
+        expect(selectCopilotStatus(state, { ...target, isBuilder: true })).toBe("idle");
+    });
+
+    it("preserves original intent but transfers ownership when another chat activates editing", () => {
+        let state = transition(activated(), event({ type: "chatReset" }));
+        state = transition(state, event(user("other", "other-local")));
+        state = transition(state, event(skill("other")));
+        expect(state.interaction.build?.intent).toBe("edit");
+        expect(state.requests[0]).toMatchObject({ intent: "create", superseded: true });
+        state = transition(state, event(skill()));
+        expect(selectCopilotStatus(state, target)).toBe("idle");
+        expect(selectCopilotGenerationPending(state, Build.Board)).toBe(false);
+        state = transition(state, event(completed()));
+        expect(selectCopilotStatus(state, target)).toBe("idle");
+        expect(selectCopilotStatus(state, scope)).toBe("building");
+        state = transition(state, event(completed("other")));
+        expect(selectCopilotStatus(state, { ...target, isEditing: true })).toBe("idle");
+        expect(selectCopilotStatus(state, scope)).toBe("waiting");
+    });
+
     it.each([
         completed(),
         { type: "chatAssistantMessage", threadId: "thread", useCase: "INVALID" },
@@ -104,6 +593,193 @@ describe("pure copilot lifecycle", () => {
         expect(selectCopilotStatus(state, { type: Build.Board })).toBe("building");
         expect(selectCopilotStatus(state, { type: Build.Document })).toBe("idle");
     });
+    describe.each([
+        { workflow: "creation before skill activation", create: true, activatedSkill: false },
+        { workflow: "creation after skill activation", create: true, activatedSkill: true },
+        { workflow: "editing", create: false, activatedSkill: true },
+    ])("typed clarification reply during $workflow", ({ create, activatedSkill }) => {
+        const waiting = (responseCompleted = true) => {
+            let state = create ? started() : transition(initial(), event(user()));
+            if (activatedSkill) {
+                state = transition(state, event(skill()));
+            }
+            state = transition(state, event(questions()));
+            state = transition(state, event({ ...questions(), interactionId: "second-question" }));
+            return responseCompleted ? transition(state, event(completed())) : state;
+        };
+
+        it.each(["foreground", "background", "reloaded"] as const)(
+            "preserves ownership when the forms are dismissed before a typed reply in %s conversation",
+            (selection) => {
+                let state = waiting();
+                const owner = state.requests[0];
+                const localId = selection === "reloaded" ? "reloaded-local" : "local";
+                if (selection !== "foreground") {
+                    state = transition(
+                        state,
+                        event({
+                            type: "chatConversationChanged",
+                            threadId: selection === "reloaded" ? "thread" : "other",
+                            conversation: {
+                                id: selection === "reloaded" ? "thread" : "other",
+                                localId: selection === "reloaded" ? localId : "other-local",
+                                createdAt: "",
+                                updatedAt: "",
+                            },
+                        }),
+                    );
+                }
+                for (const interactionId of ["question", "second-question"]) {
+                    state = transition(state, event({ ...questions("thread", null), interactionId }));
+                    expect(selectCopilotStatus(state, scope)).toBe("waiting");
+                    expect(selectCopilotReplyThreadId(state, scope)).toBe("thread");
+                    expect(state.requests[0]).toMatchObject({
+                        revision: owner.revision,
+                        type: owner.type,
+                        generation: owner.generation,
+                        intent: owner.intent,
+                        objectId: "board",
+                        responseFinished: true,
+                    });
+                }
+                expect(state.requests[0].pendingClarificationIds).toEqual([]);
+                state = transition(state, event(user("thread", localId)));
+                expect(selectCopilotStatus(state, scope)).toBe(activatedSkill ? "building" : "generating");
+                expect(state.requests).toHaveLength(1);
+                expect(state.requests[0]).toMatchObject({
+                    conversationId: localId,
+                    threadId: "thread",
+                    type: owner.type,
+                    generation: owner.generation,
+                    intent: owner.intent,
+                    objectId: "board",
+                    awaitingClarification: false,
+                });
+                expect(state.requests[0].responseFinished).not.toBe(true);
+                expect(state.interaction.pendingClarificationIds).toEqual([]);
+                state = transition(
+                    state,
+                    event({ type: "chatReasoning", threadId: "thread", title: "Resuming" }),
+                );
+                expect(selectCopilotReasoningTitle(state, scope)).toBe("Resuming");
+                state = transition(
+                    state,
+                    event({
+                        type: "chatAssistantMessage",
+                        threadId: "thread",
+                        useCase: "GENERAL",
+                        cancelled: true,
+                    }),
+                );
+                expect(selectCopilotStatus(state, scope)).toBe("idle");
+            },
+        );
+
+        it("resumes a typed reply even when the form is dismissed before response completion", () => {
+            let state = waiting(false);
+            const owner = state.requests[0];
+            state = transition(state, event(questions("thread", null)));
+            state = transition(
+                state,
+                event({ ...questions("thread", null), interactionId: "second-question" }),
+            );
+            expect(selectCopilotStatus(state, scope)).toBe(activatedSkill ? "building" : "generating");
+            state = transition(state, event(user()));
+            expect(selectCopilotStatus(state, scope)).toBe(activatedSkill ? "building" : "generating");
+            expect(state.requests[0]).toMatchObject({
+                type: owner.type,
+                generation: owner.generation,
+                intent: owner.intent,
+                objectId: "board",
+                awaitingClarification: false,
+            });
+        });
+    });
+
+    describe.each([false, true])("clarification submission (skill activated: %s)", (activatedSkill) => {
+        it.each(["foreground", "background", "reloaded"] as const)(
+            "resumes the owning workflow after the form is filled in %s conversation",
+            (selection) => {
+                let state = transition(activatedSkill ? activated() : started(), event(questions()));
+                state = transition(state, event(completed()));
+                if (selection !== "foreground") {
+                    state = transition(
+                        state,
+                        event({
+                            type: "chatConversationChanged",
+                            threadId: "other",
+                            conversation: {
+                                id: "other",
+                                localId: "other-local",
+                                createdAt: "",
+                                updatedAt: "",
+                            },
+                        }),
+                    );
+                }
+                const localId = selection === "reloaded" ? "reloaded-local" : "local";
+                if (selection === "reloaded") {
+                    state = transition(
+                        state,
+                        event({
+                            type: "chatConversationChanged",
+                            threadId: "thread",
+                            conversation: { id: "thread", localId, createdAt: "", updatedAt: "" },
+                        }),
+                    );
+                }
+                state = transition(state, event(questions("thread", { answer: "Yes" })));
+                state = transition(
+                    state,
+                    event({
+                        type: "chatUserAnswers",
+                        threadId: "thread",
+                        conversationId: localId,
+                        interactionId: "question",
+                        answers: [],
+                    }),
+                );
+
+                expect(selectCopilotStatus(state, scope)).toBe(activatedSkill ? "building" : "generating");
+                expect(state.requests).toHaveLength(1);
+                expect(state.requests[0]).toMatchObject({
+                    conversationId: localId,
+                    threadId: "thread",
+                    awaitingClarification: false,
+                    pendingClarificationIds: [],
+                });
+                expect(state.requests[0].responseFinished).not.toBe(true);
+                state = transition(
+                    state,
+                    event({ type: "chatReasoning", threadId: "thread", title: "Resuming" }),
+                );
+                expect(selectCopilotReasoningTitle(state, scope)).toBe("Resuming");
+            },
+        );
+
+        it("preserves ownership when the form is filled before the response completes", () => {
+            let state = transition(activatedSkill ? activated() : started(), event(questions()));
+            state = transition(state, event(questions("thread", { answer: "Yes" })));
+            state = transition(
+                state,
+                event({
+                    type: "chatUserAnswers",
+                    threadId: "thread",
+                    conversationId: "local",
+                    interactionId: "question",
+                    answers: [],
+                }),
+            );
+            expect(selectCopilotStatus(state, scope)).toBe(activatedSkill ? "building" : "generating");
+            expect(state.requests).toHaveLength(1);
+            expect(state.requests[0]).toMatchObject({
+                conversationId: "local",
+                threadId: "thread",
+                objectId: "board",
+            });
+        });
+    });
+
     it("ignores clarification answers for another foreground thread", () => {
         const state = activated();
         expect(
@@ -112,6 +788,24 @@ describe("pure copilot lifecycle", () => {
                 event({ type: "chatUserAnswers", threadId: "other", interactionId: "q", answers: [] }),
             ),
         ).toBe(state);
+    });
+
+    it("ignores answers with a different local conversation even if they report the owner's thread", () => {
+        const state = transition(transition(activated(), event(questions())), event(completed()));
+        expect(
+            transition(
+                state,
+                event({
+                    type: "chatUserAnswers",
+                    threadId: "thread",
+                    conversationId: "other-local",
+                    interactionId: "question",
+                    answers: [],
+                }),
+            ),
+        ).toBe(state);
+        expect(selectCopilotStatus(state, scope)).toBe("waiting");
+        expect(selectCopilotReplyThreadId(state, scope)).toBe("thread");
     });
 
     it("tracks multiple clarification items independently", () => {
@@ -364,7 +1058,6 @@ describe("pure copilot lifecycle", () => {
         completed(),
         { type: "chatAssistantMessage", threadId: "thread", useCase: "INVALID" },
         { type: "chatAssistantMessage", threadId: "thread", useCase: "GENERAL", cancelled: true },
-        questions("thread", null),
     ] satisfies ChatEvent[])("retains applying requests through response termination: $type", (value) => {
         let state = transition(applying(), event(value));
         expect(state.requests[0].responseFinished).toBe(true);
@@ -377,13 +1070,33 @@ describe("pure copilot lifecycle", () => {
         expect(transition(state, { kind: "applicationInterrupted", id: "application" })).toBe(state);
     });
 
-    it("interruption preserves a still-running request until completion", () => {
+    it("does not terminate a running application when a clarification form is dismissed", () => {
+        let state = transition(applying(), event(questions()));
+        state = transition(state, event(questions("thread", null)));
+        expect(state.requests[0].responseFinished).toBeUndefined();
+        expect(state.requests[0].pendingClarificationIds).toEqual([]);
+        expect(selectCopilotStatus(state, scope)).toBe("building");
+        const requests = state.requests;
+        state = transition(state, { kind: "resetTarget", target });
+        expect(state.requests).toBe(requests);
+        state = transition(state, { kind: "applicationInterrupted", id: "application" });
+        expect(state.requests[0].applicationIds).toEqual([]);
+        expect(selectCopilotStatus(state, scope)).toBe("building");
+        expect(transition(state, { kind: "applicationInterrupted", id: "application" })).toBe(state);
+        state = transition(state, event({ ...completed(), cancelled: true }));
+        expect(state.requests).toEqual([]);
+        expect(selectCopilotStatus(state, scope)).toBe("idle");
+    });
+
+    it("interruption preserves a running request and waits for a retry after completion", () => {
         let state = transition(applying(), { kind: "applicationInterrupted", id: "application" });
         expect(state.requests[0].applicationIds).toEqual([]);
         expect(state.requests[0].responseFinished).toBeUndefined();
         expect(state.applications).toEqual([]);
         expect(selectCopilotStatus(state, scope)).toBe("building");
         state = transition(state, event(completed()));
+        expect(selectCopilotStatus(state, scope)).toBe("waiting");
+        state = transition(state, { kind: "cancelGeneration", type: Build.Board });
         expect(state.requests).toEqual([]);
     });
 

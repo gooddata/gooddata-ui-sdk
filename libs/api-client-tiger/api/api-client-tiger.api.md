@@ -18498,7 +18498,7 @@ export interface DependentEntitiesNode {
 }
 
 // @public (undocumented)
-export type DependentEntitiesNodeTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'automation' | 'memoryItem' | 'knowledgeRecommendation' | 'visualizationObject' | 'filterContext' | 'filterView';
+export type DependentEntitiesNodeTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'automation' | 'memoryItem' | 'knowledgeRecommendation' | 'visualizationObject' | 'filterContext' | 'filterView' | 'document';
 
 // @public (undocumented)
 export interface DependentEntitiesRequest {
@@ -23817,7 +23817,7 @@ export interface EntityIdentifier {
 }
 
 // @public (undocumented)
-export type EntityIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'automation' | 'memoryItem' | 'knowledgeRecommendation' | 'visualizationObject' | 'filterContext' | 'filterView';
+export type EntityIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'automation' | 'memoryItem' | 'knowledgeRecommendation' | 'visualizationObject' | 'filterContext' | 'filterView' | 'document';
 
 // @public
 export interface EntitySearchBody {

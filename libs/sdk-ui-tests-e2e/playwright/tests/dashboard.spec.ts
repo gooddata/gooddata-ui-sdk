@@ -5,7 +5,7 @@ import { expect } from "@playwright/test";
 import { injectAuthHeader } from "@gooddata/sdk-e2e-utils";
 
 import { API_TOKEN, test } from "../config.js";
-import { enterEditMode, visit, visitCopyOf, waitAllHidden } from "../helpers.js";
+import { enterEditMode, visit, visitCopyOf, waitAllHidden, waitTableLoaded } from "../helpers.js";
 
 test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
@@ -59,6 +59,8 @@ test.describe("Dashboard", { additionalWindowProperties: { useSafeLocalIdentifie
 
                 await visit(page, "dashboard/dashboard-many-rows-columns");
                 await waitAllHidden(page, ".s-loading");
+                // Entering edit mode while the table data is still loading aborts the result request
+                await waitTableLoaded(page, parentSelector);
                 await enterEditMode(page);
 
                 const table = page.locator(`${parentSelector} .gd-pivot-table-next`);

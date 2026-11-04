@@ -2,7 +2,6 @@
 
 import { useMemo } from "react";
 
-import { type IStandaloneThemeData } from "../monaco/MonacoEditor.js";
 import {
     DecoratorAttribute,
     DecoratorComputedAttribute,
@@ -13,54 +12,59 @@ import {
     DecoratorLabel,
     DecoratorMetric,
     DecoratorParameter,
-} from "../monaco/MonacoEditor.styles.js";
+} from "../codemirror/CodeEditor.styles.js";
 
-export function useCodeTheme(): [string, IStandaloneThemeData] {
-    return useMemo<[string, IStandaloneThemeData]>(
-        () => [
-            "gooddata-theme",
-            {
-                base: "vs",
-                inherit: true,
-                rules: [
-                    //others languages are inherited from vs base theme
+/**
+ * Colors of the code itself: the token palette and the reference badges.
+ */
+export interface IMaqlCodeTheme {
+    background: string;
+    /**
+     * Color per token type, keyed by the type name the tokenizer and the semantic tokens use.
+     */
+    tokens: Record<string, string>;
+    decorators: Record<string, { color: string; background: string }>;
+}
 
-                    //maql specific
-                    { token: "keyword.maql", foreground: "#7364CF" },
-                    { token: "function.maql", foreground: "#7364CF" },
-                    { token: "variable.maql", foreground: "#464E56" },
-                    { token: "attribute.maql", foreground: "#DB7900" },
-                    { token: "label.maql", foreground: "#DB7900" },
-                    { token: "fact.maql", foreground: "#00A67D" },
-                    { token: "metric.maql", foreground: "#00A67D" },
-                    { token: "dataset.maql", foreground: "#952F8E" },
-                    { token: "string.maql", foreground: "#D95791" },
-                    { token: "number.maql", foreground: "#D95791" },
-                    { token: "comment.maql", foreground: "#94A1AD" },
-                ],
-                colors: {
-                    "editor.background": "#FCFCFD",
-                    [`editor.variable.${DecoratorFact}.color`]: "rgba(0,166,125,1)",
-                    [`editor.variable.${DecoratorFact}.background`]: "rgba(0,166,125,0.07)",
-                    [`editor.variable.${DecoratorMetric}.color`]: "rgba(0,166,125,1)",
-                    [`editor.variable.${DecoratorMetric}.background`]: "rgba(0,166,125,0.07)",
-                    [`editor.variable.${DecoratorDataset}.color`]: "rgba(149,47,142,1)",
-                    [`editor.variable.${DecoratorDataset}.background`]: "rgba(149,47,142,0.07)",
-                    [`editor.variable.${DecoratorAttribute}.color`]: "rgba(219,121,0,1)",
-                    [`editor.variable.${DecoratorAttribute}.background`]: "rgba(219,121,0,0.07)",
-                    [`editor.variable.${DecoratorLabel}.color`]: "rgba(219,121,0,1)",
-                    [`editor.variable.${DecoratorLabel}.background`]: "rgba(219,121,0,0.07)",
-                    [`editor.variable.${DecoratorComputedAttribute}.color`]: "rgba(219,121,0,1)",
-                    [`editor.variable.${DecoratorComputedAttribute}.background`]: "rgba(219,121,0,0.07)",
-                    [`editor.variable.${DecoratorDateAttribute}.color`]: "rgba(0,155,201,1)",
-                    [`editor.variable.${DecoratorDateAttribute}.background`]: "rgba(0,155,201,0.07)",
-                    [`editor.variable.${DecoratorDateLabel}.color`]: "rgba(0,155,201,1)",
-                    [`editor.variable.${DecoratorDateLabel}.background`]: "rgba(0,155,201,0.07)",
-                    [`editor.variable.${DecoratorParameter}.color`]: "rgba(148,161,173,1)",
-                    [`editor.variable.${DecoratorParameter}.background`]: "rgba(148,161,173,0.07)",
-                },
+function decorator(color: string): { color: string; background: string } {
+    return {
+        color: `rgba(${color},1)`,
+        background: `rgba(${color},0.07)`,
+    };
+}
+
+export function useCodeTheme(): IMaqlCodeTheme {
+    return useMemo<IMaqlCodeTheme>(
+        () => ({
+            background: "#FCFCFD",
+            tokens: {
+                keyword: "#7364CF",
+                function: "#7364CF",
+                type: "#7364CF",
+                operator: "#464E56",
+                variable: "#464E56",
+                attribute: "#DB7900",
+                label: "#DB7900",
+                fact: "#00A67D",
+                metric: "#00A67D",
+                dataset: "#952F8E",
+                string: "#D95791",
+                number: "#D95791",
+                comment: "#94A1AD",
+                bracket: "#0431FA",
             },
-        ],
+            decorators: {
+                [DecoratorFact]: decorator("0,166,125"),
+                [DecoratorMetric]: decorator("0,166,125"),
+                [DecoratorDataset]: decorator("149,47,142"),
+                [DecoratorAttribute]: decorator("219,121,0"),
+                [DecoratorLabel]: decorator("219,121,0"),
+                [DecoratorComputedAttribute]: decorator("219,121,0"),
+                [DecoratorDateAttribute]: decorator("0,155,201"),
+                [DecoratorDateLabel]: decorator("0,155,201"),
+                [DecoratorParameter]: decorator("148,161,173"),
+            },
+        }),
         [],
     );
 }

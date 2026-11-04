@@ -1,19 +1,17 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { type AnalyticalDashboardUriFactory } from "../selectors/uri_selector.js";
-
 interface IDeleteReportDialogUsageListItemProps {
     id: string;
     title: string;
     isEmbedded: boolean;
-    analyticalDashboardUriFactory: AnalyticalDashboardUriFactory;
+    uriFactory: (id: string) => string;
 }
 
 export function DeleteReportDialogUsageListItem({
     id,
     title,
     isEmbedded,
-    analyticalDashboardUriFactory,
+    uriFactory,
 }: IDeleteReportDialogUsageListItemProps) {
     if (isEmbedded) {
         return (
@@ -26,12 +24,11 @@ export function DeleteReportDialogUsageListItem({
             </li>
         );
     }
-    const dashboardUri = analyticalDashboardUriFactory(id);
     return (
         <li>
             <a
                 className="gd-delete-report-dialog-usage-list-item s-delete-report-dialog-usage-list-item"
-                href={dashboardUri}
+                href={uriFactory(id)}
                 rel="noopener noreferrer"
                 target="_blank"
             >

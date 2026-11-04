@@ -14,6 +14,13 @@ import { type InsightEditorTarget } from "../../model/types/insightEditorTypes.j
 
 import { InsightEditorOverlay } from "./InsightEditorOverlay.js";
 
+// `isolate: false` shares one module graph per worker, so `InsightEditorOverlay.tsx` may already have
+// been evaluated against the real store provider by an earlier test file (anything that pulls in
+// `DashboardInner.tsx`), which would turn the `vi.mock()` calls below into no-ops.
+vi.hoisted(() => {
+    vi.resetModules();
+});
+
 vi.mock("../../model/react/DashboardStoreProvider.js", () => ({
     useDashboardDispatch: vi.fn<() => unknown>(),
     useDashboardSelector: vi.fn<() => unknown>(),
@@ -88,12 +95,16 @@ describe("InsightEditorOverlay", () => {
         document.body.appendChild(trigger);
         trigger.focus();
 
-        const { unmount } = renderOverlay();
-        expect(document.activeElement).toBe(editor());
+        try {
+            const { unmount } = renderOverlay();
+            expect(document.activeElement).toBe(editor());
 
-        unmount();
-        expect(document.activeElement).toBe(trigger);
-        trigger.remove();
+            unmount();
+            expect(document.activeElement).toBe(trigger);
+        } finally {
+            // the worker shares its DOM with later test files; never leave the trigger behind
+            trigger.remove();
+        }
     });
 
     it("does not open the editor on a mobile screen", () => {

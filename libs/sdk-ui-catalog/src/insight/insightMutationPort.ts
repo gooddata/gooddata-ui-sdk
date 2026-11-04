@@ -25,7 +25,7 @@ export function loadInsight(
         .getInsight(idRef(item.identifier, "insight"), { loadUserData: true });
 }
 
-/** Dashboards referencing an insight. @internal */
+/** Dashboards and documents referencing an insight. @internal */
 export async function listInsightReferences(
     backend: IAnalyticalBackend,
     workspace: string,
@@ -35,10 +35,12 @@ export async function listInsightReferences(
         .workspace(workspace)
         .insights()
         .getInsightReferencingObjects(idRef(item.identifier, "insight"));
-    return (referencing.analyticalDashboards ?? []).map(({ id, type, title }) => ({
-        ...idRef(id, type),
-        title,
-    }));
+    return [...(referencing.analyticalDashboards ?? []), ...(referencing.documents ?? [])].map(
+        ({ id, type, title }) => ({
+            ...idRef(id, type),
+            title,
+        }),
+    );
 }
 
 function pickInsightIdentity(

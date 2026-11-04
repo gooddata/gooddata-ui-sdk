@@ -289,8 +289,8 @@ export type DashboardConfig = {
      * visualization list. Analytical Designer loads lazily when one of them opens it.
      *
      * `@gooddata/sdk-ui-analytical-designer` and its stylesheets load with it. Analytical Designer
-     * imports the Monaco editor worker with the Vite `?worker&url` syntax: a Vite dev server needs the
-     * `optimizeDeps` plugin and a webpack host needs a loader for it, see the README of that package.
+     * ships a bundled Monaco editor worker, so no worker-specific Vite or webpack setup is needed.
+     * See the README of that package for build-time defines and content security policy requirements.
      *
      * Defaults to false.
      *

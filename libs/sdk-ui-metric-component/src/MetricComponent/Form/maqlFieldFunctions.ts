@@ -2,7 +2,7 @@
 
 import { type DependencyList, useCallback, useRef } from "react";
 
-import { type IStandaloneCodeEditor, type Monaco } from "../../MaqlEditor/monaco/MonacoEditor.js";
+import { type MaqlEditorView } from "../../MaqlEditor/codemirror/types.js";
 import { type IMeasureDef } from "../metric/metricHelpers.js";
 
 export type IMeasureDefWithMaqlField = Omit<IMeasureDef, "expression"> & { expression: string | MaqlValue };
@@ -30,15 +30,11 @@ export function getMaqlValid(value: MaqlValue): boolean {
 export function useMaqlField(
     value: MaqlValue,
     onChange: (value: MaqlValue) => void,
-): [
-    (editor: IStandaloneCodeEditor, monaco: Monaco, value: string) => void,
-    (editor: IStandaloneCodeEditor, monaco: Monaco, valid: boolean) => void,
-] {
+): [(editor: MaqlEditorView, value: string) => void, (editor: MaqlEditorView, valid: boolean) => void] {
     const valueRef = useRef<string>(getMaqlValue(value));
     const validRef = useRef<boolean>(getMaqlValid(value));
 
-    // oxlint-disable-next-line @typescript-eslint/no-explicit-any
-    const onValidation: any = useValueOnly(
+    const onValidation = useValueOnly(
         (valid: boolean) => {
             validRef.current = valid;
             onChange(createMaqlValue(valueRef.current, valid));
@@ -46,8 +42,7 @@ export function useMaqlField(
         [onChange],
     );
 
-    // oxlint-disable-next-line @typescript-eslint/no-explicit-any
-    const onChanged: any = useValueOnly(
+    const onChanged = useValueOnly(
         (currentValue: string) => {
             valueRef.current = currentValue;
             onChange(createMaqlValue(currentValue, validRef.current));
@@ -60,8 +55,7 @@ export function useMaqlField(
 
 function useValueOnly<T>(handler: (val: T) => void, deps: DependencyList) {
     return useCallback(
-        (...args: T[]) => {
-            const [, , value] = args;
+        (_editor: MaqlEditorView, value: T) => {
             handler(value);
         },
         // oxlint-disable-next-line react-hooks/exhaustive-deps
