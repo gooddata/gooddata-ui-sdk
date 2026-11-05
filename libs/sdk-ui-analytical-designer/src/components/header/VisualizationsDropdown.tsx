@@ -19,7 +19,6 @@ import {
     insightUpdated,
     insightUri,
     insightVisualizationUrl,
-    objRefToString,
     uriRef,
 } from "@gooddata/sdk-model";
 import { useBackend } from "@gooddata/sdk-ui";
@@ -41,19 +40,11 @@ import {
 } from "@gooddata/sdk-ui-semantic-search";
 
 import { deleteReport } from "../../actions/delete_actions.js";
-import { openReport } from "../../actions/open_actions.js";
+import { type IAnalyticalDesignerOpenProps } from "../../embedding/editorHeaderSlotTypes.js";
 import { descriptionTooltipOpened } from "../../sagas/description_tooltip/description_tooltip_ui_actions.js";
 import { isOwnershipSupported, supportsObjectUris } from "../../selectors/backend_capabilities_selector.js";
-import { getProjectId, getUserLoginMD5, getUserUri } from "../../selectors/bootstrap_selector.js";
-import {
-    enableCatalogSmartSearchResults,
-    enableVisualizationFilteringByTags,
-    getMetadataTimeZone,
-} from "../../selectors/feature_flag_selector.js";
-import { canOpenReport } from "../../selectors/open_report_selector.js";
-import { openReportIdSelector } from "../../selectors/report_selector.js";
-import { getTagsConfiguration } from "../../selectors/route_selector.js";
-import { getEnabledVisualizationClassesUrls } from "../../services/visualization_class_service.js";
+import { getUserLoginMD5, getUserUri } from "../../selectors/bootstrap_selector.js";
+import { getMetadataTimeZone } from "../../selectors/feature_flag_selector.js";
 import { getIsReadOnlyMode } from "../../store/embedding/embedding_selectors.js";
 import { type AppDispatch } from "../../store/types.js";
 
@@ -88,8 +79,6 @@ interface IInsightGroup extends SearchItemGroup<IInsight["insight"]> {
     identifier?: string;
 }
 
-const isDisabledSelector = createSelector([canOpenReport], (canOpenReport) => !canOpenReport);
-
 const authorSelector = createSelector(
     supportsObjectUris,
     getUserUri,
@@ -102,28 +91,27 @@ const authorSelector = createSelector(
 const tabsIds: ITabsIds = { my: INSIGHT_DROPDOWN_MY_TAB_ID, all: INSIGHT_DROPDOWN_ALL_TAB_ID };
 const divider = { divider: true };
 
-export function VisualizationsDropdown() {
+/**
+ * The Open control as a dropdown list of visualizations.
+ */
+export function VisualizationsDropdown({
+    workspace: workspaceId,
+    label: buttonText,
+    isDisabled,
+    selectedInsightId: openInsightId,
+    includeTags: tags,
+    excludeTags,
+    enabledVisualizationUrls: enabledVisualizationClassesUrls,
+    isSemanticSearchEnabled: isSmartSearchResultsEnabled,
+    onOpenInsight,
+}: IAnalyticalDesignerOpenProps) {
     const intl = useIntl();
     const dispatch = useDispatch<AppDispatch>();
 
-    const workspaceId = useSelector(getProjectId);
     const author = useSelector(authorSelector);
-    const isDisabled = useSelector(isDisabledSelector);
-    const openInsightId = useSelector(openReportIdSelector);
-    const enabledVisualizationClassesUrls: string[] = useSelector(getEnabledVisualizationClassesUrls);
     const hasOwnershipSupport = useSelector(isOwnershipSupported);
-    const isSmartSearchResultsEnabled = useSelector(enableCatalogSmartSearchResults);
     const metadataTimeZone = useSelector(getMetadataTimeZone);
-    const isFilteringByTagsEnabled = useSelector(enableVisualizationFilteringByTags);
-    const tagsConfiguration = useSelector(getTagsConfiguration);
     const isReadOnly = useSelector(getIsReadOnlyMode);
-
-    const onOpenInsight = useCallback(
-        (insightRef: ObjRef) => {
-            dispatch(openReport(insightRef, false));
-        },
-        [dispatch],
-    );
 
     const onDeleteInsight = useCallback(
         (insightRef: ObjRef, title: string) => {
@@ -139,22 +127,7 @@ export function VisualizationsDropdown() {
         [dispatch],
     );
 
-    const buttonText = intl.formatMessage({ id: "openReportPlaceholder" });
-
     const backend = useBackend();
-
-    // Extract tag identifiers from tags configuration only when the feature flag is enabled
-    // Tags come as ObjRef (idRef) from route selector, extract identifier directly as the method expects
-    // just strings
-    const [tags, excludeTags] = useMemo(() => {
-        const tags = isFilteringByTagsEnabled
-            ? tagsConfiguration?.includeObjectsWithTags?.map((tag) => objRefToString(tag))
-            : undefined;
-        const excludeTags = isFilteringByTagsEnabled
-            ? tagsConfiguration?.excludeObjectsWithTags?.map((tag) => objRefToString(tag))
-            : undefined;
-        return [tags, excludeTags];
-    }, [isFilteringByTagsEnabled, tagsConfiguration]);
 
     const {
         items,

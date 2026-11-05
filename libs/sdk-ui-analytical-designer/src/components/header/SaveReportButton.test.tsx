@@ -4,9 +4,10 @@ import { fireEvent, render } from "@testing-library/react";
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { saveReportCheck, saveReportFromKD } from "../../actions/save_actions.js";
+import { type IAnalyticalDesignerHeaderContext } from "../../embedding/editorHeaderSlotTypes.js";
 import { withIntl } from "../../utils/with_intl.js";
 
-import { SaveReportButton } from "./SaveReportButton.js";
+import { DefaultSave, useSaveProps } from "./SaveReportButton.js";
 
 vi.hoisted(() => {
     vi.resetModules();
@@ -21,6 +22,8 @@ vi.mock("react-redux", async () => {
         ...actual,
         useSelector: (selector: (state: unknown) => unknown) => selector(undefined),
         useDispatch: () => dispatchMock,
+        // the guarded callback reads the state through the mocked selector as well
+        useStore: () => ({ getState: (): unknown => undefined }),
     };
 });
 
@@ -44,6 +47,17 @@ interface ISaveReportSelectorValues {
     isDisabled: boolean;
     displaySaveInsightFromKDDialog: boolean;
     showDisabledTooltip: boolean;
+}
+
+const context: IAnalyticalDesignerHeaderContext = {
+    layout: { mode: "legacy", isCatalogCollapsed: false, canCollapseCatalog: false },
+    workspace: "workspace",
+    title: "",
+    hasUnsavedChanges: false,
+};
+
+function SaveReportButton() {
+    return <DefaultSave {...useSaveProps(context)} />;
 }
 
 describe("Test SaveReportButton", () => {

@@ -97,6 +97,7 @@
     "visualizations.totals.dropdown.title.nat": "Podsumowanie (Suma)",
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "Agregacja podsumowania (Suma) nie jest dostępna podczas filtrowania wizualizacji wg wartości metryki. Aby użyć podsumowania (Suma), usuń wszystkie filtry wartości metryki z paska filtrów.",
     "visualizations.totals.dropdown.tooltip.nat.disabled.ranking": "Agregacja podsumowania (Suma) nie jest dostępna podczas filtrowania wizualizacji za pomocą filtra rankingowego. Aby użyć podsumowania (Suma), usuń filtr rankingowy z paska filtrów.",
+    "visualizations.totals.dropdown.tooltip.subtotal.disabled.measureSort": "Sumy częściowe wierszy są niedostępne podczas sortowania według metryki. Wyczyść sortowanie według metryki, aby wyświetlić sumy częściowe.",
     "visualizations.totals.dropdown.title.med": "Mediana",
     "visualizations.headline.tertiary.title": "Versus",
     "visualizations.headline.comparison.title.change": "Zmień",

@@ -95,7 +95,7 @@ export function convertAutomation(
               alert: convertAlert(alert),
           }
         : {};
-    const state = alert ? alert.trigger.state : undefined;
+    const state = alert ? alert.trigger.state : automation.state;
     const metadataObj = metadata
         ? {
               metadata,

@@ -10,6 +10,7 @@ import {
     type IReferencesService,
     type IWorkspaceAccessControlService,
     type IWorkspaceAgentsService,
+    type IWorkspaceAnalyticsAsCodeService,
     type IWorkspaceAttributesService,
     type IWorkspaceAutomationService,
     type IWorkspaceCatalogFactory,
@@ -227,6 +228,16 @@ export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
 
     public customApplicationSettings(): IWorkspaceCustomApplicationSettingsService {
         return this.decorated.customApplicationSettings();
+    }
+
+    public analyticsAsCode(): IWorkspaceAnalyticsAsCodeService {
+        const { analyticsAsCode } = this.factories;
+
+        if (analyticsAsCode) {
+            return analyticsAsCode(this.decorated.analyticsAsCode(), this.workspace);
+        }
+
+        return this.decorated.analyticsAsCode();
     }
 
     public automations(): IWorkspaceAutomationService {

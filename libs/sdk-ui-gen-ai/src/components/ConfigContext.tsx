@@ -9,8 +9,10 @@ export type ConfigContext = {
     canManage?: boolean;
     canAnalyze?: boolean;
     canFullControl?: boolean;
+    canCreateDocument?: boolean;
     linkHandler?: (linkClickEvent: LinkHandlerEvent) => string | undefined;
     catalogItems?: CatalogItem[];
+    inputPlaceholder?: string;
 };
 
 /**
@@ -55,6 +57,8 @@ export function ConfigProvider({
     canManage,
     canAnalyze,
     canFullControl,
+    canCreateDocument,
+    inputPlaceholder,
 }: PropsWithChildren<ConfigContext>) {
     const parentConfig = useConfig();
 
@@ -72,8 +76,20 @@ export function ConfigProvider({
             canManage: canManage ?? parentConfig.canManage,
             canAnalyze: canAnalyze ?? parentConfig.canAnalyze,
             canFullControl: canFullControl ?? parentConfig.canFullControl,
+            canCreateDocument: canCreateDocument ?? parentConfig.canCreateDocument,
+            inputPlaceholder: inputPlaceholder ?? parentConfig.inputPlaceholder,
         }),
-        [allowNativeLinks, parentConfig, linkHandler, catalogItems, canManage, canAnalyze, canFullControl],
+        [
+            allowNativeLinks,
+            parentConfig,
+            linkHandler,
+            catalogItems,
+            canManage,
+            canAnalyze,
+            canFullControl,
+            canCreateDocument,
+            inputPlaceholder,
+        ],
     );
 
     return <configContext.Provider value={value}>{children}</configContext.Provider>;

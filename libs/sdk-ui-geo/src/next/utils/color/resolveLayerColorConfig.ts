@@ -18,7 +18,7 @@ export interface IResolvedLayerColorConfig {
  * Resolves effective color configuration for a layer.
  *
  * @remarks
- * Precedence: layer config > chart config > defaults.
+ * Precedence: layer config \> chart config \> defaults.
  *
  * @internal
  */

@@ -14,7 +14,7 @@
  *   for `http(s):` URLs; unsafe URLs (javascript:, data:text/...) fall back to plain text
  * - Horizontal rules (--- or ***)
  * - Line breaks
- * - Backslash escapes (\*, \_, \[, \!, etc.) — render the metachar as literal text.
+ * - Backslash escapes (`\*`, `\_`, `\[`, `\!`, etc.) — render the metachar as literal text.
  *   Used by reference resolution to keep data values that contain markdown
  *   syntax from being reinterpreted as formatting.
  *

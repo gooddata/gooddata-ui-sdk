@@ -28,7 +28,7 @@ export interface ITimezoneDialogProps {
  * Dialog for the ad-hoc, session-only change of the insight timezone in Analytical Designer.
  *
  * @remarks
- * Mirrors the KD {@code TimezoneDialog}: hosts the shared timezone picker with "Default" (clears
+ * Mirrors the KD `TimezoneDialog`: hosts the shared timezone picker with "Default" (clears
  * the override so the workspace configuration applies again) and "From browser" special items.
  * Applying a selection resolves the browser-detected sentinel locally so the session-only Redux
  * state always stores a concrete IANA timezone ID. The override is never persisted with the insight.

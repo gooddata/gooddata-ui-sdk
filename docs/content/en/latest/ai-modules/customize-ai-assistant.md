@@ -7,19 +7,50 @@ api_symbols:
   - "@gooddata/sdk-ui-gen-ai:GenAIAssistant"
 source_files:
   - src/components/customized/types.ts
+  - src/components/GenAIChat.tsx
+  - src/components/GenAIStandaloneInput.tsx
 related_pages:
   - /docs/ai-modules/ai-assistant
   - /docs/ai-modules/ai-assistant-layout
   - /docs/ai-modules/control-ai-assistant
   - /docs/integrations/embedding/apply-theming
-description: Replace or wrap parts of the AI Assistant UI through slots, from the landing screen and the agent chooser to messages, follow-up questions, and feedback.
+description: Customize the AI Assistant input placeholder, or replace and wrap parts of its UI through slots.
 ai_generated_body: true
 type: docs
 weight: 53
 section: AI & Modules
 ---
 
-Change parts of the AI Assistant UI by passing your own components in the `slots` prop of `GenAIAssistant` (and of `GenAIConversations` for the conversation history). Each slot component receives `Default`, the built-in component, and `defaultProps`, its props. Render `Default` with `defaultProps` to wrap the built-in UI, or render your own markup to replace it. The [slot list](../ai-assistant/#slots) on the reference page shows every slot and its stability.
+Set `inputPlaceholder` to change the AI Assistant's chat input hint, or pass your own components in the `slots` prop of `GenAIAssistant` (and of `GenAIConversations` for the conversation history). Each slot component receives `Default`, the built-in component, and `defaultProps`, its props. Render `Default` with `defaultProps` to wrap the built-in UI, or render your own markup to replace it. The [slot list](../ai-assistant/#slots) on the reference page shows every slot and its stability.
+
+## Set the input placeholder
+
+Pass `inputPlaceholder` to `GenAIAssistant` to replace the chat input placeholder without replacing any UI components:
+
+```tsx
+import { GenAIAssistant } from "@gooddata/sdk-ui-gen-ai";
+import "@gooddata/sdk-ui-gen-ai/styles/css/main.css";
+
+export const App = () => <GenAIAssistant inputPlaceholder="Ask about your data…" />;
+```
+
+Omit `inputPlaceholder` to keep the bundled placeholder for the assistant's `locale` (`Ask here…` in English). Custom text is displayed as-is; translate it in your application before passing it to the component. Pass an empty string (`inputPlaceholder=""`) to hide the placeholder.
+
+The standalone input accepts the same prop:
+
+```tsx
+import { GenAIStandaloneInput } from "@gooddata/sdk-ui-gen-ai/internal";
+import "@gooddata/sdk-ui-gen-ai/styles/css/main.css";
+
+export const StandaloneInput = () => (
+    <GenAIStandaloneInput
+        inputPlaceholder="Start a conversation about your data…"
+        onStart={(prompt) => console.log(prompt)}
+    />
+);
+```
+
+`GenAIStandaloneInput` is an internal API and may change without notice. Its existing `placeholder` prop remains supported. When both props are supplied, `inputPlaceholder` takes precedence, including when it is an empty string. When neither is supplied, the input uses the bundled localized placeholder.
 
 {{% alert color="warning" title="Alpha API" %}}
 Only the `LandingScreen`, `Disclaimer`, and `AgentItem` slots are public. All other slots, their props types, and every
@@ -431,10 +462,16 @@ The slots get these props in `defaultProps`:
 
 - `MessageTextContent`: the `text`, the metadata `objects` rendered as links in it, and `isLoading`.
 - `MessageErrorContent`: the error `message`, and optionally its `code`, `reason`, `traceId`, and `isLoading`.
-- `MessageReasoningContent`: the reasoning `summary`, the referenced `objects`, and `isLoading`.
+- `MessageReasoningContent`: the reasoning `summary`, the referenced `objects`, optional `durationMs` (`number`), optional `agent` (`{ id: string; name?: string }`), and `isLoading`.
 - `MessageMultipartContent`: the `message`, its `parts` (text, visualization, dashboard, and so on), the shared `references`, and `isLast`.
 - `ConversationVisualizationContent`: the `message`, the `part`, the `visualization` to render, an optional what-if `scenario`, `className`, `menuItems`, and `enableKeyDriverAnalysis` (alpha), which turns explain on charts on or off. It defaults to whether `GenAiKeyDriverAnalysis` is mounted and the workspace setting is on.
 - `ConversationKdaContent`: the `kda` definition, `className`, and `enableKeyDriverAnalysis`, with the same default.
+
+`durationMs` is the reasoning-group duration in milliseconds, matching the built-in reasoning header. It is the absolute difference between the last message's `createdAt` timestamp in the reasoning group and the last message's timestamp in the preceding group. It includes tool activity grouped with reasoning, but excludes answer generation; it is not the total response duration or a measurement of reasoning-text streaming alone.
+
+The value updates as the group's message timestamps change during streaming and is recalculated from those same timestamps when conversation history is reloaded. It does not depend on Interaction Intelligence being enabled and does not fetch interaction steps or require additional API requests. When the required group or message timestamps are unavailable, `durationMs` is `undefined`. Check explicitly for `undefined` so that a valid duration of `0` is still displayed, as in the example below.
+
+`agent` identifies the user-selected agent recorded for that message, not an internally routed sub-agent. It is available for live messages and reloaded history when the backend supplies the per-message `agentId`. Switching agents does not change the identity on earlier messages. The optional `name` comes from the matching agent's current `title` in the loaded agent list, not a historical snapshot; when the agent is unavailable, the `id` is still provided. If a message has no `agentId`, `agent` is `undefined` rather than falling back to the conversation's current agent. Resolving this prop uses the existing agent list and makes no additional API requests.
 
 Use `menuItems` of `ConversationVisualizationContent` to hide specific menu actions:
 
@@ -478,6 +515,12 @@ const CustomReasoningContent = ({
 }: ISlotProps<IGenAIAssistantMessageReasoningContentProps>) => (
     <div style={{ borderLeft: "2px solid #ccc", paddingLeft: 8, opacity: 0.8 }}>
         <Default {...defaultProps} />
+        {defaultProps.agent && (
+            <small>Agent: {defaultProps.agent.name ?? defaultProps.agent.id}</small>
+        )}
+        {defaultProps.durationMs !== undefined && (
+            <small>Reasoning: {(defaultProps.durationMs / 1000).toFixed(1)} s</small>
+        )}
     </div>
 );
 

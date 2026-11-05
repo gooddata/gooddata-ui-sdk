@@ -2,7 +2,7 @@
 
 import { type IPackage, importXOverrides, importXRules, scopeRules } from "@gooddata/lint-config";
 
-import type { IDualConfiguration } from "../types.js";
+import type { IConfiguration } from "../types.js";
 
 const importXPlugin: IPackage = {
     name: "eslint-plugin-import-x",
@@ -43,21 +43,17 @@ const commonConfiguration = {
     ],
 };
 
-const v9Common = {
+const flat = {
     ...commonConfiguration,
+    rules: scopeRules(importXRules, "import-x"),
     plugins: { "import-x": importXPlugin },
 };
 
-export const importX: IDualConfiguration<"import-x"> = {
-    v8: {
+export const importX: IConfiguration<"import-x"> = {
+    legacy: {
         ...commonConfiguration,
         rules: scopeRules(importXRules, "import-x"),
         plugins: ["import-x"],
     },
-    v9: {
-        ...v9Common,
-        rules: scopeRules(importXRules, "import-x"),
-        plugins: { "import-x": importXPlugin },
-    },
-    ox: {},
+    flat: { v9: flat, v9ox: {}, v10: flat, v10ox: {} },
 };

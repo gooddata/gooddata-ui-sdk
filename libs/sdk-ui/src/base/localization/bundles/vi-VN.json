@@ -97,6 +97,7 @@
     "visualizations.totals.dropdown.title.nat": "Rollup (Tổng)",
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "Phép tổng hợp Rollup (Tổng) không khả dụng khi lọc trực quan hóa theo giá trị chỉ số. Để dùng Rollup (Tổng), hãy xóa tất cả bộ lọc giá trị chỉ số khỏi thanh bộ lọc.",
     "visualizations.totals.dropdown.tooltip.nat.disabled.ranking": "Phép tổng hợp Rollup (Tổng) không khả dụng khi lọc trực quan hóa theo bộ lọc xếp hạng. Để dùng Rollup (Tổng), hãy xóa bộ lọc xếp hạng khỏi thanh bộ lọc.",
+    "visualizations.totals.dropdown.tooltip.subtotal.disabled.measureSort": "Tổng phụ theo hàng không khả dụng khi sắp xếp theo chỉ số. Xóa sắp xếp theo chỉ số để hiển thị tổng phụ.",
     "visualizations.totals.dropdown.title.med": "Trung vị",
     "visualizations.headline.tertiary.title": "So với",
     "visualizations.headline.comparison.title.change": "Thay đổi",

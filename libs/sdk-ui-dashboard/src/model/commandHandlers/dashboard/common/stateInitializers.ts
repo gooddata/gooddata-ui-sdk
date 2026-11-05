@@ -5,7 +5,11 @@ import { cloneDeep, compact, isEmpty, update } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, select } from "redux-saga/effects";
 
-import { type IUnavailableDashboardReference, walkLayout } from "@gooddata/sdk-backend-spi";
+import {
+    type IAttributeWithReferences,
+    type IUnavailableDashboardReference,
+    walkLayout,
+} from "@gooddata/sdk-backend-spi";
 import {
     type FilterContextItem,
     type IAttributeDisplayFormMetadataObject,
@@ -38,10 +42,7 @@ import {
     dashboardFilterContextDefinition,
     dashboardFilterContextIdentity,
 } from "../../../../_staging/dashboard/dashboardFilterContext.js";
-import {
-    type ValidationResult,
-    mergeFilterContextFilters,
-} from "../../../../_staging/dashboard/dashboardFilterContextValidation.js";
+import { type ValidationResult } from "../../../../_staging/dashboard/dashboardFilterContextValidation.js";
 import { dashboardLayoutSanitize } from "../../../../_staging/dashboard/dashboardLayout.js";
 import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
 import { DEFAULT_FISCAL_DATE_FILTER_PRESET } from "../../../../_staging/dateFilterConfig/defaultConfig.js";
@@ -77,6 +78,7 @@ import { resolveFilterDisplayForms } from "../../../utils/filterResolver.js";
 import { EmptyDashboardLayout, dashboardInitialize } from "./dashboardInitialize.js";
 import { loadAvailableDisplayFormRefs } from "./loadAvailableDisplayFormRefs.js";
 import { mergedMigratedAttributeFilters } from "./migratedAttributeFilters.js";
+import { mergeDashboardOverrideFilters, resolveOverrideFiltersByTab } from "./overrideFiltersAcrossTabs.js";
 import { distributeParametersToTabs } from "./parameterHydration.js";
 
 /**
@@ -122,8 +124,9 @@ function* processExistingTabFilterContext(
     );
     const filterContextIdentity = dashboardFilterContextIdentity(tabAsDashboard);
 
-    // Merge with override filters if provided
-    const { mergedFilters, validationResults } = mergeFilterContextFilters(
+    // Merge with override filters if provided. A common date of all time is the absence of the
+    // filter, so the merge also writes a common date override that has nothing to match.
+    const { mergedFilters, validationResults } = mergeDashboardOverrideFilters(
         originalSanitizedFilterContextDefinition.filters,
         overrideDefaultFilters ?? [],
         {
@@ -638,6 +641,8 @@ function getDisplayAsLabels(attributeFilterConfigs: IDashboardAttributeFilterCon
  * @param displayForms - specify display forms that should be used for in-memory resolution of
  *  attribute filter display forms to metadata objects
  * @param persistedDashboard - dashboard to use for the persisted dashboard state slice in case it needs to be different from the dashboard param
+ * @param attributesWithReferences - attributes of the attribute filters, used to match an override filter
+ *  to the same filter on another tab when filters persist across tabs
  */
 export function* actionsToInitializeExistingDashboard(
     ctx: DashboardContext,
@@ -656,6 +661,7 @@ export function* actionsToInitializeExistingDashboard(
     activeTabLocalIdentifier?: string,
     workspaceParameters: IParameterMetadataObject[] = [],
     unavailableObjectsOverride?: ReadonlyArray<IUnavailableDashboardReference>,
+    attributesWithReferences?: IAttributeWithReferences[],
 ): SagaIterator<Array<PayloadAction<any>>> {
     const effectiveActiveTabId =
         activeTabLocalIdentifier ?? dashboard.tabs?.[0]?.localIdentifier ?? DEFAULT_TAB_ID;
@@ -708,13 +714,21 @@ export function* actionsToInitializeExistingDashboard(
         // Process each tab to build complete TabState with filterContext
         const processedTabs: ITabState[] = [];
 
+        const persistFiltersAcrossTabs =
+            (settings.enableDashboardPersistentFiltersAcrossTabs ?? false) &&
+            dashboard.enablePersistentFiltersAcrossTabs === true;
+        // The tab the link opens on keeps the override filters as copied. When filters persist
+        // across tabs, every other tab receives those values on its own filters.
+        const overridesByTab = resolveOverrideFiltersByTab(
+            customizedDashboard.tabs as IDashboardTab<IDashboardWidget>[],
+            ctx.config?.overrideDefaultFilters,
+            effectiveActiveTabId,
+            persistFiltersAcrossTabs,
+            attributesWithReferences,
+        );
+
         for (const tab of customizedDashboard.tabs as IDashboardTab<IDashboardWidget>[]) {
-            const isActiveTab = tab.localIdentifier === effectiveActiveTabId;
-            // Override default filters are only applied to the active tab
-            const overrideDefaultFilters =
-                isActiveTab && ctx.config?.overrideDefaultFilters
-                    ? ctx.config?.overrideDefaultFilters
-                    : undefined;
+            const overrideDefaultFilters = overridesByTab[tab.localIdentifier];
             // Process this tab's filterContext
             const [tabFilterContext, tabValidationResults]: SagaReturnType<
                 typeof processExistingTabFilterContext

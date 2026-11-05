@@ -16,9 +16,8 @@ import { type IIntlState, intlInitialState } from "./intl_state.js";
 const intlSlice = createSlice({
     name: "intl",
     initialState: intlInitialState,
-    // Cases are wired by their frozen enum STRING with type-only creator imports on purpose:
-    // a value import of actions/app_context_actions.js would drag jquery + jquery.browser
-    // (a window read at import time) into the reducer graph and break node-env consumers.
+    // Cases are wired by their frozen enum STRING with type-only creator imports, so the reducer
+    // graph does not load actions/app_context_actions.js.
     reducers: {},
     extraReducers: (builder) => {
         builder

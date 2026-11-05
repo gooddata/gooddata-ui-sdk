@@ -52,7 +52,7 @@ export interface IUseAutomationAlertParameters {
 
 /**
  * Parameter editing for the alert dialog. The single source of truth is the edited automation's
- * `alert.execution.parameters` ({ref, value} wire shape); the display-ready set is derived per render.
+ * `alert.execution.parameters` (`{ref, value}` wire shape); the display-ready set is derived per render.
  *
  * @internal
  */

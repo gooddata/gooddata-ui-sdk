@@ -86,7 +86,7 @@
         z-index: 1;
     }
 
-    &__mc {
+    #{$root} &__mc {
         position: relative;
         z-index: 1;
 

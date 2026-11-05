@@ -111,6 +111,7 @@ import {
     type IWidgetReferences,
     type IWorkspaceAccessControlService,
     type IWorkspaceAgentsService,
+    type IWorkspaceAnalyticsAsCodeService,
     type IWorkspaceAttributesService,
     type IWorkspaceAutomationService,
     type IWorkspaceCatalog,
@@ -573,6 +574,9 @@ function dummyWorkspace(
         customApplicationSettings(): IWorkspaceCustomApplicationSettingsService {
             throw new NotSupported("not supported");
         },
+        analyticsAsCode(): IWorkspaceAnalyticsAsCodeService {
+            throw new NotSupported("not supported");
+        },
         automations(): IWorkspaceAutomationService {
             return new DummyWorkspaceAutomationService(workspace);
         },
@@ -694,6 +698,7 @@ function dummyLocalizationService(): IOrganizationLocalizationService & IWorkspa
         getStatistics: () => Promise.resolve({ metadata: { locales: [] }, data: { locales: [] } }),
         getTranslationUsage: () => Promise.resolve({ values: [] }),
         getStatisticsWorkspaces: () => Promise.resolve({ workspaces: [], totalCount: 0 }),
+        getMissingTranslations: () => Promise.resolve([]),
     };
 }
 

@@ -1,4 +1,6 @@
 {
+    "gd.gen-ai.copilot.composing.waiting": "Wachten op uw antwoord",
+    "gd.gen-ai.copilot.composing.replyNow": "Nu antwoorden",
     "gd.gen-ai.global-error": "Er is een onvoorziene fout opgetreden.",
     "gd.gen-ai.global-error.description": "Probeer de chatbot opnieuw op te starten en opnieuw beginnen.",
     "gd.gen-ai.global-error.button-details": "Zie de onbewerkte foutreactie voor meer informatie",
@@ -149,8 +151,8 @@
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, one {# pagina} other {# pagina's}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, one {# pagina} other {# pagina's}}",
     "gd.gen-ai.publisherDocument.unavailable": "Het document is niet beschikbaar.",
-    "gd.gen-ai.publisherDocument.previousVersion": "Dit document is gemaakt in de vorige versie van Publisher en kan hier niet worden geopend.",
-    "gd.gen-ai.publisherDocument.newerVersion": "Dit document is gemaakt in een nieuwere versie van Publisher en kan hier niet worden geopend.",
+    "gd.gen-ai.publisherDocument.previousVersion": "Dit document is gemaakt in de vorige versie van Rapporten en kan hier niet worden geopend.",
+    "gd.gen-ai.publisherDocument.newerVersion": "Dit document is gemaakt in een nieuwere versie van Rapporten en kan hier niet worden geopend.",
     "gd.gen-ai.alert-proposal.summary.trigger": "Activeren",
     "gd.gen-ai.alert-proposal.summary.trigger.mode": "Modus",
     "gd.gen-ai.alert-proposal.summary.trigger.interval": "Interval",

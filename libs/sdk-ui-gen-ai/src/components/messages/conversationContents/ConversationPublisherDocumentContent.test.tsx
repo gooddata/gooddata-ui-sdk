@@ -108,6 +108,8 @@ function renderCard({
     openDocumentId,
     openDraftRef,
     linkHandler = vi.fn(),
+    canManage = false,
+    canCreateDocument = true,
 }: {
     saved?: string | null;
     baseDocumentId?: string | null;
@@ -123,12 +125,17 @@ function renderCard({
     openDocumentId?: string;
     openDraftRef?: string;
     linkHandler?: (event: LinkHandlerEvent) => string | undefined;
+    canManage?: boolean;
+    canCreateDocument?: boolean;
 } = {}) {
     const store = configureStore({
         reducer: {
             [chatWindowSliceName]: chatWindowSliceReducer,
             [messagesSliceName]: messagesSliceReducer,
         },
+        // The checks time the large document state and warn on slow CI runners; these tests do not need them.
+        middleware: (getDefaultMiddleware) =>
+            getDefaultMiddleware({ serializableCheck: false, immutableCheck: false }),
     });
     store.dispatch(
         setSettingsAction({
@@ -169,7 +176,12 @@ function renderCard({
         <Provider store={store}>
             <IntlProvider locale="en-US" messages={DEFAULT_MESSAGES["en-US"]}>
                 <WorkspaceProvider workspace="ws-1">
-                    <ConfigProvider linkHandler={linkHandler} allowNativeLinks={allowNativeLinks} canManage>
+                    <ConfigProvider
+                        linkHandler={linkHandler}
+                        allowNativeLinks={allowNativeLinks}
+                        canManage={canManage}
+                        canCreateDocument={canCreateDocument}
+                    >
                         <ConversationPublisherDocumentContent message={message} part={part} />
                     </ConfigProvider>
                 </WorkspaceProvider>
@@ -229,7 +241,7 @@ describe("ConversationPublisherDocumentContent", () => {
                 workspaceId: "ws-1",
                 newTab: false,
                 action: "open",
-                itemUrl: "/workspace/ws-1/publisher/new?conversation=conv-1&item=item-1",
+                itemUrl: "/workspace/ws-1/reports/new?conversation=conv-1&item=item-1",
             }),
         );
     });
@@ -243,7 +255,7 @@ describe("ConversationPublisherDocumentContent", () => {
             expect.objectContaining({
                 type: "report",
                 id: "r/1",
-                itemUrl: "/workspace/ws-1/publisher/report/r%2F1?conversation=conv-1&item=item-1",
+                itemUrl: "/workspace/ws-1/reports/report/r%2F1?conversation=conv-1&item=item-1",
             }),
         );
     });
@@ -254,7 +266,7 @@ describe("ConversationPublisherDocumentContent", () => {
         fireEvent.click(openButton());
 
         expect(linkHandler).toHaveBeenCalledWith(
-            expect.objectContaining({ itemUrl: "/workspace/ws-1/publisher/report/r%2F1" }),
+            expect.objectContaining({ itemUrl: "/workspace/ws-1/reports/report/r%2F1" }),
         );
     });
 
@@ -269,7 +281,7 @@ describe("ConversationPublisherDocumentContent", () => {
 
         expect(
             screen.getByText(
-                "This document was made in the previous version of Publisher and can't be opened here.",
+                "This document was made in the previous version of Reports and can't be opened here.",
             ),
         ).toBeTruthy();
         expect(screen.queryByRole("button", { name: "Open" })).toBeNull();
@@ -281,7 +293,7 @@ describe("ConversationPublisherDocumentContent", () => {
 
             expect(
                 screen.getByText(
-                    "This document was made in a newer version of Publisher and can't be opened here.",
+                    "This document was made in a newer version of Reports and can't be opened here.",
                 ),
             ).toBeTruthy();
             expect(screen.queryByRole("button", { name: "Open" })).toBeNull();
@@ -326,7 +338,7 @@ describe("ConversationPublisherDocumentContent", () => {
                 expect.objectContaining({
                     type: "report",
                     id: "d/1",
-                    itemUrl: "/workspace/ws-1/publisher/document/d%2F1?conversation=conv-1&item=item-1",
+                    itemUrl: "/workspace/ws-1/reports/document/d%2F1?conversation=conv-1&item=item-1",
                 }),
             );
         });
@@ -342,7 +354,7 @@ describe("ConversationPublisherDocumentContent", () => {
             fireEvent.click(openButton());
 
             expect(linkHandler).toHaveBeenCalledWith(
-                expect.objectContaining({ itemUrl: "/workspace/ws-1/publisher/document/d%2F1" }),
+                expect.objectContaining({ itemUrl: "/workspace/ws-1/reports/document/d%2F1" }),
             );
         });
 
@@ -353,7 +365,7 @@ describe("ConversationPublisherDocumentContent", () => {
 
             expect(linkHandler).toHaveBeenCalledWith(
                 expect.objectContaining({
-                    itemUrl: "/workspace/ws-1/publisher/new?conversation=conv-1&item=item-1",
+                    itemUrl: "/workspace/ws-1/reports/new?conversation=conv-1&item=item-1",
                 }),
             );
         });
@@ -369,7 +381,7 @@ describe("ConversationPublisherDocumentContent", () => {
             expect.objectContaining({
                 type: "report",
                 id: "item-1",
-                itemUrl: "/workspace/ws-1/publisher/report/base-1?conversation=conv-1&item=item-1",
+                itemUrl: "/workspace/ws-1/reports/report/base-1?conversation=conv-1&item=item-1",
             }),
         );
     });
@@ -381,7 +393,7 @@ describe("ConversationPublisherDocumentContent", () => {
 
         expect(linkHandler).toHaveBeenCalledWith(
             expect.objectContaining({
-                itemUrl: "/workspace/ws-1/publisher/report/base-1?conversation=conv-1&item=item-1",
+                itemUrl: "/workspace/ws-1/reports/report/base-1?conversation=conv-1&item=item-1",
             }),
         );
     });
@@ -393,7 +405,7 @@ describe("ConversationPublisherDocumentContent", () => {
 
         expect(linkHandler).toHaveBeenCalledWith(
             expect.objectContaining({
-                itemUrl: "/workspace/ws-1/publisher/report/base-1?conversation=conv-1&item=item-1",
+                itemUrl: "/workspace/ws-1/reports/report/base-1?conversation=conv-1&item=item-1",
             }),
         );
     });
@@ -421,7 +433,7 @@ describe("ConversationPublisherDocumentContent", () => {
 
         expect(linkHandler).toHaveBeenCalledWith(
             expect.objectContaining({
-                itemUrl: "/workspace/ws-1/publisher/report/base-1?conversation=conv-1&item=item-1",
+                itemUrl: "/workspace/ws-1/reports/report/base-1?conversation=conv-1&item=item-1",
             }),
         );
     });
@@ -451,7 +463,7 @@ describe("ConversationPublisherDocumentContent", () => {
 
         expect(linkHandler).toHaveBeenCalledWith(
             expect.objectContaining({
-                itemUrl: "/workspace/ws-1/publisher/new?conversation=conv-1&item=item-1",
+                itemUrl: "/workspace/ws-1/reports/new?conversation=conv-1&item=item-1",
             }),
         );
     });
@@ -514,7 +526,7 @@ describe("ConversationPublisherDocumentContent", () => {
 
         fireEvent.click(openButton());
 
-        expect(location.href).toBe("/workspace/ws-1/publisher/new?conversation=conv-1&item=item-1");
+        expect(location.href).toBe("/workspace/ws-1/reports/new?conversation=conv-1&item=item-1");
         expect(linkHandler).not.toHaveBeenCalled();
     });
 
@@ -524,6 +536,27 @@ describe("ConversationPublisherDocumentContent", () => {
         ["the message has no id yet", { message: { ...MESSAGE, id: "" } }],
     ])("cannot open a draft while %s", (_description, options) => {
         const { linkHandler } = renderCard(options);
+
+        expect((openButton() as HTMLButtonElement).disabled).toBe(true);
+        fireEvent.click(openButton());
+
+        expect(linkHandler).not.toHaveBeenCalled();
+    });
+
+    it("opens a draft for a user who may create documents without managing the workspace", () => {
+        const { linkHandler } = renderCard({ canManage: false, canCreateDocument: true });
+
+        fireEvent.click(openButton());
+
+        expect(linkHandler).toHaveBeenCalledWith(
+            expect.objectContaining({
+                itemUrl: "/workspace/ws-1/reports/new?conversation=conv-1&item=item-1",
+            }),
+        );
+    });
+
+    it("cannot open a document without the create-document permission, even with workspace manage", () => {
+        const { linkHandler } = renderCard({ canManage: true, canCreateDocument: false });
 
         expect((openButton() as HTMLButtonElement).disabled).toBe(true);
         fireEvent.click(openButton());

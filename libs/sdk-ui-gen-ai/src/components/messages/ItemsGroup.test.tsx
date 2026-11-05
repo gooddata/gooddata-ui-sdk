@@ -6,6 +6,7 @@ import { act, render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 
+import { makeAssistantItem, makeUserItem } from "../../model.js";
 import { type IChatMessagesGroup } from "../utils/groupUtility.js";
 
 import { ItemsGroup } from "./ItemsGroup.js";
@@ -25,6 +26,8 @@ describe("ItemsGroup", () => {
                 messages={{
                     "gd.gen-ai.state.thinking": "Thinking",
                     "gd.gen-ai.routing.thinking-process": "Thinking process",
+                    "gd.gen-ai.state.seconds": "s",
+                    "gd.gen-ai.state.minutes": "m",
                 }}
             >
                 {ui}
@@ -142,5 +145,37 @@ describe("ItemsGroup", () => {
         );
 
         expect(container.querySelector("[aria-live]")).toBeNull();
+    });
+
+    it("keeps displaying the formatted reasoning group duration including tool activity", () => {
+        const previousGroup: IChatMessagesGroup = {
+            type: "user",
+            messages: [{ ...makeUserItem(), createdAt: 1000 }],
+        };
+        const group: IChatMessagesGroup = {
+            type: "reasoning",
+            messages: [
+                {
+                    ...makeAssistantItem({ type: "reasoning", summary: "Thinking" }, "reasoning", true),
+                    createdAt: 1350,
+                },
+                {
+                    ...makeAssistantItem(
+                        { type: "toolResult", callId: "tool-1", result: "Done" },
+                        "tool",
+                        true,
+                    ),
+                    createdAt: 2750,
+                },
+            ],
+        };
+
+        renderWithIntl(
+            <ItemsGroup previousGroup={previousGroup} group={group}>
+                <div>Reasoning Content</div>
+            </ItemsGroup>,
+        );
+
+        expect(screen.getByText("2s")).toBeInTheDocument();
     });
 });

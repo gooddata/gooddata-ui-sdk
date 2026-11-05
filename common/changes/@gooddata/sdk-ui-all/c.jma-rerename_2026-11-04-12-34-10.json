@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-pluggable-host, sdk-ui-gen-ai, sdk-ui, sdk-ui-analytical-designer: Publisher is called Reports and served under `/reports`; old `/publisher` links redirect.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

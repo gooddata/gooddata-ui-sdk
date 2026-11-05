@@ -2,23 +2,24 @@
 
 import { type IPackage, reactHooksRules } from "@gooddata/lint-config";
 
-import type { IDualConfiguration } from "../types.js";
+import type { IConfiguration } from "../types.js";
 
 const reactHooksPlugin: IPackage = {
     name: "eslint-plugin-react-hooks",
     version: "7.1.1",
 };
 
-export const reactHooks: IDualConfiguration<"react-hooks"> = {
-    v8: {
+const flat = {
+    packages: [reactHooksPlugin],
+    plugins: { "react-hooks": reactHooksPlugin },
+    rules: reactHooksRules,
+};
+
+export const reactHooks: IConfiguration<"react-hooks"> = {
+    legacy: {
         packages: [reactHooksPlugin],
         plugins: ["react-hooks"],
         rules: reactHooksRules,
     },
-    v9: {
-        packages: [reactHooksPlugin],
-        plugins: { "react-hooks": reactHooksPlugin },
-        rules: reactHooksRules,
-    },
-    ox: {},
+    flat: { v9: flat, v9ox: {}, v10: flat, v10ox: {} },
 };

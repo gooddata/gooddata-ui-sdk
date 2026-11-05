@@ -26,8 +26,9 @@ interface ISetupOptions extends RenderOptions {
 }
 
 /**
- * Return type of the `render` needs to be explicit, because then an `The inferred type of 'render' cannot be named
- * without a reference to pretty-format` error appears (pretty-format is transitive dependency of Testing Library).
+ * Return type of the `render` needs to be explicit, because otherwise an error appears saying that the inferred
+ * type of render cannot be named without a reference to pretty-format (pretty-format is transitive dependency
+ * of Testing Library).
  * This seems to be a bug within tsgo (see https://github.com/microsoft/typescript-go/issues/2277 for more details).
  * Remove the `RenderResult & { user: UserEvent }` explicit type annotation once the issues get fixed in tsgo.
  */
@@ -37,8 +38,8 @@ export function render(jsx: ReactNode, options: ISetupOptions = {}): RenderResul
     const preloadedState = merge(
         cloneDeep(configureStore({ reducer: createDashboardRootReducer() }).getState()),
         /**
-         * Setting empty config and permissions is needed here because otherwise an `Invariant Violation:
-         * attempting to access uninitialized ... state` error from the respective selectors in tests appears.
+         * Setting empty config and permissions is needed here because otherwise an invariant violation error
+         * about attempting to access uninitialized state appears from the respective selectors in tests.
          */
         { config: { config: {} }, permissions: { permissions: {} } },
         state,

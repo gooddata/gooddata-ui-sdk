@@ -38,9 +38,11 @@ import {
     isReportMissingColumnsSelector,
     isReportMissingLocationSelector,
     isReportMissingMetricSelector,
+    isReportSavedSelector,
     isReportTooLargeSelector,
     isUnsupportedConfiguration,
 } from "./report_selector.js";
+import { isResetDisabledSelector } from "./reset_button_selector.js";
 import { getRouteQueryAsOfDate, getSourceDashboardId, isEditFromKD } from "./route_selector.js";
 
 const isSavingSelector = (state: IAppState): boolean => isReportSaving(state);
@@ -292,6 +294,17 @@ export const hasTitleChanged = (state: IAppState): boolean =>
 
 export const hasDescriptionChanged = (state: IAppState): boolean =>
     getLastSavedObject(state).visualizationObject?.meta?.summary !== getInsightSummary(state);
+
+/**
+ * The visualization differs from its last saved version, whether or not it can be saved now — unlike
+ * {@link isSaveDisabledSelector}, which is also true during a save, for an invalid visualization and with
+ * `asOfDate`. A visualization that is not saved yet has no saved content to compare with; it has changes once
+ * it is not blank.
+ */
+export const hasUnsavedChangesSelector = (state: IAppState): boolean =>
+    isReportSavedSelector(state)
+        ? hasTitleChanged(state) || hasDescriptionChanged(state) || !isSavedReportCurrentReport(state)
+        : !isResetDisabledSelector(state) || getInsightSummary(state) !== "";
 
 const savingInProgressSelector = (state: IAppState): boolean =>
     isSavingSelector(state) || isSavingAsNewSelector(state);

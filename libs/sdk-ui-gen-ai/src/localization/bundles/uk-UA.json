@@ -1,4 +1,6 @@
 {
+    "gd.gen-ai.copilot.composing.waiting": "Очікуємо на вашу відповідь",
+    "gd.gen-ai.copilot.composing.replyNow": "Відповісти зараз",
     "gd.gen-ai.global-error": "Щось пішло не так",
     "gd.gen-ai.global-error.description": "Спробуйте перезапустити чат-бота й почати спочатку.",
     "gd.gen-ai.global-error.button-details": "Переглянути необроблену відповідь з помилкою для деталей",
@@ -149,8 +151,8 @@
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, one {# сторінка} few {# сторінки} many {# сторінок} other {# сторінки}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, one {# сторінка} few {# сторінки} many {# сторінок} other {# сторінки}}",
     "gd.gen-ai.publisherDocument.unavailable": "Документ недоступний.",
-    "gd.gen-ai.publisherDocument.previousVersion": "Цей документ створено в попередній версії Publisher, тому його неможливо тут відкрити.",
-    "gd.gen-ai.publisherDocument.newerVersion": "Цей документ створено в новішій версії Publisher, тому його неможливо тут відкрити.",
+    "gd.gen-ai.publisherDocument.previousVersion": "Цей документ створено в попередній версії Звітів, тому його неможливо тут відкрити.",
+    "gd.gen-ai.publisherDocument.newerVersion": "Цей документ створено в новішій версії Звітів, тому його неможливо тут відкрити.",
     "gd.gen-ai.alert-proposal.summary.trigger": "Тригер",
     "gd.gen-ai.alert-proposal.summary.trigger.mode": "Режим",
     "gd.gen-ai.alert-proposal.summary.trigger.interval": "Інтервал",

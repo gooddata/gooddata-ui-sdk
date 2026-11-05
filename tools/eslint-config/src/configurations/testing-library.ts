@@ -7,48 +7,55 @@ import {
     testingLibraryVueRules,
 } from "@gooddata/lint-config";
 
-import type { IDualConfiguration } from "../types.js";
+import type { IConfiguration } from "../types.js";
 
 const packages = [testingLibraryPlugin];
 
-export const testingLibraryDom: IDualConfiguration<"testing-library"> = {
-    v8: {
-        packages,
-        plugins: ["testing-library"],
-        rules: testingLibraryDomRules,
-    },
-    v9: {
-        packages,
-        plugins: { "testing-library": testingLibraryPlugin },
-        rules: testingLibraryDomRules,
-    },
-    ox: {},
+const legacyCommonConfiguration = {
+    packages,
+    plugins: ["testing-library"],
 };
 
-export const testingLibraryReact: IDualConfiguration<"testing-library"> = {
-    v8: {
-        packages,
-        plugins: ["testing-library"],
-        rules: testingLibraryReactRules,
-    },
-    v9: {
-        packages,
-        plugins: { "testing-library": testingLibraryPlugin },
-        rules: testingLibraryReactRules,
-    },
-    ox: {},
+const flatCommonConfiguration = {
+    packages,
+    plugins: { "testing-library": testingLibraryPlugin },
 };
 
-export const testingLibraryVue: IDualConfiguration<"testing-library"> = {
-    v8: {
-        packages,
-        plugins: ["testing-library"],
+const domFlat = {
+    ...flatCommonConfiguration,
+    rules: testingLibraryDomRules,
+};
+
+const reactFlat = {
+    ...flatCommonConfiguration,
+    rules: testingLibraryReactRules,
+};
+
+const vueFlat = {
+    ...flatCommonConfiguration,
+    rules: testingLibraryVueRules,
+};
+
+export const testingLibraryDom: IConfiguration<"testing-library"> = {
+    legacy: {
+        ...legacyCommonConfiguration,
+        rules: testingLibraryDomRules,
+    },
+    flat: { v9: domFlat, v9ox: {}, v10: domFlat, v10ox: {} },
+};
+
+export const testingLibraryReact: IConfiguration<"testing-library"> = {
+    legacy: {
+        ...legacyCommonConfiguration,
+        rules: testingLibraryReactRules,
+    },
+    flat: { v9: reactFlat, v9ox: {}, v10: reactFlat, v10ox: {} },
+};
+
+export const testingLibraryVue: IConfiguration<"testing-library"> = {
+    legacy: {
+        ...legacyCommonConfiguration,
         rules: testingLibraryVueRules,
     },
-    v9: {
-        packages,
-        plugins: { "testing-library": testingLibraryPlugin },
-        rules: testingLibraryVueRules,
-    },
-    ox: {},
+    flat: { v9: vueFlat, v9ox: {}, v10: vueFlat, v10ox: {} },
 };

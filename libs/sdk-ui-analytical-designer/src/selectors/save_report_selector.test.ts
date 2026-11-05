@@ -17,7 +17,8 @@ import {
     setupAppStateWithDateDatasetMeta,
     tableVisualizationClass,
 } from "../tests/constants.test.helpers.js";
-import { withMdObjectContent } from "../tests/report_builder.test.helpers.js";
+import { withMdObjectContent, withMdObjectMeta } from "../tests/report_builder.test.helpers.js";
+import { withRouteQuery } from "../tests/route.test.helpers.js";
 import { getInitializedState } from "../tests/state.test.helpers.js";
 import { withData, withReport, withRoot } from "../tests/state_builder.test.helpers.js";
 import { visualizationClassMock } from "../tests/visualization_class.test.helpers.js";
@@ -26,6 +27,7 @@ import { convertModelInsightToADRep } from "../utils/sdkModelToADRep/InsightConv
 
 import { getInsightForSaveViaMd, getInsightWithBucketsViaMd } from "./insight_selectors.js";
 import {
+    hasUnsavedChangesSelector,
     isSavedReportCurrentReport,
     isUsedOnOtherThanSourceDashboard,
     prepareForComparison,
@@ -579,6 +581,11 @@ const geoChartWithoutLocation = withData(getInitializedState(), {
 const savingInProgress = withReport(validReportWithoutChanges, { saving: true });
 const savingAsInProgress = withReport(validReportWithoutChanges, { savingAsNew: true });
 
+const asSaved = (state: IAppState): IAppState =>
+    withReport(state, {
+        lastSavedObject: withMdObjectMeta(state.report.lastSavedObject, { uri: "/gdc/md/p1/obj/1" }),
+    });
+
 describe("Save selectors", () => {
     describe("isUsedOnOtherThanSourceDashboard", () => {
         // the result function only reads `allDashboards`, so the cases carry just that
@@ -688,6 +695,38 @@ describe("Save selectors", () => {
                     isDisabled: true,
                 });
             });
+        });
+    });
+
+    describe("hasUnsavedChangesSelector", () => {
+        it("is false for a saved visualization without changes", () => {
+            expect(hasUnsavedChangesSelector(asSaved(validReportWithoutChanges))).toBe(false);
+        });
+
+        it("is true for a saved visualization with changed content or title", () => {
+            expect(hasUnsavedChangesSelector(asSaved(validReportWithChanges))).toBe(true);
+            expect(hasUnsavedChangesSelector(asSaved(reportWithChangedTitle))).toBe(true);
+        });
+
+        it("stays true where Save is disabled: during a save and with asOfDate", () => {
+            const saving = withReport(asSaved(validReportWithChanges), { saving: true });
+            const asOfDate = withRouteQuery(asSaved(validReportWithChanges), { asOfDate: "2026-01-01" });
+
+            expect(saveReportSelector(saving).isDisabled).toBe(true);
+            expect(hasUnsavedChangesSelector(saving)).toBe(true);
+            expect(saveReportSelector(asOfDate).isDisabled).toBe(true);
+            expect(hasUnsavedChangesSelector(asOfDate)).toBe(true);
+        });
+
+        it("is false for a blank visualization that is not saved yet", () => {
+            expect(hasUnsavedChangesSelector(getInitializedState())).toBe(false);
+        });
+
+        it("is true for a visualization that is not saved yet once it is not blank", () => {
+            expect(hasUnsavedChangesSelector(withData(getInitializedState(), { title: "Title" }))).toBe(true);
+            expect(hasUnsavedChangesSelector(withData(getInitializedState(), { summary: "About" }))).toBe(
+                true,
+            );
         });
     });
 

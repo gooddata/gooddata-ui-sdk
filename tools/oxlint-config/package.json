@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/oxlint-config",
-    "version": "11.67.0-alpha.3",
+    "version": "11.67.0-alpha.4",
     "license": "MIT",
     "author": "GoodData",
     "repository": {
@@ -52,7 +52,7 @@
         "@types/node": "24.12.0",
         "@typescript-eslint/eslint-plugin": "8.58.0",
         "@typescript-eslint/parser": "8.58.0",
-        "eslint": "^9.39.2",
+        "eslint": "^10.14.0",
         "eslint-plugin-chai-friendly": "1.1.0",
         "eslint-plugin-headers": "1.3.3",
         "eslint-plugin-import-esm": "3.0.1",

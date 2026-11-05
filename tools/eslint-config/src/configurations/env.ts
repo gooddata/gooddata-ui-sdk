@@ -1,21 +1,20 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type { IDualConfiguration } from "../types.js";
+import type { IConfiguration } from "../types.js";
 
-const v9 = {
+const common = {
     packages: [{ name: "globals", version: "17.2.0" }],
     languageOptions: {
         globalsPresets: ["node" as const, "es2022" as const],
     },
 };
 
-export const env: IDualConfiguration = {
-    v8: {
+export const env: IConfiguration = {
+    legacy: {
         env: {
             node: true,
             es2022: true,
         },
     },
-    v9,
-    ox: v9,
+    flat: { v9: common, v9ox: common, v10: common, v10ox: common },
 };

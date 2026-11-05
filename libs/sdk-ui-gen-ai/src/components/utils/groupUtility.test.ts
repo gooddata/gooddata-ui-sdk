@@ -2,9 +2,59 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type IChatConversationLocalItem } from "../../model.js";
+import { type IChatConversationLocalItem, makeAssistantItem, makeUserItem } from "../../model.js";
 
-import { groupMessages } from "./groupUtility.js";
+import { type IChatMessagesGroup, getReasoningDurationMs, groupMessages } from "./groupUtility.js";
+
+describe("getReasoningDurationMs", () => {
+    const previousGroup: IChatMessagesGroup = {
+        type: "user",
+        messages: [
+            { ...makeUserItem(), createdAt: 1000 },
+            { ...makeUserItem(), createdAt: 2000 },
+        ],
+    };
+    const group: IChatMessagesGroup = {
+        type: "reasoning",
+        messages: [
+            { ...makeAssistantItem(), createdAt: 2100 },
+            {
+                ...makeAssistantItem({ type: "toolResult", callId: "tool-1", result: "Done" }),
+                createdAt: 2350,
+            },
+        ],
+    };
+
+    it("uses the last message of each group, including tool activity", () => {
+        expect(getReasoningDurationMs(previousGroup, group)).toBe(350);
+    });
+
+    it("preserves zero duration", () => {
+        expect(getReasoningDurationMs(previousGroup, { ...group, messages: previousGroup.messages })).toBe(0);
+    });
+
+    it("preserves the header's absolute timestamp difference", () => {
+        expect(
+            getReasoningDurationMs(
+                { ...previousGroup, messages: group.messages },
+                {
+                    ...group,
+                    messages: previousGroup.messages,
+                },
+            ),
+        ).toBe(350);
+    });
+
+    it.each([
+        { previous: undefined, current: group },
+        { previous: previousGroup, current: undefined },
+        { previous: { ...previousGroup, messages: [] }, current: group },
+        { previous: previousGroup, current: { ...group, messages: [] } },
+        { previous: previousGroup, current: previousGroup },
+    ])("returns undefined when group timing is unavailable (%#)", ({ previous, current }) => {
+        expect(getReasoningDurationMs(previous, current)).toBeUndefined();
+    });
+});
 
 describe("groupMessages", () => {
     const createUserMessage = (text: string): IChatConversationLocalItem => ({

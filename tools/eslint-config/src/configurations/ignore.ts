@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type { IDualConfiguration } from "../types.js";
+import type { IConfiguration } from "../types.js";
 
 const commonConfiguration = {
     ignorePatterns: [
@@ -27,8 +27,12 @@ const commonConfiguration = {
     ],
 };
 
-export const ignore: IDualConfiguration = {
-    v8: commonConfiguration,
-    v9: commonConfiguration,
-    ox: commonConfiguration,
+export const ignore: IConfiguration = {
+    legacy: commonConfiguration,
+    flat: {
+        v9: commonConfiguration,
+        v9ox: commonConfiguration,
+        v10: commonConfiguration,
+        v10ox: commonConfiguration,
+    },
 };

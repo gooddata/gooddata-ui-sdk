@@ -2,18 +2,22 @@
 
 import { storybookOverrides, storybookPackages, storybookPlugin } from "@gooddata/lint-config";
 
-import type { IDualConfiguration } from "../types.js";
+import type { IConfiguration } from "../types.js";
 
-export const storybook: IDualConfiguration<"storybook", ""> = {
-    v8: {
-        packages: storybookPackages,
-        overrides: storybookOverrides,
+const commonConfiguration = {
+    packages: storybookPackages,
+    overrides: storybookOverrides,
+};
+
+const flat = {
+    ...commonConfiguration,
+    plugins: { storybook: storybookPlugin },
+};
+
+export const storybook: IConfiguration<"storybook", ""> = {
+    legacy: {
+        ...commonConfiguration,
         plugins: ["storybook"],
     },
-    v9: {
-        packages: storybookPackages,
-        overrides: storybookOverrides,
-        plugins: { storybook: storybookPlugin },
-    },
-    ox: {},
+    flat: { v9: flat, v9ox: {}, v10: flat, v10ox: {} },
 };

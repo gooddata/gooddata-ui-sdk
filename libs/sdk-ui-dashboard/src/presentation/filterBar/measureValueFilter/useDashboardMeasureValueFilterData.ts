@@ -302,7 +302,7 @@ export interface IDashboardMeasureValueFilterData {
     catalogDimensionality: IDimensionalityItem[];
     /** Loader for catalog dimensionality items shown in the configuration panel picker. */
     loadCatalogDimensionality: (dimensionality: ObjRef[]) => Promise<IDimensionalityItem[]>;
-    /** Human-readable condition summary shown on the chip ("> 100 OR ≥ 50%"). */
+    /** Human-readable condition summary shown on the chip (`> 100 OR ≥ 50%`). */
     conditionLabel: string;
     /** Execution-level MVF that the SDK <MeasureValueFilter /> takes as `filter`. */
     dropdownFilter: IMeasureValueFilter;

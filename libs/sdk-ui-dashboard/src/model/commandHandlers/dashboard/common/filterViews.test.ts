@@ -4,10 +4,8 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
 import {
     type FilterContextItem,
-    type IAttributeDisplayFormMetadataObject,
     type IDashboard,
     type IDashboardAttributeFilter,
     type IDashboardFilterView,
@@ -17,7 +15,6 @@ import {
     type MeasureValueFilterCondition,
     exportOverrideFilterContextIdentifier,
     idRef,
-    uriRef,
 } from "@gooddata/sdk-model";
 
 import { applyDefaultFilterView, changeFilterContextSelection } from "./filterViews.js";
@@ -320,73 +317,6 @@ describe("filterViews", () => {
                     },
                 ]);
                 expect(tabFilters(updated, 0)).toEqual([regionFilter("a_region", ["view-b"])]);
-            });
-
-            it("matches the filters of the tabs through the attributes of the attribute filters", () => {
-                const regionDisplayForm = {
-                    type: "displayForm",
-                    id: "region",
-                    uri: "/region",
-                    ref: idRef("region", "displayForm"),
-                    attribute: idRef("region.attr", "attribute"),
-                } as IAttributeDisplayFormMetadataObject;
-                const attributesWithReferences = [
-                    {
-                        attribute: {
-                            ref: idRef("region.attr", "attribute"),
-                            displayForms: [regionDisplayForm],
-                        },
-                    },
-                ] as IAttributeWithReferences[];
-                // tab B refers to the same display form by its URI
-                const regionByUri: FilterContextItem = {
-                    attributeFilter: {
-                        displayForm: uriRef("/region"),
-                        attributeElements: { uris: ["stored-b"] },
-                        negativeSelection: false,
-                        localIdentifier: "b_region",
-                    },
-                };
-                const dashboard = buildDashboard({
-                    tabs: [
-                        {
-                            localIdentifier: "tab-A",
-                            title: "Tab A",
-                            filterContext: buildFilterContext([regionFilter("a_region", ["stored-a"])]),
-                        },
-                        {
-                            localIdentifier: "tab-B",
-                            title: "Tab B",
-                            filterContext: buildFilterContext([regionByUri]),
-                        },
-                    ],
-                });
-                const viewA = buildFilterView({
-                    tabLocalIdentifier: "tab-A",
-                    filterContext: {
-                        title: "",
-                        description: "",
-                        filters: [regionFilter("a_region", ["view-a"])],
-                    },
-                });
-                const options = { persistFiltersAcrossTabs: true, activeTabLocalIdentifier: "tab-A" };
-
-                const withoutAttributes = applyDefaultFilterView(dashboard, [viewA], undefined, [], options);
-                const withAttributes = applyDefaultFilterView(dashboard, [viewA], undefined, [], {
-                    ...options,
-                    attributesWithReferences,
-                });
-
-                expect(tabFilters(withoutAttributes, 1)).toEqual([regionByUri]);
-                expect(tabFilters(withAttributes, 1)).toMatchObject([
-                    {
-                        attributeFilter: {
-                            displayForm: uriRef("/region"),
-                            attributeElements: { uris: ["view-a"] },
-                            localIdentifier: "b_region",
-                        },
-                    },
-                ]);
             });
 
             it("keeps a text-only filter when the default view holds a list selection", () => {

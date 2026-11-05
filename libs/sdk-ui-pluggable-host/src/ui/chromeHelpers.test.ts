@@ -138,10 +138,10 @@ function localApp(
     return {
         apiVersion: "1.0",
         id: "gdc-publisher",
-        title: "Publisher",
+        title: "Reports",
         applicationScope: "workspace",
         menuOrder: 20,
-        local: { routeBase: "/publisher" },
+        local: { routeBase: "/reports" },
         ...overrides,
     };
 }
@@ -158,35 +158,35 @@ describe("getWorkspaceSwitchPath", () => {
 
     it("drops the object id of the workspace the object belongs to", () => {
         const path = getWorkspaceSwitchPath(
-            "/workspace/old-workspace/publisher/report/document-id",
+            "/workspace/old-workspace/reports/report/document-id",
             "new-workspace",
             apps,
             context(),
         );
 
-        expect(path).toBe("/workspace/new-workspace/publisher");
+        expect(path).toBe("/workspace/new-workspace/reports");
     });
 
     it("drops an application screen the host cannot tell from an object id", () => {
         const path = getWorkspaceSwitchPath(
-            "/workspace/old-workspace/publisher/templates",
+            "/workspace/old-workspace/reports/templates",
             "new-workspace",
             apps,
             context(),
         );
 
-        expect(path).toBe("/workspace/new-workspace/publisher");
+        expect(path).toBe("/workspace/new-workspace/reports");
     });
 
     it("lands on the application the user is in", () => {
         const path = getWorkspaceSwitchPath(
-            "/workspace/old-workspace/publisher",
+            "/workspace/old-workspace/reports",
             "new-workspace",
             apps,
             context(),
         );
 
-        expect(path).toBe("/workspace/new-workspace/publisher");
+        expect(path).toBe("/workspace/new-workspace/reports");
     });
 
     it("swaps the workspace when no workspace application claims the path", () => {

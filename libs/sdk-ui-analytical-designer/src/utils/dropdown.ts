@@ -1,7 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type Subscription, fromEvent } from "rxjs";
-import { debounceTime } from "rxjs/operators/index.js";
+import { debounce } from "lodash-es";
 
 export const DROPDOWN_MIN_HEIGHT = 170;
 export const DROPDOWN_MAX_HEIGHT = 400;
@@ -90,8 +89,22 @@ export function getDateDatasetDropdownWidth(
 
 export type EventHandler = (value: Event) => void;
 
-export function subscribeEvents(func: EventHandler, events = ["scroll", "resize"]): Subscription[] {
+export interface IEventSubscription {
+    /** Removes the window listener and drops a debounced call that has not fired yet. */
+    unsubscribe: () => void;
+}
+
+/** Calls `func` with the last window event of a burst, each event type debounced on its own. */
+export function subscribeEvents(func: EventHandler, events = ["scroll", "resize"]): IEventSubscription[] {
     return events.map((event) => {
-        return fromEvent(window, event).pipe(debounceTime(EVENT_DEBOUNCE_MILLISECONDS)).subscribe(func);
+        const listener = debounce(func, EVENT_DEBOUNCE_MILLISECONDS);
+        window.addEventListener(event, listener);
+
+        return {
+            unsubscribe: () => {
+                window.removeEventListener(event, listener);
+                listener.cancel();
+            },
+        };
     });
 }

@@ -16,6 +16,7 @@ import {
     type IReferencesService,
     type IWorkspaceAccessControlService,
     type IWorkspaceAgentsService,
+    type IWorkspaceAnalyticsAsCodeService,
     type IWorkspaceAttributesService,
     type IWorkspaceAutomationService,
     type IWorkspaceCatalogFactory,
@@ -57,6 +58,7 @@ import { TigerWorkspaceLocalizationService } from "../localization/index.js";
 
 import { TigerWorkspaceAccessControlService } from "./accessControl/index.js";
 import { TigerWorkspaceAgentsService } from "./agents.js";
+import { TigerWorkspaceAnalyticsAsCodeService } from "./analyticsAsCode/index.js";
 import { TigerAttributeHierarchiesService } from "./attributeHierarchies/index.js";
 import { TigerWorkspaceAttributes } from "./attributes/index.js";
 import { TigerWorkspaceAutomationService } from "./automations/index.js";
@@ -247,6 +249,10 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
 
     public customApplicationSettings(): IWorkspaceCustomApplicationSettingsService {
         return new TigerWorkspaceCustomApplicationSettingsService(this.authCall, this.workspace);
+    }
+
+    public analyticsAsCode(): IWorkspaceAnalyticsAsCodeService {
+        return new TigerWorkspaceAnalyticsAsCodeService(this.authCall, this.workspace);
     }
 
     public automations(): IWorkspaceAutomationService {

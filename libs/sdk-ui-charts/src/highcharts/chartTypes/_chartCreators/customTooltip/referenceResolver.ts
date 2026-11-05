@@ -4,7 +4,7 @@
  * Highcharts-specific reference resolution for custom tooltip content.
  *
  * The pure substitution function (`resolveReferences`) and the value lookup
- * shape (`IResolvedReferenceValues`) live in @gooddata/sdk-ui-vis-commons; this
+ * shape (`IResolvedReferenceValues`) live in `@gooddata/sdk-ui-vis-commons`; this
  * file builds the lookup from a hovered Highcharts point's drill intersection.
  */
 

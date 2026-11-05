@@ -148,6 +148,9 @@ export type DashboardConfig = {
      *
      * Compatible matching filters will replace originals.
      *
+     * When the dashboard keeps filter selections across tabs, the same values are written onto the
+     * matching filters of every tab. Each tab keeps its own filter identifiers, which its widgets bind.
+     *
      * Incompatible filters are merged following these rules:
      * - Non-matching filters won't be added
      * - Multi-to-single selection conversions will use first element only

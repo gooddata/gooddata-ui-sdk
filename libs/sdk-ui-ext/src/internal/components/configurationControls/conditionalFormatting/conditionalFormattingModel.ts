@@ -633,11 +633,11 @@ export const isPercentFormat = (format: string | undefined): boolean =>
 // 0.4 * 100 = 40.00000000000001 in IEEE-754; toPrecision(12) drops the tail.
 const denoise = (n: number): number => Number(n.toPrecision(12));
 
-/** Raw stored number -> the number the user sees in a percent input (×100). */
+/** Raw stored number -\> the number the user sees in a percent input (×100). */
 export const rawToDisplayNumber = (raw: number, percent: boolean): number =>
     percent ? denoise(raw * 100) : raw;
 
-/** Number entered in a percent input -> the raw number stored and compared (÷100). */
+/** Number entered in a percent input -\> the raw number stored and compared (÷100). */
 export const displayToRawNumber = (display: number, percent: boolean): number =>
     percent ? denoise(display / 100) : display;
 

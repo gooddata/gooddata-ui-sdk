@@ -671,6 +671,7 @@ export type IKdDashboardLoadedData = IGdcKdMessageEnvelope<GdcKdEventType.Dashbo
 
 // @public (undocumented)
 export interface IKdDashboardObjectMeta {
+    // @deprecated
     client?: string;
     dashboard: string;
     dashboardId: string;

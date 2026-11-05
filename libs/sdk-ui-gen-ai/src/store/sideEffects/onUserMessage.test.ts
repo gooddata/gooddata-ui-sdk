@@ -215,6 +215,38 @@ describe("onUserMessage with different publisher settings", () => {
     });
 });
 
+describe("onUserMessage answering agent", () => {
+    it("keeps per-item agents on live user and assistant messages across streamed interactions", async () => {
+        const run = setup();
+        await run.send({
+            ...item({ type: "text", text: "How are sales?" }, "user-1", "user"),
+            agentId: "agent-a",
+        });
+        await run.send({ ...reasoning("# Plan"), agentId: "agent-a" });
+        await run.send({ ...reasoning("# Updated plan"), agentId: "agent-a" });
+        await run.send({ ...item({ type: "text", text: "Answer" }, "answer-1"), agentId: "agent-a" });
+        await run.finish();
+
+        run.store.dispatch(
+            setCurrentConversationAction({ conversation: { ...conversation, agentId: "agent-b" } }),
+        );
+        const messages = conversationMessagesByIdSelector(run.store.getState(), conversation.localId);
+        expect(messages).toHaveLength(3);
+        expect(messages.map((message) => message.agentId)).toEqual(["agent-a", "agent-a", "agent-a"]);
+    });
+
+    it("does not erase a streamed agent id when a later chunk omits it", async () => {
+        const run = setup();
+        await run.send({ ...reasoning("# Plan"), agentId: "agent-a" });
+        await run.send(reasoning("# Updated plan"));
+        await run.finish();
+
+        expect(
+            conversationMessagesByIdSelector(run.store.getState(), conversation.localId).at(-1)?.agentId,
+        ).toBe("agent-a");
+    });
+});
+
 describe("onUserMessage reasoning titles", () => {
     it("clears at response start and emits live titles from accumulated snapshots, without the body", async () => {
         const run = setup();

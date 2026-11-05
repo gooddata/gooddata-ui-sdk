@@ -1,13 +1,16 @@
 // (C) 2024-2026 GoodData Corporation
 
+import { useSelector } from "react-redux";
+
 import {
     type IChatConversationErrorContent,
     type IChatConversationLocalContent,
     type IChatConversationLocalItem,
     type TextContentObject,
 } from "../../model.js";
+import { agentsSelector } from "../../store/messages/messagesSelectors.js";
 import { useCustomization } from "../CustomizationContext.js";
-import type { IChatMessagesGroup } from "../utils/groupUtility.js";
+import { type IChatMessagesGroup, getReasoningDurationMs } from "../utils/groupUtility.js";
 
 import { ConversationClarifyingAnswersContent } from "./conversationContents/ConversationClarifyingAnswersContent.js";
 import { ConversationSkillActivatedContent } from "./conversationContents/ConversationSkillActivatedContent.js";
@@ -36,6 +39,7 @@ export function ConversationItemContents({
         MessageReasoningContentComponent,
         MessageMultipartContentComponent,
     } = useCustomization();
+    const agents = useSelector(agentsSelector);
     const content = message.content as IChatConversationLocalContent | IChatConversationErrorContent;
 
     if (content.type === "error") {
@@ -53,10 +57,20 @@ export function ConversationItemContents({
     }
 
     if (content.type === "reasoning") {
+        const groupIndex = groups.findIndex((group) =>
+            group.messages.some((m) => m.localId === message.localId),
+        );
+        const durationMs = getReasoningDurationMs(groups[groupIndex - 1], groups[groupIndex]);
+
+        const foundAgent = agents?.find((a) => a.id === message.agentId);
+        const agent = message.agentId ? { id: message.agentId, name: foundAgent?.title } : undefined;
+
         return (
             <MessageReasoningContentComponent
                 summary={content.summary}
                 objects={[...(content.objects ?? []), ...references]}
+                durationMs={durationMs}
+                agent={agent}
                 isLoading={isLoading}
             />
         );

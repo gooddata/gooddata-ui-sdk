@@ -82,7 +82,7 @@ describe("DeleteReportDialog", () => {
         expect(toggle.getAttribute("aria-expanded")).toBe("true");
 
         const link = screen.getByText("Q3 board pack").closest("a")!;
-        expect(link.getAttribute("href")).toMatch(/\/publisher\/document\/q3%2Fpack$/);
+        expect(link.getAttribute("href")).toMatch(/\/reports\/document\/q3%2Fpack$/);
     });
 
     it("names both dashboards and documents when both use the visualization", async () => {

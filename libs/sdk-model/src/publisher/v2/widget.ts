@@ -156,7 +156,7 @@ export interface IPublisherDataSetRefV2 {
  */
 export interface IPublisherWidgetTitleV2 {
     /**
-     * Defaults to `true`.
+     * When left out, a visualization's title is hidden and a takeaway's is shown.
      */
     visible?: boolean;
     /**

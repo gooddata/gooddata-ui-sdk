@@ -97,6 +97,7 @@
     "visualizations.totals.dropdown.title.nat": "Сведение (Всего)",
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "Агрегация Rollup (Итог) недоступна при фильтрации визуализации по значению метрики. Чтобы использовать Rollup (Итог), удалите все фильтры значений метрик из панели фильтров.",
     "visualizations.totals.dropdown.tooltip.nat.disabled.ranking": "Агрегация Rollup (Итог) недоступна при фильтрации визуализации ранжирующим фильтром. Чтобы использовать Rollup (Итог), удалите ранжирующий фильтр из панели фильтров.",
+    "visualizations.totals.dropdown.tooltip.subtotal.disabled.measureSort": "Промежуточные итоги по строкам недоступны при сортировке по метрике. Сбросьте сортировку по метрике, чтобы отобразить промежуточные итоги.",
     "visualizations.totals.dropdown.title.med": "Медиана",
     "visualizations.headline.tertiary.title": "по сравнению",
     "visualizations.headline.comparison.title.change": "Изменение",

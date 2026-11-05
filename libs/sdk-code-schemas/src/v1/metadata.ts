@@ -14616,6 +14616,9 @@ export interface PublisherVisualizationWidgetV2 {
     style?: PublisherVisualizationStyleV2;
 }
 export interface PublisherWidgetTitleV2 {
+    /**
+     * When left out, a visualization's title is hidden and a takeaway's is shown.
+     */
     visible?: boolean;
     text?: string;
     style?: PublisherTextStyleV2;

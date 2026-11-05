@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-analytical-designer: In the editor header slots, hasUnsavedChanges reports the difference from the last saved visualization, Back and Cancel wait only for a save, and the access level uses ShareStatus from sdk-model.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

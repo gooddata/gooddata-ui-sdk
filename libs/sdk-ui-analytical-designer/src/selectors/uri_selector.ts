@@ -18,5 +18,5 @@ export const documentUriFactorySelector = createSelector(
     getProjectId,
     (projectId): DocumentUriFactory =>
         (documentId: string) =>
-            `/workspace/${projectId}/publisher/document/${encodeURIComponent(documentId)}`,
+            `/workspace/${projectId}/reports/document/${encodeURIComponent(documentId)}`,
 );

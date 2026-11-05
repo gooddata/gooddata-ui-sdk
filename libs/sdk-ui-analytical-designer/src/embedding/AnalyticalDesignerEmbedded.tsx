@@ -133,7 +133,7 @@ const NOOP_TELEMETRY: IHostTelemetryCallbacks = {
 
 /**
  * Analytical Designer rendered in-process as a React component — the iframe-free alternative to
- * embedding the deployed AD app. Communication uses the same @gooddata/sdk-embedding contract as
+ * embedding the deployed AD app. Communication uses the same `@gooddata/sdk-embedding` contract as
  * the postMessage transport, carried over the host adapter: events arrive through `callbacks`,
  * commands are sent through `apiRef`.
  *

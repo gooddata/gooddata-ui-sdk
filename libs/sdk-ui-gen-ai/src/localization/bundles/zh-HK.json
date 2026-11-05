@@ -1,4 +1,6 @@
 {
+    "gd.gen-ai.copilot.composing.waiting": "正在等候您的回覆",
+    "gd.gen-ai.copilot.composing.replyNow": "立即回覆",
     "gd.gen-ai.global-error": "發生不可預見的錯誤。",
     "gd.gen-ai.global-error.description": "嘗試重新啟動聊天機械人並重新開始。",
     "gd.gen-ai.global-error.button-details": "有關詳細信息，請參閱原始錯誤響應",
@@ -149,8 +151,8 @@
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, other {# 頁}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, other {# 頁}}",
     "gd.gen-ai.publisherDocument.unavailable": "文件無法使用。",
-    "gd.gen-ai.publisherDocument.previousVersion": "此文件是在舊版 Publisher 中建立，因此無法在此開啟。",
-    "gd.gen-ai.publisherDocument.newerVersion": "此文件是在較新版的 Publisher 中建立，因此無法在此開啟。",
+    "gd.gen-ai.publisherDocument.previousVersion": "此文件是在舊版報表中建立，因此無法在此開啟。",
+    "gd.gen-ai.publisherDocument.newerVersion": "此文件是在較新版的報表中建立，因此無法在此開啟。",
     "gd.gen-ai.alert-proposal.summary.trigger": "觸發",
     "gd.gen-ai.alert-proposal.summary.trigger.mode": "模式",
     "gd.gen-ai.alert-proposal.summary.trigger.interval": "間隔",

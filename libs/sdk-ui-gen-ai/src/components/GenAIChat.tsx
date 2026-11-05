@@ -26,6 +26,11 @@ export type GenAIAssistantProps = Omit<GenAiStoreProps, "children"> & {
      */
     locale?: string;
     /**
+     * Placeholder text for the chat input. Defaults to the bundled localized placeholder when omitted.
+     * The supplied text is used as-is and is not translated.
+     */
+    inputPlaceholder?: string;
+    /**
      * When provided, references to the metadata objects will be rendered as clickable links.
      * Otherwise, the metadata objects will be rendered as plain text (using object title).
      */
@@ -168,12 +173,16 @@ function GenAIContent(props: GenAIChatProps) {
     useDashboardAmbientContext(dashboardSelector);
     useDataLoad();
 
+    const canManage = props.disableManage ? false : (permissions.canManageProject ?? false);
+
     return (
         <ConfigProvider
             catalogItems={catalogItems}
+            inputPlaceholder={props.inputPlaceholder}
             canFullControl={props.disableFullControl ? false : (permissions.canManageProject ?? false)}
-            canManage={props.disableManage ? false : (permissions.canManageProject ?? false)}
+            canManage={canManage}
             canAnalyze={props.disableAnalyze ? false : (permissions.canAnalyzeWorkspace ?? false)}
+            canCreateDocument={permissions.canCreateDocument ?? canManage}
         >
             <CustomizationProvider slots={slots}>
                 <OverlayAlignOnParentScrollProvider>

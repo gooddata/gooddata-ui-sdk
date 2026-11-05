@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import config from "@gooddata/eslint-config/oxlint-esm";
+import config from "@gooddata/eslint-config/v10/oxlint/esm";
 
 export default [
     ...config,

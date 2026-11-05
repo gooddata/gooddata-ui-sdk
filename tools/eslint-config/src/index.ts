@@ -19,11 +19,12 @@ import { regexp } from "./configurations/regexp.js";
 import { sonarjs } from "./configurations/sonarjs.js";
 import { storybook } from "./configurations/storybook.js";
 import { testingLibraryDom, testingLibraryReact } from "./configurations/testing-library.js";
+import { tsdoc } from "./configurations/tsdoc.js";
 import { typescript } from "./configurations/typescript.js";
 import { vitest } from "./configurations/vitest.js";
-import { type IDualConfiguration } from "./types.js";
+import { type IConfiguration } from "./types.js";
 
-export const commonConfigurations: IDualConfiguration[] = [
+export const commonConfigurations: IConfiguration[] = [
     env,
     eslint,
     header,
@@ -33,19 +34,17 @@ export const commonConfigurations: IDualConfiguration[] = [
     jsdoc,
     regexp,
     sonarjs,
-    // tsdoc,
+    tsdoc,
     ignore,
 ];
 
 // please note, if you modify keys in the following array, please run `npm run update-package` in addition to `npm run build`
-export const commonVariants: Record<string, IDualConfiguration[]> = {
-    // browser: [browserEnv], // for any packages that uses document, but are not react libs
-    "browser-esm": [browserEnv, esm, importEsm], // for sdk-embedding
-    // vitest: [vitest, noOnlyTests],
+export const commonVariants: Record<string, IConfiguration[]> = {
+    "browser-esm": [browserEnv, esm, importEsm], // for sdk-backend-tiger and sdk-embedding
     esm: [esm, importEsm], // used for this lib
-    "esm-vitest": [esm, importEsm, vitest, noOnlyTests], // for @gooddata/util and MAQL language server
+    "esm-vitest": [esm, importEsm, vitest, noOnlyTests], // for @gooddata/util and most AAC libs
     "esm-vitest-rtl": [esm, importEsm, vitest, testingLibraryDom, noOnlyTests], // for @gooddata/util and MAQL language server
-    react: [browserEnv, esm, react, reactHooks], // for skel tsx
+    react: [browserEnv, esm, react, reactHooks], // for gdc-host-application
     "react-vitest": [browserEnv, esm, react, reactHooks, vitest, noOnlyTests], // for gdc-ui libs
     "react-vitest-rtl": [browserEnv, esm, react, reactHooks, vitest, testingLibraryReact, noOnlyTests], // for gdc-ui libs
     "esm-playwright": [browserEnv, esm, importEsm, playwright, chaiFriendly, noOnlyTests], // for gdc e2e libs
@@ -64,5 +63,5 @@ export const commonVariants: Record<string, IDualConfiguration[]> = {
     ], // for most sdk react libs with vitest
 };
 
-export const v8Variants = { ...commonVariants };
-export const v9Variants = { ...commonVariants };
+export const legacyVariants = { ...commonVariants };
+export const flatVariants = { ...commonVariants };

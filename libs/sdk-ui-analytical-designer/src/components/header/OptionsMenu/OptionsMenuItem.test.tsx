@@ -31,7 +31,7 @@ describe("OptionsMenuItem", () => {
         const defaultProps: ComponentProps<typeof Wrapped> = {
             bubbleId: BUBBLE_ID,
             className: MENU_ITEM_CLASSNAMES,
-            titleId: "export.type.XLSX",
+            label: "XLSX",
             onClick: () => {},
             isDisabled: false,
         };
@@ -56,7 +56,7 @@ describe("OptionsMenuItem", () => {
     it("should not trigger onClick if menu item is disabled", () => {
         const onClick = vi.fn();
         const { container } = renderComponent({
-            bubbleTextProvider: () => BUBBLE_CONTENT,
+            disabledTooltip: BUBBLE_CONTENT,
             isDisabled: true,
             onClick,
         });
@@ -78,7 +78,7 @@ describe("OptionsMenuItem", () => {
 
     it("should display bubble if menu item is disabled", () => {
         const { container } = renderComponent({
-            bubbleTextProvider: () => BUBBLE_CONTENT,
+            disabledTooltip: BUBBLE_CONTENT,
             isDisabled: true,
         });
 

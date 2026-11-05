@@ -1,7 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
 import { type AxiosInstance, type AxiosPromise, type GenericAbortSignal } from "axios";
-import { merge, uniqBy } from "lodash-es";
+import { merge, uniq, uniqBy } from "lodash-es";
 
 import { type ITigerClientBase } from "./client.js";
 import {
@@ -35,9 +35,66 @@ const DefaultOptions = {
         size: DefaultPageSize,
     },
 };
+// pages are heavy backend requests (e.g. with X-GDC-VALIDATE-RELATIONS), so never fire all of them at once
+const MaxParallelPageRequests = 4;
 
 function createOptionsForPage(page: number, options: MetadataGetEntitiesOptions): MetadataGetEntitiesOptions {
     return merge({}, DefaultOptions, options, { params: { page } });
+}
+
+// keeps whatever meta the caller asked for (e.g. permissions) next to the page count
+function withPageMeta<P extends MetadataGetEntitiesParams>(params: P): P {
+    const { metaInclude = [] } = params as { metaInclude?: string[] };
+    return { ...params, metaInclude: uniq([...metaInclude, "page"]) };
+}
+
+// requests the pages following `loadedPages` one by one until the backend returns a page that is not full
+async function getRemainingPagesInSeries<
+    T extends MetadataGetEntitiesResult,
+    P extends MetadataGetEntitiesParams,
+>(
+    client: ITigerClientBase,
+    entitiesGet: MetadataGetEntitiesFnNew<T, P>,
+    params: P,
+    options: MetadataGetEntitiesOptions,
+    loadedPages: T[],
+): Promise<T[]> {
+    const pages = [...loadedPages];
+    const pageSize = options.params?.size ?? DefaultPageSize;
+
+    while (pages.length === 0 || pages[pages.length - 1].data.length >= pageSize) {
+        const result = await entitiesGet(
+            client.axios,
+            "",
+            params,
+            createOptionsForPage(pages.length, options),
+        );
+        pages.push(result.data);
+    }
+
+    return pages;
+}
+
+// runs at most `limit` tasks at a time and starts no new task once one of them fails
+async function runWithConcurrencyLimit<R>(tasks: Array<() => Promise<R>>, limit: number): Promise<R[]> {
+    const results: R[] = [];
+    let nextTask = 0;
+    let failed = false;
+
+    const worker = async () => {
+        while (!failed && nextTask < tasks.length) {
+            const index = nextTask++;
+            try {
+                results[index] = await tasks[index]();
+            } catch (e) {
+                failed = true;
+                throw e;
+            }
+        }
+    };
+
+    await Promise.all(Array.from({ length: Math.min(limit, tasks.length) }, worker));
+    return results;
 }
 
 /**
@@ -299,35 +356,22 @@ export class MetadataUtilities {
         params: P,
         options: MetadataGetEntitiesOptions = {},
     ): Promise<T[]> => {
-        const results: T[] = [];
-        const pageSize = options.params?.size ?? DefaultPageSize;
-        let reachedEnd = false;
-        let nextPage: number = 0;
-
-        while (!reachedEnd) {
-            const optionsToUse = createOptionsForPage(nextPage, options);
-            const result = await entitiesGet(client.axios, "", params, optionsToUse);
-
-            results.push(result.data);
-
-            if (result.data.data.length < pageSize) {
-                reachedEnd = true;
-            } else {
-                nextPage += 1;
-            }
-        }
-
-        return results;
+        return getRemainingPagesInSeries(client, entitiesGet, params, options, []);
     };
 
     /**
      * Given a function to get a paged list of metadata entities, API call parameters and options, this function will
      * retrieve all pages from the metadata.
      * Unlike to the getAllPagesOf, the requests will not be done in series. Instead, a first request will be done
-     * with metaInclude=page to get the number of pages and all subsequent pages will be fetched in parallel.
+     * with metaInclude=page to get the number of pages and the subsequent pages will be fetched in parallel,
+     * at most four at a time. Once a page fails, no further pages are requested.
      *
-     * The parameters are passed to the function as is. The options will be used as a 'template'. If the options specify
-     * page `size`, it will be retained and used for paging.
+     * The parameters are passed to the function as is; `page` is added to any `metaInclude` they already contain.
+     * The options will be used as a 'template'. If the options specify page `size`, it will be retained and used
+     * for paging.
+     *
+     * When the backend does not return the number of pages, the subsequent pages are fetched in series until
+     * a page that is not full, the same way as getAllPagesOf does.
      *
      * @param client - API client to use, this is required so that function can correctly bind 'this' for
      *  the entitiesGet function
@@ -345,23 +389,25 @@ export class MetadataUtilities {
         params: P,
         options: MetadataGetEntitiesOptions = {},
     ): Promise<T[]> => {
-        const initialOptions = createOptionsForPage(0, options);
         const initialGet = await entitiesGet(
             client.axios,
             "",
-            { ...params, metaInclude: ["page"] },
-            initialOptions,
+            withPageMeta(params),
+            createOptionsForPage(0, options),
         );
 
-        const total = initialGet.data?.meta?.page?.totalPages || 1;
+        const total = initialGet.data.meta?.page?.totalPages;
+        if (total === undefined) {
+            return getRemainingPagesInSeries(client, entitiesGet, params, options, [initialGet.data]);
+        }
 
-        const range = Array.from({ length: total - 1 }, (_v, i) => i + 1);
+        const range = Array.from({ length: Math.max(total - 1, 0) }, (_v, i) => i + 1);
 
-        const morePages = await Promise.all(
-            range.map((page) => {
-                const optionsToUse = createOptionsForPage(page, options);
-                return entitiesGet(client.axios, "", params, optionsToUse);
-            }),
+        const morePages = await runWithConcurrencyLimit(
+            range.map(
+                (page) => () => entitiesGet(client.axios, "", params, createOptionsForPage(page, options)),
+            ),
+            MaxParallelPageRequests,
         );
 
         return [initialGet, ...morePages].map((item) => item.data);

@@ -14,7 +14,7 @@ export interface IIntelligenceStepCarouselProps {
 }
 
 /**
- * The detail view's footer pager, e.g. "< 2 of 7 >", for moving between categories without
+ * The detail view's footer pager, e.g. "\< 2 of 7 \>", for moving between categories without
  * returning to the list. The current position is shown in bold.
  */
 export function IntelligenceStepCarousel({

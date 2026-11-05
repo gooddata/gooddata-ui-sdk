@@ -4,7 +4,7 @@
  * Tiger-specific type definitions for analytical objects.
  *
  * @remarks
- * These types are manually defined duplicates of platform-agnostic types from @gooddata/sdk-model.
+ * These types are manually defined duplicates of platform-agnostic types from `@gooddata/sdk-model`.
  * They exist as separate types to establish proper architectural boundaries between:
  * - Layer 1 (api-client-tiger): Platform-specific API client and models
  * - Layer 2 (sdk-model): Platform-agnostic domain model

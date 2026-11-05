@@ -18,7 +18,11 @@ import {
     canSaveReport,
     displayedActions,
     hiddenActions,
+    isCancelVisible,
     isEditorHeaderResetDisabled,
+    isNavigationDisabled,
+    isOpenInAnalyticalDesignerVisible,
+    isOpenVisible,
     isOptionsMenuEnabled,
     isRedoDisabled,
     isSaveAsVisible,
@@ -224,6 +228,66 @@ describe("Editor header selector test", () => {
                         isReadOnlyMode,
                     ),
                 ).toBe(expectedResult);
+            },
+        );
+    });
+
+    describe("isNavigationDisabled", () => {
+        it("refuses leaving while the visualization is being saved, also as a new one", () => {
+            expect(isNavigationDisabled(withReport(getInitializedState(), { saving: true }))).toBe(true);
+            expect(isNavigationDisabled(withReport(getInitializedState(), { savingAsNew: true }))).toBe(true);
+        });
+
+        it("lets the user leave an opening that takes long", () => {
+            expect(isNavigationDisabled(withReport(getInitializedState(), { opening: true }))).toBe(false);
+            expect(isNavigationDisabled(getInitializedState())).toBe(false);
+        });
+    });
+
+    describe("isCancelVisible", () => {
+        it.each([
+            [false, false, false, []],
+            [true, true, false, []],
+            [true, false, true, []],
+            [true, false, false, ["cancel"]],
+            [false, false, false, ["other"]],
+        ])(
+            "should return %s when isEditFromKD is %s, isExploreFromKD is %s and displayedActions are %s",
+            (expectedResult, isEditFromKD, isExploreFromKD, displayedActions: string[]) => {
+                expect(isCancelVisible.resultFunc(isEditFromKD, isExploreFromKD, displayedActions)).toBe(
+                    expectedResult,
+                );
+            },
+        );
+    });
+
+    describe("isOpenVisible", () => {
+        it.each([
+            [true, false, []],
+            // an explore draft from a dashboard does not offer to open another visualization
+            [false, true, []],
+            [false, false, ["open"]],
+            [true, false, ["saveAs"]],
+        ])(
+            "should return %s when isExploreFromKD is %s and hiddenActions are %s",
+            (expectedResult, isExploreFromKD, hiddenActions: string[]) => {
+                expect(isOpenVisible.resultFunc(isExploreFromKD, hiddenActions)).toBe(expectedResult);
+            },
+        );
+    });
+
+    describe("isOpenInAnalyticalDesignerVisible", () => {
+        it.each([
+            [false, false, []],
+            [true, true, []],
+            [false, true, ["openInAnalyticalDesigner"]],
+            [true, true, ["open"]],
+        ])(
+            "should return %s when isEditFromKD is %s and hiddenActions are %s",
+            (expectedResult, isEditFromKD, hiddenActions: string[]) => {
+                expect(isOpenInAnalyticalDesignerVisible.resultFunc(isEditFromKD, hiddenActions)).toBe(
+                    expectedResult,
+                );
             },
         );
     });

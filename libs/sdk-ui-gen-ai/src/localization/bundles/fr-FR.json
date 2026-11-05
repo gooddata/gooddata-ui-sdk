@@ -1,4 +1,6 @@
 {
+    "gd.gen-ai.copilot.composing.waiting": "En attente de votre réponse",
+    "gd.gen-ai.copilot.composing.replyNow": "Répondre maintenant",
     "gd.gen-ai.global-error": "Une erreur imprévue s’est produite.",
     "gd.gen-ai.global-error.description": "Essayez de redémarrer le chatbot et de recommencer.",
     "gd.gen-ai.global-error.button-details": "Voir la réponse brute à l’erreur pour plus de détails",
@@ -149,8 +151,8 @@
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, one {# page} other {# pages}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, one {# page} other {# pages}}",
     "gd.gen-ai.publisherDocument.unavailable": "Le document est indisponible.",
-    "gd.gen-ai.publisherDocument.previousVersion": "Ce document a été créé dans la version précédente de Publisher et ne peut pas être ouvert ici.",
-    "gd.gen-ai.publisherDocument.newerVersion": "Ce document a été créé dans une version plus récente de Publisher et ne peut pas être ouvert ici.",
+    "gd.gen-ai.publisherDocument.previousVersion": "Ce document a été créé dans la version précédente de Rapports et ne peut pas être ouvert ici.",
+    "gd.gen-ai.publisherDocument.newerVersion": "Ce document a été créé dans une version plus récente de Rapports et ne peut pas être ouvert ici.",
     "gd.gen-ai.alert-proposal.summary.trigger": "Déclencheur",
     "gd.gen-ai.alert-proposal.summary.trigger.mode": "Mode",
     "gd.gen-ai.alert-proposal.summary.trigger.interval": "Intervalle",

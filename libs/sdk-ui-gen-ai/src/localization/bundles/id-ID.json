@@ -1,4 +1,6 @@
 {
+    "gd.gen-ai.copilot.composing.waiting": "Menunggu balasan Anda",
+    "gd.gen-ai.copilot.composing.replyNow": "Balas sekarang",
     "gd.gen-ai.global-error": "Terjadi kesalahan",
     "gd.gen-ai.global-error.description": "Coba mulai ulang chatbot dan mulai dari awal.",
     "gd.gen-ai.global-error.button-details": "Lihat respons kesalahan mentah untuk detail",
@@ -149,8 +151,8 @@
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, other {# halaman}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, other {# halaman}}",
     "gd.gen-ai.publisherDocument.unavailable": "Dokumen tidak tersedia.",
-    "gd.gen-ai.publisherDocument.previousVersion": "Dokumen ini dibuat di Publisher versi sebelumnya dan tidak dapat dibuka di sini.",
-    "gd.gen-ai.publisherDocument.newerVersion": "Dokumen ini dibuat di Publisher versi yang lebih baru dan tidak dapat dibuka di sini.",
+    "gd.gen-ai.publisherDocument.previousVersion": "Dokumen ini dibuat di Laporan versi sebelumnya dan tidak dapat dibuka di sini.",
+    "gd.gen-ai.publisherDocument.newerVersion": "Dokumen ini dibuat di Laporan versi yang lebih baru dan tidak dapat dibuka di sini.",
     "gd.gen-ai.alert-proposal.summary.trigger": "Pemicu",
     "gd.gen-ai.alert-proposal.summary.trigger.mode": "Mode",
     "gd.gen-ai.alert-proposal.summary.trigger.interval": "Interval",

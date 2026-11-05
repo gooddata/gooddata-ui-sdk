@@ -227,6 +227,22 @@ describe("parameter references", () => {
         expect(getReferences).toHaveBeenCalledWith(root, { direction: "up" });
     });
 
+    it("listParameterReferences returns user data filters that reference the parameter", async () => {
+        const userDataFilter = { identifier: "udf.id", type: "userDataFilter" };
+        const { backend, getReferences } = createFakeBackend();
+        getReferences.mockResolvedValueOnce({
+            nodes: [
+                { ...root, title: "My Param", isRoot: true },
+                { ...userDataFilter, title: "Region filter", isRoot: false },
+            ],
+            edges: [{ from: root, to: userDataFilter }],
+        });
+
+        expect(await listParameterReferences(backend, "ws-1", parameterItem)).toEqual([
+            { ...userDataFilter, title: "Region filter" },
+        ]);
+    });
+
     it("listParameterReferences reports nothing when only the root is present", async () => {
         const { backend, getReferences } = createFakeBackend();
         getReferences.mockResolvedValueOnce({

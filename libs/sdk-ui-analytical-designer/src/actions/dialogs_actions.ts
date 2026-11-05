@@ -17,8 +17,8 @@ export const hideSaveReportDialog = createAction(ActionTypeKeys.SAVE_REPORT_DIAL
 /**
  * Opens the "name your insight before saving" confirmation dialog.
  *
- * @param data.saveAsNew - the confirmed save continues as save-as-new
- * @param data.reOpenEmbedDialog - re-open the embed-insight dialog after the save flow ends
+ * @param data - `saveAsNew`: the confirmed save continues as save-as-new; `reOpenEmbedDialog`: re-open
+ * the embed-insight dialog after the save flow ends
  */
 export const showDialogSavingUntitledReport = createAction(
     ActionTypeKeys.SHOW_DIALOG_SAVING_UNTITLED_REPORT_CONFIRMATION,

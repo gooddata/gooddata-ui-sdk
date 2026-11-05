@@ -1,6 +1,6 @@
 // (C) 2023-2026 GoodData Corporation
 
-import type { DateDataset } from "@gooddata/sdk-code-schemas/v1";
+import type { AttributeFilter, DateDataset, DateFilter } from "@gooddata/sdk-code-schemas/v1";
 import type { MatchFilterOperator } from "@gooddata/sdk-model";
 
 import { type ExportEntities, type FromEntities } from "../types.js";
@@ -74,4 +74,61 @@ function convertDateValues(gran: string, values: (string | number | boolean)[]) 
     return values
         .map((v) => parseGranularityValue(granularity, v))
         .filter((v) => v !== null && v !== undefined);
+}
+
+/**
+ * Before the date filter carried its own `empty_values`, the mode was stored as an attribute filter on the
+ * date label with the single value `""`: `include` meant "only", `exclude` meant "exclude". Pull and AD
+ * still read that shape; deploy must not write it, because the backend executes it next to the date
+ * filter's default of excluding empty values, and the two cancel out.
+ *
+ * Returns the date filter with such a `with:` entry folded into `empty_values` and removed. An explicit
+ * `empty_values` wins, the entry is dropped either way. A `""` mixed with other values, or on a label
+ * that is not of the date filter's dataset, or several `""` markers, is an ordinary filter and stays.
+ */
+export function foldLegacyEmptyValuesWithFilter(filter: DateFilter): DateFilter {
+    const withFilters = filter.with;
+    if (!withFilters) {
+        return filter;
+    }
+
+    const datasetId = filter.using.split("/").pop();
+    const legacy = Object.entries(withFilters).flatMap(([key, withFilter]) => {
+        const mode = legacyEmptyValuesMode(withFilter, datasetId);
+        return mode ? [{ key, mode }] : [];
+    });
+    // Two markers on one date filter have no single mode to fold into, so none is folded
+    if (legacy.length !== 1) {
+        return filter;
+    }
+
+    const legacyKeys = new Set(legacy.map(({ key }) => key));
+    const remaining = Object.fromEntries(Object.entries(withFilters).filter(([key]) => !legacyKeys.has(key)));
+    const { with: _with, ...rest } = filter;
+
+    return {
+        ...rest,
+        ...(Object.keys(remaining).length > 0 ? { with: remaining } : {}),
+        ...(filter.empty_values ? {} : { empty_values: legacy[0].mode }),
+    };
+}
+
+function legacyEmptyValuesMode(
+    filter: AttributeFilter,
+    datasetId: string | undefined,
+): "only" | "exclude" | undefined {
+    // A date label id is `<dataset id>.<granularity>`; the dataset id may itself contain dots, so compare
+    // it whole rather than up to the first dot.
+    const labelId = filter.using.split("/").pop() ?? "";
+    const granularity =
+        datasetId && labelId.startsWith(`${datasetId}.`) ? labelId.slice(datasetId.length + 1) : "";
+    if (!granularity || granularity.includes(".")) {
+        return undefined;
+    }
+
+    const isOnlyEmpty = (values: unknown[] | undefined) => values?.length === 1 && values[0] === "";
+    if (isOnlyEmpty(filter.state?.include)) {
+        return "only";
+    }
+    return isOnlyEmpty(filter.state?.exclude) ? "exclude" : undefined;
 }

@@ -10,6 +10,22 @@ export interface IChatMessagesGroup {
     messages: IChatConversationLocalItem[];
 }
 
+export function getReasoningDurationMs(
+    previousGroup: IChatMessagesGroup | undefined,
+    group: IChatMessagesGroup | undefined,
+): number | undefined {
+    if (!previousGroup || group?.type !== "reasoning") {
+        return undefined;
+    }
+    const previousLastMessage = previousGroup.messages[previousGroup.messages.length - 1];
+    const lastMessage = group.messages[group.messages.length - 1];
+    if (!previousLastMessage || !lastMessage) {
+        return undefined;
+    }
+
+    return Math.abs(lastMessage.createdAt - previousLastMessage.createdAt);
+}
+
 export function groupMessages(messages: IChatConversationLocalItem[]): IChatMessagesGroup[] {
     if (messages.length === 0) {
         return [];

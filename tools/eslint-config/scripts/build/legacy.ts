@@ -1,10 +1,10 @@
 // (C) 2026 GoodData Corporation
 
-import { writeFileSync } from "fs";
+import { mkdirSync, writeFileSync } from "fs";
 
 import { type Rules } from "@gooddata/lint-config";
 
-import type { IConfigurationV8, IDualConfiguration } from "../../src/types.js";
+import type { IConfiguration, IConfigurationLegacy } from "../../src/types.js";
 
 // Types for the output eslintrc JSON format
 interface IEslintConfigurationCommon {
@@ -39,7 +39,7 @@ function createEmptyConfig(): IEslintConfiguration {
 
 function applyConfiguration(
     eslintConfiguration: IEslintConfiguration,
-    configuration: IConfigurationV8,
+    configuration: IConfigurationLegacy,
 ): IEslintConfiguration {
     const newConfiguration: IEslintConfiguration = structuredClone(eslintConfiguration);
 
@@ -88,27 +88,32 @@ function applyConfiguration(
     return newConfiguration;
 }
 
-export function buildV8(
-    commonConfigurations: IDualConfiguration[],
-    variants: Record<string, IDualConfiguration[]>,
+// ESLint major the legacy (eslintrc) config is built for; names its dist folder and export prefix
+export const legacyMajor = "v8";
+const legacyOutDir = `dist/${legacyMajor}`;
+
+export function buildLegacy(
+    commonConfigurations: IConfiguration[],
+    variants: Record<string, IConfiguration[]>,
 ): void {
     // Build base config from commonConfigurations
     let baseConfig = createEmptyConfig();
 
     for (const dualConfig of commonConfigurations) {
-        baseConfig = applyConfiguration(baseConfig, dualConfig.v8);
+        baseConfig = applyConfiguration(baseConfig, dualConfig.legacy);
     }
 
-    writeFileSync("dist/base.json", JSON.stringify(baseConfig, null, 4));
+    mkdirSync(legacyOutDir, { recursive: true });
+    writeFileSync(`${legacyOutDir}/base.json`, JSON.stringify(baseConfig, null, 4));
 
     // Build variant configs
     for (const [variantName, variantConfigs] of Object.entries(variants)) {
         let variantConfig = structuredClone(baseConfig);
 
         for (const dualConfig of variantConfigs) {
-            variantConfig = applyConfiguration(variantConfig, dualConfig.v8);
+            variantConfig = applyConfiguration(variantConfig, dualConfig.legacy);
         }
 
-        writeFileSync(`dist/${variantName}.json`, JSON.stringify(variantConfig, null, 4));
+        writeFileSync(`${legacyOutDir}/${variantName}.json`, JSON.stringify(variantConfig, null, 4));
     }
 }

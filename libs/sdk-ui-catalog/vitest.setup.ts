@@ -16,7 +16,7 @@ import { strictBarrel } from "@gooddata/util";
  * does not work here: with `resolve.preserveSymlinks` on, the optimizer cannot resolve the
  * second-level transitive dependencies of pnpm-linked packages and leaves them as bare externals.
  * Every CommonJS package among them (react-intl, hoist-non-react-statics, prop-types,
- * @babel/runtime/*, json-stable-stringify, ...) then dies at runtime on "Calling `require` for X in
+ * `@babel/runtime/*`, json-stable-stringify, ...) then dies at runtime on "Calling `require` for X in
  * an environment that doesn't expose the `require` function".
  *
  * They live here rather than in individual test files on purpose: with a non-isolated run every file

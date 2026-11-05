@@ -63,6 +63,18 @@ describe("AaC query preview AFM matches the model filter conversion", () => {
             { type: "date_filter", using: DATASET, from: "2020-01-01", to: "2020-12-31" },
             newAbsoluteDateFilter(DATASET, "2020-01-01", "2020-12-31"),
         ],
+        [
+            'relative with include: [""] with: filter',
+            {
+                type: "date_filter",
+                using: DATASET,
+                granularity: "YEAR",
+                from: -10,
+                to: 0,
+                with: { y: { type: "attribute_filter", using: YEAR_LABEL, state: { include: [""] } } },
+            },
+            newRelativeDateFilter(DATASET, "GDC.time.year", -10, 0, undefined, undefined, "only"),
+        ],
         // `with:` attribute filters are deployed as separate filters right after the date filter
         [
             "relative with positive with: filter",

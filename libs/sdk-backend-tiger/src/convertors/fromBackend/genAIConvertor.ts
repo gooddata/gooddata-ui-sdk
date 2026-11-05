@@ -138,7 +138,7 @@ export function convertChatConversationItemFromBackend(
             content,
             stepId: item.stepId ?? undefined,
             detail: convertChatConversationItemDetailFromBackend(item.detail),
-            agentId: item.newAgentId ?? undefined,
+            agentId: item.newAgentId ?? item.agentId ?? undefined,
             oldAgentId: item.oldAgentId ?? undefined,
             reasoningEffort: item.reasoningEffort ?? undefined,
         };

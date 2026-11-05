@@ -8,7 +8,7 @@ import { type IntlShape, defineMessages, useIntl } from "react-intl";
 import { UiButton } from "@gooddata/sdk-ui-kit";
 
 import { AIThinkingLoader, AIThinkingSummary } from "../utils/animation.js";
-import { type IChatMessagesGroup } from "../utils/groupUtility.js";
+import { type IChatMessagesGroup, getReasoningDurationMs } from "../utils/groupUtility.js";
 import { extractHeading } from "../utils/markdownUtils.js";
 
 interface IItemsGroupProps {
@@ -158,18 +158,9 @@ function useReasoningGroup(previousGroup: IChatMessagesGroup | undefined, group:
     }, [group.messages, intl]);
 
     const duration = useMemo(() => {
-        if (!previousGroup) {
-            return undefined;
-        }
-        const previousLastMessage = previousGroup.messages[previousGroup.messages.length - 1];
-        const lastMessage = group.messages[group.messages.length - 1];
-        if (!previousLastMessage || !lastMessage) {
-            return undefined;
-        }
-
-        const duration = Math.abs(lastMessage.createdAt - previousLastMessage.createdAt);
-        return formatDuration(intl, duration);
-    }, [group.messages, intl, previousGroup]);
+        const durationMs = getReasoningDurationMs(previousGroup, group);
+        return durationMs === undefined ? undefined : formatDuration(intl, durationMs);
+    }, [group, intl, previousGroup]);
 
     return {
         headings,

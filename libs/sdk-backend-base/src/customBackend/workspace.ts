@@ -10,6 +10,7 @@ import {
     type IReferencesService,
     type IWorkspaceAccessControlService,
     type IWorkspaceAgentsService,
+    type IWorkspaceAnalyticsAsCodeService,
     type IWorkspaceAttributesService,
     type IWorkspaceAutomationService,
     type IWorkspaceCatalogFactory,
@@ -171,6 +172,10 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
 
     public customApplicationSettings(): IWorkspaceCustomApplicationSettingsService {
         throw new NotSupported("custom application settings are not supported");
+    }
+
+    public analyticsAsCode(): IWorkspaceAnalyticsAsCodeService {
+        throw new NotSupported("analytics as code is not supported");
     }
 
     public automations(): IWorkspaceAutomationService {

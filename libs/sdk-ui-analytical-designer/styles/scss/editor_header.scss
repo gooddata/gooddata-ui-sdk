@@ -10,7 +10,9 @@
     left: 15px;
     display: flex;
     align-items: center;
-    height: 47px;
+    // grows with content a host adds around the default header; the editor publishes the height it measures
+    // as --adi-editor-header-height for the content below
+    min-height: 47px;
 
     &.without-dataset-picker {
         .left-actions-wrapper {
@@ -26,9 +28,26 @@
         }
     }
 
+    .adi-editor-header-content {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        justify-content: center;
+        align-self: stretch;
+        min-width: 0;
+    }
+
+    .adi-editor-header-row {
+        display: flex;
+        align-items: center;
+        min-height: 47px;
+    }
+
     .left-actions-wrapper {
         display: flex;
         flex: 0 1 auto;
+        align-items: center;
+        min-width: 0;
         overflow: hidden;
         margin-left: var(--adi-catalog-width);
         margin-right: 20px;

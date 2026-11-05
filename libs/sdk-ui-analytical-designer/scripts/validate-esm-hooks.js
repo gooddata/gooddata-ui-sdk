@@ -6,7 +6,6 @@ import { readFile } from "node:fs/promises";
 // the listed module of sdk-ui-metric-component renders into `document` at load. The smoke test
 // replaces each of them with a stub that exports the same names; the rest of that package is imported
 // for real.
-const STUBBED_PACKAGES = new Set(["jquery.browser"]);
 const STUBBED_PACKAGE_PREFIXES = ["monaco-editor/", "monaco-languageclient/"];
 const STUBBED_MODULES = [
     "/sdk-ui-metric-component/esm/MetricComponent/Form/MaqlEditorField/MaqlEditorEditor.js",
@@ -21,7 +20,6 @@ const ASSET_EXTENSION = /\.(svg|png|gif|jpe?g|webp|ico|woff2?|ttf|eot)$/;
 
 function isStubbed(specifier, url) {
     return (
-        STUBBED_PACKAGES.has(specifier) ||
         STUBBED_PACKAGE_PREFIXES.some((prefix) => specifier.startsWith(prefix)) ||
         STUBBED_MODULES.some((path) => new URL(url).pathname.endsWith(path))
     );

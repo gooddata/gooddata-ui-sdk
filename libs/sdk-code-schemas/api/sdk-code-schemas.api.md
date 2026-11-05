@@ -5863,6 +5863,7 @@ export const metadata_v1: {
                 properties: {
                     visible: {
                         type: string;
+                        description: string;
                     };
                     text: {
                         type: string;
@@ -15095,7 +15096,6 @@ interface PublisherWidgetTitleV2 {
     style?: PublisherTextStyleV2;
     // (undocumented)
     text?: string;
-    // (undocumented)
     visible?: boolean;
 }
 

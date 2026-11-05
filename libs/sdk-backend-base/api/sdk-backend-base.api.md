@@ -171,6 +171,7 @@ import { IWidgetAlert } from '@gooddata/sdk-model';
 import { IWidgetAlertCount } from '@gooddata/sdk-backend-spi';
 import { IWidgetAlertDefinition } from '@gooddata/sdk-model';
 import { IWidgetReferences } from '@gooddata/sdk-backend-spi';
+import { IWorkspaceAnalyticsAsCodeService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceAttributesService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceAutomationService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalog } from '@gooddata/sdk-backend-spi';
@@ -233,6 +234,9 @@ export type AnalyticalBackendCallbacks = {
     successfulOutliersResultReadAll?: (outliersResult: IOutliersResult, executionId: string) => void;
     failedOutliersResultReadAll?: (error: any, executionId: string) => void;
 };
+
+// @alpha (undocumented)
+export type AnalyticsAsCodeDecoratorFactory = (analyticsAsCode: IWorkspaceAnalyticsAsCodeService, workspace: string) => IWorkspaceAnalyticsAsCodeService;
 
 // @public
 export class AnonymousAuthProvider implements IAuthProviderCallGuard {
@@ -1052,6 +1056,7 @@ export type DecoratorFactories = {
     workspacePublisher?: WorkspacePublisherDecoratorFactory;
     workspacePublisherV2?: WorkspacePublisherV2DecoratorFactory;
     objectPermissions?: ObjectPermissionsDecoratorFactory;
+    analyticsAsCode?: AnalyticsAsCodeDecoratorFactory;
 };
 
 // @internal (undocumented)

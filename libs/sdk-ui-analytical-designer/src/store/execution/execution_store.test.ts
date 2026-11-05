@@ -181,9 +181,9 @@ describe("store/execution mount", () => {
 
     /**
      * The pluggable visualization reports its validation failures from RENDER
-     * (PluggableVisualization#onError -> reportExecutionFailed), so re-reporting the SAME result
+     * (PluggableVisualization#onError -\> reportExecutionFailed), so re-reporting the SAME result
      * must leave the state reference untouched. A write that produces a new object every dispatch
-     * closes a render -> dispatch -> render loop that pins the browser's main thread — switching an
+     * closes a render -\> dispatch -\> render loop that pins the browser's main thread — switching an
      * insight with two date items to a pie chart froze AD until the tab was killed.
      *
      * These assertions pin the IDENTITY, not the values — the values alone cannot catch the

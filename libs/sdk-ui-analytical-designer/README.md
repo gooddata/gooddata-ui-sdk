@@ -153,10 +153,9 @@ Leave out `insight` to open a new insight. The AnalyticalDesigner component sect
 - **Import side effects**: importing an entry creates no router and no browser history. `Root`
   creates its router when it mounts: a `BrowserRouter` under the host's base path in the pluggable
   module, and none in hosted-component mode. AD's own modules load in Node without a
-  DOM, but two dependencies use browser APIs when they load: `@gooddata/sdk-ui-metric-component`
-  (through `monaco-editor`) and `jquery.browser`. `rushx validate-esm` imports both entries in
-  Node, loads CSS and image imports as a bundler does, and replaces those two dependencies with
-  stubs.
+  DOM, but one dependency uses browser APIs when it loads: `@gooddata/sdk-ui-metric-component`
+  (through `monaco-editor`). `rushx validate-esm` imports both entries in Node, loads CSS and
+  image imports as a bundler does, and replaces that dependency with a stub.
 
 - **Styles**: importing the package loads no stylesheet, and no module of the package imports one.
   Import the SDK stylesheets AD needs and then AD's `main.css` once, where AD loads, in this order so
@@ -257,7 +256,16 @@ import "@gooddata/sdk-ui-analytical-designer/styles/css/main.css";
 - **Slots**: `slots.Loading` and `slots.Error`, each a component that gets the `Default` region and
   its `defaultProps` (ADR-26-02). `Error` covers both a failed load and
   AD's own bootstrap errors.
-- **Not yet**: the `Header` and `MetricEditor` slots and a portal target: AD's
+- **Editor header slots**: the regions `EditorHeader`, `VisualizationInfo` and `EditorActions`,
+  and one slot per control: `VisualizationTitle`, `VisualizationDescription`,
+  `VisualizationAccess`, `UndoRedo`, `Clear`, `Open`, `Cancel`, `SaveAs`, `Save`, `Embed` and
+  `Options`. A slot hides its region by returning `null`, replaces it with the data and guarded
+  callbacks in `defaultProps`, or renders `Default` with changed props or next to its own
+  content. A region gets its children already rendered with their slots. A control AD does
+  not show (permissions, `hiddenActions`, mode) does not render its slot. AD keeps the catalog
+  restore control and the dialogs the controls open (embed code, time zone) outside the slots,
+  and places the editor below the measured header height.
+- **Not yet**: the `MetricEditor` slot and a portal target: AD's
   overlays open in `document.body`.
 
 The `./internal` entry exports the same component with `auth`, `externalProviderId` and an

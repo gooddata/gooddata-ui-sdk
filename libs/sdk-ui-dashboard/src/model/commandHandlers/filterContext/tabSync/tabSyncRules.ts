@@ -34,12 +34,15 @@ import {
 } from "../../../store/tabs/filterContext/filterSync.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import { type ITabState } from "../../../store/tabs/tabsState.js";
+import { isDisplayFormMetadataReferencedBy } from "../../../utils/attributeFilterMatching.js";
 
 import { type ITabSyncRuleContext, type TabSyncActionsRule, type TabSyncRule } from "./tabSyncScope.js";
 
 type AnyTabSyncRule = TabSyncActionsRule<any>;
 
-type PayloadActionCreatorLike = ((payload: any) => PayloadAction<any>) & { readonly type: string };
+type PayloadActionCreatorLike = ((payload: any) => PayloadAction<any>) & {
+    readonly type: string;
+};
 
 function defineRule<C extends PayloadActionCreatorLike>(
     actionCreator: C,
@@ -185,6 +188,54 @@ function mirroredListSelection(
         : undefined;
 }
 
+function hasDisplayForm(counterpart: IDashboardAttributeFilter, displayForm: ObjRef): boolean {
+    return areObjRefsEqual(counterpart.attributeFilter.displayForm, displayForm);
+}
+
+/**
+ * Actions that let `counterpart` take `displayForm` and keep showing the label it shows now.
+ * The target tab learns the metadata of `displayForm`, and a counterpart without a display-as label
+ * gets its current display form as one. The display form itself is changed by the caller.
+ */
+function prepareDisplayFormChange(
+    ctx: ITabSyncRuleContext,
+    targetTabState: ITabState,
+    targetFilter: IDashboardAttributeFilter,
+    sourceDisplayForm: ObjRef,
+): PayloadAction<object>[] {
+    const actions: PayloadAction<object>[] = [];
+    const targetDisplayForms = targetTabState.filterContext?.attributeFilterDisplayForms;
+    const metadata = (ctx.source.filterContext?.attributeFilterDisplayForms ?? []).find((candidate) =>
+        isDisplayFormMetadataReferencedBy(candidate, sourceDisplayForm),
+    );
+    if (
+        metadata &&
+        targetDisplayForms &&
+        !targetDisplayForms.some((candidate) =>
+            isDisplayFormMetadataReferencedBy(candidate, sourceDisplayForm),
+        )
+    ) {
+        actions.push(
+            tabsActions.addAttributeFilterDisplayForm({
+                displayForm: metadata,
+            }),
+        );
+    }
+    const localIdentifier = targetFilter.attributeFilter.localIdentifier!;
+    const hasDisplayAsLabel = targetTabState.attributeFilterConfigs?.attributeFilterConfigs?.some(
+        (config) => config.localIdentifier === localIdentifier && config.displayAsLabel,
+    );
+    if (!hasDisplayAsLabel) {
+        actions.push(
+            tabsActions.changeDisplayAsLabel({
+                localIdentifier,
+                displayAsLabel: targetFilter.attributeFilter.displayForm,
+            }),
+        );
+    }
+    return actions;
+}
+
 function findMeasureValueCounterpart(
     ctx: ITabSyncRuleContext,
     target: ITabState,
@@ -216,7 +267,14 @@ function toUpsertDateFilterPayload(filter: IDashboardDateFilter): IUpsertDateFil
     if (isAllTimeDashboardDateFilter(filter)) {
         return { type: "allTime", ...shared };
     }
-    return { type, granularity, from, to, ...(boundedFilter ? { boundedFilter } : {}), ...shared };
+    return {
+        type,
+        granularity,
+        from,
+        to,
+        ...(boundedFilter ? { boundedFilter } : {}),
+        ...shared,
+    };
 }
 
 /**
@@ -230,7 +288,9 @@ function savedDateFilterPayload(
 ): IUpsertDateFilterPayload | undefined {
     const original = findOriginalFilter(
         target,
-        applied ?? { dateFilter: { type: "relative", granularity: "GDC.time.date" } },
+        applied ?? {
+            dateFilter: { type: "relative", granularity: "GDC.time.date" },
+        },
     );
     if (isDashboardDateFilter(original)) {
         return toUpsertDateFilterPayload(original);
@@ -290,7 +350,9 @@ const filterContextRules: Array<[string, AnyTabSyncRule]> = [
         if (!target.filterContext?.attributeFilterDisplayForms) {
             return undefined;
         }
-        return { displayForm: "displayForm" in payload ? payload.displayForm : payload };
+        return {
+            displayForm: "displayForm" in payload ? payload.displayForm : payload,
+        };
     }),
 
     // Selection changes swap the display form together with elements expressed in it, so the swap
@@ -316,7 +378,10 @@ const filterContextRules: Array<[string, AnyTabSyncRule]> = [
         }
         const filterLocalId = dashboardFilterLocalIdentifier(counterpart)!;
         if (!payload.restoreTargetOriginal) {
-            const changeDisplayForm = tabsActions.changeAttributeDisplayForm({ ...payload, filterLocalId });
+            const changeDisplayForm = tabsActions.changeAttributeDisplayForm({
+                ...payload,
+                filterLocalId,
+            });
             const currentDisplayForm = counterpart.attributeFilter.displayForm;
             const hasDisplayAsLabel = target.attributeFilterConfigs?.attributeFilterConfigs?.some(
                 (config) => config.localIdentifier === filterLocalId && config.displayAsLabel,
@@ -375,10 +440,12 @@ const filterContextRules: Array<[string, AnyTabSyncRule]> = [
 
 // Staged edits stay on their tab until applied. With `restoreTargetOriginal`, every tab restores its own saved value.
 const selectionRules: Array<[string, AnyTabSyncRule]> = [
-    defineRule(tabsActions.updateAttributeFilterSelection, (payload, target, ctx) => {
+    // Elements are values of the display form of their filter, so the counterpart takes the display
+    // form of the written elements.
+    defineActionsRule(tabsActions.updateAttributeFilterSelection, (payload, target, ctx) => {
         // Every tab migrates its own filters, so a migrated selection stays on its tab.
         if (payload.isWorkingSelectionChange || payload.isResultOfMigration) {
-            return undefined;
+            return [];
         }
         const counterpart = mirroredListSelection(
             ctx,
@@ -387,24 +454,42 @@ const selectionRules: Array<[string, AnyTabSyncRule]> = [
             payload.restoreTargetOriginal,
         );
         if (!counterpart) {
-            return undefined;
+            return [];
         }
-        const original = payload.restoreTargetOriginal ? findOriginalFilter(target, counterpart) : undefined;
-        if (payload.restoreTargetOriginal && !isDashboardAttributeFilter(original)) {
-            return undefined;
+        const filterLocalId = counterpart.attributeFilter.localIdentifier!;
+        const filter = payload.restoreTargetOriginal
+            ? findOriginalFilter(target, counterpart)
+            : findFilterByLocalId(ctx.source, payload.filterLocalId);
+        if (!isDashboardAttributeFilter(filter)) {
+            return [];
         }
-        return {
+        const updateSelection = tabsActions.updateAttributeFilterSelection({
             ...payload,
-            filterLocalId: counterpart.attributeFilter.localIdentifier!,
-            ...(isDashboardAttributeFilter(original)
+            filterLocalId,
+            ...(payload.restoreTargetOriginal
                 ? {
-                      elements: original.attributeFilter.attributeElements,
-                      negativeSelection: original.attributeFilter.negativeSelection,
+                      elements: filter.attributeFilter.attributeElements,
+                      negativeSelection: filter.attributeFilter.negativeSelection,
                   }
                 : {}),
             // Every tab migrates its own filters.
             enableImmediateAttributeFilterDisplayAsLabelMigration: false,
-        };
+        });
+        const displayForm = filter.attributeFilter.displayForm;
+        if (hasDisplayForm(counterpart, displayForm)) {
+            return [updateSelection];
+        }
+        return [
+            // A restored filter takes back its own saved display form, which its tab already knows.
+            ...(payload.restoreTargetOriginal
+                ? []
+                : prepareDisplayFormChange(ctx, target, counterpart, displayForm)),
+            tabsActions.changeAttributeDisplayForm({
+                filterLocalId,
+                displayForm,
+            }),
+            updateSelection,
+        ];
     }),
     defineRule(tabsActions.replaceAttributeFilterItem, (payload, target, ctx) => {
         if (payload.isWorkingSelectionChange) {
@@ -438,7 +523,11 @@ const selectionRules: Array<[string, AnyTabSyncRule]> = [
         ) {
             return undefined;
         }
-        return { ...payload, filterLocalId, filter: retargetAttributeFilterItem(replacement, filterLocalId) };
+        return {
+            ...payload,
+            filterLocalId,
+            filter: retargetAttributeFilterItem(replacement, filterLocalId),
+        };
     }),
     defineRule(tabsActions.clearAttributeFiltersSelection, (payload, target, ctx) => {
         const filterLocalIds = payload.filterLocalIds.flatMap((filterLocalId) => {
@@ -453,7 +542,10 @@ const selectionRules: Array<[string, AnyTabSyncRule]> = [
         if (filterLocalIds.length === 0) {
             return undefined;
         }
-        return { filterLocalIds, ...(payload.restoreTargetOriginal ? { restoreOriginal: true } : {}) };
+        return {
+            filterLocalIds,
+            ...(payload.restoreTargetOriginal ? { restoreOriginal: true } : {}),
+        };
     }),
     defineRule(tabsActions.upsertDateFilter, (payload, target) => {
         if (payload.isWorkingSelectionChange || !target.filterContext?.filterContextDefinition) {
@@ -472,7 +564,10 @@ const selectionRules: Array<[string, AnyTabSyncRule]> = [
         }
         // A common date filter created on the target does not take the local identifier of the source.
         const ownValue = payload.restoreTargetOriginal ? value.localIdentifier : undefined;
-        return { ...value, localIdentifier: counterpart?.dateFilter.localIdentifier ?? ownValue };
+        return {
+            ...value,
+            localIdentifier: counterpart?.dateFilter.localIdentifier ?? ownValue,
+        };
     }),
     defineRule(tabsActions.changeMeasureValueFilterCondition, (payload, target, ctx) => {
         if (payload.isWorkingSelectionChange) {
@@ -488,7 +583,11 @@ const selectionRules: Array<[string, AnyTabSyncRule]> = [
         }
         const original = findOriginalFilter(target, counterpart);
         return isDashboardMeasureValueFilter(original)
-            ? { ...payload, localIdentifier, conditions: original.dashboardMeasureValueFilter.conditions }
+            ? {
+                  ...payload,
+                  localIdentifier,
+                  conditions: original.dashboardMeasureValueFilter.conditions,
+              }
             : undefined;
     }),
     defineRule(tabsActions.setMeasureValueFilterDimensionality, (payload, target, ctx) => {
@@ -516,13 +615,26 @@ const selectionRules: Array<[string, AnyTabSyncRule]> = [
         return values.length > 0 ? { ...payload, values } : undefined;
     }),
     // Other tabs receive the committed values of the source tab, not their own staged values.
-    defineRule(tabsActions.applyWorkingSelection, (_payload, target, ctx) => {
+    // A committed list filter brings its display form, which the mirrored selection writes.
+    defineActionsRule(tabsActions.applyWorkingSelection, (_payload, target, ctx) => {
         const filters = committedFilterValues(ctx, target);
         const parameters = committedParameterValues(ctx, target);
         if (filters.length === 0 && parameters.length === 0) {
-            return undefined;
+            return [];
         }
-        return { mirroredSelection: { filters, parameters } };
+        const displayFormChanges = filters.filter(isDashboardAttributeFilter).flatMap((filter) => {
+            const targetFilter = findFilterByLocalId(target, filter.attributeFilter.localIdentifier!);
+            return isDashboardAttributeFilter(targetFilter) &&
+                !hasDisplayForm(targetFilter, filter.attributeFilter.displayForm)
+                ? prepareDisplayFormChange(ctx, target, targetFilter, filter.attributeFilter.displayForm)
+                : [];
+        });
+        return [
+            ...displayFormChanges,
+            tabsActions.applyWorkingSelection({
+                mirroredSelection: { filters, parameters },
+            }),
+        ];
     }),
 ];
 

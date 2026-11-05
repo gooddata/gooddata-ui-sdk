@@ -1,12 +1,12 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
 
-import { type ObjRef, idRef, objRefToString, uriRef } from "@gooddata/sdk-model";
+import { type ObjRef, idRef, uriRef } from "@gooddata/sdk-model";
 import {
     type IInsightPickerItem,
     type IInsightPickerMenuAction,
@@ -16,24 +16,14 @@ import {
 import { Button, Dialog } from "@gooddata/sdk-ui-kit";
 
 import { deleteReport } from "../../actions/delete_actions.js";
-import { openReport } from "../../actions/open_actions.js";
 import { saveReportCheck } from "../../actions/save_actions.js";
+import { type IAnalyticalDesignerOpenProps } from "../../embedding/editorHeaderSlotTypes.js";
 import { descriptionTooltipOpened } from "../../sagas/description_tooltip/description_tooltip_ui_actions.js";
 import { isOwnershipSupported, supportsObjectUris } from "../../selectors/backend_capabilities_selector.js";
-import { getProjectId, getUserLoginMD5, getUserUri } from "../../selectors/bootstrap_selector.js";
-import {
-    enableCatalogSmartSearchResults,
-    enableVisualizationFilteringByTags,
-    getMetadataTimeZone,
-} from "../../selectors/feature_flag_selector.js";
-import { canOpenReport } from "../../selectors/open_report_selector.js";
-import { openReportIdSelector } from "../../selectors/report_selector.js";
-import { getTagsConfiguration } from "../../selectors/route_selector.js";
-import { getEnabledVisualizationClassesUrls } from "../../services/visualization_class_service.js";
+import { getUserLoginMD5, getUserUri } from "../../selectors/bootstrap_selector.js";
+import { getMetadataTimeZone } from "../../selectors/feature_flag_selector.js";
 import { getIsReadOnlyMode } from "../../store/embedding/embedding_selectors.js";
 import { type AppDispatch } from "../../store/types.js";
-
-const isDisabledSelector = createSelector([canOpenReport], (canOpenReport) => !canOpenReport);
 
 const authorSelector = createSelector(
     supportsObjectUris,
@@ -44,27 +34,26 @@ const authorSelector = createSelector(
     },
 );
 
-export function InsightPickerDialog() {
-    const workspaceId = useSelector(getProjectId);
+/**
+ * The Open control as a button with the visualization picker in a dialog.
+ */
+export function InsightPickerDialog({
+    workspace,
+    label,
+    isDisabled,
+    selectedInsightId: openInsightId,
+    includeTags,
+    excludeTags,
+    enabledVisualizationUrls,
+    isSemanticSearchEnabled,
+    onOpenInsight,
+}: IAnalyticalDesignerOpenProps) {
     const author = useSelector(authorSelector);
-    const isDisabled = useSelector(isDisabledSelector);
-    const openInsightId = useSelector(openReportIdSelector);
-    const enabledVisualizationClassesUrls: string[] = useSelector(getEnabledVisualizationClassesUrls);
     const hasOwnershipSupport = useSelector(isOwnershipSupported);
     const metadataTimeZone = useSelector(getMetadataTimeZone);
-    const isFilteringByTagsEnabled = useSelector(enableVisualizationFilteringByTags);
     const isReadOnly = useSelector(getIsReadOnlyMode);
-    const isSmartSearchResultsEnabled = useSelector(enableCatalogSmartSearchResults);
-    const tagsConfiguration = useSelector(getTagsConfiguration);
 
     const dispatch = useDispatch<AppDispatch>();
-
-    const onOpenInsight = useCallback(
-        (insightRef: ObjRef) => {
-            dispatch(openReport(insightRef, false));
-        },
-        [dispatch],
-    );
     const onDeleteInsight = useCallback(
         (insightRef: ObjRef, insightTitle: string) => {
             dispatch(deleteReport(insightRef, false, { title: insightTitle }));
@@ -85,7 +74,6 @@ export function InsightPickerDialog() {
     );
 
     const intl = useIntl();
-    const buttonText = intl.formatMessage({ id: "openReportPlaceholder" });
 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const pickerState = useInsightPickerState(hasOwnershipSupport ? author : undefined);
@@ -100,21 +88,6 @@ export function InsightPickerDialog() {
             onSaveAsNew(true);
         }
     }, [openInsightId, onSaveAsNew]);
-
-    const includeTags = useMemo(
-        () =>
-            isFilteringByTagsEnabled
-                ? tagsConfiguration?.includeObjectsWithTags?.map((tag) => objRefToString(tag))
-                : undefined,
-        [isFilteringByTagsEnabled, tagsConfiguration?.includeObjectsWithTags],
-    );
-    const excludeTags = useMemo(
-        () =>
-            isFilteringByTagsEnabled
-                ? tagsConfiguration?.excludeObjectsWithTags?.map((tag) => objRefToString(tag))
-                : undefined,
-        [isFilteringByTagsEnabled, tagsConfiguration?.excludeObjectsWithTags],
-    );
 
     const handleSelect = useCallback(
         (insightRef: ObjRef) => {
@@ -161,7 +134,7 @@ export function InsightPickerDialog() {
         <div className="s-report_select report-select editor-header-item">
             <Button
                 className="gd-button-secondary type-metric customizable"
-                value={buttonText}
+                value={label}
                 disabled={isDisabled}
                 onClick={() => setIsDialogOpen(true)}
             />
@@ -175,14 +148,14 @@ export function InsightPickerDialog() {
                 >
                     <div className="open-visualizations s-open-visualizations">
                         <InsightPicker
-                            workspace={workspaceId}
+                            workspace={workspace}
                             author={hasOwnershipSupport ? author : undefined}
                             includeTags={includeTags}
                             excludeTags={excludeTags}
-                            enabledVisualizationClassesUrls={enabledVisualizationClassesUrls}
+                            enabledVisualizationClassesUrls={enabledVisualizationUrls}
                             selectedInsightId={openInsightId}
                             metadataTimeZone={metadataTimeZone}
-                            enableSemanticSearch={isSmartSearchResultsEnabled}
+                            enableSemanticSearch={isSemanticSearchEnabled}
                             width={740}
                             {...pickerState}
                             onSelect={handleSelect}

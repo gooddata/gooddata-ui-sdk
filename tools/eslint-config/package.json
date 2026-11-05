@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/eslint-config",
-    "version": "11.67.0-alpha.3",
+    "version": "11.67.0-alpha.4",
     "license": "MIT",
     "author": "GoodData",
     "repository": {
@@ -9,9 +9,9 @@
         "directory": "tools/eslint-config"
     },
     "files": [
-        "dist/*.json",
-        "dist/*.js",
-        "dist/*.d.ts",
+        "dist/**/*.json",
+        "dist/**/*.js",
+        "dist/**/*.d.ts",
         "dist/*.cjs",
         "*.md",
         "LICENSE"
@@ -19,93 +19,200 @@
     "type": "module",
     "sideEffects": false,
     "exports": {
-        ".": {
-            "import": "./dist/base.js",
-            "require": "./dist/base.json"
+        "./v8/base": {
+            "require": "./dist/v8/base.json"
         },
-        "./browser-esm": {
-            "import": "./dist/browser-esm.js",
-            "require": "./dist/browser-esm.json"
+        "./v8/browser-esm": {
+            "require": "./dist/v8/browser-esm.json"
         },
-        "./oxlint-browser-esm": {
-            "import": "./dist/oxlint-browser-esm.js"
+        "./v8/esm": {
+            "require": "./dist/v8/esm.json"
         },
-        "./esm": {
-            "import": "./dist/esm.js",
-            "require": "./dist/esm.json"
+        "./v8/esm-vitest": {
+            "require": "./dist/v8/esm-vitest.json"
         },
-        "./oxlint-esm": {
-            "import": "./dist/oxlint-esm.js"
+        "./v8/esm-vitest-rtl": {
+            "require": "./dist/v8/esm-vitest-rtl.json"
         },
-        "./esm-vitest": {
-            "import": "./dist/esm-vitest.js",
-            "require": "./dist/esm-vitest.json"
+        "./v8/react": {
+            "require": "./dist/v8/react.json"
         },
-        "./oxlint-esm-vitest": {
-            "import": "./dist/oxlint-esm-vitest.js"
+        "./v8/react-vitest": {
+            "require": "./dist/v8/react-vitest.json"
         },
-        "./esm-vitest-rtl": {
-            "import": "./dist/esm-vitest-rtl.js",
-            "require": "./dist/esm-vitest-rtl.json"
+        "./v8/react-vitest-rtl": {
+            "require": "./dist/v8/react-vitest-rtl.json"
         },
-        "./oxlint-esm-vitest-rtl": {
-            "import": "./dist/oxlint-esm-vitest-rtl.js"
+        "./v8/esm-playwright": {
+            "require": "./dist/v8/esm-playwright.json"
         },
-        "./react": {
-            "import": "./dist/react.js",
-            "require": "./dist/react.json"
+        "./v8/esm-react": {
+            "require": "./dist/v8/esm-react.json"
         },
-        "./oxlint-react": {
-            "import": "./dist/oxlint-react.js"
+        "./v8/esm-react-storybook": {
+            "require": "./dist/v8/esm-react-storybook.json"
         },
-        "./react-vitest": {
-            "import": "./dist/react-vitest.js",
-            "require": "./dist/react-vitest.json"
+        "./v8/esm-react-vitest": {
+            "require": "./dist/v8/esm-react-vitest.json"
         },
-        "./oxlint-react-vitest": {
-            "import": "./dist/oxlint-react-vitest.js"
+        "./v8/esm-react-vitest-rtl": {
+            "require": "./dist/v8/esm-react-vitest-rtl.json"
         },
-        "./react-vitest-rtl": {
-            "import": "./dist/react-vitest-rtl.js",
-            "require": "./dist/react-vitest-rtl.json"
+        "./v9/base": {
+            "import": "./dist/v9/base.js"
         },
-        "./oxlint-react-vitest-rtl": {
-            "import": "./dist/oxlint-react-vitest-rtl.js"
+        "./v9/oxlint/base": {
+            "import": "./dist/v9/oxlint/base.js"
         },
-        "./esm-playwright": {
-            "import": "./dist/esm-playwright.js",
-            "require": "./dist/esm-playwright.json"
+        "./v9/browser-esm": {
+            "import": "./dist/v9/browser-esm.js"
         },
-        "./oxlint-esm-playwright": {
-            "import": "./dist/oxlint-esm-playwright.js"
+        "./v9/oxlint/browser-esm": {
+            "import": "./dist/v9/oxlint/browser-esm.js"
         },
-        "./esm-react": {
-            "import": "./dist/esm-react.js",
-            "require": "./dist/esm-react.json"
+        "./v9/esm": {
+            "import": "./dist/v9/esm.js"
         },
-        "./oxlint-esm-react": {
-            "import": "./dist/oxlint-esm-react.js"
+        "./v9/oxlint/esm": {
+            "import": "./dist/v9/oxlint/esm.js"
         },
-        "./esm-react-storybook": {
-            "import": "./dist/esm-react-storybook.js",
-            "require": "./dist/esm-react-storybook.json"
+        "./v9/esm-vitest": {
+            "import": "./dist/v9/esm-vitest.js"
         },
-        "./oxlint-esm-react-storybook": {
-            "import": "./dist/oxlint-esm-react-storybook.js"
+        "./v9/oxlint/esm-vitest": {
+            "import": "./dist/v9/oxlint/esm-vitest.js"
         },
-        "./esm-react-vitest": {
-            "import": "./dist/esm-react-vitest.js",
-            "require": "./dist/esm-react-vitest.json"
+        "./v9/esm-vitest-rtl": {
+            "import": "./dist/v9/esm-vitest-rtl.js"
         },
-        "./oxlint-esm-react-vitest": {
-            "import": "./dist/oxlint-esm-react-vitest.js"
+        "./v9/oxlint/esm-vitest-rtl": {
+            "import": "./dist/v9/oxlint/esm-vitest-rtl.js"
         },
-        "./esm-react-vitest-rtl": {
-            "import": "./dist/esm-react-vitest-rtl.js",
-            "require": "./dist/esm-react-vitest-rtl.json"
+        "./v9/react": {
+            "import": "./dist/v9/react.js"
         },
-        "./oxlint-esm-react-vitest-rtl": {
-            "import": "./dist/oxlint-esm-react-vitest-rtl.js"
+        "./v9/oxlint/react": {
+            "import": "./dist/v9/oxlint/react.js"
+        },
+        "./v9/react-vitest": {
+            "import": "./dist/v9/react-vitest.js"
+        },
+        "./v9/oxlint/react-vitest": {
+            "import": "./dist/v9/oxlint/react-vitest.js"
+        },
+        "./v9/react-vitest-rtl": {
+            "import": "./dist/v9/react-vitest-rtl.js"
+        },
+        "./v9/oxlint/react-vitest-rtl": {
+            "import": "./dist/v9/oxlint/react-vitest-rtl.js"
+        },
+        "./v9/esm-playwright": {
+            "import": "./dist/v9/esm-playwright.js"
+        },
+        "./v9/oxlint/esm-playwright": {
+            "import": "./dist/v9/oxlint/esm-playwright.js"
+        },
+        "./v9/esm-react": {
+            "import": "./dist/v9/esm-react.js"
+        },
+        "./v9/oxlint/esm-react": {
+            "import": "./dist/v9/oxlint/esm-react.js"
+        },
+        "./v9/esm-react-storybook": {
+            "import": "./dist/v9/esm-react-storybook.js"
+        },
+        "./v9/oxlint/esm-react-storybook": {
+            "import": "./dist/v9/oxlint/esm-react-storybook.js"
+        },
+        "./v9/esm-react-vitest": {
+            "import": "./dist/v9/esm-react-vitest.js"
+        },
+        "./v9/oxlint/esm-react-vitest": {
+            "import": "./dist/v9/oxlint/esm-react-vitest.js"
+        },
+        "./v9/esm-react-vitest-rtl": {
+            "import": "./dist/v9/esm-react-vitest-rtl.js"
+        },
+        "./v9/oxlint/esm-react-vitest-rtl": {
+            "import": "./dist/v9/oxlint/esm-react-vitest-rtl.js"
+        },
+        "./v10/base": {
+            "import": "./dist/v10/base.js"
+        },
+        "./v10/oxlint/base": {
+            "import": "./dist/v10/oxlint/base.js"
+        },
+        "./v10/browser-esm": {
+            "import": "./dist/v10/browser-esm.js"
+        },
+        "./v10/oxlint/browser-esm": {
+            "import": "./dist/v10/oxlint/browser-esm.js"
+        },
+        "./v10/esm": {
+            "import": "./dist/v10/esm.js"
+        },
+        "./v10/oxlint/esm": {
+            "import": "./dist/v10/oxlint/esm.js"
+        },
+        "./v10/esm-vitest": {
+            "import": "./dist/v10/esm-vitest.js"
+        },
+        "./v10/oxlint/esm-vitest": {
+            "import": "./dist/v10/oxlint/esm-vitest.js"
+        },
+        "./v10/esm-vitest-rtl": {
+            "import": "./dist/v10/esm-vitest-rtl.js"
+        },
+        "./v10/oxlint/esm-vitest-rtl": {
+            "import": "./dist/v10/oxlint/esm-vitest-rtl.js"
+        },
+        "./v10/react": {
+            "import": "./dist/v10/react.js"
+        },
+        "./v10/oxlint/react": {
+            "import": "./dist/v10/oxlint/react.js"
+        },
+        "./v10/react-vitest": {
+            "import": "./dist/v10/react-vitest.js"
+        },
+        "./v10/oxlint/react-vitest": {
+            "import": "./dist/v10/oxlint/react-vitest.js"
+        },
+        "./v10/react-vitest-rtl": {
+            "import": "./dist/v10/react-vitest-rtl.js"
+        },
+        "./v10/oxlint/react-vitest-rtl": {
+            "import": "./dist/v10/oxlint/react-vitest-rtl.js"
+        },
+        "./v10/esm-playwright": {
+            "import": "./dist/v10/esm-playwright.js"
+        },
+        "./v10/oxlint/esm-playwright": {
+            "import": "./dist/v10/oxlint/esm-playwright.js"
+        },
+        "./v10/esm-react": {
+            "import": "./dist/v10/esm-react.js"
+        },
+        "./v10/oxlint/esm-react": {
+            "import": "./dist/v10/oxlint/esm-react.js"
+        },
+        "./v10/esm-react-storybook": {
+            "import": "./dist/v10/esm-react-storybook.js"
+        },
+        "./v10/oxlint/esm-react-storybook": {
+            "import": "./dist/v10/oxlint/esm-react-storybook.js"
+        },
+        "./v10/esm-react-vitest": {
+            "import": "./dist/v10/esm-react-vitest.js"
+        },
+        "./v10/oxlint/esm-react-vitest": {
+            "import": "./dist/v10/oxlint/esm-react-vitest.js"
+        },
+        "./v10/esm-react-vitest-rtl": {
+            "import": "./dist/v10/esm-react-vitest-rtl.js"
+        },
+        "./v10/oxlint/esm-react-vitest-rtl": {
+            "import": "./dist/v10/oxlint/esm-react-vitest-rtl.js"
         }
     },
     "scripts": {
@@ -121,28 +228,27 @@
         "validate": "npm run lint && npm run format-check"
     },
     "devDependencies": {
-        "@eslint/js": "9.39.5",
+        "@eslint/js": "10.0.1",
         "@gooddata/lint-config": "workspace:*",
         "@testing-library/dom": "10.4.2",
         "@types/node": "24.12.0",
         "@typescript-eslint/eslint-plugin": "8.58.0",
         "@typescript-eslint/parser": "8.58.0",
         "@vitest/eslint-plugin": "1.6.19",
-        "eslint": "^9.39.2",
+        "eslint": "^10.14.0",
         "eslint-import-resolver-typescript": "4.4.4",
         "eslint-plugin-chai-friendly": "1.1.0",
         "eslint-plugin-headers": "1.3.3",
-        "eslint-plugin-import-esm": "3.0.1",
         "eslint-plugin-import-x": "4.17.1",
         "eslint-plugin-jsdoc": "65.4.2",
         "eslint-plugin-no-barrel-files": "1.2.2",
         "eslint-plugin-no-only-tests": "3.3.0",
         "eslint-plugin-playwright": "2.10.1",
-        "eslint-plugin-react": "7.37.5",
         "eslint-plugin-react-hooks": "7.1.1",
         "eslint-plugin-sonarjs": "4.2.2",
         "eslint-plugin-storybook": "10.6.5",
         "eslint-plugin-testing-library": "7.16.2",
+        "eslint-plugin-tsdoc": "0.5.4",
         "globals": "17.2.0",
         "jiti": "2.6.1",
         "oxfmt": "0.68.0",
@@ -155,7 +261,8 @@
     "peerDependencies": {
         "@typescript-eslint/eslint-plugin": "8.58.0",
         "@typescript-eslint/parser": "8.58.0",
-        "eslint": "^8.57.1 || ^9.39.2",
-        "eslint-plugin-jsdoc": "65.4.2"
+        "eslint": "^8.57.1 || ^9.39.2 || ^10.0.1",
+        "eslint-plugin-jsdoc": "65.4.2",
+        "eslint-plugin-tsdoc": "0.5.4"
     }
 }

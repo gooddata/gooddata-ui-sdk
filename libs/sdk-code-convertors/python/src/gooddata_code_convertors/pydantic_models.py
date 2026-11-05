@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: acb0fdf12721d2d96de458b3c85af98942b972e7ca31a3621402f9565fd2b013
+# schema-hash: 879399cb6d885b440230f6ef78c389f10c64d7c792082a49d003d0afdfd07c3a
 
 from __future__ import annotations
 
@@ -33,17 +33,6 @@ __all__ = [
     "AggregatedFact",
     "Aggregation",
     "Aggregation1",
-    "Aggregation10",
-    "Aggregation11",
-    "Aggregation12",
-    "Aggregation13",
-    "Aggregation14",
-    "Aggregation2",
-    "Aggregation3",
-    "Aggregation6",
-    "Aggregation7",
-    "Aggregation8",
-    "Aggregation9",
     "AnomalyDetectionSensitivity",
     "AnomalyDetectionSize",
     "Attribute",
@@ -209,17 +198,6 @@ __all__ = [
     "OpenUrl",
     "Operator",
     "Operator1",
-    "Operator10",
-    "Operator11",
-    "Operator12",
-    "Operator13",
-    "Operator14",
-    "Operator2",
-    "Operator3",
-    "Operator4",
-    "Operator5",
-    "Operator6",
-    "Operator7",
     "ParagraphSlot",
     "Parameter",
     "Parameter1",
@@ -303,19 +281,12 @@ __all__ = [
     "QueryDateFilter2",
     "QueryField",
     "QueryField1",
-    "QueryField10",
-    "QueryField11",
-    "QueryField12",
-    "QueryField13",
-    "QueryField14",
     "QueryField2",
     "QueryField3",
     "QueryField4",
     "QueryField5",
     "QueryField6",
     "QueryField7",
-    "QueryField8",
-    "QueryField9",
     "QueryFields",
     "QueryFilter",
     "QueryFilters",
@@ -400,11 +371,6 @@ __all__ = [
     "TotalItem",
     "Type",
     "Type1",
-    "Type100",
-    "Type101",
-    "Type102",
-    "Type103",
-    "Type104",
     "Type11",
     "Type12",
     "Type14",
@@ -447,8 +413,6 @@ __all__ = [
     "Type55",
     "Type56",
     "Type57",
-    "Type58",
-    "Type59",
     "Type60",
     "Type61",
     "Type62",
@@ -460,6 +424,8 @@ __all__ = [
     "Type68",
     "Type69",
     "Type7",
+    "Type70",
+    "Type71",
     "Type72",
     "Type73",
     "Type74",
@@ -483,16 +449,7 @@ __all__ = [
     "Type90",
     "Type91",
     "Type92",
-    "Type93",
-    "Type94",
-    "Type95",
-    "Type96",
-    "Type97",
-    "Type98",
-    "Type99",
     "Using",
-    "Using1",
-    "Using2",
     "Value",
     "Value1",
     "Value2",
@@ -1761,517 +1718,13 @@ class Operator(Enum):
 
 class Type44(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
-
-
-class Aggregation1(Enum):
-    SUM = 'SUM'
-    COUNT = 'COUNT'
-    APPROXIMATE_COUNT = 'APPROXIMATE_COUNT'
-    AVG = 'AVG'
-    MIN = 'MIN'
-    MAX = 'MAX'
-    MEDIAN = 'MEDIAN'
-    RUNSUM = 'RUNSUM'
-    SUM_1 = 'SUM'
-    COUNT_1 = 'COUNT'
-    APPROXIMATE_COUNT_1 = 'APPROXIMATE_COUNT'
-    AVG_1 = 'AVG'
-    MIN_1 = 'MIN'
-    MAX_1 = 'MAX'
-    MEDIAN_1 = 'MEDIAN'
-    RUNSUM_1 = 'RUNSUM'
-
-
-class Operator1(Enum):
-    SUM = 'SUM'
-    DIFFERENCE = 'DIFFERENCE'
-    MULTIPLICATION = 'MULTIPLICATION'
-    RATIO = 'RATIO'
-    CHANGE = 'CHANGE'
-    SUM_1 = 'SUM'
-    DIFFERENCE_1 = 'DIFFERENCE'
-    MULTIPLICATION_1 = 'MULTIPLICATION'
-    RATIO_1 = 'RATIO'
-    CHANGE_1 = 'CHANGE'
 
 
 class Type45(Enum):
-    PREVIOUS_YEAR = 'PREVIOUS_YEAR'
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
-    PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD_1 = 'PREVIOUS_PERIOD'
-
-
-class QueryField2(BaseModel):
-    aggregation: Aggregation1 | None = Field(
-        None, description='Aggregation function to use for this field.'
-    )
-    using: str | list[str] | None = None
-    maql: str | None = Field(None, description='Define MAQL syntax for metric.')
-    operator: Operator1 | None = Field(
-        None, description='Arithmetic operator to use for this field.'
-    )
-    type: Type45 | None = Field(
-        None,
-        description='Type of relative period metric related to another metric in list.',
-    )
-    date_filter: str | None = Field(
-        None, description='Date filter to use for this field.'
-    )
-
-
-class Aggregation2(Enum):
-    SUM = 'SUM'
-    COUNT = 'COUNT'
-    APPROXIMATE_COUNT = 'APPROXIMATE_COUNT'
-    AVG = 'AVG'
-    MIN = 'MIN'
-    MAX = 'MAX'
-    MEDIAN = 'MEDIAN'
-    RUNSUM = 'RUNSUM'
-
-
-class Using1(RootModel[str]):
-    model_config = ConfigDict(
-        regex_engine="python-re",
-    )
-    root: constr(pattern=r'^metric/(?!\.)[.A-Za-z0-9_-]{1,255}$') = Field(
-        ..., description='Identifier to use for this field.', title='Metric Identifier'
-    )
-
-
-class Using2(RootModel[list[str]]):
-    root: list[str] = Field(
-        ...,
-        description='List of identifiers to use for this field.',
-        title='Metric Identifier',
-    )
-
-
-class Operator2(Enum):
-    SUM = 'SUM'
-    DIFFERENCE = 'DIFFERENCE'
-    MULTIPLICATION = 'MULTIPLICATION'
-    RATIO = 'RATIO'
-    CHANGE = 'CHANGE'
 
 
 class Type46(Enum):
-    PREVIOUS_YEAR = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
-
-
-class Aggregation3(Enum):
-    SUM = 'SUM'
-    COUNT = 'COUNT'
-    APPROXIMATE_COUNT = 'APPROXIMATE_COUNT'
-    AVG = 'AVG'
-    MIN = 'MIN'
-    MAX = 'MAX'
-    MEDIAN = 'MEDIAN'
-    RUNSUM = 'RUNSUM'
-    SUM_1 = 'SUM'
-    COUNT_1 = 'COUNT'
-    APPROXIMATE_COUNT_1 = 'APPROXIMATE_COUNT'
-    AVG_1 = 'AVG'
-    MIN_1 = 'MIN'
-    MAX_1 = 'MAX'
-    MEDIAN_1 = 'MEDIAN'
-    RUNSUM_1 = 'RUNSUM'
-
-
-class Operator3(Enum):
-    SUM = 'SUM'
-    DIFFERENCE = 'DIFFERENCE'
-    MULTIPLICATION = 'MULTIPLICATION'
-    RATIO = 'RATIO'
-    CHANGE = 'CHANGE'
-    SUM_1 = 'SUM'
-    DIFFERENCE_1 = 'DIFFERENCE'
-    MULTIPLICATION_1 = 'MULTIPLICATION'
-    RATIO_1 = 'RATIO'
-    CHANGE_1 = 'CHANGE'
-
-
-class Type47(Enum):
-    PREVIOUS_YEAR = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
-    PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD_1 = 'PREVIOUS_PERIOD'
-
-
-class QueryField4(BaseModel):
-    aggregation: Aggregation3 | None = Field(
-        None, description='Aggregation function to use for this field.'
-    )
-    using: str | list[str] | None = None
-    maql: str | None = Field(None, description='Define MAQL syntax for metric.')
-    operator: Operator3 | None = Field(
-        None, description='Arithmetic operator to use for this field.'
-    )
-    type: Type47 | None = Field(
-        None,
-        description='Type of relative period metric related to another metric in list.',
-    )
-    date_filter: str | None = Field(
-        None, description='Date filter to use for this field.'
-    )
-
-
-class Operator4(Enum):
-    SUM = 'SUM'
-    DIFFERENCE = 'DIFFERENCE'
-    MULTIPLICATION = 'MULTIPLICATION'
-    RATIO = 'RATIO'
-    CHANGE = 'CHANGE'
-
-
-class Type48(Enum):
-    PREVIOUS_YEAR = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
-
-
-class Operator5(Enum):
-    SUM = 'SUM'
-    DIFFERENCE = 'DIFFERENCE'
-    MULTIPLICATION = 'MULTIPLICATION'
-    RATIO = 'RATIO'
-    CHANGE = 'CHANGE'
-    SUM_1 = 'SUM'
-    DIFFERENCE_1 = 'DIFFERENCE'
-    MULTIPLICATION_1 = 'MULTIPLICATION'
-    RATIO_1 = 'RATIO'
-    CHANGE_1 = 'CHANGE'
-
-
-class Type49(Enum):
-    PREVIOUS_YEAR = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
-    PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD_1 = 'PREVIOUS_PERIOD'
-
-
-class QueryField6(BaseModel):
-    aggregation: Aggregation3 | None = Field(
-        None, description='Aggregation function to use for this field.'
-    )
-    using: str | list[str] | None = None
-    maql: str | None = Field(None, description='Define MAQL syntax for metric.')
-    operator: Operator5 | None = Field(
-        None, description='Arithmetic operator to use for this field.'
-    )
-    type: Type49 | None = Field(
-        None,
-        description='Type of relative period metric related to another metric in list.',
-    )
-    date_filter: str | None = Field(
-        None, description='Date filter to use for this field.'
-    )
-
-
-class Aggregation6(Enum):
-    SUM = 'SUM'
-    COUNT = 'COUNT'
-    APPROXIMATE_COUNT = 'APPROXIMATE_COUNT'
-    AVG = 'AVG'
-    MIN = 'MIN'
-    MAX = 'MAX'
-    MEDIAN = 'MEDIAN'
-    RUNSUM = 'RUNSUM'
-
-
-class Operator6(Enum):
-    SUM = 'SUM'
-    DIFFERENCE = 'DIFFERENCE'
-    MULTIPLICATION = 'MULTIPLICATION'
-    RATIO = 'RATIO'
-    CHANGE = 'CHANGE'
-
-
-class Type50(Enum):
-    PREVIOUS_YEAR = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
-
-
-class Aggregation7(Enum):
-    SUM = 'SUM'
-    COUNT = 'COUNT'
-    APPROXIMATE_COUNT = 'APPROXIMATE_COUNT'
-    AVG = 'AVG'
-    MIN = 'MIN'
-    MAX = 'MAX'
-    MEDIAN = 'MEDIAN'
-    RUNSUM = 'RUNSUM'
-    SUM_1 = 'SUM'
-    COUNT_1 = 'COUNT'
-    APPROXIMATE_COUNT_1 = 'APPROXIMATE_COUNT'
-    AVG_1 = 'AVG'
-    MIN_1 = 'MIN'
-    MAX_1 = 'MAX'
-    MEDIAN_1 = 'MEDIAN'
-    RUNSUM_1 = 'RUNSUM'
-
-
-class Operator7(Enum):
-    SUM = 'SUM'
-    DIFFERENCE = 'DIFFERENCE'
-    MULTIPLICATION = 'MULTIPLICATION'
-    RATIO = 'RATIO'
-    CHANGE = 'CHANGE'
-    SUM_1 = 'SUM'
-    DIFFERENCE_1 = 'DIFFERENCE'
-    MULTIPLICATION_1 = 'MULTIPLICATION'
-    RATIO_1 = 'RATIO'
-    CHANGE_1 = 'CHANGE'
-
-
-class Type51(Enum):
-    PREVIOUS_YEAR = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
-    PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD_1 = 'PREVIOUS_PERIOD'
-
-
-class QueryField8(BaseModel):
-    aggregation: Aggregation7 | None = Field(
-        None, description='Aggregation function to use for this field.'
-    )
-    using: str | list[str] | None = None
-    maql: str | None = Field(None, description='Define MAQL syntax for metric.')
-    operator: Operator7 | None = Field(
-        None, description='Arithmetic operator to use for this field.'
-    )
-    type: Type51 | None = Field(
-        None,
-        description='Type of relative period metric related to another metric in list.',
-    )
-    date_filter: str | None = Field(
-        None, description='Date filter to use for this field.'
-    )
-
-
-class Aggregation8(Enum):
-    SUM = 'SUM'
-    COUNT = 'COUNT'
-    APPROXIMATE_COUNT = 'APPROXIMATE_COUNT'
-    AVG = 'AVG'
-    MIN = 'MIN'
-    MAX = 'MAX'
-    MEDIAN = 'MEDIAN'
-    RUNSUM = 'RUNSUM'
-
-
-class Type52(Enum):
-    PREVIOUS_YEAR = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
-
-
-class Aggregation9(Enum):
-    SUM = 'SUM'
-    COUNT = 'COUNT'
-    APPROXIMATE_COUNT = 'APPROXIMATE_COUNT'
-    AVG = 'AVG'
-    MIN = 'MIN'
-    MAX = 'MAX'
-    MEDIAN = 'MEDIAN'
-    RUNSUM = 'RUNSUM'
-    SUM_1 = 'SUM'
-    COUNT_1 = 'COUNT'
-    APPROXIMATE_COUNT_1 = 'APPROXIMATE_COUNT'
-    AVG_1 = 'AVG'
-    MIN_1 = 'MIN'
-    MAX_1 = 'MAX'
-    MEDIAN_1 = 'MEDIAN'
-    RUNSUM_1 = 'RUNSUM'
-
-
-class Type53(Enum):
-    PREVIOUS_YEAR = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
-    PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD_1 = 'PREVIOUS_PERIOD'
-
-
-class QueryField10(BaseModel):
-    aggregation: Aggregation9 | None = Field(
-        None, description='Aggregation function to use for this field.'
-    )
-    using: str | list[str] | None = None
-    maql: str | None = Field(None, description='Define MAQL syntax for metric.')
-    operator: Operator7 | None = Field(
-        None, description='Arithmetic operator to use for this field.'
-    )
-    type: Type53 | None = Field(
-        None,
-        description='Type of relative period metric related to another metric in list.',
-    )
-    date_filter: str | None = Field(
-        None, description='Date filter to use for this field.'
-    )
-
-
-class Aggregation10(Enum):
-    SUM = 'SUM'
-    COUNT = 'COUNT'
-    APPROXIMATE_COUNT = 'APPROXIMATE_COUNT'
-    AVG = 'AVG'
-    MIN = 'MIN'
-    MAX = 'MAX'
-    MEDIAN = 'MEDIAN'
-    RUNSUM = 'RUNSUM'
-
-
-class Operator10(Enum):
-    SUM = 'SUM'
-    DIFFERENCE = 'DIFFERENCE'
-    MULTIPLICATION = 'MULTIPLICATION'
-    RATIO = 'RATIO'
-    CHANGE = 'CHANGE'
-
-
-class Type54(Enum):
-    PREVIOUS_YEAR = 'PREVIOUS_YEAR'
-
-
-class Aggregation11(Enum):
-    SUM = 'SUM'
-    COUNT = 'COUNT'
-    APPROXIMATE_COUNT = 'APPROXIMATE_COUNT'
-    AVG = 'AVG'
-    MIN = 'MIN'
-    MAX = 'MAX'
-    MEDIAN = 'MEDIAN'
-    RUNSUM = 'RUNSUM'
-    SUM_1 = 'SUM'
-    COUNT_1 = 'COUNT'
-    APPROXIMATE_COUNT_1 = 'APPROXIMATE_COUNT'
-    AVG_1 = 'AVG'
-    MIN_1 = 'MIN'
-    MAX_1 = 'MAX'
-    MEDIAN_1 = 'MEDIAN'
-    RUNSUM_1 = 'RUNSUM'
-
-
-class Operator11(Enum):
-    SUM = 'SUM'
-    DIFFERENCE = 'DIFFERENCE'
-    MULTIPLICATION = 'MULTIPLICATION'
-    RATIO = 'RATIO'
-    CHANGE = 'CHANGE'
-    SUM_1 = 'SUM'
-    DIFFERENCE_1 = 'DIFFERENCE'
-    MULTIPLICATION_1 = 'MULTIPLICATION'
-    RATIO_1 = 'RATIO'
-    CHANGE_1 = 'CHANGE'
-
-
-class Type55(Enum):
-    PREVIOUS_YEAR = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
-    PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD_1 = 'PREVIOUS_PERIOD'
-
-
-class QueryField12(BaseModel):
-    aggregation: Aggregation11 | None = Field(
-        None, description='Aggregation function to use for this field.'
-    )
-    using: str | list[str] | None = None
-    maql: str | None = Field(None, description='Define MAQL syntax for metric.')
-    operator: Operator11 | None = Field(
-        None, description='Arithmetic operator to use for this field.'
-    )
-    type: Type55 | None = Field(
-        None,
-        description='Type of relative period metric related to another metric in list.',
-    )
-    date_filter: str | None = Field(
-        None, description='Date filter to use for this field.'
-    )
-
-
-class Aggregation12(Enum):
-    SUM = 'SUM'
-    COUNT = 'COUNT'
-    APPROXIMATE_COUNT = 'APPROXIMATE_COUNT'
-    AVG = 'AVG'
-    MIN = 'MIN'
-    MAX = 'MAX'
-    MEDIAN = 'MEDIAN'
-    RUNSUM = 'RUNSUM'
-
-
-class Operator12(Enum):
-    SUM = 'SUM'
-    DIFFERENCE = 'DIFFERENCE'
-    MULTIPLICATION = 'MULTIPLICATION'
-    RATIO = 'RATIO'
-    CHANGE = 'CHANGE'
-
-
-class Type56(Enum):
-    PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
-
-
-class Aggregation13(Enum):
-    SUM = 'SUM'
-    COUNT = 'COUNT'
-    APPROXIMATE_COUNT = 'APPROXIMATE_COUNT'
-    AVG = 'AVG'
-    MIN = 'MIN'
-    MAX = 'MAX'
-    MEDIAN = 'MEDIAN'
-    RUNSUM = 'RUNSUM'
-    SUM_1 = 'SUM'
-    COUNT_1 = 'COUNT'
-    APPROXIMATE_COUNT_1 = 'APPROXIMATE_COUNT'
-    AVG_1 = 'AVG'
-    MIN_1 = 'MIN'
-    MAX_1 = 'MAX'
-    MEDIAN_1 = 'MEDIAN'
-    RUNSUM_1 = 'RUNSUM'
-
-
-class Operator13(Enum):
-    SUM = 'SUM'
-    DIFFERENCE = 'DIFFERENCE'
-    MULTIPLICATION = 'MULTIPLICATION'
-    RATIO = 'RATIO'
-    CHANGE = 'CHANGE'
-    SUM_1 = 'SUM'
-    DIFFERENCE_1 = 'DIFFERENCE'
-    MULTIPLICATION_1 = 'MULTIPLICATION'
-    RATIO_1 = 'RATIO'
-    CHANGE_1 = 'CHANGE'
-
-
-class Type57(Enum):
-    PREVIOUS_YEAR = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
-    PREVIOUS_YEAR_1 = 'PREVIOUS_YEAR'
-    PREVIOUS_PERIOD_1 = 'PREVIOUS_PERIOD'
-
-
-class QueryField14(BaseModel):
-    aggregation: Aggregation13 | None = Field(
-        None, description='Aggregation function to use for this field.'
-    )
-    using: str | list[str] | None = None
-    maql: str | None = Field(None, description='Define MAQL syntax for metric.')
-    operator: Operator13 | None = Field(
-        None, description='Arithmetic operator to use for this field.'
-    )
-    type: Type57 | None = Field(
-        None,
-        description='Type of relative period metric related to another metric in list.',
-    )
-    date_filter: str | None = Field(
-        None, description='Date filter to use for this field.'
-    )
-
-
-class Type58(Enum):
     attribute_sort = 'attribute_sort'
 
 
@@ -2280,11 +1733,11 @@ class Direction(Enum):
     DESC = 'DESC'
 
 
-class Aggregation14(Enum):
+class Aggregation1(Enum):
     SUM = 'SUM'
 
 
-class Type59(Enum):
+class Type47(Enum):
     metric_sort = 'metric_sort'
 
 
@@ -2297,15 +1750,15 @@ class Function(Enum):
     NAT = 'NAT'
 
 
-class Type60(Enum):
+class Type48(Enum):
     report = 'report'
 
 
-class Type61(Enum):
+class Type49(Enum):
     report_page_layout = 'report_page_layout'
 
 
-class Type62(Enum):
+class Type50(Enum):
     report_template = 'report_template'
 
 
@@ -2339,7 +1792,7 @@ class BucketGeoAreaItem(RootModel[str]):
     root: str = Field(..., title='Geo Area Bucket')
 
 
-class Type63(Enum):
+class Type51(Enum):
     SUM = 'SUM'
     AVG = 'AVG'
     MAX = 'MAX'
@@ -2352,16 +1805,16 @@ class BucketLocationItem(RootModel[str]):
     root: str = Field(..., title='Location Bucket')
 
 
-class Type64(Enum):
+class Type52(Enum):
     pushpin = 'pushpin'
     area = 'area'
 
 
-class Type65(Enum):
+class Type53(Enum):
     attribute_hierarchy = 'attribute_hierarchy'
 
 
-class Type66(Enum):
+class Type54(Enum):
     computed_attribute = 'computed_attribute'
 
 
@@ -2382,7 +1835,7 @@ class DataLabelsStyle(Enum):
     backplate = 'backplate'
 
 
-class Type67(Enum):
+class Type55(Enum):
     solid = 'solid'
     pattern = 'pattern'
     outline = 'outline'
@@ -2416,7 +1869,7 @@ class PatternNameMapping(Enum):
 
 
 class ChartFill(BaseModel):
-    type: Type67 | None = None
+    type: Type55 | None = None
     pattern_name_mapping: dict[str, PatternNameMapping] | None = None
 
 
@@ -2601,7 +2054,7 @@ class Target1(BaseModel):
     )
 
 
-class Operator14(Enum):
+class Operator1(Enum):
     all = 'all'
     equal_to = 'equal_to'
     not_equal_to = 'not_equal_to'
@@ -2697,7 +2150,7 @@ class Condition9(BaseModel):
         extra='forbid',
     )
     id: str
-    operator: Operator14
+    operator: Operator1
     value: float | str | Value | Value1 | Value2 | None = Field(
         None,
         description='Literal (number or string); a {from,to} range for between/not_between; an {absolute} period or {relative} period for date-attribute conditions; omitted for all/is_empty/is_not_empty.',
@@ -2755,7 +2208,7 @@ class ConditionalFormatting(BaseModel):
     )
 
 
-class Type68(Enum):
+class Type56(Enum):
     dashboard = 'dashboard'
 
 
@@ -2764,7 +2217,7 @@ class Version4(Enum):
     field_3 = '3'
 
 
-class Type69(Enum):
+class Type57(Enum):
     dataset = 'dataset'
     dataset_1 = 'dataset'
 
@@ -2781,7 +2234,7 @@ class DatasetType5(Enum):
     auxiliary = 'auxiliary'
 
 
-class Type72(Enum):
+class Type60(Enum):
     date = 'date'
 
 
@@ -2829,15 +2282,15 @@ class Locale(RootModel[constr(pattern=r'^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{1,8})*$')]):
     )
 
 
-class Type73(Enum):
+class Type61(Enum):
     metric = 'metric'
 
 
-class Type74(Enum):
+class Type62(Enum):
     parameter = 'parameter'
 
 
-class Type75(Enum):
+class Type63(Enum):
     plugin = 'plugin'
 
 
@@ -2889,7 +2342,7 @@ class TextOverflow(Enum):
     ellipsis = 'ellipsis'
 
 
-class Type76(Enum):
+class Type64(Enum):
     document_template = 'document_template'
 
 
@@ -2897,7 +2350,7 @@ class Version5(Enum):
     field_2 = '2'
 
 
-class Type77(Enum):
+class Type65(Enum):
     document = 'document'
 
 
@@ -2969,7 +2422,7 @@ class PublisherPageProportionV2(RootModel[PositiveFloat]):
     )
 
 
-class Type78(Enum):
+class Type66(Enum):
     page_template = 'page_template'
 
 
@@ -3060,7 +2513,7 @@ class PublisherWidgetPlaceholderV2(BaseModel):
     required: bool | None = None
 
 
-class Type79(Enum):
+class Type67(Enum):
     report = 'report'
 
 
@@ -3152,11 +2605,11 @@ class ReportWeight(RootModel[float]):
     )
 
 
-class Type80(Enum):
+class Type68(Enum):
     report_page_layout = 'report_page_layout'
 
 
-class Type81(Enum):
+class Type69(Enum):
     report_template = 'report_template'
 
 
@@ -3164,95 +2617,95 @@ class Title(RootModel[constr(max_length=255)]):
     root: constr(max_length=255)
 
 
-class Type82(Enum):
+class Type70(Enum):
     table = 'table'
 
 
-class Type83(Enum):
+class Type71(Enum):
     bar_chart = 'bar_chart'
 
 
-class Type84(Enum):
+class Type72(Enum):
     column_chart = 'column_chart'
 
 
-class Type85(Enum):
+class Type73(Enum):
     line_chart = 'line_chart'
 
 
-class Type86(Enum):
+class Type74(Enum):
     area_chart = 'area_chart'
 
 
-class Type87(Enum):
+class Type75(Enum):
     scatter_chart = 'scatter_chart'
 
 
-class Type88(Enum):
+class Type76(Enum):
     bubble_chart = 'bubble_chart'
 
 
-class Type89(Enum):
+class Type77(Enum):
     pie_chart = 'pie_chart'
 
 
-class Type90(Enum):
+class Type78(Enum):
     donut_chart = 'donut_chart'
 
 
-class Type91(Enum):
+class Type79(Enum):
     treemap_chart = 'treemap_chart'
 
 
-class Type92(Enum):
+class Type80(Enum):
     pyramid_chart = 'pyramid_chart'
 
 
-class Type93(Enum):
+class Type81(Enum):
     funnel_chart = 'funnel_chart'
 
 
-class Type94(Enum):
+class Type82(Enum):
     heatmap_chart = 'heatmap_chart'
 
 
-class Type95(Enum):
+class Type83(Enum):
     bullet_chart = 'bullet_chart'
 
 
-class Type96(Enum):
+class Type84(Enum):
     waterfall_chart = 'waterfall_chart'
 
 
-class Type97(Enum):
+class Type85(Enum):
     dependency_wheel_chart = 'dependency_wheel_chart'
 
 
-class Type98(Enum):
+class Type86(Enum):
     sankey_chart = 'sankey_chart'
 
 
-class Type99(Enum):
+class Type87(Enum):
     headline_chart = 'headline_chart'
 
 
-class Type100(Enum):
+class Type88(Enum):
     combo_chart = 'combo_chart'
 
 
-class Type101(Enum):
+class Type89(Enum):
     geo_chart = 'geo_chart'
 
 
-class Type102(Enum):
+class Type90(Enum):
     geo_area_chart = 'geo_area_chart'
 
 
-class Type103(Enum):
+class Type91(Enum):
     repeater_chart = 'repeater_chart'
 
 
-class Type104(Enum):
+class Type92(Enum):
     radar_chart = 'radar_chart'
 
 
@@ -4187,117 +3640,62 @@ class QueryField1(BaseModel):
         extra='forbid',
         regex_engine="python-re",
     )
-    aggregation: Aggregation | None = Field(
-        None, description='Aggregation function to use for this field.'
-    )
-    using: (
-        str
-        | list[str]
-        | constr(pattern=r'^attribute/(?!\.)[.A-Za-z0-9_-]{1,255}$')
-        | constr(pattern=r'^label/(?!\.)[.A-Za-z0-9_-]{1,255}$')
-        | constr(pattern=r'^computed_attribute/(?!\.)[.A-Za-z0-9_-]{1,255}$')
-        | constr(pattern=r'^fact/(?!\.)[.A-Za-z0-9_-]{1,255}$')
-    ) = Field(..., description='Attribute or label identifier to use for this field.')
-    maql: str | None = Field(None, description='Define MAQL syntax for metric.')
-    operator: Operator | None = Field(
-        None, description='Arithmetic operator to use for this field.'
-    )
-    type: Type44 | None = Field(
-        None,
-        description='Type of relative period metric related to another metric in list.',
-    )
-    date_filter: str | None = Field(
-        None, description='Date filter to use for this field.'
-    )
     title: Title | None = Field(None, description='A field title.')
     show_all_values: bool | None = Field(
         None,
         description='Show all values in the attribute filter (do not ignore empty and NULL).',
     )
+    using: (
+        constr(pattern=r'^attribute/(?!\.)[.A-Za-z0-9_-]{1,255}$')
+        | constr(pattern=r'^label/(?!\.)[.A-Za-z0-9_-]{1,255}$')
+        | constr(pattern=r'^computed_attribute/(?!\.)[.A-Za-z0-9_-]{1,255}$')
+        | constr(pattern=r'^fact/(?!\.)[.A-Za-z0-9_-]{1,255}$')
+    ) = Field(..., description='Attribute or label identifier to use for this field.')
+
+
+class QueryField4(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    title: Title | None = Field(None, description='A field title.')
+    maql: str = Field(..., description='Define MAQL syntax for metric.')
+
+
+class QueryField5(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    title: Title | None = Field(None, description='A field title.')
+    operator: Operator = Field(
+        ..., description='Arithmetic operator to use for this field.'
+    )
+    using: list[str] = Field(..., max_length=2, min_length=2)
+
+
+class QueryField6(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    title: Title | None = Field(None, description='A field title.')
+    type: Type44 = Field(
+        ...,
+        description='Type of relative period metric related to another metric in list.',
+    )
+    using: str = Field(..., description='Identifier to use for this field.')
+    date_filter: str = Field(..., description='Date filter to use for this field.')
 
 
 class QueryField7(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    aggregation: Aggregation6 | None = Field(
-        None, description='Aggregation function to use for this field.'
-    )
-    using: str | list[str] | None = None
-    maql: str = Field(..., description='Define MAQL syntax for metric.')
-    operator: Operator6 | None = Field(
-        None, description='Arithmetic operator to use for this field.'
-    )
-    type: Type50 | None = Field(
-        None,
-        description='Type of relative period metric related to another metric in list.',
-    )
-    date_filter: str | None = Field(
-        None, description='Date filter to use for this field.'
-    )
     title: Title | None = Field(None, description='A field title.')
-
-
-class QueryField9(BaseModel):
-    model_config = ConfigDict(
-        extra='forbid',
-    )
-    aggregation: Aggregation8 | None = Field(
-        None, description='Aggregation function to use for this field.'
-    )
-    using: list[str] = Field(..., max_length=2, min_length=2)
-    maql: str | None = Field(None, description='Define MAQL syntax for metric.')
-    operator: Operator7 = Field(
-        ..., description='Arithmetic operator to use for this field.'
-    )
-    type: Type52 | None = Field(
-        None,
-        description='Type of relative period metric related to another metric in list.',
-    )
-    date_filter: str | None = Field(
-        None, description='Date filter to use for this field.'
-    )
-    title: Title | None = Field(None, description='A field title.')
-
-
-class QueryField11(BaseModel):
-    model_config = ConfigDict(
-        extra='forbid',
-    )
-    aggregation: Aggregation10 | None = Field(
-        None, description='Aggregation function to use for this field.'
-    )
-    using: str | list[str] = Field(..., description='Identifier to use for this field.')
-    maql: str | None = Field(None, description='Define MAQL syntax for metric.')
-    operator: Operator10 | None = Field(
-        None, description='Arithmetic operator to use for this field.'
-    )
-    type: Type54 = Field(
+    type: Type45 = Field(
         ...,
         description='Type of relative period metric related to another metric in list.',
     )
+    using: str = Field(..., description='Identifier to use for this field.')
     date_filter: str = Field(..., description='Date filter to use for this field.')
-    title: Title | None = Field(None, description='A field title.')
-
-
-class QueryField13(BaseModel):
-    model_config = ConfigDict(
-        extra='forbid',
-    )
-    aggregation: Aggregation12 | None = Field(
-        None, description='Aggregation function to use for this field.'
-    )
-    using: str | list[str] = Field(..., description='Identifier to use for this field.')
-    maql: str | None = Field(None, description='Define MAQL syntax for metric.')
-    operator: Operator12 | None = Field(
-        None, description='Arithmetic operator to use for this field.'
-    )
-    type: Type56 = Field(
-        ...,
-        description='Type of relative period metric related to another metric in list.',
-    )
-    date_filter: str = Field(..., description='Date filter to use for this field.')
-    title: Title | None = Field(None, description='A field title.')
     period: confloat(ge=1.0) | None = Field(
         None, description='Number of periods ago to use for this field.'
     )
@@ -4307,12 +3705,12 @@ class QueryAttributeSort(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type58
+    type: Type46
     by: str | AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier = (
         Field(..., description='Local attribute or label to use in this sort.')
     )
     direction: Direction = Field(..., description='Sort direction.')
-    aggregation: Aggregation14 | None = Field(
+    aggregation: Aggregation1 | None = Field(
         None, description='Aggregation function to use for this sort.'
     )
 
@@ -4336,7 +3734,7 @@ class QueryMetricSort(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type59
+    type: Type47
     direction: Direction = Field(..., description='Sort direction.')
     metrics: list[str | Metrics] = Field(..., min_length=1)
 
@@ -4352,7 +3750,7 @@ class TotalItem(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type63
+    type: Type51
     title: Title | None = Field(None, description='A total title.')
     using: str = Field(
         ..., description='Local metric identifier to use for this total.'
@@ -4366,7 +3764,7 @@ class AttributeHierarchy(BaseModel):
     id: Identifier = Field(
         ..., description='A unique identifier of the attribute hierarchy.'
     )
-    type: Type65
+    type: Type53
     title: Title | None = Field(
         None,
         description='An optional human readable title for the attribute hierarchy. Will be derived from id if not provided explicitly.',
@@ -4393,7 +3791,7 @@ class ComputedAttribute(BaseModel):
         ...,
         description='A unique identifier of the computed attribute. Must not collide with the identifier of an attribute or a label.',
     )
-    type: Type66
+    type: Type54
     title: Title | None = Field(
         None,
         description='An optional human readable title for the computed attribute. Will be derived from id if not provided explicitly.',
@@ -4596,7 +3994,7 @@ class DateDataset(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the date instance.')
-    type: Type72
+    type: Type60
     title: Title | None = Field(
         None,
         description='An optional human readable title for the date instance. Will be derived from id if not provided explicitly.',
@@ -4621,7 +4019,7 @@ class Metric(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the metric.')
-    type: Type73
+    type: Type61
     title: Title | None = Field(
         None,
         description='An optional human readable title for the metric. Will be derived from id if not provided explicitly.',
@@ -4650,7 +4048,7 @@ class Plugin(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the plugin.')
-    type: Type75
+    type: Type63
     title: Title | None = Field(
         None,
         description='An optional human readable title for the plugin. Will be derived from id if not provided explicitly.',
@@ -5317,7 +4715,7 @@ class LayerItemBase(BaseModel):
         None,
         description='An optional human readable title for the layer. Will be derived from id if not provided explicitly.',
     )
-    type: Type64 | None = Field(
+    type: Type52 | None = Field(
         None, description='Type of visualisation for this layer.'
     )
     config: Config | None = Field(
@@ -5366,7 +4764,7 @@ class Parameter(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the parameter.')
-    type: Type74
+    type: Type62
     title: Title | None = Field(
         None,
         description='An optional human readable title for the parameter. Will be derived from id if not provided explicitly.',
@@ -5387,7 +4785,10 @@ class PublisherWidgetTitleV2(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    visible: bool | None = None
+    visible: bool | None = Field(
+        None,
+        description="When left out, a visualization's title is hidden and a takeaway's is shown.",
+    )
     text: constr(min_length=1) | None = None
     style: PublisherTextStyleV2 | None = None
 
@@ -5590,28 +4991,9 @@ class QuerySorts(RootModel[list[QuerySort]]):
     root: list[QuerySort] = Field(..., title='Sorts')
 
 
-class QueryField3(BaseModel):
+class QueryField2(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
-    )
-    aggregation: Aggregation2 | None = Field(
-        None, description='Aggregation function to use for this field.'
-    )
-    using: Using1 | Using2 = Field(
-        ...,
-        description='Metric identifier to use for this field.',
-        title='Metric Identifier',
-    )
-    maql: str | None = Field(None, description='Define MAQL syntax for metric.')
-    operator: Operator2 | None = Field(
-        None, description='Arithmetic operator to use for this field.'
-    )
-    type: Type46 | None = Field(
-        None,
-        description='Type of relative period metric related to another metric in list.',
-    )
-    date_filter: str | None = Field(
-        None, description='Date filter to use for this field.'
     )
     title: Title | None = Field(None, description='A field title.')
     compute_ratio: bool | None = Field(
@@ -5620,34 +5002,16 @@ class QueryField3(BaseModel):
     filter_by: QueryFilters | None = Field(
         None, description='A list of filters in this query.'
     )
+    using: MetricIdentifier = Field(
+        ..., description='Metric identifier to use for this field.'
+    )
 
 
-class QueryField5(BaseModel):
+class QueryField3(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
         regex_engine="python-re",
     )
-    aggregation: Aggregation3 = Field(
-        ..., description='Aggregation function to use for this field.'
-    )
-    using: (
-        str
-        | list[str]
-        | constr(pattern=r'^attribute/(?!\.)[.A-Za-z0-9_-]{1,255}$')
-        | constr(pattern=r'^fact/(?!\.)[.A-Za-z0-9_-]{1,255}$')
-        | constr(pattern=r'^label/(?!\.)[.A-Za-z0-9_-]{1,255}$')
-    ) = Field(..., description='Attribute identifier to use for this field.')
-    maql: str | None = Field(None, description='Define MAQL syntax for metric.')
-    operator: Operator4 | None = Field(
-        None, description='Arithmetic operator to use for this field.'
-    )
-    type: Type48 | None = Field(
-        None,
-        description='Type of relative period metric related to another metric in list.',
-    )
-    date_filter: str | None = Field(
-        None, description='Date filter to use for this field.'
-    )
     title: Title | None = Field(None, description='A field title.')
     compute_ratio: bool | None = Field(
         None, description='Compute ratio for this metric.'
@@ -5655,6 +5019,14 @@ class QueryField5(BaseModel):
     filter_by: QueryFilters | None = Field(
         None, description='A list of filters in this query.'
     )
+    aggregation: Aggregation = Field(
+        ..., description='Aggregation function to use for this field.'
+    )
+    using: (
+        constr(pattern=r'^attribute/(?!\.)[.A-Za-z0-9_-]{1,255}$')
+        | constr(pattern=r'^fact/(?!\.)[.A-Za-z0-9_-]{1,255}$')
+        | constr(pattern=r'^label/(?!\.)[.A-Za-z0-9_-]{1,255}$')
+    ) = Field(..., description='Attribute identifier to use for this field.')
 
 
 class QueryField(
@@ -5671,13 +5043,6 @@ class QueryField(
         | QueryField5
         | QueryField6
         | QueryField7
-        | QueryField8
-        | QueryField9
-        | QueryField10
-        | QueryField11
-        | QueryField12
-        | QueryField13
-        | QueryField14
     ]
 ):
     root: (
@@ -5693,13 +5058,6 @@ class QueryField(
         | QueryField5
         | QueryField6
         | QueryField7
-        | QueryField8
-        | QueryField9
-        | QueryField10
-        | QueryField11
-        | QueryField12
-        | QueryField13
-        | QueryField14
     ) = Field(..., title='Field')
 
 
@@ -5796,7 +5154,7 @@ class Dataset5(BaseModel):
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type69
+    type: Type57
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -5842,7 +5200,7 @@ class Dataset6(BaseModel):
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type69
+    type: Type57
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -5888,7 +5246,7 @@ class Dataset7(BaseModel):
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type69
+    type: Type57
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -6075,7 +5433,7 @@ class Visualisation1(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type82 = Field(..., description='Type of visualisation.')
+    type: Type70 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6121,7 +5479,7 @@ class Visualisation2(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type83 = Field(..., description='Type of visualisation.')
+    type: Type71 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6164,7 +5522,7 @@ class Visualisation3(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type84 = Field(..., description='Type of visualisation.')
+    type: Type72 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6207,7 +5565,7 @@ class Visualisation4(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type85 = Field(..., description='Type of visualisation.')
+    type: Type73 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6250,7 +5608,7 @@ class Visualisation5(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type86 = Field(..., description='Type of visualisation.')
+    type: Type74 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6293,7 +5651,7 @@ class Visualisation6(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type87 = Field(..., description='Type of visualisation.')
+    type: Type75 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6336,7 +5694,7 @@ class Visualisation7(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type88 = Field(..., description='Type of visualisation.')
+    type: Type76 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6379,7 +5737,7 @@ class Visualisation8(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type89 = Field(..., description='Type of visualisation.')
+    type: Type77 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6419,7 +5777,7 @@ class Visualisation9(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type90 = Field(..., description='Type of visualisation.')
+    type: Type78 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6459,7 +5817,7 @@ class Visualisation10(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type91 = Field(..., description='Type of visualisation.')
+    type: Type79 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6499,7 +5857,7 @@ class Visualisation11(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type92 = Field(..., description='Type of visualisation.')
+    type: Type80 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6539,7 +5897,7 @@ class Visualisation12(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type93 = Field(..., description='Type of visualisation.')
+    type: Type81 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6579,7 +5937,7 @@ class Visualisation13(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type94 = Field(..., description='Type of visualisation.')
+    type: Type82 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6625,7 +5983,7 @@ class Visualisation14(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type95 = Field(..., description='Type of visualisation.')
+    type: Type83 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6665,7 +6023,7 @@ class Visualisation15(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type96 = Field(..., description='Type of visualisation.')
+    type: Type84 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6705,7 +6063,7 @@ class Visualisation16(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type97 = Field(..., description='Type of visualisation.')
+    type: Type85 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6751,7 +6109,7 @@ class Visualisation17(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type98 = Field(..., description='Type of visualisation.')
+    type: Type86 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6797,7 +6155,7 @@ class Visualisation18(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type99 = Field(..., description='Type of visualisation.')
+    type: Type87 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6835,7 +6193,7 @@ class Visualisation19(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type100 = Field(..., description='Type of visualisation.')
+    type: Type88 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6875,7 +6233,7 @@ class Visualisation20(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type101 = Field(..., description='Type of visualisation.')
+    type: Type89 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6919,7 +6277,7 @@ class Visualisation21(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type102 = Field(..., description='Type of visualisation.')
+    type: Type90 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6963,7 +6321,7 @@ class Visualisation22(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type103 = Field(..., description='Type of visualisation.')
+    type: Type91 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -7009,7 +6367,7 @@ class Visualisation23(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type104 = Field(..., description='Type of visualisation.')
+    type: Type92 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -7301,7 +6659,7 @@ class Report1(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the document.')
-    type: Type60
+    type: Type48
     title: Title = Field(..., description='A human readable title for the document.')
     description: Description | None = Field(
         None, description='An optional description of the document.'
@@ -7370,7 +6728,7 @@ class ReportPageLayout1(BaseModel):
     id: Identifier = Field(
         ..., description='A unique identifier of the document page layout.'
     )
-    type: Type61
+    type: Type49
     title: Title = Field(
         ..., description='A human readable title for the document page layout.'
     )
@@ -7401,7 +6759,7 @@ class ReportTemplate1(BaseModel):
     id: Identifier = Field(
         ..., description='A unique identifier of the document template.'
     )
-    type: Type62
+    type: Type50
     title: Title = Field(
         ..., description='A human readable title for the document template.'
     )
@@ -7434,7 +6792,7 @@ class Dashboard(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the dashboard.')
-    type: Type68
+    type: Type56
     version: Version4 | None = Field(
         None,
         description='Dashboard model version. "2" (default if omitted) — legacy shape: root-level sections/filters are also mirrored into a default tab, producing a declarative model with duplicated content for backward compatibility with older SDK readers. "3" — clean shape: tabs are the sole source of layout and filters; root sections/filters in YAML are still allowed as an authoring shortcut but are wrapped into a single synthetic tab without duplication. Use "3" for new dashboards; "2" exists to keep existing files round-trippable.',
@@ -7522,7 +6880,7 @@ class PublisherDocumentTemplateV2(BaseModel):
         ...,
         description='A unique identifier of the document template. Ids starting with default. are reserved.',
     )
-    type: Type76
+    type: Type64
     version: Version5 = Field(..., description='Version of the content format.')
     title: PublisherEntityTitleV2
     description: PublisherEntityDescriptionV2 | None = None
@@ -7539,7 +6897,7 @@ class PublisherDocumentV2(BaseModel):
         ...,
         description='A unique identifier of the document. Ids starting with default. are reserved.',
     )
-    type: Type77
+    type: Type65
     version: Version5 = Field(..., description='Version of the content format.')
     title: PublisherEntityTitleV2
     description: PublisherEntityDescriptionV2 | None = None
@@ -7577,7 +6935,7 @@ class PublisherPageTemplateV2(BaseModel):
         ...,
         description='A unique identifier of the page template. Ids starting with default. are reserved.',
     )
-    type: Type78
+    type: Type66
     version: Version5 = Field(..., description='Version of the content format.')
     title: PublisherEntityTitleV2
     description: PublisherEntityDescriptionV2 | None = None
@@ -7593,7 +6951,7 @@ class Report(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the document.')
-    type: Type79
+    type: Type67
     title: Title = Field(..., description='A human readable title for the document.')
     description: Description | None = Field(
         None, description='An optional description of the document.'
@@ -7654,7 +7012,7 @@ class ReportPageLayout(BaseModel):
     id: Identifier = Field(
         ..., description='A unique identifier of the document page layout.'
     )
-    type: Type80
+    type: Type68
     title: Title = Field(
         ..., description='A human readable title for the document page layout.'
     )
@@ -7685,7 +7043,7 @@ class ReportTemplate(BaseModel):
     id: Identifier = Field(
         ..., description='A unique identifier of the document template.'
     )
-    type: Type81
+    type: Type69
     title: Title = Field(
         ..., description='A human readable title for the document template.'
     )

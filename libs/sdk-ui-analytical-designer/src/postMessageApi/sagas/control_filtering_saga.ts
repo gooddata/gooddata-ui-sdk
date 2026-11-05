@@ -240,7 +240,7 @@ function getAttributeFilterErrorMessage(error: unknown): ICommandFailedBody {
 
 /**
  * Throws if text-mode filters target existing element-based filters (mode mismatch).
- * Allows switching between text modes (arbitrary <-> match).
+ * Allows switching between text modes (arbitrary \<-\> match).
  */
 function checkFilterModeMismatch(
     appState: IAppState,

@@ -988,8 +988,8 @@ export type IChatConversationItem = {
      */
     detail?: IChatConversationItemDetail;
     /**
-     * Id of the agent the conversation was switched to. Only set on system items
-     * that represent an agent-switch event.
+     * Id of the agent selected for the turn, when provided by the backend, not a routed subagent.
+     * On system items representing an agent-switch event, identifies the destination agent instead.
      */
     agentId?: string;
     /**

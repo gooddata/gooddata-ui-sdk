@@ -20,6 +20,20 @@ const App = () => {
 };
 ```
 
+## Custom input placeholder
+
+Set `inputPlaceholder` on `GenAIAssistant` to override the chat input placeholder:
+
+```tsx
+<GenAIAssistant backend={backend} workspace="your-workspace-id" inputPlaceholder="Ask about your data…" />
+```
+
+`GenAIStandaloneInput` (available from `@gooddata/sdk-ui-gen-ai/internal`) accepts the same prop.
+Custom text is displayed as-is; the embedding application is responsible for translating it.
+Omitting the prop keeps the bundled localized placeholder ("Ask here…" in English).
+An empty string hides the placeholder. The standalone input's existing `placeholder` prop remains
+supported, with `inputPlaceholder` taking precedence when both are supplied.
+
 ## Headless copilot workflow (alpha)
 
 `CopilotHandler` owns plain immutable workflow state; it requires no Redux setup.

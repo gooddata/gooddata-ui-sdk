@@ -5,6 +5,7 @@ import { type IWorkspaceLocalizationService } from "../localization/index.js";
 
 import { type IWorkspaceAccessControlService } from "./accessControl/index.js";
 import { type IWorkspaceAgentsService } from "./agents/index.js";
+import { type IWorkspaceAnalyticsAsCodeService } from "./analyticsAsCode/index.js";
 import { type IAttributeHierarchiesService } from "./attributeHierarchies/index.js";
 import { type IWorkspaceAttributesService } from "./attributes/index.js";
 import { type IWorkspaceAutomationService } from "./automations/index.js";
@@ -208,6 +209,12 @@ export interface IAnalyticalWorkspace {
      * @alpha
      */
     customApplicationSettings(): IWorkspaceCustomApplicationSettingsService;
+
+    /**
+     * Returns service that provisions the workspace from analytics-as-code documents.
+     * @alpha
+     */
+    analyticsAsCode(): IWorkspaceAnalyticsAsCodeService;
 
     /**
      * Returns service that can be used to access GenAI services.

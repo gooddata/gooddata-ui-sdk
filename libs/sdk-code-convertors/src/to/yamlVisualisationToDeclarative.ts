@@ -74,7 +74,11 @@ import { BucketsType, type ExportEntities } from "../types.js";
 import { convertBucketToTitle } from "../utils/convertBucketToTitle.js";
 import { mapDateAttribute, mapDateDataset } from "../utils/dateUtils.js";
 import { CoreErrorCode, newError } from "../utils/errors.js";
-import { parseDateValues, yamlConditionToMatch } from "../utils/filterUtils.js";
+import {
+    foldLegacyEmptyValuesWithFilter,
+    parseDateValues,
+    yamlConditionToMatch,
+} from "../utils/filterUtils.js";
 import { convertGranularity } from "../utils/granularityUtils.js";
 import { mapLocationLabel } from "../utils/locationUtils.js";
 import { assertUnreachable, convertIdToTitle, getFullBucket, getFullField } from "../utils/sharedUtils.js";
@@ -85,6 +89,7 @@ import {
     isAttributeField,
     isAttributeSort,
     isCalculatedMetricField,
+    isDateFilter,
     isInlineMetricField,
     isMatchTextFilter,
     isMetricAllValueFilter,
@@ -1039,6 +1044,10 @@ function yamlFilterToDeclarative(
     // correlated via attributeFilterConfigs. Measure-scoped filters must NOT carry one.
     assignFilterLocalId: boolean,
 ): YamlFilterToDeclarativeResult {
+    // The same for the insight-level and the metric-level date filter
+    if (isDateFilter(filter)) {
+        filter = foldLegacyEmptyValuesWithFilter(filter);
+    }
     if (isAbsoluteDateFilter(filter)) {
         return yamlAbsoluteDateFilterToDeclarative(entities, filter, assignFilterLocalId);
     }

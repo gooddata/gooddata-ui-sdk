@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: acb0fdf12721d2d96de458b3c85af98942b972e7ca31a3621402f9565fd2b013
+# schema-hash: 879399cb6d885b440230f6ef78c389f10c64d7c792082a49d003d0afdfd07c3a
 
 from __future__ import annotations
 
@@ -189,13 +189,12 @@ __all__ = [
     "QueryDateFilter2",
     "QueryField",
     "QueryField1",
-    "QueryField11",
-    "QueryField13",
     "QueryField2",
     "QueryField3",
+    "QueryField4",
     "QueryField5",
+    "QueryField6",
     "QueryField7",
-    "QueryField9",
     "QueryFields",
     "QueryFilter",
     "QueryFilters",
@@ -263,8 +262,6 @@ __all__ = [
     "Title",
     "TotalItem",
     "Using",
-    "Using1",
-    "Using2",
     "Value",
     "Value1",
     "Value2",
@@ -693,27 +690,6 @@ class NumberParameterDefinition(TypedDict):
 class ParameterAllowedValue(TypedDict):
     value: str
     title: NotRequired[str]
-
-
-class QueryField2(TypedDict):
-    aggregation: NotRequired[
-        Literal['SUM', 'COUNT', 'APPROXIMATE_COUNT', 'AVG', 'MIN', 'MAX', 'MEDIAN', 'RUNSUM']
-    ]
-    using: NotRequired[str | list[str]]
-    maql: NotRequired[str]
-    operator: NotRequired[
-        Literal['SUM', 'DIFFERENCE', 'MULTIPLICATION', 'RATIO', 'CHANGE']
-    ]
-    type: NotRequired[
-        Literal['PREVIOUS_YEAR', 'PREVIOUS_PERIOD']
-    ]
-    date_filter: NotRequired[str]
-
-
-Using1: TypeAlias = str
-
-
-Using2: TypeAlias = list[str]
 
 
 BucketEmptyItem: TypeAlias = None
@@ -1379,72 +1355,34 @@ class Plugin(TypedDict):
 
 
 class QueryField1(TypedDict):
-    aggregation: NotRequired[
-        Literal['SUM', 'COUNT', 'APPROXIMATE_COUNT', 'AVG', 'MIN', 'MAX', 'MEDIAN', 'RUNSUM']
-    ]
-    using: str | list[str]
-    maql: NotRequired[str]
-    operator: NotRequired[
-        Literal['SUM', 'DIFFERENCE', 'MULTIPLICATION', 'RATIO', 'CHANGE']
-    ]
-    type: NotRequired[Literal['PREVIOUS_YEAR', 'PREVIOUS_PERIOD']]
-    date_filter: NotRequired[str]
     title: NotRequired[Title]
     show_all_values: NotRequired[bool]
+    using: str
+
+
+class QueryField4(TypedDict):
+    title: NotRequired[Title]
+    maql: str
+
+
+class QueryField5(TypedDict):
+    title: NotRequired[Title]
+    operator: Literal['SUM', 'DIFFERENCE', 'MULTIPLICATION', 'RATIO', 'CHANGE']
+    using: list[str]
+
+
+class QueryField6(TypedDict):
+    title: NotRequired[Title]
+    type: Literal['PREVIOUS_YEAR']
+    using: str
+    date_filter: str
 
 
 class QueryField7(TypedDict):
-    aggregation: NotRequired[
-        Literal['SUM', 'COUNT', 'APPROXIMATE_COUNT', 'AVG', 'MIN', 'MAX', 'MEDIAN', 'RUNSUM']
-    ]
-    using: NotRequired[str | list[str]]
-    maql: str
-    operator: NotRequired[
-        Literal['SUM', 'DIFFERENCE', 'MULTIPLICATION', 'RATIO', 'CHANGE']
-    ]
-    type: NotRequired[Literal['PREVIOUS_YEAR', 'PREVIOUS_PERIOD']]
-    date_filter: NotRequired[str]
     title: NotRequired[Title]
-
-
-class QueryField9(TypedDict):
-    aggregation: NotRequired[
-        Literal['SUM', 'COUNT', 'APPROXIMATE_COUNT', 'AVG', 'MIN', 'MAX', 'MEDIAN', 'RUNSUM']
-    ]
-    using: list[str]
-    maql: NotRequired[str]
-    operator: Literal['SUM', 'DIFFERENCE', 'MULTIPLICATION', 'RATIO', 'CHANGE']
-    type: NotRequired[Literal['PREVIOUS_YEAR', 'PREVIOUS_PERIOD']]
-    date_filter: NotRequired[str]
-    title: NotRequired[Title]
-
-
-class QueryField11(TypedDict):
-    aggregation: NotRequired[
-        Literal['SUM', 'COUNT', 'APPROXIMATE_COUNT', 'AVG', 'MIN', 'MAX', 'MEDIAN', 'RUNSUM']
-    ]
-    using: str | list[str]
-    maql: NotRequired[str]
-    operator: NotRequired[
-        Literal['SUM', 'DIFFERENCE', 'MULTIPLICATION', 'RATIO', 'CHANGE']
-    ]
-    type: Literal['PREVIOUS_YEAR']
-    date_filter: str
-    title: NotRequired[Title]
-
-
-class QueryField13(TypedDict):
-    aggregation: NotRequired[
-        Literal['SUM', 'COUNT', 'APPROXIMATE_COUNT', 'AVG', 'MIN', 'MAX', 'MEDIAN', 'RUNSUM']
-    ]
-    using: str | list[str]
-    maql: NotRequired[str]
-    operator: NotRequired[
-        Literal['SUM', 'DIFFERENCE', 'MULTIPLICATION', 'RATIO', 'CHANGE']
-    ]
     type: Literal['PREVIOUS_PERIOD']
+    using: str
     date_filter: str
-    title: NotRequired[Title]
     period: NotRequired[float]
 
 
@@ -2163,34 +2101,19 @@ class PublisherTakeawayWidgetV2(TypedDict):
 QuerySorts: TypeAlias = list[QuerySort]
 
 
+class QueryField2(TypedDict):
+    title: NotRequired[Title]
+    compute_ratio: NotRequired[bool]
+    filter_by: NotRequired[QueryFilters]
+    using: MetricIdentifier
+
+
 class QueryField3(TypedDict):
-    aggregation: NotRequired[
-        Literal['SUM', 'COUNT', 'APPROXIMATE_COUNT', 'AVG', 'MIN', 'MAX', 'MEDIAN', 'RUNSUM']
-    ]
-    using: Using1 | Using2
-    maql: NotRequired[str]
-    operator: NotRequired[
-        Literal['SUM', 'DIFFERENCE', 'MULTIPLICATION', 'RATIO', 'CHANGE']
-    ]
-    type: NotRequired[Literal['PREVIOUS_YEAR', 'PREVIOUS_PERIOD']]
-    date_filter: NotRequired[str]
     title: NotRequired[Title]
     compute_ratio: NotRequired[bool]
     filter_by: NotRequired[QueryFilters]
-
-
-class QueryField5(TypedDict):
     aggregation: Literal['SUM', 'COUNT', 'APPROXIMATE_COUNT', 'AVG', 'MIN', 'MAX', 'MEDIAN', 'RUNSUM']
-    using: str | list[str]
-    maql: NotRequired[str]
-    operator: NotRequired[
-        Literal['SUM', 'DIFFERENCE', 'MULTIPLICATION', 'RATIO', 'CHANGE']
-    ]
-    type: NotRequired[Literal['PREVIOUS_YEAR', 'PREVIOUS_PERIOD']]
-    date_filter: NotRequired[str]
-    title: NotRequired[Title]
-    compute_ratio: NotRequired[bool]
-    filter_by: NotRequired[QueryFilters]
+    using: str
 
 
 QueryField: TypeAlias = (
@@ -2202,11 +2125,10 @@ QueryField: TypeAlias = (
     | QueryField1
     | QueryField2
     | QueryField3
+    | QueryField4
     | QueryField5
+    | QueryField6
     | QueryField7
-    | QueryField9
-    | QueryField11
-    | QueryField13
 )
 
 

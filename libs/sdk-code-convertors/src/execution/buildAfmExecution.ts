@@ -27,7 +27,11 @@ import type { MatchFilterOperator } from "@gooddata/sdk-model";
 import { type ExportEntities, type ToExecutionResults } from "../types.js";
 import { convertBucketToTitle } from "../utils/convertBucketToTitle.js";
 import { mapDateAttribute, mapDateDataset } from "../utils/dateUtils.js";
-import { parseDateValues, yamlConditionToMatch } from "../utils/filterUtils.js";
+import {
+    foldLegacyEmptyValuesWithFilter,
+    parseDateValues,
+    yamlConditionToMatch,
+} from "../utils/filterUtils.js";
 import { getFullField } from "../utils/sharedUtils.js";
 import {
     isAbsoluteDateFilter,
@@ -284,7 +288,9 @@ function buildFilters(entities: ExportEntities, filters_by: QueryFilters | undef
     const filters: FilterDefinition[] = [];
 
     Object.keys(filters_by ?? {}).forEach((key) => {
-        const filter = filters_by[key];
+        const queryFilter = filters_by[key];
+        // The same for the insight-level and the metric-level date filter, as in deploy
+        const filter = isDateFilter(queryFilter) ? foldLegacyEmptyValuesWithFilter(queryFilter) : queryFilter;
         if (isAbsoluteDateFilter(filter)) {
             filters.push({
                 absoluteDateFilter: {

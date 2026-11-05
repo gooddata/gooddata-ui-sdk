@@ -65,8 +65,8 @@ export function ConversationPublisherDocumentContent({
 
     const { saved, baseDocumentId } = part;
 
-    // The Publisher app needs workspace manage; a user who has lost it gets a disabled Open button.
-    const itemUrl = config.canManage
+    // Opening a drafted document needs the create-document permission; without it the Open button is disabled.
+    const itemUrl = config.canCreateDocument
         ? getPublisherDocumentItemUrl({
               workspaceId,
               saved,

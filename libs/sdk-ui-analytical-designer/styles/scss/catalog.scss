@@ -21,14 +21,14 @@ $bubble-trigger-buffer-zone: 6px;
 
 %catalog-panel {
     position: absolute;
-    top: 47px;
+    top: var(--adi-editor-header-height, 47px);
     bottom: 0;
     left: 0;
     box-sizing: border-box;
     width: calc(var(--adi-catalog-width) - 1px);
 
     &.enhanced-insight-picker {
-        top: 58px;
+        top: calc(var(--adi-editor-header-height, 47px) + 11px);
     }
 }
 

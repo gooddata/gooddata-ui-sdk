@@ -24,6 +24,7 @@ import { isClarificationQuestionsItem } from "../utils.js";
 
 import { collectReferences } from "./completion/references.js";
 import { useCompletion } from "./completion/useCompletion.js";
+import { useConfig } from "./ConfigContext.js";
 import { GenAiChatAgentSwitching } from "./GenAiChatAgentSwitching.js";
 import { GenAiChatContextChooser } from "./GenAiChatContextChooser.js";
 import { GenAIChatContextIndicator } from "./GenAIChatContextIndicator.js";
@@ -55,6 +56,7 @@ const isMac =
 function InputComponent({ autofocus = false, canManage, canAnalyze, targetRef }: InputOwnProps) {
     const intl = useIntl();
     const dispatch = useDispatch();
+    const { inputPlaceholder } = useConfig();
     const { isBigScreen, isSmallScreen, isFullscreen } = useFullscreenCheck();
 
     const conversationsLoaded = useSelector((state: RootState) => conversationsLoadedSelector(state));
@@ -158,7 +160,7 @@ function InputComponent({ autofocus = false, canManage, canAnalyze, targetRef }:
                     <div className="gd-gen-ai-chat__input__text" {...ref}>
                         <DefaultSyntaxHighlightingInput
                             className="gd-gen-ai-chat__input__mc"
-                            placeholder={intl.formatMessage(msgs.placeholder)}
+                            placeholder={inputPlaceholder ?? intl.formatMessage(msgs.placeholder)}
                             label={intl.formatMessage(msgs.label)}
                             value={value}
                             autocompletion={{

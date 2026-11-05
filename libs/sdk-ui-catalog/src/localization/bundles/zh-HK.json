@@ -73,7 +73,7 @@
     "analyticsCatalog.conditionalFormatting.edit": "編輯",
     "analyticsCatalog.conditionalFormatting.toggleAriaLabel": "為 {title} 啟用/停用格式設定",
     "analyticsCatalog.column.isHidden.icon.tooltip": "已從所有使用者的 Smart Search 和 AI Assistant 結果中隱藏。",
-    "analyticsCatalog.certification.field.status": "地位",
+    "analyticsCatalog.certification.field.status": "狀態",
     "analyticsCatalog.certification.field.status.certified": "已認證",
     "analyticsCatalog.certification.field.status.notCertified": "未認證",
     "analyticsCatalog.certification.field.message": "消息",

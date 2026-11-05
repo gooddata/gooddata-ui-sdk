@@ -1,4 +1,6 @@
 {
+    "gd.gen-ai.copilot.composing.waiting": "Warten auf Ihre Antwort",
+    "gd.gen-ai.copilot.composing.replyNow": "Jetzt antworten",
     "gd.gen-ai.global-error": "Ein unvorhergesehener Fehler ist aufgetreten.",
     "gd.gen-ai.global-error.description": "Versuchen Sie, den Chatbot neu zu starten und von vorne zu beginnen.",
     "gd.gen-ai.global-error.button-details": "Weitere Informationen finden Sie in der RAW-Fehlerreaktion",
@@ -149,8 +151,8 @@
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, one {# Seite} other {# Seiten}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, one {# Seite} other {# Seiten}}",
     "gd.gen-ai.publisherDocument.unavailable": "Das Dokument ist nicht verfügbar.",
-    "gd.gen-ai.publisherDocument.previousVersion": "Dieses Dokument wurde in der vorherigen Version von Publisher erstellt und kann hier nicht geöffnet werden.",
-    "gd.gen-ai.publisherDocument.newerVersion": "Dieses Dokument wurde in einer neueren Version von Publisher erstellt und kann hier nicht geöffnet werden.",
+    "gd.gen-ai.publisherDocument.previousVersion": "Dieses Dokument wurde in der vorherigen Version von „Berichte“ erstellt und kann hier nicht geöffnet werden.",
+    "gd.gen-ai.publisherDocument.newerVersion": "Dieses Dokument wurde in einer neueren Version von „Berichte“ erstellt und kann hier nicht geöffnet werden.",
     "gd.gen-ai.alert-proposal.summary.trigger": "Auslösen",
     "gd.gen-ai.alert-proposal.summary.trigger.mode": "Modus",
     "gd.gen-ai.alert-proposal.summary.trigger.interval": "Intervall",

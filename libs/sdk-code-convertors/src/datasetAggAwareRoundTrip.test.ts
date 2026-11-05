@@ -289,8 +289,8 @@ describe("dataset agg-aware round-trip (CQ-2302)", () => {
      * `assigned_to` points at an attribute on an AUXILIARY dataset.
      *
      * Mirrors the canonical xfail repro in gooddata-python-sdk
-     * (`tests/catalog/unit_tests/test_aac_agg_aware.py
-     * ::test_pre_aggregation_approximate_count_attribute_target_round_trips`).
+     * (`tests/catalog/unit_tests/test_aac_agg_aware.py`
+     * `::test_pre_aggregation_approximate_count_attribute_target_round_trips`).
      *
      * Platform contract: gdc-nas CQ-2147 / SourceReferenceOperation.isAllowedForFact() === false
      * for APPROXIMATE_COUNT — the only valid `reference.type` is `"attribute"`.

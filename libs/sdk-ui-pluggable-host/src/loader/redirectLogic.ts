@@ -196,8 +196,8 @@ function resolveOrgScopeTarget(
  * - A URL string → caller must navigate to this URL (e.g. via React Router)
  * - `null` → the current URL is valid; render the active app
  *
- * @throws {AppNotFoundError} The current path maps to no accessible application (show 404)
- * @throws {Error} Unexpected failure (show generic error screen)
+ * @throws AppNotFoundError - The current path maps to no accessible application (show 404)
+ * @throws Error - Unexpected failure (show generic error screen)
  */
 export async function resolveRedirectTarget({
     apps,

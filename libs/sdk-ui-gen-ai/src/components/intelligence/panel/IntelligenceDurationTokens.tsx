@@ -14,7 +14,7 @@ export interface IIntelligenceDurationTokensProps {
 }
 
 /**
- * The "{duration} / {tokens}" fragment shown by the inline Interaction Intelligence trigger,
+ * The `{duration} / {tokens}` fragment shown by the inline Interaction Intelligence trigger,
  * omitting the tokens segment when `tokens` is unknown.
  */
 export function IntelligenceDurationTokens({ totals, showSlash = true }: IIntelligenceDurationTokensProps) {

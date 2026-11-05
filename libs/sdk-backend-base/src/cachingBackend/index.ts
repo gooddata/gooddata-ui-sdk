@@ -7,9 +7,11 @@ import SparkMD5 from "spark-md5";
 import { invariant } from "ts-invariant";
 
 import {
+    type AnalyticsAsCodeDocument,
     type AutomationFilterType,
     type AutomationType,
     type IAnalyticalBackend,
+    type IAnalyticsAsCodeDeployOptions,
     type IAttributeWithReferences,
     type IAutomationsQuery,
     type IAutomationsQueryResult,
@@ -48,6 +50,7 @@ import {
     type IRawExportCustomOverrides,
     type ISecuritySettingsService,
     type IUserWorkspaceSettings,
+    type IWorkspaceAnalyticsAsCodeService,
     type IWorkspaceAttributesService,
     type IWorkspaceAutomationService,
     type IWorkspaceCatalog,
@@ -133,6 +136,7 @@ import { DecoratedWorkspaceObjectPermissionsService } from "../decoratedBackend/
 import { DecoratedOrganizationExportTemplatesService } from "../decoratedBackend/organizationExportTemplates.js";
 import { DecoratedSecuritySettingsService } from "../decoratedBackend/securitySettings.js";
 import {
+    type AnalyticsAsCodeDecoratorFactory,
     type AttributesDecoratorFactory,
     type AutomationsDecoratorFactory,
     type CatalogDecoratorFactory,
@@ -2485,6 +2489,42 @@ function insightPermissionsInvalidation(ctx: CachingContext): ObjectPermissionsD
 }
 
 //
+// ANALYTICS AS CODE
+//
+
+// A deploy replaces the whole LDM and all analytical objects.
+// Child workspaces inherit them, so clear the caches of all workspaces, not only this one.
+class WithAnalyticsAsCodeInvalidation implements IWorkspaceAnalyticsAsCodeService {
+    constructor(
+        private readonly decorated: IWorkspaceAnalyticsAsCodeService,
+        private readonly ctx: CachingContext,
+    ) {}
+
+    public async deploy(
+        documents: AnalyticsAsCodeDocument[],
+        options?: IAnalyticsAsCodeDeployOptions,
+    ): Promise<void> {
+        try {
+            await this.decorated.deploy(documents, options);
+        } finally {
+            const { caches } = this.ctx;
+            caches.execution?.clear();
+            caches.workspaceCatalogs?.clear();
+            caches.workspaceAttributes?.clear();
+            caches.workspaceAutomations?.clear();
+            caches.workspaceInsights?.clear();
+            caches.workspaceFacts?.clear();
+            caches.workspaceMeasures?.clear();
+            caches.workspaceDatasets?.clear();
+        }
+    }
+}
+
+function analyticsAsCodeInvalidation(ctx: CachingContext): AnalyticsAsCodeDecoratorFactory {
+    return (original) => new WithAnalyticsAsCodeInvalidation(original, ctx);
+}
+
+//
 // FACTS CACHING
 //
 
@@ -3947,6 +3987,7 @@ export function withCaching(
         : undefined;
     const workspaceSettings = workspaceSettingsCaching ? cachedWorkspaceSettings(ctx) : (v: any) => v;
     const geo = geoCaching ? cachedGeo(ctx) : undefined;
+    const analyticsAsCode = analyticsAsCodeInvalidation(ctx);
 
     if (config.onCacheReady) {
         config.onCacheReady(cacheControl(ctx));
@@ -3968,6 +4009,7 @@ export function withCaching(
         workspaceExportTemplates,
         geo,
         objectPermissions,
+        analyticsAsCode,
     });
 }
 

@@ -103,6 +103,8 @@ export {
     type ActionsApiWorkspaceLocalizationUsageRequest,
     ActionsApi_WorkspaceLocalizationUsageUsers,
     type ActionsApiWorkspaceLocalizationUsageUsersRequest,
+    ActionsApi_RetrieveTranslations,
+    type ActionsApiRetrieveTranslationsRequest,
 } from "../../generated/metadata-json-api/index.js";
 
 // Execution Result API

@@ -1,9 +1,5 @@
 // (C) 2007-2026 GoodData Corporation
 
-import "@formatjs/intl-pluralrules";
-// Fully-specified (.js) so strict-ESM consumers (webpack fullySpecified, e.g. the dashboards app
-// loading the direct-AD-embedding chunk) can resolve these extensionless-unfriendly packages.
-import "@formatjs/intl-pluralrules/polyfill-locales.js";
 import { useRef } from "react";
 
 import { DndProvider } from "@evil-internetmann/react-dnd";

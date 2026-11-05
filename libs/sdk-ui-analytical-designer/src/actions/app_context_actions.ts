@@ -1,7 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
 import { createAction } from "@reduxjs/toolkit";
-import $ from "jquery";
 import { v4 as uuid } from "uuid";
 
 import { type ApiEntitlement } from "@gooddata/sdk-backend-tiger";
@@ -121,9 +120,9 @@ export type AppContextActions =
 export const bootstrapData = createAction(
     ActionTypeKeys.BOOTSTRAP_DATA,
     (data: IBootstrapData, windowInstance = window) => {
-        const $window = $(windowInstance);
-        const viewportWidth = $window.width();
-        const viewportHeight = $window.height();
+        // what jQuery's $(window).width() / .height() read: the viewport without its scrollbars
+        const { clientWidth: viewportWidth, clientHeight: viewportHeight } =
+            windowInstance.document.documentElement;
 
         const windowInfo = {
             viewport: `${viewportWidth}x${viewportHeight}`,

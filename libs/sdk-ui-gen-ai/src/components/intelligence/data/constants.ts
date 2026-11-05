@@ -17,7 +17,7 @@ export const DEFAULT_STEP_ICON: IconType = "questionMark";
 export const MAX_DETAIL_LIST_ITEMS = 5;
 
 /**
- * Category -> icon mapping. Typed by {@link GenAIInteractionStepCategory}, so adding a category to
+ * Category -\> icon mapping. Typed by {@link GenAIInteractionStepCategory}, so adding a category to
  * the backend's vocabulary fails to compile until its icon is chosen here. A category still
  * missing at runtime (an older client meeting a newer backend) falls back to
  * {@link DEFAULT_STEP_ICON}.

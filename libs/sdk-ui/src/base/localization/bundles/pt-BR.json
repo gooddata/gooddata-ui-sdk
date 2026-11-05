@@ -97,6 +97,7 @@
     "visualizations.totals.dropdown.title.nat": "Acumulado (Total)",
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "A agregação Rollup (Total) não está disponível ao filtrar a visualização por valor métrico. Para usar o Rollup (Total), remova todos os filtros de valor métrico da barra de filtros.",
     "visualizations.totals.dropdown.tooltip.nat.disabled.ranking": "A agregação Rollup (Total) não está disponível ao filtrar a visualização pelo filtro de classificação. Para usar o Rollup (Total), remova o filtro de classificação da barra de filtros.",
+    "visualizations.totals.dropdown.tooltip.subtotal.disabled.measureSort": "Os subtotais de linha não estão disponíveis ao classificar por uma métrica. Remova a classificação por métrica para exibir os subtotais.",
     "visualizations.totals.dropdown.title.med": "Mediana",
     "visualizations.headline.tertiary.title": "Versus",
     "visualizations.headline.comparison.title.change": "Alterar",

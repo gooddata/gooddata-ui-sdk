@@ -58,7 +58,7 @@ export interface IAutomationParameter {
 }
 
 /**
- * Stored {@link IInsightParameterValue} overrides carry only {ref, value}; title, mode and
+ * Stored {@link IInsightParameterValue} overrides carry only `{ref, value}`; title, mode and
  * definition are re-derived from the current dashboard and workspace catalog. Rows without a
  * resolvable definition (see {@link resolveParameterDefinition}) are dropped; a value whose kind
  * arrives as an untyped wire string is decoded against the definition (see
@@ -248,8 +248,8 @@ export function dropStaleAlertParameters(
 }
 
 /**
- * Encodes the display-ready parameter set back to the neutral export wire shape ({id, value:string,
- * title, parameterType}). The full per-tab execution set (including `hidden` entries) is converted, not just the
+ * Encodes the display-ready parameter set back to the neutral export wire shape
+ * (`{id, value:string, title, parameterType}`). The full per-tab execution set (including `hidden` entries) is converted, not just the
  * visible ones, so the server resolver does not drop omitted parameters to the workspace default.
  *
  * @internal

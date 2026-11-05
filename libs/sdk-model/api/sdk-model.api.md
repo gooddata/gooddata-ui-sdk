@@ -1481,11 +1481,13 @@ export interface IAttributeDescriptor {
 export interface IAttributeDescriptorBody {
     // @alpha
     conditionalFormatting?: ISemanticConditionalFormatting;
+    dataType?: ComputedAttributeDataType;
     format?: {
         locale: string;
         pattern: string;
         timezone?: string;
     };
+    formatGranularity?: string;
     formOf: IAttributeHeaderFormOf;
     // @alpha
     geoAreaConfig?: IAttributeDisplayFormGeoAreaConfig;
@@ -4077,6 +4079,7 @@ export interface IFeatureFlags {
     enableRankingStrictLimit?: boolean;
     enableRankingWithMvf?: boolean;
     enableRawExports?: boolean;
+    enableReportsPostGA?: boolean;
     enableReportsSubsections?: boolean;
     // @alpha
     enableRichTextWidgetFilterConfiguration?: boolean;

@@ -28,7 +28,7 @@ export function postHostEvent<T extends AnalyticalDesignerEventType>(
     hostAdapter.onEvent(event as AnalyticalDesignerEvent);
 }
 
-/** Posts an event as a window message; data is the @gooddata/sdk-embedding contract payload. */
+/** Posts an event as a window message; data is the `@gooddata/sdk-embedding` contract payload. */
 export function postWindowEvent(type: AnalyticalDesignerEventType, data: unknown, contextId?: string): void {
     messagingUtils.postEvent(
         GdcProductName.ANALYTICAL_DESIGNER,

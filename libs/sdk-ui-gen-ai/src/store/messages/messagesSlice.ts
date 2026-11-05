@@ -468,6 +468,7 @@ const messagesSlice = createSlice({
             assistantMessage.cancelled = false;
             assistantMessage.responseId = payload.item?.responseId ?? "";
             assistantMessage.replyTo = payload.item?.replyTo;
+            assistantMessage.agentId = payload.item?.agentId ?? assistantMessage.agentId;
 
             // Also update the interaction id in the relevant user message (if one exists)
             // Note: dynamically created assistant messages (for multi-interaction streams)
@@ -532,6 +533,7 @@ const messagesSlice = createSlice({
             userMessage.responseId = message.responseId;
             userMessage.replyTo = message.replyTo;
             userMessage.createdAt = message.createdAt;
+            userMessage.agentId = message.agentId ?? userMessage.agentId;
         },
         evaluateMessageCompleteAction: (
             state,

@@ -1,5 +1,6 @@
 // (C) 2026 GoodData Corporation
 
+import { invariant } from "ts-invariant";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ActionsApi_ComputeLabelElementsPost } from "@gooddata/api-client-tiger/endpoints/labelElements";
@@ -114,6 +115,156 @@ describe("TigerWorkspaceElementsQuery", () => {
                 callsAfterFirstPage + 1,
             );
             expect(second.numberFormat).toBe("#,##0");
+        });
+    });
+
+    describe("date format", () => {
+        const format = { locale: "en-US", pattern: "dd.MM.yyyy" };
+        const respond = (data: Record<string, unknown>) =>
+            vi.mocked(ActionsApi_ComputeLabelElementsPost).mockResolvedValueOnce({
+                data: {
+                    paging: { total: 1 },
+                    elements: [{ title: "2026-03-15", primaryTitle: "2026-03-15" }],
+                    ...data,
+                },
+            } as any);
+        // the factory's date formatter renders the parsed date as an ISO string
+        const parsedDay = new Date(2026, 2, 15).toISOString();
+
+        it("formats values of a DATE computed attribute without granularity as days", async () => {
+            respond({ dataType: "DATE", format });
+
+            const result = await factory.forDisplayForm(idRef("ca", "computedAttribute")).query();
+
+            expect(result.items).toEqual([
+                {
+                    title: "2026-03-15",
+                    uri: "2026-03-15",
+                    formattedTitle: parsedDay,
+                    normalizedValue: parsedDay,
+                },
+            ]);
+        });
+
+        it.each(["TIMESTAMP", "TIMESTAMP_TZ"])(
+            "formats values of a %s computed attribute without granularity as seconds",
+            async (dataType) => {
+                respond({
+                    dataType,
+                    format,
+                    elements: [{ title: "2026-03-15 14:05:09", primaryTitle: "2026-03-15 14:05:09" }],
+                });
+                const parsedSecond = new Date(2026, 2, 15, 14, 5, 9).toISOString();
+
+                const result = await factory.forDisplayForm(idRef("ca", "computedAttribute")).query();
+
+                expect(result.items).toEqual([
+                    {
+                        title: "2026-03-15 14:05:09",
+                        uri: "2026-03-15 14:05:09",
+                        formattedTitle: parsedSecond,
+                        normalizedValue: parsedSecond,
+                    },
+                ]);
+            },
+        );
+
+        it("keeps the raw values of a computed attribute with a format that cannot be applied", async () => {
+            const warn = vi.spyOn(invariant, "warn").mockImplementation(() => {});
+            respond({ dataType: "DATE", format });
+            const Elements = factory.constructor as typeof TigerWorkspaceElementsClass;
+            const failingFactory = new Elements(authCall, "workspace", () => {
+                throw new Error("unsupported pattern");
+            });
+
+            const result = await failingFactory.forDisplayForm(idRef("ca", "computedAttribute")).query();
+
+            expect(result.items).toEqual([
+                {
+                    title: "2026-03-15",
+                    uri: "2026-03-15",
+                    formattedTitle: "2026-03-15",
+                    normalizedValue: parsedDay,
+                },
+            ]);
+            expect(warn).toHaveBeenCalledOnce();
+            warn.mockRestore();
+        });
+
+        it("keeps failing on a format of a date attribute that cannot be applied", async () => {
+            respond({ granularity: "DAY", format });
+            const Elements = factory.constructor as typeof TigerWorkspaceElementsClass;
+            const failingFactory = new Elements(authCall, "workspace", () => {
+                throw new Error("unsupported pattern");
+            });
+
+            await expect(
+                failingFactory.forDisplayForm(idRef("some_label", "displayForm")).query(),
+            ).rejects.toThrow();
+        });
+
+        it.each([
+            ["a date attribute", { granularity: "SECOND" }, idRef("some_label", "displayForm")],
+            ["a computed attribute", { dataType: "TIMESTAMP_TZ" }, idRef("ca", "computedAttribute")],
+        ])(
+            "formats values of %s in the timezone of their format, the same as in execution results",
+            async (_, attribute, ref) => {
+                const zonedFormat = {
+                    locale: "en-US-x-24h",
+                    pattern: "dd.MM.yyyy HH:mm",
+                    timezone: "America/New_York",
+                };
+                respond({
+                    ...attribute,
+                    format: zonedFormat,
+                    elements: [{ title: "2026-03-15 14:05:09", primaryTitle: "2026-03-15 14:05:09" }],
+                });
+                const dateFormatter = vi.fn((value: Date) => value.toISOString());
+                const Elements = factory.constructor as typeof TigerWorkspaceElementsClass;
+
+                const result = await new Elements(authCall, "workspace", dateFormatter)
+                    .forDisplayForm(ref)
+                    .query();
+
+                // the value is New York time, 4 hours behind UTC in daylight saving time
+                const parsed = "2026-03-15T18:05:09.000Z";
+                expect(dateFormatter).toHaveBeenCalledWith(
+                    new Date(parsed),
+                    "GDC.time.second",
+                    zonedFormat.locale,
+                    zonedFormat.pattern,
+                    zonedFormat.timezone,
+                );
+                expect(result.items[0]).toMatchObject({ formattedTitle: parsed, normalizedValue: parsed });
+            },
+        );
+
+        it("does not format values of a granularity the SDK does not model and warns about it", async () => {
+            const warn = vi.spyOn(invariant, "warn").mockImplementation(() => {});
+            respond({ granularity: "FISCAL_WEEK", format });
+
+            expect((await factory.forDisplayForm(idRef("some_label", "displayForm")).query()).items).toEqual([
+                { title: "2026-03-15", uri: "2026-03-15" },
+            ]);
+            expect(warn).toHaveBeenCalledWith(expect.stringContaining('"FISCAL_WEEK"'));
+            warn.mockRestore();
+        });
+
+        it("does not format values of a non-date computed attribute or a label without granularity", async () => {
+            respond({ dataType: "STRING", format });
+            expect((await factory.forDisplayForm(idRef("ca", "computedAttribute")).query()).items).toEqual([
+                { title: "2026-03-15", uri: "2026-03-15" },
+            ]);
+
+            respond({ dataType: "STRING", granularity: "DAY", format });
+            expect((await factory.forDisplayForm(idRef("ca", "computedAttribute")).query()).items).toEqual([
+                { title: "2026-03-15", uri: "2026-03-15" },
+            ]);
+
+            respond({ format });
+            expect((await factory.forDisplayForm(idRef("some_label", "displayForm")).query()).items).toEqual([
+                { title: "2026-03-15", uri: "2026-03-15" },
+            ]);
         });
     });
 

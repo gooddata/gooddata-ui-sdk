@@ -288,6 +288,8 @@ function* resetDashboardFromPersisted(ctx: DashboardContext, renderMode: RenderM
             persistedDashboard,
             effectiveActiveTabId,
             workspaceParameters,
+            undefined,
+            attributesWithReferences,
         );
         batch = [
             ...initActions,

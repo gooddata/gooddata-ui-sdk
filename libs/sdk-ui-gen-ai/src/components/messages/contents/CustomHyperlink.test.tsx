@@ -16,6 +16,7 @@ type RenderCustomHyperlinkOptions = {
     allowNativeLinks?: boolean;
     canManage?: boolean;
     canAnalyze?: boolean;
+    canCreateDocument?: boolean;
     linkHandler?: (event: LinkHandlerEvent) => string | undefined;
 };
 
@@ -25,6 +26,7 @@ function renderCustomHyperlinkComponent({
     allowNativeLinks = true,
     canManage = true,
     canAnalyze = false,
+    canCreateDocument = true,
     linkHandler,
 }: RenderCustomHyperlinkOptions = {}) {
     return render(
@@ -32,6 +34,7 @@ function renderCustomHyperlinkComponent({
             allowNativeLinks={allowNativeLinks}
             canManage={canManage}
             canAnalyze={canAnalyze}
+            canCreateDocument={canCreateDocument}
             linkHandler={linkHandler}
         >
             <CustomHyperlinkComponent href={href} text={text} />
@@ -77,6 +80,30 @@ describe("CustomHyperlinkComponent", () => {
         expect(screen.queryByRole("link")).not.toBeInTheDocument();
     });
 
+    it("renders report link when user may create documents without managing the workspace", () => {
+        renderCustomHyperlinkComponent({
+            href: "gooddata://report?ws=workspace_1&id=report_1",
+            canManage: false,
+            canCreateDocument: true,
+        });
+
+        expect(screen.getByRole("link")).toHaveAttribute(
+            "href",
+            "/workspace/workspace_1/reports/report/report_1",
+        );
+    });
+
+    it("renders plain text for report when user cannot create documents", () => {
+        renderCustomHyperlinkComponent({
+            href: "gooddata://report?ws=workspace_1&id=report_1",
+            canManage: true,
+            canCreateDocument: false,
+        });
+
+        expect(screen.getByText(plainText)).toBeInTheDocument();
+        expect(screen.queryByRole("link")).not.toBeInTheDocument();
+    });
+
     it("renders metric link when user can analyze", () => {
         renderCustomHyperlinkComponent({
             href: "gooddata://metric?ws=workspace_1&id=metric_1",
@@ -109,7 +136,7 @@ describe("CustomHyperlinkComponent", () => {
         [
             "report",
             "gooddata://report?ws=workspace_1&id=report/1",
-            "/workspace/workspace_1/publisher/report/report%2F1",
+            "/workspace/workspace_1/reports/report/report%2F1",
         ],
     ])("renders native link for %s", (_description, href, expectedHref) => {
         renderCustomHyperlinkComponent({ href, allowNativeLinks: true });

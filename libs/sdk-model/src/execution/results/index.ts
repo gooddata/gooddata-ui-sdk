@@ -8,6 +8,7 @@ import {
     type AttributeDisplayFormType,
     type IAttributeDisplayFormGeoAreaConfig,
 } from "../../ldm/metadata/attributeDisplayForm/index.js";
+import { type ComputedAttributeDataType } from "../../ldm/metadata/computedAttribute/index.js";
 import { type ObjRef } from "../../objRef/index.js";
 
 /**
@@ -265,6 +266,26 @@ export interface IAttributeDescriptorBody {
      * the same way date attributes' `formattedName` is treated.
      */
     numberFormat?: string;
+
+    /**
+     * Data type of the attribute's element values.
+     *
+     * @remarks
+     * Present for computed attributes only. For a date computed attribute without `formatGranularity`, it
+     * decides how its values are parsed before they are formatted with `format`.
+     */
+    dataType?: ComputedAttributeDataType;
+
+    /**
+     * Granularity to apply `format` with: the element values of a date computed attribute are parsed
+     * with it before they are formatted.
+     *
+     * @remarks
+     * Present for computed attributes only, in place of `granularity`. Unlike `granularity`, it does not
+     * make the attribute a date attribute, so computed attributes are not offered for date drilling or
+     * key driver analysis.
+     */
+    formatGranularity?: string;
 
     /**
      * Primary label of the attribute from formOf

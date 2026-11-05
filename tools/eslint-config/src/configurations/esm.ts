@@ -1,21 +1,19 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type { IDualConfiguration } from "../types.js";
+import type { IConfiguration } from "../types.js";
 
-const v9 = {
-    languageOptions: {
-        ecmaVersion: 2022,
-        sourceType: "module" as const,
-    },
+const options = {
+    ecmaVersion: 2022,
+    sourceType: "module" as const,
 };
 
-export const esm: IDualConfiguration = {
-    v8: {
-        parserOptions: {
-            ecmaVersion: 2022,
-            sourceType: "module",
-        },
+const common = {
+    languageOptions: options,
+};
+
+export const esm: IConfiguration = {
+    legacy: {
+        parserOptions: options,
     },
-    v9,
-    ox: v9,
+    flat: { v9: common, v9ox: common, v10: common, v10ox: common },
 };

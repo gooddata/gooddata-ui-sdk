@@ -24,7 +24,7 @@ type CustomHyperlinkProps = CustomHyperlinkOwnProps & {
  * used for links management
  */
 export function CustomHyperlinkComponent({ href, text, conversation }: CustomHyperlinkProps) {
-    const { linkHandler, allowNativeLinks, canManage, canAnalyze } = useConfig();
+    const { linkHandler, allowNativeLinks, canManage, canAnalyze, canCreateDocument } = useConfig();
     const canManageMetrics = canManage || canAnalyze;
     const canManageVisualisations = canManage || canAnalyze;
     const plainText = removeMarkdown(text);
@@ -99,7 +99,7 @@ export function CustomHyperlinkComponent({ href, text, conversation }: CustomHyp
     if (parsedRef.type === "visualization" && !canManageVisualisations) {
         return plainText;
     }
-    if (parsedRef.type === "report" && !canManage) {
+    if (parsedRef.type === "report" && !canCreateDocument) {
         return plainText;
     }
 

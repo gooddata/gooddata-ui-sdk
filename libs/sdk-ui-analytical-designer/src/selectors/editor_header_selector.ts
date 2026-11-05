@@ -13,7 +13,7 @@ import {
 } from "../selectors/feature_flag_selector.js";
 import { selectTimeTravel } from "../store/_infra/time_travel.js";
 import { getIsReadOnlyMode } from "../store/embedding/embedding_selectors.js";
-import { isReportSaving } from "../store/report/report_selectors.js";
+import { isReportSaving, isReportSavingAsNew } from "../store/report/report_selectors.js";
 import { getRouteQueryDisplayAction, getRouteQueryHideAction } from "../store/router/router_selectors.js";
 import { type IAppState } from "../store/types.js";
 
@@ -170,6 +170,37 @@ export const isSaveAsVisible = createSelector(
         !hiddenActions.includes(AVAILABLE_HIDDEN_ACTIONS.SAVE_AS) &&
         isReportSaved &&
         canCreateNewVisualization,
+);
+
+// Leaving the editor (Back, Cancel) waits while the visualization is being saved. An opening does not block it,
+// so that the user can leave a slow or stuck load.
+export const isNavigationDisabled = createSelector(
+    reportSaving,
+    isReportSavingAsNew,
+    (isSaving, isSavingAsNew) => isSaving || isSavingAsNew,
+);
+
+export const isCancelVisible = createSelector(
+    isEditFromKD,
+    isExploreFromKD,
+    displayedActions,
+    (isEditFromKD, isExploreFromKD, displayedActions) =>
+        isEditFromKD || isExploreFromKD || displayedActions.includes(AVAILABLE_DISPLAYED_ACTIONS.CANCEL),
+);
+
+export const isOpenVisible = createSelector(
+    isExploreFromKD,
+    hiddenActions,
+    (isExploreFromKD, hiddenActions) =>
+        !isExploreFromKD && !hiddenActions.includes(AVAILABLE_HIDDEN_ACTIONS.OPEN),
+);
+
+// Only a visualization edited from a dashboard offers to continue in the full Analytical Designer.
+export const isOpenInAnalyticalDesignerVisible = createSelector(
+    isEditFromKD,
+    hiddenActions,
+    (isEditFromKD, hiddenActions) =>
+        isEditFromKD && !hiddenActions.includes(AVAILABLE_HIDDEN_ACTIONS.OPEN_IN_ANALYTICAL_DESIGNER),
 );
 
 export const isEditorHeaderResetDisabled = createSelector(

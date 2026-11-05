@@ -19,11 +19,13 @@ import { IColorPalette } from '@gooddata/sdk-model';
 import { ICommandFailedBody } from '@gooddata/sdk-embedding';
 import { IDrillEvent } from '@gooddata/sdk-ui';
 import { IEntitlementDescriptor } from '@gooddata/sdk-model';
+import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContextContent } from '@gooddata/sdk-embedding';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { ILocale } from '@gooddata/sdk-model';
 import { IObjectMeta } from '@gooddata/sdk-embedding';
+import { IObjectPermissionsObject } from '@gooddata/sdk-backend-spi';
 import { ISeparators } from '@gooddata/sdk-model';
 import { ISlotProps } from '@gooddata/sdk-ui-kit';
 import { ITheme } from '@gooddata/sdk-model';
@@ -33,7 +35,9 @@ import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { ReactElement } from 'react';
+import { ReactNode } from 'react';
 import { Ref } from 'react';
+import { ShareStatus } from '@gooddata/sdk-model';
 
 // @alpha
 export function AnalyticalDesigner(props: IAnalyticalDesignerProps): ReactElement;
@@ -51,7 +55,16 @@ export type AnalyticalDesignerEvent<T extends AnalyticalDesignerEventType = Anal
 export type AnalyticalDesignerEventType = keyof IAnalyticalDesignerEventDataMap;
 
 // @alpha
+export type AnalyticalDesignerHeaderLayoutMode = "legacy" | "compact" | "catalogSidebar";
+
+// @alpha
 export type AnalyticalDesignerHiddenAction = "open" | "clear" | "export" | "save" | "saveAs" | "openInAnalyticalDesigner";
+
+// @alpha
+export type AnalyticalDesignerInsightPickerVariant = "dialog" | "dropdown";
+
+// @alpha
+export type AnalyticalDesignerOptionsItem = IAnalyticalDesignerOptionsAction | IAnalyticalDesignerOptionsSection | IAnalyticalDesignerOptionsSeparator;
 
 // @alpha
 export type AnalyticalDesignerSlotComponent<TProps> = ComponentType<ISlotProps<TProps>>;
@@ -68,6 +81,20 @@ export interface IAnalyticalDesignerApi {
 export interface IAnalyticalDesignerCacheReset {
     resetAll?: () => void;
     resetCatalogs?: () => void;
+}
+
+// @alpha
+export interface IAnalyticalDesignerCancelProps extends IAnalyticalDesignerHeaderContext {
+    isDisabled: boolean;
+    label: string;
+    onCancel: () => void;
+}
+
+// @alpha
+export interface IAnalyticalDesignerClearProps extends IAnalyticalDesignerHeaderContext {
+    isDisabled: boolean;
+    label: string;
+    onClear: () => void;
 }
 
 // @alpha
@@ -105,6 +132,34 @@ export interface IAnalyticalDesignerConfig {
 }
 
 // @alpha
+export interface IAnalyticalDesignerEditorAction {
+    content: ReactNode;
+    id: string;
+}
+
+// @alpha
+export interface IAnalyticalDesignerEditorActionsProps extends IAnalyticalDesignerHeaderContext {
+    items: readonly IAnalyticalDesignerEditorAction[];
+}
+
+// @alpha
+export interface IAnalyticalDesignerEditorHeaderProps extends IAnalyticalDesignerHeaderContext {
+    editorActions: ReactNode;
+    visualizationInfo: ReactNode;
+}
+
+// @alpha
+export interface IAnalyticalDesignerEmbedProps extends IAnalyticalDesignerHeaderContext {
+    documentationLabel: string;
+    documentationUrl: string;
+    embedInsightDisabledReason?: string;
+    embedInsightLabel: string;
+    isEmbedInsightDisabled: boolean;
+    label: string;
+    onEmbedInsight: () => void;
+}
+
+// @alpha
 export interface IAnalyticalDesignerErrorProps {
     error: unknown;
 }
@@ -135,6 +190,22 @@ export interface IAnalyticalDesignerEventDataMap {
 }
 
 // @alpha
+export interface IAnalyticalDesignerHeaderContext {
+    hasUnsavedChanges: boolean;
+    insightRef?: ObjRef;
+    layout: IAnalyticalDesignerHeaderLayout;
+    title: string;
+    workspace: string;
+}
+
+// @alpha
+export interface IAnalyticalDesignerHeaderLayout {
+    canCollapseCatalog: boolean;
+    isCatalogCollapsed: boolean;
+    mode: AnalyticalDesignerHeaderLayoutMode;
+}
+
+// @alpha
 export interface IAnalyticalDesignerInsightOpenedData {
     availableCommands: GdcAdCommandType[];
     definition: IInsightDefinition;
@@ -144,6 +215,54 @@ export interface IAnalyticalDesignerInsightOpenedData {
 // @alpha
 export interface IAnalyticalDesignerLoadingProps {
     className?: string;
+}
+
+// @alpha
+export interface IAnalyticalDesignerOpenProps extends IAnalyticalDesignerHeaderContext {
+    enabledVisualizationUrls: string[];
+    excludeTags?: string[];
+    includeTags?: string[];
+    isDisabled: boolean;
+    isLoading: boolean;
+    isSemanticSearchEnabled: boolean;
+    label: string;
+    onOpenInsight: (ref: ObjRef) => void;
+    pickerVariant: AnalyticalDesignerInsightPickerVariant;
+    selectedInsightId?: string;
+}
+
+// @alpha
+export interface IAnalyticalDesignerOptionsAction {
+    disabledTooltip?: string;
+    id: string;
+    isDisabled: boolean;
+    label: string;
+    onSelect: () => void;
+    // (undocumented)
+    type: "action";
+}
+
+// @alpha
+export interface IAnalyticalDesignerOptionsProps extends IAnalyticalDesignerHeaderContext {
+    accessibleName: string;
+    isDisabled: boolean;
+    items: readonly AnalyticalDesignerOptionsItem[];
+    label: string;
+}
+
+// @alpha
+export interface IAnalyticalDesignerOptionsSection {
+    id: string;
+    label: string;
+    // (undocumented)
+    type: "section";
+}
+
+// @alpha
+export interface IAnalyticalDesignerOptionsSeparator {
+    id: string;
+    // (undocumented)
+    type: "separator";
 }
 
 // @alpha
@@ -164,9 +283,40 @@ export interface IAnalyticalDesignerProps {
 }
 
 // @alpha
+export interface IAnalyticalDesignerSaveAsProps extends IAnalyticalDesignerHeaderContext {
+    isDisabled: boolean;
+    isSaving: boolean;
+    label: string;
+    onSaveAs: () => void;
+}
+
+// @alpha
+export interface IAnalyticalDesignerSaveProps extends IAnalyticalDesignerHeaderContext {
+    disabledTooltip?: string;
+    isDisabled: boolean;
+    isSaving: boolean;
+    label: string;
+    onSave: () => void;
+}
+
+// @alpha
 export interface IAnalyticalDesignerSlots {
+    Cancel?: AnalyticalDesignerSlotComponent<IAnalyticalDesignerCancelProps>;
+    Clear?: AnalyticalDesignerSlotComponent<IAnalyticalDesignerClearProps>;
+    EditorActions?: AnalyticalDesignerSlotComponent<IAnalyticalDesignerEditorActionsProps>;
+    EditorHeader?: AnalyticalDesignerSlotComponent<IAnalyticalDesignerEditorHeaderProps>;
+    Embed?: AnalyticalDesignerSlotComponent<IAnalyticalDesignerEmbedProps>;
     Error?: AnalyticalDesignerSlotComponent<IAnalyticalDesignerErrorProps>;
     Loading?: AnalyticalDesignerSlotComponent<IAnalyticalDesignerLoadingProps>;
+    Open?: AnalyticalDesignerSlotComponent<IAnalyticalDesignerOpenProps>;
+    Options?: AnalyticalDesignerSlotComponent<IAnalyticalDesignerOptionsProps>;
+    Save?: AnalyticalDesignerSlotComponent<IAnalyticalDesignerSaveProps>;
+    SaveAs?: AnalyticalDesignerSlotComponent<IAnalyticalDesignerSaveAsProps>;
+    UndoRedo?: AnalyticalDesignerSlotComponent<IAnalyticalDesignerUndoRedoProps>;
+    VisualizationAccess?: AnalyticalDesignerSlotComponent<IAnalyticalDesignerVisualizationAccessProps>;
+    VisualizationDescription?: AnalyticalDesignerSlotComponent<IAnalyticalDesignerVisualizationDescriptionProps>;
+    VisualizationInfo?: AnalyticalDesignerSlotComponent<IAnalyticalDesignerVisualizationInfoProps>;
+    VisualizationTitle?: AnalyticalDesignerSlotComponent<IAnalyticalDesignerVisualizationTitleProps>;
 }
 
 // @alpha
@@ -176,6 +326,57 @@ export interface IAnalyticalDesignerTelemetryCallbacks {
     }) => void;
     trackPageView: (page: string, data?: Record<string, unknown>) => void;
     trackTiming: (variable: string, label: string, valueMs: number, data?: Record<string, unknown>) => void;
+}
+
+// @alpha
+export interface IAnalyticalDesignerUndoRedoProps extends IAnalyticalDesignerHeaderContext {
+    isRedoDisabled: boolean;
+    isUndoDisabled: boolean;
+    onRedo: () => void;
+    onUndo: () => void;
+}
+
+// @alpha
+export interface IAnalyticalDesignerVisualizationAccessProps extends IAnalyticalDesignerHeaderContext {
+    accessLevel?: ShareStatus;
+    canManageAccess: boolean;
+    isAccessError: boolean;
+    isAccessLoading: boolean;
+    isDefaultAvailable: boolean;
+    objectTitle: string;
+    onRequestAccessSummary: () => void;
+    target?: IObjectPermissionsObject;
+}
+
+// @alpha
+export interface IAnalyticalDesignerVisualizationDescriptionProps extends IAnalyticalDesignerHeaderContext {
+    addLabel: string;
+    description: string;
+    filters: IFilter[];
+    isEditable: boolean;
+    onDescriptionChange: (description: string) => void;
+    placeholder: string;
+    separators?: ISeparators;
+}
+
+// @alpha
+export interface IAnalyticalDesignerVisualizationInfoProps extends IAnalyticalDesignerHeaderContext {
+    indicators: ReactNode;
+    isNavigationDisabled: boolean;
+    onRequestBack: () => void;
+    usages: ReactNode;
+    visualizationAccess: ReactNode;
+    visualizationDescription: ReactNode;
+    visualizationTitle: ReactNode;
+}
+
+// @alpha
+export interface IAnalyticalDesignerVisualizationTitleProps extends IAnalyticalDesignerHeaderContext {
+    isEditable: boolean;
+    isLocked: boolean;
+    maxLength: number;
+    onTitleChange: (title: string) => void;
+    placeholder: string;
 }
 
 ```

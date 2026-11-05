@@ -36,6 +36,7 @@ const features: IHostChromeWorkspaceFeatures = {
     canAnalyzeWorkspace: true,
     canAccessWorkbench: false,
     canFullControl: false,
+    canCreateDocument: true,
     showSearch: false,
     showChat: true,
 };

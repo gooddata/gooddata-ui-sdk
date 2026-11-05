@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 /**
- * Hand-curated public types from the AAC schema provided by @gooddata/sdk-code-schemas.
+ * Hand-curated public types from the AAC schema provided by `@gooddata/sdk-code-schemas`.
  * This file isolates api-extractor from the generated metadata.ts internals
  * (which contain anonymous union members like Visualisation1-22, Id4-16, etc.).
  */

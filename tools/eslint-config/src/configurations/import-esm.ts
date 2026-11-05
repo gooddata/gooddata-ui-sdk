@@ -2,16 +2,16 @@
 
 import { importEsmPlugin, importEsmRules } from "@gooddata/lint-config";
 
-import type { IDualConfiguration } from "../types.js";
+import type { IConfiguration } from "../types.js";
 
-const v9 = {
+const flat = {
     packages: [importEsmPlugin],
     plugins: { "import-esm": importEsmPlugin },
     rules: importEsmRules,
 };
 
-export const importEsm: IDualConfiguration<"import-esm"> = {
-    v8: {
+export const importEsm: IConfiguration<"import-esm"> = {
+    legacy: {
         packages: [
             {
                 name: "eslint-plugin-import-esm",
@@ -21,6 +21,5 @@ export const importEsm: IDualConfiguration<"import-esm"> = {
         plugins: ["import-esm"],
         rules: importEsmRules,
     },
-    v9,
-    ox: {},
+    flat: { v9: flat, v9ox: {}, v10: {}, v10ox: {} },
 };
