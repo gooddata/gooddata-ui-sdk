@@ -533,19 +533,3 @@ export interface IDeclarativeGranularitiesFormatting {
     titleBase: string;
     titlePattern: string;
 }
-
-/**
- * Logical data model and analytical objects of a workspace.
- *
- * @alpha
- */
-export interface IDeclarativeWorkspaceLayout {
-    ldm: IDeclarativeLogicalModel;
-    /**
-     * Analytical objects in the declarative analytics document of the backend.
-     *
-     * @remarks
-     * The model does not describe this document. Use a document that the backend exported.
-     */
-    analytics: object;
-}

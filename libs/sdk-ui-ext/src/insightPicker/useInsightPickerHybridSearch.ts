@@ -35,6 +35,7 @@ const insightItemBuilder: HybridSearchItemBuilder<IInsightPickerItem> = (
     description: item.description,
     identifier: item.id,
     isLocked: false,
+    isRelated: true,
     created: item.createdAt,
     updated: item.modifiedAt ?? item.createdAt,
     visualizationUrl: item.visualizationUrl ?? "",
@@ -78,6 +79,7 @@ export function useInsightPickerHybridSearch({
                 created: insightCreated(insight),
                 updated: insightUpdated(insight),
                 visualizationUrl: insightVisualizationUrl(insight),
+                permissions: insight.insight.permissions,
             })),
         [insights],
     );

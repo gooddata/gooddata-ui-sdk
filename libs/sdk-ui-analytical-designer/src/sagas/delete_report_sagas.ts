@@ -43,6 +43,12 @@ export function getCurrentlyOpenedReportUri(state: IAppState): string | undefine
     return getLastSavedReportUri(state);
 }
 
+function deleteFailureReason(error: unknown): DeleteReportFailureReason {
+    return isUnexpectedResponseError(error) && error.httpStatus === 403
+        ? DeleteReportFailureReason.FORBIDDEN
+        : DeleteReportFailureReason.UNKNOWN;
+}
+
 export function performDelete(projectId: string, insightRef: ObjRef) {
     return backend.workspace(projectId).insights().deleteInsight(insightRef);
 }
@@ -108,9 +114,7 @@ export function* deleteReport({ payload: { insightRef, forceDelete, meta } }: ID
             logError("Error while deleting insight", error);
 
             const duration: ReturnType<typeof getDuration> = yield call(getDuration, startTime);
-            const reason = isUnexpectedResponseError(error)
-                ? DeleteReportFailureReason.FAILED_TO_DELETE_REFERENCED_REPORT
-                : DeleteReportFailureReason.UNKNOWN;
+            const reason = deleteFailureReason(error);
 
             yield put(deleteReportFailed(duration, reason, error as Error));
 

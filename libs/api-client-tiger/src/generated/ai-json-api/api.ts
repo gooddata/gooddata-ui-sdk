@@ -806,6 +806,42 @@ export interface AiChartFill {
 }
 
 
+export interface AiClarifyingAnswer {
+    'answer': AiSingleChoiceAnswer;
+    /**
+     * Position of the question on the questions item, from zero.
+     */
+    'questionIndex': number;
+    /**
+     * The question, as stored on the questions item.
+     */
+    'questionText': string;
+}
+
+/**
+ * A user\'s answers to the clarifying questions on item ``questionsItemId``.  A question with no entry in ``answers`` is a skipped question. An empty list means the user skipped every question. Data obfuscation can mask the question and option text.
+ */
+export interface AiClarifyingAnswersContent {
+    /**
+     * One entry per answered question.
+     */
+    'answers': Array<AiClarifyingAnswer>;
+    /**
+     * Item ID of the assistant item that asked the questions.
+     */
+    'questionsItemId': string;
+    /**
+     * The answers as the plain text the model read.
+     */
+    'text': string;
+    /**
+     * Type of item content.
+     */
+    'type'?: AiClarifyingAnswersContentTypeEnum;
+}
+
+export type AiClarifyingAnswersContentTypeEnum = 'clarifyingAnswers';
+
 export interface AiClarifyingChoiceOption {
     /**
      * The answer itself, rendered as the option and submitted verbatim, e.g. `Net Sales`.
@@ -1233,7 +1269,7 @@ export interface AiConfig {
  * @type AiContent
  * Conversation item content payload.
  */
-export type AiContent = { type: 'multipart' } & AiMultipartContent | { type: 'reasoning' } & AiReasoningContent | { type: 'skillsActivated' } & AiSkillsActivatedContent | { type: 'text' } & AiTextMessageContent | { type: 'toolCall' } & AiFunctionCallContent | { type: 'toolResult' } & AiFunctionResultContent;
+export type AiContent = { type: 'clarifyingAnswers' } & AiClarifyingAnswersContent | { type: 'multipart' } & AiMultipartContent | { type: 'reasoning' } & AiReasoningContent | { type: 'skillsActivated' } & AiSkillsActivatedContent | { type: 'text' } & AiTextMessageContent | { type: 'toolCall' } & AiFunctionCallContent | { type: 'toolResult' } & AiFunctionResultContent;
 
 /**
  * @type AiContent1
@@ -2938,6 +2974,7 @@ export const AiObjectType = {
     ATTRIBUTE: 'attribute',
     DATE_ATTRIBUTE: 'date_attribute',
     LABEL: 'label',
+    COMPUTED_ATTRIBUTE: 'computed_attribute',
     VISUALIZATION: 'visualization',
     DASHBOARD: 'dashboard',
     FILTER_CONTEXT: 'filter_context',
@@ -4562,6 +4599,23 @@ export type AiShapeType = typeof AiShapeType[keyof typeof AiShapeType];
 
 export interface AiSimpleColorItem {
 }
+
+export interface AiSingleChoiceAnswer {
+    /**
+     * Position of the picked option in the question\'s `control.options`, from zero.
+     */
+    'optionIndex': number;
+    /**
+     * The picked option, as stored on the questions item.
+     */
+    'optionText': string;
+    /**
+     * Type of answer.
+     */
+    'type': AiSingleChoiceAnswerTypeEnum;
+}
+
+export type AiSingleChoiceAnswerTypeEnum = 'singleChoice';
 
 /**
  * Pick exactly one option — radio buttons, or rows that submit on click.  The only control there is for now; a later one (multiple choice, a date range, a catalog object picker) becomes another member of ``ClarifyingQuestionControl`` without changing any payload a client has already seen.

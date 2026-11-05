@@ -1017,6 +1017,8 @@
     "userManagement.workspace.permission.createAutomation.tooltip": "เพิ่มสิทธิ์ CREATE_AUTOMATIONS เพื่อสร้างการแจ้งเตือนอัตโนมัติและการส่งออกตามกำหนดการ",
     "userManagement.workspace.permission.createComputedAttribute": "แอตทริบิวต์ที่คำนวณได้",
     "userManagement.workspace.permission.createComputedAttribute.tooltip": "เพิ่มสิทธิ์ CREATE_COMPUTED_ATTRIBUTE เพื่อสร้างและจัดการแอตทริบิวต์ที่คำนวณได้ใหม่ หากต้องการจัดการแอตทริบิวต์ที่คำนวณได้อื่น ผู้ใช้ต้องมีสิทธิ์เข้าถึงแอตทริบิวต์นั้น",
+    "userManagement.workspace.permission.createDocument": "เอกสาร",
+    "userManagement.workspace.permission.createDocument.tooltip": "เพิ่มสิทธิ์ CREATE_DOCUMENT เพื่อให้สร้างเอกสารใน Reports และแก้ไขหรือลบเอกสารที่ผู้ใช้สร้างขึ้นได้ การแก้ไขหรือลบเอกสารที่ผู้อื่นสร้างขึ้นต้องมีสิทธิ์จัดการ หากต้องการสร้างการแสดงภาพข้อมูลใหม่ในเอกสาร ผู้ใช้ต้องมีสิทธิ์การแสดงภาพข้อมูลด้วย",
     "userManagement.workspace.permission.createMetric": "เมตริก",
     "userManagement.workspace.permission.createMetric.tooltip": "เพิ่มสิทธิ์ CREATE_METRIC เพื่อสร้างและจัดการเมตริกใหม่ หากต้องการจัดการเมตริกอื่น ผู้ใช้ต้องมีสิทธิ์เข้าถึงเมตริกนั้น",
     "userManagement.workspace.permission.createVisualization": "การแสดงภาพข้อมูล",

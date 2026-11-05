@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 879399cb6d885b440230f6ef78c389f10c64d7c792082a49d003d0afdfd07c3a
+# schema-hash: 59eac68b67b20d27fd2b953ff0e64a2801a41f8fb305e63739c6dc1f586f0478
 
 from __future__ import annotations
 
@@ -1489,6 +1489,14 @@ class Config(TypedDict):
     yaxis_secondary_visible: NotRequired[bool]
     yaxis_secondary_labels: NotRequired[bool]
     yaxis_secondary_show_on_right: NotRequired[bool]
+    xaxis_secondary_format: NotRequired[str]
+    xaxis_secondary_max: NotRequired[float]
+    xaxis_secondary_min: NotRequired[float]
+    xaxis_secondary_name_position: NotRequired[str]
+    xaxis_secondary_name_visible: NotRequired[bool]
+    xaxis_secondary_rotation: NotRequired[str]
+    xaxis_secondary_visible: NotRequired[bool]
+    xaxis_secondary_labels: NotRequired[bool]
     tooltip_text: NotRequired[str]
     viewport: NotRequired[
         Literal['auto', 'continent_af', 'continent_as', 'continent_au', 'continent_eu', 'continent_na', 'continent_sa', 'world', 'custom']

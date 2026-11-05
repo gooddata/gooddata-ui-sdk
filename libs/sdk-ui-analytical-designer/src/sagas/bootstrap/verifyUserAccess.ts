@@ -14,11 +14,7 @@ import {
     NO_PROJECT_AVAILABLE_ERROR as NO_PROJECT_AVAILABLE_ERROR_CODE,
     PROJECT_NOT_FOUND_ERROR as PROJECT_NOT_FOUND_ERROR_CODE,
 } from "../../constants/errors.js";
-import {
-    getCurrentProjectInfo,
-    hasWorkspaceAccess,
-    stashedProjectUri,
-} from "../../selectors/bootstrap_selector.js";
+import { getCurrentProjectInfo, stashedProjectUri } from "../../selectors/bootstrap_selector.js";
 import { enableVisualizationPermissions } from "../../selectors/feature_flag_selector.js";
 import { getIsEmbedded } from "../../selectors/meta_selector.js";
 import { workspacePermissions as workspacePermissionsSelector } from "../../selectors/permissions_selector.js";
@@ -38,17 +34,12 @@ export function* verifyUserAccess() {
     const routeParams: ReturnType<typeof getRouteParams> = yield select(getRouteParams);
 
     const currentProjectInfo: ReturnType<typeof getCurrentProjectInfo> = yield select(getCurrentProjectInfo);
-    const hasWSAccess: ReturnType<typeof hasWorkspaceAccess> = yield select(hasWorkspaceAccess);
     const workspacePermissions: ReturnType<typeof workspacePermissionsSelector> = yield select(
         workspacePermissionsSelector,
     );
     const isEmbedded: ReturnType<typeof getIsEmbedded> = yield select(getIsEmbedded);
 
     const userStashedProjectUri: ReturnType<typeof stashedProjectUri> = yield select(stashedProjectUri);
-
-    if (!hasWSAccess) {
-        throw NOT_AUTHORIZED_ERROR;
-    }
 
     if (!workspacePermissions.canAccessWorkbench && !isEmbedded) {
         throw ACCESS_WORKBENCH_DENIED_ERROR;

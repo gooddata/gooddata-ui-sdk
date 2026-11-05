@@ -36,37 +36,13 @@ export interface IBootstrapData {
 
     // Specific ui settings
     uiSettings: {
-        // Texts
-        // Optional: in pluggable mode the host owns the tab title (and its brand segment), so the
-        // pluggable bootstrap does not supply applicationTitle. Standalone still sets it.
-        applicationTitle?: string;
         organizationName: string;
         organizationId?: string;
-        // UI Flags
-        displayProjects: boolean;
-        displayAccountPage: boolean;
-
-        // Logo urls
         logoUrl: string;
-        faviconUrl: string;
-        appleTouchIconUrl: string;
-
-        // Colors
-        activeColor?: string;
-        headerColor?: string;
-        headerTextColor?: string;
 
         // Branding
         documentationUrl?: string;
         isBranded: boolean;
-        supportEmail?: string;
-        supportForumUrl?: string;
-
-        // SSO info
-        ssoLogoutUrl?: string;
-        ssoExpiredUrl?: string;
-        ssoUnauthorizedUrl?: string;
-        showSSOCustomUnauthorizedLoginPage?: boolean;
     };
 
     // Current project info

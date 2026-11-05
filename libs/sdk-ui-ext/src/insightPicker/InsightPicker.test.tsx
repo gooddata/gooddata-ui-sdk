@@ -2,15 +2,21 @@
 
 import { useState } from "react";
 
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
 import { type IAnalyticalBackend, type IFilterBaseOptions } from "@gooddata/sdk-backend-spi";
-import { type IInsight, type ISemanticSearchResultItem, uriRef } from "@gooddata/sdk-model";
+import {
+    type AccessGranularPermission,
+    type IInsight,
+    type ISemanticSearchResultItem,
+    uriRef,
+} from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 
 import { InsightPicker } from "./InsightPicker.js";
+import { type IInsightPickerMenuAction } from "./types.js";
 import { useInsightPickerState } from "./useInsightPickerState.js";
 
 const AUTHOR = "author-login";
@@ -59,6 +65,7 @@ interface IInsightsQueryStub {
     withPage: (page: number) => IInsightsQueryStub;
     withSorting: () => IInsightsQueryStub;
     withInclude: () => IInsightsQueryStub;
+    withMetaInclude: (include: string[]) => IInsightsQueryStub;
     withFilter: (filter: IFilterBaseOptions) => IInsightsQueryStub;
     query: () => Promise<{ items: IInsight[]; totalCount: number }>;
 }
@@ -74,6 +81,7 @@ function createBackend({
     const queries: { createdBy: string[] | undefined; tags: string[] | undefined }[] = [];
     const searchFilters: (string | undefined)[] = [];
     const semanticQuestions: string[] = [];
+    const metaIncludes: string[][] = [];
 
     const getSemanticSearchQuery = () => {
         const query = {
@@ -96,6 +104,7 @@ function createBackend({
     const getInsightsQuery = (): IInsightsQueryStub => {
         let page = 0;
         let filter: IFilterBaseOptions | undefined;
+        let withPermissions = false;
 
         const query: IInsightsQueryStub = {
             withSize: () => query,
@@ -105,6 +114,11 @@ function createBackend({
             },
             withSorting: () => query,
             withInclude: () => query,
+            withMetaInclude: (include: string[]) => {
+                metaIncludes.push(include);
+                withPermissions = include.includes("permissions");
+                return query;
+            },
             withFilter: (nextFilter: IFilterBaseOptions) => {
                 filter = nextFilter;
                 return query;
@@ -131,8 +145,9 @@ function createBackend({
                           ),
                       )
                     : allInsights;
+                const items = matching.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
                 return Promise.resolve({
-                    items: matching.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE),
+                    items: withPermissions ? items.map(withEditOnlyOnInsightOne) : items,
                     totalCount: matching.length,
                 });
             },
@@ -155,16 +170,26 @@ function createBackend({
         }),
     } as unknown as IAnalyticalBackend;
 
-    return { backend, createdByFilters, queries, searchFilters, semanticQuestions };
+    return { backend, createdByFilters, queries, searchFilters, semanticQuestions, metaIncludes };
+}
+
+function withEditOnlyOnInsightOne(item: IInsight): IInsight {
+    const permissions: AccessGranularPermission[] =
+        item.insight.identifier === "insight-1" ? ["VIEW", "EDIT"] : ["VIEW"];
+    return { insight: { ...item.insight, permissions } };
 }
 
 /** Mirrors the consumers: the picker body is mounted only while open, its state is not. */
 function TestPicker({
     backend,
     enableSemanticSearch = false,
+    includePermissions,
+    menuActions,
 }: {
     backend: IAnalyticalBackend;
     enableSemanticSearch?: boolean;
+    includePermissions?: boolean;
+    menuActions?: IInsightPickerMenuAction[];
 }) {
     const pickerState = useInsightPickerState(AUTHOR);
     const [isOpen, setIsOpen] = useState(true);
@@ -182,6 +207,8 @@ function TestPicker({
                         {...pickerState}
                         author={AUTHOR}
                         enableSemanticSearch={enableSemanticSearch}
+                        includePermissions={includePermissions}
+                        menuActions={menuActions}
                         onSelect={() => {}}
                     />
                 ) : null}
@@ -252,6 +279,14 @@ function searchInput() {
 
 /** One slot of the virtualized list, and so one stop for keyboard navigation. */
 const LIST_ITEM_SELECTOR = ".gd-ui-kit-paged-virtual-list__item";
+
+function pickerRow(title: HTMLElement): HTMLElement {
+    const row = title.closest<HTMLElement>(".gd-ui-ext-insight-picker-row");
+    if (!row) {
+        throw new Error(`"${title.textContent}" is not inside a picker row`);
+    }
+    return row;
+}
 
 // A call that was never made and one that is merely still pending look alike until every debounce
 // the query passes through has run out.
@@ -442,5 +477,35 @@ describe("InsightPicker", () => {
 
         await waitFor(() => expect(createdByFilters).toEqual([[AUTHOR], undefined, [AUTHOR], [AUTHOR]]));
         expect(screen.getByTestId("author-filter").textContent).toBe(AUTHOR);
+    });
+
+    it("hands the loaded permissions to the menu actions", async () => {
+        const { backend, metaIncludes } = createBackend({ insightsAuthor: AUTHOR });
+        const editOnlyDelete: IInsightPickerMenuAction = {
+            id: "delete",
+            title: "Delete",
+            isAvailable: (item) => item.permissions?.includes("EDIT") ?? false,
+            onClick: () => {},
+        };
+
+        render(<TestPicker backend={backend} includePermissions menuActions={[editOnlyDelete]} />);
+        const viewOnlyRow = pickerRow(await screen.findByText("Insight 0"));
+        const editableRow = pickerRow(screen.getByText("Insight 1"));
+
+        expect(metaIncludes).toContainEqual(["permissions"]);
+        expect(within(viewOnlyRow).queryByRole("button", { name: "Actions" })).toBeNull();
+        await userEvent.click(within(editableRow).getByRole("button", { name: "Actions" }));
+        expect(await screen.findByText("Delete")).toBeTruthy();
+    });
+
+    it("reloads with permissions when they are requested after the first page", async () => {
+        const { backend, metaIncludes } = createBackend({ insightsAuthor: AUTHOR });
+
+        const { rerender } = render(<TestPicker backend={backend} />);
+        expect(await screen.findByText("Insight 0")).toBeTruthy();
+        expect(metaIncludes).not.toContainEqual(["permissions"]);
+
+        rerender(<TestPicker backend={backend} includePermissions />);
+        await waitFor(() => expect(metaIncludes).toContainEqual(["permissions"]));
     });
 });

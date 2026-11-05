@@ -424,6 +424,7 @@ export type {
     PatternFillName,
     PointShapeSymbol,
 } from "./configs/types.js";
+export type { SecondaryAxisProperties } from "./configs/secondaryAxis.js";
 export {
     getValueOrDefault,
     type ConfigDefaults,

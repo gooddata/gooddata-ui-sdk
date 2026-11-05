@@ -161,6 +161,7 @@ export class ActionsApi extends MetadataBaseApi implements ActionsApiInterface {
     unsubscribeOrganizationAutomations(requestParameters: ActionsApiUnsubscribeOrganizationAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     unsubscribeSelectedWorkspaceAutomations(requestParameters: ActionsApiUnsubscribeSelectedWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     unsubscribeWorkspaceAutomations(requestParameters: ActionsApiUnsubscribeWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    validateEmbeddingOrigin(requestParameters: ActionsApiValidateEmbeddingOriginRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateEmbeddingOriginResponse>;
     visualizationPermissions(requestParameters: ActionsApiVisualizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<VisualizationPermissions>;
     workspaceLocalizationStatistics(requestParameters: ActionsApiWorkspaceLocalizationStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationStatistics>;
     workspaceLocalizationUsage(requestParameters: ActionsApiWorkspaceLocalizationUsageRequest, options?: AxiosRequestConfig): AxiosPromise<WorkspaceLocalizationUsage>;
@@ -647,7 +648,7 @@ export interface ActionsApiExecuteFlowRequest {
 // @public
 export interface ActionsApiExplainAFMRequest {
     readonly afmExecution: AfmExecution;
-    readonly explainType?: 'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL' | 'COMPRESSED_GRPC_MODEL_SVG' | 'GIT';
+    readonly explainType?: 'MAQL' | 'GRPC_MODEL' | 'MODEL_STATISTICS' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL' | 'COMPRESSED_GRPC_MODEL_SVG' | 'GIT';
     readonly workspaceId: string;
 }
 
@@ -825,6 +826,7 @@ export interface ActionsApiInterface {
     unsubscribeOrganizationAutomations(requestParameters: ActionsApiUnsubscribeOrganizationAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     unsubscribeSelectedWorkspaceAutomations(requestParameters: ActionsApiUnsubscribeSelectedWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     unsubscribeWorkspaceAutomations(requestParameters: ActionsApiUnsubscribeWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    validateEmbeddingOrigin(requestParameters: ActionsApiValidateEmbeddingOriginRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateEmbeddingOriginResponse>;
     visualizationPermissions(requestParameters: ActionsApiVisualizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<VisualizationPermissions>;
     workspaceLocalizationStatistics(requestParameters: ActionsApiWorkspaceLocalizationStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationStatistics>;
     workspaceLocalizationUsage(requestParameters: ActionsApiWorkspaceLocalizationUsageRequest, options?: AxiosRequestConfig): AxiosPromise<WorkspaceLocalizationUsage>;
@@ -1249,6 +1251,11 @@ export interface ActionsApiUnsubscribeWorkspaceAutomationsRequest {
 }
 
 // @public
+export interface ActionsApiValidateEmbeddingOriginRequest {
+    readonly validateEmbeddingOriginRequest: ValidateEmbeddingOriginRequest;
+}
+
+// @public
 interface ActionsApiValidateLLMEndpointByIdRequest {
     readonly llmEndpointId: string;
 }
@@ -1263,6 +1270,7 @@ export interface ActionsApiVisualizationPermissionsRequest {
 
 // @public
 export interface ActionsApiWorkspaceLocalizationStatisticsRequest {
+    readonly includeCoverage?: boolean;
     readonly workspaceId: string;
 }
 
@@ -3809,6 +3817,25 @@ export interface AiChartFill {
 }
 
 // @public (undocumented)
+export interface AiClarifyingAnswer {
+    // (undocumented)
+    'answer': AiSingleChoiceAnswer;
+    'questionIndex': number;
+    'questionText': string;
+}
+
+// @public
+export interface AiClarifyingAnswersContent {
+    'answers': Array<AiClarifyingAnswer>;
+    'questionsItemId': string;
+    'text': string;
+    'type'?: AiClarifyingAnswersContentTypeEnum;
+}
+
+// @public (undocumented)
+export type AiClarifyingAnswersContentTypeEnum = 'clarifyingAnswers';
+
+// @public (undocumented)
 export interface AiClarifyingChoiceOption {
     'text': string;
 }
@@ -4407,6 +4434,8 @@ export interface AiConfigurationParameters {
 
 // @public
 export type AiContent = ({
+    type: 'clarifyingAnswers';
+} & AiClarifyingAnswersContent) | ({
     type: 'multipart';
 } & AiMultipartContent) | ({
     type: 'reasoning';
@@ -6081,6 +6110,7 @@ export const AiObjectType: {
     readonly ATTRIBUTE: 'attribute';
     readonly DATE_ATTRIBUTE: 'date_attribute';
     readonly LABEL: 'label';
+    readonly COMPUTED_ATTRIBUTE: 'computed_attribute';
     readonly VISUALIZATION: 'visualization';
     readonly DASHBOARD: 'dashboard';
     readonly FILTER_CONTEXT: 'filter_context';
@@ -7755,6 +7785,16 @@ export type AiShapeType = typeof AiShapeType[keyof typeof AiShapeType];
 // @public (undocumented)
 export interface AiSimpleColorItem {
 }
+
+// @public (undocumented)
+export interface AiSingleChoiceAnswer {
+    'optionIndex': number;
+    'optionText': string;
+    'type': AiSingleChoiceAnswerTypeEnum;
+}
+
+// @public (undocumented)
+export type AiSingleChoiceAnswerTypeEnum = 'singleChoice';
 
 // @public
 export interface AiSingleChoiceControl {
@@ -14151,6 +14191,7 @@ export interface ChangeAnalysisResponse {
 // @public
 export interface ChangeAnalysisResult {
     'data': Array<AfmMetricValueChange>;
+    'restrictedCount': number;
 }
 
 // @public
@@ -17236,12 +17277,14 @@ export interface DeclarativeAnalyticsLayer {
     'exportDefinitions'?: Array<DeclarativeExportDefinition>;
     'filterContexts'?: Array<DeclarativeFilterContext>;
     'memoryItems'?: Array<DeclarativeMemoryItem>;
+    'metricExtensions'?: Array<DeclarativeMetricExtension>;
     'metrics'?: Array<DeclarativeMetric>;
     'pageTemplates'?: Array<DeclarativePublisherDocumentPageTemplate>;
     'parameters'?: Array<DeclarativeParameter>;
     'reportPageLayouts'?: Array<DeclarativeReportPageLayout>;
     'reports'?: Array<DeclarativeReport>;
     'reportTemplates'?: Array<DeclarativeReportTemplate>;
+    'visualizationObjectExtensions'?: Array<DeclarativeVisualizationObjectExtension>;
     'visualizationObjects'?: Array<DeclarativeVisualizationObject>;
 }
 
@@ -17804,6 +17847,15 @@ export interface DeclarativeMetric {
 // @public (undocumented)
 export type DeclarativeMetricCertificationEnum = 'CERTIFIED';
 
+// @public (undocumented)
+export interface DeclarativeMetricExtension {
+    'id': string;
+    'permissions': Array<DeclarativeMetricExtensionPermissionsInner>;
+}
+
+// @public
+export type DeclarativeMetricExtensionPermissionsInner = DeclarativeMetricPermissionForAssignee | DeclarativeMetricPermissionForAssigneeRule;
+
 // @public
 export interface DeclarativeMetricPermissionForAssignee {
     // (undocumented)
@@ -17954,9 +18006,16 @@ export interface DeclarativeParameter {
 
 // @public (undocumented)
 export interface DeclarativePublisherDocument {
-    'content': object | null;
+    // (undocumented)
+    'content': PublisherDocumentContent;
+    'createdAt'?: string | null;
+    // (undocumented)
+    'createdBy'?: DeclarativeUserIdentifier;
     'description'?: string;
     'id': string;
+    'modifiedAt'?: string | null;
+    // (undocumented)
+    'modifiedBy'?: DeclarativeUserIdentifier;
     // (undocumented)
     'period': PublisherDocumentPeriod;
     // (undocumented)
@@ -17967,7 +18026,8 @@ export interface DeclarativePublisherDocument {
 
 // @public (undocumented)
 export interface DeclarativePublisherDocumentPageTemplate {
-    'content': object | null;
+    // (undocumented)
+    'content': PublisherDocumentPageTemplateContent;
     'description'?: string;
     'id': string;
     // (undocumented)
@@ -17978,7 +18038,8 @@ export interface DeclarativePublisherDocumentPageTemplate {
 
 // @public (undocumented)
 export interface DeclarativePublisherDocumentTemplate {
-    'content': object | null;
+    // (undocumented)
+    'content': PublisherDocumentContent;
     'description'?: string;
     'id': string;
     // (undocumented)
@@ -18079,7 +18140,7 @@ export interface DeclarativeSetting {
 }
 
 // @public (undocumented)
-export type DeclarativeSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE';
+export type DeclarativeSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE' | 'EMBEDDING_ORIGINS';
 
 // @public (undocumented)
 export interface DeclarativeSingleWorkspacePermission {
@@ -18107,6 +18168,9 @@ export interface DeclarativeTable {
     'id': string;
     'namePrefix'?: string;
     'path': Array<string>;
+    'properties'?: {
+        [key: string]: string;
+    };
     'type': string;
 }
 
@@ -18259,6 +18323,15 @@ export interface DeclarativeVisualizationObject {
 
 // @public (undocumented)
 export type DeclarativeVisualizationObjectCertificationEnum = 'CERTIFIED';
+
+// @public (undocumented)
+export interface DeclarativeVisualizationObjectExtension {
+    'id': string;
+    'permissions': Array<DeclarativeVisualizationObjectExtensionPermissionsInner>;
+}
+
+// @public
+export type DeclarativeVisualizationObjectExtensionPermissionsInner = DeclarativeVisualizationObjectPermissionForAssignee | DeclarativeVisualizationObjectPermissionForAssigneeRule;
 
 // @public
 export interface DeclarativeVisualizationObjectPermissionForAssignee {
@@ -36072,7 +36145,7 @@ export interface JsonApiOrganizationSettingInAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiOrganizationSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE';
+export type JsonApiOrganizationSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE' | 'EMBEDDING_ORIGINS';
 
 // @public (undocumented)
 export interface JsonApiOrganizationSettingInDocument {
@@ -36099,7 +36172,7 @@ export interface JsonApiOrganizationSettingOutAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiOrganizationSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE';
+export type JsonApiOrganizationSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE' | 'EMBEDDING_ORIGINS';
 
 // @public (undocumented)
 export interface JsonApiOrganizationSettingOutDocument {
@@ -36157,7 +36230,7 @@ export interface JsonApiOrganizationSettingPatchAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiOrganizationSettingPatchAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE';
+export type JsonApiOrganizationSettingPatchAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE' | 'EMBEDDING_ORIGINS';
 
 // @public (undocumented)
 export interface JsonApiOrganizationSettingPatchDocument {
@@ -36592,7 +36665,8 @@ export interface JsonApiPublisherDocumentIn {
 export interface JsonApiPublisherDocumentInAttributes {
     // (undocumented)
     'areRelationsValid'?: boolean;
-    'content': object;
+    // (undocumented)
+    'content': JsonApiPublisherDocumentInAttributesContent;
     // (undocumented)
     'description'?: string;
     // (undocumented)
@@ -36602,6 +36676,21 @@ export interface JsonApiPublisherDocumentInAttributes {
     // (undocumented)
     'title': string;
     'version': string;
+}
+
+// @public
+export interface JsonApiPublisherDocumentInAttributesContent {
+    // (undocumented)
+    'attributeFilterConfigs'?: Array<PublisherDocumentAttributeFilterConfig>;
+    // (undocumented)
+    'defaults'?: PublisherDocumentDefaults;
+    'filters'?: Array<PublisherDocumentFilter>;
+    'formatLocale'?: string;
+    'locale'?: string;
+    'pages'?: Array<PublisherDocumentPage>;
+    'sections'?: Array<PublisherDocumentSection>;
+    // (undocumented)
+    'style'?: PublisherDocumentAreaStyle;
 }
 
 // @public
@@ -36636,7 +36725,8 @@ export interface JsonApiPublisherDocumentOut {
 export interface JsonApiPublisherDocumentOutAttributes {
     // (undocumented)
     'areRelationsValid'?: boolean;
-    'content': object;
+    // (undocumented)
+    'content': JsonApiPublisherDocumentOutAttributesContent;
     'createdAt'?: string | null;
     // (undocumented)
     'description'?: string;
@@ -36648,6 +36738,21 @@ export interface JsonApiPublisherDocumentOutAttributes {
     // (undocumented)
     'title': string;
     'version': string;
+}
+
+// @public
+export interface JsonApiPublisherDocumentOutAttributesContent {
+    // (undocumented)
+    'attributeFilterConfigs'?: Array<PublisherDocumentAttributeFilterConfig>;
+    // (undocumented)
+    'defaults'?: PublisherDocumentDefaults;
+    'filters'?: Array<PublisherDocumentFilter>;
+    'formatLocale'?: string;
+    'locale'?: string;
+    'pages'?: Array<PublisherDocumentPage>;
+    'sections'?: Array<PublisherDocumentSection>;
+    // (undocumented)
+    'style'?: PublisherDocumentAreaStyle;
 }
 
 // @public
@@ -36789,7 +36894,8 @@ export interface JsonApiPublisherDocumentPageTemplateIn {
 export interface JsonApiPublisherDocumentPageTemplateInAttributes {
     // (undocumented)
     'areRelationsValid'?: boolean;
-    'content': object;
+    // (undocumented)
+    'content': JsonApiPublisherDocumentPageTemplateInAttributesContent;
     // (undocumented)
     'description'?: string;
     // (undocumented)
@@ -36798,6 +36904,25 @@ export interface JsonApiPublisherDocumentPageTemplateInAttributes {
     'title': string;
     'version': string;
 }
+
+// @public
+export interface JsonApiPublisherDocumentPageTemplateInAttributesContent {
+    'filters'?: Array<PublisherDocumentFilter>;
+    'kind'?: JsonApiPublisherDocumentPageTemplateInAttributesContentKindEnum;
+    // (undocumented)
+    'layout': PublisherDocumentLayoutNode;
+    'notes'?: string;
+    // (undocumented)
+    'pageSize'?: JsonApiPublisherDocumentPageTemplateInAttributesContentPageSizeEnum;
+    // (undocumented)
+    'style'?: PublisherDocumentPageStyle;
+}
+
+// @public (undocumented)
+export type JsonApiPublisherDocumentPageTemplateInAttributesContentKindEnum = 'cover' | 'section' | 'content';
+
+// @public (undocumented)
+export type JsonApiPublisherDocumentPageTemplateInAttributesContentPageSizeEnum = 'widescreen';
 
 // @public (undocumented)
 export interface JsonApiPublisherDocumentPageTemplateInDocument {
@@ -36824,10 +36949,12 @@ export interface JsonApiPublisherDocumentPageTemplateOut {
 export interface JsonApiPublisherDocumentPageTemplateOutAttributes {
     // (undocumented)
     'areRelationsValid'?: boolean;
-    'content': object;
+    // (undocumented)
+    'content': JsonApiPublisherDocumentPageTemplateOutAttributesContent;
     'createdAt'?: string | null;
     // (undocumented)
     'description'?: string;
+    'isDefault': boolean;
     'modifiedAt'?: string | null;
     // (undocumented)
     'tags'?: Array<string>;
@@ -36835,6 +36962,25 @@ export interface JsonApiPublisherDocumentPageTemplateOutAttributes {
     'title': string;
     'version': string;
 }
+
+// @public
+export interface JsonApiPublisherDocumentPageTemplateOutAttributesContent {
+    'filters'?: Array<PublisherDocumentFilter>;
+    'kind'?: JsonApiPublisherDocumentPageTemplateOutAttributesContentKindEnum;
+    // (undocumented)
+    'layout': PublisherDocumentLayoutNode;
+    'notes'?: string;
+    // (undocumented)
+    'pageSize'?: JsonApiPublisherDocumentPageTemplateOutAttributesContentPageSizeEnum;
+    // (undocumented)
+    'style'?: PublisherDocumentPageStyle;
+}
+
+// @public (undocumented)
+export type JsonApiPublisherDocumentPageTemplateOutAttributesContentKindEnum = 'cover' | 'section' | 'content';
+
+// @public (undocumented)
+export type JsonApiPublisherDocumentPageTemplateOutAttributesContentPageSizeEnum = 'widescreen';
 
 // @public (undocumented)
 export interface JsonApiPublisherDocumentPageTemplateOutDocument {
@@ -36937,7 +37083,8 @@ export interface JsonApiPublisherDocumentPageTemplatePatch {
 export interface JsonApiPublisherDocumentPageTemplatePatchAttributes {
     // (undocumented)
     'areRelationsValid'?: boolean;
-    'content'?: object;
+    // (undocumented)
+    'content'?: JsonApiPublisherDocumentPageTemplatePatchAttributesContent;
     // (undocumented)
     'description'?: string;
     // (undocumented)
@@ -36946,6 +37093,25 @@ export interface JsonApiPublisherDocumentPageTemplatePatchAttributes {
     'title'?: string;
     'version'?: string;
 }
+
+// @public
+export interface JsonApiPublisherDocumentPageTemplatePatchAttributesContent {
+    'filters'?: Array<PublisherDocumentFilter>;
+    'kind'?: JsonApiPublisherDocumentPageTemplatePatchAttributesContentKindEnum;
+    // (undocumented)
+    'layout': PublisherDocumentLayoutNode;
+    'notes'?: string;
+    // (undocumented)
+    'pageSize'?: JsonApiPublisherDocumentPageTemplatePatchAttributesContentPageSizeEnum;
+    // (undocumented)
+    'style'?: PublisherDocumentPageStyle;
+}
+
+// @public (undocumented)
+export type JsonApiPublisherDocumentPageTemplatePatchAttributesContentKindEnum = 'cover' | 'section' | 'content';
+
+// @public (undocumented)
+export type JsonApiPublisherDocumentPageTemplatePatchAttributesContentPageSizeEnum = 'widescreen';
 
 // @public (undocumented)
 export interface JsonApiPublisherDocumentPageTemplatePatchDocument {
@@ -36968,7 +37134,8 @@ export interface JsonApiPublisherDocumentPageTemplatePostOptionalId {
 export interface JsonApiPublisherDocumentPageTemplatePostOptionalIdAttributes {
     // (undocumented)
     'areRelationsValid'?: boolean;
-    'content': object;
+    // (undocumented)
+    'content': JsonApiPublisherDocumentPageTemplatePostOptionalIdAttributesContent;
     // (undocumented)
     'description'?: string;
     // (undocumented)
@@ -36977,6 +37144,25 @@ export interface JsonApiPublisherDocumentPageTemplatePostOptionalIdAttributes {
     'title': string;
     'version': string;
 }
+
+// @public
+export interface JsonApiPublisherDocumentPageTemplatePostOptionalIdAttributesContent {
+    'filters'?: Array<PublisherDocumentFilter>;
+    'kind'?: JsonApiPublisherDocumentPageTemplatePostOptionalIdAttributesContentKindEnum;
+    // (undocumented)
+    'layout': PublisherDocumentLayoutNode;
+    'notes'?: string;
+    // (undocumented)
+    'pageSize'?: JsonApiPublisherDocumentPageTemplatePostOptionalIdAttributesContentPageSizeEnum;
+    // (undocumented)
+    'style'?: PublisherDocumentPageStyle;
+}
+
+// @public (undocumented)
+export type JsonApiPublisherDocumentPageTemplatePostOptionalIdAttributesContentKindEnum = 'cover' | 'section' | 'content';
+
+// @public (undocumented)
+export type JsonApiPublisherDocumentPageTemplatePostOptionalIdAttributesContentPageSizeEnum = 'widescreen';
 
 // @public (undocumented)
 export interface JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument {
@@ -36999,7 +37185,8 @@ export interface JsonApiPublisherDocumentPatch {
 export interface JsonApiPublisherDocumentPatchAttributes {
     // (undocumented)
     'areRelationsValid'?: boolean;
-    'content'?: object;
+    // (undocumented)
+    'content'?: JsonApiPublisherDocumentPatchAttributesContent;
     // (undocumented)
     'description'?: string;
     // (undocumented)
@@ -37009,6 +37196,21 @@ export interface JsonApiPublisherDocumentPatchAttributes {
     // (undocumented)
     'title'?: string;
     'version'?: string;
+}
+
+// @public
+export interface JsonApiPublisherDocumentPatchAttributesContent {
+    // (undocumented)
+    'attributeFilterConfigs'?: Array<PublisherDocumentAttributeFilterConfig>;
+    // (undocumented)
+    'defaults'?: PublisherDocumentDefaults;
+    'filters'?: Array<PublisherDocumentFilter>;
+    'formatLocale'?: string;
+    'locale'?: string;
+    'pages'?: Array<PublisherDocumentPage>;
+    'sections'?: Array<PublisherDocumentSection>;
+    // (undocumented)
+    'style'?: PublisherDocumentAreaStyle;
 }
 
 // @public
@@ -37039,7 +37241,8 @@ export interface JsonApiPublisherDocumentPostOptionalId {
 export interface JsonApiPublisherDocumentPostOptionalIdAttributes {
     // (undocumented)
     'areRelationsValid'?: boolean;
-    'content': object;
+    // (undocumented)
+    'content': JsonApiPublisherDocumentPostOptionalIdAttributesContent;
     // (undocumented)
     'description'?: string;
     // (undocumented)
@@ -37049,6 +37252,21 @@ export interface JsonApiPublisherDocumentPostOptionalIdAttributes {
     // (undocumented)
     'title': string;
     'version': string;
+}
+
+// @public
+export interface JsonApiPublisherDocumentPostOptionalIdAttributesContent {
+    // (undocumented)
+    'attributeFilterConfigs'?: Array<PublisherDocumentAttributeFilterConfig>;
+    // (undocumented)
+    'defaults'?: PublisherDocumentDefaults;
+    'filters'?: Array<PublisherDocumentFilter>;
+    'formatLocale'?: string;
+    'locale'?: string;
+    'pages'?: Array<PublisherDocumentPage>;
+    'sections'?: Array<PublisherDocumentSection>;
+    // (undocumented)
+    'style'?: PublisherDocumentAreaStyle;
 }
 
 // @public
@@ -37079,7 +37297,8 @@ export interface JsonApiPublisherDocumentTemplateIn {
 export interface JsonApiPublisherDocumentTemplateInAttributes {
     // (undocumented)
     'areRelationsValid'?: boolean;
-    'content': object;
+    // (undocumented)
+    'content': JsonApiPublisherDocumentTemplateInAttributesContent;
     // (undocumented)
     'description'?: string;
     // (undocumented)
@@ -37087,6 +37306,21 @@ export interface JsonApiPublisherDocumentTemplateInAttributes {
     // (undocumented)
     'title': string;
     'version': string;
+}
+
+// @public
+export interface JsonApiPublisherDocumentTemplateInAttributesContent {
+    // (undocumented)
+    'attributeFilterConfigs'?: Array<PublisherDocumentAttributeFilterConfig>;
+    // (undocumented)
+    'defaults'?: PublisherDocumentDefaults;
+    'filters'?: Array<PublisherDocumentFilter>;
+    'formatLocale'?: string;
+    'locale'?: string;
+    'pages'?: Array<PublisherDocumentPage>;
+    'sections'?: Array<PublisherDocumentSection>;
+    // (undocumented)
+    'style'?: PublisherDocumentAreaStyle;
 }
 
 // @public (undocumented)
@@ -37114,7 +37348,8 @@ export interface JsonApiPublisherDocumentTemplateOut {
 export interface JsonApiPublisherDocumentTemplateOutAttributes {
     // (undocumented)
     'areRelationsValid'?: boolean;
-    'content': object;
+    // (undocumented)
+    'content': JsonApiPublisherDocumentTemplateOutAttributesContent;
     'createdAt'?: string | null;
     // (undocumented)
     'description'?: string;
@@ -37124,6 +37359,21 @@ export interface JsonApiPublisherDocumentTemplateOutAttributes {
     // (undocumented)
     'title': string;
     'version': string;
+}
+
+// @public
+export interface JsonApiPublisherDocumentTemplateOutAttributesContent {
+    // (undocumented)
+    'attributeFilterConfigs'?: Array<PublisherDocumentAttributeFilterConfig>;
+    // (undocumented)
+    'defaults'?: PublisherDocumentDefaults;
+    'filters'?: Array<PublisherDocumentFilter>;
+    'formatLocale'?: string;
+    'locale'?: string;
+    'pages'?: Array<PublisherDocumentPage>;
+    'sections'?: Array<PublisherDocumentSection>;
+    // (undocumented)
+    'style'?: PublisherDocumentAreaStyle;
 }
 
 // @public (undocumented)
@@ -37227,7 +37477,8 @@ export interface JsonApiPublisherDocumentTemplatePatch {
 export interface JsonApiPublisherDocumentTemplatePatchAttributes {
     // (undocumented)
     'areRelationsValid'?: boolean;
-    'content'?: object;
+    // (undocumented)
+    'content'?: JsonApiPublisherDocumentTemplatePatchAttributesContent;
     // (undocumented)
     'description'?: string;
     // (undocumented)
@@ -37235,6 +37486,21 @@ export interface JsonApiPublisherDocumentTemplatePatchAttributes {
     // (undocumented)
     'title'?: string;
     'version'?: string;
+}
+
+// @public
+export interface JsonApiPublisherDocumentTemplatePatchAttributesContent {
+    // (undocumented)
+    'attributeFilterConfigs'?: Array<PublisherDocumentAttributeFilterConfig>;
+    // (undocumented)
+    'defaults'?: PublisherDocumentDefaults;
+    'filters'?: Array<PublisherDocumentFilter>;
+    'formatLocale'?: string;
+    'locale'?: string;
+    'pages'?: Array<PublisherDocumentPage>;
+    'sections'?: Array<PublisherDocumentSection>;
+    // (undocumented)
+    'style'?: PublisherDocumentAreaStyle;
 }
 
 // @public (undocumented)
@@ -37258,7 +37524,8 @@ export interface JsonApiPublisherDocumentTemplatePostOptionalId {
 export interface JsonApiPublisherDocumentTemplatePostOptionalIdAttributes {
     // (undocumented)
     'areRelationsValid'?: boolean;
-    'content': object;
+    // (undocumented)
+    'content': JsonApiPublisherDocumentTemplatePostOptionalIdAttributesContent;
     // (undocumented)
     'description'?: string;
     // (undocumented)
@@ -37266,6 +37533,21 @@ export interface JsonApiPublisherDocumentTemplatePostOptionalIdAttributes {
     // (undocumented)
     'title': string;
     'version': string;
+}
+
+// @public
+export interface JsonApiPublisherDocumentTemplatePostOptionalIdAttributesContent {
+    // (undocumented)
+    'attributeFilterConfigs'?: Array<PublisherDocumentAttributeFilterConfig>;
+    // (undocumented)
+    'defaults'?: PublisherDocumentDefaults;
+    'filters'?: Array<PublisherDocumentFilter>;
+    'formatLocale'?: string;
+    'locale'?: string;
+    'pages'?: Array<PublisherDocumentPage>;
+    'sections'?: Array<PublisherDocumentSection>;
+    // (undocumented)
+    'style'?: PublisherDocumentAreaStyle;
 }
 
 // @public (undocumented)
@@ -38766,7 +39048,7 @@ export interface JsonApiUserSettingInAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiUserSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE';
+export type JsonApiUserSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE';
 
 // @public (undocumented)
 export interface JsonApiUserSettingInDocument {
@@ -38793,7 +39075,7 @@ export interface JsonApiUserSettingOutAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiUserSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE';
+export type JsonApiUserSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE';
 
 // @public (undocumented)
 export interface JsonApiUserSettingOutDocument {
@@ -40428,7 +40710,7 @@ export interface JsonApiWorkspaceSettingInAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiWorkspaceSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE';
+export type JsonApiWorkspaceSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE';
 
 // @public (undocumented)
 export interface JsonApiWorkspaceSettingInDocument {
@@ -40457,7 +40739,7 @@ export interface JsonApiWorkspaceSettingOutAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiWorkspaceSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE';
+export type JsonApiWorkspaceSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE';
 
 // @public (undocumented)
 export interface JsonApiWorkspaceSettingOutDocument {
@@ -40532,7 +40814,7 @@ export interface JsonApiWorkspaceSettingPatchAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiWorkspaceSettingPatchAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE';
+export type JsonApiWorkspaceSettingPatchAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE';
 
 // @public (undocumented)
 export interface JsonApiWorkspaceSettingPatchDocument {
@@ -40559,7 +40841,7 @@ export interface JsonApiWorkspaceSettingPostOptionalIdAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiWorkspaceSettingPostOptionalIdAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE';
+export type JsonApiWorkspaceSettingPostOptionalIdAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE';
 
 // @public (undocumented)
 export interface JsonApiWorkspaceSettingPostOptionalIdDocument {
@@ -42587,6 +42869,7 @@ export type LocalizationDefaultSourceEnum = 'USER' | 'WORKSPACE' | 'PARENT' | 'O
 export interface LocalizationMetadataStatistics {
     // (undocumented)
     'locales': Array<LocalizationStatisticsLocale>;
+    'workspaces'?: Array<LocalizationStatisticsWorkspace>;
 }
 
 // @public
@@ -42655,6 +42938,21 @@ export interface LocalizationStatistics {
 // @public (undocumented)
 export interface LocalizationStatisticsLocale {
     'locale': string;
+}
+
+// @public
+export interface LocalizationStatisticsTranslatedLocale {
+    'locale': string;
+    'translated': number;
+}
+
+// @public
+export interface LocalizationStatisticsWorkspace {
+    'id': string;
+    'locales': Array<LocalizationStatisticsTranslatedLocale>;
+    'name': string;
+    'parentId'?: string | null;
+    'total': number;
 }
 
 // @public (undocumented)
@@ -45434,11 +45732,1677 @@ export type ProfileApiInterface = {
 };
 
 // @public
+export interface PublisherDocumentArbitraryAttributeFilter {
+    // (undocumented)
+    'arbitraryAttributeFilter': PublisherDocumentArbitraryAttributeFilterArbitraryAttributeFilter;
+}
+
+// @public (undocumented)
+export interface PublisherDocumentArbitraryAttributeFilterArbitraryAttributeFilter {
+    // (undocumented)
+    'displayForm': PublisherDocumentObjRef;
+    // (undocumented)
+    'filterElementsBy'?: Array<PublisherDocumentAttributeFilterParent>;
+    // (undocumented)
+    'filterElementsByDate'?: Array<PublisherDocumentAttributeFilterByDate>;
+    'localIdentifier'?: string;
+    // (undocumented)
+    'negativeSelection': boolean;
+    // (undocumented)
+    'title'?: string;
+    // (undocumented)
+    'validateElementsBy'?: Array<PublisherDocumentObjRef>;
+    'values': Array<string | null>;
+}
+
+// @public
+export interface PublisherDocumentAreaStyle {
+    // (undocumented)
+    'backgroundColor'?: string;
+    // (undocumented)
+    'backgroundFit'?: PublisherDocumentAreaStyleBackgroundFitEnum;
+    // (undocumented)
+    'backgroundHorizontalAlign'?: PublisherDocumentAreaStyleBackgroundHorizontalAlignEnum;
+    // (undocumented)
+    'backgroundImage'?: string;
+    // (undocumented)
+    'backgroundImageOpacity'?: number;
+    // (undocumented)
+    'backgroundOffset'?: number;
+    // (undocumented)
+    'backgroundOffsetBottom'?: number;
+    // (undocumented)
+    'backgroundOffsetLeft'?: number;
+    // (undocumented)
+    'backgroundOffsetRight'?: number;
+    // (undocumented)
+    'backgroundOffsetTop'?: number;
+    // (undocumented)
+    'backgroundOpacity'?: number;
+    // (undocumented)
+    'backgroundVerticalAlign'?: PublisherDocumentAreaStyleBackgroundVerticalAlignEnum;
+    // (undocumented)
+    'gap'?: PublisherDocumentAreaStyleGap;
+}
+
+// @public (undocumented)
+export type PublisherDocumentAreaStyleBackgroundFitEnum = 'cover' | 'contain' | 'fill' | 'tile';
+
+// @public (undocumented)
+export type PublisherDocumentAreaStyleBackgroundHorizontalAlignEnum = 'left' | 'center' | 'right';
+
+// @public (undocumented)
+export type PublisherDocumentAreaStyleBackgroundVerticalAlignEnum = 'top' | 'center' | 'bottom';
+
+// @public
+export type PublisherDocumentAreaStyleGap = number | string;
+
+// @public
+export type PublisherDocumentAttributeElements = PublisherDocumentAttributeElementsByUri | PublisherDocumentAttributeElementsByValue;
+
+// @public (undocumented)
+export interface PublisherDocumentAttributeElementsByUri {
+    'uris': Array<string>;
+}
+
+// @public (undocumented)
+export interface PublisherDocumentAttributeElementsByValue {
+    'values': Array<string | null>;
+}
+
+// @public
+export interface PublisherDocumentAttributeFilter {
+    // (undocumented)
+    'attributeFilter': PublisherDocumentAttributeFilterAttributeFilter;
+}
+
+// @public (undocumented)
+export interface PublisherDocumentAttributeFilterAttributeFilter {
+    // (undocumented)
+    'attributeElements': PublisherDocumentAttributeElements;
+    // (undocumented)
+    'displayForm': PublisherDocumentObjRef;
+    'filterElementsBy'?: Array<PublisherDocumentAttributeFilterParent>;
+    'filterElementsByDate'?: Array<PublisherDocumentAttributeFilterByDate>;
+    'localIdentifier'?: string;
+    // (undocumented)
+    'negativeSelection': boolean;
+    // (undocumented)
+    'selectionMode'?: PublisherDocumentAttributeFilterAttributeFilterSelectionModeEnum;
+    // (undocumented)
+    'title'?: string;
+    // (undocumented)
+    'validateElementsBy'?: Array<PublisherDocumentObjRef>;
+}
+
+// @public (undocumented)
+export type PublisherDocumentAttributeFilterAttributeFilterSelectionModeEnum = 'single' | 'multi';
+
+// @public
+export interface PublisherDocumentAttributeFilterByDate {
+    // (undocumented)
+    'dataSet'?: PublisherDocumentObjRef;
+    // (undocumented)
+    'filterLocalIdentifier': string;
+    // (undocumented)
+    'isCommonDate': boolean;
+}
+
+// @public
+export interface PublisherDocumentAttributeFilterConfig {
+    // (undocumented)
+    'displayAsLabel'?: PublisherDocumentObjRef;
+    // (undocumented)
+    'localIdentifier': string;
+    // (undocumented)
+    'mode'?: PublisherDocumentAttributeFilterConfigModeEnum;
+    // (undocumented)
+    'selectionType'?: PublisherDocumentAttributeFilterConfigSelectionTypeEnum;
+}
+
+// @public (undocumented)
+export type PublisherDocumentAttributeFilterConfigModeEnum = 'readonly' | 'hidden' | 'active';
+
+// @public (undocumented)
+export type PublisherDocumentAttributeFilterConfigSelectionTypeEnum = 'list' | 'text' | 'listOrText';
+
+// @public
+export interface PublisherDocumentAttributeFilterParent {
+    // (undocumented)
+    'filterLocalIdentifier': string;
+    // (undocumented)
+    'over': PublisherDocumentAttributeFilterParentOver;
+}
+
+// @public
+export interface PublisherDocumentAttributeFilterParentOver {
+    // (undocumented)
+    'attributes': Array<PublisherDocumentObjRef>;
+}
+
+// @public (undocumented)
+export interface PublisherDocumentAttributeFilterReference {
+    // (undocumented)
+    'displayForm': PublisherDocumentObjRef;
+    // (undocumented)
+    'type': PublisherDocumentAttributeFilterReferenceTypeEnum;
+}
+
+// @public (undocumented)
+export type PublisherDocumentAttributeFilterReferenceTypeEnum = 'attributeFilterReference';
+
+// @public (undocumented)
+export interface PublisherDocumentAutoVisibility {
+    // (undocumented)
+    'visible'?: PublisherDocumentAutoVisibilityVisible;
+}
+
+// @public
+export type PublisherDocumentAutoVisibilityVisible = boolean | string;
+
+// @public (undocumented)
+export interface PublisherDocumentAxisDisplay {
+    // (undocumented)
+    'max'?: number;
+    // (undocumented)
+    'min'?: number;
+    // (undocumented)
+    'name'?: PublisherDocumentAxisNameDisplay;
+    // (undocumented)
+    'values'?: PublisherDocumentAxisValuesDisplay;
+    // (undocumented)
+    'visible'?: boolean;
+}
+
+// @public (undocumented)
+export interface PublisherDocumentAxisNameDisplay {
+    // (undocumented)
+    'position'?: PublisherDocumentAxisNameDisplayPositionEnum;
+    // (undocumented)
+    'visible'?: boolean;
+}
+
+// @public (undocumented)
+export type PublisherDocumentAxisNameDisplayPositionEnum = 'low' | 'middle' | 'high';
+
+// @public (undocumented)
+export interface PublisherDocumentAxisValuesDisplay {
+    'rotation'?: number;
+    // (undocumented)
+    'visible'?: boolean;
+}
+
+// @public
+export interface PublisherDocumentBoundedFilter {
+    // (undocumented)
+    'from'?: number;
+    // (undocumented)
+    'granularity': PublisherDocumentBoundedFilterGranularityEnum;
+    // (undocumented)
+    'to'?: number;
+}
+
+// @public (undocumented)
+export type PublisherDocumentBoundedFilterGranularityEnum = 'GDC.time.second' | 'GDC.time.minute' | 'GDC.time.hour' | 'GDC.time.date' | 'GDC.time.week_us' | 'GDC.time.month' | 'GDC.time.fiscal_month' | 'GDC.time.quarter' | 'GDC.time.fiscal_quarter' | 'GDC.time.year' | 'GDC.time.fiscal_year';
+
+// @public
+export interface PublisherDocumentChartStyle {
+    // (undocumented)
+    'axisLineColor'?: string;
+    // (undocumented)
+    'axisNameColor'?: string;
+    // (undocumented)
+    'axisNameSize'?: number;
+    // (undocumented)
+    'axisValueColor'?: string;
+    // (undocumented)
+    'axisValueSize'?: number;
+    // (undocumented)
+    'dataLabelColor'?: string;
+    // (undocumented)
+    'dataLabelSize'?: number;
+    // (undocumented)
+    'fontSize'?: number;
+    // (undocumented)
+    'gridColor'?: string;
+    // (undocumented)
+    'legendColor'?: string;
+    // (undocumented)
+    'legendSize'?: number;
+    // (undocumented)
+    'plotLineColor'?: string;
+    // (undocumented)
+    'textColor'?: string;
+}
+
+// @public
+export interface PublisherDocumentColumn {
+    'children': Array<PublisherDocumentLayoutNode>;
+    // (undocumented)
+    'id'?: string;
+    'locked'?: boolean;
+    'proportion'?: number;
+    // (undocumented)
+    'style'?: PublisherDocumentContainerStyle;
+    // (undocumented)
+    'type': PublisherDocumentColumnTypeEnum;
+}
+
+// @public (undocumented)
+export type PublisherDocumentColumnTypeEnum = 'column';
+
+// @public (undocumented)
+export interface PublisherDocumentComparisonCondition {
+    // (undocumented)
+    'comparison': PublisherDocumentComparisonConditionComparison;
+}
+
+// @public (undocumented)
+export interface PublisherDocumentComparisonConditionComparison {
+    // (undocumented)
+    'operator': PublisherDocumentComparisonConditionComparisonOperatorEnum;
+    // (undocumented)
+    'treatNullValuesAs'?: number;
+    // (undocumented)
+    'value': number;
+}
+
+// @public (undocumented)
+export type PublisherDocumentComparisonConditionComparisonOperatorEnum = 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO';
+
+// @public
+export interface PublisherDocumentContainerStyle {
+    // (undocumented)
+    'backgroundColor'?: string;
+    // (undocumented)
+    'backgroundFit'?: PublisherDocumentContainerStyleBackgroundFitEnum;
+    // (undocumented)
+    'backgroundHorizontalAlign'?: PublisherDocumentContainerStyleBackgroundHorizontalAlignEnum;
+    // (undocumented)
+    'backgroundImage'?: string;
+    // (undocumented)
+    'backgroundImageOpacity'?: number;
+    // (undocumented)
+    'backgroundOffset'?: number;
+    // (undocumented)
+    'backgroundOffsetBottom'?: number;
+    // (undocumented)
+    'backgroundOffsetLeft'?: number;
+    // (undocumented)
+    'backgroundOffsetRight'?: number;
+    // (undocumented)
+    'backgroundOffsetTop'?: number;
+    // (undocumented)
+    'backgroundOpacity'?: number;
+    // (undocumented)
+    'backgroundVerticalAlign'?: PublisherDocumentContainerStyleBackgroundVerticalAlignEnum;
+    // (undocumented)
+    'borderBottomColor'?: string;
+    // (undocumented)
+    'borderBottomLeftRadius'?: PublisherDocumentContainerStyleBorderBottomLeftRadius;
+    // (undocumented)
+    'borderBottomRightRadius'?: PublisherDocumentContainerStyleBorderBottomRightRadius;
+    // (undocumented)
+    'borderBottomStyle'?: PublisherDocumentContainerStyleBorderBottomStyleEnum;
+    // (undocumented)
+    'borderBottomWidth'?: number;
+    // (undocumented)
+    'borderColor'?: string;
+    // (undocumented)
+    'borderLeftColor'?: string;
+    // (undocumented)
+    'borderLeftStyle'?: PublisherDocumentContainerStyleBorderLeftStyleEnum;
+    // (undocumented)
+    'borderLeftWidth'?: number;
+    // (undocumented)
+    'borderRadius'?: PublisherDocumentContainerStyleBorderRadius;
+    // (undocumented)
+    'borderRightColor'?: string;
+    // (undocumented)
+    'borderRightStyle'?: PublisherDocumentContainerStyleBorderRightStyleEnum;
+    // (undocumented)
+    'borderRightWidth'?: number;
+    // (undocumented)
+    'borderStyle'?: PublisherDocumentContainerStyleBorderStyleEnum;
+    // (undocumented)
+    'borderTopColor'?: string;
+    // (undocumented)
+    'borderTopLeftRadius'?: PublisherDocumentContainerStyleBorderTopLeftRadius;
+    // (undocumented)
+    'borderTopRightRadius'?: PublisherDocumentContainerStyleBorderTopRightRadius;
+    // (undocumented)
+    'borderTopStyle'?: PublisherDocumentContainerStyleBorderTopStyleEnum;
+    // (undocumented)
+    'borderTopWidth'?: number;
+    // (undocumented)
+    'borderWidth'?: number;
+    // (undocumented)
+    'fontSize'?: number;
+    // (undocumented)
+    'fontStyle'?: PublisherDocumentContainerStyleFontStyleEnum;
+    // (undocumented)
+    'fontWeight'?: number;
+    // (undocumented)
+    'gap'?: PublisherDocumentContainerStyleGap;
+    // (undocumented)
+    'horizontalAlign'?: PublisherDocumentContainerStyleHorizontalAlignEnum;
+    // (undocumented)
+    'letterSpacing'?: number;
+    // (undocumented)
+    'lineHeight'?: number;
+    // (undocumented)
+    'opacity'?: number;
+    // (undocumented)
+    'padding'?: PublisherDocumentContainerStylePadding;
+    // (undocumented)
+    'paddingBottom'?: PublisherDocumentContainerStylePaddingBottom;
+    // (undocumented)
+    'paddingLeft'?: PublisherDocumentContainerStylePaddingLeft;
+    // (undocumented)
+    'paddingRight'?: PublisherDocumentContainerStylePaddingRight;
+    // (undocumented)
+    'paddingTop'?: PublisherDocumentContainerStylePaddingTop;
+    // (undocumented)
+    'shadow'?: string;
+    // (undocumented)
+    'shadowBlur'?: number;
+    // (undocumented)
+    'shadowColor'?: string;
+    // (undocumented)
+    'shadowOpacity'?: number;
+    // (undocumented)
+    'shadowSpread'?: number;
+    // (undocumented)
+    'shadowX'?: number;
+    // (undocumented)
+    'shadowY'?: number;
+    // (undocumented)
+    'textColor'?: string;
+    // (undocumented)
+    'textOverflow'?: PublisherDocumentContainerStyleTextOverflowEnum;
+    // (undocumented)
+    'textStyle'?: PublisherDocumentContainerStyleTextStyleEnum;
+    // (undocumented)
+    'textTransform'?: PublisherDocumentContainerStyleTextTransformEnum;
+    // (undocumented)
+    'verticalAlign'?: PublisherDocumentContainerStyleVerticalAlignEnum;
+}
+
+// @public (undocumented)
+export type PublisherDocumentContainerStyleBackgroundFitEnum = 'cover' | 'contain' | 'fill' | 'tile';
+
+// @public (undocumented)
+export type PublisherDocumentContainerStyleBackgroundHorizontalAlignEnum = 'left' | 'center' | 'right';
+
+// @public (undocumented)
+export type PublisherDocumentContainerStyleBackgroundVerticalAlignEnum = 'top' | 'center' | 'bottom';
+
+// @public
+export type PublisherDocumentContainerStyleBorderBottomLeftRadius = number | string;
+
+// @public
+export type PublisherDocumentContainerStyleBorderBottomRightRadius = number | string;
+
+// @public (undocumented)
+export type PublisherDocumentContainerStyleBorderBottomStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+
+// @public (undocumented)
+export type PublisherDocumentContainerStyleBorderLeftStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+
+// @public
+export type PublisherDocumentContainerStyleBorderRadius = number | string;
+
+// @public (undocumented)
+export type PublisherDocumentContainerStyleBorderRightStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+
+// @public (undocumented)
+export type PublisherDocumentContainerStyleBorderStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+
+// @public
+export type PublisherDocumentContainerStyleBorderTopLeftRadius = number | string;
+
+// @public
+export type PublisherDocumentContainerStyleBorderTopRightRadius = number | string;
+
+// @public (undocumented)
+export type PublisherDocumentContainerStyleBorderTopStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+
+// @public (undocumented)
+export type PublisherDocumentContainerStyleFontStyleEnum = 'normal' | 'italic';
+
+// @public
+export type PublisherDocumentContainerStyleGap = number | string;
+
+// @public (undocumented)
+export type PublisherDocumentContainerStyleHorizontalAlignEnum = 'left' | 'center' | 'right' | 'justify';
+
+// @public
+export type PublisherDocumentContainerStylePadding = number | string;
+
+// @public
+export type PublisherDocumentContainerStylePaddingBottom = number | string;
+
+// @public
+export type PublisherDocumentContainerStylePaddingLeft = number | string;
+
+// @public
+export type PublisherDocumentContainerStylePaddingRight = number | string;
+
+// @public
+export type PublisherDocumentContainerStylePaddingTop = number | string;
+
+// @public (undocumented)
+export type PublisherDocumentContainerStyleTextOverflowEnum = 'shrink' | 'clip' | 'ellipsis';
+
+// @public (undocumented)
+export type PublisherDocumentContainerStyleTextStyleEnum = 'title' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'largeText' | 'normalText' | 'smallText';
+
+// @public (undocumented)
+export type PublisherDocumentContainerStyleTextTransformEnum = 'none' | 'uppercase' | 'lowercase' | 'capitalize';
+
+// @public (undocumented)
+export type PublisherDocumentContainerStyleVerticalAlignEnum = 'top' | 'center' | 'bottom';
+
+// @public
+export interface PublisherDocumentContent {
+    // (undocumented)
+    'attributeFilterConfigs'?: Array<PublisherDocumentAttributeFilterConfig>;
+    // (undocumented)
+    'defaults'?: PublisherDocumentDefaults;
+    'filters'?: Array<PublisherDocumentFilter>;
+    'formatLocale'?: string;
+    'locale'?: string;
+    'pages'?: Array<PublisherDocumentPage>;
+    'sections'?: Array<PublisherDocumentSection>;
+    // (undocumented)
+    'style'?: PublisherDocumentAreaStyle;
+}
+
+// @public
+export interface PublisherDocumentDataSetRef {
+    // (undocumented)
+    'identifier': string;
+    // (undocumented)
+    'type': PublisherDocumentDataSetRefTypeEnum;
+}
+
+// @public (undocumented)
+export type PublisherDocumentDataSetRefTypeEnum = 'dataSet';
+
+// @public
+export interface PublisherDocumentDateFilter {
+    // (undocumented)
+    'dateFilter': PublisherDocumentDateFilterDateFilter;
+}
+
+// @public (undocumented)
+export interface PublisherDocumentDateFilterDateFilter {
+    // (undocumented)
+    'attribute'?: PublisherDocumentObjRef;
+    // (undocumented)
+    'boundedFilter'?: PublisherDocumentBoundedFilter;
+    // (undocumented)
+    'dataSet'?: PublisherDocumentObjRef;
+    // (undocumented)
+    'emptyValueHandling'?: PublisherDocumentDateFilterDateFilterEmptyValueHandlingEnum;
+    // (undocumented)
+    'from'?: PublisherDocumentDateFilterDateFilterFrom;
+    // (undocumented)
+    'granularity': PublisherDocumentDateFilterDateFilterGranularityEnum;
+    'localIdentifier'?: string;
+    // (undocumented)
+    'to'?: PublisherDocumentDateFilterDateFilterTo;
+    // (undocumented)
+    'type': PublisherDocumentDateFilterDateFilterTypeEnum;
+}
+
+// @public (undocumented)
+export type PublisherDocumentDateFilterDateFilterEmptyValueHandlingEnum = 'include' | 'exclude' | 'only';
+
+// @public
+export type PublisherDocumentDateFilterDateFilterFrom = number | string;
+
+// @public (undocumented)
+export type PublisherDocumentDateFilterDateFilterGranularityEnum = 'GDC.time.second' | 'GDC.time.minute' | 'GDC.time.hour' | 'GDC.time.date' | 'GDC.time.week_us' | 'GDC.time.month' | 'GDC.time.fiscal_month' | 'GDC.time.quarter' | 'GDC.time.fiscal_quarter' | 'GDC.time.year' | 'GDC.time.fiscal_year';
+
+// @public
+export type PublisherDocumentDateFilterDateFilterTo = number | string;
+
+// @public (undocumented)
+export type PublisherDocumentDateFilterDateFilterTypeEnum = 'relative' | 'absolute';
+
+// @public (undocumented)
+export interface PublisherDocumentDateFilterReference {
+    // (undocumented)
+    'dataSet': PublisherDocumentObjRef;
+    // (undocumented)
+    'type': PublisherDocumentDateFilterReferenceTypeEnum;
+}
+
+// @public (undocumented)
+export type PublisherDocumentDateFilterReferenceTypeEnum = 'dateFilterReference';
+
+// @public
+export interface PublisherDocumentDefaults {
+    'pageSize'?: PublisherDocumentDefaultsPageSizeEnum;
+    // (undocumented)
+    'period'?: PublisherDocumentPeriod;
+    // (undocumented)
+    'takeaway'?: PublisherDocumentTakeawayDefaults;
+}
+
+// @public (undocumented)
+export type PublisherDocumentDefaultsPageSizeEnum = 'widescreen';
+
+// @public
+export type PublisherDocumentFilter = PublisherDocumentArbitraryAttributeFilter | PublisherDocumentAttributeFilter | PublisherDocumentDateFilter | PublisherDocumentMatchAttributeFilter | PublisherDocumentMeasureValueFilter;
+
+// @public
+export type PublisherDocumentFilterReference = ({
+    type: 'attributeFilterReference';
+} & PublisherDocumentAttributeFilterReference) | ({
+    type: 'dateFilterReference';
+} & PublisherDocumentDateFilterReference) | ({
+    type: 'measureValueFilterReference';
+} & PublisherDocumentMeasureValueFilterReference);
+
+// @public
+export interface PublisherDocumentHeadingWidget {
+    'id': string;
+    'level'?: PublisherDocumentHeadingWidgetLevelEnum;
+    'locked'?: boolean;
+    'markdown'?: string;
+    // (undocumented)
+    'placeholder'?: PublisherDocumentWidgetPlaceholder;
+    // (undocumented)
+    'proportion'?: number;
+    // (undocumented)
+    'style'?: PublisherDocumentTextWidgetStyle;
+    // (undocumented)
+    'type': PublisherDocumentHeadingWidgetTypeEnum;
+}
+
+// @public (undocumented)
+export type PublisherDocumentHeadingWidgetLevelEnum = 1 | 2 | 3 | 4 | 5 | 6;
+
+// @public (undocumented)
+export type PublisherDocumentHeadingWidgetTypeEnum = 'heading';
+
+// @public
+export interface PublisherDocumentHeadlineStyle {
+    // (undocumented)
+    'negativeColor'?: string;
+    // (undocumented)
+    'positiveColor'?: string;
+    // (undocumented)
+    'primaryValueColor'?: string;
+    // (undocumented)
+    'primaryValueSize'?: number;
+    // (undocumented)
+    'secondaryValueColor'?: string;
+    // (undocumented)
+    'secondaryValueSize'?: number;
+}
+
+// @public
+export interface PublisherDocumentImageWidget {
+    // (undocumented)
+    'altText'?: string;
+    'decorative'?: boolean;
+    'id': string;
+    'locked'?: boolean;
+    // (undocumented)
+    'placeholder'?: PublisherDocumentWidgetPlaceholder;
+    // (undocumented)
+    'proportion'?: number;
+    'source'?: string;
+    // (undocumented)
+    'style'?: PublisherDocumentImageWidgetStyle;
+    // (undocumented)
+    'type': PublisherDocumentImageWidgetTypeEnum;
+}
+
+// @public
+export interface PublisherDocumentImageWidgetStyle {
+    // (undocumented)
+    'backgroundColor'?: string;
+    // (undocumented)
+    'backgroundFit'?: PublisherDocumentImageWidgetStyleBackgroundFitEnum;
+    // (undocumented)
+    'backgroundHorizontalAlign'?: PublisherDocumentImageWidgetStyleBackgroundHorizontalAlignEnum;
+    // (undocumented)
+    'backgroundImage'?: string;
+    // (undocumented)
+    'backgroundImageOpacity'?: number;
+    // (undocumented)
+    'backgroundOffset'?: number;
+    // (undocumented)
+    'backgroundOffsetBottom'?: number;
+    // (undocumented)
+    'backgroundOffsetLeft'?: number;
+    // (undocumented)
+    'backgroundOffsetRight'?: number;
+    // (undocumented)
+    'backgroundOffsetTop'?: number;
+    // (undocumented)
+    'backgroundOpacity'?: number;
+    // (undocumented)
+    'backgroundVerticalAlign'?: PublisherDocumentImageWidgetStyleBackgroundVerticalAlignEnum;
+    // (undocumented)
+    'borderBottomColor'?: string;
+    // (undocumented)
+    'borderBottomLeftRadius'?: PublisherDocumentImageWidgetStyleBorderBottomLeftRadius;
+    // (undocumented)
+    'borderBottomRightRadius'?: PublisherDocumentImageWidgetStyleBorderBottomRightRadius;
+    // (undocumented)
+    'borderBottomStyle'?: PublisherDocumentImageWidgetStyleBorderBottomStyleEnum;
+    // (undocumented)
+    'borderBottomWidth'?: number;
+    // (undocumented)
+    'borderColor'?: string;
+    // (undocumented)
+    'borderLeftColor'?: string;
+    // (undocumented)
+    'borderLeftStyle'?: PublisherDocumentImageWidgetStyleBorderLeftStyleEnum;
+    // (undocumented)
+    'borderLeftWidth'?: number;
+    // (undocumented)
+    'borderRadius'?: PublisherDocumentImageWidgetStyleBorderRadius;
+    // (undocumented)
+    'borderRightColor'?: string;
+    // (undocumented)
+    'borderRightStyle'?: PublisherDocumentImageWidgetStyleBorderRightStyleEnum;
+    // (undocumented)
+    'borderRightWidth'?: number;
+    // (undocumented)
+    'borderStyle'?: PublisherDocumentImageWidgetStyleBorderStyleEnum;
+    // (undocumented)
+    'borderTopColor'?: string;
+    // (undocumented)
+    'borderTopLeftRadius'?: PublisherDocumentImageWidgetStyleBorderTopLeftRadius;
+    // (undocumented)
+    'borderTopRightRadius'?: PublisherDocumentImageWidgetStyleBorderTopRightRadius;
+    // (undocumented)
+    'borderTopStyle'?: PublisherDocumentImageWidgetStyleBorderTopStyleEnum;
+    // (undocumented)
+    'borderTopWidth'?: number;
+    // (undocumented)
+    'borderWidth'?: number;
+    // (undocumented)
+    'fit'?: PublisherDocumentImageWidgetStyleFitEnum;
+    // (undocumented)
+    'horizontalAlign'?: PublisherDocumentImageWidgetStyleHorizontalAlignEnum;
+    // (undocumented)
+    'opacity'?: number;
+    // (undocumented)
+    'padding'?: PublisherDocumentImageWidgetStylePadding;
+    // (undocumented)
+    'paddingBottom'?: PublisherDocumentImageWidgetStylePaddingBottom;
+    // (undocumented)
+    'paddingLeft'?: PublisherDocumentImageWidgetStylePaddingLeft;
+    // (undocumented)
+    'paddingRight'?: PublisherDocumentImageWidgetStylePaddingRight;
+    // (undocumented)
+    'paddingTop'?: PublisherDocumentImageWidgetStylePaddingTop;
+    // (undocumented)
+    'shadow'?: string;
+    // (undocumented)
+    'shadowBlur'?: number;
+    // (undocumented)
+    'shadowColor'?: string;
+    // (undocumented)
+    'shadowOpacity'?: number;
+    // (undocumented)
+    'shadowSpread'?: number;
+    // (undocumented)
+    'shadowX'?: number;
+    // (undocumented)
+    'shadowY'?: number;
+    // (undocumented)
+    'verticalAlign'?: PublisherDocumentImageWidgetStyleVerticalAlignEnum;
+}
+
+// @public (undocumented)
+export type PublisherDocumentImageWidgetStyleBackgroundFitEnum = 'cover' | 'contain' | 'fill' | 'tile';
+
+// @public (undocumented)
+export type PublisherDocumentImageWidgetStyleBackgroundHorizontalAlignEnum = 'left' | 'center' | 'right';
+
+// @public (undocumented)
+export type PublisherDocumentImageWidgetStyleBackgroundVerticalAlignEnum = 'top' | 'center' | 'bottom';
+
+// @public
+export type PublisherDocumentImageWidgetStyleBorderBottomLeftRadius = number | string;
+
+// @public
+export type PublisherDocumentImageWidgetStyleBorderBottomRightRadius = number | string;
+
+// @public (undocumented)
+export type PublisherDocumentImageWidgetStyleBorderBottomStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+
+// @public (undocumented)
+export type PublisherDocumentImageWidgetStyleBorderLeftStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+
+// @public
+export type PublisherDocumentImageWidgetStyleBorderRadius = number | string;
+
+// @public (undocumented)
+export type PublisherDocumentImageWidgetStyleBorderRightStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+
+// @public (undocumented)
+export type PublisherDocumentImageWidgetStyleBorderStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+
+// @public
+export type PublisherDocumentImageWidgetStyleBorderTopLeftRadius = number | string;
+
+// @public
+export type PublisherDocumentImageWidgetStyleBorderTopRightRadius = number | string;
+
+// @public (undocumented)
+export type PublisherDocumentImageWidgetStyleBorderTopStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+
+// @public (undocumented)
+export type PublisherDocumentImageWidgetStyleFitEnum = 'contain' | 'cover' | 'fill';
+
+// @public (undocumented)
+export type PublisherDocumentImageWidgetStyleHorizontalAlignEnum = 'left' | 'center' | 'right';
+
+// @public
+export type PublisherDocumentImageWidgetStylePadding = number | string;
+
+// @public
+export type PublisherDocumentImageWidgetStylePaddingBottom = number | string;
+
+// @public
+export type PublisherDocumentImageWidgetStylePaddingLeft = number | string;
+
+// @public
+export type PublisherDocumentImageWidgetStylePaddingRight = number | string;
+
+// @public
+export type PublisherDocumentImageWidgetStylePaddingTop = number | string;
+
+// @public (undocumented)
+export type PublisherDocumentImageWidgetStyleVerticalAlignEnum = 'top' | 'center' | 'bottom';
+
+// @public (undocumented)
+export type PublisherDocumentImageWidgetTypeEnum = 'image';
+
+// @public
+export type PublisherDocumentLayoutNode = ({
+    type: 'column';
+} & PublisherDocumentColumn) | ({
+    type: 'heading';
+} & PublisherDocumentHeadingWidget) | ({
+    type: 'image';
+} & PublisherDocumentImageWidget) | ({
+    type: 'row';
+} & PublisherDocumentRow) | ({
+    type: 'takeaway';
+} & PublisherDocumentTakeawayWidget) | ({
+    type: 'text';
+} & PublisherDocumentTextWidget) | ({
+    type: 'title';
+} & PublisherDocumentTitleWidget) | ({
+    type: 'visualization';
+} & PublisherDocumentVisualizationWidget);
+
+// @public (undocumented)
+export interface PublisherDocumentLegendDisplay {
+    // (undocumented)
+    'position'?: PublisherDocumentLegendDisplayPositionEnum;
+    // (undocumented)
+    'visible'?: boolean;
+}
+
+// @public (undocumented)
+export type PublisherDocumentLegendDisplayPositionEnum = 'auto' | 'top' | 'bottom' | 'left' | 'right';
+
+// @public
+export interface PublisherDocumentMatchAttributeFilter {
+    // (undocumented)
+    'matchAttributeFilter': PublisherDocumentMatchAttributeFilterMatchAttributeFilter;
+}
+
+// @public (undocumented)
+export interface PublisherDocumentMatchAttributeFilterMatchAttributeFilter {
+    // (undocumented)
+    'caseSensitive'?: boolean;
+    // (undocumented)
+    'displayForm': PublisherDocumentObjRef;
+    // (undocumented)
+    'literal': string;
+    'localIdentifier'?: string;
+    // (undocumented)
+    'negativeSelection'?: boolean;
+    // (undocumented)
+    'operator': PublisherDocumentMatchAttributeFilterMatchAttributeFilterOperatorEnum;
+    // (undocumented)
+    'title'?: string;
+}
+
+// @public (undocumented)
+export type PublisherDocumentMatchAttributeFilterMatchAttributeFilterOperatorEnum = 'contains' | 'startsWith' | 'endsWith';
+
+// @public
+export type PublisherDocumentMeasureValueCondition = PublisherDocumentComparisonCondition | PublisherDocumentRangeCondition;
+
+// @public
+export interface PublisherDocumentMeasureValueFilter {
+    // (undocumented)
+    'dashboardMeasureValueFilter': PublisherDocumentMeasureValueFilterDashboardMeasureValueFilter;
+}
+
+// @public (undocumented)
+export interface PublisherDocumentMeasureValueFilterDashboardMeasureValueFilter {
+    'conditions'?: Array<PublisherDocumentMeasureValueCondition>;
+    // (undocumented)
+    'dimensionality'?: Array<PublisherDocumentObjRef>;
+    // (undocumented)
+    'localIdentifier': string;
+    // (undocumented)
+    'measure': PublisherDocumentObjRef;
+    // (undocumented)
+    'title'?: string;
+}
+
+// @public (undocumented)
+export interface PublisherDocumentMeasureValueFilterReference {
+    // (undocumented)
+    'measure': PublisherDocumentObjRef;
+    // (undocumented)
+    'type': PublisherDocumentMeasureValueFilterReferenceTypeEnum;
+}
+
+// @public (undocumented)
+export type PublisherDocumentMeasureValueFilterReferenceTypeEnum = 'measureValueFilterReference';
+
+// @public
+export interface PublisherDocumentObjRef {
+    // (undocumented)
+    'identifier': string;
+    'type': PublisherDocumentObjRefTypeEnum;
+}
+
+// @public (undocumented)
+export type PublisherDocumentObjRefTypeEnum = 'insight' | 'displayForm' | 'dataSet' | 'measure' | 'attribute';
+
+// @public
+export interface PublisherDocumentPage {
+    'filters'?: Array<PublisherDocumentFilter>;
+    'id'?: string;
+    'kind'?: PublisherDocumentPageKindEnum;
+    // (undocumented)
+    'layout': PublisherDocumentLayoutNode;
+    'notes'?: string;
+    // (undocumented)
+    'pageSize'?: PublisherDocumentPagePageSizeEnum;
+    // (undocumented)
+    'style'?: PublisherDocumentPageStyle;
+    'visible'?: boolean;
+}
+
+// @public (undocumented)
+export type PublisherDocumentPageKindEnum = 'cover' | 'section' | 'content';
+
+// @public (undocumented)
+export type PublisherDocumentPagePageSizeEnum = 'widescreen';
+
+// @public
+export interface PublisherDocumentPageStyle {
+    // (undocumented)
+    'backgroundColor'?: string;
+    // (undocumented)
+    'backgroundFit'?: PublisherDocumentPageStyleBackgroundFitEnum;
+    // (undocumented)
+    'backgroundHorizontalAlign'?: PublisherDocumentPageStyleBackgroundHorizontalAlignEnum;
+    // (undocumented)
+    'backgroundImage'?: string;
+    // (undocumented)
+    'backgroundImageOpacity'?: number;
+    // (undocumented)
+    'backgroundOffset'?: number;
+    // (undocumented)
+    'backgroundOffsetBottom'?: number;
+    // (undocumented)
+    'backgroundOffsetLeft'?: number;
+    // (undocumented)
+    'backgroundOffsetRight'?: number;
+    // (undocumented)
+    'backgroundOffsetTop'?: number;
+    // (undocumented)
+    'backgroundOpacity'?: number;
+    // (undocumented)
+    'backgroundVerticalAlign'?: PublisherDocumentPageStyleBackgroundVerticalAlignEnum;
+    // (undocumented)
+    'fontSize'?: number;
+    // (undocumented)
+    'fontStyle'?: PublisherDocumentPageStyleFontStyleEnum;
+    // (undocumented)
+    'fontWeight'?: number;
+    // (undocumented)
+    'gap'?: PublisherDocumentPageStyleGap;
+    // (undocumented)
+    'horizontalAlign'?: PublisherDocumentPageStyleHorizontalAlignEnum;
+    // (undocumented)
+    'letterSpacing'?: number;
+    // (undocumented)
+    'lineHeight'?: number;
+    // (undocumented)
+    'padding'?: PublisherDocumentPageStylePadding;
+    // (undocumented)
+    'paddingBottom'?: PublisherDocumentPageStylePaddingBottom;
+    // (undocumented)
+    'paddingLeft'?: PublisherDocumentPageStylePaddingLeft;
+    // (undocumented)
+    'paddingRight'?: PublisherDocumentPageStylePaddingRight;
+    // (undocumented)
+    'paddingTop'?: PublisherDocumentPageStylePaddingTop;
+    // (undocumented)
+    'textColor'?: string;
+    // (undocumented)
+    'textOverflow'?: PublisherDocumentPageStyleTextOverflowEnum;
+    // (undocumented)
+    'textStyle'?: PublisherDocumentPageStyleTextStyleEnum;
+    // (undocumented)
+    'textTransform'?: PublisherDocumentPageStyleTextTransformEnum;
+    // (undocumented)
+    'verticalAlign'?: PublisherDocumentPageStyleVerticalAlignEnum;
+}
+
+// @public (undocumented)
+export type PublisherDocumentPageStyleBackgroundFitEnum = 'cover' | 'contain' | 'fill' | 'tile';
+
+// @public (undocumented)
+export type PublisherDocumentPageStyleBackgroundHorizontalAlignEnum = 'left' | 'center' | 'right';
+
+// @public (undocumented)
+export type PublisherDocumentPageStyleBackgroundVerticalAlignEnum = 'top' | 'center' | 'bottom';
+
+// @public (undocumented)
+export type PublisherDocumentPageStyleFontStyleEnum = 'normal' | 'italic';
+
+// @public
+export type PublisherDocumentPageStyleGap = number | string;
+
+// @public (undocumented)
+export type PublisherDocumentPageStyleHorizontalAlignEnum = 'left' | 'center' | 'right' | 'justify';
+
+// @public
+export type PublisherDocumentPageStylePadding = number | string;
+
+// @public
+export type PublisherDocumentPageStylePaddingBottom = number | string;
+
+// @public
+export type PublisherDocumentPageStylePaddingLeft = number | string;
+
+// @public
+export type PublisherDocumentPageStylePaddingRight = number | string;
+
+// @public
+export type PublisherDocumentPageStylePaddingTop = number | string;
+
+// @public (undocumented)
+export type PublisherDocumentPageStyleTextOverflowEnum = 'shrink' | 'clip' | 'ellipsis';
+
+// @public (undocumented)
+export type PublisherDocumentPageStyleTextStyleEnum = 'title' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'largeText' | 'normalText' | 'smallText';
+
+// @public (undocumented)
+export type PublisherDocumentPageStyleTextTransformEnum = 'none' | 'uppercase' | 'lowercase' | 'capitalize';
+
+// @public (undocumented)
+export type PublisherDocumentPageStyleVerticalAlignEnum = 'top' | 'center' | 'bottom';
+
+// @public
+export interface PublisherDocumentPageTemplateContent {
+    'filters'?: Array<PublisherDocumentFilter>;
+    'kind'?: PublisherDocumentPageTemplateContentKindEnum;
+    // (undocumented)
+    'layout': PublisherDocumentLayoutNode;
+    'notes'?: string;
+    // (undocumented)
+    'pageSize'?: PublisherDocumentPageTemplateContentPageSizeEnum;
+    // (undocumented)
+    'style'?: PublisherDocumentPageStyle;
+}
+
+// @public (undocumented)
+export type PublisherDocumentPageTemplateContentKindEnum = 'cover' | 'section' | 'content';
+
+// @public (undocumented)
+export type PublisherDocumentPageTemplateContentPageSizeEnum = 'widescreen';
+
+// @public
 export type PublisherDocumentPeriod = ({
     type: 'absolute';
 } & AbsolutePublisherDocumentPeriod) | ({
     type: 'relative';
 } & RelativePublisherDocumentPeriod);
+
+// @public (undocumented)
+export interface PublisherDocumentRangeCondition {
+    // (undocumented)
+    'range': PublisherDocumentRangeConditionRange;
+}
+
+// @public (undocumented)
+export interface PublisherDocumentRangeConditionRange {
+    // (undocumented)
+    'from': number;
+    // (undocumented)
+    'operator': PublisherDocumentRangeConditionRangeOperatorEnum;
+    // (undocumented)
+    'to': number;
+    // (undocumented)
+    'treatNullValuesAs'?: number;
+}
+
+// @public (undocumented)
+export type PublisherDocumentRangeConditionRangeOperatorEnum = 'BETWEEN' | 'NOT_BETWEEN';
+
+// @public
+export interface PublisherDocumentRow {
+    'children': Array<PublisherDocumentLayoutNode>;
+    // (undocumented)
+    'id'?: string;
+    'locked'?: boolean;
+    'proportion'?: number;
+    // (undocumented)
+    'style'?: PublisherDocumentContainerStyle;
+    // (undocumented)
+    'type': PublisherDocumentRowTypeEnum;
+}
+
+// @public (undocumented)
+export type PublisherDocumentRowTypeEnum = 'row';
+
+// @public
+export interface PublisherDocumentSection {
+    // (undocumented)
+    'description'?: string;
+    'id'?: string;
+    // (undocumented)
+    'pages': Array<PublisherDocumentPage>;
+    // (undocumented)
+    'title'?: string;
+}
+
+// @public
+export interface PublisherDocumentTableStyle {
+    // (undocumented)
+    'fontSize'?: number;
+    // (undocumented)
+    'gridColor'?: string;
+    // (undocumented)
+    'headerBackgroundColor'?: string;
+    // (undocumented)
+    'headerLabelColor'?: string;
+    // (undocumented)
+    'nullValueColor'?: string;
+    // (undocumented)
+    'rowHeight'?: number;
+    // (undocumented)
+    'subtotalBackgroundColor'?: string;
+    // (undocumented)
+    'totalBackgroundColor'?: string;
+    // (undocumented)
+    'totalValueColor'?: string;
+    // (undocumented)
+    'valueColor'?: string;
+}
+
+// @public
+export interface PublisherDocumentTakeawayContext {
+    // (undocumented)
+    'filters'?: boolean;
+    // (undocumented)
+    'otherPages'?: boolean;
+    // (undocumented)
+    'pageTitle'?: boolean;
+    'widgets'?: Array<string>;
+}
+
+// @public
+export interface PublisherDocumentTakeawayDefaults {
+    // (undocumented)
+    'generation'?: PublisherDocumentTakeawayGeneration;
+}
+
+// @public
+export interface PublisherDocumentTakeawayGeneration {
+    // (undocumented)
+    'context'?: PublisherDocumentTakeawayContext;
+    // (undocumented)
+    'instructions'?: string;
+}
+
+// @public
+export interface PublisherDocumentTakeawayWidget {
+    // (undocumented)
+    'generation'?: PublisherDocumentTakeawayGeneration;
+    'id': string;
+    'locked'?: boolean;
+    'markdown'?: string;
+    // (undocumented)
+    'placeholder'?: PublisherDocumentWidgetPlaceholder;
+    // (undocumented)
+    'proportion'?: number;
+    // (undocumented)
+    'style'?: PublisherDocumentTextWidgetStyle;
+    // (undocumented)
+    'title'?: PublisherDocumentWidgetTitle;
+    // (undocumented)
+    'type': PublisherDocumentTakeawayWidgetTypeEnum;
+}
+
+// @public (undocumented)
+export type PublisherDocumentTakeawayWidgetTypeEnum = 'takeaway';
+
+// @public
+export interface PublisherDocumentTextStyle {
+    // (undocumented)
+    'fontSize'?: number;
+    // (undocumented)
+    'fontStyle'?: PublisherDocumentTextStyleFontStyleEnum;
+    // (undocumented)
+    'fontWeight'?: number;
+    // (undocumented)
+    'horizontalAlign'?: PublisherDocumentTextStyleHorizontalAlignEnum;
+    // (undocumented)
+    'letterSpacing'?: number;
+    // (undocumented)
+    'lineHeight'?: number;
+    // (undocumented)
+    'textColor'?: string;
+    // (undocumented)
+    'textOverflow'?: PublisherDocumentTextStyleTextOverflowEnum;
+    // (undocumented)
+    'textStyle'?: PublisherDocumentTextStyleTextStyleEnum;
+    // (undocumented)
+    'textTransform'?: PublisherDocumentTextStyleTextTransformEnum;
+    // (undocumented)
+    'verticalAlign'?: PublisherDocumentTextStyleVerticalAlignEnum;
+}
+
+// @public (undocumented)
+export type PublisherDocumentTextStyleFontStyleEnum = 'normal' | 'italic';
+
+// @public (undocumented)
+export type PublisherDocumentTextStyleHorizontalAlignEnum = 'left' | 'center' | 'right' | 'justify';
+
+// @public (undocumented)
+export type PublisherDocumentTextStyleTextOverflowEnum = 'shrink' | 'clip' | 'ellipsis';
+
+// @public (undocumented)
+export type PublisherDocumentTextStyleTextStyleEnum = 'title' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'largeText' | 'normalText' | 'smallText';
+
+// @public (undocumented)
+export type PublisherDocumentTextStyleTextTransformEnum = 'none' | 'uppercase' | 'lowercase' | 'capitalize';
+
+// @public (undocumented)
+export type PublisherDocumentTextStyleVerticalAlignEnum = 'top' | 'center' | 'bottom';
+
+// @public
+export interface PublisherDocumentTextWidget {
+    'decorative'?: boolean;
+    'id': string;
+    'locked'?: boolean;
+    'markdown'?: string;
+    // (undocumented)
+    'placeholder'?: PublisherDocumentWidgetPlaceholder;
+    // (undocumented)
+    'proportion'?: number;
+    // (undocumented)
+    'style'?: PublisherDocumentTextWidgetStyle;
+    // (undocumented)
+    'type': PublisherDocumentTextWidgetTypeEnum;
+}
+
+// @public
+export interface PublisherDocumentTextWidgetStyle {
+    // (undocumented)
+    'backgroundColor'?: string;
+    // (undocumented)
+    'backgroundFit'?: PublisherDocumentTextWidgetStyleBackgroundFitEnum;
+    // (undocumented)
+    'backgroundHorizontalAlign'?: PublisherDocumentTextWidgetStyleBackgroundHorizontalAlignEnum;
+    // (undocumented)
+    'backgroundImage'?: string;
+    // (undocumented)
+    'backgroundImageOpacity'?: number;
+    // (undocumented)
+    'backgroundOffset'?: number;
+    // (undocumented)
+    'backgroundOffsetBottom'?: number;
+    // (undocumented)
+    'backgroundOffsetLeft'?: number;
+    // (undocumented)
+    'backgroundOffsetRight'?: number;
+    // (undocumented)
+    'backgroundOffsetTop'?: number;
+    // (undocumented)
+    'backgroundOpacity'?: number;
+    // (undocumented)
+    'backgroundVerticalAlign'?: PublisherDocumentTextWidgetStyleBackgroundVerticalAlignEnum;
+    // (undocumented)
+    'borderBottomColor'?: string;
+    // (undocumented)
+    'borderBottomLeftRadius'?: PublisherDocumentTextWidgetStyleBorderBottomLeftRadius;
+    // (undocumented)
+    'borderBottomRightRadius'?: PublisherDocumentTextWidgetStyleBorderBottomRightRadius;
+    // (undocumented)
+    'borderBottomStyle'?: PublisherDocumentTextWidgetStyleBorderBottomStyleEnum;
+    // (undocumented)
+    'borderBottomWidth'?: number;
+    // (undocumented)
+    'borderColor'?: string;
+    // (undocumented)
+    'borderLeftColor'?: string;
+    // (undocumented)
+    'borderLeftStyle'?: PublisherDocumentTextWidgetStyleBorderLeftStyleEnum;
+    // (undocumented)
+    'borderLeftWidth'?: number;
+    // (undocumented)
+    'borderRadius'?: PublisherDocumentTextWidgetStyleBorderRadius;
+    // (undocumented)
+    'borderRightColor'?: string;
+    // (undocumented)
+    'borderRightStyle'?: PublisherDocumentTextWidgetStyleBorderRightStyleEnum;
+    // (undocumented)
+    'borderRightWidth'?: number;
+    // (undocumented)
+    'borderStyle'?: PublisherDocumentTextWidgetStyleBorderStyleEnum;
+    // (undocumented)
+    'borderTopColor'?: string;
+    // (undocumented)
+    'borderTopLeftRadius'?: PublisherDocumentTextWidgetStyleBorderTopLeftRadius;
+    // (undocumented)
+    'borderTopRightRadius'?: PublisherDocumentTextWidgetStyleBorderTopRightRadius;
+    // (undocumented)
+    'borderTopStyle'?: PublisherDocumentTextWidgetStyleBorderTopStyleEnum;
+    // (undocumented)
+    'borderTopWidth'?: number;
+    // (undocumented)
+    'borderWidth'?: number;
+    // (undocumented)
+    'fontSize'?: number;
+    // (undocumented)
+    'fontStyle'?: PublisherDocumentTextWidgetStyleFontStyleEnum;
+    // (undocumented)
+    'fontWeight'?: number;
+    // (undocumented)
+    'horizontalAlign'?: PublisherDocumentTextWidgetStyleHorizontalAlignEnum;
+    // (undocumented)
+    'letterSpacing'?: number;
+    // (undocumented)
+    'lineHeight'?: number;
+    // (undocumented)
+    'opacity'?: number;
+    // (undocumented)
+    'padding'?: PublisherDocumentTextWidgetStylePadding;
+    // (undocumented)
+    'paddingBottom'?: PublisherDocumentTextWidgetStylePaddingBottom;
+    // (undocumented)
+    'paddingLeft'?: PublisherDocumentTextWidgetStylePaddingLeft;
+    // (undocumented)
+    'paddingRight'?: PublisherDocumentTextWidgetStylePaddingRight;
+    // (undocumented)
+    'paddingTop'?: PublisherDocumentTextWidgetStylePaddingTop;
+    // (undocumented)
+    'shadow'?: string;
+    // (undocumented)
+    'shadowBlur'?: number;
+    // (undocumented)
+    'shadowColor'?: string;
+    // (undocumented)
+    'shadowOpacity'?: number;
+    // (undocumented)
+    'shadowSpread'?: number;
+    // (undocumented)
+    'shadowX'?: number;
+    // (undocumented)
+    'shadowY'?: number;
+    // (undocumented)
+    'textColor'?: string;
+    // (undocumented)
+    'textOverflow'?: PublisherDocumentTextWidgetStyleTextOverflowEnum;
+    // (undocumented)
+    'textStyle'?: PublisherDocumentTextWidgetStyleTextStyleEnum;
+    // (undocumented)
+    'textTransform'?: PublisherDocumentTextWidgetStyleTextTransformEnum;
+    // (undocumented)
+    'verticalAlign'?: PublisherDocumentTextWidgetStyleVerticalAlignEnum;
+}
+
+// @public (undocumented)
+export type PublisherDocumentTextWidgetStyleBackgroundFitEnum = 'cover' | 'contain' | 'fill' | 'tile';
+
+// @public (undocumented)
+export type PublisherDocumentTextWidgetStyleBackgroundHorizontalAlignEnum = 'left' | 'center' | 'right';
+
+// @public (undocumented)
+export type PublisherDocumentTextWidgetStyleBackgroundVerticalAlignEnum = 'top' | 'center' | 'bottom';
+
+// @public
+export type PublisherDocumentTextWidgetStyleBorderBottomLeftRadius = number | string;
+
+// @public
+export type PublisherDocumentTextWidgetStyleBorderBottomRightRadius = number | string;
+
+// @public (undocumented)
+export type PublisherDocumentTextWidgetStyleBorderBottomStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+
+// @public (undocumented)
+export type PublisherDocumentTextWidgetStyleBorderLeftStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+
+// @public
+export type PublisherDocumentTextWidgetStyleBorderRadius = number | string;
+
+// @public (undocumented)
+export type PublisherDocumentTextWidgetStyleBorderRightStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+
+// @public (undocumented)
+export type PublisherDocumentTextWidgetStyleBorderStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+
+// @public
+export type PublisherDocumentTextWidgetStyleBorderTopLeftRadius = number | string;
+
+// @public
+export type PublisherDocumentTextWidgetStyleBorderTopRightRadius = number | string;
+
+// @public (undocumented)
+export type PublisherDocumentTextWidgetStyleBorderTopStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+
+// @public (undocumented)
+export type PublisherDocumentTextWidgetStyleFontStyleEnum = 'normal' | 'italic';
+
+// @public (undocumented)
+export type PublisherDocumentTextWidgetStyleHorizontalAlignEnum = 'left' | 'center' | 'right' | 'justify';
+
+// @public
+export type PublisherDocumentTextWidgetStylePadding = number | string;
+
+// @public
+export type PublisherDocumentTextWidgetStylePaddingBottom = number | string;
+
+// @public
+export type PublisherDocumentTextWidgetStylePaddingLeft = number | string;
+
+// @public
+export type PublisherDocumentTextWidgetStylePaddingRight = number | string;
+
+// @public
+export type PublisherDocumentTextWidgetStylePaddingTop = number | string;
+
+// @public (undocumented)
+export type PublisherDocumentTextWidgetStyleTextOverflowEnum = 'shrink' | 'clip' | 'ellipsis';
+
+// @public (undocumented)
+export type PublisherDocumentTextWidgetStyleTextStyleEnum = 'title' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'largeText' | 'normalText' | 'smallText';
+
+// @public (undocumented)
+export type PublisherDocumentTextWidgetStyleTextTransformEnum = 'none' | 'uppercase' | 'lowercase' | 'capitalize';
+
+// @public (undocumented)
+export type PublisherDocumentTextWidgetStyleVerticalAlignEnum = 'top' | 'center' | 'bottom';
+
+// @public (undocumented)
+export type PublisherDocumentTextWidgetTypeEnum = 'text';
+
+// @public
+export interface PublisherDocumentTitleWidget {
+    'id': string;
+    'locked'?: boolean;
+    'markdown'?: string;
+    // (undocumented)
+    'placeholder'?: PublisherDocumentWidgetPlaceholder;
+    // (undocumented)
+    'proportion'?: number;
+    // (undocumented)
+    'style'?: PublisherDocumentTextWidgetStyle;
+    // (undocumented)
+    'type': PublisherDocumentTitleWidgetTypeEnum;
+}
+
+// @public (undocumented)
+export type PublisherDocumentTitleWidgetTypeEnum = 'title';
+
+// @public (undocumented)
+export interface PublisherDocumentVisibility {
+    // (undocumented)
+    'visible'?: boolean;
+}
+
+// @public
+export interface PublisherDocumentVisualizationDisplay {
+    // (undocumented)
+    'dataLabels'?: PublisherDocumentAutoVisibility;
+    // (undocumented)
+    'dataPoints'?: PublisherDocumentAutoVisibility;
+    // (undocumented)
+    'gridlines'?: PublisherDocumentVisibility;
+    // (undocumented)
+    'legend'?: PublisherDocumentLegendDisplay;
+    // (undocumented)
+    'secondaryYAxis'?: PublisherDocumentAxisDisplay;
+    // (undocumented)
+    'xAxis'?: PublisherDocumentAxisDisplay;
+    // (undocumented)
+    'yAxis'?: PublisherDocumentAxisDisplay;
+}
+
+// @public
+export interface PublisherDocumentVisualizationRef {
+    // (undocumented)
+    'identifier': string;
+    // (undocumented)
+    'type': PublisherDocumentVisualizationRefTypeEnum;
+}
+
+// @public (undocumented)
+export type PublisherDocumentVisualizationRefTypeEnum = 'insight';
+
+// @public
+export interface PublisherDocumentVisualizationStyle {
+    // (undocumented)
+    'backgroundColor'?: string;
+    // (undocumented)
+    'backgroundFit'?: PublisherDocumentVisualizationStyleBackgroundFitEnum;
+    // (undocumented)
+    'backgroundHorizontalAlign'?: PublisherDocumentVisualizationStyleBackgroundHorizontalAlignEnum;
+    // (undocumented)
+    'backgroundImage'?: string;
+    // (undocumented)
+    'backgroundImageOpacity'?: number;
+    // (undocumented)
+    'backgroundOffset'?: number;
+    // (undocumented)
+    'backgroundOffsetBottom'?: number;
+    // (undocumented)
+    'backgroundOffsetLeft'?: number;
+    // (undocumented)
+    'backgroundOffsetRight'?: number;
+    // (undocumented)
+    'backgroundOffsetTop'?: number;
+    // (undocumented)
+    'backgroundOpacity'?: number;
+    // (undocumented)
+    'backgroundVerticalAlign'?: PublisherDocumentVisualizationStyleBackgroundVerticalAlignEnum;
+    // (undocumented)
+    'borderBottomColor'?: string;
+    // (undocumented)
+    'borderBottomLeftRadius'?: PublisherDocumentVisualizationStyleBorderBottomLeftRadius;
+    // (undocumented)
+    'borderBottomRightRadius'?: PublisherDocumentVisualizationStyleBorderBottomRightRadius;
+    // (undocumented)
+    'borderBottomStyle'?: PublisherDocumentVisualizationStyleBorderBottomStyleEnum;
+    // (undocumented)
+    'borderBottomWidth'?: number;
+    // (undocumented)
+    'borderColor'?: string;
+    // (undocumented)
+    'borderLeftColor'?: string;
+    // (undocumented)
+    'borderLeftStyle'?: PublisherDocumentVisualizationStyleBorderLeftStyleEnum;
+    // (undocumented)
+    'borderLeftWidth'?: number;
+    // (undocumented)
+    'borderRadius'?: PublisherDocumentVisualizationStyleBorderRadius;
+    // (undocumented)
+    'borderRightColor'?: string;
+    // (undocumented)
+    'borderRightStyle'?: PublisherDocumentVisualizationStyleBorderRightStyleEnum;
+    // (undocumented)
+    'borderRightWidth'?: number;
+    // (undocumented)
+    'borderStyle'?: PublisherDocumentVisualizationStyleBorderStyleEnum;
+    // (undocumented)
+    'borderTopColor'?: string;
+    // (undocumented)
+    'borderTopLeftRadius'?: PublisherDocumentVisualizationStyleBorderTopLeftRadius;
+    // (undocumented)
+    'borderTopRightRadius'?: PublisherDocumentVisualizationStyleBorderTopRightRadius;
+    // (undocumented)
+    'borderTopStyle'?: PublisherDocumentVisualizationStyleBorderTopStyleEnum;
+    // (undocumented)
+    'borderTopWidth'?: number;
+    // (undocumented)
+    'borderWidth'?: number;
+    // (undocumented)
+    'chart'?: PublisherDocumentChartStyle;
+    // (undocumented)
+    'headline'?: PublisherDocumentHeadlineStyle;
+    // (undocumented)
+    'opacity'?: number;
+    // (undocumented)
+    'padding'?: PublisherDocumentVisualizationStylePadding;
+    // (undocumented)
+    'paddingBottom'?: PublisherDocumentVisualizationStylePaddingBottom;
+    // (undocumented)
+    'paddingLeft'?: PublisherDocumentVisualizationStylePaddingLeft;
+    // (undocumented)
+    'paddingRight'?: PublisherDocumentVisualizationStylePaddingRight;
+    // (undocumented)
+    'paddingTop'?: PublisherDocumentVisualizationStylePaddingTop;
+    // (undocumented)
+    'shadow'?: string;
+    // (undocumented)
+    'shadowBlur'?: number;
+    // (undocumented)
+    'shadowColor'?: string;
+    // (undocumented)
+    'shadowOpacity'?: number;
+    // (undocumented)
+    'shadowSpread'?: number;
+    // (undocumented)
+    'shadowX'?: number;
+    // (undocumented)
+    'shadowY'?: number;
+    // (undocumented)
+    'table'?: PublisherDocumentTableStyle;
+}
+
+// @public (undocumented)
+export type PublisherDocumentVisualizationStyleBackgroundFitEnum = 'cover' | 'contain' | 'fill' | 'tile';
+
+// @public (undocumented)
+export type PublisherDocumentVisualizationStyleBackgroundHorizontalAlignEnum = 'left' | 'center' | 'right';
+
+// @public (undocumented)
+export type PublisherDocumentVisualizationStyleBackgroundVerticalAlignEnum = 'top' | 'center' | 'bottom';
+
+// @public
+export type PublisherDocumentVisualizationStyleBorderBottomLeftRadius = number | string;
+
+// @public
+export type PublisherDocumentVisualizationStyleBorderBottomRightRadius = number | string;
+
+// @public (undocumented)
+export type PublisherDocumentVisualizationStyleBorderBottomStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+
+// @public (undocumented)
+export type PublisherDocumentVisualizationStyleBorderLeftStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+
+// @public
+export type PublisherDocumentVisualizationStyleBorderRadius = number | string;
+
+// @public (undocumented)
+export type PublisherDocumentVisualizationStyleBorderRightStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+
+// @public (undocumented)
+export type PublisherDocumentVisualizationStyleBorderStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+
+// @public
+export type PublisherDocumentVisualizationStyleBorderTopLeftRadius = number | string;
+
+// @public
+export type PublisherDocumentVisualizationStyleBorderTopRightRadius = number | string;
+
+// @public (undocumented)
+export type PublisherDocumentVisualizationStyleBorderTopStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+
+// @public
+export type PublisherDocumentVisualizationStylePadding = number | string;
+
+// @public
+export type PublisherDocumentVisualizationStylePaddingBottom = number | string;
+
+// @public
+export type PublisherDocumentVisualizationStylePaddingLeft = number | string;
+
+// @public
+export type PublisherDocumentVisualizationStylePaddingRight = number | string;
+
+// @public
+export type PublisherDocumentVisualizationStylePaddingTop = number | string;
+
+// @public
+export interface PublisherDocumentVisualizationWidget {
+    'altText'?: string;
+    // (undocumented)
+    'dateDataSet'?: PublisherDocumentDataSetRef;
+    // (undocumented)
+    'display'?: PublisherDocumentVisualizationDisplay;
+    'filters'?: Array<PublisherDocumentFilter>;
+    'id': string;
+    'ignoreDocumentFilters'?: Array<PublisherDocumentFilterReference>;
+    // (undocumented)
+    'ignoreDocumentPeriod'?: boolean;
+    'locked'?: boolean;
+    // (undocumented)
+    'placeholder'?: PublisherDocumentWidgetPlaceholder;
+    // (undocumented)
+    'proportion'?: number;
+    // (undocumented)
+    'style'?: PublisherDocumentVisualizationStyle;
+    // (undocumented)
+    'title'?: PublisherDocumentWidgetTitle;
+    // (undocumented)
+    'type': PublisherDocumentVisualizationWidgetTypeEnum;
+    // (undocumented)
+    'visualization'?: PublisherDocumentVisualizationRef;
+}
+
+// @public (undocumented)
+export type PublisherDocumentVisualizationWidgetTypeEnum = 'visualization';
+
+// @public
+export interface PublisherDocumentWidgetPlaceholder {
+    // (undocumented)
+    'hint'?: string;
+    // (undocumented)
+    'required'?: boolean;
+}
+
+// @public
+export interface PublisherDocumentWidgetTitle {
+    // (undocumented)
+    'style'?: PublisherDocumentTextStyle;
+    'text'?: string;
+    'visible'?: boolean;
+}
 
 // @public (undocumented)
 export type QualityIssueSeverityEnum = 'WARNING' | 'INFO';
@@ -45832,6 +47796,7 @@ export interface ReportExportExportInterface {
 export class ReportingSettingsApi extends MetadataBaseApi implements ReportingSettingsApiInterface {
     resolveAllSettingsWithoutWorkspace(requestParameters?: ReportingSettingsApiResolveAllSettingsWithoutWorkspaceRequest, options?: AxiosRequestConfig): AxiosPromise<ResolvedSetting[]>;
     resolveSettingsWithoutWorkspace(requestParameters: ReportingSettingsApiResolveSettingsWithoutWorkspaceRequest, options?: AxiosRequestConfig): AxiosPromise<ResolvedSetting[]>;
+    validateEmbeddingOrigin(requestParameters: ReportingSettingsApiValidateEmbeddingOriginRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateEmbeddingOriginResponse>;
 }
 
 // @public
@@ -45850,6 +47815,7 @@ export function ReportingSettingsApiAxiosParamCreator_ResolveSettingsWithoutWork
 export interface ReportingSettingsApiInterface {
     resolveAllSettingsWithoutWorkspace(requestParameters: ReportingSettingsApiResolveAllSettingsWithoutWorkspaceRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ResolvedSetting>>;
     resolveSettingsWithoutWorkspace(requestParameters: ReportingSettingsApiResolveSettingsWithoutWorkspaceRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ResolvedSetting>>;
+    validateEmbeddingOrigin(requestParameters: ReportingSettingsApiValidateEmbeddingOriginRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateEmbeddingOriginResponse>;
 }
 
 // @public
@@ -45864,6 +47830,11 @@ export interface ReportingSettingsApiResolveSettingsWithoutWorkspaceRequest {
 }
 
 // @public
+export interface ReportingSettingsApiValidateEmbeddingOriginRequest {
+    readonly validateEmbeddingOriginRequest: ValidateEmbeddingOriginRequest;
+}
+
+// @public
 export interface ResolvedSetting {
     'content'?: object | null;
     // @deprecated
@@ -45872,7 +47843,7 @@ export interface ResolvedSetting {
 }
 
 // @public (undocumented)
-export type ResolvedSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE';
+export type ResolvedSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE';
 
 // @public
 export interface ResolveSettingsRequest {
@@ -46083,6 +48054,9 @@ export interface ScanModelDeclarativeTable {
     'id': string;
     'namePrefix'?: string;
     'path': Array<string>;
+    'properties'?: {
+        [key: string]: string;
+    };
     'type': string;
 }
 
@@ -48390,6 +50364,16 @@ export interface UserSettingsApiUpdateEntityUserSettingsRequest {
 export interface ValidateByItem {
     'id': string;
     'type': string;
+}
+
+// @public
+export interface ValidateEmbeddingOriginRequest {
+    'origin': string;
+}
+
+// @public
+export interface ValidateEmbeddingOriginResponse {
+    'valid': boolean;
 }
 
 // @public (undocumented)

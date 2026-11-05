@@ -32,7 +32,7 @@ export type IDeleteReportFinishedAction = ReturnType<typeof deleteReportFinished
 
 export enum DeleteReportFailureReason {
     UNKNOWN = "UNKNOWN",
-    FAILED_TO_DELETE_REFERENCED_REPORT = "FAILED_TO_DELETE_REFERENCED_REPORT",
+    FORBIDDEN = "FORBIDDEN",
 }
 
 export const deleteReportFailed = createAction(

@@ -12,12 +12,10 @@ import {
 } from "@gooddata/sdk-ui-semantic-search";
 
 import { CatalogUiActions } from "../../sagas/catalog/catalog_ui_actions.js";
-import { getLinkToDatasourcePage } from "../../selectors/data_page_selector.js";
 import {
     enableCatalogSmartSearchResults as enableCatalogSmartSearchResultsSelector,
     enableEnhancedInsightPicker,
     getCatalogGroupsExpanded,
-    isFreemiumEdition as isFreemiumEditionSelector,
 } from "../../selectors/feature_flag_selector.js";
 import { canManageProject as canManageProjectSelector } from "../../selectors/permissions_selector.js";
 import {
@@ -57,8 +55,6 @@ export function Catalog() {
     const updatedItemsCount = useSelector(getUpdatedItemsCount);
     const isWorkspaceEmpty = useSelector(isWorkspaceEmptySelector);
     const canManageProject = useSelector(canManageProjectSelector);
-    const isFreemiumEdition = useSelector(isFreemiumEditionSelector);
-    const linkToDatasourcePage = useSelector(getLinkToDatasourcePage);
     const shouldUnavailableItemsBeVisible = useSelector(shouldUnavailableItemsBeVisibleSelector);
     const enableCatalogSmartSearchResults = useSelector(enableCatalogSmartSearchResultsSelector);
     const isEnhancedInsightPickerEnabled = useSelector(enableEnhancedInsightPicker);
@@ -166,8 +162,6 @@ export function Catalog() {
             isWorkspaceEmpty={isWorkspaceEmpty}
             tabSelectionStates={tabSelectionStates}
             canManageProject={canManageProject}
-            isFreemiumEdition={isFreemiumEdition}
-            linkToDatasourcePage={linkToDatasourcePage}
             isEnhancedInsightPickerEnabled={isEnhancedInsightPickerEnabled}
         />
     );

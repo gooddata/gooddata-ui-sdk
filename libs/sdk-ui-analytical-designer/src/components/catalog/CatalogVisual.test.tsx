@@ -55,8 +55,6 @@ describe("CatalogVisual", () => {
         updatedItemsCount: 0,
         isWorkspaceEmpty: false,
         canManageProject: true,
-        isFreemiumEdition: false,
-        linkToDatasourcePage: "/data",
         tabSelectionStates: [true, false, false],
         isEnhancedInsightPickerEnabled: false,
     };

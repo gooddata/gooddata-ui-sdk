@@ -1017,6 +1017,8 @@
     "userManagement.workspace.permission.createAutomation.tooltip": "Adds CREATE_AUTOMATIONS permission to create automated alerts and scheduled exports.",
     "userManagement.workspace.permission.createComputedAttribute": "Computed attributes",
     "userManagement.workspace.permission.createComputedAttribute.tooltip": "Adds CREATE_COMPUTED_ATTRIBUTE permission to create and manage new computed attributes. To manage any other computed attribute, the user needs access to it.",
+    "userManagement.workspace.permission.createDocument": "Documents",
+    "userManagement.workspace.permission.createDocument.tooltip": "Adds CREATE_DOCUMENT permission to create documents in Reports and edit or delete the ones the user created. Editing or deleting documents created by others requires the Manage permission. To create new visualisations in a document, the user also needs the Visualisations permission.",
     "userManagement.workspace.permission.createMetric": "Metrics",
     "userManagement.workspace.permission.createMetric.tooltip": "Adds CREATE_METRIC permission to create and manage new metrics. To manage any other metric, the user needs access to it.",
     "userManagement.workspace.permission.createVisualization": "Visualisations",

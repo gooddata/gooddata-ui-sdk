@@ -56,10 +56,6 @@ const logConfigs: Record<string, ILogConfig> = {
     clearInsight: {
         action: "clears insight",
     },
-    openAsReport: {
-        action: "visualization open as report",
-        label: "success",
-    },
     exportResult: {
         action: "report export result",
         label: "success",
@@ -386,7 +382,6 @@ export const logVisualizationOpen = partial(logEvent, "open");
 export const logADClear = partial(logEvent, "clear");
 export const logADClearInsight = partial(logEvent, "clearInsight");
 export const logExportResult = partial(logEvent, "exportResult");
-export const logOpenAsReport = partial(logEvent, "openAsReport");
 export const logPoweredByGDClickedAdmin = partial(logEvent, "logPoweredByGDClickedAdmin");
 export const logPoweredByGDClickedNonAdmin = partial(logEvent, "logPoweredByGDClickedNonAdmin");
 export const logVisualizationExecuted = partial(logEvent, "executed");

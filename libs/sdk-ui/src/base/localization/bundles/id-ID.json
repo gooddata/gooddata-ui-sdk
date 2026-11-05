@@ -1017,6 +1017,8 @@
     "userManagement.workspace.permission.createAutomation.tooltip": "Menambahkan izin CREATE_AUTOMATIONS untuk membuat peringatan otomatis dan ekspor terjadwal.",
     "userManagement.workspace.permission.createComputedAttribute": "Atribut yang dihitung",
     "userManagement.workspace.permission.createComputedAttribute.tooltip": "Menambahkan izin CREATE_COMPUTED_ATTRIBUTE untuk membuat dan mengelola atribut baru yang dihitung. Untuk mengelola atribut lain yang dihitung, pengguna memerlukan akses ke atribut tersebut.",
+    "userManagement.workspace.permission.createDocument": "Dokumen",
+    "userManagement.workspace.permission.createDocument.tooltip": "Menambahkan izin CREATE_DOCUMENT untuk membuat dokumen di Reports serta mengedit atau menghapus dokumen yang dibuat pengguna. Untuk mengedit atau menghapus dokumen yang dibuat oleh pengguna lain, diperlukan izin Kelola. Untuk membuat visualisasi baru dalam dokumen, pengguna juga memerlukan izin Visualisasi.",
     "userManagement.workspace.permission.createMetric": "Metrik",
     "userManagement.workspace.permission.createMetric.tooltip": "Menambahkan izin CREATE_METRIC untuk membuat dan mengelola metrik baru. Untuk mengelola metrik lainnya, pengguna memerlukan akses ke metrik tersebut.",
     "userManagement.workspace.permission.createVisualization": "Visualisasi",

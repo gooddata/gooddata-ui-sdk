@@ -6,7 +6,7 @@
 // component is in the root entry.
 
 export { Root } from "./Root.js";
-export { store, startSagas, subscribeControls, sagaMiddleware } from "./reduxStore.js";
+export { store, startSagas, subscribeControls } from "./reduxStore.js";
 export { getHelpMenuItems, getTranslatedHelpMenuItemsForLocale } from "./utils/appHeader.js";
 export { type IAdHostBackend, type IApiToken, adoptHostBackend, resetBackend } from "./backend.js";
 export { emitApiTokenIsAboutToExpire } from "./postMessageApi/outgoing/set_api_token_events.js";
@@ -15,7 +15,6 @@ export { setEmbedded } from "./actions/embedded_actions.js";
 export { resetForPluggableMount } from "./actions/reset_for_pluggable_mount_actions.js";
 export { setFeatureFlagsItems } from "./actions/featureFlags_actions.js";
 export { setRouteProjectId } from "./store/router/router_actions.js";
-export { useAppMode } from "./appMode/appMode.js";
 export { handleHostNavigationRequest } from "./appMode/handleHostNavigationRequest.js";
 export { clearPendingHostNavigation } from "./appMode/pendingHostNavigation.js";
 export {

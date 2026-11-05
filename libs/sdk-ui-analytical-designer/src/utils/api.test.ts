@@ -7,7 +7,7 @@ import { type IAnalyticalWorkspace } from "@gooddata/sdk-backend-spi";
 
 import { adoptHostBackend, resetBackend } from "../backend.js";
 
-import { checkMetricOverrides, getMetricsEditorUrl, setupSessionId } from "./api.js";
+import { checkMetricOverrides, setupSessionId } from "./api.js";
 
 describe("setup XHR", () => {
     let xhr: { setRequestHeader: Mock };
@@ -23,21 +23,6 @@ describe("setup XHR", () => {
     it("should setup xhr with session id", () => {
         setupSessionId(xhr, "id");
         expect(getFirstArg(xhr.setRequestHeader)).toEqual("X-GDC-REQUEST");
-    });
-});
-
-describe("getMetricsEditorUrl", () => {
-    const projectId = "projectId";
-    it("should return URL to metric editor with the given metric", () => {
-        expect(getMetricsEditorUrl(projectId, "metric/uri/")).toEqual(
-            `/#s=/gdc/projects/${projectId}|objectPage|metric/uri/`,
-        );
-    });
-
-    it("should return URL to metric editor for creating the new metric when no metric URI is provided", () => {
-        expect(getMetricsEditorUrl(projectId)).toEqual(
-            `/#s=/gdc/projects/${projectId}|objectPage|none|metric`,
-        );
     });
 });
 

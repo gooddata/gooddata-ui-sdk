@@ -24,6 +24,10 @@ const declarativeKeys: Record<DeclarativePublisherEntityKindV2, ReadonlySet<stri
         version: true,
         period: true,
         content: true,
+        createdAt: true,
+        createdBy: true,
+        modifiedAt: true,
+        modifiedBy: true,
     } satisfies Record<keyof DeclarativePublisherDocument, true>),
     documentTemplate: keySet({
         id: true,
@@ -46,6 +50,19 @@ const declarativeKeys: Record<DeclarativePublisherEntityKindV2, ReadonlySet<stri
         isDefault: true,
     }),
 };
+
+// The backend sets these audit keys on a stored document. The sdk-model definition has them under
+// other names, so they are renamed for its validator, and its issues are renamed back.
+const auditKeyToModelKey: Readonly<Record<string, string>> = {
+    createdAt: "created",
+    createdBy: "createdBy",
+    modifiedAt: "updated",
+    modifiedBy: "updatedBy",
+};
+
+const modelKeyToAuditKey: Readonly<Record<string, string>> = Object.fromEntries(
+    Object.entries(auditKeyToModelKey).map(([auditKey, modelKey]) => [modelKey, auditKey]),
+);
 
 const kinds = Object.keys(declarativeKeys);
 
@@ -73,10 +90,20 @@ function isRecord(value: unknown): value is Record<string, unknown> {
     return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
-function onId(issue: IPublisherValidationIssueV2): IPublisherValidationIssueV2 {
-    return issue.path === "ref" || issue.path.startsWith("ref.")
-        ? { ...issue, path: `id${issue.path.slice("ref".length)}` }
-        : issue;
+function renamedPath(path: string, from: string, to: string): string | undefined {
+    return path === from || path.startsWith(`${from}.`) ? `${to}${path.slice(from.length)}` : undefined;
+}
+
+// An issue on the reference is reported on the id, and an issue on an audit key on its stored name.
+function onStoredKeys(issue: IPublisherValidationIssueV2): IPublisherValidationIssueV2 {
+    const renames: Array<[string, string]> = [["ref", "id"], ...Object.entries(modelKeyToAuditKey)];
+    for (const [from, to] of renames) {
+        const path = renamedPath(issue.path, from, to);
+        if (path !== undefined) {
+            return { ...issue, path };
+        }
+    }
+    return issue;
 }
 
 function unknownKeyIssues(
@@ -130,7 +157,16 @@ function asDefinition(
     kind: DeclarativePublisherEntityKindV2,
 ): Record<string, unknown> {
     const { id, ...rest } = entity;
-    const known = Object.fromEntries(Object.entries(rest).filter(([key]) => declarativeKeys[kind].has(key)));
+    const known = Object.fromEntries(
+        Object.entries(rest)
+            .filter(([key]) => declarativeKeys[kind].has(key))
+            // The api client allows a null audit date; the model leaves the key out instead.
+            .filter(([key, value]) => !(Object.hasOwn(auditKeyToModelKey, key) && value === null))
+            .map(([key, value]) => [
+                Object.hasOwn(auditKeyToModelKey, key) ? auditKeyToModelKey[key] : key,
+                value,
+            ]),
+    );
     const typed = { ...known, type: kind };
     return isPublisherEntityIdV2(id) && !isBackendDefaultPageTemplate(entity, kind)
         ? { ...typed, ref: idRef(id) }
@@ -145,7 +181,7 @@ function issuesOfKind(
     return [
         ...unknownKeyIssues(entity, knownKeys),
         ...idIssues(entity["id"]),
-        ...validatePublisherEntityV2(asDefinition(entity, kind)).map(onId),
+        ...validatePublisherEntityV2(asDefinition(entity, kind)).map(onStoredKeys),
     ];
 }
 

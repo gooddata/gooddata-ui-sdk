@@ -99,7 +99,7 @@ export function createStore(reducer = rootReducer) {
         },
     });
 
-    // Sagas are never auto-started — every caller (standalone bootstrap, the pluggable wrapper)
+    // Sagas are never auto-started — every caller (the pluggable module, the embedded component)
     // invokes startSagas() explicitly when ready.
     const startSagas = () => sagaMiddleware.run(sagas);
     const subscribeControls = (): (() => void) => subscribeToControlsState(store);

@@ -26,7 +26,7 @@ export function* replaceAttributeFilterItemSelectionHandler(
     ctx: DashboardContext,
     cmd: ReplaceAttributeFilterItemSelection,
 ): SagaIterator<void> {
-    const { filterLocalId, filter, isWorkingSelectionChange, isSelectionInvalid } = cmd.payload;
+    const { filterLocalId, filter, isWorkingSelectionChange, isSelectionInvalid, skipSync } = cmd.payload;
 
     // Validate that the filter exists using the wide selector
     const affectedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterItemByLocalId>> =
@@ -38,7 +38,7 @@ export function* replaceAttributeFilterItemSelectionHandler(
 
     const isApplyAllAtOnceEnabledAndSet: ReturnType<typeof selectIsApplyFiltersAllAtOnceEnabledAndSet> =
         yield select(selectIsApplyFiltersAllAtOnceEnabledAndSet);
-    const session: ITabSyncSession = yield call(beginTabSync);
+    const session: ITabSyncSession = yield call(beginTabSync, { enabled: !skipSync });
 
     yield call(putTabSynced, session, [
         tabsActions.replaceAttributeFilterItem({

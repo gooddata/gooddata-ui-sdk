@@ -719,9 +719,9 @@
         "text": "Failed to delete visualization, please try again.",
         "crowdinContext": "Error message when visualization deletion fails"
     },
-    "messages.failedToDeleteReferencedReportError": {
-        "text": "Visualizations used on KPI dashboards cannot be deleted. To delete this visualization, remove it from all dashboards.",
-        "crowdinContext": "Error message when trying to delete visualization that is referenced by KPI dashboards"
+    "messages.deleteReportForbiddenError": {
+        "text": "You don't have permission to delete this visualization.",
+        "crowdinContext": "Error message when the server refuses to delete a visualization because the user lacks permission to delete it"
     },
     "messages.saveReportSuccess": {
         "text": "Great! We saved your visualization.",
@@ -1347,10 +1347,6 @@
         "text": "This workspace contains no data.",
         "crowdinContext": "Message when workspace has no data available"
     },
-    "catalog.workspace_contains_no_data.link": {
-        "text": "Add data",
-        "crowdinContext": "Full sentence: \"This workspace contains no data. Add data\""
-    },
     "catalog.no_related_data_items_found": {
         "text": "No related data items found.",
         "crowdinContext": "Message when no related data items are found in catalog"
@@ -1430,14 +1426,6 @@
     "catalog.refresh.n_items_updated": {
         "text": "{count} {count, plural, one {item} other {items}} updated",
         "crowdinContext": "Refresh message showing changed items count. Example: '1 item changed' or '5 items changed'."
-    },
-    "catalog.add_calculated_measure": {
-        "text": "Create metric",
-        "crowdinContext": "Label of the button which redirects user to the different app (metric editor)"
-    },
-    "catalog.add_calculated_measure_long": {
-        "text": "Open the Metric Editor in a new window and create a metric.",
-        "crowdinContext": "Label of the button which redirects user to the different app (metric editor), with info about opening the new window"
     },
     "catalog.add_calculated_measure_disabled": {
         "text": "Metric cannot be created when the workspace does not contain any data.",
@@ -1799,10 +1787,6 @@
         "text": "Represents all your dates in workspace. Can group by Day, Week, Month, Quarter & Year.",
         "crowdinContext": "Description of common date dimension functionality in workspace context"
     },
-    "dashboard.catalog_item.view_details": {
-        "text": "View details",
-        "crowdinContext": "Detail button label in catalog item bubble help."
-    },
     "dashboard.catalog_item.edit_metric": {
         "text": "Edit",
         "crowdinContext": "Edit button in catalog item bubble help"
@@ -1930,10 +1914,6 @@
     "dashboard.message.workspace_empty.description_question": {
         "text": "The facts, metrics or attributes do not contain any data. Have you loaded the data?",
         "crowdinContext": "Question asking if data has been loaded for facts/metrics/attributes"
-    },
-    "dashboard.message.workspace_empty.description_link": {
-        "text": "The facts, metrics or attributes do not contain any data. Have you <dataLoadLink>loaded the data?</dataLoadLink>",
-        "crowdinContext": "Question about data loading with link to data loading instructions for facts/metrics/attributes"
     },
     "dashboard.message.workspace_empty.description": {
         "text": "The facts, metrics or attributes do not contain any data.",

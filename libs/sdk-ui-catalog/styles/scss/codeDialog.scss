@@ -152,5 +152,10 @@
         margin: 4px 0 0;
         padding-left: 20px;
         overflow-wrap: anywhere;
+
+        .gd-ui-kit-button__text {
+            white-space: normal;
+            text-align: start;
+        }
     }
 }

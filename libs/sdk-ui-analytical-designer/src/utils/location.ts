@@ -78,25 +78,18 @@ export function getRouteUri(state: IAppState, options: Partial<ICustomRouteParam
     return decodeURIComponent(`${getBaseUri(params)}${getQueryParams(params)}`);
 }
 
-// Host-shell URI for the current route: the host owns /workspace/<id>/analyze, so the
-// hash carries only the non-workspace bits, same shape the pluggable router emits.
-export function getInfoUri(status: string) {
-    return `/account.html#/info/${status}`;
-}
-
 export interface IUriResolverParams {
     projectId: string;
     location?: Location;
-    isRenamingProjectToWorkspace?: boolean;
 }
 
 export type UriResolver = (params: IUriResolverParams) => string;
 
 export function redirectTo(
     getUri: UriResolver,
-    { projectId, location = window.location, isRenamingProjectToWorkspace = false }: IUriResolverParams,
+    { projectId, location = window.location }: IUriResolverParams,
 ) {
-    location.href = getUri({ projectId, location, isRenamingProjectToWorkspace });
+    location.href = getUri({ projectId, location });
 }
 
 export function createRouteParams(customRouteParams: ICustomRouteParams): ICustomRouteParams {

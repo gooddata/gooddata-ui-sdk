@@ -9,12 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeBucketItem } from "../actions/dnd_actions.js";
 import { BUCKET_ITEM, FILTER_ITEM } from "../constants/drag_item_types.js";
 import { removeFilter } from "../sagas/filter_bar/filter_bar_ui_actions.js";
-import { canManageMetadata } from "../selectors/backend_capabilities_selector.js";
-import { getProjectId } from "../selectors/bootstrap_selector.js";
 import { enableEnhancedInsightPicker } from "../selectors/feature_flag_selector.js";
-import { getIsEmbedded } from "../selectors/meta_selector.js";
 import { canCreateMetric } from "../selectors/metric_permissions_selector.js";
-import { canManageMetric } from "../selectors/permissions_selector.js";
 import { isCatalogEmptyNoData } from "../store/catalog/catalog_selector.js";
 import { type FilterType } from "../store/filter_bar/filter_bar_types.js";
 import { type AppDispatch } from "../store/types.js";
@@ -25,18 +21,13 @@ import {
     type IInjectedDropTargetProps,
 } from "../typings/drag_and_drop.js";
 
-import { CreateMeasureLink } from "./catalog/blocks/CreateMeasureLink.js";
 import { CreateMetricButton } from "./catalog/blocks/CreateMetricButton.js";
 import { Trash } from "./catalog/blocks/Trash.js";
 import { Catalog } from "./catalog/Catalog.js";
 import { CatalogSidebarHeader } from "./catalogSidebar/CatalogSidebarToggle.js";
 
 interface ICatalogPanelStateProps {
-    canUserManageMetric: boolean;
     canUserCreateMetric: boolean;
-    isEmbeddedMode: boolean;
-    projectId: string;
-    isCreateMeasureLinkHidden?: boolean;
     noData: boolean;
     isEnhancedInsightPickerEnabled: boolean;
 }
@@ -68,13 +59,9 @@ export const dropConfig = {
 export function CatalogPanelBase({
     isDragging,
     isOver,
-    canUserManageMetric,
     canUserCreateMetric,
-    isEmbeddedMode,
-    projectId,
     onDropBucketItem,
     onDropFilterItem,
-    isCreateMeasureLinkHidden,
     noData,
     isEnhancedInsightPickerEnabled,
 }: ICatalogPanelProps) {
@@ -86,11 +73,7 @@ export function CatalogPanelBase({
                     {
                         isDragging,
                         isOver,
-                        canUserManageMetric,
                         canUserCreateMetric,
-                        isEmbeddedMode,
-                        projectId,
-                        isCreateMeasureLinkHidden,
                         noData,
                         onDropBucketItem,
                         onDropFilterItem,
@@ -104,18 +87,7 @@ export function CatalogPanelBase({
                 isOver: monitor.isOver(),
             }),
         }),
-        [
-            isDragging,
-            isOver,
-            canUserManageMetric,
-            canUserCreateMetric,
-            isEmbeddedMode,
-            projectId,
-            isCreateMeasureLinkHidden,
-            noData,
-            onDropBucketItem,
-            onDropFilterItem,
-        ],
+        [isDragging, isOver, canUserCreateMetric, noData, onDropBucketItem, onDropFilterItem],
     );
 
     const effectiveIsDragging = isDragging ?? canDrop;
@@ -135,9 +107,6 @@ export function CatalogPanelBase({
             <CatalogSidebarHeader />
             <div className={catalogPanelClasses}>
                 <Catalog />
-                {!isEmbeddedMode && !isCreateMeasureLinkHidden && canUserManageMetric ? (
-                    <CreateMeasureLink projectId={projectId} disabled={noData} />
-                ) : null}
                 {canUserCreateMetric ? <CreateMetricButton disabled={noData} /> : null}
             </div>
             <div className={trashPanelClasses}>
@@ -150,11 +119,7 @@ export function CatalogPanelBase({
 export function CatalogPanel(ownProps: IInjectedDropTargetProps) {
     const dispatch = useDispatch<AppDispatch>();
 
-    const projectId = useSelector(getProjectId);
-    const canUserManageMetric = useSelector(canManageMetric);
     const canUserCreateMetric = useSelector(canCreateMetric);
-    const isEmbeddedMode = useSelector(getIsEmbedded);
-    const canBackendManageMetadata = useSelector(canManageMetadata);
     const noData = useSelector(isCatalogEmptyNoData);
     const isEnhancedInsightPickerEnabled = useSelector(enableEnhancedInsightPicker);
 
@@ -174,11 +139,7 @@ export function CatalogPanel(ownProps: IInjectedDropTargetProps) {
     return (
         <CatalogPanelBase
             {...ownProps}
-            projectId={projectId}
-            canUserManageMetric={canUserManageMetric}
             canUserCreateMetric={canUserCreateMetric}
-            isEmbeddedMode={isEmbeddedMode}
-            isCreateMeasureLinkHidden={!canBackendManageMetadata}
             noData={noData}
             isEnhancedInsightPickerEnabled={isEnhancedInsightPickerEnabled}
             onDropBucketItem={onDropBucketItem}

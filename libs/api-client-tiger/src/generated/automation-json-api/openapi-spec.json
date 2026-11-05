@@ -4842,7 +4842,7 @@
                         ]
                     },
                     "url": {
-                        "maxLength": 255,
+                        "maxLength": 2048,
                         "pattern": "https?\\://.*",
                         "type": "string",
                         "description": "The webhook URL.",

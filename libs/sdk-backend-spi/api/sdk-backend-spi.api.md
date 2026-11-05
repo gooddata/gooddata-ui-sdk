@@ -100,7 +100,6 @@ import type { IDateFilter } from '@gooddata/sdk-model';
 import { IDateFilterConfig } from '@gooddata/sdk-model';
 import { IDateHierarchyTemplate } from '@gooddata/sdk-model';
 import { IDeclarativeLogicalModel } from '@gooddata/sdk-model';
-import { IDeclarativeWorkspaceLayout } from '@gooddata/sdk-model';
 import { IDefaultExportTemplate } from '@gooddata/sdk-model';
 import type { Identifier } from '@gooddata/sdk-model';
 import { IdentifierRef } from '@gooddata/sdk-model';
@@ -3665,7 +3664,6 @@ export interface IWorkspaceLocalizationService {
 export interface IWorkspaceLogicalModelService {
     getDatasets(includeParents: boolean): Promise<IDateDataset[]>;
     getDeclarativeModel(options?: IDeclarativeLogicalModelOptions): Promise<IDeclarativeLogicalModel>;
-    setDeclarativeLayout(layout: IDeclarativeWorkspaceLayout): Promise<void>;
     setDeclarativeModel(model: IDeclarativeLogicalModel): Promise<void>;
 }
 

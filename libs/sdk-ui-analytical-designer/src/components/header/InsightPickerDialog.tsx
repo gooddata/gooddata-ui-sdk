@@ -22,6 +22,10 @@ import { descriptionTooltipOpened } from "../../sagas/description_tooltip/descri
 import { isOwnershipSupported, supportsObjectUris } from "../../selectors/backend_capabilities_selector.js";
 import { getUserLoginMD5, getUserUri } from "../../selectors/bootstrap_selector.js";
 import { getMetadataTimeZone } from "../../selectors/feature_flag_selector.js";
+import {
+    canDeleteListedInsight,
+    shouldLoadListedInsightPermissions,
+} from "../../selectors/insight_delete_selector.js";
 import { getIsReadOnlyMode } from "../../store/embedding/embedding_selectors.js";
 import { type AppDispatch } from "../../store/types.js";
 
@@ -52,6 +56,8 @@ export function InsightPickerDialog({
     const hasOwnershipSupport = useSelector(isOwnershipSupported);
     const metadataTimeZone = useSelector(getMetadataTimeZone);
     const isReadOnly = useSelector(getIsReadOnlyMode);
+    const canDeleteInsight = useSelector(canDeleteListedInsight);
+    const includePermissions = useSelector(shouldLoadListedInsightPermissions);
 
     const dispatch = useDispatch<AppDispatch>();
     const onDeleteInsight = useCallback(
@@ -123,6 +129,7 @@ export function InsightPickerDialog({
                   title: intl.formatMessage({ id: "openReport.menu.delete" }),
                   isDestructive: true,
                   hasSeparator: true,
+                  isAvailable: canDeleteInsight,
                   onClick: (item: IInsightPickerItem) => {
                       setIsDialogOpen(false);
                       onDeleteInsight(toRef(item), item.title);
@@ -156,6 +163,7 @@ export function InsightPickerDialog({
                             selectedInsightId={openInsightId}
                             metadataTimeZone={metadataTimeZone}
                             enableSemanticSearch={isSemanticSearchEnabled}
+                            includePermissions={includePermissions}
                             width={740}
                             {...pickerState}
                             onSelect={handleSelect}

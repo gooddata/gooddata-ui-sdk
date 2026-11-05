@@ -448,7 +448,7 @@
     "notifications.panel.dashboardLinkHint": "Bu dışa aktarma için kullanılan Gösterge tablosunu aç",
     "notifications.panel.dashboardLink": "{dashboardTitle} kaynağı",
     "notifications.panel.downloadFilesHint": "Dışa aktarılmış dosyaları indir",
-    "notifications.filters.buttonLabel": "{count, plural, one {# filtre} other {# filtreler}}",
+    "notifications.filters.buttonLabel": "{count, plural, one {# filtre} other {# filtre}}",
     "notifications.filters.dialog.title": "Filtreler",
     "notifications.panel.triggers.title": "{triggeredCount}/{totalCount} öğeler için",
     "notifications.panel.triggers.dialog.newValue": "Yeni değer",

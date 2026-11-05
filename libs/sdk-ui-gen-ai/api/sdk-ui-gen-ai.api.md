@@ -294,6 +294,7 @@ export class CopilotHandler<TBuild extends string = CopilotBuildType> {
     getSnapshot: () => ICopilotSnapshot<TBuild>;
     getStatus: (scope: ICopilotScope<TBuild>) => CopilotStatus;
     handleEvent: (event: ChatEvent) => void;
+    hasDefinition: (target: ICopilotTarget<TBuild>) => boolean;
     isGenerationPending: (type: TBuild) => boolean;
     resetInteraction: () => void;
     resetTarget: (target: ICopilotTarget<TBuild>) => void;

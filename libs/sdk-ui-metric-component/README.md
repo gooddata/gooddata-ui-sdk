@@ -1,9 +1,7 @@
 # Metric component
 
-Metric component is a library for editing metrics in gdc-analytical-designer and gdc-meditor.
-Originally it was part of gdc-meditor and released as npm private package @gooddata/metric-component.
-The npm package is now obsolete as the library is now here in the monorepo, still used
-by both gdc-analytical-designer and gdc-meditor apps.
+Metric component is a library for editing metrics in the Analytical Designer
+(`@gooddata/sdk-ui-analytical-designer`) and the Metric Editor (`libs/gdc-metric-editor`).
 
 ## Development setup
 

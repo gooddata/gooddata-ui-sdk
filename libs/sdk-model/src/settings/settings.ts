@@ -1260,6 +1260,19 @@ export interface IFeatureFlags {
     enableEmbeddingWriteCommands?: boolean;
 
     /**
+     * Enable the origin validation of postMessage communication in embedded dashboards and Analytical Designer.
+     *
+     * @remarks
+     * When enabled, the embedded application accepts commands only from a parent origin that is in the
+     * organization embedding allowlist, and sends events only to that validated origin instead of `*`.
+     *
+     * This flag is temporary. It will be removed when origin validation is always on.
+     *
+     * Disabled by default.
+     */
+    enableEmbeddingOriginValidation?: boolean;
+
+    /**
      * Enable the localization overview in organization settings: settings split into subpages under an
      * expandable Settings group in the navigation, and the per-language usage overview.
      *

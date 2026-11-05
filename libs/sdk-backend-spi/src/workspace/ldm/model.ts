@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type IDeclarativeLogicalModel, type IDeclarativeWorkspaceLayout } from "@gooddata/sdk-model";
+import { type IDeclarativeLogicalModel } from "@gooddata/sdk-model";
 
 /**
  * Interface that represents logical model date dataset.
@@ -50,14 +50,4 @@ export interface IWorkspaceLogicalModelService {
      * @param model - the new logical data model
      */
     setDeclarativeModel(model: IDeclarativeLogicalModel): Promise<void>;
-
-    /**
-     * Replaces the logical data model and the analytical objects of the workspace in one request.
-     *
-     * @remarks
-     * Use this to provision a workspace from a layout that the backend exported, for example demo content.
-     *
-     * @param layout - the logical data model and the analytical objects
-     */
-    setDeclarativeLayout(layout: IDeclarativeWorkspaceLayout): Promise<void>;
 }

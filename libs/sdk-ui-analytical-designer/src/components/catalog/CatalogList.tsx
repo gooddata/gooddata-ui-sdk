@@ -34,8 +34,6 @@ export interface ICatalogListOwnProps {
     hiddenItemsCount: number;
     selectedTabNames: string;
     canManageProject: boolean;
-    isFreemiumEdition: boolean;
-    linkToDatasourcePage: string;
 }
 
 export type ICatalogListProps = ICatalogListOwnProps;
@@ -236,8 +234,6 @@ export const CatalogList = memo(function CatalogList(props: ICatalogListProps) {
         hiddenItemsCount,
         selectedTabNames,
         canManageProject,
-        isFreemiumEdition,
-        linkToDatasourcePage,
     } = props;
 
     const {
@@ -278,8 +274,6 @@ export const CatalogList = memo(function CatalogList(props: ICatalogListProps) {
                         isWorkspaceEmpty={isWorkspaceEmpty}
                         hiddenItemsCount={hiddenItemsCount}
                         canManageProject={canManageProject}
-                        isFreemiumEdition={isFreemiumEdition}
-                        linkToDatasourcePage={linkToDatasourcePage}
                     />
                 )
             ) : null}

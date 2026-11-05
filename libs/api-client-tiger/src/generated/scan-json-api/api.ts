@@ -181,6 +181,10 @@ export interface DeclarativeTable {
      */
     'path': Array<string>;
     /**
+     * Additional properties of the table that the data source passes on to the modeler and other callers. The data source decides which keys it sends. A caller uses the keys it understands and skips all other keys.
+     */
+    'properties'?: { [key: string]: string; };
+    /**
      * Table type: TABLE or VIEW.
      */
     'type': string;

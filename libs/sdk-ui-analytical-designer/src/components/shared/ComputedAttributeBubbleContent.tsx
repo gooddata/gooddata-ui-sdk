@@ -16,16 +16,12 @@ export type IComputedAttributeBubbleContentProps = IOrganizedCatalogTooltipDetai
  * both: the values first (like an attribute), the definition after (like a metric).
  */
 export function ComputedAttributeBubbleContent(props: IComputedAttributeBubbleContentProps) {
-    const { metricMaql, projectId, isRedirectAllowed } = props;
+    const { metricMaql } = props;
 
     return (
         <span>
             <TooltipValuesSection {...props} />
-            <MeasureBubbleContent
-                metricMaql={metricMaql}
-                projectId={projectId}
-                isRedirectAllowed={isRedirectAllowed}
-            />
+            <MeasureBubbleContent metricMaql={metricMaql} />
         </span>
     );
 }

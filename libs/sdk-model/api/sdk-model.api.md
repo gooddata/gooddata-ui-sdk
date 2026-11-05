@@ -3496,13 +3496,6 @@ export interface IDeclarativeWorkspaceDataFilterReference {
     filterId: IDeclarativeWorkspaceDataFilterIdentifier;
 }
 
-// @alpha
-export interface IDeclarativeWorkspaceLayout {
-    analytics: object;
-    // (undocumented)
-    ldm: IDeclarativeLogicalModel;
-}
-
 // @beta
 export interface IDefaultExportTemplate {
     id: string;
@@ -4015,6 +4008,7 @@ export interface IFeatureFlags {
     enableDrillToUrlByDefault?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
+    enableEmbeddingOriginValidation?: boolean;
     enableEmbeddingWriteCommands?: boolean;
     enableEnhancedInsightPicker?: boolean;
     enableExecutionCancelling?: boolean;

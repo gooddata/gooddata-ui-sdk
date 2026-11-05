@@ -1,9 +1,7 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type DeclarativeAnalyticsLayer } from "@gooddata/api-client-tiger";
 import {
     LayoutApi_GetLogicalModel,
-    LayoutApi_PutWorkspaceLayout,
     LayoutApi_SetLogicalModel,
 } from "@gooddata/api-client-tiger/endpoints/layout";
 import {
@@ -11,7 +9,7 @@ import {
     type IDeclarativeLogicalModelOptions,
     type IWorkspaceLogicalModelService,
 } from "@gooddata/sdk-backend-spi";
-import { type IDeclarativeLogicalModel, type IDeclarativeWorkspaceLayout } from "@gooddata/sdk-model";
+import { type IDeclarativeLogicalModel } from "@gooddata/sdk-model";
 
 import { convertDeclarativeLdm } from "../../../convertors/fromBackend/DeclarativeModelConverter.js";
 import { convertDeclarativeLdmToBackend } from "../../../convertors/toBackend/DeclarativeModelConverter.js";
@@ -54,19 +52,6 @@ export class TigerWorkspaceLogicalModelService implements IWorkspaceLogicalModel
             await LayoutApi_SetLogicalModel(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 declarativeModel: { ldm: convertDeclarativeLdmToBackend(model) },
-            });
-        });
-    }
-
-    setDeclarativeLayout(layout: IDeclarativeWorkspaceLayout): Promise<void> {
-        return this.authCall(async (client) => {
-            await LayoutApi_PutWorkspaceLayout(client.axios, client.basePath, {
-                workspaceId: this.workspace,
-                declarativeWorkspaceModel: {
-                    ldm: convertDeclarativeLdmToBackend(layout.ldm),
-                    // The model does not describe the analytics document. The caller provides a backend export.
-                    analytics: layout.analytics as DeclarativeAnalyticsLayer,
-                },
             });
         });
     }

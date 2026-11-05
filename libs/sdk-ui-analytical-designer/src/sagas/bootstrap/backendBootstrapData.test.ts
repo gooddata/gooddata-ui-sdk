@@ -104,15 +104,9 @@ const expected: IBootstrapData = {
     uiSettings: {
         organizationName: "Acme",
         organizationId: "org1",
-        displayProjects: true,
-        displayAccountPage: true,
         logoUrl: "/logo.svg",
-        faviconUrl: "",
-        appleTouchIconUrl: "",
         isBranded: true,
         documentationUrl: "https://www.gooddata.com/developers/cloud-native/doc/cloud/",
-        supportEmail: "tiger-beta@gooddata.com",
-        supportForumUrl: "https://support.gooddata.com/home",
     },
     project: {
         identifier: "ws1",

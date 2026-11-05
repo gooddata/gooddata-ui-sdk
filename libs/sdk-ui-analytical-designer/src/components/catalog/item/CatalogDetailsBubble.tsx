@@ -11,15 +11,10 @@ import { Bubble, BubbleHoverTrigger, Button, IconCopy, RichText, ScrollGradient 
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { type IShowAddMessagePayload, addMessage } from "../../../actions/messages_actions.js";
-import { COMPUTED_ATTRIBUTE } from "../../../constants/bucket.js";
 import { CatalogUiActions } from "../../../sagas/catalog/catalog_ui_actions.js";
 import { getCatalogBubbleItemCacheKey } from "../../../sagas/catalog/catalog_utils.js";
-import { canManageMetadata } from "../../../selectors/backend_capabilities_selector.js";
-import { getProjectId, getSeparators } from "../../../selectors/bootstrap_selector.js";
-import { getIsEmbedded } from "../../../selectors/meta_selector.js";
+import { getSeparators } from "../../../selectors/bootstrap_selector.js";
 import { canEditCatalogMetric } from "../../../selectors/metric_permissions_selector.js";
-import { canManageMetric } from "../../../selectors/permissions_selector.js";
-import { isEmbeddedFromKD } from "../../../selectors/route_selector.js";
 import {
     getAttributeHierarchiesWithCatalogItem,
     getItemTooltipDetails,
@@ -33,9 +28,7 @@ import {
     type IOrganizedCatalogTooltipDetailsMeasure,
 } from "../../../typings/catalog.js";
 import { type ICatalogEntry } from "../../../typings/state_objects.js";
-import { getMetricsEditorUrl } from "../../../utils/api.js";
 import { getCatalogItemTitle } from "../../../utils/translations.js";
-import { getWorkspaceRef } from "../../../utils/uri.js";
 import { AttributeBubbleContent } from "../../shared/AttributeBubbleContent.js";
 import { ComputedAttributeBubbleContent } from "../../shared/ComputedAttributeBubbleContent.js";
 import { FactBubbleContent } from "../../shared/FactBubbleContent.js";
@@ -107,11 +100,6 @@ const getBubbleDetails = (state: IAppState, item: ICatalogEntry) => {
 export const CatalogDetailsBubble = memo(function CatalogDetailsBubble({ item }: ICatalogDetailsBubbleProps) {
     const theme = useTheme();
 
-    const projectId = useSelector(getProjectId);
-    const isEmbeddedMode = useSelector(getIsEmbedded);
-    const isEmbeddedModeFromKD = useSelector(isEmbeddedFromKD);
-    const canUserManageMetric = useSelector(canManageMetric);
-    const canBackendManageMetadata = useSelector(canManageMetadata);
     const bubbleDetails = useSelector((state: IAppState) => getBubbleDetails(state, item)) ?? null;
     // memoised per item: getAttributeHierarchiesWithCatalogItem builds a filtering selector, so a
     // fresh one on every render would hand useSelector a new array each time it is called
@@ -140,8 +128,6 @@ export const CatalogDetailsBubble = memo(function CatalogDetailsBubble({ item }:
     );
 
     const intl = useIntl();
-
-    const workspacesRef = getWorkspaceRef(true);
 
     const bubbleTimeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
 
@@ -219,46 +205,9 @@ export const CatalogDetailsBubble = memo(function CatalogDetailsBubble({ item }:
         );
     };
 
-    const openMetricsEditor = () => {
-        const itemUri = item.uri;
-        const url = getMetricsEditorUrl(projectId, itemUri, workspacesRef);
-        window.open(`${window.location.origin}${url}`, "_blank");
-    };
-
-    const isRedirectAllowed = () => {
-        const itemUri = item.uri;
-
-        return (
-            // The redirect opens the metric editor, which loads a measure. A computed attribute
-            // borrows the metric bubble but is not one, so the editor would 404 on its uri.
-            item.type !== COMPUTED_ATTRIBUTE &&
-            (!isEmbeddedMode || isEmbeddedModeFromKD) &&
-            canBackendManageMetadata &&
-            canUserManageMetric &&
-            !!itemUri
-        );
-    };
-
-    const renderTitle = () => {
-        const title = getCatalogItemTitle(item, intl);
-
-        if (isRedirectAllowed()) {
-            return (
-                <a
-                    className="gd-button-link s-adi-catalog-tooltip-title-redirect"
-                    href={getMetricsEditorUrl(projectId, item.uri, workspacesRef)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <h3 className="s-adi-catalog-tooltip-heading">
-                        <span className="gd-button-text">{title}</span>
-                    </h3>
-                </a>
-            );
-        }
-
-        return <h3 className="s-adi-catalog-tooltip-heading">{title}</h3>;
-    };
+    const renderTitle = () => (
+        <h3 className="s-adi-catalog-tooltip-heading">{getCatalogItemTitle(item, intl)}</h3>
+    );
 
     const renderDetails = () => {
         const type = item.type;
@@ -266,13 +215,7 @@ export const CatalogDetailsBubble = memo(function CatalogDetailsBubble({ item }:
         switch (type) {
             case "metric":
             case "measure":
-                return (
-                    <MeasureBubbleContent
-                        metricMaql={getItemDetails("metricMaql")}
-                        projectId={projectId}
-                        isRedirectAllowed={isRedirectAllowed()}
-                    />
-                );
+                return <MeasureBubbleContent metricMaql={getItemDetails("metricMaql")} />;
             // A computed attribute is an attribute with values AND a MAQL definition: the values
             // are shown first like an attribute's, then the definition the same way a metric's is
             // - with the referenced objects resolved to their titles.
@@ -284,8 +227,6 @@ export const CatalogDetailsBubble = memo(function CatalogDetailsBubble({ item }:
                         attrElementsNumberFormat={getItemDetails("attrElementsNumberFormat")}
                         separators={separators}
                         metricMaql={getItemDetails("metricMaql")}
-                        projectId={projectId}
-                        isRedirectAllowed={isRedirectAllowed()}
                     />
                 );
             case "attribute":
@@ -417,15 +358,6 @@ export const CatalogDetailsBubble = memo(function CatalogDetailsBubble({ item }:
                         {renderHierarchies()}
                     </ScrollGradient>
                     <div className="adi-catalog-tooltip-footer">
-                        {!!isRedirectAllowed() && (
-                            <Button
-                                className="gd-button-secondary gd-button-small s-adi-catalog-tooltip-button-redirect"
-                                value={intl.formatMessage({
-                                    id: "dashboard.catalog_item.view_details",
-                                })}
-                                onClick={openMetricsEditor}
-                            />
-                        )}
                         {(type === "measure" || type === "metric") && (
                             <div className="adi-catalog-tooltip-metric-editor-edit">
                                 <Button

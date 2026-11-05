@@ -4299,6 +4299,14 @@
                     "yaxis_secondary_visible": { "type": "boolean" },
                     "yaxis_secondary_labels": { "type": "boolean" },
                     "yaxis_secondary_show_on_right": { "type": "boolean" },
+                    "xaxis_secondary_format": { "type": "string" },
+                    "xaxis_secondary_max": { "type": "number" },
+                    "xaxis_secondary_min": { "type": "number" },
+                    "xaxis_secondary_name_position": { "type": "string" },
+                    "xaxis_secondary_name_visible": { "type": "boolean" },
+                    "xaxis_secondary_rotation": { "type": "string" },
+                    "xaxis_secondary_visible": { "type": "boolean" },
+                    "xaxis_secondary_labels": { "type": "boolean" },
                     "tooltip_text": { "type": "string" },
                     "viewport": {
                         "type": "string",
@@ -9494,7 +9502,7 @@
                         "format": { "type": "string", "description": "Metric value default format" },
                         "axis": {
                             "type": "string",
-                            "description": "Axis to use for this bucket. Only applicable for \"combo\" charts.",
+                            "description": "Axis to use for this bucket. Only applicable for \"combo\", \"line\", \"column\" and \"bar\" charts. The secondary axis is on the right, or on the top for \"bar\" charts.",
                             "enum": ["primary", "secondary"]
                         },
                         "display_as": {

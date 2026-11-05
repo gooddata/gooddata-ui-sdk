@@ -2450,7 +2450,7 @@
                         "description": "Bad request payload."
                     },
                     "404": {
-                        "description": "Conversation or report draft not found, the report builder or Reports app feature is disabled, or the user lacks MANAGE on the workspace."
+                        "description": "Conversation or report draft not found, the report builder or Reports app feature is disabled, or the user lacks CREATE_DOCUMENT on the workspace."
                     },
                     "422": {
                         "description": "Validation Error",
@@ -2551,7 +2551,7 @@
                         "description": "Bad request payload."
                     },
                     "404": {
-                        "description": "Conversation or document draft not found, the report builder or Reports app feature is disabled, or the user lacks MANAGE on the workspace."
+                        "description": "Conversation or document draft not found, the report builder or Reports app feature is disabled, or the user lacks CREATE_DOCUMENT on the workspace."
                     },
                     "422": {
                         "description": "Validation Error",
@@ -4224,6 +4224,81 @@
                 },
                 "type": "object",
                 "title": "ChartFill"
+            },
+            "ClarifyingAnswer": {
+                "properties": {
+                    "answer": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/SingleChoiceAnswer"
+                            }
+                        ],
+                        "title": "Answer",
+                        "description": "The option the user picked.",
+                        "discriminator": {
+                            "propertyName": "type",
+                            "mapping": {
+                                "singleChoice": "#/components/schemas/SingleChoiceAnswer"
+                            }
+                        }
+                    },
+                    "questionIndex": {
+                        "type": "integer",
+                        "title": "Questionindex",
+                        "description": "Position of the question on the questions item, from zero."
+                    },
+                    "questionText": {
+                        "type": "string",
+                        "title": "Questiontext",
+                        "description": "The question, as stored on the questions item."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "questionIndex",
+                    "questionText",
+                    "answer"
+                ],
+                "title": "ClarifyingAnswer"
+            },
+            "ClarifyingAnswersContent": {
+                "properties": {
+                    "answers": {
+                        "items": {
+                            "$ref": "#/components/schemas/ClarifyingAnswer"
+                        },
+                        "type": "array",
+                        "title": "Answers",
+                        "description": "One entry per answered question."
+                    },
+                    "questionsItemId": {
+                        "type": "string",
+                        "title": "Questionsitemid",
+                        "description": "Item ID of the assistant item that asked the questions."
+                    },
+                    "text": {
+                        "type": "string",
+                        "title": "Text",
+                        "description": "The answers as the plain text the model read."
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "clarifyingAnswers",
+                        "title": "Type",
+                        "description": "Type of item content.",
+                        "default": "clarifyingAnswers"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "questionsItemId",
+                    "answers",
+                    "text"
+                ],
+                "title": "ClarifyingAnswersContent",
+                "description": "A user's answers to the clarifying questions on item ``questionsItemId``.\n\nA question with no entry in ``answers`` is a skipped question.\nAn empty list means the user skipped every question.\nData obfuscation can mask the question and option text."
             },
             "ClarifyingChoiceOption": {
                 "properties": {
@@ -6387,6 +6462,9 @@
                             },
                             {
                                 "$ref": "#/components/schemas/SkillsActivatedContent"
+                            },
+                            {
+                                "$ref": "#/components/schemas/ClarifyingAnswersContent"
                             }
                         ],
                         "title": "Content",
@@ -6394,6 +6472,7 @@
                         "discriminator": {
                             "propertyName": "type",
                             "mapping": {
+                                "clarifyingAnswers": "#/components/schemas/ClarifyingAnswersContent",
                                 "multipart": "#/components/schemas/MultipartContent",
                                 "reasoning": "#/components/schemas/ReasoningContent",
                                 "skillsActivated": "#/components/schemas/SkillsActivatedContent",
@@ -10769,6 +10848,7 @@
                     "attribute",
                     "date_attribute",
                     "label",
+                    "computed_attribute",
                     "visualization",
                     "dashboard",
                     "filter_context",
@@ -15937,6 +16017,34 @@
                     }
                 ],
                 "title": "Color"
+            },
+            "SingleChoiceAnswer": {
+                "properties": {
+                    "optionIndex": {
+                        "type": "integer",
+                        "title": "Optionindex",
+                        "description": "Position of the picked option in the question's `control.options`, from zero."
+                    },
+                    "optionText": {
+                        "type": "string",
+                        "title": "Optiontext",
+                        "description": "The picked option, as stored on the questions item."
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "singleChoice",
+                        "title": "Type",
+                        "description": "Type of answer."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "optionIndex",
+                    "optionText"
+                ],
+                "title": "SingleChoiceAnswer"
             },
             "SingleChoiceControl": {
                 "properties": {

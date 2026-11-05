@@ -11,25 +11,11 @@ import { withRedux } from "../../utils/with_redux.js";
 import { WorkspaceEmpty } from "./WorkspaceEmpty.js";
 
 describe("WorkspaceEmpty", () => {
-    // the component reads the permissions and the platform edition from the store, so the tests seed them
-    function createComponent({
-        canManageProject = true,
-        isFreemiumEdition = false,
-    }: {
-        canManageProject?: boolean;
-        isFreemiumEdition?: boolean;
-    }) {
+    function createComponent({ canManageProject = true }: { canManageProject?: boolean }) {
         const seed = (state: IAppState) =>
-            withRoot(
-                withRoot(state, {
-                    workspacePermissions: { ...state.workspacePermissions, canManageProject },
-                }),
-                {
-                    featureFlags: {
-                        platformEdition: isFreemiumEdition ? "free" : "enterprise",
-                    },
-                },
-            );
+            withRoot(state, {
+                workspacePermissions: { ...state.workspacePermissions, canManageProject },
+            });
         const Wrapped = withRedux(withIntl(WorkspaceEmpty), seed);
         return render(<Wrapped />);
     }
@@ -45,11 +31,5 @@ describe("WorkspaceEmpty", () => {
         const { container } = createComponent({ canManageProject: true });
 
         expect(container.querySelector(".s-workspace-empty-data-load")).toBeTruthy();
-    });
-
-    it("should display data load link when can manage project and is freemium", () => {
-        const { container } = createComponent({ canManageProject: true, isFreemiumEdition: true });
-
-        expect(container.querySelector(".s-workspace-empty-data-load-link")).toBeTruthy();
     });
 });

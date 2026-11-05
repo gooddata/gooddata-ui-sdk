@@ -10,28 +10,13 @@ import { type ObjRef, type ObjectType } from "@gooddata/sdk-model";
 import { metricEditorOpen } from "../../store/metric_editor/metric_editor_actions.js";
 import { type AppDispatch } from "../../store/types.js";
 import { type IExpressionToken, type IOrganizedCatalogTooltipDetailsMeasure } from "../../typings/catalog.js";
-import { getMetricsEditorUrl } from "../../utils/api.js";
-import { getWorkspaceRef } from "../../utils/uri.js";
 
-function TooltipMetricMaql({
-    metricMaql,
-    projectId,
-    isRedirectAllowed,
-}: IOrganizedCatalogTooltipDetailsMeasure) {
+function TooltipMetricMaql({ metricMaql }: IOrganizedCatalogTooltipDetailsMeasure) {
     if (metricMaql) {
         return (
             <>
                 {metricMaql.map((metric, idx) => {
-                    return metric.category === "text" ? (
-                        metric.title
-                    ) : (
-                        <MaqlSegment
-                            key={idx}
-                            {...metric}
-                            projectId={projectId}
-                            isRedirectAllowed={isRedirectAllowed}
-                        />
-                    );
+                    return metric.category === "text" ? metric.title : <MaqlSegment key={idx} {...metric} />;
                 })}
             </>
         );
@@ -40,18 +25,10 @@ function TooltipMetricMaql({
     return <FormattedMessage id="loading" />;
 }
 
-export interface IMaqlSegmentProps extends IExpressionToken, IMaqlSegmentOwnProps {}
-
-interface IMaqlSegmentOwnProps {
-    projectId: string;
-    isRedirectAllowed: boolean;
-}
-
 const isMeasureSegment = (category: string) => ["measure", "metric"].includes(category);
 
-function MaqlSegment({ title, id, category, uri, projectId, isRedirectAllowed }: IMaqlSegmentProps) {
+function MaqlSegment({ title, id, category }: IExpressionToken) {
     const dispatch = useDispatch<AppDispatch>();
-    const workspacesRef = getWorkspaceRef(true);
 
     const openMetricEditorDialog = useCallback(
         (metricRef: ObjRef) => {
@@ -66,19 +43,6 @@ function MaqlSegment({ title, id, category, uri, projectId, isRedirectAllowed }:
             identifier: id,
         });
     }, [id, category, openMetricEditorDialog]);
-
-    if (uri && isRedirectAllowed) {
-        return (
-            <a
-                className="s-adi-maql-segment-redirect"
-                href={getMetricsEditorUrl(projectId, uri, workspacesRef)}
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                <MaqlSegmentTitle title={title} category={category} classNames="adi-maql-segment-link" />
-            </a>
-        );
-    }
 
     if (isMeasureSegment(category) && id) {
         return (
@@ -109,22 +73,14 @@ function MaqlSegmentTitle({ category, title, classNames }: IMaqlSegmentTitleProp
     return <span className={`${category} adi-maql-segment s-adi-maql-segment ${classNames}`}>{title}</span>;
 }
 
-export function MeasureBubbleContent({
-    metricMaql,
-    projectId,
-    isRedirectAllowed,
-}: IOrganizedCatalogTooltipDetailsMeasure) {
+export function MeasureBubbleContent({ metricMaql }: IOrganizedCatalogTooltipDetailsMeasure) {
     return (
         <span>
             <h4 className="s-adi-catalog-tooltip-detail-heading">
                 <FormattedMessage id="dashboard.catalog_item.defined_as" />
             </h4>
             <p className="adi-metric-maql s-adi-catalog-tooltip-measure-expression">
-                <TooltipMetricMaql
-                    metricMaql={metricMaql}
-                    projectId={projectId}
-                    isRedirectAllowed={isRedirectAllowed}
-                />
+                <TooltipMetricMaql metricMaql={metricMaql} />
             </p>
         </span>
     );

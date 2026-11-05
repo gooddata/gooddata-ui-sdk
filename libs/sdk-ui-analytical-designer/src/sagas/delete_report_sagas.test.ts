@@ -110,7 +110,7 @@ describe("Delete report sagas", () => {
                 .silentRun(0);
         });
 
-        it("should display error about deleted referenced object when delete referenced given report failed", () => {
+        it("should display generic error when the backend fails the delete for another reason", () => {
             const action = deleteReportAction(dummyReportUriRef, true);
 
             const startTime = 10;
@@ -128,13 +128,29 @@ describe("Delete report sagas", () => {
                     [call(logVisualizationDeleteFailed, { state, time: duration }), undefined],
                 ])
                 .put(deleteReportStarted(dummyReportUriRef))
-                .put(
-                    deleteReportFailed(
-                        duration,
-                        DeleteReportFailureReason.FAILED_TO_DELETE_REFERENCED_REPORT,
-                        error,
-                    ),
-                )
+                .put(deleteReportFailed(duration, DeleteReportFailureReason.UNKNOWN, error))
+                .silentRun(0);
+        });
+
+        it("should display permission error when the backend refuses the delete", () => {
+            const action = deleteReportAction(dummyReportUriRef, true);
+
+            const startTime = 10;
+            const duration = 25;
+            const error = new UnexpectedResponseError("Operation is not allowed", 403, {});
+
+            return expectSaga(deleteReport, action)
+                .provide([
+                    [select(getProjectId), projectId],
+                    [select(getCurrentlyOpenedReportUri), REPORT_URI],
+                    [call(getStartTime), startTime],
+                    [call(performDelete, projectId, dummyReportUriRef), throwError(error)],
+                    [call(getDuration, startTime), duration],
+                    [select(), state],
+                    [call(logVisualizationDeleteFailed, { state, time: duration }), undefined],
+                ])
+                .put(deleteReportStarted(dummyReportUriRef))
+                .put(deleteReportFailed(duration, DeleteReportFailureReason.FORBIDDEN, error))
                 .silentRun(0);
         });
     });

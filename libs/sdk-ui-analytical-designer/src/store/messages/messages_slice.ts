@@ -28,7 +28,6 @@ import {
     showErrorMessage,
     showWarningMessage,
 } from "../../actions/messages_actions.js";
-import { exportReportError } from "../../actions/report_actions.js";
 import {
     hideSuccessMessage as hideSaveSuccessMessage,
     saveReportError,
@@ -69,6 +68,11 @@ interface IMessageConfiguration {
         };
     };
 }
+
+const deleteReportErrorText: Record<DeleteReportFailureReason, string> = {
+    [DeleteReportFailureReason.UNKNOWN]: defineMessage({ id: "messages.deleteReportError" }).id,
+    [DeleteReportFailureReason.FORBIDDEN]: defineMessage({ id: "messages.deleteReportForbiddenError" }).id,
+};
 
 function pushMessage(state: IMessagesState, messageId: string, configuration: IMessageConfiguration): void {
     const { messageData, timeoutId, delayed = false } = configuration;
@@ -134,7 +138,6 @@ const handleDataSourceError = (state: IMessagesState, error: unknown) => {
     });
 };
 
-// Shared by SHOW_ERROR_MESSAGE and REPORT_EXPORT_ERROR.
 const handleShowErrorMessage = (state: IMessagesState, message: unknown, error: unknown) => {
     // this message has NO id, so HIDE_MESSAGE can never remove it
     state.displayed.push(
@@ -175,13 +178,8 @@ const messagesSlice = createSlice({
                 });
             })
             .addCase(deleteReportFailed, (state, action) => {
-                const text =
-                    action.payload.reason === DeleteReportFailureReason.FAILED_TO_DELETE_REFERENCED_REPORT
-                        ? defineMessage({ id: "messages.failedToDeleteReferencedReportError" }).id
-                        : defineMessage({ id: "messages.deleteReportError" }).id;
-
                 pushMessage(state, MESSAGE_DELETE_REPORT_ERROR, {
-                    messageData: { type: "error", text },
+                    messageData: { type: "error", text: deleteReportErrorText[action.payload.reason] },
                 });
             })
             .addCase(exportResultStarted, (state) => {
@@ -280,11 +278,6 @@ const messagesSlice = createSlice({
             })
             .addCase(showErrorMessage, (state, action) => {
                 handleShowErrorMessage(state, action.payload.message, action.payload.error);
-            })
-            .addCase(exportReportError, (state, action) => {
-                // the caught export error is probed for the two fields the toast shows
-                const errorProbe = action.payload as { message?: string; error?: unknown } | undefined;
-                handleShowErrorMessage(state, errorProbe?.message, errorProbe?.error);
             })
             .addCase(showWarningMessage, (state, action) => {
                 pushMessage(state, MESSAGE_SHOW_WARNING, {

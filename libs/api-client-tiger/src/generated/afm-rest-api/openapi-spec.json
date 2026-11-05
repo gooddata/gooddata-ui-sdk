@@ -971,13 +971,14 @@
                     {
                         "name": "explainType",
                         "in": "query",
-                        "description": "Requested explain type. If not specified all types are bundled in a ZIP archive.\n\n`MAQL` - MAQL Abstract Syntax Tree, execution dimensions and related info\n\n`GRPC_MODEL` - Datasets used in execution\n\n`GRPC_MODEL_SVG` - Generated SVG image of the datasets\n\n`COMPRESSED_GRPC_MODEL_SVG` - Generated SVG image of the model fragment used in the query\n\n`WDF` - Workspace data filters in execution workspace context\n\n`QT` - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL\n\n`QT_SVG` - Generated SVG image of the Query Tree\n\n`OPT_QT` - Optimized Query Tree\n\n`OPT_QT_SVG` - Generated SVG image of the Optimized Query Tree\n\n`SQL` - Final SQL to be executed\n\n`COMPRESSED_SQL` - Final SQL to be executed with rolled SQL datasets\n\n`SETTINGS` - Settings used to execute explain request\n\n`GIT` - Git properties of current build",
+                        "description": "Requested explain type. If not specified all types are bundled in a ZIP archive.\n\n`MAQL` - MAQL Abstract Syntax Tree, execution dimensions and related info\n\n`GRPC_MODEL` - Datasets used in execution\n\n`MODEL_STATISTICS` - Physical table statistics of the datasets used in execution\n\n`GRPC_MODEL_SVG` - Generated SVG image of the datasets\n\n`COMPRESSED_GRPC_MODEL_SVG` - Generated SVG image of the model fragment used in the query\n\n`WDF` - Workspace data filters in execution workspace context\n\n`QT` - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL\n\n`QT_SVG` - Generated SVG image of the Query Tree\n\n`OPT_QT` - Optimized Query Tree\n\n`OPT_QT_SVG` - Generated SVG image of the Optimized Query Tree\n\n`SQL` - Final SQL to be executed\n\n`COMPRESSED_SQL` - Final SQL to be executed with rolled SQL datasets\n\n`SETTINGS` - Settings used to execute explain request\n\n`GIT` - Git properties of current build",
                         "required": false,
                         "schema": {
                             "type": "string",
                             "enum": [
                                 "MAQL",
                                 "GRPC_MODEL",
+                                "MODEL_STATISTICS",
                                 "GRPC_MODEL_SVG",
                                 "WDF",
                                 "QT",
@@ -1010,7 +1011,7 @@
                             "application/zip": {
                                 "schema": {
                                     "type": "string",
-                                    "description": "ZIP with MAQL, GRPC_MODEL, GRPC_MODEL_SVG, WDF, QT, QT_SVG, OPT_QT, OPT_QT_SVG and SQL files",
+                                    "description": "ZIP with MAQL, GRPC_MODEL, MODEL_STATISTICS, GRPC_MODEL_SVG, WDF, QT, QT_SVG, OPT_QT, OPT_QT_SVG and SQL files",
                                     "format": "binary"
                                 }
                             },
@@ -4472,7 +4473,7 @@
                             },
                             "numberFormat": {
                                 "type": "string",
-                                "description": "Format to be used to format the attribute values, the same kind of format string as the measure format. Only filled for computed attributes with a format."
+                                "description": "Format to be used to format the attribute values, the same kind of format string as the measure format. Only filled for computed attributes with a format and INT or NUMERIC data type."
                             },
                             "primaryLabel": {
                                 "$ref": "#/components/schemas/RestApiIdentifier"
@@ -4831,7 +4832,8 @@
             },
             "ChangeAnalysisResult": {
                 "required": [
-                    "data"
+                    "data",
+                    "restrictedCount"
                 ],
                 "type": "object",
                 "properties": {
@@ -4841,6 +4843,11 @@
                         "items": {
                             "$ref": "#/components/schemas/MetricValueChange"
                         }
+                    },
+                    "restrictedCount": {
+                        "type": "integer",
+                        "description": "Number of attributes and computed attributes left out of the analysis because the user has no access to them.",
+                        "format": "int32"
                     }
                 },
                 "description": "Result of a change analysis execution."
@@ -5116,7 +5123,8 @@
                     "dataSources",
                     "id",
                     "name",
-                    "storageIds"
+                    "storageIds",
+                    "storages"
                 ],
                 "type": "object",
                 "properties": {
@@ -5138,10 +5146,17 @@
                     "storageIds": {
                         "uniqueItems": true,
                         "type": "array",
-                        "description": "Set of ids of the storage instances this database instance should access.",
+                        "description": "Set of names of the storage instances this database instance accesses. Kept for backward compatibility; use `storages` for the storage ids.",
                         "items": {
                             "type": "string",
-                            "description": "Set of ids of the storage instances this database instance should access."
+                            "description": "Set of names of the storage instances this database instance accesses. Kept for backward compatibility; use `storages` for the storage ids."
+                        }
+                    },
+                    "storages": {
+                        "type": "array",
+                        "description": "Storage instances this database instance accesses.",
+                        "items": {
+                            "$ref": "#/components/schemas/ObjectStorageRef"
                         }
                     }
                 },
@@ -5500,7 +5515,7 @@
                     },
                     "numberFormat": {
                         "type": "string",
-                        "description": "Format to be used to format the element values, the same kind of format string as the measure format. Only filled for computed attributes with a format."
+                        "description": "Format to be used to format the element values, the same kind of format string as the measure format. Only filled for computed attributes with a format and INT or NUMERIC data type."
                     },
                     "paging": {
                         "$ref": "#/components/schemas/Paging"
@@ -7399,6 +7414,25 @@
                 },
                 "description": "Descriptor of a registered ObjectStorage. Provider credentials are stripped — only fields useful for identifying the storage are returned."
             },
+            "ObjectStorageRef": {
+                "required": [
+                    "name",
+                    "storageId"
+                ],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Human-readable name of the storage.",
+                        "example": "s3-data-lake"
+                    },
+                    "storageId": {
+                        "type": "string",
+                        "description": "Stable identifier of the storage, as returned by the ObjectStorages listing."
+                    }
+                },
+                "description": "Reference to a registered ObjectStorage."
+            },
             "OpenAIProviderConfig": {
                 "required": [
                     "auth",
@@ -7865,10 +7899,10 @@
                     "storageIds": {
                         "uniqueItems": true,
                         "type": "array",
-                        "description": "Set of ids of the storage instances this database instance should access.",
+                        "description": "Set of ids of the storage instances this database instance should access. Each entry is a `storageId` from the ObjectStorages listing or, for backward compatibility, a storage name. Must contain exactly one entry.",
                         "items": {
                             "type": "string",
-                            "description": "Set of ids of the storage instances this database instance should access."
+                            "description": "Set of ids of the storage instances this database instance should access. Each entry is a `storageId` from the ObjectStorages listing or, for backward compatibility, a storage name. Must contain exactly one entry."
                         }
                     }
                 },

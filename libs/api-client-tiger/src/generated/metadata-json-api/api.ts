@@ -1805,6 +1805,10 @@ export interface DeclarativeAnalyticsLayer {
      */
     'memoryItems'?: Array<DeclarativeMemoryItem>;
     /**
+     * A list of metric permissions assigned to a related metric.
+     */
+    'metricExtensions'?: Array<DeclarativeMetricExtension>;
+    /**
      * A list of metrics available in the model.
      */
     'metrics'?: Array<DeclarativeMetric>;
@@ -1828,6 +1832,10 @@ export interface DeclarativeAnalyticsLayer {
      * A list of reports available in the model.
      */
     'reports'?: Array<DeclarativeReport>;
+    /**
+     * A list of visualization object permissions assigned to a related visualization object.
+     */
+    'visualizationObjectExtensions'?: Array<DeclarativeVisualizationObjectExtension>;
     /**
      * A list of visualization objects available in the model.
      */
@@ -2918,6 +2926,22 @@ export interface DeclarativeMetric {
 
 export type DeclarativeMetricCertificationEnum = 'CERTIFIED';
 
+export interface DeclarativeMetricExtension {
+    /**
+     * Metric ID.
+     */
+    'id': string;
+    /**
+     * A list of permissions.
+     */
+    'permissions': Array<DeclarativeMetricExtensionPermissionsInner>;
+}
+
+/**
+ * @type DeclarativeMetricExtensionPermissionsInner
+ */
+export type DeclarativeMetricExtensionPermissionsInner = DeclarativeMetricPermissionForAssignee | DeclarativeMetricPermissionForAssigneeRule;
+
 /**
  * Metric permission.
  */
@@ -3145,10 +3169,12 @@ export interface DeclarativeParameter {
 }
 
 export interface DeclarativePublisherDocument {
+    'content': PublisherDocumentContent;
     /**
-     * Free-form JSON object
+     * Time of the entity creation.
      */
-    'content': object | null;
+    'createdAt'?: string | null;
+    'createdBy'?: DeclarativeUserIdentifier;
     /**
      * Document description.
      */
@@ -3157,6 +3183,11 @@ export interface DeclarativePublisherDocument {
      * Document ID.
      */
     'id': string;
+    /**
+     * Time of the last entity modification.
+     */
+    'modifiedAt'?: string | null;
+    'modifiedBy'?: DeclarativeUserIdentifier;
     'period': PublisherDocumentPeriod;
     'tags'?: Array<string>;
     /**
@@ -3170,10 +3201,7 @@ export interface DeclarativePublisherDocument {
 }
 
 export interface DeclarativePublisherDocumentPageTemplate {
-    /**
-     * Free-form JSON object
-     */
-    'content': object | null;
+    'content': PublisherDocumentPageTemplateContent;
     /**
      * Page template description.
      */
@@ -3194,10 +3222,7 @@ export interface DeclarativePublisherDocumentPageTemplate {
 }
 
 export interface DeclarativePublisherDocumentTemplate {
-    /**
-     * Free-form JSON object
-     */
-    'content': object | null;
+    'content': PublisherDocumentContent;
     /**
      * Document template description.
      */
@@ -3401,7 +3426,7 @@ export interface DeclarativeSetting {
     'type'?: DeclarativeSettingTypeEnum;
 }
 
-export type DeclarativeSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE';
+export type DeclarativeSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE' | 'EMBEDDING_ORIGINS';
 
 export interface DeclarativeSingleWorkspacePermission {
     'assignee': AssigneeIdentifier;
@@ -3446,6 +3471,10 @@ export interface DeclarativeTable {
      * Path to table.
      */
     'path': Array<string>;
+    /**
+     * Additional properties of the table that the data source passes on to the modeler and other callers. The data source decides which keys it sends. A caller uses the keys it understands and skips all other keys.
+     */
+    'properties'?: { [key: string]: string; };
     /**
      * Table type: TABLE or VIEW.
      */
@@ -3701,6 +3730,22 @@ export interface DeclarativeVisualizationObject {
 }
 
 export type DeclarativeVisualizationObjectCertificationEnum = 'CERTIFIED';
+
+export interface DeclarativeVisualizationObjectExtension {
+    /**
+     * Visualization object ID.
+     */
+    'id': string;
+    /**
+     * A list of permissions.
+     */
+    'permissions': Array<DeclarativeVisualizationObjectExtensionPermissionsInner>;
+}
+
+/**
+ * @type DeclarativeVisualizationObjectExtensionPermissionsInner
+ */
+export type DeclarativeVisualizationObjectExtensionPermissionsInner = DeclarativeVisualizationObjectPermissionForAssignee | DeclarativeVisualizationObjectPermissionForAssigneeRule;
 
 /**
  * Visualization object permission.
@@ -4164,8 +4209,11 @@ export interface FactPermissionsForAssigneeRule {
 export type FactPermissionsForAssigneeRulePermissionsEnum = 'EDIT' | 'SHARE' | 'VIEW';
 
 export interface FeatureFlagsContext {
+    'controlledFeatureRollout': string;
+    'dataCenter': string;
     'earlyAccess': string;
     'earlyAccessValues': Array<string>;
+    'tier': string;
 }
 
 /**
@@ -12759,7 +12807,7 @@ export interface JsonApiOrganizationSettingInAttributes {
     'type'?: JsonApiOrganizationSettingInAttributesTypeEnum;
 }
 
-export type JsonApiOrganizationSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE';
+export type JsonApiOrganizationSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE' | 'EMBEDDING_ORIGINS';
 
 export interface JsonApiOrganizationSettingInDocument {
     'data': JsonApiOrganizationSettingIn;
@@ -12790,7 +12838,7 @@ export interface JsonApiOrganizationSettingOutAttributes {
     'type'?: JsonApiOrganizationSettingOutAttributesTypeEnum;
 }
 
-export type JsonApiOrganizationSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE';
+export type JsonApiOrganizationSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE' | 'EMBEDDING_ORIGINS';
 
 export interface JsonApiOrganizationSettingOutDocument {
     'data': JsonApiOrganizationSettingOut;
@@ -12850,7 +12898,7 @@ export interface JsonApiOrganizationSettingPatchAttributes {
     'type'?: JsonApiOrganizationSettingPatchAttributesTypeEnum;
 }
 
-export type JsonApiOrganizationSettingPatchAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE';
+export type JsonApiOrganizationSettingPatchAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE' | 'EMBEDDING_ORIGINS';
 
 export interface JsonApiOrganizationSettingPatchDocument {
     'data': JsonApiOrganizationSettingPatch;
@@ -13112,10 +13160,7 @@ export type JsonApiPublisherDocumentInTypeEnum = 'document';
 
 export interface JsonApiPublisherDocumentInAttributes {
     'areRelationsValid'?: boolean;
-    /**
-     * Free-form document definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
-     */
-    'content': object;
+    'content': JsonApiPublisherDocumentInAttributesContent;
     'description'?: string;
     'period': JsonApiPublisherDocumentInAttributesPeriod;
     'tags'?: Array<string>;
@@ -13124,6 +13169,35 @@ export interface JsonApiPublisherDocumentInAttributes {
      * Version of the content format.
      */
     'version': string;
+}
+
+/**
+ * Content of the document, validated on write. Missing page and section ids, and the `localIdentifier` of an attribute or date filter, are generated. An invalid value is a 400 whose `path` names the first invalid key, such as `content.pages[0].layout.type`. Maximum supported length is 250000 characters.
+ */
+export interface JsonApiPublisherDocumentInAttributesContent {
+    'attributeFilterConfigs'?: Array<PublisherDocumentAttributeFilterConfig>;
+    'defaults'?: PublisherDocumentDefaults;
+    /**
+     * Document filters, at most one per attribute display form or date dataset.
+     */
+    'filters'?: Array<PublisherDocumentFilter>;
+    /**
+     * Locale for formatting dates in variables, charts and tables.
+     */
+    'formatLocale'?: string;
+    /**
+     * Locale of the text the product writes, such as `de-DE`.
+     */
+    'locale'?: string;
+    /**
+     * The document\'s pages, when it has no sections.
+     */
+    'pages'?: Array<PublisherDocumentPage>;
+    /**
+     * Groups of pages, when the document has no top-level pages.
+     */
+    'sections'?: Array<PublisherDocumentSection>;
+    'style'?: PublisherDocumentAreaStyle;
 }
 
 /**
@@ -13157,10 +13231,7 @@ export type JsonApiPublisherDocumentOutTypeEnum = 'document';
 
 export interface JsonApiPublisherDocumentOutAttributes {
     'areRelationsValid'?: boolean;
-    /**
-     * Free-form document definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
-     */
-    'content': object;
+    'content': JsonApiPublisherDocumentOutAttributesContent;
     /**
      * Time of the entity creation.
      */
@@ -13177,6 +13248,35 @@ export interface JsonApiPublisherDocumentOutAttributes {
      * Version of the content format.
      */
     'version': string;
+}
+
+/**
+ * Content of the document, validated on write. Missing page and section ids, and the `localIdentifier` of an attribute or date filter, are generated. An invalid value is a 400 whose `path` names the first invalid key, such as `content.pages[0].layout.type`. Maximum supported length is 250000 characters.
+ */
+export interface JsonApiPublisherDocumentOutAttributesContent {
+    'attributeFilterConfigs'?: Array<PublisherDocumentAttributeFilterConfig>;
+    'defaults'?: PublisherDocumentDefaults;
+    /**
+     * Document filters, at most one per attribute display form or date dataset.
+     */
+    'filters'?: Array<PublisherDocumentFilter>;
+    /**
+     * Locale for formatting dates in variables, charts and tables.
+     */
+    'formatLocale'?: string;
+    /**
+     * Locale of the text the product writes, such as `de-DE`.
+     */
+    'locale'?: string;
+    /**
+     * The document\'s pages, when it has no sections.
+     */
+    'pages'?: Array<PublisherDocumentPage>;
+    /**
+     * Groups of pages, when the document has no top-level pages.
+     */
+    'sections'?: Array<PublisherDocumentSection>;
+    'style'?: PublisherDocumentAreaStyle;
 }
 
 /**
@@ -13326,10 +13426,7 @@ export type JsonApiPublisherDocumentPageTemplateInTypeEnum = 'pageTemplate';
 
 export interface JsonApiPublisherDocumentPageTemplateInAttributes {
     'areRelationsValid'?: boolean;
-    /**
-     * Free-form page definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
-     */
-    'content': object;
+    'content': JsonApiPublisherDocumentPageTemplateInAttributesContent;
     'description'?: string;
     'tags'?: Array<string>;
     'title': string;
@@ -13338,6 +13435,30 @@ export interface JsonApiPublisherDocumentPageTemplateInAttributes {
      */
     'version': string;
 }
+
+/**
+ * One page without `id` and `visible`, validated on write. An invalid value is a 400 whose `path` names the first invalid key, such as `content.layout.type`. Maximum supported length is 250000 characters.
+ */
+export interface JsonApiPublisherDocumentPageTemplateInAttributesContent {
+    /**
+     * Page filters; stored, not applied.
+     */
+    'filters'?: Array<PublisherDocumentFilter>;
+    /**
+     * Editor hint.
+     */
+    'kind'?: JsonApiPublisherDocumentPageTemplateInAttributesContentKindEnum;
+    'layout': PublisherDocumentLayoutNode;
+    /**
+     * Speaker notes in markdown, never drawn.
+     */
+    'notes'?: string;
+    'pageSize'?: JsonApiPublisherDocumentPageTemplateInAttributesContentPageSizeEnum;
+    'style'?: PublisherDocumentPageStyle;
+}
+
+export type JsonApiPublisherDocumentPageTemplateInAttributesContentKindEnum = 'cover' | 'section' | 'content';
+export type JsonApiPublisherDocumentPageTemplateInAttributesContentPageSizeEnum = 'widescreen';
 
 export interface JsonApiPublisherDocumentPageTemplateInDocument {
     'data': JsonApiPublisherDocumentPageTemplateIn;
@@ -13364,15 +13485,16 @@ export type JsonApiPublisherDocumentPageTemplateOutTypeEnum = 'pageTemplate';
 
 export interface JsonApiPublisherDocumentPageTemplateOutAttributes {
     'areRelationsValid'?: boolean;
-    /**
-     * Free-form page definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
-     */
-    'content': object;
+    'content': JsonApiPublisherDocumentPageTemplateOutAttributesContent;
     /**
      * Time of the entity creation.
      */
     'createdAt'?: string | null;
     'description'?: string;
+    /**
+     * Whether the backend ships this page template as a read-only default.
+     */
+    'isDefault': boolean;
     /**
      * Time of the last entity modification.
      */
@@ -13384,6 +13506,30 @@ export interface JsonApiPublisherDocumentPageTemplateOutAttributes {
      */
     'version': string;
 }
+
+/**
+ * One page without `id` and `visible`, validated on write. An invalid value is a 400 whose `path` names the first invalid key, such as `content.layout.type`. Maximum supported length is 250000 characters.
+ */
+export interface JsonApiPublisherDocumentPageTemplateOutAttributesContent {
+    /**
+     * Page filters; stored, not applied.
+     */
+    'filters'?: Array<PublisherDocumentFilter>;
+    /**
+     * Editor hint.
+     */
+    'kind'?: JsonApiPublisherDocumentPageTemplateOutAttributesContentKindEnum;
+    'layout': PublisherDocumentLayoutNode;
+    /**
+     * Speaker notes in markdown, never drawn.
+     */
+    'notes'?: string;
+    'pageSize'?: JsonApiPublisherDocumentPageTemplateOutAttributesContentPageSizeEnum;
+    'style'?: PublisherDocumentPageStyle;
+}
+
+export type JsonApiPublisherDocumentPageTemplateOutAttributesContentKindEnum = 'cover' | 'section' | 'content';
+export type JsonApiPublisherDocumentPageTemplateOutAttributesContentPageSizeEnum = 'widescreen';
 
 export interface JsonApiPublisherDocumentPageTemplateOutDocument {
     'data': JsonApiPublisherDocumentPageTemplateOut;
@@ -13489,10 +13635,7 @@ export type JsonApiPublisherDocumentPageTemplatePatchTypeEnum = 'pageTemplate';
 
 export interface JsonApiPublisherDocumentPageTemplatePatchAttributes {
     'areRelationsValid'?: boolean;
-    /**
-     * Free-form page definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
-     */
-    'content'?: object;
+    'content'?: JsonApiPublisherDocumentPageTemplatePatchAttributesContent;
     'description'?: string;
     'tags'?: Array<string>;
     'title'?: string;
@@ -13501,6 +13644,30 @@ export interface JsonApiPublisherDocumentPageTemplatePatchAttributes {
      */
     'version'?: string;
 }
+
+/**
+ * One page without `id` and `visible`, validated on write. An invalid value is a 400 whose `path` names the first invalid key, such as `content.layout.type`. Maximum supported length is 250000 characters.
+ */
+export interface JsonApiPublisherDocumentPageTemplatePatchAttributesContent {
+    /**
+     * Page filters; stored, not applied.
+     */
+    'filters'?: Array<PublisherDocumentFilter>;
+    /**
+     * Editor hint.
+     */
+    'kind'?: JsonApiPublisherDocumentPageTemplatePatchAttributesContentKindEnum;
+    'layout': PublisherDocumentLayoutNode;
+    /**
+     * Speaker notes in markdown, never drawn.
+     */
+    'notes'?: string;
+    'pageSize'?: JsonApiPublisherDocumentPageTemplatePatchAttributesContentPageSizeEnum;
+    'style'?: PublisherDocumentPageStyle;
+}
+
+export type JsonApiPublisherDocumentPageTemplatePatchAttributesContentKindEnum = 'cover' | 'section' | 'content';
+export type JsonApiPublisherDocumentPageTemplatePatchAttributesContentPageSizeEnum = 'widescreen';
 
 export interface JsonApiPublisherDocumentPageTemplatePatchDocument {
     'data': JsonApiPublisherDocumentPageTemplatePatch;
@@ -13525,10 +13692,7 @@ export type JsonApiPublisherDocumentPageTemplatePostOptionalIdTypeEnum = 'pageTe
 
 export interface JsonApiPublisherDocumentPageTemplatePostOptionalIdAttributes {
     'areRelationsValid'?: boolean;
-    /**
-     * Free-form page definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
-     */
-    'content': object;
+    'content': JsonApiPublisherDocumentPageTemplatePostOptionalIdAttributesContent;
     'description'?: string;
     'tags'?: Array<string>;
     'title': string;
@@ -13537,6 +13701,30 @@ export interface JsonApiPublisherDocumentPageTemplatePostOptionalIdAttributes {
      */
     'version': string;
 }
+
+/**
+ * One page without `id` and `visible`, validated on write. An invalid value is a 400 whose `path` names the first invalid key, such as `content.layout.type`. Maximum supported length is 250000 characters.
+ */
+export interface JsonApiPublisherDocumentPageTemplatePostOptionalIdAttributesContent {
+    /**
+     * Page filters; stored, not applied.
+     */
+    'filters'?: Array<PublisherDocumentFilter>;
+    /**
+     * Editor hint.
+     */
+    'kind'?: JsonApiPublisherDocumentPageTemplatePostOptionalIdAttributesContentKindEnum;
+    'layout': PublisherDocumentLayoutNode;
+    /**
+     * Speaker notes in markdown, never drawn.
+     */
+    'notes'?: string;
+    'pageSize'?: JsonApiPublisherDocumentPageTemplatePostOptionalIdAttributesContentPageSizeEnum;
+    'style'?: PublisherDocumentPageStyle;
+}
+
+export type JsonApiPublisherDocumentPageTemplatePostOptionalIdAttributesContentKindEnum = 'cover' | 'section' | 'content';
+export type JsonApiPublisherDocumentPageTemplatePostOptionalIdAttributesContentPageSizeEnum = 'widescreen';
 
 export interface JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument {
     'data': JsonApiPublisherDocumentPageTemplatePostOptionalId;
@@ -13561,10 +13749,7 @@ export type JsonApiPublisherDocumentPatchTypeEnum = 'document';
 
 export interface JsonApiPublisherDocumentPatchAttributes {
     'areRelationsValid'?: boolean;
-    /**
-     * Free-form document definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
-     */
-    'content'?: object;
+    'content'?: JsonApiPublisherDocumentPatchAttributesContent;
     'description'?: string;
     'period'?: JsonApiPublisherDocumentPatchAttributesPeriod;
     'tags'?: Array<string>;
@@ -13573,6 +13758,35 @@ export interface JsonApiPublisherDocumentPatchAttributes {
      * Version of the content format.
      */
     'version'?: string;
+}
+
+/**
+ * Content of the document, validated on write. Missing page and section ids, and the `localIdentifier` of an attribute or date filter, are generated. An invalid value is a 400 whose `path` names the first invalid key, such as `content.pages[0].layout.type`. Maximum supported length is 250000 characters.
+ */
+export interface JsonApiPublisherDocumentPatchAttributesContent {
+    'attributeFilterConfigs'?: Array<PublisherDocumentAttributeFilterConfig>;
+    'defaults'?: PublisherDocumentDefaults;
+    /**
+     * Document filters, at most one per attribute display form or date dataset.
+     */
+    'filters'?: Array<PublisherDocumentFilter>;
+    /**
+     * Locale for formatting dates in variables, charts and tables.
+     */
+    'formatLocale'?: string;
+    /**
+     * Locale of the text the product writes, such as `de-DE`.
+     */
+    'locale'?: string;
+    /**
+     * The document\'s pages, when it has no sections.
+     */
+    'pages'?: Array<PublisherDocumentPage>;
+    /**
+     * Groups of pages, when the document has no top-level pages.
+     */
+    'sections'?: Array<PublisherDocumentSection>;
+    'style'?: PublisherDocumentAreaStyle;
 }
 
 /**
@@ -13604,10 +13818,7 @@ export type JsonApiPublisherDocumentPostOptionalIdTypeEnum = 'document';
 
 export interface JsonApiPublisherDocumentPostOptionalIdAttributes {
     'areRelationsValid'?: boolean;
-    /**
-     * Free-form document definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
-     */
-    'content': object;
+    'content': JsonApiPublisherDocumentPostOptionalIdAttributesContent;
     'description'?: string;
     'period': JsonApiPublisherDocumentPostOptionalIdAttributesPeriod;
     'tags'?: Array<string>;
@@ -13616,6 +13827,35 @@ export interface JsonApiPublisherDocumentPostOptionalIdAttributes {
      * Version of the content format.
      */
     'version': string;
+}
+
+/**
+ * Content of the document, validated on write. Missing page and section ids, and the `localIdentifier` of an attribute or date filter, are generated. An invalid value is a 400 whose `path` names the first invalid key, such as `content.pages[0].layout.type`. Maximum supported length is 250000 characters.
+ */
+export interface JsonApiPublisherDocumentPostOptionalIdAttributesContent {
+    'attributeFilterConfigs'?: Array<PublisherDocumentAttributeFilterConfig>;
+    'defaults'?: PublisherDocumentDefaults;
+    /**
+     * Document filters, at most one per attribute display form or date dataset.
+     */
+    'filters'?: Array<PublisherDocumentFilter>;
+    /**
+     * Locale for formatting dates in variables, charts and tables.
+     */
+    'formatLocale'?: string;
+    /**
+     * Locale of the text the product writes, such as `de-DE`.
+     */
+    'locale'?: string;
+    /**
+     * The document\'s pages, when it has no sections.
+     */
+    'pages'?: Array<PublisherDocumentPage>;
+    /**
+     * Groups of pages, when the document has no top-level pages.
+     */
+    'sections'?: Array<PublisherDocumentSection>;
+    'style'?: PublisherDocumentAreaStyle;
 }
 
 /**
@@ -13647,10 +13887,7 @@ export type JsonApiPublisherDocumentTemplateInTypeEnum = 'documentTemplate';
 
 export interface JsonApiPublisherDocumentTemplateInAttributes {
     'areRelationsValid'?: boolean;
-    /**
-     * Free-form document template definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
-     */
-    'content': object;
+    'content': JsonApiPublisherDocumentTemplateInAttributesContent;
     'description'?: string;
     'tags'?: Array<string>;
     'title': string;
@@ -13658,6 +13895,35 @@ export interface JsonApiPublisherDocumentTemplateInAttributes {
      * Version of the content format.
      */
     'version': string;
+}
+
+/**
+ * Content of the document template, validated on write. Missing page and section ids, and the `localIdentifier` of an attribute or date filter, are generated. An invalid value is a 400 whose `path` names the first invalid key, such as `content.pages[0].layout.type`. Maximum supported length is 250000 characters.
+ */
+export interface JsonApiPublisherDocumentTemplateInAttributesContent {
+    'attributeFilterConfigs'?: Array<PublisherDocumentAttributeFilterConfig>;
+    'defaults'?: PublisherDocumentDefaults;
+    /**
+     * Document filters, at most one per attribute display form or date dataset.
+     */
+    'filters'?: Array<PublisherDocumentFilter>;
+    /**
+     * Locale for formatting dates in variables, charts and tables.
+     */
+    'formatLocale'?: string;
+    /**
+     * Locale of the text the product writes, such as `de-DE`.
+     */
+    'locale'?: string;
+    /**
+     * The document\'s pages, when it has no sections.
+     */
+    'pages'?: Array<PublisherDocumentPage>;
+    /**
+     * Groups of pages, when the document has no top-level pages.
+     */
+    'sections'?: Array<PublisherDocumentSection>;
+    'style'?: PublisherDocumentAreaStyle;
 }
 
 export interface JsonApiPublisherDocumentTemplateInDocument {
@@ -13685,10 +13951,7 @@ export type JsonApiPublisherDocumentTemplateOutTypeEnum = 'documentTemplate';
 
 export interface JsonApiPublisherDocumentTemplateOutAttributes {
     'areRelationsValid'?: boolean;
-    /**
-     * Free-form document template definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
-     */
-    'content': object;
+    'content': JsonApiPublisherDocumentTemplateOutAttributesContent;
     /**
      * Time of the entity creation.
      */
@@ -13704,6 +13967,35 @@ export interface JsonApiPublisherDocumentTemplateOutAttributes {
      * Version of the content format.
      */
     'version': string;
+}
+
+/**
+ * Content of the document template, validated on write. Missing page and section ids, and the `localIdentifier` of an attribute or date filter, are generated. An invalid value is a 400 whose `path` names the first invalid key, such as `content.pages[0].layout.type`. Maximum supported length is 250000 characters.
+ */
+export interface JsonApiPublisherDocumentTemplateOutAttributesContent {
+    'attributeFilterConfigs'?: Array<PublisherDocumentAttributeFilterConfig>;
+    'defaults'?: PublisherDocumentDefaults;
+    /**
+     * Document filters, at most one per attribute display form or date dataset.
+     */
+    'filters'?: Array<PublisherDocumentFilter>;
+    /**
+     * Locale for formatting dates in variables, charts and tables.
+     */
+    'formatLocale'?: string;
+    /**
+     * Locale of the text the product writes, such as `de-DE`.
+     */
+    'locale'?: string;
+    /**
+     * The document\'s pages, when it has no sections.
+     */
+    'pages'?: Array<PublisherDocumentPage>;
+    /**
+     * Groups of pages, when the document has no top-level pages.
+     */
+    'sections'?: Array<PublisherDocumentSection>;
+    'style'?: PublisherDocumentAreaStyle;
 }
 
 export interface JsonApiPublisherDocumentTemplateOutDocument {
@@ -13810,10 +14102,7 @@ export type JsonApiPublisherDocumentTemplatePatchTypeEnum = 'documentTemplate';
 
 export interface JsonApiPublisherDocumentTemplatePatchAttributes {
     'areRelationsValid'?: boolean;
-    /**
-     * Free-form document template definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
-     */
-    'content'?: object;
+    'content'?: JsonApiPublisherDocumentTemplatePatchAttributesContent;
     'description'?: string;
     'tags'?: Array<string>;
     'title'?: string;
@@ -13821,6 +14110,35 @@ export interface JsonApiPublisherDocumentTemplatePatchAttributes {
      * Version of the content format.
      */
     'version'?: string;
+}
+
+/**
+ * Content of the document template, validated on write. Missing page and section ids, and the `localIdentifier` of an attribute or date filter, are generated. An invalid value is a 400 whose `path` names the first invalid key, such as `content.pages[0].layout.type`. Maximum supported length is 250000 characters.
+ */
+export interface JsonApiPublisherDocumentTemplatePatchAttributesContent {
+    'attributeFilterConfigs'?: Array<PublisherDocumentAttributeFilterConfig>;
+    'defaults'?: PublisherDocumentDefaults;
+    /**
+     * Document filters, at most one per attribute display form or date dataset.
+     */
+    'filters'?: Array<PublisherDocumentFilter>;
+    /**
+     * Locale for formatting dates in variables, charts and tables.
+     */
+    'formatLocale'?: string;
+    /**
+     * Locale of the text the product writes, such as `de-DE`.
+     */
+    'locale'?: string;
+    /**
+     * The document\'s pages, when it has no sections.
+     */
+    'pages'?: Array<PublisherDocumentPage>;
+    /**
+     * Groups of pages, when the document has no top-level pages.
+     */
+    'sections'?: Array<PublisherDocumentSection>;
+    'style'?: PublisherDocumentAreaStyle;
 }
 
 export interface JsonApiPublisherDocumentTemplatePatchDocument {
@@ -13846,10 +14164,7 @@ export type JsonApiPublisherDocumentTemplatePostOptionalIdTypeEnum = 'documentTe
 
 export interface JsonApiPublisherDocumentTemplatePostOptionalIdAttributes {
     'areRelationsValid'?: boolean;
-    /**
-     * Free-form document template definition, stored verbatim - not parsed, validated or migrated. Maximum supported length is 250000 characters.
-     */
-    'content': object;
+    'content': JsonApiPublisherDocumentTemplatePostOptionalIdAttributesContent;
     'description'?: string;
     'tags'?: Array<string>;
     'title': string;
@@ -13857,6 +14172,35 @@ export interface JsonApiPublisherDocumentTemplatePostOptionalIdAttributes {
      * Version of the content format.
      */
     'version': string;
+}
+
+/**
+ * Content of the document template, validated on write. Missing page and section ids, and the `localIdentifier` of an attribute or date filter, are generated. An invalid value is a 400 whose `path` names the first invalid key, such as `content.pages[0].layout.type`. Maximum supported length is 250000 characters.
+ */
+export interface JsonApiPublisherDocumentTemplatePostOptionalIdAttributesContent {
+    'attributeFilterConfigs'?: Array<PublisherDocumentAttributeFilterConfig>;
+    'defaults'?: PublisherDocumentDefaults;
+    /**
+     * Document filters, at most one per attribute display form or date dataset.
+     */
+    'filters'?: Array<PublisherDocumentFilter>;
+    /**
+     * Locale for formatting dates in variables, charts and tables.
+     */
+    'formatLocale'?: string;
+    /**
+     * Locale of the text the product writes, such as `de-DE`.
+     */
+    'locale'?: string;
+    /**
+     * The document\'s pages, when it has no sections.
+     */
+    'pages'?: Array<PublisherDocumentPage>;
+    /**
+     * Groups of pages, when the document has no top-level pages.
+     */
+    'sections'?: Array<PublisherDocumentSection>;
+    'style'?: PublisherDocumentAreaStyle;
 }
 
 export interface JsonApiPublisherDocumentTemplatePostOptionalIdDocument {
@@ -15440,7 +15784,7 @@ export interface JsonApiUserSettingInAttributes {
     'type'?: JsonApiUserSettingInAttributesTypeEnum;
 }
 
-export type JsonApiUserSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE';
+export type JsonApiUserSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE';
 
 export interface JsonApiUserSettingInDocument {
     'data': JsonApiUserSettingIn;
@@ -15471,7 +15815,7 @@ export interface JsonApiUserSettingOutAttributes {
     'type'?: JsonApiUserSettingOutAttributesTypeEnum;
 }
 
-export type JsonApiUserSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE';
+export type JsonApiUserSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE';
 
 export interface JsonApiUserSettingOutDocument {
     'data': JsonApiUserSettingOut;
@@ -17232,7 +17576,7 @@ export interface JsonApiWorkspaceSettingInAttributes {
     'type'?: JsonApiWorkspaceSettingInAttributesTypeEnum;
 }
 
-export type JsonApiWorkspaceSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE';
+export type JsonApiWorkspaceSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE';
 
 export interface JsonApiWorkspaceSettingInDocument {
     'data': JsonApiWorkspaceSettingIn;
@@ -17264,7 +17608,7 @@ export interface JsonApiWorkspaceSettingOutAttributes {
     'type'?: JsonApiWorkspaceSettingOutAttributesTypeEnum;
 }
 
-export type JsonApiWorkspaceSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE';
+export type JsonApiWorkspaceSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE';
 
 export interface JsonApiWorkspaceSettingOutDocument {
     'data': JsonApiWorkspaceSettingOut;
@@ -17342,7 +17686,7 @@ export interface JsonApiWorkspaceSettingPatchAttributes {
     'type'?: JsonApiWorkspaceSettingPatchAttributesTypeEnum;
 }
 
-export type JsonApiWorkspaceSettingPatchAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE';
+export type JsonApiWorkspaceSettingPatchAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE';
 
 export interface JsonApiWorkspaceSettingPatchDocument {
     'data': JsonApiWorkspaceSettingPatch;
@@ -17373,7 +17717,7 @@ export interface JsonApiWorkspaceSettingPostOptionalIdAttributes {
     'type'?: JsonApiWorkspaceSettingPostOptionalIdAttributesTypeEnum;
 }
 
-export type JsonApiWorkspaceSettingPostOptionalIdAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE';
+export type JsonApiWorkspaceSettingPostOptionalIdAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE';
 
 export interface JsonApiWorkspaceSettingPostOptionalIdDocument {
     'data': JsonApiWorkspaceSettingPostOptionalId;
@@ -17663,6 +18007,10 @@ export interface LocalizationDefaults {
  */
 export interface LocalizationMetadataStatistics {
     'locales': Array<LocalizationStatisticsLocale>;
+    /**
+     * Translation counts of the workspace and each parent workspace, root first. Present only with `includeCoverage=true` on the workspace endpoint.
+     */
+    'workspaces'?: Array<LocalizationStatisticsWorkspace>;
 }
 
 /**
@@ -17727,6 +18075,46 @@ export interface LocalizationStatisticsLocale {
      * Language tag.
      */
     'locale': string;
+}
+
+/**
+ * Translated texts of one workspace in one language.
+ */
+export interface LocalizationStatisticsTranslatedLocale {
+    /**
+     * Language tag.
+     */
+    'locale': string;
+    /**
+     * Texts of the workspace with a translation. A title, description or tag edited after its translation still counts.
+     */
+    'translated': number;
+}
+
+/**
+ * Metadata texts of one workspace. A row counts only the texts that the workspace owns. A child workspace sums its row and the rows of its parents.
+ */
+export interface LocalizationStatisticsWorkspace {
+    /**
+     * Workspace ID.
+     */
+    'id': string;
+    /**
+     * Every language of `metadata.locales`, sorted, with 0 where nothing is translated.
+     */
+    'locales': Array<LocalizationStatisticsTranslatedLocale>;
+    /**
+     * Workspace name.
+     */
+    'name': string;
+    /**
+     * Parent workspace ID, null for a root workspace.
+     */
+    'parentId'?: string | null;
+    /**
+     * Titles, descriptions, tags and free-form texts the workspace owns. Blank texts are not counted.
+     */
+    'total': number;
 }
 
 export interface LocalizationUsage {
@@ -18423,10 +18811,1463 @@ export interface ProfileLinks {
 }
 
 /**
+ * Filters an attribute display form by arbitrary values.
+ */
+export interface PublisherDocumentArbitraryAttributeFilter {
+    'arbitraryAttributeFilter': PublisherDocumentArbitraryAttributeFilterArbitraryAttributeFilter;
+}
+
+export interface PublisherDocumentArbitraryAttributeFilterArbitraryAttributeFilter {
+    'displayForm': PublisherDocumentObjRef;
+    'filterElementsBy'?: Array<PublisherDocumentAttributeFilterParent>;
+    'filterElementsByDate'?: Array<PublisherDocumentAttributeFilterByDate>;
+    /**
+     * Required on a document filter in the declarative layout. A REST write can omit it there. The server then generates it. Optional on a page filter.
+     */
+    'localIdentifier'?: string;
+    'negativeSelection': boolean;
+    'title'?: string;
+    'validateElementsBy'?: Array<PublisherDocumentObjRef>;
+    /**
+     * Values; `null` stands for an empty value.
+     */
+    'values': Array<string | null>;
+}
+
+/**
+ * Style of the area behind the pages. Lengths are in canvas px.
+ */
+export interface PublisherDocumentAreaStyle {
+    'backgroundColor'?: string;
+    'backgroundFit'?: PublisherDocumentAreaStyleBackgroundFitEnum;
+    'backgroundHorizontalAlign'?: PublisherDocumentAreaStyleBackgroundHorizontalAlignEnum;
+    'backgroundImage'?: string;
+    'backgroundImageOpacity'?: number;
+    'backgroundOffset'?: number;
+    'backgroundOffsetBottom'?: number;
+    'backgroundOffsetLeft'?: number;
+    'backgroundOffsetRight'?: number;
+    'backgroundOffsetTop'?: number;
+    'backgroundOpacity'?: number;
+    'backgroundVerticalAlign'?: PublisherDocumentAreaStyleBackgroundVerticalAlignEnum;
+    'gap'?: PublisherDocumentAreaStyleGap;
+}
+
+export type PublisherDocumentAreaStyleBackgroundFitEnum = 'cover' | 'contain' | 'fill' | 'tile';
+export type PublisherDocumentAreaStyleBackgroundHorizontalAlignEnum = 'left' | 'center' | 'right';
+export type PublisherDocumentAreaStyleBackgroundVerticalAlignEnum = 'top' | 'center' | 'bottom';
+
+/**
+ * @type PublisherDocumentAreaStyleGap
+ * A length, or `{theme.spacing.gap.<compact|normal|spacious>}`.
+ */
+export type PublisherDocumentAreaStyleGap = number | string;
+
+/**
+ * @type PublisherDocumentAttributeElements
+ * Selected attribute elements: `{\"values\": [...]}` or `{\"uris\": [...]}`.
+ */
+export type PublisherDocumentAttributeElements = PublisherDocumentAttributeElementsByUri | PublisherDocumentAttributeElementsByValue;
+
+export interface PublisherDocumentAttributeElementsByUri {
+    /**
+     * Element URIs; `null` stands for an empty value.
+     */
+    'uris': Array<string>;
+}
+
+export interface PublisherDocumentAttributeElementsByValue {
+    /**
+     * Element values; `null` stands for an empty value.
+     */
+    'values': Array<string | null>;
+}
+
+/**
+ * Filters an attribute display form by a list of elements.
+ */
+export interface PublisherDocumentAttributeFilter {
+    'attributeFilter': PublisherDocumentAttributeFilterAttributeFilter;
+}
+
+export interface PublisherDocumentAttributeFilterAttributeFilter {
+    'attributeElements': PublisherDocumentAttributeElements;
+    'displayForm': PublisherDocumentObjRef;
+    /**
+     * Parent filters that limit the offered elements.
+     */
+    'filterElementsBy'?: Array<PublisherDocumentAttributeFilterParent>;
+    /**
+     * Date filters that limit the offered elements.
+     */
+    'filterElementsByDate'?: Array<PublisherDocumentAttributeFilterByDate>;
+    /**
+     * Required on a document filter in the declarative layout. A REST write can omit it there. The server then generates it. Optional on a page filter.
+     */
+    'localIdentifier'?: string;
+    'negativeSelection': boolean;
+    'selectionMode'?: PublisherDocumentAttributeFilterAttributeFilterSelectionModeEnum;
+    'title'?: string;
+    'validateElementsBy'?: Array<PublisherDocumentObjRef>;
+}
+
+export type PublisherDocumentAttributeFilterAttributeFilterSelectionModeEnum = 'single' | 'multi';
+
+/**
+ * A date filter that limits the offered elements.
+ */
+export interface PublisherDocumentAttributeFilterByDate {
+    'dataSet'?: PublisherDocumentObjRef;
+    'filterLocalIdentifier': string;
+    'isCommonDate': boolean;
+}
+
+/**
+ * How a document attribute filter is shown, as in dashboards.
+ */
+export interface PublisherDocumentAttributeFilterConfig {
+    'displayAsLabel'?: PublisherDocumentObjRef;
+    'localIdentifier': string;
+    'mode'?: PublisherDocumentAttributeFilterConfigModeEnum;
+    'selectionType'?: PublisherDocumentAttributeFilterConfigSelectionTypeEnum;
+}
+
+export type PublisherDocumentAttributeFilterConfigModeEnum = 'readonly' | 'hidden' | 'active';
+export type PublisherDocumentAttributeFilterConfigSelectionTypeEnum = 'list' | 'text' | 'listOrText';
+
+/**
+ * A parent attribute filter that limits the offered elements.
+ */
+export interface PublisherDocumentAttributeFilterParent {
+    'filterLocalIdentifier': string;
+    'over': PublisherDocumentAttributeFilterParentOver;
+}
+
+/**
+ * Attributes that connect the parent and the child filter in the data model.
+ */
+export interface PublisherDocumentAttributeFilterParentOver {
+    'attributes': Array<PublisherDocumentObjRef>;
+}
+
+export interface PublisherDocumentAttributeFilterReference {
+    'displayForm': PublisherDocumentObjRef;
+    'type': PublisherDocumentAttributeFilterReferenceTypeEnum;
+}
+
+export type PublisherDocumentAttributeFilterReferenceTypeEnum = 'attributeFilterReference';
+
+export interface PublisherDocumentAutoVisibility {
+    'visible'?: PublisherDocumentAutoVisibilityVisible;
+}
+
+/**
+ * @type PublisherDocumentAutoVisibilityVisible
+ * `true`, `false` or `\"auto\"`.
+ */
+export type PublisherDocumentAutoVisibilityVisible = boolean | string;
+
+export interface PublisherDocumentAxisDisplay {
+    'max'?: number;
+    'min'?: number;
+    'name'?: PublisherDocumentAxisNameDisplay;
+    'values'?: PublisherDocumentAxisValuesDisplay;
+    'visible'?: boolean;
+}
+
+export interface PublisherDocumentAxisNameDisplay {
+    'position'?: PublisherDocumentAxisNameDisplayPositionEnum;
+    'visible'?: boolean;
+}
+
+export type PublisherDocumentAxisNameDisplayPositionEnum = 'low' | 'middle' | 'high';
+
+export interface PublisherDocumentAxisValuesDisplay {
+    /**
+     * Label rotation in degrees, from -90 to 90.
+     */
+    'rotation'?: number;
+    'visible'?: boolean;
+}
+
+/**
+ * One open end of a relative date filter: exactly one of `from` and `to`.
+ */
+export interface PublisherDocumentBoundedFilter {
+    'from'?: number;
+    'granularity': PublisherDocumentBoundedFilterGranularityEnum;
+    'to'?: number;
+}
+
+export type PublisherDocumentBoundedFilterGranularityEnum = 'GDC.time.second' | 'GDC.time.minute' | 'GDC.time.hour' | 'GDC.time.date' | 'GDC.time.week_us' | 'GDC.time.month' | 'GDC.time.fiscal_month' | 'GDC.time.quarter' | 'GDC.time.fiscal_quarter' | 'GDC.time.year' | 'GDC.time.fiscal_year';
+
+/**
+ * Chart style overrides; stored, not applied. Lengths are in canvas px.
+ */
+export interface PublisherDocumentChartStyle {
+    'axisLineColor'?: string;
+    'axisNameColor'?: string;
+    'axisNameSize'?: number;
+    'axisValueColor'?: string;
+    'axisValueSize'?: number;
+    'dataLabelColor'?: string;
+    'dataLabelSize'?: number;
+    'fontSize'?: number;
+    'gridColor'?: string;
+    'legendColor'?: string;
+    'legendSize'?: number;
+    'plotLineColor'?: string;
+    'textColor'?: string;
+}
+
+/**
+ * Lays its children out top to bottom.
+ */
+export interface PublisherDocumentColumn {
+    /**
+     * Child nodes from top to bottom, in reading order; an empty list is a spacer.
+     */
+    'children': Array<PublisherDocumentLayoutNode>;
+    'id'?: string;
+    /**
+     * Locks the container in the document editor; never checked on write.
+     */
+    'locked'?: boolean;
+    /**
+     * Share of the parent\'s main axis, greater than 0. Default 1.
+     */
+    'proportion'?: number;
+    'style'?: PublisherDocumentContainerStyle;
+    'type': PublisherDocumentColumnTypeEnum;
+}
+
+export type PublisherDocumentColumnTypeEnum = 'column';
+
+export interface PublisherDocumentComparisonCondition {
+    'comparison': PublisherDocumentComparisonConditionComparison;
+}
+
+export interface PublisherDocumentComparisonConditionComparison {
+    'operator': PublisherDocumentComparisonConditionComparisonOperatorEnum;
+    'treatNullValuesAs'?: number;
+    'value': number;
+}
+
+export type PublisherDocumentComparisonConditionComparisonOperatorEnum = 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO';
+
+/**
+ * Style of a row or column; its content inherits the text keys. Lengths are in canvas px.
+ */
+export interface PublisherDocumentContainerStyle {
+    'backgroundColor'?: string;
+    'backgroundFit'?: PublisherDocumentContainerStyleBackgroundFitEnum;
+    'backgroundHorizontalAlign'?: PublisherDocumentContainerStyleBackgroundHorizontalAlignEnum;
+    'backgroundImage'?: string;
+    'backgroundImageOpacity'?: number;
+    'backgroundOffset'?: number;
+    'backgroundOffsetBottom'?: number;
+    'backgroundOffsetLeft'?: number;
+    'backgroundOffsetRight'?: number;
+    'backgroundOffsetTop'?: number;
+    'backgroundOpacity'?: number;
+    'backgroundVerticalAlign'?: PublisherDocumentContainerStyleBackgroundVerticalAlignEnum;
+    'borderBottomColor'?: string;
+    'borderBottomLeftRadius'?: PublisherDocumentContainerStyleBorderBottomLeftRadius;
+    'borderBottomRightRadius'?: PublisherDocumentContainerStyleBorderBottomRightRadius;
+    'borderBottomStyle'?: PublisherDocumentContainerStyleBorderBottomStyleEnum;
+    'borderBottomWidth'?: number;
+    'borderColor'?: string;
+    'borderLeftColor'?: string;
+    'borderLeftStyle'?: PublisherDocumentContainerStyleBorderLeftStyleEnum;
+    'borderLeftWidth'?: number;
+    'borderRadius'?: PublisherDocumentContainerStyleBorderRadius;
+    'borderRightColor'?: string;
+    'borderRightStyle'?: PublisherDocumentContainerStyleBorderRightStyleEnum;
+    'borderRightWidth'?: number;
+    'borderStyle'?: PublisherDocumentContainerStyleBorderStyleEnum;
+    'borderTopColor'?: string;
+    'borderTopLeftRadius'?: PublisherDocumentContainerStyleBorderTopLeftRadius;
+    'borderTopRightRadius'?: PublisherDocumentContainerStyleBorderTopRightRadius;
+    'borderTopStyle'?: PublisherDocumentContainerStyleBorderTopStyleEnum;
+    'borderTopWidth'?: number;
+    'borderWidth'?: number;
+    'fontSize'?: number;
+    'fontStyle'?: PublisherDocumentContainerStyleFontStyleEnum;
+    'fontWeight'?: number;
+    'gap'?: PublisherDocumentContainerStyleGap;
+    'horizontalAlign'?: PublisherDocumentContainerStyleHorizontalAlignEnum;
+    'letterSpacing'?: number;
+    'lineHeight'?: number;
+    'opacity'?: number;
+    'padding'?: PublisherDocumentContainerStylePadding;
+    'paddingBottom'?: PublisherDocumentContainerStylePaddingBottom;
+    'paddingLeft'?: PublisherDocumentContainerStylePaddingLeft;
+    'paddingRight'?: PublisherDocumentContainerStylePaddingRight;
+    'paddingTop'?: PublisherDocumentContainerStylePaddingTop;
+    'shadow'?: string;
+    'shadowBlur'?: number;
+    'shadowColor'?: string;
+    'shadowOpacity'?: number;
+    'shadowSpread'?: number;
+    'shadowX'?: number;
+    'shadowY'?: number;
+    'textColor'?: string;
+    'textOverflow'?: PublisherDocumentContainerStyleTextOverflowEnum;
+    'textStyle'?: PublisherDocumentContainerStyleTextStyleEnum;
+    'textTransform'?: PublisherDocumentContainerStyleTextTransformEnum;
+    'verticalAlign'?: PublisherDocumentContainerStyleVerticalAlignEnum;
+}
+
+export type PublisherDocumentContainerStyleBackgroundFitEnum = 'cover' | 'contain' | 'fill' | 'tile';
+export type PublisherDocumentContainerStyleBackgroundHorizontalAlignEnum = 'left' | 'center' | 'right';
+export type PublisherDocumentContainerStyleBackgroundVerticalAlignEnum = 'top' | 'center' | 'bottom';
+export type PublisherDocumentContainerStyleBorderBottomStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+export type PublisherDocumentContainerStyleBorderLeftStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+export type PublisherDocumentContainerStyleBorderRightStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+export type PublisherDocumentContainerStyleBorderStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+export type PublisherDocumentContainerStyleBorderTopStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+export type PublisherDocumentContainerStyleFontStyleEnum = 'normal' | 'italic';
+export type PublisherDocumentContainerStyleHorizontalAlignEnum = 'left' | 'center' | 'right' | 'justify';
+export type PublisherDocumentContainerStyleTextOverflowEnum = 'shrink' | 'clip' | 'ellipsis';
+export type PublisherDocumentContainerStyleTextStyleEnum = 'title' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'largeText' | 'normalText' | 'smallText';
+export type PublisherDocumentContainerStyleTextTransformEnum = 'none' | 'uppercase' | 'lowercase' | 'capitalize';
+export type PublisherDocumentContainerStyleVerticalAlignEnum = 'top' | 'center' | 'bottom';
+
+/**
+ * @type PublisherDocumentContainerStyleBorderBottomLeftRadius
+ * A length, or `{theme.corners.<small|medium|large|full>}`.
+ */
+export type PublisherDocumentContainerStyleBorderBottomLeftRadius = number | string;
+
+/**
+ * @type PublisherDocumentContainerStyleBorderBottomRightRadius
+ * A length, or `{theme.corners.<small|medium|large|full>}`.
+ */
+export type PublisherDocumentContainerStyleBorderBottomRightRadius = number | string;
+
+/**
+ * @type PublisherDocumentContainerStyleBorderRadius
+ * A length, or `{theme.corners.<small|medium|large|full>}`.
+ */
+export type PublisherDocumentContainerStyleBorderRadius = number | string;
+
+/**
+ * @type PublisherDocumentContainerStyleBorderTopLeftRadius
+ * A length, or `{theme.corners.<small|medium|large|full>}`.
+ */
+export type PublisherDocumentContainerStyleBorderTopLeftRadius = number | string;
+
+/**
+ * @type PublisherDocumentContainerStyleBorderTopRightRadius
+ * A length, or `{theme.corners.<small|medium|large|full>}`.
+ */
+export type PublisherDocumentContainerStyleBorderTopRightRadius = number | string;
+
+/**
+ * @type PublisherDocumentContainerStyleGap
+ * A length, or `{theme.spacing.gap.<compact|normal|spacious>}`.
+ */
+export type PublisherDocumentContainerStyleGap = number | string;
+
+/**
+ * @type PublisherDocumentContainerStylePadding
+ * A length, or `{theme.spacing.padding.<compact|normal|spacious>}`.
+ */
+export type PublisherDocumentContainerStylePadding = number | string;
+
+/**
+ * @type PublisherDocumentContainerStylePaddingBottom
+ * A length, or `{theme.spacing.padding.<compact|normal|spacious>}`.
+ */
+export type PublisherDocumentContainerStylePaddingBottom = number | string;
+
+/**
+ * @type PublisherDocumentContainerStylePaddingLeft
+ * A length, or `{theme.spacing.padding.<compact|normal|spacious>}`.
+ */
+export type PublisherDocumentContainerStylePaddingLeft = number | string;
+
+/**
+ * @type PublisherDocumentContainerStylePaddingRight
+ * A length, or `{theme.spacing.padding.<compact|normal|spacious>}`.
+ */
+export type PublisherDocumentContainerStylePaddingRight = number | string;
+
+/**
+ * @type PublisherDocumentContainerStylePaddingTop
+ * A length, or `{theme.spacing.padding.<compact|normal|spacious>}`.
+ */
+export type PublisherDocumentContainerStylePaddingTop = number | string;
+
+/**
+ * Content of a document or a document template. Holds `pages` or `sections`, never both.
+ */
+export interface PublisherDocumentContent {
+    'attributeFilterConfigs'?: Array<PublisherDocumentAttributeFilterConfig>;
+    'defaults'?: PublisherDocumentDefaults;
+    /**
+     * Document filters, at most one per attribute display form or date dataset.
+     */
+    'filters'?: Array<PublisherDocumentFilter>;
+    /**
+     * Locale for formatting dates in variables, charts and tables.
+     */
+    'formatLocale'?: string;
+    /**
+     * Locale of the text the product writes, such as `de-DE`.
+     */
+    'locale'?: string;
+    /**
+     * The document\'s pages, when it has no sections.
+     */
+    'pages'?: Array<PublisherDocumentPage>;
+    /**
+     * Groups of pages, when the document has no top-level pages.
+     */
+    'sections'?: Array<PublisherDocumentSection>;
+    'style'?: PublisherDocumentAreaStyle;
+}
+
+/**
+ * A date dataset.
+ */
+export interface PublisherDocumentDataSetRef {
+    'identifier': string;
+    'type': PublisherDocumentDataSetRefTypeEnum;
+}
+
+export type PublisherDocumentDataSetRefTypeEnum = 'dataSet';
+
+/**
+ * Filters a date dataset. A document filter always names its `dataSet`.
+ */
+export interface PublisherDocumentDateFilter {
+    'dateFilter': PublisherDocumentDateFilterDateFilter;
+}
+
+export interface PublisherDocumentDateFilterDateFilter {
+    'attribute'?: PublisherDocumentObjRef;
+    'boundedFilter'?: PublisherDocumentBoundedFilter;
+    'dataSet'?: PublisherDocumentObjRef;
+    'emptyValueHandling'?: PublisherDocumentDateFilterDateFilterEmptyValueHandlingEnum;
+    'from'?: PublisherDocumentDateFilterDateFilterFrom;
+    'granularity': PublisherDocumentDateFilterDateFilterGranularityEnum;
+    /**
+     * Required on a document filter in the declarative layout. A REST write can omit it there. The server then generates it. Optional on a page filter.
+     */
+    'localIdentifier'?: string;
+    'to'?: PublisherDocumentDateFilterDateFilterTo;
+    'type': PublisherDocumentDateFilterDateFilterTypeEnum;
+}
+
+export type PublisherDocumentDateFilterDateFilterEmptyValueHandlingEnum = 'include' | 'exclude' | 'only';
+export type PublisherDocumentDateFilterDateFilterGranularityEnum = 'GDC.time.second' | 'GDC.time.minute' | 'GDC.time.hour' | 'GDC.time.date' | 'GDC.time.week_us' | 'GDC.time.month' | 'GDC.time.fiscal_month' | 'GDC.time.quarter' | 'GDC.time.fiscal_quarter' | 'GDC.time.year' | 'GDC.time.fiscal_year';
+export type PublisherDocumentDateFilterDateFilterTypeEnum = 'relative' | 'absolute';
+
+/**
+ * @type PublisherDocumentDateFilterDateFilterFrom
+ * A date, or an offset of a relative filter.
+ */
+export type PublisherDocumentDateFilterDateFilterFrom = number | string;
+
+/**
+ * @type PublisherDocumentDateFilterDateFilterTo
+ * A date, or an offset of a relative filter.
+ */
+export type PublisherDocumentDateFilterDateFilterTo = number | string;
+
+export interface PublisherDocumentDateFilterReference {
+    'dataSet': PublisherDocumentObjRef;
+    'type': PublisherDocumentDateFilterReferenceTypeEnum;
+}
+
+export type PublisherDocumentDateFilterReferenceTypeEnum = 'dateFilterReference';
+
+/**
+ * Document-wide defaults.
+ */
+export interface PublisherDocumentDefaults {
+    /**
+     * Page size of a page that sets none.
+     */
+    'pageSize'?: PublisherDocumentDefaultsPageSizeEnum;
+    'period'?: PublisherDocumentPeriod;
+    'takeaway'?: PublisherDocumentTakeawayDefaults;
+}
+
+export type PublisherDocumentDefaultsPageSizeEnum = 'widescreen';
+
+/**
+ * @type PublisherDocumentFilter
+ * A filter in the dashboard filter grammar, wrapped in an object keyed by its kind.
+ */
+export type PublisherDocumentFilter = PublisherDocumentArbitraryAttributeFilter | PublisherDocumentAttributeFilter | PublisherDocumentDateFilter | PublisherDocumentMatchAttributeFilter | PublisherDocumentMeasureValueFilter;
+
+/**
+ * @type PublisherDocumentFilterReference
+ * A reference to a document filter, selected by `type`.
+ */
+export type PublisherDocumentFilterReference = { type: 'attributeFilterReference' } & PublisherDocumentAttributeFilterReference | { type: 'dateFilterReference' } & PublisherDocumentDateFilterReference | { type: 'measureValueFilterReference' } & PublisherDocumentMeasureValueFilterReference;
+
+/**
+ * A heading below the page title.
+ */
+export interface PublisherDocumentHeadingWidget {
+    /**
+     * Unique within the page.
+     */
+    'id': string;
+    /**
+     * Outline level below the page title. Default 1.
+     */
+    'level'?: PublisherDocumentHeadingWidgetLevelEnum;
+    /**
+     * Locks the widget in the document editor; never checked on write.
+     */
+    'locked'?: boolean;
+    /**
+     * Inline markdown.
+     */
+    'markdown'?: string;
+    'placeholder'?: PublisherDocumentWidgetPlaceholder;
+    'proportion'?: number;
+    'style'?: PublisherDocumentTextWidgetStyle;
+    'type': PublisherDocumentHeadingWidgetTypeEnum;
+}
+
+export type PublisherDocumentHeadingWidgetLevelEnum = 1 | 2 | 3 | 4 | 5 | 6;
+export type PublisherDocumentHeadingWidgetTypeEnum = 'heading';
+
+/**
+ * Headline style overrides; stored, not applied. Lengths are in canvas px.
+ */
+export interface PublisherDocumentHeadlineStyle {
+    'negativeColor'?: string;
+    'positiveColor'?: string;
+    'primaryValueColor'?: string;
+    'primaryValueSize'?: number;
+    'secondaryValueColor'?: string;
+    'secondaryValueSize'?: number;
+}
+
+/**
+ * An image from the theme or an https URL.
+ */
+export interface PublisherDocumentImageWidget {
+    'altText'?: string;
+    /**
+     * Left out of the accessibility tree, PDF tags and the AI context; needs no alt text.
+     */
+    'decorative'?: boolean;
+    /**
+     * Unique within the page.
+     */
+    'id': string;
+    /**
+     * Locks the widget in the document editor; never checked on write.
+     */
+    'locked'?: boolean;
+    'placeholder'?: PublisherDocumentWidgetPlaceholder;
+    'proportion'?: number;
+    /**
+     * A theme image reference such as `{theme.logo}`, or an `https://` URL.
+     */
+    'source'?: string;
+    'style'?: PublisherDocumentImageWidgetStyle;
+    'type': PublisherDocumentImageWidgetTypeEnum;
+}
+
+export type PublisherDocumentImageWidgetTypeEnum = 'image';
+
+/**
+ * Style of an image widget. Lengths are in canvas px.
+ */
+export interface PublisherDocumentImageWidgetStyle {
+    'backgroundColor'?: string;
+    'backgroundFit'?: PublisherDocumentImageWidgetStyleBackgroundFitEnum;
+    'backgroundHorizontalAlign'?: PublisherDocumentImageWidgetStyleBackgroundHorizontalAlignEnum;
+    'backgroundImage'?: string;
+    'backgroundImageOpacity'?: number;
+    'backgroundOffset'?: number;
+    'backgroundOffsetBottom'?: number;
+    'backgroundOffsetLeft'?: number;
+    'backgroundOffsetRight'?: number;
+    'backgroundOffsetTop'?: number;
+    'backgroundOpacity'?: number;
+    'backgroundVerticalAlign'?: PublisherDocumentImageWidgetStyleBackgroundVerticalAlignEnum;
+    'borderBottomColor'?: string;
+    'borderBottomLeftRadius'?: PublisherDocumentImageWidgetStyleBorderBottomLeftRadius;
+    'borderBottomRightRadius'?: PublisherDocumentImageWidgetStyleBorderBottomRightRadius;
+    'borderBottomStyle'?: PublisherDocumentImageWidgetStyleBorderBottomStyleEnum;
+    'borderBottomWidth'?: number;
+    'borderColor'?: string;
+    'borderLeftColor'?: string;
+    'borderLeftStyle'?: PublisherDocumentImageWidgetStyleBorderLeftStyleEnum;
+    'borderLeftWidth'?: number;
+    'borderRadius'?: PublisherDocumentImageWidgetStyleBorderRadius;
+    'borderRightColor'?: string;
+    'borderRightStyle'?: PublisherDocumentImageWidgetStyleBorderRightStyleEnum;
+    'borderRightWidth'?: number;
+    'borderStyle'?: PublisherDocumentImageWidgetStyleBorderStyleEnum;
+    'borderTopColor'?: string;
+    'borderTopLeftRadius'?: PublisherDocumentImageWidgetStyleBorderTopLeftRadius;
+    'borderTopRightRadius'?: PublisherDocumentImageWidgetStyleBorderTopRightRadius;
+    'borderTopStyle'?: PublisherDocumentImageWidgetStyleBorderTopStyleEnum;
+    'borderTopWidth'?: number;
+    'borderWidth'?: number;
+    'fit'?: PublisherDocumentImageWidgetStyleFitEnum;
+    'horizontalAlign'?: PublisherDocumentImageWidgetStyleHorizontalAlignEnum;
+    'opacity'?: number;
+    'padding'?: PublisherDocumentImageWidgetStylePadding;
+    'paddingBottom'?: PublisherDocumentImageWidgetStylePaddingBottom;
+    'paddingLeft'?: PublisherDocumentImageWidgetStylePaddingLeft;
+    'paddingRight'?: PublisherDocumentImageWidgetStylePaddingRight;
+    'paddingTop'?: PublisherDocumentImageWidgetStylePaddingTop;
+    'shadow'?: string;
+    'shadowBlur'?: number;
+    'shadowColor'?: string;
+    'shadowOpacity'?: number;
+    'shadowSpread'?: number;
+    'shadowX'?: number;
+    'shadowY'?: number;
+    'verticalAlign'?: PublisherDocumentImageWidgetStyleVerticalAlignEnum;
+}
+
+export type PublisherDocumentImageWidgetStyleBackgroundFitEnum = 'cover' | 'contain' | 'fill' | 'tile';
+export type PublisherDocumentImageWidgetStyleBackgroundHorizontalAlignEnum = 'left' | 'center' | 'right';
+export type PublisherDocumentImageWidgetStyleBackgroundVerticalAlignEnum = 'top' | 'center' | 'bottom';
+export type PublisherDocumentImageWidgetStyleBorderBottomStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+export type PublisherDocumentImageWidgetStyleBorderLeftStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+export type PublisherDocumentImageWidgetStyleBorderRightStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+export type PublisherDocumentImageWidgetStyleBorderStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+export type PublisherDocumentImageWidgetStyleBorderTopStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+export type PublisherDocumentImageWidgetStyleFitEnum = 'contain' | 'cover' | 'fill';
+export type PublisherDocumentImageWidgetStyleHorizontalAlignEnum = 'left' | 'center' | 'right';
+export type PublisherDocumentImageWidgetStyleVerticalAlignEnum = 'top' | 'center' | 'bottom';
+
+/**
+ * @type PublisherDocumentImageWidgetStyleBorderBottomLeftRadius
+ * A length, or `{theme.corners.<small|medium|large|full>}`.
+ */
+export type PublisherDocumentImageWidgetStyleBorderBottomLeftRadius = number | string;
+
+/**
+ * @type PublisherDocumentImageWidgetStyleBorderBottomRightRadius
+ * A length, or `{theme.corners.<small|medium|large|full>}`.
+ */
+export type PublisherDocumentImageWidgetStyleBorderBottomRightRadius = number | string;
+
+/**
+ * @type PublisherDocumentImageWidgetStyleBorderRadius
+ * A length, or `{theme.corners.<small|medium|large|full>}`.
+ */
+export type PublisherDocumentImageWidgetStyleBorderRadius = number | string;
+
+/**
+ * @type PublisherDocumentImageWidgetStyleBorderTopLeftRadius
+ * A length, or `{theme.corners.<small|medium|large|full>}`.
+ */
+export type PublisherDocumentImageWidgetStyleBorderTopLeftRadius = number | string;
+
+/**
+ * @type PublisherDocumentImageWidgetStyleBorderTopRightRadius
+ * A length, or `{theme.corners.<small|medium|large|full>}`.
+ */
+export type PublisherDocumentImageWidgetStyleBorderTopRightRadius = number | string;
+
+/**
+ * @type PublisherDocumentImageWidgetStylePadding
+ * A length, or `{theme.spacing.padding.<compact|normal|spacious>}`.
+ */
+export type PublisherDocumentImageWidgetStylePadding = number | string;
+
+/**
+ * @type PublisherDocumentImageWidgetStylePaddingBottom
+ * A length, or `{theme.spacing.padding.<compact|normal|spacious>}`.
+ */
+export type PublisherDocumentImageWidgetStylePaddingBottom = number | string;
+
+/**
+ * @type PublisherDocumentImageWidgetStylePaddingLeft
+ * A length, or `{theme.spacing.padding.<compact|normal|spacious>}`.
+ */
+export type PublisherDocumentImageWidgetStylePaddingLeft = number | string;
+
+/**
+ * @type PublisherDocumentImageWidgetStylePaddingRight
+ * A length, or `{theme.spacing.padding.<compact|normal|spacious>}`.
+ */
+export type PublisherDocumentImageWidgetStylePaddingRight = number | string;
+
+/**
+ * @type PublisherDocumentImageWidgetStylePaddingTop
+ * A length, or `{theme.spacing.padding.<compact|normal|spacious>}`.
+ */
+export type PublisherDocumentImageWidgetStylePaddingTop = number | string;
+
+/**
+ * @type PublisherDocumentLayoutNode
+ * A layout node: a row or column container, or a widget. The shape is selected by `type`.
+ */
+export type PublisherDocumentLayoutNode = { type: 'column' } & PublisherDocumentColumn | { type: 'heading' } & PublisherDocumentHeadingWidget | { type: 'image' } & PublisherDocumentImageWidget | { type: 'row' } & PublisherDocumentRow | { type: 'takeaway' } & PublisherDocumentTakeawayWidget | { type: 'text' } & PublisherDocumentTextWidget | { type: 'title' } & PublisherDocumentTitleWidget | { type: 'visualization' } & PublisherDocumentVisualizationWidget;
+
+export interface PublisherDocumentLegendDisplay {
+    'position'?: PublisherDocumentLegendDisplayPositionEnum;
+    'visible'?: boolean;
+}
+
+export type PublisherDocumentLegendDisplayPositionEnum = 'auto' | 'top' | 'bottom' | 'left' | 'right';
+
+/**
+ * Filters an attribute display form by a text pattern.
+ */
+export interface PublisherDocumentMatchAttributeFilter {
+    'matchAttributeFilter': PublisherDocumentMatchAttributeFilterMatchAttributeFilter;
+}
+
+export interface PublisherDocumentMatchAttributeFilterMatchAttributeFilter {
+    'caseSensitive'?: boolean;
+    'displayForm': PublisherDocumentObjRef;
+    'literal': string;
+    /**
+     * Required on a document filter in the declarative layout. A REST write can omit it there. The server then generates it. Optional on a page filter.
+     */
+    'localIdentifier'?: string;
+    'negativeSelection'?: boolean;
+    'operator': PublisherDocumentMatchAttributeFilterMatchAttributeFilterOperatorEnum;
+    'title'?: string;
+}
+
+export type PublisherDocumentMatchAttributeFilterMatchAttributeFilterOperatorEnum = 'contains' | 'startsWith' | 'endsWith';
+
+/**
+ * @type PublisherDocumentMeasureValueCondition
+ * A measure value condition, wrapped in an object keyed by its kind.
+ */
+export type PublisherDocumentMeasureValueCondition = PublisherDocumentComparisonCondition | PublisherDocumentRangeCondition;
+
+/**
+ * Filters by the value of a measure.
+ */
+export interface PublisherDocumentMeasureValueFilter {
+    'dashboardMeasureValueFilter': PublisherDocumentMeasureValueFilterDashboardMeasureValueFilter;
+}
+
+export interface PublisherDocumentMeasureValueFilterDashboardMeasureValueFilter {
+    /**
+     * OR-ed conditions; none means all values.
+     */
+    'conditions'?: Array<PublisherDocumentMeasureValueCondition>;
+    'dimensionality'?: Array<PublisherDocumentObjRef>;
+    'localIdentifier': string;
+    'measure': PublisherDocumentObjRef;
+    'title'?: string;
+}
+
+export interface PublisherDocumentMeasureValueFilterReference {
+    'measure': PublisherDocumentObjRef;
+    'type': PublisherDocumentMeasureValueFilterReferenceTypeEnum;
+}
+
+export type PublisherDocumentMeasureValueFilterReferenceTypeEnum = 'measureValueFilterReference';
+
+/**
+ * A flat object reference.
+ */
+export interface PublisherDocumentObjRef {
+    'identifier': string;
+    /**
+     * sdk-model object type.
+     */
+    'type': PublisherDocumentObjRefTypeEnum;
+}
+
+export type PublisherDocumentObjRefTypeEnum = 'insight' | 'displayForm' | 'dataSet' | 'measure' | 'attribute';
+
+/**
+ * A page of a document.
+ */
+export interface PublisherDocumentPage {
+    /**
+     * Page filters; stored, not applied.
+     */
+    'filters'?: Array<PublisherDocumentFilter>;
+    /**
+     * Unique within the document. Required in the declarative layout. A REST write can omit it. The server then generates it.
+     */
+    'id'?: string;
+    /**
+     * Editor hint.
+     */
+    'kind'?: PublisherDocumentPageKindEnum;
+    'layout': PublisherDocumentLayoutNode;
+    /**
+     * Speaker notes in markdown, never drawn.
+     */
+    'notes'?: string;
+    'pageSize'?: PublisherDocumentPagePageSizeEnum;
+    'style'?: PublisherDocumentPageStyle;
+    /**
+     * `false` keeps the page out of the viewer, exports and page numbering. Default `true`.
+     */
+    'visible'?: boolean;
+}
+
+export type PublisherDocumentPageKindEnum = 'cover' | 'section' | 'content';
+export type PublisherDocumentPagePageSizeEnum = 'widescreen';
+
+/**
+ * Style of a page; containers inherit its gap and text keys. Lengths are in canvas px.
+ */
+export interface PublisherDocumentPageStyle {
+    'backgroundColor'?: string;
+    'backgroundFit'?: PublisherDocumentPageStyleBackgroundFitEnum;
+    'backgroundHorizontalAlign'?: PublisherDocumentPageStyleBackgroundHorizontalAlignEnum;
+    'backgroundImage'?: string;
+    'backgroundImageOpacity'?: number;
+    'backgroundOffset'?: number;
+    'backgroundOffsetBottom'?: number;
+    'backgroundOffsetLeft'?: number;
+    'backgroundOffsetRight'?: number;
+    'backgroundOffsetTop'?: number;
+    'backgroundOpacity'?: number;
+    'backgroundVerticalAlign'?: PublisherDocumentPageStyleBackgroundVerticalAlignEnum;
+    'fontSize'?: number;
+    'fontStyle'?: PublisherDocumentPageStyleFontStyleEnum;
+    'fontWeight'?: number;
+    'gap'?: PublisherDocumentPageStyleGap;
+    'horizontalAlign'?: PublisherDocumentPageStyleHorizontalAlignEnum;
+    'letterSpacing'?: number;
+    'lineHeight'?: number;
+    'padding'?: PublisherDocumentPageStylePadding;
+    'paddingBottom'?: PublisherDocumentPageStylePaddingBottom;
+    'paddingLeft'?: PublisherDocumentPageStylePaddingLeft;
+    'paddingRight'?: PublisherDocumentPageStylePaddingRight;
+    'paddingTop'?: PublisherDocumentPageStylePaddingTop;
+    'textColor'?: string;
+    'textOverflow'?: PublisherDocumentPageStyleTextOverflowEnum;
+    'textStyle'?: PublisherDocumentPageStyleTextStyleEnum;
+    'textTransform'?: PublisherDocumentPageStyleTextTransformEnum;
+    'verticalAlign'?: PublisherDocumentPageStyleVerticalAlignEnum;
+}
+
+export type PublisherDocumentPageStyleBackgroundFitEnum = 'cover' | 'contain' | 'fill' | 'tile';
+export type PublisherDocumentPageStyleBackgroundHorizontalAlignEnum = 'left' | 'center' | 'right';
+export type PublisherDocumentPageStyleBackgroundVerticalAlignEnum = 'top' | 'center' | 'bottom';
+export type PublisherDocumentPageStyleFontStyleEnum = 'normal' | 'italic';
+export type PublisherDocumentPageStyleHorizontalAlignEnum = 'left' | 'center' | 'right' | 'justify';
+export type PublisherDocumentPageStyleTextOverflowEnum = 'shrink' | 'clip' | 'ellipsis';
+export type PublisherDocumentPageStyleTextStyleEnum = 'title' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'largeText' | 'normalText' | 'smallText';
+export type PublisherDocumentPageStyleTextTransformEnum = 'none' | 'uppercase' | 'lowercase' | 'capitalize';
+export type PublisherDocumentPageStyleVerticalAlignEnum = 'top' | 'center' | 'bottom';
+
+/**
+ * @type PublisherDocumentPageStyleGap
+ * A length, or `{theme.spacing.gap.<compact|normal|spacious>}`.
+ */
+export type PublisherDocumentPageStyleGap = number | string;
+
+/**
+ * @type PublisherDocumentPageStylePadding
+ * A length, or `{theme.spacing.padding.<compact|normal|spacious>}`.
+ */
+export type PublisherDocumentPageStylePadding = number | string;
+
+/**
+ * @type PublisherDocumentPageStylePaddingBottom
+ * A length, or `{theme.spacing.padding.<compact|normal|spacious>}`.
+ */
+export type PublisherDocumentPageStylePaddingBottom = number | string;
+
+/**
+ * @type PublisherDocumentPageStylePaddingLeft
+ * A length, or `{theme.spacing.padding.<compact|normal|spacious>}`.
+ */
+export type PublisherDocumentPageStylePaddingLeft = number | string;
+
+/**
+ * @type PublisherDocumentPageStylePaddingRight
+ * A length, or `{theme.spacing.padding.<compact|normal|spacious>}`.
+ */
+export type PublisherDocumentPageStylePaddingRight = number | string;
+
+/**
+ * @type PublisherDocumentPageStylePaddingTop
+ * A length, or `{theme.spacing.padding.<compact|normal|spacious>}`.
+ */
+export type PublisherDocumentPageStylePaddingTop = number | string;
+
+/**
+ * Content of a page template: one page without `id` and `visible`.
+ */
+export interface PublisherDocumentPageTemplateContent {
+    /**
+     * Page filters; stored, not applied.
+     */
+    'filters'?: Array<PublisherDocumentFilter>;
+    /**
+     * Editor hint.
+     */
+    'kind'?: PublisherDocumentPageTemplateContentKindEnum;
+    'layout': PublisherDocumentLayoutNode;
+    /**
+     * Speaker notes in markdown, never drawn.
+     */
+    'notes'?: string;
+    'pageSize'?: PublisherDocumentPageTemplateContentPageSizeEnum;
+    'style'?: PublisherDocumentPageStyle;
+}
+
+export type PublisherDocumentPageTemplateContentKindEnum = 'cover' | 'section' | 'content';
+export type PublisherDocumentPageTemplateContentPageSizeEnum = 'widescreen';
+
+/**
  * @type PublisherDocumentPeriod
  * The period the document covers, absolute or relative to today.
  */
 export type PublisherDocumentPeriod = { type: 'absolute' } & AbsolutePublisherDocumentPeriod | { type: 'relative' } & RelativePublisherDocumentPeriod;
+
+export interface PublisherDocumentRangeCondition {
+    'range': PublisherDocumentRangeConditionRange;
+}
+
+export interface PublisherDocumentRangeConditionRange {
+    'from': number;
+    'operator': PublisherDocumentRangeConditionRangeOperatorEnum;
+    'to': number;
+    'treatNullValuesAs'?: number;
+}
+
+export type PublisherDocumentRangeConditionRangeOperatorEnum = 'BETWEEN' | 'NOT_BETWEEN';
+
+/**
+ * Lays its children out left to right.
+ */
+export interface PublisherDocumentRow {
+    /**
+     * Child nodes from left to right, in reading order; an empty list is a spacer.
+     */
+    'children': Array<PublisherDocumentLayoutNode>;
+    'id'?: string;
+    /**
+     * Locks the container in the document editor; never checked on write.
+     */
+    'locked'?: boolean;
+    /**
+     * Share of the parent\'s main axis, greater than 0. Default 1.
+     */
+    'proportion'?: number;
+    'style'?: PublisherDocumentContainerStyle;
+    'type': PublisherDocumentRowTypeEnum;
+}
+
+export type PublisherDocumentRowTypeEnum = 'row';
+
+/**
+ * A group of pages, like a dashboard tab.
+ */
+export interface PublisherDocumentSection {
+    'description'?: string;
+    /**
+     * Unique within the document. Required in the declarative layout. A REST write can omit it. The server then generates it.
+     */
+    'id'?: string;
+    'pages': Array<PublisherDocumentPage>;
+    'title'?: string;
+}
+
+/**
+ * Table style overrides; stored, not applied. Lengths are in canvas px.
+ */
+export interface PublisherDocumentTableStyle {
+    'fontSize'?: number;
+    'gridColor'?: string;
+    'headerBackgroundColor'?: string;
+    'headerLabelColor'?: string;
+    'nullValueColor'?: string;
+    'rowHeight'?: number;
+    'subtotalBackgroundColor'?: string;
+    'totalBackgroundColor'?: string;
+    'totalValueColor'?: string;
+    'valueColor'?: string;
+}
+
+/**
+ * What the copilot reads when it writes a takeaway.
+ */
+export interface PublisherDocumentTakeawayContext {
+    'filters'?: boolean;
+    'otherPages'?: boolean;
+    'pageTitle'?: boolean;
+    /**
+     * Widget ids on the same page.
+     */
+    'widgets'?: Array<string>;
+}
+
+/**
+ * Takeaway settings every takeaway widget of the document uses.
+ */
+export interface PublisherDocumentTakeawayDefaults {
+    'generation'?: PublisherDocumentTakeawayGeneration;
+}
+
+/**
+ * How the copilot writes a takeaway.
+ */
+export interface PublisherDocumentTakeawayGeneration {
+    'context'?: PublisherDocumentTakeawayContext;
+    'instructions'?: string;
+}
+
+/**
+ * A generated takeaway, stored as markdown.
+ */
+export interface PublisherDocumentTakeawayWidget {
+    'generation'?: PublisherDocumentTakeawayGeneration;
+    /**
+     * Unique within the page.
+     */
+    'id': string;
+    /**
+     * Locks the widget in the document editor; never checked on write.
+     */
+    'locked'?: boolean;
+    /**
+     * The generated text.
+     */
+    'markdown'?: string;
+    'placeholder'?: PublisherDocumentWidgetPlaceholder;
+    'proportion'?: number;
+    'style'?: PublisherDocumentTextWidgetStyle;
+    'title'?: PublisherDocumentWidgetTitle;
+    'type': PublisherDocumentTakeawayWidgetTypeEnum;
+}
+
+export type PublisherDocumentTakeawayWidgetTypeEnum = 'takeaway';
+
+/**
+ * Text style of a widget title. Lengths are in canvas px.
+ */
+export interface PublisherDocumentTextStyle {
+    'fontSize'?: number;
+    'fontStyle'?: PublisherDocumentTextStyleFontStyleEnum;
+    'fontWeight'?: number;
+    'horizontalAlign'?: PublisherDocumentTextStyleHorizontalAlignEnum;
+    'letterSpacing'?: number;
+    'lineHeight'?: number;
+    'textColor'?: string;
+    'textOverflow'?: PublisherDocumentTextStyleTextOverflowEnum;
+    'textStyle'?: PublisherDocumentTextStyleTextStyleEnum;
+    'textTransform'?: PublisherDocumentTextStyleTextTransformEnum;
+    'verticalAlign'?: PublisherDocumentTextStyleVerticalAlignEnum;
+}
+
+export type PublisherDocumentTextStyleFontStyleEnum = 'normal' | 'italic';
+export type PublisherDocumentTextStyleHorizontalAlignEnum = 'left' | 'center' | 'right' | 'justify';
+export type PublisherDocumentTextStyleTextOverflowEnum = 'shrink' | 'clip' | 'ellipsis';
+export type PublisherDocumentTextStyleTextStyleEnum = 'title' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'largeText' | 'normalText' | 'smallText';
+export type PublisherDocumentTextStyleTextTransformEnum = 'none' | 'uppercase' | 'lowercase' | 'capitalize';
+export type PublisherDocumentTextStyleVerticalAlignEnum = 'top' | 'center' | 'bottom';
+
+/**
+ * A block of markdown text.
+ */
+export interface PublisherDocumentTextWidget {
+    /**
+     * Left out of the accessibility tree, PDF tags and the AI context.
+     */
+    'decorative'?: boolean;
+    /**
+     * Unique within the page.
+     */
+    'id': string;
+    /**
+     * Locks the widget in the document editor; never checked on write.
+     */
+    'locked'?: boolean;
+    /**
+     * Full markdown.
+     */
+    'markdown'?: string;
+    'placeholder'?: PublisherDocumentWidgetPlaceholder;
+    'proportion'?: number;
+    'style'?: PublisherDocumentTextWidgetStyle;
+    'type': PublisherDocumentTextWidgetTypeEnum;
+}
+
+export type PublisherDocumentTextWidgetTypeEnum = 'text';
+
+/**
+ * Style of a title, heading, text or takeaway widget. Lengths are in canvas px.
+ */
+export interface PublisherDocumentTextWidgetStyle {
+    'backgroundColor'?: string;
+    'backgroundFit'?: PublisherDocumentTextWidgetStyleBackgroundFitEnum;
+    'backgroundHorizontalAlign'?: PublisherDocumentTextWidgetStyleBackgroundHorizontalAlignEnum;
+    'backgroundImage'?: string;
+    'backgroundImageOpacity'?: number;
+    'backgroundOffset'?: number;
+    'backgroundOffsetBottom'?: number;
+    'backgroundOffsetLeft'?: number;
+    'backgroundOffsetRight'?: number;
+    'backgroundOffsetTop'?: number;
+    'backgroundOpacity'?: number;
+    'backgroundVerticalAlign'?: PublisherDocumentTextWidgetStyleBackgroundVerticalAlignEnum;
+    'borderBottomColor'?: string;
+    'borderBottomLeftRadius'?: PublisherDocumentTextWidgetStyleBorderBottomLeftRadius;
+    'borderBottomRightRadius'?: PublisherDocumentTextWidgetStyleBorderBottomRightRadius;
+    'borderBottomStyle'?: PublisherDocumentTextWidgetStyleBorderBottomStyleEnum;
+    'borderBottomWidth'?: number;
+    'borderColor'?: string;
+    'borderLeftColor'?: string;
+    'borderLeftStyle'?: PublisherDocumentTextWidgetStyleBorderLeftStyleEnum;
+    'borderLeftWidth'?: number;
+    'borderRadius'?: PublisherDocumentTextWidgetStyleBorderRadius;
+    'borderRightColor'?: string;
+    'borderRightStyle'?: PublisherDocumentTextWidgetStyleBorderRightStyleEnum;
+    'borderRightWidth'?: number;
+    'borderStyle'?: PublisherDocumentTextWidgetStyleBorderStyleEnum;
+    'borderTopColor'?: string;
+    'borderTopLeftRadius'?: PublisherDocumentTextWidgetStyleBorderTopLeftRadius;
+    'borderTopRightRadius'?: PublisherDocumentTextWidgetStyleBorderTopRightRadius;
+    'borderTopStyle'?: PublisherDocumentTextWidgetStyleBorderTopStyleEnum;
+    'borderTopWidth'?: number;
+    'borderWidth'?: number;
+    'fontSize'?: number;
+    'fontStyle'?: PublisherDocumentTextWidgetStyleFontStyleEnum;
+    'fontWeight'?: number;
+    'horizontalAlign'?: PublisherDocumentTextWidgetStyleHorizontalAlignEnum;
+    'letterSpacing'?: number;
+    'lineHeight'?: number;
+    'opacity'?: number;
+    'padding'?: PublisherDocumentTextWidgetStylePadding;
+    'paddingBottom'?: PublisherDocumentTextWidgetStylePaddingBottom;
+    'paddingLeft'?: PublisherDocumentTextWidgetStylePaddingLeft;
+    'paddingRight'?: PublisherDocumentTextWidgetStylePaddingRight;
+    'paddingTop'?: PublisherDocumentTextWidgetStylePaddingTop;
+    'shadow'?: string;
+    'shadowBlur'?: number;
+    'shadowColor'?: string;
+    'shadowOpacity'?: number;
+    'shadowSpread'?: number;
+    'shadowX'?: number;
+    'shadowY'?: number;
+    'textColor'?: string;
+    'textOverflow'?: PublisherDocumentTextWidgetStyleTextOverflowEnum;
+    'textStyle'?: PublisherDocumentTextWidgetStyleTextStyleEnum;
+    'textTransform'?: PublisherDocumentTextWidgetStyleTextTransformEnum;
+    'verticalAlign'?: PublisherDocumentTextWidgetStyleVerticalAlignEnum;
+}
+
+export type PublisherDocumentTextWidgetStyleBackgroundFitEnum = 'cover' | 'contain' | 'fill' | 'tile';
+export type PublisherDocumentTextWidgetStyleBackgroundHorizontalAlignEnum = 'left' | 'center' | 'right';
+export type PublisherDocumentTextWidgetStyleBackgroundVerticalAlignEnum = 'top' | 'center' | 'bottom';
+export type PublisherDocumentTextWidgetStyleBorderBottomStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+export type PublisherDocumentTextWidgetStyleBorderLeftStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+export type PublisherDocumentTextWidgetStyleBorderRightStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+export type PublisherDocumentTextWidgetStyleBorderStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+export type PublisherDocumentTextWidgetStyleBorderTopStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+export type PublisherDocumentTextWidgetStyleFontStyleEnum = 'normal' | 'italic';
+export type PublisherDocumentTextWidgetStyleHorizontalAlignEnum = 'left' | 'center' | 'right' | 'justify';
+export type PublisherDocumentTextWidgetStyleTextOverflowEnum = 'shrink' | 'clip' | 'ellipsis';
+export type PublisherDocumentTextWidgetStyleTextStyleEnum = 'title' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'largeText' | 'normalText' | 'smallText';
+export type PublisherDocumentTextWidgetStyleTextTransformEnum = 'none' | 'uppercase' | 'lowercase' | 'capitalize';
+export type PublisherDocumentTextWidgetStyleVerticalAlignEnum = 'top' | 'center' | 'bottom';
+
+/**
+ * @type PublisherDocumentTextWidgetStyleBorderBottomLeftRadius
+ * A length, or `{theme.corners.<small|medium|large|full>}`.
+ */
+export type PublisherDocumentTextWidgetStyleBorderBottomLeftRadius = number | string;
+
+/**
+ * @type PublisherDocumentTextWidgetStyleBorderBottomRightRadius
+ * A length, or `{theme.corners.<small|medium|large|full>}`.
+ */
+export type PublisherDocumentTextWidgetStyleBorderBottomRightRadius = number | string;
+
+/**
+ * @type PublisherDocumentTextWidgetStyleBorderRadius
+ * A length, or `{theme.corners.<small|medium|large|full>}`.
+ */
+export type PublisherDocumentTextWidgetStyleBorderRadius = number | string;
+
+/**
+ * @type PublisherDocumentTextWidgetStyleBorderTopLeftRadius
+ * A length, or `{theme.corners.<small|medium|large|full>}`.
+ */
+export type PublisherDocumentTextWidgetStyleBorderTopLeftRadius = number | string;
+
+/**
+ * @type PublisherDocumentTextWidgetStyleBorderTopRightRadius
+ * A length, or `{theme.corners.<small|medium|large|full>}`.
+ */
+export type PublisherDocumentTextWidgetStyleBorderTopRightRadius = number | string;
+
+/**
+ * @type PublisherDocumentTextWidgetStylePadding
+ * A length, or `{theme.spacing.padding.<compact|normal|spacious>}`.
+ */
+export type PublisherDocumentTextWidgetStylePadding = number | string;
+
+/**
+ * @type PublisherDocumentTextWidgetStylePaddingBottom
+ * A length, or `{theme.spacing.padding.<compact|normal|spacious>}`.
+ */
+export type PublisherDocumentTextWidgetStylePaddingBottom = number | string;
+
+/**
+ * @type PublisherDocumentTextWidgetStylePaddingLeft
+ * A length, or `{theme.spacing.padding.<compact|normal|spacious>}`.
+ */
+export type PublisherDocumentTextWidgetStylePaddingLeft = number | string;
+
+/**
+ * @type PublisherDocumentTextWidgetStylePaddingRight
+ * A length, or `{theme.spacing.padding.<compact|normal|spacious>}`.
+ */
+export type PublisherDocumentTextWidgetStylePaddingRight = number | string;
+
+/**
+ * @type PublisherDocumentTextWidgetStylePaddingTop
+ * A length, or `{theme.spacing.padding.<compact|normal|spacious>}`.
+ */
+export type PublisherDocumentTextWidgetStylePaddingTop = number | string;
+
+/**
+ * The page\'s title, at most one per page.
+ */
+export interface PublisherDocumentTitleWidget {
+    /**
+     * Unique within the page.
+     */
+    'id': string;
+    /**
+     * Locks the widget in the document editor; never checked on write.
+     */
+    'locked'?: boolean;
+    /**
+     * Inline markdown.
+     */
+    'markdown'?: string;
+    'placeholder'?: PublisherDocumentWidgetPlaceholder;
+    'proportion'?: number;
+    'style'?: PublisherDocumentTextWidgetStyle;
+    'type': PublisherDocumentTitleWidgetTypeEnum;
+}
+
+export type PublisherDocumentTitleWidgetTypeEnum = 'title';
+
+export interface PublisherDocumentVisibility {
+    'visible'?: boolean;
+}
+
+/**
+ * Overrides of the saved visualization\'s own configuration; stored, not applied.
+ */
+export interface PublisherDocumentVisualizationDisplay {
+    'dataLabels'?: PublisherDocumentAutoVisibility;
+    'dataPoints'?: PublisherDocumentAutoVisibility;
+    'gridlines'?: PublisherDocumentVisibility;
+    'legend'?: PublisherDocumentLegendDisplay;
+    'secondaryYAxis'?: PublisherDocumentAxisDisplay;
+    'xAxis'?: PublisherDocumentAxisDisplay;
+    'yAxis'?: PublisherDocumentAxisDisplay;
+}
+
+/**
+ * A saved visualization.
+ */
+export interface PublisherDocumentVisualizationRef {
+    'identifier': string;
+    'type': PublisherDocumentVisualizationRefTypeEnum;
+}
+
+export type PublisherDocumentVisualizationRefTypeEnum = 'insight';
+
+/**
+ * Style of a visualization widget. Lengths are in canvas px.
+ */
+export interface PublisherDocumentVisualizationStyle {
+    'backgroundColor'?: string;
+    'backgroundFit'?: PublisherDocumentVisualizationStyleBackgroundFitEnum;
+    'backgroundHorizontalAlign'?: PublisherDocumentVisualizationStyleBackgroundHorizontalAlignEnum;
+    'backgroundImage'?: string;
+    'backgroundImageOpacity'?: number;
+    'backgroundOffset'?: number;
+    'backgroundOffsetBottom'?: number;
+    'backgroundOffsetLeft'?: number;
+    'backgroundOffsetRight'?: number;
+    'backgroundOffsetTop'?: number;
+    'backgroundOpacity'?: number;
+    'backgroundVerticalAlign'?: PublisherDocumentVisualizationStyleBackgroundVerticalAlignEnum;
+    'borderBottomColor'?: string;
+    'borderBottomLeftRadius'?: PublisherDocumentVisualizationStyleBorderBottomLeftRadius;
+    'borderBottomRightRadius'?: PublisherDocumentVisualizationStyleBorderBottomRightRadius;
+    'borderBottomStyle'?: PublisherDocumentVisualizationStyleBorderBottomStyleEnum;
+    'borderBottomWidth'?: number;
+    'borderColor'?: string;
+    'borderLeftColor'?: string;
+    'borderLeftStyle'?: PublisherDocumentVisualizationStyleBorderLeftStyleEnum;
+    'borderLeftWidth'?: number;
+    'borderRadius'?: PublisherDocumentVisualizationStyleBorderRadius;
+    'borderRightColor'?: string;
+    'borderRightStyle'?: PublisherDocumentVisualizationStyleBorderRightStyleEnum;
+    'borderRightWidth'?: number;
+    'borderStyle'?: PublisherDocumentVisualizationStyleBorderStyleEnum;
+    'borderTopColor'?: string;
+    'borderTopLeftRadius'?: PublisherDocumentVisualizationStyleBorderTopLeftRadius;
+    'borderTopRightRadius'?: PublisherDocumentVisualizationStyleBorderTopRightRadius;
+    'borderTopStyle'?: PublisherDocumentVisualizationStyleBorderTopStyleEnum;
+    'borderTopWidth'?: number;
+    'borderWidth'?: number;
+    'chart'?: PublisherDocumentChartStyle;
+    'headline'?: PublisherDocumentHeadlineStyle;
+    'opacity'?: number;
+    'padding'?: PublisherDocumentVisualizationStylePadding;
+    'paddingBottom'?: PublisherDocumentVisualizationStylePaddingBottom;
+    'paddingLeft'?: PublisherDocumentVisualizationStylePaddingLeft;
+    'paddingRight'?: PublisherDocumentVisualizationStylePaddingRight;
+    'paddingTop'?: PublisherDocumentVisualizationStylePaddingTop;
+    'shadow'?: string;
+    'shadowBlur'?: number;
+    'shadowColor'?: string;
+    'shadowOpacity'?: number;
+    'shadowSpread'?: number;
+    'shadowX'?: number;
+    'shadowY'?: number;
+    'table'?: PublisherDocumentTableStyle;
+}
+
+export type PublisherDocumentVisualizationStyleBackgroundFitEnum = 'cover' | 'contain' | 'fill' | 'tile';
+export type PublisherDocumentVisualizationStyleBackgroundHorizontalAlignEnum = 'left' | 'center' | 'right';
+export type PublisherDocumentVisualizationStyleBackgroundVerticalAlignEnum = 'top' | 'center' | 'bottom';
+export type PublisherDocumentVisualizationStyleBorderBottomStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+export type PublisherDocumentVisualizationStyleBorderLeftStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+export type PublisherDocumentVisualizationStyleBorderRightStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+export type PublisherDocumentVisualizationStyleBorderStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+export type PublisherDocumentVisualizationStyleBorderTopStyleEnum = 'solid' | 'dashed' | 'dotted' | 'none';
+
+/**
+ * @type PublisherDocumentVisualizationStyleBorderBottomLeftRadius
+ * A length, or `{theme.corners.<small|medium|large|full>}`.
+ */
+export type PublisherDocumentVisualizationStyleBorderBottomLeftRadius = number | string;
+
+/**
+ * @type PublisherDocumentVisualizationStyleBorderBottomRightRadius
+ * A length, or `{theme.corners.<small|medium|large|full>}`.
+ */
+export type PublisherDocumentVisualizationStyleBorderBottomRightRadius = number | string;
+
+/**
+ * @type PublisherDocumentVisualizationStyleBorderRadius
+ * A length, or `{theme.corners.<small|medium|large|full>}`.
+ */
+export type PublisherDocumentVisualizationStyleBorderRadius = number | string;
+
+/**
+ * @type PublisherDocumentVisualizationStyleBorderTopLeftRadius
+ * A length, or `{theme.corners.<small|medium|large|full>}`.
+ */
+export type PublisherDocumentVisualizationStyleBorderTopLeftRadius = number | string;
+
+/**
+ * @type PublisherDocumentVisualizationStyleBorderTopRightRadius
+ * A length, or `{theme.corners.<small|medium|large|full>}`.
+ */
+export type PublisherDocumentVisualizationStyleBorderTopRightRadius = number | string;
+
+/**
+ * @type PublisherDocumentVisualizationStylePadding
+ * A length, or `{theme.spacing.padding.<compact|normal|spacious>}`.
+ */
+export type PublisherDocumentVisualizationStylePadding = number | string;
+
+/**
+ * @type PublisherDocumentVisualizationStylePaddingBottom
+ * A length, or `{theme.spacing.padding.<compact|normal|spacious>}`.
+ */
+export type PublisherDocumentVisualizationStylePaddingBottom = number | string;
+
+/**
+ * @type PublisherDocumentVisualizationStylePaddingLeft
+ * A length, or `{theme.spacing.padding.<compact|normal|spacious>}`.
+ */
+export type PublisherDocumentVisualizationStylePaddingLeft = number | string;
+
+/**
+ * @type PublisherDocumentVisualizationStylePaddingRight
+ * A length, or `{theme.spacing.padding.<compact|normal|spacious>}`.
+ */
+export type PublisherDocumentVisualizationStylePaddingRight = number | string;
+
+/**
+ * @type PublisherDocumentVisualizationStylePaddingTop
+ * A length, or `{theme.spacing.padding.<compact|normal|spacious>}`.
+ */
+export type PublisherDocumentVisualizationStylePaddingTop = number | string;
+
+/**
+ * A saved visualization.
+ */
+export interface PublisherDocumentVisualizationWidget {
+    /**
+     * Defaults to the visualization\'s description.
+     */
+    'altText'?: string;
+    'dateDataSet'?: PublisherDocumentDataSetRef;
+    'display'?: PublisherDocumentVisualizationDisplay;
+    /**
+     * Widget filters; stored, not applied.
+     */
+    'filters'?: Array<PublisherDocumentFilter>;
+    /**
+     * Unique within the page.
+     */
+    'id': string;
+    /**
+     * Document filters this widget ignores.
+     */
+    'ignoreDocumentFilters'?: Array<PublisherDocumentFilterReference>;
+    'ignoreDocumentPeriod'?: boolean;
+    /**
+     * Locks the widget in the document editor; never checked on write.
+     */
+    'locked'?: boolean;
+    'placeholder'?: PublisherDocumentWidgetPlaceholder;
+    'proportion'?: number;
+    'style'?: PublisherDocumentVisualizationStyle;
+    'title'?: PublisherDocumentWidgetTitle;
+    'type': PublisherDocumentVisualizationWidgetTypeEnum;
+    'visualization'?: PublisherDocumentVisualizationRef;
+}
+
+export type PublisherDocumentVisualizationWidgetTypeEnum = 'visualization';
+
+/**
+ * What the editor shows in an empty widget.
+ */
+export interface PublisherDocumentWidgetPlaceholder {
+    'hint'?: string;
+    'required'?: boolean;
+}
+
+/**
+ * Title of a visualization or takeaway widget.
+ */
+export interface PublisherDocumentWidgetTitle {
+    'style'?: PublisherDocumentTextStyle;
+    /**
+     * Overrides the default title; may contain text variables.
+     */
+    'text'?: string;
+    /**
+     * When left out, a visualization\'s title is hidden and a takeaway\'s is shown.
+     */
+    'visible'?: boolean;
+}
 
 export interface Range {
     'from': Value;
@@ -18710,7 +20551,7 @@ export interface ResolvedSetting {
     'type'?: ResolvedSettingTypeEnum;
 }
 
-export type ResolvedSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE';
+export type ResolvedSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE';
 
 /**
  * A reference the caller may not view.
@@ -19368,6 +21209,26 @@ export interface UserPermission {
      * Permissions granted to the user
      */
     'permissions'?: Array<GrantedPermission>;
+}
+
+/**
+ * An origin to check against the embedding origins of the organization.
+ */
+export interface ValidateEmbeddingOriginRequest {
+    /**
+     * The origin of the embedding application, or `*` when it hides its origin.
+     */
+    'origin': string;
+}
+
+/**
+ * Whether the origin may embed the application.
+ */
+export interface ValidateEmbeddingOriginResponse {
+    /**
+     * True when the embedding origins of the organization allow the origin.
+     */
+    'valid': boolean;
 }
 
 /**
@@ -22100,7 +23961,7 @@ export async function ActionsApiAxiosParamCreator_OrganizationLocalizationUsage(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.
+ * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
  * @summary (BETA) Users who set a language themselves.
  * @param {string} [value] Language tag that the user sets.
  * @param {string} [name] Filter by user name, email or login (user ID). Note that the filter is case insensitive.
@@ -22171,7 +24032,7 @@ export async function ActionsApiAxiosParamCreator_OrganizationLocalizationUsageU
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * (BETA) Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one.
+ * (BETA) Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
  * @summary (BETA) Workspaces that use a language.
  * @param {string} [value] Language tag that the workspace gets.
  * @param {string} [name] Filter by workspace name. Note that the filter is case insensitive.
@@ -23629,6 +25490,64 @@ export async function ActionsApiAxiosParamCreator_UnsubscribeWorkspaceAutomation
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
+ * Checks one origin against the embedding origins of the organization. The literal `*` is valid only when the embedding origins contain `*`.
+ * @summary Validate an embedding origin.
+ * @param {ValidateEmbeddingOriginRequest} validateEmbeddingOriginRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_ValidateEmbeddingOrigin(
+    validateEmbeddingOriginRequest: ValidateEmbeddingOriginRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'validateEmbeddingOriginRequest' is not null or undefined
+    assertParamExists('validateEmbeddingOrigin', 'validateEmbeddingOriginRequest', validateEmbeddingOriginRequest)
+    const localVarPath = `/api/v1/actions/validateEmbeddingOrigin`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof validateEmbeddingOriginRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(validateEmbeddingOriginRequest !== undefined ? validateEmbeddingOriginRequest : {})
+        : validateEmbeddingOriginRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
  * 
  * @summary (BETA) Get Visualization Permissions
  * @param {string} workspaceId 
@@ -23678,15 +25597,16 @@ export async function ActionsApiAxiosParamCreator_VisualizationPermissions(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list.
+ * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list. With includeCoverage=true, it also counts the translated metadata texts of the workspace and each parent.
  * @summary (BETA) Languages with translations in the workspace.
  * @param {string} workspaceId 
+ * @param {boolean} [includeCoverage] Adds translation counts for the workspace and each parent, root first.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ActionsApiAxiosParamCreator_WorkspaceLocalizationStatistics(
-    workspaceId: string, 
+    workspaceId: string, includeCoverage?: boolean, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -23703,6 +25623,10 @@ export async function ActionsApiAxiosParamCreator_WorkspaceLocalizationStatistic
     const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
+
+    if (includeCoverage !== undefined) {
+        localVarQueryParameter['includeCoverage'] = includeCoverage;
+    }
 
 
     
@@ -23768,7 +25692,7 @@ export async function ActionsApiAxiosParamCreator_WorkspaceLocalizationUsage(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one.
+ * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
  * @summary (BETA) Workspace members who get a language.
  * @param {string} workspaceId 
  * @param {string} [value] Language tag that the user gets.
@@ -24840,7 +26764,7 @@ export async function ActionsApi_OrganizationLocalizationUsage(
 
 // ActionsApi Api FP
 /**
- * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.
+ * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
  * @summary (BETA) Users who set a language themselves.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -24866,7 +26790,7 @@ export async function ActionsApi_OrganizationLocalizationUsageUsers(
 
 // ActionsApi Api FP
 /**
- * (BETA) Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one.
+ * (BETA) Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
  * @summary (BETA) Workspaces that use a language.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -25564,6 +27488,32 @@ export async function ActionsApi_UnsubscribeWorkspaceAutomations(
 
 // ActionsApi Api FP
 /**
+ * Checks one origin against the embedding origins of the organization. The literal `*` is valid only when the embedding origins contain `*`.
+ * @summary Validate an embedding origin.
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiValidateEmbeddingOriginRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ValidateEmbeddingOrigin(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiValidateEmbeddingOriginRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ValidateEmbeddingOriginResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ValidateEmbeddingOrigin(
+        requestParameters.validateEmbeddingOriginRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
  * 
  * @summary (BETA) Get Visualization Permissions
  * @param {AxiosInstance} axios Axios instance.
@@ -25590,7 +27540,7 @@ export async function ActionsApi_VisualizationPermissions(
 
 // ActionsApi Api FP
 /**
- * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list.
+ * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list. With includeCoverage=true, it also counts the translated metadata texts of the workspace and each parent.
  * @summary (BETA) Languages with translations in the workspace.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -25606,7 +27556,7 @@ export async function ActionsApi_WorkspaceLocalizationStatistics(
     configuration?: Configuration,
 ): AxiosPromise<LocalizationStatistics> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_WorkspaceLocalizationStatistics(
-        requestParameters.workspaceId, 
+        requestParameters.workspaceId, requestParameters.includeCoverage, 
         options || {},
         configuration,
     );
@@ -25642,7 +27592,7 @@ export async function ActionsApi_WorkspaceLocalizationUsage(
 
 // ActionsApi Api FP
 /**
- * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one.
+ * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
  * @summary (BETA) Workspace members who get a language.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -26060,7 +28010,7 @@ export interface ActionsApiInterface {
     organizationLocalizationUsage(options?: AxiosRequestConfig): AxiosPromise<LocalizationUsage>;
 
     /**
-     * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.
+     * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
      * @summary (BETA) Users who set a language themselves.
      * @param {ActionsApiOrganizationLocalizationUsageUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -26070,7 +28020,7 @@ export interface ActionsApiInterface {
     organizationLocalizationUsageUsers(requestParameters: ActionsApiOrganizationLocalizationUsageUsersRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationUsageUsers>;
 
     /**
-     * (BETA) Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one.
+     * (BETA) Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
      * @summary (BETA) Workspaces that use a language.
      * @param {ActionsApiOrganizationLocalizationUsageWorkspacesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -26336,6 +28286,16 @@ export interface ActionsApiInterface {
     unsubscribeWorkspaceAutomations(requestParameters: ActionsApiUnsubscribeWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
+     * Checks one origin against the embedding origins of the organization. The literal `*` is valid only when the embedding origins contain `*`.
+     * @summary Validate an embedding origin.
+     * @param {ActionsApiValidateEmbeddingOriginRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    validateEmbeddingOrigin(requestParameters: ActionsApiValidateEmbeddingOriginRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateEmbeddingOriginResponse>;
+
+    /**
      * 
      * @summary (BETA) Get Visualization Permissions
      * @param {ActionsApiVisualizationPermissionsRequest} requestParameters Request parameters.
@@ -26346,7 +28306,7 @@ export interface ActionsApiInterface {
     visualizationPermissions(requestParameters: ActionsApiVisualizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<VisualizationPermissions>;
 
     /**
-     * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list.
+     * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list. With includeCoverage=true, it also counts the translated metadata texts of the workspace and each parent.
      * @summary (BETA) Languages with translations in the workspace.
      * @param {ActionsApiWorkspaceLocalizationStatisticsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -26366,7 +28326,7 @@ export interface ActionsApiInterface {
     workspaceLocalizationUsage(requestParameters: ActionsApiWorkspaceLocalizationUsageRequest, options?: AxiosRequestConfig): AxiosPromise<WorkspaceLocalizationUsage>;
 
     /**
-     * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one.
+     * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
      * @summary (BETA) Workspace members who get a language.
      * @param {ActionsApiWorkspaceLocalizationUsageUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -27546,6 +29506,20 @@ export interface ActionsApiUnsubscribeWorkspaceAutomationsRequest {
 }
 
 /**
+ * Request parameters for validateEmbeddingOrigin operation in ActionsApi.
+ * @export
+ * @interface ActionsApiValidateEmbeddingOriginRequest
+ */
+export interface ActionsApiValidateEmbeddingOriginRequest {
+    /**
+     * 
+     * @type {ValidateEmbeddingOriginRequest}
+     * @memberof ActionsApiValidateEmbeddingOrigin
+     */
+    readonly validateEmbeddingOriginRequest: ValidateEmbeddingOriginRequest
+}
+
+/**
  * Request parameters for visualizationPermissions operation in ActionsApi.
  * @export
  * @interface ActionsApiVisualizationPermissionsRequest
@@ -27578,6 +29552,13 @@ export interface ActionsApiWorkspaceLocalizationStatisticsRequest {
      * @memberof ActionsApiWorkspaceLocalizationStatistics
      */
     readonly workspaceId: string
+
+    /**
+     * Adds translation counts for the workspace and each parent, root first.
+     * @type {boolean}
+     * @memberof ActionsApiWorkspaceLocalizationStatistics
+     */
+    readonly includeCoverage?: boolean
 }
 
 /**
@@ -28110,7 +30091,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.
+     * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
      * @summary (BETA) Users who set a language themselves.
      * @param {ActionsApiOrganizationLocalizationUsageUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -28122,7 +30103,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * (BETA) Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one.
+     * (BETA) Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
      * @summary (BETA) Workspaces that use a language.
      * @param {ActionsApiOrganizationLocalizationUsageWorkspacesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -28442,6 +30423,18 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     * Checks one origin against the embedding origins of the organization. The literal `*` is valid only when the embedding origins contain `*`.
+     * @summary Validate an embedding origin.
+     * @param {ActionsApiValidateEmbeddingOriginRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public validateEmbeddingOrigin(requestParameters: ActionsApiValidateEmbeddingOriginRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_ValidateEmbeddingOrigin(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * 
      * @summary (BETA) Get Visualization Permissions
      * @param {ActionsApiVisualizationPermissionsRequest} requestParameters Request parameters.
@@ -28454,7 +30447,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list.
+     * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list. With includeCoverage=true, it also counts the translated metadata texts of the workspace and each parent.
      * @summary (BETA) Languages with translations in the workspace.
      * @param {ActionsApiWorkspaceLocalizationStatisticsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -28478,7 +30471,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one.
+     * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
      * @summary (BETA) Workspace members who get a language.
      * @param {ActionsApiWorkspaceLocalizationUsageUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -63622,7 +65615,7 @@ export async function DocumentControllerApiAxiosParamCreator_DeleteEntityDocumen
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -63707,7 +65700,7 @@ export async function DocumentControllerApiAxiosParamCreator_GetAllEntitiesDocum
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -64617,7 +66610,7 @@ export async function DocumentTemplateControllerApiAxiosParamCreator_DeleteEntit
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -64702,7 +66695,7 @@ export async function DocumentTemplateControllerApiAxiosParamCreator_GetAllEntit
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -72482,7 +74475,7 @@ export async function EntitiesApiAxiosParamCreator_GetAllEntitiesDocumentTemplat
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -73992,7 +75985,7 @@ export async function EntitiesApiAxiosParamCreator_GetAllEntitiesOrganizationSet
 
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
- * 
+ * Lists the default page templates first, in a fixed order, then the workspace page templates. Paging counts both as one sequence. `filter` and `sort` apply to the workspace page templates only; the default page templates are always listed first and in full, and `isDefault` is not filterable. The default page templates are listed only with `origin=ALL`.
  * @summary Get all Page Templates
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -74167,7 +76160,7 @@ export async function EntitiesApiAxiosParamCreator_GetAllEntitiesParameters(
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -76782,7 +78775,7 @@ export async function EntitiesApiAxiosParamCreator_GetEntityDocumentTemplates(
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -78303,7 +80296,7 @@ export async function EntitiesApiAxiosParamCreator_GetEntityReportTemplates(
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -91763,7 +93756,7 @@ export async function EntitiesApi_GetAllEntitiesOrganizationSettings(
 
 // EntitiesApi Api FP
 /**
- * 
+ * Lists the default page templates first, in a fixed order, then the workspace page templates. Paging counts both as one sequence. `filter` and `sort` apply to the workspace page templates only; the default page templates are always listed first and in full, and `isDefault` is not filterable. The default page templates are listed only with `origin=ALL`.
  * @summary Get all Page Templates
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -98457,7 +100450,7 @@ export interface EntitiesApiInterface {
     getAllEntitiesOrganizationSettings(requestParameters: EntitiesApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutList>;
 
     /**
-     * 
+     * Lists the default page templates first, in a fixed order, then the workspace page templates. Paging counts both as one sequence. `filter` and `sort` apply to the workspace page templates only; the default page templates are always listed first and in full, and `isDefault` is not filterable. The default page templates are listed only with `origin=ALL`.
      * @summary Get all Page Templates
      * @param {EntitiesApiGetAllEntitiesPageTemplatesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -114344,7 +116337,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
     }
 
     /**
-     * 
+     * Lists the default page templates first, in a fixed order, then the workspace page templates. Paging counts both as one sequence. `filter` and `sort` apply to the workspace page templates only; the default page templates are always listed first and in full, and `isDefault` is not filterable. The default page templates are listed only with `origin=ALL`.
      * @summary Get all Page Templates
      * @param {EntitiesApiGetAllEntitiesPageTemplatesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -147681,7 +149674,7 @@ export async function LocalizationApiAxiosParamCreator_OrganizationLocalizationU
 
 // LocalizationApi FP - LocalizationApiAxiosParamCreator
 /**
- * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.
+ * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
  * @summary (BETA) Users who set a language themselves.
  * @param {string} [value] Language tag that the user sets.
  * @param {string} [name] Filter by user name, email or login (user ID). Note that the filter is case insensitive.
@@ -147752,7 +149745,7 @@ export async function LocalizationApiAxiosParamCreator_OrganizationLocalizationU
 
 // LocalizationApi FP - LocalizationApiAxiosParamCreator
 /**
- * (BETA) Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one.
+ * (BETA) Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
  * @summary (BETA) Workspaces that use a language.
  * @param {string} [value] Language tag that the workspace gets.
  * @param {string} [name] Filter by workspace name. Note that the filter is case insensitive.
@@ -147823,15 +149816,16 @@ export async function LocalizationApiAxiosParamCreator_OrganizationLocalizationU
 
 // LocalizationApi FP - LocalizationApiAxiosParamCreator
 /**
- * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list.
+ * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list. With includeCoverage=true, it also counts the translated metadata texts of the workspace and each parent.
  * @summary (BETA) Languages with translations in the workspace.
  * @param {string} workspaceId 
+ * @param {boolean} [includeCoverage] Adds translation counts for the workspace and each parent, root first.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function LocalizationApiAxiosParamCreator_WorkspaceLocalizationStatistics(
-    workspaceId: string, 
+    workspaceId: string, includeCoverage?: boolean, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -147848,6 +149842,10 @@ export async function LocalizationApiAxiosParamCreator_WorkspaceLocalizationStat
     const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
+
+    if (includeCoverage !== undefined) {
+        localVarQueryParameter['includeCoverage'] = includeCoverage;
+    }
 
 
     
@@ -147913,7 +149911,7 @@ export async function LocalizationApiAxiosParamCreator_WorkspaceLocalizationUsag
 
 // LocalizationApi FP - LocalizationApiAxiosParamCreator
 /**
- * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one.
+ * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
  * @summary (BETA) Workspace members who get a language.
  * @param {string} workspaceId 
  * @param {string} [value] Language tag that the user gets.
@@ -148039,7 +150037,7 @@ export async function LocalizationApi_OrganizationLocalizationUsage(
 
 // LocalizationApi Api FP
 /**
- * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.
+ * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
  * @summary (BETA) Users who set a language themselves.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -148065,7 +150063,7 @@ export async function LocalizationApi_OrganizationLocalizationUsageUsers(
 
 // LocalizationApi Api FP
 /**
- * (BETA) Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one.
+ * (BETA) Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
  * @summary (BETA) Workspaces that use a language.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -148091,7 +150089,7 @@ export async function LocalizationApi_OrganizationLocalizationUsageWorkspaces(
 
 // LocalizationApi Api FP
 /**
- * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list.
+ * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list. With includeCoverage=true, it also counts the translated metadata texts of the workspace and each parent.
  * @summary (BETA) Languages with translations in the workspace.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -148107,7 +150105,7 @@ export async function LocalizationApi_WorkspaceLocalizationStatistics(
     configuration?: Configuration,
 ): AxiosPromise<LocalizationStatistics> {
     const localVarAxiosArgs = await LocalizationApiAxiosParamCreator_WorkspaceLocalizationStatistics(
-        requestParameters.workspaceId, 
+        requestParameters.workspaceId, requestParameters.includeCoverage, 
         options || {},
         configuration,
     );
@@ -148143,7 +150141,7 @@ export async function LocalizationApi_WorkspaceLocalizationUsage(
 
 // LocalizationApi Api FP
 /**
- * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one.
+ * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
  * @summary (BETA) Workspace members who get a language.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -148192,7 +150190,7 @@ export interface LocalizationApiInterface {
     organizationLocalizationUsage(options?: AxiosRequestConfig): AxiosPromise<LocalizationUsage>;
 
     /**
-     * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.
+     * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
      * @summary (BETA) Users who set a language themselves.
      * @param {LocalizationApiOrganizationLocalizationUsageUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -148202,7 +150200,7 @@ export interface LocalizationApiInterface {
     organizationLocalizationUsageUsers(requestParameters: LocalizationApiOrganizationLocalizationUsageUsersRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationUsageUsers>;
 
     /**
-     * (BETA) Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one.
+     * (BETA) Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
      * @summary (BETA) Workspaces that use a language.
      * @param {LocalizationApiOrganizationLocalizationUsageWorkspacesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -148212,7 +150210,7 @@ export interface LocalizationApiInterface {
     organizationLocalizationUsageWorkspaces(requestParameters: LocalizationApiOrganizationLocalizationUsageWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationUsageWorkspaces>;
 
     /**
-     * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list.
+     * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list. With includeCoverage=true, it also counts the translated metadata texts of the workspace and each parent.
      * @summary (BETA) Languages with translations in the workspace.
      * @param {LocalizationApiWorkspaceLocalizationStatisticsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -148232,7 +150230,7 @@ export interface LocalizationApiInterface {
     workspaceLocalizationUsage(requestParameters: LocalizationApiWorkspaceLocalizationUsageRequest, options?: AxiosRequestConfig): AxiosPromise<WorkspaceLocalizationUsage>;
 
     /**
-     * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one.
+     * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
      * @summary (BETA) Workspace members who get a language.
      * @param {LocalizationApiWorkspaceLocalizationUsageUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -148353,6 +150351,13 @@ export interface LocalizationApiWorkspaceLocalizationStatisticsRequest {
      * @memberof LocalizationApiWorkspaceLocalizationStatistics
      */
     readonly workspaceId: string
+
+    /**
+     * Adds translation counts for the workspace and each parent, root first.
+     * @type {boolean}
+     * @memberof LocalizationApiWorkspaceLocalizationStatistics
+     */
+    readonly includeCoverage?: boolean
 }
 
 /**
@@ -148455,7 +150460,7 @@ export class LocalizationApi extends BaseAPI implements LocalizationApiInterface
     }
 
     /**
-     * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. Users counted in the usage entry without a language are not listed.
+     * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
      * @summary (BETA) Users who set a language themselves.
      * @param {LocalizationApiOrganizationLocalizationUsageUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -148467,7 +150472,7 @@ export class LocalizationApi extends BaseAPI implements LocalizationApiInterface
     }
 
     /**
-     * (BETA) Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one.
+     * (BETA) Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
      * @summary (BETA) Workspaces that use a language.
      * @param {LocalizationApiOrganizationLocalizationUsageWorkspacesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -148479,7 +150484,7 @@ export class LocalizationApi extends BaseAPI implements LocalizationApiInterface
     }
 
     /**
-     * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list.
+     * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list. With includeCoverage=true, it also counts the translated metadata texts of the workspace and each parent.
      * @summary (BETA) Languages with translations in the workspace.
      * @param {LocalizationApiWorkspaceLocalizationStatisticsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -148503,7 +150508,7 @@ export class LocalizationApi extends BaseAPI implements LocalizationApiInterface
     }
 
     /**
-     * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one.
+     * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
      * @summary (BETA) Workspace members who get a language.
      * @param {LocalizationApiWorkspaceLocalizationUsageUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -162526,7 +164531,7 @@ export async function PageTemplateControllerApiAxiosParamCreator_DeleteEntityPag
 
 // PageTemplateControllerApi FP - PageTemplateControllerApiAxiosParamCreator
 /**
- * 
+ * Lists the default page templates first, in a fixed order, then the workspace page templates. Paging counts both as one sequence. `filter` and `sort` apply to the workspace page templates only; the default page templates are always listed first and in full, and `isDefault` is not filterable. The default page templates are listed only with `origin=ALL`.
  * @summary Get all Page Templates
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -162887,7 +164892,7 @@ export async function PageTemplateControllerApi_DeleteEntityPageTemplates(
 
 // PageTemplateControllerApi Api FP
 /**
- * 
+ * Lists the default page templates first, in a fixed order, then the workspace page templates. Paging counts both as one sequence. `filter` and `sort` apply to the workspace page templates only; the default page templates are always listed first and in full, and `isDefault` is not filterable. The default page templates are listed only with `origin=ALL`.
  * @summary Get all Page Templates
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -163016,7 +165021,7 @@ export interface PageTemplateControllerApiInterface {
     deleteEntityPageTemplates(requestParameters: PageTemplateControllerApiDeleteEntityPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
-     * 
+     * Lists the default page templates first, in a fixed order, then the workspace page templates. Paging counts both as one sequence. `filter` and `sort` apply to the workspace page templates only; the default page templates are always listed first and in full, and `isDefault` is not filterable. The default page templates are listed only with `origin=ALL`.
      * @summary Get all Page Templates
      * @param {PageTemplateControllerApiGetAllEntitiesPageTemplatesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -163348,7 +165353,7 @@ export class PageTemplateControllerApi extends BaseAPI implements PageTemplateCo
     }
 
     /**
-     * 
+     * Lists the default page templates first, in a fixed order, then the workspace page templates. Paging counts both as one sequence. `filter` and `sort` apply to the workspace page templates only; the default page templates are always listed first and in full, and `isDefault` is not filterable. The default page templates are listed only with `origin=ALL`.
      * @summary Get all Page Templates
      * @param {PageTemplateControllerApiGetAllEntitiesPageTemplatesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -170563,7 +172568,7 @@ export async function PublisherDocumentsApiAxiosParamCreator_GetAllEntitiesDocum
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -170643,7 +172648,7 @@ export async function PublisherDocumentsApiAxiosParamCreator_GetAllEntitiesDocum
 
 // PublisherDocumentsApi FP - PublisherDocumentsApiAxiosParamCreator
 /**
- * 
+ * Lists the default page templates first, in a fixed order, then the workspace page templates. Paging counts both as one sequence. `filter` and `sort` apply to the workspace page templates only; the default page templates are always listed first and in full, and `isDefault` is not filterable. The default page templates are listed only with `origin=ALL`.
  * @summary Get all Page Templates
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -170802,7 +172807,7 @@ export async function PublisherDocumentsApiAxiosParamCreator_GetEntityDocumentTe
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -171606,7 +173611,7 @@ export async function PublisherDocumentsApi_GetAllEntitiesDocuments(
 
 // PublisherDocumentsApi Api FP
 /**
- * 
+ * Lists the default page templates first, in a fixed order, then the workspace page templates. Paging counts both as one sequence. `filter` and `sort` apply to the workspace page templates only; the default page templates are always listed first and in full, and `isDefault` is not filterable. The default page templates are listed only with `origin=ALL`.
  * @summary Get all Page Templates
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -171951,7 +173956,7 @@ export interface PublisherDocumentsApiInterface {
     getAllEntitiesDocuments(requestParameters: PublisherDocumentsApiGetAllEntitiesDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutList>;
 
     /**
-     * 
+     * Lists the default page templates first, in a fixed order, then the workspace page templates. Paging counts both as one sequence. `filter` and `sort` apply to the workspace page templates only; the default page templates are always listed first and in full, and `isDefault` is not filterable. The default page templates are listed only with `origin=ALL`.
      * @summary Get all Page Templates
      * @param {PublisherDocumentsApiGetAllEntitiesPageTemplatesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -172933,7 +174938,7 @@ export class PublisherDocumentsApi extends BaseAPI implements PublisherDocuments
     }
 
     /**
-     * 
+     * Lists the default page templates first, in a fixed order, then the workspace page templates. Paging counts both as one sequence. `filter` and `sort` apply to the workspace page templates only; the default page templates are always listed first and in full, and `isDefault` is not filterable. The default page templates are listed only with `origin=ALL`.
      * @summary Get all Page Templates
      * @param {PublisherDocumentsApiGetAllEntitiesPageTemplatesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -173183,7 +175188,7 @@ export async function ReportControllerApiAxiosParamCreator_DeleteEntityReports(
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -173268,7 +175273,7 @@ export async function ReportControllerApiAxiosParamCreator_GetAllEntitiesReports
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -176148,6 +178153,64 @@ export async function ReportingSettingsApiAxiosParamCreator_ResolveSettingsWitho
 }
 
 
+// ReportingSettingsApi FP - ReportingSettingsApiAxiosParamCreator
+/**
+ * Checks one origin against the embedding origins of the organization. The literal `*` is valid only when the embedding origins contain `*`.
+ * @summary Validate an embedding origin.
+ * @param {ValidateEmbeddingOriginRequest} validateEmbeddingOriginRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportingSettingsApiAxiosParamCreator_ValidateEmbeddingOrigin(
+    validateEmbeddingOriginRequest: ValidateEmbeddingOriginRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'validateEmbeddingOriginRequest' is not null or undefined
+    assertParamExists('validateEmbeddingOrigin', 'validateEmbeddingOriginRequest', validateEmbeddingOriginRequest)
+    const localVarPath = `/api/v1/actions/validateEmbeddingOrigin`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof validateEmbeddingOriginRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(validateEmbeddingOriginRequest !== undefined ? validateEmbeddingOriginRequest : {})
+        : validateEmbeddingOriginRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
 
 // ReportingSettingsApi Api FP
 /**
@@ -176201,6 +178264,32 @@ export async function ReportingSettingsApi_ResolveSettingsWithoutWorkspace(
 }
 
 
+// ReportingSettingsApi Api FP
+/**
+ * Checks one origin against the embedding origins of the organization. The literal `*` is valid only when the embedding origins contain `*`.
+ * @summary Validate an embedding origin.
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ReportingSettingsApiValidateEmbeddingOriginRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ReportingSettingsApi_ValidateEmbeddingOrigin(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ReportingSettingsApiValidateEmbeddingOriginRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ValidateEmbeddingOriginResponse> {
+    const localVarAxiosArgs = await ReportingSettingsApiAxiosParamCreator_ValidateEmbeddingOrigin(
+        requestParameters.validateEmbeddingOriginRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
 /**
  * ReportingSettingsApi - interface
  * @export
@@ -176226,6 +178315,16 @@ export interface ReportingSettingsApiInterface {
      * @memberof ReportingSettingsApiInterface
      */
     resolveSettingsWithoutWorkspace(requestParameters: ReportingSettingsApiResolveSettingsWithoutWorkspaceRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ResolvedSetting>>;
+
+    /**
+     * Checks one origin against the embedding origins of the organization. The literal `*` is valid only when the embedding origins contain `*`.
+     * @summary Validate an embedding origin.
+     * @param {ReportingSettingsApiValidateEmbeddingOriginRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportingSettingsApiInterface
+     */
+    validateEmbeddingOrigin(requestParameters: ReportingSettingsApiValidateEmbeddingOriginRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateEmbeddingOriginResponse>;
 
 }
 
@@ -176265,6 +178364,20 @@ export interface ReportingSettingsApiResolveSettingsWithoutWorkspaceRequest {
 }
 
 /**
+ * Request parameters for validateEmbeddingOrigin operation in ReportingSettingsApi.
+ * @export
+ * @interface ReportingSettingsApiValidateEmbeddingOriginRequest
+ */
+export interface ReportingSettingsApiValidateEmbeddingOriginRequest {
+    /**
+     * 
+     * @type {ValidateEmbeddingOriginRequest}
+     * @memberof ReportingSettingsApiValidateEmbeddingOrigin
+     */
+    readonly validateEmbeddingOriginRequest: ValidateEmbeddingOriginRequest
+}
+
+/**
  * ReportingSettingsApi - object-oriented interface
  * @export
  * @class ReportingSettingsApi
@@ -176293,6 +178406,18 @@ export class ReportingSettingsApi extends BaseAPI implements ReportingSettingsAp
      */
     public resolveSettingsWithoutWorkspace(requestParameters: ReportingSettingsApiResolveSettingsWithoutWorkspaceRequest, options?: AxiosRequestConfig) {
         return ReportingSettingsApi_ResolveSettingsWithoutWorkspace(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Checks one origin against the embedding origins of the organization. The literal `*` is valid only when the embedding origins contain `*`.
+     * @summary Validate an embedding origin.
+     * @param {ReportingSettingsApiValidateEmbeddingOriginRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportingSettingsApi
+     */
+    public validateEmbeddingOrigin(requestParameters: ReportingSettingsApiValidateEmbeddingOriginRequest, options?: AxiosRequestConfig) {
+        return ReportingSettingsApi_ValidateEmbeddingOrigin(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 

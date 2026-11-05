@@ -45,11 +45,7 @@ const HOST_VALUES: IAdBootstrapHostValues = {
 };
 
 const UI_SETTINGS_CONSTANTS = {
-    displayProjects: true,
-    displayAccountPage: true,
     documentationUrl: "https://www.gooddata.com/developers/cloud-native/doc/cloud/",
-    supportEmail: "tiger-beta@gooddata.com",
-    supportForumUrl: "https://support.gooddata.com/home",
 };
 
 const PROJECT = {
@@ -87,8 +83,6 @@ describe("hostValuesToBootstrapData", () => {
                 organizationName: "Org",
                 organizationId: "org-1",
                 logoUrl: "logo.svg",
-                faviconUrl: "favicon.ico",
-                appleTouchIconUrl: "",
                 isBranded: true,
             },
             project: PROJECT,
@@ -130,8 +124,6 @@ describe("hostValuesToBootstrapData", () => {
                 organizationName: "",
                 organizationId: undefined,
                 logoUrl: "",
-                faviconUrl: "",
-                appleTouchIconUrl: "",
                 isBranded: false,
             },
             project: PROJECT,

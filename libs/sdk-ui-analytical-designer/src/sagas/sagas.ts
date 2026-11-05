@@ -22,7 +22,6 @@ import { watchShortcutOperations } from "../store/shortcuts/shortcuts_operations
 
 import { loadIntlMessages, watchApplicationContext } from "./application_context/application_context_saga.js";
 import { watchApplicationInitialization } from "./application_initialization_tracking_sagas.js";
-import { watchApplicationRedirect } from "./application_redirect_sagas.js";
 import { waitForBackendInitialization } from "./backend_sagas.js";
 import { watchErrorBootstrap } from "./bootstrap_error_sagas.js";
 import { watchBuckets } from "./bucket_saga.js";
@@ -120,7 +119,6 @@ export function* root() {
             watchProperties(),
             watchPermissions(),
             confirmUnsavedChangesWatcher(),
-            watchApplicationRedirect(),
             messagesWatcher(),
             watchMetricEditor(),
             watchChartSort(),

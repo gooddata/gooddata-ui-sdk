@@ -998,6 +998,11 @@ export type ReplaceAttributeFilterItemSelectionPayload = {
      * Specifies if filter selection is invalid (e.g. text filter with missing value/literal).
      */
     readonly isSelectionInvalid?: boolean;
+    /**
+     * Specifies that the filter is reset because the filter selection type changes.
+     * The selection type is filter configuration of a single tab, so the reset is not synced to other tabs.
+     */
+    readonly skipSync?: boolean;
 };
 
 /**
@@ -1040,6 +1045,32 @@ export function replaceAttributeFilterItemSelection(
             filterLocalId,
             filter,
             isSelectionInvalid,
+        },
+    };
+}
+
+/**
+ * Creates the ReplaceAttributeFilterItemSelection command that resets an attribute filter
+ * whose selection type changes. The reset applies to the tab of the filter only.
+ *
+ * @param filterLocalId - dashboard attribute filter's local id
+ * @param filter - the replacement filter item
+ * @param correlationId - specify correlation id to use for this command
+ *
+ * @internal
+ */
+export function replaceAttributeFilterItemSelectionForSelectionTypeChange(
+    filterLocalId: string,
+    filter: DashboardAttributeFilterItem,
+    correlationId?: string,
+): ReplaceAttributeFilterItemSelection {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER_ITEM.REPLACE_SELECTION",
+        correlationId,
+        payload: {
+            filterLocalId,
+            filter,
+            skipSync: true,
         },
     };
 }

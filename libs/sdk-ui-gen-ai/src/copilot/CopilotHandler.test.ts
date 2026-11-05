@@ -5,7 +5,13 @@ import { describe, expect, it, vi } from "vitest";
 import { type ChatDefinitionReceivedEvent } from "../store/events.js";
 
 import { CopilotHandler } from "./CopilotHandler.js";
-import { CopilotBuildType, type ICopilotConfiguration, type ICopilotRegistration } from "./types.js";
+import {
+    CopilotBuildType,
+    type ICopilotConfiguration,
+    type ICopilotContext,
+    type ICopilotRegistration,
+    type ICopilotTarget,
+} from "./types.js";
 
 const type = CopilotBuildType.Dashboard;
 const target = { type, objectId: "object" };
@@ -96,6 +102,139 @@ describe("CopilotHandler", () => {
         expect(onApplyDefinition).not.toHaveBeenCalled();
     });
 
+    it.each<{
+        name: string;
+        context: ICopilotContext<string>;
+        generation?: string;
+        interactionId?: string;
+        resolvedTarget?: ICopilotTarget<string>;
+        applies: boolean;
+    }>([
+        { name: "matching builder", context: { builderTarget: target }, applies: true },
+        {
+            name: "matching builder history",
+            context: { builderTarget: target },
+            interactionId: "persisted",
+            applies: true,
+        },
+        { name: "edited object", context: { ...target, isEditing: true }, applies: true },
+        { name: "viewed object", context: target, applies: false },
+        {
+            name: "another edited object",
+            context: { type, objectId: "another-object", isEditing: true },
+            applies: false,
+        },
+        {
+            name: "edited object history",
+            context: { ...target, isEditing: true },
+            interactionId: "persisted",
+            applies: false,
+        },
+        { name: "pending generation", context: {}, generation: type, applies: true },
+        {
+            name: "history during generation",
+            context: {},
+            generation: type,
+            interactionId: "persisted",
+            applies: false,
+        },
+        { name: "unrelated generation", context: {}, generation: "report", applies: false },
+        {
+            name: "another workflow's builder with the same identifier",
+            context: { builderTarget: { type: "report", objectId: target.objectId } },
+            applies: false,
+        },
+        {
+            name: "another workflow's edited object with the same identifier",
+            context: { type: "report", objectId: target.objectId, isEditing: true },
+            applies: false,
+        },
+        {
+            name: "application-defined workflow",
+            context: { type: "report", objectId: target.objectId, isEditing: true },
+            resolvedTarget: { type: "report", objectId: target.objectId },
+            applies: true,
+        },
+    ])("applies resolved targets only for an eligible workflow: $name", (testCase) => {
+        const resolvedTarget = testCase.resolvedTarget ?? target;
+        const onApplyDefinition = vi.fn();
+        const handler = new CopilotHandler<string>({
+            registrations: [
+                {
+                    type: resolvedTarget.type,
+                    skills: ["dashboard_builder"],
+                    resolveDefinition: () => resolvedTarget,
+                    onApplyDefinition,
+                },
+            ],
+        });
+        handler.setContext(testCase.context);
+        if (testCase.generation) {
+            handler.startGeneration(testCase.generation);
+        }
+        const snapshot = handler.getSnapshot();
+        const event = { ...definition, interactionId: testCase.interactionId };
+
+        handler.handleEvent(event);
+
+        const expectedCalls = [[event, expect.any(String), resolvedTarget]];
+        expect(onApplyDefinition.mock.calls).toEqual(testCase.applies ? expectedCalls : []);
+        expect(handler.getSnapshot().applications.map((application) => application.target)).toEqual(
+            testCase.applies ? [resolvedTarget] : [],
+        );
+        expect(handler.getSnapshot() === snapshot).toBe(!testCase.applies);
+    });
+
+    it.each([
+        {
+            name: "same server thread with another local ID",
+            origin: { conversationId: "another-local", threadId: "thread" },
+            applies: true,
+        },
+        { name: "local ID fallback", origin: { threadId: undefined }, applies: true },
+        {
+            name: "local ID fallback before the source has a thread",
+            origin: { threadId: "new-thread" },
+            sourceThreadId: undefined,
+            applies: true,
+        },
+        { name: "another server thread", origin: { threadId: "another-thread" }, applies: false },
+        {
+            name: "another local ID without a server thread",
+            origin: { conversationId: "another-local", threadId: undefined },
+            applies: false,
+        },
+        { name: "unknown origin", origin: { conversationId: "", threadId: undefined }, applies: false },
+        { name: "history replay", origin: { interactionId: "persisted" }, applies: false },
+        { name: "closed builder", origin: {}, leaveBuilder: true, applies: false },
+    ])("accepts a changed draft identifier only from its live builder source: $name", (testCase) => {
+        const updatedTarget = { ...target, objectId: "updated-draft" };
+        const { handler, onApplyDefinition } = setup({ resolveDefinition: () => updatedTarget });
+        const applicationId = handler.definitionApplicationStarted({
+            target,
+            conversationId: "local",
+            threadId: "sourceThreadId" in testCase ? testCase.sourceThreadId : "thread",
+        });
+        handler.definitionApplied(applicationId, target);
+        handler.handleEvent({
+            type: "chatAssistantMessage",
+            threadId: "thread",
+            useCase: "GENERAL",
+            responseCompleted: true,
+        });
+        handler.setContext({ type, builderTarget: testCase.leaveBuilder ? undefined : target });
+        expect(handler.isGenerationPending(type)).toBe(false);
+        const snapshot = handler.getSnapshot();
+
+        handler.handleEvent({ ...definition, ...testCase.origin });
+
+        expect(onApplyDefinition).toHaveBeenCalledTimes(testCase.applies ? 1 : 0);
+        expect(handler.getSnapshot().applications.map((application) => application.target)).toEqual(
+            testCase.applies ? [updatedTarget] : [],
+        );
+        expect(handler.getSnapshot() === snapshot).toBe(!testCase.applies);
+    });
+
     it("does not deduplicate streamed revisions by item ID", () => {
         const { handler, onApplyDefinition } = setup();
         handler.handleEvent(definition);
@@ -143,6 +282,64 @@ describe("CopilotHandler", () => {
         const id = handler.definitionApplicationStarted({ target, conversationId: "origin" });
         handler.definitionApplied(id, target);
         expect(handler.getAppliedSource(target)).toEqual({ conversationId: "origin", threadId: undefined });
+    });
+
+    it.each([
+        { status: "pending", conversationId: "origin" },
+        { status: "applied", conversationId: "origin" },
+        { status: "pending", conversationId: undefined },
+        { status: "applied", conversationId: undefined },
+    ])(
+        "finds a $status definition with origin $conversationId by exact target",
+        ({ status, conversationId }) => {
+            const handler = new CopilotHandler<string>({ registrations: [] });
+            expect(handler.hasDefinition(target)).toBe(false);
+            const id = handler.definitionApplicationStarted({ target, conversationId });
+            if (status === "applied") {
+                handler.definitionApplied(id, target);
+            }
+            handler.setContext({ type: "report", objectId: "another-object" });
+            handler.handleEvent({
+                type: "chatConversationChanged",
+                threadId: "another-thread",
+                conversation: {
+                    id: "another-thread",
+                    localId: "another-local",
+                    createdAt: "",
+                    updatedAt: "",
+                },
+            });
+            const snapshot = handler.getSnapshot();
+            const listener = vi.fn();
+            handler.subscribe(listener);
+
+            expect(handler.hasDefinition({ ...target })).toBe(true);
+            expect(handler.hasDefinition({ ...target, objectId: "another-object" })).toBe(false);
+            expect(handler.hasDefinition({ ...target, type: "report" })).toBe(false);
+            expect(handler.getSnapshot()).toBe(snapshot);
+            expect(listener).not.toHaveBeenCalled();
+        },
+    );
+
+    it("does not retain an interrupted definition as a known target", () => {
+        const handler = new CopilotHandler({ registrations: [] });
+        const id = handler.definitionApplicationStarted({ target });
+        expect(handler.hasDefinition(target)).toBe(true);
+
+        handler.definitionApplicationInterrupted(id);
+
+        expect(handler.hasDefinition(target)).toBe(false);
+    });
+
+    it("finds an applied definition by its final identifier", () => {
+        const handler = new CopilotHandler({ registrations: [] });
+        const id = handler.definitionApplicationStarted({ target });
+        const appliedTarget = { ...target, objectId: "final-object" };
+
+        handler.definitionApplied(id, appliedTarget);
+
+        expect(handler.hasDefinition(appliedTarget)).toBe(true);
+        expect(handler.hasDefinition(target)).toBe(false);
     });
 
     it("keeps snapshots stable for unchanged input and unsubscribes directly", () => {

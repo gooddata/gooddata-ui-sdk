@@ -9,8 +9,15 @@ import { assertPublisherEntitySupportedV2 } from "@gooddata/sdk-backend-spi";
 import {
     type IPublisherDocumentDefinitionV2,
     type IPublisherDocumentTemplateDefinitionV2,
+    type IPublisherPageBodyV2,
     type IPublisherPageTemplateDefinitionV2,
+    type PublisherDocumentContentV2,
 } from "@gooddata/sdk-model";
+
+type PublisherEntityDefinitionV2 =
+    | IPublisherDocumentDefinitionV2
+    | IPublisherDocumentTemplateDefinitionV2
+    | IPublisherPageTemplateDefinitionV2;
 
 function descriptiveAttributes({
     description,
@@ -25,28 +32,35 @@ function descriptiveAttributes({
     };
 }
 
-function templateAttributes(
-    template: IPublisherPageTemplateDefinitionV2 | IPublisherDocumentTemplateDefinitionV2,
-): JsonApiPublisherDocumentPageTemplateInAttributes & JsonApiPublisherDocumentTemplateInAttributes {
-    assertPublisherEntitySupportedV2(template);
+function entityAttributes(
+    entity: PublisherEntityDefinitionV2,
+): Pick<JsonApiPublisherDocumentInAttributes, "title" | "description" | "tags" | "version"> {
     return {
-        title: template.title,
-        ...descriptiveAttributes(template),
-        version: template.version,
-        content: template.content,
+        title: entity.title,
+        ...descriptiveAttributes(entity),
+        version: entity.version,
     };
+}
+
+// The api client types the stored content after the backend's schema, and sdk-model after its own
+// definition of the same JSON. Sound: assertPublisherEntitySupportedV2 has checked the content against
+// the sdk-model definition, and the backend stores what passes it.
+function storedContent<T>(content: PublisherDocumentContentV2 | IPublisherPageBodyV2): T {
+    return content as unknown as T;
 }
 
 export function convertPublisherPageTemplateToBackendV2(
     template: IPublisherPageTemplateDefinitionV2,
 ): JsonApiPublisherDocumentPageTemplateInAttributes {
-    return templateAttributes(template);
+    assertPublisherEntitySupportedV2(template);
+    return { ...entityAttributes(template), content: storedContent(template.content) };
 }
 
 export function convertPublisherDocumentTemplateToBackendV2(
     template: IPublisherDocumentTemplateDefinitionV2,
 ): JsonApiPublisherDocumentTemplateInAttributes {
-    return templateAttributes(template);
+    assertPublisherEntitySupportedV2(template);
+    return { ...entityAttributes(template), content: storedContent(template.content) };
 }
 
 export function convertPublisherDocumentToBackendV2(
@@ -54,10 +68,8 @@ export function convertPublisherDocumentToBackendV2(
 ): JsonApiPublisherDocumentInAttributes {
     assertPublisherEntitySupportedV2(publisherDocument);
     return {
-        title: publisherDocument.title,
-        ...descriptiveAttributes(publisherDocument),
-        version: publisherDocument.version,
+        ...entityAttributes(publisherDocument),
         period: publisherDocument.period,
-        content: publisherDocument.content,
+        content: storedContent(publisherDocument.content),
     };
 }

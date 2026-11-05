@@ -775,6 +775,13 @@
                             "example": "table_name"
                         }
                     },
+                    "properties": {
+                        "additionalProperties": {
+                            "type": "string"
+                        },
+                        "description": "Additional properties of the table that the data source passes on to the modeler and other callers. The data source decides which keys it sends. A caller uses the keys it understands and skips all other keys.",
+                        "type": "object"
+                    },
                     "type": {
                         "type": "string",
                         "description": "Table type: TABLE or VIEW.",

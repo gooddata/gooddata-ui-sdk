@@ -31,7 +31,8 @@ export function convertScanResult(result: ScanResultPdm): IDataSourceScanResult 
 }
 
 function convertPhysicalTable(table: ScanModelDeclarativeTable): IPhysicalTable {
-    const { columns, id, namePrefix, path, type, ...unmapped } = table;
+    // The physical table has no key for the data source's own table properties, so they are not read.
+    const { columns, id, namePrefix, path, type, properties: _properties, ...unmapped } = table;
     assertAllFieldsMapped(unmapped);
     return withoutUndefined({
         columns: columns.map(convertPhysicalColumn),
