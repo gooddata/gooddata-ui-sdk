@@ -28,19 +28,26 @@ export const insightAccessTarget = createSelector(
         isSaved && identifier ? insightPermissionsTarget(identifier) : undefined,
 );
 
+// Whether the user may change who opens the visualization, wherever AD runs.
+export const canShareInsight = createSelector(
+    enableVisualizationPermissions,
+    insightAccessTarget,
+    getLastSavedReportPermissions,
+    workspacePermissions,
+    canCreateNewVisualization,
+    (flagOn, target, permissions, workspacePermissions, canCreate): boolean => {
+        if (!workspacePermissions) {
+            return false;
+        }
+        return target ? canShareVisualization(permissions, workspacePermissions, flagOn) : canCreate;
+    },
+);
+
 // Embedded and dashboard-hosted editors leave sharing to their host.
 export const canManageInsightAccess = createSelector(
     enableVisualizationPermissions,
     getIsEmbedded,
     isHostedComponentSelector,
-    insightAccessTarget,
-    getLastSavedReportPermissions,
-    workspacePermissions,
-    canCreateNewVisualization,
-    (flagOn, isEmbedded, isHosted, target, permissions, workspacePermissions, canCreate): boolean => {
-        if (!flagOn || isEmbedded || isHosted || !workspacePermissions) {
-            return false;
-        }
-        return target ? canShareVisualization(permissions, workspacePermissions, flagOn) : canCreate;
-    },
+    canShareInsight,
+    (flagOn, isEmbedded, isHosted, canShare): boolean => flagOn && !isEmbedded && !isHosted && canShare,
 );

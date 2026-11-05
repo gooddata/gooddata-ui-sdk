@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type ObjectType } from "@gooddata/sdk-model";
+
 /**
  * Locale setting covered by the localization overview.
  *
@@ -324,6 +326,55 @@ export interface ILocalizationStatisticsWorkspacesPage {
 }
 
 /**
+ * Kind of translatable text of an object: its title, its description, its tags,
+ * or the free-form texts inside it, such as dashboard section and widget titles.
+ *
+ * @alpha
+ */
+export type LocalizationTextKind = "title" | "description" | "tags" | "freeForm";
+
+/**
+ * Texts of one kind that have no translation.
+ *
+ * @alpha
+ */
+export interface ILocalizationMissingText {
+    /**
+     * Kind of the untranslated texts.
+     */
+    text: LocalizationTextKind;
+    /**
+     * Number of untranslated texts of this kind: 1 for a title or a description, one per tag or free-form text.
+     */
+    count: number;
+}
+
+/**
+ * An object of a workspace with texts that have no translation into a language.
+ *
+ * @alpha
+ */
+export interface ILocalizationMissingObject {
+    /**
+     * Object type, for example `measure`, `insight` or `analyticalDashboard`. Undefined when the backend object
+     * has no matching `ObjectType`.
+     */
+    type: ObjectType | undefined;
+    /**
+     * Id of the object, without its type.
+     */
+    id: string;
+    /**
+     * Title of the object in the source language, or its id when it has none.
+     */
+    title: string;
+    /**
+     * The kinds of texts without a translation, in the order of the object's texts.
+     */
+    missing: ILocalizationMissingText[];
+}
+
+/**
  * Reads how languages and translations are used across the organization.
  *
  * @alpha
@@ -398,4 +449,19 @@ export interface IWorkspaceLocalizationService {
      * List translation coverage of the workspace and its ancestors.
      */
     getStatisticsWorkspaces(query?: ILocalizationPageQuery): Promise<ILocalizationStatisticsWorkspacesPage>;
+
+    /**
+     * List the objects the workspace owns that have texts without a translation into the language.
+     *
+     * @remarks
+     * Covers only the objects of this workspace, not those it inherits. Blank texts, such as an empty description,
+     * are not listed. Downloads the workspace's translations, so it needs the right to manage the workspace.
+     * Every call is recorded in the audit log as a download of the workspace's translations.
+     *
+     * The tiger implementation reads the downloaded translations with the DOM parser of the browser. Outside a
+     * browser the call rejects with an `UnexpectedError`.
+     *
+     * @param locale - language of the translation, for example `ja-JP`
+     */
+    getMissingTranslations(locale: string): Promise<ILocalizationMissingObject[]>;
 }

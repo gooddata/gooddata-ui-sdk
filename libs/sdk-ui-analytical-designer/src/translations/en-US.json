@@ -167,6 +167,10 @@
         "text": "Open in Analytical Designer",
         "crowdinContext": "Menu option to open visualization in Analytical Designer"
     },
+    "options.menu.ariaLabel": {
+        "text": "More options",
+        "crowdinContext": "Accessible name of the button in the Analytical Designer header that opens the menu with export and time zone options"
+    },
     "options.menu.changeTimezone": {
         "text": "Change time zone",
         "crowdinContext": "Options menu item that opens the dialog for temporarily changing the time zone used for insight executions in Analytical Designer. Session-only; never persisted with the insight."
@@ -2610,6 +2614,10 @@
     "embedInsightDialog.code.copied.success": {
         "text": "The code was copied to your clipboard.",
         "crowdinContext": "Success message after copying embedding code to clipboard"
+    },
+    "embedInsightDialog.embed.button.label": {
+        "text": "Embed",
+        "crowdinContext": "Accessible name of the icon button in the Analytical Designer header that opens the menu for embedding the visualization"
     },
     "embedInsightDialog.embed.menu.title": {
         "text": "Embed visualization",

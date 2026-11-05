@@ -500,6 +500,9 @@ export type {
     ILocalizationTranslationCoverage,
     ILocalizationStatisticsWorkspace,
     ILocalizationStatisticsWorkspacesPage,
+    LocalizationTextKind,
+    ILocalizationMissingText,
+    ILocalizationMissingObject,
     LocalizationTranslatedSettingType,
     LocalizationTranslationState,
     ILocalizationTranslationCount,
@@ -521,6 +524,11 @@ export type {
     IDeclarativeLogicalModelOptions,
 } from "./workspace/ldm/model.js";
 export type { IWorkspaceCustomApplicationSettingsService } from "./workspace/customApplicationSettings/index.js";
+export type {
+    AnalyticsAsCodeDocument,
+    IAnalyticsAsCodeDeployOptions,
+    IWorkspaceAnalyticsAsCodeService,
+} from "./workspace/analyticsAsCode/index.js";
 
 export type {
     IWorkspaceAutomationService,

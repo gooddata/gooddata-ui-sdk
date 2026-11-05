@@ -96,7 +96,7 @@ export interface IProfileContext {
  * template subtree. ORDER MATTERS:
  *   - longer tokens MUST come before shorter ones that are their substrings
  *     (e.g. `gdc-app-template-module` before `gdc-app-template`),
- *   - we use an array (not Record<string, string>) so JS-engine integer-key
+ *   - we use an array (not `Record<string, string>`) so JS-engine integer-key
  *     iteration ordering can't reshuffle numeric tokens (`"8450"`, `"8550"`)
  *     ahead of string tokens.
  */
@@ -161,7 +161,7 @@ export interface IScaffoldProfile {
      * Optional override: explicit absolute filesystem paths for each subtree.
      * When set, the engine uses these directly and skips its own resolution.
      * Profile authors use this for internal-only profiles where the templates
-     * aren't installed as transitive deps of @gooddata/create-pluggable-module —
+     * aren't installed as transitive deps of `@gooddata/create-pluggable-module` —
      * e.g. gdc-ui's internal scaffolder resolves the workspace templates via
      * its own `import.meta.url`-relative path.
      *

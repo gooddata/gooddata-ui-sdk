@@ -1,15 +1,17 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { commonConfigurations, v8Variants, v9Variants } from "../src/index.js";
+import { commonConfigurations, flatVariants, legacyVariants } from "../src/index.js";
 
-import { buildV8 } from "./build/v8.js";
-import { buildV9 } from "./build/v9.js";
+import { buildFlat, eslintMajors } from "./build/flat.js";
+import { buildLegacy } from "./build/legacy.js";
 
-// Build v8 eslintrc JSON configs
-buildV8(commonConfigurations, v8Variants);
+// Build legacy eslintrc JSON configs
+buildLegacy(commonConfigurations, legacyVariants);
 
-// Build v9 flat config JS files
-buildV9(commonConfigurations, v9Variants);
+for (const major of eslintMajors) {
+    // Build flat config JS files
+    buildFlat(commonConfigurations, flatVariants, major);
 
-// Build v9 flat config JS files for OxLint partial migration
-buildV9(commonConfigurations, v9Variants, true);
+    // Build flat config JS files for OxLint partial migration
+    buildFlat(commonConfigurations, flatVariants, major, true);
+}

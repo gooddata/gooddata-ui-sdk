@@ -1,4 +1,6 @@
 {
+    "gd.gen-ai.copilot.composing.waiting": "Esperando su respuesta",
+    "gd.gen-ai.copilot.composing.replyNow": "Responda ahora",
     "gd.gen-ai.global-error": "Se ha producido un error imprevisto.",
     "gd.gen-ai.global-error.description": "Intente reiniciar el chatbot y empezar de nuevo.",
     "gd.gen-ai.global-error.button-details": "Consulte la respuesta de error sin procesar para obtener más detalles",
@@ -149,8 +151,8 @@
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, one {# página} other {# páginas}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, one {# página} other {# páginas}}",
     "gd.gen-ai.publisherDocument.unavailable": "El documento no está disponible.",
-    "gd.gen-ai.publisherDocument.previousVersion": "Este documento se creó en la versión anterior de Publisher y no se puede abrir aquí.",
-    "gd.gen-ai.publisherDocument.newerVersion": "Este documento se creó en una versión más reciente de Publisher y no se puede abrir aquí.",
+    "gd.gen-ai.publisherDocument.previousVersion": "Este documento se creó en la versión anterior de Informes y no se puede abrir aquí.",
+    "gd.gen-ai.publisherDocument.newerVersion": "Este documento se creó en una versión más reciente de Informes y no se puede abrir aquí.",
     "gd.gen-ai.alert-proposal.summary.trigger": "Disparador",
     "gd.gen-ai.alert-proposal.summary.trigger.mode": "Modo",
     "gd.gen-ai.alert-proposal.summary.trigger.interval": "Intervalo",

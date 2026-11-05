@@ -85,7 +85,7 @@ function mapLegacyAnalyzeUrl(pathname: string, hash: string, search: string): st
     return toHashHostUrl(embedded, "analyze", match[1], lifted.remainder, lifted.search);
 }
 
-// KD reads <c> in #/client/<c> and #/product/<p>/client/<c> as a client id, never a workspace id.
+// <c> in #/client/<c> and #/product/<p>/client/<c> is a Bear client id, never a workspace id.
 const KD_CLIENT_HASH = /^#\/(?:product\/[^/?]+\/)?client\/[^/?]+/;
 
 // KD legacy hash: #/workspace|project|p/<ws>/<rest>. Lift <ws> to the path, keep <rest>.
@@ -128,12 +128,11 @@ const LEGACY_HOME_PATHS = [
     "/getting-started",
 ];
 
-// Publisher was served under the /reports route base. The backend report export and saved links still
-// open that route.
-const FORMER_PUBLISHER_ROUTE = /^((?:\/embedded)?\/workspace\/[^/]+)\/reports(\/.*)?$/;
+// /publisher is the former route base; saved links and document exports may still open it.
+const FORMER_REPORTS_ROUTE = /^((?:\/embedded)?\/workspace\/[^/]+)\/publisher(\/.*)?$/;
 
 /**
- * Maps a legacy KD/AD/modeler/metrics/home-ui/reports URL (embedded or standalone) to its host equivalent,
+ * Maps a legacy KD/AD/modeler/metrics/home-ui/publisher URL (embedded or standalone) to its host equivalent,
  * or `null` when it is not a recognized legacy URL. Mirrors the standalone→host redirects that live
  * in the legacy apps; runs client-side because the workspace id is in the (server-invisible) hash.
  *
@@ -142,9 +141,9 @@ const FORMER_PUBLISHER_ROUTE = /^((?:\/embedded)?\/workspace\/[^/]+)\/reports(\/
 export function mapLegacyUrlToHost(location: ILegacyLocation): string | null {
     const { pathname, hash, search } = location;
 
-    const formerPublisher = FORMER_PUBLISHER_ROUTE.exec(pathname);
-    if (formerPublisher) {
-        return `${formerPublisher[1]}/publisher${formerPublisher[2] ?? ""}${search}${hash}`;
+    const formerReports = FORMER_REPORTS_ROUTE.exec(pathname);
+    if (formerReports) {
+        return `${formerReports[1]}/reports${formerReports[2] ?? ""}${search}${hash}`;
     }
 
     if (isUnder(pathname, "/dashboards")) {

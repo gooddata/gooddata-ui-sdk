@@ -44,6 +44,7 @@ export type {
     WorkspacePublisherDecoratorFactory,
     WorkspacePublisherV2DecoratorFactory,
     ObjectPermissionsDecoratorFactory,
+    AnalyticsAsCodeDecoratorFactory,
 } from "./decoratedBackend/types.js";
 
 export {

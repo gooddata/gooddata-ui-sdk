@@ -97,6 +97,7 @@
     "visualizations.totals.dropdown.title.nat": "롤업(총계)",
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "롤업(총계) 집계는 시각화를 메트릭 값으로 필터링할 때 사용할 수 없습니다. 롤업(총계)을 사용하려면 필터 바에서 모든 메트릭 값 필터를 제거하세요.",
     "visualizations.totals.dropdown.tooltip.nat.disabled.ranking": "랭킹 필터로 시각화를 필터링할 때 롤업(총계) 집계는 사용할 수 없습니다. 롤업(총계)를 사용하려면 필터 바에서 랭킹 필터를 제거하세요.",
+    "visualizations.totals.dropdown.tooltip.subtotal.disabled.measureSort": "메트릭을 기준으로 정렬하면 행 소계를 사용할 수 없습니다. 소계를 표시하려면 메트릭 정렬을 해제하세요.",
     "visualizations.totals.dropdown.title.med": "중앙값",
     "visualizations.headline.tertiary.title": "대",
     "visualizations.headline.comparison.title.change": "변경",

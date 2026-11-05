@@ -1,10 +1,15 @@
 // (C) 2026 GoodData Corporation
 
-import { writeFileSync } from "fs";
+import { mkdirSync, writeFileSync } from "fs";
 
 import type { GlobalValue, IPackage } from "@gooddata/lint-config";
 
-import type { GlobalsPreset, IConfigurationV9, IDualConfiguration } from "../../src/types.js";
+import type {
+    GlobalsPreset,
+    IConfiguration,
+    IConfigurationFlat,
+    IConfigurationFlatVariants,
+} from "../../src/types.js";
 
 import { renderKey, renderValue } from "./renderPlugin.js";
 
@@ -15,7 +20,7 @@ interface IImportInfo {
 }
 
 // Collect all unique imports from configurations with indexed variable names
-function collectImports(configs: IConfigurationV9[]): Map<string, IImportInfo> {
+function collectImports(configs: IConfigurationFlat[]): Map<string, IImportInfo> {
     const imports = new Map<string, IImportInfo>();
     let index = 1;
 
@@ -60,7 +65,7 @@ function collectImports(configs: IConfigurationV9[]): Map<string, IImportInfo> {
 }
 
 // Check if any config uses globalsPresets
-function needsGlobalsImport(configs: IConfigurationV9[]): boolean {
+function needsGlobalsImport(configs: IConfigurationFlat[]): boolean {
     for (const config of configs) {
         if (config.languageOptions?.globalsPresets?.length) {
             return true;
@@ -150,7 +155,7 @@ function generatePluginsExpression(
 
 // Generate a single config object
 function generateConfigObject(
-    config: IConfigurationV9,
+    config: IConfigurationFlat,
     imports: Map<string, IImportInfo>,
     indent: number,
 ): string {
@@ -228,7 +233,7 @@ function generateConfigObject(
 
 // Generate override config objects (flat config uses files property on separate objects)
 function generateOverrideObjects(
-    config: IConfigurationV9,
+    config: IConfigurationFlat,
     imports: Map<string, IImportInfo>,
     indent: number,
 ): string[] {
@@ -314,7 +319,7 @@ function generateOverrideObjects(
 }
 
 // Generate full config array from multiple configurations
-function generateConfigArray(configs: IConfigurationV9[], imports: Map<string, IImportInfo>): string {
+function generateConfigArray(configs: IConfigurationFlat[], imports: Map<string, IImportInfo>): string {
     const items: string[] = [];
 
     for (const config of configs) {
@@ -335,7 +340,7 @@ function generateConfigArray(configs: IConfigurationV9[], imports: Map<string, I
 }
 
 // Generate complete JS file content
-function generateJsFile(configs: IConfigurationV9[]): string {
+function generateJsFile(configs: IConfigurationFlat[]): string {
     const imports = collectImports(configs);
     const needsGlobals = needsGlobalsImport(configs);
 
@@ -367,30 +372,38 @@ declare const config: FlatConfig[];
 export default config;
 `;
 
-export function buildV9(
-    commonConfigurations: IDualConfiguration[],
-    variants: Record<string, IDualConfiguration[]>,
+// ESLint majors the flat config is built for; each gets its own dist/<major> folder
+export const eslintMajors = ["v9", "v10"] as const;
+export type EslintMajor = (typeof eslintMajors)[number];
+
+// Subfolder of dist/<major> (and export path segment) holding the OxLint partial migration variants
+export const oxlintDir = "oxlint";
+
+export function buildFlat(
+    commonConfigurations: IConfiguration[],
+    variants: Record<string, IConfiguration[]>,
+    major: EslintMajor,
     oxLint: boolean = false,
 ): void {
-    const prefix = oxLint ? "oxlint-" : "";
+    const variantKey: keyof IConfigurationFlatVariants = oxLint ? `${major}ox` : major;
+    const outDir = oxLint ? `dist/${major}/${oxlintDir}` : `dist/${major}`;
 
-    // Extract v9 configs from commonConfigurations
-    const commonV9Configs = commonConfigurations.map((dc) => (oxLint ? dc.ox : dc.v9));
+    mkdirSync(outDir, { recursive: true });
+
+    // Extract flat configs for this major from commonConfigurations
+    const commonFlatConfigs = commonConfigurations.map((dc) => dc.flat[variantKey]);
 
     // Build base config
-    const baseJs = generateJsFile(commonV9Configs);
-    writeFileSync(`dist/${prefix}base.js`, baseJs);
-    writeFileSync(`dist/${prefix}base.d.ts`, dtsContent);
+    const baseJs = generateJsFile(commonFlatConfigs);
+    writeFileSync(`${outDir}/base.js`, baseJs);
+    writeFileSync(`${outDir}/base.d.ts`, dtsContent);
 
     // Build variant configs
     for (const [variantName, variantConfigs] of Object.entries(variants)) {
-        const variantV9Configs = [
-            ...commonV9Configs,
-            ...variantConfigs.map((dc) => (oxLint ? dc.ox : dc.v9)),
-        ];
+        const variantFlatConfigs = [...commonFlatConfigs, ...variantConfigs.map((dc) => dc.flat[variantKey])];
 
-        const variantJs = generateJsFile(variantV9Configs);
-        writeFileSync(`dist/${prefix}${variantName}.js`, variantJs);
-        writeFileSync(`dist/${prefix}${variantName}.d.ts`, dtsContent);
+        const variantJs = generateJsFile(variantFlatConfigs);
+        writeFileSync(`${outDir}/${variantName}.js`, variantJs);
+        writeFileSync(`${outDir}/${variantName}.d.ts`, dtsContent);
     }
 }

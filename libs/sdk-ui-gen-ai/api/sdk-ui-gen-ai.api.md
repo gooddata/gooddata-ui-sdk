@@ -458,6 +458,7 @@ export type GenAIAssistantMode = "docked" | "fullscreen";
 // @public
 export type GenAIAssistantProps = Omit<GenAiStoreProps, "children"> & {
     locale?: string;
+    inputPlaceholder?: string;
     onLinkClick?: (linkClickEvent: LinkHandlerEvent) => string | undefined;
     allowNativeLinks?: boolean;
     disableManage?: boolean;
@@ -834,6 +835,11 @@ export type IGenAIAssistantMessageMultipartContentProps = {
 export type IGenAIAssistantMessageReasoningContentProps = {
     summary: string;
     objects: TextContentObject[];
+    durationMs?: number;
+    agent?: {
+        id: string;
+        name?: string;
+    };
     isLoading?: boolean;
 };
 

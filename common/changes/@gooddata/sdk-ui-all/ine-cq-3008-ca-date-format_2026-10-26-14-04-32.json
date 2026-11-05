@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-backend-tiger, sdk-model: Format date computed attribute values, showing them raw when their format cannot be applied; add IAttributeDescriptorBody dataType and formatGranularity; format attribute filter elements in the timezone of their format",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "ivan.nejezchleb@gooddata.com"
+}

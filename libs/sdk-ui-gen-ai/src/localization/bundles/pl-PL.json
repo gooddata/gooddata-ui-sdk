@@ -1,4 +1,6 @@
 {
+    "gd.gen-ai.copilot.composing.waiting": "Oczekiwanie na odpowiedź",
+    "gd.gen-ai.copilot.composing.replyNow": "Odpowiedz teraz",
     "gd.gen-ai.global-error": "Coś poszło nie tak",
     "gd.gen-ai.global-error.description": "Spróbuj ponownie uruchomić chatbota i zacząć od nowa.",
     "gd.gen-ai.global-error.button-details": "Zobacz surową odpowiedź błędu, aby uzyskać szczegóły",
@@ -149,8 +151,8 @@
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, one {# strona} few {# strony} many {# stron} other {# strony}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, one {# strona} few {# strony} many {# stron} other {# strony}}",
     "gd.gen-ai.publisherDocument.unavailable": "Dokument jest niedostępny.",
-    "gd.gen-ai.publisherDocument.previousVersion": "Ten dokument został utworzony w poprzedniej wersji Publishera i nie można go tutaj otworzyć.",
-    "gd.gen-ai.publisherDocument.newerVersion": "Ten dokument został utworzony w nowszej wersji Publishera i nie można go tutaj otworzyć.",
+    "gd.gen-ai.publisherDocument.previousVersion": "Ten dokument został utworzony w poprzedniej wersji Raportów i nie można go tutaj otworzyć.",
+    "gd.gen-ai.publisherDocument.newerVersion": "Ten dokument został utworzony w nowszej wersji Raportów i nie można go tutaj otworzyć.",
     "gd.gen-ai.alert-proposal.summary.trigger": "Wyzwalacz",
     "gd.gen-ai.alert-proposal.summary.trigger.mode": "Tryb",
     "gd.gen-ai.alert-proposal.summary.trigger.interval": "Interwał",

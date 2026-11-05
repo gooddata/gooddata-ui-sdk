@@ -58,7 +58,7 @@
 
 .adi-editor-main {
     position: absolute;
-    top: 47px; // 48px - 1px border that should be part of the header
+    top: var(--adi-editor-header-height, 47px); // 48px - 1px border that should be part of the header
     right: 0;
     bottom: 0;
     left: calc(var(--adi-catalog-width) - 1px); // 1px border as above

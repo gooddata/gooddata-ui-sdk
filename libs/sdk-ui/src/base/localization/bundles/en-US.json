@@ -4073,11 +4073,11 @@
     },
     "userManagement.workspace.permission.createDocument": {
         "text": "Documents",
-        "crowdinContext": "Name of the workspace permission that allows user to create documents in Publisher and edit or delete their own."
+        "crowdinContext": "Name of the workspace permission that allows user to create documents in Reports and edit or delete their own."
     },
     "userManagement.workspace.permission.createDocument.tooltip": {
-        "text": "Adds CREATE_DOCUMENT permission to create documents in Publisher and edit or delete the ones the user created. Editing or deleting documents created by others requires the Manage permission. To create new visualizations in a document, the user also needs the Visualizations permission.",
-        "crowdinContext": "Create document permission tooltip. Publisher is a product name."
+        "text": "Adds CREATE_DOCUMENT permission to create documents in Reports and edit or delete the ones the user created. Editing or deleting documents created by others requires the Manage permission. To create new visualizations in a document, the user also needs the Visualizations permission.",
+        "crowdinContext": "Create document permission tooltip. Reports is a product name."
     },
     "userManagement.workspace.permission.createMetric": {
         "text": "Metrics",

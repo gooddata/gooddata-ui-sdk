@@ -100,6 +100,7 @@ export interface IGenAIChatProps {
     canManageProject?: boolean;
     canAnalyzeProject?: boolean;
     canFullControl?: boolean;
+    canCreateDocument?: boolean;
     settings?: IUserWorkspaceSettings;
     /** Where to place the chat (e.g. an embedded dashboard's left/right `showassistant` param). */
     dialogPosition?: "left" | "right";
@@ -138,6 +139,7 @@ export function GenAIChat({
     canManageProject,
     canAnalyzeProject,
     canFullControl,
+    canCreateDocument,
     settings,
     dialogPosition,
     embedded,
@@ -214,6 +216,7 @@ export function GenAIChat({
             canManage={canManageProject}
             canAnalyze={canAnalyzeProject}
             canFullControl={canFullControl}
+            canCreateDocument={canCreateDocument}
             settings={settings}
             dialogPosition={dialogPosition}
             className={embedded ? EMBEDDED_CHAT_CLASS : undefined}

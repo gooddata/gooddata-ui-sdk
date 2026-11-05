@@ -2,36 +2,39 @@
 
 import { type IPackage, reactRules, reactRulesNativeNotSupported } from "@gooddata/lint-config";
 
-import type { IDualConfiguration } from "../types.js";
+import type { IConfiguration } from "../types.js";
 
 const reactPlugin: IPackage = {
     name: "eslint-plugin-react",
     version: "7.37.5",
 };
 
-const settings = {
-    react: {
-        version: "detect",
+const commonConfiguration = {
+    packages: [reactPlugin],
+    settings: {
+        react: {
+            version: "detect",
+        },
     },
 };
 
-export const react: IDualConfiguration<"react"> = {
-    v8: {
-        packages: [reactPlugin],
+const flat = {
+    ...commonConfiguration,
+    plugins: { react: reactPlugin },
+    rules: reactRules,
+};
+
+const ox = {
+    ...commonConfiguration,
+    plugins: { react: reactPlugin },
+    rules: reactRulesNativeNotSupported,
+};
+
+export const react: IConfiguration<"react"> = {
+    legacy: {
+        ...commonConfiguration,
         plugins: ["react"],
-        settings,
         rules: reactRules,
     },
-    v9: {
-        packages: [reactPlugin],
-        plugins: { react: reactPlugin },
-        settings,
-        rules: reactRules,
-    },
-    ox: {
-        packages: [reactPlugin],
-        plugins: { react: reactPlugin },
-        settings,
-        rules: reactRulesNativeNotSupported,
-    },
+    flat: { v9: flat, v9ox: ox, v10: {}, v10ox: {} },
 };

@@ -203,7 +203,7 @@ const lineOf = (sourceFile: SourceFile, node: Node) =>
 
 /**
  * Does this type reference name the root state? Syntactic on purpose — cheap and unambiguous.
- * @param typeNode
+ * @param typeNode - the type reference to inspect
  */
 const namesRootState = (typeNode: TypeNode) =>
     !!typeNode && ROOT_STATE_TYPE_NAMES.has(typeNode.getText().replace(/\s/g, "").split("<")[0]);

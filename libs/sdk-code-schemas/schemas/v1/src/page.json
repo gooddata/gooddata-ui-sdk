@@ -1124,7 +1124,8 @@
             "additionalProperties": false,
             "properties": {
                 "visible": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "When left out, a visualization's title is hidden and a takeaway's is shown."
                 },
                 "text": {
                     "type": "string",

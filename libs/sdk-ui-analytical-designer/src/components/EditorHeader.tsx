@@ -1,211 +1,82 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type ReactElement, useCallback } from "react";
+import { type Ref, useCallback, useState } from "react";
 
 import classNames from "classnames";
-import { useIntl } from "react-intl";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
-import { Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
-
-import { resetApplication } from "../actions/app_context_actions.js";
-import { cancelEditFromKDAction } from "../actions/cancel_edit_from_kd_actions.js";
-import { redo, undo } from "../actions/time_travel_actions.js";
-import {
-    AVAILABLE_DISPLAYED_ACTIONS,
-    AVAILABLE_HIDDEN_ACTIONS,
-    displayedActions as displayedActionsSelector,
-    hiddenActions as hiddenActionsSelector,
-    isEditorHeaderResetDisabled,
-    isEmbedButtonVisible as isEmbedButtonVisibleSelector,
-    isOptionsMenuEnabled as isOptionsMenuEnabledSelector,
-    isRedoDisabled as isRedoDisabledSelector,
-    isSaveAsVisible as isSaveAsVisibleSelector,
-    isSaveVisible as isSaveVisibleSelector,
-    isUndoDisabled as isUndoDisabledSelector,
-} from "../selectors/editor_header_selector.js";
-import { enableEnhancedInsightPicker, enableGenAiRightPanel } from "../selectors/feature_flag_selector.js";
-import {
-    isEditFromKD as isEditFromKDSelector,
-    isExploreFromKD as isExploreFromKDSelector,
-} from "../selectors/route_selector.js";
-import { type AppDispatch } from "../store/types.js";
+import { type IAnalyticalDesignerEditorHeaderProps } from "../embedding/editorHeaderSlotTypes.js";
+import { renderSlot, useAdSlots } from "../embedding/slots.js";
+import { enableEnhancedInsightPicker } from "../selectors/feature_flag_selector.js";
 
 import { CatalogSidebarRestoreToggle } from "./catalogSidebar/CatalogSidebarToggle.js";
-import { EmbedButton } from "./header/Embed/EmbedButton.js";
-import { InsightPickerDialog } from "./header/InsightPickerDialog.js";
-import { OptionsButton } from "./header/OptionsMenu/OptionsButton.js";
-import { SaveAsNewReportButton } from "./header/SaveAsNewReportButton.js";
-import { SaveReportButton } from "./header/SaveReportButton.js";
-import { VisualizationsDropdown } from "./header/VisualizationsDropdown.js";
-import { ReportTitle } from "./ReportTitle.js";
+import { useEditorActions } from "./header/EditorActions.js";
+import { useEditorHeaderContext } from "./header/editorHeaderContext.js";
+import { EmbedInsightDialogContainer } from "./header/Embed/EmbedInsightDialogContainer.js";
+import { TimezoneDialog } from "./header/TimezoneDialog.js";
+import { useVisualizationInfo } from "./header/VisualizationInfo.js";
 
-export function EditorHeader() {
-    const intl = useIntl();
-    const dispatch = useDispatch<AppDispatch>();
+interface IEditorHeaderProps {
+    /**
+     * The header element, which the editor measures to place the content below it.
+     */
+    containerRef?: Ref<HTMLDivElement>;
+}
 
-    const isUndoDisabled = useSelector(isUndoDisabledSelector);
-    const isRedoDisabled = useSelector(isRedoDisabledSelector);
-    const isResetDisabled = useSelector(isEditorHeaderResetDisabled);
+/**
+ * The header shell. It keeps the catalog restore control and the dialogs of the header flows outside the
+ * EditorHeader slot, so a host that replaces or hides the header cannot strand a collapsed catalog or break a
+ * flow its own controls start.
+ */
+export function EditorHeader({ containerRef }: IEditorHeaderProps) {
+    const slots = useAdSlots();
+    const context = useEditorHeaderContext();
     const isEnhancedInsightPickerEnabled = useSelector(enableEnhancedInsightPicker);
-    const isGenAiRightPanelEnabled = useSelector(enableGenAiRightPanel);
-    const isOptionsMenuEnabled = useSelector(isOptionsMenuEnabledSelector);
-    const isEditFromKD = useSelector(isEditFromKDSelector);
-    const isExploreFromKD = useSelector(isExploreFromKDSelector);
-    const hiddenActions = useSelector(hiddenActionsSelector);
-    const displayedActions = useSelector(displayedActionsSelector);
-    const isSaveVisible = useSelector(isSaveVisibleSelector);
-    const isSaveAsVisible = useSelector(isSaveAsVisibleSelector);
-    const isEmbedButtonVisible = useSelector(isEmbedButtonVisibleSelector);
 
-    const onCancelEditFromKD = useCallback(() => {
-        dispatch(cancelEditFromKDAction());
-    }, [dispatch]);
+    const [isTimezoneDialogOpen, setIsTimezoneDialogOpen] = useState(false);
+    const openTimezoneDialog = useCallback(() => setIsTimezoneDialogOpen(true), []);
+    const closeTimezoneDialog = useCallback(() => setIsTimezoneDialogOpen(false), []);
 
-    const onUndo = useCallback(() => {
-        dispatch(undo());
-    }, [dispatch]);
+    const visualizationInfo = useVisualizationInfo(context);
+    const editorActions = useEditorActions(context, openTimezoneDialog);
 
-    const onRedo = useCallback(() => {
-        dispatch(redo());
-    }, [dispatch]);
-
-    const onResetReport = useCallback(() => {
-        dispatch(resetApplication());
-    }, [dispatch]);
-
-    const getEditorHeaderClassName = () => {
-        return classNames("adi-editor-header", "without-dataset-picker", {
-            "enhanced-insight-picker": isEnhancedInsightPickerEnabled,
-            "without-title-space": isGenAiRightPanelEnabled,
-        });
-    };
-
-    const renderSaveButtons = () => {
-        return (
-            <>
-                {isSaveAsVisible ? <SaveAsNewReportButton /> : null}
-                {isSaveVisible ? <SaveReportButton /> : null}
-            </>
-        );
-    };
-
-    const renderCancelButton = (): ReactElement => {
-        const isFromKD = isEditFromKD || isExploreFromKD;
-        const displayCancel = isFromKD || displayedActions.includes(AVAILABLE_DISPLAYED_ACTIONS.CANCEL);
-
-        return (
-            displayCancel && (
-                <Button
-                    value={intl.formatMessage({ id: "cancel" })}
-                    className={`gd-button-secondary cancel-edit-from-kd s-cancel-edit-from-kd editor-header-item`}
-                    onClick={onCancelEditFromKD}
-                />
-            )
-        );
-    };
-
-    const renderUndoButton = (): ReactElement => {
-        return (
-            <span>
-                <BubbleHoverTrigger>
-                    <Button
-                        className="gd-button-secondary gd-button-icon-only gd-icon-undo undo s-undo"
-                        value=""
-                        disabled={isUndoDisabled}
-                        onClick={onUndo}
-                    />
-                    <Bubble
-                        className="bubble-primary"
-                        alignPoints={[{ align: "bc tc", offset: { x: 0, y: 12 } }]}
-                    >
-                        {intl.formatMessage({ id: "undo" })}
-                    </Bubble>
-                </BubbleHoverTrigger>
-            </span>
-        );
-    };
-
-    const renderRedoButton = (): ReactElement => {
-        return (
-            <span>
-                <BubbleHoverTrigger>
-                    <Button
-                        className="gd-button-secondary gd-button-icon-only gd-icon-redo redo s-redo"
-                        value=""
-                        disabled={isRedoDisabled}
-                        onClick={onRedo}
-                    />
-                    <Bubble
-                        className="bubble-primary"
-                        alignPoints={[{ align: "bc tc", offset: { x: 0, y: 12 } }]}
-                    >
-                        {intl.formatMessage({ id: "redo" })}
-                    </Bubble>
-                </BubbleHoverTrigger>
-            </span>
-        );
-    };
-
-    const renderUndoRedoButtons = (): ReactElement => {
-        const isUndoRedoVisible = !hiddenActions.includes(AVAILABLE_HIDDEN_ACTIONS.UNDO_REDO);
-
-        return (
-            isUndoRedoVisible && (
-                <div className="gd-button-group editor-header-item">
-                    {renderUndoButton()}
-                    {renderRedoButton()}
-                </div>
-            )
-        );
-    };
-
-    const renderClearButton = () => {
-        const isClearVisible = !hiddenActions.includes(AVAILABLE_HIDDEN_ACTIONS.CLEAR);
-        return (
-            isClearVisible && (
-                <Button
-                    value={intl.formatMessage({ id: "reset" })}
-                    className="gd-button-secondary reset s-reset-report editor-header-item"
-                    disabled={isResetDisabled}
-                    onClick={onResetReport}
-                />
-            )
-        );
-    };
-
-    const renderOpenDropdown = () => {
-        const isOpenVisible = !isExploreFromKD && !hiddenActions.includes(AVAILABLE_HIDDEN_ACTIONS.OPEN);
-        if (!isOpenVisible) {
-            return null;
-        }
-        return isEnhancedInsightPickerEnabled ? <InsightPickerDialog /> : <VisualizationsDropdown />;
-    };
-
-    const renderOptionsButton = () => {
-        return isOptionsMenuEnabled && <OptionsButton />;
-    };
-
-    const renderEmbedButton = () => {
-        return isEmbedButtonVisible && <EmbedButton />;
+    const headerProps: IAnalyticalDesignerEditorHeaderProps = {
+        ...context,
+        visualizationInfo,
+        editorActions,
     };
 
     return (
-        <div className={getEditorHeaderClassName()}>
+        <div
+            ref={containerRef}
+            className={classNames("adi-editor-header", "without-dataset-picker", {
+                "enhanced-insight-picker": isEnhancedInsightPickerEnabled,
+                // the compact layout drops the catalog-width offset; the catalog sidebar layout positions the header
+                "without-title-space": context.layout.mode === "compact",
+            })}
+        >
             <CatalogSidebarRestoreToggle />
             <h1 className="s-adi-application-title" />
-            <div className="left-actions-wrapper">
-                <ReportTitle />
+            <div className="adi-editor-header-content">
+                {renderSlot(slots.EditorHeader, DefaultEditorHeader, headerProps)}
             </div>
-            <div className="export-wrapper">
-                {renderUndoRedoButtons()}
-                {renderClearButton()}
-                {renderOpenDropdown()}
-                {renderCancelButton()}
-                {renderSaveButtons()}
-                {renderEmbedButton()}
-                {renderOptionsButton()}
-            </div>
+            <EmbedInsightDialogContainer />
+            {isTimezoneDialogOpen ? <TimezoneDialog onClose={closeTimezoneDialog} /> : null}
+        </div>
+    );
+}
+
+/**
+ * Default of the EditorHeader slot: the visualization information on the left and the actions on the right.
+ */
+export function DefaultEditorHeader({
+    visualizationInfo,
+    editorActions,
+}: IAnalyticalDesignerEditorHeaderProps) {
+    return (
+        <div className="adi-editor-header-row">
+            <div className="left-actions-wrapper">{visualizationInfo}</div>
+            <div className="export-wrapper">{editorActions}</div>
         </div>
     );
 }

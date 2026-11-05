@@ -139,8 +139,8 @@ function intersectAttributeFilters(
  * |---------------|---------------|-------------------------------------------|
  * | Positive (A)  | Positive (B)  | Positive (A ∩ B)                          |
  * | Negative (A)  | Negative (B)  | Negative (A ∪ B)                          |
- * | Positive (A)  | Negative (B)  | Positive (A \ B)                          |
- * | Negative (A)  | Positive (B)  | Positive (B \ A)                          |
+ * | Positive (A)  | Negative (B)  | Positive (A ∖ B)                          |
+ * | Negative (A)  | Positive (B)  | Positive (B ∖ A)                          |
  */
 function intersectElements(
     aValues: Array<string | null>,

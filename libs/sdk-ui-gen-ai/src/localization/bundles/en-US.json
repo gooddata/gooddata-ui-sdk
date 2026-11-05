@@ -608,12 +608,12 @@
         "crowdinContext": "Shown in place of the document card in the chat when the document the assistant created can no longer be loaded."
     },
     "gd.gen-ai.publisherDocument.previousVersion": {
-        "text": "This document was made in the previous version of Publisher and can't be opened here.",
-        "crowdinContext": "Shown in place of the document card in the chat when the assistant made the document in the previous version of Publisher, which the workspace no longer uses. Publisher is the product name."
+        "text": "This document was made in the previous version of Reports and can't be opened here.",
+        "crowdinContext": "Shown in place of the document card in the chat when the assistant made the document in the previous version of Reports, which the workspace no longer uses. Reports is the product name."
     },
     "gd.gen-ai.publisherDocument.newerVersion": {
-        "text": "This document was made in a newer version of Publisher and can't be opened here.",
-        "crowdinContext": "Shown in place of the document card in the chat when the assistant made the document in a newer version of Publisher than the one the workspace uses. Publisher is the product name."
+        "text": "This document was made in a newer version of Reports and can't be opened here.",
+        "crowdinContext": "Shown in place of the document card in the chat when the assistant made the document in a newer version of Reports than the one the workspace uses. Reports is the product name."
     },
     "gd.gen-ai.alert-proposal.summary.trigger": {
         "text": "Trigger",

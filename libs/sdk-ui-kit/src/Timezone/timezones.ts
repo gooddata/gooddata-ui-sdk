@@ -67,7 +67,7 @@ const timezonesRaw: [
     ["America/St_Johns", "Newfoundland", "GMT-03:30", -210, -150],
     ["America/Sao_Paulo", "Brasilia", "GMT-03:00", -120, -180],
     ["America/Argentina/Buenos_Aires", "Buenos Aires", "GMT-03:00", -180, -180],
-    ["America/Godthab", "Greenland", "GMT-03:00", -180, -120],
+    ["America/Nuuk", "Greenland", "GMT-02:00", -120, -60],
     ["Atlantic/South_Georgia", "Mid-Atlantic", "GMT-02:00", -120, -120],
     ["Atlantic/Azores", "Azores", "GMT-01:00", -60, 0],
     ["Atlantic/Cape_Verde", "Cape Verde Is.", "GMT-01:00", -60, -60],
@@ -103,7 +103,7 @@ const timezonesRaw: [
     ["Europe/Helsinki", "Helsinki", "GMT+02:00", 120, 180],
     ["Europe/Istanbul", "Istanbul", "GMT+02:00", 120, 180],
     ["Asia/Jerusalem", "Jerusalem", "GMT+02:00", 120, 180],
-    ["Europe/Kiev", "Kyiv", "GMT+02:00", 120, 180],
+    ["Europe/Kyiv", "Kyiv", "GMT+02:00", 120, 180],
     ["Europe/Minsk", "Minsk", "GMT+02:00", 120, 180],
     ["Africa/Johannesburg", "Pretoria", "GMT+02:00", 120, 120],
     ["Europe/Riga", "Riga", "GMT+02:00", 120, 180],
@@ -130,7 +130,7 @@ const timezonesRaw: [
     ["Asia/Almaty", "Almaty", "GMT+06:00", 360, 360],
     ["Asia/Dhaka", "Dhaka", "GMT+06:00", 360, 360],
     ["Asia/Novosibirsk", "Novosibirsk", "GMT+06:00", 360, 420],
-    ["Asia/Rangoon", "Rangoon", "GMT+06:30", 390, 390],
+    ["Asia/Yangon", "Rangoon", "GMT+06:30", 390, 390],
     ["Asia/Bangkok", "Bangkok", "GMT+07:00", 420, 420],
     ["Asia/Jakarta", "Jakarta", "GMT+07:00", 420, 420],
     ["Asia/Krasnoyarsk", "Krasnoyarsk", "GMT+07:00", 420, 480],
@@ -176,6 +176,14 @@ const timezones: ITimezoneItem[] = timezonesRaw.map(([id, name, offsetLabel, jan
 
 const TIMEZONE_DEFAULT = timezones.find((tz) => tz.id === "Etc/UTC")!;
 
+// V8 (Chrome, Node) reports the runtime timezone by its legacy CLDR name, e.g. "Europe/Kiev"
+// even when the system is set to "Europe/Kyiv"; map those to the canonical IDs used above
+const LEGACY_TIMEZONE_ALIASES = new Map<string, string>([
+    ["America/Godthab", "America/Nuuk"],
+    ["Europe/Kiev", "Europe/Kyiv"],
+    ["Asia/Rangoon", "Asia/Yangon"],
+]);
+
 /**
  * Returns the full display label of a timezone, combining the offset and the name,
  * e.g. "GMT+01:00 Prague". Use only where the merged label is actually displayed;
@@ -217,7 +225,7 @@ export function getUserTimezone(): ITimezoneItem {
     // resolve to the viewer's actual zone; fall back to offset matching for runtime ids
     // that are not part of the curated list
     const runtimeTimezoneId = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const exactMatch = getTimezoneById(runtimeTimezoneId);
+    const exactMatch = getTimezoneById(LEGACY_TIMEZONE_ALIASES.get(runtimeTimezoneId) ?? runtimeTimezoneId);
     if (exactMatch) {
         return exactMatch;
     }

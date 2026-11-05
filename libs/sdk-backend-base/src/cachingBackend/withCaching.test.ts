@@ -22,6 +22,7 @@ import {
     type IMeasureReferencing,
     type IPagedResource,
     type IPreparedExecution,
+    type IWorkspaceAnalyticsAsCodeService,
     type IWorkspaceAttributesService,
     type IWorkspaceComputedAttributesService,
     type IWorkspaceDatasetsService,
@@ -3298,6 +3299,55 @@ describe("withCaching computed attributes", () => {
             await expect(service.getComputedAttributeExpressionTokens(ref)).rejects.toThrow("boom");
 
             expect(counts.getTokens).toEqual(2);
+        });
+    });
+
+    describe("analytics as code", () => {
+        function createDeployBackend(
+            getFact: IWorkspaceFactsService["getFact"],
+            deploy: IWorkspaceAnalyticsAsCodeService["deploy"],
+        ): IAnalyticalBackend {
+            const backend = createFactsBackend(getFact);
+
+            return {
+                ...backend,
+                workspace: (id: string) => ({
+                    ...backend.workspace(id),
+                    analyticsAsCode: () => ({ deploy }),
+                }),
+            };
+        }
+
+        it.each([
+            ["succeeds", () => Promise.resolve()],
+            ["fails", () => Promise.reject(new Error("boom"))],
+        ])("drops the workspace caches when the deploy %s", async (_, deploy) => {
+            const getFact = vi.fn(async () => ({ ...SAMPLE_FACT }) as IFactMetadataObject);
+            const backend = withCachingForTests(createDeployBackend(getFact, deploy));
+            const workspace = backend.workspace("test");
+
+            await workspace.facts().getFact(FACT_REF);
+            await workspace.facts().getFact(FACT_REF);
+            expect(getFact).toHaveBeenCalledTimes(1);
+
+            await workspace
+                .analyticsAsCode()
+                .deploy([])
+                .catch(() => undefined);
+            await workspace.facts().getFact(FACT_REF);
+
+            expect(getFact).toHaveBeenCalledTimes(2);
+        });
+
+        it("drops the caches of child workspaces too", async () => {
+            const getFact = vi.fn(async () => ({ ...SAMPLE_FACT }) as IFactMetadataObject);
+            const backend = withCachingForTests(createDeployBackend(getFact, async () => {}));
+
+            await backend.workspace("child").facts().getFact(FACT_REF);
+            await backend.workspace("parent").analyticsAsCode().deploy([]);
+            await backend.workspace("child").facts().getFact(FACT_REF);
+
+            expect(getFact).toHaveBeenCalledTimes(2);
         });
     });
 });

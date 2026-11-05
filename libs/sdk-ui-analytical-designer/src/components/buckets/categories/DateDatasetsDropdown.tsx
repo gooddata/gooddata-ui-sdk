@@ -4,7 +4,6 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } fr
 
 import classNames from "classnames";
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
-import { type Subscription } from "rxjs";
 
 import {
     Button,
@@ -23,6 +22,7 @@ import {
 import { type IDecoratedDateDataset } from "../../../models/decorated_date_dataset.js";
 import {
     DROPDOWN_ALIGN_POINTS,
+    type IEventSubscription,
     getDateConfigurationDropdownHeight,
     getDateDatasetDropdownWidth,
     subscribeEvents,
@@ -170,7 +170,7 @@ export function DateDatasetsDropdown({
         recalculateDimensions,
     ]);
 
-    const subscribersRef = useRef<Subscription[]>(null);
+    const subscribersRef = useRef<IEventSubscription[]>(null);
     useEffect(() => {
         subscribersRef.current = subscribeEvents(recalculateDimensions);
 

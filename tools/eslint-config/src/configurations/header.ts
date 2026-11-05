@@ -2,16 +2,16 @@
 
 import { headersPlugin, headersRules } from "@gooddata/lint-config";
 
-import type { IDualConfiguration } from "../types.js";
+import type { IConfiguration } from "../types.js";
 
-const v9 = {
+const flat = {
     packages: [headersPlugin],
     plugins: { headers: headersPlugin },
     rules: headersRules,
 };
 
-export const header: IDualConfiguration<"header", "headers"> = {
-    v8: {
+export const header: IConfiguration<"header", "headers"> = {
+    legacy: {
         packages: [
             {
                 name: "eslint-plugin-header",
@@ -30,6 +30,5 @@ export const header: IDualConfiguration<"header", "headers"> = {
             ],
         },
     },
-    v9,
-    ox: {},
+    flat: { v9: flat, v9ox: {}, v10: flat, v10ox: {} },
 };

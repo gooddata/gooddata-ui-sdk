@@ -1,4 +1,6 @@
 {
+    "gd.gen-ai.copilot.composing.waiting": "Čakanje na vaš odgovor",
+    "gd.gen-ai.copilot.composing.replyNow": "Odgovorite zdaj",
     "gd.gen-ai.global-error": "Nekaj je šlo narobe",
     "gd.gen-ai.global-error.description": "Poskusite znova zagnati klepetalnico in začeti znova.",
     "gd.gen-ai.global-error.button-details": "Za podrobnosti si oglejte surov odziv napake",
@@ -149,8 +151,8 @@
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, one {# stran} two {# strani} few {# strani} other {# strani}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, one {# stran} two {# strani} few {# strani} other {# strani}}",
     "gd.gen-ai.publisherDocument.unavailable": "Dokument ni na voljo.",
-    "gd.gen-ai.publisherDocument.previousVersion": "Ta dokument je bil ustvarjen v prejšnji različici Publisherja in ga tukaj ni mogoče odpreti.",
-    "gd.gen-ai.publisherDocument.newerVersion": "Ta dokument je bil ustvarjen v novejši različici Publisherja in ga tukaj ni mogoče odpreti.",
+    "gd.gen-ai.publisherDocument.previousVersion": "Ta dokument je bil ustvarjen v prejšnji različici Poročil in ga tukaj ni mogoče odpreti.",
+    "gd.gen-ai.publisherDocument.newerVersion": "Ta dokument je bil ustvarjen v novejši različici Poročil in ga tukaj ni mogoče odpreti.",
     "gd.gen-ai.alert-proposal.summary.trigger": "Sprožilec",
     "gd.gen-ai.alert-proposal.summary.trigger.mode": "Način",
     "gd.gen-ai.alert-proposal.summary.trigger.interval": "Interval",

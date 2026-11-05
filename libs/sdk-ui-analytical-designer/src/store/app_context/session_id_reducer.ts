@@ -22,9 +22,8 @@ import { insightContentResetCarrierOf, isInsightContentResetEvent } from "./appl
  * `nullableLeaf`, which stores that as `null`; `getAppSessionId` converts back to `undefined`,
  * the shape every consumer reads.
  *
- * The two action cases are wired by their frozen enum STRING with type-only creator imports on
- * purpose: a value import of actions/app_context_actions.js would drag jquery (a window read at
- * import time) into the reducer graph and break node-env consumers (the app_context_slices rule).
+ * The two action cases are wired by their frozen enum STRING with type-only creator imports, as in
+ * app_context_slices, so the reducer graph does not load actions/app_context_actions.js.
  */
 export function sessionIdLeafReducer(state: string | undefined, action: Action): string | undefined {
     switch (action.type) {

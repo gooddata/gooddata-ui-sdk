@@ -1,4 +1,6 @@
 {
+    "gd.gen-ai.copilot.composing.waiting": "Ожидание вашего ответа",
+    "gd.gen-ai.copilot.composing.replyNow": "Ответить сейчас",
     "gd.gen-ai.global-error": "Произошла ошибка",
     "gd.gen-ai.global-error.description": "Попробуйте перезапустить чат-бота и начать заново.",
     "gd.gen-ai.global-error.button-details": "Подробнее см. в исходном ответе об ошибке",
@@ -149,8 +151,8 @@
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, one {# страница} few {# страницы} many {# страниц} other {# страницы}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, one {# страница} few {# страницы} many {# страниц} other {# страницы}}",
     "gd.gen-ai.publisherDocument.unavailable": "Документ недоступен.",
-    "gd.gen-ai.publisherDocument.previousVersion": "Этот документ создан в предыдущей версии Publisher, и его нельзя открыть здесь.",
-    "gd.gen-ai.publisherDocument.newerVersion": "Этот документ создан в более новой версии Publisher, и его нельзя открыть здесь.",
+    "gd.gen-ai.publisherDocument.previousVersion": "Этот документ создан в предыдущей версии Отчетов, и его нельзя открыть здесь.",
+    "gd.gen-ai.publisherDocument.newerVersion": "Этот документ создан в более новой версии Отчетов, и его нельзя открыть здесь.",
     "gd.gen-ai.alert-proposal.summary.trigger": "Триггер",
     "gd.gen-ai.alert-proposal.summary.trigger.mode": "Режим",
     "gd.gen-ai.alert-proposal.summary.trigger.interval": "Интервал",

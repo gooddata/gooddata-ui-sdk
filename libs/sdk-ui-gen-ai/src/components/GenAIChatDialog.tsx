@@ -30,6 +30,7 @@ export type GenAIChatDialogProps = Omit<GenAiStoreProps, "children"> & {
     canManage?: boolean;
     canAnalyze?: boolean;
     canFullControl?: boolean;
+    canCreateDocument?: boolean;
     onOpen: () => void;
     onClose: () => void;
     returnFocusTo?: RefObject<HTMLElement | null> | string;
@@ -73,6 +74,7 @@ export function GenAIChatDialog({
     canManage = false,
     canAnalyze = false,
     canFullControl = false,
+    canCreateDocument = canManage,
     eventHandlers,
     catalogItems,
     colorPalette,
@@ -121,6 +123,7 @@ export function GenAIChatDialog({
                         canManage={canManage}
                         canAnalyze={canAnalyze}
                         canFullControl={canFullControl}
+                        canCreateDocument={canCreateDocument}
                         slots={slots}
                         displayMode={displayMode}
                     />
@@ -146,6 +149,7 @@ type GenAIChatDialogContentProps = {
     canManage: boolean;
     canAnalyze: boolean;
     canFullControl: boolean;
+    canCreateDocument: boolean;
     slots?: IGenAIAssistantSlots;
     closeOnEscape?: boolean;
     displayMode?: GenAIAssistantDisplayMode;
@@ -167,6 +171,7 @@ function GenAIChatDialogContent({
     canManage,
     canAnalyze,
     canFullControl,
+    canCreateDocument,
     slots,
     displayMode,
     closeOnEscape,
@@ -232,6 +237,7 @@ function GenAIChatDialogContent({
                             canManage={canManage}
                             canAnalyze={canAnalyze}
                             canFullControl={canFullControl}
+                            canCreateDocument={canCreateDocument}
                         >
                             <CustomizationProvider slots={slots}>
                                 <GenAIChatOverlay

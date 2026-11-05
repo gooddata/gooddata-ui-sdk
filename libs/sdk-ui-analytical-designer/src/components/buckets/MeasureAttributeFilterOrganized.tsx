@@ -4,13 +4,17 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import classNames from "classnames";
 import { useIntl } from "react-intl";
-import { type Subscription } from "rxjs";
 
 import { Button, Overlay } from "@gooddata/sdk-ui-kit";
 
 import { type IDecoratedBucketItem } from "../../typings/buckets.js";
 import { type ITagsConfiguration } from "../../typings/route.js";
-import { DROPDOWN_ALIGNMENTS, getDialogHeight, subscribeEvents } from "../../utils/dropdown.js";
+import {
+    DROPDOWN_ALIGNMENTS,
+    type IEventSubscription,
+    getDialogHeight,
+    subscribeEvents,
+} from "../../utils/dropdown.js";
 
 import {
     MEASURE_ATTRIBUTE_PICKER_SEARCHBOX_HEIGHT,
@@ -64,7 +68,7 @@ export function MeasureAttributeFilterOrganized({
         isEnabled: hasOpened,
     });
 
-    const subscribersRef = useRef<Subscription[]>([]);
+    const subscribersRef = useRef<IEventSubscription[]>([]);
     const buttonNodeRef = useRef<Element | null | Text>(null);
 
     const setDialogHeightCallback = useCallback(() => {

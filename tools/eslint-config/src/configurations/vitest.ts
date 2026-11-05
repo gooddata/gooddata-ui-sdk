@@ -2,7 +2,7 @@
 
 import { type IPackage, scopeRules, vitestRules } from "@gooddata/lint-config";
 
-import type { IDualConfiguration } from "../types.js";
+import type { IConfiguration } from "../types.js";
 
 export const vitestPlugin: IPackage = {
     name: "@vitest/eslint-plugin",
@@ -11,18 +11,17 @@ export const vitestPlugin: IPackage = {
 
 const packages = [vitestPlugin];
 
-const v9 = {
+const flat = {
     packages,
     plugins: { vitest: vitestPlugin },
     rules: scopeRules(vitestRules, "vitest"),
 };
 
-export const vitest: IDualConfiguration<"@vitest", "vitest"> = {
-    v8: {
+export const vitest: IConfiguration<"@vitest", "vitest"> = {
+    legacy: {
         packages,
         plugins: ["@vitest"],
         rules: scopeRules(vitestRules, "@vitest"),
     },
-    v9,
-    ox: {},
+    flat: { v9: flat, v9ox: {}, v10: flat, v10ox: {} },
 };

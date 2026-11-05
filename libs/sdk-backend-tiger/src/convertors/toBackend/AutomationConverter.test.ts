@@ -2,9 +2,15 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type IAutomationAlert, type IInsightParameterValue, idRef, newMeasure } from "@gooddata/sdk-model";
+import {
+    type IAutomationAlert,
+    type IAutomationMetadataObjectDefinition,
+    type IInsightParameterValue,
+    idRef,
+    newMeasure,
+} from "@gooddata/sdk-model";
 
-import { convertAlert } from "./AutomationConverter.js";
+import { convertAlert, convertAutomation } from "./AutomationConverter.js";
 
 describe("convertAlert (toBackend) — parameters", () => {
     const baseAlert = (parameters?: IInsightParameterValue[]): IAutomationAlert => ({
@@ -63,5 +69,27 @@ describe("convertAlert (toBackend) — execution settings", () => {
 
     it("omits settings when the execution has no timezone", () => {
         expect(convertAlert(baseAlert()).settings).toBeUndefined();
+    });
+});
+
+describe("convertAutomation (toBackend) — state", () => {
+    const schedule = (state?: "ACTIVE" | "PAUSED"): IAutomationMetadataObjectDefinition => ({
+        type: "automation",
+        title: "Weekly export",
+        description: "",
+        schedule: { cron: "0 0 * * * *", timezone: "UTC" },
+        ...(state ? { state } : {}),
+    });
+
+    it("sends the state of a paused scheduled export", () => {
+        expect(convertAutomation(schedule("PAUSED")).attributes?.state).toBe("PAUSED");
+    });
+
+    it("sends the state of an active scheduled export", () => {
+        expect(convertAutomation(schedule("ACTIVE")).attributes?.state).toBe("ACTIVE");
+    });
+
+    it("omits the state of a new scheduled export", () => {
+        expect(convertAutomation(schedule()).attributes).not.toHaveProperty("state");
     });
 });

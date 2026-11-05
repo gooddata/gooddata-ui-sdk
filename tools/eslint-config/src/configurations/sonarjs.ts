@@ -2,7 +2,7 @@
 
 import { sonarjsOverrides, sonarjsPlugin, sonarjsRules } from "@gooddata/lint-config";
 
-import type { IDualConfiguration } from "../types.js";
+import type { IConfiguration } from "../types.js";
 
 const commonConfiguration = {
     packages: [sonarjsPlugin],
@@ -10,16 +10,15 @@ const commonConfiguration = {
     overrides: sonarjsOverrides,
 };
 
-const v9 = {
+const flat = {
     ...commonConfiguration,
     plugins: { sonarjs: sonarjsPlugin },
 };
 
-export const sonarjs: IDualConfiguration<"sonarjs"> = {
-    v8: {
+export const sonarjs: IConfiguration<"sonarjs"> = {
+    legacy: {
         ...commonConfiguration,
         plugins: ["sonarjs"],
     },
-    v9,
-    ox: {},
+    flat: { v9: flat, v9ox: {}, v10: flat, v10ox: {} },
 };

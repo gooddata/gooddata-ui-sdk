@@ -225,7 +225,7 @@ export type DashboardDensity = "comfortable" | "compact";
 /**
  * Tests whether the provided density is supported.
  *
- * @param density
+ * @param density - density value to test
  *
  * @alpha
  */

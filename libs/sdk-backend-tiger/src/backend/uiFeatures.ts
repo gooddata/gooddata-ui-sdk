@@ -123,6 +123,7 @@ export const TigerFeatureDefinitions = {
     enableBusinessBriefingReportsApp: booleanFeature(false),
     enableReportsSubsections: booleanFeature(false),
     enablePublisherV2: booleanFeature(false),
+    enableReportsPostGA: booleanFeature(false),
     enableGenAiReportTakeaways: booleanFeature(false),
     enableEmbeddingWriteCommands: booleanFeature(false),
     enableLocalizationOverview: booleanFeature(false),

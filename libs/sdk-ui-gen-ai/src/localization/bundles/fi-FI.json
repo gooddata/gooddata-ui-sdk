@@ -1,4 +1,6 @@
 {
+    "gd.gen-ai.copilot.composing.waiting": "Odotetaan vastaustasi",
+    "gd.gen-ai.copilot.composing.replyNow": "Vastaa nyt",
     "gd.gen-ai.global-error": "Tapahtui odottamaton virhe.",
     "gd.gen-ai.global-error.description": "Yritä käynnistää chatbotti uudelleen ja aloittaa alusta.",
     "gd.gen-ai.global-error.button-details": "Katso lisätietoja RAW-virhevastauksesta",
@@ -149,8 +151,8 @@
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, one {# sivu} other {# sivua}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, one {# sivu} other {# sivua}}",
     "gd.gen-ai.publisherDocument.unavailable": "Asiakirja ei ole saatavilla.",
-    "gd.gen-ai.publisherDocument.previousVersion": "Tämä asiakirja luotiin Publisherin edellisessä versiossa, eikä sitä voi avata tässä.",
-    "gd.gen-ai.publisherDocument.newerVersion": "Tämä asiakirja luotiin Publisherin uudemmassa versiossa, eikä sitä voi avata tässä.",
+    "gd.gen-ai.publisherDocument.previousVersion": "Tämä asiakirja luotiin Raporttien edellisessä versiossa, eikä sitä voi avata tässä.",
+    "gd.gen-ai.publisherDocument.newerVersion": "Tämä asiakirja luotiin Raporttien uudemmassa versiossa, eikä sitä voi avata tässä.",
     "gd.gen-ai.alert-proposal.summary.trigger": "Laukaisin",
     "gd.gen-ai.alert-proposal.summary.trigger.mode": "Tila",
     "gd.gen-ai.alert-proposal.summary.trigger.interval": "Aikaväli",

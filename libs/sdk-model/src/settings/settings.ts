@@ -1229,6 +1229,16 @@ export interface IFeatureFlags {
     enablePublisherV2?: boolean;
 
     /**
+     * Enable the Reports features planned after its general availability.
+     *
+     * @remarks
+     * Has an effect only with {@link IFeatureFlags.enablePublisherV2} enabled.
+     *
+     * Disabled by default.
+     */
+    enableReportsPostGA?: boolean;
+
+    /**
      * Enable AI takeaways in the Business Briefing reports application: generating them and their instructions.
      *
      * @remarks

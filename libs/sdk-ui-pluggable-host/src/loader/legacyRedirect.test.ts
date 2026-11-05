@@ -13,23 +13,44 @@ function location(pathname: string, hash = "", search = "") {
 describe("mapLegacyUrlToHost", () => {
     it.each([
         [
-            "/workspace/ws1/reports/report/r%2F1",
+            "/workspace/ws1/publisher/report/r%2F1",
             "?mode=export_slideshow&pageWidth=1920",
-            "/workspace/ws1/publisher/report/r%2F1?mode=export_slideshow&pageWidth=1920",
+            "/workspace/ws1/reports/report/r%2F1?mode=export_slideshow&pageWidth=1920",
         ],
-        ["/workspace/ws1/reports", "", "/workspace/ws1/publisher"],
-        ["/workspace/ws1/reports/templates", "", "/workspace/ws1/publisher/templates"],
-        ["/embedded/workspace/ws1/reports/layouts", "", "/embedded/workspace/ws1/publisher/layouts"],
-    ])("maps the former Publisher route %s%s to %s", (pathname, search, expected) => {
+        [
+            "/workspace/ws1/publisher/document/d%2F1",
+            "?mode=export_slideshow&pageWidth=1920&exportId=e1",
+            "/workspace/ws1/reports/document/d%2F1?mode=export_slideshow&pageWidth=1920&exportId=e1",
+        ],
+        [
+            "/workspace/ws1/publisher/new",
+            "?conversation=c1&item=i1",
+            "/workspace/ws1/reports/new?conversation=c1&item=i1",
+        ],
+        ["/workspace/ws1/publisher", "", "/workspace/ws1/reports"],
+        ["/workspace/ws1/publisher/", "", "/workspace/ws1/reports/"],
+        ["/workspace/ws1/publisher/templates", "", "/workspace/ws1/reports/templates"],
+        ["/embedded/workspace/ws1/publisher/layouts", "", "/embedded/workspace/ws1/reports/layouts"],
+    ])("maps the /publisher link %s%s to %s", (pathname, search, expected) => {
         expect(mapLegacyUrlToHost(location(pathname, "", search))).toBe(expected);
     });
 
-    it.each(["/workspace/ws1/reportsx", "/workspace/ws1/publisher/report/r1", "/reports"])(
-        "leaves %s alone",
-        (pathname) => {
-            expect(mapLegacyUrlToHost(location(pathname))).toBeNull();
-        },
-    );
+    it("keeps the hash of a /publisher link", () => {
+        expect(
+            mapLegacyUrlToHost(
+                location("/embedded/workspace/ws1/publisher/document/d1", "#apiTokenAuthentication", "?x=1"),
+            ),
+        ).toBe("/embedded/workspace/ws1/reports/document/d1?x=1#apiTokenAuthentication");
+    });
+
+    it.each([
+        ["a reports route", "/workspace/ws1/reports/report/r1"],
+        ["an embedded reports route", "/embedded/workspace/ws1/reports"],
+        ["a workspace app whose name only starts with publisher", "/workspace/ws1/publisherx"],
+        ["/publisher outside a workspace", "/publisher"],
+    ])("leaves %s alone", (_name, pathname) => {
+        expect(mapLegacyUrlToHost(location(pathname))).toBeNull();
+    });
 
     it.each([
         ["/analyze/", "#/ws1/insight1", "/workspace/ws1/analyze/#/insight1"],

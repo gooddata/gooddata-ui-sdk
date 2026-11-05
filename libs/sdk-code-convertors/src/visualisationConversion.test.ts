@@ -758,6 +758,161 @@ describe("visualisation conversion", () => {
         });
     });
 
+    describe("legacy empty string with: filter of a date filter", () => {
+        const period = {
+            type: "date_filter" as const,
+            using: "dataset/created",
+            granularity: "YEAR" as const,
+            from: -10,
+            to: 0,
+        };
+        const withFilter = (
+            state: { include?: string[]; exclude?: string[] },
+            using = "label/created.year",
+        ) => ({
+            y: { type: "attribute_filter" as const, using, state },
+        });
+        const relative = {
+            dataSet: { identifier: { id: "created", type: "dataset" } },
+            granularity: "GDC.time.year",
+            from: -10,
+            to: 0,
+        };
+        // insight level is what yamlVisualisationToDeclarative passes (assignFilterLocalId = true)
+        const insightFilters = (filter: Record<string, unknown>) =>
+            yamlFiltersToDeclarative(emptyEntities, { d1: filter } as never, {}, true).filters;
+
+        it('writes include: [""] as emptyValueHandling only and drops the "" filter', () => {
+            expect(insightFilters({ ...period, with: withFilter({ include: [""] }) })).toEqual([
+                { relativeDateFilter: { ...relative, emptyValueHandling: "only" } },
+            ]);
+        });
+
+        it('writes exclude: [""] as emptyValueHandling exclude and drops the "" filter', () => {
+            expect(insightFilters({ ...period, with: withFilter({ exclude: [""] }) })).toEqual([
+                { relativeDateFilter: { ...relative, emptyValueHandling: "exclude" } },
+            ]);
+        });
+
+        it("folds it on an absolute date filter too", () => {
+            expect(
+                insightFilters({
+                    type: "date_filter",
+                    using: "dataset/created",
+                    from: "2020-01-01",
+                    to: "2020-12-31",
+                    with: withFilter({ include: [""] }),
+                }),
+            ).toEqual([
+                {
+                    absoluteDateFilter: {
+                        dataSet: { identifier: { id: "created", type: "dataset" } },
+                        from: "2020-01-01",
+                        to: "2020-12-31",
+                        emptyValueHandling: "only",
+                    },
+                },
+            ]);
+        });
+
+        it('keeps the other with: filters when only the "" one is folded', () => {
+            const filters = insightFilters({
+                ...period,
+                with: {
+                    ...withFilter({ include: [""] }),
+                    m: { type: "attribute_filter", using: "label/created.month", state: { include: ["1"] } },
+                },
+            });
+            expect(filters).toHaveLength(2);
+            expect(filters[0]).toEqual({ relativeDateFilter: { ...relative, emptyValueHandling: "only" } });
+            expect(filters[1]).toHaveProperty("positiveAttributeFilter.in.values", ["1"]);
+        });
+
+        it('lets an explicit empty_values win and still drops the "" filter', () => {
+            expect(
+                insightFilters({ ...period, empty_values: "include", with: withFilter({ include: [""] }) }),
+            ).toEqual([{ relativeDateFilter: { ...relative, emptyValueHandling: "include" } }]);
+        });
+
+        it('keeps "" mixed with other values as an ordinary filter', () => {
+            const filters = insightFilters({ ...period, with: withFilter({ include: ["", "2025"] }) });
+            expect(filters).toHaveLength(2);
+            expect(filters[0]).toEqual({ relativeDateFilter: relative });
+            expect(filters[1]).toHaveProperty("positiveAttributeFilter.in.values", ["", "2025"]);
+        });
+
+        it('keeps a "" filter on a label of another dataset', () => {
+            const filters = insightFilters({
+                ...period,
+                with: withFilter({ include: [""] }, "label/region"),
+            });
+            expect(filters[0]).toEqual({ relativeDateFilter: relative });
+            expect(filters).toHaveLength(2);
+        });
+
+        it('does not fold a "" filter of a date dataset sharing the id prefix', () => {
+            const filters = insightFilters({
+                ...period,
+                using: "dataset/orders.created",
+                with: withFilter({ include: [""] }, "label/orders.updated.year"),
+            });
+            expect(filters).toHaveLength(2);
+            expect(filters[0]).not.toHaveProperty("relativeDateFilter.emptyValueHandling");
+        });
+
+        it("folds on a dataset id that contains a dot", () => {
+            const filters = insightFilters({
+                ...period,
+                using: "dataset/orders.created",
+                with: withFilter({ include: [""] }, "label/orders.created.year"),
+            });
+            expect(filters).toHaveLength(1);
+            expect(filters[0]).toHaveProperty("relativeDateFilter.emptyValueHandling", "only");
+        });
+
+        it("folds nothing when several markers disagree on the mode", () => {
+            const filters = insightFilters({
+                ...period,
+                with: {
+                    ...withFilter({ include: [""] }),
+                    m: { type: "attribute_filter", using: "label/created.month", state: { exclude: [""] } },
+                },
+            });
+            expect(filters).toHaveLength(3);
+            expect(filters[0]).not.toHaveProperty("relativeDateFilter.emptyValueHandling");
+        });
+
+        it("folds it the same way in a metric's filter_by as in the insight's", () => {
+            const filterBy = { d1: { ...period, with: withFilter({ include: [""] }) } } as never;
+            const insight = yamlFiltersToDeclarative(emptyEntities, filterBy, {}, true).filters;
+            const metric = yamlFiltersToDeclarative(emptyEntities, filterBy).filters;
+
+            expect(metric).toEqual(insight);
+            expect(metric).toEqual([{ relativeDateFilter: { ...relative, emptyValueHandling: "only" } }]);
+        });
+
+        it("round-trips through pull as empty_values with no with:", () => {
+            const deployed = yamlVisualisationToDeclarative(
+                emptyEntities,
+                visualisation({
+                    type: "table",
+                    id: "v",
+                    title: "t",
+                    query: {
+                        fields: { m1: { aggregation: "COUNT", using: "attribute/order_item_id" } },
+                        filter_by: { f: { ...period, with: withFilter({ include: [""] }) } },
+                    },
+                    metrics: ["m1"],
+                } as never),
+            );
+            const { json } = declarativeVisualisationToYaml(emptyFromEntities, deployed as never);
+            const filterBy = (json as { query: { filter_by: Record<string, Record<string, unknown>> } }).query
+                .filter_by;
+            expect(Object.values(filterBy)[0]).toMatchObject({ empty_values: "only" });
+            expect(Object.values(filterBy)[0]).not.toHaveProperty("with");
+        });
+    });
+
     describe("filters a date filter carries", () => {
         // Grouping under a date filter requires the label to belong to that filter's own dataset.
         const CARRIED_LABEL = "label/created.month";

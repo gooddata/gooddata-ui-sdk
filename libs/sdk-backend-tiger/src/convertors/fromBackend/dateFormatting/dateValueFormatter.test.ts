@@ -1,10 +1,11 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { describe, expect, it } from "vitest";
+import { invariant } from "ts-invariant";
+import { describe, expect, it, vi } from "vitest";
 
 import { type DateAttributeGranularity } from "@gooddata/sdk-model";
 
-import { createDateValueFormatter } from "./dateValueFormatter.js";
+import { createDateValueFormatter, guardDateValueFormatter } from "./dateValueFormatter.js";
 import { type FormattingLocale, defaultDateFormatter } from "./defaultDateFormatter.js";
 
 describe("createDateValueFormatter", () => {
@@ -68,4 +69,29 @@ describe("createDateValueFormatter", () => {
             expect(actual).toBe(expected);
         },
     );
+});
+
+describe("guardDateValueFormatter", () => {
+    it("should format the values when the format can be applied", () => {
+        const formatter = guardDateValueFormatter(createDateValueFormatter(defaultDateFormatter), "date.day");
+
+        expect(formatter("2026-03-15", "GDC.time.date", "en-US", "dd.MM.yyyy")).toBe("15.03.2026");
+    });
+
+    it("should show the raw values and warn once when the format cannot be applied", () => {
+        const warn = vi.spyOn(invariant, "warn").mockImplementation(() => {});
+        const dateFormatter = vi.fn(() => {
+            throw new Error("unsupported pattern");
+        });
+        const formatter = guardDateValueFormatter(createDateValueFormatter(dateFormatter), "date.day");
+
+        expect(formatter("2026-03-15", "GDC.time.date", "en-US", "dd.MM.yyyy Z")).toBe("2026-03-15");
+        expect(formatter("2026-03-16", "GDC.time.date", "en-US", "dd.MM.yyyy Z")).toBe("2026-03-16");
+        expect(formatter(null, "GDC.time.date", "en-US", "dd.MM.yyyy Z")).toBe("");
+
+        // the format fails the same way for every value, so it is not applied again
+        expect(dateFormatter).toHaveBeenCalledTimes(1);
+        expect(warn).toHaveBeenCalledTimes(1);
+        warn.mockRestore();
+    });
 });

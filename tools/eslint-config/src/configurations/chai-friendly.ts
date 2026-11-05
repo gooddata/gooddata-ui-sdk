@@ -2,7 +2,7 @@
 
 import { chaiFriendlyPlugin, chaiFriendlyRules } from "@gooddata/lint-config";
 
-import type { IDualConfiguration } from "../types.js";
+import type { IConfiguration } from "../types.js";
 
 // empty generic because we have built-in eslint and typescript-eslint rules here too
 const commonConfiguration = {
@@ -19,10 +19,9 @@ const commonConfiguration = {
     ],
 };
 
-const v9 = { ...commonConfiguration, plugins: { "chai-friendly": chaiFriendlyPlugin } };
+const flat = { ...commonConfiguration, plugins: { "chai-friendly": chaiFriendlyPlugin } };
 
-export const chaiFriendly: IDualConfiguration = {
-    v8: { ...commonConfiguration, plugins: ["chai-friendly"] },
-    v9,
-    ox: {},
+export const chaiFriendly: IConfiguration = {
+    legacy: { ...commonConfiguration, plugins: ["chai-friendly"] },
+    flat: { v9: flat, v9ox: {}, v10: flat, v10ox: {} },
 };

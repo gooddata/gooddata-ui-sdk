@@ -230,6 +230,28 @@ export type IGenAIAssistantMessageReasoningContentProps = {
      */
     objects: TextContentObject[];
     /**
+     * Reasoning-group duration in milliseconds, matching the reasoning header. Calculated from
+     * the last message timestamps of this group and the preceding group, including grouped tool
+     * activity but excluding answer generation. Available during streaming and after reloading
+     * conversation history; undefined when the required group timestamps are unavailable.
+     */
+    durationMs?: number;
+    /**
+     * The user-selected agent recorded for this message, not an internally routed sub-agent.
+     * Undefined when the message does not carry an agent ID; independent of the conversation's
+     * current agent selection.
+     */
+    agent?: {
+        /**
+         * The agent ID recorded on the message.
+         */
+        id: string;
+        /**
+         * The agent's current display name, resolved from the loaded agent list when available.
+         */
+        name?: string;
+    };
+    /**
      * Whether the message is still loading.
      */
     isLoading?: boolean;

@@ -356,7 +356,7 @@ function renderFormStateHook(props: Partial<IUseAlertFormStateProps> = {}) {
     return renderHook(() => useAlertFormState(mergedProps), { wrapper: IntlWrapper });
 }
 
-/** Renders the hook with a draft that starts out `undefined` (new-alert path, createDefaultAlert -> undefined). */
+/** Renders the hook with a draft that starts out `undefined` (new-alert path, createDefaultAlert -\> undefined). */
 function renderWithUndefinedDraft(props: Partial<IUseAlertFormStateProps> = {}) {
     createDefaultAlertSpy.mockReturnValue(undefined);
     return renderFormStateHook(props);

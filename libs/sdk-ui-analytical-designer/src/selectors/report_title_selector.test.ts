@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { createAnalyticalDashboard, createListedDashboard } from "../tests/constants.test.helpers.js";
 import { withMdObjectMeta } from "../tests/report_builder.test.helpers.js";
 import { getInitializedState } from "../tests/state.test.helpers.js";
-import { withData, withReport } from "../tests/state_builder.test.helpers.js";
+import { withData, withMeta, withReport } from "../tests/state_builder.test.helpers.js";
 
 import { reportTitleSelector } from "./report_title_selector.js";
 
@@ -17,7 +17,7 @@ describe("Report title selector test", () => {
         isReportLocked: true,
         canEditTitle: false,
         isEnabledUsages: false,
-        isSaveDisabled: true,
+        hasUnsavedChanges: false,
     };
 
     it("check default props values", () => {
@@ -42,6 +42,7 @@ describe("Report title selector test", () => {
             isTitleDefined: true,
             isReportLocked: false,
             canEditTitle: true,
+            hasUnsavedChanges: true,
         });
     });
 
@@ -56,7 +57,14 @@ describe("Report title selector test", () => {
             currentDescription: description,
             isReportLocked: false,
             canEditTitle: true,
+            hasUnsavedChanges: true,
         });
+    });
+
+    it("reports no unsaved changes in read-only mode, which saves nothing", () => {
+        const state = withMeta(withData(getInitializedState(), { title: "My title" }), { isReadOnly: true });
+
+        expect(reportTitleSelector(state)).toMatchObject({ canEditTitle: false, hasUnsavedChanges: false });
     });
 
     it("should have locked flag", () => {

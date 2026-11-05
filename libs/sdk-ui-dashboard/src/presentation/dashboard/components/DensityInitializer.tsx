@@ -13,7 +13,7 @@ import { isSupportedDashboardDensity } from "../../../types.js";
 /**
  * Reads the density setting from theme and localStorage on mount and sets it in the store.
  *
- * Priority: localStorage (user preference) > theme.dashboards.density > "comfortable"
+ * Priority: localStorage (user preference) -\> theme.dashboards.density -\> "comfortable"
  *
  * @internal
  */

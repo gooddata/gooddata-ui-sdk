@@ -7,7 +7,7 @@
  * When a value equals emptyValueDisplay (e.g. "(empty value)"), it is converted to null.
  * When a value is an explicit empty quoted string (""), it is stored as an empty string.
  *
- * @param input - Raw input string (e.g. "Berlin, Prague, (empty value)" or "Berlin\nPrague")
+ * @param input - Raw input string (e.g. `"Berlin, Prague, (empty value)"` or `"Berlin\nPrague"`)
  * @param emptyValueDisplay - Localized string for empty value (e.g. "(empty value)"). When a parsed token equals this, result is null.
  * @returns Array of parsed values (strings or null)
  * @internal

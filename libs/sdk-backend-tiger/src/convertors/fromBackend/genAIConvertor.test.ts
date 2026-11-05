@@ -54,6 +54,47 @@ describe("genAIConvertor", () => {
         });
     });
 
+    describe.each(["history", "live"])("%s item agent identity", (source) => {
+        it.each([
+            ["keeps per-message agent identity", { agentId: "agent-selected" }, "agent-selected", undefined],
+            ["leaves absent identity undefined", {}, undefined, undefined],
+            [
+                "preserves agent-switch markers",
+                { newAgentId: "agent-new", oldAgentId: "agent-old" },
+                "agent-new",
+                "agent-old",
+            ],
+            [
+                "gives agent-switch markers precedence over per-message identity",
+                { agentId: "agent-selected", newAgentId: "agent-new", oldAgentId: "agent-old" },
+                "agent-new",
+                "agent-old",
+            ],
+        ] as const)("%s", (_description, metadata, agentId, oldAgentId) => {
+            const item: AiConversationItemResponse = {
+                conversationId: "conv-1",
+                itemIndex: 0,
+                itemId: "item-1",
+                responseId: "resp-1",
+                role: "newAgentId" in metadata ? "system" : "assistant",
+                createdAt: "2024-01-01T00:00:00Z",
+                content: { type: "text", text: "Hello" },
+                ...metadata,
+            };
+
+            const converted =
+                source === "history"
+                    ? convertChatConversationItemsFromBackend([item], [], dateNormalizer)[0]
+                    : convertChatConversationItemFromBackend(item, undefined, [], dateNormalizer);
+
+            assert(converted?.type === "item");
+            expect(converted.agentId).toBe(agentId);
+            expect(converted.oldAgentId).toBe(oldAgentId);
+            expect(converted.role).toBe(item.role);
+            expect(converted.responseId).toBe("resp-1");
+        });
+    });
+
     describe("convertWhatIf", () => {
         it("should correctly convert AiWhatIfScenario to IChatWhatIfDefinition", () => {
             const item: AiConversationItemResponse = {

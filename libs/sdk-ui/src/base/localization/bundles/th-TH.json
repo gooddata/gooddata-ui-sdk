@@ -97,6 +97,7 @@
     "visualizations.totals.dropdown.title.nat": "Rollup (Total)",
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "ไม่สามารถใช้การรวมค่า Rollup (Total) ได้เมื่อกรองการแสดงภาพข้อมูลตามค่าเมตริก หากต้องการใช้ Rollup (Total) ให้ลบตัวกรองค่าเมตริกทั้งหมดออกจากแถบตัวกรอง",
     "visualizations.totals.dropdown.tooltip.nat.disabled.ranking": "ไม่สามารถใช้การรวมค่า Rollup (Total) ได้เมื่อกรองการแสดงภาพข้อมูลตามตัวกรองการจัดอันดับ หากต้องการใช้ Rollup (Total) ให้ลบตัวกรองการจัดอันดับออกจากแถบตัวกรอง",
+    "visualizations.totals.dropdown.tooltip.subtotal.disabled.measureSort": "ผลรวมย่อยของแถวไม่พร้อมใช้งานเมื่อเรียงลำดับตามเมตริก ล้างการเรียงลำดับตามเมตริกเพื่อแสดงผลรวมย่อย.",
     "visualizations.totals.dropdown.title.med": "มัธยฐาน",
     "visualizations.headline.tertiary.title": "เทียบกับ",
     "visualizations.headline.comparison.title.change": "การเปลี่ยนแปลง",

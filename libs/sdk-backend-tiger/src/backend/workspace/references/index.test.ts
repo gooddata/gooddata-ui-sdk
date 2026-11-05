@@ -133,15 +133,48 @@ describe("TigerReferencesService", () => {
         expectGraphRequest([{ id: "m1", type: "metric" }], "DEPENDENTS");
     });
 
-    it("skips nodes outside the object types of the SDK references", async () => {
+    it("keeps automation nodes and their edges", async () => {
         const automationNode = { id: "a1", type: "automation" };
         mockGraph([metricNode, automationNode], [[metricNode, automationNode]]);
         const service = makeService();
 
         const result = await service.getReferences(metricRef, { direction: "up" });
 
-        expect(result.nodes).toEqual([{ ...metricRef, title: "M1", isRoot: true }]);
-        expect(result.edges).toEqual([]);
+        const automationRef = idRef("a1", "automation");
+        expect(result.nodes).toEqual([
+            { ...metricRef, title: "M1", isRoot: true },
+            { ...automationRef, title: "a1", isRoot: false },
+        ]);
+        expect(result.edges).toEqual([{ from: metricRef, to: automationRef }]);
+    });
+
+    it("keeps user data filters that depend on a parameter", async () => {
+        const userDataFilterNode = { id: "udf1", type: "userDataFilter", title: "UDF1" };
+        mockGraph([parameterNode, userDataFilterNode], [[parameterNode, userDataFilterNode]]);
+        const service = makeService();
+
+        const result = await service.getReferences(parameterRef, { direction: "up" });
+
+        const userDataFilterRef = idRef("udf1", "userDataFilter");
+        expect(result.nodes).toEqual([
+            { ...parameterRef, title: "P1", isRoot: true },
+            { ...userDataFilterRef, title: "UDF1", isRoot: false },
+        ]);
+        expect(result.edges).toEqual([{ from: parameterRef, to: userDataFilterRef }]);
+    });
+
+    it("uses the id as title for a user data filter with an empty title", async () => {
+        const userDataFilterNode = { id: "udf1", type: "userDataFilter", title: "" };
+        mockGraph([parameterNode, userDataFilterNode], [[parameterNode, userDataFilterNode]]);
+        const service = makeService();
+
+        const result = await service.getReferences(parameterRef, { direction: "up" });
+
+        expect(result.nodes).toContainEqual({
+            ...idRef("udf1", "userDataFilter"),
+            title: "udf1",
+            isRoot: false,
+        });
     });
 
     it("orients both dependency and dependent graphs by their API relation", async () => {

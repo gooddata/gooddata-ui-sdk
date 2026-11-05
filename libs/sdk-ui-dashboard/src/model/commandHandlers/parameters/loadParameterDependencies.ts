@@ -17,7 +17,7 @@ interface IParameterDependenciesLoadResult {
 }
 
 /**
- * Loads the root -> parameter dependencies of `roots` from the workspace references service.
+ * Loads the root -\> parameter dependencies of `roots` from the workspace references service.
  *
  * @remarks
  * Walks the dependency graph in `direction: "down"` from each root, then collects the parameter

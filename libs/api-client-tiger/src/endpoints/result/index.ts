@@ -38,8 +38,6 @@ export {
 
 /**
  * Request parameters for getCustomCollectionItems operation.
- * @export
- * @interface IResultApiGetCustomCollectionItemsRequest
  */
 export interface IResultApiGetCustomCollectionItemsRequest {
     /**
@@ -67,11 +65,11 @@ export interface IResultApiGetCustomCollectionItemsRequest {
  * Retrieve features from a custom (organization-scoped) GeoCollections collection as GeoJSON.
  * This endpoint is used for CUSTOM geo collections.
  *
- * @param axios Axios instance.
- * @param basePath Base path.
- * @param requestParameters Request parameters.
- * @param options Override http request option.
- * @throws {RequiredError}
+ * @param axios - Axios instance.
+ * @param basePath - Base path.
+ * @param requestParameters - Request parameters.
+ * @param options - Override http request option.
+ * @throws RequiredError
  */
 export async function ResultApi_GetCustomCollectionItems(
     axios: AxiosInstance,

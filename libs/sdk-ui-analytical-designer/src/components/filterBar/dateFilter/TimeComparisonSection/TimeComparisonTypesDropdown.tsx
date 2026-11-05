@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 
 import classNames from "classnames";
 import { defineMessage, useIntl } from "react-intl";
-import { type Subscription } from "rxjs";
 
 import { type OverTimeComparisonType, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 import { Dropdown, DropdownButton, DropdownList } from "@gooddata/sdk-ui-kit";
@@ -12,6 +11,7 @@ import { Dropdown, DropdownButton, DropdownList } from "@gooddata/sdk-ui-kit";
 import {
     DROPDOWN_ALIGN_POINTS,
     DROPDOWN_MIN_HEIGHT,
+    type IEventSubscription,
     getDateConfigurationDropdownHeight,
     subscribeEvents,
 } from "../../../../utils/dropdown.js";
@@ -61,7 +61,7 @@ export function TimeComparisonTypesDropdown({
         height: 0,
     });
 
-    const subscribersRef = useRef<Subscription[]>(null);
+    const subscribersRef = useRef<IEventSubscription[]>(null);
     const buttonRef = useRef<HTMLElement>(null);
     const itemsRef = useRef<OverTimeComparisonType[]>(null);
 

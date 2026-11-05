@@ -872,9 +872,9 @@ export type KdResizedEventData = IGdcKdMessageEnvelope<GdcKdEventType.Resized, I
  */
 export interface IKdDashboardObjectMeta {
     /**
-     * Client id - Each client has an identifier unique within the domain
+     * Client id
      *
-     * Note: use the combination of the data product ID and client ID instead of the project ID
+     * @deprecated KPI Dashboards never sends this value. Use project.
      */
     client?: string;
 

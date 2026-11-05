@@ -430,6 +430,8 @@ function* loadExistingDashboard(
         cmd.payload.persistedDashboard ?? loadedDashboard,
         resolvedActiveTabId,
         workspaceParametersList,
+        undefined,
+        preloadedAttributeFilters?.attributesWithReferences,
     );
 
     const catalogPayload = {
@@ -680,9 +682,9 @@ function makeCatalogParametersPayload(result: IParameterMetadataObject[] | "gate
 }
 
 /**
- * The attributes of the attribute filters, which match the filters of the tabs when the default view of the
- * active tab is written to the other tabs. The view is not shared, or the attributes fail to load: none,
- * so filters match on equal display form refs.
+ * The attributes of the attribute filters, which match the filters of the tabs when a selection is
+ * written to the other tabs: the default view of the active tab, or embed-url filter overrides.
+ * Nothing is shared, or the attributes fail to load: none, so filters match on equal display form refs.
  */
 function* loadAttributesForSharedDefaultFilterView(
     ctx: DashboardContext,
@@ -692,7 +694,14 @@ function* loadAttributesForSharedDefaultFilterView(
     options: IApplyDefaultFilterViewOptions,
     unavailableObjects: IUnavailableDashboardReference[],
 ): SagaIterator<IPreloadedAttributeFilters | undefined> {
-    if (!isDefaultFilterViewSharedAcrossTabs(dashboard, filterViews, renderMode, options)) {
+    const shareOverrideFilters =
+        !!options.persistFiltersAcrossTabs &&
+        (dashboard.tabs?.length ?? 0) > 1 &&
+        (ctx.config?.overrideDefaultFilters?.length ?? 0) > 0;
+    if (
+        !shareOverrideFilters &&
+        !isDefaultFilterViewSharedAcrossTabs(dashboard, filterViews, renderMode, options)
+    ) {
         return undefined;
     }
     const refs = attributeFilterDisplayFormRefs(dashboard, unavailableObjects);

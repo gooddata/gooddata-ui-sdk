@@ -33,6 +33,7 @@ from gooddata_code_convertors.pydantic_models import (
     Fields,
     Interaction,
     Metadata,
+    QueryField,
     QueryFilter,
     QuerySort,
 )
@@ -156,6 +157,24 @@ FIELDS = {
 }
 
 
+QUERY_FIELDS = {
+    "previous_year": {
+        "using": "metric/revenue",
+        "type": "PREVIOUS_YEAR",
+        "date_filter": "date_ds",
+    },
+    "previous_period": {
+        "using": "metric/revenue",
+        "type": "PREVIOUS_PERIOD",
+        "date_filter": "date_ds",
+        "period": 1,
+    },
+    "arithmetic": {"using": ["metric/revenue", "metric/cost"], "operator": "RATIO"},
+    "aggregated": {"using": "fact/amount", "aggregation": "SUM"},
+    "inline": {"maql": "SELECT SUM({fact/amount})"},
+}
+
+
 def assert_no_key_loss(model: type[BaseModel], payload: dict) -> None:
     """A payload must survive validate -> dump with every key intact, at every level."""
     dumped = model.model_validate(payload).model_dump(
@@ -222,6 +241,18 @@ def test_dashboard_filters_no_groups_rejects_a_filter_group():
 @pytest.mark.parametrize("payload", FIELDS.values(), ids=list(FIELDS))
 def test_fields_round_trip_keeps_every_key(payload):
     assert_no_key_loss(Fields, payload)
+
+
+@pytest.mark.parametrize("payload", QUERY_FIELDS.values(), ids=list(QUERY_FIELDS))
+def test_query_field_round_trip_keeps_every_key(payload):
+    assert_no_key_loss(QueryField, payload)
+
+
+def test_query_field_rejects_metrics_without_an_operator():
+    """Each variant's `else` is `not: {}` next to the keys narrowSchema merges into it; a
+    generated model of it would accept any combination of the field keys."""
+    with pytest.raises(ValidationError):
+        QueryField.model_validate({"using": ["metric/revenue", "metric/cost"]})
 
 
 def test_query_filter_selects_the_model_for_its_type():

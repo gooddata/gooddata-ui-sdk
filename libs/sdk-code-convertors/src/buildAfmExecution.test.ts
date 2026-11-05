@@ -461,3 +461,47 @@ describe("buildAfmExecution date filter with: attribute filters", () => {
         ]);
     });
 });
+
+describe("buildAfmExecution legacy empty string with: filter of a date filter", () => {
+    const dataset = { identifier: { id: "expected_ship_date", type: "dataset" } };
+    const dateFilter = {
+        type: "date_filter",
+        using: "expected_ship_date",
+        granularity: "YEAR",
+        from: -10,
+        to: 0,
+    };
+    const yearWith = (state: unknown) => ({
+        y: { type: "attribute_filter", using: "label/expected_ship_date.year", state },
+    });
+    const relative = { relativeDateFilter: { dataset, granularity: "YEAR", from: -10, to: 0 } };
+
+    it.each([
+        ["include", "ONLY"],
+        ["exclude", "EXCLUDE"],
+    ])('folds %s: [""] into emptyValueHandling %s, as deploy does', (key, mode) => {
+        const { filters } = buildAfmExecution(
+            emptyEntities,
+            buildQueryWithFilters({ f: { ...dateFilter, with: yearWith({ [key]: [""] }) } }),
+        ).execution.execution;
+        expect(filters).toEqual([
+            { relativeDateFilter: { ...relative.relativeDateFilter, emptyValueHandling: mode } },
+        ]);
+    });
+
+    it("folds it the same way in metric-level filter_by", () => {
+        const query = {
+            fields: {
+                m1: {
+                    aggregation: "COUNT",
+                    using: "attribute/order_item_id",
+                    filter_by: { f: { ...dateFilter, with: yearWith({ include: [""] }) } },
+                },
+            },
+        } as unknown as Query;
+        const { measures } = buildAfmExecution(emptyEntities, query).execution.execution;
+        expect((measures[0].definition as any).measure.filters).toEqual([
+            { relativeDateFilter: { ...relative.relativeDateFilter, emptyValueHandling: "ONLY" } },
+        ]);
+    });
+});

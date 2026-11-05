@@ -4,7 +4,7 @@ import { useId } from "react";
 
 import { type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 
-import type { ObjectShareLevel } from "@gooddata/sdk-ui-ext";
+import { type ShareStatus } from "@gooddata/sdk-model";
 import { type IconType, UiButton, UiSkeleton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 const messages = defineMessages({
@@ -18,17 +18,15 @@ const messages = defineMessages({
     fallbackLabel: { id: "insightAccess.share" },
 });
 
-const LEVELS: Record<
-    ObjectShareLevel,
-    { icon: IconType; label: MessageDescriptor; tooltip: MessageDescriptor }
-> = {
-    PRIVATE: { icon: "invisible", label: messages.privateLabel, tooltip: messages.privateTooltip },
-    SHARED: { icon: "users", label: messages.sharedLabel, tooltip: messages.sharedTooltip },
-    WORKSPACE: { icon: "building", label: messages.workspaceLabel, tooltip: messages.workspaceTooltip },
-};
+const LEVELS: Record<ShareStatus, { icon: IconType; label: MessageDescriptor; tooltip: MessageDescriptor }> =
+    {
+        private: { icon: "invisible", label: messages.privateLabel, tooltip: messages.privateTooltip },
+        shared: { icon: "users", label: messages.sharedLabel, tooltip: messages.sharedTooltip },
+        public: { icon: "building", label: messages.workspaceLabel, tooltip: messages.workspaceTooltip },
+    };
 
 export interface IInsightAccessChipProps {
-    level: ObjectShareLevel | undefined;
+    level: ShareStatus | undefined;
     isLoading?: boolean;
     isOpen?: boolean;
     onClick: () => void;

@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type { IDualConfiguration } from "../types.js";
+import type { IConfiguration } from "../types.js";
 
 // const regexpPlugin: IPackage = {
 //     name: "eslint-plugin-regexp",
@@ -13,19 +13,18 @@ import type { IDualConfiguration } from "../types.js";
 //     "regexp/prefer-w": "off",
 // };
 
-const v9 = {
+const common = {
     // TODO: eslint-plugin-regexp rules crash on TS files due to missing type services
     // Re-enable when the plugin handles this gracefully or we add parser support
     // packages: [regexpPlugin],
 };
 
-export const regexp: IDualConfiguration<"regexp"> = {
-    v8: {
+export const regexp: IConfiguration<"regexp"> = {
+    legacy: {
         // TODO: Fix this
         // packages: [regexpPlugin],
         // extends: ["plugin:regexp/recommended"],
         // rules,
     },
-    v9,
-    ox: v9,
+    flat: { v9: common, v9ox: common, v10: common, v10ox: common },
 };

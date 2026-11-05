@@ -142,8 +142,8 @@ describe("report store", () => {
 
         /**
          * The slice stores null for "no error", because a non-draftable state cannot be undefined.
-         * The accessor is the ONE sanctioned read and converts back to undefined — `null !==
-         * undefined` would otherwise flip hasReportLoadingError/isReportValid and paint an error
+         * The accessor is the ONE sanctioned read and converts back to undefined — null not being
+         * equal to undefined would otherwise flip hasReportLoadingError/isReportValid and paint an error
          * screen over a healthy report.
          */
         it("the stored null never leaks through the accessor", () => {

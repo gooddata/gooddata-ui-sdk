@@ -204,6 +204,7 @@ export interface IGenAIChatDialogConnectedProps {
     canManage?: boolean;
     canAnalyze?: boolean;
     canFullControl?: boolean;
+    canCreateDocument?: boolean;
     settings?: IUserWorkspaceSettings;
 
     /** Open-state is fully controlled by the caller (props, not redux). */
@@ -306,6 +307,7 @@ export function GenAIChatDialogConnected({
     canManage,
     canAnalyze,
     canFullControl,
+    canCreateDocument,
     settings,
     agentId,
     effort,
@@ -461,6 +463,7 @@ export function GenAIChatDialogConnected({
             canManage={canManage}
             canAnalyze={canAnalyze}
             canFullControl={canFullControl}
+            canCreateDocument={canCreateDocument}
             settings={settings}
             objectTypes={objectTypes}
             includeTags={includeTags}

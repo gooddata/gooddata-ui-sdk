@@ -1,5 +1,7 @@
 // (C) 2020-2026 GoodData Corporation
 
+import { invariant } from "ts-invariant";
+
 import { parseDateValue, serializeDateValue } from "./dateValueParser.js";
 import { type DateFormatter, type DateParseFormatter, type DateStringifier } from "./types.js";
 
@@ -22,6 +24,44 @@ export function createDateValueFormatter(dateFormatter: DateFormatter): DatePars
             return value;
         }
         return dateFormatter(parsed, granularity, locale, pattern, timezone);
+    };
+}
+
+/**
+ * Wraps a date value formatter so that it shows the raw values when their format cannot be applied.
+ *
+ * @remarks
+ * Used for computed attributes, whose format is written by their author and can contain pattern tokens
+ * the date formatter does not support, which would otherwise fail the whole result. Formats of date
+ * attributes come from the backend, so a failure there is a bug that should not be hidden.
+ *
+ * The failure depends on the format only, so once it fails, the remaining values are shown raw without
+ * formatting them again and the warning is logged only once.
+ *
+ * @param formatter - formatter of the date values, all of them with the same format
+ * @param attribute - identifier of the attribute the values belong to, for the warning
+ * @internal
+ */
+export function guardDateValueFormatter(
+    formatter: DateParseFormatter,
+    attribute: string,
+): DateParseFormatter {
+    let failed = false;
+
+    return (value, granularity, locale, pattern, timezone) => {
+        if (!failed) {
+            try {
+                return formatter(value, granularity, locale, pattern, timezone);
+            } catch (error) {
+                failed = true;
+                invariant.warn(
+                    `Unable to format values of the "${attribute}" attribute by the "${pattern}" pattern, showing raw values.`,
+                    error,
+                );
+            }
+        }
+
+        return value ?? "";
     };
 }
 

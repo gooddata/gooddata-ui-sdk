@@ -74,7 +74,8 @@ $header-height: 48px;
 .adi-editor.adi-editor--catalog-collapsible {
     .adi-catalog-panel,
     .adi-trash-panel {
-        top: $header-height;
+        // below the editor header, which can be taller than the catalog toggle row
+        top: calc(var(--adi-editor-header-height, #{$header-height - 1px}) + 1px);
     }
 
     .adi-catalog-panel {

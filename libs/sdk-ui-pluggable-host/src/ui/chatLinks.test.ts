@@ -12,7 +12,7 @@ function linkOf(overrides: Partial<LinkHandlerEvent> = {}): LinkHandlerEvent {
         id: "r1",
         workspaceId: "ws",
         newTab: false,
-        itemUrl: "/workspace/ws/publisher/report/r1",
+        itemUrl: "/workspace/ws/reports/report/r1",
         preventDefault: vi.fn(),
         action: "open",
         ...overrides,
@@ -43,8 +43,8 @@ describe("handleChatLinkClick", () => {
 
         const result = handleChatLinkClick(linkOf(), { embedded: false, onAppLinkClick: () => false });
 
-        expect(assign).toHaveBeenCalledWith("/workspace/ws/publisher/report/r1");
-        expect(result).toBe("/workspace/ws/publisher/report/r1");
+        expect(assign).toHaveBeenCalledWith("/workspace/ws/reports/report/r1");
+        expect(result).toBe("/workspace/ws/reports/report/r1");
     });
 
     it("keeps the page when the app handled the click", () => {
@@ -71,7 +71,7 @@ describe("handleChatLinkClick", () => {
             onAppLinkClick: () => isHandledByApp,
         });
 
-        expect(open).toHaveBeenCalledWith("/workspace/ws/publisher/report/r1", "_blank");
+        expect(open).toHaveBeenCalledWith("/workspace/ws/reports/report/r1", "_blank");
         expect(assign).not.toHaveBeenCalled();
     });
 

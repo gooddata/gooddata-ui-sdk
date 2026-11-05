@@ -7,7 +7,7 @@ import { getInsightSummary, getInsightTitle } from "../store/insight/insight_sel
 import { type IAppState } from "../store/types.js";
 
 import { isEnabledInsightUsageOnDashboards, isReportLockedSelector } from "./report_selector.js";
-import { isSaveDisabledSelector } from "./save_report_selector.js";
+import { hasUnsavedChangesSelector } from "./save_report_selector.js";
 
 export const currentReportTitle = (state: IAppState): string => getInsightTitle(state);
 export const currentReportDescription = (state: IAppState): string => getInsightSummary(state);
@@ -19,7 +19,7 @@ export const reportTitleSelector = createSelector(
     hasDefinedTitle,
     isReportLockedSelector,
     isEnabledInsightUsageOnDashboards,
-    isSaveDisabledSelector,
+    hasUnsavedChangesSelector,
     getIsReadOnlyMode,
     (
         currentTitle,
@@ -27,7 +27,7 @@ export const reportTitleSelector = createSelector(
         isTitleDefined,
         isReportLocked,
         isEnabledUsages,
-        isSaveDisabled,
+        hasUnsavedChanges,
         isReadOnlyMode,
     ) => ({
         currentTitle,
@@ -36,6 +36,7 @@ export const reportTitleSelector = createSelector(
         isReportLocked,
         canEditTitle: !isReadOnlyMode && !isReportLocked,
         isEnabledUsages,
-        isSaveDisabled: isReadOnlyMode || isSaveDisabled,
+        // read-only mode saves nothing, so its changes are explorations, not unsaved work
+        hasUnsavedChanges: !isReadOnlyMode && hasUnsavedChanges,
     }),
 );

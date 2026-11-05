@@ -2,16 +2,16 @@
 
 import { noOnlyTestsPlugin, noOnlyTestsRules } from "@gooddata/lint-config";
 
-import type { IDualConfiguration } from "../types.js";
+import type { IConfiguration } from "../types.js";
 
-const v9 = {
+const flat = {
     packages: [noOnlyTestsPlugin],
     plugins: { "no-only-tests": noOnlyTestsPlugin },
     rules: noOnlyTestsRules,
 };
 
-export const noOnlyTests: IDualConfiguration<"no-only-tests"> = {
-    v8: {
+export const noOnlyTests: IConfiguration<"no-only-tests"> = {
+    legacy: {
         packages: [
             {
                 name: "eslint-plugin-no-only-tests",
@@ -21,6 +21,5 @@ export const noOnlyTests: IDualConfiguration<"no-only-tests"> = {
         plugins: ["no-only-tests"],
         rules: noOnlyTestsRules,
     },
-    v9,
-    ox: {},
+    flat: { v9: flat, v9ox: {}, v10: flat, v10ox: {} },
 };

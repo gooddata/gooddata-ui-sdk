@@ -146,6 +146,7 @@ function GenAIConversationsContent(props: GenAIConversationsProps) {
             canFullControl={false}
             canManage={false}
             canAnalyze={false}
+            canCreateDocument={false}
         >
             <CustomizationProvider slots={slots}>
                 <OverlayAlignOnParentScrollProvider>

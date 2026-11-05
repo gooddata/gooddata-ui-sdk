@@ -4,10 +4,25 @@ import { readFileSync, writeFileSync } from "fs";
 
 import { type IPackage } from "@gooddata/lint-config";
 
-import { commonConfigurations, v8Variants, v9Variants } from "../src/index.js";
-import type { IDualConfiguration } from "../src/types.js";
+import { commonConfigurations, flatVariants, legacyVariants } from "../src/index.js";
+import type { IConfiguration, IConfigurationFlatVariants } from "../src/types.js";
+
+import { type EslintMajor, eslintMajors, oxlintDir } from "./build/flat.js";
+import { legacyMajor } from "./build/legacy.js";
 
 type ExportValue = string | { import?: string; require?: string };
+
+// Where a configuration keeps the packages for one build target
+type ConfigurationTarget = "legacy" | keyof IConfigurationFlatVariants;
+
+const configurationTargets: ConfigurationTarget[] = ["legacy", "v9", "v9ox", "v10", "v10ox"];
+
+function targetPackages(configuration: IConfiguration, target: ConfigurationTarget): IPackage[] {
+    const packages =
+        target === "legacy" ? configuration.legacy.packages : configuration.flat[target].packages;
+
+    return packages ?? [];
+}
 
 const packageJson = JSON.parse(readFileSync("./package.json").toString()) as {
     exports: Record<string, ExportValue>;
@@ -15,38 +30,28 @@ const packageJson = JSON.parse(readFileSync("./package.json").toString()) as {
     peerDependencies: Record<string, string>;
 };
 
-// Track packages by version for each ESLint version
-interface IPackageVersions {
-    v8?: string;
-    v9?: string;
-    ox?: string;
-}
+// ESLint major this repository lints with; decides which versions land in devDependencies
+const devEslintMajor: EslintMajor = "v10";
 
-const packageVersions: Record<string, IPackageVersions> = {};
-
-function collectPackages(packages: IPackage[] | undefined, eslintVersion: "v8" | "v9" | "ox") {
-    for (const pkg of packages ?? []) {
-        if (!packageVersions[pkg.name]) {
-            packageVersions[pkg.name] = {};
-        }
-        packageVersions[pkg.name][eslintVersion] = pkg.version;
-    }
-}
+// Track package version for each build target
+const packageVersions: Record<string, Partial<Record<ConfigurationTarget, string>>> = {};
 
 // Collect packages from commonConfigurations (these become peerDependencies)
 for (const configuration of commonConfigurations) {
-    collectPackages(configuration.v8.packages, "v8");
-    collectPackages(configuration.v9.packages, "v9");
-    collectPackages(configuration.ox.packages, "ox");
+    for (const target of configurationTargets) {
+        for (const pkg of targetPackages(configuration, target)) {
+            packageVersions[pkg.name] = { ...packageVersions[pkg.name], [target]: pkg.version };
+        }
+    }
 }
 
-// Collect packages from v9 variants only (these are added to devDependencies only)
-const variantPackagesV9: Record<string, string> = {};
+// Collect packages from flat variants on devEslintMajor only (these are added to devDependencies only)
+const variantPackagesDev: Record<string, string> = {};
 
-for (const variant of Object.values(v9Variants)) {
+for (const variant of Object.values(flatVariants)) {
     for (const configuration of variant) {
-        for (const pkg of configuration.v9.packages ?? []) {
-            variantPackagesV9[pkg.name] = pkg.version;
+        for (const pkg of targetPackages(configuration, devEslintMajor)) {
+            variantPackagesDev[pkg.name] = pkg.version;
         }
     }
 }
@@ -57,21 +62,16 @@ const peers: Record<string, string> = {
 };
 
 for (const [name, versions] of Object.entries(packageVersions)) {
-    const { v8, v9, ox } = versions;
+    const targetVersions = configurationTargets.map((target) => versions[target]);
 
-    // Only add to peerDependencies if package appears in v8, v9 AND ox
-    if (v8 && v9 && ox) {
-        if (v8 === v9 && v9 === ox) {
-            peers[name] = v8;
-        } else {
-            // Different versions - use || syntax
-            peers[name] = `${v8} || ${v9} || ${ox}`;
-        }
+    // Only add to peerDependencies if package appears in every build target
+    if (targetVersions.every((version) => version !== undefined)) {
+        peers[name] = [...new Set(targetVersions)].join(" || ");
     }
-    // Packages only in v8 or only in v9 or only in ox are NOT added to peerDependencies
+    // Packages missing from any build target are NOT added to peerDependencies
 }
 
-// Build devDependencies (v9 packages only to avoid conflicts)
+// Build devDependencies (flat packages on devEslintMajor only, to avoid conflicts)
 const devDeps: Record<string, string> = {
     "@gooddata/lint-config": packageJson.devDependencies["@gooddata/lint-config"],
     eslint: packageJson.devDependencies["eslint"],
@@ -82,15 +82,17 @@ const devDeps: Record<string, string> = {
     "vite-node": packageJson.devDependencies["vite-node"],
 };
 
-// Add v9 common packages to devDeps only
+// Add flat common packages on devEslintMajor to devDeps only
 for (const [name, versions] of Object.entries(packageVersions)) {
-    if (versions.v9) {
-        devDeps[name] = versions.v9;
+    const devVersion = versions[devEslintMajor];
+
+    if (devVersion) {
+        devDeps[name] = devVersion;
     }
 }
 
-// Add v9 variant packages to devDeps
-for (const [name, version] of Object.entries(variantPackagesV9)) {
+// Add flat variant packages on devEslintMajor to devDeps
+for (const [name, version] of Object.entries(variantPackagesDev)) {
     if (!devDeps[name]) {
         devDeps[name] = version;
     }
@@ -110,63 +112,54 @@ for (const key of devDepsKeys) {
     packageJson.devDependencies[key] = devDeps[key];
 }
 
-// Build exports with conditional exports for v8 (JSON) and v9 (JS)
-const v8VariantNames = new Set(Object.keys(v8Variants));
-const v9VariantNames = new Set(Object.keys(v9Variants));
-const allVariantNames = new Set([...v8VariantNames, ...v9VariantNames]);
+// Build exports, all prefixed by ESLint major: legacy (JSON) under "require", flat (JS) under "import"
+const exports: Record<string, ExportValue> = {};
 
-function buildExport(name: string, hasV8: boolean, hasV9: boolean): { import?: string; require?: string } {
-    const jsPath = `./dist/${name}.js`;
-    const jsonPath = `./dist/${name}.json`;
-
-    if (hasV8 && hasV9) {
-        return { import: jsPath, require: jsonPath };
-    } else if (hasV9) {
-        return { import: jsPath };
-    } else {
-        return { require: jsonPath };
-    }
+for (const variantName of ["base", ...Object.keys(legacyVariants)]) {
+    exports[`./${legacyMajor}/${variantName}`] = { require: `./dist/${legacyMajor}/${variantName}.json` };
 }
 
-const exports: Record<string, ExportValue> = {
-    // Base config (always has both v8 and v9)
-    ".": { import: "./dist/base.js", require: "./dist/base.json" },
-};
-
-// Add variant exports
-for (const variantName of allVariantNames) {
-    const hasV8 = v8VariantNames.has(variantName);
-    const hasV9 = v9VariantNames.has(variantName);
-    exports[`./${variantName}`] = buildExport(variantName, hasV8, hasV9);
-    exports[`./oxlint-${variantName}`] = {
-        import: `./dist/oxlint-${variantName}.js`,
-    };
+for (const major of eslintMajors) {
+    for (const variantName of ["base", ...Object.keys(flatVariants)]) {
+        exports[`./${major}/${variantName}`] = { import: `./dist/${major}/${variantName}.js` };
+        exports[`./${major}/${oxlintDir}/${variantName}`] = {
+            import: `./dist/${major}/${oxlintDir}/${variantName}.js`,
+        };
+    }
 }
 
 packageJson.exports = exports;
 
-writeFileSync("./package.json", JSON.stringify(packageJson, null, 4));
+writeFileSync("./package.json", `${JSON.stringify(packageJson, null, 4)}\n`);
 
-// Generate PACKAGES_V8.md and PACKAGES_V9.md
-function collectConfigPackages(
-    configs: IDualConfiguration[],
-    version: "v8" | "v9" | "ox",
-): Map<string, string> {
+// Generate PACKAGES_*.md, one table per build target
+interface IPackagesMarkdown {
+    file: string;
+    title: string;
+    target: ConfigurationTarget;
+    variants: Record<string, IConfiguration[]>;
+}
+
+const packagesMarkdowns: IPackagesMarkdown[] = [
+    { file: "PACKAGES_V8.md", title: "V8", target: "legacy", variants: legacyVariants },
+    { file: "PACKAGES_V9.md", title: "V9", target: "v9", variants: flatVariants },
+    { file: "PACKAGES_V9_OXLINT.md", title: "V9 OxLint", target: "v9ox", variants: flatVariants },
+    { file: "PACKAGES_V10.md", title: "V10", target: "v10", variants: flatVariants },
+    { file: "PACKAGES_V10_OXLINT.md", title: "V10 OxLint", target: "v10ox", variants: flatVariants },
+];
+
+function collectConfigPackages(configs: IConfiguration[], target: ConfigurationTarget): Map<string, string> {
     const packages = new Map<string, string>();
     for (const config of configs) {
-        const pkgs = config[version].packages ?? [];
-        for (const pkg of pkgs) {
+        for (const pkg of targetPackages(config, target)) {
             packages.set(pkg.name, pkg.version);
         }
     }
     return packages;
 }
 
-function generatePackagesMarkdown(
-    version: "v8" | "v9" | "ox",
-    variants: Record<string, IDualConfiguration[]>,
-): string {
-    const prefix = version === "ox" ? "oxlint-" : "";
+function generatePackagesMarkdown({ title, target, variants }: IPackagesMarkdown): string {
+    const prefix = target.endsWith("ox") ? `${oxlintDir}/` : "";
 
     // Collect all config names: base + variants
     const configNames = ["base", ...Object.keys(variants).sort()];
@@ -175,29 +168,14 @@ function generatePackagesMarkdown(
     const configPackages: Map<string, Map<string, string>> = new Map();
 
     // Base config packages
-    configPackages.set("base", collectConfigPackages(commonConfigurations, version));
+    configPackages.set("base", collectConfigPackages(commonConfigurations, target));
 
     // Variant config packages (includes common + variant-specific)
     for (const [variantName, variantConfigs] of Object.entries(variants)) {
-        const packages = new Map<string, string>();
-
-        // Add common packages
-        for (const config of commonConfigurations) {
-            const pkgs = config[version].packages ?? [];
-            for (const pkg of pkgs) {
-                packages.set(pkg.name, pkg.version);
-            }
-        }
-
-        // Add variant-specific packages
-        for (const config of variantConfigs) {
-            const pkgs = config[version].packages ?? [];
-            for (const pkg of pkgs) {
-                packages.set(pkg.name, pkg.version);
-            }
-        }
-
-        configPackages.set(variantName, packages);
+        configPackages.set(
+            variantName,
+            collectConfigPackages([...commonConfigurations, ...variantConfigs], target),
+        );
     }
 
     // Collect all unique package names across all configs
@@ -242,7 +220,7 @@ function generatePackagesMarkdown(
     );
 
     const lines: string[] = [
-        `# ESLint ${version === "ox" ? "V9 OxLint" : version.toUpperCase()} Packages`,
+        `# ESLint ${title} Packages`,
         "",
         "This table shows which packages are required for each configuration.",
         "",
@@ -255,11 +233,6 @@ function generatePackagesMarkdown(
     return lines.join("\n");
 }
 
-// Generate v8 and v9 markdown files
-const v8Markdown = generatePackagesMarkdown("v8", v8Variants);
-const v9Markdown = generatePackagesMarkdown("v9", v9Variants);
-const v9OxMarkdown = generatePackagesMarkdown("ox", v9Variants);
-
-writeFileSync("./PACKAGES_V8.md", v8Markdown);
-writeFileSync("./PACKAGES_V9.md", v9Markdown);
-writeFileSync("./PACKAGES_V9_OXLINT.md", v9OxMarkdown);
+for (const packagesMarkdown of packagesMarkdowns) {
+    writeFileSync(`./${packagesMarkdown.file}`, generatePackagesMarkdown(packagesMarkdown));
+}

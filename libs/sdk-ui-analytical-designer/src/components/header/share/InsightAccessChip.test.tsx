@@ -3,7 +3,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import type { ObjectShareLevel } from "@gooddata/sdk-ui-ext";
+import { type ShareStatus } from "@gooddata/sdk-model";
 
 import { withIntl } from "../../../utils/with_intl.js";
 
@@ -12,22 +12,22 @@ import { type IInsightAccessChipProps, InsightAccessChip } from "./InsightAccess
 function renderChip(props: Partial<IInsightAccessChipProps> = {}) {
     const onClick = vi.fn<() => void>();
     const Wrapped = withIntl(InsightAccessChip);
-    render(<Wrapped level="PRIVATE" onClick={onClick} {...props} />);
+    render(<Wrapped level="private" onClick={onClick} {...props} />);
     return onClick;
 }
 
 describe("InsightAccessChip", () => {
-    it.each<[ObjectShareLevel, string]>([
-        ["PRIVATE", "Private"],
-        ["SHARED", "Shared"],
-        ["WORKSPACE", "Workspace"],
+    it.each<[ShareStatus, string]>([
+        ["private", "Private"],
+        ["shared", "Shared"],
+        ["public", "Workspace"],
     ])("names the %s level", (level, label) => {
         renderChip({ level });
         expect(screen.getByRole("button")).toHaveTextContent(label);
     });
 
     it("says which level it is and that it opens a dialog", () => {
-        renderChip({ level: "WORKSPACE", isOpen: true });
+        renderChip({ level: "public", isOpen: true });
         const button = screen.getByRole("button");
         expect(button).toHaveAttribute("aria-label", "Access level: Workspace. Click to manage sharing.");
         expect(button).toHaveAttribute("aria-haspopup", "dialog");

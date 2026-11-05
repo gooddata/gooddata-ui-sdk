@@ -97,6 +97,7 @@
     "visualizations.totals.dropdown.title.nat": "Consolidación (Total)",
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "La agregación Rollup (Total) no está disponible cuando se filtra la visualización por valor métrico. Para utilizar Rollup (Total), elimine todos los filtros de valor métrico de la barra de filtros.",
     "visualizations.totals.dropdown.tooltip.nat.disabled.ranking": "La agregación Rollup (Total) no está disponible cuando se filtra la visualización por filtro de clasificación. Para utilizar Rollup (Total), elimine el filtro de clasificación de la barra de filtros.",
+    "visualizations.totals.dropdown.tooltip.subtotal.disabled.measureSort": "Los subtotales de fila no están disponibles cuando se ordena por una métrica. Borre el ordenamiento por métrica para mostrar los subtotales.",
     "visualizations.totals.dropdown.title.med": "Mediana",
     "visualizations.headline.tertiary.title": "Frente a",
     "visualizations.headline.comparison.title.change": "Cambiar",

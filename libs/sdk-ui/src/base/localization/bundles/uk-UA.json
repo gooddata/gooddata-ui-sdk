@@ -97,6 +97,7 @@
     "visualizations.totals.dropdown.title.nat": "Згортання (Усього)",
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "Агрегація Згортання (Усього) недоступна під час фільтрування visualization за значенням metric. Щоб використовувати Згортання (Усього), видаліть усі filters за значенням metric з filter bar.",
     "visualizations.totals.dropdown.tooltip.nat.disabled.ranking": "Агрегація Згортання (Усього) недоступна під час фільтрування visualization за ranking filter. Щоб використовувати Згортання (Усього), видаліть ranking filter з filter bar.",
+    "visualizations.totals.dropdown.tooltip.subtotal.disabled.measureSort": "Проміжні підсумки за рядками недоступні під час сортування за метрикою. Скасуйте сортування за метрикою, щоб відобразити проміжні підсумки.",
     "visualizations.totals.dropdown.title.med": "Медіана",
     "visualizations.headline.tertiary.title": "Порівняно з",
     "visualizations.headline.comparison.title.change": "Зміна",

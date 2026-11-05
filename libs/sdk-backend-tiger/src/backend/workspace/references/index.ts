@@ -22,17 +22,15 @@ import { objectTypeToTigerIdType, tigerIdTypeToObjectType } from "../../../types
 
 const sdkObjectTypeToTigerType: Partial<Record<ObjectType, TigerObjectType>> = objectTypeToTigerIdType;
 
-type NodeTypeMapping = Partial<Record<DependentEntitiesNodeTypeEnum, ObjectType>>;
-
-const referenceNodeTypeToObjectType: NodeTypeMapping = tigerIdTypeToObjectType;
-
-const workspaceGraphNodeTypeToObjectType: NodeTypeMapping = {
+const nodeTypeToObjectType: Record<DependentEntitiesNodeTypeEnum, ObjectType | undefined> = {
     ...tigerIdTypeToObjectType,
     automation: "automation",
     filterView: "filterView",
     userDataFilter: "userDataFilter",
     memoryItem: "memoryItem",
     document: "document",
+    // No sdk-model ObjectType exists for it.
+    knowledgeRecommendation: undefined,
 };
 
 export class TigerReferencesService implements IReferencesService {
@@ -72,7 +70,7 @@ export class TigerReferencesService implements IReferencesService {
             return response.data.graph;
         });
         // The full graph has the same edge order as the graph of dependencies.
-        return createGraph(entitiesGraph, new Set(), "DEPENDENCIES", workspaceGraphNodeTypeToObjectType);
+        return createGraph(entitiesGraph, new Set(), "DEPENDENCIES");
     }
 }
 
@@ -105,21 +103,20 @@ async function getGraph(
         return response.data.graph;
     });
 
-    return createGraph(entitiesGraph, rootKeys, relation, referenceNodeTypeToObjectType);
+    return createGraph(entitiesGraph, rootKeys, relation);
 }
 
 function createGraph(
     entitiesGraph: DependentEntitiesGraph,
     rootKeys: Set<string>,
     relation: DependentEntitiesRequestRelationEnum,
-    nodeTypes: NodeTypeMapping,
 ): IReferencesResult {
     const nodes: IReferencesResult["nodes"] = entitiesGraph.nodes.flatMap((node) => {
-        const ref = tigerNodeToRef(node, nodeTypes);
+        const ref = tigerNodeToRef(node);
         if (!ref) {
             return [];
         }
-        return [{ ...ref, title: node.title ?? node.id, isRoot: rootKeys.has(entityKey(node)) }];
+        return [{ ...ref, title: node.title || node.id, isRoot: rootKeys.has(entityKey(node)) }];
     });
 
     const edges: IReferencesResult["edges"] = entitiesGraph.edges.flatMap((edge) => {
@@ -127,8 +124,8 @@ function createGraph(
         if (!from || !to) {
             return [];
         }
-        const fromRef = tigerNodeToRef(from, nodeTypes);
-        const toRef = tigerNodeToRef(to, nodeTypes);
+        const fromRef = tigerNodeToRef(from);
+        const toRef = tigerNodeToRef(to);
         if (!fromRef || !toRef) {
             return [];
         }
@@ -153,11 +150,11 @@ function refToEntityIdentifier(ref: IdentifierRef): EntityIdentifier[] {
     return isGraphSupportedType(tigerType) ? [{ id: ref.identifier, type: tigerType }] : [];
 }
 
-function tigerNodeToRef(
-    node: { id: string; type: DependentEntitiesNodeTypeEnum },
-    nodeTypes: NodeTypeMapping,
-): IdentifierRef | undefined {
-    const type = nodeTypes[node.type];
+function tigerNodeToRef(node: {
+    id: string;
+    type: DependentEntitiesNodeTypeEnum;
+}): IdentifierRef | undefined {
+    const type = nodeTypeToObjectType[node.type];
     return type ? { identifier: node.id, type } : undefined;
 }
 

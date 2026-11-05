@@ -37,7 +37,12 @@ const msgs = defineMessages({
  */
 export type GenAIStandaloneInputProps = Omit<GenAiStoreProps, "children"> & {
     /**
-     * Placeholder text for the input.
+     * Placeholder text for the input. Defaults to the bundled localized placeholder when omitted.
+     * The supplied text is used as-is and is not translated. Takes precedence over `placeholder`.
+     */
+    inputPlaceholder?: string;
+    /**
+     * Alias for `inputPlaceholder`. Used when `inputPlaceholder` is not provided.
      */
     placeholder?: string;
     /**
@@ -89,6 +94,7 @@ function StandaloneInputContent({
     className,
     canManage,
     canAnalyze,
+    inputPlaceholder,
     placeholder,
     autofocus = true,
     requiredSkills,
@@ -159,7 +165,9 @@ function StandaloneInputContent({
                     <div className="gd-gen-ai-chat__input__text" {...ref}>
                         <DefaultSyntaxHighlightingInput
                             className="gd-gen-ai-chat__input__mc"
-                            placeholder={placeholder ?? intl.formatMessage(msgs.placeholder)}
+                            placeholder={
+                                inputPlaceholder ?? placeholder ?? intl.formatMessage(msgs.placeholder)
+                            }
                             value={value}
                             onApi={setApi}
                             onChange={setValue}

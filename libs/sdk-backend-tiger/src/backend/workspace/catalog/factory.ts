@@ -191,13 +191,18 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         );
 
         const measures = await this.authCall((client) => {
-            return MetadataUtilities.getAllPagesOf(client, EntitiesApi_GetAllEntitiesMetrics, params, {
-                headers: ValidateRelationsHeader,
-                signal: this.signal,
-                params: {
-                    size: this.options.pageSize,
+            return MetadataUtilities.getAllPagesOfParallel(
+                client,
+                EntitiesApi_GetAllEntitiesMetrics,
+                params,
+                {
+                    headers: ValidateRelationsHeader,
+                    signal: this.signal,
+                    params: {
+                        size: this.options.pageSize,
+                    },
                 },
-            })
+            )
                 .then(MetadataUtilities.mergeEntitiesResults)
                 .then(MetadataUtilities.filterValidEntities);
         });

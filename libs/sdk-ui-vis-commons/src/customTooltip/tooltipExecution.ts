@@ -127,7 +127,7 @@ function getFilterDependencyMeasures(
  * Build tooltip-only measures for the given references (already filtered to
  * those not in the chart). Labels and computed attributes get a max+count pair
  * (mirrors the RichText widget pattern) so the lookup can render "(Multiple items)" when a label
- * resolves to >1 value per row.
+ * resolves to \>1 value per row.
  *
  * LocalId prefixes `tt_m_`, `tt_lv_`, `tt_lc_` are reserved — collision with
  * chart-side measure localIds would break filter-dependency reuse.

@@ -147,6 +147,45 @@ describe("transformResultDimensions", () => {
         expect(numberFormatOf(computedAttributeDimensions("label"))).toBeUndefined();
     });
 
+    it("should carry the data type of a computed attribute without making it a date attribute", () => {
+        const def = newDefForItems("test", [newAttribute("ca_1", (a) => a.localId("caLocal"))]);
+        const format = { locale: "en-US", pattern: "dd.MM.yyyy", timezone: "UTC" };
+
+        const [dimension] = transformResultDimensions(
+            computedAttributeDimensions("computedAttribute", { dataType: "TIMESTAMP", format }),
+            def,
+        );
+        const { attributeHeader } = dimension.headers[0] as IAttributeDescriptor;
+
+        expect(attributeHeader).toMatchObject({ dataType: "TIMESTAMP", format });
+        expect(attributeHeader.granularity).toBeUndefined();
+        expect(
+            (
+                transformResultDimensions(computedAttributeDimensions("label"), def)[0]
+                    .headers[0] as IAttributeDescriptor
+            ).attributeHeader,
+        ).not.toHaveProperty("dataType");
+    });
+
+    it("should carry the granularity of a computed attribute only as the granularity of its values", () => {
+        const def = newDefForItems("test", [newAttribute("ca_1", (a) => a.localId("caLocal"))]);
+        const attributeHeaderOf = (identifierType: string) =>
+            (
+                transformResultDimensions(
+                    computedAttributeDimensions(identifierType, { granularity: "DAY" }),
+                    def,
+                )[0].headers[0] as IAttributeDescriptor
+            ).attributeHeader;
+
+        const computedAttributeHeader = attributeHeaderOf("computedAttribute");
+        expect(computedAttributeHeader.formatGranularity).toBe("DAY");
+        expect(computedAttributeHeader).not.toHaveProperty("granularity");
+
+        const labelHeader = attributeHeaderOf("label");
+        expect(labelHeader.granularity).toBe("DAY");
+        expect(labelHeader).not.toHaveProperty("formatGranularity");
+    });
+
     it("should keep the computedAttribute ref type when the backend states it on the header", () => {
         // the execution definition does not know the attribute is computed; the header alone decides
         const def = newDefForItems("test", [newAttribute("ca_1", (a) => a.localId("caLocal"))]);

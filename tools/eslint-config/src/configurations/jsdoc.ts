@@ -2,9 +2,9 @@
 
 import { type IPackage } from "@gooddata/lint-config";
 
-import type { IDualConfiguration } from "../types.js";
+import type { IConfiguration } from "../types.js";
 
-const jsdocPlugin: IPackage = {
+export const jsdocPlugin: IPackage = {
     name: "eslint-plugin-jsdoc",
     version: "65.4.2",
 };
@@ -19,7 +19,7 @@ const rules = {
     "jsdoc/require-param": "error", // require @param for all params
 };
 
-const v9 = {
+const common = {
     packages: [jsdocPlugin],
     overrides: [
         {
@@ -31,8 +31,8 @@ const v9 = {
     ],
 };
 
-export const jsdoc: IDualConfiguration<"jsdoc"> = {
-    v8: {
+export const jsdoc: IConfiguration<"jsdoc"> = {
+    legacy: {
         packages: [jsdocPlugin],
         overrides: [
             {
@@ -43,6 +43,5 @@ export const jsdoc: IDualConfiguration<"jsdoc"> = {
             },
         ],
     },
-    v9,
-    ox: v9,
+    flat: { v9: common, v9ox: common, v10: common, v10ox: common },
 };

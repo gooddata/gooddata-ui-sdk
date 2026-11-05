@@ -23,10 +23,7 @@ import {
     type FilterContextState,
     type WorkingFilterContextItem,
 } from "../../../store/tabs/filterContext/filterContextState.js";
-import {
-    type CrossFilteringLocalIdsByTab,
-    seedSyncedTabFilters,
-} from "../../../store/tabs/filterContext/filterSync.js";
+import { type CrossFilteringLocalIdsByTab } from "../../../store/tabs/filterContext/filterSync.js";
 import { tabsActions, tabsSliceReducer } from "../../../store/tabs/index.js";
 import { tabsReducers } from "../../../store/tabs/tabsReducers.js";
 import { type ITabState, type ITabsState } from "../../../store/tabs/tabsState.js";
@@ -117,7 +114,13 @@ function filterContext(
         filterContextDefinition: { title: "", description: "", filters },
         workingFilterContextDefinition: { filters: working },
         ...(original
-            ? { originalFilterContextDefinition: { title: "", description: "", filters: original } }
+            ? {
+                  originalFilterContextDefinition: {
+                      title: "",
+                      description: "",
+                      filters: original,
+                  },
+              }
             : {}),
     };
 }
@@ -259,7 +262,10 @@ describe("view mode tab sync", () => {
         );
 
         expect(next.tabs?.[0]?.filterContext?.filterContextDefinition?.filters[0]).toMatchObject({
-            attributeFilter: { attributeElements: { uris: [] }, negativeSelection: true },
+            attributeFilter: {
+                attributeElements: { uris: [] },
+                negativeSelection: true,
+            },
         });
         expect(next.tabs?.[1]?.filterContext?.filterContextDefinition?.filters[0]).toMatchObject({
             attributeFilter: {
@@ -344,7 +350,9 @@ describe("view mode tab sync", () => {
         it("does not sync a filter with another display-as label", () => {
             const next = sync(
                 makeState([
-                    tabWith("tab-a", "region-a", { displayAsLabel: otherDisplayForm }),
+                    tabWith("tab-a", "region-a", {
+                        displayAsLabel: otherDisplayForm,
+                    }),
                     tabWith("tab-b", "region-b", {}),
                 ]),
                 selectWest,
@@ -383,7 +391,9 @@ describe("view mode tab sync", () => {
         it("does not sync a list selection to a text-only filter", () => {
             const next = sync(
                 makeState([
-                    tabWith("tab-a", "region-a", { selectionType: "listOrText" }),
+                    tabWith("tab-a", "region-a", {
+                        selectionType: "listOrText",
+                    }),
                     tabWith("tab-b", "region-b", { selectionType: "text" }),
                 ]),
                 selectWest,
@@ -423,6 +433,154 @@ describe("view mode tab sync", () => {
             );
 
             expect(selectionOnTabB(next)).toEqual({ uris: ["west"] });
+        });
+    });
+
+    describe("when the counterpart uses another label shown as the same display-as label", () => {
+        const regionId = idRef("region.id", "displayForm");
+        const regionName = idRef("region.name", "displayForm");
+        const regionCode = idRef("region.code", "displayForm");
+        const tabWith = (
+            localIdentifier: string,
+            filter: IDashboardAttributeFilter,
+            displayAsLabel: ObjRef | undefined,
+            options: {
+                original?: IDashboardAttributeFilter;
+                working?: WorkingFilterContextItem[];
+            } = {},
+        ): ITabState => ({
+            localIdentifier,
+            filterContext: {
+                ...filterContext(
+                    [filter],
+                    options.working ?? [],
+                    options.original ? [options.original] : undefined,
+                ),
+                attributeFilterDisplayForms: [
+                    displayFormMeta(
+                        (
+                            filter.attributeFilter.displayForm as {
+                                identifier: string;
+                            }
+                        ).identifier,
+                        "region",
+                    ),
+                ],
+            },
+            attributeFilterConfigs: {
+                attributeFilterConfigs: displayAsLabel
+                    ? [
+                          {
+                              localIdentifier: filter.attributeFilter.localIdentifier!,
+                              displayAsLabel,
+                          },
+                      ]
+                    : [],
+            },
+        });
+        const tabB = (state: ITabsState) => state.tabs?.[1];
+        const filterOnTabB = (state: ITabsState) =>
+            tabB(state)?.filterContext?.filterContextDefinition?.filters[0] as IDashboardAttributeFilter;
+        const displayAsLabelOnTabB = (state: ITabsState) =>
+            tabB(state)?.attributeFilterConfigs?.attributeFilterConfigs?.[0]?.displayAsLabel;
+        const selectWest = tabsActions.updateAttributeFilterSelection({
+            filterLocalId: "region-a",
+            elements: { uris: ["west"] },
+            negativeSelection: false,
+        });
+
+        it("writes the selection together with its display form", () => {
+            const next = sync(
+                makeState([
+                    tabWith("tab-a", allAttributeFilter("region-a", regionId), regionName),
+                    tabWith("tab-b", allAttributeFilter("region-b", regionCode), regionName),
+                ]),
+                selectWest,
+            );
+
+            expect(filterOnTabB(next).attributeFilter).toMatchObject({
+                localIdentifier: "region-b",
+                displayForm: regionId,
+                attributeElements: { uris: ["west"] },
+                negativeSelection: false,
+            });
+            expect(displayAsLabelOnTabB(next)).toEqual(regionName);
+            expect(tabB(next)?.filterContext?.attributeFilterDisplayForms?.map((df) => df.id)).toEqual([
+                "region.code",
+                "region.id",
+            ]);
+        });
+
+        it("keeps showing the current label of a counterpart without a display-as label", () => {
+            const next = sync(
+                makeState([
+                    tabWith("tab-a", allAttributeFilter("region-a", regionId), regionName),
+                    tabWith("tab-b", allAttributeFilter("region-b", regionName), undefined),
+                ]),
+                selectWest,
+            );
+
+            expect(filterOnTabB(next).attributeFilter).toMatchObject({
+                displayForm: regionId,
+                attributeElements: { uris: ["west"] },
+            });
+            expect(displayAsLabelOnTabB(next)).toEqual(regionName);
+        });
+
+        it("restores the saved display form of the counterpart on reset", () => {
+            const next = sync(
+                makeState([
+                    tabWith("tab-a", attributeFilter("region-a", regionId, ["west"]), regionName, {
+                        original: allAttributeFilter("region-a", regionId),
+                    }),
+                    tabWith("tab-b", attributeFilter("region-b", regionId, ["west"]), regionName, {
+                        original: attributeFilter("region-b", regionCode, ["east"]),
+                    }),
+                ]),
+                tabsActions.updateAttributeFilterSelection({
+                    filterLocalId: "region-a",
+                    elements: { uris: [] },
+                    negativeSelection: true,
+                    restoreTargetOriginal: true,
+                }),
+            );
+
+            expect(filterOnTabB(next).attributeFilter).toMatchObject({
+                displayForm: regionCode,
+                attributeElements: { uris: ["east"] },
+                negativeSelection: false,
+            });
+        });
+
+        it("commits a staged selection together with its display form", () => {
+            const next = sync(
+                makeState([
+                    tabWith("tab-a", allAttributeFilter("region-a", regionId), regionName, {
+                        working: [
+                            {
+                                attributeFilter: {
+                                    localIdentifier: "region-a",
+                                    attributeElements: { uris: ["west"] },
+                                    negativeSelection: false,
+                                },
+                            },
+                        ],
+                    }),
+                    tabWith("tab-b", allAttributeFilter("region-b", regionName), undefined),
+                ]),
+                tabsActions.applyWorkingSelection({}),
+            );
+
+            expect(filterOnTabB(next).attributeFilter).toMatchObject({
+                localIdentifier: "region-b",
+                displayForm: regionId,
+                attributeElements: { uris: ["west"] },
+            });
+            expect(displayAsLabelOnTabB(next)).toEqual(regionName);
+            expect(tabB(next)?.filterContext?.attributeFilterDisplayForms?.map((df) => df.id)).toEqual([
+                "region.name",
+                "region.id",
+            ]);
         });
     });
 
@@ -634,8 +792,14 @@ describe("view mode tab sync", () => {
 
     it("mirrors a date filter by data set and keeps the target local identifier", () => {
         const initial = makeState([
-            { localIdentifier: "tab-a", filterContext: filterContext([dateFilter("date_0", -7)]) },
-            { localIdentifier: "tab-b", filterContext: filterContext([dateFilter("date-migrated", -7)]) },
+            {
+                localIdentifier: "tab-a",
+                filterContext: filterContext([dateFilter("date_0", -7)]),
+            },
+            {
+                localIdentifier: "tab-b",
+                filterContext: filterContext([dateFilter("date-migrated", -7)]),
+            },
         ]);
 
         const next = sync(
@@ -657,11 +821,22 @@ describe("view mode tab sync", () => {
 
     it("mirrors the common date filter", () => {
         const common = (from: number): IDashboardDateFilter => ({
-            dateFilter: { type: "relative", granularity: "GDC.time.year", from, to: 0 },
+            dateFilter: {
+                type: "relative",
+                granularity: "GDC.time.year",
+                from,
+                to: 0,
+            },
         });
         const initial = makeState([
-            { localIdentifier: "tab-a", filterContext: filterContext([common(-1)]) },
-            { localIdentifier: "tab-b", filterContext: filterContext([common(-1)]) },
+            {
+                localIdentifier: "tab-a",
+                filterContext: filterContext([common(-1)]),
+            },
+            {
+                localIdentifier: "tab-b",
+                filterContext: filterContext([common(-1)]),
+            },
         ]);
 
         const next = sync(
@@ -681,12 +856,23 @@ describe("view mode tab sync", () => {
 
     it("mirrors a committed common date filter onto a tab that is all time", () => {
         const lastSevenDays: IDashboardDateFilter = {
-            dateFilter: { type: "relative", granularity: "GDC.time.date", from: -6, to: 0 },
+            dateFilter: {
+                type: "relative",
+                granularity: "GDC.time.date",
+                from: -6,
+                to: 0,
+            },
         };
         const region = attributeFilter("region-b", displayForm, ["east"]);
         const initial = makeState([
-            { localIdentifier: "tab-a", filterContext: filterContext([], [lastSevenDays]) },
-            { localIdentifier: "tab-b", filterContext: filterContext([region]) },
+            {
+                localIdentifier: "tab-a",
+                filterContext: filterContext([], [lastSevenDays]),
+            },
+            {
+                localIdentifier: "tab-b",
+                filterContext: filterContext([region]),
+            },
         ]);
         const next = sync(initial, tabsActions.applyWorkingSelection({}));
         expect(next.tabs?.[0]?.filterContext?.filterContextDefinition?.filters).toEqual([lastSevenDays]);
@@ -700,10 +886,18 @@ describe("view mode tab sync", () => {
             dateFilter: { type: "relative", granularity: "GDC.time.date" },
         };
         const lastYear: IDashboardDateFilter = {
-            dateFilter: { type: "relative", granularity: "GDC.time.year", from: -1, to: 0 },
+            dateFilter: {
+                type: "relative",
+                granularity: "GDC.time.year",
+                from: -1,
+                to: 0,
+            },
         };
         const initial = makeState([
-            { localIdentifier: "tab-a", filterContext: filterContext([lastYear], [allTime]) },
+            {
+                localIdentifier: "tab-a",
+                filterContext: filterContext([lastYear], [allTime]),
+            },
             { localIdentifier: "tab-b", filterContext: filterContext([]) },
         ]);
         const next = sync(initial, tabsActions.applyWorkingSelection({}));
@@ -790,7 +984,13 @@ describe("view mode tab sync", () => {
 
     it("restores a saved common date filter when the source reset is all time", () => {
         const common = (from: number, localIdentifier: string): IDashboardDateFilter => ({
-            dateFilter: { type: "relative", granularity: "GDC.time.year", from, to: 0, localIdentifier },
+            dateFilter: {
+                type: "relative",
+                granularity: "GDC.time.year",
+                from,
+                to: 0,
+                localIdentifier,
+            },
         });
         const initial = makeState([
             {
@@ -813,7 +1013,11 @@ describe("view mode tab sync", () => {
 
         expect(next.tabs?.[0]?.filterContext?.filterContextDefinition?.filters).toEqual([]);
         expect(next.tabs?.[1]?.filterContext?.filterContextDefinition?.filters[0]).toMatchObject({
-            dateFilter: { localIdentifier: "common-b", from: -5, granularity: "GDC.time.year" },
+            dateFilter: {
+                localIdentifier: "common-b",
+                from: -5,
+                granularity: "GDC.time.year",
+            },
         });
     });
 
@@ -849,7 +1053,10 @@ describe("view mode tab sync", () => {
 
     it("mirrors a measure value filter by measure ref when local identifiers differ", () => {
         const initial = makeState([
-            { localIdentifier: "tab-a", filterContext: filterContext([measureFilter("mvf_0", 1)]) },
+            {
+                localIdentifier: "tab-a",
+                filterContext: filterContext([measureFilter("mvf_0", 1)]),
+            },
             {
                 localIdentifier: "tab-b",
                 filterContext: filterContext([measureFilter("mvf-migrated", 1)]),
@@ -929,15 +1136,28 @@ describe("view mode tab sync", () => {
         const region = idRef("region", "attribute");
         const target = measureFilter("mvf-b", 1, [region]);
         const initial = makeState([
-            { localIdentifier: "tab-a", filterContext: filterContext([measureFilter("mvf_0", 1)]) },
-            { localIdentifier: "tab-b", filterContext: filterContext([target]) },
+            {
+                localIdentifier: "tab-a",
+                filterContext: filterContext([measureFilter("mvf_0", 1)]),
+            },
+            {
+                localIdentifier: "tab-b",
+                filterContext: filterContext([target]),
+            },
         ]);
 
         const next = sync(
             initial,
             tabsActions.changeMeasureValueFilterCondition({
                 localIdentifier: "mvf_0",
-                conditions: [{ comparison: { operator: "GREATER_THAN", value: 1_000_000 } }],
+                conditions: [
+                    {
+                        comparison: {
+                            operator: "GREATER_THAN",
+                            value: 1_000_000,
+                        },
+                    },
+                ],
             }),
         );
 
@@ -981,7 +1201,10 @@ describe("view mode tab sync", () => {
                 localIdentifier: "tab-a",
                 filterContext: filterContext([measureFilter("mvf_0", 1, [region, product])]),
             },
-            { localIdentifier: "tab-b", filterContext: filterContext([first, second]) },
+            {
+                localIdentifier: "tab-b",
+                filterContext: filterContext([first, second]),
+            },
         ]);
         const next = sync(
             initial,
@@ -1002,7 +1225,10 @@ describe("view mode tab sync", () => {
                 localIdentifier: "tab-a",
                 filterContext: filterContext([measureFilter("mvf_0", 1, [region])]),
             },
-            { localIdentifier: "tab-b", filterContext: filterContext([target]) },
+            {
+                localIdentifier: "tab-b",
+                filterContext: filterContext([target]),
+            },
         ]);
 
         const next = sync(
@@ -1027,7 +1253,14 @@ describe("view mode tab sync", () => {
                         {
                             dashboardMeasureValueFilter: {
                                 localIdentifier: "mvf_0",
-                                conditions: [{ comparison: { operator: "GREATER_THAN", value: 50 } }],
+                                conditions: [
+                                    {
+                                        comparison: {
+                                            operator: "GREATER_THAN",
+                                            value: 50,
+                                        },
+                                    },
+                                ],
                             },
                         },
                     ],
@@ -1059,13 +1292,23 @@ describe("view mode tab sync", () => {
                         {
                             dashboardMeasureValueFilter: {
                                 localIdentifier: "mvf_0",
-                                conditions: [{ comparison: { operator: "GREATER_THAN", value: 50 } }],
+                                conditions: [
+                                    {
+                                        comparison: {
+                                            operator: "GREATER_THAN",
+                                            value: 50,
+                                        },
+                                    },
+                                ],
                             },
                         },
                     ],
                 ),
             },
-            { localIdentifier: "tab-b", filterContext: filterContext([target]) },
+            {
+                localIdentifier: "tab-b",
+                filterContext: filterContext([target]),
+            },
         ]);
 
         const next = sync(initial, tabsActions.applyWorkingSelection({}));
@@ -1084,19 +1327,39 @@ describe("view mode tab sync", () => {
             dashboardMeasureValueFilter: {
                 measure: headcount,
                 localIdentifier: "mvf_0",
-                conditions: [{ comparison: { operator: "GREATER_THAN" as const, value: 10 } }],
+                conditions: [
+                    {
+                        comparison: {
+                            operator: "GREATER_THAN" as const,
+                            value: 10,
+                        },
+                    },
+                ],
             },
         };
         const initial = makeState([
-            { localIdentifier: "tab-a", filterContext: filterContext([measureFilter("mvf_0", 1)]) },
-            { localIdentifier: "tab-b", filterContext: filterContext([target]) },
+            {
+                localIdentifier: "tab-a",
+                filterContext: filterContext([measureFilter("mvf_0", 1)]),
+            },
+            {
+                localIdentifier: "tab-b",
+                filterContext: filterContext([target]),
+            },
         ]);
 
         const next = sync(
             initial,
             tabsActions.changeMeasureValueFilterCondition({
                 localIdentifier: "mvf_0",
-                conditions: [{ comparison: { operator: "GREATER_THAN", value: 1_000_000 } }],
+                conditions: [
+                    {
+                        comparison: {
+                            operator: "GREATER_THAN",
+                            value: 1_000_000,
+                        },
+                    },
+                ],
             }),
         );
 
@@ -1123,7 +1386,10 @@ describe("view mode tab sync", () => {
         );
 
         expect(next.tabs?.[0]?.filterContext?.filterContextDefinition?.filters[0]).toMatchObject({
-            attributeFilter: { attributeElements: { uris: [] }, negativeSelection: true },
+            attributeFilter: {
+                attributeElements: { uris: [] },
+                negativeSelection: true,
+            },
         });
         expect(next.tabs?.[1]?.filterContext?.filterContextDefinition?.filters[0]).toMatchObject({
             attributeFilter: {
@@ -1296,8 +1562,14 @@ describe("view mode tab sync", () => {
             },
         });
         const initial = makeState([
-            { localIdentifier: "tab-a", filterContext: filterContext([text("text-a", ["east"])]) },
-            { localIdentifier: "tab-b", filterContext: filterContext([text("text-b", ["east"])]) },
+            {
+                localIdentifier: "tab-a",
+                filterContext: filterContext([text("text-a", ["east"])]),
+            },
+            {
+                localIdentifier: "tab-b",
+                filterContext: filterContext([text("text-b", ["east"])]),
+            },
         ]);
 
         const next = sync(
@@ -1324,7 +1596,10 @@ describe("view mode tab sync", () => {
         });
         const target = attributeFilter("list-b", displayForm, ["east"]);
         const initial = makeState([
-            { localIdentifier: "tab-a", filterContext: filterContext([text(["east"])]) },
+            {
+                localIdentifier: "tab-a",
+                filterContext: filterContext([text(["east"])]),
+            },
             {
                 localIdentifier: "tab-b",
                 filterContext: filterContext([target]),
@@ -1386,6 +1661,61 @@ describe("view mode tab sync", () => {
         ]);
     });
 
+    it("does not apply a contains value to a filter on another label shown as the same label", () => {
+        const regionId = idRef("region.id", "displayForm");
+        const target = allAttributeFilter("region-b", regionId);
+        const initial = makeState([
+            {
+                localIdentifier: "tab-a",
+                filterContext: {
+                    ...filterContext([allAttributeFilter("region-a", displayForm)]),
+                    attributeFilterDisplayForms: [displayFormMeta("region.name", "region")],
+                },
+                attributeFilterConfigs: {
+                    attributeFilterConfigs: [
+                        {
+                            localIdentifier: "region-a",
+                            selectionType: "listOrText",
+                        },
+                    ],
+                },
+            },
+            {
+                localIdentifier: "tab-b",
+                filterContext: {
+                    ...filterContext([target]),
+                    attributeFilterDisplayForms: [displayFormMeta("region.id", "region")],
+                },
+                attributeFilterConfigs: {
+                    attributeFilterConfigs: [
+                        {
+                            localIdentifier: "region-b",
+                            selectionType: "listOrText",
+                            displayAsLabel: displayForm,
+                        },
+                    ],
+                },
+            },
+        ]);
+
+        const next = sync(
+            initial,
+            tabsActions.replaceAttributeFilterItem({
+                filterLocalId: "region-a",
+                filter: {
+                    matchAttributeFilter: {
+                        displayForm,
+                        localIdentifier: "region-a",
+                        operator: "contains",
+                        literal: "West",
+                    },
+                },
+            }),
+        );
+
+        expect(next.tabs?.[1]?.filterContext?.filterContextDefinition?.filters).toEqual([target]);
+    });
+
     it("syncs the next list value after a list-only filter rejects a contains value", () => {
         const contains = (localIdentifier: string, literal: string) => ({
             matchAttributeFilter: {
@@ -1400,7 +1730,12 @@ describe("view mode tab sync", () => {
                 localIdentifier: "tab-a",
                 filterContext: filterContext([attributeFilter("region-a", displayForm, ["east"])]),
                 attributeFilterConfigs: {
-                    attributeFilterConfigs: [{ localIdentifier: "region-a", selectionType: "listOrText" }],
+                    attributeFilterConfigs: [
+                        {
+                            localIdentifier: "region-a",
+                            selectionType: "listOrText",
+                        },
+                    ],
                 },
             },
             {
@@ -1427,7 +1762,10 @@ describe("view mode tab sync", () => {
             attributeFilter: { attributeElements: { uris: ["north"] } },
         });
         expect(next.tabs?.[1]?.filterContext?.filterContextDefinition?.filters[0]).toMatchObject({
-            attributeFilter: { localIdentifier: "region-b", attributeElements: { uris: ["north"] } },
+            attributeFilter: {
+                localIdentifier: "region-b",
+                attributeElements: { uris: ["north"] },
+            },
         });
     });
 
@@ -1449,7 +1787,12 @@ describe("view mode tab sync", () => {
                     [attributeFilter("region-a", displayForm, ["saved-a"])],
                 ),
                 attributeFilterConfigs: {
-                    attributeFilterConfigs: [{ localIdentifier: "region-a", selectionType: "listOrText" }],
+                    attributeFilterConfigs: [
+                        {
+                            localIdentifier: "region-a",
+                            selectionType: "listOrText",
+                        },
+                    ],
                 },
             },
             {
@@ -1482,10 +1825,16 @@ describe("view mode tab sync", () => {
         );
 
         expect(reset.tabs?.[0]?.filterContext?.filterContextDefinition?.filters[0]).toMatchObject({
-            attributeFilter: { localIdentifier: "region-a", attributeElements: { uris: ["saved-a"] } },
+            attributeFilter: {
+                localIdentifier: "region-a",
+                attributeElements: { uris: ["saved-a"] },
+            },
         });
         expect(reset.tabs?.[1]?.filterContext?.filterContextDefinition?.filters[0]).toMatchObject({
-            attributeFilter: { localIdentifier: "region-b", attributeElements: { uris: ["saved-b"] } },
+            attributeFilter: {
+                localIdentifier: "region-b",
+                attributeElements: { uris: ["saved-b"] },
+            },
         });
     });
 
@@ -1503,7 +1852,12 @@ describe("view mode tab sync", () => {
                 localIdentifier: "tab-a",
                 filterContext: filterContext([attributeFilter("region-a", displayForm, ["east"])]),
                 attributeFilterConfigs: {
-                    attributeFilterConfigs: [{ localIdentifier: "region-a", selectionType: "listOrText" }],
+                    attributeFilterConfigs: [
+                        {
+                            localIdentifier: "region-a",
+                            selectionType: "listOrText",
+                        },
+                    ],
                 },
             },
             {
@@ -1643,7 +1997,10 @@ describe("view mode tab sync", () => {
         });
         expect(next.tabs?.[0]?.filterContext?.workingFilterContextDefinition).toEqual({ filters: [] });
         expect(next.tabs?.[1]?.filterContext?.filterContextDefinition?.filters[0]).toMatchObject({
-            attributeFilter: { localIdentifier: "region-b", attributeElements: { uris: ["west"] } },
+            attributeFilter: {
+                localIdentifier: "region-b",
+                attributeElements: { uris: ["west"] },
+            },
         });
         expect(next.tabs?.[1]?.filterContext?.workingFilterContextDefinition?.filters).toEqual([]);
         expect(next.tabs?.[0]?.parameters?.parameters[0]?.runtimeOverride).toBe(9);
@@ -1702,9 +2059,19 @@ describe("view mode tab sync", () => {
         const next = sync(initial, tabsActions.applyWorkingSelection({}));
 
         expect(next.tabs?.[1]?.filterContext?.filterContextDefinition?.filters).toMatchObject([
-            { attributeFilter: { localIdentifier: "region-b", attributeElements: { uris: ["west"] } } },
+            {
+                attributeFilter: {
+                    localIdentifier: "region-b",
+                    attributeElements: { uris: ["west"] },
+                },
+            },
             { dateFilter: { localIdentifier: "date-b", from: -7 } },
-            { attributeFilter: { localIdentifier: "product-b", attributeElements: { uris: [] } } },
+            {
+                attributeFilter: {
+                    localIdentifier: "product-b",
+                    attributeElements: { uris: [] },
+                },
+            },
         ]);
         expect(next.tabs?.[1]?.filterContext?.workingFilterContextDefinition?.filters).toEqual([
             stagedOnB[2],
@@ -1740,7 +2107,9 @@ describe("view mode tab sync", () => {
             {
                 localIdentifier: "tab-b",
                 filterContext: filterContext([attributeFilter("region-b", displayForm, ["east"])], stagedOnB),
-                parameters: { parameters: [{ parameter, runtimeOverride: 1, workingOverride: 9 }] },
+                parameters: {
+                    parameters: [{ parameter, runtimeOverride: 1, workingOverride: 9 }],
+                },
             },
         ]);
 
@@ -1761,92 +2130,49 @@ describe("view mode tab sync", () => {
         expect(afterCancel.tabs?.[1]?.parameters?.parameters[0]?.workingOverride).toBe(9);
     });
 
-    it("keeps a seeded tab in sync and restores it to its seed on reset", () => {
-        const source: ITabState = {
-            localIdentifier: "tab-a",
-            filterContext: filterContext(
-                [attributeFilter("region", displayForm, ["east"]), measureFilter("mvf", 10)],
-                [],
-                [allAttributeFilter("region", displayForm), measureFilter("mvf", 0)],
-            ),
-        };
-        const seed = seedSyncedTabFilters(source, { title: "filterContext", description: "", filters: [] });
-        const seeded: ITabState = {
-            localIdentifier: "tab-new",
-            filterContext: {
-                filtersWithInvalidSelection: [],
-                filterContextDefinition: seed.filterContextDefinition,
-                originalFilterContextDefinition: seed.filterContextDefinition,
-            },
-        };
-
-        const withNewTab = tabsReducers.setTabs(
-            makeState([source]),
-            tabsActions.setTabs({ tabs: [source, seeded], activeTabLocalIdentifier: "tab-a" }),
-        )!;
-
-        const changed = sync(withNewTab, [
-            tabsActions.updateAttributeFilterSelection({
-                filterLocalId: "region",
-                elements: { uris: ["west"] },
-                negativeSelection: false,
-            }),
-            tabsActions.changeMeasureValueFilterCondition({
-                localIdentifier: "mvf",
-                conditions: [{ comparison: { operator: "GREATER_THAN", value: 50 } }],
-            }),
-        ]);
-
-        expect(changed.tabs?.[1]?.filterContext?.filterContextDefinition?.filters).toEqual([
-            attributeFilter("region", displayForm, ["west"]),
-            measureFilter("mvf", 50),
-        ]);
-
-        const reset = sync(changed, [
-            tabsActions.updateAttributeFilterSelection({
-                filterLocalId: "region",
-                elements: { uris: [] },
-                negativeSelection: true,
-                restoreTargetOriginal: true,
-            }),
-            tabsActions.changeMeasureValueFilterCondition({
-                localIdentifier: "mvf",
-                conditions: [{ comparison: { operator: "GREATER_THAN", value: 0 } }],
-                restoreTargetOriginal: true,
-            }),
-        ]);
-
-        expect(reset.tabs?.[1]?.filterContext?.filterContextDefinition?.filters).toEqual([
-            attributeFilter("region", displayForm, ["east"]),
-            measureFilter("mvf", 10),
-        ]);
-    });
-
     it("writes parameter values onto every tab that defines the parameter", () => {
         const scenarioRef = idRef("scenario", "parameter");
-        const scenario: IDashboardParameter = { ref: scenarioRef, parameterType: "STRING", mode: "active" };
+        const scenario: IDashboardParameter = {
+            ref: scenarioRef,
+            parameterType: "STRING",
+            mode: "active",
+        };
         const initial = makeState([
             {
                 localIdentifier: "tab-a",
-                parameters: { parameters: [{ parameter, runtimeOverride: 10, workingOverride: 40 }] },
+                parameters: {
+                    parameters: [{ parameter, runtimeOverride: 10, workingOverride: 40 }],
+                },
             },
             {
                 localIdentifier: "tab-b",
-                parameters: { parameters: [{ parameter, runtimeOverride: 20, workingOverride: 30 }] },
+                parameters: {
+                    parameters: [{ parameter, runtimeOverride: 20, workingOverride: 30 }],
+                },
             },
             {
                 localIdentifier: "tab-c",
-                parameters: { parameters: [{ parameter: scenario, runtimeOverride: "Actual" }] },
+                parameters: {
+                    parameters: [{ parameter: scenario, runtimeOverride: "Actual" }],
+                },
             },
         ]);
 
         const next = sync(
             initial,
-            tabsActions.setParameterRuntimeValues({ values: [{ ref: parameterRef, value: 99 }] }),
+            tabsActions.setParameterRuntimeValues({
+                values: [{ ref: parameterRef, value: 99 }],
+            }),
         );
 
-        expect(next.tabs?.[0]?.parameters?.parameters[0]).toEqual({ parameter, runtimeOverride: 99 });
-        expect(next.tabs?.[1]?.parameters?.parameters[0]).toEqual({ parameter, runtimeOverride: 99 });
+        expect(next.tabs?.[0]?.parameters?.parameters[0]).toEqual({
+            parameter,
+            runtimeOverride: 99,
+        });
+        expect(next.tabs?.[1]?.parameters?.parameters[0]).toEqual({
+            parameter,
+            runtimeOverride: 99,
+        });
         expect(next.tabs?.[2]?.parameters?.parameters).toEqual([
             { parameter: scenario, runtimeOverride: "Actual" },
         ]);
@@ -1874,7 +2200,9 @@ describe("view mode tab sync", () => {
                 tabsActions.removeAttributeFilter({ filterLocalId: "cross" }),
                 tabsActions.removeAttributeFilterDisplayForms({ displayForm }),
                 tabsActions.removeAttributeFilter({ filterLocalId: "code" }),
-                tabsActions.removeAttributeFilterDisplayForms({ displayForm: otherDisplayForm }),
+                tabsActions.removeAttributeFilterDisplayForms({
+                    displayForm: otherDisplayForm,
+                }),
             ],
             { "tab-a": ["cross"] },
         );

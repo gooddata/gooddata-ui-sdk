@@ -24,9 +24,8 @@ import {
     projectIdInitialState,
 } from "./app_context_state.js";
 
-// All cases are wired by their frozen enum STRING with type-only creator imports on purpose:
-// a value import of actions/app_context_actions.js would drag jquery + jquery.browser
-// (a window read at import time) into the reducer graph and break node-env consumers.
+// All cases are wired by their frozen enum STRING with type-only creator imports, so the reducer
+// graph does not load actions/app_context_actions.js.
 
 const bootstrapDataSlice = createSlice({
     name: "bootstrapData",

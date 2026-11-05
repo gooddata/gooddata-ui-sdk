@@ -5,13 +5,8 @@ import {
     type DashboardAttributeFilterItem,
     type FilterContextItem,
     type IAttributeDisplayFormMetadataObject,
-    type IDashboardAttributeFilterConfig,
     type IDashboardDateFilter,
-    type IDashboardDateFilterConfigItem,
-    type IDashboardFilterGroupsConfig,
     type IDashboardMeasureValueFilter,
-    type IDashboardMeasureValueFilterConfig,
-    type IFilterContextDefinition,
     type ObjRef,
     type ParameterValue,
     areObjRefsEqual,
@@ -31,10 +26,7 @@ import {
     isSingleSelectionFilter,
 } from "@gooddata/sdk-model";
 
-import {
-    displayFormsEquivalent,
-    findAttributeFilterCounterpart,
-} from "../../../utils/attributeFilterMatching.js";
+import { findAttributeFilterCounterpart } from "../../../utils/attributeFilterMatching.js";
 import { canApplyFilterTypeToTarget } from "../../../utils/attributeFilterSelectionTypeCompatibility.js";
 import { type ITabState } from "../tabsState.js";
 
@@ -119,11 +111,7 @@ export function findCounterpartFilter(
             targets
                 .filter(isDashboardAttributeFilterItem)
                 .filter((target) =>
-                    samePresentation(
-                        sourcePresentation,
-                        attributeFilterPresentation(targetTab, target),
-                        displayForms,
-                    ),
+                    samePresentation(sourcePresentation, attributeFilterPresentation(targetTab, target)),
                 ),
             {
                 sourceFilterConfigs: sourceTab.attributeFilterConfigs?.attributeFilterConfigs,
@@ -192,13 +180,25 @@ export function retargetAttributeFilterItem(
     localIdentifier: string,
 ): DashboardAttributeFilterItem {
     if (isDashboardAttributeFilter(filter)) {
-        return { attributeFilter: { ...filter.attributeFilter, localIdentifier } };
+        return {
+            attributeFilter: { ...filter.attributeFilter, localIdentifier },
+        };
     }
     if (isDashboardArbitraryAttributeFilter(filter)) {
-        return { arbitraryAttributeFilter: { ...filter.arbitraryAttributeFilter, localIdentifier } };
+        return {
+            arbitraryAttributeFilter: {
+                ...filter.arbitraryAttributeFilter,
+                localIdentifier,
+            },
+        };
     }
     if (isDashboardMatchAttributeFilter(filter)) {
-        return { matchAttributeFilter: { ...filter.matchAttributeFilter, localIdentifier } };
+        return {
+            matchAttributeFilter: {
+                ...filter.matchAttributeFilter,
+                localIdentifier,
+            },
+        };
     }
     return filter;
 }
@@ -227,10 +227,17 @@ export function preserveFilterDependencies(
     };
 
     if (isDashboardAttributeFilter(replacement)) {
-        return { attributeFilter: { ...replacement.attributeFilter, ...preserved } };
+        return {
+            attributeFilter: { ...replacement.attributeFilter, ...preserved },
+        };
     }
     if (isDashboardArbitraryAttributeFilter(replacement)) {
-        return { arbitraryAttributeFilter: { ...replacement.arbitraryAttributeFilter, ...preserved } };
+        return {
+            arbitraryAttributeFilter: {
+                ...replacement.arbitraryAttributeFilter,
+                ...preserved,
+            },
+        };
     }
     return replacement;
 }
@@ -238,6 +245,7 @@ export function preserveFilterDependencies(
 /**
  * Copies an applied source filter onto an existing target filter, keeping the target's
  * local identifier, parent dependencies, and measure-value dimensionality. Does not create a filter.
+ * A list filter takes the display form of the source, because its elements are values of that display form.
  *
  * @internal
  */
@@ -246,9 +254,16 @@ export function applyMirroredFilterValue(
     target: FilterContextItem,
 ): FilterContextItem {
     if (isDashboardAttributeFilter(source) && isDashboardAttributeFilter(target)) {
+        const sameDisplayForm = areObjRefsEqual(
+            source.attributeFilter.displayForm,
+            target.attributeFilter.displayForm,
+        );
         return {
             attributeFilter: {
                 ...target.attributeFilter,
+                displayForm: sameDisplayForm
+                    ? target.attributeFilter.displayForm
+                    : source.attributeFilter.displayForm,
                 attributeElements: source.attributeFilter.attributeElements,
                 negativeSelection: source.attributeFilter.negativeSelection,
             },
@@ -375,71 +390,6 @@ export function findAppliedFilterForStaged(
     return filters.find((filter) => dashboardFilterLocalIdentifier(filter) === localIdentifier);
 }
 
-/**
- * Filter state of a tab created while sync is on.
- *
- * @internal
- */
-export interface ISyncedTabSeed {
-    readonly filterContextDefinition: IFilterContextDefinition;
-    readonly attributeFilterDisplayForms: IAttributeDisplayFormMetadataObject[];
-    readonly attributeFilterConfigs: IDashboardAttributeFilterConfig[];
-    readonly dateFilterConfigs: IDashboardDateFilterConfigItem[];
-    readonly measureValueFilterConfigs: IDashboardMeasureValueFilterConfig[];
-    readonly filterGroupsConfig: IDashboardFilterGroupsConfig | undefined;
-}
-
-/**
- * Seeds a new tab with the applied filters of `sourceTab` and the configs that belong to them,
- * so every synced filter has a counterpart on the new tab. Cross-filtering virtual filters stay
- * on their own tab. `base` provides the title and description of the new filter context.
- *
- * @internal
- */
-export function seedSyncedTabFilters(
-    sourceTab: ITabState,
-    base: IFilterContextDefinition,
-    crossFilteringLocalIdsByTab?: CrossFilteringLocalIdsByTab,
-): ISyncedTabSeed {
-    const filters = appliedFilters(sourceTab).filter(
-        (filter) =>
-            !isCrossFilteringVirtualFilter(
-                sourceTab,
-                dashboardFilterLocalIdentifier(filter),
-                crossFilteringLocalIdsByTab,
-            ),
-    );
-    const localIds = new Set(
-        filters.map(dashboardFilterLocalIdentifier).filter((id): id is string => id !== undefined),
-    );
-    const dateDataSets = filters
-        .filter(isDashboardDateFilter)
-        .map((filter) => filter.dateFilter.dataSet)
-        .filter((ref): ref is ObjRef => ref !== undefined);
-
-    const groups = (sourceTab.filterGroupsConfig?.groups ?? [])
-        .map((group) => ({
-            ...group,
-            filters: group.filters.filter((item) => localIds.has(item.filterLocalIdentifier)),
-        }))
-        .filter((group) => group.filters.length > 0);
-
-    return {
-        filterContextDefinition: { ...base, filters },
-        attributeFilterDisplayForms: sourceTab.filterContext?.attributeFilterDisplayForms ?? [],
-        attributeFilterConfigs: (sourceTab.attributeFilterConfigs?.attributeFilterConfigs ?? []).filter(
-            (config) => localIds.has(config.localIdentifier),
-        ),
-        dateFilterConfigs: (sourceTab.dateFilterConfigs?.dateFilterConfigs ?? []).filter((config) =>
-            dateDataSets.some((ref) => areObjRefsEqual(ref, config.dateDataSet)),
-        ),
-        measureValueFilterConfigs: (
-            sourceTab.measureValueFilterConfigs?.measureValueFilterConfigs ?? []
-        ).filter((config) => localIds.has(config.localIdentifier)),
-        filterGroupsConfig: groups.length > 0 ? { groups } : undefined,
-    };
-}
-
 function writeFilter(tab: ITabState, current: FilterContextItem, next: FilterContextItem): void {
     const filters = tab.filterContext?.filterContextDefinition?.filters;
     if (!filters) {
@@ -554,6 +504,10 @@ function attributeFilterPresentation(
  * list-or-text filter, and cannot be applied to a list-only filter. An omitted selection type
  * means list-or-text, except a single-value list filter, which means list.
  *
+ * A text value is a value of one label, so it is valid only on a filter of the same display form.
+ * A filter that shows that label through its display-as label filters by another label and keeps
+ * its own value.
+ *
  * @internal
  */
 export function targetAcceptsAttributeFilterValue(
@@ -567,22 +521,26 @@ export function targetAcceptsAttributeFilterValue(
               (config) => config.localIdentifier === localIdentifier,
           )?.selectionType
         : undefined;
-    const valueType = isDashboardAttributeFilter(value) ? "list" : "text";
-    return canApplyFilterTypeToTarget(valueType, selectionType, targetFilter);
+    if (isDashboardAttributeFilter(value)) {
+        return canApplyFilterTypeToTarget("list", selectionType, targetFilter);
+    }
+    return (
+        canApplyFilterTypeToTarget("text", selectionType, targetFilter) &&
+        areObjRefsEqual(
+            dashboardAttributeFilterItemDisplayForm(value),
+            dashboardAttributeFilterItemDisplayForm(targetFilter),
+        )
+    );
 }
 
 /**
  * Attribute filters are the same filter when they show the same label and both select either a
  * single value or multiple values.
  */
-function samePresentation(
-    left: IAttributeFilterPresentation,
-    right: IAttributeFilterPresentation,
-    displayForms: IAttributeDisplayFormMetadataObject[],
-): boolean {
+function samePresentation(left: IAttributeFilterPresentation, right: IAttributeFilterPresentation): boolean {
     return (
         left.isSingleSelection === right.isSingleSelection &&
-        displayFormsEquivalent(left.displayAsLabel, right.displayAsLabel, displayForms)
+        areObjRefsEqual(left.displayAsLabel, right.displayAsLabel)
     );
 }
 

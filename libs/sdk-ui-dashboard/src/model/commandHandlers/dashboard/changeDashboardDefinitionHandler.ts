@@ -29,6 +29,7 @@ import {
     selectSettings,
 } from "../../store/config/configSelectors.js";
 import { selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
+import { selectPreloadedAttributesWithReferences } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectActiveTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 import { DEFAULT_TAB_ID } from "../../store/tabs/tabsState.js";
 import { unavailableObjectsActions } from "../../store/unavailableObjects/index.js";
@@ -179,6 +180,9 @@ export function* changeDashboardDefinitionHandler(
     const effectiveActiveTabId = activeTabExistsInNewDashboard
         ? currentActiveTabId
         : (dashboard.tabs?.[0]?.localIdentifier ?? DEFAULT_TAB_ID);
+    const attributesWithReferences: ReturnType<typeof selectPreloadedAttributesWithReferences> = yield select(
+        selectPreloadedAttributesWithReferences,
+    );
 
     const batch: Array<PayloadAction<any>> = yield call(
         actionsToInitializeExistingDashboard,
@@ -197,6 +201,7 @@ export function* changeDashboardDefinitionHandler(
         effectiveActiveTabId,
         workspaceParameters,
         unavailableReferences,
+        attributesWithReferences,
     );
 
     batch.push(unavailableObjectsActions.setUnavailableObjects(unavailableReferences));

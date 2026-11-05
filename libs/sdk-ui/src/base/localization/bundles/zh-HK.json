@@ -97,6 +97,7 @@
     "visualizations.totals.dropdown.title.nat": "匯總（總計）",
     "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "按度量值篩選可視化效果時，匯總（總計）聚合不可用。 要使用Rollup （Total），請從篩選器欄中刪除所有度量值篩選器。",
     "visualizations.totals.dropdown.tooltip.nat.disabled.ranking": "透過排名篩選器篩選可視化效果時，匯總（總計）聚合不可用。 要使用Rollup （Total），請從過濾器欄中刪除排名過濾器。",
+    "visualizations.totals.dropdown.tooltip.subtotal.disabled.measureSort": "按指標排序時無法使用列小計。清除指標排序以顯示小計。",
     "visualizations.totals.dropdown.title.med": "中位數",
     "visualizations.headline.tertiary.title": "對比",
     "visualizations.headline.comparison.title.change": "改變",

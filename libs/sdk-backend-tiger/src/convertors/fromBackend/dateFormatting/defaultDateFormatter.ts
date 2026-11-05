@@ -183,6 +183,8 @@ export const defaultDateFormatter = (
         ) {
             return formatInTimeZone(value, timezone, transformedFormatPattern, {
                 locale: convertedLocale,
+                useAdditionalDayOfYearTokens: true, // for day of year formatting
+                useAdditionalWeekYearTokens: true, // for week formatting
                 weekStartsOn: 0, // hardcoded to US value as backend returns US weeks
                 firstWeekContainsDate: 1, // hardocded to US value as backend returns US weeks - otherwise this could influence first and last week of year
             });

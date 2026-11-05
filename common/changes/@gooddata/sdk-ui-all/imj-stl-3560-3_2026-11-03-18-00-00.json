@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-analytical-designer: The AnalyticalDesigner slots cover the editor header. EditorHeader, VisualizationInfo and EditorActions, and one slot per header control, can be hidden, replaced, decorated or rendered with changed props.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

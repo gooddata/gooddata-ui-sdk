@@ -25,6 +25,8 @@ section: AI & Modules
 
 Place the AI Assistant in your layout and connect it to the components around it. Every example needs the AI Assistant set up in your organization, see [Prerequisites](../ai-assistant/#prerequisites).
 
+To change the chat input hint, see [Set the input placeholder](../customize-ai-assistant/#set-the-input-placeholder).
+
 ## Switch between the docked and fullscreen layouts
 
 Use `mode` to switch the assistant between the compact `docked` layout, intended for a side panel, and the wide `fullscreen` layout, intended for a full-page section. `mode` changes only the internal layout; size the container yourself.

@@ -568,7 +568,7 @@ in `@gooddata/sdk-ui-gen-ai` and may change or be removed without a major versio
 | `AssistantMessage` | Alpha | Custom wrapper for assistant messages. |
 | `MessageTextContent` | Alpha | Custom rendering for text message content. |
 | `MessageErrorContent` | Alpha | Custom rendering for error message content. |
-| `MessageReasoningContent` | Alpha | Custom rendering for assistant reasoning content. |
+| `MessageReasoningContent` | Alpha | Custom rendering for assistant reasoning content, with optional `durationMs` matching the reasoning header and per-message `agent` identity (id and name when available), during streaming and after history reload. See [Customize message content](../customize-ai-assistant/#customize-message-content). |
 | `MessageMultipartContent` | Alpha | Custom rendering for complex messages with multiple parts. |
 | `ConversationVisualizationContent` | Alpha | Custom rendering for visualization parts in multipart messages, including visualization menu item visibility. |
 | `VisualizationMenu` | Alpha | Custom items of the visualization menu (the `...` button on visualizations in messages). |
@@ -632,6 +632,7 @@ See [Build your own conversation list](../ai-assistant-layout/#build-your-own-co
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | `locale` | `string` | `"en-US"` | The locale of the chat UI. |
+| `inputPlaceholder` | `string` | Bundled localized placeholder | Overrides the chat input placeholder (`Ask here…` in English). Custom text is displayed as-is, without translation. An empty string hides the placeholder. See [Set the input placeholder](../customize-ai-assistant/#set-the-input-placeholder). |
 | `onLinkClick` | `(event: LinkHandlerEvent) => string \| undefined` | - | Handles clicks on the catalog items mentioned in the chat. Without it, the items are plain text. See [Link clicks](#link-clicks). |
 | `allowNativeLinks` | `boolean` | `false` | Renders catalog items as native `<a>` links to the GoodData web interface. `onLinkClick` fires in both cases. |
 | `disableManage` | `boolean` | `false` | Turns off the manage permission for the user even if the user has it. |

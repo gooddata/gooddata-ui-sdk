@@ -6,7 +6,6 @@ import classNames from "classnames";
 import { isEmpty, isEqual } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
 import { connect } from "react-redux";
-import { type Subscription } from "rxjs";
 
 import {
     type DateFilterGranularity,
@@ -62,7 +61,12 @@ import { type IAppState } from "../../store/types.js";
 import { type IBucketItemMetricFilter } from "../../typings/bucket_item_filter.js";
 import { type IDecoratedBucketItem } from "../../typings/buckets.js";
 import { type IDateDatasetRefWithGranularities } from "../../typings/datasets.js";
-import { DROPDOWN_ALIGNMENTS, getDialogHeight, subscribeEvents } from "../../utils/dropdown.js";
+import {
+    DROPDOWN_ALIGNMENTS,
+    type IEventSubscription,
+    getDialogHeight,
+    subscribeEvents,
+} from "../../utils/dropdown.js";
 import { getIsoDate } from "../../utils/timers.js";
 import { DateFilterPresets } from "../DateFilterPresets.js";
 import { type IDateFilterOption } from "../filterBar/dateFilter/dateFilterOptionFactory.js";
@@ -240,7 +244,7 @@ export function MeasureDateFilterBase({
     const intl = useIntl();
 
     const [state, setState] = useState<IState>(initialState);
-    const subscribersRef = useRef<Subscription[]>([]);
+    const subscribersRef = useRef<IEventSubscription[]>([]);
     const buttonRef = useRef<HTMLElement | null>(null);
 
     const isDisabled = useCallback(() => {

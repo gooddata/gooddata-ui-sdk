@@ -136,7 +136,7 @@ Produces a production bundle in \`dist/\`.
 ",
   "harness/eslint.config.ts": "// (C) 2026 GoodData Corporation
 
-export { default } from "@gooddata/eslint-config/oxlint-react";
+export { default } from "@gooddata/eslint-config/v10/oxlint/react";
 ",
   "harness/index.html": "<!doctype html>
 <html lang="en">
@@ -203,8 +203,8 @@ export { default } from "@gooddata/eslint-config/oxlint-react";
         "eslint-plugin-headers": "<VERSION>",
         "eslint-plugin-jsdoc": "<VERSION>",
         "eslint-plugin-no-barrel-files": "<VERSION>",
-        "eslint-plugin-react": "<VERSION>",
         "eslint-plugin-sonarjs": "<VERSION>",
+        "eslint-plugin-tsdoc": "<VERSION>",
         "jiti": "<VERSION>",
         "npm-run-all": "<VERSION>",
         "oxfmt": "<VERSION>",
@@ -608,7 +608,7 @@ The \`asyncComponentTranslations\` map is typed as \`Record<ILocale, ...>\`. If 
 ",
   "module/eslint.config.ts": "// (C) 2026 GoodData Corporation
 
-export { default } from "@gooddata/eslint-config/oxlint-react-vitest";
+export { default } from "@gooddata/eslint-config/v10/oxlint/react-vitest";
 ",
   "module/package.json": "{
     "name": "gdc-snap-test-module",
@@ -675,8 +675,8 @@ export { default } from "@gooddata/eslint-config/oxlint-react-vitest";
         "eslint-plugin-jsdoc": "<VERSION>",
         "eslint-plugin-no-barrel-files": "<VERSION>",
         "eslint-plugin-no-only-tests": "<VERSION>",
-        "eslint-plugin-react": "<VERSION>",
         "eslint-plugin-sonarjs": "<VERSION>",
+        "eslint-plugin-tsdoc": "<VERSION>",
         "happy-dom": "<VERSION>",
         "jiti": "<VERSION>",
         "npm-run-all": "<VERSION>",

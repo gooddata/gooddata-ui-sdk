@@ -1,7 +1,5 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { FormattedMessage, useIntl } from "react-intl";
-
 import { IconExternalLink, Item, ItemsWrapper, Overlay, Separator } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
@@ -10,20 +8,24 @@ import { EmbedMenuItem } from "./EmbedMenuItem.js";
 const MENU_ALIGN_POINTS = [{ align: "br tr" }];
 
 export interface IEmbedMenuProps {
-    isReportBlank: boolean;
-    isCodeGenerationSupported: boolean;
-    embedAnalyticalDesignerLink: string;
+    embedInsightLabel: string;
+    isEmbedInsightDisabled: boolean;
+    embedInsightDisabledReason?: string;
+    documentationLabel: string;
+    documentationUrl: string;
     toggleMenu: () => void;
     onMenuItemClick: () => void;
 }
 
 export function EmbedMenu({
-    isReportBlank,
-    embedAnalyticalDesignerLink,
+    embedInsightLabel,
+    isEmbedInsightDisabled,
+    embedInsightDisabledReason,
+    documentationLabel,
+    documentationUrl,
     toggleMenu,
     onMenuItemClick,
 }: IEmbedMenuProps) {
-    const intl = useIntl();
     const theme = useTheme();
 
     const iconColor = theme?.palette?.complementary?.c5 ?? "#000000";
@@ -40,17 +42,15 @@ export function EmbedMenu({
         >
             <ItemsWrapper smallItemsSpacing className=".s-embed-menu">
                 <EmbedMenuItem
-                    title={intl.formatMessage({ id: "embedInsightDialog.embed.menu.title" })}
-                    disabled={isReportBlank}
-                    disableMessage={intl.formatMessage({
-                        id: "embedInsightDialog.embed.disable.message.empty.report",
-                    })}
+                    title={embedInsightLabel}
+                    disabled={isEmbedInsightDisabled}
+                    disableMessage={embedInsightDisabledReason}
                     onMenuItemClick={onMenuItemClick}
                 />
                 <Separator />
                 <Item className="adi-embed-button-menu-item-link" onClick={toggleMenu}>
-                    <a href={embedAnalyticalDesignerLink} target="_blank" rel="noreferrer">
-                        <FormattedMessage id="embedInsightDialog.embed.analytical.designer.menu.title" />
+                    <a href={documentationUrl} target="_blank" rel="noreferrer">
+                        {documentationLabel}
                         <IconExternalLink
                             className="adi-embed-button-menu-item-ico-link"
                             width={14}

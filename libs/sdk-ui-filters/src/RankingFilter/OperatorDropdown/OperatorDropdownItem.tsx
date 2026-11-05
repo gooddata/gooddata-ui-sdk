@@ -13,7 +13,7 @@ interface IOperatorDropdownItemProps {
     strictLimitOfRows: boolean;
     isSelected: boolean;
     tooltipId?: string;
-    /** Current ranking filter value (N); fills the {n} placeholder in the strict condition tooltip. */
+    /** Current ranking filter value (N); fills the `{n}` placeholder in the strict condition tooltip. */
     limitValue: number;
     onSelect: (value: RankingFilterOperator, strictLimitOfRows: boolean) => void;
 }

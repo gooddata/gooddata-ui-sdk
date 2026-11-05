@@ -10,7 +10,7 @@ export const METRICS_CHANGED_EVENT = "metricsChanged";
 /**
  * Tells an in-process host that a metric was saved or deleted, so a host that shares a caching
  * backend with AD can reset its caches. Only the host adapter receives it: the event is not part of
- * the @gooddata/sdk-embedding contract, so it is not posted to an iframe parent.
+ * the `@gooddata/sdk-embedding` contract, so it is not posted to an iframe parent.
  */
 export function metricsChanged(): void {
     if (!getHostAdapter()) {

@@ -234,6 +234,7 @@ export function useHostChromeChat({
                 canManageProject={features.canManageProject}
                 canAnalyzeProject={features.canAnalyzeWorkspace}
                 canFullControl={features.canFullControl}
+                canCreateDocument={features.canCreateDocument}
                 settings={ctx.workspaceSettings}
                 dialogPosition={dialogPosition}
                 embedded={embedded}

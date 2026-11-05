@@ -1,18 +1,20 @@
 // (C) 2007-2026 GoodData Corporation
 
 // @vitest-environment node
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
     DROPDOWN_MAX_HEIGHT,
     DROPDOWN_MIN_HEIGHT,
     DROPDOWN_OFFSET_FROM_NODE,
     DROP_DOWN_BUTTON_HEIGHT,
+    EVENT_DEBOUNCE_MILLISECONDS,
     type IDropdownWindow,
     MAX_DATE_DATASET_DROPDOWN_WIDTH,
     PADDING,
     getDateDatasetDropdownWidth,
     getDialogHeight,
+    subscribeEvents,
 } from "./dropdown.js";
 
 const LOW_WINDOW_HEIGHT = 360; // TWICE DROPDOWN_MIN_HEIGHT
@@ -121,5 +123,101 @@ describe("getDateDatasetDropdownWidth", () => {
         const narrowWindow = { innerWidth: 150 };
 
         expect(getDateDatasetDropdownWidth(80, 900, -50, 30, narrowWindow)).toEqual(80);
+    });
+});
+
+describe("subscribeEvents", () => {
+    let windowTarget: EventTarget;
+
+    beforeEach(() => {
+        vi.useFakeTimers();
+        windowTarget = new EventTarget();
+        vi.stubGlobal("window", windowTarget);
+    });
+
+    afterEach(() => {
+        vi.useRealTimers();
+    });
+
+    const dispatch = (type: string) => {
+        const event = new Event(type);
+        windowTarget.dispatchEvent(event);
+        return event;
+    };
+
+    it("calls the handler once with the last event, after a quiet period following a burst", () => {
+        const handler = vi.fn();
+        subscribeEvents(handler);
+
+        dispatch("scroll");
+        vi.advanceTimersByTime(EVENT_DEBOUNCE_MILLISECONDS - 1);
+        const last = dispatch("scroll");
+        vi.advanceTimersByTime(EVENT_DEBOUNCE_MILLISECONDS - 1);
+
+        expect(handler).not.toHaveBeenCalled();
+
+        vi.advanceTimersByTime(1);
+
+        expect(handler).toHaveBeenCalledTimes(1);
+        expect(handler).toHaveBeenCalledWith(last);
+    });
+
+    it("debounces each event type on its own", () => {
+        const handler = vi.fn();
+        subscribeEvents(handler);
+
+        const scroll = dispatch("scroll");
+        const resize = dispatch("resize");
+        vi.advanceTimersByTime(EVENT_DEBOUNCE_MILLISECONDS);
+
+        expect(handler).toHaveBeenCalledTimes(2);
+        expect(handler).toHaveBeenCalledWith(scroll);
+        expect(handler).toHaveBeenCalledWith(resize);
+    });
+
+    it("listens only to the given events", () => {
+        const handler = vi.fn();
+        subscribeEvents(handler, ["resize"]);
+
+        dispatch("scroll");
+        vi.advanceTimersByTime(EVENT_DEBOUNCE_MILLISECONDS);
+
+        expect(handler).not.toHaveBeenCalled();
+    });
+
+    it("stops calling the handler after unsubscribe", () => {
+        const handler = vi.fn();
+        subscribeEvents(handler).forEach((subscription) => subscription.unsubscribe());
+
+        dispatch("scroll");
+        dispatch("resize");
+        vi.advanceTimersByTime(EVENT_DEBOUNCE_MILLISECONDS);
+
+        expect(handler).not.toHaveBeenCalled();
+    });
+
+    it("drops a pending call on unsubscribe", () => {
+        const handler = vi.fn();
+        const subscriptions = subscribeEvents(handler);
+
+        dispatch("scroll");
+        dispatch("resize");
+        subscriptions.forEach((subscription) => subscription.unsubscribe());
+        vi.advanceTimersByTime(EVENT_DEBOUNCE_MILLISECONDS);
+
+        expect(handler).not.toHaveBeenCalled();
+    });
+
+    it("unsubscribes one event type without affecting the other", () => {
+        const handler = vi.fn();
+        const [scrollSubscription] = subscribeEvents(handler);
+
+        scrollSubscription.unsubscribe();
+        dispatch("scroll");
+        const resize = dispatch("resize");
+        vi.advanceTimersByTime(EVENT_DEBOUNCE_MILLISECONDS);
+
+        expect(handler).toHaveBeenCalledTimes(1);
+        expect(handler).toHaveBeenCalledWith(resize);
     });
 });

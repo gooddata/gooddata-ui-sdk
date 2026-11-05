@@ -757,7 +757,9 @@ function mirrorTabSelection(
     const commonDate = sourceCommonDate
         ? targetCommonDate
             ? applyMirroredFilterValue(sourceCommonDate, targetCommonDate)
-            : { dateFilter: omit(sourceCommonDate.dateFilter, ["localIdentifier"]) }
+            : {
+                  dateFilter: omit(sourceCommonDate.dateFilter, ["localIdentifier"]),
+              }
         : undefined;
 
     return {
@@ -792,8 +794,13 @@ function findSameTabFilter(
 function toTabSyncState(tab: DashboardTab, filterContext: IFilterContext): ITabState {
     return {
         localIdentifier: tab.localIdentifier,
-        filterContext: { filtersWithInvalidSelection: [], filterContextDefinition: filterContext },
-        attributeFilterConfigs: { attributeFilterConfigs: tab.attributeFilterConfigs },
+        filterContext: {
+            filtersWithInvalidSelection: [],
+            filterContextDefinition: filterContext,
+        },
+        attributeFilterConfigs: {
+            attributeFilterConfigs: tab.attributeFilterConfigs,
+        },
     };
 }
 

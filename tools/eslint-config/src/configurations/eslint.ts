@@ -1,34 +1,46 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { eslintOverrides, eslintRules } from "@gooddata/lint-config";
+import { type IPackage, eslintOverrides, eslintRules } from "@gooddata/lint-config";
 
-import type { IDualConfiguration } from "../types.js";
+import type { IConfiguration } from "../types.js";
 
-export const eslint: IDualConfiguration = {
-    v8: {
-        rules: eslintRules,
-        overrides: eslintOverrides,
-    },
-    v9: {
-        packages: [
-            {
-                name: "@eslint/js",
-                version: "9.39.5",
-            },
-            {
-                name: "jiti",
-                version: "2.6.1",
-            },
-        ],
-        overrides: eslintOverrides,
-        rules: eslintRules,
-    },
-    ox: {
-        packages: [
-            {
-                name: "jiti",
-                version: "2.6.1",
-            },
-        ],
-    },
+const common = {
+    rules: eslintRules,
+    overrides: eslintOverrides,
+};
+
+const jitiPackage: IPackage = {
+    name: "jiti",
+    version: "2.6.1",
+};
+
+const v9 = {
+    packages: [
+        {
+            name: "@eslint/js",
+            version: "9.39.5",
+        },
+        jitiPackage,
+    ],
+    ...common,
+};
+
+const v10 = {
+    packages: [
+        {
+            name: "@eslint/js",
+            version: "10.0.1",
+        },
+        jitiPackage,
+    ],
+    ...common,
+};
+
+const ox = {
+    packages: [jitiPackage],
+};
+
+export const eslint: IConfiguration = {
+    legacy: common,
+    flat: { v9, v9ox: ox, v10, v10ox: ox },
 };

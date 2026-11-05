@@ -56,6 +56,7 @@ function transformDimension(
                     h.attributeHeader.numberFormat,
                     h.attributeHeader.dataType,
                 );
+                const formatGranularity = h.attributeHeader.granularity;
                 const labelRefType = isComputedAttributeHeader ? "computedAttribute" : "displayForm";
                 const attributeRefType = isComputedAttributeHeader ? "computedAttribute" : "attribute";
 
@@ -75,12 +76,17 @@ function transformDimension(
                         localIdentifier: h.attributeHeader.localIdentifier,
                         name: h.attributeHeader.labelName,
                         totalItems: attrTotals[h.attributeHeader.localIdentifier] ?? [],
-                        granularity: h.attributeHeader.granularity,
+                        // a granularity marks a date attribute for drilling and KDA, which a computed
+                        // attribute is not; its granularity only says how its values are parsed
+                        ...(isComputedAttributeHeader
+                            ? formatGranularity && { formatGranularity }
+                            : { granularity: h.attributeHeader.granularity }),
                         format: h.attributeHeader.format,
                         labelType: convertLabelType(h.attributeHeader.valueType),
                         primaryLabel: idRef(h.attributeHeader.primaryLabel.id, labelRefType),
                         geoAreaConfig,
                         ...(numberFormat ? { numberFormat } : {}),
+                        ...(h.attributeHeader.dataType ? { dataType: h.attributeHeader.dataType } : {}),
                     },
                 };
             } else {

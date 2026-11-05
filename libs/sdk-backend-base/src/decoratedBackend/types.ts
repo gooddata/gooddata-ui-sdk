@@ -5,6 +5,7 @@ import {
     type IGeoService,
     type IOrganizationExportTemplatesService,
     type ISecuritySettingsService,
+    type IWorkspaceAnalyticsAsCodeService,
     type IWorkspaceAttributesService,
     type IWorkspaceAutomationService,
     type IWorkspaceCatalogFactory,
@@ -156,6 +157,14 @@ export type ObjectPermissionsDecoratorFactory = (
 ) => IWorkspaceObjectPermissionsService;
 
 /**
+ * @alpha
+ */
+export type AnalyticsAsCodeDecoratorFactory = (
+    analyticsAsCode: IWorkspaceAnalyticsAsCodeService,
+    workspace: string,
+) => IWorkspaceAnalyticsAsCodeService;
+
+/**
  * Provides factory functions for the different decorators (currently only supports execution
  * decorator). Input to each factory function is the original implementation from the wrapped backend, output
  * is whatever decorateur sees fit.
@@ -181,4 +190,5 @@ export type DecoratorFactories = {
     workspacePublisher?: WorkspacePublisherDecoratorFactory;
     workspacePublisherV2?: WorkspacePublisherV2DecoratorFactory;
     objectPermissions?: ObjectPermissionsDecoratorFactory;
+    analyticsAsCode?: AnalyticsAsCodeDecoratorFactory;
 };

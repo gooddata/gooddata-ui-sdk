@@ -100,6 +100,20 @@ describe("createDefaultDateFormatter localization", () => {
         expect(actual).toMatch(/^01\/05\/2025, 06:30 PST$/);
     });
 
+    it("should support week year and day of year tokens with a timezone", () => {
+        const testDate = new Date(Date.UTC(2025, 0, 5, 14, 30, 0));
+
+        const actual = defaultDateFormatter(
+            testDate,
+            "GDC.time.minute",
+            "en-US-x-24h",
+            "dd.MM.YYYY (D) HH:mm",
+            "US/Pacific",
+        );
+
+        expect(actual).toBe("05.01.2025 (5) 06:30");
+    });
+
     it("should use provided format pattern for given locale", () => {
         const formatter = defaultDateFormatter(DATE, "GDC.time.quarter_in_year", "fr-FR", "'T'Q y");
         expect(formatter).toBe("T4 2020");

@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import {
     getTimezoneById,
@@ -45,6 +45,13 @@ describe("timezones", () => {
         it("should find a curated timezone", () => {
             expect(getTimezoneById("Etc/UTC")?.name).toBe("UTC");
         });
+
+        it.each(["America/Nuuk", "Europe/Kyiv", "Asia/Yangon"])(
+            "should find the canonical IANA id %s",
+            (id) => {
+                expect(getTimezoneById(id)?.id).toBe(id);
+            },
+        );
 
         it("should return undefined for unknown or missing id", () => {
             expect(getTimezoneById("Unknown/Zone")).toBeUndefined();
@@ -143,6 +150,20 @@ describe("timezones", () => {
             const matchesRuntime =
                 userTimezone.januaryOffset === januaryOffset && userTimezone.juneOffset === juneOffset;
             expect(matchesRuntime || userTimezone.id === "Etc/UTC").toBe(true);
+        });
+
+        it.each([
+            ["America/Godthab", "America/Nuuk"],
+            ["Europe/Kiev", "Europe/Kyiv"],
+            ["Asia/Rangoon", "Asia/Yangon"],
+        ])("should resolve the legacy runtime id %s to %s", (legacyId, canonicalId) => {
+            const resolvedOptions = Intl.DateTimeFormat().resolvedOptions();
+            vi.spyOn(Intl.DateTimeFormat.prototype, "resolvedOptions").mockReturnValue({
+                ...resolvedOptions,
+                timeZone: legacyId,
+            });
+
+            expect(getUserTimezone().id).toBe(canonicalId);
         });
     });
 });

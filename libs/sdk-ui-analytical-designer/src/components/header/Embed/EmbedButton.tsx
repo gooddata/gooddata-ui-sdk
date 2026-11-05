@@ -3,56 +3,82 @@
 import { useCallback, useMemo, useState } from "react";
 
 import { useIntl } from "react-intl";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 
-import { type ILocale, fillMissingTitlesWithMessages } from "@gooddata/sdk-ui";
-import { EmbedInsightDialog } from "@gooddata/sdk-ui-ext";
-import { type CopyCodeOriginType, type EmbedType, IconEmbedCode } from "@gooddata/sdk-ui-kit";
-import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+import { IconEmbedCode } from "@gooddata/sdk-ui-kit";
 
-import { hideDialog } from "../../../actions/dialogs_actions.js";
+import { createEmbedDialogOpenAction } from "../../../actions/embed_dialog_actions.js";
 import {
-    createEmbedDialogCopyCodeAction,
-    createEmbedDialogOpenAction,
-} from "../../../actions/embed_dialog_actions.js";
-import { saveReportCheck } from "../../../actions/save_actions.js";
-import { backend } from "../../../backend.js";
-import {
-    documentationUrl as documentationUrlSelector,
-    getProjectId,
-} from "../../../selectors/bootstrap_selector.js";
-import { getExecutionConfig } from "../../../selectors/execution_config_selector.js";
-import { getFeatureFlags } from "../../../selectors/feature_flag_selector.js";
-import { getInsightForSaveViaMd } from "../../../selectors/insight_selectors.js";
-import { getIntlMessagesForLocale } from "../../../selectors/intl_selector.js";
+    type IAnalyticalDesignerEmbedProps,
+    type IAnalyticalDesignerHeaderContext,
+} from "../../../embedding/editorHeaderSlotTypes.js";
+import { documentationUrl as documentationUrlSelector } from "../../../selectors/bootstrap_selector.js";
 import { isReportExecutableSelector } from "../../../selectors/report_selector.js";
-import { getColorPalette } from "../../../store/app_context/app_context_selectors.js";
-import { getShowEmbedInsightDialog } from "../../../store/dialogs/dialogs_selectors.js";
 import { type AppDispatch, type IAppState } from "../../../store/types.js";
+import { useGuardedCallback } from "../editorHeaderContext.js";
 
-import { getEmbedAnalyticalDesignerLink, getIntegrationLink } from "./documentationLinks.js";
+import { getEmbedAnalyticalDesignerLink } from "./documentationLinks.js";
 import { EmbedMenu } from "./EmbedMenu.js";
-import { isCodeGenerationSupported } from "./utils.js";
 
 const isReportBlankSelector = createSelector(isReportExecutableSelector, (isExecutable) => !isExecutable);
 
-export function EmbedButton() {
-    const [isMenuOpen, setMenuOpen] = useState(false);
+const canEmbed = (state: IAppState) => !isReportBlankSelector(state);
+const runEmbed = (dispatch: AppDispatch) => dispatch(createEmbedDialogOpenAction());
 
+export function useEmbedProps(context: IAnalyticalDesignerHeaderContext): IAnalyticalDesignerEmbedProps {
     const intl = useIntl();
-    const theme = useTheme();
-    const dispatch = useDispatch<AppDispatch>();
+    const isReportBlank = useSelector(isReportBlankSelector);
+    const documentationUrl = useSelector(documentationUrlSelector);
+    const onEmbedInsight = useGuardedCallback(canEmbed, runEmbed);
 
-    const isReportBlank = useSelector((state: IAppState) => isReportBlankSelector(state));
-    const insight = useSelector((state: IAppState) => getInsightForSaveViaMd(state));
-    const settings = useSelector((state: IAppState) => getFeatureFlags(state));
-    const colorPalette = useSelector((state: IAppState) => getColorPalette(state));
-    const documentationUrl = useSelector((state: IAppState) => documentationUrlSelector(state));
-    const executionConfig = useSelector((state: IAppState) => getExecutionConfig(state));
-    const workspaceId = useSelector((state: IAppState) => getProjectId(state));
-    const isEmbedDialogVisible = useSelector((state: IAppState) => getShowEmbedInsightDialog(state));
-    const messages = useSelector((state: IAppState) => getIntlMessagesForLocale(state));
+    const label = intl.formatMessage({ id: "embedInsightDialog.embed.button.label" });
+    const embedInsightLabel = intl.formatMessage({ id: "embedInsightDialog.embed.menu.title" });
+    const disabledReason = intl.formatMessage({
+        id: "embedInsightDialog.embed.disable.message.empty.report",
+    });
+    const documentationLabel = intl.formatMessage({
+        id: "embedInsightDialog.embed.analytical.designer.menu.title",
+    });
+
+    return useMemo(
+        () => ({
+            ...context,
+            label,
+            embedInsightLabel,
+            isEmbedInsightDisabled: isReportBlank,
+            ...(isReportBlank ? { embedInsightDisabledReason: disabledReason } : {}),
+            documentationLabel,
+            // the props are built even while Embed is hidden, where the bootstrap may carry no documentation
+            documentationUrl: documentationUrl ? getEmbedAnalyticalDesignerLink(documentationUrl) : "",
+            onEmbedInsight,
+        }),
+        [
+            context,
+            label,
+            embedInsightLabel,
+            isReportBlank,
+            disabledReason,
+            documentationLabel,
+            documentationUrl,
+            onEmbedInsight,
+        ],
+    );
+}
+
+/**
+ * Default of the Embed slot: an icon button with a menu of the embedding choices.
+ */
+export function DefaultEmbed({
+    label,
+    embedInsightLabel,
+    isEmbedInsightDisabled,
+    embedInsightDisabledReason,
+    documentationLabel,
+    documentationUrl,
+    onEmbedInsight,
+}: IAnalyticalDesignerEmbedProps) {
+    const [isMenuOpen, setMenuOpen] = useState(false);
 
     const toggleMenu = useCallback(() => {
         setMenuOpen((open) => !open);
@@ -60,36 +86,8 @@ export function EmbedButton() {
 
     const onMenuClick = useCallback(() => {
         setMenuOpen(false);
-        dispatch(createEmbedDialogOpenAction());
-    }, [dispatch]);
-
-    const onDialogClose = useCallback(() => {
-        dispatch(hideDialog());
-    }, [dispatch]);
-
-    const onCopyCode = useCallback(
-        (code: string, type: CopyCodeOriginType, codeType: EmbedType) => {
-            dispatch(createEmbedDialogCopyCodeAction(code, type, codeType));
-        },
-        [dispatch],
-    );
-
-    const openSaveInsightClick = useCallback(() => {
-        onDialogClose();
-        dispatch(saveReportCheck(false, false, true));
-    }, [dispatch, onDialogClose]);
-
-    const isGenerationSupported = useMemo(() => {
-        return isCodeGenerationSupported(insight, settings);
-    }, [insight, settings]);
-
-    // we need to do the same transformations as when the insight is executed by the AD itself (see PluggableVisualization.tsx)
-    const effectiveInsight = fillMissingTitlesWithMessages(
-        insight,
-        settings.locale as ILocale,
-        messages,
-        undefined,
-    );
+        onEmbedInsight();
+    }, [onEmbedInsight]);
 
     return (
         <>
@@ -97,35 +95,22 @@ export function EmbedButton() {
                 style={{ height: 32 }}
                 data-testid="s-embed-button"
                 className="gd-button-secondary editor-header-item"
+                aria-label={label}
+                aria-haspopup="menu"
+                aria-expanded={isMenuOpen}
                 onClick={toggleMenu}
             >
                 <IconEmbedCode />
             </button>
             {isMenuOpen ? (
                 <EmbedMenu
-                    isReportBlank={isReportBlank}
-                    isCodeGenerationSupported={isGenerationSupported}
-                    embedAnalyticalDesignerLink={getEmbedAnalyticalDesignerLink(documentationUrl)}
+                    embedInsightLabel={embedInsightLabel}
+                    isEmbedInsightDisabled={isEmbedInsightDisabled}
+                    embedInsightDisabledReason={embedInsightDisabledReason}
+                    documentationLabel={documentationLabel}
+                    documentationUrl={documentationUrl}
                     toggleMenu={toggleMenu}
                     onMenuItemClick={onMenuClick}
-                />
-            ) : null}
-            {isEmbedDialogVisible ? (
-                <EmbedInsightDialog
-                    insight={effectiveInsight}
-                    settings={settings}
-                    backend={backend}
-                    locale={intl.locale}
-                    theme={theme}
-                    reactIntegrationDocLink={getIntegrationLink()}
-                    webComponentIntegrationDocLink={getIntegrationLink()}
-                    colorPalette={colorPalette}
-                    executionConfig={executionConfig}
-                    onClose={onDialogClose}
-                    onCopyCode={onCopyCode}
-                    workspaceId={workspaceId}
-                    openSaveInsightDialog={openSaveInsightClick}
-                    showWebComponentsTab
                 />
             ) : null}
         </>

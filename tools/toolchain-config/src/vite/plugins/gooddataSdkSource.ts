@@ -13,8 +13,8 @@ const GDC_PREFIX = "gdc-";
 
 /**
  * Source roots for the two monorepo lib families the plugin serves live, by package name:
- *  - `@gooddata/<pkg>`  -> sdk/libs/<pkg>     (published SDK packages)
- *  - `gdc-<pkg>`        -> libs/<pkg>         (internal pluggable-app libs)
+ *  - `@gooddata/<pkg>`  -\> sdk/libs/<pkg>     (published SDK packages)
+ *  - `gdc-<pkg>`        -\> libs/<pkg>         (internal pluggable-app libs)
  */
 interface ISourceRoots {
     sdkLibsDir: string;
@@ -93,11 +93,11 @@ function resolveSourceFile(root: string, rel: string): string | null {
 /**
  * Resolve a `@gooddata/<pkg>` / `gdc-<pkg>` specifier (with optional `/<subpath>`) to a live
  * monorepo source file:
- *  - `styles/css/<name>.css` -> the `styles/scss/<name>.scss` it is compiled from (so scss edits HMR).
- *  - other `styles/<file>` -> the same live file (icons/fonts/images/scss partials).
- *  - `esm/assets/<file>` (referenced by scss `url(...)`) -> the `src/assets/<file>` source (falls back
- *    to the built copy if no src twin); other `esm/*` -> null (left to the published artifact).
- *  - everything else (`.`, `internal`, `src/@ui/...`, ...) -> the matching `src/*` source file.
+ *  - `styles/css/<name>.css` -\> the `styles/scss/<name>.scss` it is compiled from (so scss edits HMR).
+ *  - other `styles/<file>` -\> the same live file (icons/fonts/images/scss partials).
+ *  - `esm/assets/<file>` (referenced by scss `url(...)`) -\> the `src/assets/<file>` source (falls back
+ *    to the built copy if no src twin); other `esm/*` -\> null (left to the published artifact).
+ *  - everything else (`.`, `internal`, `src/@ui/...`, ...) -\> the matching `src/*` source file.
  * Returns null when there is no matching source file (then the published artifact stays).
  */
 function findLibSource(spec: string, roots: ISourceRoots): string | null {
@@ -237,8 +237,8 @@ function gooddataSassImporter(roots: ISourceRoots) {
 /**
  * Dev-only Vite plugin (`apply: "serve"`) that serves GoodData monorepo libraries from their live
  * source instead of the published/built artifact, so edits hot-reload in pluggable-app dev servers:
- *  - `@gooddata/<pkg>` -> `sdk/libs/<pkg>/src` (+ styles)
- *  - `gdc-<pkg>`       -> `libs/<pkg>/src` (+ styles)
+ *  - `@gooddata/<pkg>` -\> `sdk/libs/<pkg>/src` (+ styles)
+ *  - `gdc-<pkg>`       -\> `libs/<pkg>/src` (+ styles)
  *
  * Why a plugin (not an export `source` condition): the SDK is a pnpm `file:` dep injected into the
  * store as its published `files` (esm/ + scss) — there is NO `src/` at the resolved location, and a
@@ -246,7 +246,7 @@ function gooddataSassImporter(roots: ISourceRoots) {
  * `source` export at all. Remapping by package name to the live source tree (outside node_modules,
  * so Vite treats it as project source and does not pre-bundle it) covers both uniformly.
  *
- * Covers: JS `resolveId` (`@gooddata/<pkg>` / `gdc-<pkg>` -> live `src`); scss `@use` (a sass
+ * Covers: JS `resolveId` (`@gooddata/<pkg>` / `gdc-<pkg>` -\> live `src`); scss `@use` (a sass
  * importer); and scss `url()` assets, which Vite resolves via `resolve.alias` (NOT resolveId) — a
  * dev-only alias remaps the built `esm/assets/*` refs to the live `src/assets/*` source. Assets are
  * served un-inlined (assetsInlineLimit:0) so every asset edit hot-reloads granularly (a `css-update`,

@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "eslint-config: Add ESLint v10 flat configs. Every export path now carries the ESLint major (`@gooddata/eslint-config/v8/<variant>` for legacy JSON, `/v9/<variant>` and `/v10/<variant>` for flat config); the unprefixed exports are removed, so consumers must add the major to their import or `extends` path.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

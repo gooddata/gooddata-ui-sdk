@@ -7,11 +7,16 @@
 import { AccessGranteeDetail } from '@gooddata/sdk-model';
 import { AccessGranularPermission } from '@gooddata/sdk-model';
 import type { AgentCustomSkill } from '@gooddata/sdk-model';
+import type { AttributeHierarchy } from '@gooddata/sdk-code-schemas/v1';
 import { CatalogItem } from '@gooddata/sdk-model';
 import { CatalogItemType } from '@gooddata/sdk-model';
+import type { ComputedAttribute } from '@gooddata/sdk-code-schemas/v1';
+import type { Dashboard } from '@gooddata/sdk-code-schemas/v1';
 import { DashboardFiltersApplyMode } from '@gooddata/sdk-model';
+import type { Dataset } from '@gooddata/sdk-code-schemas/v1';
 import { DataValue } from '@gooddata/sdk-model';
 import { DateAttributeGranularity } from '@gooddata/sdk-model';
+import type { DateDataset } from '@gooddata/sdk-code-schemas/v1';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import type { FilterContextItem } from '@gooddata/sdk-model';
 import type { GenAIChatEffort } from '@gooddata/sdk-model';
@@ -220,16 +225,20 @@ import { LlmProviderListModelsResults } from '@gooddata/sdk-model';
 import { LlmProviderPatch } from '@gooddata/sdk-model';
 import { LlmProviderTestResults } from '@gooddata/sdk-model';
 import type { MemoryItemStrategy } from '@gooddata/sdk-model';
+import type { Metric } from '@gooddata/sdk-code-schemas/v1';
 import { NotificationChannelDestinationType } from '@gooddata/sdk-model';
 import { ObjectOrigin } from '@gooddata/sdk-model';
 import { ObjectPermissionsObjectKind } from '@gooddata/sdk-model';
 import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { OrganizationPermissionAssignment } from '@gooddata/sdk-model';
+import type { Parameter } from '@gooddata/sdk-code-schemas/v1';
+import type { Plugin as Plugin_2 } from '@gooddata/sdk-code-schemas/v1';
 import { SortDirection } from '@gooddata/sdk-model';
 import { UnavailableReferenceReason } from '@gooddata/sdk-model';
 import { UserDataFilter } from '@gooddata/sdk-model';
 import { UserDataFilterDefinition } from '@gooddata/sdk-model';
+import type { Visualisation } from '@gooddata/sdk-code-schemas/v1';
 
 // @public
 export class AbortError extends AnalyticalBackendError {
@@ -265,6 +274,9 @@ export const AnalyticalBackendErrorTypes: {
 
 // @public
 export type AnalyticalBackendFactory = (config?: IAnalyticalBackendConfig, implConfig?: any) => IAnalyticalBackend;
+
+// @alpha
+export type AnalyticsAsCodeDocument = Dataset | DateDataset | Metric | ComputedAttribute | Parameter | Visualisation | Dashboard | Plugin_2 | AttributeHierarchy;
 
 // @internal
 export type AnalyticsCatalogGenerateDescriptionObjectType = Extract<ObjectType, "insight" | "analyticalDashboard" | "measure" | "fact" | "attribute">;
@@ -438,6 +450,8 @@ export interface IAnalyticalWorkspace {
     // @alpha
     agents(): IWorkspaceAgentsService;
     // @alpha
+    analyticsAsCode(): IWorkspaceAnalyticsAsCodeService;
+    // @alpha
     attributeHierarchies(): IAttributeHierarchiesService;
     attributes(): IWorkspaceAttributesService;
     // @alpha
@@ -486,6 +500,11 @@ export interface IAnalyticalWorkspace {
     users(): IWorkspaceUsersQuery;
     // (undocumented)
     readonly workspace: string;
+}
+
+// @alpha
+export interface IAnalyticsAsCodeDeployOptions {
+    dataSourceId?: string;
 }
 
 // @internal
@@ -2131,6 +2150,20 @@ export interface ILocalizationDefault {
 }
 
 // @alpha
+export interface ILocalizationMissingObject {
+    id: string;
+    missing: ILocalizationMissingText[];
+    title: string;
+    type: ObjectType | undefined;
+}
+
+// @alpha
+export interface ILocalizationMissingText {
+    count: number;
+    text: LocalizationTextKind;
+}
+
+// @alpha
 export interface ILocalizationPageQuery {
     // (undocumented)
     page?: number;
@@ -3297,6 +3330,11 @@ export interface IWorkspaceAgentsService {
     getAgentsQuery(): IAgentsQuery;
 }
 
+// @alpha
+export interface IWorkspaceAnalyticsAsCodeService {
+    deploy(documents: AnalyticsAsCodeDocument[], options?: IAnalyticsAsCodeDeployOptions): Promise<void>;
+}
+
 // @public
 export interface IWorkspaceAttributesService {
     elements(): IElementsQueryFactory;
@@ -3614,6 +3652,7 @@ export interface IWorkspaceKeyDriverAnalysisService {
 
 // @alpha
 export interface IWorkspaceLocalizationService {
+    getMissingTranslations(locale: string): Promise<ILocalizationMissingObject[]>;
     getStatistics(): Promise<ILocalizationStatistics>;
     getStatisticsWorkspaces(query?: ILocalizationPageQuery): Promise<ILocalizationStatisticsWorkspacesPage>;
     getTranslationUsage(): Promise<ILocalizationTranslationUsage>;
@@ -3900,6 +3939,9 @@ export class LimitReached extends AnalyticalBackendError {
 
 // @alpha
 export type LocalizationSettingType = "LOCALE" | "METADATA_LOCALE" | "DATA_LOCALE";
+
+// @alpha
+export type LocalizationTextKind = "title" | "description" | "tags" | "freeForm";
 
 // @alpha
 export type LocalizationTranslatedSettingType = "METADATA_LOCALE" | "DATA_LOCALE";

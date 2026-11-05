@@ -6,6 +6,7 @@ import {
     ActionsApi_OrganizationLocalizationUsage,
     ActionsApi_OrganizationLocalizationUsageUsers,
     ActionsApi_OrganizationLocalizationUsageWorkspaces,
+    ActionsApi_RetrieveTranslations,
     ActionsApi_WorkspaceLocalizationStatistics,
     ActionsApi_WorkspaceLocalizationUsage,
     ActionsApi_WorkspaceLocalizationUsageUsers,
@@ -15,6 +16,7 @@ import {
     EntitiesApi_GetEntityWorkspaces,
 } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import {
+    type ILocalizationMissingObject,
     type ILocalizationPageQuery,
     type ILocalizationStatistics,
     type ILocalizationStatisticsWorkspace,
@@ -52,8 +54,9 @@ import {
     convertWorkspaceLocalizationUsageWorkspaces,
     originIdsOf,
 } from "./fromBackend.js";
+import { missingTranslationsFromXliff } from "./xliff.js";
 
-// The usage summaries, the workspaces and users lists and the statistics summaries call the backend. The other methods and the translation lists return the Acme fixture with the real
+// The usage summaries, the workspaces and users lists, the statistics summaries and the missing translations call the backend. The other methods and the translation lists return the Acme fixture with the real
 // workspace names and ids of the organization. Fixture workspaces take the real ones in name order.
 
 interface IFixtureData {
@@ -318,5 +321,17 @@ export class TigerWorkspaceLocalizationService
         query: ILocalizationPageQuery = {},
     ): Promise<ILocalizationStatisticsWorkspacesPage> {
         return statisticsPage(await this.statisticsRows(), query);
+    }
+
+    public async getMissingTranslations(locale: string): Promise<ILocalizationMissingObject[]> {
+        const result = await this.authCall((client) =>
+            ActionsApi_RetrieveTranslations(
+                client.axios,
+                client.basePath,
+                { workspaceId: this.workspaceId, localeRequest: { locale } },
+                { responseType: "text", headers: { Accept: "application/xml" } },
+            ),
+        );
+        return missingTranslationsFromXliff(String(result.data));
     }
 }

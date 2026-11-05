@@ -231,14 +231,15 @@ def is_dead_branch(branch: object) -> bool:
     Two cases, opposite in meaning, same treatment:
       * annotation-only — matches everything, so as a union member it swallows payloads
         that belong to a sibling member;
-      * `{"not": {}}` — matches nothing, an `else` written to make the branch fail.
+      * `"not": {}` — matches nothing, an `else` written to make the branch fail. It stays
+        unsatisfiable whatever narrowSchema merged in beside it, since a schema's keywords
+        all have to hold.
     """
     if not isinstance(branch, dict):
         return False
-    constraints = set(branch) - ANNOTATION_KEYWORDS
-    if not constraints:
+    if not set(branch) - ANNOTATION_KEYWORDS:
         return True
-    return constraints == {"not"} and branch["not"] == {}
+    return branch.get("not") == {}
 
 
 def resolve_conditional_branches(node: object) -> object:
@@ -259,9 +260,8 @@ def resolve_conditional_branches(node: object) -> object:
     resolved = {key: resolve_conditional_branches(value) for key, value in node.items()}
 
     if is_conditional_union:
-        # Identify dead branches BEFORE inheriting anything, and never inherit into
-        # one: a `{"not": {}}` or annotation-only branch that picks up a keyword stops
-        # looking dead to is_dead_branch() and survives into the union as a stub.
+        # Identify dead branches BEFORE inheriting anything: an annotation-only branch
+        # that picks up a keyword stops looking dead and survives into the union as a stub.
         live = [member for member in resolved["oneOf"] if not is_dead_branch(member)]
         for keyword in INHERITED_KEYWORDS:
             inherited = resolved.pop(keyword, None)

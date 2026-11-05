@@ -139,32 +139,30 @@ describe("getDashboardHref", () => {
 
 describe("getPublisherDocumentHref", () => {
     it("links a saved document inside the publisher", () => {
-        expect(getPublisherDocumentHref("ws1", "r1", "aac-v1")).toBe("/workspace/ws1/publisher/report/r1");
+        expect(getPublisherDocumentHref("ws1", "r1", "aac-v1")).toBe("/workspace/ws1/reports/report/r1");
     });
 
     it("links a saved v2 document on the document route", () => {
         expect(getPublisherDocumentHref("ws1", "d/1", "aac-v2")).toBe(
-            "/workspace/ws1/publisher/document/d%2F1",
+            "/workspace/ws1/reports/document/d%2F1",
         );
     });
 
     it("keeps an id with a slash in one path segment", () => {
-        expect(getPublisherDocumentHref("ws1", "r/1", "aac-v1")).toBe(
-            "/workspace/ws1/publisher/report/r%2F1",
-        );
+        expect(getPublisherDocumentHref("ws1", "r/1", "aac-v1")).toBe("/workspace/ws1/reports/report/r%2F1");
     });
 });
 
 describe("getPublisherDocumentDraftHref", () => {
     it("names the conversation and the message the draft is read from", () => {
         expect(getPublisherDocumentDraftHref("ws1", "conv-1", "item-1")).toBe(
-            "/workspace/ws1/publisher/new?conversation=conv-1&item=item-1",
+            "/workspace/ws1/reports/new?conversation=conv-1&item=item-1",
         );
     });
 
     it("encodes ids that are not query-safe", () => {
         expect(getPublisherDocumentDraftHref("ws1", "a&b", "c d")).toBe(
-            "/workspace/ws1/publisher/new?conversation=a%26b&item=c+d",
+            "/workspace/ws1/reports/new?conversation=a%26b&item=c+d",
         );
     });
 });
@@ -179,7 +177,7 @@ describe("getPublisherDocumentModifyHref", () => {
                 conversationId: "conv-1",
                 itemId: "item-1",
             }),
-        ).toBe("/workspace/ws1/publisher/report/r%2F1?conversation=conv-1&item=item-1");
+        ).toBe("/workspace/ws1/reports/report/r%2F1?conversation=conv-1&item=item-1");
     });
 });
 
@@ -193,12 +191,12 @@ describe("getPublisherDocumentItemUrl of a v2 document", () => {
                 conversationId: "conv-1",
                 itemId: "item-1",
             }),
-        ).toBe("/workspace/ws1/publisher/document/base-1?conversation=conv-1&item=item-1");
+        ).toBe("/workspace/ws1/reports/document/base-1?conversation=conv-1&item=item-1");
     });
 
     it("links a saved document without the draft on the document route", () => {
         expect(getPublisherDocumentItemUrl({ workspaceId: "ws1", format: "aac-v2", saved: "d1" })).toBe(
-            "/workspace/ws1/publisher/document/d1",
+            "/workspace/ws1/reports/document/d1",
         );
     });
 
@@ -210,13 +208,13 @@ describe("getPublisherDocumentItemUrl of a v2 document", () => {
                 conversationId: "conv-1",
                 itemId: "item-1",
             }),
-        ).toBe("/workspace/ws1/publisher/new?conversation=conv-1&item=item-1");
+        ).toBe("/workspace/ws1/reports/new?conversation=conv-1&item=item-1");
     });
 });
 
 describe("getPublisherDocumentItemUrl", () => {
-    const draftUrl = "/workspace/ws1/publisher/new?conversation=conv-1&item=item-1";
-    const modifyUrl = "/workspace/ws1/publisher/report/base-1?conversation=conv-1&item=item-1";
+    const draftUrl = "/workspace/ws1/reports/new?conversation=conv-1&item=item-1";
+    const modifyUrl = "/workspace/ws1/reports/report/base-1?conversation=conv-1&item=item-1";
 
     it("links the draft's changes to the saved document it edits", () => {
         expect(
@@ -240,7 +238,7 @@ describe("getPublisherDocumentItemUrl", () => {
                 conversationId: "conv-1",
                 itemId: "item-1",
             }),
-        ).toBe("/workspace/ws1/publisher/report/r1?conversation=conv-1&item=item-1");
+        ).toBe("/workspace/ws1/reports/report/r1?conversation=conv-1&item=item-1");
     });
 
     it.each([null, ""])("links a new draft when the document it edits is %j", (baseDocumentId) => {
@@ -278,7 +276,7 @@ describe("getPublisherDocumentItemUrl", () => {
                 conversationId: "conv-1",
                 itemId: "item-1",
             }),
-        ).toBe("/workspace/ws1/publisher/report/r1?conversation=conv-1&item=item-1");
+        ).toBe("/workspace/ws1/reports/report/r1?conversation=conv-1&item=item-1");
     });
 
     it.each([
@@ -288,7 +286,7 @@ describe("getPublisherDocumentItemUrl", () => {
     ])("links a saved document without the draft with %s", (_description, ids) => {
         expect(
             getPublisherDocumentItemUrl({ workspaceId: "ws1", format: "aac-v1", saved: "r1", ...ids }),
-        ).toBe("/workspace/ws1/publisher/report/r1");
+        ).toBe("/workspace/ws1/reports/report/r1");
     });
 
     it("links a draft that names its conversation and message", () => {

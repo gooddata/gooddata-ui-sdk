@@ -157,7 +157,7 @@ describe("CopilotInteractionComposing", () => {
         );
 
         expect(screen.getByText("Editor")).toBeInTheDocument();
-        expect(await screen.findByRole("status")).toHaveTextContent("Waiting for your reply");
+        expect(await screen.findByRole("status")).toHaveTextContent("Warten auf Ihre Antwort");
     });
 });
 

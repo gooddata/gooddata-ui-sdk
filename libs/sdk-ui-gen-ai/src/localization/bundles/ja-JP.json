@@ -1,4 +1,6 @@
 {
+    "gd.gen-ai.copilot.composing.waiting": "返信を待っています",
+    "gd.gen-ai.copilot.composing.replyNow": "今すぐ返信",
     "gd.gen-ai.global-error": "予期せぬエラーが発生しました。",
     "gd.gen-ai.global-error.description": "チャットボットを再起動して、やり直してみてください。",
     "gd.gen-ai.global-error.button-details": "詳細は生のエラー応答を参照",
@@ -149,8 +151,8 @@
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, other {# ページ}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, other {# ページ}}",
     "gd.gen-ai.publisherDocument.unavailable": "ドキュメントは利用できません。",
-    "gd.gen-ai.publisherDocument.previousVersion": "このドキュメントは以前のバージョンのPublisherで作成されたため、ここでは開けません。",
-    "gd.gen-ai.publisherDocument.newerVersion": "このドキュメントはより新しいバージョンのPublisherで作成されたため、ここでは開けません。",
+    "gd.gen-ai.publisherDocument.previousVersion": "このドキュメントは以前のバージョンのレポートで作成されたため、ここでは開けません。",
+    "gd.gen-ai.publisherDocument.newerVersion": "このドキュメントはより新しいバージョンのレポートで作成されたため、ここでは開けません。",
     "gd.gen-ai.alert-proposal.summary.trigger": "トリガー",
     "gd.gen-ai.alert-proposal.summary.trigger.mode": "モード",
     "gd.gen-ai.alert-proposal.summary.trigger.interval": "間隔",

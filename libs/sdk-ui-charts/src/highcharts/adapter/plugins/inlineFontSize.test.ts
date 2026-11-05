@@ -30,7 +30,7 @@ function createSvgElement(name: string, fontSize?: string, parent?: Element) {
     return element;
 }
 
-/** svg (16px computed) > g (groupFontSize) > text (textFontSize) > tspan */
+/** svg (16px computed) \> g (groupFontSize) \> text (textFontSize) \> tspan */
 function createChartText(textFontSize?: string, groupFontSize?: string) {
     const svg = createSvgElement("svg");
     document.body.appendChild(svg);

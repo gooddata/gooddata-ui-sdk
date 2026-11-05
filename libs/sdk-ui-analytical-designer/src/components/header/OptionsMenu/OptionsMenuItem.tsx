@@ -3,31 +3,26 @@
 import { type ReactNode, memo } from "react";
 
 import classNames from "classnames";
-import { type IntlShape, useIntl } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger, Item } from "@gooddata/sdk-ui-kit";
 
-const noopString = () => "";
-
 interface IOptionsMenuItemProps {
     bubbleId: string;
-    bubbleTextProvider?: (intl: IntlShape) => string;
+    disabledTooltip?: string;
     className: string;
     isDisabled: boolean;
-    titleId: string;
+    label: string;
     onClick: () => void;
 }
 
 export const OptionsMenuItem = memo(function OptionsMenuItem({
     bubbleId,
-    bubbleTextProvider = noopString,
+    disabledTooltip,
     className,
     isDisabled,
-    titleId,
+    label,
     onClick,
 }: IOptionsMenuItemProps) {
-    const intl = useIntl();
-
     const getItemClasses = (customClassName: string, isDisabled: boolean) => {
         return classNames("gd-list-item", "gd-menu-item", customClassName, { "is-disabled": isDisabled });
     };
@@ -49,17 +44,16 @@ export const OptionsMenuItem = memo(function OptionsMenuItem({
     const itemClasses = getItemClasses(className, isDisabled);
 
     if (isDisabled) {
-        const button = <Item className={itemClasses}>{intl.formatMessage({ id: titleId })}</Item>;
-        const bubbleMessage = bubbleTextProvider(intl);
-        if (bubbleMessage) {
-            return renderBubble(bubbleId, button, bubbleMessage);
+        const button = <Item className={itemClasses}>{label}</Item>;
+        if (disabledTooltip) {
+            return renderBubble(bubbleId, button, disabledTooltip);
         } else {
             return button;
         }
     } else {
         return (
             <Item className={itemClasses} onClick={onClick}>
-                {intl.formatMessage({ id: titleId })}
+                {label}
             </Item>
         );
     }

@@ -57,7 +57,7 @@ export function getPublisherDocumentHref(
     format: GenAIPublisherDocumentFormat,
 ) {
     const route = format === "aac-v2" ? "document" : "report";
-    return `/workspace/${wsId}/publisher/${route}/${encodeURIComponent(documentId)}`;
+    return `/workspace/${wsId}/reports/${route}/${encodeURIComponent(documentId)}`;
 }
 
 function getPublisherDocumentDraftParams(conversationId: string, itemId: string) {
@@ -66,7 +66,7 @@ function getPublisherDocumentDraftParams(conversationId: string, itemId: string)
 }
 
 export function getPublisherDocumentDraftHref(wsId: string, conversationId: string, itemId: string) {
-    return `/workspace/${wsId}/publisher/new?${getPublisherDocumentDraftParams(conversationId, itemId)}`;
+    return `/workspace/${wsId}/reports/new?${getPublisherDocumentDraftParams(conversationId, itemId)}`;
 }
 
 export function getPublisherDocumentModifyHref({

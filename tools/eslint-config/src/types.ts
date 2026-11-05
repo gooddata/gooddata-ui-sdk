@@ -9,7 +9,7 @@ interface IConfigurationBase {
     packages?: IPackage[];
 }
 
-interface IConfigurationSharedV8<RulePrefix extends string> {
+interface IConfigurationSharedLegacy<RulePrefix extends string> {
     /**
      * Parser to be set when this configuration is active
      */
@@ -85,7 +85,7 @@ export type GlobalsPreset =
  */
 export type SourceType = "module" | "script" | "commonjs";
 
-interface ILanguageOptionsV9 {
+interface ILanguageOptionsFlat {
     /**
      * Globals presets to include (build script spreads from `globals` package).
      */
@@ -109,7 +109,7 @@ interface ILanguageOptionsV9 {
     parserOptions?: Record<string, unknown>;
 }
 
-interface IConfigurationSharedV9<RulePrefix extends string> {
+interface IConfigurationSharedFlat<RulePrefix extends string> {
     /**
      * Parser to be set when this configuration is active
      */
@@ -120,13 +120,13 @@ interface IConfigurationSharedV9<RulePrefix extends string> {
     plugins?: Record<string, IPackage>;
     /**
      * Configurations to extend as port of this configuration
-     * This has been removed for v9 since extended configs cause various issues, using the rules directly is much more stable
+     * This has been removed for flat config since extended configs cause various issues, using the rules directly is much more stable
      */
     // extends?: unknown;
     /**
-     * Language options for v9 flat config (replaces env, parserOptions)
+     * Language options for flat config (replaces env, parserOptions)
      */
-    languageOptions?: ILanguageOptionsV9;
+    languageOptions?: ILanguageOptionsFlat;
     /**
      * Rules for this configuration
      */
@@ -141,31 +141,52 @@ interface IConfigurationSharedV9<RulePrefix extends string> {
     ignorePatterns?: string[];
 }
 
-interface IOverrideV8<RulePrefix extends string> extends IConfigurationSharedV8<RulePrefix> {
+interface IOverrideLegacy<RulePrefix extends string> extends IConfigurationSharedLegacy<RulePrefix> {
     files: string[];
     excludedFiles?: string[];
 }
 
-interface IOverrideV9<RulePrefix extends string> extends IConfigurationSharedV9<RulePrefix> {
+interface IOverrideFlat<RulePrefix extends string> extends IConfigurationSharedFlat<RulePrefix> {
     files: string[];
     excludedFiles?: string[];
 }
 
-export interface IConfigurationV8<RulePrefix extends string = "">
-    extends IConfigurationBase, IConfigurationSharedV8<RulePrefix> {
-    overrides?: IOverrideV8<RulePrefix>[];
+export interface IConfigurationLegacy<RulePrefix extends string = "">
+    extends IConfigurationBase, IConfigurationSharedLegacy<RulePrefix> {
+    overrides?: IOverrideLegacy<RulePrefix>[];
 }
 
-export interface IConfigurationV9<RulePrefix extends string = "">
-    extends IConfigurationBase, IConfigurationSharedV9<RulePrefix> {
-    overrides?: IOverrideV9<RulePrefix>[];
+export interface IConfigurationFlat<RulePrefix extends string = "">
+    extends IConfigurationBase, IConfigurationSharedFlat<RulePrefix> {
+    overrides?: IOverrideFlat<RulePrefix>[];
 }
 
-export interface IDualConfiguration<
-    RulePrefixV8 extends string = "",
-    RulePrefixV9 extends string = RulePrefixV8,
+/**
+ * Flat configurations per ESLint major, each with a plain variant and an OxLint partial migration variant.
+ */
+export interface IConfigurationFlatVariants<RulePrefix extends string = ""> {
+    /**
+     * ESLint 9
+     */
+    v9: IConfigurationFlat<RulePrefix>;
+    /**
+     * ESLint 9, rules already covered by OxLint left out
+     */
+    v9ox: IConfigurationFlat<RulePrefix>;
+    /**
+     * ESLint 10
+     */
+    v10: IConfigurationFlat<RulePrefix>;
+    /**
+     * ESLint 10, rules already covered by OxLint left out
+     */
+    v10ox: IConfigurationFlat<RulePrefix>;
+}
+
+export interface IConfiguration<
+    RulePrefixLegacy extends string = "",
+    RulePrefixFlat extends string = RulePrefixLegacy,
 > {
-    v8: IConfigurationV8<RulePrefixV8>;
-    v9: IConfigurationV9<RulePrefixV9>;
-    ox: IConfigurationV9<RulePrefixV9>;
+    legacy: IConfigurationLegacy<RulePrefixLegacy>;
+    flat: IConfigurationFlatVariants<RulePrefixFlat>;
 }

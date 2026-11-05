@@ -16,6 +16,7 @@ export interface IHostChromeWorkspaceFeatures {
     canAnalyzeWorkspace: boolean;
     canAccessWorkbench: boolean;
     canFullControl: boolean;
+    canCreateDocument: boolean;
     showSearch: boolean;
     showChat: boolean;
 }
@@ -45,6 +46,7 @@ export function useHostChromeWorkspaceFeatures(
         const canAnalyzeWorkspace = !!ctx.workspacePermissions?.canAnalyzeWorkspace;
         const canAccessWorkbench = !!ctx.workspacePermissions?.canAccessWorkbench;
         const canFullControl = !!ctx.organizationPermissions?.canManageOrganization;
+        const canCreateDocument = !!ctx.workspacePermissions?.canCreateDocument;
 
         const showSearch = isWorkspaceApp && !!workspaceId && enableSemanticSearch;
         const showChat = isWorkspaceApp && !!workspaceId && canUseAiAssistant;
@@ -58,6 +60,7 @@ export function useHostChromeWorkspaceFeatures(
             canAnalyzeWorkspace,
             canAccessWorkbench,
             canFullControl,
+            canCreateDocument,
             showSearch,
             showChat,
         };

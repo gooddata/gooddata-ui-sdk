@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-backend-spi, sdk-backend-tiger, api-client-tiger, gdc-home-ui: List the objects of a workspace that have texts without a translation into a language (`getMissingTranslations`), and show them from the Incomplete translation check of the language side panel (Show missing objects)",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

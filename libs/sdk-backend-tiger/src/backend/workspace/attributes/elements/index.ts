@@ -7,7 +7,6 @@ import {
     type DependsOnDateFilter,
     type DependsOnMatchFilter,
     type ElementsRequest,
-    type ElementsResponseGranularityEnum,
 } from "@gooddata/api-client-tiger";
 import { ActionsApi_ComputeLabelElementsPost } from "@gooddata/api-client-tiger/endpoints/labelElements";
 import { InMemoryPaging, ServerPaging } from "@gooddata/sdk-backend-base";
@@ -26,6 +25,7 @@ import {
     isValueBasedElementsQueryOptionsElements,
 } from "@gooddata/sdk-backend-spi";
 import {
+    type DateAttributeGranularity,
     type IAbsoluteDateFilter,
     type IArbitraryAttributeFilter,
     type IAttributeElement,
@@ -41,6 +41,7 @@ import {
     isAttributeElementsByRef,
     isAttributeFilter,
     isAttributeFilterWithSelection,
+    isComputedAttributeRef,
     isIdentifierRef,
     isMatchAttributeFilter,
     isNegativeAttributeFilter,
@@ -49,11 +50,15 @@ import {
 
 import { TigerCancellationConverter } from "../../../../cancelation/index.js";
 import { attributeNumberFormat } from "../../../../convertors/fromBackend/attributeNumberFormat.js";
-import { createDateValueFormatter } from "../../../../convertors/fromBackend/dateFormatting/dateValueFormatter.js";
+import { dateValueGranularity } from "../../../../convertors/fromBackend/computedAttributeDateGranularity.js";
+import {
+    createDateValueFormatter,
+    guardDateValueFormatter,
+} from "../../../../convertors/fromBackend/dateFormatting/dateValueFormatter.js";
 import { createDateValueNormalizer } from "../../../../convertors/fromBackend/dateFormatting/dateValueNormalizer.js";
 import { type FormattingLocale } from "../../../../convertors/fromBackend/dateFormatting/defaultDateFormatter.js";
 import { type DateFormatter } from "../../../../convertors/fromBackend/dateFormatting/types.js";
-import { toSdkGranularity } from "../../../../convertors/fromBackend/dateGranularityConversions.js";
+import { isSupportedTigerGranularity } from "../../../../convertors/fromBackend/dateGranularityConversions.js";
 import { toLabelQualifier, toObjQualifier } from "../../../../convertors/toBackend/ObjRefConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../../types/index.js";
 
@@ -348,15 +353,22 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
         shouldFormatTitle: boolean,
         dateValueFormatter: ReturnType<typeof createDateValueFormatter>,
         dateValueNormalizer: ReturnType<typeof createDateValueNormalizer>,
-        sdkGranularity: ReturnType<typeof toSdkGranularity> | undefined,
+        sdkGranularity: DateAttributeGranularity | undefined,
         locale: FormattingLocale,
         pattern: string,
+        timezone: string | undefined,
     ): IAttributeElement {
         let objWithFormatted = {};
 
         if (shouldFormatTitle && sdkGranularity) {
-            const formattedTitle = dateValueFormatter(element.title, sdkGranularity, locale, pattern);
-            const normalizedValue = dateValueNormalizer(element.title, sdkGranularity, locale);
+            const formattedTitle = dateValueFormatter(
+                element.title,
+                sdkGranularity,
+                locale,
+                pattern,
+                timezone,
+            );
+            const normalizedValue = dateValueNormalizer(element.title, sdkGranularity, locale, timezone);
             objWithFormatted = {
                 formattedTitle,
                 normalizedValue,
@@ -411,15 +423,25 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
 
                 numberFormat = attributeNumberFormat(responseNumberFormat, dataType);
 
-                // Only date attributes carry a granularity; for the rest it is absent, so convert only when
-                // present (passing undefined into the strict converter is what previously threw).
-                const sdkGranularity = granularity
-                    ? toSdkGranularity(granularity as ElementsResponseGranularityEnum)
-                    : undefined;
+                // Only date attributes carry a granularity, date computed attributes do not carry it yet and
+                // fall back to a default one. Values of other attributes and of granularities the SDK does not
+                // model are not formatted. The format of a computed attribute is written by its author, so its
+                // values are shown raw when it cannot be applied; other formats come from the backend and fail.
+                const isComputedAttribute = isComputedAttributeRef(ref);
+                const sdkGranularity = dateValueGranularity(granularity, dataType, isComputedAttribute);
+                if (granularity && !isSupportedTigerGranularity(granularity)) {
+                    invariant.warn(
+                        `Unsupported tiger date granularity "${granularity}" — values of the "${ref.identifier}" attribute are not formatted.`,
+                    );
+                }
                 const locale = format?.locale as FormattingLocale;
                 const pattern = format?.pattern as string;
+                // the same timezone handling as for the values in execution results
+                const timezone = format?.timezone;
                 const shouldFormatTitle = !!(sdkGranularity && format);
-                const dateValueFormatter = createDateValueFormatter(this.dateFormatter);
+                const dateValueFormatter = isComputedAttribute
+                    ? guardDateValueFormatter(createDateValueFormatter(this.dateFormatter), ref.identifier)
+                    : createDateValueFormatter(this.dateFormatter);
                 const dateValueNormalizer = createDateValueNormalizer();
 
                 return {
@@ -432,6 +454,7 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                             sdkGranularity,
                             locale,
                             pattern,
+                            timezone,
                         ),
                     ),
                     totalCount: paging.total,

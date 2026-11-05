@@ -8,6 +8,7 @@ import { type IChatConversationItem } from "@gooddata/sdk-backend-spi";
 
 import { type IChatConversationLocal } from "../../model.js";
 import { chatWindowSliceReducer } from "../chatWindow/chatWindowSlice.js";
+import { conversationMessagesSelector } from "../messages/messagesSelectors.js";
 import { activateConversationAction, messagesSliceReducer } from "../messages/messagesSlice.js";
 import { queueActivateConversationMiddleware } from "../queues/queue.activateConversationAction.js";
 
@@ -29,7 +30,37 @@ describe("onThreadLoad", () => {
             ...makeConversation("conversation-2"),
             updatedAt: new Date(2).toISOString(),
         };
-        const loadHistory = vi.fn(async () => [] as IChatConversationItem[]);
+        const history: IChatConversationItem[] = [
+            {
+                type: "item",
+                id: "old-response",
+                responseId: "response-1",
+                createdAt: 1,
+                role: "assistant",
+                agentId: "silver",
+                content: { type: "reasoning", summary: "First agent's reasoning" },
+            },
+            {
+                type: "item",
+                id: "agent-switch",
+                responseId: "response-2",
+                createdAt: 2,
+                role: "system",
+                agentId: "gold",
+                oldAgentId: "silver",
+                content: { type: "text", text: "" },
+            },
+            {
+                type: "item",
+                id: "new-response",
+                responseId: "response-3",
+                createdAt: 3,
+                role: "assistant",
+                agentId: "gold",
+                content: { type: "reasoning", summary: "Second agent's reasoning" },
+            },
+        ];
+        const loadHistory = vi.fn(async () => history);
         const getConversationThread = vi.fn(() => ({ loadHistory }));
         const query = {
             withSize: () => query,
@@ -70,5 +101,8 @@ describe("onThreadLoad", () => {
         expect(conversationsApi.getConversationThread).toHaveBeenCalledWith(conversation.id);
         expect(store.getState().messages.currentConversation).toEqual(conversation);
         expect(store.getState().messages.loaded).toBe(true);
+        expect(conversationMessagesSelector(store.getState())).toEqual(
+            history.map((item) => expect.objectContaining(item)),
+        );
     });
 });

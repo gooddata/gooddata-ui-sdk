@@ -25,20 +25,24 @@ import {
     type IResultMeasureHeader,
     type IResultTotalHeader,
     isAttributeDescriptor,
+    isComputedAttributeRef,
     isMeasureGroupDescriptor,
     isResultTotalHeader as isResultTotalHeaderModel,
 } from "@gooddata/sdk-model";
 
+import { dateValueGranularity } from "../computedAttributeDateGranularity.js";
 import {
     createDateValueFormatter,
     createForecastDateValueFormatter,
+    guardDateValueFormatter,
 } from "../dateFormatting/dateValueFormatter.js";
 import { createDateValueNormalizer } from "../dateFormatting/dateValueNormalizer.js";
 import { type FormattingLocale } from "../dateFormatting/defaultDateFormatter.js";
 import { type DateFormatter, type DateNormalizer, type DateParseFormatter } from "../dateFormatting/types.js";
-import { toSdkGranularity } from "../dateGranularityConversions.js";
 
 type DateAttributeFormatProps = {
+    identifier: string;
+    isComputedAttribute: boolean;
     granularity: DateAttributeGranularity;
     format: {
         locale: FormattingLocale;
@@ -47,50 +51,32 @@ type DateAttributeFormatProps = {
     };
 };
 
-const supportedSuffixes: JsonApiAttributeOutAttributesGranularityEnum[] = [
-    "SECOND",
-    "MINUTE",
-    "HOUR",
-    "DAY",
-    "WEEK",
-    "MONTH",
-    "QUARTER",
-    "YEAR",
-    "SECOND_OF_MINUTE",
-    "MINUTE_OF_HOUR",
-    "HOUR_OF_DAY",
-    "SECOND_OF_DAY",
-    "MINUTE_OF_DAY",
-    "DAY_OF_WEEK",
-    "DAY_OF_MONTH",
-    "DAY_OF_QUARTER",
-    "DAY_OF_YEAR",
-    "WEEK_OF_YEAR",
-    "MONTH_OF_YEAR",
-    "QUARTER_OF_YEAR",
-    "FISCAL_MONTH",
-    "FISCAL_QUARTER",
-    "FISCAL_YEAR",
-];
-
 function getDateFormatProps(header: IDimensionItemDescriptor): DateAttributeFormatProps | undefined {
-    if (
-        !isAttributeDescriptor(header) ||
-        !header.attributeHeader.granularity ||
-        !supportedSuffixes.includes(
-            header.attributeHeader.granularity as JsonApiAttributeOutAttributesGranularityEnum,
-        ) ||
-        !header.attributeHeader.format
-    ) {
+    if (!isAttributeDescriptor(header) || !header.attributeHeader.format) {
         return undefined;
     }
 
     const {
-        attributeHeader: { granularity, format },
+        attributeHeader: { identifier, ref, format, dataType, formatGranularity },
     } = header;
+    const isComputedAttribute = isComputedAttributeRef(ref);
+    // the descriptor keeps the granularity of the backend as it came
+    const granularity = dateValueGranularity(
+        (header.attributeHeader.granularity ?? formatGranularity) as
+            | JsonApiAttributeOutAttributesGranularityEnum
+            | undefined,
+        dataType,
+        isComputedAttribute,
+    );
+
+    if (!granularity) {
+        return undefined;
+    }
 
     return {
-        granularity: toSdkGranularity(granularity as JsonApiAttributeOutAttributesGranularityEnum),
+        identifier,
+        isComputedAttribute,
+        granularity,
         format: {
             locale: format.locale as FormattingLocale,
             pattern: format.pattern,
@@ -221,13 +207,17 @@ export function getTransformDimensionHeaders(
                     dimensions[dimensionIndex].headers[headerGroupIndex],
                 );
 
+                const groupDateValueFormatter = dateFormatProps?.isComputedAttribute
+                    ? guardDateValueFormatter(dateValueFormatter, dateFormatProps.identifier)
+                    : dateValueFormatter;
+
                 const baseHeaders = headerGroup.headers.map((header, index): IResultHeader => {
                     return getTransformedBaseHeader(
                         header,
                         index,
                         measureDescriptors,
                         dateFormatProps,
-                        dateValueFormatter,
+                        groupDateValueFormatter,
                         dateValueNormalizer,
                         baseHeadersTotalsMap,
                     );
@@ -269,6 +259,9 @@ export function getTransformForecastHeaders(
                     used = true;
 
                     const data = fillData(forecastResults?.attribute, forecastConfig.forecastPeriod);
+                    const groupDateValueFormatter = dateFormatProps?.isComputedAttribute
+                        ? guardDateValueFormatter(dateValueFormatter, dateFormatProps.identifier)
+                        : dateValueFormatter;
 
                     return data.map((header): IResultAttributeHeader => {
                         return attributeHeaderItem(
@@ -279,7 +272,7 @@ export function getTransformForecastHeaders(
                                 },
                             },
                             dateFormatProps,
-                            dateValueFormatter,
+                            groupDateValueFormatter,
                             dateValueNormalizer,
                         );
                     });
