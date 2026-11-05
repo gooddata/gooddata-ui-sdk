@@ -60,7 +60,7 @@ export function loadSettings(
 /**
  * AD's bootstrap data loaded from the backend, for a host that passes none. The user and the settings
  * are required. The other values are optional and fall back to their defaults. The workspace title
- * is the workspace identifier: only the standalone header showed it.
+ * is the workspace identifier because AD does not show the workspace title.
  */
 export async function backendBootstrapData(
     backend: IAnalyticalBackend,

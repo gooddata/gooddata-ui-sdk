@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-model: `evaluateCondition` treats malformed requirement conditions, such as arrays, nulls, empty `$or`/`$and` operands, operators mixed with other keys or unknown `$` keys, as not met instead of met.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

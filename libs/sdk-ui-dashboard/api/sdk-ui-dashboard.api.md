@@ -11591,6 +11591,7 @@ export type ReplaceAttributeFilterItemSelectionPayload = {
     readonly filter: DashboardAttributeFilterItem;
     readonly isWorkingSelectionChange?: boolean;
     readonly isSelectionInvalid?: boolean;
+    readonly skipSync?: boolean;
 };
 
 // @beta

@@ -459,7 +459,7 @@ export interface AttributeHeaderAttributeHeader {
      */
     'localIdentifier': string;
     /**
-     * Format to be used to format the attribute values, the same kind of format string as the measure format. Only filled for computed attributes with a format.
+     * Format to be used to format the attribute values, the same kind of format string as the measure format. Only filled for computed attributes with a format and INT or NUMERIC data type.
      */
     'numberFormat'?: string;
     'primaryLabel': RestApiIdentifier;
@@ -642,6 +642,10 @@ export interface ChangeAnalysisResult {
      * The change analysis result data containing significant changes.
      */
     'data': Array<MetricValueChange>;
+    /**
+     * Number of attributes and computed attributes left out of the analysis because the user has no access to them.
+     */
+    'restrictedCount': number;
 }
 
 export interface ClusteringRequest {
@@ -781,9 +785,13 @@ export interface DatabaseInstance {
      */
     'name': string;
     /**
-     * Set of ids of the storage instances this database instance should access.
+     * Set of names of the storage instances this database instance accesses. Kept for backward compatibility; use `storages` for the storage ids.
      */
     'storageIds': Array<string>;
+    /**
+     * Storage instances this database instance accesses.
+     */
+    'storages': Array<ObjectStorageRef>;
 }
 
 /**
@@ -955,7 +963,7 @@ export interface ElementsResponse {
      */
     'granularity'?: ElementsResponseGranularityEnum;
     /**
-     * Format to be used to format the element values, the same kind of format string as the measure format. Only filled for computed attributes with a format.
+     * Format to be used to format the element values, the same kind of format string as the measure format. Only filled for computed attributes with a format and INT or NUMERIC data type.
      */
     'numberFormat'?: string;
     'paging': Paging;
@@ -2001,6 +2009,20 @@ export interface ObjectStorageInfo {
 }
 
 /**
+ * Reference to a registered ObjectStorage.
+ */
+export interface ObjectStorageRef {
+    /**
+     * Human-readable name of the storage.
+     */
+    'name': string;
+    /**
+     * Stable identifier of the storage, as returned by the ObjectStorages listing.
+     */
+    'storageId': string;
+}
+
+/**
  * Configuration for OpenAI provider.
  */
 export interface OpenAIProviderConfig {
@@ -2247,7 +2269,7 @@ export interface ProvisionDatabaseInstanceRequest {
      */
     'name': string;
     /**
-     * Set of ids of the storage instances this database instance should access.
+     * Set of ids of the storage instances this database instance should access. Each entry is a `storageId` from the ObjectStorages listing or, for backward compatibility, a storage name. Must contain exactly one entry.
      */
     'storageIds': Array<string>;
 }
@@ -7669,13 +7691,13 @@ export async function ActionsApiAxiosParamCreator_ExecuteFlow(
  * @summary AFM explain resource.
  * @param {string} workspaceId Workspace identifier
  * @param {AfmExecution} afmExecution 
- * @param {'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL' | 'COMPRESSED_GRPC_MODEL_SVG' | 'GIT'} [explainType] Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;GRPC_MODEL_SVG&#x60; - Generated SVG image of the datasets  &#x60;COMPRESSED_GRPC_MODEL_SVG&#x60; - Generated SVG image of the model fragment used in the query  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;COMPRESSED_SQL&#x60; - Final SQL to be executed with rolled SQL datasets  &#x60;SETTINGS&#x60; - Settings used to execute explain request  &#x60;GIT&#x60; - Git properties of current build
+ * @param {'MAQL' | 'GRPC_MODEL' | 'MODEL_STATISTICS' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL' | 'COMPRESSED_GRPC_MODEL_SVG' | 'GIT'} [explainType] Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;MODEL_STATISTICS&#x60; - Physical table statistics of the datasets used in execution  &#x60;GRPC_MODEL_SVG&#x60; - Generated SVG image of the datasets  &#x60;COMPRESSED_GRPC_MODEL_SVG&#x60; - Generated SVG image of the model fragment used in the query  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;COMPRESSED_SQL&#x60; - Final SQL to be executed with rolled SQL datasets  &#x60;SETTINGS&#x60; - Settings used to execute explain request  &#x60;GIT&#x60; - Git properties of current build
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ActionsApiAxiosParamCreator_ExplainAFM(
-    workspaceId: string, afmExecution: AfmExecution, explainType?: 'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL' | 'COMPRESSED_GRPC_MODEL_SVG' | 'GIT', 
+    workspaceId: string, afmExecution: AfmExecution, explainType?: 'MAQL' | 'GRPC_MODEL' | 'MODEL_STATISTICS' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL' | 'COMPRESSED_GRPC_MODEL_SVG' | 'GIT', 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -11601,11 +11623,11 @@ export interface ActionsApiExplainAFMRequest {
     readonly afmExecution: AfmExecution
 
     /**
-     * Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;GRPC_MODEL_SVG&#x60; - Generated SVG image of the datasets  &#x60;COMPRESSED_GRPC_MODEL_SVG&#x60; - Generated SVG image of the model fragment used in the query  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;COMPRESSED_SQL&#x60; - Final SQL to be executed with rolled SQL datasets  &#x60;SETTINGS&#x60; - Settings used to execute explain request  &#x60;GIT&#x60; - Git properties of current build
-     * @type {'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL' | 'COMPRESSED_GRPC_MODEL_SVG' | 'GIT'}
+     * Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;MODEL_STATISTICS&#x60; - Physical table statistics of the datasets used in execution  &#x60;GRPC_MODEL_SVG&#x60; - Generated SVG image of the datasets  &#x60;COMPRESSED_GRPC_MODEL_SVG&#x60; - Generated SVG image of the model fragment used in the query  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;COMPRESSED_SQL&#x60; - Final SQL to be executed with rolled SQL datasets  &#x60;SETTINGS&#x60; - Settings used to execute explain request  &#x60;GIT&#x60; - Git properties of current build
+     * @type {'MAQL' | 'GRPC_MODEL' | 'MODEL_STATISTICS' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL' | 'COMPRESSED_GRPC_MODEL_SVG' | 'GIT'}
      * @memberof ActionsApiExplainAFM
      */
-    readonly explainType?: 'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL' | 'COMPRESSED_GRPC_MODEL_SVG' | 'GIT'
+    readonly explainType?: 'MAQL' | 'GRPC_MODEL' | 'MODEL_STATISTICS' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL' | 'COMPRESSED_GRPC_MODEL_SVG' | 'GIT'
 }
 
 /**
@@ -13410,13 +13432,13 @@ export async function ComputationApiAxiosParamCreator_ComputeValidObjects(
  * @summary AFM explain resource.
  * @param {string} workspaceId Workspace identifier
  * @param {AfmExecution} afmExecution 
- * @param {'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL' | 'COMPRESSED_GRPC_MODEL_SVG' | 'GIT'} [explainType] Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;GRPC_MODEL_SVG&#x60; - Generated SVG image of the datasets  &#x60;COMPRESSED_GRPC_MODEL_SVG&#x60; - Generated SVG image of the model fragment used in the query  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;COMPRESSED_SQL&#x60; - Final SQL to be executed with rolled SQL datasets  &#x60;SETTINGS&#x60; - Settings used to execute explain request  &#x60;GIT&#x60; - Git properties of current build
+ * @param {'MAQL' | 'GRPC_MODEL' | 'MODEL_STATISTICS' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL' | 'COMPRESSED_GRPC_MODEL_SVG' | 'GIT'} [explainType] Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;MODEL_STATISTICS&#x60; - Physical table statistics of the datasets used in execution  &#x60;GRPC_MODEL_SVG&#x60; - Generated SVG image of the datasets  &#x60;COMPRESSED_GRPC_MODEL_SVG&#x60; - Generated SVG image of the model fragment used in the query  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;COMPRESSED_SQL&#x60; - Final SQL to be executed with rolled SQL datasets  &#x60;SETTINGS&#x60; - Settings used to execute explain request  &#x60;GIT&#x60; - Git properties of current build
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ComputationApiAxiosParamCreator_ExplainAFM(
-    workspaceId: string, afmExecution: AfmExecution, explainType?: 'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL' | 'COMPRESSED_GRPC_MODEL_SVG' | 'GIT', 
+    workspaceId: string, afmExecution: AfmExecution, explainType?: 'MAQL' | 'GRPC_MODEL' | 'MODEL_STATISTICS' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL' | 'COMPRESSED_GRPC_MODEL_SVG' | 'GIT', 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -14718,11 +14740,11 @@ export interface ComputationApiExplainAFMRequest {
     readonly afmExecution: AfmExecution
 
     /**
-     * Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;GRPC_MODEL_SVG&#x60; - Generated SVG image of the datasets  &#x60;COMPRESSED_GRPC_MODEL_SVG&#x60; - Generated SVG image of the model fragment used in the query  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;COMPRESSED_SQL&#x60; - Final SQL to be executed with rolled SQL datasets  &#x60;SETTINGS&#x60; - Settings used to execute explain request  &#x60;GIT&#x60; - Git properties of current build
-     * @type {'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL' | 'COMPRESSED_GRPC_MODEL_SVG' | 'GIT'}
+     * Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;MODEL_STATISTICS&#x60; - Physical table statistics of the datasets used in execution  &#x60;GRPC_MODEL_SVG&#x60; - Generated SVG image of the datasets  &#x60;COMPRESSED_GRPC_MODEL_SVG&#x60; - Generated SVG image of the model fragment used in the query  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;COMPRESSED_SQL&#x60; - Final SQL to be executed with rolled SQL datasets  &#x60;SETTINGS&#x60; - Settings used to execute explain request  &#x60;GIT&#x60; - Git properties of current build
+     * @type {'MAQL' | 'GRPC_MODEL' | 'MODEL_STATISTICS' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL' | 'COMPRESSED_GRPC_MODEL_SVG' | 'GIT'}
      * @memberof ComputationApiExplainAFM
      */
-    readonly explainType?: 'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL' | 'COMPRESSED_GRPC_MODEL_SVG' | 'GIT'
+    readonly explainType?: 'MAQL' | 'GRPC_MODEL' | 'MODEL_STATISTICS' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL' | 'COMPRESSED_GRPC_MODEL_SVG' | 'GIT'
 }
 
 /**

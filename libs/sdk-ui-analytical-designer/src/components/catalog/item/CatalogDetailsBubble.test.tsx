@@ -10,8 +10,7 @@ import { getCatalogBubbleItemCacheKey } from "../../../sagas/catalog/catalog_uti
 import { type IAppState } from "../../../store/types.js";
 import { getCatalogMeasureWithPermissions } from "../../../tests/catalog.test.helpers.js";
 import { buildAttributeHierarchyMock } from "../../../tests/catalog_attribute_hierarchy.test.helpers.js";
-import { withRouteQuery } from "../../../tests/route.test.helpers.js";
-import { withData, withMeta, withRoot } from "../../../tests/state_builder.test.helpers.js";
+import { withData, withRoot } from "../../../tests/state_builder.test.helpers.js";
 import {
     type IOrganizedCatalogItem,
     type IOrganizedCatalogTooltipDetails,
@@ -27,7 +26,6 @@ vi.hoisted(() => {
 });
 
 const dispatchMock = vi.hoisted(() => vi.fn());
-const canManageMetadataMock = vi.hoisted(() => vi.fn(() => false));
 
 // the component dispatches through useDispatch; the tests assert on the dispatched actions
 vi.mock("react-redux", async () => {
@@ -36,18 +34,6 @@ vi.mock("react-redux", async () => {
     return {
         ...actual,
         useDispatch: () => dispatchMock,
-    };
-});
-
-// canManageMetadata is a backend capability, not a part of the store state, so it is driven directly
-vi.mock("../../../selectors/backend_capabilities_selector.js", async () => {
-    const actual = await vi.importActual<Record<string, unknown>>(
-        "../../../selectors/backend_capabilities_selector.js",
-    );
-
-    return {
-        ...actual,
-        canManageMetadata: canManageMetadataMock,
     };
 });
 
@@ -105,12 +91,8 @@ describe("Catalog Details Bubble", () => {
     const attributeHierarchies: ICatalogAttributeHierarchy[] = [buildAttributeHierarchyMock()];
 
     interface IStoreValues {
-        projectId: string;
-        isEmbeddedMode: boolean;
-        isEmbeddedModeFromKD: boolean;
         canUserManageMetric: boolean;
         canUserManageProject: boolean;
-        canBackendManageMetadata: boolean;
         bubbleDetails: IOrganizedCatalogTooltipDetails | null;
         attributeHierarchies: ICatalogAttributeHierarchy[];
         catalogItems: CatalogItem[];
@@ -118,12 +100,8 @@ describe("Catalog Details Bubble", () => {
     }
 
     const defaultStoreValues: IStoreValues = {
-        projectId: "projectId",
-        isEmbeddedMode: false,
-        isEmbeddedModeFromKD: false,
         canUserManageMetric: true,
         canUserManageProject: true,
-        canBackendManageMetadata: true,
         bubbleDetails: null,
         attributeHierarchies,
         catalogItems: [],
@@ -132,14 +110,9 @@ describe("Catalog Details Bubble", () => {
 
     function seedState(renderedItem: ICatalogEntry, values: IStoreValues) {
         return (state: IAppState): IAppState => {
-            let seeded = withRoot(state, { projectId: values.projectId });
-            seeded = withMeta(seeded, { isEmbedded: values.isEmbeddedMode });
-            seeded = withRouteQuery(seeded, {
-                isEmbeddedFromKD: values.isEmbeddedModeFromKD ? "true" : "false",
-            });
-            seeded = withRoot(seeded, {
+            let seeded = withRoot(state, {
                 workspacePermissions: {
-                    ...seeded.workspacePermissions,
+                    ...state.workspacePermissions,
                     canManageMetric: values.canUserManageMetric,
                     canManageProject: values.canUserManageProject,
                 },
@@ -177,8 +150,6 @@ describe("Catalog Details Bubble", () => {
         const { item: customItem, offsetX = 200, offsetY = 10, ...customStoreValues } = customProps;
         const storeValues: IStoreValues = { ...defaultStoreValues, ...customStoreValues };
         const renderedItem = customItem ?? item;
-
-        canManageMetadataMock.mockReturnValue(storeValues.canBackendManageMetadata);
 
         const Wrapped = withRedux(withIntl(CatalogDetailsBubble), seedState(renderedItem, storeValues));
 
@@ -463,97 +434,6 @@ describe("Catalog Details Bubble", () => {
                 expect(document.querySelectorAll(".s-attribute-hierarchy-name")).toHaveLength(
                     attributeHierarchies.length,
                 );
-            });
-        });
-    });
-
-    describe("Measure detail redirect", () => {
-        let windowSpy: ReturnType<typeof vi.spyOn>;
-        beforeEach(() => {
-            windowSpy = vi.spyOn(window, "open").mockImplementation(() => null);
-        });
-
-        afterEach(() => {
-            windowSpy.mockClear();
-        });
-
-        const catalogItemWithUri = { ...item, uri: "/itemUri" };
-        const redirectAllowedProps = {
-            item: catalogItemWithUri,
-            isEmbeddedMode: false,
-            canUserManageMetric: true,
-        };
-
-        it("should not render title and button redirects when uri is missing", async () => {
-            const { container } = renderComponent({ isEmbeddedMode: false, canUserManageMetric: true });
-            const hoverTrigger = container.querySelector(".gd-bubble-trigger");
-            fireEvent.mouseEnter(hoverTrigger);
-
-            await waitFor(() => {
-                expect(container.querySelectorAll(".s-adi-catalog-tooltip-title-redirect")).toHaveLength(0);
-                expect(container.querySelectorAll(".s-adi-catalog-tooltip-button-redirect")).toHaveLength(0);
-            });
-        });
-
-        it("should not render title and button redirects when in embedded mode", async () => {
-            const { container } = renderComponent({ ...redirectAllowedProps, isEmbeddedMode: true });
-            const hoverTrigger = container.querySelector(".gd-bubble-trigger");
-            fireEvent.mouseEnter(hoverTrigger);
-
-            await waitFor(() => {
-                expect(container.querySelectorAll(".s-adi-catalog-tooltip-title-redirect")).toHaveLength(0);
-                expect(container.querySelectorAll(".s-adi-catalog-tooltip-button-redirect")).toHaveLength(0);
-            });
-        });
-
-        it("should not render title and button redirects when user is not permitted to manage metric", async () => {
-            const { container } = renderComponent({ ...redirectAllowedProps, canUserManageMetric: false });
-            const hoverTrigger = container.querySelector(".gd-bubble-trigger");
-            fireEvent.mouseEnter(hoverTrigger);
-
-            await waitFor(() => {
-                expect(container.querySelectorAll(".s-adi-catalog-tooltip-title-redirect")).toHaveLength(0);
-                expect(container.querySelectorAll(".s-adi-catalog-tooltip-button-redirect")).toHaveLength(0);
-            });
-        });
-
-        it("should render title and button redirects", async () => {
-            const { container } = renderComponent({ ...redirectAllowedProps });
-            const hoverTrigger = container.querySelector(".gd-bubble-trigger");
-            fireEvent.mouseEnter(hoverTrigger);
-
-            await waitFor(() => {
-                expect(document.querySelectorAll(".s-adi-catalog-tooltip-title-redirect")).toHaveLength(1);
-                expect(document.querySelectorAll(".s-adi-catalog-tooltip-button-redirect")).toHaveLength(1);
-            });
-        });
-
-        it("should render title redirect with correct href property", async () => {
-            const { container } = renderComponent({ ...redirectAllowedProps });
-            const hoverTrigger = container.querySelector(".gd-bubble-trigger");
-            fireEvent.mouseEnter(hoverTrigger);
-            await waitFor(() => {
-                expect(
-                    document.querySelectorAll("a[href='/#s=/gdc/workspaces/projectId|objectPage|/itemUri']"),
-                ).toHaveLength(1);
-            });
-        });
-
-        it("should call window.open with correct arguments after click on button redirect", async () => {
-            const { container } = renderComponent({ ...redirectAllowedProps });
-            const hoverTrigger = container.querySelector(".gd-bubble-trigger");
-            fireEvent.mouseEnter(hoverTrigger);
-            await waitFor(() => {
-                const button = document.querySelector(".s-adi-catalog-tooltip-button-redirect");
-                fireEvent.click(button);
-            });
-
-            await waitFor(() => {
-                expect(windowSpy).toHaveBeenCalled();
-                expect(windowSpy.mock.calls[0]).toEqual([
-                    "http://localhost:3000/#s=/gdc/workspaces/projectId|objectPage|/itemUri",
-                    "_blank",
-                ]);
             });
         });
     });

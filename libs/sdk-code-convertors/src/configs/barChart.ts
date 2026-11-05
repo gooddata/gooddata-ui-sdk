@@ -1,6 +1,6 @@
 // (C) 2023-2026 GoodData Corporation
 
-import type { Visualisation } from "@gooddata/sdk-code-schemas/v1";
+import type { Bucket, Visualisation } from "@gooddata/sdk-code-schemas/v1";
 
 import {
     DEFAULT_CUSTOM_TOOLTIP,
@@ -13,6 +13,12 @@ import {
     saveCustomTooltip,
 } from "../utils/configUtils.js";
 
+import {
+    SECONDARY_AXIS_DEFAULTS,
+    type SecondaryAxisProperties,
+    loadSecondaryAxis,
+    saveSecondaryAxis,
+} from "./secondaryAxis.js";
 import { type ChartFillType, type ColorMapping, type ICustomTooltip, type PatternFillName } from "./types.js";
 import {
     type ConfigDefaults,
@@ -61,6 +67,7 @@ export type BarChartConfigProperties = {
         rotation: "0" | "30" | "60" | "90" | "auto";
         visible: boolean;
     };
+    secondary_xaxis: SecondaryAxisProperties;
     grid: {
         enabled: boolean;
     };
@@ -110,6 +117,7 @@ const DEFAULTS: ConfigDefaults<BarChartConfigProperties> = {
         rotation: "auto",
         visible: true,
     },
+    secondary_xaxis: SECONDARY_AXIS_DEFAULTS,
     grid: {
         enabled: true,
     },
@@ -204,6 +212,8 @@ export function barChartLoad(props: VisualisationConfig<BarChartConfigProperties
                     ],
                 ];
             }
+            case "secondary_xaxis":
+                return [...loadSecondaryAxis(value, "xaxis_secondary")];
             case "grid": {
                 return [["grid_enabled", getValueOrDefault(value.enabled, DEFAULTS.grid.enabled, "bool")]];
             }
@@ -235,9 +245,12 @@ export function barChartLoad(props: VisualisationConfig<BarChartConfigProperties
 /** @internal */
 export function barChartSave(
     _fields: Visualisation["query"]["fields"] | undefined,
-    config: Visualisation["config"] | undefined,
+    inputConfig: Visualisation["config"] | undefined,
+    metrics: Bucket[] = [],
 ) {
-    if (!config) {
+    const config = inputConfig ?? {};
+    const secondaryXAxis = saveSecondaryAxis(config, "xaxis_secondary", metrics);
+    if (!inputConfig && !secondaryXAxis) {
         return undefined;
     }
 
@@ -284,6 +297,7 @@ export function barChartSave(
             visible: getValueOrDefault(config.yaxis_visible, DEFAULTS.yaxis.visible, "bool"),
             labelsEnabled: getValueOrDefault(config.yaxis_labels, DEFAULTS.yaxis.labelsEnabled, "bool"),
         }),
+        secondary_xaxis: secondaryXAxis,
         grid: saveConfigObject({
             enabled: getValueOrDefault(config.grid_enabled, DEFAULTS.grid.enabled, "bool"),
         }),

@@ -21,6 +21,12 @@ interface IInsightPickerMenuComponentProps {
 
 export function InsightPickerMenu({ item, menuActions, renderMenu }: IInsightPickerMenuComponentProps) {
     const intl = useIntl();
+    const actions = menuActions?.filter((action) => action.isAvailable?.(item) ?? true) ?? [];
+
+    if (!renderMenu && actions.length === 0) {
+        return null;
+    }
+
     return (
         <Dropdown
             alignPoints={[{ align: "br tr" }, { align: "tr br" }]}
@@ -42,9 +48,9 @@ export function InsightPickerMenu({ item, menuActions, renderMenu }: IInsightPic
 
                 return (
                     <ItemsWrapper smallItemsSpacing>
-                        {menuActions?.map((action) => (
+                        {actions.map((action, index) => (
                             <Fragment key={action.id}>
-                                {action.hasSeparator ? (
+                                {action.hasSeparator && index > 0 ? (
                                     <SingleSelectListItem
                                         type="separator"
                                         accessibilityConfig={{ role: "separator" }}

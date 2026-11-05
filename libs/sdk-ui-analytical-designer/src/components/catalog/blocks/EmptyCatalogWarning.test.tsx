@@ -16,15 +16,12 @@ const translationsMock = {
     "catalog.no_related_attributes_found": "catalog.no_related_attributes_found",
     "catalog.no_related_measures_found": "catalog.no_related_measures_found",
     "catalog.no_related_data_items_found": "catalog.no_related_data_items_found",
-    "catalog.workspace_contains_no_data.link": "catalog.workspace_contains_no_data.link",
 };
 
 const defaultProps = {
     hiddenItemsCount: 0,
     isWorkspaceEmpty: false,
     canManageProject: true,
-    isFreemiumEdition: false,
-    linkToDatasourcePage: "/data",
     selectedTabNames: TabNames.ALL_TAB_NAME,
 };
 
@@ -83,30 +80,4 @@ describe("EmptyCatalogWarning", () => {
             );
         },
     );
-
-    it("should not display link when workspace has no data and cant manage data", () => {
-        const { container } = mountComponent({
-            isWorkspaceEmpty: true,
-            canManageProject: false,
-        });
-        expect(container.querySelector(".s-catalog-no-data-link")).toBeFalsy();
-    });
-
-    it("should not display link when workspace has no data and it is not freemium edition", () => {
-        const { container } = mountComponent({
-            isWorkspaceEmpty: true,
-            canManageProject: true,
-            isFreemiumEdition: false,
-        });
-        expect(container.querySelector(".s-catalog-no-data-link")).toBeFalsy();
-    });
-
-    it("should display link when workspace has no data and it is freemium edition", () => {
-        const { container } = mountComponent({
-            isWorkspaceEmpty: true,
-            canManageProject: true,
-            isFreemiumEdition: true,
-        });
-        expect(container.querySelectorAll(".s-catalog-no-data-link")).toBeTruthy();
-    });
 });

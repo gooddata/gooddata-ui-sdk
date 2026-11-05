@@ -893,6 +893,30 @@ describe("resolveApplications", () => {
 
                 expect(result).toHaveLength(0);
             });
+
+            it.each([
+                ["a top-level array", []],
+                ["an $or with a nested empty array", { $or: [[]] }],
+                ["an empty $and", { $and: [] }],
+                ["an $or with a null operand", { $or: [null] }],
+            ])("excludes app when the condition is %s", (_desc, condition) => {
+                const local = [
+                    externalApp({
+                        id: "a",
+                        menuOrder: 1,
+                        requiredOrganizationPermissions:
+                            condition as unknown as PluggableApplicationRegistryItem["requiredOrganizationPermissions"],
+                    }),
+                ];
+                const result = resolveApplications({
+                    localApps: local,
+                    remoteRegistry: undefined,
+                    ctx: ctxWith({ organizationPermissions: { canManageOrganization: true } }),
+                    scope: "workspace",
+                });
+
+                expect(result).toHaveLength(0);
+            });
         });
 
         describe("requiredEntitlements", () => {

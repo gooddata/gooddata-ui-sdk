@@ -3,16 +3,6 @@
 @use "@gooddata/sdk-ui-kit/styles/scss/Bubble/_variables" as bubble-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
-.gd-header,
-.gd-header-embedded {
-    z-index: 1;
-}
-
-.gd-header-embedded {
-    position: relative;
-    height: 0;
-}
-
 .invisible {
     display: none;
 }

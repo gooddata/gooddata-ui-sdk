@@ -6941,6 +6941,30 @@ export const metadata_v1: {
                     yaxis_secondary_show_on_right: {
                         type: string;
                     };
+                    xaxis_secondary_format: {
+                        type: string;
+                    };
+                    xaxis_secondary_max: {
+                        type: string;
+                    };
+                    xaxis_secondary_min: {
+                        type: string;
+                    };
+                    xaxis_secondary_name_position: {
+                        type: string;
+                    };
+                    xaxis_secondary_name_visible: {
+                        type: string;
+                    };
+                    xaxis_secondary_rotation: {
+                        type: string;
+                    };
+                    xaxis_secondary_visible: {
+                        type: string;
+                    };
+                    xaxis_secondary_labels: {
+                        type: string;
+                    };
                     tooltip_text: {
                         type: string;
                     };
@@ -17556,6 +17580,22 @@ interface VisualisationConfig {
     // (undocumented)
     xaxis_rotation?: string;
     // (undocumented)
+    xaxis_secondary_format?: string;
+    // (undocumented)
+    xaxis_secondary_labels?: boolean;
+    // (undocumented)
+    xaxis_secondary_max?: number;
+    // (undocumented)
+    xaxis_secondary_min?: number;
+    // (undocumented)
+    xaxis_secondary_name_position?: string;
+    // (undocumented)
+    xaxis_secondary_name_visible?: boolean;
+    // (undocumented)
+    xaxis_secondary_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_visible?: boolean;
+    // (undocumented)
     xaxis_visible?: boolean;
     // (undocumented)
     yaxis_format?: string;
@@ -17863,6 +17903,22 @@ interface VisualisationConfig1 {
     xaxis_name_visible?: boolean;
     // (undocumented)
     xaxis_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_format?: string;
+    // (undocumented)
+    xaxis_secondary_labels?: boolean;
+    // (undocumented)
+    xaxis_secondary_max?: number;
+    // (undocumented)
+    xaxis_secondary_min?: number;
+    // (undocumented)
+    xaxis_secondary_name_position?: string;
+    // (undocumented)
+    xaxis_secondary_name_visible?: boolean;
+    // (undocumented)
+    xaxis_secondary_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_visible?: boolean;
     // (undocumented)
     xaxis_visible?: boolean;
     // (undocumented)
@@ -18172,6 +18228,22 @@ interface VisualisationConfig10 {
     // (undocumented)
     xaxis_rotation?: string;
     // (undocumented)
+    xaxis_secondary_format?: string;
+    // (undocumented)
+    xaxis_secondary_labels?: boolean;
+    // (undocumented)
+    xaxis_secondary_max?: number;
+    // (undocumented)
+    xaxis_secondary_min?: number;
+    // (undocumented)
+    xaxis_secondary_name_position?: string;
+    // (undocumented)
+    xaxis_secondary_name_visible?: boolean;
+    // (undocumented)
+    xaxis_secondary_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_visible?: boolean;
+    // (undocumented)
     xaxis_visible?: boolean;
     // (undocumented)
     yaxis_format?: string;
@@ -18479,6 +18551,22 @@ interface VisualisationConfig11 {
     xaxis_name_visible?: boolean;
     // (undocumented)
     xaxis_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_format?: string;
+    // (undocumented)
+    xaxis_secondary_labels?: boolean;
+    // (undocumented)
+    xaxis_secondary_max?: number;
+    // (undocumented)
+    xaxis_secondary_min?: number;
+    // (undocumented)
+    xaxis_secondary_name_position?: string;
+    // (undocumented)
+    xaxis_secondary_name_visible?: boolean;
+    // (undocumented)
+    xaxis_secondary_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_visible?: boolean;
     // (undocumented)
     xaxis_visible?: boolean;
     // (undocumented)
@@ -18788,6 +18876,22 @@ interface VisualisationConfig12 {
     // (undocumented)
     xaxis_rotation?: string;
     // (undocumented)
+    xaxis_secondary_format?: string;
+    // (undocumented)
+    xaxis_secondary_labels?: boolean;
+    // (undocumented)
+    xaxis_secondary_max?: number;
+    // (undocumented)
+    xaxis_secondary_min?: number;
+    // (undocumented)
+    xaxis_secondary_name_position?: string;
+    // (undocumented)
+    xaxis_secondary_name_visible?: boolean;
+    // (undocumented)
+    xaxis_secondary_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_visible?: boolean;
+    // (undocumented)
     xaxis_visible?: boolean;
     // (undocumented)
     yaxis_format?: string;
@@ -19095,6 +19199,22 @@ interface VisualisationConfig13 {
     xaxis_name_visible?: boolean;
     // (undocumented)
     xaxis_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_format?: string;
+    // (undocumented)
+    xaxis_secondary_labels?: boolean;
+    // (undocumented)
+    xaxis_secondary_max?: number;
+    // (undocumented)
+    xaxis_secondary_min?: number;
+    // (undocumented)
+    xaxis_secondary_name_position?: string;
+    // (undocumented)
+    xaxis_secondary_name_visible?: boolean;
+    // (undocumented)
+    xaxis_secondary_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_visible?: boolean;
     // (undocumented)
     xaxis_visible?: boolean;
     // (undocumented)
@@ -19404,6 +19524,22 @@ interface VisualisationConfig14 {
     // (undocumented)
     xaxis_rotation?: string;
     // (undocumented)
+    xaxis_secondary_format?: string;
+    // (undocumented)
+    xaxis_secondary_labels?: boolean;
+    // (undocumented)
+    xaxis_secondary_max?: number;
+    // (undocumented)
+    xaxis_secondary_min?: number;
+    // (undocumented)
+    xaxis_secondary_name_position?: string;
+    // (undocumented)
+    xaxis_secondary_name_visible?: boolean;
+    // (undocumented)
+    xaxis_secondary_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_visible?: boolean;
+    // (undocumented)
     xaxis_visible?: boolean;
     // (undocumented)
     yaxis_format?: string;
@@ -19711,6 +19847,22 @@ interface VisualisationConfig15 {
     xaxis_name_visible?: boolean;
     // (undocumented)
     xaxis_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_format?: string;
+    // (undocumented)
+    xaxis_secondary_labels?: boolean;
+    // (undocumented)
+    xaxis_secondary_max?: number;
+    // (undocumented)
+    xaxis_secondary_min?: number;
+    // (undocumented)
+    xaxis_secondary_name_position?: string;
+    // (undocumented)
+    xaxis_secondary_name_visible?: boolean;
+    // (undocumented)
+    xaxis_secondary_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_visible?: boolean;
     // (undocumented)
     xaxis_visible?: boolean;
     // (undocumented)
@@ -20020,6 +20172,22 @@ interface VisualisationConfig16 {
     // (undocumented)
     xaxis_rotation?: string;
     // (undocumented)
+    xaxis_secondary_format?: string;
+    // (undocumented)
+    xaxis_secondary_labels?: boolean;
+    // (undocumented)
+    xaxis_secondary_max?: number;
+    // (undocumented)
+    xaxis_secondary_min?: number;
+    // (undocumented)
+    xaxis_secondary_name_position?: string;
+    // (undocumented)
+    xaxis_secondary_name_visible?: boolean;
+    // (undocumented)
+    xaxis_secondary_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_visible?: boolean;
+    // (undocumented)
     xaxis_visible?: boolean;
     // (undocumented)
     yaxis_format?: string;
@@ -20327,6 +20495,22 @@ interface VisualisationConfig17 {
     xaxis_name_visible?: boolean;
     // (undocumented)
     xaxis_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_format?: string;
+    // (undocumented)
+    xaxis_secondary_labels?: boolean;
+    // (undocumented)
+    xaxis_secondary_max?: number;
+    // (undocumented)
+    xaxis_secondary_min?: number;
+    // (undocumented)
+    xaxis_secondary_name_position?: string;
+    // (undocumented)
+    xaxis_secondary_name_visible?: boolean;
+    // (undocumented)
+    xaxis_secondary_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_visible?: boolean;
     // (undocumented)
     xaxis_visible?: boolean;
     // (undocumented)
@@ -20636,6 +20820,22 @@ interface VisualisationConfig18 {
     // (undocumented)
     xaxis_rotation?: string;
     // (undocumented)
+    xaxis_secondary_format?: string;
+    // (undocumented)
+    xaxis_secondary_labels?: boolean;
+    // (undocumented)
+    xaxis_secondary_max?: number;
+    // (undocumented)
+    xaxis_secondary_min?: number;
+    // (undocumented)
+    xaxis_secondary_name_position?: string;
+    // (undocumented)
+    xaxis_secondary_name_visible?: boolean;
+    // (undocumented)
+    xaxis_secondary_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_visible?: boolean;
+    // (undocumented)
     xaxis_visible?: boolean;
     // (undocumented)
     yaxis_format?: string;
@@ -20943,6 +21143,22 @@ interface VisualisationConfig19 {
     xaxis_name_visible?: boolean;
     // (undocumented)
     xaxis_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_format?: string;
+    // (undocumented)
+    xaxis_secondary_labels?: boolean;
+    // (undocumented)
+    xaxis_secondary_max?: number;
+    // (undocumented)
+    xaxis_secondary_min?: number;
+    // (undocumented)
+    xaxis_secondary_name_position?: string;
+    // (undocumented)
+    xaxis_secondary_name_visible?: boolean;
+    // (undocumented)
+    xaxis_secondary_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_visible?: boolean;
     // (undocumented)
     xaxis_visible?: boolean;
     // (undocumented)
@@ -21252,6 +21468,22 @@ interface VisualisationConfig2 {
     // (undocumented)
     xaxis_rotation?: string;
     // (undocumented)
+    xaxis_secondary_format?: string;
+    // (undocumented)
+    xaxis_secondary_labels?: boolean;
+    // (undocumented)
+    xaxis_secondary_max?: number;
+    // (undocumented)
+    xaxis_secondary_min?: number;
+    // (undocumented)
+    xaxis_secondary_name_position?: string;
+    // (undocumented)
+    xaxis_secondary_name_visible?: boolean;
+    // (undocumented)
+    xaxis_secondary_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_visible?: boolean;
+    // (undocumented)
     xaxis_visible?: boolean;
     // (undocumented)
     yaxis_format?: string;
@@ -21559,6 +21791,22 @@ interface VisualisationConfig20 {
     xaxis_name_visible?: boolean;
     // (undocumented)
     xaxis_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_format?: string;
+    // (undocumented)
+    xaxis_secondary_labels?: boolean;
+    // (undocumented)
+    xaxis_secondary_max?: number;
+    // (undocumented)
+    xaxis_secondary_min?: number;
+    // (undocumented)
+    xaxis_secondary_name_position?: string;
+    // (undocumented)
+    xaxis_secondary_name_visible?: boolean;
+    // (undocumented)
+    xaxis_secondary_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_visible?: boolean;
     // (undocumented)
     xaxis_visible?: boolean;
     // (undocumented)
@@ -21868,6 +22116,22 @@ interface VisualisationConfig21 {
     // (undocumented)
     xaxis_rotation?: string;
     // (undocumented)
+    xaxis_secondary_format?: string;
+    // (undocumented)
+    xaxis_secondary_labels?: boolean;
+    // (undocumented)
+    xaxis_secondary_max?: number;
+    // (undocumented)
+    xaxis_secondary_min?: number;
+    // (undocumented)
+    xaxis_secondary_name_position?: string;
+    // (undocumented)
+    xaxis_secondary_name_visible?: boolean;
+    // (undocumented)
+    xaxis_secondary_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_visible?: boolean;
+    // (undocumented)
     xaxis_visible?: boolean;
     // (undocumented)
     yaxis_format?: string;
@@ -22175,6 +22439,22 @@ interface VisualisationConfig22 {
     xaxis_name_visible?: boolean;
     // (undocumented)
     xaxis_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_format?: string;
+    // (undocumented)
+    xaxis_secondary_labels?: boolean;
+    // (undocumented)
+    xaxis_secondary_max?: number;
+    // (undocumented)
+    xaxis_secondary_min?: number;
+    // (undocumented)
+    xaxis_secondary_name_position?: string;
+    // (undocumented)
+    xaxis_secondary_name_visible?: boolean;
+    // (undocumented)
+    xaxis_secondary_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_visible?: boolean;
     // (undocumented)
     xaxis_visible?: boolean;
     // (undocumented)
@@ -22484,6 +22764,22 @@ interface VisualisationConfig23 {
     // (undocumented)
     xaxis_rotation?: string;
     // (undocumented)
+    xaxis_secondary_format?: string;
+    // (undocumented)
+    xaxis_secondary_labels?: boolean;
+    // (undocumented)
+    xaxis_secondary_max?: number;
+    // (undocumented)
+    xaxis_secondary_min?: number;
+    // (undocumented)
+    xaxis_secondary_name_position?: string;
+    // (undocumented)
+    xaxis_secondary_name_visible?: boolean;
+    // (undocumented)
+    xaxis_secondary_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_visible?: boolean;
+    // (undocumented)
     xaxis_visible?: boolean;
     // (undocumented)
     yaxis_format?: string;
@@ -22791,6 +23087,22 @@ interface VisualisationConfig3 {
     xaxis_name_visible?: boolean;
     // (undocumented)
     xaxis_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_format?: string;
+    // (undocumented)
+    xaxis_secondary_labels?: boolean;
+    // (undocumented)
+    xaxis_secondary_max?: number;
+    // (undocumented)
+    xaxis_secondary_min?: number;
+    // (undocumented)
+    xaxis_secondary_name_position?: string;
+    // (undocumented)
+    xaxis_secondary_name_visible?: boolean;
+    // (undocumented)
+    xaxis_secondary_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_visible?: boolean;
     // (undocumented)
     xaxis_visible?: boolean;
     // (undocumented)
@@ -23100,6 +23412,22 @@ interface VisualisationConfig4 {
     // (undocumented)
     xaxis_rotation?: string;
     // (undocumented)
+    xaxis_secondary_format?: string;
+    // (undocumented)
+    xaxis_secondary_labels?: boolean;
+    // (undocumented)
+    xaxis_secondary_max?: number;
+    // (undocumented)
+    xaxis_secondary_min?: number;
+    // (undocumented)
+    xaxis_secondary_name_position?: string;
+    // (undocumented)
+    xaxis_secondary_name_visible?: boolean;
+    // (undocumented)
+    xaxis_secondary_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_visible?: boolean;
+    // (undocumented)
     xaxis_visible?: boolean;
     // (undocumented)
     yaxis_format?: string;
@@ -23407,6 +23735,22 @@ interface VisualisationConfig5 {
     xaxis_name_visible?: boolean;
     // (undocumented)
     xaxis_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_format?: string;
+    // (undocumented)
+    xaxis_secondary_labels?: boolean;
+    // (undocumented)
+    xaxis_secondary_max?: number;
+    // (undocumented)
+    xaxis_secondary_min?: number;
+    // (undocumented)
+    xaxis_secondary_name_position?: string;
+    // (undocumented)
+    xaxis_secondary_name_visible?: boolean;
+    // (undocumented)
+    xaxis_secondary_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_visible?: boolean;
     // (undocumented)
     xaxis_visible?: boolean;
     // (undocumented)
@@ -23716,6 +24060,22 @@ interface VisualisationConfig6 {
     // (undocumented)
     xaxis_rotation?: string;
     // (undocumented)
+    xaxis_secondary_format?: string;
+    // (undocumented)
+    xaxis_secondary_labels?: boolean;
+    // (undocumented)
+    xaxis_secondary_max?: number;
+    // (undocumented)
+    xaxis_secondary_min?: number;
+    // (undocumented)
+    xaxis_secondary_name_position?: string;
+    // (undocumented)
+    xaxis_secondary_name_visible?: boolean;
+    // (undocumented)
+    xaxis_secondary_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_visible?: boolean;
+    // (undocumented)
     xaxis_visible?: boolean;
     // (undocumented)
     yaxis_format?: string;
@@ -24023,6 +24383,22 @@ interface VisualisationConfig7 {
     xaxis_name_visible?: boolean;
     // (undocumented)
     xaxis_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_format?: string;
+    // (undocumented)
+    xaxis_secondary_labels?: boolean;
+    // (undocumented)
+    xaxis_secondary_max?: number;
+    // (undocumented)
+    xaxis_secondary_min?: number;
+    // (undocumented)
+    xaxis_secondary_name_position?: string;
+    // (undocumented)
+    xaxis_secondary_name_visible?: boolean;
+    // (undocumented)
+    xaxis_secondary_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_visible?: boolean;
     // (undocumented)
     xaxis_visible?: boolean;
     // (undocumented)
@@ -24332,6 +24708,22 @@ interface VisualisationConfig8 {
     // (undocumented)
     xaxis_rotation?: string;
     // (undocumented)
+    xaxis_secondary_format?: string;
+    // (undocumented)
+    xaxis_secondary_labels?: boolean;
+    // (undocumented)
+    xaxis_secondary_max?: number;
+    // (undocumented)
+    xaxis_secondary_min?: number;
+    // (undocumented)
+    xaxis_secondary_name_position?: string;
+    // (undocumented)
+    xaxis_secondary_name_visible?: boolean;
+    // (undocumented)
+    xaxis_secondary_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_visible?: boolean;
+    // (undocumented)
     xaxis_visible?: boolean;
     // (undocumented)
     yaxis_format?: string;
@@ -24639,6 +25031,22 @@ interface VisualisationConfig9 {
     xaxis_name_visible?: boolean;
     // (undocumented)
     xaxis_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_format?: string;
+    // (undocumented)
+    xaxis_secondary_labels?: boolean;
+    // (undocumented)
+    xaxis_secondary_max?: number;
+    // (undocumented)
+    xaxis_secondary_min?: number;
+    // (undocumented)
+    xaxis_secondary_name_position?: string;
+    // (undocumented)
+    xaxis_secondary_name_visible?: boolean;
+    // (undocumented)
+    xaxis_secondary_rotation?: string;
+    // (undocumented)
+    xaxis_secondary_visible?: boolean;
     // (undocumented)
     xaxis_visible?: boolean;
     // (undocumented)

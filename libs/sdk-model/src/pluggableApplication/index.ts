@@ -207,6 +207,10 @@ export interface IConditionAnd<T> {
  * Supports the plain-object (implicit AND), `$or` and `$and` forms. A missing property in `actual`
  * is treated as falsy, so `undefined` satisfies a requirement of `false`.
  *
+ * A malformed condition is never satisfied. Examples are an array, `null` or a primitive in place of
+ * a condition, an `$or` or `$and` operand that is not a non-empty array, an operator mixed with other
+ * keys, and an unknown `$` key. A required value matches only a strictly equal actual value.
+ *
  * @param condition - condition to evaluate
  * @param actual - actual values to evaluate the condition against
  * @returns true when the condition is satisfied
@@ -214,22 +218,34 @@ export interface IConditionAnd<T> {
  * @alpha
  */
 export function evaluateCondition<T extends object>(condition: Condition<T>, actual: T | undefined): boolean {
-    if (typeof condition === "object" && condition !== null && "$or" in condition) {
-        return (condition as IConditionOr<T>).$or.some((c) => evaluateCondition(c, actual));
+    if (!isPlainRecord(condition)) {
+        return false;
     }
-    if (typeof condition === "object" && condition !== null && "$and" in condition) {
-        return (condition as IConditionAnd<T>).$and.every((c) => evaluateCondition(c, actual));
+    const keys = Object.keys(condition);
+    if (keys.length === 1 && (keys[0] === "$or" || keys[0] === "$and")) {
+        const operands = condition[keys[0]];
+        if (!Array.isArray(operands) || operands.length === 0) {
+            return false;
+        }
+        const evaluateOperand = (c: Condition<T>) => evaluateCondition(c, actual);
+        return keys[0] === "$or" ? operands.some(evaluateOperand) : operands.every(evaluateOperand);
+    }
+    if (keys.some((key) => key.startsWith("$"))) {
+        return false;
     }
     if (actual === undefined) {
         return false;
     }
-    const plain = condition as Record<string, unknown>;
     const actualRecord = actual as Record<string, unknown>;
-    return Object.keys(plain).every((key) => {
-        const required = plain[key];
+    return keys.every((key) => {
+        const required = condition[key];
         const actualValue = actualRecord[key];
         return actualValue === required || (actualValue === undefined && required === false);
     });
+}
+
+function isPlainRecord(value: unknown): value is Record<string, unknown> {
+    return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 /**

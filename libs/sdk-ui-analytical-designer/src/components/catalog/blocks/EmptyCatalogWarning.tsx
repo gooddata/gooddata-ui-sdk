@@ -10,8 +10,6 @@ export interface IEmptyCatalogWarningOwnProps {
     hiddenItemsCount: number;
     isWorkspaceEmpty: boolean;
     canManageProject: boolean;
-    isFreemiumEdition: boolean;
-    linkToDatasourcePage: string;
 }
 
 const getMessageId = (
@@ -56,8 +54,6 @@ export function EmptyCatalogWarning({
     hiddenItemsCount,
     isWorkspaceEmpty,
     canManageProject,
-    isFreemiumEdition,
-    linkToDatasourcePage,
 }: IEmptyCatalogWarningOwnProps) {
     const messageId = getMessageId(selectedTabNames, hiddenItemsCount, isWorkspaceEmpty, canManageProject);
     const className = classNames("adi-no-objects", "s-no-objects-found", {
@@ -67,19 +63,6 @@ export function EmptyCatalogWarning({
     return (
         <div className={className}>
             <FormattedMessage id={messageId} />
-            {isFreemiumEdition && canManageProject && isWorkspaceEmpty ? (
-                <>
-                    {" "}
-                    <a
-                        href={linkToDatasourcePage}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                        className="s-catalog-no-data-link"
-                    >
-                        <FormattedMessage id="catalog.workspace_contains_no_data.link" />
-                    </a>
-                </>
-            ) : null}
         </div>
     );
 }

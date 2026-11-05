@@ -39,6 +39,5 @@ export default defineConfig({
         COMMITHASH: '"dev"',
         DEBUG: false,
         TESTING: true,
-        TIGER_API_TOKEN: false,
     },
 });

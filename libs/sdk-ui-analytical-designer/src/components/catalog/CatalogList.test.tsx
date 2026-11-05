@@ -44,8 +44,6 @@ describe("CatalogList", () => {
         isWorkspaceEmpty: false,
         hiddenItemsCount: 0,
         canManageProject: true,
-        isFreemiumEdition: false,
-        linkToDatasourcePage: "/data",
         selectedTabNames: TabNames.ALL_TAB_NAME,
     };
 

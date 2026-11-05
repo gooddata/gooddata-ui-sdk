@@ -1,11 +1,9 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { has, isEqual, truncate, uniq, uniqWith } from "lodash-es";
+import { has, isEqual, uniq, uniqWith } from "lodash-es";
 
-import { type IInsightDefinition, type ObjRef, isUriRef, objRefToString } from "@gooddata/sdk-model";
+import { type ObjRef, isUriRef, objRefToString } from "@gooddata/sdk-model";
 
-import { MAX_TITLE_LENGTH } from "../constants/report.js";
-import { BearToBackendConvertors } from "../convertors/index.js";
 import { currentReportMDObject } from "../selectors/buckets_selector.js";
 import { getInsightForSaveViaMd } from "../selectors/insight_selectors.js";
 import { getInsightTitle } from "../store/insight/insight_selectors.js";
@@ -25,19 +23,6 @@ import {
 import { type IElement, type IFilterConfiguration } from "../typings/measure_filters.js";
 import { type IReport } from "../typings/report.js";
 import { convertModelInsightToADRep } from "../utils/sdkModelToADRep/InsightConverter.js";
-
-/**
- * The measure member of a bucket item. The item type is a UNION and lodash `has` does not narrow
- * it, so these reads were only legal while the callbacks were typed `any`; they now go through this
- * shape at the read instead.
- */
-type IBucketItemMeasure = {
-    title?: string;
-    definition?: { measureDefinition?: { filters?: unknown[] } };
-};
-
-const measureOf = (item: unknown): IBucketItemMeasure | undefined =>
-    (item as { measure?: IBucketItemMeasure })?.measure;
 
 export function getReportTitle(state: IAppState) {
     return getInsightTitle(state);
@@ -71,45 +56,6 @@ export function getVisualizationObjectForSave(state: IAppState) {
     };
 
     return visualization;
-}
-
-export function getVisualizationForExportFromInsight(
-    state: IAppState,
-    title: string,
-    insight: IInsightDefinition,
-): IReport {
-    const visualization = getNewReportMDObject(state);
-
-    // to be able to call the fillMissingTitles method, we have to have an insight here as well...
-    const mdObjectWithFilledTitles = BearToBackendConvertors.convertInsightDefinition(insight);
-
-    const bucketsWithTruncatedTitles = mdObjectWithFilledTitles.content.buckets.map((bucket) => ({
-        ...bucket,
-        items: (bucket.items ?? []).map((item) => {
-            const measure = measureOf(item);
-            return has(item, "measure")
-                ? {
-                      ...item,
-                      measure: { ...measure, title: truncate(measure?.title, { length: MAX_TITLE_LENGTH }) },
-                  }
-                : item;
-        }) as IVisualizationObjectBucket["items"],
-    }));
-
-    return {
-        ...visualization,
-        visualizationObject: {
-            ...visualization.visualizationObject,
-            content: {
-                ...visualization.visualizationObject.content,
-                buckets: bucketsWithTruncatedTitles,
-            },
-            meta: {
-                ...visualization.visualizationObject.meta,
-                title,
-            },
-        },
-    };
 }
 
 const isAttributeFilter = (filter: unknown): filter is IAdAttributeFilter =>

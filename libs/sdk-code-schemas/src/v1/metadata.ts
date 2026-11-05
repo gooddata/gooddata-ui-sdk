@@ -4077,6 +4077,14 @@ export interface VisualisationConfig {
     yaxis_secondary_visible?: boolean;
     yaxis_secondary_labels?: boolean;
     yaxis_secondary_show_on_right?: boolean;
+    xaxis_secondary_format?: string;
+    xaxis_secondary_max?: number;
+    xaxis_secondary_min?: number;
+    xaxis_secondary_name_position?: string;
+    xaxis_secondary_name_visible?: boolean;
+    xaxis_secondary_rotation?: string;
+    xaxis_secondary_visible?: boolean;
+    xaxis_secondary_labels?: boolean;
     tooltip_text?: string;
     viewport?:
         | "auto"
@@ -4364,7 +4372,7 @@ export interface ComplexBucket {
      */
     format?: string;
     /**
-     * Axis to use for this bucket. Only applicable for "combo" charts.
+     * Axis to use for this bucket. Only applicable for "combo", "line", "column" and "bar" charts. The secondary axis is on the right, or on the top for "bar" charts.
      */
     axis?: "primary" | "secondary";
     /**
@@ -4556,6 +4564,14 @@ export interface VisualisationConfig1 {
     yaxis_secondary_visible?: boolean;
     yaxis_secondary_labels?: boolean;
     yaxis_secondary_show_on_right?: boolean;
+    xaxis_secondary_format?: string;
+    xaxis_secondary_max?: number;
+    xaxis_secondary_min?: number;
+    xaxis_secondary_name_position?: string;
+    xaxis_secondary_name_visible?: boolean;
+    xaxis_secondary_rotation?: string;
+    xaxis_secondary_visible?: boolean;
+    xaxis_secondary_labels?: boolean;
     tooltip_text?: string;
     viewport?:
         | "auto"
@@ -4956,6 +4972,14 @@ export interface VisualisationConfig2 {
     yaxis_secondary_visible?: boolean;
     yaxis_secondary_labels?: boolean;
     yaxis_secondary_show_on_right?: boolean;
+    xaxis_secondary_format?: string;
+    xaxis_secondary_max?: number;
+    xaxis_secondary_min?: number;
+    xaxis_secondary_name_position?: string;
+    xaxis_secondary_name_visible?: boolean;
+    xaxis_secondary_rotation?: string;
+    xaxis_secondary_visible?: boolean;
+    xaxis_secondary_labels?: boolean;
     tooltip_text?: string;
     viewport?:
         | "auto"
@@ -5356,6 +5380,14 @@ export interface VisualisationConfig3 {
     yaxis_secondary_visible?: boolean;
     yaxis_secondary_labels?: boolean;
     yaxis_secondary_show_on_right?: boolean;
+    xaxis_secondary_format?: string;
+    xaxis_secondary_max?: number;
+    xaxis_secondary_min?: number;
+    xaxis_secondary_name_position?: string;
+    xaxis_secondary_name_visible?: boolean;
+    xaxis_secondary_rotation?: string;
+    xaxis_secondary_visible?: boolean;
+    xaxis_secondary_labels?: boolean;
     tooltip_text?: string;
     viewport?:
         | "auto"
@@ -5756,6 +5788,14 @@ export interface VisualisationConfig4 {
     yaxis_secondary_visible?: boolean;
     yaxis_secondary_labels?: boolean;
     yaxis_secondary_show_on_right?: boolean;
+    xaxis_secondary_format?: string;
+    xaxis_secondary_max?: number;
+    xaxis_secondary_min?: number;
+    xaxis_secondary_name_position?: string;
+    xaxis_secondary_name_visible?: boolean;
+    xaxis_secondary_rotation?: string;
+    xaxis_secondary_visible?: boolean;
+    xaxis_secondary_labels?: boolean;
     tooltip_text?: string;
     viewport?:
         | "auto"
@@ -6156,6 +6196,14 @@ export interface VisualisationConfig5 {
     yaxis_secondary_visible?: boolean;
     yaxis_secondary_labels?: boolean;
     yaxis_secondary_show_on_right?: boolean;
+    xaxis_secondary_format?: string;
+    xaxis_secondary_max?: number;
+    xaxis_secondary_min?: number;
+    xaxis_secondary_name_position?: string;
+    xaxis_secondary_name_visible?: boolean;
+    xaxis_secondary_rotation?: string;
+    xaxis_secondary_visible?: boolean;
+    xaxis_secondary_labels?: boolean;
     tooltip_text?: string;
     viewport?:
         | "auto"
@@ -6556,6 +6604,14 @@ export interface VisualisationConfig6 {
     yaxis_secondary_visible?: boolean;
     yaxis_secondary_labels?: boolean;
     yaxis_secondary_show_on_right?: boolean;
+    xaxis_secondary_format?: string;
+    xaxis_secondary_max?: number;
+    xaxis_secondary_min?: number;
+    xaxis_secondary_name_position?: string;
+    xaxis_secondary_name_visible?: boolean;
+    xaxis_secondary_rotation?: string;
+    xaxis_secondary_visible?: boolean;
+    xaxis_secondary_labels?: boolean;
     tooltip_text?: string;
     viewport?:
         | "auto"
@@ -6952,6 +7008,14 @@ export interface VisualisationConfig7 {
     yaxis_secondary_visible?: boolean;
     yaxis_secondary_labels?: boolean;
     yaxis_secondary_show_on_right?: boolean;
+    xaxis_secondary_format?: string;
+    xaxis_secondary_max?: number;
+    xaxis_secondary_min?: number;
+    xaxis_secondary_name_position?: string;
+    xaxis_secondary_name_visible?: boolean;
+    xaxis_secondary_rotation?: string;
+    xaxis_secondary_visible?: boolean;
+    xaxis_secondary_labels?: boolean;
     tooltip_text?: string;
     viewport?:
         | "auto"
@@ -7348,6 +7412,14 @@ export interface VisualisationConfig8 {
     yaxis_secondary_visible?: boolean;
     yaxis_secondary_labels?: boolean;
     yaxis_secondary_show_on_right?: boolean;
+    xaxis_secondary_format?: string;
+    xaxis_secondary_max?: number;
+    xaxis_secondary_min?: number;
+    xaxis_secondary_name_position?: string;
+    xaxis_secondary_name_visible?: boolean;
+    xaxis_secondary_rotation?: string;
+    xaxis_secondary_visible?: boolean;
+    xaxis_secondary_labels?: boolean;
     tooltip_text?: string;
     viewport?:
         | "auto"
@@ -7744,6 +7816,14 @@ export interface VisualisationConfig9 {
     yaxis_secondary_visible?: boolean;
     yaxis_secondary_labels?: boolean;
     yaxis_secondary_show_on_right?: boolean;
+    xaxis_secondary_format?: string;
+    xaxis_secondary_max?: number;
+    xaxis_secondary_min?: number;
+    xaxis_secondary_name_position?: string;
+    xaxis_secondary_name_visible?: boolean;
+    xaxis_secondary_rotation?: string;
+    xaxis_secondary_visible?: boolean;
+    xaxis_secondary_labels?: boolean;
     tooltip_text?: string;
     viewport?:
         | "auto"
@@ -8140,6 +8220,14 @@ export interface VisualisationConfig10 {
     yaxis_secondary_visible?: boolean;
     yaxis_secondary_labels?: boolean;
     yaxis_secondary_show_on_right?: boolean;
+    xaxis_secondary_format?: string;
+    xaxis_secondary_max?: number;
+    xaxis_secondary_min?: number;
+    xaxis_secondary_name_position?: string;
+    xaxis_secondary_name_visible?: boolean;
+    xaxis_secondary_rotation?: string;
+    xaxis_secondary_visible?: boolean;
+    xaxis_secondary_labels?: boolean;
     tooltip_text?: string;
     viewport?:
         | "auto"
@@ -8536,6 +8624,14 @@ export interface VisualisationConfig11 {
     yaxis_secondary_visible?: boolean;
     yaxis_secondary_labels?: boolean;
     yaxis_secondary_show_on_right?: boolean;
+    xaxis_secondary_format?: string;
+    xaxis_secondary_max?: number;
+    xaxis_secondary_min?: number;
+    xaxis_secondary_name_position?: string;
+    xaxis_secondary_name_visible?: boolean;
+    xaxis_secondary_rotation?: string;
+    xaxis_secondary_visible?: boolean;
+    xaxis_secondary_labels?: boolean;
     tooltip_text?: string;
     viewport?:
         | "auto"
@@ -8940,6 +9036,14 @@ export interface VisualisationConfig12 {
     yaxis_secondary_visible?: boolean;
     yaxis_secondary_labels?: boolean;
     yaxis_secondary_show_on_right?: boolean;
+    xaxis_secondary_format?: string;
+    xaxis_secondary_max?: number;
+    xaxis_secondary_min?: number;
+    xaxis_secondary_name_position?: string;
+    xaxis_secondary_name_visible?: boolean;
+    xaxis_secondary_rotation?: string;
+    xaxis_secondary_visible?: boolean;
+    xaxis_secondary_labels?: boolean;
     tooltip_text?: string;
     viewport?:
         | "auto"
@@ -9336,6 +9440,14 @@ export interface VisualisationConfig13 {
     yaxis_secondary_visible?: boolean;
     yaxis_secondary_labels?: boolean;
     yaxis_secondary_show_on_right?: boolean;
+    xaxis_secondary_format?: string;
+    xaxis_secondary_max?: number;
+    xaxis_secondary_min?: number;
+    xaxis_secondary_name_position?: string;
+    xaxis_secondary_name_visible?: boolean;
+    xaxis_secondary_rotation?: string;
+    xaxis_secondary_visible?: boolean;
+    xaxis_secondary_labels?: boolean;
     tooltip_text?: string;
     viewport?:
         | "auto"
@@ -9732,6 +9844,14 @@ export interface VisualisationConfig14 {
     yaxis_secondary_visible?: boolean;
     yaxis_secondary_labels?: boolean;
     yaxis_secondary_show_on_right?: boolean;
+    xaxis_secondary_format?: string;
+    xaxis_secondary_max?: number;
+    xaxis_secondary_min?: number;
+    xaxis_secondary_name_position?: string;
+    xaxis_secondary_name_visible?: boolean;
+    xaxis_secondary_rotation?: string;
+    xaxis_secondary_visible?: boolean;
+    xaxis_secondary_labels?: boolean;
     tooltip_text?: string;
     viewport?:
         | "auto"
@@ -10130,6 +10250,14 @@ export interface VisualisationConfig15 {
     yaxis_secondary_visible?: boolean;
     yaxis_secondary_labels?: boolean;
     yaxis_secondary_show_on_right?: boolean;
+    xaxis_secondary_format?: string;
+    xaxis_secondary_max?: number;
+    xaxis_secondary_min?: number;
+    xaxis_secondary_name_position?: string;
+    xaxis_secondary_name_visible?: boolean;
+    xaxis_secondary_rotation?: string;
+    xaxis_secondary_visible?: boolean;
+    xaxis_secondary_labels?: boolean;
     tooltip_text?: string;
     viewport?:
         | "auto"
@@ -10528,6 +10656,14 @@ export interface VisualisationConfig16 {
     yaxis_secondary_visible?: boolean;
     yaxis_secondary_labels?: boolean;
     yaxis_secondary_show_on_right?: boolean;
+    xaxis_secondary_format?: string;
+    xaxis_secondary_max?: number;
+    xaxis_secondary_min?: number;
+    xaxis_secondary_name_position?: string;
+    xaxis_secondary_name_visible?: boolean;
+    xaxis_secondary_rotation?: string;
+    xaxis_secondary_visible?: boolean;
+    xaxis_secondary_labels?: boolean;
     tooltip_text?: string;
     viewport?:
         | "auto"
@@ -10924,6 +11060,14 @@ export interface VisualisationConfig17 {
     yaxis_secondary_visible?: boolean;
     yaxis_secondary_labels?: boolean;
     yaxis_secondary_show_on_right?: boolean;
+    xaxis_secondary_format?: string;
+    xaxis_secondary_max?: number;
+    xaxis_secondary_min?: number;
+    xaxis_secondary_name_position?: string;
+    xaxis_secondary_name_visible?: boolean;
+    xaxis_secondary_rotation?: string;
+    xaxis_secondary_visible?: boolean;
+    xaxis_secondary_labels?: boolean;
     tooltip_text?: string;
     viewport?:
         | "auto"
@@ -11320,6 +11464,14 @@ export interface VisualisationConfig18 {
     yaxis_secondary_visible?: boolean;
     yaxis_secondary_labels?: boolean;
     yaxis_secondary_show_on_right?: boolean;
+    xaxis_secondary_format?: string;
+    xaxis_secondary_max?: number;
+    xaxis_secondary_min?: number;
+    xaxis_secondary_name_position?: string;
+    xaxis_secondary_name_visible?: boolean;
+    xaxis_secondary_rotation?: string;
+    xaxis_secondary_visible?: boolean;
+    xaxis_secondary_labels?: boolean;
     tooltip_text?: string;
     viewport?:
         | "auto"
@@ -11720,6 +11872,14 @@ export interface VisualisationConfig19 {
     yaxis_secondary_visible?: boolean;
     yaxis_secondary_labels?: boolean;
     yaxis_secondary_show_on_right?: boolean;
+    xaxis_secondary_format?: string;
+    xaxis_secondary_max?: number;
+    xaxis_secondary_min?: number;
+    xaxis_secondary_name_position?: string;
+    xaxis_secondary_name_visible?: boolean;
+    xaxis_secondary_rotation?: string;
+    xaxis_secondary_visible?: boolean;
+    xaxis_secondary_labels?: boolean;
     tooltip_text?: string;
     viewport?:
         | "auto"
@@ -12093,6 +12253,14 @@ export interface VisualisationConfig20 {
     yaxis_secondary_visible?: boolean;
     yaxis_secondary_labels?: boolean;
     yaxis_secondary_show_on_right?: boolean;
+    xaxis_secondary_format?: string;
+    xaxis_secondary_max?: number;
+    xaxis_secondary_min?: number;
+    xaxis_secondary_name_position?: string;
+    xaxis_secondary_name_visible?: boolean;
+    xaxis_secondary_rotation?: string;
+    xaxis_secondary_visible?: boolean;
+    xaxis_secondary_labels?: boolean;
     tooltip_text?: string;
     viewport?:
         | "auto"
@@ -12493,6 +12661,14 @@ export interface VisualisationConfig21 {
     yaxis_secondary_visible?: boolean;
     yaxis_secondary_labels?: boolean;
     yaxis_secondary_show_on_right?: boolean;
+    xaxis_secondary_format?: string;
+    xaxis_secondary_max?: number;
+    xaxis_secondary_min?: number;
+    xaxis_secondary_name_position?: string;
+    xaxis_secondary_name_visible?: boolean;
+    xaxis_secondary_rotation?: string;
+    xaxis_secondary_visible?: boolean;
+    xaxis_secondary_labels?: boolean;
     tooltip_text?: string;
     viewport?:
         | "auto"
@@ -12897,6 +13073,14 @@ export interface VisualisationConfig22 {
     yaxis_secondary_visible?: boolean;
     yaxis_secondary_labels?: boolean;
     yaxis_secondary_show_on_right?: boolean;
+    xaxis_secondary_format?: string;
+    xaxis_secondary_max?: number;
+    xaxis_secondary_min?: number;
+    xaxis_secondary_name_position?: string;
+    xaxis_secondary_name_visible?: boolean;
+    xaxis_secondary_rotation?: string;
+    xaxis_secondary_visible?: boolean;
+    xaxis_secondary_labels?: boolean;
     tooltip_text?: string;
     viewport?:
         | "auto"
@@ -13293,6 +13477,14 @@ export interface VisualisationConfig23 {
     yaxis_secondary_visible?: boolean;
     yaxis_secondary_labels?: boolean;
     yaxis_secondary_show_on_right?: boolean;
+    xaxis_secondary_format?: string;
+    xaxis_secondary_max?: number;
+    xaxis_secondary_min?: number;
+    xaxis_secondary_name_position?: string;
+    xaxis_secondary_name_visible?: boolean;
+    xaxis_secondary_rotation?: string;
+    xaxis_secondary_visible?: boolean;
+    xaxis_secondary_labels?: boolean;
     tooltip_text?: string;
     viewport?:
         | "auto"

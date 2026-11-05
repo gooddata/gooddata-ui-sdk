@@ -28,7 +28,7 @@ interface IAdditionalDateAttributesDropdownProps {
 // dropdown gets an inline z-index from that controller and would otherwise paint over the menu
 // (the .adi-date-granularity-dropdown CSS pins 5001, tying only with un-controlled overlays).
 // Mounted only while the menu is open, so it registers on open and releases on close; without a
-// controller it falls back to 5001, keeping standalone AD behavior unchanged.
+// controller it falls back to 5001, the same z-index as the un-controlled overlays.
 function MenuItemsWrapper({ children }: { children: ReactNode }) {
     const zIndex = useOverlayZIndexWithRegister();
     return (

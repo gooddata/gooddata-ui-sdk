@@ -5,7 +5,6 @@ import { backend } from "../backend.js";
 export const isCsvExportSupported = () => !!backend.capabilities.canExportCsv;
 export const isXlsxExportSupported = () => !!backend.capabilities.canExportXlsx;
 export const isCreateReportSupported = () => !!backend.capabilities["supportsLegacyReports"];
-export const canManageMetadata = () => false;
 export const isRankingFilterSupported = () => !!backend.capabilities.supportsRankingFilter;
 export const isElementUrisSupported = () => !!backend.capabilities.supportsElementUris;
 export const areGenericDateAttributeElementsSupported = () =>

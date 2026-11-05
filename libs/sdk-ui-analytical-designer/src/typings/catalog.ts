@@ -78,8 +78,6 @@ export type IOrganizedCatalogTooltipDetails =
 
 export interface IOrganizedCatalogTooltipDetailsMeasure {
     metricMaql?: ReadonlyArray<IExpressionToken>;
-    projectId?: string;
-    isRedirectAllowed?: boolean;
 }
 
 export interface IOrganizedCatalogTooltipDetailsFact {

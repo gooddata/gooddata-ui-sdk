@@ -8,12 +8,10 @@ import { type CatalogItem, type ICatalogGroup } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 
 import { type GeoLabelType } from "../../constants/geo.js";
-import { getLinkToDatasourcePage } from "../../selectors/data_page_selector.js";
 import {
     enableCatalogSmartSearchResults,
     enableEnhancedInsightPicker,
     getCatalogGroupsExpanded,
-    isFreemiumEdition,
 } from "../../selectors/feature_flag_selector.js";
 import { canManageProject } from "../../selectors/permissions_selector.js";
 import { getActiveGeoLabelType, isLocationIconEnabled } from "../../services/reference_point_service.js";
@@ -50,8 +48,6 @@ interface ICatalogStateProps {
     updatedItemsCount: number;
     isWorkspaceEmpty: boolean;
     canManageProject: boolean;
-    isFreemiumEdition: boolean;
-    linkToDatasourcePage: string;
     shouldUnavailableItemsBeVisible: boolean;
     enableCatalogSmartSearchResults: boolean;
     isEnhancedInsightPickerEnabled: boolean;
@@ -118,8 +114,6 @@ describe("Catalog", () => {
         updatedItemsCount: 0,
         isWorkspaceEmpty: false,
         canManageProject: true,
-        isFreemiumEdition: false,
-        linkToDatasourcePage: "/data",
         shouldUnavailableItemsBeVisible: false,
         enableCatalogSmartSearchResults: false,
         isEnhancedInsightPickerEnabled: false,
@@ -143,8 +137,6 @@ describe("Catalog", () => {
             [getUpdatedItemsCount, state.updatedItemsCount],
             [isWorkspaceEmpty, state.isWorkspaceEmpty],
             [canManageProject, state.canManageProject],
-            [isFreemiumEdition, state.isFreemiumEdition],
-            [getLinkToDatasourcePage, state.linkToDatasourcePage],
             [shouldUnavailableItemsBeVisible, state.shouldUnavailableItemsBeVisible],
             [enableCatalogSmartSearchResults, state.enableCatalogSmartSearchResults],
             [enableEnhancedInsightPicker, state.isEnhancedInsightPickerEnabled],

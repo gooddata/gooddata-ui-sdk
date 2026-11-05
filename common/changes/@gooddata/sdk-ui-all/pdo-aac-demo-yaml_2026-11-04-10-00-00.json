@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-backend-spi: Removed the alpha setDeclarativeLayout() logical model method and the IDeclarativeWorkspaceLayout type. Use analyticsAsCode().deploy() instead.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

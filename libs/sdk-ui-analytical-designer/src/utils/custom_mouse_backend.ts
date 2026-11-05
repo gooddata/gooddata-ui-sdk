@@ -206,7 +206,7 @@ export class TouchBackend implements Backend {
          * inside-clicks, so a bubble-phase window listener would never see the drag-start mousedown.
          * Capture phase runs window-first, before any document handler, and is immune to that. The
          * drag gating is unaffected: beginDrag still requires the bubble-phase source-node listener
-         * (handleMoveStart) to have fired. Standalone/pluggable keep the original bubble phase.
+         * (handleMoveStart) to have fired. Pluggable and iframe keep the original bubble phase.
          */
         this.startListenerCapture = isHostedComponentSelector(store.getState() as unknown as IAppState);
 

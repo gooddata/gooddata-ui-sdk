@@ -2,7 +2,7 @@
 
 import { v4 as uuid } from "uuid";
 
-import { type ChatEvent } from "../store/events.js";
+import { type ChatDefinitionReceivedEvent, type ChatEvent } from "../store/events.js";
 
 import {
     selectCopilotGenerationPending,
@@ -67,7 +67,11 @@ export class CopilotHandler<TBuild extends string = CopilotBuildType> {
         if (event.type === "onDefinitionReceived") {
             for (const registration of this.configuration.registrations) {
                 const target = registration.resolveDefinition(event, this.state.context, this.state);
-                if (!target || target.type !== registration.type) {
+                if (
+                    !target ||
+                    target.type !== registration.type ||
+                    !this.shouldApplyDefinition(event, target)
+                ) {
                     continue;
                 }
                 const applicationId = this.definitionApplicationStarted({
@@ -189,11 +193,41 @@ export class CopilotHandler<TBuild extends string = CopilotBuildType> {
     public getAppliedSource = (target: ICopilotTarget<TBuild>): ICopilotSource | undefined =>
         selectCopilotSource(this.state, target);
 
+    /** Whether this exact workflow target has a pending or applied definition, regardless of chat selection. */
+    public hasDefinition = (target: ICopilotTarget<TBuild>): boolean =>
+        [...this.state.applications, ...this.state.sources].some(
+            (entry) => entry.target.type === target.type && entry.target.objectId === target.objectId,
+        );
+
     /** Permanently stop processing and release all listeners. Idempotent. */
     public dispose = (): void => {
         this.disposed = true;
         this.listeners.clear();
     };
+
+    private shouldApplyDefinition(
+        event: ChatDefinitionReceivedEvent,
+        target: ICopilotTarget<TBuild>,
+    ): boolean {
+        const { context } = this.state;
+        const builderTarget = context.builderTarget?.type === target.type ? context.builderTarget : undefined;
+        if (builderTarget?.objectId === target.objectId) {
+            return true;
+        }
+        if (event.interactionId) {
+            return false;
+        }
+        const source = builderTarget ? this.getAppliedSource(builderTarget) : undefined;
+        const isBuilderFollowUp =
+            source?.threadId && event.threadId
+                ? source.threadId === event.threadId
+                : !!source?.conversationId && source.conversationId === event.conversationId;
+        return (
+            this.isGenerationPending(target.type) ||
+            isBuilderFollowUp ||
+            (context.type === target.type && !!context.isEditing && context.objectId === target.objectId)
+        );
+    }
 
     private update(input: CopilotInput<TBuild>): void {
         if (this.disposed) {

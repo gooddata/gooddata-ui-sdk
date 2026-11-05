@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-code-convertors: Line, column and bar charts keep their secondary axis in analytics-as-code. Metrics marked `axis: secondary` map to the right axis (top axis for bar charts), and the new `xaxis_secondary_*` config keys hold the bar chart top axis settings.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

@@ -12,7 +12,6 @@ import { type TigerWorkspaceLogicalModelService } from "./index.js";
 
 vi.mock("@gooddata/api-client-tiger/endpoints/layout", () => ({
     LayoutApi_GetLogicalModel: vi.fn(),
-    LayoutApi_PutWorkspaceLayout: vi.fn(),
     LayoutApi_SetLogicalModel: vi.fn(),
 }));
 
@@ -86,18 +85,6 @@ describe("TigerWorkspaceLogicalModelService", () => {
         expect(layoutApi.LayoutApi_SetLogicalModel).toHaveBeenCalledWith({}, "", {
             workspaceId: "ws",
             declarativeModel: { ldm: model },
-        });
-    });
-
-    it("writes the model and the analytics in one request", async () => {
-        vi.mocked(layoutApi.LayoutApi_PutWorkspaceLayout).mockResolvedValue({} as AxiosResponse);
-        const analytics = { metrics: [{ id: "m", title: "M", content: { maql: "SELECT 1" } }] };
-
-        await service.setDeclarativeLayout({ ldm: model, analytics });
-
-        expect(layoutApi.LayoutApi_PutWorkspaceLayout).toHaveBeenCalledWith({}, "", {
-            workspaceId: "ws",
-            declarativeWorkspaceModel: { ldm: model, analytics },
         });
     });
 });

@@ -7,4 +7,4 @@ import { createStore } from "./create_store.js";
 //  upgraded. The store is created in separate file from app.tsx where it was created before to not have
 //  circular dependencies between the files.
 // Sagas are not auto-started; caller invokes startSagas() when ready.
-export const { store, sagaMiddleware, startSagas, subscribeControls } = createStore();
+export const { store, startSagas, subscribeControls } = createStore();

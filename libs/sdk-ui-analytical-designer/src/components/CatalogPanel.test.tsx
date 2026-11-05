@@ -27,10 +27,7 @@ describe("Catalog Panel", () => {
     const workspace = "test-workspace";
 
     const defaultProps: ICatalogPanelProps = {
-        canUserManageMetric: false,
         canUserCreateMetric: false,
-        isEmbeddedMode: false,
-        projectId: "N/A",
         connectDropTarget: ((v) => v) as ConnectDropTarget,
         onDropBucketItem: (v) => v,
         onDropFilterItem: (v) => v,
@@ -126,23 +123,6 @@ describe("Catalog Panel", () => {
             drop({ ...defaultProps, onDropFilterItem }, monitor);
 
             expect(onDropFilterItem).toHaveBeenCalledWith("d1", DATE);
-        });
-    });
-
-    describe("Create calculated measure link", () => {
-        it("should render the button link when not in embedded mode and user is allowed to manage metrics", () => {
-            const { container } = renderComponent({ canUserManageMetric: true, isEmbeddedMode: false });
-            expect(container.querySelector(".s-btn-create_calculated_measure")).toBeInTheDocument();
-        });
-
-        it("should not render the button link when in embedded mode even thought the user is allowed to manage metrics", () => {
-            const { container } = renderComponent({ canUserManageMetric: true, isEmbeddedMode: true });
-            expect(container.querySelector(".s-btn-create_calculated_measure")).not.toBeInTheDocument();
-        });
-
-        it("should not render the button link when the user is not allowed to manage metrics", () => {
-            const { container } = renderComponent({ canUserManageMetric: false, isEmbeddedMode: false });
-            expect(container.querySelector(".s-btn-create_calculated_measure")).not.toBeInTheDocument();
         });
     });
 

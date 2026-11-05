@@ -2177,7 +2177,7 @@
                         },
                         "axis": {
                             "type": "string",
-                            "description": "Axis to use for this bucket. Only applicable for \"combo\" charts.",
+                            "description": "Axis to use for this bucket. Only applicable for \"combo\", \"line\", \"column\" and \"bar\" charts. The secondary axis is on the right, or on the top for \"bar\" charts.",
                             "enum": ["primary", "secondary"]
                         },
                         "display_as": {

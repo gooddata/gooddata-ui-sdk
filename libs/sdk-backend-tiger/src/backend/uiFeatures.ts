@@ -126,6 +126,7 @@ export const TigerFeatureDefinitions = {
     enableReportsPostGA: booleanFeature(false),
     enableGenAiReportTakeaways: booleanFeature(false),
     enableEmbeddingWriteCommands: booleanFeature(false),
+    enableEmbeddingOriginValidation: booleanFeature(false),
     enableLocalizationOverview: booleanFeature(false),
     enableAiAssistantChartsV2: booleanFeature(false),
     enableUserLanguageChange: booleanFeature(true),

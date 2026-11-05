@@ -68,6 +68,7 @@ export function InsightPickerCore({
     tagFilter,
     onTagFilterChange,
     enableSemanticSearch = false,
+    includePermissions = false,
     maxHeight = 350,
     width = 700,
     onSelect,
@@ -126,6 +127,7 @@ export function InsightPickerCore({
         sortDirection,
         createdByFilter: authorFilter.length > 0 ? authorFilter : undefined,
         includeAuthorInfo: true,
+        includePermissions,
         searchTerm: debouncedSearchQuery,
     });
 
@@ -140,7 +142,7 @@ export function InsightPickerCore({
     const tagFilterKey = tagFilter.join(",");
     const searchKey = debouncedSearchQuery;
     // Holds the filters the loaded items belong to. The reload effect below advances it.
-    const prevKeys = useRef({ sortingKey, authorFilterKey, tagFilterKey, searchKey });
+    const prevKeys = useRef({ sortingKey, authorFilterKey, tagFilterKey, searchKey, includePermissions });
 
     // The picker opens filtered to the current user. A user who authored nothing would face an
     // empty picker, so drop that default and let the reload below fetch every author. The filter
@@ -180,19 +182,20 @@ export function InsightPickerCore({
         searchKey,
     ]);
 
-    // Reload when sorting, filters or the search term change (after initial load)
+    // Reload when sorting, filters, the search term or the permissions request change (after initial load)
     useEffect(() => {
         const prev = prevKeys.current;
         if (
             sortingKey !== prev.sortingKey ||
             authorFilterKey !== prev.authorFilterKey ||
             tagFilterKey !== prev.tagFilterKey ||
-            searchKey !== prev.searchKey
+            searchKey !== prev.searchKey ||
+            includePermissions !== prev.includePermissions
         ) {
-            prevKeys.current = { sortingKey, authorFilterKey, tagFilterKey, searchKey };
+            prevKeys.current = { sortingKey, authorFilterKey, tagFilterKey, searchKey, includePermissions };
             resetItems();
         }
-    }, [sortingKey, authorFilterKey, tagFilterKey, searchKey, resetItems]);
+    }, [sortingKey, authorFilterKey, tagFilterKey, searchKey, includePermissions, resetItems]);
 
     // --- Insight lookup ---
     const insightsByIdentifier = useMemo(

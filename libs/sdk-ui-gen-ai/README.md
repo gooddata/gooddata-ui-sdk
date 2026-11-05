@@ -37,8 +37,17 @@ supported, with `inputPlaceholder` taking precedence when both are supplied.
 ## Headless copilot workflow (alpha)
 
 `CopilotHandler` owns plain immutable workflow state; it requires no Redux setup.
-Register each build type with its reacting skills, pure definition acceptance policy,
+Register each build type with its reacting skills, pure definition target resolver,
 and host application callback. Create one instance per editor/runtime, not a singleton.
+
+The handler accepts definitions matching the open builder target, including history replays.
+Other definitions must be live and belong to pending generation, the currently edited object,
+or the open builder's applied conversation. Builder follow-ups may change the draft identifier;
+server thread IDs take precedence over local conversation IDs when both are available.
+
+Use `copilot.hasDefinition(target)` to check whether the exact workflow type and object ID have a
+pending or applied definition, independently of the current view or selected conversation. Hosts can
+use this query to restore chat for fresh builder URLs without switching chats after in-session applications.
 
 ```typescript
 import { CopilotBuildType, CopilotHandler } from "@gooddata/sdk-ui-gen-ai";

@@ -59,7 +59,8 @@ type KnownKeys<T> = {
     [K in keyof T as string extends K ? never : number extends K ? never : K]: T[K];
 };
 type YamlConfig = KnownKeys<NonNullable<Visualisation["config"]>>;
-type ConfigEntry = { [K in keyof YamlConfig]-?: [key: K, value: unknown] }[keyof YamlConfig];
+/** @internal */
+export type ConfigEntry = { [K in keyof YamlConfig]-?: [key: K, value: unknown] }[keyof YamlConfig];
 type LoaderArgs<T> = { [K in keyof T]: [key: K, value: T[K]] }[keyof T];
 
 export function loadConfig<T>(

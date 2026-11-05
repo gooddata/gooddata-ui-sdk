@@ -26,7 +26,9 @@ type UnmappedTypes =
     | "REPORTS_BRAND_KIT"
     | "CONVERSATION_RETENTION_DAYS"
     | "ENABLE_AI_DATA_OBFUSCATION"
-    | "AUTHORIZATION_SERVER_REDIRECT_POLICY";
+    | "AUTHORIZATION_SERVER_REDIRECT_POLICY"
+    | "QUERY_ENGINE"
+    | "EMBEDDING_ORIGINS";
 
 // Only mandatory types
 type MandatoryTypes = Exclude<AllSettingsType, UnmappedTypes>;

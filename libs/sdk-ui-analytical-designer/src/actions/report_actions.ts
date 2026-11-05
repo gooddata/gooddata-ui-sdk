@@ -85,51 +85,6 @@ export function hasExecutionStatus(payload: unknown): payload is { status: strin
     );
 }
 
-export const exportReport = createAction(ActionTypeKeys.REPORT_EXPORT_REQUESTED, (title: string) => ({
-    payload: { title },
-}));
-
-export type IExportReportAction = ReturnType<typeof exportReport>;
-
-export const exportReportStarted = createAction(
-    ActionTypeKeys.REPORT_EXPORT_STARTED,
-    (id: string, projectId: string, startTime: number) => ({
-        payload: undefined,
-        meta: { id, startTime, projectId },
-    }),
-);
-
-export const exportReportFinished = createAction(
-    ActionTypeKeys.REPORT_EXPORT_FINISHED,
-    (id: string, projectId: string, startTime: number, duration: number, uri: string) => ({
-        payload: undefined,
-        meta: { id, projectId, startTime, duration, uri },
-    }),
-);
-
-export const exportReportError = createAction(
-    ActionTypeKeys.REPORT_EXPORT_ERROR,
-    (id: string, projectId: string, startTime: number, duration: number, error: unknown) => {
-        // the caught export error is probed for the two response fields the telemetry reports
-        const response = (error as { response?: { status?: number; statusText?: string } } | undefined)
-            ?.response;
-        return {
-            payload: error,
-            error: true,
-            meta: {
-                id,
-                projectId,
-                startTime,
-                duration,
-                statusCode: response?.status,
-                statusText: response?.statusText,
-            },
-        };
-    },
-);
-
-export type IExportReportErrorAction = ReturnType<typeof exportReportError>;
-
 export const reportTitleChange = createAction(ActionTypeKeys.REPORT_TITLE_CHANGE, (title: string) => ({
     payload: { title },
 }));

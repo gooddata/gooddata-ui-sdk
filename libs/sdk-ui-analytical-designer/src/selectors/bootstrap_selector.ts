@@ -16,12 +16,6 @@ import { getIsEmbedded } from "./meta_selector.js";
 
 export const bootstrapData = (state: IAppState): IBootstrapData | null => getBootstrapDataState(state);
 
-// BEAR
-export const hasWorkspaceAccess = createSelector([bootstrapData], () => {
-    // Tiger does not support workspaces yet
-    return true;
-});
-
 // PROJECT
 export function getProjectId(state: IAppState): string | undefined {
     return getProjectIdState(state) ?? undefined;
@@ -45,34 +39,9 @@ export const getOrganizationName = createSelector(
     (data) => data?.uiSettings?.organizationName,
 );
 
-export const logoUrl = createSelector([bootstrapData], (data) => data?.uiSettings?.logoUrl);
-
-export const activeColor = createSelector([bootstrapData], (data) => data?.uiSettings?.activeColor);
-
-export const headerColor = createSelector([bootstrapData], (data) => data?.uiSettings?.headerColor);
-
-export const headerTextColor = createSelector([bootstrapData], (data) => data?.uiSettings?.headerTextColor);
-
-export const displayAccountPage = createSelector(
-    [bootstrapData],
-    (data) => data?.uiSettings?.displayAccountPage,
-);
-
 export const isBranded = createSelector([bootstrapData], (data) => data?.uiSettings?.isBranded);
 
 export const documentationUrl = createSelector([bootstrapData], (data) => data?.uiSettings?.documentationUrl);
-
-export const getSSOExpiredUrl = createSelector([bootstrapData], (data) => data?.uiSettings?.ssoExpiredUrl);
-
-export const getSSOUnauthorizedUrl = createSelector(
-    [bootstrapData],
-    (data) => data?.uiSettings?.ssoUnauthorizedUrl,
-);
-
-export const showSSOCustomUnauthorizedLoginPage = createSelector(
-    [bootstrapData],
-    (data) => data?.uiSettings?.showSSOCustomUnauthorizedLoginPage,
-);
 
 // USER
 export const getUserUri = createSelector([bootstrapData], (data) => data?.user?.uri);

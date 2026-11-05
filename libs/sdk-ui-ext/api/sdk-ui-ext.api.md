@@ -4,7 +4,7 @@
 
 ```ts
 
-import type { AccessGranularPermission } from '@gooddata/sdk-model';
+import { AccessGranularPermission } from '@gooddata/sdk-model';
 import { AutomationType } from '@gooddata/sdk-backend-spi';
 import { ChartInlineVisualizationType } from '@gooddata/sdk-ui-charts';
 import { ComponentType } from 'react';
@@ -704,6 +704,10 @@ export interface IInsightPickerItem {
     // (undocumented)
     isLocked: boolean;
     // (undocumented)
+    isRelated?: boolean;
+    // (undocumented)
+    permissions?: AccessGranularPermission[];
+    // (undocumented)
     ref: ObjRef;
     // (undocumented)
     title: string;
@@ -721,6 +725,8 @@ export interface IInsightPickerMenuAction {
     hasSeparator?: boolean;
     // (undocumented)
     id: string;
+    // (undocumented)
+    isAvailable?: (item: IInsightPickerItem) => boolean;
     // (undocumented)
     isDestructive?: boolean;
     // (undocumented)
@@ -747,6 +753,8 @@ export interface IInsightPickerProps {
     enabledVisualizationClassesUrls?: string[];
     enableSemanticSearch?: boolean;
     excludeTags?: string[];
+    // (undocumented)
+    includePermissions?: boolean;
     includeTags?: string[];
     isAuthorFilterModified: boolean;
     // (undocumented)

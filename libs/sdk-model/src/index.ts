@@ -1428,7 +1428,6 @@ export type {
     IDeclarativeWorkspaceDataFilterColumn,
     IDeclarativeDateDataset,
     IDeclarativeGranularitiesFormatting,
-    IDeclarativeWorkspaceLayout,
 } from "./ldm/declarativeModel/index.js";
 export type { ICustomApplicationSetting } from "./customApplicationSettings/index.js";
 

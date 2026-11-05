@@ -45,7 +45,10 @@ import { descriptionTooltipOpened } from "../../sagas/description_tooltip/descri
 import { isOwnershipSupported, supportsObjectUris } from "../../selectors/backend_capabilities_selector.js";
 import { getUserLoginMD5, getUserUri } from "../../selectors/bootstrap_selector.js";
 import { getMetadataTimeZone } from "../../selectors/feature_flag_selector.js";
-import { getIsReadOnlyMode } from "../../store/embedding/embedding_selectors.js";
+import {
+    canDeleteListedInsight,
+    shouldLoadListedInsightPermissions,
+} from "../../selectors/insight_delete_selector.js";
 import { type AppDispatch } from "../../store/types.js";
 
 const INSIGHT_DROPDOWN_MY_TAB_ID = defineMessage({ id: "gs.visualizationsList.tabs.my" }).id;
@@ -91,6 +94,8 @@ const authorSelector = createSelector(
 const tabsIds: ITabsIds = { my: INSIGHT_DROPDOWN_MY_TAB_ID, all: INSIGHT_DROPDOWN_ALL_TAB_ID };
 const divider = { divider: true };
 
+type InsightRow = (IInsight & { isRelated?: boolean }) | typeof divider;
+
 /**
  * The Open control as a dropdown list of visualizations.
  */
@@ -111,7 +116,8 @@ export function VisualizationsDropdown({
     const author = useSelector(authorSelector);
     const hasOwnershipSupport = useSelector(isOwnershipSupported);
     const metadataTimeZone = useSelector(getMetadataTimeZone);
-    const isReadOnly = useSelector(getIsReadOnlyMode);
+    const canDeleteInsight = useSelector(canDeleteListedInsight);
+    const includePermissions = useSelector(shouldLoadListedInsightPermissions);
 
     const onDeleteInsight = useCallback(
         (insightRef: ObjRef, title: string) => {
@@ -151,6 +157,7 @@ export function VisualizationsDropdown({
         tabsIds,
         tags,
         excludeTags,
+        includePermissions,
     });
 
     const matcher = useMemo(
@@ -186,13 +193,13 @@ export function VisualizationsDropdown({
     const loadingItemsCount = skeletonItemsCount + (isRelatedLoading ? 4 : 0);
 
     const insights = useMemo(
-        () => [
+        (): InsightRow[] => [
             ...items,
             ...(isRelatedLoading
                 ? [divider]
                 : [
                       ...(searchRelatedItems.length ? [divider] : []),
-                      ...searchRelatedItems.map((insight) => ({ insight })),
+                      ...searchRelatedItems.map((insight) => ({ insight, isRelated: true })),
                   ]),
         ],
         [items, searchRelatedItems, isRelatedLoading],
@@ -325,11 +332,11 @@ export function VisualizationsDropdown({
                                     "unknown";
                                 const isSelected = identifier === openInsightId;
                                 const insightUriRef = uriRef(uri);
+                                const canDelete = canDeleteInsight({
+                                    ...insight.insight,
+                                    isRelated: insight.isRelated,
+                                });
 
-                                // TODO: tiger does not have roles yet. It does, however have concept
-                                //  of parent-child workspaces and inheritance of objects. Inherited objects are locked
-                                //  and read-only. Thus the extra tiger backend check here. Once the tiger has
-                                //  ACLs and true read-only indicators, we can clean this up.
                                 return (
                                     <InsightListItem
                                         title={title}
@@ -341,12 +348,12 @@ export function VisualizationsDropdown({
                                         isLocked={isLocked}
                                         isSelected={isSelected}
                                         onDelete={
-                                            !isReadOnly &&
-                                            !isLocked &&
-                                            (() => {
-                                                closeDropdown();
-                                                onDeleteInsight(insightUriRef, title);
-                                            })
+                                            canDelete
+                                                ? () => {
+                                                      closeDropdown();
+                                                      onDeleteInsight(insightUriRef, title);
+                                                  }
+                                                : undefined
                                         }
                                         onClick={() => {
                                             closeDropdown();

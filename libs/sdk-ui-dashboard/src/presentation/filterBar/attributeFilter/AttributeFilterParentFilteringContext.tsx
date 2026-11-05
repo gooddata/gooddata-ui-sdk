@@ -26,7 +26,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { useAttributeFilterDisplayFormFromMap } from "../../../_staging/sharedHooks/useAttributeFilterDisplayFormFromMap.js";
-import { replaceAttributeFilterItemSelection } from "../../../model/commands/filters.js";
+import { replaceAttributeFilterItemSelectionForSelectionTypeChange } from "../../../model/commands/filters.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useDashboardCommandProcessing } from "../../../model/react/useDashboardCommandProcessing.js";
 import { selectAllCatalogDisplayFormsMap } from "../../../model/store/catalog/catalogSelectors.js";
@@ -247,7 +247,7 @@ export function AttributeFilterParentFilteringProvider({
     } = useSelectionTypeConfiguration(filterItem);
 
     const { run: replaceFilterItem } = useDashboardCommandProcessing({
-        commandCreator: replaceAttributeFilterItemSelection,
+        commandCreator: replaceAttributeFilterItemSelectionForSelectionTypeChange,
         successEvent: "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
     });

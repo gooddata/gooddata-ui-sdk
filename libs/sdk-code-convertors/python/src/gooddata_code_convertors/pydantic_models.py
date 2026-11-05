@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 879399cb6d885b440230f6ef78c389f10c64d7c792082a49d003d0afdfd07c3a
+# schema-hash: 59eac68b67b20d27fd2b953ff0e64a2801a41f8fb305e63739c6dc1f586f0478
 
 from __future__ import annotations
 
@@ -3923,6 +3923,14 @@ class Config(BaseModel):
     yaxis_secondary_visible: bool | None = None
     yaxis_secondary_labels: bool | None = None
     yaxis_secondary_show_on_right: bool | None = None
+    xaxis_secondary_format: str | None = None
+    xaxis_secondary_max: float | None = None
+    xaxis_secondary_min: float | None = None
+    xaxis_secondary_name_position: str | None = None
+    xaxis_secondary_name_visible: bool | None = None
+    xaxis_secondary_rotation: str | None = None
+    xaxis_secondary_visible: bool | None = None
+    xaxis_secondary_labels: bool | None = None
     tooltip_text: str | None = None
     viewport: Viewport | None = None
     basemap: str | None = None
@@ -4689,7 +4697,7 @@ class BucketItem1(BaseModel):
     format: str | None = Field(None, description='Metric value default format')
     axis: Axis | None = Field(
         None,
-        description='Axis to use for this bucket. Only applicable for "combo" charts.',
+        description='Axis to use for this bucket. Only applicable for "combo", "line", "column" and "bar" charts. The secondary axis is on the right, or on the top for "bar" charts.',
     )
     display_as: DisplayAs | None = Field(
         None,

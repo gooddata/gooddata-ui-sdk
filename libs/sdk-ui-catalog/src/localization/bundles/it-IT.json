@@ -85,7 +85,7 @@
     "analyticsCatalog.column.isHiddenFromKda.field.tooltip": "Analizza quali fattori determinano le variazioni in una metrica selezionata. Il sistema identifica e classifica i driver chiave in base all’impatto, aiutandoti a comprendere i cambiamenti delle prestazioni senza intervento manuale.",
     "analyticsCatalog.tags.manager.label.more": "Altri tag",
     "analyticsCatalog.tags.manager.label.noTags": "Nessun tag",
-    "analyticsCatalog.tags.manager.label.close": "Chiudere",
+    "analyticsCatalog.tags.manager.label.close": "Chiudi",
     "analyticsCatalog.tags.manager.label.addLabel": "Aggiungi tag",
     "analyticsCatalog.tags.manager.label.nameLabel": "Nome",
     "analyticsCatalog.tags.manager.label.cancelLabel": "Annulla",
@@ -97,7 +97,7 @@
     "analyticsCatalog.error.notFound.description": "Potrebbe essere stata eliminata o non si dispone dell'accesso.",
     "analyticsCatalog.error.unauthorized.message": "Non autorizzato",
     "analyticsCatalog.error.unauthorized.description": "Non hai accesso al catalogo di analisi. Chiedi all'amministratore di concederti le autorizzazioni.",
-    "analyticsCatalog.catalogItem.closeButtonLabel": "Chiudere",
+    "analyticsCatalog.catalogItem.closeButtonLabel": "Chiudi",
     "analyticsCatalog.catalogItem.overlayLabel": "Dettagli elemento di catalogo",
     "analyticsCatalog.catalogItem.title.add": "Aggiungi titolo…",
     "analyticsCatalog.catalogItem.title.generate": "Genera titolo con AI",
@@ -257,6 +257,7 @@
     "analyticsCatalog.asCode.dialog.delete.showLess": "Mostra di meno",
     "analyticsCatalog.asCode.dialog.delete.usageGroup.visualizations": "Visualizzazioni ({count})",
     "analyticsCatalog.asCode.dialog.delete.usageGroup.dashboards": "Cruscotti ({count})",
+    "analyticsCatalog.asCode.dialog.delete.usageGroup.documents": "Documenti ({count})",
     "analyticsCatalog.asCode.dialog.delete.usageGroup.metrics": "Metriche ({count})",
     "analyticsCatalog.asCode.dialog.delete.usageGroup.attributes": "Attributi ({count})",
     "analyticsCatalog.asCode.dialog.delete.usageGroup.otherObjects": "Altri oggetti ({count})",
@@ -289,7 +290,7 @@
     "analyticsCatalog.visualization.load.error": "Non è stato possibile caricare la visualizzazione.",
     "analyticsCatalog.visualization.dialog.delete.title": "Elimina visualizzazione",
     "analyticsCatalog.visualization.dialog.delete.body": "Eliminare <b>{name}</b>?",
-    "analyticsCatalog.visualization.dialog.delete.usageWarning": "Questa visualizzazione è utilizzata da {count, plural, one {# cruscotto} other {# cruscotti}}. L'eliminazione potrebbe comprometterne il funzionamento.",
+    "analyticsCatalog.visualization.dialog.delete.usageWarning": "Questa visualizzazione è utilizzata da {count, plural, one {# oggetto} other {# oggetti}}. L'eliminazione potrebbe comprometterne il funzionamento.",
     "analyticsCatalog.visualization.dialog.delete.submit": "Elimina",
     "analyticsCatalog.visualization.delete.success": "Visualizzazione eliminata.",
     "analyticsCatalog.visualization.delete.error": "Non è stato possibile eliminare la visualizzazione.",
@@ -304,5 +305,5 @@
     "analyticsCatalog.labels.more": "+{remaining} altre",
     "analyticsCatalog.labels.trigger.ariaLabel": "Mostra tutte le etichette",
     "analyticsCatalog.labels.popup.title": "Etichette",
-    "analyticsCatalog.labels.popup.close": "Chiudere"
+    "analyticsCatalog.labels.popup.close": "Chiudi"
 }

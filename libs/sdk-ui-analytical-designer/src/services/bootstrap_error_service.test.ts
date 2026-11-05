@@ -32,7 +32,6 @@ vi.mock("../backend", async () => {
 
 describe("getErrorHandler", () => {
     let state: IAppState;
-    let isSso: boolean;
 
     function createAction(error: string) {
         return {
@@ -48,7 +47,7 @@ describe("getErrorHandler", () => {
     function expectError(error: string, uri: string) {
         const location = { href: "/analyze" } as Location;
         const action = createAction(error);
-        const handler = getErrorHandler(state, action, isSso);
+        const handler = getErrorHandler(state, action);
 
         handler({ projectId: "my-project-123", location });
 
@@ -57,14 +56,13 @@ describe("getErrorHandler", () => {
 
     function expectNoHandler(error: string) {
         const action = createAction(error);
-        const handler = getErrorHandler(state, action, isSso);
+        const handler = getErrorHandler(state, action);
 
         expect(handler).toEqual(undefined);
     }
 
-    describe("standard login mode, non-embedded", () => {
+    describe("non-embedded", () => {
         beforeEach(() => {
-            isSso = false;
             state = initialState;
         });
 
@@ -72,14 +70,20 @@ describe("getErrorHandler", () => {
             expectError(ACCESS_DESIGNER_DENIED_ERROR, "/workspace/my-project-123/dashboards");
         });
 
+        it.each([NOT_AUTHORIZED_ERROR, ACCESS_WORKBENCH_DENIED_ERROR])(
+            "should redirect to the host landing on %s",
+            (error) => {
+                expectError(error, "/");
+            },
+        );
+
         it("should not redirect to dashboard if user has role view and can not create report, and backend is Tiger", () => {
             expectError(CREATE_REPORT_DENIED_ERROR, "/analyze");
         });
     });
 
-    describe("standard login mode, embedded", () => {
+    describe("embedded", () => {
         beforeEach(() => {
-            isSso = false;
             state = withMeta(initialState, { isEmbedded: true });
         });
 
@@ -90,32 +94,6 @@ describe("getErrorHandler", () => {
             expectNoHandler(CREATE_REPORT_DENIED_ERROR);
             expectNoHandler(PROJECT_NOT_FOUND_ERROR);
             expectNoHandler(NO_PROJECT_AVAILABLE_ERROR);
-        });
-    });
-
-    describe("SSO mode, non-embedded", () => {
-        beforeEach(() => {
-            isSso = true;
-            state = initialState;
-        });
-
-        it("should redirect to info page with ssoUnauthorized status if user cannot access workbench, FF is on and has ssoUnauthorizedUrl but backend is Tiger", () => {
-            expectError(ACCESS_WORKBENCH_DENIED_ERROR, "/account.html#/info/ssoUnauthorized");
-        });
-
-        it("should not redirect to dashboard if user cannot create report and backend is Tiger", () => {
-            expectError(CREATE_REPORT_DENIED_ERROR, "/analyze");
-        });
-    });
-
-    describe("SSO mode, embedded", () => {
-        beforeEach(() => {
-            isSso = true;
-            state = withMeta(initialState, { isEmbedded: true });
-        });
-
-        it("should redirect to info page with ssoUnauthorized status if user cannot access workbench, FF is on and has ssoUnauthorizedUrl but backend is Tiger", () => {
-            expectError(ACCESS_WORKBENCH_DENIED_ERROR, "/account.html#/info/ssoUnauthorized");
         });
     });
 });

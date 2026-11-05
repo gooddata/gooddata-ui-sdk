@@ -1,16 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import {
-    type SagaReturnType,
-    call,
-    delay,
-    fork,
-    put,
-    race,
-    select,
-    take,
-    takeEvery,
-} from "redux-saga/effects";
+import { call, delay, fork, put, race, select, take } from "redux-saga/effects";
 import { v4 as uuid } from "uuid";
 
 import { type IExportResult, type UnexpectedResponseError } from "@gooddata/sdk-backend-spi";
@@ -18,7 +8,6 @@ import { GdcErrorType } from "@gooddata/sdk-embedding";
 import {
     type ICatalogAttribute,
     type IExecutionDefinition,
-    type IInsight,
     type IInsightDefinition,
     defWithExecConfig,
     isCatalogAttribute,
@@ -28,7 +17,6 @@ import {
     type IExtendedExportConfig,
     type IGeoLayerExportInsight,
     createExportFunction,
-    fillMissingTitles,
     prepareGeoInsightForDataExport,
     prepareGeoLayerInsightsForDataExport,
 } from "@gooddata/sdk-ui";
@@ -47,15 +35,8 @@ import {
     exportResultStarted,
     hideExportSuccessMessage,
 } from "../actions/export_report_actions.js";
-import {
-    type IExportReportAction,
-    exportReportError,
-    exportReportFinished,
-    exportReportStarted,
-} from "../actions/report_actions.js";
 import { backend } from "../backend.js";
 import { ActionTypeKeys } from "../constants/actions.js";
-import { BackendToBearConvertors } from "../convertors/index.js";
 import {
     exportInsightFailed,
     exportInsightFinished,
@@ -68,21 +49,15 @@ import {
     getInsightForRawExport,
     getInsightWithBucketsViaMd,
     getRawExportOverrides,
-    getVisualizationClass,
 } from "../selectors/insight_selectors.js";
-import { getLocale } from "../selectors/intl_selector.js";
 import { getIsEmbedded } from "../selectors/meta_selector.js";
-import { getVisualizationForExportFromInsight } from "../services/report_service.js";
-import { logExportResult, logOpenAsReport } from "../services/telemetry/tracking_events.js";
+import { logExportResult } from "../services/telemetry/tracking_events.js";
 import { getCatalogItems } from "../store/catalog/catalog_selector.js";
 import { type IAppState } from "../store/types.js";
-import { type IVisualization } from "../typings/bear/bearTypes.js";
-import { exportRawToServer, exportReportToServer } from "../utils/api.js";
+import { exportRawToServer } from "../utils/api.js";
 import { downloadFile } from "../utils/downloader.js";
-import { logError } from "../utils/logging/error_logging.js";
 import { createRawExportExecutionDefinition } from "../utils/rawExport.js";
 import { getDuration, getTime } from "../utils/timers.js";
-import { getWorkspaceRef } from "../utils/uri.js";
 
 export const HIDE_SUCCESS_MESSAGE_AFTER = 2500;
 
@@ -124,73 +99,6 @@ export async function performMultiLayerInsightExport(
             title: layers[index + 1].title,
         })),
     });
-}
-
-export function exportUri(projectId: string, uri: string, workspacesRef = "workspaces") {
-    return `${window.location.origin}/#s=/gdc/${workspacesRef}/${projectId}|analysisPage|${uri}|empty-report`;
-}
-
-export function redirectToReport(win: Window, location: string) {
-    win.location.href = location;
-}
-
-export function* getInsightForExport(title: string) {
-    const locale: ReturnType<typeof getLocale> = yield select(getLocale);
-    const insight: ReturnType<typeof getInsightWithBucketsViaMd> = yield select(getInsightWithBucketsViaMd);
-    const insightWithFilledTitles: SagaReturnType<typeof fillMissingTitles> = yield call(
-        fillMissingTitles,
-        insight,
-        locale,
-        undefined,
-    );
-    const report: ReturnType<typeof getVisualizationForExportFromInsight> = yield select(
-        getVisualizationForExportFromInsight,
-        title,
-        insightWithFilledTitles,
-    );
-
-    const visClass: ReturnType<typeof getVisualizationClass> = yield select(getVisualizationClass);
-    // the export report's meta is partial and its content nullable; the convertor only reads what exists
-    return BackendToBearConvertors.convertVisualization(
-        report as unknown as IVisualization,
-        visClass.visualizationClass.uri,
-    );
-}
-
-export function* exportReport(action: IExportReportAction) {
-    const { title } = action.payload;
-    const id: ReturnType<typeof getId> = yield call(getId);
-
-    const startTime: ReturnType<typeof getTime> = yield call(getTime);
-
-    const projectId: ReturnType<typeof getProjectId> = yield select(getProjectId);
-
-    yield put(exportReportStarted(id, projectId, startTime));
-
-    const newWin: ReturnType<typeof window.open> = yield call(window.open, "", "_blank");
-
-    const insight: IInsight = yield call(getInsightForExport, title);
-
-    let exportResultUri: string | undefined;
-
-    try {
-        exportResultUri = yield call(exportReportToServer, projectId, insight);
-    } catch (error) {
-        logError("Error while exporting", error);
-
-        const duration: ReturnType<typeof getDuration> = yield call(getDuration, startTime);
-        yield put(exportReportError(id, projectId, startTime, duration, error));
-        return;
-    }
-    yield call(redirectToReport, newWin, exportUri(projectId, exportResultUri, getWorkspaceRef(true)));
-
-    const duration: ReturnType<typeof getDuration> = yield call(getDuration, startTime);
-
-    yield put(exportReportFinished(id, projectId, startTime, duration, exportResultUri));
-
-    const state: IAppState = yield select();
-
-    yield call(logOpenAsReport, { state });
 }
 
 export function* rawExport(action: IExportRawAction) {
@@ -416,6 +324,5 @@ function* watchExportResultReady() {
 }
 
 export function* watchExportReport() {
-    yield takeEvery(ActionTypeKeys.REPORT_EXPORT_REQUESTED, exportReport);
     yield fork(watchExportResultReady);
 }

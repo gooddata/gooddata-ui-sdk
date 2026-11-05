@@ -11,9 +11,9 @@ This product includes a number of subcomponents with separate copyright notices 
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2026-11-4
+Date generated: 2026-11-5
 
-Revision ID: 66165aa316fed09103bbac8a827d970a6afda351
+Revision ID: e28fc9ee41056ec62021c4000c54031a2d45d175
 
 ================================================================================
 ================================================================================
@@ -267,7 +267,7 @@ Revision ID: 66165aa316fed09103bbac8a827d970a6afda351
 - @swc/helpers (0.5.23) [Apache-2.0]
 - @tanstack/react-virtual (3.14.13) [MIT]
 - @tanstack/virtual-core (3.17.11) [MIT]
-- @ts-morph/common (0.28.1) [Apache-2.0, MIT]
+- @ts-morph/common (0.29.0) [Apache-2.0, MIT]
 - @types/chai (5.2.3) [MIT]
 - @types/debug (4.1.13) [MIT]
 - @types/deep-eql (4.0.2) [MIT]
@@ -663,7 +663,7 @@ Revision ID: 66165aa316fed09103bbac8a827d970a6afda351
 - minipass (7.1.3) [ISC]
 - minizlib (3.1.0) [MIT]
 - moment (2.31.0) [MIT]
-- moment-timezone (0.5.35) [MIT, unknown, public-domain]
+- moment-timezone (0.5.35) [BSD-3-Clause, MIT, public-domain]
 - moo (0.5.3) [BSD-3-Clause]
 - ms (2.1.3) [MIT]
 - murmurhash-js (1.0.0) [MIT]
@@ -848,7 +848,7 @@ Revision ID: 66165aa316fed09103bbac8a827d970a6afda351
 - try (1.0.3) [MIT]
 - ts-invariant (0.10.3) [MIT]
 - ts-invariant (0.7.5) [MIT]
-- ts-morph (27.0.2) [MIT, 0BSD]
+- ts-morph (28.0.0) [MIT, 0BSD]
 - tslib (2.8.1) [ISC]
 - tss-react (4.9.19) [MIT]
 - type-fest (0.21.3) [Multi-license: CC0-1.0 OR MIT]
@@ -12266,9 +12266,9 @@ MIT
 - Copyright (c) 2021 present Tanner Linsley
 
 --------------------------------------------------------------------------------
-Package Title: @ts-morph/common (0.28.1)
+Package Title: @ts-morph/common (0.29.0)
 
-Package Locator: npm+@ts-morph/common$0.28.1
+Package Locator: npm+@ts-morph/common$0.29.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -46360,7 +46360,37 @@ Package Depth: Direct
 --------------------------------------------------------------------------------
 
 * Declared Licenses *
-MIT, unknown
+BSD-3-Clause, MIT
+
+* BSD-3-Clause *
+
+* License Header *
+Copyright (c) <year> <owner> . All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+   1. Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimer.
+
+   2. Redistributions in binary form must reproduce the above copyright notice,
+      this list of conditions and the following disclaimer in the documentation
+      and/or other materials provided with the distribution.
+
+   3. Neither the name of the copyright holder nor the names of its
+      contributors may be used to endorse or promote products derived from
+      this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 * MIT *
 
@@ -46384,10 +46414,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-* unknown *
-
 * Other Licenses *
 public-domain
+
+* License Header *
+Unless specified below, all files in the tz code and data (including
+this LICENSE file) are in the public domain.
+
+If the files date.c, newstrftime.3, and strftime.c are present, they
+contain material derived from BSD and use the BSD 3-clause license.
+
 
 --------------------------------------------------------------------------------
 Package Title: moo (0.5.3)
@@ -56372,9 +56408,9 @@ MIT
 - Copyright (c) 2019 Apollo GraphQL
 
 --------------------------------------------------------------------------------
-Package Title: ts-morph (27.0.2)
+Package Title: ts-morph (28.0.0)
 
-Package Locator: npm+ts-morph$27.0.2
+Package Locator: npm+ts-morph$28.0.0
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -69347,4 +69383,4 @@ MIT
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2026-11-4
+Report Generated by FOSSA on 2026-11-5

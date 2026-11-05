@@ -138,7 +138,7 @@ Leave out `insight` to open a new insight. The AnalyticalDesigner component sect
 - **Build-time defines**: `process.env` must be defined (`{}`). The MAQL parser of the metric editor
   (`antlr4ts`) loads the `assert` and `util` polyfills, which read it when they load. No other
   define is needed: AD does not read `global`. The
-  build flags `DEBUG`, `TESTING`, `READONLY_MODE` and `TIGER_API_TOKEN` are optional: the code reads
+  build flags `DEBUG`, `TESTING` and `READONLY_MODE` are optional: the code reads
   them behind `typeof` guards and falls back to production defaults, so define them only to change
   that behavior. `modules/gdc-analytical-designer/module/vite.config.ts` is the reference setup.
 - **Workers**: no setup is needed in Vite or webpack. The metric editor
@@ -190,7 +190,7 @@ Leave out `insight` to open a new insight. The AnalyticalDesigner component sect
     images it references live in `styles/images` and ship with the package. The pluggable-app dev
     servers in gdc-ui serve `styles/css/main.css` from that SCSS source
     (the `gooddataSdkSourcePlugin` from `@gooddata/toolchain-config/vite`), so style changes reload without a rebuild.
-    Other hosts, such as the webpack Dashboards app, use the compiled file and need a lib rebuild.
+    Other hosts use the compiled file and need a lib rebuild.
 
 - **One instance per page**: the redux store is a module-level singleton, so mounting a second
   `AnalyticalDesigner` while one is mounted throws an error.

@@ -32,8 +32,6 @@ export interface ICatalogVisualStateProps {
     updatedItemsCount: number;
     isWorkspaceEmpty: boolean;
     canManageProject: boolean;
-    isFreemiumEdition: boolean;
-    linkToDatasourcePage: string;
     tabSelectionStates: ReadonlyArray<boolean>;
     isEnhancedInsightPickerEnabled: boolean;
 }
@@ -64,8 +62,6 @@ export function CatalogVisual({
     updatedItemsCount,
     isWorkspaceEmpty,
     canManageProject,
-    isFreemiumEdition,
-    linkToDatasourcePage,
     tabSelectionStates,
     isEnhancedInsightPickerEnabled,
 }: ICatalogVisualProps) {
@@ -150,8 +146,6 @@ export function CatalogVisual({
                     hiddenItemsCount={hiddenItemsCount}
                     selectedTabNames={selectedTabNames}
                     canManageProject={canManageProject}
-                    isFreemiumEdition={isFreemiumEdition}
-                    linkToDatasourcePage={linkToDatasourcePage}
                 />
                 <UpdatedItemsCount count={updatedItemsCount} />
                 <RefreshButton isVisible={isMouseOver} onClick={onRefreshButtonClick} />

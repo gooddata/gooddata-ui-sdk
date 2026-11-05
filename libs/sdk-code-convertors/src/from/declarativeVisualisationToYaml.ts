@@ -966,7 +966,11 @@ function declarativeVisBarToYaml(
     _errorContext?: IErrorContext,
 ) {
     //buckets
-    const metrics = report.buckets.consume(BucketsType.Measures);
+    const metrics = addSecondaryAxisToGroup(
+        report.buckets.consume(BucketsType.Measures),
+        def.properties,
+        "secondary_xaxis",
+    );
     if (metrics && metrics.items.length > 0) {
         doc.add(entryWithSpace("metrics", groupToYaml(metrics)));
     }
@@ -994,7 +998,11 @@ function declarativeVisColumnToYaml(
     _errorContext?: IErrorContext,
 ) {
     //buckets
-    const metrics = report.buckets.consume(BucketsType.Measures);
+    const metrics = addSecondaryAxisToGroup(
+        report.buckets.consume(BucketsType.Measures),
+        def.properties,
+        "secondary_yaxis",
+    );
     if (metrics && metrics.items.length > 0) {
         doc.add(entryWithSpace("metrics", groupToYaml(metrics)));
     }
@@ -1022,7 +1030,11 @@ function declarativeVisLineToYaml(
     _errorContext?: IErrorContext,
 ) {
     //buckets
-    const metrics = report.buckets.consume(BucketsType.Measures);
+    const metrics = addSecondaryAxisToGroup(
+        report.buckets.consume(BucketsType.Measures),
+        def.properties,
+        "secondary_yaxis",
+    );
     if (metrics && metrics.items.length > 0) {
         doc.add(entryWithSpace("metrics", groupToYaml(metrics)));
     }
@@ -1671,6 +1683,27 @@ function groupToYaml(group: YamlBucketGroup) {
         }
         return map;
     });
+}
+
+/**
+ * Marks the metrics that are listed in the stored secondary axis measures with `axis: secondary`.
+ * Line and column charts keep these measures in `secondary_yaxis`, bar charts in `secondary_xaxis`.
+ */
+function addSecondaryAxisToGroup(
+    group: YamlBucketGroup | undefined,
+    properties: IInsightDefinition["insight"]["properties"],
+    axisKey: "secondary_yaxis" | "secondary_xaxis",
+): YamlBucketGroup | undefined {
+    const measures: unknown = properties?.["controls"]?.[axisKey]?.measures;
+    if (!group || !Array.isArray(measures) || measures.length === 0) {
+        return group;
+    }
+    return {
+        ...group,
+        items: group.items.map((item) =>
+            item && measures.includes(item.field) ? { ...item, axis: "secondary" } : item,
+        ),
+    };
 }
 
 function addAxisTypeToGroup(group: YamlBucketGroup | undefined, axis: "primary" | "secondary") {

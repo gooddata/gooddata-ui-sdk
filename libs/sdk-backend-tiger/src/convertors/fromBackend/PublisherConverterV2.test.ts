@@ -2,7 +2,10 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type JsonApiPublisherDocumentOutWithLinks } from "@gooddata/api-client-tiger";
+import {
+    type JsonApiPublisherDocumentOutAttributesContent,
+    type JsonApiPublisherDocumentOutWithLinks,
+} from "@gooddata/api-client-tiger";
 import {
     type IPublisherContentNotSupportedDetails,
     PublisherContentNotSupportedError,
@@ -32,9 +35,12 @@ import {
     pageTemplateV2,
     parentOriginMetaV2,
     relativePeriodDocumentV2,
+    storedContentV2,
 } from "./publisherV2.fixture.js";
 
-const brokenContent = { pages: [{ id: "page_a", layout: { type: "chart", id: "w" } }] };
+const brokenContent = storedContentV2<JsonApiPublisherDocumentOutAttributesContent>({
+    pages: [{ id: "page_a", layout: { type: "chart", id: "w" } }],
+});
 
 const versionIssue = { path: "version", message: 'Expected "2", got "3".' };
 

@@ -190,13 +190,13 @@ function yamlConfigToDeclarative(
             controls = table.save(def.query?.fields, def.config);
             break;
         case "bar_chart":
-            controls = barChart.save(def.query?.fields, def.config);
+            controls = barChart.save(def.query?.fields, def.config, def.metrics);
             break;
         case "column_chart":
-            controls = columnChart.save(def.query?.fields, def.config);
+            controls = columnChart.save(def.query?.fields, def.config, def.metrics);
             break;
         case "line_chart":
-            controls = lineChart.save(def.query?.fields, def.config);
+            controls = lineChart.save(def.query?.fields, def.config, def.metrics);
             break;
         case "area_chart":
             controls = areaChart.save(def.query?.fields, def.config);

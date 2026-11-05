@@ -55,7 +55,7 @@ export interface IAdBootstrapHostValues {
     theme?: ITheme;
 }
 
-/** AD's bootstrap data from host values; no applicationTitle, the host owns the tab title. */
+/** AD's bootstrap data from host values. */
 export function hostValuesToBootstrapData({
     workspaceId,
     locale,
@@ -89,15 +89,9 @@ export function hostValuesToBootstrapData({
         uiSettings: {
             organizationName: organization?.title ?? "",
             organizationId: organization?.id,
-            displayProjects: true,
-            displayAccountPage: true,
             logoUrl: whiteLabeling?.logoUrl ?? "",
-            faviconUrl: whiteLabeling?.faviconUrl ?? "",
-            appleTouchIconUrl: whiteLabeling?.appleTouchIconUrl ?? "",
             isBranded: !!whiteLabeling?.enabled,
             documentationUrl: "https://www.gooddata.com/developers/cloud-native/doc/cloud/",
-            supportEmail: "tiger-beta@gooddata.com",
-            supportForumUrl: "https://support.gooddata.com/home",
         },
         project: projectId
             ? {
@@ -123,7 +117,7 @@ export function hostValuesToBootstrapData({
     };
 }
 
-/** AD's bootstrap data from the platform context; no applicationTitle, the host owns the tab title. */
+/** AD's bootstrap data from the platform context. */
 export function platformContextToBootstrapData(ctx: IPlatformContext): IBootstrapData {
     return hostValuesToBootstrapData({
         workspaceId: ctx.currentWorkspaceId,

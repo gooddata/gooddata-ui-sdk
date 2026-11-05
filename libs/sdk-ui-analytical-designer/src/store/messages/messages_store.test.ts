@@ -327,17 +327,14 @@ describe("messages store", () => {
             ]);
         });
 
-        it("should add specific error message to the displayed messages", () => {
-            const action = deleteReportFailed(
-                100,
-                DeleteReportFailureReason.FAILED_TO_DELETE_REFERENCED_REPORT,
-            );
+        it("should add permission error message to the displayed messages", () => {
+            const action = deleteReportFailed(100, DeleteReportFailureReason.FORBIDDEN);
             const messages = reduce(initialState, action);
 
             expect(messages.displayed).toMatchObject([
                 {
                     type: "error",
-                    text: "messages.failedToDeleteReferencedReportError",
+                    text: "messages.deleteReportForbiddenError",
                 },
             ]);
         });

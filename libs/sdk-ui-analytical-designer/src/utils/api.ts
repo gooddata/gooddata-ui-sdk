@@ -50,7 +50,6 @@ import {
 import { randomString } from "@gooddata/util";
 
 import { backend } from "../backend.js";
-import { bearLegacyFunctions } from "../bearLegacyFunctions.js";
 import { type Granularity } from "../models/granularity.js";
 import { isElementUrisSupported } from "../selectors/backend_capabilities_selector.js";
 import { getProjectId } from "../selectors/bootstrap_selector.js";
@@ -68,12 +67,6 @@ import { mergeSortedAlphabeticallyByTitle } from "./merge_sorted_by_title.js";
 
 export function setupSessionId(xhr: { setRequestHeader: (name: string, value: string) => void }, id: string) {
     xhr.setRequestHeader("X-GDC-REQUEST", id + randomString(10));
-}
-
-export function getMetricsEditorUrl(projectId: string, metricUri?: string, workspacesRef = "projects") {
-    return metricUri
-        ? `/#s=/gdc/${workspacesRef}/${projectId}|objectPage|${metricUri}`
-        : `/#s=/gdc/${workspacesRef}/${projectId}|objectPage|none|metric`;
 }
 
 export const checkMetricOverrides = (
@@ -170,10 +163,6 @@ async function loadAttributeElementsSelection(
         items: union,
         total: limitResults.totalCount,
     };
-}
-
-export function exportReportToServer(projectId: string, insight: IInsight): Promise<string> {
-    return bearLegacyFunctions.openAsReport(projectId, insight);
 }
 
 export async function loadVisualizationClasses(projectId: string): Promise<IVisualizationClass[]> {

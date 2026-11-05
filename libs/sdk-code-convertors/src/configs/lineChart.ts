@@ -1,6 +1,6 @@
 // (C) 2023-2026 GoodData Corporation
 
-import type { Visualisation } from "@gooddata/sdk-code-schemas/v1";
+import type { Bucket, Visualisation } from "@gooddata/sdk-code-schemas/v1";
 
 import {
     DEFAULT_CUSTOM_TOOLTIP,
@@ -13,6 +13,12 @@ import {
     saveLineStyleMapping,
 } from "../utils/configUtils.js";
 
+import {
+    SECONDARY_AXIS_DEFAULTS,
+    type SecondaryAxisProperties,
+    loadSecondaryAxis,
+    saveSecondaryAxis,
+} from "./secondaryAxis.js";
 import {
     type ColorMapping,
     type ICustomTooltip,
@@ -69,6 +75,7 @@ export type LineChartConfigProperties = {
         rotation: "0" | "30" | "60" | "90" | "auto";
         visible: boolean;
     };
+    secondary_yaxis: SecondaryAxisProperties;
     grid: {
         enabled: boolean;
     };
@@ -137,6 +144,7 @@ const DEFAULTS: ConfigDefaults<LineChartConfigProperties> = {
         rotation: "auto",
         visible: true,
     },
+    secondary_yaxis: SECONDARY_AXIS_DEFAULTS,
     grid: {
         enabled: true,
     },
@@ -251,6 +259,8 @@ export function lineChartLoad(props: VisualisationConfig<LineChartConfigProperti
                     ],
                 ];
             }
+            case "secondary_yaxis":
+                return [...loadSecondaryAxis(value, "yaxis_secondary")];
             case "grid": {
                 return [["grid_enabled", getValueOrDefault(value.enabled, DEFAULTS.grid.enabled, "bool")]];
             }
@@ -330,9 +340,12 @@ export function lineChartLoad(props: VisualisationConfig<LineChartConfigProperti
 /** @internal */
 export function lineChartSave(
     _fields: Visualisation["query"]["fields"] | undefined,
-    config: Visualisation["config"] | undefined,
+    inputConfig: Visualisation["config"] | undefined,
+    metrics: Bucket[] = [],
 ) {
-    if (!config) {
+    const config = inputConfig ?? {};
+    const secondaryYAxis = saveSecondaryAxis(config, "yaxis_secondary", metrics);
+    if (!inputConfig && !secondaryYAxis) {
         return undefined;
     }
 
@@ -383,6 +396,7 @@ export function lineChartSave(
             visible: getValueOrDefault(config.yaxis_visible, DEFAULTS.yaxis.visible, "bool"),
             labelsEnabled: getValueOrDefault(config.yaxis_labels, DEFAULTS.yaxis.labelsEnabled, "bool"),
         }),
+        secondary_yaxis: secondaryYAxis,
         grid: saveConfigObject({
             enabled: getValueOrDefault(config.grid_enabled, DEFAULTS.grid.enabled, "bool"),
         }),

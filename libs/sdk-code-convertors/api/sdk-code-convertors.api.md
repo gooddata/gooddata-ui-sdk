@@ -429,6 +429,7 @@ export type BarChartConfigProperties = {
         rotation: "0" | "30" | "60" | "90" | "auto";
         visible: boolean;
     };
+    secondary_xaxis: SecondaryAxisProperties;
     grid: {
         enabled: boolean;
     };
@@ -444,7 +445,7 @@ export type BarChartConfigProperties = {
 export function barChartLoad(props: VisualisationConfig<BarChartConfigProperties>): Pair<Scalar<string>, any> | null;
 
 // @internal (undocumented)
-export function barChartSave(_fields: Visualisation["query"]["fields"] | undefined, config: Visualisation["config"] | undefined): {
+export function barChartSave(_fields: Visualisation["query"]["fields"] | undefined, inputConfig: Visualisation["config"] | undefined, metrics?: Bucket[]): {
     colorMapping: ColorMapping[] | undefined;
     dataLabels: {
         totalsVisible: "auto" | boolean | undefined;
@@ -482,6 +483,7 @@ export function barChartSave(_fields: Visualisation["query"]["fields"] | undefin
         visible: boolean | undefined;
         labelsEnabled: boolean | undefined;
     } | undefined;
+    secondary_xaxis: SecondaryAxisProperties | undefined;
     grid: {
         enabled: boolean | undefined;
     } | undefined;
@@ -490,50 +492,6 @@ export function barChartSave(_fields: Visualisation["query"]["fields"] | undefin
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
     disableKeyDriveAnalysisOn: {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
         [k: string]: boolean;
     } | undefined;
     customTooltip: CustomTooltip | undefined;
@@ -951,6 +909,7 @@ export type ColumnChartConfigProperties = {
         rotation: "0" | "30" | "60" | "90" | "auto";
         visible: boolean;
     };
+    secondary_yaxis: SecondaryAxisProperties;
     grid: {
         enabled: boolean;
     };
@@ -966,7 +925,7 @@ export type ColumnChartConfigProperties = {
 export function columnChartLoad(props: VisualisationConfig<ColumnChartConfigProperties>): Pair<Scalar<string>, any> | null;
 
 // @internal (undocumented)
-export function columnChartSave(_fields: Visualisation["query"]["fields"] | undefined, config: Visualisation["config"] | undefined): {
+export function columnChartSave(_fields: Visualisation["query"]["fields"] | undefined, inputConfig: Visualisation["config"] | undefined, metrics?: Bucket[]): {
     colorMapping: ColorMapping[] | undefined;
     dataLabels: {
         totalsVisible: "auto" | boolean | undefined;
@@ -1004,6 +963,7 @@ export function columnChartSave(_fields: Visualisation["query"]["fields"] | unde
         visible: boolean | undefined;
         labelsEnabled: boolean | undefined;
     } | undefined;
+    secondary_yaxis: SecondaryAxisProperties | undefined;
     grid: {
         enabled: boolean | undefined;
     } | undefined;
@@ -1012,50 +972,6 @@ export function columnChartSave(_fields: Visualisation["query"]["fields"] | unde
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
     disableKeyDriveAnalysisOn: {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
         [k: string]: boolean;
     } | undefined;
     customTooltip: CustomTooltip | undefined;
@@ -2932,6 +2848,7 @@ export type LineChartConfigProperties = {
         rotation: "0" | "30" | "60" | "90" | "auto";
         visible: boolean;
     };
+    secondary_yaxis: SecondaryAxisProperties;
     grid: {
         enabled: boolean;
     };
@@ -2963,7 +2880,7 @@ export type LineChartConfigProperties = {
 export function lineChartLoad(props: VisualisationConfig<LineChartConfigProperties>): Pair<Scalar<string>, any> | null;
 
 // @internal (undocumented)
-export function lineChartSave(_fields: Visualisation["query"]["fields"] | undefined, config: Visualisation["config"] | undefined): {
+export function lineChartSave(_fields: Visualisation["query"]["fields"] | undefined, inputConfig: Visualisation["config"] | undefined, metrics?: Bucket[]): {
     colorMapping: ColorMapping[] | undefined;
     continuousLine: {
         enabled: boolean | undefined;
@@ -3004,6 +2921,7 @@ export function lineChartSave(_fields: Visualisation["query"]["fields"] | undefi
         visible: boolean | undefined;
         labelsEnabled: boolean | undefined;
     } | undefined;
+    secondary_yaxis: SecondaryAxisProperties | undefined;
     grid: {
         enabled: boolean | undefined;
     } | undefined;
@@ -3024,50 +2942,6 @@ export function lineChartSave(_fields: Visualisation["query"]["fields"] | undefi
     disableAlerts: boolean | undefined;
     disableScheduledExports: boolean | undefined;
     disableKeyDriveAnalysisOn: {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
-        [k: string]: boolean;
-    } | {
         [k: string]: boolean;
     } | undefined;
     customTooltip: CustomTooltip | undefined;
@@ -3902,6 +3776,21 @@ export function scatterChartSave(_fields: Visualisation["query"]["fields"] | und
     } | undefined;
     customTooltip: CustomTooltip | undefined;
 } | undefined;
+
+// @internal
+export type SecondaryAxisProperties = {
+    measures: string[];
+    format: "inherit" | "auto";
+    max: number | string;
+    min: number | string;
+    name: {
+        visible: boolean;
+        position: "center" | "left" | "right" | "auto";
+    };
+    labelsEnabled: boolean;
+    rotation: "0" | "30" | "60" | "90" | "auto";
+    visible: boolean;
+};
 
 // @internal @deprecated (undocumented)
 export const table: ITableConfig;

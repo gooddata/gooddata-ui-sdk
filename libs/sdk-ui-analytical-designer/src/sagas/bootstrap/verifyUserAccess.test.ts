@@ -7,11 +7,7 @@ import { describe, expect, it } from "vitest";
 
 import { type IInsight, type IWorkspacePermissions, idRef, newInsightDefinition } from "@gooddata/sdk-model";
 
-import {
-    getCurrentProjectInfo,
-    hasWorkspaceAccess,
-    stashedProjectUri,
-} from "../../selectors/bootstrap_selector.js";
+import { getCurrentProjectInfo, stashedProjectUri } from "../../selectors/bootstrap_selector.js";
 import { enableVisualizationPermissions } from "../../selectors/feature_flag_selector.js";
 import { getIsEmbedded } from "../../selectors/meta_selector.js";
 import { workspacePermissions } from "../../selectors/permissions_selector.js";
@@ -54,7 +50,6 @@ function run(
         .provide([
             [select(getRouteParams), routeParams],
             [select(getCurrentProjectInfo), projectInfo],
-            [select(hasWorkspaceAccess), true],
             [select(workspacePermissions), workspacePermissionsValue],
             [select(getIsEmbedded), isEmbedded],
             [select(stashedProjectUri), undefined],
@@ -76,7 +71,7 @@ describe("verifyUserAccess", () => {
         await run(permissions({ canCreateVisualization: true }), true, false);
     });
 
-    it("keeps a create-holder out of the standalone editor", async () => {
+    it("keeps a create-holder out of the non-embedded editor", async () => {
         await expect(run(permissions({ canCreateVisualization: true }), false, true)).rejects.toEqual(
             CREATE_REPORT_DENIED_ERROR,
         );
@@ -104,7 +99,7 @@ describe("verifyUserAccess", () => {
         );
     });
 
-    it("ignores the visualization's EDIT in the standalone editor", async () => {
+    it("ignores the visualization's EDIT in the non-embedded editor", async () => {
         await expect(run(permissions({}), false, true, insightWith(["EDIT"]))).rejects.toEqual(
             CREATE_REPORT_DENIED_ERROR,
         );

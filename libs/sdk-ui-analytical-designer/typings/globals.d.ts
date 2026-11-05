@@ -8,7 +8,6 @@ declare global {
     const TESTING: boolean;
     const DEBUG: boolean;
     const READONLY_MODE: boolean;
-    const TIGER_API_TOKEN: string | undefined;
     const MAPBOX_TOKEN: string | undefined;
 
     // eslint-disable-next-line @typescript-eslint/naming-convention

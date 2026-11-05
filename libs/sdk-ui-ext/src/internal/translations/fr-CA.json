@@ -527,7 +527,7 @@
     "automations.message.schedule.bulk.delete.error": "Erreur ! La suppression des courriels programmés a échoué.",
     "automations.message.schedule.bulk.unsubscribe.success": "Succès ! Vous vous êtes désabonné des courriels programmés.",
     "automations.message.schedule.bulk.unsubscribe.error": "Erreur ! Échec de la désinscription des courriels programmés.",
-    "automations.message.schedule.pause.success": "Succès : votre courriel programmé a été mis en pause. Votre courriel programmé a été mis en pause.",
+    "automations.message.schedule.pause.success": "Succès : votre courriel programmé a été mis en pause.",
     "automations.message.schedule.pause.error": "Erreur ! Échec de la mise en pause de l'e-mail programmé.",
     "automations.message.schedule.bulk.pause.success": "Succès ! Vos courriels programmés ont été mis en pause.",
     "automations.message.schedule.bulk.pause.error": "Erreur ! La mise en pause des e-mails programmés a échoué.",

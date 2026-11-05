@@ -147,13 +147,17 @@ export interface ICopilotSnapshot<TBuild extends string = CopilotBuildType> {
     readonly revision: number;
 }
 
-/** Pure matching policy and host effect for one workflow. @alpha */
+/** Pure definition target resolver and host effect for one workflow. @alpha */
 export interface ICopilotRegistration<TBuild extends string = CopilotBuildType> {
     /** Workflow activated by these skills. */
     readonly type: TBuild;
     /** Skills that activate this workflow. */
     readonly skills: readonly AgentCustomSkill[];
-    /** Pure acceptance policy; return undefined to reject a definition. */
+    /**
+     * Resolve a definition's target; return undefined for unsupported definitions.
+     * The handler applies matching builder definitions, or live definitions for pending generation,
+     * the builder's applied conversation, or the currently edited object.
+     */
     readonly resolveDefinition: (
         event: ChatDefinitionReceivedEvent,
         context: ICopilotContext<TBuild>,

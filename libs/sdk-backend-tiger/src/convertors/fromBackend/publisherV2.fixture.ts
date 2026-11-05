@@ -16,6 +16,12 @@ import {
     type PublisherDocumentContentV2,
 } from "@gooddata/sdk-model";
 
+// The api client types the stored content after the backend's schema. The fixtures hold sdk-model
+// content of the same JSON, and the tests also store content the converter must reject.
+export function storedContentV2<T>(content: unknown): T {
+    return content as T;
+}
+
 export const pageBodyV2: IPublisherPageBodyV2 = {
     layout: {
         type: "column",
@@ -93,7 +99,7 @@ export function documentOutV2(
             title: absolutePeriodDocumentV2.title,
             version: "2",
             period: absolutePeriodDocumentV2.period,
-            content: absolutePeriodDocumentV2.content,
+            content: storedContentV2(absolutePeriodDocumentV2.content),
             ...attributes,
         },
     };
@@ -109,7 +115,7 @@ export function documentTemplateOutV2(
         attributes: {
             title: documentTemplateV2.title,
             version: "2",
-            content: documentTemplateV2.content,
+            content: storedContentV2(documentTemplateV2.content),
             ...attributes,
         },
     };
@@ -125,7 +131,8 @@ export function pageTemplateOutV2(
         attributes: {
             title: pageTemplateV2.title,
             version: "2",
-            content: pageTemplateV2.content,
+            isDefault: false,
+            content: storedContentV2(pageTemplateV2.content),
             ...attributes,
         },
     };

@@ -93,9 +93,6 @@ export interface IProfileSetting {
 }
 
 export interface IUISettings {
-    // Optional: in pluggable mode the host owns the browser tab title and its brand segment, so the
-    // pluggable bootstrap does not supply applicationTitle. Standalone still sets it.
-    applicationTitle?: string;
     faviconUrl?: Uri | null;
     organizationName: string;
     displayFlashNews: boolean;
@@ -124,9 +121,7 @@ export interface IUISettings {
     useOnboarding?: boolean;
     displayNPS?: boolean;
     ssoLogoutUrl?: Uri;
-    ssoExpiredUrl?: Uri;
     ssoUnauthorizedUrl?: Uri;
-    showSSOCustomUnauthorizedLoginPage?: boolean;
     showServiceProviderInitiatedLogin?: boolean;
 }
 

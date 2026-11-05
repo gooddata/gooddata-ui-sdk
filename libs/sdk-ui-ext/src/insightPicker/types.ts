@@ -3,7 +3,7 @@
 import { type ReactElement, type ReactNode } from "react";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { type IInsight, type ObjRef } from "@gooddata/sdk-model";
+import { type AccessGranularPermission, type IInsight, type ObjRef } from "@gooddata/sdk-model";
 import { type ILocale } from "@gooddata/sdk-ui";
 
 /**
@@ -32,6 +32,8 @@ export interface IInsightPickerItem {
     created?: string;
     updated?: string;
     visualizationUrl: string;
+    permissions?: AccessGranularPermission[];
+    isRelated?: boolean;
 }
 
 /**
@@ -42,6 +44,7 @@ export interface IInsightPickerMenuAction {
     id: string;
     title: string;
     onClick: (item: IInsightPickerItem) => void;
+    isAvailable?: (item: IInsightPickerItem) => boolean;
     isDestructive?: boolean;
     hasSeparator?: boolean;
 }
@@ -100,6 +103,7 @@ export interface IInsightPickerProps {
      * `enableCatalogSmartSearchResults` flag this is gated on, so it defaults to off.
      */
     enableSemanticSearch?: boolean;
+    includePermissions?: boolean;
     maxHeight?: number;
     width?: number;
 
