@@ -1,6 +1,71 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Mon, 02 Nov 2026 10:22:02 GMT and should not be manually modified.
+This log was last generated on Thu, 05 Nov 2026 08:04:50 GMT and should not be manually modified.
+
+## 11.67.0
+
+Thu, 05 Nov 2026 08:04:50 GMT
+
+### Patches
+
+- sdk-ui-charts: Prevent line charts with more than 1,000 series from freezing the browser by showing the data size error before rendering.
+
+### Updates
+
+- gdc-dashboards: Fix the dashboards left navigation being covered by the dashboard content after wrapping it in the Copilot composing container.
+- sdk-ui-catalog: Hide already-present keys in parameter YAML completions
+- sdk-ui-catalog: Offer new `allowedValues` entry in parameter YAML completions
+- sdk-ui-dashboard: Stage automation parameter values in all-at-once apply mode
+- sdk-backend-tiger: `getReferences` returns user data filter, automation, filter view and memory item nodes
+- sdk-ui-kit: Use themed color for shadow in `UiSearchableSelect`.
+- sdk-ui-kit: Change mobile language button per design request.
+- sdk-backend-tiger: saving a scheduled export sends its `state`, so editing a paused schedule keeps it paused
+- api-client-tiger, sdk-backend-spi, sdk-backend-tiger, sdk-ui-analytical-designer, sdk-ui-dashboard, sdk-ui-catalog: Insight delete dialogs count Publisher documents that use the visualization.
+- sdk-model, sdk-backend-tiger: Add the `enableReportsPostGA` feature flag.
+- sdk-ui-pluggable-host, sdk-ui-gen-ai, sdk-ui, sdk-ui-analytical-designer: Publisher is called Reports and served under `/reports`; old `/publisher` links redirect.
+- sdk-model: Remove text `color` from the documents theme text styles and `textColor` from the theme takeaway look.
+- sdk-model, sdk-code-schemas: A Publisher visualization's title is hidden unless `title.visible` is `true`.
+- sdk-model, sdk-backend-tiger: Add signing secrets for webhook notification channels and preserve stored credentials independently during updates.
+- sdk-ui-analytical-designer: The AnalyticalDesigner slots cover the editor header. EditorHeader, VisualizationInfo and EditorActions, and one slot per header control, can be hidden, replaced, decorated or rendered with changed props.
+- sdk-ui-analytical-designer: In the editor header slots, hasUnsavedChanges reports the difference from the last saved visualization, Back and Cancel wait only for a save, and the access level uses ShareStatus from sdk-model.
+- sdk-ui-analytical-designer: drop the jquery, jquery.browser, rxjs and @formatjs/intl-pluralrules dependencies and redundant @types packages.
+- sdk-backend-tiger, sdk-model: Format date computed attribute values, showing them raw when their format cannot be applied; add IAttributeDescriptorBody dataType and formatGranularity; format attribute filter elements in the timezone of their format
+- fix: AaC query preview now honors date filter `empty_values` and sends All time as `allTimeDateFilter`.
+- fix: AaC query preview now applies the `with:` attribute filters of a date filter.
+- fix: AaC deploy writes a date filter `with:` filter on the empty string as `empty_values` instead of a legacy attribute filter.
+- api-client-tiger: Removed the AmplitudeService type and the amplitude property of TelemetryServices. The backend no longer returns Amplitude telemetry configuration in the user profile.
+- sdk-backend-tiger: The workspace catalog loads metric pages in parallel, at most four at a time, instead of one by one. Metric permissions are kept on every page, and a backend that does not report the page count is paged one by one as before.
+- eslint-config: Add ESLint v10 flat configs. Every export path now carries the ESLint major (`@gooddata/eslint-config/v8/<variant>` for legacy JSON, `/v9/<variant>` and `/v10/<variant>` for flat config); the unprefixed exports are removed, so consumers must add the major to their import or `extends` path.
+- sdk-ui-metric-component: Replace monaco-editor with CodeMirror in `MaqlEditor` and `SqlEditor`. Editor callbacks now receive a single `MaqlEditorView` instead of the Monaco editor and namespace, the Monaco type re-exports (`IStandaloneCodeEditor`, `IDisposable`, `IStandaloneEditorConstructionOptions`, `IEditorContribution`, `Monaco`) are removed, `ISqlEditorApi.copy` returns a Promise and the package no longer ships a web worker bundle.
+- chore: Upgrade glob to 13.0.6 to fix security vulnerabilities.
+- chore: Upgrade glob to 14.0.3 to fix security vulnerability (GHSA-3g3m-2fjr-6pw4).
+- chore: Upgrade @gooddata/fixtures to 3.7.3, which bumps transitive tmp to 0.2.7 to fix security vulnerability (GHSA-7c78-jf6q-g5cm).
+- chore: Upgrade @module-federation/vite to 1.23.8 and @module-federation/runtime to 2.9.2, which bumps transitive adm-zip to 0.6.1 and undici to 7.29.1 to fix security vulnerabilities (GHSA-7q85-xj36-vmfc, GHSA-8238-w5pm-2374, GHSA-j5f4-cc29-5x44, GHSA-rcw4-f5rp-g42v, GHSA-xcpc-8h2w-3j85, GHSA-c6fg-446q-cg94, GHSA-p634-w6r4-rjp2, GHSA-vwc7-r8mq-g2x9, GHSA-4cwx-7wf7-3272, GHSA-rfgv-xxqx-mfg5, GHSA-w293-vg96-wgc3, GHSA-2jfj-6hjv-fm6j, GHSA-3wwx-pv8p-q78v, GHSA-3xpg-4rpp-hhhm, GHSA-8xcm-r25x-g524, GHSA-jr45-8vmc-qm54, GHSA-m8rv-5g2x-5cg5, GHSA-pmjh-fq2x-6v4x, GHSA-rx4f-c7p8-82vq, GHSA-v3r7-h72x-cjcm, GHSA-2gqq-gqf2-x968, GHSA-8436-99hf-9mmv, GHSA-r53p-7pc4-xj5r).
+- chore: Upgrade @module-federation/vite to 1.23.9 and @module-federation/runtime to 2.9.3, which bumps transitive undici to 7.30.1 to fix security vulnerabilities (GHSA-2m5v-pch6-74hx, GHSA-4qv8-2p9j-2685, GHSA-4w7w-5xrc-9h26, GHSA-55wc-3pg8-jfw6, GHSA-9fm3-97px-rjf6, GHSA-f72v-6w45-q472, GHSA-qrxm-fqhp-jwvm, GHSA-xjj6-f33q-929c).
+- chore: Upgrade query-string to 10.0.0
+- chore: Upgrade react-router to 7.18.5 to fix security vulnerability (GHSA-qwww-vcr4-c8h2).
+- chore: Upgrade webpack-bundle-analyzer to 5.4.1 to fix security vulnerabilities.
+- chore: Upgrade webpack-cli to 7.3.1 to fix security vulnerabilities.
+- chore: Upgrade webpack-dev-server to 5.2.7 to fix security vulnerabilities.
+- chore: Upgrade webpack-dev-server to 6.1.0 to fix security vulnerability (GHSA-27r3-jxmh-p828).
+- chore: Upgrade webpack to 5.112.2 to fix security vulnerabilities.
+- sdk-ui-dashboard: Override filters now persist across tabs when enablePersistentFiltersAcrossTabs feature flag is enabled.
+- sdk-ui-dashboard: When Persistent Filters across Tabs is enabled, new created tab will not copy filters from origin tab, will only have common date filter.
+- sdk-backend-spi: Added the alpha analyticsAsCode() workspace service, which provisions a workspace from analytics-as-code documents.
+- sdk-code-convertors: Added yamlDocumentsToDeclarativeWorkspace, which converts the AaC documents of a workspace to its declarative model.
+- sdk-pluggable-application-model: the AI assistant chat channel is generic in both directions. `IAiAssistantChatEvent` types what the host chat hands to an application (`onAiAssistantEventReceive`) and `IAiAssistantEventSentEvent` carries an `IAiAssistantAppEvent` from the application to the chat; the publisher-document-saved and dashboard-saved pluggable events are now app events under that envelope. sdk-ui-gen-ai: `GenAIChatDialogConnected` takes one `appEvent` prop in place of `publisherDocumentSaved` and `dashboardSaved`.
+- sdk-embedding: Deprecate client in IKdDashboardObjectMeta. KPI Dashboards never sends it; use project.
+- sdk-model, sdk-backend-tiger: remove the enableShellApplication feature flag; sdk-ui-pluggable-host: the host no longer redirects when the flag is off; sdk-ui-kit, sdk-ui-gen-ai: settings and catalog links always target the host-application routes
+- sdk-ui-gen-ai: Users who may create documents can open the documents the AI Assistant drafts and follow report links in its answers without managing the workspace.
+- sdk-ui-dashboard: show full KDA attribute name in a tooltip when it is truncated
+- sdk-backend-spi, sdk-backend-tiger, api-client-tiger, gdc-home-ui: List the objects of a workspace that have texts without a translation into a language (`getMissingTranslations`), and show them from the Incomplete translation check of the language side panel (Show missing objects)
+- sdk-ui-gen-ai: Add customizable input placeholder for AI Assistant.
+- sdk-ui-gen-ai: Display reasoning group duration in messages.
+- sdk-ui-gen-ai: Add per-message agent identity support for reasoning content.
+- Remove obsolete Monaco worker bundler configuration from SDK templates and playground, and align embedded Analytical Designer setup documentation with the bundled worker.
+- sdk-ui-kit: The delete button in the visualization list can be activated with Enter and Space.
+- sdk-ui-kit: Visualization list row actions no longer stay visible after the delete dialog is closed with the mouse.
+- sdk-ui-kit: Long words such as names and IDs wrap inside dialogs instead of running out of them.
 
 ## 11.66.0
 
