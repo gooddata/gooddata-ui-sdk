@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type ReactElement, type ReactNode, type RefObject, useState } from "react";
+import { type ReactElement, type ReactNode, type RefObject, useEffect, useState } from "react";
 
 import { useIntl } from "react-intl";
 
@@ -176,8 +176,17 @@ interface IFeedbackPopupBodyProps {
     children: ReactNode;
 }
 
+const CLOSE_ON_SCROLL_DELAY_MS = 500;
+
 function FeedbackPopupBody({ containerRef, onClose, children }: IFeedbackPopupBodyProps) {
-    useCloseOnParentScroll(true, onClose, containerRef);
+    const [closeOnScroll, setCloseOnScroll] = useState(false);
+
+    useEffect(() => {
+        const timer = window.setTimeout(() => setCloseOnScroll(true), CLOSE_ON_SCROLL_DELAY_MS);
+        return () => window.clearTimeout(timer);
+    }, []);
+
+    useCloseOnParentScroll(closeOnScroll, onClose, containerRef);
 
     return <div className="gd-gen-ai-feedback-popup__body">{children}</div>;
 }
