@@ -1,6 +1,8 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { cloneDeep, isEmpty } from "lodash-es";
+import { cloneDeep } from "lodash-es";
+
+import { _isEmpty } from "@gooddata/util";
 
 import { type IDateDataset } from "../typings/datasets.js";
 
@@ -13,7 +15,7 @@ export const DateDatasetUtils = {
 };
 
 function getDateDatasetUri(dateDataset: IDateDataset): string {
-    return isEmpty(dateDataset) ? undefined : dateDataset.uri;
+    return _isEmpty(dateDataset) ? undefined : dateDataset.uri;
 }
 
 function dateDatasetRelevanceComparator(item1: IDateDataset, item2: IDateDataset): number {
@@ -27,7 +29,7 @@ function dateDatasetRelevanceComparator(item1: IDateDataset, item2: IDateDataset
 }
 
 function getMostRelevantDateDatasetUri(dateDatasets: IDateDataset[]): string {
-    if (isEmpty(dateDatasets)) {
+    if (_isEmpty(dateDatasets)) {
         return undefined;
     }
 

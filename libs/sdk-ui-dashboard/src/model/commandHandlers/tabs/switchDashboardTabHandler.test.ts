@@ -2,7 +2,6 @@
 
 // @vitest-environment node
 
-import { isEqual } from "lodash-es";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
@@ -16,6 +15,7 @@ import {
     isDashboardDateFilter,
     newRelativeDashboardDateFilter,
 } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { SimpleDashboardIdentifier } from "../../../tests/SimpleDashboard.test.helpers.js";
 import { initializeDashboard } from "../../commands/dashboard.js";
@@ -137,7 +137,7 @@ describe("switchDashboardTab handler", () => {
 
     function appliedStateIsInitial(tabId: string): boolean {
         const tab = selectTabs(Tester.state())?.find((item) => item.localIdentifier === tabId);
-        const filtersMatch = isEqual(
+        const filtersMatch = _isEqual(
             tab?.filterContext?.filterContextDefinition?.filters,
             tab?.filterContext?.originalFilterContextDefinition?.filters,
         );

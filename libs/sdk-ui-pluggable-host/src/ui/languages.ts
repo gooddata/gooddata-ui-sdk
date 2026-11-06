@@ -12,6 +12,8 @@ export type LanguageChoice = ILocale | "default";
 
 /**
  * The interface languages, in the order the list shows them.
+ *
+ * @internal
  */
 export const LANGUAGES: ILocale[] = Object.keys(LANGUAGE_NAMES).filter(isLocale);
 

@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { isEqual, omit } from "lodash-es";
+import { omit } from "lodash-es";
 
 import {
     type IAttributeWithReferences,
@@ -41,6 +41,7 @@ import {
     isFilterContext,
     isSingleSelectionFilter,
 } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { type RenderMode } from "../../../../types.js";
 import { filterLocalIdentifiers } from "../../../store/filtering/dashboardFilterSelectors.js";
@@ -126,7 +127,7 @@ const hasSameAttributeFilterConfiguration = (
     filterA: IDashboardAttributeFilter,
     filterB?: IDashboardAttributeFilter,
 ) => {
-    return isEqual(
+    return _isEqual(
         omit(filterA, OMITTED_ATTRIBUTE_FILTER_PATHS),
         omit(filterB, OMITTED_ATTRIBUTE_FILTER_PATHS),
     );
@@ -188,15 +189,15 @@ const hasSameCrossTypeFilterConfiguration = (
     // Parent/validation props only apply to arbitrary filters — match filters don't support them
     const hasSameParentConfig =
         !isDashboardArbitraryAttributeFilter(viewFilter) ||
-        (isEqual(
+        (_isEqual(
             dashboardAttributeFilterItemFilterElementsBy(dashboardFilter),
             dashboardAttributeFilterItemFilterElementsBy(viewFilter),
         ) &&
-            isEqual(
+            _isEqual(
                 dashboardAttributeFilterItemFilterElementsByDate(dashboardFilter),
                 dashboardAttributeFilterItemFilterElementsByDate(viewFilter),
             ) &&
-            isEqual(
+            _isEqual(
                 dashboardAttributeFilterItemValidateElementsBy(dashboardFilter),
                 dashboardAttributeFilterItemValidateElementsBy(viewFilter),
             ));

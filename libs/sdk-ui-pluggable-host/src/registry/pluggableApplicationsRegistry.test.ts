@@ -17,7 +17,11 @@ import {
 
 import { getApplicationScopeFromPath } from "../loader/routing.js";
 
-import { getRemoteRegistry, resolveApplications } from "./pluggableApplicationsRegistry.js";
+import {
+    getApplicationRemoteScopes,
+    getRemoteRegistry,
+    resolveApplications,
+} from "./pluggableApplicationsRegistry.js";
 
 function externalApp(
     overrides: Partial<ExternalPluggableApplicationRegistryItem> & { id: string },
@@ -119,6 +123,45 @@ describe("getRemoteRegistry", () => {
         expect(result).toBeUndefined();
         expect(consoleSpy).not.toHaveBeenCalled();
         consoleSpy.mockRestore();
+    });
+});
+
+describe("getApplicationRemoteScopes", () => {
+    it("collects the scopes of enabled applications with overrides applied and of the UI module", () => {
+        const remote = (url: string, scope: string) => ({ url, scope, module: "./app" });
+        const scopes = getApplicationRemoteScopes(
+            platformContext({
+                apiVersion: "1.0",
+                applications: [
+                    { id: "app", remote: remote("/app/remoteEntry.js", "app_scope") },
+                    { id: "app", remote: remote("/duplicate/remoteEntry.js", "duplicate_scope") },
+                    { id: "gdc-dashboards", remote: remote("/d/remoteEntry.js", "old_scope") },
+                    {
+                        id: "disabled",
+                        isEnabled: false,
+                        remote: remote("/x/remoteEntry.js", "disabled_scope"),
+                    },
+                    { id: "disabled-by-override", remote: remote("/y/remoteEntry.js", "off_scope") },
+                    { id: "first-on-shared", remote: remote("/first/remoteEntry.js", "shared_scope") },
+                    { id: "on-ui-scope", remote: remote("/app-on-ui/remoteEntry.js", "ui_scope") },
+                    { id: "second-on-shared", remote: remote("/second/remoteEntry.js", "shared_scope") },
+                    { id: "broken", remote: null },
+                    null,
+                ],
+                overrides: {
+                    "gdc-dashboards": { remote: remote("/dash/remoteEntry.js", "dash_scope") },
+                    "disabled-by-override": { isEnabled: false },
+                },
+                uiModule: { url: "/ui/remoteEntry.js", scope: "ui_scope", module: "./ui" },
+            }),
+        );
+
+        expect(Object.fromEntries(scopes)).toEqual({
+            app_scope: "/app/remoteEntry.js",
+            dash_scope: "/dash/remoteEntry.js",
+            shared_scope: "",
+            ui_scope: "",
+        });
     });
 });
 

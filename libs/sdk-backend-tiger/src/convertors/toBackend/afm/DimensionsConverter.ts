@@ -1,7 +1,5 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import {
     type Dimension,
     type SortKeyAttribute,
@@ -22,12 +20,13 @@ import {
     isAttributeSort,
     isMeasureLocator,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 type SortKey = SortKeyAttribute | SortKeyValue;
 
 function merge(dims: Dimension[], sorting: SortKey[][]): Dimension[] {
     return dims.map((dim, idx) => {
-        if (!isEmpty(sorting[idx])) {
+        if (!_isEmpty(sorting[idx])) {
             return {
                 ...dim,
                 sorting: sorting[idx],
@@ -184,7 +183,7 @@ function handleMeasureSort(
  * @param sorts - sort items defined by SDK user
  */
 function dimensionsWithSorts(dims: Dimension[], sorts: ISortItem[]): Dimension[] {
-    if (isEmpty(sorts)) {
+    if (_isEmpty(sorts)) {
         return dims;
     }
 

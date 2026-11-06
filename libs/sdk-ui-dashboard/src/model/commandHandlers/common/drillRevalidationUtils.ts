@@ -1,7 +1,5 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
-
 import {
     type IInsight,
     insightFilters,
@@ -9,6 +7,7 @@ import {
     measureFilters,
     measureLocalId,
 } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 function getSourceMeasureFilters(insight: IInsight) {
     return insightMeasures(insight)
@@ -24,7 +23,7 @@ export function shouldRevalidateDrillsAfterInsightChange(
     newInsight: IInsight,
 ): boolean {
     return (
-        !isEqual(insightFilters(originalInsight), insightFilters(newInsight)) ||
-        !isEqual(getSourceMeasureFilters(originalInsight), getSourceMeasureFilters(newInsight))
+        !_isEqual(insightFilters(originalInsight), insightFilters(newInsight)) ||
+        !_isEqual(getSourceMeasureFilters(originalInsight), getSourceMeasureFilters(newInsight))
     );
 }

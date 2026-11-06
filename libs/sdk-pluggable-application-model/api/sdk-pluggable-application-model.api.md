@@ -95,6 +95,9 @@ export function documentTitleChanged(pageTitle: string | undefined): IDocumentTi
 export type EmbeddingMode = "none" | "iframe";
 
 // @alpha
+export type HeadlessModuleMount = (options: IHeadlessModuleMountOptions) => IHeadlessModuleMountHandle;
+
+// @alpha
 export type HostUiMount = (options: IHostUiMountOptions) => IHostUiMountHandle;
 
 // @alpha
@@ -258,6 +261,30 @@ export interface IDocumentTitleChangedEvent extends IPluggableAppEvent {
 
 // @alpha
 export type IEffectiveSettings = IUserSettings | IUserWorkspaceSettings;
+
+// @alpha
+export interface IHeadlessModule {
+    allowedOrganizations?: string[];
+    buildTimestamp?: number;
+    // (undocumented)
+    mount: HeadlessModuleMount;
+}
+
+// @alpha
+export interface IHeadlessModuleMountHandle {
+    unmount(): void;
+    updateContext?(ctx: IPlatformContext): void;
+}
+
+// @alpha
+export interface IHeadlessModuleMountOptions {
+    config: Record<string, unknown>;
+    // (undocumented)
+    ctx: IPlatformContext;
+    // (undocumented)
+    id: string;
+    registerTelemetryProvider(provider: ITelemetryProvider): () => void;
+}
 
 // @alpha
 export interface IHostNavigationRequest {
@@ -542,6 +569,14 @@ export interface ITelemetryEventOptions {
 }
 
 // @alpha
+export interface ITelemetryIdentity {
+    // (undocumented)
+    organizationId: string;
+    // (undocumented)
+    userId: string;
+}
+
+// @alpha
 export interface ITelemetryPropertySlot {
     // (undocumented)
     index: number;
@@ -549,6 +584,29 @@ export interface ITelemetryPropertySlot {
     name: string;
     // (undocumented)
     scope: TelemetryPropertyScope;
+}
+
+// @alpha
+export interface ITelemetryProvider {
+    dispose?(): void;
+    // (undocumented)
+    identify?(identity: ITelemetryIdentity): void | Promise<void>;
+    // (undocumented)
+    trackEvent(eventName: string, data: ITelemetryProviderEventData): void;
+    // (undocumented)
+    trackPageView(page: string, data: ITelemetryProviderEventData): void;
+    // (undocumented)
+    trackTiming?(variable: string, valueMs: number, data: ITelemetryProviderEventData): void;
+}
+
+// @alpha
+export interface ITelemetryProviderEventData {
+    identifiers?: Record<string, string>;
+    sourceApplication?: string;
+    // (undocumented)
+    stats?: Record<string, string | number | boolean>;
+    // (undocumented)
+    value?: number;
 }
 
 // @alpha
@@ -678,6 +736,9 @@ export const TELEMETRY_PROPERTIES: {
 
 // @alpha
 export type TelemetryChannel = "standard" | "ai";
+
+// @alpha
+export type TelemetryIdentityMode = "hashed" | "userId" | "email";
 
 // @alpha
 export type TelemetryPropertyScope = "visit" | "page";

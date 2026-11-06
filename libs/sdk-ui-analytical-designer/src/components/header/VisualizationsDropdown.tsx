@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useMemo } from "react";
 
-import { isEmpty } from "lodash-es";
 import { defineMessage, useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 import { createSelector, createStructuredSelector } from "reselect";
@@ -38,6 +37,7 @@ import {
     customMatcher,
     useHybridSearch,
 } from "@gooddata/sdk-ui-semantic-search";
+import { _isEmpty } from "@gooddata/util";
 
 import { deleteReport } from "../../actions/delete_actions.js";
 import { type IAnalyticalDesignerOpenProps } from "../../embedding/editorHeaderSlotTypes.js";
@@ -256,7 +256,7 @@ export function VisualizationsDropdown({
                             onSearch={onSearch}
                             showTabs={hasOwnershipSupport && initialLoadCompleted ? !search : null}
                             tabs={dropdownTabsTranslationIds}
-                            selectedTabId={isEmpty(search) ? selectedTabId : INSIGHT_DROPDOWN_ALL_TAB_ID}
+                            selectedTabId={_isEmpty(search) ? selectedTabId : INSIGHT_DROPDOWN_ALL_TAB_ID}
                             onTabSelect={onTabSelect}
                             itemHeight={40}
                             items={insights}

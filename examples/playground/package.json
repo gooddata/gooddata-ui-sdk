@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/playground",
-    "version": "11.68.0-alpha.2",
+    "version": "11.68.0-alpha.3",
     "private": true,
     "description": "GoodData.UI SDK - Developer Playground",
     "license": "LicenseRef-LICENSE",
@@ -37,6 +37,7 @@
         "@gooddata/sdk-backend-tiger": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
         "@gooddata/sdk-ui": "workspace:*",
+        "@gooddata/sdk-ui-analytical-designer": "workspace:*",
         "@gooddata/sdk-ui-catalog": "workspace:*",
         "@gooddata/sdk-ui-charts": "workspace:*",
         "@gooddata/sdk-ui-dashboard": "workspace:*",

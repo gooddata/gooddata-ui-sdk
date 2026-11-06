@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, compact, isEmpty, negate, set, uniqBy, without } from "lodash-es";
+import { cloneDeep, compact, negate, set, uniqBy, without } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import {
@@ -28,6 +28,7 @@ import {
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
 import { isAreaChart, isBulletChart, isComboChart, isLineChart } from "@gooddata/sdk-ui-charts";
+import { _isEmpty } from "@gooddata/util";
 
 import { subtitles, titles } from "../../locales.js";
 import { ATTRIBUTE, BUCKETS, DATE, METRIC, SHOW_ON_SECONDARY_AXIS } from "../constants/bucket.js";
@@ -507,12 +508,12 @@ export function getDateFilter(filtersBucket: IFilters): IDateFilter | null {
 }
 
 export function getComparisonTypeFromFilters(filtersBucket: IFilters): OverTimeComparisonType {
-    if (isEmpty(filtersBucket)) {
+    if (_isEmpty(filtersBucket)) {
         return OverTimeComparisonTypes.NOTHING;
     }
     const dateFilter = getDateFilter(filtersBucket);
 
-    return !isEmpty(dateFilter) && dateFilter.overTimeComparisonType
+    return !_isEmpty(dateFilter) && dateFilter.overTimeComparisonType
         ? dateFilter.overTimeComparisonType
         : OverTimeComparisonTypes.NOTHING;
 }
@@ -756,7 +757,7 @@ export function getMeasureItems(buckets: IBucketOfFun[]): IBucketItem[] {
     }, []);
 
     // if no preferred items are found, return all available items
-    if (isEmpty(preferredMeasures)) {
+    if (_isEmpty(preferredMeasures)) {
         return getAllMeasures(buckets);
     }
 

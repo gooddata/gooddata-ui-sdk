@@ -2,9 +2,8 @@
 
 import { useEffect, useState } from "react";
 
-import { isEmpty } from "lodash-es";
-
 import { type ISeparators, filterObjRef } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler/types/attributeFilterHandler.js";
 import { isLimitingAttributeFiltersEmpty } from "../../AttributeFilterHandler/utils.js";
@@ -77,12 +76,12 @@ export function useAttributeFilterControllerData(
     const isFilteredByDependentDateFilters =
         shouldIncludeLimitingFilters &&
         initialElementsPageStatus === "success" &&
-        !isEmpty(limitingDateFilters);
+        !_isEmpty(limitingDateFilters);
 
     const isFilteredByLimitingValidationItems =
         shouldIncludeLimitingFilters &&
         initialElementsPageStatus === "success" &&
-        !isEmpty(limitingValidationItems);
+        !_isEmpty(limitingValidationItems);
 
     const isFiltering = useIsFiltering(handler);
 

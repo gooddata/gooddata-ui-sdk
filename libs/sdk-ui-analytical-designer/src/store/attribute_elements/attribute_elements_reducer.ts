@@ -1,8 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { clone, isEqual, range } from "lodash-es";
+import { clone, range } from "lodash-es";
 
 import { areObjRefsEqual } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { isInsightContentResetEvent } from "../app_context/application_reset_events.js";
 
@@ -33,7 +34,7 @@ function attributeElementsUpdate(
     const currentQuery = state.query;
     const newQuery = { attributeDisplayFormRef, searchPhrase };
 
-    if (!isEqual(currentQuery, newQuery)) {
+    if (!_isEqual(currentQuery, newQuery)) {
         const isSameAttribute = areObjRefsEqual(
             currentQuery.attributeDisplayFormRef,
             newQuery.attributeDisplayFormRef,
@@ -72,7 +73,7 @@ function attributeElementsUpdated(
     const currentQuery = state.query;
     const newQuery = { attributeDisplayFormRef, searchPhrase };
 
-    if (isEqual(currentQuery, newQuery)) {
+    if (_isEqual(currentQuery, newQuery)) {
         const newItems = clone(state.items);
         range(start, start + items.length).forEach((idx) => {
             newItems[idx] = items[idx - start];

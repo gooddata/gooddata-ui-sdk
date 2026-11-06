@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { isEmpty, isPlainObject, omit } from "lodash-es";
+import { isPlainObject, omit } from "lodash-es";
 import { createSelector, createStructuredSelector } from "reselect";
 
 import {
@@ -11,6 +11,7 @@ import {
     type IVisualizationClass,
     type ObjRef,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { COMPUTED_ATTRIBUTE, FACT, METRIC } from "../constants/bucket.js";
 import { LOCAL_CHOROPLETH, LOCAL_PUSHPIN } from "../constants/visualization_types.js";
@@ -324,12 +325,12 @@ function constructVisualizationMDObj(
         dateDatasets,
         useEmptyValueHandling,
     );
-    const filtersProp = isEmpty(filtersMDObj) ? {} : { filters: filtersMDObj };
+    const filtersProp = _isEmpty(filtersMDObj) ? {} : { filters: filtersMDObj };
 
     const parametersMDObj = parametersToMetadata(parameterFilters);
-    const parametersProp = isEmpty(parametersMDObj) ? {} : { parameters: parametersMDObj };
+    const parametersProp = _isEmpty(parametersMDObj) ? {} : { parameters: parametersMDObj };
 
-    const attributeFilterConfigsProp = isEmpty(attributeFilterConfigs)
+    const attributeFilterConfigsProp = _isEmpty(attributeFilterConfigs)
         ? {}
         : { attributeFilterConfigs: attributeFilterConfigs };
 
@@ -337,7 +338,7 @@ function constructVisualizationMDObj(
     // `is(controls, Map())`, true only for a present-and-empty Map).
     const controls = currentVisualizationProperties?.controls;
     const sanitized =
-        isPlainObject(controls) && isEmpty(controls)
+        isPlainObject(controls) && _isEmpty(controls)
             ? omit(currentVisualizationProperties, "controls")
             : currentVisualizationProperties;
 
@@ -352,7 +353,7 @@ function constructVisualizationMDObj(
         : sanitized;
 
     const stringifiedProperties =
-        sanitizedProperties && !isEmpty(sanitizedProperties) ? JSON.stringify(sanitizedProperties) : null;
+        sanitizedProperties && !_isEmpty(sanitizedProperties) ? JSON.stringify(sanitizedProperties) : null;
 
     return pickValid({
         buckets: bucketsMDObj,

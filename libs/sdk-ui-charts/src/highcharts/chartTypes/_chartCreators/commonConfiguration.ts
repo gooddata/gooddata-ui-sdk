@@ -1,11 +1,12 @@
 // (C) 2007-2026 GoodData Corporation
 
 import Highcharts from "highcharts/esm/highcharts.js";
-import { invoke, isEmpty, set } from "lodash-es";
+import { invoke, set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { type ITheme } from "@gooddata/sdk-model";
 import { type ChartType, type IDrillConfig } from "@gooddata/sdk-ui";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import {
@@ -96,7 +97,7 @@ function handleTouchDeviceClick(context: any): void {
     const currentChart = context.series.chart;
     const currentId = currentChart?.container?.id;
     const prevId = previousChart?.container?.id;
-    const previousChartDisconnected = isEmpty(previousChart);
+    const previousChartDisconnected = _isEmpty(previousChart);
 
     if (previousChart && !previousChartDisconnected && prevId !== currentId) {
         // Remove line chart point bubble

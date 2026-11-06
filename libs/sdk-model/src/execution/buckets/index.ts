@@ -1,8 +1,10 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import stringify from "json-stable-stringify";
-import { intersection, isEmpty } from "lodash-es";
+import { intersection } from "lodash-es";
 import { invariant } from "ts-invariant";
+
+import { _isEmpty } from "@gooddata/util";
 
 import { type Identifier } from "../../objRef/index.js";
 import {
@@ -104,7 +106,7 @@ export type MeasureInBucket = {
  */
 export function isBucket(obj: unknown): obj is IBucket {
     return (
-        !isEmpty(obj) &&
+        !_isEmpty(obj) &&
         (obj as IBucket).localIdentifier !== undefined &&
         (obj as IBucket).items !== undefined
     );
@@ -192,7 +194,7 @@ export function newBucket(
                 );
             }
             const keys = intersection(AGGREGATION_KEYS, Object.keys(i));
-            if (!isEmpty(keys)) {
+            if (!_isEmpty(keys)) {
                 const identifier = getIdentifier(i[keys[0]]);
 
                 invariant(
@@ -208,7 +210,7 @@ export function newBucket(
         }
     });
 
-    const totalsProp = isEmpty(totals) ? {} : { totals };
+    const totalsProp = _isEmpty(totals) ? {} : { totals };
 
     return {
         localIdentifier: localId,

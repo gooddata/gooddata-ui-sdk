@@ -1,6 +1,5 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import {
@@ -43,6 +42,7 @@ import {
     isRelativeDateFilter,
     relativeDateFilterValues,
 } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { type ExtendedDashboardWidget } from "../../../../model/types/layoutTypes.js";
 
@@ -352,7 +352,7 @@ export function areFiltersEqual(filter1: IFilter, filter2: IFilter): boolean {
         if (isArbitraryAttributeFilter(filter1) && isArbitraryAttributeFilter(filter2)) {
             return (
                 areObjRefsEqual(filter1Ref, filter2Ref) &&
-                isEqual(filter1.arbitraryAttributeFilter.values, filter2.arbitraryAttributeFilter.values) &&
+                _isEqual(filter1.arbitraryAttributeFilter.values, filter2.arbitraryAttributeFilter.values) &&
                 (filter1.arbitraryAttributeFilter.negativeSelection ?? false) ===
                     (filter2.arbitraryAttributeFilter.negativeSelection ?? false)
             );
@@ -381,7 +381,7 @@ export function areFiltersEqual(filter1: IFilter, filter2: IFilter): boolean {
 
             return (
                 areObjRefsEqual(filter1Ref, filter2Ref) &&
-                isEqual(filter1Values, filter2Values) &&
+                _isEqual(filter1Values, filter2Values) &&
                 filter1Type === filter2Type
             );
         }
@@ -392,15 +392,15 @@ export function areFiltersEqual(filter1: IFilter, filter2: IFilter): boolean {
         const { granularity: granularity2, ...values2 } = dateFilterValues(filter2);
 
         return (
-            isEqual(values1, values2) &&
+            _isEqual(values1, values2) &&
             (granularity1 === undefined || granularity2 === undefined || granularity1 === granularity2)
         );
     } else if (isDateFilter(filter1) && isDateFilter(filter2)) {
-        return isEqual(dateFilterValues(filter1), dateFilterValues(filter2));
+        return _isEqual(dateFilterValues(filter1), dateFilterValues(filter2));
     }
 
     // Filter types are different
-    return isEqual(filter1, filter2);
+    return _isEqual(filter1, filter2);
 }
 
 /**

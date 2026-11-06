@@ -8,7 +8,7 @@ describe("METRIC_SCHEMA_KEYS", () => {
     // Guards that the schema's property names stay in sync with editor autocompletion: a change to
     // the schema fields surfaces here explicitly rather than silently altering the suggestions.
     it("derives the top-level metric keys used for autocompletion", () => {
-        expect(METRIC_SCHEMA_KEYS[""]).toEqual([
+        expect(METRIC_SCHEMA_KEYS[""]?.keys).toEqual([
             "type",
             "id",
             "title",
@@ -21,7 +21,7 @@ describe("METRIC_SCHEMA_KEYS", () => {
         ]);
     });
 
-    it("has no nested object keys", () => {
-        expect(Object.keys(METRIC_SCHEMA_KEYS)).toEqual([""]);
+    it("nests only the tags sequence", () => {
+        expect(Object.keys(METRIC_SCHEMA_KEYS)).toEqual(["", "tags"]);
     });
 });

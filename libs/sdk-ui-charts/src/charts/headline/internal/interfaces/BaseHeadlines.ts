@@ -2,9 +2,8 @@
 
 import { type ComponentType, type RefObject } from "react";
 
-import { isEmpty } from "lodash-es";
-
 import { type HeadlineElementType } from "@gooddata/sdk-ui";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IComparison } from "../../../../interfaces/comparison.js";
 
@@ -85,7 +84,7 @@ export type ComparisonDataItem = IComparisonDataItem | IComparisonDataWithSubIte
 export function isComparisonDataWithSubItem(
     dataItem: ComparisonDataItem,
 ): dataItem is IComparisonDataWithSubItem {
-    return !isEmpty(dataItem) && (dataItem as IComparisonDataWithSubItem).subItem !== undefined;
+    return !_isEmpty(dataItem) && (dataItem as IComparisonDataWithSubItem).subItem !== undefined;
 }
 
 export interface IBaseHeadlineData {

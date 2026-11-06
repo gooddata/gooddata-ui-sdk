@@ -2,10 +2,9 @@
 
 import { useCallback } from "react";
 
-import { isEqual } from "lodash-es";
-
 import { type IMeasureMetadataObject } from "@gooddata/sdk-model";
 import { type IObjectShareDraft } from "@gooddata/sdk-ui-ext";
+import { _isEqual } from "@gooddata/util";
 
 import { type ITab, TabState } from "../../../shared/Tabs/Tab.js";
 import { emptyMetricWithId } from "../../metric/emptyMetric.js";
@@ -36,9 +35,9 @@ export const useOnChangeCallback = ({
             const states = tab.states || {};
             const { initial, current } = tab.data;
 
-            const isChanged = !isEqual(metric, initial);
-            const isUpdate = !isEqual(metric, current);
-            const isEmpty = isEqual(metric, emptyMetricWithId);
+            const isChanged = !_isEqual(metric, initial);
+            const isUpdate = !_isEqual(metric, current);
+            const isEmpty = _isEqual(metric, emptyMetricWithId);
             const isInvalid = !valid && !isEmpty;
 
             updateTab(tab, updateTabFromMetric(tab, metric as IMeasureMetadataObject, isChanged, isInvalid));

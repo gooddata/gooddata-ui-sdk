@@ -1,7 +1,5 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import { type IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
 import {
     type AssignedWorkspacePermission,
@@ -9,6 +7,7 @@ import {
     type IDataSourceIdentifierDescriptor,
     type WorkspaceAccessSource,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 export interface IAddWorkspaceSelectProps {
     onSelectWorkspace: (workspace: IWorkspaceDescriptor) => void;
@@ -40,11 +39,11 @@ export interface IDataSourceSelectOption {
 }
 
 export const isWorkspaceItem = (obj: unknown): obj is IWorkspaceDescriptor => {
-    return !isEmpty(obj) && (obj as IWorkspaceDescriptor).id !== undefined;
+    return !_isEmpty(obj) && (obj as IWorkspaceDescriptor).id !== undefined;
 };
 
 export const isDataSourceItem = (obj: unknown): obj is IDataSourceIdentifierDescriptor => {
-    return !isEmpty(obj) && (obj as IDataSourceIdentifierDescriptor).id !== undefined;
+    return !_isEmpty(obj) && (obj as IDataSourceIdentifierDescriptor).id !== undefined;
 };
 
 /**
@@ -144,7 +143,7 @@ export interface IGrantedUserGroup {
 }
 
 export const isGrantedUserGroup = (obj: unknown): obj is IGrantedUserGroup => {
-    return !isEmpty(obj) && (obj as IGrantedUserGroup).id !== undefined;
+    return !_isEmpty(obj) && (obj as IGrantedUserGroup).id !== undefined;
 };
 
 export interface IUserGroupSelectOption {
@@ -159,7 +158,7 @@ export interface IUserMember {
 }
 
 export const isUserItem = (obj: unknown): obj is IUserMember => {
-    return !isEmpty(obj) && (obj as IUserMember).id !== undefined;
+    return !_isEmpty(obj) && (obj as IUserMember).id !== undefined;
 };
 
 export interface IUserSelectOption {
@@ -175,5 +174,5 @@ export interface ISelectErrorOption {
 }
 
 export const isSelectErrorOption = (obj: unknown): obj is ISelectErrorOption => {
-    return !isEmpty(obj) && (obj as ISelectErrorOption).type === "error";
+    return !_isEmpty(obj) && (obj as ISelectErrorOption).type === "error";
 };

@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IDashboardAttributeFilterConfig } from "../../dashboard/dashboard.js";
 import { type FilterContextItem } from "../../dashboard/filterContext.js";
@@ -59,14 +59,14 @@ export type PublisherPeriodV2 = IPublisherAbsolutePeriodV2 | IPublisherRelativeP
  * @alpha
  */
 export function isPublisherAbsolutePeriodV2(obj: unknown): obj is IPublisherAbsolutePeriodV2 {
-    return !isEmpty(obj) && (obj as IPublisherAbsolutePeriodV2).type === "absolute";
+    return !_isEmpty(obj) && (obj as IPublisherAbsolutePeriodV2).type === "absolute";
 }
 
 /**
  * @alpha
  */
 export function isPublisherRelativePeriodV2(obj: unknown): obj is IPublisherRelativePeriodV2 {
-    return !isEmpty(obj) && (obj as IPublisherRelativePeriodV2).type === "relative";
+    return !_isEmpty(obj) && (obj as IPublisherRelativePeriodV2).type === "relative";
 }
 
 /**
@@ -172,7 +172,7 @@ export type PublisherDocumentContentV2 =
  * @alpha
  */
 export function isPublisherDocumentPagesContentV2(obj: unknown): obj is IPublisherDocumentPagesContentV2 {
-    if (isEmpty(obj)) {
+    if (_isEmpty(obj)) {
         return false;
     }
     const { pages, sections } = obj as IPublisherDocumentPagesContentV2;
@@ -185,7 +185,7 @@ export function isPublisherDocumentPagesContentV2(obj: unknown): obj is IPublish
 export function isPublisherDocumentSectionsContentV2(
     obj: unknown,
 ): obj is IPublisherDocumentSectionsContentV2 {
-    if (isEmpty(obj)) {
+    if (_isEmpty(obj)) {
         return false;
     }
     const { sections, pages } = obj as IPublisherDocumentSectionsContentV2;

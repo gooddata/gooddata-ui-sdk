@@ -156,6 +156,20 @@
                 font-size: 12px;
             }
 
+            &,
+            .gd-ellipsis-text-content {
+                &::-webkit-scrollbar {
+                    -webkit-appearance: none;
+                    appearance: none;
+                    width: 6px;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    background-color: var(--gd-palette-complementary-7);
+                    border-radius: 3px;
+                }
+            }
+
             h4 {
                 margin: 10px 0 0;
                 text-transform: uppercase;

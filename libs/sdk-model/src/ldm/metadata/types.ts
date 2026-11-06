@@ -1,6 +1,6 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type ObjRef, type ObjectType } from "../../objRef/index.js";
 
@@ -96,7 +96,7 @@ export interface IMetadataObject extends IMetadataObjectBase, IMetadataObjectIde
 export function isMetadataObject(obj: unknown): obj is IMetadataObject {
     const c = obj as IMetadataObject;
 
-    return !isEmpty(c) && c.type !== undefined && c.ref !== undefined;
+    return !_isEmpty(c) && c.type !== undefined && c.ref !== undefined;
 }
 
 /**

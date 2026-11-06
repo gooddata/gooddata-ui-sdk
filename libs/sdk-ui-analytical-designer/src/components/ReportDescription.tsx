@@ -3,11 +3,11 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import cx from "classnames";
-import { isEmpty } from "lodash-es";
 import { useIntl } from "react-intl";
 import { useSelector } from "react-redux";
 
 import { Bubble, type IAlignPoint, RichText, RichTextWithTooltip } from "@gooddata/sdk-ui-kit";
+import { _isEmpty } from "@gooddata/util";
 
 import { reportDescriptionChange } from "../actions/report_actions.js";
 import {
@@ -110,7 +110,7 @@ export function DefaultVisualizationDescription({
     }, []);
 
     // nothing to read and nothing to add
-    if (!isEditable && isEmpty(currentDescriptionTrimmed)) {
+    if (!isEditable && _isEmpty(currentDescriptionTrimmed)) {
         return null;
     }
 
@@ -119,7 +119,7 @@ export function DefaultVisualizationDescription({
             return cx("adi-description-tooltip-base", "s-adi-description-tooltip-content", ownClass);
         };
 
-        if (isEmpty(description) && !editMode) {
+        if (_isEmpty(description) && !editMode) {
             return (
                 <div className={getClassNames("adi-description-tooltip-placeholder")} onClick={handleClick}>
                     {addLabel}

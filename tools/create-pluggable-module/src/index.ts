@@ -22,6 +22,8 @@ export type {
     IRepoInfo,
     IScaffoldAnswers,
     IScaffoldProfile,
+    ITemplateSubtree,
+    ModuleKind,
     PackageManager,
     ProfileName,
     TokenReplacements,

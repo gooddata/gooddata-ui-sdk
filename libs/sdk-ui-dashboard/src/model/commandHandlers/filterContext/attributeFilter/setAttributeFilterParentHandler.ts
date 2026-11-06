@@ -1,6 +1,5 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
@@ -9,6 +8,7 @@ import {
     type IDashboardAttributeFilterParent,
     dashboardAttributeFilterItemFilterElementsBy,
 } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { type ISetAttributeFilterParents } from "../../../commands/filters.js";
 import { attributeFilterParentChanged } from "../../../events/filters.js";
@@ -57,7 +57,7 @@ export function* setAttributeFilterParentsHandler(
     // dependency on a filter the caller may not read.
     const isCarriedOverRestrictedParent = (parent: IDashboardAttributeFilterParent) =>
         restrictedFilterLocalIdentifiers.has(parent.filterLocalIdentifier) &&
-        storedParents.some((stored) => isEqual(stored, parent));
+        storedParents.some((stored) => _isEqual(stored, parent));
 
     const validationResult: SagaReturnType<typeof validateAttributeFilterParents> = yield call(
         validateAttributeFilterParents,

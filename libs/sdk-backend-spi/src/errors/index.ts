@@ -1,7 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import {
     type IPublisherDocumentDefinitionV2,
     type IPublisherDocumentTemplateDefinitionV2,
@@ -12,6 +10,7 @@ import {
     type ObjRef,
     validatePublisherEntityV2,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IDataView } from "../workspace/execution/index.js";
 
@@ -359,7 +358,7 @@ export type ErrorConverter = (e: Error) => AnalyticalBackendError;
  * @public
  */
 export function isAnalyticalBackendError(obj: unknown): obj is AnalyticalBackendError {
-    return !isEmpty(obj) && (obj as AnalyticalBackendError).abeType !== undefined;
+    return !_isEmpty(obj) && (obj as AnalyticalBackendError).abeType !== undefined;
 }
 
 /**

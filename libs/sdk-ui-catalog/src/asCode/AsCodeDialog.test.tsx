@@ -117,6 +117,24 @@ describe("AsCodeDialog chrome", () => {
         expect(link).toHaveAttribute("rel", "noopener noreferrer");
     });
 
+    it.each([
+        ["MacIntel", "⌘I"],
+        ["Win32", "Ctrl+I"],
+    ])("names the completion shortcut in the section tooltip on %s", async (platform, shortcut) => {
+        vi.stubGlobal("navigator", { platform });
+        renderCreate(makeWrapper());
+        await screen.findByTestId("yaml-editor");
+        fireEvent.click(
+            document.querySelector(".gd-ascode-dialog-section-header .gd-ui-kit-tooltip__anchor")!,
+        );
+
+        expect(
+            await screen.findByRole("tooltip", {
+                name: `Create a YAML statement that defines a parameter. Press ${shortcut} for suggestions.`,
+            }),
+        ).toBeInTheDocument();
+    });
+
     it("hides the help link on white-labeled deployments", () => {
         renderCreate(makeWrapper({ whiteLabeling: { enabled: true } }));
         expect(screen.queryByText("How to create a parameter?")).not.toBeInTheDocument();

@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { cloneDeep, isEmpty } from "lodash-es";
+import { cloneDeep } from "lodash-es";
 
 import {
     type IBaseWidget,
@@ -17,6 +17,7 @@ import {
     isDashboardLayout,
     isWidget,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { type ILayoutItemPath } from "../../types.js";
 
@@ -83,7 +84,7 @@ export function newCustomWidget<TExtra = void>(
 export function isCustomWidget(obj: unknown): obj is ICustomWidget {
     const w = obj as ICustomWidget;
 
-    return !isEmpty(w) && w.type === "customWidget" && w.customType !== undefined && w.ref !== undefined;
+    return !_isEmpty(w) && w.type === "customWidget" && w.customType !== undefined && w.ref !== undefined;
 }
 
 /**
@@ -95,7 +96,7 @@ export function isCustomWidget(obj: unknown): obj is ICustomWidget {
 export function isCustomWidgetDefinition(obj: unknown): obj is ICustomWidgetDefinition {
     const w = obj as ICustomWidget;
 
-    return !isEmpty(w) && w.type === "customWidget" && w.customType !== undefined && w.ref === undefined;
+    return !_isEmpty(w) && w.type === "customWidget" && w.customType !== undefined && w.ref === undefined;
 }
 
 /**
@@ -107,7 +108,7 @@ export function isCustomWidgetDefinition(obj: unknown): obj is ICustomWidgetDefi
 export function isCustomWidgetBase(obj: unknown): obj is ICustomWidgetBase {
     const w = obj as ICustomWidgetBase;
 
-    return !isEmpty(w) && w.type === "customWidget" && w.customType !== undefined;
+    return !_isEmpty(w) && w.type === "customWidget" && w.customType !== undefined;
 }
 
 /**
@@ -216,7 +217,7 @@ function getOrCreateSectionHeader(
     }
 
     if (typeof titleOrHeader === "string") {
-        if (isEmpty(titleOrHeader)) {
+        if (_isEmpty(titleOrHeader)) {
             return undefined;
         }
 

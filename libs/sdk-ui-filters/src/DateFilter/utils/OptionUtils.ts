@@ -1,7 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import {
     type DateFilterGranularity,
     type IAbsoluteDateFilterPreset,
@@ -10,6 +8,7 @@ import {
     isAbsoluteDateFilterForm,
     isRelativeDateFilterPreset,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import {
     type DateFilterOption,
@@ -72,9 +71,9 @@ export function removeEmptyKeysFromDateFilterOptions({
         ...(allTime && { allTime }),
         ...(emptyValues && { emptyValues }),
         ...(absoluteForm && { absoluteForm }),
-        ...(!isEmpty(absolutePreset) && { absolutePreset }),
+        ...(!_isEmpty(absolutePreset) && { absolutePreset }),
         ...(relativeForm && { relativeForm }),
-        ...(!isEmpty(relativePreset) && { relativePreset }),
+        ...(!_isEmpty(relativePreset) && { relativePreset }),
     };
 }
 

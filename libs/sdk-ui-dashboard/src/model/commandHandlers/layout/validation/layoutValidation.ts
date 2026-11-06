@@ -1,7 +1,7 @@
-// (C) 2021-2025 GoodData Corporation
-import { isEmpty } from "lodash-es";
+// (C) 2021-2026 GoodData Corporation
 
 import { type IDashboardLayout } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import {
     findSection,
@@ -24,7 +24,7 @@ export function validateSectionPlacement(
             return true;
         }
 
-        if (isEmpty(layout.sections) && !index) {
+        if (_isEmpty(layout.sections) && !index) {
             return true;
         }
 
@@ -39,7 +39,7 @@ export function validateSectionPlacement(
 
         const sections = findSections(layout, index);
 
-        if (isEmpty(sections) && !sectionIndex) {
+        if (_isEmpty(sections) && !sectionIndex) {
             return true;
         }
 
@@ -69,7 +69,7 @@ export function validateItemPlacement(
             return true;
         }
 
-        if (isEmpty(section.items) && !index) {
+        if (_isEmpty(section.items) && !index) {
             return true;
         }
 
@@ -81,7 +81,7 @@ export function validateItemPlacement(
             return true;
         }
 
-        if (isEmpty(section.items) && !itemIndex) {
+        if (_isEmpty(section.items) && !itemIndex) {
             return true;
         }
 

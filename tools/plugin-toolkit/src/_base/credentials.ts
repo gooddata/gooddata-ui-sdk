@@ -1,6 +1,6 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { promptApiToken } from "./terminal/prompts.js";
 import { InputValidationError } from "./types.js";
@@ -39,7 +39,7 @@ type CredentialsValidationError = "TOKEN_MISSING";
 export function validateCredentialsComplete({
     token,
 }: BackendCredentials): CredentialsValidationError | undefined {
-    if (isEmpty(token)) {
+    if (_isEmpty(token)) {
         return "TOKEN_MISSING";
     }
 

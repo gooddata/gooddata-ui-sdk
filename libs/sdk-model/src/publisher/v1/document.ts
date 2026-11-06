@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IAuditableDates, type IAuditableUsers } from "../../base/metadata.js";
 import { type ObjRef, isObjRef } from "../../objRef/index.js";
@@ -124,7 +124,7 @@ export interface IPublisherDocumentV1
 export function isPublisherDocumentTemplateDefinitionV1(
     obj: unknown,
 ): obj is IPublisherDocumentTemplateDefinitionV1 {
-    return !isEmpty(obj) && (obj as IPublisherDocumentTemplateDefinitionV1).type === "reportTemplate";
+    return !_isEmpty(obj) && (obj as IPublisherDocumentTemplateDefinitionV1).type === "reportTemplate";
 }
 
 /**
@@ -144,7 +144,7 @@ export function isPublisherDocumentTemplateV1(obj: unknown): obj is IPublisherDo
  * @alpha
  */
 export function isPublisherDocumentDefinitionV1(obj: unknown): obj is IPublisherDocumentDefinitionV1 {
-    return !isEmpty(obj) && (obj as IPublisherDocumentDefinitionV1).type === "report";
+    return !_isEmpty(obj) && (obj as IPublisherDocumentDefinitionV1).type === "report";
 }
 
 /**

@@ -12,24 +12,26 @@ import {
     useState,
 } from "react";
 
-import { type CompletionSource } from "@codemirror/autocomplete";
+import { type CompletionSource, startCompletion } from "@codemirror/autocomplete";
+import { insertNewlineAndIndent } from "@codemirror/commands";
 import { forceLinting, lintGutter, linter } from "@codemirror/lint";
-import { Compartment, type Extension } from "@codemirror/state";
-import { type EditorView, lineNumbers } from "@codemirror/view";
-import { isEqual } from "lodash-es";
+import { Compartment, type Extension, Prec } from "@codemirror/state";
+import { type EditorView, keymap, lineNumbers } from "@codemirror/view";
 
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
+import { _isEqual } from "@gooddata/util";
 
 import { createSyntaxErrorLinter } from "../../syntaxHighlightingInput/syntaxErrorLinter.js";
 import { SyntaxHighlightingInput } from "../../syntaxHighlightingInput/SyntaxHighlightingInput.js";
 import { yamlPositionAt } from "../../syntaxHighlightingInput/yamlPosition.js";
 import { bem } from "../@utils/bem.js";
 
+import { getPathDiagnostics } from "./configEditorDiagnostics.js";
 import { useLanguageGrammar } from "./configEditorGrammars.js";
 import { themedHighlightStyle } from "./configEditorHighlighting.js";
 import { type ConfigEditorLanguage, beautify, convertText, isProjectable } from "./configEditorLanguage.js";
 import { ConfigEditorToolbar } from "./ConfigEditorToolbar.js";
-import { getWarningDiagnostics } from "./configEditorWarnings.js";
+import { yamlBlockIndent } from "./configEditorYamlIndent.js";
 import { type IUiConfigEditorProps } from "./types.js";
 
 const { b, e } = bem("gd-ui-kit-config-editor");
@@ -60,7 +62,7 @@ export function UiConfigEditor({
     onLanguageChange,
     completionSource,
     labels,
-    warnings,
+    diagnostics,
     renderContextMenu,
     label,
     placeholder,
@@ -240,6 +242,11 @@ export function UiConfigEditor({
 
     const grammar = useLanguageGrammar(displayLanguage);
 
+    const yamlIndent = useMemo(
+        () => (displayLanguage === "yaml" ? yamlBlockIndent() : []),
+        [displayLanguage],
+    );
+
     // The grammar lives in a compartment so a first-time load can be injected into the running
     // view: remounting instead would throw away whatever the user did while the chunk was on the
     // wire — selection, undo history, focus — and their next keystroke would land at offset 0.
@@ -271,43 +278,25 @@ export function UiConfigEditor({
         }
     }, [grammar, syntaxErrorCompartment, syntaxErrorLinter]);
 
-    // The linter reads the warnings when it runs, so a remounted editor shows the current ones; a
-    // running view gets new warnings by swapping in a new linter. Each swap delays every linter's
-    // next run, the syntax error one included, so it happens only when the warnings' content changes.
-    const warningsRef = useAutoupdateRef(warnings);
-    const appliedWarningsRef = useRef(warnings ?? []);
-    const [warningsCompartment] = useState(() => new Compartment());
-    const warningLinter = useCallback(
+    // The linter reads the diagnostics when it runs, so a remounted editor shows the current ones; a
+    // running view gets new diagnostics by swapping in a new linter. Each swap delays every linter's
+    // next run, the syntax error one included, so it happens only when the diagnostics' content changes.
+    const diagnosticsRef = useAutoupdateRef(diagnostics);
+    const appliedDiagnosticsRef = useRef(diagnostics ?? []);
+    const [diagnosticsCompartment] = useState(() => new Compartment());
+    const diagnosticLinter = useCallback(
         (): Extension =>
-            linter((view) => getWarningDiagnostics(view.state.doc.toString(), warningsRef.current ?? [])),
-        [warningsRef],
+            linter((view) => getPathDiagnostics(view.state.doc.toString(), diagnosticsRef.current ?? [])),
+        [diagnosticsRef],
     );
     useEffect(() => {
-        const current = warnings ?? [];
-        if (isEqual(appliedWarningsRef.current, current)) {
+        const current = diagnostics ?? [];
+        if (_isEqual(appliedDiagnosticsRef.current, current)) {
             return;
         }
-        appliedWarningsRef.current = current;
-        viewRef.current?.dispatch({ effects: warningsCompartment.reconfigure(warningLinter()) });
-    }, [warnings, warningsCompartment, warningLinter]);
-
-    // Extensions are read once when CodeMirror initialises, so the editor is remounted (keyed on
-    // language) to swap grammars. Losing the undo history is reasonable there: the document was
-    // just rewritten in a different language, so there is nothing coherent left to undo into.
-    const extensions = useMemo(
-        () => [
-            grammarCompartmentRef.current.of(grammar ?? []),
-            lineNumbers(),
-            lintGutter(),
-            syntaxErrorCompartment.of(syntaxErrorLinter()),
-            warningsCompartment.of(warningLinter()),
-        ],
-        // Keyed on `grammar` (which changes with the language) rather than the language itself: a
-        // running view gets a late-arriving grammar through the effect above, but any later remount
-        // (a completion-source toggle, say) is built from this memo — stale, it would mount an
-        // editor with no grammar at all.
-        [grammar, syntaxErrorCompartment, syntaxErrorLinter, warningsCompartment, warningLinter],
-    );
+        appliedDiagnosticsRef.current = current;
+        viewRef.current?.dispatch({ effects: diagnosticsCompartment.reconfigure(diagnosticLinter()) });
+    }, [diagnostics, diagnosticsCompartment, diagnosticLinter]);
 
     // The completion source speaks in terms of the document's shape — the mapping keys enclosing the
     // position — so the raw CodeMirror context is resolved into that here. YAML only: the position
@@ -318,6 +307,34 @@ export function UiConfigEditor({
                 ? (context) => completionSource(context, yamlPositionAt(context.state, context.pos))
                 : undefined,
         [completionSource, displayLanguage],
+    );
+
+    // Extensions are read once when CodeMirror initialises, so the editor is remounted (keyed on
+    // language) to swap grammars. Losing the undo history is reasonable there: the document was
+    // just rewritten in a different language, so there is nothing coherent left to undo into.
+    const extensions = useMemo(
+        () => [
+            grammarCompartmentRef.current.of(grammar ?? []),
+            lineNumbers(),
+            lintGutter(),
+            syntaxErrorCompartment.of(syntaxErrorLinter()),
+            diagnosticsCompartment.of(diagnosticLinter()),
+            yamlIndent,
+            onCompletion ? enterOpensCompletions : [],
+        ],
+        // Keyed on `grammar` (which changes with the language) rather than the language itself: a
+        // running view gets a late-arriving grammar through the effect above, but any later remount
+        // (a completion-source toggle, say) is built from this memo — stale, it would mount an
+        // editor with no grammar at all.
+        [
+            grammar,
+            syntaxErrorCompartment,
+            syntaxErrorLinter,
+            diagnosticsCompartment,
+            diagnosticLinter,
+            yamlIndent,
+            onCompletion,
+        ],
     );
 
     return (
@@ -364,4 +381,31 @@ export function UiConfigEditor({
             </div>
         </div>
     );
+}
+
+// Completions activate only on typed input, and a newline is not one, so the key opens them itself.
+// `Prec.high` stays below the popup's own `Prec.highest` Enter, which keeps accepting the selection.
+const enterOpensCompletions = Prec.high(
+    keymap.of([
+        {
+            key: "Enter",
+            run: openCompletionsOnNewLine,
+        },
+    ]),
+);
+
+// Enter at the end of a line with content starts a line the user will fill. A blank line being
+// broken again is the user making space (or an Escape just dismissed the list), and a split inside
+// the text carries that text over, so neither opens the suggestions.
+function openCompletionsOnNewLine(view: EditorView): boolean {
+    const { to } = view.state.selection.main;
+    const line = view.state.doc.lineAt(to);
+    const atEndOfContent = line.text.trim() !== "" && line.text.slice(to - line.from).trim() === "";
+    if (!insertNewlineAndIndent(view)) {
+        return false;
+    }
+    if (atEndOfContent) {
+        startCompletion(view);
+    }
+    return true;
 }

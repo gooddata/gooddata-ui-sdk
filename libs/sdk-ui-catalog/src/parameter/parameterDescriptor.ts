@@ -11,6 +11,7 @@ import {
     type IAsCodeMessages,
     defineAsCodeDescriptor,
     fixedIdentifierOf,
+    toAsCodeFailure,
 } from "../asCode/descriptor.js";
 import type { ICatalogItemParameter } from "../catalogItem/types.js";
 import { ObjectTypes } from "../objectType/constants.js";
@@ -90,13 +91,13 @@ function useParameterEditing(): IAsCodeEditing<IParameterMetadataObjectDefinitio
                 });
                 return result.isValid
                     ? { isValid: true, definition: result.parameter }
-                    : {
-                          isValid: false,
-                          error: intl.formatMessage(errorMessages[result.errorCode], {
+                    : toAsCodeFailure(
+                          result,
+                          intl.formatMessage(errorMessages[result.errorCode], {
                               type: result.type,
                               enabledTypes: intl.formatList(enabledTypes, { type: "conjunction" }),
                           }),
-                      };
+                      );
             },
         }),
         [completionSource, enabledTypes, intl],

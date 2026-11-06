@@ -1,10 +1,10 @@
 // (C) 2026 GoodData Corporation
 
 import { createSlice, current } from "@reduxjs/toolkit";
-import { isEqual } from "lodash-es";
 import { type Reducer } from "redux";
 
 import { Axis } from "@gooddata/sdk-ui-ext/internal";
+import { _isEqual } from "@gooddata/util";
 
 import { openReportFinished } from "../../actions/open_actions.js";
 import {
@@ -59,10 +59,10 @@ const propertiesSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         // Every case COMPUTES the next value and returns it through an explicit
-        // `isEqual(current(state), next)` guard — identity is re-established explicitly, never
+        // `_isEqual(current(state), next)` guard — identity is re-established explicitly, never
         // inherited. `current()` because the comparison must not run over the immer draft proxy.
         const guarded = (state: IPropertiesState, next: IPropertiesState): IPropertiesState =>
-            isEqual(current(state), next) ? state : next;
+            _isEqual(current(state), next) ? state : next;
 
         builder
             /**

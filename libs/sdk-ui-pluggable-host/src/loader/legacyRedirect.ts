@@ -105,7 +105,7 @@ function mapLegacyDashboardsUrl(pathname: string, hash: string, search: string):
         return embedded ? toEmbeddedNotFoundUrl("dashboards", search, hash) : `/dashboards${search}`;
     }
 
-    const match = /^#\/(?:workspace|project|p)\/([^/?]+)(.*)$/.exec(hash);
+    const match = KD_WORKSPACE_HASH.exec(hash);
     return match ? toHashHostUrl(embedded, "dashboards", match[1], match[2], search) : null;
 }
 
@@ -128,6 +128,20 @@ const LEGACY_HOME_PATHS = [
     "/getting-started",
 ];
 
+// A host KD URL whose hash still names a workspace: [/embedded]/workspace/<A>/dashboards/#/workspace/<B>/<rest>.
+// The hash workspace is the link target, so it replaces the path workspace.
+const HOST_DASHBOARDS_PATH = /^(\/embedded)?\/workspace\/[^/]+\/dashboards\/?$/;
+const KD_WORKSPACE_HASH = /^#\/(?:workspace|project|p)\/([^/?]+)(.*)$/;
+
+function mapHostDashboardsWorkspaceHash(pathname: string, hash: string, search: string): string | null {
+    const path = HOST_DASHBOARDS_PATH.exec(pathname);
+    const workspaceHash = path ? KD_WORKSPACE_HASH.exec(hash) : null;
+    if (!path || !workspaceHash) {
+        return null;
+    }
+    return toHashHostUrl(!!path[1], "dashboards", workspaceHash[1], workspaceHash[2], search);
+}
+
 // /publisher is the former route base; saved links and document exports may still open it.
 const FORMER_REPORTS_ROUTE = /^((?:\/embedded)?\/workspace\/[^/]+)\/publisher(\/.*)?$/;
 
@@ -140,6 +154,11 @@ const FORMER_REPORTS_ROUTE = /^((?:\/embedded)?\/workspace\/[^/]+)\/publisher(\/
  */
 export function mapLegacyUrlToHost(location: ILegacyLocation): string | null {
     const { pathname, hash, search } = location;
+
+    const hostDashboards = mapHostDashboardsWorkspaceHash(pathname, hash, search);
+    if (hostDashboards) {
+        return hostDashboards;
+    }
 
     const formerReports = FORMER_REPORTS_ROUTE.exec(pathname);
     if (formerReports) {

@@ -129,6 +129,10 @@ export interface IAnalyticalDesignerConfig {
      * White labeling of the Analytical Designer user interface.
      */
     whiteLabeling?: {
+        /**
+         * @deprecated Analytical Designer does not render a header logo. The host header shows the logo.
+         * The property will be removed in the next major version.
+         */
         logoUrl?: string;
         isBranded?: boolean;
     };

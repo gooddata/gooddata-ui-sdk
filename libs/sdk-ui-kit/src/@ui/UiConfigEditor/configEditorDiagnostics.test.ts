@@ -2,8 +2,8 @@
 
 import { describe, expect, it } from "vitest";
 
+import { getPathDiagnostics } from "./configEditorDiagnostics.js";
 import { convertText } from "./configEditorLanguage.js";
-import { getWarningDiagnostics } from "./configEditorWarnings.js";
 
 const json = JSON.stringify(
     {
@@ -20,7 +20,7 @@ const json = JSON.stringify(
 const yaml = convertText(json, "json", "yaml");
 
 function marked(text: string, path: Array<string | number>, part?: string) {
-    return getWarningDiagnostics(text, [{ path, part, message: "Check this" }]).map(
+    return getPathDiagnostics(text, [{ path, part, severity: "warning", message: "Check this" }]).map(
         ({ from, to, severity }) => ({
             text: text.slice(from, to),
             severity,
@@ -28,7 +28,13 @@ function marked(text: string, path: Array<string | number>, part?: string) {
     );
 }
 
-describe("getWarningDiagnostics", () => {
+function markedKey(text: string, path: Array<string | number>) {
+    return getPathDiagnostics(text, [{ path, target: "key", severity: "error", message: "Unknown key" }]).map(
+        ({ from, to }) => text.slice(from, to),
+    );
+}
+
+describe("getPathDiagnostics", () => {
     it.each([
         ["JSON", json],
         ["YAML", yaml],
@@ -76,6 +82,31 @@ describe("getWarningDiagnostics", () => {
         expect(marked('{ "title": "Q3", "title": "Q4", "color": "{x}" }', ["color"])).toEqual([
             { text: '"{x}"', severity: "warning" },
         ]);
+    });
+
+    it.each([
+        ["in the middle", "title: Q3\nmaql: \nid: m1\n"],
+        ["at the end", "title: Q3\nmaql: "],
+    ])("marks the key of a blank value %s", (_, text) => {
+        expect(marked(text, ["maql"])).toEqual([{ text: "maql", severity: "warning" }]);
+    });
+
+    it("marks the sequence key for a blank list item", () => {
+        expect(marked("title: Q3\ntags:\n  -\n", ["tags", 0])).toEqual([
+            { text: "tags", severity: "warning" },
+        ]);
+    });
+
+    it.each([
+        ["a key with a value", "foo: bar\n", ["foo"]],
+        ["a key with an empty value", "title: Q3\nfoo:\n", ["foo"]],
+        ["a nested key", "definition:\n  foo: 1\n", ["definition", "foo"]],
+    ])("marks exactly the key for %s", (_, text, path) => {
+        expect(markedKey(text, path)).toEqual(["foo"]);
+    });
+
+    it("marks no key for an array index", () => {
+        expect(markedKey("tags:\n  - a\n", ["tags", 0])).toEqual([]);
     });
 
     it("marks nothing for a path the text does not hold, or for text that does not parse", () => {

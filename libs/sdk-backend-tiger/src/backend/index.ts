@@ -1,7 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
 import axios, { type AxiosInstance, type AxiosResponse } from "axios";
-import { inRange, isEmpty, isError, omit } from "lodash-es";
+import { inRange, isError, omit } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { type ITigerClientBase, newAxios, tigerClientBaseFactory } from "@gooddata/api-client-tiger";
@@ -33,6 +33,7 @@ import {
     isContractExpired,
     isNotAuthenticated,
 } from "@gooddata/sdk-backend-spi";
+import { _isEmpty } from "@gooddata/util";
 
 import { LIB_NAME, LIB_VERSION } from "../__version.js";
 import { createDateValueStringifier } from "../convertors/fromBackend/dateFormatting/dateValueFormatter.js";
@@ -484,7 +485,7 @@ function createHeaders(implConfig: TigerBackendConfig, telemetry: TelemetryData)
         headers["X-GDC-JS-SDK-COMP"] = telemetry.componentName;
     }
 
-    if (telemetry.props && !isEmpty(telemetry.props)) {
+    if (telemetry.props && !_isEmpty(telemetry.props)) {
         headers["X-GDC-JS-SDK-COMP-PROPS"] = telemetry.props.join(",");
     }
 
@@ -494,7 +495,7 @@ function createHeaders(implConfig: TigerBackendConfig, telemetry: TelemetryData)
     }
 
     // Add correlation data as x-gdc-correlation header if available
-    if (telemetry.correlationMetadata && !isEmpty(telemetry.correlationMetadata)) {
+    if (telemetry.correlationMetadata && !_isEmpty(telemetry.correlationMetadata)) {
         headers["X-GDC-CORRELATION"] = JSON.stringify(telemetry.correlationMetadata);
     }
 

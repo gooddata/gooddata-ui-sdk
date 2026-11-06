@@ -1,10 +1,10 @@
 // (C) 2007-2026 GoodData Corporation
 
 import invariant from "invariant";
-import { isEmpty } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { type IAttributeFilterConfigs, type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { hasAreaDisplayForm, hasLocationDisplayForm } from "../components/catalog/utils/locationAttribute.js";
 import { type GeoLabelType } from "../constants/geo.js";
@@ -387,7 +387,7 @@ function getFilters(
 
     const filters: IBucketItemMetricFilter[] = item?.filters ?? [];
     return filters
-        .filter((filter) => !isEmpty(filter?.attribute))
+        .filter((filter) => !_isEmpty(filter?.attribute))
         .map((filter): IDecoratedMetricFilter => {
             if (filter?.attribute === DATE_DATASET_ATTRIBUTE) {
                 const localIdentifier = item?.localIdentifier;

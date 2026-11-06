@@ -1,11 +1,12 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { isEmpty, isEqual, omit } from "lodash-es";
+import { omit } from "lodash-es";
 import { defineMessages } from "react-intl";
 import { call, put, select, take, takeEvery } from "redux-saga/effects";
 
 import { type IWorkspaceCatalog } from "@gooddata/sdk-backend-spi";
 import { isCatalogMeasure } from "@gooddata/sdk-model";
+import { _isEmpty, _isEqual } from "@gooddata/util";
 
 import { removeBucketItemsByLocalIds } from "../../actions/buckets_actions.js";
 import { createLeaveAnywayButtonClickedAction } from "../../actions/confirm_unsaved_changes_actions.js";
@@ -134,10 +135,10 @@ function* handleMetricSave(action: IMetricEditorMetricSaveAction) {
 
     const { metric, info, mode } = action.payload;
     const oldMetricId = info.previousMetric.id;
-    const metricIdChanged = !isEmpty(oldMetricId) && metric.id !== oldMetricId;
+    const metricIdChanged = !_isEmpty(oldMetricId) && metric.id !== oldMetricId;
     yield call(logCreateOrEditMetric, { state, mode });
 
-    if (!isEqual(omit(metric, ["uri"]), omit(info.previousMetric, ["uri"]))) {
+    if (!_isEqual(omit(metric, ["uri"]), omit(info.previousMetric, ["uri"]))) {
         yield put(
             addMessage({
                 type: "success",
@@ -221,7 +222,7 @@ export function* removeMetricFromBucket() {
         return bucketMetric.localIdentifier;
     });
 
-    if (!isEmpty(localIds)) {
+    if (!_isEmpty(localIds)) {
         yield put(removeBucketItemsByLocalIds(localIds));
         // waiting for removal from the bucket to be finished
         yield take(ActionTypeKeys.UI_EXTENDED_REFERENCE_POINT_CHANGED);

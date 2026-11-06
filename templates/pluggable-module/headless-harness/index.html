@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{applicationTemplateTitle} — Harness</title>
+        <style>
+            body {
+                font-family: system-ui, sans-serif;
+                margin: 24px;
+                max-width: 960px;
+            }
+            .actions {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                margin: 16px 0;
+            }
+            #log {
+                font-family: ui-monospace, monospace;
+                font-size: 13px;
+                padding-left: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>{applicationTemplateTitle}</h1>
+        <p>
+            The harness mounts the module with the config from <code>.env</code>, gives it a sample platform
+            context and sends sample telemetry to every registered provider. Open the browser console to see
+            what the provider does with it.
+        </p>
+        <div class="actions">
+            <button id="send-event" type="button">Send event</button>
+            <button id="send-page-view" type="button">Send page view</button>
+            <button id="send-timing" type="button">Send timing</button>
+            <button id="unmount" type="button">Unmount module</button>
+        </div>
+        <ol id="log"></ol>
+        <script type="module" src="/src/app.ts"></script>
+    </body>
+</html>

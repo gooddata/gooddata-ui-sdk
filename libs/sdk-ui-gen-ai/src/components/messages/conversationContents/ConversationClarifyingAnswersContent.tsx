@@ -41,24 +41,31 @@ export function ConversationClarifyingAnswersContent(props: ConversationClarifyi
     }
 
     return (
-        <div className={cx("gd-gen-ai-chat__conversation__item__content", bem.b())}>
+        <div
+            className={cx("gd-gen-ai-chat__conversation__item__content", bem.b())}
+            data-testid="gen-ai-clarifying-answers"
+        >
             {questions.map((question, index) => {
                 const labelId = `${message.id}-clarifying-answer-${index}`;
                 const answer = answers.find((ans) => ans.questionIndex === index);
 
                 return (
                     <div key={index}>
-                        <div className={bem.e("header")} id={labelId}>
+                        <div
+                            className={bem.e("header")}
+                            id={labelId}
+                            data-testid="gen-ai-clarifying-answer-question"
+                        >
                             {question.text}
                         </div>
                         {answer ? (
-                            <div aria-labelledby={labelId}>
+                            <div aria-labelledby={labelId} data-testid="gen-ai-clarifying-answer">
                                 <MarkdownComponent allowMarkdown={useMarkdown} references={objects}>
                                     {answer.answer.optionText}
                                 </MarkdownComponent>
                             </div>
                         ) : (
-                            <div aria-labelledby={labelId}>
+                            <div aria-labelledby={labelId} data-testid="gen-ai-clarifying-answer">
                                 <FormattedMessage id="gd.gen-ai.conversationContents.clarifyingAnswers.skipped" />
                             </div>
                         )}

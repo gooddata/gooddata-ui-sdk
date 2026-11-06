@@ -48,8 +48,6 @@ import { isConversationWithLocalId } from "../store/utils.js";
 import { generateTemporaryTitle } from "../utils.js";
 
 import { collectReferences, replaceReferences } from "./completion/references.js";
-import { ConversationDeleteDialog } from "./ConversationDeleteDialog.js";
-import { ConversationRenameDialog } from "./ConversationRenameDialog.js";
 import { useCustomization } from "./CustomizationContext.js";
 import { useFullscreenCheck } from "./hooks/useFullscreenCheck.js";
 import { useHistoryCheck } from "./hooks/useHistoryCheck.js";
@@ -70,6 +68,7 @@ export function GenAIChatConversations({ onClose, onSelect, wrapper }: GenAIChat
     const menuRef = useRef<HTMLElement>(undefined);
     const intl = useIntl();
     const dispatch = useDispatch();
+    const { ConversationDeleteDialogComponent, ConversationRenameDialogComponent } = useCustomization();
 
     const { isFullscreen, isSmallScreen } = useFullscreenCheck();
     const { isHistory } = useHistoryCheck();
@@ -400,14 +399,14 @@ export function GenAIChatConversations({ onClose, onSelect, wrapper }: GenAIChat
                 </div>,
             )}
             {conversationToDelete ? (
-                <ConversationDeleteDialog
+                <ConversationDeleteDialogComponent
                     conversation={conversationToDelete}
                     onClose={handleDeleteCancel}
                     onDelete={handleDeleteSubmit}
                 />
             ) : null}
             {conversationToRename ? (
-                <ConversationRenameDialog
+                <ConversationRenameDialogComponent
                     conversation={conversationToRename}
                     onClose={handleRenameCancel}
                     onRename={handleRenameSubmit}

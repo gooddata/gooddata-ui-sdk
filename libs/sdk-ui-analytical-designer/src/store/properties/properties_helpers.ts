@@ -1,9 +1,10 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { isEmpty, isEqual, isPlainObject, omit } from "lodash-es";
+import { isPlainObject, omit } from "lodash-es";
 
 import { type IVisualizationProperties } from "@gooddata/sdk-ui-ext/internal";
 import { type ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
+import { _isEmpty, _isEqual } from "@gooddata/util";
 
 import { type IVisualizationPropertiesControls } from "../../typings/properties.js";
 
@@ -238,8 +239,8 @@ export function sanitizeInitializedProperties(
 ): IVisualizationProperties | null {
     const controls = properties?.controls;
     const supportedPropertiesBase =
-        isPlainObject(controls) && isEmpty(controls) ? omit(properties, "controls") : properties;
-    return isPlainObject(supportedPropertiesBase) && isEmpty(supportedPropertiesBase)
+        isPlainObject(controls) && _isEmpty(controls) ? omit(properties, "controls") : properties;
+    return isPlainObject(supportedPropertiesBase) && _isEmpty(supportedPropertiesBase)
         ? null
         : supportedPropertiesBase;
 }
@@ -263,5 +264,5 @@ export function setDualAxisControl(
         controls: { ...properties.controls, dualAxis: value },
     };
 
-    return isEqual(properties, next) ? properties : next;
+    return _isEqual(properties, next) ? properties : next;
 }

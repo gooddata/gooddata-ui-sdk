@@ -1,8 +1,9 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { isEmpty, zip } from "lodash-es";
+import { zip } from "lodash-es";
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";
+import { _isEmpty } from "@gooddata/util";
 
 import {
     areLabelsStacked,
@@ -164,7 +165,7 @@ export function areNeighborsOverlapping(neighbors: IUnsafeDataLabels[][]): boole
     return neighbors.some((labelsPair) => {
         const [firstLabel, nextLabel]: IUnsafeDataLabels[] = labelsPair || [];
 
-        if (!isEmpty(firstLabel) && !isEmpty(nextLabel)) {
+        if (!_isEmpty(firstLabel) && !_isEmpty(nextLabel)) {
             const firstClientRect = firstLabel.element!.getBoundingClientRect();
             const nextClientRect = nextLabel.element!.getBoundingClientRect();
             if (firstClientRect && nextClientRect) {
@@ -184,7 +185,7 @@ export function areLabelsOverlappingColumns(
     chartType?: string,
 ): boolean {
     return labels.some((label: UnsafeInternals) => {
-        if (isEmpty(label)) {
+        if (_isEmpty(label)) {
             return false;
         }
 
@@ -199,8 +200,8 @@ export function areLabelsOverlappingColumns(
         return visiblePoints.some((point) => {
             const convertedSeriesType = convertToChartType(point?.series?.options?.type);
             if (
-                isEmpty(point) ||
-                isEmpty(point.graphic) ||
+                _isEmpty(point) ||
+                _isEmpty(point.graphic) ||
                 // supportedDualAxesChartTypes is including AREA and LINE
                 // won't hide the stacked label if it overlaps with points of AREA and LINE
                 convertedSeriesType === VisualizationTypes.AREA ||
@@ -248,7 +249,7 @@ export function getStackLabelPointsForDualAxis(stacks: UnsafeInternals[]): Point
 export function getStackTotalGroups(yAxis: Axis[]): Highcharts.SVGAttributes[] {
     return yAxis
         .flatMap((axis: Highcharts.Axis) => {
-            if (!isEmpty((axis as UnsafeInternals)?.stacking.stacks)) {
+            if (!_isEmpty((axis as UnsafeInternals)?.stacking.stacks)) {
                 return (axis as UnsafeInternals)?.stacking.stackTotalGroup;
             }
             return axis.series.map((serie: Highcharts.Series) => (serie as UnsafeInternals).dataLabelsGroup);
@@ -369,7 +370,7 @@ export function getLabelOrDataLabelForPoints(points: Highcharts.Point[]): Highch
 
 export function getStackItems(yAxis: Highcharts.Axis[]): IStackItem[] {
     return yAxis.flatMap((axis: Highcharts.Axis): IStackItem[] => {
-        if (!isEmpty((axis as UnsafeInternals)?.stacking.stacks)) {
+        if (!_isEmpty((axis as UnsafeInternals)?.stacking.stacks)) {
             return (axis as UnsafeInternals)?.stacking.stacks;
         }
         const series = axis.series;

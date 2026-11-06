@@ -1,9 +1,8 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
-
 import { type ISortItem } from "@gooddata/sdk-model";
 import { type IVisualizationProperties } from "@gooddata/sdk-ui-ext/internal";
+import { _isEqual } from "@gooddata/util";
 
 import { type IStoredVisualizationProperties } from "../typings/properties.js";
 
@@ -44,7 +43,7 @@ export function areSameVisualizationProperties(
     p1: AnyVisualizationProperties,
     p2: AnyVisualizationProperties,
 ): boolean {
-    return isEqual(
+    return _isEqual(
         getVisualizationPropertiesWithDefaultValues(p1),
         getVisualizationPropertiesWithDefaultValues(p2),
     );

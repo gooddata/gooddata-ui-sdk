@@ -3,10 +3,10 @@
 import { type ComponentType } from "react";
 
 import cx from "classnames";
-import { isEmpty } from "lodash-es";
 
 import { type IExecutionConfig, type IFilter, type ISeparators, type ObjRef } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
+import { _isEmpty } from "@gooddata/util";
 
 import { UiIcon } from "../@ui/UiIcon/UiIcon.js";
 import { Bubble } from "../Bubble/Bubble.js";
@@ -175,13 +175,13 @@ function DescriptionPanelContentCore({
 
     return (
         <div className={className} id={id}>
-            {!isEmpty(title) && (
+            {!_isEmpty(title) && (
                 <div className="gd-description-panel-title">
                     {isLocked ? <UiIcon type="lock" size={16} color="complementary-6" /> : null}
                     {title}
                 </div>
             )}
-            {!isEmpty(description) && (
+            {!_isEmpty(description) && (
                 <div className="gd-description-panel-content">
                     <RichText
                         value={description ?? ""}

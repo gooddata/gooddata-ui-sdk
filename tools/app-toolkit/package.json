@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/app-toolkit",
-    "version": "11.68.0-alpha.2",
+    "version": "11.68.0-alpha.3",
     "description": "CLI with useful tools for creating and maintaining GoodData web applications.",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData",
@@ -56,6 +56,7 @@
     "devDependencies": {
         "@gooddata/eslint-config": "workspace:*",
         "@gooddata/oxlint-config": "workspace:*",
+        "@gooddata/util": "workspace:*",
         "@types/cross-spawn": "6.0.6",
         "@types/fs-extra": "9.0.13",
         "@types/inquirer": "9.0.10",

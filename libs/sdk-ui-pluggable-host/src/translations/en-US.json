@@ -163,6 +163,10 @@
         "text": "No matching language.",
         "crowdinContext": "Shown in the language select of the change language dialog when no language matches the search. Also read by screen readers."
     },
+    "languageDialog.saving": {
+        "text": "Changing language…",
+        "crowdinContext": "Progress toast while saving the user's own interface language on a phone, where tapping a language applies it right away. The page reloads in the new language once it's saved."
+    },
     "languageDialog.error": {
         "text": "We couldn't change the language. Try again.",
         "crowdinContext": "Error toast when saving the user's own interface language fails. The change language dialog stays open, so that they can apply again."

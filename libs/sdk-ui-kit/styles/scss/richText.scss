@@ -33,7 +33,8 @@
     }
 
     .gd-rich-text-metric-error,
-    .gd-rich-text-metric-multiple {
+    .gd-rich-text-metric-multiple,
+    .gd-rich-text-parameter-error {
         color: variables.$gd-palette-error-base;
     }
 

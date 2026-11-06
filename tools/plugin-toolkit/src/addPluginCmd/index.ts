@@ -1,8 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import { type IDashboardPlugin } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
 import { type ActionOptions } from "../_base/types.js";
@@ -24,7 +23,7 @@ function printAddConfigSummary({
     logInfo(`  Plugin URL  : ${pluginUrl}`);
     logInfo(`  Plugin name : ${pluginName}`);
 
-    const description = isEmpty(pluginDescription) ? "(empty)" : pluginDescription;
+    const description = _isEmpty(pluginDescription) ? "(empty)" : pluginDescription;
     logInfo(`  Plugin desc : ${description}   (see package.json)`);
 }
 

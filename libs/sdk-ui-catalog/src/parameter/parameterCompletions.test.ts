@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type Completion, CompletionContext } from "@codemirror/autocomplete";
+import { type Completion, CompletionContext, insertCompletionText } from "@codemirror/autocomplete";
 import { EditorState, type Transaction } from "@codemirror/state";
 import { describe, expect, it } from "vitest";
 
@@ -47,7 +47,9 @@ function applyCompletion(option: Completion, doc: string, from: number, to: numb
     if (typeof option.apply === "function") {
         (option.apply as SnippetApply)(view, option, from, to);
     } else {
-        view.dispatch(view.state.update({ changes: { from, to, insert: option.label } }));
+        view.dispatch(
+            view.state.update(insertCompletionText(view.state, option.apply ?? option.label, from, to)),
+        );
     }
     return { doc: view.state.doc.toString(), cursor: view.state.selection.main.head };
 }
@@ -432,13 +434,39 @@ id: threshold`,
         expect(result?.from).toBe(doc.indexOf("ti|"));
     });
 
+    it("offers a new entry on a blank line directly under allowedValues", () => {
+        const docWithCursor = `definition:
+  type: STRING
+  defaultValue: actual
+  constraints:
+    allowedValues:
+      |`;
+
+        expect(labelsOf(completeAt(docWithCursor))).toEqual(["- value"]);
+        const applied = applyAt(docWithCursor, "- value");
+        expect(applied.doc.endsWith("\n    allowedValues:\n      - value: ")).toBe(true);
+        expect(applied.cursor).toBe(applied.doc.length);
+    });
+
+    it("offers a new entry on a blank line at the item column below existing entries", () => {
+        const result = completeAt(`definition:
+  type: STRING
+  defaultValue: a
+  constraints:
+    allowedValues:
+      - value: a
+      |`);
+
+        expect(labelsOf(result)).toEqual(["- value"]);
+    });
+
     it("does not offer entry keys on a dash-less line directly under allowedValues", () => {
         const result = completeAt(`definition:
   type: STRING
   defaultValue: actual
   constraints:
     allowedValues:
-      |`);
+      va|`);
 
         expect(result).toBeNull();
     });
@@ -507,6 +535,21 @@ id: threshold`,
         expect(labelsOf(result)).toEqual(["minLength", "maxLength", "allowedValues"]);
     });
 
+    it("opens a sequence of scalars with a bare item when applying its key", () => {
+        const applied = applyAt("ta|", "tags");
+
+        expect(applied.doc).toBe("tags:\n  - ");
+        expect(applied.cursor).toBe(applied.doc.length);
+    });
+
+    it.each([
+        ["an inline list", "ta|: [existing]", "tags: [existing]"],
+        ["a block list", "ta|:\n  - existing", "tags:\n  - existing"],
+        ["an empty value", "ta|:", "tags:"],
+    ])("preserves %s when completing a sequence key", (_, docWithCursor, expected) =>
+        expect(applyAt(docWithCursor, "tags")).toEqual({ doc: expected, cursor: "tags".length }),
+    );
+
     it("inserts a new entry at the item indent when applying the new-entry completion", () => {
         const applied = applyAt(
             `definition:
@@ -562,7 +605,49 @@ id: threshold`,
         `;
         const applied = applyAt(`${prefix}${typed}|`, "title");
 
-        expect(applied.doc).toBe(`${prefix}title`);
+        expect(applied.doc).toBe(`${prefix}title: `);
+    });
+
+    it("inserts the key and a colon when applying a scalar key in a sequence item", () => {
+        const applied = applyAt(
+            `definition:
+  type: STRING
+  defaultValue: actual
+  constraints:
+    allowedValues:
+      - |`,
+            "value",
+        );
+
+        expect(applied.doc.endsWith("\n      - value: ")).toBe(true);
+        expect(applied.cursor).toBe(applied.doc.length);
+    });
+
+    it.each([
+        ["a scalar key", "  defaultVa|lue: 10", "defaultValue", "\n  defaultValue: 10"],
+        ["an empty mapping key", "  constr|aints:", "constraints", "\n  constraints:"],
+        ["a populated mapping key", "  constr|aints: {min: 0}", "constraints", "\n  constraints: {min: 0}"],
+    ])("preserves the colon and value when completing %s", (_, line, label, expected) => {
+        const applied = applyAt(`definition:\n  type: NUMBER\n${line}`, label);
+
+        expect(applied.doc.endsWith(expected)).toBe(true);
+    });
+
+    it("keeps the completed range at the caret so the popup filters by the typed prefix", () => {
+        expect(completeAt("definition:\n  type: NUMBER\n  constr|aints:")?.to).toBeUndefined();
+    });
+
+    it("opens an indented block when applying a mapping key", () => {
+        const applied = applyAt(
+            `definition:
+  type: NUMBER
+  defaultValue: 10
+  |`,
+            "constraints",
+        );
+
+        expect(applied.doc.endsWith("\n  constraints:\n    ")).toBe(true);
+        expect(applied.cursor).toBe(applied.doc.length);
     });
 
     it("produces valid YAML after entering a unique value into a new entry", () => {

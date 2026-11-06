@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { compact, isEqual } from "lodash-es";
+import { compact } from "lodash-es";
 import { type Task } from "redux-saga";
 import {
     type SagaReturnType,
@@ -30,6 +30,7 @@ import {
     isStringParameterDefinition,
     newInsightDefinition,
 } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { refreshSessionId } from "../../actions/app_context_actions.js";
 import { updateItemCache } from "../../actions/data_actions.js";
@@ -317,7 +318,7 @@ export function* watchExtendedReferencePointChange() {
         const currentInsight: ReturnType<typeof getInsightWithBucketsViaMd> =
             yield select(getInsightWithBucketsViaMd);
         const currentInsightRelevantContent = getInsightContentForAvailability(currentInsight);
-        const isInsightDifferent = !isEqual(previousInsightRelevantContent, currentInsightRelevantContent);
+        const isInsightDifferent = !_isEqual(previousInsightRelevantContent, currentInsightRelevantContent);
         const lastLoadHadError: ReturnType<typeof hasAvailabilityError> = yield select(hasAvailabilityError);
 
         if (isInsightDifferent || lastLoadHadError) {

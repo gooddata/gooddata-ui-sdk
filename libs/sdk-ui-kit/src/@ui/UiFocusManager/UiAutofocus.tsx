@@ -14,6 +14,7 @@ import {
 import { getFocusableElements, isElementFocusable, isElementTextInput } from "../../utils/domUtilities.js";
 
 import { type IUiFocusHelperConnectors } from "./types.js";
+import { isOwnershipAwareModal, useUiModalOwners } from "./UiModalOwner.js";
 import { resolveRef } from "./utils.js";
 
 /**
@@ -36,6 +37,8 @@ export const useUiAutofocusConnectors = <T extends HTMLElement = HTMLElement>({
     initialFocus,
 }: IUiAutofocusOptions = {}): IUiFocusHelperConnectors<T> => {
     const [element, setElement] = useState<HTMLElement | null>(null);
+    const [modalsBeforeMount] = useState(getOpenModals);
+    const owners = useUiModalOwners();
 
     // Skip setState(null) on unmount — the effect cleanup handles observer teardown, and
     // calling setElement(null) during commit would trigger a state update outside act() in tests.
@@ -89,7 +92,9 @@ export const useUiAutofocusConnectors = <T extends HTMLElement = HTMLElement>({
         };
 
         const isFocusSettled = () =>
-            element.contains(document.activeElement) || isElementTextInput(document.activeElement);
+            element.contains(document.activeElement) ||
+            isElementTextInput(document.activeElement) ||
+            isFocusInModalItDoesNotBelongTo(element, owners, modalsBeforeMount);
 
         const attemptFocus = () => {
             if (isFocusSettled()) {
@@ -137,10 +142,34 @@ export const useUiAutofocusConnectors = <T extends HTMLElement = HTMLElement>({
         scheduleAttempt();
 
         return stop;
-    }, [refocusKey, element, initialFocus, active]);
+    }, [refocusKey, element, initialFocus, active, owners, modalsBeforeMount]);
 
     return useMemo(() => ({ ref, element: element as T }), [ref, element]);
 };
+
+const MODAL_SELECTOR = '[aria-modal="true"]';
+
+function getOpenModals(): Set<Element> {
+    return typeof document === "undefined" ? new Set() : new Set(document.querySelectorAll(MODAL_SELECTOR));
+}
+
+function isFocusInModalItDoesNotBelongTo(
+    element: HTMLElement,
+    owners: readonly Element[],
+    modalsBeforeMount: Set<Element>,
+): boolean {
+    const modal = document.activeElement?.closest(MODAL_SELECTOR);
+    if (!modal || modal.contains(element)) {
+        return false;
+    }
+    if (isOwnershipAwareModal(modal)) {
+        return !owners.includes(modal);
+    }
+    return (
+        !modalsBeforeMount.has(modal) ||
+        !!(element.compareDocumentPosition(modal) & Node.DOCUMENT_POSITION_FOLLOWING)
+    );
+}
 
 function getElementToFocus(
     element: HTMLElement | null | undefined,

@@ -1,8 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { invert, isEmpty } from "lodash-es";
+import { invert } from "lodash-es";
 
 import { type ObjectType } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { type TigerAfmType, type TigerObjectType } from "./index.js";
 
@@ -69,16 +70,16 @@ const validCompatibleAfmTypes = Object.keys(objectTypeToTigerAfmType) as TigerAf
  * @alpha
  */
 export const isTigerCompatibleType = (obj: unknown): obj is TigerObjectType => {
-    return !isEmpty(obj) && validCompatibleTypes.some((type) => type === obj);
+    return !_isEmpty(obj) && validCompatibleTypes.some((type) => type === obj);
 };
 
 export const isTigerAfmCompatibleType = (obj: unknown): obj is TigerAfmCompatibleObjectType => {
-    return !isEmpty(obj) && validCompatibleAfmTypes.some((type) => type === obj);
+    return !_isEmpty(obj) && validCompatibleAfmTypes.some((type) => type === obj);
 };
 
 /**
  * @alpha
  */
 export const isTigerType = (obj: unknown): obj is TigerObjectType => {
-    return !isEmpty(obj) && validTigerTypes.some((type) => type === obj);
+    return !_isEmpty(obj) && validTigerTypes.some((type) => type === obj);
 };

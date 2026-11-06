@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, isEmpty, set } from "lodash-es";
+import { cloneDeep, set } from "lodash-es";
 
 import {
     type IInsight,
@@ -11,6 +11,7 @@ import {
     newAttributeSort,
 } from "@gooddata/sdk-model";
 import { BucketNames, type IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
+import { _isEmpty } from "@gooddata/util";
 
 import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket.js";
 import {
@@ -326,7 +327,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
                 ],
             };
         }
-        if (measures.length === 1 && isEmpty(stackBy)) {
+        if (measures.length === 1 && _isEmpty(stackBy)) {
             if (viewBy.length >= 2) {
                 return {
                     defaultSort,
@@ -353,7 +354,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
                 availableSorts: [
                     newAvailableSortsGroup(
                         viewBy[0].localIdentifier,
-                        isEmpty(stackBy) ? measures.map((m) => m.localIdentifier) : [],
+                        _isEmpty(stackBy) ? measures.map((m) => m.localIdentifier) : [],
                     ),
                 ],
             };

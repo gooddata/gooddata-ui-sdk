@@ -5,7 +5,13 @@
 ```ts
 
 // @internal
+export function _cloneDeep<T>(value: T): T;
+
+// @internal
 export function combineGuards<T extends ((x: unknown) => x is unknown)[]>(...guards: T): (x: unknown) => x is GuardType<T[number]>;
+
+// @internal
+export function _compact<T>(array: _List<T | _Falsey> | null | undefined): T[];
 
 // @internal
 export type ConsoleFunction = (...data: any[]) => void;
@@ -17,13 +23,66 @@ export type ConsoleType = "error" | "warn" | "log" | "debug" | "info";
 export function createTightWaitFor(waitFor: WaitForFn, interval?: number): <T>(callback: () => T | Promise<T>) => Promise<T>;
 
 // @internal
+export function _debounce<T extends (...args: any) => any>(func: T, wait: number | undefined, options: _DebounceSettingsLeading): _DebouncedFuncLeading<T>;
+
+// @internal (undocumented)
+export function _debounce<T extends (...args: any) => any>(func: T, wait?: number, options?: _DebounceSettings): _DebouncedFunc<T>;
+
+// @internal
+export type _DebouncedFunc<T extends (...args: any[]) => any> = {
+    (...args: Parameters<T>): ReturnType<T> | undefined;
+    cancel(): void;
+    flush(): ReturnType<T> | undefined;
+};
+
+// @internal
+export type _DebouncedFuncLeading<T extends (...args: any[]) => any> = {
+    (...args: Parameters<T>): ReturnType<T>;
+    flush(): ReturnType<T>;
+} & _DebouncedFunc<T>;
+
+// @internal
+export type _DebounceSettings = {
+    leading?: boolean | undefined;
+    maxWait?: number | undefined;
+    trailing?: boolean | undefined;
+};
+
+// @internal
+export type _DebounceSettingsLeading = _DebounceSettings & {
+    leading: true;
+};
+
+// @internal
 export function delay(timeout?: number): Promise<void>;
+
+// @internal (undocumented)
+export type _Dictionary<T> = {
+    [index: string]: T;
+};
 
 // @internal (undocumented)
 export type EmptyObject = Record<never, never>;
 
+// @internal (undocumented)
+export type _EmptyObject<T> = {
+    [K in keyof T]?: never;
+};
+
+// @internal (undocumented)
+export type _EmptyObjectOf<T> = _EmptyObject<T> extends T ? _EmptyObject<T> : never;
+
 // @internal
 export function escapeRegExp(value: string): string;
+
+// @internal (undocumented)
+export type _Falsey = null | undefined | false | "" | 0 | 0n;
+
+// @internal
+export function _groupBy<T>(collection: _List<T> | null | undefined, iteratee?: _ValueIteratee<T>): _Dictionary<T[]>;
+
+// @internal (undocumented)
+export function _groupBy<T extends object>(collection: T | null | undefined, iteratee?: _ValueIteratee<T[keyof T]>): _Dictionary<Array<T[keyof T]>>;
 
 // @internal (undocumented)
 export type GuardType<T> = T extends ((o: unknown) => o is infer U) ? U : never;
@@ -31,11 +90,43 @@ export type GuardType<T> = T extends ((o: unknown) => o is infer U) ? U : never;
 // @internal
 export function hashCodeString(value: string): number;
 
+// @internal
+export function _isEmpty<T extends {
+    __trapAny: any;
+}>(value?: T): boolean;
+
+// @internal (undocumented)
+export function _isEmpty(value: string): value is "";
+
+// @internal (undocumented)
+export function _isEmpty(value: Map<any, any> | Set<any> | _List<any> | null | undefined): boolean;
+
+// @internal (undocumented)
+export function _isEmpty(value: object): boolean;
+
+// @internal (undocumented)
+export function _isEmpty<T extends object>(value: T | null | undefined): value is _EmptyObjectOf<T> | null | undefined;
+
+// @internal (undocumented)
+export function _isEmpty(value?: any): boolean;
+
+// @internal
+export function _isEqual(value: unknown, other: unknown): boolean;
+
 // @internal (undocumented)
 export interface IShortenTextOptions {
     // (undocumented)
     maxLength?: number;
 }
+
+// @internal (undocumented)
+export type _IterateeShorthand<T> = _PropertyName | [_PropertyName, any] | _PartialShallow<T>;
+
+// @internal (undocumented)
+export type _List<T> = ArrayLike<T>;
+
+// @internal (undocumented)
+export type _Many<T> = T | readonly T[];
 
 // @internal
 export type Matcher = {
@@ -49,17 +140,55 @@ export type Matcher = {
 // @internal
 export type MatcherFunction = (console: Record<ConsoleType, ConsoleFunction>, type: ConsoleType, message: string) => boolean;
 
+// @internal (undocumented)
+export type _NotVoid = unknown;
+
+// @internal
+export function _omit<T extends object, K extends _PropertyName[]>(object: T | null | undefined, ...paths: K): Pick<T, Exclude<keyof T, K[number]>>;
+
+// @internal (undocumented)
+export function _omit<T extends object, K extends keyof T>(object: T | null | undefined, ...paths: Array<_Many<K>>): Omit<T, K>;
+
+// @internal (undocumented)
+export function _omit<T extends object>(object: T | null | undefined, ...paths: Array<_Many<_PropertyName>>): _PartialObject<T>;
+
 // @internal
 export function parseStringToArray(str: string): string[] | null;
 
+// @internal (undocumented)
+export type _PartialObject<T> = Partial<T>;
+
+// @internal (undocumented)
+export type _PartialShallow<T> = {
+    [P in keyof T]?: T[P] extends object ? object : T[P];
+};
+
+// @internal (undocumented)
+export type _PropertyName = string | number | symbol;
+
+// @internal (undocumented)
+export type _PropertyPath = _Many<_PropertyName>;
+
 // @internal
 export function randomString(len: number): string;
+
+// @internal
+export function _range(start: number, end?: number, step?: number): number[];
+
+// @internal
+export function _range(end: number, index: string | number, guard: object): number[];
 
 // @internal
 export function removeMetadata(translationsWithMetadata: Record<string, any>): Record<string, string>;
 
 // @internal
 export const sanitizeLocaleForMoment: (intlLocale: string) => string;
+
+// @internal
+export function _set<T extends object>(object: T, path: _PropertyPath, value: unknown): T;
+
+// @internal (undocumented)
+export function _set<TResult>(object: object, path: _PropertyPath, value: unknown): TResult;
 
 // @internal (undocumented)
 export function shallowEqualObjects(objA: Record<string, any>, objB: Record<string, any>): boolean;
@@ -84,6 +213,12 @@ export function suppressConsole<T>(fn: () => T | Promise<T>, type?: ConsoleType 
 
 // @internal
 export function suppressConsole<T>(fn: () => T | Promise<T>, matcherFn: MatcherFunction): T | Promise<T>;
+
+// @internal
+export function _uniqBy<T>(array: _List<T> | null | undefined, iteratee: _ValueIteratee<T>): T[];
+
+// @internal
+export type _ValueIteratee<T> = ((value: T) => _NotVoid) | _IterateeShorthand<T>;
 
 // @internal
 export type WaitForFn = <T>(callback: () => T | Promise<T>, options?: {

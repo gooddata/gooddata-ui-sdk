@@ -1,7 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
 import invariant from "invariant";
-import { isEmpty } from "lodash-es";
 
 import {
     type IAttribute,
@@ -15,6 +14,7 @@ import {
     isMeasureSort,
     totalIsNative,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import {
     type CompatibilityFilter,
@@ -127,7 +127,7 @@ function convertTotals(totals: ITotal[] = []): ITotalItem[] {
 function convertDimensions(def: IExecutionDefinition): IDimension[] {
     return def.dimensions.map((dim) => {
         const totals = convertTotals(dim.totals);
-        const totalsProp = isEmpty(totals) ? {} : { totals };
+        const totalsProp = _isEmpty(totals) ? {} : { totals };
 
         return {
             itemIdentifiers: dim.itemIdentifiers,
@@ -153,9 +153,9 @@ function assertNoNullsInSortBy(sortBy: ISortItem[]): void {
 
 export function convertResultSpec(def: IExecutionDefinition): IResultSpec {
     assertNoNullsInSortBy(def.sortBy ?? []);
-    const sortsProp = isEmpty(def.sortBy) ? {} : { sorts: def.sortBy as SortItem[] };
+    const sortsProp = _isEmpty(def.sortBy) ? {} : { sorts: def.sortBy as SortItem[] };
     const dims = convertDimensions(def);
-    const dimsProp = isEmpty(dims) ? {} : { dimensions: dims };
+    const dimsProp = _isEmpty(dims) ? {} : { dimensions: dims };
 
     return {
         ...sortsProp,

@@ -1,7 +1,5 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import {
     type ILowerBoundedFilter,
     type IUpperBoundedFilter,
@@ -9,6 +7,7 @@ import {
     type ObjectType,
     idRef,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import {
     type DateFilterItem,
@@ -271,7 +270,7 @@ const VALID_COMPARISON_OPERATORS = [
 const VALID_RANGE_OPERATORS = ["BETWEEN", "NOT_BETWEEN"];
 
 function isValidMeasureValueFilterCondition(condition: unknown): condition is MeasureValueFilterCondition {
-    if (isEmpty(condition)) {
+    if (_isEmpty(condition)) {
         return false;
     }
     const candidate = condition as Partial<MeasureValueFilterCondition>;
@@ -299,7 +298,7 @@ function isValidMeasureValueFilterDimensionality(dimensionality: unknown): dimen
 function isValidMeasureValueFilterFormat(filterItem: IMeasureValueFilter): boolean {
     const { measure, localIdentifier, conditions, dimensionality, treatNullValuesAs } =
         filterItem.measureValueFilter;
-    if (isEmpty(measure) || !isObjIdentifierQualifier(measure)) {
+    if (_isEmpty(measure) || !isObjIdentifierQualifier(measure)) {
         return false;
     }
     if (localIdentifier !== undefined && typeof localIdentifier !== "string") {
@@ -397,7 +396,7 @@ function isValidRemoveFilterItemFormat(filterItem: unknown): boolean {
 }
 
 export function isValidRemoveFiltersFormat(filters: unknown[]): boolean {
-    return !isEmpty(filters) && filters.every(isValidRemoveFilterItemFormat);
+    return !_isEmpty(filters) && filters.every(isValidRemoveFilterItemFormat);
 }
 
 export function isValidFiltersFormat(
@@ -407,7 +406,7 @@ export function isValidFiltersFormat(
     isSecondsSupported: boolean = false,
 ): boolean {
     return (
-        !isEmpty(filters) &&
+        !_isEmpty(filters) &&
         filters.every((filter) =>
             isValidFilterItemFormat(filter, shouldValidateDataSet, isTimeSupported, isSecondsSupported),
         )
@@ -583,7 +582,7 @@ export function transformFilterContext(filters: FilterItem[]): IExternalFiltersO
         attributeFilters: [],
         dateFilters: [],
     };
-    if (isEmpty(filters)) {
+    if (_isEmpty(filters)) {
         return defaultFiltersObject;
     }
 
@@ -630,26 +629,26 @@ function isTransformedDateFilterItem(
     filterItem: ITransformedFilterItem,
 ): filterItem is ITransformedDateFilterItem {
     const { from, to } = filterItem as ITransformedDateFilterItem;
-    return !isEmpty(filterItem) && from !== undefined && to !== undefined;
+    return !_isEmpty(filterItem) && from !== undefined && to !== undefined;
 }
 
 function isTransformedAttributeFilterItem(
     filterItem: ITransformedFilterItem,
 ): filterItem is ITransformedAttributeFilterItem {
     const { attributeElements } = filterItem as ITransformedAttributeFilterItem;
-    return !isEmpty(filterItem) && attributeElements !== undefined;
+    return !_isEmpty(filterItem) && attributeElements !== undefined;
 }
 
 export function isAllTimeDateFilterItem(filterItem: ITransformedFilterItem): boolean {
     return (
-        !isEmpty(filterItem) &&
+        !_isEmpty(filterItem) &&
         (filterItem as ITransformedDateFilterItem).granularity === ALL_TIME_GRANULARITY
     );
 }
 
 export function isAllValueAttributeFilterItem(filterItem: ITransformedFilterItem): boolean {
     return (
-        !isEmpty(filterItem) &&
+        !_isEmpty(filterItem) &&
         isTransformedAttributeFilterItem(filterItem) &&
         !filterItem.attributeElements.length
     );

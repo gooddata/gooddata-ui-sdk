@@ -1,10 +1,11 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, isEmpty, set } from "lodash-es";
+import { cloneDeep, set } from "lodash-es";
 
 import { type IInsightDefinition, newMeasureSort } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { type IChartConfig, TOP } from "@gooddata/sdk-ui-charts";
+import { _isEmpty } from "@gooddata/util";
 
 import { BUCKETS } from "../../../constants/bucket.js";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
@@ -156,7 +157,7 @@ export class PluggablePieChart extends PluggableBaseChart {
         defaultSort: ISortConfig["defaultSort"];
         availableSorts: ISortConfig["availableSorts"];
     } {
-        if (!isEmpty(measures) && !isEmpty(viewBy)) {
+        if (!_isEmpty(measures) && !_isEmpty(viewBy)) {
             return {
                 defaultSort: [newMeasureSort(measures[0].localIdentifier, "desc")],
                 availableSorts: [

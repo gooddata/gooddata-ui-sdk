@@ -134,4 +134,4 @@ ship in `styles/css/main.css`.
 
 (C) 2017-2026 GoodData Corporation
 
-This project is under commercial license. See [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/LICENSE).
+This project is under commercial license. See [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-gen-ai/LICENSE).

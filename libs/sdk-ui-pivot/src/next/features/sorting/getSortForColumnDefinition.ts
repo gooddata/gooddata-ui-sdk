@@ -1,8 +1,8 @@
-// (C) 2025 GoodData Corporation
-import { isEqual } from "lodash-es";
+// (C) 2025-2026 GoodData Corporation
 
 import { type ISortItem, isAttributeSort, isMeasureSort } from "@gooddata/sdk-model";
 import { type ITableColumnDefinition } from "@gooddata/sdk-ui";
+import { _isEqual } from "@gooddata/util";
 
 import { columnScopeToLocators } from "./locators.js";
 
@@ -35,7 +35,9 @@ export function getSortForColumnDefinition(
             return undefined;
         }
 
-        return sortBy.find((sort) => isMeasureSort(sort) && isEqual(sort.measureSortItem.locators, locators));
+        return sortBy.find(
+            (sort) => isMeasureSort(sort) && _isEqual(sort.measureSortItem.locators, locators),
+        );
     }
 
     return undefined;

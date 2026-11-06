@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type ObjRef } from "../objRef/index.js";
 import { type IWorkspaceUser } from "../user/index.js";
@@ -29,7 +29,7 @@ export interface IUserAccess {
  * @alpha
  */
 export const isUserAccess = (obj: unknown): obj is IUserAccess => {
-    return !isEmpty(obj) && (obj as IUserAccess).type === "user";
+    return !_isEmpty(obj) && (obj as IUserAccess).type === "user";
 };
 
 /**
@@ -55,7 +55,7 @@ export interface IUserGroupAccess {
  * @alpha
  */
 export const isUserGroupAccess = (obj: unknown): obj is IUserGroupAccess => {
-    return !isEmpty(obj) && (obj as IUserGroupAccess).type === "group";
+    return !_isEmpty(obj) && (obj as IUserGroupAccess).type === "group";
 };
 
 /**
@@ -109,7 +109,7 @@ export interface IGranularRulesAccess extends IGranteeGranularity {
  * @alpha
  */
 export const isGranularUserAccess = (obj: unknown): obj is IGranularUserAccess => {
-    return !isEmpty(obj) && (obj as IGranularUserAccess).type === "granularUser";
+    return !_isEmpty(obj) && (obj as IGranularUserAccess).type === "granularUser";
 };
 
 /**
@@ -119,7 +119,7 @@ export const isGranularUserAccess = (obj: unknown): obj is IGranularUserAccess =
  * @alpha
  */
 export const isGranularUserGroupAccess = (obj: unknown): obj is IGranularUserGroupAccess => {
-    return !isEmpty(obj) && (obj as IGranularUserGroupAccess).type === "granularGroup";
+    return !_isEmpty(obj) && (obj as IGranularUserGroupAccess).type === "granularGroup";
 };
 
 /**
@@ -167,7 +167,7 @@ export interface IUserAccessGrantee {
  * @public
  */
 export const isUserAccessGrantee = (obj: unknown): obj is IUserAccessGrantee => {
-    return !isEmpty(obj) && (obj as IUserAccessGrantee).type === "user";
+    return !_isEmpty(obj) && (obj as IUserAccessGrantee).type === "user";
 };
 
 /**
@@ -193,7 +193,7 @@ export interface IUserGroupAccessGrantee {
  * @public
  */
 export const isUserGroupAccessGrantee = (obj: unknown): obj is IUserGroupAccessGrantee => {
-    return !isEmpty(obj) && (obj as IUserGroupAccessGrantee).type === "group";
+    return !_isEmpty(obj) && (obj as IUserGroupAccessGrantee).type === "group";
 };
 
 /**
@@ -287,7 +287,7 @@ export interface IGranularRulesAccessGrantee extends IGranteeGranularity {
  * @alpha
  */
 export const isGranularUserAccessGrantee = (obj: unknown): obj is IGranularUserAccessGrantee => {
-    return !isEmpty(obj) && (obj as IGranularUserAccessGrantee).type === "granularUser";
+    return !_isEmpty(obj) && (obj as IGranularUserAccessGrantee).type === "granularUser";
 };
 
 /**
@@ -297,7 +297,7 @@ export const isGranularUserAccessGrantee = (obj: unknown): obj is IGranularUserA
  * @alpha
  */
 export const isGranularUserGroupAccessGrantee = (obj: unknown): obj is IGranularUserGroupAccessGrantee => {
-    return !isEmpty(obj) && (obj as IGranularUserGroupAccessGrantee).type === "granularGroup";
+    return !_isEmpty(obj) && (obj as IGranularUserGroupAccessGrantee).type === "granularGroup";
 };
 
 /**
@@ -321,7 +321,7 @@ export const isGranularAccessGrantee = (obj: unknown): obj is IGranularAccessGra
  * @alpha
  */
 export const isGranularRulesAccessGrantee = (obj: unknown): obj is IGranularUserGroupAccessGrantee => {
-    return !isEmpty(obj) && (obj as IGranularRulesAccessGrantee).type === "allWorkspaceUsers";
+    return !_isEmpty(obj) && (obj as IGranularRulesAccessGrantee).type === "allWorkspaceUsers";
 };
 
 /**
@@ -376,7 +376,7 @@ export interface IAvailableUserAccessGrantee {
  * @alpha
  */
 export const isAvailableUserAccessGrantee = (obj: unknown): obj is IAvailableUserAccessGrantee => {
-    return !isEmpty(obj) && (obj as IAvailableUserAccessGrantee).type === "user";
+    return !_isEmpty(obj) && (obj as IAvailableUserAccessGrantee).type === "user";
 };
 
 /**
@@ -406,7 +406,7 @@ export interface IAvailableUserGroupAccessGrantee {
  * @alpha
  */
 export const isAvailableUserGroupAccessGrantee = (obj: unknown): obj is IAvailableUserGroupAccessGrantee => {
-    return !isEmpty(obj) && (obj as IAvailableUserGroupAccessGrantee).type === "group";
+    return !_isEmpty(obj) && (obj as IAvailableUserGroupAccessGrantee).type === "group";
 };
 
 /**
@@ -466,7 +466,7 @@ export type IUserGroupWorkspaceAccessGrantee = IWorkspaceAccess & IGranularUserG
  */
 export const isUserWorkspaceAccessGrantee = (obj: unknown): obj is IUserWorkspaceAccessGrantee => {
     return (
-        !isEmpty(obj) &&
+        !_isEmpty(obj) &&
         (obj as IUserWorkspaceAccessGrantee).workspace !== undefined &&
         isGranularUserAccessGrantee(obj)
     );
@@ -480,7 +480,7 @@ export const isUserWorkspaceAccessGrantee = (obj: unknown): obj is IUserWorkspac
  */
 export const isUserGroupWorkspaceAccessGrantee = (obj: unknown): obj is IUserGroupWorkspaceAccessGrantee => {
     return (
-        !isEmpty(obj) &&
+        !_isEmpty(obj) &&
         (obj as IUserGroupWorkspaceAccessGrantee).workspace !== undefined &&
         isGranularUserGroupAccessGrantee(obj)
     );

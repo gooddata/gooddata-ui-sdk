@@ -1,8 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, isEmpty, isEqual, set } from "lodash-es";
+import { cloneDeep, set } from "lodash-es";
 
 import { type OverTimeComparisonType, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
+import { _isEmpty, _isEqual } from "@gooddata/util";
 
 import { METRIC, SHOW_IN_PERCENT } from "../constants/bucket.js";
 import {
@@ -26,7 +27,7 @@ function getTypeOfDerivedToKeep(
     supportedTypes: OverTimeComparisonType[] | undefined,
     appliedType: OverTimeComparisonType,
 ) {
-    return isEmpty(supportedTypes) || isEqual(supportedTypes, [OverTimeComparisonTypes.NOTHING])
+    return _isEmpty(supportedTypes) || _isEqual(supportedTypes, [OverTimeComparisonTypes.NOTHING])
         ? OverTimeComparisonTypes.NOTHING
         : appliedType;
 }

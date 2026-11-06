@@ -2,10 +2,10 @@
 
 import { type CellClassParams } from "ag-grid-community";
 import cx from "classnames";
-import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { convertDrillableItemsToPredicates } from "@gooddata/sdk-ui";
+import { _isEmpty } from "@gooddata/util";
 
 import { type ICorePivotTableProps } from "../../publicTypes.js";
 import { MEASURE_COLUMN, ROW_MEASURE_COLUMN, ROW_SUBTOTAL, ROW_TOTAL } from "../base/constants.js";
@@ -30,7 +30,7 @@ export function cellClassFactory(
         // hide empty sticky cells
         const isTopPinned = cellClassParams.node.rowPinned === "top";
 
-        if (isEmpty(row)) {
+        if (_isEmpty(row)) {
             // ag-grid calls getCellClass before the data is available & rows are created - there will be no
             // data in the cellClassParams. not sure what is the purpose or whether that is a bug. anyway it
             // does not make sense to proceed further.
@@ -92,7 +92,7 @@ export function cellClassFactory(
         const isRowSubtotalColumnTotal = isRowSubtotal && isColumnTotal;
 
         const rowSubtotalValue =
-            isRowSubtotal && !hiddenCell && !isEmpty(cellClassParams.value)
+            isRowSubtotal && !hiddenCell && !_isEmpty(cellClassParams.value)
                 ? cellClassParams.value?.toLowerCase?.()
                 : null;
 

@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { isEqual, range } from "lodash-es";
+import { range } from "lodash-es";
 import { darken, mix, saturate } from "polished";
 
 import { type IColorPalette, type IRgbColorValue, isColorFromPalette, isRgbColor } from "@gooddata/sdk-model";
@@ -16,6 +16,7 @@ import {
     isCustomPalette,
     normalizeColorToRGB,
 } from "@gooddata/sdk-ui-vis-commons";
+import { _isEqual } from "@gooddata/util";
 
 import {
     DEFAULT_HEATMAP_BLUE_BASE_COLOR,
@@ -78,7 +79,7 @@ export class HeatmapColorStrategy extends ColorStrategy {
 
         if (
             isRgbColor(colorAssignmentColor) &&
-            isEqual(colorAssignmentColor.value, DEFAULT_HEATMAP_BLUE_COLOR)
+            _isEqual(colorAssignmentColor.value, DEFAULT_HEATMAP_BLUE_COLOR)
         ) {
             return normalizeColorToRGB(this.getBackgroundColor()) === "rgb(255,255,255)"
                 ? HEATMAP_BLUE_COLOR_PALETTE

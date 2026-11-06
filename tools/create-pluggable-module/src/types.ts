@@ -15,6 +15,21 @@ export type ProfileName = "client" | "internal";
 
 export type ApplicationScope = "workspace" | "organization";
 
+/**
+ * `application` is a pluggable application with a route and a menu item. `headless` is a module without
+ * UI that the host mounts once per page, for example a telemetry provider.
+ */
+export type ModuleKind = "application" | "headless";
+
+/**
+ * Template subtree that the engine copies from `source` (a key of `templateSubtreeRoots`, or a
+ * directory under `dist/templates/`) into `destRoot/dest`.
+ */
+export interface ITemplateSubtree {
+    source: string;
+    dest: string;
+}
+
 export type PackageManager = "npm" | "yarn" | "pnpm" | "rush";
 
 /**
@@ -45,6 +60,12 @@ export interface IRepoInfo {
 export interface IScaffoldAnswers {
     appName: string;
     title: string;
+    /** Default is `application`. */
+    kind?: ModuleKind;
+    /**
+     * A headless module has no scope. The engine does not ask for it, sets `organization`, and no
+     * headless template reads it.
+     */
     scope: ApplicationScope;
     /** Owner contact for the new app — required for every profile. Preferably an email. */
     maintainer: string;
@@ -156,6 +177,15 @@ export interface IScaffoldProfile {
      * Engine copies them in array order, so put `module` before `harness` if harness imports module.
      */
     readonly templateSubtrees: readonly string[];
+
+    /** Module kinds that the profile can scaffold. Default is `["application"]`. */
+    readonly supportedKinds?: readonly ModuleKind[];
+
+    /**
+     * Template subtrees for a module kind. When missing, the engine copies `templateSubtrees` for the
+     * `application` kind.
+     */
+    templateSubtreesForKind?(kind: ModuleKind): readonly ITemplateSubtree[];
 
     /**
      * Optional override: explicit absolute filesystem paths for each subtree.

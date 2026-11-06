@@ -1,10 +1,10 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import classNames from "classnames";
-import { isEmpty } from "lodash-es";
 import { FormattedMessage } from "react-intl";
 
 import { LoadingMask } from "@gooddata/sdk-ui-kit";
+import { _isEmpty } from "@gooddata/util";
 
 const LOADING_MASK_HEIGHT = 60;
 
@@ -32,7 +32,7 @@ export function ParameterDetail({
             <div className="gd-parameter-detail-title">{title}</div>
             <ParameterTypeSection typeName={typeName} />
             {label ? <ParameterLabelSection label={label} /> : null}
-            {!isEmpty(values) && (
+            {!_isEmpty(values) && (
                 <ParameterValuesSection
                     isLoading={isLoading}
                     useEllipsis={useEllipsis}

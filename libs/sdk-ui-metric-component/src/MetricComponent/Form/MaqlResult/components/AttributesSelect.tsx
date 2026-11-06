@@ -3,12 +3,13 @@
 import { type ReactElement, type ReactNode, useCallback, useMemo, useState } from "react";
 
 import classNames from "classnames";
-import { debounce, isEqual } from "lodash-es";
+import { debounce } from "lodash-es";
 import { defineMessages, useIntl } from "react-intl";
 
 import { type ICatalogAttribute } from "@gooddata/sdk-model";
 import { LoadingComponent } from "@gooddata/sdk-ui";
 import { Button, Dropdown, DropdownList, type IDropdownButtonRenderProps } from "@gooddata/sdk-ui-kit";
+import { _isEqual } from "@gooddata/util";
 
 import { useProp } from "../../../../shared/hooks/useProp.js";
 import { type DefaultTheme, makeStyles } from "../../../../shared/theme/index.js";
@@ -233,7 +234,7 @@ function useSelected(preselected: ICatalogAttribute[]) {
     const [selected, setSelected] = useProp(preselected);
 
     const changed = useMemo(
-        () => !isEqual(selected.slice().sort(), preselected.slice().sort()),
+        () => !_isEqual(selected.slice().sort(), preselected.slice().sort()),
         [preselected, selected],
     );
 

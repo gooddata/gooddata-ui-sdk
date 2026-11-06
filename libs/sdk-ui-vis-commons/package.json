@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-vis-commons",
-    "version": "11.68.0-alpha.2",
+    "version": "11.68.0-alpha.3",
     "description": "GoodData.UI SDK - common functionality for different types of visualizations",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -57,6 +57,7 @@
         "@gooddata/sdk-ui": "workspace:*",
         "@gooddata/sdk-ui-kit": "workspace:*",
         "@gooddata/sdk-ui-theme-provider": "workspace:*",
+        "@gooddata/util": "workspace:*",
         "classnames": "2.5.1",
         "default-import": "1.1.5",
         "lodash-es": "^4.17.23",

@@ -7,11 +7,11 @@ import { useSelector } from "react-redux";
 
 import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
 
-import { type IChatConversationLocal } from "../model.js";
 import { catalogItemsSelector } from "../store/chatWindow/chatWindowSelectors.js";
 import { generateTemporaryTitle } from "../utils.js";
 
 import { collectReferences, replaceReferences } from "./completion/references.js";
+import type { IGenAIAssistantConversationDeleteDialogProps } from "./customized/types.js";
 
 const messages = defineMessages({
     title: { id: "gd.gen-ai.conversations.delete-dialog.title" },
@@ -20,13 +20,17 @@ const messages = defineMessages({
     cancel: { id: "gd.gen-ai.conversations.delete-dialog.cancel" },
 });
 
-type ConversationDeleteDialogProps = {
-    conversation: IChatConversationLocal;
-    onDelete: () => void;
-    onClose: () => void;
-};
+export type ConversationDeleteDialogProps = IGenAIAssistantConversationDeleteDialogProps;
 
-export function ConversationDeleteDialog({ conversation, onDelete, onClose }: ConversationDeleteDialogProps) {
+export function ConversationDeleteDialog({
+    conversation,
+    onDelete,
+    onClose,
+    title: customTitle,
+    body,
+    submitButtonText,
+    cancelButtonText,
+}: ConversationDeleteDialogProps) {
     const intl = useIntl();
     const catalogItems = useSelector(catalogItemsSelector);
 
@@ -41,21 +45,23 @@ export function ConversationDeleteDialog({ conversation, onDelete, onClose }: Co
 
     return (
         <ConfirmDialog
-            headline={intl.formatMessage(messages.title)}
-            cancelButtonText={intl.formatMessage(messages.cancel)}
-            submitButtonText={intl.formatMessage(messages.submit)}
+            headline={customTitle ?? intl.formatMessage(messages.title)}
+            cancelButtonText={cancelButtonText ?? intl.formatMessage(messages.cancel)}
+            submitButtonText={submitButtonText ?? intl.formatMessage(messages.submit)}
             isPositive={false}
             onCancel={onClose}
             onClose={onClose}
             onSubmit={onDelete}
         >
-            <FormattedMessage
-                {...messages.body}
-                values={{
-                    name: title,
-                    b: (chunks) => <b>{chunks}</b>,
-                }}
-            />
+            {body?.({ name: title }) ?? (
+                <FormattedMessage
+                    {...messages.body}
+                    values={{
+                        name: title,
+                        b: (chunks) => <b>{chunks}</b>,
+                    }}
+                />
+            )}
         </ConfirmDialog>
     );
 }

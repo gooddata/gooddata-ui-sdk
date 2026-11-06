@@ -2,9 +2,8 @@
 
 import { useCallback, useMemo, useState } from "react";
 
-import { isEqual } from "lodash-es";
-
 import { areObjRefsEqual } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { mapShareStatusToGroupAll } from "../shareDialogMappers.js";
 
@@ -100,7 +99,7 @@ const useShareDialogState = (
     const onGranularGranteeShareChange = useCallback(
         (grantee: IGranularGrantee) => {
             const originalGrantee = originalGranularGrantees.find((g) => areObjRefsEqual(g.id, grantee.id));
-            const hasChangedPermissions = !isEqual(originalGrantee?.permissions, grantee.permissions);
+            const hasChangedPermissions = !_isEqual(originalGrantee?.permissions, grantee.permissions);
 
             setGranteesToUpdate((state) => {
                 const filteredUpdatedGrantees = state.filter((s) => !areObjRefsEqual(s.id, grantee.id));
@@ -128,7 +127,7 @@ const useShareDialogState = (
     const onGranularGranteeShareChangeAndApply = useCallback(
         (grantee: IGranularGrantee) => {
             const originalGrantee = originalGranularGrantees.find((g) => areObjRefsEqual(g.id, grantee.id));
-            const hasChangedPermissions = !isEqual(originalGrantee?.permissions, grantee.permissions);
+            const hasChangedPermissions = !_isEqual(originalGrantee?.permissions, grantee.permissions);
 
             if (hasChangedPermissions) {
                 onSubmit(grantees, [grantee], [], isUnderLenientControlNow, isLockedNow, false);

@@ -1,9 +1,9 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import { createSelector } from "reselect";
 
 import { type IVisualizationClass, visClassUrl } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import {
     LOCAL_CHOROPLETH,
@@ -40,7 +40,7 @@ export function getVisualizationClassTypeFromState(state: IAppState): string {
 }
 
 function getVisualizationClassUrl(visualizationClass: IVisualizationClass | null | undefined): string {
-    if (!visualizationClass || isEmpty(visualizationClass)) {
+    if (!visualizationClass || _isEmpty(visualizationClass)) {
         return null;
     }
 

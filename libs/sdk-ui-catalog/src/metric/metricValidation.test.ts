@@ -58,6 +58,15 @@ format: "#,##0.00"
         expect(validateMetricYaml(`title: No expression`)).toEqual({
             isValid: false,
             errorCode: "missingMaql",
+            path: ["maql"],
+        });
+    });
+
+    it("treats a blank maql line as unwritten and points at that line", () => {
+        expect(validateMetricYaml(`title: Draft\nmaql: `)).toEqual({
+            isValid: false,
+            errorCode: "missingMaql",
+            path: ["maql"],
         });
     });
 
@@ -65,6 +74,7 @@ format: "#,##0.00"
         expect(validateMetricYaml(`maql:\n  nested: value`)).toEqual({
             isValid: false,
             errorCode: "invalidStructure",
+            path: ["maql"],
         });
     });
 
@@ -72,6 +82,23 @@ format: "#,##0.00"
         expect(validateMetricYaml(`maql: SELECT 1\ntags: 5`)).toEqual({
             isValid: false,
             errorCode: "invalidTags",
+            path: ["tags"],
+        });
+    });
+
+    it("points at the offending tag entry", () => {
+        expect(validateMetricYaml(`maql: SELECT 1\ntags:\n  - finance\n  - 5`)).toEqual({
+            isValid: false,
+            errorCode: "invalidTags",
+            path: ["tags", 1],
+        });
+    });
+
+    it("points a wrong type at the type line", () => {
+        expect(validateMetricYaml(`type: measure\nmaql: SELECT 1`)).toEqual({
+            isValid: false,
+            errorCode: "invalidStructure",
+            path: ["type"],
         });
     });
 
@@ -79,6 +106,8 @@ format: "#,##0.00"
         expect(validateMetricYaml(`maql: SELECT 1\nunexpected: true`)).toEqual({
             isValid: false,
             errorCode: "invalidStructure",
+            path: ["unexpected"],
+            target: "key",
         });
     });
 
@@ -86,7 +115,7 @@ format: "#,##0.00"
         const result = validateMetricYaml(`id: changed\nmaql: SELECT 1`, {
             fixedIdentifier: "original",
         });
-        expect(result).toEqual({ isValid: false, errorCode: "idImmutable" });
+        expect(result).toEqual({ isValid: false, errorCode: "idImmutable", path: ["id"] });
     });
 
     it("accepts an unchanged fixed identifier in edit mode", () => {

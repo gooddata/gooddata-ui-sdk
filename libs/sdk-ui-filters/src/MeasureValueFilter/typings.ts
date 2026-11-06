@@ -2,8 +2,6 @@
 
 import { type ComponentType } from "react";
 
-import { isEmpty } from "lodash-es";
-
 import {
     type IMeasureMetadataObject,
     type IMeasureValueFilter,
@@ -13,6 +11,7 @@ import {
 } from "@gooddata/sdk-model";
 import { type ISeparators } from "@gooddata/sdk-ui";
 import { type IAlignPoint } from "@gooddata/sdk-ui-kit";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IMeasureValueFilterDropdownButtonProps } from "./MeasureValueFilterButton.js";
 
@@ -379,5 +378,5 @@ export type IWarningMessage = {
  * @alpha
  */
 export function isWarningMessage(obj: unknown): obj is IWarningMessage {
-    return !isEmpty(obj) && !!(obj as IWarningMessage).severity;
+    return !_isEmpty(obj) && !!(obj as IWarningMessage).severity;
 }

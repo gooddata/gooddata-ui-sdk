@@ -1,9 +1,8 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import { type IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { type DashboardContext, type IDashboardEngine } from "@gooddata/sdk-ui-dashboard";
+import { _isEmpty } from "@gooddata/util";
 
 import {
     type IDashboardPluginsLoaderOptions,
@@ -33,7 +32,7 @@ import {
 export const adaptiveDashboardEngineLoaderFactory =
     (moduleFederationIntegration: ModuleFederationIntegration) =>
     (dashboard: IDashboardWithReferences | undefined): Promise<IDashboardEngine> => {
-        if (dashboard && !isEmpty(dashboard.references.plugins)) {
+        if (dashboard && !_isEmpty(dashboard.references.plugins)) {
             return dynamicDashboardEngineLoader(dashboard, moduleFederationIntegration);
         }
 
@@ -56,7 +55,7 @@ export const adaptiveDashboardPluginLoaderFactory =
         dashboard: IDashboardWithReferences | undefined,
         options?: IDashboardPluginsLoaderOptions,
     ): Promise<LoadedPlugin[]> => {
-        if (dashboard && !isEmpty(dashboard.references.plugins)) {
+        if (dashboard && !_isEmpty(dashboard.references.plugins)) {
             options?.beforePluginsLoaded({ externalPluginsCount: dashboard.references.plugins.length });
             return dynamicDashboardPluginLoader(ctx, dashboard, moduleFederationIntegration);
         }
@@ -76,7 +75,7 @@ export const adaptiveDashboardPluginLoaderFactory =
 export const adaptiveDashboardBeforeLoadFactory =
     (_moduleFederationIntegration: ModuleFederationIntegration) =>
     (ctx: DashboardContext, dashboard: IDashboardWithReferences | undefined): Promise<void> => {
-        if (dashboard && !isEmpty(dashboard.references.plugins)) {
+        if (dashboard && !_isEmpty(dashboard.references.plugins)) {
             return dynamicDashboardBeforeLoad(ctx, dashboard);
         }
 

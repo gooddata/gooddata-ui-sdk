@@ -1,14 +1,18 @@
 // (C) 2026 GoodData Corporation
 
-import { Children, Fragment, type ReactNode, isValidElement, useId, useState } from "react";
+import { Children, Fragment, type ReactNode, isValidElement, useId, useRef, useState } from "react";
 
+import { useMediaQuery } from "../../responsive/useMediaQuery.js";
 import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { accessibilityConfigToAttributes } from "../../typings/utilities.js";
 import { matchesSearchQuery } from "../@utils/matchesSearchQuery.js";
+import { type IUiDropdownButtonRenderProps } from "../UiDropdown/types.js";
 import { UiDropdown } from "../UiDropdown/UiDropdown.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
 import { type IUiListboxInteractiveItem, type IUiListboxItem } from "../UiListbox/types.js";
 import { getNextFocusableItemId } from "../UiListbox/UiListbox.js";
+import { UiDialogHeader } from "../UiModalDialog/UiDialogHeader.js";
+import { UiModalDialog } from "../UiModalDialog/UiModalDialog.js";
 
 import { e } from "./searchableSelectBem.js";
 import { UiSearchableSelectContext } from "./UiSearchableSelectContext.js";
@@ -32,9 +36,22 @@ export interface IUiSearchableSelectProps<T> {
      * while searching: without a query, all items show.
      */
     filter?: (item: T, query: string) => boolean;
+    isOpen?: boolean;
     items: T[];
     onChange: (value: string) => void;
+    onOpenChange?: (isOpen: boolean) => void;
     placeholder: string;
+    /**
+     * Only null for now as proper custom anchor is not needed. Null is supported only in fullscreen mode as
+     * desktop mode would for that need `anchorRef` prop or something similar which is not needed.
+     * You can extend this if you find the need for any of those in the future.
+     */
+    renderButton?: null;
+    shouldCloseOnSelect?: boolean;
+    /**
+     * The heading of the full-screen view on mobile, which also names its dialog.
+     */
+    title: string;
     value: string | null;
 }
 
@@ -47,18 +64,29 @@ export function UiSearchableSelect<T>({
     items,
     filter,
     placeholder,
+    title,
     defaultOpen = false,
+    isOpen,
+    onOpenChange,
+    renderButton: renderButtonProp,
+    shouldCloseOnSelect = true,
     value,
     onChange,
 }: IUiSearchableSelectProps<T>) {
+    const isFullscreen = useMediaQuery("mobileDevice");
+    const [isOpenState, setIsOpenState] = useState(defaultOpen);
+    const isOpenResolved = isOpen ?? isOpenState;
+    const setIsOpen = (nextIsOpen: boolean) => {
+        setIsOpenState(nextIsOpen);
+        onOpenChange?.(nextIsOpen);
+    };
+    const dialogId = useId();
+    const searchInputRef = useRef<HTMLInputElement>(null);
     const buttonId = useId();
-    // the button's name is its value followed by its label ("Item 12 Language"), like in React Aria's Select
     const valueId = useId();
-    // shared, so that the search can point at the highlighted option (aria-activedescendant)
     const listboxId = useId();
     const [query, setQuery] = useState("");
 
-    // built here, where the items are typed, also to show the selected item while the list is not rendered
     const renderItem = findUiSearchableSelectListRenderItem(children);
     // one group per item: the item and the dividers rendered with it
     const listboxItemGroups = items.map((item): IUiListboxItem<T>[] =>
@@ -84,13 +112,8 @@ export function UiSearchableSelect<T>({
             )
             .flat();
     const filteredListboxItems = filterListboxItems(query);
-    // the highlight the search moves and the list shows; each opening starts on the selected item
     const [focusedItemId, setFocusedItemId] = useState(value);
-    // the highlight shows right away, but the search points at it only after the first arrow key or hover, so
-    // that screen readers announce the search on open (see the tests)
     const [isActiveDescendantShown, setIsActiveDescendantShown] = useState(false);
-    // while searching, the highlight moves to the first match, like in React Aria; without a query, it goes
-    // back to the selected item
     const changeQuery = (nextQuery: string) => {
         setQuery(nextQuery);
         setFocusedItemId(
@@ -104,72 +127,137 @@ export function UiSearchableSelect<T>({
         );
     };
 
+    const [wasOpen, setWasOpen] = useState(isOpenResolved);
+    if (wasOpen !== isOpenResolved) {
+        setWasOpen(isOpenResolved);
+        if (isOpenResolved) {
+            setFocusedItemId(value);
+            setIsActiveDescendantShown(false);
+        } else {
+            setQuery("");
+        }
+    }
+
+    const renderButton = ({
+        isOpen,
+        onClick,
+        ariaAttributes,
+        ref,
+    }: {
+        isOpen: boolean;
+        onClick: () => void;
+        ariaAttributes: IUiDropdownButtonRenderProps["ariaAttributes"];
+        ref?: IUiDropdownButtonRenderProps["ref"];
+    }) => (
+        <button
+            className={e("button")}
+            // UiDropdown types its ref as RefObject<HTMLElement>, which a <button> doesn't accept;
+            // a callback ref assigns the mounted button to it without a cast
+            ref={(button) => {
+                if (button && ref) {
+                    ref.current = button;
+                }
+            }}
+            type="button"
+            onClick={onClick}
+            {...ariaAttributes}
+            {...accessibilityConfigToAttributes(accessibilityConfig)}
+            id={buttonId}
+            // Normally if both aria-label and button text is applied, the screen reader announces only the label. Make sure that is not the case.
+            aria-labelledby={`${valueId} ${accessibilityConfig.ariaLabelledBy ?? buttonId}`}
+        >
+            <span id={valueId} className={e("button-title")}>
+                {selectedItem?.stringTitle ?? placeholder}
+            </span>
+            <div className={e("button-icon")}>
+                <UiIcon type={isOpen ? "navigateUp" : "navigateDown"} size={14} disableAnimation />
+            </div>
+        </button>
+    );
+
+    const renderBody = (closeDropdown: () => void, bodyAttributes?: { id: string }) => (
+        <UiSearchableSelectContext.Provider
+            value={{
+                listboxItems: filteredListboxItems,
+                query,
+                setQuery: changeQuery,
+                listboxLabelledBy:
+                    accessibilityConfig.ariaLabelledBy ??
+                    (isFullscreen && renderButtonProp === null ? undefined : buttonId),
+                listboxLabel: accessibilityConfig.ariaLabel,
+                listboxId,
+                focusedItemId,
+                setFocusedItemId,
+                isActiveDescendantShown,
+                setIsActiveDescendantShown,
+                value,
+                onChange,
+                closeDropdown,
+                shouldCloseOnSelect,
+                searchInputRef,
+                isFullscreen,
+            }}
+        >
+            <div className={e("body", { isFullscreen })} {...bodyAttributes}>
+                {children}
+            </div>
+        </UiSearchableSelectContext.Provider>
+    );
+
+    if (isFullscreen) {
+        const closeFullscreen = () => setIsOpen(false);
+
+        return (
+            <>
+                {renderButtonProp === null
+                    ? null
+                    : renderButton({
+                          isOpen: isOpenResolved,
+                          onClick: () => setIsOpen(true),
+                          ariaAttributes: {
+                              role: "button",
+                              "aria-haspopup": "dialog",
+                              "aria-expanded": isOpenResolved,
+                              // The dialog is rendered only while open, so the button points at it only then
+                              "aria-controls": isOpenResolved ? dialogId : undefined,
+                          },
+                      })}
+                <UiModalDialog
+                    id={dialogId}
+                    isFullscreen
+                    isOpen={isOpenResolved}
+                    onClose={closeFullscreen}
+                    initialFocus={searchInputRef}
+                >
+                    <UiDialogHeader title={title} onClose={closeFullscreen} />
+                    {renderBody(closeFullscreen)}
+                </UiModalDialog>
+            </>
+        );
+    }
+
     return (
         <UiDropdown
             width="same-as-anchor"
             fullWidthButton
             autofocusOnOpen
-            // like a native <select>, tab closes the popup and moves on from the button: the tab out focuses
-            // the button (returnFocusTo) before the browser moves the focus
             enableFocusTrap={false}
             returnFocusTo={buttonId}
-            openOnInit={defaultOpen}
+            isOpen={isOpenResolved}
+            onOpenChange={setIsOpen}
             accessibilityConfig={{ popupRole: "listbox" }}
-            // a new opening starts with all items, like TimezoneSelect
-            onOpen={() => {
-                setFocusedItemId(value);
-                setIsActiveDescendantShown(false);
-            }}
-            onClose={() => setQuery("")}
-            renderButton={({ ref, isOpen, toggleDropdown, ariaAttributes }) => (
-                <button
-                    className={e("button")}
-                    // UiDropdown types its ref as RefObject<HTMLElement>, which a <button> doesn't accept;
-                    // a callback ref assigns the mounted button to it without a cast
-                    ref={(button) => {
-                        if (button) {
-                            ref.current = button;
-                        }
-                    }}
-                    type="button"
-                    onClick={toggleDropdown}
-                    {...ariaAttributes}
-                    {...accessibilityConfigToAttributes(accessibilityConfig)}
-                    id={buttonId}
-                    aria-controls={isOpen ? listboxId : undefined}
-                    // Normally if both aria-label and button text is applied, it the screen read announces only the label. Make sure that is not the case.
-                    aria-labelledby={`${valueId} ${accessibilityConfig.ariaLabelledBy ?? buttonId}`}
-                >
-                    <span id={valueId} className={e("button-title")}>
-                        {selectedItem?.stringTitle ?? placeholder}
-                    </span>
-                    <div className={e("button-icon")}>
-                        <UiIcon type={isOpen ? "navigateUp" : "navigateDown"} size={14} disableAnimation />
-                    </div>
-                </button>
-            )}
-            renderBody={({ ariaAttributes, closeDropdown }) => (
-                <UiSearchableSelectContext.Provider
-                    value={{
-                        listboxItems: filteredListboxItems,
-                        query,
-                        setQuery: changeQuery,
-                        buttonId,
-                        listboxId,
-                        focusedItemId,
-                        setFocusedItemId,
-                        isActiveDescendantShown,
-                        setIsActiveDescendantShown,
-                        value,
-                        onChange,
-                        closeDropdown,
-                    }}
-                >
-                    <div className={e("body")} {...ariaAttributes}>
-                        {children}
-                    </div>
-                </UiSearchableSelectContext.Provider>
-            )}
+            renderButton={({ ref, isOpen, toggleDropdown, ariaAttributes }) =>
+                renderButton({
+                    isOpen,
+                    onClick: toggleDropdown,
+                    ref,
+                    ariaAttributes: {
+                        ...ariaAttributes,
+                        "aria-controls": isOpen ? listboxId : undefined,
+                    },
+                })
+            }
+            renderBody={({ ariaAttributes, closeDropdown }) => renderBody(closeDropdown, ariaAttributes)}
         />
     );
 }

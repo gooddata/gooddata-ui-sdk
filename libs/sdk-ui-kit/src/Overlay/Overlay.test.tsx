@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type RefObject, createRef, forwardRef } from "react";
+import { type RefObject, createRef, forwardRef, useState } from "react";
 
 import { act, render, screen } from "@testing-library/react";
 import { flushSync } from "react-dom";
@@ -66,6 +66,32 @@ function createEvent(options = {}) {
         preventDefault: vi.fn(),
         ...options,
     };
+}
+
+function SelfRemovingButton() {
+    const [isShown, setIsShown] = useState(true);
+
+    return isShown ? (
+        <button type="button" onClick={() => flushSync(() => setIsShown(false))}>
+            Back
+        </button>
+    ) : (
+        <span>Replaced</span>
+    );
+}
+
+// happy-dom rebuilds composedPath() from the live DOM; browsers keep the path from dispatch start
+function pinComposedPath(e: Event) {
+    const path = e.composedPath();
+    Object.defineProperty(e, "composedPath", { value: () => path });
+}
+
+function clickTargetThatRemovesItself(container: HTMLElement) {
+    const target = document.createElement("button");
+    container.appendChild(target);
+    container.addEventListener("click", () => target.remove(), { once: true });
+    target.click();
+    return target;
 }
 
 function ContainingOverlayZIndexProbe({ testId }: { testId: string }) {
@@ -460,6 +486,106 @@ describe("Overlay", () => {
                 expect(props.overlay.onClose).toHaveBeenCalledTimes(1);
             });
 
+            describe("when the click removes its own target before it reaches the document", () => {
+                beforeEach(() => {
+                    window.addEventListener("click", pinComposedPath, true);
+                });
+
+                afterEach(() => {
+                    window.removeEventListener("click", pinComposedPath, true);
+                });
+
+                async function alignOverlay(ref: RefObject<Overlay | null>) {
+                    await act(async () => {
+                        ref.current?.align();
+                        await new Promise((resolve) => setTimeout(resolve, 20));
+                    });
+                }
+
+                it("should not call onClose when the target was inside the overlay", async () => {
+                    const onClose = vi.fn<() => void>();
+                    const ref = createRef<Overlay>();
+                    // A no-op onClick lets the click bubble to document, as Dropdown's enableEventPropagation does
+                    render(
+                        <Overlay ref={ref} closeOnOutsideClick onClose={onClose} onClick={() => {}}>
+                            <SelfRemovingButton />
+                        </Overlay>,
+                    );
+                    await alignOverlay(ref);
+
+                    const button = screen.getByRole("button", { name: "Back" });
+                    act(() => {
+                        button.click();
+                    });
+
+                    expect(button.isConnected).toBe(false);
+                    expect(onClose).not.toHaveBeenCalled();
+
+                    act(() => {
+                        document.body.click();
+                    });
+
+                    expect(onClose).toHaveBeenCalledTimes(1);
+                });
+
+                it("should not call onClose when the target was inside a child overlay", async () => {
+                    const onClose = vi.fn<() => void>();
+                    const ref = createRef<Overlay>();
+                    render(<Overlay ref={ref} closeOnOutsideClick onClose={onClose} />);
+                    await alignOverlay(ref);
+                    const childOverlay = renderClickedElement("overlay-wrapper");
+
+                    const target = clickTargetThatRemovesItself(childOverlay);
+
+                    expect(target.isConnected).toBe(false);
+                    expect(onClose).not.toHaveBeenCalled();
+
+                    childOverlay.remove();
+                    document.body.click();
+
+                    expect(onClose).toHaveBeenCalledTimes(1);
+                });
+
+                it("should not call onClose when the target was inside an element ignored by class", async () => {
+                    const onClose = vi.fn<() => void>();
+                    const ref = createRef<Overlay>();
+                    render(
+                        <Overlay
+                            ref={ref}
+                            closeOnOutsideClick
+                            ignoreClicksOnByClass={[".ignored-element"]}
+                            onClose={onClose}
+                        />,
+                    );
+                    await alignOverlay(ref);
+                    const ignoredElement = renderClickedElement("ignored-element");
+
+                    const target = clickTargetThatRemovesItself(ignoredElement);
+
+                    expect(target.isConnected).toBe(false);
+                    expect(onClose).not.toHaveBeenCalled();
+
+                    ignoredElement.remove();
+                    document.body.click();
+
+                    expect(onClose).toHaveBeenCalledTimes(1);
+                });
+
+                it("should call onClose when the target was outside the overlay", async () => {
+                    const onClose = vi.fn<() => void>();
+                    const ref = createRef<Overlay>();
+                    render(<Overlay ref={ref} closeOnOutsideClick onClose={onClose} />);
+                    await alignOverlay(ref);
+                    const outsideElement = renderClickedElement();
+
+                    const target = clickTargetThatRemovesItself(outsideElement);
+                    outsideElement.remove();
+
+                    expect(target.isConnected).toBe(false);
+                    expect(onClose).toHaveBeenCalledTimes(1);
+                });
+            });
+
             it("should call onClose when ESC key pressed", () => {
                 const props = {
                     closeOnEscape: true,
@@ -764,17 +890,18 @@ describe("Overlay", () => {
         };
 
         it.each([
-            ["below", "bl tl", "300px", "340px"],
-            ["above", "tl bl", "200px", "240px"],
+            ["below", "bl tl", "400px"],
+            ["above", "tl bl", "300px"],
         ])(
-            "should keep the bottom edge in place when the overlay %s the anchor shrinks",
-            async (_position, align, initialTop, shrunkTop) => {
+            "should position the overlay %s the anchor by its bottom edge and keep it when shrinking",
+            async (_position, align, bottom) => {
                 const overlay = await renderAlignedOverlay(align);
-                expect(overlay.style.top).toBe(initialTop);
+                expect(overlay.style.top).toBe(bottom);
+                expect(overlay.style.transform).toBe("translateY(-100%)");
 
                 act(() => notifyResize(60));
 
-                expect(overlay.style.top).toBe(shrunkTop);
+                expect(overlay.style.top).toBe(bottom);
             },
         );
 
@@ -782,10 +909,10 @@ describe("Overlay", () => {
             const overlay = await renderAlignedOverlay("tl bl");
 
             act(() => notifyResize(400));
-            expect(overlay.style.top).toBe("0px");
+            expect(overlay.style.top).toBe("400px");
 
             act(() => notifyResize(100));
-            expect(overlay.style.top).toBe("200px");
+            expect(overlay.style.top).toBe("300px");
         });
 
         it("should keep a fixed overlay within the viewport when the page is scrolled", async () => {
@@ -800,7 +927,7 @@ describe("Overlay", () => {
 
                 act(() => notifyResize(400));
 
-                expect(overlay.style.top).toBe(`${window.innerHeight - 400}px`);
+                expect(overlay.style.top).toBe(`${window.innerHeight}px`);
             } finally {
                 setPageScroll(0);
             }

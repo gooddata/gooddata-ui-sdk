@@ -4,9 +4,10 @@
 // we need direct import from esm module otherwise import ar not node compatible
 // https://github.com/reduxjs/redux-toolkit/issues/1960
 import { createSelector } from "@reduxjs/toolkit";
-import { isEqual, omit } from "lodash-es";
+import { omit } from "lodash-es";
 
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
+import { _isEqual } from "@gooddata/util";
 
 import { type AsyncOperationStatus } from "../../../types/common.js";
 import { type ILoadElementsOptions } from "../../../types/elementsLoader.js";
@@ -66,7 +67,7 @@ export const selectIsLoadElementsOptionsChanged: FilterSelector<boolean> = creat
     selectLoadElementsOptions,
     selectLastLoadedElementsOptions,
     (loadOptions, lastLoadedOptions) => {
-        return !isEqual(
+        return !_isEqual(
             // omit offset as it changes for each page
             // omit options which can not be set externally by user and thus are not stored in state
             omit(loadOptions, "offset", "excludePrimaryLabel", "filterByPrimaryLabel"),

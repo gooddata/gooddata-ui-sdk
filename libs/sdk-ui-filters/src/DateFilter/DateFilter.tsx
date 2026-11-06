@@ -11,8 +11,6 @@ import {
     useState,
 } from "react";
 
-import { isEmpty, isEqual } from "lodash-es";
-
 import {
     type DateFilterGranularity,
     type IActiveCalendars,
@@ -22,6 +20,7 @@ import {
     isEmptyValuesDateFilterOption,
 } from "@gooddata/sdk-model";
 import { type OverlayPositionType } from "@gooddata/sdk-ui-kit";
+import { _isEmpty, _isEqual } from "@gooddata/util";
 
 import { type IFilterButtonCustomIcon, type VisibilityMode } from "../shared/interfaces/index.js";
 
@@ -279,13 +278,13 @@ function getDerivedStateFromProps(
         nextProps.withoutApply &&
         nextProps.workingSelectedFilterOption &&
         nextProps.excludeCurrentPeriod !== undefined &&
-        (!isEqual(nextProps.workingSelectedFilterOption, prevState.initWorkingSelectedFilterOption) ||
+        (!_isEqual(nextProps.workingSelectedFilterOption, prevState.initWorkingSelectedFilterOption) ||
             nextProps.workingExcludeCurrentPeriod !== prevState.initWorkingExcludeCurrentPeriod)
     ) {
         return getStateFromWorkingProps(nextProps);
     }
     if (
-        !isEqual(nextProps.selectedFilterOption, prevState.initSelectedFilterOption) ||
+        !_isEqual(nextProps.selectedFilterOption, prevState.initSelectedFilterOption) ||
         nextProps.excludeCurrentPeriod !== prevState.initExcludeCurrentPeriod
     ) {
         return getStateFromProps(nextProps);
@@ -324,7 +323,7 @@ function isSameOptionExceptEmptyValueHandling(a: DateFilterOption, b: DateFilter
     const { emptyValueHandling: _aEmptyValueHandling, ...aWithoutEmptyValueHandling } = a;
     const { emptyValueHandling: _bEmptyValueHandling, ...bWithoutEmptyValueHandling } = b;
 
-    return isEqual(aWithoutEmptyValueHandling, bWithoutEmptyValueHandling);
+    return _isEqual(aWithoutEmptyValueHandling, bWithoutEmptyValueHandling);
 }
 
 /**
@@ -397,7 +396,7 @@ export const DateFilter: NamedExoticComponent<IDateFilterProps> = memo(function 
     // The `isEqual` guard makes the extra render pass a no-op once the state is in sync.
     let state = storedState;
     const derivedState = getDerivedStateFromProps(props, storedState);
-    if (derivedState !== null && !isEqual(derivedState, storedState)) {
+    if (derivedState !== null && !_isEqual(derivedState, storedState)) {
         setState(() => derivedState);
         state = derivedState;
     }
@@ -475,7 +474,7 @@ export const DateFilter: NamedExoticComponent<IDateFilterProps> = memo(function 
         const normalizedSelectedFilterOption = normalizeEmptyValueHandling(
             normalizeSelectedFilterOption(selectedFilterOption),
         );
-        if (isEmpty(validateFilterOption(normalizedSelectedFilterOption))) {
+        if (_isEmpty(validateFilterOption(normalizedSelectedFilterOption))) {
             onSelect?.(normalizedSelectedFilterOption, excludeCurrentPeriod);
         }
     };
@@ -508,7 +507,7 @@ export const DateFilter: NamedExoticComponent<IDateFilterProps> = memo(function 
         if (!withoutApply) {
             setState(() => getStateFromProps(props));
             pendingSelectRef.current = {};
-        } else if (withoutApply && !isEmpty(validateFilterOption(stateRef.current.selectedFilterOption))) {
+        } else if (withoutApply && !_isEmpty(validateFilterOption(stateRef.current.selectedFilterOption))) {
             setState(() => getStateFromWorkingProps(props));
         }
     };

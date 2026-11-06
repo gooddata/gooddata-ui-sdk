@@ -16,7 +16,7 @@ import { KdaAttributesDropdown } from "./KdaAttributesDropdown.js";
 
 export function KeyDriversFooter() {
     const { state, setState } = useKdaState();
-    const [applyCount, setApplyCount] = useState(0);
+    const [refocus, setRefocus] = useState<"applied" | "reloading">();
     const attributesButtonId = useIdPrefixed("kda-attributes-dropdown-button");
 
     const isCatalogLoaded = useDashboardSelector(selectCatalogIsLoaded);
@@ -32,7 +32,7 @@ export function KeyDriversFooter() {
 
     const onApply = useCallback(
         (selected: ICatalogAttribute[]) => {
-            setApplyCount((count) => count + 1);
+            setRefocus("applied");
             setState({
                 selectedAttributes: selected.map((item) => {
                     const existingRef = state.selectedAttributes.find((ref) =>
@@ -54,9 +54,13 @@ export function KeyDriversFooter() {
         setState({ attributesDropdownOpen: false });
     }, [setState]);
 
+    if (refocus === "applied" && isLoading) {
+        setRefocus("reloading");
+    }
+    const isRefocusDue = refocus === "reloading" && !isLoading;
+
     const autofocus = useUiAutofocusConnectors<HTMLDivElement>({
-        active: applyCount > 0 && !isLoading,
-        refocusKey: `${applyCount}-${isLoading}`,
+        active: isRefocusDue,
         initialFocus: attributesButtonId,
     });
 
@@ -66,7 +70,7 @@ export function KeyDriversFooter() {
     }
 
     return (
-        <div ref={autofocus.ref}>
+        <div ref={autofocus.ref} onFocus={isRefocusDue ? () => setRefocus(undefined) : undefined}>
             {isLoading ? (
                 <UiSkeleton itemHeight={23} itemWidth={300} />
             ) : (

@@ -3,11 +3,10 @@
 import { useMemo } from "react";
 
 import cx from "classnames";
-import { isEmpty } from "lodash-es";
 
 import { type ICatalogAttribute } from "@gooddata/sdk-model";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
-import { simplifyText } from "@gooddata/util";
+import { _isEmpty, simplifyText } from "@gooddata/util";
 
 import { AttributeListItemTooltip } from "./attributeListItemTooltip/AttributeListItemTooltip.js";
 
@@ -25,7 +24,7 @@ const TOOLTIP_ALIGN_POINT = [
 
 export function AttributeListItem({ item, title, isLocationIconEnabled, onClick }: IAttributeListItemProps) {
     const classNames = useMemo(() => {
-        const isDisplayLocationIcon = isLocationIconEnabled && !isEmpty(item?.geoPinDisplayForms);
+        const isDisplayLocationIcon = isLocationIconEnabled && !_isEmpty(item?.geoPinDisplayForms);
         return cx(`s-${simplifyText(item.attribute.title)}`, "gd-attribute-list-item", {
             "gd-list-item": true,
             "gd-list-item-shortened": true,

@@ -1,9 +1,8 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import { type IVisualizationClass, visClassUrl } from "@gooddata/sdk-model";
 import { FullVisualizationCatalog } from "@gooddata/sdk-ui-ext/internal";
+import { _isEmpty } from "@gooddata/util";
 
 import { LOCAL_COLUMN, LOCAL_TABLE } from "../constants/visualization_types.js";
 
@@ -23,7 +22,7 @@ export function findVisualizationClass(
     visualizationClasses: ReadonlyArray<IVisualizationClass>,
     className: string,
 ): IVisualizationClass {
-    if (isEmpty(visualizationClasses)) {
+    if (_isEmpty(visualizationClasses)) {
         return null;
     }
 
@@ -34,7 +33,7 @@ export function findVisualizationClass(
 }
 
 export function isVisualizationClassDeprecated(visualizationClass: IVisualizationClass): boolean {
-    return isEmpty(visualizationClass);
+    return _isEmpty(visualizationClass);
 }
 
 /**
@@ -43,7 +42,7 @@ export function isVisualizationClassDeprecated(visualizationClass: IVisualizatio
  * @param visualizationClass -
  */
 export function isVisualizationClassLocal(visualizationClass: IVisualizationClass): boolean {
-    if (isEmpty(visualizationClass)) {
+    if (_isEmpty(visualizationClass)) {
         return false;
     }
     return visClassUrl(visualizationClass).startsWith("local:");
@@ -60,7 +59,7 @@ export function isVisualizationClassSupported(visualizationClass: IVisualization
 export function getDefaultVisualizationClass(
     visualizationClasses: ReadonlyArray<IVisualizationClass>,
 ): IVisualizationClass {
-    if (isEmpty(visualizationClasses)) {
+    if (_isEmpty(visualizationClasses)) {
         return null;
     }
 
@@ -83,7 +82,7 @@ export function getDefaultVisualizationClass(
 export function unwrapVisualizationClass(
     visualizationClassWrapped: IVisualizationClassWrapped,
 ): IVisualizationClass {
-    if (isEmpty(visualizationClassWrapped)) {
+    if (_isEmpty(visualizationClassWrapped)) {
         return null;
     }
 

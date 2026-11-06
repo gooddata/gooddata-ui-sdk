@@ -1,10 +1,10 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
 import { getHierarchyRef } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { type IAddDrillDownForInsightWidget } from "../../commands/insight.js";
 import {
@@ -85,7 +85,7 @@ export function* addDrillDownForInsightWidgetHandler(
         const drillDownReference = hierarchyToDrillDownReference(hierarchy, attributeIdentifier);
         const existingIgnoredAttributesWithoutChangedItem =
             currentDrillDownIntersectionIgnoredAttributes?.filter((item) =>
-                isEqual(item.drillDownReference, drillDownReference),
+                _isEqual(item.drillDownReference, drillDownReference),
             ) ?? [];
 
         yield put(

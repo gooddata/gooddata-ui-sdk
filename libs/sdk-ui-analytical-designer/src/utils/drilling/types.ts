@@ -1,9 +1,8 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import { type ILowerBoundedFilter, type IUpperBoundedFilter, type ObjectType } from "@gooddata/sdk-model";
 import { type ChartType, type VisElementType, type VisType } from "@gooddata/sdk-ui";
+import { _isEmpty } from "@gooddata/util";
 
 export interface ILegacyDrillEvent {
     executionContext: IAfm;
@@ -314,24 +313,24 @@ export interface IMeasureLocatorItem {
 }
 
 export function isObjectUriQualifier(qualifier: ObjQualifier): qualifier is IObjUriQualifier {
-    return !isEmpty(qualifier) && (qualifier as IObjUriQualifier).uri !== undefined;
+    return !_isEmpty(qualifier) && (qualifier as IObjUriQualifier).uri !== undefined;
 }
 
 export function isObjIdentifierQualifier(qualifier: ObjQualifier): qualifier is IObjIdentifierQualifier {
-    return !isEmpty(qualifier) && (qualifier as IObjIdentifierQualifier).identifier !== undefined;
+    return !_isEmpty(qualifier) && (qualifier as IObjIdentifierQualifier).identifier !== undefined;
 }
 
 export function isSimpleMeasureDefinition(
     definition: MeasureDefinition,
 ): definition is ISimpleMeasureDefinition {
-    return !isEmpty(definition) && (definition as ISimpleMeasureDefinition).measure !== undefined;
+    return !_isEmpty(definition) && (definition as ISimpleMeasureDefinition).measure !== undefined;
 }
 
 export function isArithmeticMeasureDefinition(
     definition: MeasureDefinition,
 ): definition is IArithmeticMeasureDefinition {
     return (
-        !isEmpty(definition) && (definition as IArithmeticMeasureDefinition).arithmeticMeasure !== undefined
+        !_isEmpty(definition) && (definition as IArithmeticMeasureDefinition).arithmeticMeasure !== undefined
     );
 }
 
@@ -339,43 +338,43 @@ export function isPreviousPeriodMeasureDefinition(
     definition: MeasureDefinition,
 ): definition is IPreviousPeriodMeasureDefinition {
     return (
-        !isEmpty(definition) &&
+        !_isEmpty(definition) &&
         (definition as IPreviousPeriodMeasureDefinition).previousPeriodMeasure !== undefined
     );
 }
 
 export function isDateFilter(filter: CompatibilityFilter): filter is DateFilterItem {
-    return !isEmpty(filter) && (isRelativeDateFilter(filter) || isAbsoluteDateFilter(filter));
+    return !_isEmpty(filter) && (isRelativeDateFilter(filter) || isAbsoluteDateFilter(filter));
 }
 
 export function isRelativeDateFilter(filter: CompatibilityFilter): filter is IRelativeDateFilter {
-    return !isEmpty(filter) && (filter as IRelativeDateFilter).relativeDateFilter !== undefined;
+    return !_isEmpty(filter) && (filter as IRelativeDateFilter).relativeDateFilter !== undefined;
 }
 
 export function isAbsoluteDateFilter(filter: CompatibilityFilter): filter is IAbsoluteDateFilter {
-    return !isEmpty(filter) && (filter as IAbsoluteDateFilter).absoluteDateFilter !== undefined;
+    return !_isEmpty(filter) && (filter as IAbsoluteDateFilter).absoluteDateFilter !== undefined;
 }
 
 export function isAttributeFilter(filter: CompatibilityFilter): filter is AttributeFilterItem {
-    return !isEmpty(filter) && (isPositiveAttributeFilter(filter) || isNegativeAttributeFilter(filter));
+    return !_isEmpty(filter) && (isPositiveAttributeFilter(filter) || isNegativeAttributeFilter(filter));
 }
 
 export function isPositiveAttributeFilter(filter: CompatibilityFilter): filter is IPositiveAttributeFilter {
-    return !isEmpty(filter) && (filter as IPositiveAttributeFilter).positiveAttributeFilter !== undefined;
+    return !_isEmpty(filter) && (filter as IPositiveAttributeFilter).positiveAttributeFilter !== undefined;
 }
 
 export function isNegativeAttributeFilter(filter: CompatibilityFilter): filter is INegativeAttributeFilter {
-    return !isEmpty(filter) && (filter as INegativeAttributeFilter).negativeAttributeFilter !== undefined;
+    return !_isEmpty(filter) && (filter as INegativeAttributeFilter).negativeAttributeFilter !== undefined;
 }
 
 export function isMeasureValueFilter(filter: CompatibilityFilter): filter is IMeasureValueFilter {
-    return !isEmpty(filter) && (filter as IMeasureValueFilter).measureValueFilter !== undefined;
+    return !_isEmpty(filter) && (filter as IMeasureValueFilter).measureValueFilter !== undefined;
 }
 
 export function isRankingFilter(filter: CompatibilityFilter): filter is IRankingFilter {
-    return !isEmpty(filter) && (filter as IRankingFilter).rankingFilter !== undefined;
+    return !_isEmpty(filter) && (filter as IRankingFilter).rankingFilter !== undefined;
 }
 
 export function isExpressionFilter(filter: CompatibilityFilter): filter is IExpressionFilter {
-    return !isEmpty(filter) && (filter as IExpressionFilter).value !== undefined;
+    return !_isEmpty(filter) && (filter as IExpressionFilter).value !== undefined;
 }

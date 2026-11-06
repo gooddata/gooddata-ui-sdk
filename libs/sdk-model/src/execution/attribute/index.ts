@@ -1,6 +1,8 @@
 // (C) 2019-2026 GoodData Corporation
-import { isEmpty } from "lodash-es";
+
 import { invariant } from "ts-invariant";
+
+import { _isEmpty } from "@gooddata/util";
 
 import {
     type Identifier,
@@ -81,7 +83,7 @@ export interface IAttribute {
  * @public
  */
 export function isAttribute(obj: unknown): obj is IAttribute {
-    return !isEmpty(obj) && (obj as IAttribute).attribute !== undefined;
+    return !_isEmpty(obj) && (obj as IAttribute).attribute !== undefined;
 }
 
 /**

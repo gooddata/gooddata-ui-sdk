@@ -1,9 +1,8 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import { type IBucket, type IMeasure, bucketMeasure, bucketMeasures, bucketsFind } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IChartConfig } from "../../interfaces/chartConfig.js";
 import { type IComparison } from "../../interfaces/comparison.js";
@@ -38,7 +37,7 @@ const getHeadlineType = (buckets: IBucket[], config: IChartConfig | undefined): 
     const primaryMeasure = measureBucket ? bucketMeasure(measureBucket) : undefined;
 
     const secondaryBucket = bucketsFind(buckets, BucketNames.SECONDARY_MEASURES);
-    const secondaryMeasures = isEmpty(secondaryBucket) ? [] : bucketMeasures(secondaryBucket);
+    const secondaryMeasures = _isEmpty(secondaryBucket) ? [] : bucketMeasures(secondaryBucket);
 
     if (isComparisonType(primaryMeasure, secondaryMeasures, config?.comparison)) {
         return HeadlineType.COMPARISON;

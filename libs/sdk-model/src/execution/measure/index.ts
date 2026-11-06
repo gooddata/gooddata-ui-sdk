@@ -1,7 +1,8 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
+
+import { _isEmpty } from "@gooddata/util";
 
 import { type Identifier, type ObjRef, isIdentifierRef, isUriRef } from "../../objRef/index.js";
 import { type IMeasureFilter } from "../filter/index.js";
@@ -290,7 +291,7 @@ export const idMatchMeasure: (id: string) => MeasurePredicate = (id) => (m) =>
  */
 export function isMeasure(obj: unknown): obj is IMeasure {
     return (
-        !isEmpty(obj) &&
+        !_isEmpty(obj) &&
         // we need to prevent false positives for the "insides" of measure value filters that also have `measure` property
         // so check also for the definition property which is mandatory anyway
         (obj as IMeasure).measure?.definition !== undefined
@@ -382,7 +383,7 @@ export function isVirtualArithmeticMeasure(
  * @public
  */
 export function isMeasureDefinition(obj: unknown): obj is IMeasureDefinition {
-    return !isEmpty(obj) && (obj as IMeasureDefinition).measureDefinition !== undefined;
+    return !_isEmpty(obj) && (obj as IMeasureDefinition).measureDefinition !== undefined;
 }
 
 /**
@@ -391,7 +392,7 @@ export function isMeasureDefinition(obj: unknown): obj is IMeasureDefinition {
  * @public
  */
 export function isInlineMeasureDefinition(obj: unknown): obj is IInlineMeasureDefinition {
-    return !isEmpty(obj) && (obj as IInlineMeasureDefinition).inlineDefinition !== undefined;
+    return !_isEmpty(obj) && (obj as IInlineMeasureDefinition).inlineDefinition !== undefined;
 }
 
 /**
@@ -400,7 +401,7 @@ export function isInlineMeasureDefinition(obj: unknown): obj is IInlineMeasureDe
  * @public
  */
 export function isPoPMeasureDefinition(obj: unknown): obj is IPoPMeasureDefinition {
-    return !isEmpty(obj) && (obj as IPoPMeasureDefinition).popMeasureDefinition !== undefined;
+    return !_isEmpty(obj) && (obj as IPoPMeasureDefinition).popMeasureDefinition !== undefined;
 }
 
 /**
@@ -409,7 +410,7 @@ export function isPoPMeasureDefinition(obj: unknown): obj is IPoPMeasureDefiniti
  * @public
  */
 export function isPreviousPeriodMeasureDefinition(obj: unknown): obj is IPreviousPeriodMeasureDefinition {
-    return !isEmpty(obj) && (obj as IPreviousPeriodMeasureDefinition).previousPeriodMeasure !== undefined;
+    return !_isEmpty(obj) && (obj as IPreviousPeriodMeasureDefinition).previousPeriodMeasure !== undefined;
 }
 
 /**
@@ -418,7 +419,7 @@ export function isPreviousPeriodMeasureDefinition(obj: unknown): obj is IPreviou
  * @public
  */
 export function isArithmeticMeasureDefinition(obj: unknown): obj is IArithmeticMeasureDefinition {
-    return !isEmpty(obj) && (obj as IArithmeticMeasureDefinition).arithmeticMeasure !== undefined;
+    return !_isEmpty(obj) && (obj as IArithmeticMeasureDefinition).arithmeticMeasure !== undefined;
 }
 
 /**

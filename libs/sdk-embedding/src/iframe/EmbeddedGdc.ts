@@ -1,13 +1,12 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import {
     type DashboardAttributeFilterConfigMode,
     type DashboardDateFilterConfigMode,
     type ILowerBoundedFilter,
     type IUpperBoundedFilter,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import {
     type ILocalIdentifierQualifier,
@@ -249,21 +248,21 @@ export type RemoveFilterItem =
  * @public
  */
 export function isDateFilter(filter: unknown): filter is DateFilterItem {
-    return !isEmpty(filter) && (isRelativeDateFilter(filter) || isAbsoluteDateFilter(filter));
+    return !_isEmpty(filter) && (isRelativeDateFilter(filter) || isAbsoluteDateFilter(filter));
 }
 
 /**
  * @public
  */
 export function isRelativeDateFilter(filter: unknown): filter is IRelativeDateFilter {
-    return !isEmpty(filter) && (filter as IRelativeDateFilter).relativeDateFilter !== undefined;
+    return !_isEmpty(filter) && (filter as IRelativeDateFilter).relativeDateFilter !== undefined;
 }
 
 /**
  * @public
  */
 export function isAbsoluteDateFilter(filter: unknown): filter is IAbsoluteDateFilter {
-    return !isEmpty(filter) && (filter as IAbsoluteDateFilter).absoluteDateFilter !== undefined;
+    return !_isEmpty(filter) && (filter as IAbsoluteDateFilter).absoluteDateFilter !== undefined;
 }
 
 /**
@@ -271,7 +270,7 @@ export function isAbsoluteDateFilter(filter: unknown): filter is IAbsoluteDateFi
  */
 export function isAttributeFilter(filter: unknown): filter is AttributeFilterItem {
     return (
-        !isEmpty(filter) &&
+        !_isEmpty(filter) &&
         (isPositiveAttributeFilter(filter) ||
             isNegativeAttributeFilter(filter) ||
             isArbitraryAttributeFilterItem(filter) ||
@@ -283,28 +282,28 @@ export function isAttributeFilter(filter: unknown): filter is AttributeFilterIte
  * @public
  */
 export function isPositiveAttributeFilter(filter: unknown): filter is IPositiveAttributeFilter {
-    return !isEmpty(filter) && (filter as IPositiveAttributeFilter).positiveAttributeFilter !== undefined;
+    return !_isEmpty(filter) && (filter as IPositiveAttributeFilter).positiveAttributeFilter !== undefined;
 }
 
 /**
  * @public
  */
 export function isNegativeAttributeFilter(filter: unknown): filter is INegativeAttributeFilter {
-    return !isEmpty(filter) && (filter as INegativeAttributeFilter).negativeAttributeFilter !== undefined;
+    return !_isEmpty(filter) && (filter as INegativeAttributeFilter).negativeAttributeFilter !== undefined;
 }
 
 /**
  * @public
  */
 export function isRankingFilter(filter: unknown): filter is IRankingFilter {
-    return !isEmpty(filter) && (filter as IRankingFilter).rankingFilter !== undefined;
+    return !_isEmpty(filter) && (filter as IRankingFilter).rankingFilter !== undefined;
 }
 
 /**
  * @public
  */
 export function isMeasureValueFilter(filter: unknown): filter is IMeasureValueFilter {
-    return !isEmpty(filter) && (filter as IMeasureValueFilter).measureValueFilter !== undefined;
+    return !_isEmpty(filter) && (filter as IMeasureValueFilter).measureValueFilter !== undefined;
 }
 
 /**
@@ -312,7 +311,7 @@ export function isMeasureValueFilter(filter: unknown): filter is IMeasureValueFi
  */
 export function isArbitraryAttributeFilterItem(filter: unknown): filter is IArbitraryAttributeFilterItem {
     return (
-        !isEmpty(filter) && (filter as IArbitraryAttributeFilterItem).arbitraryAttributeFilter !== undefined
+        !_isEmpty(filter) && (filter as IArbitraryAttributeFilterItem).arbitraryAttributeFilter !== undefined
     );
 }
 
@@ -320,7 +319,7 @@ export function isArbitraryAttributeFilterItem(filter: unknown): filter is IArbi
  * @public
  */
 export function isMatchAttributeFilterItem(filter: unknown): filter is IMatchAttributeFilterItem {
-    return !isEmpty(filter) && (filter as IMatchAttributeFilterItem).matchAttributeFilter !== undefined;
+    return !_isEmpty(filter) && (filter as IMatchAttributeFilterItem).matchAttributeFilter !== undefined;
 }
 
 /**
@@ -347,21 +346,21 @@ export interface IRemoveFilterContextContent {
  * @public
  */
 export function isRemoveDateFilter(filter: unknown): filter is IRemoveDateFilterItem {
-    return !isEmpty(filter) && (filter as IRemoveDateFilterItem).dataSet !== undefined;
+    return !_isEmpty(filter) && (filter as IRemoveDateFilterItem).dataSet !== undefined;
 }
 
 /**
  * @public
  */
 export function isRemoveAttributeFilter(filter: unknown): filter is IRemoveAttributeFilterItem {
-    return !isEmpty(filter) && (filter as IRemoveAttributeFilterItem).displayForm !== undefined;
+    return !_isEmpty(filter) && (filter as IRemoveAttributeFilterItem).displayForm !== undefined;
 }
 
 /**
  * @public
  */
 export function isRemoveRankingFilter(filter: unknown): filter is IRemoveRankingFilterItem {
-    return !isEmpty(filter) && (filter as IRemoveRankingFilterItem).removeRankingFilter !== undefined;
+    return !_isEmpty(filter) && (filter as IRemoveRankingFilterItem).removeRankingFilter !== undefined;
 }
 
 /**
@@ -369,7 +368,7 @@ export function isRemoveRankingFilter(filter: unknown): filter is IRemoveRanking
  */
 export function isRemoveMeasureValueFilter(filter: unknown): filter is IRemoveMeasureValueFilterItem {
     return (
-        !isEmpty(filter) && (filter as IRemoveMeasureValueFilterItem).removeMeasureValueFilter !== undefined
+        !_isEmpty(filter) && (filter as IRemoveMeasureValueFilterItem).removeMeasureValueFilter !== undefined
     );
 }
 
@@ -452,28 +451,28 @@ export type DashboardDateFilter =
  * @public
  */
 export function isDashboardDateFilter(filter: unknown): filter is DashboardDateFilter {
-    return !isEmpty(filter) && (filter as DashboardDateFilter).dateFilter !== undefined;
+    return !_isEmpty(filter) && (filter as DashboardDateFilter).dateFilter !== undefined;
 }
 
 /**
  * @public
  */
 export function isDashboardAllTimeDateFilter(filter: unknown): filter is IDashboardAllTimeDateFilter {
-    return !isEmpty(filter) && (filter as IDashboardAllTimeDateFilter).dateFilter?.type === "allTime";
+    return !_isEmpty(filter) && (filter as IDashboardAllTimeDateFilter).dateFilter?.type === "allTime";
 }
 
 /**
  * @public
  */
 export function isDashboardAbsoluteDateFilter(filter: unknown): filter is IDashboardAbsoluteDateFilter {
-    return !isEmpty(filter) && (filter as IDashboardAbsoluteDateFilter).dateFilter?.type === "absolute";
+    return !_isEmpty(filter) && (filter as IDashboardAbsoluteDateFilter).dateFilter?.type === "absolute";
 }
 
 /**
  * @public
  */
 export function isDashboardRelativeDateFilter(filter: unknown): filter is IDashboardRelativeDateFilter {
-    return !isEmpty(filter) && (filter as IDashboardRelativeDateFilter).dateFilter?.type === "relative";
+    return !_isEmpty(filter) && (filter as IDashboardRelativeDateFilter).dateFilter?.type === "relative";
 }
 
 /**
@@ -491,7 +490,7 @@ export interface IDashboardAttributeFilter {
  * @public
  */
 export function isDashboardAttributeFilter(filter: unknown): filter is IDashboardAttributeFilter {
-    return !isEmpty(filter) && (filter as IDashboardAttributeFilter).attributeFilter !== undefined;
+    return !_isEmpty(filter) && (filter as IDashboardAttributeFilter).attributeFilter !== undefined;
 }
 
 /**
@@ -514,7 +513,7 @@ export function isDashboardArbitraryAttributeFilter(
     filter: unknown,
 ): filter is IDashboardArbitraryAttributeFilter {
     return (
-        !isEmpty(filter) &&
+        !_isEmpty(filter) &&
         (filter as IDashboardArbitraryAttributeFilter).arbitraryAttributeFilter !== undefined
     );
 }
@@ -537,7 +536,7 @@ export interface IDashboardMatchAttributeFilter {
  * @public
  */
 export function isDashboardMatchAttributeFilter(filter: unknown): filter is IDashboardMatchAttributeFilter {
-    return !isEmpty(filter) && (filter as IDashboardMatchAttributeFilter).matchAttributeFilter !== undefined;
+    return !_isEmpty(filter) && (filter as IDashboardMatchAttributeFilter).matchAttributeFilter !== undefined;
 }
 
 /**

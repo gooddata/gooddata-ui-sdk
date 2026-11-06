@@ -1,9 +1,9 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import ora from "ora";
 
 import { type IAnalyticalBackend, type IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
+import { _isEmpty } from "@gooddata/util";
 
 import { createBackend } from "../_base/backend.js";
 import { getDashboardFromOptions } from "../_base/inputHandling/extractors.js";
@@ -44,7 +44,7 @@ function createLinkedPluginValidator(
             references: { plugins },
         } = dashboardWithReferences;
 
-        if (isEmpty(plugins)) {
+        if (_isEmpty(plugins)) {
             return `Dashboard ${dashboard.identifier} does not use any plugins.`;
         }
 

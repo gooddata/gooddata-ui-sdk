@@ -1,8 +1,9 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { groupBy, isEqual } from "lodash-es";
+import { groupBy } from "lodash-es";
 
 import { type IMeasureMetadataObject } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { type IEvent } from "../eventing/EventContext.js";
 import { EventCategories, Events } from "../eventing/events.js";
@@ -31,7 +32,7 @@ let workspaceMetricStats: null | WorkspaceMetricStats = null;
 
 function workspaceMetricDataEvent(data: IMeasureMetadataObject[]): IEvent | null {
     const stats = calculateWorkspaceMetricStats(data);
-    if (workspaceMetricStats && !isEqual(stats, workspaceMetricStats)) {
+    if (workspaceMetricStats && !_isEqual(stats, workspaceMetricStats)) {
         return workspaceMetricStatsChangedEvent(stats);
     }
     workspaceMetricStats = stats;

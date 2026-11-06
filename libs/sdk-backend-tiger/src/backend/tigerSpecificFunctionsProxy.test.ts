@@ -7,37 +7,37 @@ import { createTigerSpecificFunctionsProxy } from "./tigerSpecificFunctionsProxy
 describe("createTigerSpecificFunctionsProxy", () => {
     it("delegates to the initial implementation", async () => {
         const { functions } = createTigerSpecificFunctionsProxy({
-            isCommunityEdition: async () => true,
+            isOrganizationAdmin: async () => true,
         });
 
-        await expect(functions.isCommunityEdition!()).resolves.toBe(true);
+        await expect(functions.isOrganizationAdmin!()).resolves.toBe(true);
     });
 
     it("returns undefined and warns when method is missing", () => {
         const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
         const { functions } = createTigerSpecificFunctionsProxy();
-        const result = functions.isCommunityEdition!();
+        const result = functions.isOrganizationAdmin!();
 
         expect(result).toBeUndefined();
         expect(warnSpy).toHaveBeenCalledOnce();
-        expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining("isCommunityEdition"));
+        expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining("isOrganizationAdmin"));
 
         warnSpy.mockRestore();
     });
 
     it("swaps the backing implementation via updateImplementation", async () => {
         const { functions, updateImplementation } = createTigerSpecificFunctionsProxy({
-            getDeploymentVersion: async () => "v1",
+            getOrganizationAllowedOrigins: async () => ["v1"],
         });
 
-        await expect(functions.getDeploymentVersion!()).resolves.toBe("v1");
+        await expect(functions.getOrganizationAllowedOrigins!("org")).resolves.toEqual(["v1"]);
 
         updateImplementation({
-            getDeploymentVersion: async () => "v2",
+            getOrganizationAllowedOrigins: async () => ["v2"],
         });
 
-        await expect(functions.getDeploymentVersion!()).resolves.toBe("v2");
+        await expect(functions.getOrganizationAllowedOrigins!("org")).resolves.toEqual(["v2"]);
     });
 
     it("passes arguments through to the underlying function", async () => {
@@ -51,7 +51,7 @@ describe("createTigerSpecificFunctionsProxy", () => {
 
     it("returns undefined for symbol property access", () => {
         const { functions } = createTigerSpecificFunctionsProxy({
-            isCommunityEdition: async () => true,
+            isOrganizationAdmin: async () => true,
         });
 
         // Symbol access should return undefined, not a function stub
@@ -61,12 +61,12 @@ describe("createTigerSpecificFunctionsProxy", () => {
 
     it("reflects current implementation keys via Object.keys()", () => {
         const { functions, updateImplementation } = createTigerSpecificFunctionsProxy({
-            isCommunityEdition: async () => true,
-            getDeploymentVersion: async () => "v1",
+            isOrganizationAdmin: async () => true,
+            getOrganizationAllowedOrigins: async () => ["v1"],
         });
 
         expect(Object.keys(functions)).toEqual(
-            expect.arrayContaining(["isCommunityEdition", "getDeploymentVersion"]),
+            expect.arrayContaining(["isOrganizationAdmin", "getOrganizationAllowedOrigins"]),
         );
         expect(Object.keys(functions)).toHaveLength(2);
 
@@ -79,7 +79,7 @@ describe("createTigerSpecificFunctionsProxy", () => {
 
     it("spread copies stay dynamically bound after updateImplementation", async () => {
         const { functions, updateImplementation } = createTigerSpecificFunctionsProxy({
-            isCommunityEdition: async () => true,
+            isOrganizationAdmin: async () => true,
         });
 
         const spread = { ...functions };
@@ -87,39 +87,39 @@ describe("createTigerSpecificFunctionsProxy", () => {
         // Spread captures delegating stubs that look up the current impl at
         // call time — not raw references. Verify that swapping the impl after
         // spreading is reflected in the spread copy.
-        expect(typeof spread.isCommunityEdition).toBe("function");
-        await expect(spread.isCommunityEdition!()).resolves.toBe(true);
+        expect(typeof spread.isOrganizationAdmin).toBe("function");
+        await expect(spread.isOrganizationAdmin!()).resolves.toBe(true);
 
         updateImplementation({
-            isCommunityEdition: async () => false,
+            isOrganizationAdmin: async () => false,
         });
 
-        await expect(spread.isCommunityEdition!()).resolves.toBe(false);
+        await expect(spread.isOrganizationAdmin!()).resolves.toBe(false);
     });
 
     it("returns stable references for the same property", () => {
         const { functions } = createTigerSpecificFunctionsProxy({
-            isCommunityEdition: async () => true,
+            isOrganizationAdmin: async () => true,
         });
 
-        const ref1 = functions.isCommunityEdition;
-        const ref2 = functions.isCommunityEdition;
+        const ref1 = functions.isOrganizationAdmin;
+        const ref2 = functions.isOrganizationAdmin;
 
         expect(ref1).toBe(ref2);
     });
 
     it("keeps stable stub references after updateImplementation", async () => {
         const { functions, updateImplementation } = createTigerSpecificFunctionsProxy({
-            isCommunityEdition: async () => true,
+            isOrganizationAdmin: async () => true,
         });
 
-        const before = functions.isCommunityEdition;
+        const before = functions.isOrganizationAdmin;
 
         updateImplementation({
-            isCommunityEdition: async () => false,
+            isOrganizationAdmin: async () => false,
         });
 
-        const after = functions.isCommunityEdition;
+        const after = functions.isOrganizationAdmin;
 
         // Stub reference stays the same (React dep-array stability)
         expect(before).toBe(after);
@@ -134,7 +134,7 @@ describe("createTigerSpecificFunctionsProxy", () => {
 
         expect(Object.keys(functions)).toHaveLength(0);
 
-        const result = functions.getDeploymentVersion!();
+        const result = functions.isOrganizationAdmin!();
         expect(result).toBeUndefined();
         expect(warnSpy).toHaveBeenCalledOnce();
 

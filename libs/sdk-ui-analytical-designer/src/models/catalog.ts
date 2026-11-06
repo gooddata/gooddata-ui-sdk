@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { differenceWith, isEqual } from "lodash-es";
+import { differenceWith } from "lodash-es";
 
 import {
     type CatalogItem,
@@ -11,6 +11,7 @@ import {
     isCatalogFact,
     isCatalogMeasure,
 } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 const areItemRefsEqual = (firstItem: CatalogItem, secondItem: CatalogItem): boolean => {
     if (isCatalogAttribute(firstItem) && isCatalogAttribute(secondItem)) {
@@ -44,7 +45,7 @@ export const getChangedItemsCount = (
     const addedItems = differenceWith(newItems, originalItems, areItemRefsEqual);
     const updatedItems = newItems.filter((newItem) =>
         originalItems.find(
-            (originalItem) => areItemRefsEqual(originalItem, newItem) && !isEqual(originalItem, newItem),
+            (originalItem) => areItemRefsEqual(originalItem, newItem) && !_isEqual(originalItem, newItem),
         ),
     );
 

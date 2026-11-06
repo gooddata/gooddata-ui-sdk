@@ -2,7 +2,6 @@
 
 import { type CSSProperties, memo, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
-import { isEqual } from "lodash-es";
 import { type Root, createRoot } from "react-dom/client";
 import { v4 as uuidv4 } from "uuid";
 
@@ -45,6 +44,7 @@ import {
 } from "@gooddata/sdk-ui";
 import { OverlayZIndexContext, useContainingOverlayZIndex } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+import { _isEqual } from "@gooddata/util";
 
 import {
     DEFAULT_MESSAGES,
@@ -401,9 +401,9 @@ const InsightRendererCore = memo(function InsightRendererCore(props: InsightRend
         const newInsightForCompare = currentProps.insight && insightSetProperties(currentProps.insight, {});
 
         const needsNewSetup =
-            !isEqual(newInsightForCompare, prevInsightForCompare) ||
-            !isEqual(currentProps.filters, prevProps.filters) ||
-            !isEqual(currentProps.settings, prevProps.settings) ||
+            !_isEqual(newInsightForCompare, prevInsightForCompare) ||
+            !_isEqual(currentProps.filters, prevProps.filters) ||
+            !_isEqual(currentProps.settings, prevProps.settings) ||
             currentProps.workspace !== prevProps.workspace;
 
         if (needsNewSetup) {

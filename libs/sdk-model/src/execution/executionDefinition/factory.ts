@@ -1,7 +1,8 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
+
+import { _isEmpty } from "@gooddata/util";
 
 import {
     type IInsightDefinition,
@@ -297,7 +298,7 @@ function toDimensions(
     dimsOrGen: Array<IDimension | DimensionGenerator>,
     def: IExecutionDefinition,
 ): IDimension[] {
-    if (!dimsOrGen || isEmpty(dimsOrGen)) {
+    if (!dimsOrGen || _isEmpty(dimsOrGen)) {
         return [];
     }
 

@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, compact, isEmpty, omitBy, set, tail } from "lodash-es";
+import { cloneDeep, compact, omitBy, set, tail } from "lodash-es";
 
 import { type IBackendCapabilities, type IDataView, type IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
@@ -22,6 +22,7 @@ import {
     updateOutliersWithSettings,
 } from "@gooddata/sdk-ui-charts";
 import { buildTooltipExecutionFromConfig } from "@gooddata/sdk-ui-vis-commons";
+import { _isEmpty } from "@gooddata/util";
 
 import { messages } from "../../../../locales.js";
 import { BUCKETS } from "../../../constants/bucket.js";
@@ -247,7 +248,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         const resultingHeight = this.environment === DASHBOARDS_ENVIRONMENT ? height : undefined;
         const { drillableItems } = custom;
         const supportedControls: IVisualizationProperties = this.getSupportedControls(insight, options);
-        const configSupportedControls = isEmpty(supportedControls) ? undefined : supportedControls;
+        const configSupportedControls = _isEmpty(supportedControls) ? undefined : supportedControls;
         const fullConfig = this.buildVisualizationConfig(options, configSupportedControls);
         const execution = this.getExecution(options, insight, executionFactory);
 
@@ -493,7 +494,7 @@ function enhancePropertiesMetaWithPartialClusteringInfo(data: any, type: ChartTy
 
     return {
         ...data,
-        ...omitBy(dataPropertiesMeta, isEmpty),
+        ...omitBy(dataPropertiesMeta, _isEmpty),
     };
 }
 
@@ -507,7 +508,7 @@ function enhanceBaseChartWithClusteringConfiguration(fullConfig: IChartConfig) {
           }
         : {};
 
-    return !isEmpty(fullConfig.clustering) && fullConfig.clustering.enabled
+    return !_isEmpty(fullConfig.clustering) && fullConfig.clustering.enabled
         ? {
               clusteringConfig: {
                   ...fullConfig.clustering,

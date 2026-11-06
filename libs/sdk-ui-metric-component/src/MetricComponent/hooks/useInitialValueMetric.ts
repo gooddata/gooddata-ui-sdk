@@ -2,7 +2,7 @@
 
 import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 
-import { isEqual } from "lodash-es";
+import { _isEqual } from "@gooddata/util";
 
 import { type IMeasureDef } from "../metric/metricHelpers.js";
 
@@ -12,7 +12,7 @@ export function useInitialValueMetric(
     const [initialValueMetric, setInitialValueMetric] = useState(metric);
 
     useEffect(() => {
-        if (!isEqual(initialValueMetric, metric)) {
+        if (!_isEqual(initialValueMetric, metric)) {
             setInitialValueMetric(metric);
         }
     }, [initialValueMetric, metric]);

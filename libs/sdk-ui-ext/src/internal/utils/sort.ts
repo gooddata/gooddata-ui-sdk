@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { isEmpty, isEqual, omitBy } from "lodash-es";
+import { omitBy } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import {
@@ -28,6 +28,7 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { type IAxisConfig } from "@gooddata/sdk-ui-charts";
+import { _isEmpty, _isEqual } from "@gooddata/util";
 
 import { messages } from "../../locales.js";
 import { SORT_DIR_DESC } from "../constants/sort.js";
@@ -84,15 +85,15 @@ function getDefaultBarChartSort(
         ];
     }
 
-    if (!isEmpty(viewBy) && !isEmpty(stackBy)) {
+    if (!_isEmpty(viewBy) && !_isEmpty(stackBy)) {
         return [newAttributeAreaSort(viewBy[0], SORT_DIR_DESC)];
     }
 
-    if (!isEmpty(viewBy) && canSortStackTotalValue) {
+    if (!_isEmpty(viewBy) && canSortStackTotalValue) {
         return [newAttributeAreaSort(viewBy[0], SORT_DIR_DESC)];
     }
 
-    return isEmpty(stackBy) && !isEmpty(measures) ? [newMeasureSort(measures[0], SORT_DIR_DESC)] : [];
+    return _isEmpty(stackBy) && !_isEmpty(measures) ? [newMeasureSort(measures[0], SORT_DIR_DESC)] : [];
 }
 
 export function getDefaultTreemapSortFromBuckets(
@@ -103,7 +104,7 @@ export function getDefaultTreemapSortFromBuckets(
     const viewAttr = viewBy ? bucketAttributes(viewBy) : [];
     const stackAttr = segmentBy ? bucketAttributes(segmentBy) : [];
 
-    if (!isEmpty(viewAttr) && !isEmpty(stackAttr)) {
+    if (!_isEmpty(viewAttr) && !_isEmpty(stackAttr)) {
         return [
             newAttributeSort(viewAttr[0], "asc"),
             ...(measures ?? []).map((m) => newMeasureSort(m, "desc")),
@@ -123,7 +124,7 @@ function getDefaultTreemapSort(insight: IInsightDefinition): ISortItem[] {
 
 function getDefaultHeatmapSortFromBuckets(viewBy: IBucket | undefined): ISortItem[] {
     const viewAttr = viewBy ? bucketAttributes(viewBy) : [];
-    if (!isEmpty(viewAttr)) {
+    if (!_isEmpty(viewAttr)) {
         return [newAttributeSort(viewAttr[0], "desc")];
     }
 
@@ -144,7 +145,7 @@ function getDefaultPieDonutPyramidFunnelSort(insight: IInsightDefinition): ISort
     const viewBucket = insightBucket(insight, BucketNames.VIEW);
     const viewBy = viewBucket ? bucketAttributes(viewBucket) : [];
 
-    if (!isEmpty(measures) && !isEmpty(viewBy)) {
+    if (!_isEmpty(measures) && !_isEmpty(viewBy)) {
         return [newMeasureSort(measures[0], SORT_DIR_DESC)];
     }
 
@@ -234,7 +235,7 @@ function validateMeasureSortLocators(sortLocators: ILocatorItem[], availableLoca
     return (
         sortLocators.length === availableLocators.length &&
         sortLocators.every((sortLocator, locatorIndex) =>
-            isEqual(sortLocator, availableLocators[locatorIndex]),
+            _isEqual(sortLocator, availableLocators[locatorIndex]),
         )
     );
 }

@@ -60,12 +60,12 @@ export interface IUiConfigEditorLabels {
 }
 
 /**
- * A warning about a value in the editor's text, shown in the lint gutter. It does not stop the value
- * being edited or emitted.
+ * An error or warning about a value in the editor's text, shown in the lint gutter. It does not stop
+ * the value being edited or emitted.
  *
  * @internal
  */
-export interface IUiConfigEditorWarning {
+export interface IUiConfigEditorDiagnostic {
     /**
      * Where the value sits in the parsed document, as object keys and array indexes. The same path
      * finds it whichever language is displayed.
@@ -76,6 +76,9 @@ export interface IUiConfigEditorWarning {
      * holds it. The whole value is marked when it is absent or the value does not hold it.
      */
     part?: string;
+    /** `"key"` marks the key that names the value instead of the value, such as an unknown key. */
+    target?: "key";
+    severity: "error" | "warning";
     message: string;
 }
 
@@ -131,10 +134,10 @@ export interface IUiConfigEditorProps {
     /** The editor's localized texts. Anything omitted falls back to a neutral default. */
     labels?: IUiConfigEditorLabels;
     /**
-     * Warnings about values, shown in the lint gutter next to any syntax error. A warning whose path
-     * the displayed text does not hold is not shown.
+     * Errors and warnings about values, shown in the lint gutter next to any syntax error. A
+     * diagnostic whose path the displayed text does not hold is not shown.
      */
-    warnings?: readonly IUiConfigEditorWarning[];
+    diagnostics?: readonly IUiConfigEditorDiagnostic[];
     /**
      * Renders the contents of the toolbar's context menu, usually a `UiMenu`.
      *

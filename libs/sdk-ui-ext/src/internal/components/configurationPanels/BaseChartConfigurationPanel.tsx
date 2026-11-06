@@ -3,12 +3,12 @@
 import { type ReactNode } from "react";
 
 import cx from "classnames";
-import { isEmpty } from "lodash-es";
 import { FormattedMessage } from "react-intl";
 
 import { bucketsById, bucketsIsEmpty, insightBuckets } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+import { _isEmpty } from "@gooddata/util";
 
 import { messages } from "../../../locales.js";
 import { AXIS, BASE_CHART_AXIS_CONFIG, DUAL_AXES_SUPPORTED_CHARTS } from "../../constants/axis.js";
@@ -43,7 +43,7 @@ export class BaseChartConfigurationPanel<
         const { buckets } = insight!.insight;
 
         const stackBy = bucketsById(buckets, BucketNames.STACK);
-        const isNotStacked = isEmpty(stackBy);
+        const isNotStacked = _isEmpty(stackBy);
 
         return (
             <ConfigSection

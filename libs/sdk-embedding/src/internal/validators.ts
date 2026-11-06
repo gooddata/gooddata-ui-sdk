@@ -1,8 +1,7 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import { isObjRef } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import {
     type IKdSetFilterParentsAttributeFilter,
@@ -13,7 +12,7 @@ import {
 } from "../iframe/EmbeddedKpiDashboard.js";
 
 function isValidSetFilterParentsAttributeFilter(obj: unknown): obj is IKdSetFilterParentsAttributeFilter {
-    if (isEmpty(obj)) {
+    if (_isEmpty(obj)) {
         return false;
     }
 
@@ -27,7 +26,7 @@ function isValidSetFilterParentsItemFilter(obj: unknown): obj is KdSetFilterPare
 }
 
 function isValidSetFilterParentsItemParent(obj: unknown): obj is IKdSetFilterParentsItemParent {
-    if (isEmpty(obj)) {
+    if (_isEmpty(obj)) {
         return false;
     }
 
@@ -37,7 +36,7 @@ function isValidSetFilterParentsItemParent(obj: unknown): obj is IKdSetFilterPar
 }
 
 function isValidSetFilterParentsItem(obj: unknown): obj is IKdSetFilterParentsItem {
-    if (isEmpty(obj)) {
+    if (_isEmpty(obj)) {
         return false;
     }
 
@@ -51,7 +50,7 @@ function isValidSetFilterParentsItem(obj: unknown): obj is IKdSetFilterParentsIt
 }
 
 export function isValidSetFilterParentsCommandData(obj: unknown): obj is IKdSetFilterParentsDataBody {
-    if (isEmpty(obj)) {
+    if (_isEmpty(obj)) {
         return false;
     }
 

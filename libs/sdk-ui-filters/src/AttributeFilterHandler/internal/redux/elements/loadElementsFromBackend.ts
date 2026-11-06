@@ -1,7 +1,5 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import {
     type CancelableOptions,
     type IAnalyticalBackend,
@@ -24,6 +22,7 @@ import {
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 import { DataViewFacade, convertError } from "@gooddata/sdk-ui";
+import { _isEmpty } from "@gooddata/util";
 
 import { type ILoadElementsOptions } from "../../../types/elementsLoader.js";
 import { type IAttributeFilterHandlerStoreContext } from "../store/types.js";
@@ -100,9 +99,9 @@ export async function loadElementsFromBackend(
     } = options;
 
     const isInitialSelectionRequest =
-        isEmpty(limitingAttributeFilters) &&
-        isEmpty(limitingDateFilters) &&
-        isEmpty(limitingMeasures) &&
+        _isEmpty(limitingAttributeFilters) &&
+        _isEmpty(limitingDateFilters) &&
+        _isEmpty(limitingMeasures) &&
         !search &&
         !excludePrimaryLabel &&
         !order &&
@@ -160,7 +159,7 @@ export async function loadElementsFromBackend(
     if (includeTotalCountWithoutFilters) {
         loaderOptions.includeTotalCountWithoutFilters = includeTotalCountWithoutFilters;
     }
-    if (!isEmpty(loaderOptions)) {
+    if (!_isEmpty(loaderOptions)) {
         loader = loader.withOptions(loaderOptions);
     }
 

@@ -1,8 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
-
 import { type TotalType } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { getBucketByLocalIdentifier } from "../../services/buckets_service.js";
 import { type IAppState } from "../../store/types.js";
@@ -11,7 +10,7 @@ import type { ITotal } from "../../typings/state_objects.js";
 
 export function findDifferentTotal(bigTotalList: ITotal[], smallTotalList: ITotal[]) {
     return bigTotalList.find((bigTotal) => {
-        return !smallTotalList.find((smallTotal) => isEqual(bigTotal, smallTotal));
+        return !smallTotalList.find((smallTotal) => _isEqual(bigTotal, smallTotal));
     });
 }
 

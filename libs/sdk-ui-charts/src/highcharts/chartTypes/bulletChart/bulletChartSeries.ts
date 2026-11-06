@@ -1,7 +1,5 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import {
     type DataValue,
     type IBucket,
@@ -12,6 +10,7 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames, type DataViewFacade } from "@gooddata/sdk-ui";
 import { type IChartFillConfig, type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IPointData, type ISeriesItemConfig } from "../../typings/unsafe.js";
 import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration.js";
@@ -195,7 +194,7 @@ export function getOccupiedMeasureBucketsLocalIdentifiers(dv: DataViewFacade): I
         )
         .map((b) => b.localIdentifier!);
 
-    return isEmpty(notEmptyMeasureBucketsLocalIdentifiers)
+    return _isEmpty(notEmptyMeasureBucketsLocalIdentifiers)
         ? availableMeasureBucketsLocalIdentifiers.slice(0, executionResultData.length)
         : notEmptyMeasureBucketsLocalIdentifiers;
 }

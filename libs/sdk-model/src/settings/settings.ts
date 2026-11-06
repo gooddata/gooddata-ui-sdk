@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import type { IDateFilterConfig } from "../dateFilterConfig/index.js";
 
@@ -82,7 +82,7 @@ export interface ISeparators {
  * @public
  */
 export function isSeparators(obj: unknown): obj is ISeparators {
-    return !isEmpty(obj) && !!(obj as ISeparators).decimal && !!(obj as ISeparators).thousand;
+    return !_isEmpty(obj) && !!(obj as ISeparators).decimal && !!(obj as ISeparators).thousand;
 }
 
 /**
@@ -1277,7 +1277,7 @@ export interface IFeatureFlags {
      * expandable Settings group in the navigation, and the per-language usage overview.
      *
      * @remarks
-     * Disabled by default.
+     * Enabled by default.
      */
     enableLocalizationOverview?: boolean;
 

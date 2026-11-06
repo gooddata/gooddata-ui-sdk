@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import {
     type IAuditable,
@@ -845,7 +845,7 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget>
 export function isDashboard(obj: unknown): obj is IDashboard {
     const asDash: IDashboard | undefined = obj as IDashboard;
 
-    return !isEmpty(asDash) && asDash.type === "IDashboard" && asDash.ref !== undefined;
+    return !_isEmpty(asDash) && asDash.type === "IDashboard" && asDash.ref !== undefined;
 }
 
 /**
@@ -857,7 +857,7 @@ export function isDashboard(obj: unknown): obj is IDashboard {
 export function isDashboardDefinition(obj: unknown): obj is IDashboardDefinition {
     const asDash: IDashboard | undefined = obj as IDashboard;
 
-    return !isEmpty(asDash) && asDash.type === "IDashboard";
+    return !_isEmpty(asDash) && asDash.type === "IDashboard";
 }
 
 /**
@@ -953,7 +953,7 @@ export interface IListedDashboard
 export function isListedDashboard(obj: unknown): obj is IListedDashboard {
     const asDash: IListedDashboard | undefined = obj as IListedDashboard;
 
-    return !isEmpty(asDash) && asDash.availability !== undefined && asDash.ref !== undefined;
+    return !_isEmpty(asDash) && asDash.availability !== undefined && asDash.ref !== undefined;
 }
 
 /**
@@ -966,7 +966,7 @@ export function isDashboardTab(obj: unknown): obj is IDashboardTab {
     const asTab = obj as IDashboardTab;
 
     return (
-        !isEmpty(asTab) &&
+        !_isEmpty(asTab) &&
         typeof asTab.localIdentifier === "string" &&
         typeof asTab.title === "string" &&
         asTab.filterContext !== undefined

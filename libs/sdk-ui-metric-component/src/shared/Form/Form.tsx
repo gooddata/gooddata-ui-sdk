@@ -11,7 +11,7 @@ import {
     useRef,
 } from "react";
 
-import { isEqual } from "lodash-es";
+import { _isEqual } from "@gooddata/util";
 
 import { type FormMode } from "./data.js";
 import { FormApi, type IFormApi } from "./FormApi.js";
@@ -77,7 +77,7 @@ export const FormProvider = forwardRef<IFormApi<unknown> | undefined, IForm<unkn
                 setBlur,
                 setSaving,
             },
-            isEqual,
+            _isEqual,
         );
 
         return (

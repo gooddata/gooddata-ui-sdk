@@ -1,8 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
-
 import { type ITotal } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { ATTRIBUTE, COLUMNS } from "../../constants/bucket.js";
 import { getLocalIdentifier, isDerivedFrom } from "../../models/bucket_item.js";
@@ -103,7 +102,7 @@ export function areBucketTotalsIdentical(
         (bucket: IRawBucket) => bucket?.localIdentifier === bucketLocalIdentifier,
     );
 
-    return isEqual(affectedBucket?.totals, totals);
+    return _isEqual(affectedBucket?.totals, totals);
 }
 
 /**
@@ -253,7 +252,7 @@ export function mirrorTotalsToDerivedMeasures(
     });
 
     // the deep-equality guard is EXPLICIT: nothing else makes this transformer idempotent
-    return isEqual(buckets, bucketsWithTotalsMirrored) ? buckets : bucketsWithTotalsMirrored;
+    return _isEqual(buckets, bucketsWithTotalsMirrored) ? buckets : bucketsWithTotalsMirrored;
 }
 
 function addTotalsEnabledForAllMeasuresToNewMeasureForBucket(

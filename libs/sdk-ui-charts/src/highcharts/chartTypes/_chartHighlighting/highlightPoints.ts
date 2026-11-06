@@ -1,7 +1,8 @@
 // (C) 2023-2026 GoodData Corporation
 
 import cx from "classnames";
-import { isEqual } from "lodash-es";
+
+import { _isEqual } from "@gooddata/util";
 
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 
@@ -26,7 +27,7 @@ export const highlightChartPoints = (series: Highcharts.Series[], config?: IChar
     series.forEach((seriesItem) => {
         seriesItem.points.forEach((point) => {
             selectedPoints.forEach((selectedPointIntersection: any) => {
-                if (isEqual((point as any).drillIntersection, selectedPointIntersection)) {
+                if (_isEqual((point as any).drillIntersection, selectedPointIntersection)) {
                     /**
                      * In case of waterfall chart, we make sure that the `x` value is not changed.
                      * For some reason it was always changed after any class update and categories were reordered and moved.

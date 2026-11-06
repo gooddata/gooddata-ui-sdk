@@ -1,6 +1,6 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type ObjRef } from "../../../objRef/index.js";
 import { type IAttributeHierarchyMetadataObject } from "../../metadata/attributeHierarchy/index.js";
@@ -25,14 +25,14 @@ export interface ICatalogAttributeHierarchy {
  * @public
  */
 export function isCatalogAttributeHierarchy(obj: unknown): obj is ICatalogAttributeHierarchy {
-    return !isEmpty(obj) && (obj as ICatalogAttributeHierarchy).type === "attributeHierarchy";
+    return !_isEmpty(obj) && (obj as ICatalogAttributeHierarchy).type === "attributeHierarchy";
 }
 
 /**
  * @internal
  */
 export function isCatalogDateAttributeHierarchy(obj: unknown): obj is ICatalogDateAttributeHierarchy {
-    return !isEmpty(obj) && (obj as ICatalogDateAttributeHierarchy).type === "dateAttributeHierarchy";
+    return !_isEmpty(obj) && (obj as ICatalogDateAttributeHierarchy).type === "dateAttributeHierarchy";
 }
 
 /**

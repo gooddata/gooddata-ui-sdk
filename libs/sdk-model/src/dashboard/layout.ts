@@ -1,5 +1,6 @@
-// (C) 2019-2025 GoodData Corporation
-import { isEmpty } from "lodash-es";
+// (C) 2019-2026 GoodData Corporation
+
+import { _isEmpty } from "@gooddata/util";
 
 import { type IBaseWidget } from "./baseWidget.js";
 import { type IDashboardObjectIdentity } from "./common.js";
@@ -64,7 +65,7 @@ export interface IDashboardLayoutItem<TWidget = IDashboardWidget> {
  * @alpha
  */
 export function isDashboardLayoutItem<TWidget>(obj: unknown): obj is IDashboardLayoutItem<TWidget> {
-    return !isEmpty(obj) && typeof (obj as IDashboardLayoutItem<TWidget>).size?.xl?.gridWidth === "number";
+    return !_isEmpty(obj) && typeof (obj as IDashboardLayoutItem<TWidget>).size?.xl?.gridWidth === "number";
 }
 
 /**
@@ -139,7 +140,7 @@ export interface IDashboardLayout<TWidget = IDashboardWidget> {
 export function isDashboardLayout<TWidget = IDashboardWidget>(
     obj: unknown,
 ): obj is IDashboardLayout<TWidget> {
-    return !isEmpty(obj) && (obj as IDashboardLayout<TWidget>).type === "IDashboardLayout";
+    return !_isEmpty(obj) && (obj as IDashboardLayout<TWidget>).type === "IDashboardLayout";
 }
 
 /**
@@ -230,7 +231,7 @@ export interface IDashboardLayoutSection<TWidget = IDashboardWidget> {
  * @alpha
  */
 export function isDashboardLayoutSection<TWidget>(obj: unknown): obj is IDashboardLayoutSection<TWidget> {
-    return !isEmpty(obj) && Array.isArray((obj as IDashboardLayoutSection<TWidget>).items);
+    return !_isEmpty(obj) && Array.isArray((obj as IDashboardLayoutSection<TWidget>).items);
 }
 
 /**

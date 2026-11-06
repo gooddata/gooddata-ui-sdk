@@ -2,9 +2,8 @@
 
 import { type DependencyList } from "react";
 
-import { isEmpty } from "lodash-es";
-
 import { type IAnalyticalBackend, type IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { _isEmpty } from "@gooddata/util";
 
 import { convertError } from "../base/errors/errorHandling.js";
 import { type GoodDataSdkError } from "../base/errors/GoodDataSdkError.js";
@@ -81,7 +80,7 @@ export interface IExecutionConfiguration {
  * @internal
  */
 function isExecutionConfiguration(obj: unknown): obj is IExecutionConfiguration {
-    return !isEmpty(obj) && !!(obj as IExecutionConfiguration)?.seriesBy;
+    return !_isEmpty(obj) && !!(obj as IExecutionConfiguration)?.seriesBy;
 }
 
 /**

@@ -1,8 +1,8 @@
 {
     "name": "@gooddata/sdk-ui-gen-ai",
-    "version": "11.68.0-alpha.2",
+    "version": "11.68.0-alpha.3",
     "description": "GoodData GenAI SDK",
-    "license": "MIT",
+    "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
     "repository": {
         "type": "git",

@@ -2,8 +2,9 @@
 
 import { type ReactElement, type ReactNode, useMemo, useState } from "react";
 
-import { isEqual } from "lodash-es";
 import { defineMessages, useIntl } from "react-intl";
+
+import { _isEqual } from "@gooddata/util";
 
 import { UiButton } from "../@ui/UiButton/UiButton.js";
 import {
@@ -273,7 +274,7 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
                 const { closeDropdown, ariaAttributes } = bodyProps;
                 const isEmptySelection = !isInverted && selection.length === 0;
                 const isSelectionEqual =
-                    isEqual(selection, committedSelection) && isInverted === committedIsInverted;
+                    _isEqual(selection, committedSelection) && isInverted === committedIsInverted;
                 const ariaAttrs = {
                     ...ariaAttributes,
                     ...(accessibilityConfig?.popupLabel

@@ -1,8 +1,10 @@
 // (C) 2026 GoodData Corporation
 
-import { syntaxTree } from "@codemirror/language";
+import { ensureSyntaxTree, syntaxTree } from "@codemirror/language";
 import { type Diagnostic, linter } from "@codemirror/lint";
 import { type EditorState } from "@codemirror/state";
+
+const PARSE_BUDGET_MS = 200;
 
 /**
  * Collects syntax-error diagnostics by walking the parse tree for error nodes.
@@ -19,11 +21,15 @@ export function getSyntaxErrorDiagnostics(state: EditorState, message: string): 
     }
 
     const diagnostics: Diagnostic[] = [];
-    const tree = syntaxTree(state);
+    const completeTree = ensureSyntaxTree(state, state.doc.length, PARSE_BUDGET_MS);
+    const tree = completeTree ?? syntaxTree(state);
+    // A parse stopped before the end of the document ends with error nodes at the stop position,
+    // where the text itself has no error.
+    const isBeforeParseCut = (to: number) => completeTree !== null || to < tree.length;
 
     tree.iterate({
         enter(node) {
-            if (node.type.isError) {
+            if (node.type.isError && isBeforeParseCut(node.to)) {
                 diagnostics.push({
                     from: node.from,
                     // Zero-width error nodes are widened so the marker has something to underline —
@@ -45,8 +51,8 @@ export function getSyntaxErrorDiagnostics(state: EditorState, message: string): 
  * Creates a CodeMirror linter extension that reports syntax errors by walking the parse tree for
  * error nodes.
  *
- * Language-agnostic: it reads the tree the language extension already built for highlighting, so it
- * works for any grammar and costs no extra parse and no extra dependency.
+ * Language-agnostic: it reads the tree the language extension builds, so it works for any grammar.
+ * Each lint finishes an unfinished parse on the main thread, within a bounded time budget.
  *
  * @param message - localized message shown on each syntax-error diagnostic
  * @internal

@@ -7,7 +7,7 @@ import { type IUserSettings, idRef } from "@gooddata/sdk-model";
 import { type IPlatformContext } from "@gooddata/sdk-pluggable-application-model";
 
 import { render } from "../../test/render.js";
-import { registerAppLifecycleCallbacks } from "../loader/pluggableApplicationsLoader.js";
+import { registerHostTelemetryServices } from "../loader/pluggableApplicationsLoader.js";
 
 import { HostChrome } from "./HostChrome.js";
 import { setHostPricingExtension } from "./useHostChromePricing.js";
@@ -115,7 +115,7 @@ describe("HostChrome", () => {
             trackEvent.mockClear();
             setLocale.mockReset();
             organizationSettings.locale = "en-US";
-            registerAppLifecycleCallbacks({
+            registerHostTelemetryServices({
                 createTelemetryCallbacks: () => ({
                     trackEvent,
                     trackPageView: vi.fn(),
@@ -126,7 +126,7 @@ describe("HostChrome", () => {
         });
 
         afterEach(() => {
-            registerAppLifecycleCallbacks({});
+            registerHostTelemetryServices({});
             vi.unstubAllGlobals();
         });
 

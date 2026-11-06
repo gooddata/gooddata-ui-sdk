@@ -1,8 +1,9 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
+
+import { _isEqual } from "@gooddata/util";
 
 import { type IRemoveDrillDownForInsightWidget } from "../../commands/insight.js";
 import {
@@ -47,7 +48,7 @@ export function* removeDrillDownForInsightWidgetHandler(
         currentDrillDownIntersectionIgnoredAttributes?.filter(
             (ignoredIntersectionAttributes) =>
                 !newBlacklistHierarchies.some((hierarchy) =>
-                    isEqual(hierarchy, ignoredIntersectionAttributes.drillDownReference),
+                    _isEqual(hierarchy, ignoredIntersectionAttributes.drillDownReference),
                 ),
         );
 

@@ -1,7 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
 import { type AxiosRequestConfig } from "axios";
-import { isEqual } from "lodash-es";
 
 import { ExecutionAPI_ComputeReport } from "@gooddata/api-client-tiger/endpoints/execution";
 import { ExplainApi_ExplainAFM } from "@gooddata/api-client-tiger/endpoints/explain";
@@ -32,6 +31,7 @@ import {
     filterIsEmpty,
     isPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { TigerCancellationConverter } from "../../../cancelation/index.js";
 import { type DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types.js";
@@ -175,7 +175,7 @@ export class TigerPreparedExecution implements IPreparedExecution {
     }
 
     public equals(other: IPreparedExecution): boolean {
-        return isEqual(defFingerprint(this.definition), defFingerprint(other.definition));
+        return _isEqual(defFingerprint(this.definition), defFingerprint(other.definition));
     }
 
     public withContext(context: IExecutionContext): IPreparedExecution {

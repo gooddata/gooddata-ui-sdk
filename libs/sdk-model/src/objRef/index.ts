@@ -1,8 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
 import stringify from "json-stable-stringify";
-import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
+
+import { _isEmpty } from "@gooddata/util";
 
 /**
  * Type for all identifiers.
@@ -157,7 +158,7 @@ export type ObjectOrigin = "ALL" | "PARENTS" | "NATIVE";
  * @public
  */
 export function isUriRef(obj: unknown): obj is UriRef {
-    return !isEmpty(obj) && (obj as UriRef).uri !== undefined;
+    return !_isEmpty(obj) && (obj as UriRef).uri !== undefined;
 }
 
 /**
@@ -166,7 +167,7 @@ export function isUriRef(obj: unknown): obj is UriRef {
  * @public
  */
 export function isIdentifierRef(obj: unknown): obj is IdentifierRef {
-    return !isEmpty(obj) && (obj as IdentifierRef).identifier !== undefined;
+    return !_isEmpty(obj) && (obj as IdentifierRef).identifier !== undefined;
 }
 
 /**
@@ -201,7 +202,7 @@ export function isObjRef(obj: unknown): obj is ObjRef {
  * @public
  */
 export function isLocalIdRef(obj: unknown): obj is LocalIdRef {
-    return !isEmpty(obj) && (obj as LocalIdRef).localIdentifier !== undefined;
+    return !_isEmpty(obj) && (obj as LocalIdRef).localIdentifier !== undefined;
 }
 
 /**

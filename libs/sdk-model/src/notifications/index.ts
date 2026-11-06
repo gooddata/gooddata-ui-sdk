@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IAutomationDetails } from "../automations/index.js";
 import { type IExportResult } from "../exports/index.js";
@@ -471,7 +471,7 @@ export type INotification = IAlertNotification | IScheduleNotification | ITestNo
  * @public
  */
 export function isAlertNotification(notification: unknown): notification is IAlertNotification {
-    if (isEmpty(notification)) {
+    if (_isEmpty(notification)) {
         return false;
     }
 
@@ -484,7 +484,7 @@ export function isAlertNotification(notification: unknown): notification is IAle
  * @public
  */
 export function isScheduleNotification(notification: unknown): notification is IScheduleNotification {
-    if (isEmpty(notification)) {
+    if (_isEmpty(notification)) {
         return false;
     }
 
@@ -497,7 +497,7 @@ export function isScheduleNotification(notification: unknown): notification is I
  * @public
  */
 export function isTestNotification(notification: unknown): notification is ITestNotification {
-    if (isEmpty(notification)) {
+    if (_isEmpty(notification)) {
         return false;
     }
 

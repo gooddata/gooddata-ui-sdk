@@ -1,8 +1,9 @@
 // (C) 2026 GoodData Corporation
 
 import { createSlice, current } from "@reduxjs/toolkit";
-import { isEqual } from "lodash-es";
 import { type Reducer } from "redux";
+
+import { _isEqual } from "@gooddata/util";
 
 import { savedInsightPermissionsLoaded } from "../../actions/insight_access_actions.js";
 import { openReportFailed, openReportFinished, openReportStarted } from "../../actions/open_actions.js";
@@ -130,13 +131,13 @@ const lastSavedObjectSlice = createSlice({
                     visualizationObject: buildLastSavedCompatibleReport(action.payload.insight),
                 };
                 // current(): the equality guard must compare the real value, not the draft proxy
-                return isEqual(current(state), next) ? state : next;
+                return _isEqual(current(state), next) ? state : next;
             })
             .addCase(saveReportFinished, (state, action) => {
                 const next: IReportLastSavedObjectState = {
                     visualizationObject: action.payload.reportMDObject.visualizationObject,
                 };
-                return isEqual(current(state), next) ? state : next;
+                return _isEqual(current(state), next) ? state : next;
             })
             .addCase(savedInsightPermissionsLoaded, (state, action) => {
                 const { meta } = state.visualizationObject;

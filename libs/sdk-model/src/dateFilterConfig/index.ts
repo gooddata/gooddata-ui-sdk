@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IGranularitiesQuery, getGranularities } from "../base/granularityRegistry.js";
 import {
@@ -107,7 +107,7 @@ const dateFilterGranularity: DateFilterGranularity[] = [
  * @alpha
  */
 export const isDateFilterGranularity = (obj: unknown): obj is DateFilterGranularity =>
-    !isEmpty(obj) && dateFilterGranularity.some((granularity) => granularity === obj);
+    !_isEmpty(obj) && dateFilterGranularity.some((granularity) => granularity === obj);
 
 /**
  * Standard-calendar granularities that an absolute (static) date filter can be configured with.
@@ -279,7 +279,7 @@ export interface IAllTimeDateFilterOption extends IDateFilterOption {
  * @alpha
  */
 export const isAllTimeDateFilterOption = (obj: unknown): obj is IAllTimeDateFilterOption =>
-    !isEmpty(obj) && (obj as IAllTimeDateFilterOption).type === "allTime";
+    !_isEmpty(obj) && (obj as IAllTimeDateFilterOption).type === "allTime";
 
 /**
  * Preset option for empty date values (records with no date)
@@ -301,35 +301,35 @@ export interface IEmptyValuesDateFilterOption extends IDateFilterOption {
  * @alpha
  */
 export const isEmptyValuesDateFilterOption = (obj: unknown): obj is IEmptyValuesDateFilterOption =>
-    !isEmpty(obj) && (obj as IEmptyValuesDateFilterOption).type === "emptyValues";
+    !_isEmpty(obj) && (obj as IEmptyValuesDateFilterOption).type === "emptyValues";
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IAbsoluteDateFilterForm}.
  * @alpha
  */
 export const isAbsoluteDateFilterForm = (obj: unknown): obj is IAbsoluteDateFilterForm =>
-    !isEmpty(obj) && (obj as IAbsoluteDateFilterForm).type === "absoluteForm";
+    !_isEmpty(obj) && (obj as IAbsoluteDateFilterForm).type === "absoluteForm";
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IAbsoluteDateFilterPreset}.
  * @alpha
  */
 export const isAbsoluteDateFilterPreset = (obj: unknown): obj is IAbsoluteDateFilterPreset =>
-    !isEmpty(obj) && (obj as IAbsoluteDateFilterPreset).type === "absolutePreset";
+    !_isEmpty(obj) && (obj as IAbsoluteDateFilterPreset).type === "absolutePreset";
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IRelativeDateFilterForm}.
  * @alpha
  */
 export const isRelativeDateFilterForm = (obj: unknown): obj is IRelativeDateFilterForm =>
-    !isEmpty(obj) && (obj as IRelativeDateFilterForm).type === "relativeForm";
+    !_isEmpty(obj) && (obj as IRelativeDateFilterForm).type === "relativeForm";
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IRelativeDateFilterPreset}.
  * @alpha
  */
 export const isRelativeDateFilterPreset = (obj: unknown): obj is IRelativeDateFilterPreset =>
-    !isEmpty(obj) && (obj as IRelativeDateFilterPreset).type === "relativePreset";
+    !_isEmpty(obj) && (obj as IRelativeDateFilterPreset).type === "relativePreset";
 
 /**
  * Date filter configs allow to define your own date filter options, that appear in the date filter.

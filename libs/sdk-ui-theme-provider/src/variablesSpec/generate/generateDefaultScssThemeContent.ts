@@ -1,6 +1,8 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
-import { capitalize, isEqual } from "lodash-es";
+import { capitalize } from "lodash-es";
+
+import { _isEqual } from "@gooddata/util";
 
 import { allThemeCssVariables } from "../allThemeCssVariables.js";
 
@@ -33,7 +35,7 @@ export function generateDefaultScssThemeContent() {
 
             // Separate theme variables by their first theme path (eg palette, dashboard, chart, etc.)
             if (variableSpecification.type === "theme") {
-                if (!isEqual(lastVariableThemePath, variableSpecification.themePath[0])) {
+                if (!_isEqual(lastVariableThemePath, variableSpecification.themePath[0])) {
                     lastVariableThemePath = variableSpecification.themePath[0];
                     collectedLines.push(getThemingSectionSeparator(lastVariableThemePath));
                 }

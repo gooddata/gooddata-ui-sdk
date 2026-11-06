@@ -1,7 +1,8 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import cx from "classnames";
-import { isEmpty } from "lodash-es";
+
+import { _isEmpty } from "@gooddata/util";
 
 /**
  * @internal
@@ -29,8 +30,8 @@ export function Hyperlink({ text, href, onClick = () => {}, className, iconClass
             rel="noreferrer (() => {})ener"
             onClick={() => onClick()}
         >
-            {!isEmpty(iconClass) && <span className={cx("gd-hyperlink-icon", iconClass)} />}
-            {!isEmpty(text) && <span className="gd-hyperlink-text">{text}</span>}
+            {!_isEmpty(iconClass) && <span className={cx("gd-hyperlink-icon", iconClass)} />}
+            {!_isEmpty(text) && <span className="gd-hyperlink-text">{text}</span>}
         </a>
     );
 }

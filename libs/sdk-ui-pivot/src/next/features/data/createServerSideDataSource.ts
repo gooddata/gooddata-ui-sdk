@@ -5,7 +5,6 @@ import {
     type IServerSideGetRowsParams,
     type LoadSuccessParams,
 } from "ag-grid-enterprise";
-import { isEqual } from "lodash-es";
 
 import { type IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { type IAttribute, type IMeasure, type ISeparators, type ISortItem } from "@gooddata/sdk-model";
@@ -17,6 +16,7 @@ import {
     type OnExportReady,
     convertDataWindowError,
 } from "@gooddata/sdk-ui";
+import { _isEqual } from "@gooddata/util";
 
 import { type AgGridApi } from "../../types/agGrid.js";
 import { type GrandTotalsPosition } from "../../types/grandTotalsPosition.js";
@@ -209,7 +209,7 @@ export const createServerSideDataSource = ({
         const sortModel = getSortModel(params.api);
         const updatedSortBy = sortModelToSortItems(sortModel, columnDefinitionByColId);
 
-        if (!isEqual(lastSortBy, updatedSortBy)) {
+        if (!_isEqual(lastSortBy, updatedSortBy)) {
             // Always rebuild from the initial execution result to avoid accumulating
             // multiple layers of execution result decorators over time.
             currentExecutionResult = await initialExecutionResult

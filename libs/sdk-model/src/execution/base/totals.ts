@@ -1,7 +1,8 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
+
+import { _isEmpty } from "@gooddata/util";
 
 import { type Identifier } from "../../objRef/index.js";
 import { type IAttribute, attributeLocalId } from "../attribute/index.js";
@@ -56,7 +57,7 @@ export interface ITotal {
  */
 export function isTotal(obj: unknown): obj is ITotal {
     return (
-        !isEmpty(obj) &&
+        !_isEmpty(obj) &&
         (obj as ITotal).type !== undefined &&
         (obj as ITotal).measureIdentifier !== undefined &&
         (obj as ITotal).attributeIdentifier !== undefined

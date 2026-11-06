@@ -10,7 +10,15 @@ export {
 } from "./loader/localLoader.js";
 
 export { registerLocalApplications } from "./registry/pluggableApplicationsRegistry.js";
-export { registerAppLifecycleCallbacks } from "./loader/pluggableApplicationsLoader.js";
+export { registerLocalHeadlessModules } from "./headless/headlessModulesRegistry.js";
+export {
+    registerLocalHeadlessModuleLoaders,
+    type LocalHeadlessModuleLoader,
+} from "./headless/localHeadlessLoader.js";
+export {
+    registerAppLifecycleCallbacks,
+    registerHostTelemetryServices,
+} from "./loader/pluggableApplicationsLoader.js";
 
 export { mapLegacyUrlToHost, type ILegacyLocation } from "./loader/legacyRedirect.js";
 
@@ -20,7 +28,17 @@ export {
     type IHostErrorBoundaryProps,
     type IHostErrorBoundaryState,
 } from "./components/HostErrorBoundary.js";
-export { type IAppLifecycleCallbacks } from "./types/lifecycle.js";
+export {
+    type IAppLifecycleCallbacks,
+    type IPluggableModuleFailureInfo,
+    type IPluggableModuleLifecycleInfo,
+    type PluggableModuleFailurePhase,
+    type PluggableModuleKind,
+} from "./types/lifecycle.js";
+export {
+    type IHeadlessTelemetryProviderRegistration,
+    type IHostTelemetryServices,
+} from "./types/telemetryServices.js";
 
 export {
     STALE_CHUNK_RELOAD_PARAM,
@@ -43,5 +61,6 @@ export {
 export { HostIntlProvider, type IHostIntlProviderProps } from "./ui/HostIntlProvider.js";
 export { HostChromeProviders, type IHostChromeProvidersProps } from "./ui/HostChromeProviders.js";
 export { LanguageDialog, type ILanguageDialogProps } from "./ui/LanguageDialog.js";
+export { LanguageMobileSelect, type ILanguageMobileSelectProps } from "./ui/LanguageMobileSelect.js";
 export { type ILanguages } from "./ui/useLanguages.js";
-export { type LanguageChoice } from "./ui/languages.js";
+export { LANGUAGES, type LanguageChoice } from "./ui/languages.js";

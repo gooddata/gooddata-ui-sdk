@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-loaders",
-    "version": "11.68.0-alpha.2",
+    "version": "11.68.0-alpha.3",
     "description": "GoodData SDK Runtime Component Loaders",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
@@ -47,6 +47,7 @@
         "@gooddata/sdk-model": "workspace:*",
         "@gooddata/sdk-ui": "workspace:*",
         "@gooddata/sdk-ui-dashboard": "workspace:*",
+        "@gooddata/util": "workspace:*",
         "json-stable-stringify": "1.3.0",
         "lodash-es": "^4.17.23",
         "react-intl": "10.1.25",

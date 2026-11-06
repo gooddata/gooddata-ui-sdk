@@ -1,6 +1,5 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -18,6 +17,7 @@ import {
     isObjRef,
     objRefToString,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import {
     type IResolvedAttributeFilterValues,
@@ -157,7 +157,7 @@ async function resolveAttributeFilterValues(
     let elementsPage = await elementsQuery.withLimit(requestLimit).query();
     const elements: IAttributeElement[] = [];
 
-    while (!isEmpty(elementsPage.items)) {
+    while (!_isEmpty(elementsPage.items)) {
         elements.push(...elementsPage.items);
         elementsPage = await elementsPage.next();
     }

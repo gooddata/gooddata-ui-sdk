@@ -1,10 +1,11 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { isEmpty, omit } from "lodash-es";
+import { omit } from "lodash-es";
 
 import { attributeDisplayFormRef, isUriRef } from "@gooddata/sdk-model";
 import { type IAxisConfig, type IChartConfig } from "@gooddata/sdk-ui-charts";
 import { type IGeoConfig } from "@gooddata/sdk-ui-geo";
+import { _isEmpty } from "@gooddata/util";
 
 const ConfigNotApplicableInInsight: Array<keyof IChartConfig | keyof IGeoConfig> = [
     "colorPalette",
@@ -102,7 +103,7 @@ export function geoChartConfigToVisProperties(chartConfig: IGeoConfig): any {
  * the translated enum has to be stored.
  */
 function axisNameAlignmentCorrection(axisType: "x" | "y", axisConfig?: IAxisConfig): any {
-    if (!axisConfig || isEmpty(axisConfig)) {
+    if (!axisConfig || _isEmpty(axisConfig)) {
         return {};
     }
 

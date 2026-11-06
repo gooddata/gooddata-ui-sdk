@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, isEqual } from "lodash-es";
+import { cloneDeep } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { type IExecutionFactory, type IPreparedExecution } from "@gooddata/sdk-backend-spi";
@@ -26,6 +26,7 @@ import {
     isForecastNotReceived,
     isGoodDataSdkError,
 } from "@gooddata/sdk-ui";
+import { _isEqual } from "@gooddata/util";
 
 import { type ISortConfig } from "../../interfaces/SortConfig.js";
 import {
@@ -404,7 +405,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
         return (
             this.propertiesAffectingReferencePoint.some(
                 (prop) =>
-                    !isEqual(
+                    !_isEqual(
                         currentReferencePoint?.properties?.controls?.[prop],
                         nextReferencePoint?.properties?.controls?.[prop],
                     ),
@@ -412,7 +413,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
             // Analytical Designer takes sorts from sortItems and put them to target insight,
             // however there is no visualization update/re-render when they are changed by the visualization itself, and not by Analytical Designer UI.
             // I know this is not nice, but I didn't found any better way how to resolve it.
-            !isEqual(
+            !_isEqual(
                 currentReferencePoint?.properties?.sortItems ?? [],
                 nextReferencePoint?.properties?.sortItems ?? [],
             )

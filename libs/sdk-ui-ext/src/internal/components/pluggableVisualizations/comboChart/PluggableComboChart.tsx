@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, isEmpty, set } from "lodash-es";
+import { cloneDeep, set } from "lodash-es";
 
 import {
     type IInsightDefinition,
@@ -11,6 +11,7 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { type IChartConfig, isAreaChart, isLineChart } from "@gooddata/sdk-ui-charts";
+import { _isEmpty } from "@gooddata/util";
 
 import { AXIS, AXIS_NAME } from "../../../constants/axis.js";
 import { BUCKETS, METRIC } from "../../../constants/bucket.js";
@@ -374,7 +375,7 @@ export class PluggableComboChart extends PluggableBaseChart {
 
         const defaultSort = viewBy.map((vb) => newAttributeSort(vb.localIdentifier, "asc"));
 
-        if (!isEmpty(viewBy) && (!isEmpty(measures) || !isEmpty(secondaryMeasures))) {
+        if (!_isEmpty(viewBy) && (!_isEmpty(measures) || !_isEmpty(secondaryMeasures))) {
             const mergedMeasures = [...measures, ...secondaryMeasures];
 
             return {

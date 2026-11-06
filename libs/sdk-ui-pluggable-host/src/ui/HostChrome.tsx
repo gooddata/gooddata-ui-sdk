@@ -36,11 +36,12 @@ import {
     generateHeaderCommonHelpMenuItems,
     LANGUAGE_MENU_ITEM_ID,
     generateHeaderStaticHelpMenuItems,
+    useMediaQuery,
 } from "@gooddata/sdk-ui-kit";
 import { defaultHeaderTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import defaultLogoUrl from "../assets/logo-white.svg";
-import { getAppLifecycleCallbacks } from "../loader/pluggableApplicationsLoader.js";
+import { getHostTelemetryServices } from "../loader/pluggableApplicationsLoader.js";
 import { getActiveInternalApplication } from "../loader/routing.js";
 import { getBackend } from "../platformContext/backend.js";
 
@@ -57,6 +58,7 @@ import { HostChromeProviders } from "./HostChromeProviders.js";
 import { HostNotificationDispatcher } from "./HostNotificationDispatcher.js";
 import { LanguageChangedToast } from "./LanguageChangedToast.js";
 import { LanguageDialog } from "./LanguageDialog.js";
+import { LanguageMobileSelect } from "./LanguageMobileSelect.js";
 import { trackLanguageSettingsOpen } from "./languageTelemetry.js";
 import { useAppPreloadOnHover } from "./useAppPreloadOnHover.js";
 import { useGenAiRightPanel } from "./useGenAiRightPanel.js";
@@ -73,6 +75,7 @@ import "@gooddata/sdk-ui-gen-ai/styles/css/main.css";
 import "@gooddata/sdk-ui-semantic-search/styles/css/main.css";
 import "@gooddata/sdk-ui-semantic-search/styles/css/internal.css";
 
+import { useHostHeaderHeightStyle } from "./useHostHeaderHeight.js";
 import { type ILanguages, useLanguages } from "./useLanguages.js";
 import { AppHeaderWorkspacePicker } from "./WorkspacePicker.js";
 
@@ -152,11 +155,14 @@ export function HostChrome({
     const features = useHostChromeWorkspaceFeatures(resolvedApplications, ctx, pathname);
 
     const shellTelemetry = useMemo(
-        () => getAppLifecycleCallbacks()?.createTelemetryCallbacks?.("host-ui"),
+        () => getHostTelemetryServices()?.createTelemetryCallbacks?.("host-ui"),
         [],
     );
 
     const pricing = useHostChromePricing(ctx, locale);
+    const headerRef = useRef<HTMLDivElement>(null);
+    const isHeaderRendered = !isHeaderHidden(ctx);
+    const headerHeightStyle = useHostHeaderHeightStyle(headerRef, isHeaderRendered);
     const { isTrial, onUpsellButtonClick } = pricing;
     useEffect(() => {
         if (!openPricingDialogRef) {
@@ -370,15 +376,16 @@ export function HostChrome({
 
     return (
         <HostChromeProviders locale={locale} additionalMessages={appMessages} backend={getBackend()}>
-            <div className={b({ export: ctx.isExportMode === true })}>
+            <div className={b({ export: ctx.isExportMode === true })} style={headerHeightStyle}>
                 <DocumentHeader
                     pageTitle={documentPageTitle}
                     brandTitle={documentBrandTitle}
                     faviconUrl={faviconUrl}
                     appleTouchIconUrl={ctx.whiteLabeling?.appleTouchIconUrl}
                 />
-                {isHeaderHidden(ctx) ? null : (
+                {isHeaderRendered ? (
                     <div
+                        ref={headerRef}
                         className={e("header")}
                         onMouseOver={appPreloadOnHover.onMouseOver}
                         onMouseLeave={appPreloadOnHover.onMouseLeave}
@@ -419,7 +426,7 @@ export function HostChrome({
                             )}
                         />
                     </div>
-                )}
+                ) : null}
                 <Wrapper chatIsOpen={Boolean(chatIsOpen && enablePanel)} mode={chatMode}>
                     {children}
                 </Wrapper>
@@ -447,6 +454,7 @@ interface IHostLanguageDialogProps {
 }
 
 function HostLanguageDialog({ languages, ctx, telemetry, onClose }: IHostLanguageDialogProps) {
+    const isMobileDevice = useMediaQuery("mobileDevice");
     const isOpenTracked = useRef(false);
 
     // The event names the language the user sees. Tracked once, as `languages` changes on every render.
@@ -466,5 +474,9 @@ function HostLanguageDialog({ languages, ctx, telemetry, onClose }: IHostLanguag
         );
     }, [languages, telemetry, ctx.currentWorkspaceId]);
 
-    return <LanguageDialog {...languages} onClose={onClose} />;
+    return isMobileDevice ? (
+        <LanguageMobileSelect {...languages} onClose={onClose} />
+    ) : (
+        <LanguageDialog {...languages} onClose={onClose} />
+    );
 }

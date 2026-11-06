@@ -48,7 +48,12 @@ import type { IExportResult } from "../execution/index.js";
 export type IUnavailableDashboardReference = IUnavailableReference;
 
 /**
- * Dashboard referenced objects
+ * Dashboard referenced objects.
+ *
+ * @remarks
+ * Supply all referenced insights when rendering a dashboard draft by value. For a dashboard
+ * without plugins, use an empty `plugins` array.
+ *
  * @alpha
  */
 export interface IDashboardReferences {

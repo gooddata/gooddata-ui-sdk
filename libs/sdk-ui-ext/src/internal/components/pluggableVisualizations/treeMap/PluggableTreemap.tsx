@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, isEmpty, set, tail } from "lodash-es";
+import { cloneDeep, set, tail } from "lodash-es";
 
 import {
     type IInsight,
@@ -9,6 +9,7 @@ import {
     insightBuckets,
 } from "@gooddata/sdk-model";
 import { BucketNames, type IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
+import { _isEmpty } from "@gooddata/util";
 
 import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket.js";
 import { TREEMAP_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
@@ -101,7 +102,7 @@ export class PluggableTreemap extends PluggableBaseChart {
             measures = getMeasureItems(limitNumberOfMeasuresInBuckets(buckets, 1));
         }
 
-        if (nonStackAttributes.length > 1 && isEmpty(stacks)) {
+        if (nonStackAttributes.length > 1 && _isEmpty(stacks)) {
             // first attribute is taken, find next available and put to stacks
             const attributesWithoutFirst = tail(nonStackAttributes);
             stacks = attributesWithoutFirst.slice(0, 1);

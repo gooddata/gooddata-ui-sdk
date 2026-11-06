@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import {
     type ITigerAttributeFilterConfigs,
@@ -37,5 +37,5 @@ export interface IVisualizationObject {
 export function isVisualizationObject(
     visualizationObject: unknown,
 ): visualizationObject is IVisualizationObject {
-    return !isEmpty(visualizationObject) && (visualizationObject as IVisualizationObject).version === "2";
+    return !_isEmpty(visualizationObject) && (visualizationObject as IVisualizationObject).version === "2";
 }

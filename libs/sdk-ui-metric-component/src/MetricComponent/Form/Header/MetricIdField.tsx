@@ -2,8 +2,9 @@
 
 import { type ReactElement, useCallback } from "react";
 
-import { isEmpty } from "lodash-es";
 import { useIntl } from "react-intl";
+
+import { _isEmpty } from "@gooddata/util";
 
 import { useEvents } from "../../../shared/eventing/useEvents.js";
 import { makeStyles } from "../../../shared/theme/index.js";
@@ -54,7 +55,7 @@ export function MetricIdField({ className, regenerateId }: IMetricIdFieldProps):
 
     // The row holds before an id exists, so it fills in as the title is typed. Nothing to
     // show and nothing to type into would render a bare "ID:".
-    if (isEmpty(value) && isEmpty(defaultId) && (isLocked || isReadOnly)) {
+    if (_isEmpty(value) && _isEmpty(defaultId) && (isLocked || isReadOnly)) {
         return null;
     }
 
@@ -86,7 +87,7 @@ export function MetricIdField({ className, regenerateId }: IMetricIdFieldProps):
 /** Trimmed value if the id pattern allows it or it is empty, otherwise null to reject it. */
 export function passOnlyValidOrEmpty(value: string): string | null {
     const idValue = value.trim();
-    if (isEmpty(idValue) || validateIdPattern(idValue)) {
+    if (_isEmpty(idValue) || validateIdPattern(idValue)) {
         return idValue;
     }
 
@@ -97,7 +98,7 @@ function useIdSanitizers(defaultId: string) {
     const trimOrSetDefaultIfEmpty = useCallback(
         (value: string) => {
             const idValue = value.trim();
-            if (isEmpty(idValue)) {
+            if (_isEmpty(idValue)) {
                 return defaultId;
             } else {
                 return idValue;
@@ -114,7 +115,7 @@ function useBlurEventsCallback(id?: string, onBlur?: (e?: FocusEvent) => void) {
 
     return useCallback(
         (e?: FocusEvent) => {
-            if (isEmpty(id)) {
+            if (_isEmpty(id)) {
                 metricIdCreatedEvent();
             } else {
                 metricIdEditEvent();

@@ -100,6 +100,7 @@ export function AppHeader({
     });
 
     const nodeRef = useRef<HTMLDivElement>(null);
+    const hamburgerRef = useRef<HTMLDivElement>(null);
     const stylesheetRef = useRef<HTMLStyleElement | null>(null);
 
     const measureChildren = useCallback(() => {
@@ -501,6 +502,7 @@ export function AppHeader({
                         onMenuItemClick={(item, e) => {
                             // the menu closes first, so that the dialog the item opens isn't under it
                             setOverlayMenu(false);
+                            hamburgerRef.current?.focus();
                             onMenuItemClick?.(item, e);
                         }}
                     />
@@ -550,6 +552,7 @@ export function AppHeader({
         return (
             <>
                 <div
+                    ref={hamburgerRef}
                     aria-label={intl.formatMessage({ id: "gs.header.mainMenu.ariaLabel" })}
                     role="button"
                     tabIndex={0}

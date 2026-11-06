@@ -3,11 +3,11 @@
 import { type RefObject } from "react";
 
 import cx from "classnames";
-import { isEmpty } from "lodash-es";
 
 import { type ClientColors, ClientFormatterFacade } from "@gooddata/number-formatter";
 import { type ISeparators } from "@gooddata/sdk-model";
 import { getHeadlineResponsiveClassName } from "@gooddata/sdk-ui-vis-commons";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IChartConfig } from "../../../../interfaces/chartConfig.js";
 import { type IBaseHeadlineValueItem } from "../interfaces/BaseHeadlines.js";
@@ -26,7 +26,7 @@ function formatValueToLabelWithColors(
 
     // Based on the tests, when a format is not provided, we should refrain from formatting the value using the formatter, as the default format "#,##0.00" will be used.
     // Additionally, the test necessitates that the value should remain unformatted.
-    if (!isEmpty(format)) {
+    if (!_isEmpty(format)) {
         return ClientFormatterFacade.formatValue(parsedNumber, format!, separators);
     }
 

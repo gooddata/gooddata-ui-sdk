@@ -1,7 +1,8 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
 import { type IntlShape } from "react-intl";
+
+import { _isEqual } from "@gooddata/util";
 
 import { type IGrantedWorkspace, type WorkspacePermission, type WorkspacePermissions } from "../../types.js";
 
@@ -215,7 +216,7 @@ export const haveWorkspacePermissionsChanged = (
 
     return (
         workspace1.isHierarchical !== workspace2.isHierarchical ||
-        !isEqual(
+        !_isEqual(
             removeRedundantPermissions(workspace1.permissions, analyzeIncludesManageVisualizations).sort(),
             removeRedundantPermissions(workspace2.permissions, analyzeIncludesManageVisualizations).sort(),
         )
@@ -293,5 +294,5 @@ export const getHumanReadablePermissionsTitle = (
  */
 export const areRedundantPermissionsPresent = (permissions: WorkspacePermissions): boolean => {
     const effectivePermissions = removeRedundantPermissions(permissions);
-    return !isEqual(effectivePermissions.sort(), permissions.sort());
+    return !_isEqual(effectivePermissions.sort(), permissions.sort());
 };

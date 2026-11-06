@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IAnalyticalDashboardCommonProps } from "./AnalyticalDashboardModelV2.js";
 import { type ITigerDashboardTab } from "./TigerTypes.js";
@@ -22,5 +22,5 @@ export interface IAnalyticalDashboard extends IAnalyticalDashboardCommonProps {
  * @alpha
  */
 export function isAnalyticalDashboard(dashboard: unknown): dashboard is IAnalyticalDashboard {
-    return !isEmpty(dashboard) && (dashboard as IAnalyticalDashboard).version === "3";
+    return !_isEmpty(dashboard) && (dashboard as IAnalyticalDashboard).version === "3";
 }

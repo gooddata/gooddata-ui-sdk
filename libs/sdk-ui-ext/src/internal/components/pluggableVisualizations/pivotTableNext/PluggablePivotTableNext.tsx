@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { cloneDeep, isEmpty, isEqual } from "lodash-es";
+import { cloneDeep } from "lodash-es";
 
 import {
     type IAnalyticalBackend,
@@ -45,6 +45,7 @@ import {
     type PivotTableNextConfig,
     type PivotTableNextConfigWithConditionalFormatting,
 } from "@gooddata/sdk-ui-pivot/next";
+import { _isEmpty, _isEqual } from "@gooddata/util";
 
 import { METRIC } from "../../../constants/bucket.js";
 import { ANALYTICAL_ENVIRONMENT, DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
@@ -596,7 +597,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
         visualizationProperties: IVisualizationProperties,
         measureGroupDimension: MeasureGroupDimension,
     ) {
-        if (isEmpty(insightBuckets(insight))) {
+        if (_isEmpty(insightBuckets(insight))) {
             return;
         }
 
@@ -606,7 +607,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
             measureGroupDimension,
         );
 
-        if (!isEqual(columnWidths, adaptedColumnWidths) && this.visualizationProperties) {
+        if (!_isEqual(columnWidths, adaptedColumnWidths) && this.visualizationProperties) {
             this.visualizationProperties.controls = this.visualizationProperties.controls ?? {};
             this.visualizationProperties.controls["columnWidths"] = adaptedColumnWidths;
             this.pushData({

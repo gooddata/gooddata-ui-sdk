@@ -11,7 +11,6 @@ import {
 } from "react";
 
 import cx from "classnames";
-import { isEmpty } from "lodash-es";
 
 import {
     ValidationContextStore,
@@ -20,6 +19,7 @@ import {
     useValidationContextValue,
 } from "@gooddata/sdk-ui";
 import { isArrowKey, isEnterKey, useId } from "@gooddata/sdk-ui-kit";
+import { _isEmpty } from "@gooddata/util";
 
 import { convertPlatformDateStringToDate } from "../utils/DateConversions.js";
 
@@ -130,7 +130,7 @@ const useDateInput = ({
 
     const onSubmitValue = useCallback(
         (shouldSubmitForm: boolean) => {
-            if (isEmpty(inputValue)) {
+            if (_isEmpty(inputValue)) {
                 setError("empty");
                 onChange(undefined, shouldSubmitForm);
                 return;

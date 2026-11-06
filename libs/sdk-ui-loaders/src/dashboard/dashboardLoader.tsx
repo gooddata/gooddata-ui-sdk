@@ -2,7 +2,6 @@
 
 import { type ComponentType, type FC } from "react";
 
-import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { type IAnalyticalBackend, type IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
@@ -20,6 +19,7 @@ import {
     type IDashboardProps,
     newDashboardEngine,
 } from "@gooddata/sdk-ui-dashboard";
+import { _isEmpty } from "@gooddata/util";
 
 import { validatePluginsBeforeLoading } from "./beforeLoadPluginValidation.js";
 import { type DashboardLoadResult, type IDashboardLoader } from "./loader.js";
@@ -208,7 +208,7 @@ export class DashboardLoader implements IDashboardLoader {
 
         const resolvedClientWorkspace = resolveLCMWorkspaceIdentifiers(backend, this.clientWorkspace);
         invariant(
-            !isEmpty(resolvedClientWorkspace),
+            !_isEmpty(resolvedClientWorkspace),
             "DashboardLoader was not able to resolve LCM client workspace to actual workspace.",
         );
 

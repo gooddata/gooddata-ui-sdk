@@ -96,6 +96,17 @@ export {
 } from "./telemetry/telemetryProperties.js";
 
 export {
+    type HeadlessModuleMount,
+    type IHeadlessModule,
+    type IHeadlessModuleMountHandle,
+    type IHeadlessModuleMountOptions,
+    type ITelemetryIdentity,
+    type ITelemetryProvider,
+    type ITelemetryProviderEventData,
+    type TelemetryIdentityMode,
+} from "./headless.js";
+
+export {
     type IHostUiModule,
     type IHostUiMountHandle,
     type IHostUiMountOptions,

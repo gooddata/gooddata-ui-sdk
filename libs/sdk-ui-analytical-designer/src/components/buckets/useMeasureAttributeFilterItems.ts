@@ -2,8 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { isEqual } from "lodash-es";
-
 import {
     type IAttributeOrMeasure,
     type ICatalogAttribute,
@@ -11,6 +9,7 @@ import {
     type IInsightDefinition,
     isCatalogComputedAttribute,
 } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { BackendToBearConvertors } from "../../convertors/index.js";
 import { getMetricMDObject } from "../../services/metadata_service.js";
@@ -55,7 +54,7 @@ const NO_ITEMS: IMeasureAttributeFilterItem[] = [];
  */
 function useContentStable<T>(value: T): T {
     const ref = useRef(value);
-    if (ref.current !== value && !isEqual(ref.current, value)) {
+    if (ref.current !== value && !_isEqual(ref.current, value)) {
         ref.current = value;
     }
     return ref.current;

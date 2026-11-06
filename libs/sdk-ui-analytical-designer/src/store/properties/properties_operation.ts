@@ -1,8 +1,7 @@
 // (C) 2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
-
 import { type IVisualizationProperties } from "@gooddata/sdk-ui-ext/internal";
+import { _isEqual } from "@gooddata/util";
 
 import { type IRawBuckets } from "../../typings/buckets.js";
 import { areBucketTotalsIdentical, setBucketTotals } from "../buckets/buckets_totals_helpers.js";
@@ -85,7 +84,7 @@ export function applyVisualizationProperties(
     // explicit `isEqual` guard — identity is explicit, never inherited)
     const visualizationProperties =
         !newMergedPropertiesWithoutTotals ||
-        isEqual(input.visualizationProperties, newMergedPropertiesWithoutTotals)
+        _isEqual(input.visualizationProperties, newMergedPropertiesWithoutTotals)
             ? input.visualizationProperties
             : newMergedPropertiesWithoutTotals;
 

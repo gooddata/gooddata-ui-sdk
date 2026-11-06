@@ -1,12 +1,12 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
-import { isEmpty } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "@gooddata/sdk-ui";
 import { Button } from "@gooddata/sdk-ui-kit";
+import { _isEmpty } from "@gooddata/util";
 
 import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.js";
 
@@ -25,7 +25,7 @@ export function AttributeHierarchyDialogFooter() {
         setDisplayDeleteConfirmation,
     } = useAttributeHierarchyDialog();
 
-    const isSaveDisabled = isEmpty(attributes) || !isDirty;
+    const isSaveDisabled = _isEmpty(attributes) || !isDirty;
 
     const onDelete = () => {
         setDisplayDeleteConfirmation(true);

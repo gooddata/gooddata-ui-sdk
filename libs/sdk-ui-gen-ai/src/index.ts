@@ -195,6 +195,8 @@ export {
     type IGenAIAssistantConversationHeaderProps,
     type IGenAIAssistantConversationFooterProps,
     type IGenAIAssistantConversationDateGroupingProps,
+    type IGenAIAssistantConversationRenameDialogProps,
+    type IGenAIAssistantConversationDeleteDialogProps,
     type IGenAIAssistantUserMessageProps,
     type IGenAIAssistantAssistantMessageProps,
     type IGenAIAssistantMessageTextContentProps,
@@ -227,6 +229,8 @@ export { DefaultConversationDrawerHeader } from "./components/customized/Convers
 export { DefaultConversationHeader } from "./components/customized/ConversationHeader.js";
 export { DefaultConversationFooter } from "./components/customized/ConversationFooter.js";
 export { DefaultConversationDateGrouping } from "./components/customized/ConversationDateGrouping.js";
+export { DefaultConversationRenameDialog } from "./components/customized/ConversationRenameDialog.js";
+export { DefaultConversationDeleteDialog } from "./components/customized/ConversationDeleteDialog.js";
 export { DefaultFollowUpButtons } from "./components/customized/FollowUpButtons.js";
 export { DefaultFollowUpQuestion } from "./components/customized/FollowUpQuestion.js";
 export { DefaultFeedback } from "./components/customized/Feedback.js";

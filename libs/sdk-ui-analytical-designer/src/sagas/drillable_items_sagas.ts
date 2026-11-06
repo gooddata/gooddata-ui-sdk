@@ -1,10 +1,11 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { cloneDeep, isEmpty } from "lodash-es";
+import { cloneDeep } from "lodash-es";
 import { type SagaReturnType, call, put, select, takeEvery } from "redux-saga/effects";
 
 import { type IDrillableItemsCommandBody } from "@gooddata/sdk-embedding";
 import { DrillablePredicatesUtils } from "@gooddata/sdk-ui-ext/internal";
+import { _isEmpty } from "@gooddata/util";
 
 import { conversionDone, type conversionInit } from "../actions/drillable_items_actions.js";
 import { ActionTypeKeys } from "../constants/actions.js";
@@ -12,7 +13,7 @@ import { logDrillableItemsReceived } from "../services/telemetry/tracking_events
 import { type IAppState } from "../store/types.js";
 
 function isDrillByUri(command: IDrillableItemsCommandBody) {
-    return !isEmpty(command.uris) || !isEmpty(command.composedFrom?.uris);
+    return !_isEmpty(command.uris) || !_isEmpty(command.composedFrom?.uris);
 }
 
 export function* convertDrillableItems(action: ReturnType<typeof conversionInit>) {

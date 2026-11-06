@@ -1,7 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
 // eslint-disable-next-line no-restricted-imports
-import { cloneDeep, get, has, isEmpty, set } from "lodash-es";
+import { cloneDeep, get, has, set } from "lodash-es";
 
 import {
     type IConditionalFormatting,
@@ -25,6 +25,7 @@ import {
     type ITextWrapping,
     type PivotTableNextConditionalFormattingConfig,
 } from "@gooddata/sdk-ui-pivot/next";
+import { _isEmpty } from "@gooddata/util";
 
 import { AXIS } from "../constants/axis.js";
 import { PROPERTY_CONTROLS } from "../constants/properties.js";
@@ -111,7 +112,7 @@ export function getSupportedProperties(
     const controls = visualizationProperties?.controls ?? {};
     const supportedControls = getSupportedPropertiesControls(controls, supportedPropertiesList);
 
-    return isEmpty(supportedControls)
+    return _isEmpty(supportedControls)
         ? {}
         : {
               controls: supportedControls,
@@ -126,9 +127,9 @@ export function getReferencePointWithSupportedProperties(
         ? getSupportedPropertiesControls(referencePoint.properties.controls, supportedPropertiesList)
         : {};
 
-    if (isEmpty(supportedControlsProperties)) {
+    if (_isEmpty(supportedControlsProperties)) {
         const sortItems = referencePoint.properties?.sortItems;
-        const sortItemsExpand = sortItems && !isEmpty(sortItems) ? { sortItems } : {};
+        const sortItemsExpand = sortItems && !_isEmpty(sortItems) ? { sortItems } : {};
 
         return {
             ...referencePoint,
@@ -254,7 +255,7 @@ export function getHighchartsAxisNameConfiguration(
         (result: IVisualizationProperties, axis: string) => {
             const axisNameConfig: IAxisNameProperties = controlProperties?.[axis]?.name;
 
-            if (isEmpty(axisNameConfig)) {
+            if (_isEmpty(axisNameConfig)) {
                 return result;
             }
 

@@ -4,7 +4,7 @@
 
 import { type MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
 
-import { debounce, difference, differenceBy, isEmpty, isEqual } from "lodash-es";
+import { debounce, difference, differenceBy } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { type IAnalyticalBackend, type IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
@@ -35,6 +35,7 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError, UnexpectedSdkError } from "@gooddata/sdk-ui";
+import { _isEmpty, _isEqual } from "@gooddata/util";
 
 import { type IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler/types/attributeFilterHandler.js";
 import { type OnApplyCallbackType, type OnChangeCallbackType } from "../types.js";
@@ -64,10 +65,10 @@ const areElementsEqual = (elementsA: IAttributeElements, elementsB: IAttributeEl
     return (
         (isAttributeElementsByRef(elementsA) &&
             isAttributeElementsByRef(elementsB) &&
-            isEqual([...elementsA.uris].sort(), [...elementsB.uris].sort())) ||
+            _isEqual([...elementsA.uris].sort(), [...elementsB.uris].sort())) ||
         (isAttributeElementsByValue(elementsA) &&
             isAttributeElementsByValue(elementsB) &&
-            isEqual([...elementsA.values].sort(), [...elementsB.values].sort()))
+            _isEqual([...elementsA.values].sort(), [...elementsB.values].sort()))
     );
 };
 
@@ -173,7 +174,7 @@ function updateNonResettingFilter(
             supportsKeepingDependentFiltersSelection &&
             (hasNumberOfLimitingAttributesChanged ||
                 hasLimitingDateFiltersChanged ||
-                !isEmpty(leftoverIrrelevantKeys));
+                !_isEmpty(leftoverIrrelevantKeys));
 
         const irrelevantKeysObj = shouldReinitilizeAllElements ? { irrelevantKeys: [] } : {};
         if (filterChanged || !supportsKeepingDependentFiltersSelection || shouldReinitilizeAllElements) {
@@ -211,7 +212,7 @@ function updateNonResettingFilter(
                 committedKeys.length === 0 ||
                 handler.getElementsByKey(committedKeys).length === committedKeys.length;
             const needsInitialization =
-                filterChanged && (isEmpty(handler.getAllElements()) || !isSelectionResolved);
+                filterChanged && (_isEmpty(handler.getAllElements()) || !isSelectionResolved);
 
             if (!needsInitialization) {
                 return undefined;
@@ -516,10 +517,10 @@ function useInitOrReload(
 
         const limitingAttributesChanged =
             shouldIncludeLimitingFilters &&
-            !isEqual(limitingAttributeFilters, handler.getLimitingAttributeFilters());
+            !_isEqual(limitingAttributeFilters, handler.getLimitingAttributeFilters());
 
         const limitingDateFiltersChanged =
-            shouldIncludeLimitingFilters && !isEqual(limitingDateFilters, handler.getLimitingDateFilters());
+            shouldIncludeLimitingFilters && !_isEqual(limitingDateFilters, handler.getLimitingDateFilters());
 
         const getFilterChanged = (filter: IAttributeFilter, handler: IMultiSelectAttributeFilterHandler) => {
             // When the handler migrated the filter internally to a different label (displayAs
@@ -554,7 +555,7 @@ function useInitOrReload(
 
         const limitingValidationItemsChanged =
             shouldIncludeLimitingFilters &&
-            !isEqual(limitingValidationItems, handler.getLimitingValidationItems());
+            !_isEqual(limitingValidationItems, handler.getLimitingValidationItems());
 
         const updateProps: UpdateFilterProps = {
             filter: filter as IAttributeFilter,
@@ -685,9 +686,9 @@ function useSingleSelectModeHandler(
         if (
             selectFirst &&
             selectionMode === "single" &&
-            (isEmpty(committedSelectionKeys) || committedSelectionKeys.length > 1) &&
+            (_isEmpty(committedSelectionKeys) || committedSelectionKeys.length > 1) &&
             initialStatus === "success" &&
-            !isEmpty(elements)
+            !_isEmpty(elements)
         ) {
             const keys = [elements[0].uri];
 
@@ -813,7 +814,7 @@ function useCallbacks(
             const nextFilter = handler.getFilter();
             const isInverted = handler.getWorkingSelection()?.isInverted;
             const keys = handler.getWorkingSelection().keys;
-            const isSelectionInvalid = (!isInverted && isEmpty(keys)) || keys.length > MAX_SELECTION_SIZE;
+            const isSelectionInvalid = (!isInverted && _isEmpty(keys)) || keys.length > MAX_SELECTION_SIZE;
 
             const displayAsLabel = handler.getDisplayAsLabel();
             const { attribute } = handlerState;

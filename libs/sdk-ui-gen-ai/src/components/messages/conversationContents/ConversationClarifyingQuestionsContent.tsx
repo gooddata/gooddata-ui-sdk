@@ -42,12 +42,13 @@ export function ConversationClarifyingQuestionsContent(props: ConversationClarif
     return (
         <div
             className={cx("gd-gen-ai-chat__conversation__item__content", bem.b())}
+            data-testid="gen-ai-clarifying-questions"
             tabIndex={0}
             onKeyDown={keyboardHandler}
             ref={ref.ref}
             aria-activedescendant={`${labelId}-option-${index}`}
         >
-            <div className={bem.e("header")} id={labelId}>
+            <div className={bem.e("header")} id={labelId} data-testid="gen-ai-clarifying-question">
                 {question.text}
             </div>
             {question.control.options.map((option, i) => (
@@ -55,13 +56,14 @@ export function ConversationClarifyingQuestionsContent(props: ConversationClarif
                     key={i}
                     id={`${labelId}-option-${i}`}
                     className={bem.e("option", { focused: index === i })}
+                    data-testid="gen-ai-clarifying-option"
                     aria-selected={index === i}
                     aria-label={option.text}
                     aria-describedby={labelId}
                     onClick={() => onSelectOption(question, i)}
                 >
                     <div className={bem.e("option-index")}>{i + 1}</div>
-                    <div className={bem.e("option-content")}>
+                    <div className={bem.e("option-content")} data-testid="gen-ai-clarifying-option-content">
                         <MarkdownComponent allowMarkdown={useMarkdown} references={objects}>
                             {option.text}
                         </MarkdownComponent>
@@ -72,7 +74,7 @@ export function ConversationClarifyingQuestionsContent(props: ConversationClarif
                 </div>
             ))}
             <div className={bem.e("footer")}>
-                <div>
+                <div data-testid="gen-ai-clarifying-progress">
                     <FormattedMessage
                         id="gd.gen-ai.clarification-question.of"
                         values={{

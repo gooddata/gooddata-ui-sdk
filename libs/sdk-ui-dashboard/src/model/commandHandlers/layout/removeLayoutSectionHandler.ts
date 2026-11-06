@@ -1,8 +1,9 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
+
+import { _isEmpty } from "@gooddata/util";
 
 import {
     findSections,
@@ -30,7 +31,7 @@ export function* removeLayoutSectionHandler(
     const isLegacyCommand = typeof index === "number";
     const sections = isLegacyCommand ? layout.sections : findSections(layout, index);
 
-    if (isEmpty(sections)) {
+    if (_isEmpty(sections)) {
         throw invalidArgumentsProvided(ctx, cmd, `Attempting to remove a section from an empty layout.`);
     }
 

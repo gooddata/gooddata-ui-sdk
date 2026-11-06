@@ -312,6 +312,8 @@ You can customize the conversation history UI (in `GenAIAssistant` and `GenAICon
 - `slots.ConversationFooter`: content rendered below each conversation group.
 - `slots.ConversationDateGrouping`: date-group labels (for example "Today" or "Last week").
 - `slots.ConversationItem`: wrapper for each interactive conversation row.
+- `slots.ConversationRenameDialog`: confirmation dialog for renaming a conversation.
+- `slots.ConversationDeleteDialog`: confirmation dialog for deleting a conversation.
 
 Default components you can reuse:
 
@@ -320,6 +322,8 @@ Default components you can reuse:
 - `DefaultConversationFooter`
 - `DefaultConversationDateGrouping`
 - `DefaultConversationItem`
+- `DefaultConversationRenameDialog`
+- `DefaultConversationDeleteDialog`
 
 The slots get these props in `defaultProps`:
 
@@ -327,6 +331,8 @@ The slots get these props in `defaultProps`:
 - `ConversationHeader` and `ConversationFooter` (`IGenAIAssistantConversationHeaderProps`, `IGenAIAssistantConversationFooterProps`): the `id` of the conversation group and its `listItems`.
 - `ConversationDateGrouping` (`IGenAIAssistantConversationDateGroupingProps`): the `menuGroupItemProps` of the date-group row.
 - `ConversationItem` (`IGenAIAssistantConversationItemProps`): the `conversation` and the `menuItemProps` of its row.
+- `ConversationRenameDialog` (`IGenAIAssistantConversationRenameDialogProps`): the `conversation` to rename, `onRename` and `onClose` callbacks, and optional overrides for `title`, `label`, `submitButtonText`, and `cancelButtonText`.
+- `ConversationDeleteDialog` (`IGenAIAssistantConversationDeleteDialogProps`): the `conversation` to delete, `onDelete` and `onClose` callbacks, and optional overrides for `title`, `body`, `submitButtonText`, and `cancelButtonText`.
 
 ```tsx
 import {
@@ -336,6 +342,8 @@ import {
     type IGenAIAssistantConversationDrawerHeaderProps,
     type IGenAIAssistantConversationItemProps,
     type IGenAIAssistantConversationDateGroupingProps,
+    type IGenAIAssistantConversationRenameDialogProps,
+    type IGenAIAssistantConversationDeleteDialogProps,
 } from "@gooddata/sdk-ui-gen-ai";
 import { type ISlotProps } from "@gooddata/sdk-ui-kit";
 
@@ -379,6 +387,34 @@ const CustomConversationItem = ({
     );
 };
 
+const CustomConversationRenameDialog = ({
+    Default,
+    defaultProps,
+}: ISlotProps<IGenAIAssistantConversationRenameDialogProps>) => {
+    return (
+        <Default
+            {...defaultProps}
+            title="Rename conversation"
+            submitButtonText="Save"
+            cancelButtonText="Cancel"
+        />
+    );
+};
+
+const CustomConversationDeleteDialog = ({
+    Default,
+    defaultProps,
+}: ISlotProps<IGenAIAssistantConversationDeleteDialogProps>) => {
+    return (
+        <Default
+            {...defaultProps}
+            title="Delete conversation?"
+            submitButtonText="Delete"
+            cancelButtonText="Cancel"
+        />
+    );
+};
+
 export const App = () => (
     <GenAIAssistant
         slots={{
@@ -387,6 +423,8 @@ export const App = () => (
             ConversationFooter: CustomConversationFooter,
             ConversationDateGrouping: CustomConversationDateGrouping,
             ConversationItem: CustomConversationItem,
+            ConversationRenameDialog: CustomConversationRenameDialog,
+            ConversationDeleteDialog: CustomConversationDeleteDialog,
         }}
     />
 );

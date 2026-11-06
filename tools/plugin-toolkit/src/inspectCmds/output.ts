@@ -2,7 +2,7 @@
 
 // oxlint-disable eslint-js/no-console
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 export type ObjectSummary = {
     type: string;
@@ -27,8 +27,8 @@ export function printObjectSummary({
     console.log(`-- ${type}: ${identifier}`);
     console.log("--");
     console.log(`Title       : ${title}`);
-    console.log(`Description : ${isEmpty(description) ? "(none)" : description}`);
-    console.log(`Tags        : ${isEmpty(tags) ? "(none)" : tags?.join(", ")}`);
+    console.log(`Description : ${_isEmpty(description) ? "(none)" : description}`);
+    console.log(`Tags        : ${_isEmpty(tags) ? "(none)" : tags?.join(", ")}`);
     console.log(`Created     : ${created}`);
     console.log(`Updated     : ${updated}`);
 }

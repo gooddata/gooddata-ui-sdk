@@ -2,8 +2,6 @@
 
 import { useCallback, useMemo, useState } from "react";
 
-import { isEqual } from "lodash-es";
-
 import { type IInsight, type IInsightWidget } from "@gooddata/sdk-model";
 import {
     DataViewFacade,
@@ -11,6 +9,7 @@ import {
     type IPushData,
     isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
+import { _isEqual } from "@gooddata/util";
 
 import { addDrillTargets } from "../../../../../model/commands/drillTargets.js";
 import {
@@ -55,7 +54,7 @@ export const useDashboardInsightDrills = ({
         (data: IPushData): void => {
             const targets = data?.availableDrillTargets;
 
-            if (targets && !isEqual(drillTargets?.availableDrillTargets, targets)) {
+            if (targets && !_isEqual(drillTargets?.availableDrillTargets, targets)) {
                 dispatch(addDrillTargets(widget.ref, targets));
             }
 

@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type FilterContextItem } from "../../dashboard/filterContext.js";
 
@@ -76,7 +76,7 @@ export interface IPublisherDocumentPageV2 extends IPublisherPageBodyV2 {
  * @alpha
  */
 export function isPublisherPageBodyV2(obj: unknown): obj is IPublisherPageBodyV2 {
-    if (isEmpty(obj)) {
+    if (_isEmpty(obj)) {
         return false;
     }
     const { layout } = obj as IPublisherPageBodyV2;

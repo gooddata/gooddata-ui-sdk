@@ -1,6 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
-
-import { isEmpty } from "lodash-es";
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type IInsightDefinition,
@@ -12,6 +10,7 @@ import {
     isInsightWidget,
     isMeasureSort,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 /**
  * Purpose of methods in this file is to remove & replace legacy element uris in the visualization properties & sorts
@@ -137,14 +136,14 @@ interface IAttributeColumnLocator {
  * @internal
  */
 function isAttributeColumnLocator(obj: unknown): obj is IAttributeColumnLocator {
-    return !isEmpty(obj) && (obj as IAttributeColumnLocator).attributeLocatorItem !== undefined;
+    return !_isEmpty(obj) && (obj as IAttributeColumnLocator).attributeLocatorItem !== undefined;
 }
 
 /**
  * @internal
  */
 function isMeasureColumnWidthItem(obj: unknown): obj is IMeasureColumnWidthItem {
-    return !isEmpty(obj) && (obj as IMeasureColumnWidthItem).measureColumnWidthItem?.locators !== undefined;
+    return !_isEmpty(obj) && (obj as IMeasureColumnWidthItem).measureColumnWidthItem?.locators !== undefined;
 }
 
 function fixColumnLocator(locator: unknown): unknown {

@@ -11,7 +11,10 @@ import type { Text } from "@codemirror/state";
 
 import type { ParameterType } from "@gooddata/sdk-model";
 
-import { type ParameterSchemaKeys, type SchemaKeysEntry, parameterSchemaKeys } from "./parameterSchema.js";
+import { replacingKey } from "../asCode/keyCompletions.js";
+import type { SchemaKeys, SchemaKeysEntry } from "../asCode/schemaKeys.js";
+
+import { parameterSchemaKeys } from "./parameterSchema.js";
 
 /**
  * Creates a CodeMirror completion source that suggests allowed YAML property
@@ -65,7 +68,13 @@ export function createParameterCompletions(enabledTypes: ParameterType[]) {
         const entry = vocabulary[parent.key];
         // A sequence's keys are valid only inside a `- ` item; a mapping's keys only outside one.
         const inItem = itemMatch !== null || parent.itemIndent !== undefined;
-        if (!entry || (entry.kind === "sequence") !== inItem) {
+        if (!entry) {
+            return null;
+        }
+        if (entry.kind === "sequence" && !inItem) {
+            return word === "" ? { from, options: [toNewItemOption(entry.options[0].label, from)] } : null;
+        }
+        if (entry.kind === "mapping" && inItem) {
             return null;
         }
 
@@ -82,24 +91,30 @@ export function createParameterCompletions(enabledTypes: ParameterType[]) {
 
 type CompletionVocabulary = Record<string, { kind: SchemaKeysEntry["kind"]; options: Completion[] }>;
 
-function toVocabulary(schemaKeys: ParameterSchemaKeys): CompletionVocabulary {
+function toVocabulary(schemaKeys: SchemaKeys): CompletionVocabulary {
+    // A sequence of scalars has no keys to offer, so it gets no entry: every entry has a first option.
     return Object.fromEntries(
-        Object.entries(schemaKeys).map(([parent, { kind, keys }]) => [
-            parent,
-            { kind, options: keys.map((key) => toKeyOption(key, schemaKeys)) },
-        ]),
+        Object.entries(schemaKeys)
+            .filter(([, { keys }]) => keys.length > 0)
+            .map(([parent, { kind, keys }]) => [
+                parent,
+                { kind, options: keys.map((key) => replacingKey(toKeyOption(key, schemaKeys))) },
+            ]),
     );
 }
 
-function toKeyOption(label: string, schemaKeys: ParameterSchemaKeys): Completion {
+function toKeyOption(label: string, schemaKeys: SchemaKeys): Completion {
     const child = schemaKeys[label];
     if (child?.kind === "sequence") {
-        return snippetCompletion(`${label}:\n\t${toItemTemplate(child.keys[0])}`, {
+        return snippetCompletion(`${label}:\n\t${toItemTemplate(child.keys.at(0))}`, {
             label,
             type: "property",
         });
     }
-    return { label, type: "property" };
+    if (child?.kind === "mapping") {
+        return snippetCompletion(`${label}:\n\t\${}`, { label, type: "property" });
+    }
+    return { label, type: "property", apply: `${label}: ` };
 }
 
 function toNewItemOption(firstKey: string, itemFrom: number): Completion {
@@ -112,8 +127,8 @@ function toNewItemOption(firstKey: string, itemFrom: number): Completion {
     };
 }
 
-function toItemTemplate(firstKey: string): string {
-    return `- ${firstKey}: \${}`;
+function toItemTemplate(firstKey: string | undefined): string {
+    return firstKey === undefined ? "- ${}" : `- ${firstKey}: \${}`;
 }
 
 type ParentContext = { key: string; itemIndent: number | undefined };

@@ -1,8 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IDateDatasetsMeta } from "../models/date_datasets_meta.js";
 import type { IDateDatasetsMetaItem } from "../models/date_datasets_meta_item.js";
@@ -15,7 +14,7 @@ export const DateDatasetsMetaUtils = {
 };
 
 function collectMeta(dateDatasets: IDateDatasets): IDateDatasetsMeta {
-    if (isEmpty(dateDatasets)) {
+    if (_isEmpty(dateDatasets)) {
         return null;
     }
 
@@ -38,7 +37,7 @@ function findDateDatasetMetaByUri(
     uri: string,
     dateDatasetMetas: IDateDatasetsMetaItem[],
 ): IDateDatasetsMetaItem {
-    if (isEmpty(dateDatasetMetas)) {
+    if (_isEmpty(dateDatasetMetas)) {
         return undefined;
     }
     return dateDatasetMetas.find((dateDatasetMeta) => dateDatasetMeta.uri === uri);
@@ -48,7 +47,7 @@ function findDateDatasetMetaByRef(
     ref: ObjRef,
     dateDatasetMetas: IDateDatasetsMetaItem[],
 ): IDateDatasetsMetaItem {
-    if (isEmpty(dateDatasetMetas)) {
+    if (_isEmpty(dateDatasetMetas)) {
         return undefined;
     }
     return dateDatasetMetas.find((dateDatasetMeta) => areObjRefsEqual(dateDatasetMeta.ref, ref));

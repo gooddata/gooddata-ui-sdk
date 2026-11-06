@@ -1,9 +1,10 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { has, isEqual, omit, sortBy } from "lodash-es";
+import { has, omit, sortBy } from "lodash-es";
 import { createSelector } from "reselect";
 
 import { type IInsightDefinition, type VisualizationProperties } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { CHOROPLETH, LOCAL_CHOROPLETH, LOCAL_PUSHPIN, PUSHPIN } from "../constants/visualization_types.js";
 import { BackendToBearConvertors } from "../convertors/index.js";
@@ -283,7 +284,7 @@ export function isSavedReportCurrentReport(state: IAppState): boolean {
         dateDatasets: DateDatasetsService.getPlainDateDatasets(state),
     };
 
-    return isEqual(
+    return _isEqual(
         prepareForComparison(savedReportContent, options),
         prepareForComparison(currentReportContent, options),
     );

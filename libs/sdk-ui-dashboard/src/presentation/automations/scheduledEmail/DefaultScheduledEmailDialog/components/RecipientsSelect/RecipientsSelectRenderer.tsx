@@ -3,7 +3,6 @@
 import { type KeyboardEvent, type ReactElement, memo, useCallback, useEffect, useRef, useState } from "react";
 
 import cx from "classnames";
-import { isEmpty } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
 import ReactSelect, {
     type ActionMeta,
@@ -41,6 +40,7 @@ import {
     isEscapeKey,
     makeKeyboardNavigation,
 } from "@gooddata/sdk-ui-kit";
+import { _isEmpty } from "@gooddata/util";
 
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../../../constants/zIndex.js";
 import { getRecipientLabel } from "../../../utils/users.js";
@@ -364,7 +364,7 @@ export const RecipientsSelectRenderer = memo(function RecipientsSelectRenderer(
 
     const getStyle = useCallback(() => {
         const { current } = recipientRef;
-        const { width } = (!isEmpty(current) && current.getBoundingClientRect()) || { width: undefined };
+        const { width } = (!_isEmpty(current) && current.getBoundingClientRect()) || { width: undefined };
 
         return {
             maxWidth: width ? width - PADDING : "100%",

@@ -1,6 +1,5 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import { type IntlShape, defineMessages } from "react-intl";
 
 import {
@@ -11,6 +10,7 @@ import {
     type IMeasureTitleProps,
     type OverTimeComparisonType,
 } from "@gooddata/sdk-ui";
+import { _isEmpty } from "@gooddata/util";
 
 import {
     getMasterLocalIdentifier,
@@ -239,7 +239,7 @@ function getDerivedMeasureTitle(
     const masterLocalIdentifier = getMasterLocalIdentifier(measure);
 
     const masterMeasureAlias = measuresDescriptions[masterLocalIdentifier].alias;
-    const actualTitle = isEmpty(masterMeasureAlias)
+    const actualTitle = _isEmpty(masterMeasureAlias)
         ? measuresDescriptions[masterLocalIdentifier].title
         : masterMeasureAlias;
     const overTimeComparisonType = measure?.overTimeComparisonType as OverTimeComparisonType;

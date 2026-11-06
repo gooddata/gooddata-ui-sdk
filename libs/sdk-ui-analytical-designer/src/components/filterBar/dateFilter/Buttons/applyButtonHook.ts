@@ -1,6 +1,5 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
 import moment from "moment";
 import { useIntl } from "react-intl";
 
@@ -11,6 +10,7 @@ import {
     isAbsoluteDateFilterOption,
     isRelativeDateFilterOption,
 } from "@gooddata/sdk-ui-filters";
+import { _isEqual } from "@gooddata/util";
 
 import { type IDecoratedDateDataset } from "../../../../models/decorated_date_dataset.js";
 import {
@@ -30,7 +30,7 @@ const isAllTimeSelectedAndTimeComparisonApplied = (
 const areSameMeasuresSelected = (
     selectedComparisonMeasures: string[],
     originalComparisonMeasures: string[],
-) => isEqual(selectedComparisonMeasures.slice().sort(), originalComparisonMeasures.slice().sort());
+) => _isEqual(selectedComparisonMeasures.slice().sort(), originalComparisonMeasures.slice().sort());
 
 const isEndTimeAfterOrAtStartTime = (start: string, end: string) => moment(start) <= moment(end);
 
@@ -58,7 +58,7 @@ const isDialogStateChanged = (
     selectedEmptyDateValuesFilterMode: EmptyDateValuesFilterMode | undefined,
     originalEmptyDateValuesFilterMode: EmptyDateValuesFilterMode | undefined,
 ) => {
-    const isFilterSame = isEqual(selectedFilter, originalFilter);
+    const isFilterSame = _isEqual(selectedFilter, originalFilter);
     const isComparisonTypeSame = selectedTimeComparisonType === originalTimeComparisonType;
     // originalDateDataset is undefined when component is removed from filter bar (when dragged to trash)
     const isSameDateDataset = areObjRefsEqual(selectedDateDataset.ref, originalDateDataset?.ref);
@@ -66,7 +66,7 @@ const isDialogStateChanged = (
         selectedComparisonMeasures,
         originalComparisonMeasures,
     );
-    const areAdditionalFiltersSame = isEqual(additionalDateFilters, originalAdditionalDateFilters);
+    const areAdditionalFiltersSame = _isEqual(additionalDateFilters, originalAdditionalDateFilters);
     const isEmptyDateValuesFilterModeSame =
         (selectedEmptyDateValuesFilterMode || "include") === (originalEmptyDateValuesFilterMode || "include");
 

@@ -1,5 +1,6 @@
-// (C) 2019-2025 GoodData Corporation
-import { isEmpty } from "lodash-es";
+// (C) 2019-2026 GoodData Corporation
+
+import { _isEmpty } from "@gooddata/util";
 
 import { type IFactMetadataObject } from "../../metadata/fact/index.js";
 import { type IGroupableCatalogItemBase } from "../group/index.js";
@@ -27,5 +28,5 @@ export interface ICatalogFact extends IGroupableCatalogItemBase {
  * @public
  */
 export function isCatalogFact(obj: unknown): obj is ICatalogFact {
-    return !isEmpty(obj) && (obj as ICatalogFact).type === "fact";
+    return !_isEmpty(obj) && (obj as ICatalogFact).type === "fact";
 }

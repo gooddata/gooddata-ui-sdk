@@ -1,5 +1,6 @@
-// (C) 2019-2025 GoodData Corporation
-import { compact, isEmpty } from "lodash-es";
+// (C) 2019-2026 GoodData Corporation
+
+import { compact } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { type IAnalyticalBackend, type IPreparedExecution } from "@gooddata/sdk-backend-spi";
@@ -16,6 +17,7 @@ import {
     newDimension,
     newTwoDimensional,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 /**
  * @internal
@@ -135,7 +137,7 @@ export function createExecution(options: CreateExecutionOptions): IPreparedExecu
         "backend and workspace must be either specified explicitly or be provided by context",
     );
 
-    const dimensions = isEmpty(slicesBy)
+    const dimensions = _isEmpty(slicesBy)
         ? seriesOnlyDim(seriesBy)
         : seriesAndSlicesDim(seriesBy, slicesBy, totals);
 

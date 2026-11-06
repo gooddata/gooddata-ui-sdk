@@ -21,6 +21,8 @@ const requireFromHere = createRequire(import.meta.url);
 const WORKSPACE_TEMPLATE_ROOTS = {
     module: dirname(requireFromHere.resolve("gdc-app-template-name-module/tsconfig.json")),
     harness: dirname(requireFromHere.resolve("gdc-app-template-name-harness/tsconfig.json")),
+    "headless-module": dirname(requireFromHere.resolve("gdc-headless-template-name-module/tsconfig.json")),
+    "headless-harness": dirname(requireFromHere.resolve("gdc-headless-template-name-harness/tsconfig.json")),
 };
 
 /**
@@ -109,6 +111,38 @@ describe("snapshot: client profile end-to-end scaffold", () => {
         );
 
         const tree = treeToMap(join(testRoot, "modules", "gdc-snap-test"));
+        expect(tree).toMatchSnapshot();
+    });
+
+    it("produces a deterministic headless scaffold (client profile, fresh non-rush dir)", async () => {
+        const profileForSnapshot = {
+            ...clientProfile,
+            preferWorkspaceTemplate: true,
+            templateSubtreeRoots: WORKSPACE_TEMPLATE_ROOTS,
+            postCopy: async () => {},
+        };
+
+        await runProfileWithAnswers(
+            profileForSnapshot,
+            {
+                appName: "gdc-snap-headless",
+                title: "Snapshot Headless",
+                kind: "headless",
+                scope: "organization",
+                maintainer: "team@gooddata.com",
+            },
+            {
+                repo: {
+                    repoRoot: testRoot,
+                    packageManager: "npm",
+                },
+                steps: [],
+            },
+        );
+
+        const tree = treeToMap(join(testRoot, "modules", "gdc-snap-headless"));
+        expect(Object.keys(tree).some((path) => path.includes("template-name"))).toBe(false);
+        expect(JSON.stringify(tree)).not.toMatch(/gdc-headless-template-name|\{applicationTemplate/);
         expect(tree).toMatchSnapshot();
     });
 });

@@ -171,6 +171,41 @@ describe("mapLegacyUrlToHost", () => {
         },
     );
 
+    it.each([
+        [
+            "/workspace/wsA/dashboards/",
+            "#/workspace/wsB/dashboard/d1",
+            "",
+            "/workspace/wsB/dashboards/#/dashboard/d1",
+        ],
+        [
+            "/workspace/wsA/dashboards",
+            "#/project/wsB/dashboard/d1/tab/t1",
+            "?x=1",
+            "/workspace/wsB/dashboards/?x=1#/dashboard/d1/tab/t1",
+        ],
+        ["/workspace/wsA/dashboards/", "#/p/wsB", "", "/workspace/wsB/dashboards/"],
+        [
+            "/embedded/workspace/wsA/dashboards/",
+            "#/workspace/wsB/dashboard/d1?showNavigation=false",
+            "",
+            "/embedded/workspace/wsB/dashboards/#/dashboard/d1?showNavigation=false",
+        ],
+    ])(
+        "moves the hash workspace of the host KD URL %s%s into the path",
+        (pathname, hash, search, expected) => {
+            expect(mapLegacyUrlToHost(location(pathname, hash, search))).toBe(expected);
+        },
+    );
+
+    it.each([
+        ["/workspace/wsA/dashboards/", "#/dashboard/d1"],
+        ["/workspace/wsA/analyze/", "#/workspace/wsB/insight"],
+        ["/workspace/wsA/dashboards/extra", "#/workspace/wsB/dashboard/d1"],
+    ])("leaves the host URL %s%s alone", (pathname, hash) => {
+        expect(mapLegacyUrlToHost(location(pathname, hash))).toBeNull();
+    });
+
     it("sends the standalone KD access-denied page to the host root", () => {
         expect(mapLegacyUrlToHost(location("/dashboards/403.html"))).toBe("/");
     });

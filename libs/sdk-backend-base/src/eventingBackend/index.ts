@@ -1,5 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
-import { isEmpty } from "lodash-es";
+// (C) 2007-2026 GoodData Corporation
+
 import { v4 as uuid } from "uuid";
 
 import {
@@ -17,6 +17,7 @@ import {
     type IPreparedExecution,
 } from "@gooddata/sdk-backend-spi";
 import { type IExecutionDefinition } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import {
     DecoratedExecutionFactory,
@@ -269,7 +270,7 @@ export function withEventing(
     realBackend: IAnalyticalBackend,
     callbacks: AnalyticalBackendCallbacks,
 ): IAnalyticalBackend {
-    if (isEmpty(callbacks)) {
+    if (_isEmpty(callbacks)) {
         return realBackend;
     }
 

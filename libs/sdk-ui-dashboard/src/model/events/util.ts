@@ -1,5 +1,6 @@
-// (C) 2021 GoodData Corporation
-import { isEmpty } from "lodash-es";
+// (C) 2021-2026 GoodData Corporation
+
+import { _isEmpty } from "@gooddata/util";
 
 import { type IDashboardEvent } from "./base.js";
 
@@ -12,5 +13,5 @@ import { type IDashboardEvent } from "./base.js";
 export const eventGuard =
     <TEvent extends IDashboardEvent>(type: TEvent["type"]) =>
     (obj: unknown): obj is TEvent => {
-        return !isEmpty(obj) && (obj as TEvent).type === type;
+        return !_isEmpty(obj) && (obj as TEvent).type === type;
     };

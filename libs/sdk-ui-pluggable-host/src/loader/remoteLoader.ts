@@ -2,8 +2,12 @@
 
 import { type ModuleFederation, createInstance } from "@module-federation/runtime";
 
-import { type IRemotePluggableApplicationModule } from "@gooddata/sdk-model";
-import { type IPluggableApp, type IHostUiModule } from "@gooddata/sdk-pluggable-application-model";
+import { type IRemoteModuleLocation, type IRemotePluggableApplicationModule } from "@gooddata/sdk-model";
+import {
+    type IHeadlessModule,
+    type IHostUiModule,
+    type IPluggableApp,
+} from "@gooddata/sdk-pluggable-application-model";
 
 import { createHostFederationPlugin } from "./federationRuntimePlugin.js";
 import { isAllowedRemoteHostname } from "./remoteUrlSecurity.js";
@@ -52,11 +56,11 @@ function asPluggableApp(
     return app;
 }
 
-function getCacheKey(remote: IRemotePluggableApplicationModule): string {
+function getCacheKey(remote: IRemoteModuleLocation): string {
     return `${remote.scope}::${remote.url}::${remote.module}`;
 }
 
-function registerRemote(remote: IRemotePluggableApplicationModule): void {
+function registerRemote(remote: IRemoteModuleLocation): void {
     const existingUrl = registeredRemoteScopeUrls.get(remote.scope);
 
     if (!remote.url) {
@@ -100,12 +104,21 @@ function registerRemote(remote: IRemotePluggableApplicationModule): void {
 }
 
 async function loadRemoteModule<T = ILoadedRemotePluggableApplicationModule>(
-    remote: IRemotePluggableApplicationModule,
+    remote: IRemoteModuleLocation,
 ): Promise<T> {
     registerRemote(remote);
 
     const moduleName = normalizeModuleName(remote.module);
     const loaded = await getFederation().loadRemote<T>(`${remote.scope}/${moduleName}`);
+
+    // The federation runtime resolves the scope after an await. A load that registers the same scope
+    // with another URL in that gap makes this load return the module from that other URL.
+    const registeredUrl = registeredRemoteScopeUrls.get(remote.scope);
+    if (registeredUrl !== remote.url) {
+        throw new Error(
+            `[host-runtime/remote-loader] Remote "${remote.scope}" was registered from "${registeredUrl}" while "${remote.url}" was loading. Refusing to use a module that can come from the other URL.`,
+        );
+    }
 
     if (!loaded) {
         throw new Error(
@@ -166,6 +179,33 @@ export async function loadRemoteHostUiModule(
 ): Promise<IHostUiModule> {
     const loaded = await loadRemoteModule<ILoadedHostUiRemoteModule>(remote);
     return asHostUiModule(remote, loaded);
+}
+
+// ---------------------------------------------------------------------------
+// Headless module loading
+// ---------------------------------------------------------------------------
+
+interface ILoadedHeadlessRemoteModule {
+    default?: IHeadlessModule;
+    headlessModule?: IHeadlessModule;
+}
+
+export function asHeadlessModule(
+    source: string,
+    loaded: ILoadedHeadlessRemoteModule | undefined,
+): IHeadlessModule {
+    const mod = loaded?.headlessModule ?? loaded?.default;
+
+    if (!mod || typeof mod.mount !== "function") {
+        throw new Error(`[host-runtime/remote-loader] ${source} does not export a valid headless module.`);
+    }
+
+    return mod;
+}
+
+export async function loadRemoteHeadlessModule(remote: IRemoteModuleLocation): Promise<IHeadlessModule> {
+    const loaded = await loadRemoteModule<ILoadedHeadlessRemoteModule>(remote);
+    return asHeadlessModule(`Remote module "${remote.scope}/${remote.module}"`, loaded);
 }
 
 export async function preloadRemotePluggableApplication(

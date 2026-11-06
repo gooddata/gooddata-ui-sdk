@@ -11,6 +11,7 @@ import {
     type IAsCodeMessages,
     defineAsCodeDescriptor,
     fixedIdentifierOf,
+    toAsCodeFailure,
 } from "../asCode/descriptor.js";
 import type { ICatalogItemMeasure } from "../catalogItem/types.js";
 import { ObjectTypes } from "../objectType/constants.js";
@@ -82,7 +83,7 @@ function useMetricEditing(): IAsCodeEditing<IMeasureMetadataObjectDefinition> {
                 const result = validateMetricYaml(value, { fixedIdentifier: fixedIdentifierOf(context) });
                 return result.isValid
                     ? { isValid: true, definition: result.measure }
-                    : { isValid: false, error: intl.formatMessage(errorMessages[result.errorCode]) };
+                    : toAsCodeFailure(result, intl.formatMessage(errorMessages[result.errorCode]));
             },
             reconcile: reconcileMetricDefinition,
         }),
