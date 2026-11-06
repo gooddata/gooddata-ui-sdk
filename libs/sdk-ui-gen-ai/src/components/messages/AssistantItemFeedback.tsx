@@ -64,6 +64,11 @@ export function AssistantItemFeedback({
                 "gd-gen-ai-chat__conversation__item__feedback--assigned": isAssigned,
                 "gd-gen-ai-chat__conversation__item__feedback--last": isLast,
             })}
+            onMouseDown={(event) => {
+                if (event.currentTarget.contains(event.target as Node)) {
+                    event.preventDefault();
+                }
+            }}
         >
             <UiTooltip
                 triggerBy={["focus", "hover"]}

@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import { configureStore } from "@reduxjs/toolkit";
-import { cleanup, render } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 import { Provider } from "react-redux";
 import { afterEach, describe, expect, it } from "vitest";
@@ -65,5 +65,24 @@ describe("AssistantItemComponent", () => {
         const { container } = renderAnswer(ANSWER);
 
         expect(container.querySelector("[aria-live]")?.textContent).toBe("");
+    });
+
+    it("keeps the chat input focused when the feedback button is pressed", () => {
+        renderAnswer(ANSWER);
+
+        const notPrevented = fireEvent.mouseDown(
+            screen.getByRole("button", { name: "Mark this message as not helpful" }),
+        );
+
+        expect(notPrevented).toBe(false);
+    });
+
+    it("lets the feedback form take focus on mouse press", () => {
+        renderAnswer(ANSWER);
+        fireEvent.click(screen.getByRole("button", { name: "Mark this message as not helpful" }));
+
+        const notPrevented = fireEvent.mouseDown(screen.getByRole("dialog"));
+
+        expect(notPrevented).toBe(true);
     });
 });
