@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type ObjRef, type ObjRefInScope } from "../objRef/index.js";
 
@@ -132,7 +132,7 @@ export interface IDrillFromMeasure extends IDrillOrigin {
  * @alpha
  */
 export function isDrillFromMeasure(obj: DrillOrigin): obj is IDrillFromMeasure {
-    return !isEmpty(obj) && (obj as IDrillFromMeasure).type === "drillFromMeasure";
+    return !_isEmpty(obj) && (obj as IDrillFromMeasure).type === "drillFromMeasure";
 }
 
 /**
@@ -156,7 +156,7 @@ export interface IDrillFromAttribute extends IDrillOrigin {
  * @alpha
  */
 export function isDrillFromAttribute(obj: DrillOrigin): obj is IDrillFromAttribute {
-    return !isEmpty(obj) && (obj as IDrillFromAttribute).type === "drillFromAttribute";
+    return !_isEmpty(obj) && (obj as IDrillFromAttribute).type === "drillFromAttribute";
 }
 
 /**
@@ -225,7 +225,7 @@ export interface IDrillToLegacyDashboard extends IDrill {
  * @alpha
  */
 export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDashboard {
-    return !isEmpty(obj) && (obj as IDrillToLegacyDashboard).type === "drillToLegacyDashboard";
+    return !_isEmpty(obj) && (obj as IDrillToLegacyDashboard).type === "drillToLegacyDashboard";
 }
 
 /**
@@ -340,7 +340,7 @@ export type SourceMeasureFilterObjRef = Extract<
  * @alpha
  */
 export function isDrillToDashboard(obj: unknown): obj is IDrillToDashboard {
-    return !isEmpty(obj) && (obj as IDrillToDashboard).type === "drillToDashboard";
+    return !_isEmpty(obj) && (obj as IDrillToDashboard).type === "drillToDashboard";
 }
 
 /**
@@ -384,7 +384,7 @@ export interface IDrillToInsight extends IDrill {
  * @alpha
  */
 export function isDrillToInsight(obj: unknown): obj is IDrillToInsight {
-    return !isEmpty(obj) && (obj as IDrillToInsight).type === "drillToInsight";
+    return !_isEmpty(obj) && (obj as IDrillToInsight).type === "drillToInsight";
 }
 
 /**
@@ -413,7 +413,7 @@ export interface IDrillToCustomUrl extends IDrill {
  * @alpha
  */
 export function isDrillToCustomUrl(obj: unknown): obj is IDrillToCustomUrl {
-    return !isEmpty(obj) && (obj as IDrillToCustomUrl).type === "drillToCustomUrl";
+    return !_isEmpty(obj) && (obj as IDrillToCustomUrl).type === "drillToCustomUrl";
 }
 
 /**
@@ -442,7 +442,7 @@ export interface IDrillToAttributeUrl extends IDrill {
  * @alpha
  */
 export function isDrillToAttributeUrl(obj: unknown): obj is IDrillToAttributeUrl {
-    return !isEmpty(obj) && (obj as IDrillToAttributeUrl).type === "drillToAttributeUrl";
+    return !_isEmpty(obj) && (obj as IDrillToAttributeUrl).type === "drillToAttributeUrl";
 }
 
 /**
@@ -470,7 +470,7 @@ export interface IDateHierarchyReference {
  * @alpha
  */
 export function isAttributeHierarchyReference(obj: unknown): obj is IAttributeHierarchyReference {
-    return !isEmpty(obj) && (obj as IAttributeHierarchyReference).type === "attributeHierarchyReference";
+    return !_isEmpty(obj) && (obj as IAttributeHierarchyReference).type === "attributeHierarchyReference";
 }
 
 /**
@@ -478,7 +478,7 @@ export function isAttributeHierarchyReference(obj: unknown): obj is IAttributeHi
  * @alpha
  */
 export function isDateHierarchyReference(obj: unknown): obj is IDateHierarchyReference {
-    return !isEmpty(obj) && (obj as IDateHierarchyReference).type === "dateHierarchyReference";
+    return !_isEmpty(obj) && (obj as IDateHierarchyReference).type === "dateHierarchyReference";
 }
 
 /**
@@ -523,7 +523,7 @@ export interface ICrossFiltering extends IDrill {
  * @alpha
  */
 export function isCrossFiltering(obj: unknown): obj is ICrossFiltering {
-    return !isEmpty(obj) && (obj as ICrossFiltering).type === "crossFiltering";
+    return !_isEmpty(obj) && (obj as ICrossFiltering).type === "crossFiltering";
 }
 
 /**
@@ -542,5 +542,5 @@ export interface IKeyDriveAnalysis extends IDrill {
  * @alpha
  */
 export function isKeyDriveAnalysis(obj: unknown): obj is IKeyDriveAnalysis {
-    return !isEmpty(obj) && (obj as IKeyDriveAnalysis).type === "keyDriveAnalysis";
+    return !_isEmpty(obj) && (obj as IKeyDriveAnalysis).type === "keyDriveAnalysis";
 }

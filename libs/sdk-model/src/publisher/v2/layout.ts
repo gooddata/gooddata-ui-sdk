@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IPublisherContainerStyleV2 } from "./style.js";
 import { type PublisherWidgetV2 } from "./widget.js";
@@ -47,12 +47,12 @@ export function isPublisherContainerV2(obj: unknown): obj is IPublisherContainer
  * @alpha
  */
 export function isPublisherRowV2(obj: unknown): obj is IPublisherContainerV2 & { type: "row" } {
-    return !isEmpty(obj) && (obj as IPublisherContainerV2).type === "row";
+    return !_isEmpty(obj) && (obj as IPublisherContainerV2).type === "row";
 }
 
 /**
  * @alpha
  */
 export function isPublisherColumnV2(obj: unknown): obj is IPublisherContainerV2 & { type: "column" } {
-    return !isEmpty(obj) && (obj as IPublisherContainerV2).type === "column";
+    return !_isEmpty(obj) && (obj as IPublisherContainerV2).type === "column";
 }

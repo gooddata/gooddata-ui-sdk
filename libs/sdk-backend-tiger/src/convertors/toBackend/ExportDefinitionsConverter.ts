@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { isEmpty, omitBy } from "lodash-es";
+import { omitBy } from "lodash-es";
 
 import {
     type AutomationRawExportAutomationRequest,
@@ -24,6 +24,7 @@ import {
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { convertSdkFiltersToTiger } from "../shared/storedFilterConverter.js";
 
@@ -119,7 +120,7 @@ export const convertToRawExportRequest = (
     };
 
     const customOverride =
-        isEmpty(overrides) || (isEmpty(overrides?.measures) && isEmpty(overrides?.displayForms))
+        _isEmpty(overrides) || (_isEmpty(overrides?.measures) && _isEmpty(overrides?.displayForms))
             ? undefined
             : {
                   metrics: overrides?.measures,
@@ -141,7 +142,7 @@ export const convertToRawExportRequest = (
 
     const timezone = exportRequest.timezoneId;
     const settingsWithTimezone = { ...settings, ...(timezone ? { timezone } : {}) };
-    const executionSettings = isEmpty(settingsWithTimezone) ? undefined : settingsWithTimezone;
+    const executionSettings = _isEmpty(settingsWithTimezone) ? undefined : settingsWithTimezone;
     const delimiter = exportRequest.settings?.delimiter;
 
     return {
@@ -151,7 +152,7 @@ export const convertToRawExportRequest = (
         executionSettings,
         customOverride,
         ...(delimiter ? { delimiter } : {}),
-        ...(isEmpty(metadata) ? {} : { metadata }),
+        ...(_isEmpty(metadata) ? {} : { metadata }),
     };
 };
 

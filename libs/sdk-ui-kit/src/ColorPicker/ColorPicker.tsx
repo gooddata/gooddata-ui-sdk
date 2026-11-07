@@ -2,9 +2,10 @@
 
 import { useCallback, useState } from "react";
 
-import { isEqual } from "lodash-es";
 import { useIntl } from "react-intl";
 import { type ColorFormats } from "tinycolor2";
+
+import { _isEqual } from "@gooddata/util";
 
 import { Button } from "../Button/Button.js";
 
@@ -70,7 +71,7 @@ export function ColorPicker(props: IColorPickerProps) {
                     />
                     <Button
                         value={intl.formatMessage({ id: "gs.color-picker.okButton" })}
-                        disabled={isEqual(props.initialRgbColor, getRgbFromHslColor(draftHslColor))}
+                        disabled={_isEqual(props.initialRgbColor, getRgbFromHslColor(draftHslColor))}
                         className="gd-button-action gd-button color-picker-ok-button"
                         onClick={handleSubmit}
                     />

@@ -85,31 +85,6 @@ $attribute-filter-drag-handle-left: 10px;
     }
 }
 
-.is-sticky {
-    .dash-nav,
-    .gd-dash-header-wrapper {
-        @media #{kit-variables.$medium-up} {
-            position: fixed;
-            top: 0;
-            animation: sticky-intro 1ms;
-        }
-    }
-
-    .dash-nav {
-        width: variables.$sidebar-width;
-    }
-}
-
-@keyframes sticky-intro {
-    from {
-        top: -100%;
-    }
-
-    to {
-        top: 0;
-    }
-}
-
 .dash-filters-visible {
     position: relative;
     overflow-y: hidden;

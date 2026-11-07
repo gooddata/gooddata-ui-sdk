@@ -3,7 +3,6 @@
 import { useState } from "react";
 
 import cx from "classnames";
-import { isEqual } from "lodash-es";
 import { useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 
@@ -15,6 +14,7 @@ import {
     type IConditionalFormattingCondition,
     type IConditionalFormattingRule,
 } from "@gooddata/sdk-ui-pivot/next";
+import { _isEqual } from "@gooddata/util";
 
 import { conditionalFormattingMessages } from "../../../../locales.js";
 import { DisabledBubbleMessage } from "../../DisabledBubbleMessage.js";
@@ -222,7 +222,7 @@ export function ConditionalFormattingDialog({
     const isPercent = selectedTarget?.isPercent ?? false;
     const suggestions = selectedTarget?.elements ?? [];
     const complete = isRuleComplete(rule, selectedTarget?.date);
-    const isDirty = isNew || !isEqual(rule, initial);
+    const isDirty = isNew || !_isEqual(rule, initial);
     // A target with a semantic default reads as a plain "Rule" regardless of which side of the
     // checkbox it's on — the Add/Edit split only applies to targets with no default to switch to.
     const title = intl.formatMessage(

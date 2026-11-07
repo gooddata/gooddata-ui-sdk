@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, isEmpty, isEqual } from "lodash-es";
+import { cloneDeep } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
 
 import {
@@ -60,11 +60,12 @@ import {
     isInsightWidgetDefinition,
     isKpiWidgetDefinition,
 } from "@gooddata/sdk-model";
+import { _isEmpty, _isEqual } from "@gooddata/util";
 
 import { type DashboardRecording, type RecordingIndex } from "./types.js";
 
 function isDashboardRecording(obj: unknown): obj is DashboardRecording {
-    return !isEmpty(obj) && (obj as any).obj !== undefined;
+    return !_isEmpty(obj) && (obj as any).obj !== undefined;
 }
 
 export class RecordedDashboards implements IWorkspaceDashboardsService {
@@ -248,7 +249,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
     ): Promise<IDashboard> => {
         if (!areObjRefsEqual(dashboard.ref, updatedDashboard.ref)) {
             throw new Error("Cannot update dashboard with different refs!");
-        } else if (isEqual(dashboard, updatedDashboard)) {
+        } else if (_isEqual(dashboard, updatedDashboard)) {
             return Promise.resolve(dashboard);
         }
 

@@ -1,9 +1,10 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, isEmpty, isEqual, set } from "lodash-es";
+import { cloneDeep, set } from "lodash-es";
 
 import { type IInsight, type IInsightDefinition, newAttributeSort } from "@gooddata/sdk-model";
 import { BucketNames, type IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
+import { _isEmpty, _isEqual } from "@gooddata/util";
 
 import { AXIS, AXIS_NAME } from "../../../constants/axis.js";
 import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket.js";
@@ -276,7 +277,7 @@ export class PluggableLineChart extends PluggableBaseChart {
         const defaultSort = trendBy.length > 0 ? [newAttributeSort(trendBy[0].localIdentifier, "asc")] : [];
 
         if (measures.length > 0 && trendBy.length === 1) {
-            if (isEmpty(segmentBy)) {
+            if (_isEmpty(segmentBy)) {
                 return {
                     defaultSort,
                     availableSorts: [
@@ -324,7 +325,7 @@ export class PluggableLineChart extends PluggableBaseChart {
             // In case there's just one measure item, we need to reset the threshold measures
             set(referencePoint, "properties.controls.thresholdMeasures", []);
         }
-        if (isEqual(listThresholdMeasures, existingThresholdMeasures)) {
+        if (_isEqual(listThresholdMeasures, existingThresholdMeasures)) {
             return referencePoint;
         }
         set(referencePoint, "properties.controls.thresholdMeasures", listThresholdMeasures);

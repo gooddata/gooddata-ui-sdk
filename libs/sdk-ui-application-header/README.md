@@ -13,4 +13,4 @@ The API surface is marked `@alpha` and may change between minor releases.
 
 (C) 2022-2026 GoodData Corporation
 
-This project is under MIT License. See [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-application-header/LICENSE).
+This project is under commercial license. See [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-application-header/LICENSE).

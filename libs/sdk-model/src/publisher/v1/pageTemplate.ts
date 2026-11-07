@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IAuditableDates, type IAuditableUsers } from "../../base/metadata.js";
 import { type FilterContextItem } from "../../dashboard/filterContext.js";
@@ -125,7 +125,7 @@ export interface IPublisherPageTemplateV1
  * @alpha
  */
 export function isPublisherPageTemplateDefinitionV1(obj: unknown): obj is IPublisherPageTemplateDefinitionV1 {
-    return !isEmpty(obj) && (obj as IPublisherPageTemplateDefinitionV1).type === "reportPageLayout";
+    return !_isEmpty(obj) && (obj as IPublisherPageTemplateDefinitionV1).type === "reportPageLayout";
 }
 
 /**
@@ -144,9 +144,9 @@ export function isPublisherPageTemplateV1(obj: unknown): obj is IPublisherPageTe
  */
 export function isPublisherPageTemplateContentV1(obj: unknown): obj is IPublisherPageTemplateContentV1 {
     return (
-        !isEmpty(obj) &&
+        !_isEmpty(obj) &&
         (obj as IPublisherPageTemplateContentV1).version === "1" &&
-        !isEmpty((obj as IPublisherPageTemplateContentV1).layout) &&
+        !_isEmpty((obj as IPublisherPageTemplateContentV1).layout) &&
         Array.isArray((obj as IPublisherPageTemplateContentV1).slots)
     );
 }

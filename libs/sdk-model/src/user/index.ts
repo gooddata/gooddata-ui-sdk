@@ -1,7 +1,8 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
+
+import { _isEmpty } from "@gooddata/util";
 
 import { type IEntitlementDescriptor } from "../entitlements/index.js";
 import { type ObjRef } from "../objRef/index.js";
@@ -197,7 +198,7 @@ export interface IOrganizationUser {
  * @alpha
  */
 export function isIOrganizationUser(obj: unknown): obj is IOrganizationUser {
-    return !isEmpty(obj) && (obj as IOrganizationUser).id !== undefined;
+    return !_isEmpty(obj) && (obj as IOrganizationUser).id !== undefined;
 }
 
 /**
@@ -225,5 +226,5 @@ export interface IOrganizationUserGroup {
  * @alpha
  */
 export function isIOrganizationUserGroup(obj: unknown): obj is IOrganizationUserGroup {
-    return !isEmpty(obj) && (obj as IOrganizationUserGroup).id !== undefined;
+    return !_isEmpty(obj) && (obj as IOrganizationUserGroup).id !== undefined;
 }

@@ -14,7 +14,6 @@ import {
 } from "react";
 
 import { type KeyBinding } from "@codemirror/view";
-import { isEmpty } from "lodash-es";
 import { flushSync } from "react-dom";
 import { type Root, createRoot } from "react-dom/client";
 import { useIntl } from "react-intl";
@@ -34,6 +33,7 @@ import {
     IconMetric,
     IconQuestionMark,
 } from "@gooddata/sdk-ui-kit";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IMaqlEditorIcon } from "../../../MaqlEditor/codemirror/CodeEditor.styles.js";
 import { type IMaqlEditorApi, MaqlEditor } from "../../../MaqlEditor/maql/MaqlEditor.js";
@@ -116,7 +116,7 @@ export const MaqlEditorEditor = forwardRef<IMaqlEditorApi, IMaqlEditorEditorProp
     const [autofocus, setAutofocus] = useState(false);
     const [autohints, setAutoHints] = useAutohint(!valid);
 
-    const isMaqlEditorEmpty = isEmpty(getMaqlValue(value));
+    const isMaqlEditorEmpty = _isEmpty(getMaqlValue(value));
 
     const [onChanged, onValidation] = useMaqlField(value, onChange);
     const onBlurHandler = useBlur(value, onBlur, setAutoHints, setAutofocus);

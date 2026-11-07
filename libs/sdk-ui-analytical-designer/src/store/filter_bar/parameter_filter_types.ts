@@ -1,8 +1,7 @@
 // (C) 2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import { type IParameterDefinition, type ObjRef, type ParameterValue } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 /**
  * Parameter filter state. Represents a per-insight override of a workspace parameter's value.
@@ -19,7 +18,7 @@ export interface IParameterFilter {
 }
 
 export function isParameterFilter(item: unknown): item is IParameterFilter {
-    return !isEmpty(item) && (item as { type?: unknown }).type === "parameter";
+    return !_isEmpty(item) && (item as { type?: unknown }).type === "parameter";
 }
 
 /**

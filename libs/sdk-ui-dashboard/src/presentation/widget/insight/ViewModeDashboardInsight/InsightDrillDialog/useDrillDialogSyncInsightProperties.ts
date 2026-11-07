@@ -2,10 +2,11 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { isEqual, mergeWith } from "lodash-es";
+import { mergeWith } from "lodash-es";
 
 import { type IInsight, insightProperties, insightSetProperties } from "@gooddata/sdk-model";
 import { type IPushData, type PushDataCallback } from "@gooddata/sdk-ui";
+import { _isEqual } from "@gooddata/util";
 
 function mergeVisualizationProperties(
     current: NonNullable<IInsight["insight"]["properties"]> | undefined,
@@ -74,7 +75,7 @@ export function useDrillDialogSyncInsightProperties({
             if (data.properties) {
                 setPushedProperties((current) => {
                     const mergedProperties = mergeVisualizationProperties(current, data.properties);
-                    return isEqual(mergedProperties, current) ? current : mergedProperties;
+                    return _isEqual(mergedProperties, current) ? current : mergedProperties;
                 });
             }
 

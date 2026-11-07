@@ -1,7 +1,5 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
-
 import { type IMeasureGroupDescriptor, type IResultAttributeHeader, type ITheme } from "@gooddata/sdk-model";
 import {
     type DataViewFacade,
@@ -14,6 +12,7 @@ import {
     getLighterColor,
     valueWithEmptyHandling,
 } from "@gooddata/sdk-ui-vis-commons";
+import { _isEqual } from "@gooddata/util";
 
 import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { type IPointData } from "../../typings/unsafe.js";
@@ -99,7 +98,7 @@ export function getTreemapStackedSeriesDataWithViewBy(
     executionResultData.forEach((seriesItems, seriesIndex) => {
         const currentRoot = viewByAttribute.items[seriesIndex].attributeHeaderItem;
 
-        if (!isEqual(currentRoot, lastRoot)) {
+        if (!_isEqual(currentRoot, lastRoot)) {
             // store previous group leafs
             leafs.push(...gradientPreviousGroup(uncoloredLeafs));
             rootId++;

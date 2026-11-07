@@ -3,9 +3,9 @@
 // oxlint-disable eslint-js/no-console
 
 import columnify from "columnify";
-import { isEmpty } from "lodash-es";
 
 import { areObjRefsEqual, idRef } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { type ActionOptions } from "../_base/types.js";
 
@@ -37,7 +37,7 @@ export async function inspectDashboard(
         created,
     });
 
-    if (isEmpty(plugins)) {
+    if (_isEmpty(plugins)) {
         console.log("Dashboard is not linked with any plugins.");
     } else {
         console.log("\nLinked dashboard plugins\n");
@@ -52,7 +52,7 @@ export async function inspectDashboard(
                         identifier: plugin.identifier,
                         title: plugin.name,
                         url: plugin.url,
-                        parameters: isEmpty(link?.parameters) ? "(none)" : link!.parameters,
+                        parameters: _isEmpty(link?.parameters) ? "(none)" : link!.parameters,
                         created: plugin.created,
                         updated: plugin.updated,
                     };

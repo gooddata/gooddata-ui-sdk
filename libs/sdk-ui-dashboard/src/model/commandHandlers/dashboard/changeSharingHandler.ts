@@ -1,6 +1,5 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import { type BatchAction, batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, put, select } from "redux-saga/effects";
@@ -13,6 +12,7 @@ import {
     isFilterContext,
     isGranularAccessGrantee,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IChangeSharing } from "../../commands/dashboard.js";
 import { type DashboardSharingChanged, dashboardSharingChanged } from "../../events/dashboard.js";
@@ -104,7 +104,7 @@ function* saveSharing(
     const { granteesToAdd, granteesToDelete } = saveSharingCtx.cmd.payload.newSharingProperties;
     const grantees = [...granteesToAdd, ...granteesToDelete].filter(isGranularAccessGrantee);
 
-    if (!isEmpty(grantees)) {
+    if (!_isEmpty(grantees)) {
         yield call(changeGrantees, ctx, saveSharingCtx);
     }
 

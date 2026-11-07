@@ -3,11 +3,12 @@
 import { type ReactElement, memo } from "react";
 
 import classNames from "classnames";
-import { isEqual, range } from "lodash-es";
+import { range } from "lodash-es";
 import { defineMessages, useIntl } from "react-intl";
 
 import { type IVisualizationClass } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+import { _isEqual } from "@gooddata/util";
 
 const visualizationTypeMessages = defineMessages({
     table: { id: "table" },
@@ -83,7 +84,7 @@ export const VisualizationPicker = memo(function VisualizationPicker({
         // deep equality on purpose — the selected class and the list entry are usually the same
         // reference, but the writers re-derive the value, so identity is not a contract
         // (store/visualization_classes/visualization_classes_state.ts)
-        if (!isEqual(selected, visualizationClass)) {
+        if (!_isEqual(selected, visualizationClass)) {
             onClick(visualizationClass);
         }
     };
@@ -97,7 +98,7 @@ export const VisualizationPicker = memo(function VisualizationPicker({
             "gd-vis-type",
             isVisualizationClassLocal(visualizationClass) ? `gd-vis-type-${type}` : null,
             {
-                "is-selected": isEqual(selected, visualizationClass),
+                "is-selected": _isEqual(selected, visualizationClass),
             },
         );
 

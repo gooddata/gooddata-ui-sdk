@@ -13,20 +13,11 @@ import { useUiDialogContext } from "./UiModalDialog.js";
 const { b, e } = bem("gd-ui-kit-dialog-header");
 
 /**
- * Title sizing variant.
- *
- * @internal
- */
-export type DialogHeaderTitleSize = "default" | "large";
-
-/**
  * @internal
  */
 export interface IUiDialogHeaderProps {
     /** Title shown in the header. */
     title: string;
-    /** Title size — `"default"` = 18/26, `"large"` = 20/26. */
-    titleSize?: DialogHeaderTitleSize;
     /** Fires when the user clicks the X close button. Omit to hide the X. */
     onClose?: () => void;
     /** Optional leading slot rendered before the title (e.g. a back button). */
@@ -38,13 +29,14 @@ export interface IUiDialogHeaderProps {
  *
  * @internal
  */
-export function UiDialogHeader({ title, titleSize = "default", onClose, leading }: IUiDialogHeaderProps) {
+export function UiDialogHeader({ title, onClose, leading }: IUiDialogHeaderProps) {
     const intl = useIntl();
     const dialogContext = useUiDialogContext();
+    const size = dialogContext?.size ?? "default";
     return (
-        <div className={b()}>
+        <div className={b({ size })}>
             {leading ? <span className={e("leading")}>{leading}</span> : null}
-            <h2 id={dialogContext?.titleId} className={e("title", { size: titleSize })}>
+            <h2 id={dialogContext?.titleId} className={e("title", { size })}>
                 {title}
             </h2>
             {onClose ? (
@@ -54,8 +46,8 @@ export function UiDialogHeader({ title, titleSize = "default", onClose, leading 
                         icon="cross"
                         variant="tertiary"
                         // 18px cross, matching the design; the tertiary box has no fill or
-                        // border of its own, so only the icon size shows.
-                        size="medium"
+                        // border of its own, so only the icon size shows. On "large" size, the cross is 20px.
+                        size={size === "large" ? "large" : "medium"}
                         onClick={onClose}
                         accessibilityConfig={{
                             ariaLabel: intl.formatMessage(commonDialogMessages.close),

@@ -2,7 +2,7 @@
 
 import { useCallback, useMemo } from "react";
 
-import { difference, isEqual, partition } from "lodash-es";
+import { difference, partition } from "lodash-es";
 
 import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {
@@ -18,6 +18,7 @@ import {
     newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
+import { _isEqual } from "@gooddata/util";
 
 import { messages } from "../../../../locales.js";
 import {
@@ -161,7 +162,7 @@ const computeResetEligibility = (
         return { canResetFilters: false, canResetWorkingContext: false, canResetParameters: false };
     }
 
-    const filtersChanged = !isEqual(normalizedCurrentFilters, normalizedOriginalFilters);
+    const filtersChanged = !_isEqual(normalizedCurrentFilters, normalizedOriginalFilters);
     const hasCrossFilterAddedFilters = newlyAddedFiltersCount > 0;
     // If the cross filter add some filters, we should allow the reset
     return {

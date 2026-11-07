@@ -7,11 +7,13 @@ import {
     type IGenAIAssistantAgentItemProps,
     type IGenAIAssistantAssistantMessageProps,
     type IGenAIAssistantConversationDateGroupingProps,
+    type IGenAIAssistantConversationDeleteDialogProps,
     type IGenAIAssistantConversationDrawerHeaderProps,
     type IGenAIAssistantConversationFooterProps,
     type IGenAIAssistantConversationHeaderProps,
     type IGenAIAssistantConversationItemProps,
     type IGenAIAssistantConversationKdaContentProps,
+    type IGenAIAssistantConversationRenameDialogProps,
     type IGenAIAssistantConversationVisualizationContentProps,
     type IGenAIAssistantFeedbackProps,
     type IGenAIAssistantFollowUpButtonsProps,
@@ -37,6 +39,8 @@ export interface IGenAIAssistantComponents {
     ConversationHeaderComponent: ComponentType<IGenAIAssistantConversationHeaderProps>;
     ConversationFooterComponent: ComponentType<IGenAIAssistantConversationFooterProps>;
     ConversationDateGroupingComponent: ComponentType<IGenAIAssistantConversationDateGroupingProps>;
+    ConversationRenameDialogComponent: ComponentType<IGenAIAssistantConversationRenameDialogProps>;
+    ConversationDeleteDialogComponent: ComponentType<IGenAIAssistantConversationDeleteDialogProps>;
     UserMessageComponent: ComponentType<IGenAIAssistantUserMessageProps>;
     AssistantMessageComponent: ComponentType<IGenAIAssistantAssistantMessageProps>;
     MessageTextContentComponent: ComponentType<IGenAIAssistantMessageTextContentProps>;

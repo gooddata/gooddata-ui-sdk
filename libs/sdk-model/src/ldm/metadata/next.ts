@@ -1,5 +1,6 @@
-// (C) 2019-2025 GoodData Corporation
-import { isEmpty } from "lodash-es";
+// (C) 2019-2026 GoodData Corporation
+
+import { _isEmpty } from "@gooddata/util";
 
 import { type ObjectType } from "../../objRef/index.js";
 
@@ -70,7 +71,7 @@ export type ToMdObjectDefinition<T extends IMdObject> = Omit<T, "id">;
  */
 export function isMdObject(obj: unknown): obj is IMdObject {
     const c = obj as IMdObject;
-    const isDefined = !isEmpty(c);
+    const isDefined = !_isEmpty(c);
     const hasType = !(c.type === null || c.type === undefined);
     const hasId = !(c.id === null || c.id === undefined);
 
@@ -84,7 +85,7 @@ export function isMdObject(obj: unknown): obj is IMdObject {
  */
 export function isMdObjectDefinition(obj: unknown): obj is IMdObjectDefinition {
     const c = obj as IMdObjectDefinition;
-    const isDefined = !isEmpty(c);
+    const isDefined = !_isEmpty(c);
     const hasType = !(c.type === null || c.type === undefined);
     const hasNotId = (c as IMdObject).id === null || (c as IMdObject).id === undefined;
 

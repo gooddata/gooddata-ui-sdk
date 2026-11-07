@@ -3,10 +3,10 @@
 import { type Ref, useEffect, useMemo, useState } from "react";
 
 import cx from "classnames";
-import { isEmpty, isEqual } from "lodash-es";
 
 import { type IInsight, type ISettings, type IWidget, type ScreenSize } from "@gooddata/sdk-model";
 import { INSIGHT_WIDGET_SIZE_INFO_DEFAULT, fluidLayoutDescriptor } from "@gooddata/sdk-ui-ext";
+import { _isEmpty, _isEqual } from "@gooddata/util";
 
 import {
     type IDashboardLayoutItemFacade,
@@ -130,7 +130,7 @@ export function HeightResizerHotspot({ section, items, getLayoutDimensions }: He
     const areWidgetsResizing = resizeDirection !== "none";
     const isColumnResizing = resizeDirection === "width";
     const isOtherRowResizing =
-        !isEmpty(resizeItemIdentifiers) && !isEqual(resizeItemIdentifiers, widgetIdentifiers);
+        !_isEmpty(resizeItemIdentifiers) && !_isEqual(resizeItemIdentifiers, widgetIdentifiers);
 
     const [isResizerVisible, setResizerVisibility] = useState<boolean>(false);
     const onMouseEnter = () => setResizerVisibility(true);

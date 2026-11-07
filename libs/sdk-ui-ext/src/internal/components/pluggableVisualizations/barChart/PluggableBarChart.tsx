@@ -1,9 +1,8 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import { type IInsightDefinition, newAttributeAreaSort, newMeasureSort } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+import { _isEmpty } from "@gooddata/util";
 
 import { AXIS, AXIS_NAME } from "../../../constants/axis.js";
 import { BAR_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
@@ -126,17 +125,17 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
         const measures = getBucketItems(buckets, BucketNames.MEASURES);
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
         const stackBy = getBucketItems(buckets, BucketNames.STACK);
-        const isStacked = !isEmpty(stackBy) || canSortStackTotalValue;
+        const isStacked = !_isEmpty(stackBy) || canSortStackTotalValue;
 
-        if (viewBy.length === 2 && !isEmpty(measures)) {
+        if (viewBy.length === 2 && !_isEmpty(measures)) {
             return this.getSortForTwoViewBy(measures, viewBy, stackBy, isStacked, canSortStackTotalValue);
         }
 
-        if (!isEmpty(viewBy) && isStacked) {
+        if (!_isEmpty(viewBy) && isStacked) {
             return this.getSortForStackedSingleViewBy(measures, viewBy, stackBy);
         }
 
-        if (!isEmpty(viewBy) && !isEmpty(measures)) {
+        if (!_isEmpty(viewBy) && !_isEmpty(measures)) {
             return this.getSortForUnstackedSingleViewBy(measures, viewBy);
         }
 
@@ -177,7 +176,7 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
         const secondViewBySort = isStacked
             ? newAttributeAreaSort(viewBy[1].localIdentifier, "desc")
             : newMeasureSort(measures[0].localIdentifier, "desc");
-        const measureIds = isEmpty(stackBy) ? measures.map((m) => m.localIdentifier) : [];
+        const measureIds = _isEmpty(stackBy) ? measures.map((m) => m.localIdentifier) : [];
 
         return {
             defaultSort: [newAttributeAreaSort(viewBy[0].localIdentifier, "desc"), secondViewBySort],
@@ -201,7 +200,7 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
         defaultSort: ISortConfig["defaultSort"];
         availableSorts: ISortConfig["availableSorts"];
     } {
-        const measureIds = isEmpty(stackBy) ? measures.map((m) => m.localIdentifier) : [];
+        const measureIds = _isEmpty(stackBy) ? measures.map((m) => m.localIdentifier) : [];
 
         return {
             defaultSort: [newAttributeAreaSort(viewBy[0].localIdentifier, "desc")],

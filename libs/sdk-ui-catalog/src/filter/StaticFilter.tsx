@@ -11,10 +11,10 @@ import {
 } from "react";
 
 import cx from "classnames";
-import { isEqual } from "lodash-es";
 import { defineMessages, useIntl } from "react-intl";
 
 import { Dropdown, type IAlignPoint, InvertableSelect, SeparatorLine, UiButton } from "@gooddata/sdk-ui-kit";
+import { _isEqual } from "@gooddata/util";
 
 const messages = defineMessages({
     apply: {
@@ -84,13 +84,13 @@ export function StaticFilter<T>(props: IStaticFilterProps<T>) {
 
     // Reset local state when the parent selection changes
     // https://react.dev/learn/you-might-not-need-an-effect#adjusting-some-state-when-a-prop-changes
-    if (!isEqual(prevSelection, selection)) {
+    if (!_isEqual(prevSelection, selection)) {
         resetLocalState();
     }
 
     // The search bar should not appear until there are at least 7 items in the list.
     const isSearchBarVisible = options.length >= 7;
-    const isSelectionEqual = isEqual(localSelection, selection) && localIsInverted === isSelectionInverted;
+    const isSelectionEqual = _isEqual(localSelection, selection) && localIsInverted === isSelectionInverted;
     const isSelectionEmpty = localIsInverted
         ? localSelection.length === options.length
         : localSelection.length === 0;

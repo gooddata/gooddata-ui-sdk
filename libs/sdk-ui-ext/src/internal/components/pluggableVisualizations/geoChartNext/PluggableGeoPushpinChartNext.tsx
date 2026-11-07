@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { cloneDeep, isEqual, set } from "lodash-es";
+import { cloneDeep, set } from "lodash-es";
 
 import {
     type IAnalyticalBackend,
@@ -31,6 +31,7 @@ import {
     insightLayerToGeoLayer,
     insightLayersToGeoLayers,
 } from "@gooddata/sdk-ui-geo/internal";
+import { _isEqual } from "@gooddata/util";
 
 import { BUCKETS } from "../../../constants/bucket.js";
 import {
@@ -133,7 +134,7 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
     ): boolean {
         return (
             getPushpinShapeType(currentReferencePoint) !== getPushpinShapeType(nextReferencePoint) ||
-            !isEqual(
+            !_isEqual(
                 currentReferencePoint?.properties?.sortItems ?? [],
                 nextReferencePoint?.properties?.sortItems ?? [],
             )

@@ -4,7 +4,7 @@ import type * as z from "zod/mini";
 
 import type { ParameterType } from "@gooddata/sdk-model";
 
-import { validateYaml } from "../asCode/validateYaml.js";
+import { type YamlValidationFailure, validateYaml } from "../asCode/validateYaml.js";
 
 import {
     type ParameterSchema,
@@ -18,11 +18,9 @@ export type ParameterValidationResult =
           isValid: true;
           parameter: ParameterSchema;
       }
-    | {
-          isValid: false;
-          errorCode: ParameterValidationErrorCode;
-          type?: ParameterType;
-      };
+    | YamlValidationFailure<ParameterFailure>;
+
+type ParameterFailure = { errorCode: ParameterValidationErrorCode; type?: ParameterType };
 
 export type ParameterValidationErrorCode =
     | "empty"
@@ -48,49 +46,43 @@ export function validateParameterYaml(
     const result = validateYaml(value, {
         schema: buildParameterSchema(options.enabledTypes),
         fixedIdentifier: options.fixedIdentifier,
+        classifyIssue: classifyParameterIssue,
     });
 
-    if (result.ok) {
+    if (result.isValid) {
         return { isValid: true, parameter: result.data };
     }
-    return result.kind === "schema"
-        ? classifySchemaError(result.error, readDeclaredType(result.parsed))
-        : invalid(result.kind);
+    return result;
 }
 
-type ParameterValidationFailure = Extract<ParameterValidationResult, { isValid: false }>;
-
-function classifySchemaError(
-    error: z.core.$ZodError,
-    declaredType: ParameterType | undefined,
-): ParameterValidationFailure {
-    for (const issue of error.issues) {
-        const path = issue.path.map(String).join(".");
-
-        if (isSchemaErrorCode(issue.message)) {
-            return invalid(issue.message, declaredType);
-        }
-        // The object's own `type`, not the model type inside `definition`. A mistyped one is easy to
-        // make and impossible to spot in a generic structure error, so it gets its own message naming
-        // the one value the field accepts.
-        if (path === "type") {
-            return invalid("invalidType");
-        }
-        if (path === "definition.type") {
-            return invalid("unsupportedType");
-        }
-        if (path === "definition.defaultValue") {
-            return invalid("invalidDefaultValue", declaredType);
-        }
-        if (path.startsWith("definition.constraints")) {
-            return invalid("invalidConstraints", declaredType);
-        }
-        if (path === "tags" || path.startsWith("tags.")) {
-            return invalid("invalidTags");
-        }
+function classifyParameterIssue(
+    path: string,
+    parsed: unknown,
+    issue: z.core.$ZodIssue,
+): ParameterFailure | undefined {
+    const declaredType = readDeclaredType(parsed);
+    if (isSchemaErrorCode(issue.message)) {
+        return { errorCode: issue.message, type: declaredType };
     }
-
-    return invalid("invalidStructure");
+    // The object's own `type`, not the model type inside `definition`. A mistyped one is easy to
+    // make and impossible to spot in a generic structure error, so it gets its own message naming
+    // the one value the field accepts.
+    if (path === "type") {
+        return { errorCode: "invalidType" };
+    }
+    if (path === "definition.type") {
+        return { errorCode: "unsupportedType" };
+    }
+    if (path === "definition.defaultValue") {
+        return { errorCode: "invalidDefaultValue", type: declaredType };
+    }
+    if (path.startsWith("definition.constraints")) {
+        return { errorCode: "invalidConstraints", type: declaredType };
+    }
+    if (path === "tags" || path.startsWith("tags.")) {
+        return { errorCode: "invalidTags" };
+    }
+    return undefined;
 }
 
 const schemaErrorCodeSet: ReadonlySet<string> = new Set(schemaErrorCodes);
@@ -109,12 +101,4 @@ function readDeclaredType(parsed: unknown): ParameterType | undefined {
     }
     const { type } = definition as { type?: unknown };
     return type === "NUMBER" || type === "STRING" ? type : undefined;
-}
-
-function invalid(code: ParameterValidationErrorCode, type?: ParameterType): ParameterValidationFailure {
-    return {
-        isValid: false,
-        errorCode: code,
-        type,
-    };
 }

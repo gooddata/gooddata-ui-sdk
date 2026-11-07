@@ -1,6 +1,5 @@
 // (C) 2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import {
@@ -16,6 +15,7 @@ import {
     isAutomationUnknownUserRecipient,
     isAutomationUserRecipient,
 } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { isEmail } from "../../scheduledEmail/utils/validate.js";
 import { useAlertValidation } from "../hooks/useAlertValidation.js";
@@ -113,7 +113,7 @@ export function useAlertFormValidation(props: IUseAlertFormValidationProps): {
         hasValidThreshold &&
         isTitleValid;
 
-    const isSubmitDisabled = !!(!isValid || (alertToEdit && isEqual(originalAutomation, editedAutomation)));
+    const isSubmitDisabled = !!(!isValid || (alertToEdit && _isEqual(originalAutomation, editedAutomation)));
 
     return {
         isSubmitDisabled,

@@ -2,26 +2,32 @@
 
 import { json } from "@codemirror/lang-json";
 import { yaml } from "@codemirror/lang-yaml";
-import { ensureSyntaxTree } from "@codemirror/language";
+import { syntaxTree } from "@codemirror/language";
 import { EditorState, type Extension } from "@codemirror/state";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, onTestFinished, vi } from "vitest";
 
 import { getSyntaxErrorDiagnostics } from "./syntaxErrorLinter.js";
 
-const diagnosticsFor = (doc: string, language: Extension) => {
-    const initial = EditorState.create({ doc, extensions: [language] });
-    // The initial parse only gets a small time budget; on a loaded machine a partial tree would
-    // make the walk silently miss the error nodes under test.
-    if (ensureSyntaxTree(initial, doc.length, 5000) === null && doc.length > 0) {
-        throw new Error("Parse did not finish; the diagnostics under test would not be tree-derived.");
-    }
-    // `ensureSyntaxTree` finishes the parse but hands the completed tree back rather than storing it:
-    // the state still carries the snapshot its own budgeted parse ended on, and that is the tree the
-    // linter reads. An empty transaction is what makes the state adopt the finished one — without it,
-    // a truncated initial parse leaves the unparsed tail looking like a syntax error.
-    const state = initial.update({}).state;
-    return getSyntaxErrorDiagnostics(state, "Syntax error");
-};
+const createState = (doc: string, language: Extension) => EditorState.create({ doc, extensions: [language] });
+
+const diagnosticsFor = (doc: string, language: Extension) =>
+    getSyntaxErrorDiagnostics(createState(doc, language), "Syntax error");
+
+const initialTreeLength = (doc: string, language: Extension) => syntaxTree(createState(doc, language)).length;
+
+const longJson = (entry: (index: number) => string) =>
+    `{\n${Array.from({ length: 200 }, (_, index) => entry(index)).join(",\n")}\n}`;
+
+const validLongJson = longJson((index) => `  "k${index}": { "background_color": "{theme.palette.success}" }`);
+
+const validLongYaml = Array.from(
+    { length: 200 },
+    (_, index) => `k${index}:\n  background_color: "{theme.palette.success}"`,
+).join("\n");
+
+const earlyError = validLongJson.indexOf('"k1"');
+const lateError = validLongJson.indexOf('"k150"');
+const longJsonWithErrors = `${validLongJson.slice(0, earlyError)}?${validLongJson.slice(earlyError, lateError)}?${validLongJson.slice(lateError)}`;
 
 describe("getSyntaxErrorDiagnostics", () => {
     it("reports nothing for a valid document", () => {
@@ -57,5 +63,35 @@ describe("getSyntaxErrorDiagnostics", () => {
         expect(diagnosticsFor("", json())).toEqual([]);
         expect(diagnosticsFor("  \n ", json())).toEqual([]);
         expect(diagnosticsFor("", yaml())).toEqual([]);
+    });
+
+    it("reports nothing for a valid document longer than the initial parse", () => {
+        expect(initialTreeLength(validLongJson, json())).toBeLessThan(validLongJson.length);
+        expect(initialTreeLength(validLongYaml, yaml())).toBeLessThan(validLongYaml.length);
+
+        expect(diagnosticsFor(validLongJson, json())).toEqual([]);
+        expect(diagnosticsFor(validLongYaml, yaml())).toEqual([]);
+    });
+
+    it("reports real errors before and past the initial parse", () => {
+        expect(lateError).toBeGreaterThan(initialTreeLength(longJsonWithErrors, json()));
+
+        const positions = diagnosticsFor(longJsonWithErrors, json()).map((diagnostic) => diagnostic.from);
+
+        expect(positions).toEqual([earlyError, lateError + 1]);
+    });
+
+    it("reports only the errors before the cut of a parse that runs out of time, not those past it", () => {
+        const state = createState(longJsonWithErrors, json());
+        expect(syntaxTree(state).length).toBeLessThan(lateError);
+        let now = Date.now();
+        const dateNow = vi.spyOn(Date, "now").mockImplementation(() => (now += 1000));
+        onTestFinished(() => dateNow.mockRestore());
+
+        const positions = getSyntaxErrorDiagnostics(state, "Syntax error").map(
+            (diagnostic) => diagnostic.from,
+        );
+
+        expect(positions).toEqual([earlyError]);
     });
 });

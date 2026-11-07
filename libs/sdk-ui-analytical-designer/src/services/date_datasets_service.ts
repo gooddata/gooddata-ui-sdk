@@ -1,8 +1,9 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { isEmpty, partial } from "lodash-es";
+import { partial } from "lodash-es";
 
 import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IDateDatasetsMeta } from "../models/date_datasets_meta.js";
 import { type IDateDatasetsMetaItem } from "../models/date_datasets_meta_item.js";
@@ -72,7 +73,7 @@ function getDateDatasetsFromMetaInfo(
     availables: IDateDataset[],
 ): IDateDataset[] {
     const dateDatasetMetas = dateDatasetsMeta?.items;
-    if (isEmpty(dateDatasetMetas)) {
+    if (_isEmpty(dateDatasetMetas)) {
         // An empty ARRAY, not an empty object: the result is a list of date datasets and
         // consumers iterate it (#11767 — the empty sentinel's KIND is part of the contract).
         return [];

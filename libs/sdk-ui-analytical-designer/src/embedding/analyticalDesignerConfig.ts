@@ -145,7 +145,6 @@ export function applyConfigToBootstrapData(
         },
         uiSettings: {
             ...data.uiSettings,
-            logoUrl: whiteLabeling?.logoUrl ?? data.uiSettings.logoUrl,
             isBranded: whiteLabeling?.isBranded ?? data.uiSettings.isBranded,
         },
         tiger: {

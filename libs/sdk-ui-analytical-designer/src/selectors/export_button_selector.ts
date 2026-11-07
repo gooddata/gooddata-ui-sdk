@@ -1,8 +1,9 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
 import { type IntlShape, defineMessages } from "react-intl";
 import { createSelector, createStructuredSelector } from "reselect";
+
+import { _isEqual } from "@gooddata/util";
 
 const bucketItemTypeMessages = defineMessages({
     attribute: { id: "bucket_item_types.attribute" },
@@ -80,7 +81,7 @@ function findDuplicated(decoratedBuckets: IDecoratedBuckets, type: string) {
     const isAggregationEqual = (metric: IDecoratedBucketItem, other: IDecoratedBucketItem) =>
         metric.aggregation === other.aggregation;
     const areFiltersEquals = (metric: IDecoratedBucketItem, other: IDecoratedBucketItem) =>
-        isEqual(excludeFilterAll(metric).filters, excludeFilterAll(other).filters);
+        _isEqual(excludeFilterAll(metric).filters, excludeFilterAll(other).filters);
     const isMasterDerivedRelation = (item1: IRawBucketItem, item2: IRawBucketItem) =>
         isDerivedFrom(item1, item2) || isDerivedFrom(item2, item1);
 

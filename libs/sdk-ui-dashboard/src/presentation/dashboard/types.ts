@@ -833,6 +833,8 @@ export interface IDashboardBaseProps {
      * identifier - this is same as using `idRef(objectIdentifier)`.
      *
      * If you do not specify dashboard to render, a new default empty dashboard will be rendered.
+     * To render an AI-proposed draft, supply the dashboard by value and set `config.references`.
+     * Use `config.initialRenderMode: "edit"` to allow saving it.
      */
     dashboard?: string | ObjRef | IDashboard;
 

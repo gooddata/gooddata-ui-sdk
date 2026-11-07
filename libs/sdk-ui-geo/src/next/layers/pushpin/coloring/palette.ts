@@ -1,9 +1,10 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { isEmpty, range } from "lodash-es";
+import { range } from "lodash-es";
 
 import { type IRgbColorValue, isAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-model";
 import { type IColorLegendItem, type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IPushpinColor } from "../../../types/geoData/pushpin.js";
 import { isFiniteNumber } from "../../../utils/guards.js";
@@ -273,7 +274,7 @@ export function getPushpinColors(
  * @internal
  */
 export function generateLegendColorData(colorSeries: number[], colorString: string): IColorLegendItem[] {
-    if (isEmpty(colorSeries)) {
+    if (_isEmpty(colorSeries)) {
         return [];
     }
 

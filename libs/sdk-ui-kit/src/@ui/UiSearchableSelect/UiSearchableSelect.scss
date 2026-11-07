@@ -101,6 +101,37 @@
 
     &__body {
         padding: 4px 0;
+
+        &--isFullscreen {
+            display: flex;
+            flex-direction: column;
+            flex: 1 1 auto;
+            min-height: 0;
+            padding: var(--gd-spacing-15px) var(--gd-spacing-15px) 0;
+
+            .gd-ui-kit-searchable-select__search {
+                padding: 0 0 12px;
+            }
+
+            .gd-ui-kit-listbox {
+                box-sizing: border-box;
+                flex: 0 1 auto;
+                width: auto;
+                max-height: none;
+                margin: 0 calc(-1 * var(--gd-spacing-15px));
+                padding: 0;
+            }
+
+            .gd-ui-kit-listbox__item {
+                padding-right: var(--gd-spacing-15px);
+                padding-left: var(--gd-spacing-15px);
+            }
+
+            .gd-ui-kit-searchable-select__no-items {
+                font-size: 14px;
+                padding: 8px 0;
+            }
+        }
     }
 
     &__search {

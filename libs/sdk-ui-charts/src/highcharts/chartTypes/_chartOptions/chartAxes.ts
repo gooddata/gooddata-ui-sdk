@@ -1,9 +1,10 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { compact, isEmpty, range } from "lodash-es";
+import { compact, range } from "lodash-es";
 
 import { type IMeasureDescriptor, type IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { BucketNames, type DataViewFacade } from "@gooddata/sdk-ui";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
@@ -269,8 +270,8 @@ export function getYAxes(
 
     const isDualAxes =
         isOneOfTypes(type, supportedDualAxesChartTypes) &&
-        !isEmpty(measureGroupItems) &&
-        !isEmpty(secondaryAxisMeasures);
+        !_isEmpty(measureGroupItems) &&
+        !_isEmpty(secondaryAxisMeasures);
 
     if (isDualAxes) {
         return getDualAxesYAxes(secondaryAxisMeasures, measureGroup);

@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IAuditableDates, type IAuditableUsers } from "../../base/metadata.js";
 import { type ObjRef, isObjRef } from "../../objRef/index.js";
@@ -170,7 +170,7 @@ type PublisherEntityTypeV2 =
 const contentVersion: PublisherContentVersionV2 = "2";
 
 function isPublisherEntityDefinitionV2(obj: unknown, type: PublisherEntityTypeV2): boolean {
-    if (isEmpty(obj)) {
+    if (_isEmpty(obj)) {
         return false;
     }
     const entity = obj as { type?: unknown; version?: unknown };

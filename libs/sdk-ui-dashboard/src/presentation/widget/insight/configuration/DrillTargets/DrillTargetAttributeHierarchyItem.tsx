@@ -1,7 +1,5 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import {
     type ICatalogAttributeHierarchy,
     type ICatalogDateAttributeHierarchy,
@@ -10,6 +8,7 @@ import {
     isCatalogAttributeHierarchy,
 } from "@gooddata/sdk-model";
 import { AttributeHierarchyDialog } from "@gooddata/sdk-ui-ext";
+import { _isEmpty } from "@gooddata/util";
 
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { useDashboardUserInteraction } from "../../../../../model/react/useDashboardUserInteraction.js";
@@ -54,7 +53,7 @@ export function DrillTargetAttributeHierarchyItem({
         );
     });
 
-    const shouldShowEmptyMessage = isEmpty(existInHierarchies) && !config.complete;
+    const shouldShowEmptyMessage = _isEmpty(existInHierarchies) && !config.complete;
 
     const onOpenDialog = (item?: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy) => {
         if (!item || isCatalogAttributeHierarchy(item)) {

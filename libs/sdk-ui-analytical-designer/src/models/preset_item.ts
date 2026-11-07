@@ -1,7 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
 import invariant from "invariant";
-import { findKey, isEqual, keyBy } from "lodash-es";
+import { findKey, keyBy } from "lodash-es";
 import moment from "moment";
 import { type IntlShape, defineMessage } from "react-intl";
 
@@ -12,6 +12,7 @@ import {
 } from "@gooddata/sdk-model";
 import { formatRelativeDateRange } from "@gooddata/sdk-ui-filters";
 import { DEFAULT_LOCALE } from "@gooddata/sdk-ui-filters/internal";
+import { _isEqual } from "@gooddata/util";
 
 import {
     ALL_TIME,
@@ -718,12 +719,12 @@ function matchStaticPeriod(firstPreset: IDecoratedPresetItem, secondPreset: IDec
 }
 
 function matchRelativePreset(firstPreset: IDecoratedPresetItem, secondPreset: IDecoratedPresetItem) {
-    const sameInterval = firstPreset.interval && isEqual(firstPreset.interval, secondPreset.interval);
+    const sameInterval = firstPreset.interval && _isEqual(firstPreset.interval, secondPreset.interval);
 
     const sameGranularity = firstPreset.granularity && firstPreset.granularity === secondPreset.granularity;
 
     // Compare boundedFilter to distinguish between regular filters and "to date" filters
-    const sameBoundedFilter = isEqual(firstPreset.boundedFilter, secondPreset.boundedFilter);
+    const sameBoundedFilter = _isEqual(firstPreset.boundedFilter, secondPreset.boundedFilter);
 
     return sameInterval && sameGranularity && sameBoundedFilter;
 }

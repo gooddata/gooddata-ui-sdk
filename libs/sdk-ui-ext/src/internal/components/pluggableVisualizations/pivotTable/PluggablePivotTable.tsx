@@ -3,7 +3,7 @@
 import { type CSSProperties } from "react";
 
 import { defaultImport } from "default-import";
-import { cloneDeep, isEmpty, isEqual } from "lodash-es";
+import { cloneDeep } from "lodash-es";
 import Measure from "react-measure";
 
 import { type IBackendCapabilities, type IExecutionFactory } from "@gooddata/sdk-backend-spi";
@@ -34,6 +34,7 @@ import {
     type MeasureGroupDimension,
     pivotTableMenuForCapabilities,
 } from "@gooddata/sdk-ui-pivot";
+import { _isEmpty, _isEqual } from "@gooddata/util";
 
 import { ATTRIBUTE, DATE, METRIC } from "../../../constants/bucket.js";
 import { ANALYTICAL_ENVIRONMENT, DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
@@ -558,7 +559,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         visualizationProperties: IVisualizationProperties,
         measureGroupDimension: MeasureGroupDimension,
     ) {
-        if (isEmpty(insightBuckets(insight))) {
+        if (_isEmpty(insightBuckets(insight))) {
             return;
         }
 
@@ -568,7 +569,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             measureGroupDimension,
         );
 
-        if (!isEqual(columnWidths, adaptedColumnWidths)) {
+        if (!_isEqual(columnWidths, adaptedColumnWidths)) {
             this.visualizationProperties.controls!["columnWidths"] = adaptedColumnWidths;
             this.pushData({
                 properties: {
@@ -700,7 +701,7 @@ function getPivotTableSortItems(insight: IInsightDefinition): ISortItem[] | unde
     const sorts = insightSorts(insight);
     const mesureGroupDimension = getMeasureGroupDimensionFromProperties(insightProperties(insight));
 
-    if (!isEmpty(sorts)) {
+    if (!_isEmpty(sorts)) {
         /*
          * This is here to ensure that when rendering pivot table in KD, all invalid sort items
          * are filtered out. At this moment, core pivot table does not handle invalid sorts so well and

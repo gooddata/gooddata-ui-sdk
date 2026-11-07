@@ -1,6 +1,4 @@
-// (C) 2025 GoodData Corporation
-
-import { isEmpty } from "lodash-es";
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type IAttribute,
@@ -9,6 +7,7 @@ import {
     attributeLocalId,
     measureLocalId,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 /**
  * @public
@@ -94,7 +93,7 @@ export interface ITotalColumnLocatorBody {
  * @public
  */
 export function isAttributeColumnLocator(obj: unknown): obj is IAttributeColumnLocator {
-    return !isEmpty(obj) && (obj as IAttributeColumnLocator).attributeLocatorItem !== undefined;
+    return !_isEmpty(obj) && (obj as IAttributeColumnLocator).attributeLocatorItem !== undefined;
 }
 
 /**
@@ -103,7 +102,7 @@ export function isAttributeColumnLocator(obj: unknown): obj is IAttributeColumnL
  * @public
  */
 export function isMeasureColumnLocator(obj: unknown): obj is IMeasureColumnLocator {
-    return !isEmpty(obj) && (obj as IMeasureColumnLocator).measureLocatorItem !== undefined;
+    return !_isEmpty(obj) && (obj as IMeasureColumnLocator).measureLocatorItem !== undefined;
 }
 
 /**
@@ -112,7 +111,7 @@ export function isMeasureColumnLocator(obj: unknown): obj is IMeasureColumnLocat
  * @public
  */
 export function isTotalColumnLocator(obj: unknown): obj is ITotalColumnLocator {
-    return !isEmpty(obj) && (obj as ITotalColumnLocator).totalLocatorItem !== undefined;
+    return !_isEmpty(obj) && (obj as ITotalColumnLocator).totalLocatorItem !== undefined;
 }
 
 /**

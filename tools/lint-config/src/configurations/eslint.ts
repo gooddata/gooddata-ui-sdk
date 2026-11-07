@@ -60,6 +60,10 @@ const lodashEsBans: Record<string, string> = {
     isString: "typeof val === 'string'",
     toString: "String(val)",
     "flow,flowRight": "refactoring your code",
+
+    // @gooddata/util
+    isEmpty: "_isEmpty from @gooddata/util",
+    isEqual: "_isEqual from @gooddata/util",
 };
 
 const lodashEsPatterns = Object.entries(lodashEsBans).map(([importNames, alternative]) => ({

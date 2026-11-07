@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { cloneDeep, isEmpty } from "lodash-es";
+import { cloneDeep } from "lodash-es";
 import { type IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
 
@@ -17,6 +17,7 @@ import {
     VisualizationTypes,
     isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IHeadlineData, type IHeadlineDataItem } from "../interfaces/Headlines.js";
 
@@ -143,11 +144,11 @@ export function applyDrillableItems(
     const { primaryItem, secondaryItem } = data;
     const [primaryItemHeader, secondaryItemHeader] = dv.meta().measureDescriptors();
 
-    if (!isEmpty(primaryItem) && !isEmpty(primaryItemHeader)) {
+    if (!_isEmpty(primaryItem) && !_isEmpty(primaryItemHeader)) {
         primaryItem.isDrillable = isSomeHeaderPredicateMatched(drillableItems, primaryItemHeader, dv);
     }
 
-    if (!isEmpty(secondaryItem) && !isEmpty(secondaryItemHeader)) {
+    if (!_isEmpty(secondaryItem) && !_isEmpty(secondaryItemHeader)) {
         secondaryItem.isDrillable = isSomeHeaderPredicateMatched(drillableItems, secondaryItemHeader, dv);
     }
 

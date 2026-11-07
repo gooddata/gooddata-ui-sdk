@@ -932,6 +932,10 @@ $dataset_color: #952f8e;
 
             @include content-markdown(kit-variables.$gd-color-white, "user");
             @include object-types("user");
+
+            p {
+                white-space: pre-line;
+            }
         }
     }
 

@@ -45,6 +45,9 @@ export function UiSearchableSelectSearch({
         value,
         onChange,
         closeDropdown,
+        shouldCloseOnSelect,
+        searchInputRef,
+        isFullscreen,
     } = useUiSearchableSelectContext();
 
     // while typing, the search points at the highlight only a moment after the last key, like in React Aria,
@@ -53,7 +56,6 @@ export function UiSearchableSelectSearch({
     const changeQuery = (nextQuery: string) => {
         setQuery(nextQuery);
         setIsActiveDescendantShown(false);
-        // without a query, it's like a fresh opening again: the search points at nothing until an arrow key
         if (nextQuery) {
             showActiveDescendantLater();
         } else {
@@ -61,7 +63,6 @@ export function UiSearchableSelectSearch({
         }
     };
 
-    // focus stays in the search, which moves the highlight that the list shows (virtual focus)
     const activeItem = listboxItems.find(
         (item): item is IUiListboxInteractiveItem<unknown> =>
             item.type === "interactive" && item.id === focusedItemId,
@@ -72,6 +73,7 @@ export function UiSearchableSelectSearch({
             <UiTextInput
                 value={query}
                 onChange={changeQuery}
+                inputRef={searchInputRef}
                 onKeyDown={(event) => {
                     // while an input method composes text (e.g. Japanese), the keys are its own; Safari reports
                     // the key that ends the composition after it, with only the keyCode 229 left
@@ -79,7 +81,6 @@ export function UiSearchableSelectSearch({
                         return;
                     }
                     if (event.key === "ArrowDown" || event.key === "ArrowUp") {
-                        // keeps the caret where it is
                         event.preventDefault();
                         const direction = event.key === "ArrowDown" ? "down" : "up";
                         setIsActiveDescendantShown(true);
@@ -87,17 +88,15 @@ export function UiSearchableSelectSearch({
                             getNextFocusableItemId({ items: listboxItems, focusedItemId, direction }),
                         );
                     } else if (event.key === "Enter" && activeItem) {
-                        // like escape, the event ends here, so that e.g. a surrounding dialog doesn't submit
                         event.preventDefault();
                         event.stopPropagation();
-                        // like a native <select>, picking the already selected item only closes the list
                         if (activeItem.id !== value) {
                             onChange(activeItem.id);
                         }
-                        closeDropdown();
+                        if (shouldCloseOnSelect) {
+                            closeDropdown();
+                        }
                     } else if (event.key === "Escape") {
-                        // the first escape clears the query, the next one closes the list; the event ends here,
-                        // so that e.g. a surrounding dialog doesn't close too
                         event.preventDefault();
                         event.stopPropagation();
                         if (query) {
@@ -109,11 +108,10 @@ export function UiSearchableSelectSearch({
                 }}
                 placeholder={placeholder ?? intl.formatMessage(messages.searchPlaceholder)}
                 iconBefore="search"
-                size="small"
+                size={isFullscreen ? "medium" : "small"}
                 accessibilityConfig={{
                     ariaLabel: intl.formatMessage(messages.searchAriaLabel),
                     ...accessibilityConfig,
-                    // a combobox that filters the list it controls; the list is shown while the search is
                     role: "combobox",
                     ariaExpanded: true,
                     ariaControls: listboxId,

@@ -96,7 +96,7 @@ const DOCUMENT_V2: IPublisherDocumentDefinitionV2 = {
 function renderCard({
     saved,
     baseDocumentId,
-    publisherDocument: publisherDocument = DOCUMENT,
+    publisherDocument = DOCUMENT,
     documentV2,
     isPublisherAppEnabled = true,
     isPreview = false,

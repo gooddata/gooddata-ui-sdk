@@ -172,17 +172,24 @@ export type DashboardSavedPayload = {
     readonly newDashboard: boolean;
 
     /**
-     * Identifier of the dashboard definition before it was persisted. This is present when an AI
-     * dashboard draft was saved and can differ from the identifier of dashboard.
+     * Identifier of the dashboard definition before it was persisted. This is present when a
+     * dashboard draft was saved and can differ from the identifier of `dashboard`.
      *
-     * @internal
+     * @remarks
+     * Use this identifier to associate a Copilot proposal with `dashboard.identifier` after saving.
+     *
+     * @alpha
      */
     readonly originalDashboardId?: string;
 
     /**
      * Draft insights persisted as part of the dashboard save.
      *
-     * @internal
+     * @remarks
+     * Each mapping associates an original draft insight identifier with the saved insight identifier.
+     * Only insights created by this save are included. Empty when none were created.
+     *
+     * @alpha
      */
     readonly savedInsights?: ReadonlyArray<{
         readonly originalInsightId: string;

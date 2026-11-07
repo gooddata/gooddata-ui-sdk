@@ -1,7 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { type PayloadAction } from "@reduxjs/toolkit";
-import { isEmpty } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, put, select } from "redux-saga/effects";
@@ -12,6 +11,7 @@ import {
     type IKpiWidget,
     objRefToString,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { newCatalogDateDatasetMap } from "../../../_staging/metadata/objRefMap.js";
 import { type IChangeKpiWidgetMeasure } from "../../commands/kpi.js";
@@ -87,7 +87,7 @@ function* determineDateDatasetToUse(
     const catalogDataSet = newCatalogDateDatasetMap(measureDateDatasets.dateDatasets).get(widget.dateDataSet);
 
     if (!catalogDataSet) {
-        if (!isEmpty(measureDateDatasets.dateDatasetsOrdered)) {
+        if (!_isEmpty(measureDateDatasets.dateDatasetsOrdered)) {
             return measureDateDatasets.dateDatasetsOrdered[0];
         }
 

@@ -1,9 +1,11 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { compact, isEmpty } from "lodash-es";
+import { compact } from "lodash-es";
+
+import { _isEmpty } from "@gooddata/util";
 
 function isUseless(obj: unknown): boolean {
-    return obj === null || obj === undefined || (typeof obj === "object" && isEmpty(obj));
+    return obj === null || obj === undefined || (typeof obj === "object" && _isEmpty(obj));
 }
 
 /**

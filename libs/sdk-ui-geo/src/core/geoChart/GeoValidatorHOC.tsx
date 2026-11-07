@@ -10,8 +10,6 @@ import {
     useState,
 } from "react";
 
-import { isEqual } from "lodash-es";
-
 import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { type IColor } from "@gooddata/sdk-model";
 import {
@@ -26,6 +24,7 @@ import {
     newErrorMapping,
 } from "@gooddata/sdk-ui";
 import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
+import { _isEqual } from "@gooddata/util";
 
 import { type IGeoConfig } from "../../GeoChart.js";
 
@@ -51,7 +50,7 @@ const isSameConfig = (config?: IGeoConfig, nextConfig?: IGeoConfig): boolean => 
         colorMapping: nextColorMapping,
     };
 
-    return isEqual(configProps, nextConfigProps);
+    return _isEqual(configProps, nextConfigProps);
 };
 
 const isSameData = (execution?: IPreparedExecution, nextExecution?: IPreparedExecution): boolean => {
@@ -148,7 +147,7 @@ export function geoValidatorHOC<T>(InnerComponent: ComponentClass<T>): Component
             // check if buckets, filters and config are changed
             const isSameConfigResult = isSameConfig(config, nextConfig);
             const isSameDataSource = isSameData(execution, nextExecution);
-            const isSameDrillableItems = isEqual(drillableItems, nextDrillableItems);
+            const isSameDrillableItems = _isEqual(drillableItems, nextDrillableItems);
 
             // Return true if props are equal (should NOT re-render)
             // This is the opposite of shouldComponentUpdate

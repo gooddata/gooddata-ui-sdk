@@ -1,5 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
-import { isEmpty } from "lodash-es";
+// (C) 2007-2026 GoodData Corporation
 
 import {
     type IAttribute,
@@ -8,6 +7,7 @@ import {
     attributeLocalId,
     measureLocalId,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 //
 // types used in implementation internals
@@ -265,7 +265,7 @@ export interface ITotalColumnLocator {
  * @public
  */
 export function isMeasureColumnLocator(obj: unknown): obj is IMeasureColumnLocator {
-    return !isEmpty(obj) && (obj as IMeasureColumnLocator).measureLocatorItem !== undefined;
+    return !_isEmpty(obj) && (obj as IMeasureColumnLocator).measureLocatorItem !== undefined;
 }
 
 /**
@@ -274,7 +274,7 @@ export function isMeasureColumnLocator(obj: unknown): obj is IMeasureColumnLocat
  * @public
  */
 export function isAttributeColumnLocator(obj: unknown): obj is IAttributeColumnLocator {
-    return !isEmpty(obj) && (obj as IAttributeColumnLocator).attributeLocatorItem !== undefined;
+    return !_isEmpty(obj) && (obj as IAttributeColumnLocator).attributeLocatorItem !== undefined;
 }
 
 /**
@@ -283,7 +283,7 @@ export function isAttributeColumnLocator(obj: unknown): obj is IAttributeColumnL
  * @public
  */
 export function isTotalColumnLocator(obj: unknown): obj is ITotalColumnLocator {
-    return !isEmpty(obj) && (obj as ITotalColumnLocator).totalLocatorItem !== undefined;
+    return !_isEmpty(obj) && (obj as ITotalColumnLocator).totalLocatorItem !== undefined;
 }
 
 /**
@@ -301,7 +301,7 @@ export function isAbsoluteColumnWidth(columnWidth: ColumnWidth): columnWidth is 
  * @public
  */
 export function isAttributeColumnWidthItem(obj: unknown): obj is IAttributeColumnWidthItem {
-    return !isEmpty(obj) && (obj as IAttributeColumnWidthItem).attributeColumnWidthItem !== undefined;
+    return !_isEmpty(obj) && (obj as IAttributeColumnWidthItem).attributeColumnWidthItem !== undefined;
 }
 
 /**
@@ -310,7 +310,7 @@ export function isAttributeColumnWidthItem(obj: unknown): obj is IAttributeColum
  * @public
  */
 export function isMeasureColumnWidthItem(obj: unknown): obj is IMeasureColumnWidthItem {
-    return !isEmpty(obj) && (obj as IMeasureColumnWidthItem).measureColumnWidthItem?.locators !== undefined;
+    return !_isEmpty(obj) && (obj as IMeasureColumnWidthItem).measureColumnWidthItem?.locators !== undefined;
 }
 
 /**
@@ -320,7 +320,7 @@ export function isMeasureColumnWidthItem(obj: unknown): obj is IMeasureColumnWid
  */
 export function isSliceMeasureColumnWidthItem(obj: unknown): obj is ISliceMeasureColumnWidthItem {
     return (
-        !isEmpty(obj) &&
+        !_isEmpty(obj) &&
         (obj as ISliceMeasureColumnWidthItem).sliceMeasureColumnWidthItem?.locators !== undefined
     );
 }
@@ -332,7 +332,7 @@ export function isSliceMeasureColumnWidthItem(obj: unknown): obj is ISliceMeasur
  */
 export function isMixedValuesColumnWidthItem(obj: unknown): obj is IMixedValuesColumnWidthItem {
     return (
-        !isEmpty(obj) &&
+        !_isEmpty(obj) &&
         (obj as IMixedValuesColumnWidthItem).mixedValuesColumnWidthItem?.locators !== undefined
     );
 }
@@ -344,7 +344,7 @@ export function isMixedValuesColumnWidthItem(obj: unknown): obj is IMixedValuesC
  */
 export function isAllMeasureColumnWidthItem(obj: unknown): obj is IAllMeasureColumnWidthItem {
     return (
-        !isEmpty(obj) &&
+        !_isEmpty(obj) &&
         (obj as IAllMeasureColumnWidthItem).measureColumnWidthItem !== undefined &&
         (obj as IMeasureColumnWidthItem).measureColumnWidthItem.locators === undefined &&
         (obj as IWeakMeasureColumnWidthItem).measureColumnWidthItem.locator === undefined
@@ -358,7 +358,7 @@ export function isAllMeasureColumnWidthItem(obj: unknown): obj is IAllMeasureCol
  */
 export function isWeakMeasureColumnWidthItem(obj: unknown): obj is IWeakMeasureColumnWidthItem {
     return (
-        !isEmpty(obj) && (obj as IWeakMeasureColumnWidthItem).measureColumnWidthItem?.locator !== undefined
+        !_isEmpty(obj) && (obj as IWeakMeasureColumnWidthItem).measureColumnWidthItem?.locator !== undefined
     );
 }
 

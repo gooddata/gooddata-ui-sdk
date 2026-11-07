@@ -1,9 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
 import { type ColDef, type GridApi } from "ag-grid-community";
-import { isEqual } from "lodash-es";
 
 import { type IDimension } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { COLUMN_SUBTOTAL, COLUMN_TOTAL, ROW_SUBTOTAL, ROW_TOTAL } from "../base/constants.js";
 
@@ -19,7 +19,7 @@ export function areTotalsChanged(gridApi: GridApi | undefined, newTotals: IGridT
     }
 
     for (let i = 0; i < currentTotalsCount; i++) {
-        if (!isEqual(gridApi?.getPinnedBottomRow(i)?.data, totals[i])) {
+        if (!_isEqual(gridApi?.getPinnedBottomRow(i)?.data, totals[i])) {
             return true;
         }
     }

@@ -32,7 +32,6 @@ services:
             - NO_COLOR
             - TIGER_API_TOKEN
             - TIGER_DATASOURCES_NAME
-            - BACKEND_ENVIRONMENT
             - FIXTURE_TYPE
             - TEST_WORKSPACE_ID
             - PLAYWRIGHT_GREP

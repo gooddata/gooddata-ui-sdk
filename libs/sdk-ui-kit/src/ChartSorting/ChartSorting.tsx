@@ -2,11 +2,11 @@
 
 import { useCallback, useMemo, useState } from "react";
 
-import { isEqual } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { type ISortItem } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
+import { _isEqual } from "@gooddata/util";
 
 import { Button } from "../Button/Button.js";
 
@@ -47,7 +47,7 @@ function ChartSorting({
         setCurrentSort(item);
     };
     const isApplyEnabled = useMemo(
-        () => !isEqual(currentSort, currentSelectedSort),
+        () => !_isEqual(currentSort, currentSelectedSort),
         [currentSort, currentSelectedSort],
     );
     return (

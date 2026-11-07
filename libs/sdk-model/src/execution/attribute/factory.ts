@@ -1,7 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, isEmpty } from "lodash-es";
+import { cloneDeep } from "lodash-es";
 import SparkMD5 from "spark-md5";
+
+import { _isEmpty } from "@gooddata/util";
 
 import { idRef } from "../../objRef/factory.js";
 import { type Identifier, type ObjRef, isObjRef, objRefToString } from "../../objRef/index.js";
@@ -155,13 +157,13 @@ export class AttributeBuilder {
     };
 
     private getOrGenerateLocalId(): string {
-        if (this.customLocalId && !isEmpty(this.attribute.localIdentifier)) {
+        if (this.customLocalId && !_isEmpty(this.attribute.localIdentifier)) {
             return this.attribute.localIdentifier;
         }
 
         return sanitizeLocalId(
             ["a", this.calculateAliasHash(), objRefToString(this.attribute.displayForm)]
-                .filter((part) => !isEmpty(part))
+                .filter((part) => !_isEmpty(part))
                 .join("_"),
         );
     }

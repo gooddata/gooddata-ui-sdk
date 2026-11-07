@@ -3,7 +3,7 @@
 import { type ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 
 import cx from "classnames";
-import { isEmpty, isEqual, xorWith } from "lodash-es";
+import { xorWith } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {
@@ -13,6 +13,7 @@ import {
     newRankingFilter,
 } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
+import { _isEmpty, _isEqual } from "@gooddata/util";
 
 import { type IDimensionalityItem } from "../MeasureValueFilter/typings.js";
 import {
@@ -46,10 +47,10 @@ const isApplyButtonDisabled = (
 
     const operatorNotChanged = rankingFilter.operator === rankingFilterState.operator;
     const valueNotChanged = rankingFilter.value === rankingFilterState.value;
-    const attributesNotChanged = isEmpty(
-        xorWith(rankingFilter.attributes, rankingFilterState.attributes, isEqual),
+    const attributesNotChanged = _isEmpty(
+        xorWith(rankingFilter.attributes, rankingFilterState.attributes, _isEqual),
     );
-    const measureNotChanged = isEqual(rankingFilter.measure, rankingFilterState.measure);
+    const measureNotChanged = _isEqual(rankingFilter.measure, rankingFilterState.measure);
 
     // When flag is enabled, also check if applyOnResult changed
     const applyOnResultNotChanged =

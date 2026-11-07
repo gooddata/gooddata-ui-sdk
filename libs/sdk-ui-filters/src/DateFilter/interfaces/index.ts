@@ -1,7 +1,5 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import {
     type DateFilterGranularity,
     type DateString,
@@ -21,6 +19,7 @@ import {
     isRelativeDateFilterForm,
     isRelativeDateFilterPreset,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 /**
  * Represents the global absolute date filter, which may contain selected values
@@ -50,7 +49,7 @@ export interface IUiAbsoluteDateFilterForm extends IAbsoluteDateFilterForm {
  * @public
  */
 export const isUiRelativeDateFilterForm = (obj: unknown): obj is IUiRelativeDateFilterForm => {
-    return !isEmpty(obj) && (obj as IUiRelativeDateFilterForm).type === "relativeForm";
+    return !_isEmpty(obj) && (obj as IUiRelativeDateFilterForm).type === "relativeForm";
 };
 
 /**
@@ -111,7 +110,7 @@ export const isRelativeDateFilterOption = (obj: unknown): obj is RelativeDateFil
  * @public
  */
 export const isRelativeDateFilterWithBoundOption = (obj: unknown): obj is RelativeDateFilterOption =>
-    isRelativeDateFilterOption(obj) && !isEmpty(obj.boundedFilter);
+    isRelativeDateFilterOption(obj) && !_isEmpty(obj.boundedFilter);
 
 /**
  * Represents any option in the date filter dropdown

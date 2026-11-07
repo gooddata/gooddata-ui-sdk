@@ -57,12 +57,17 @@ describe("parameterSchemaKeys", () => {
         });
     });
 
+    it("records a sequence of scalars with no keys", () => {
+        expect(parameterSchemaKeys(["NUMBER"])["tags"]).toEqual({ kind: "sequence", keys: [] });
+    });
+
     it("only contains expected nesting levels", () => {
         expect(Object.keys(parameterSchemaKeys(["NUMBER", "STRING"])).sort()).toEqual([
             "",
             "allowedValues",
             "constraints",
             "definition",
+            "tags",
         ]);
     });
 });

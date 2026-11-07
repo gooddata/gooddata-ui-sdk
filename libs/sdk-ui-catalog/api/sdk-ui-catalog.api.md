@@ -33,6 +33,15 @@ export function AnalyticsCatalogDetailContent(input: IAnalyticsCatalogDetailCont
 // @public
 export function AnalyticsCatalogFilter<T>(props: IAnalyticsCatalogFilterProps<T>): JSX.Element;
 
+// @internal
+export type AsCodeDocumentPath = ReadonlyArray<string | number>;
+
+// @internal
+export type AsCodeFieldMark = {
+    path?: AsCodeDocumentPath;
+    target?: "key";
+};
+
 // @internal (undocumented)
 export type AsCodeSerialization = {
     yaml: string;
@@ -43,10 +52,10 @@ export type AsCodeSerialization = {
 export type AsCodeValidation<TDef> = {
     isValid: true;
     definition: TDef;
-} | {
+} | ({
     isValid: false;
     error: string;
-};
+} & AsCodeFieldMark);
 
 // @internal
 export type AsCodeValidationContext = {

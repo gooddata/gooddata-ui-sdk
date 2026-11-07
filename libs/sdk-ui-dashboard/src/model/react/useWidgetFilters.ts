@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from "react";
 
 import stringify from "json-stable-stringify";
-import { isEqual } from "lodash-es";
 
 import {
     type FilterContextItem,
@@ -22,6 +21,7 @@ import {
     isDashboardMeasureValueFilter,
 } from "@gooddata/sdk-model";
 import { usePrevious } from "@gooddata/sdk-ui";
+import { _isEqual } from "@gooddata/util";
 
 import { safeSerializeObjRef } from "../../_staging/metadata/safeSerializeObjRef.js";
 import { type IQueryWidgetFilters, queryWidgetFilters } from "../queries/widgets.js";
@@ -176,7 +176,7 @@ function useNonIgnoredFilters(widget: FilterableDashboardWidget | undefined | nu
                 const getNewRefs = () => {
                     // only set state if the values really changed
                     // this prevents the full query from running unnecessarily
-                    if (!isEqual(prevValue.nonIgnoredFilterRefs, result)) {
+                    if (!_isEqual(prevValue.nonIgnoredFilterRefs, result)) {
                         return (result as IFilter[]).map(filterObjRef) as ObjRef[];
                     }
                     return prevValue.nonIgnoredFilterRefs;

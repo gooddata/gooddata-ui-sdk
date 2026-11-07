@@ -1,9 +1,10 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { cloneDeep, isEmpty, isEqual, set } from "lodash-es";
+import { cloneDeep, set } from "lodash-es";
 
 import { type IInsightDefinition, newMeasureSort } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+import { _isEmpty, _isEqual } from "@gooddata/util";
 
 import { BUCKETS } from "../../../constants/bucket.js";
 import { WATERFALL_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
@@ -184,7 +185,7 @@ export class PluggableWaterfallChart extends PluggableBaseChart {
         defaultSort: ISortConfig["defaultSort"];
         availableSorts: ISortConfig["availableSorts"];
     } {
-        if (isEmpty(measures) || isEmpty(viewBy)) {
+        if (_isEmpty(measures) || _isEmpty(viewBy)) {
             return {
                 defaultSort: [],
                 availableSorts: [],
@@ -279,7 +280,7 @@ export class PluggableWaterfallChart extends PluggableBaseChart {
             set(referencePoint, "properties.controls.total.measures", []);
         }
 
-        if (viewItems.length > 0 || isEqual(listTotalMeasures, existingTotalMeasures)) {
+        if (viewItems.length > 0 || _isEqual(listTotalMeasures, existingTotalMeasures)) {
             return referencePoint;
         }
 

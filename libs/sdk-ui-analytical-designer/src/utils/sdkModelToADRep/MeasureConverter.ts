@@ -1,7 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import {
     type IArithmeticMeasureDefinition,
     type IMeasure,
@@ -31,6 +29,7 @@ import {
     measureTitle,
     measureUri,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { getDefaultMeasureFormat } from "../../models/bucket_item.js";
 import {
@@ -112,7 +111,7 @@ const convertSimpleMeasureDefinition = (
             item: isComputedAttributeRef(ref) ? ref : identifier ? { identifier } : { uri: uri },
             ...(aggregation && { aggregation }),
             ...(computeRatio && { computeRatio }),
-            ...(!isEmpty(filters) && { filters }),
+            ...(!_isEmpty(filters) && { filters }),
         },
     };
 };

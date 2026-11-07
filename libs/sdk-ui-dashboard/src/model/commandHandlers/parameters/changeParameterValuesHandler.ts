@@ -1,10 +1,10 @@
 // (C) 2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 
 import { type IInsightParameterValue, areObjRefsEqual } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { type IDashboardCommand } from "../../commands/base.js";
 import { type IChangeParameterValues } from "../../commands/parameters.js";
@@ -132,7 +132,7 @@ export function* dispatchParametersChanged(
     const valuesByTab: ReturnType<typeof selectParameterValuesByTab> =
         yield select(selectParameterValuesByTab);
     const values = valuesByTab[tabLocalIdentifier];
-    if (values === undefined || isEqual(valuesBefore, values)) {
+    if (values === undefined || _isEqual(valuesBefore, values)) {
         return;
     }
 

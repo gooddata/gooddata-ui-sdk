@@ -508,13 +508,11 @@ export type TigerObjectType = TigerAfmType | TigerMetadataType;
 
 // @internal @deprecated
 export type TigerSpecificFunctions = {
-    isCommunityEdition?: () => Promise<boolean>;
     isOrganizationAdmin?: () => Promise<boolean>;
     organizationExpiredDate?: () => Promise<string>;
     getOrganizationAllowedOrigins?: (organizationId: string) => Promise<string[]>;
     getOrganizationPermissions?: (organizationId: string) => Promise<Array<OrganizationPermission>>;
     updateOrganizationAllowedOrigins?: (organizationId: string, updatedOrigins: string[]) => Promise<string[]>;
-    getDeploymentVersion?: () => Promise<string>;
     getAllApiTokens?: (userId: string) => Promise<IApiToken[]>;
     generateApiToken?: (userId: string, tokenId: string) => Promise<IApiTokenExtended | undefined>;
     deleteApiToken?: (userId: string, tokenId: string) => Promise<void>;

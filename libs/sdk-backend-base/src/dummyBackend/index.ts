@@ -1,7 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { isEmpty, isEqual } from "lodash-es";
-
 import {
     type AutomationFilterType,
     type AutomationType,
@@ -238,6 +236,7 @@ import {
     isIdentifierRef,
     isUriRef,
 } from "@gooddata/sdk-model";
+import { _isEmpty, _isEqual } from "@gooddata/util";
 
 import { AbstractExecutionFactory } from "../toolkit/execution.js";
 
@@ -835,10 +834,10 @@ function dummyPreparedExecution(
             return fp;
         },
         equals(other: IPreparedExecution): boolean {
-            return isEqual(this.definition, other.definition);
+            return _isEqual(this.definition, other.definition);
         },
         withExecConfig(config: IExecutionConfig): IPreparedExecution {
-            if (!isEmpty(config?.dataSamplingPercentage)) {
+            if (!_isEmpty(config?.dataSamplingPercentage)) {
                 console.warn("Backend does not support data sampling, result will be not affected");
             }
             return executionFactory.forDefinition(definition, { context });

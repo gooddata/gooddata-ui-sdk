@@ -28,6 +28,7 @@ import { OverlayZIndexContext, useOverlayZIndexWithRegister } from "../../Overla
 import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { bem } from "../@utils/bem.js";
 import { markModalOwnedEvent } from "../UiFocusManager/modalOwnedEvents.js";
+import { UiModalOwnerProvider, modalOwnerAttributes } from "../UiFocusManager/UiModalOwner.js";
 
 const { b, e } = bem("gd-ui-kit-modal-dialog");
 
@@ -43,6 +44,8 @@ interface IUiDialogContext {
      * cleared when the last one unmounts.
      */
     registerBody: () => () => void;
+    /** The size of the header (title and close button) */
+    size: UiModalDialogSize;
 }
 
 const UiDialogContext = createContext<IUiDialogContext | null>(null);
@@ -53,6 +56,13 @@ const UiDialogContext = createContext<IUiDialogContext | null>(null);
 export function useUiDialogContext(): IUiDialogContext | null {
     return useContext(UiDialogContext);
 }
+
+/**
+ * The size of the dialog's header: its title and close button.
+ *
+ * @internal
+ */
+export type UiModalDialogSize = "default" | "large";
 
 /**
  * @internal
@@ -73,8 +83,10 @@ export interface IUiModalDialogProps {
     closeOnOutsideClick?: boolean;
     /** Fires when the user dismisses via Esc, backdrop press, or `onClose` from inside. */
     onClose: () => void;
-    /** Card width in px. Defaults to 540. */
+    /** Card width in px. Defaults to 540. Ignored when `isFullscreen` is set. */
     width?: number;
+    /** The size of the header: its title and close button. Ignored when `isFullscreen` is set. */
+    size?: UiModalDialogSize;
     /** Initial keyboard focus target. Defaults to the first tabbable element. */
     initialFocus?: RefObject<HTMLElement | null>;
     /**
@@ -89,6 +101,10 @@ export interface IUiModalDialogProps {
     };
     /** Test id forwarded to the overlay element. */
     dataTestId?: string;
+    /** Id of the dialog element, e.g. for the `aria-controls` of the button that opens it. */
+    id?: string;
+    /** Whether the dialog fills the viewport instead of showing as a card, e.g. on mobile. */
+    isFullscreen?: boolean;
 }
 
 /**
@@ -105,10 +121,13 @@ export function UiModalDialog({
     isOpen,
     onClose,
     width,
+    size,
     initialFocus,
     closeOnOutsideClick,
     accessibilityConfig,
     dataTestId,
+    id,
+    isFullscreen,
 }: IUiModalDialogProps) {
     if (!isOpen) {
         return null;
@@ -118,10 +137,13 @@ export function UiModalDialog({
             variant={variant}
             onClose={onClose}
             width={width}
+            size={size}
             initialFocus={initialFocus}
             closeOnOutsideClick={closeOnOutsideClick}
             accessibilityConfig={accessibilityConfig}
             dataTestId={dataTestId}
+            id={id}
+            isFullscreen={isFullscreen}
         >
             {children}
         </OpenModalDialog>
@@ -138,19 +160,25 @@ function OpenModalDialog({
     variant = "default",
     onClose,
     width = 540,
+    size = "default",
     initialFocus,
     closeOnOutsideClick = false,
     accessibilityConfig,
     dataTestId,
+    id,
+    isFullscreen = false,
 }: {
     children: ReactNode;
     variant?: IUiModalDialogProps["variant"];
     onClose: () => void;
     width?: number;
+    size?: UiModalDialogSize;
     initialFocus?: RefObject<HTMLElement | null>;
     closeOnOutsideClick?: boolean;
     accessibilityConfig?: IUiModalDialogProps["accessibilityConfig"];
     dataTestId?: string;
+    id?: string;
+    isFullscreen?: boolean;
 }) {
     const zIndex = useOverlayZIndexWithRegister();
     const titleId = useId();
@@ -186,9 +214,11 @@ function OpenModalDialog({
     // makes it focus the dialog card itself instead of the first action.
     const initialFocusRef = useRef<HTMLElement>(null);
     const [hasAutofocusTarget, setHasAutofocusTarget] = useState(false);
+    const [card, setCard] = useState<HTMLElement | null>(null);
     const setFloatingRef = useCallback(
         (node: HTMLElement | null) => {
             refs.setFloating(node);
+            setCard(node);
             const target = node?.querySelector<HTMLElement>("[autofocus]") ?? null;
             initialFocusRef.current = target;
             setHasAutofocusTarget(target !== null);
@@ -244,8 +274,13 @@ function OpenModalDialog({
         accessibilityConfig?.ariaLabelledBy ?? (accessibilityConfig?.ariaLabel ? undefined : titleId);
 
     const dialogContextValue = useMemo(
-        () => ({ titleId, descriptionId, registerBody }),
-        [titleId, descriptionId, registerBody],
+        (): IUiDialogContext => ({
+            titleId,
+            descriptionId,
+            registerBody,
+            size: isFullscreen ? "large" : size,
+        }),
+        [titleId, descriptionId, registerBody, isFullscreen, size],
     );
 
     // Nested kit popovers/menus (UiPopover, UiTooltip, dropdowns) portal
@@ -292,19 +327,21 @@ function OpenModalDialog({
                     >
                         <div
                             ref={setFloatingRef}
-                            className={e("card", { variant })}
-                            style={{ width }}
+                            id={id}
+                            className={e("card", { variant, isFullscreen })}
+                            style={isFullscreen ? undefined : { width }}
                             role={accessibilityConfig?.role ?? "dialog"}
                             aria-modal="true"
                             aria-label={accessibilityConfig?.ariaLabel}
                             aria-labelledby={ariaLabelledBy}
                             aria-describedby={hasBody ? descriptionId : undefined}
                             {...getFloatingProps()}
+                            {...modalOwnerAttributes}
                             onKeyDown={onCardKeyDown}
                         >
                             <UiDialogContext.Provider value={dialogContextValue}>
                                 <OverlayZIndexContext.Provider value={zIndex}>
-                                    {children}
+                                    <UiModalOwnerProvider modal={card}>{children}</UiModalOwnerProvider>
                                 </OverlayZIndexContext.Provider>
                             </UiDialogContext.Provider>
                         </div>

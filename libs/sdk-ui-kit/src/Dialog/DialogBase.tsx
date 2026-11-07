@@ -1,10 +1,11 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { type KeyboardEvent, type KeyboardEventHandler, memo, useCallback } from "react";
+import { type KeyboardEvent, type KeyboardEventHandler, memo, useCallback, useState } from "react";
 
 import cx from "classnames";
 
 import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";
+import { UiModalOwnerProvider, modalOwnerAttributes } from "../@ui/UiFocusManager/UiModalOwner.js";
 import { defaultFocusCheckFn } from "../@ui/UiFocusManager/utils.js";
 import { ScreenReaderToast } from "../Messages/toasts/ToastsCenter.js";
 import { isElementSubmitButton, isElementTextInput } from "../utils/domUtilities.js";
@@ -65,6 +66,18 @@ export const DialogBase = memo<IDialogBaseProps>(function DialogBase({
     );
 
     const dialogClasses = cx("overlay", "gd-dialog", className);
+    const [dialog, setDialog] = useState<HTMLDivElement | null>(null);
+    const isAriaModal = !!accessibilityConfig?.isModal;
+
+    const content = (
+        <div className={dialogClasses}>
+            {displayCloseButton ? (
+                <CloseButton onClose={onClose ?? onCancel} accessibilityConfig={accessibilityConfig} />
+            ) : null}
+
+            {children}
+        </div>
+    );
 
     return (
         <UiFocusManager
@@ -74,6 +87,7 @@ export const DialogBase = memo<IDialogBaseProps>(function DialogBase({
             focusCheckFn={focusCheckFn}
         >
             <div
+                ref={setDialog}
                 id={accessibilityConfig?.dialogId}
                 onKeyDown={handleKeyDown}
                 data-testid={dataTestId}
@@ -82,18 +96,14 @@ export const DialogBase = memo<IDialogBaseProps>(function DialogBase({
                 aria-label={accessibilityConfig?.title}
                 aria-labelledby={accessibilityConfig?.titleElementId}
                 aria-describedby={accessibilityConfig?.descriptionElementId}
+                {...(isAriaModal ? modalOwnerAttributes : {})}
             >
                 <ScreenReaderToast />
-                <div className={dialogClasses}>
-                    {displayCloseButton ? (
-                        <CloseButton
-                            onClose={onClose ?? onCancel}
-                            accessibilityConfig={accessibilityConfig}
-                        />
-                    ) : null}
-
-                    {children}
-                </div>
+                {isAriaModal ? (
+                    <UiModalOwnerProvider modal={dialog}>{content}</UiModalOwnerProvider>
+                ) : (
+                    content
+                )}
             </div>
         </UiFocusManager>
     );

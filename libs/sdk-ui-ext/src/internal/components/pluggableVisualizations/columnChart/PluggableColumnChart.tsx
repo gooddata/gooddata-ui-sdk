@@ -1,9 +1,8 @@
-// (C) 2019-2025 GoodData Corporation
-
-import { isEmpty } from "lodash-es";
+// (C) 2019-2026 GoodData Corporation
 
 import { newAttributeSort } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+import { _isEmpty } from "@gooddata/util";
 
 import { AXIS, AXIS_NAME } from "../../../constants/axis.js";
 import { COLUMN_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
@@ -81,7 +80,7 @@ export class PluggableColumnChart extends PluggableColumnBarCharts {
         const stackBy = getBucketItems(buckets, BucketNames.STACK);
         const measures = getBucketItems(buckets, BucketNames.MEASURES);
         const defaultSort = viewBy.map((vb) => newAttributeSort(vb.localIdentifier, "asc"));
-        const isStacked = !isEmpty(stackBy) || canSortStackTotalValue;
+        const isStacked = !_isEmpty(stackBy) || canSortStackTotalValue;
 
         if (viewBy.length === 2) {
             if (measures.length >= 2 && !canSortStackTotalValue) {
@@ -103,7 +102,7 @@ export class PluggableColumnChart extends PluggableColumnBarCharts {
                     newAvailableSortsGroup(viewBy[0].localIdentifier),
                     newAvailableSortsGroup(
                         viewBy[1].localIdentifier,
-                        isEmpty(stackBy) ? measures.map((m) => m.localIdentifier) : [],
+                        _isEmpty(stackBy) ? measures.map((m) => m.localIdentifier) : [],
                         true,
                         isStacked || measures.length > 1,
                     ),
@@ -111,19 +110,19 @@ export class PluggableColumnChart extends PluggableColumnBarCharts {
             };
         }
 
-        if (!isEmpty(viewBy) && isStacked) {
+        if (!_isEmpty(viewBy) && isStacked) {
             return {
                 defaultSort,
                 availableSorts: [
                     newAvailableSortsGroup(
                         viewBy[0].localIdentifier,
-                        isEmpty(stackBy) ? measures.map((m) => m.localIdentifier) : [],
+                        _isEmpty(stackBy) ? measures.map((m) => m.localIdentifier) : [],
                     ),
                 ],
             };
         }
 
-        if (!isEmpty(viewBy) && !isEmpty(measures)) {
+        if (!_isEmpty(viewBy) && !_isEmpty(measures)) {
             return {
                 defaultSort,
                 availableSorts: [

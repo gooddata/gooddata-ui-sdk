@@ -5,7 +5,7 @@ import { type ReactElement, Suspense, lazy, useCallback, useEffect, useMemo, use
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 
 import { LoadingComponent } from "@gooddata/sdk-ui";
-import { ConfirmDialog, UiButton, UiIcon, UiLink, UiTooltip } from "@gooddata/sdk-ui-kit";
+import { ConfirmDialog, UiButton, UiIcon, UiLink, UiTooltip, isApplePlatform } from "@gooddata/sdk-ui-kit";
 
 import { useIsWhiteLabeled } from "../permission/PermissionsContext.js";
 import { extractBackendErrorDetail } from "../utils/backendError.js";
@@ -139,6 +139,11 @@ export function AsCodeDialog(props: Props) {
         }
     }, [isSubmitting, onClose]);
 
+    const validationContext = useMemo<AsCodeValidationContext>(
+        () => (mode === "edit" ? { intent: "edit", fixedIdentifier } : { intent: "create" }),
+        [mode, fixedIdentifier],
+    );
+
     const handleChange = useCallback((nextValue: string) => {
         yamlValue.current = nextValue;
         setIsDirty(true);
@@ -159,9 +164,7 @@ export function AsCodeDialog(props: Props) {
         if (!editing || initialYaml === null || !onSubmit) {
             return;
         }
-        const context: AsCodeValidationContext =
-            mode === "edit" ? { intent: "edit", fixedIdentifier } : { intent: "create" };
-        const result = editing.validate(yamlValue.current ?? initialYaml, context);
+        const result = editing.validate(yamlValue.current ?? initialYaml, validationContext);
         if (!result.isValid) {
             setValidationError(result.error);
             return;
@@ -181,7 +184,7 @@ export function AsCodeDialog(props: Props) {
         } finally {
             setIsSubmitting(false);
         }
-    }, [descriptor, editing, fixedIdentifier, initialYaml, intl, mode, onSubmit, reconcileWithBase]);
+    }, [descriptor, editing, initialYaml, intl, onSubmit, reconcileWithBase, validationContext]);
 
     const handleDuplicate = useCallback(() => {
         if (!onDuplicate || !editing || initialYaml === null) {
@@ -277,7 +280,9 @@ export function AsCodeDialog(props: Props) {
                                     optimalPlacement
                                     triggerBy={["hover", "click", "focus"]}
                                     anchor={<UiIcon type="question" size={14} color="complementary-6" />}
-                                    content={intl.formatMessage(descriptor.messages.sectionHeaderTooltip)}
+                                    content={intl.formatMessage(descriptor.messages.sectionHeaderTooltip, {
+                                        platform: isApplePlatform() ? "apple" : "other",
+                                    })}
                                 />
                             </div>
                             {isBaseUnrepresentable ? (
@@ -292,8 +297,8 @@ export function AsCodeDialog(props: Props) {
                                     label={intl.formatMessage(descriptor.messages.sectionHeader)}
                                     onChange={handleChange}
                                     disabled={isSubmitting || isBaseUnrepresentable}
-                                    completionSource={editing.completionSource}
-                                    syntaxErrorMessage={editing.syntaxErrorMessage}
+                                    editing={editing}
+                                    validationContext={validationContext}
                                 />
                             </div>
                             {validationError || submitError ? (

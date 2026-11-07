@@ -2,9 +2,8 @@
 
 import { useCallback, useMemo, useState } from "react";
 
-import { isEqual } from "lodash-es";
-
 import { type IDashboardAttributeFilter, type ObjRef } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { setAttributeFilterLimitingItems } from "../../../../../../model/commands/dashboard.js";
 import { useDashboardSelector } from "../../../../../../model/react/DashboardStoreProvider.js";
@@ -29,14 +28,14 @@ export const useLimitingItemsConfiguration = (currentFilter: IDashboardAttribute
         [currentFilter],
     );
     const [limitingItems, setLimitingItems] = useState(originalLimitingItems ?? []);
-    const limitingItemsChanged = !isEqual(originalLimitingItems, limitingItems);
+    const limitingItemsChanged = !_isEqual(originalLimitingItems, limitingItems);
 
     const onLimitingItemsUpdate = useCallback((value: ObjRef[]) => {
         setLimitingItems(value);
     }, []);
 
     const onLimitingItemsChange = useCallback(() => {
-        if (!isEqual(originalLimitingItems, limitingItems)) {
+        if (!_isEqual(originalLimitingItems, limitingItems)) {
             changeAttributeFilterLimitingItems(currentFilterLocalId!, limitingItems);
         }
     }, [currentFilterLocalId, originalLimitingItems, changeAttributeFilterLimitingItems, limitingItems]);

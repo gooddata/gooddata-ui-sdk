@@ -74,10 +74,11 @@ export function RestrictedContentConfirmation() {
                     isOpen={isOpen}
                     onClose={close}
                     width={440}
+                    size="large"
                     initialFocus={cancelButtonRef}
                     accessibilityConfig={{ role: "alertdialog" }}
                 >
-                    <UiDialogHeader title="Remove restricted content?" titleSize="large" onClose={close} />
+                    <UiDialogHeader title="Remove restricted content?" onClose={close} />
                     <UiDialogBody>
                         Parts of this text are restricted. Editing it will permanently remove the restricted
                         objects for all users.
@@ -100,4 +101,21 @@ export function RestrictedContentConfirmation() {
 RestrictedContentConfirmation.parameters = {
     kind: "restricted content confirmation",
     screenshot: { readySelector: { selector: "[role=alertdialog]", state: State.Attached } },
+} satisfies IStoryParameters;
+
+export function Fullscreen() {
+    return (
+        <IntlWrapper>
+            <UiModalDialog isOpen isFullscreen onClose={action("close")}>
+                <UiDialogHeader title="Fullscreen dialog" onClose={action("close")} />
+                <UiDialogBody>
+                    The dialog fills the viewport instead of showing as a card, e.g. on mobile.
+                </UiDialogBody>
+            </UiModalDialog>
+        </IntlWrapper>
+    );
+}
+Fullscreen.parameters = {
+    kind: "fullscreen",
+    screenshot: { readySelector: { selector: "[role=dialog]", state: State.Attached } },
 } satisfies IStoryParameters;

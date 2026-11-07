@@ -1,6 +1,8 @@
 // (C) 2026 GoodData Corporation
 
-import { isEqual, mergeWith } from "lodash-es";
+import { mergeWith } from "lodash-es";
+
+import { _isEqual } from "@gooddata/util";
 
 import { type IDateDatasetsMeta } from "../../models/date_datasets_meta.js";
 import { type ICacheItem, type ICatalogEntry } from "../../typings/state_objects.js";
@@ -52,7 +54,7 @@ export function mergeItemsIntoCache(
 
     Object.entries(items ?? {}).forEach(([key, item]) => {
         const nextEntry = mergeWith({}, cache[key], item, replaceArrayFields) as ICatalogEntry;
-        if (!isEqual(cache[key], nextEntry)) {
+        if (!_isEqual(cache[key], nextEntry)) {
             merged[key] = nextEntry;
             changed = true;
         }

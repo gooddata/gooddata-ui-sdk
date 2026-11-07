@@ -1,6 +1,8 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { type GridApi } from "ag-grid-community";
-import { isEmpty } from "lodash-es";
+
+import { _isEmpty } from "@gooddata/util";
 
 import {
     addCellClass,
@@ -142,7 +144,7 @@ export function updateStickyRowContentClassesAndData(
     } = previousRowData;
     // set new rowData only if differen to avoid rerendering and flashing of the sticky row
     if (areDataDifferent(previousData, stickyRowData)) {
-        const headerItemMapProp = isEmpty(headerItemMap) ? {} : { headerItemMap };
+        const headerItemMapProp = _isEmpty(headerItemMap) ? {} : { headerItemMap };
         gridApi.updateGridOptions({
             pinnedTopRowData: [
                 {

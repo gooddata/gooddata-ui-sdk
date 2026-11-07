@@ -13,7 +13,7 @@ import { GenAIAssistantMode } from "@gooddata/sdk-ui-gen-ai";
 import { type ISequencedAppEvent } from "@gooddata/sdk-ui-gen-ai/internal";
 import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
-import { getAppLifecycleCallbacks } from "../loader/pluggableApplicationsLoader.js";
+import { getHostTelemetryServices } from "../loader/pluggableApplicationsLoader.js";
 import { getBackend } from "../platformContext/backend.js";
 
 import { e } from "./hostChromeBem.js";
@@ -119,7 +119,7 @@ export function HostChat({
     const features = useHostChromeWorkspaceFeatures(resolvedApplications, ctx, pathname);
 
     const shellTelemetry = useMemo(
-        () => getAppLifecycleCallbacks()?.createTelemetryCallbacks?.("host-ui"),
+        () => getHostTelemetryServices()?.createTelemetryCallbacks?.("host-ui"),
         [],
     );
 

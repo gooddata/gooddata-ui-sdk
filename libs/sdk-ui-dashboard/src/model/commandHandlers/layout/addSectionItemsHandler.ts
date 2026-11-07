@@ -1,9 +1,10 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, put, select } from "redux-saga/effects";
+
+import { _isEmpty } from "@gooddata/util";
 
 import {
     findSection,
@@ -78,7 +79,7 @@ function validateAndResolveItems(commandCtx: AddSectionItemsContext) {
 
         const stashValidationResult = validateAndResolveStashedItems(stash, items);
 
-        if (!isEmpty(stashValidationResult.missing)) {
+        if (!_isEmpty(stashValidationResult.missing)) {
             throw invalidArgumentsProvided(
                 ctx,
                 commandCtx.cmd,
@@ -117,7 +118,7 @@ function validateAndResolveItems(commandCtx: AddSectionItemsContext) {
 
         const stashValidationResult = validateAndResolveStashedItems(stash, items);
 
-        if (!isEmpty(stashValidationResult.missing)) {
+        if (!_isEmpty(stashValidationResult.missing)) {
             throw invalidArgumentsProvided(
                 ctx,
                 commandCtx.cmd,

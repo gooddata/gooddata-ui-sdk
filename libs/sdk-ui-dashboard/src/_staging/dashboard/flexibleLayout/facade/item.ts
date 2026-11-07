@@ -1,7 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
-
 import {
     type IDashboardLayout,
     type IDashboardLayoutItem,
@@ -27,6 +25,7 @@ import {
     isWidget,
     isWidgetDefinition,
 } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { type ILayoutItemPath } from "../../../../types.js";
 import { areLayoutPathsEqual, updateItemIndex } from "../../../layout/coordinates.js";
@@ -94,7 +93,7 @@ export class DashboardLayoutItemFacade<TWidget> implements IDashboardLayoutItemF
     }
 
     public widgetEquals(widget: TWidget | undefined): boolean {
-        return isEqual(this.widget(), widget);
+        return _isEqual(this.widget(), widget);
     }
 
     public widgetIs(widget: TWidget): boolean {

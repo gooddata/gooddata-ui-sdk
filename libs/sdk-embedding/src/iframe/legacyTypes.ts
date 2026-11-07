@@ -1,8 +1,7 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import { type ObjectType } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 /**
  * @public
@@ -478,19 +477,19 @@ export interface IVisualization {
  * @public
  */
 export function isObjIdentifierQualifier(qualifier: ObjQualifier): qualifier is IObjIdentifierQualifier {
-    return !isEmpty(qualifier) && (qualifier as IObjIdentifierQualifier).identifier !== undefined;
+    return !_isEmpty(qualifier) && (qualifier as IObjIdentifierQualifier).identifier !== undefined;
 }
 
 /**
  * @public
  */
 export function isObjectUriQualifier(qualifier: ObjQualifier): qualifier is IObjUriQualifier {
-    return !isEmpty(qualifier) && (qualifier as IObjUriQualifier).uri !== undefined;
+    return !_isEmpty(qualifier) && (qualifier as IObjUriQualifier).uri !== undefined;
 }
 
 /**
  * @public
  */
 export function isLocalIdentifierQualifier(qualifier: unknown): qualifier is ILocalIdentifierQualifier {
-    return !isEmpty(qualifier) && (qualifier as ILocalIdentifierQualifier).localIdentifier !== undefined;
+    return !_isEmpty(qualifier) && (qualifier as ILocalIdentifierQualifier).localIdentifier !== undefined;
 }

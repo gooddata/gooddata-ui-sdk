@@ -1,7 +1,5 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
-
 import {
     type IAttributeDescriptor,
     type IAttributeFilter,
@@ -40,6 +38,7 @@ import {
     type IDrillEvent,
     getMappingHeaderLocalIdentifier,
 } from "@gooddata/sdk-ui";
+import { _isEqual } from "@gooddata/util";
 
 import {
     type DashboardDrillDefinition,
@@ -173,7 +172,7 @@ export function isDrillConfigured(
             return false;
         }
 
-        return isEqual(drill, configDrill);
+        return _isEqual(drill, configDrill);
     });
 }
 

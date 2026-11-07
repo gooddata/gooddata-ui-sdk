@@ -1,7 +1,5 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { isEmpty, isEqual } from "lodash-es";
-
 import {
     type IColor,
     type IColorPalette,
@@ -18,6 +16,7 @@ import {
     type IMappingHeader,
     getMappingHeaderLocalIdentifier,
 } from "@gooddata/sdk-ui";
+import { _isEmpty, _isEqual } from "@gooddata/util";
 
 import { type IColorMapping, type IPatternObject } from "./types.js";
 
@@ -213,7 +212,7 @@ export function getRgbString(color: IColorPaletteItem): string {
  * @internal
  */
 export function isCustomPalette(palette: IColorPalette): boolean {
-    return !isEqual(palette, DefaultColorPalette);
+    return !_isEqual(palette, DefaultColorPalette);
 }
 
 /**
@@ -362,11 +361,11 @@ export function getColorMappingPredicate(testValue: string): IHeaderPredicate {
  * @internal
  */
 export function getValidColorPalette(colors?: string[], colorPalette?: IColorPalette): IColorPalette {
-    if (colorPalette && !isEmpty(colorPalette)) {
+    if (colorPalette && !_isEmpty(colorPalette)) {
         return colorPalette;
     }
 
-    if (colors && !isEmpty(colors)) {
+    if (colors && !_isEmpty(colors)) {
         return getColorPaletteFromColors(colors);
     }
 
@@ -391,5 +390,5 @@ export const ColorUtils = {
  * @internal
  */
 export function isPatternObject(color: string | IPatternObject | undefined): color is IPatternObject {
-    return !isEmpty(color) && (color as IPatternObject).pattern !== undefined;
+    return !_isEmpty(color) && (color as IPatternObject).pattern !== undefined;
 }

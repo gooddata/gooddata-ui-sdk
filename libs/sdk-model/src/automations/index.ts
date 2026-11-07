@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IAuditable } from "../base/metadata.js";
 import { type IExecutionDefinition } from "../execution/executionDefinition/index.js";
@@ -213,7 +213,7 @@ export interface IAutomationMetadataObject
  * @alpha
  */
 export function isAutomationMetadataObject(obj: unknown): obj is IAutomationMetadataObject {
-    return isAutomationMetadataObjectDefinition(obj) && !isEmpty((obj as IAutomationMetadataObject).id);
+    return isAutomationMetadataObjectDefinition(obj) && !_isEmpty((obj as IAutomationMetadataObject).id);
 }
 
 /**
@@ -231,7 +231,7 @@ export interface IAutomationMetadataObjectDefinition
 export function isAutomationMetadataObjectDefinition(
     obj: unknown,
 ): obj is IAutomationMetadataObjectDefinition {
-    return !isEmpty(obj) && (obj as IAutomationMetadataObject).type === "automation";
+    return !_isEmpty(obj) && (obj as IAutomationMetadataObject).type === "automation";
 }
 
 /**
@@ -323,7 +323,7 @@ export interface IAutomationUserRecipient extends IAutomationRecipientBase {
  * @alpha
  */
 export function isAutomationUserRecipient(obj: unknown): obj is IAutomationUserRecipient {
-    return !isEmpty(obj) && (obj as IAutomationUserRecipient).type === "user";
+    return !_isEmpty(obj) && (obj as IAutomationUserRecipient).type === "user";
 }
 
 /**
@@ -346,7 +346,7 @@ export interface IAutomationUserGroupRecipient extends IAutomationRecipientBase 
  * @alpha
  */
 export function isAutomationUserGroupRecipient(obj: unknown): obj is IAutomationUserGroupRecipient {
-    return !isEmpty(obj) && (obj as IAutomationUserGroupRecipient).type === "userGroup";
+    return !_isEmpty(obj) && (obj as IAutomationUserGroupRecipient).type === "userGroup";
 }
 
 /**
@@ -364,7 +364,7 @@ export interface IAutomationExternalRecipient extends Omit<IAutomationUserRecipi
  * @alpha
  */
 export function isAutomationExternalUserRecipient(obj: unknown): obj is IAutomationExternalRecipient {
-    return !isEmpty(obj) && (obj as IAutomationExternalRecipient).type === "externalUser";
+    return !_isEmpty(obj) && (obj as IAutomationExternalRecipient).type === "externalUser";
 }
 
 /**
@@ -382,7 +382,7 @@ export interface IAutomationUnknownRecipient extends Omit<IAutomationUserRecipie
  * @alpha
  */
 export function isAutomationUnknownUserRecipient(obj: unknown): obj is IAutomationUnknownRecipient {
-    return !isEmpty(obj) && (obj as IAutomationUnknownRecipient).type === "unknownUser";
+    return !_isEmpty(obj) && (obj as IAutomationUnknownRecipient).type === "unknownUser";
 }
 
 /**

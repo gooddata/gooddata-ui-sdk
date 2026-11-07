@@ -28,7 +28,6 @@ services:
             - HOST
             - NO_COLOR
             - TIGER_API_TOKEN
-            - BACKEND_ENVIRONMENT
             - PLAYWRIGHT_UPDATE_SNAPSHOTS
             - SHARD_INDEX
             - SHARD_TOTAL

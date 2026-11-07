@@ -7,11 +7,13 @@ import { DefaultAgentChooser } from "./customized/AgentChooser.js";
 import { DefaultAgentItem } from "./customized/AgentItem.js";
 import { DefaultAssistantMessage } from "./customized/AssistantMessage.js";
 import { DefaultConversationDateGrouping } from "./customized/ConversationDateGrouping.js";
+import { DefaultConversationDeleteDialog } from "./customized/ConversationDeleteDialog.js";
 import { DefaultConversationDrawerHeader } from "./customized/ConversationDrawerHeader.js";
 import { DefaultConversationFooter } from "./customized/ConversationFooter.js";
 import { DefaultConversationHeader } from "./customized/ConversationHeader.js";
 import { DefaultConversationItem } from "./customized/ConversationItem.js";
 import { DefaultConversationKdaContent } from "./customized/ConversationKdaContent.js";
+import { DefaultConversationRenameDialog } from "./customized/ConversationRenameDialog.js";
 import { DefaultConversationVisualizationContent } from "./customized/ConversationVisualizationContent.js";
 import { DefaultDisclaimer } from "./customized/Disclaimer.js";
 import { DefaultFeedback } from "./customized/Feedback.js";
@@ -27,11 +29,13 @@ import {
     type IGenAIAssistantAgentItemProps,
     type IGenAIAssistantAssistantMessageProps,
     type IGenAIAssistantConversationDateGroupingProps,
+    type IGenAIAssistantConversationDeleteDialogProps,
     type IGenAIAssistantConversationDrawerHeaderProps,
     type IGenAIAssistantConversationFooterProps,
     type IGenAIAssistantConversationHeaderProps,
     type IGenAIAssistantConversationItemProps,
     type IGenAIAssistantConversationKdaContentProps,
+    type IGenAIAssistantConversationRenameDialogProps,
     type IGenAIAssistantConversationVisualizationContentProps,
     type IGenAIAssistantFeedbackProps,
     type IGenAIAssistantFollowUpButtonsProps,
@@ -140,6 +144,30 @@ function ConversationDateGroupingSlotRenderer(props: IGenAIAssistantConversation
         );
     }
     return <DefaultConversationDateGrouping {...props} />;
+}
+
+function ConversationRenameDialogSlotRenderer(props: IGenAIAssistantConversationRenameDialogProps) {
+    const { slots } = useContext(customizationContext);
+    const ConversationRenameDialogSlot = slots?.ConversationRenameDialog;
+
+    if (ConversationRenameDialogSlot) {
+        return (
+            <ConversationRenameDialogSlot Default={DefaultConversationRenameDialog} defaultProps={props} />
+        );
+    }
+    return <DefaultConversationRenameDialog {...props} />;
+}
+
+function ConversationDeleteDialogSlotRenderer(props: IGenAIAssistantConversationDeleteDialogProps) {
+    const { slots } = useContext(customizationContext);
+    const ConversationDeleteDialogSlot = slots?.ConversationDeleteDialog;
+
+    if (ConversationDeleteDialogSlot) {
+        return (
+            <ConversationDeleteDialogSlot Default={DefaultConversationDeleteDialog} defaultProps={props} />
+        );
+    }
+    return <DefaultConversationDeleteDialog {...props} />;
 }
 
 function UserMessageSlotRenderer(props: IGenAIAssistantUserMessageProps) {
@@ -290,6 +318,8 @@ export function CustomizationProvider({ children, slots }: PropsWithChildren<Cus
             ConversationHeaderComponent: ConversationHeaderSlotRenderer,
             ConversationFooterComponent: ConversationFooterSlotRenderer,
             ConversationDateGroupingComponent: ConversationDateGroupingSlotRenderer,
+            ConversationRenameDialogComponent: ConversationRenameDialogSlotRenderer,
+            ConversationDeleteDialogComponent: ConversationDeleteDialogSlotRenderer,
             UserMessageComponent: UserMessageSlotRenderer,
             AssistantMessageComponent: AssistantMessageSlotRenderer,
             MessageTextContentComponent: MessageTextContentSlotRenderer,

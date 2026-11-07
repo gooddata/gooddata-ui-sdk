@@ -2,8 +2,6 @@
 
 import { type ComponentType, type ReactNode } from "react";
 
-import { isEmpty } from "lodash-es";
-
 import {
     type DrillDefinition,
     type IAccessGrantee,
@@ -17,6 +15,7 @@ import {
     isDashboardFilter as isDashboardFilterBase,
 } from "@gooddata/sdk-model";
 import { type IDrillEvent, type OnFiredDrillEvent } from "@gooddata/sdk-ui";
+import { _isEmpty } from "@gooddata/util";
 
 import { type DateFilterConfigValidationResult } from "./_staging/dateFilterConfig/validation.js";
 
@@ -108,7 +107,7 @@ export interface IDrillDownDefinition {
  * @beta
  */
 export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition {
-    return !isEmpty(obj) && (obj as IDrillDownDefinition).type === "drillDown";
+    return !_isEmpty(obj) && (obj as IDrillDownDefinition).type === "drillDown";
 }
 
 /**
@@ -305,7 +304,7 @@ export interface ILayoutCoordinates {
  */
 export function isLayoutCoordinates(obj: unknown): obj is ILayoutCoordinates {
     return (
-        !isEmpty(obj) &&
+        !_isEmpty(obj) &&
         (obj as ILayoutCoordinates).sectionIndex !== undefined &&
         (obj as ILayoutCoordinates).itemIndex !== undefined
     );
@@ -328,7 +327,7 @@ export type ILayoutItemPath = ILayoutCoordinates[];
  *  @alpha
  */
 export function isLayoutItemPath(obj: unknown): obj is ILayoutItemPath {
-    return !isEmpty(obj) && Array.isArray(obj) && obj.every(isLayoutCoordinates);
+    return !_isEmpty(obj) && Array.isArray(obj) && obj.every(isLayoutCoordinates);
 }
 
 /**
@@ -354,7 +353,7 @@ export interface ILayoutSectionPath {
  *  @alpha
  */
 export function isLayoutSectionPath(obj: unknown): obj is ILayoutSectionPath {
-    return !isEmpty(obj) && (obj as ILayoutSectionPath).sectionIndex !== undefined;
+    return !_isEmpty(obj) && (obj as ILayoutSectionPath).sectionIndex !== undefined;
 }
 
 /**

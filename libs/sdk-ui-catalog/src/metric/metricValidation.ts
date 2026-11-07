@@ -1,10 +1,8 @@
 // (C) 2026 GoodData Corporation
 
-import type * as z from "zod/mini";
-
 import type { IMeasureMetadataObjectDefinition } from "@gooddata/sdk-model";
 
-import { validateYaml } from "../asCode/validateYaml.js";
+import { type YamlValidationFailure, isMaqlWritten, validateYaml } from "../asCode/validateYaml.js";
 
 import { metricYamlToDefinition } from "./metricConverter.js";
 import { metricSchema } from "./metricSchema.js";
@@ -14,10 +12,7 @@ export type MetricValidationResult =
           isValid: true;
           measure: IMeasureMetadataObjectDefinition;
       }
-    | {
-          isValid: false;
-          errorCode: MetricValidationErrorCode;
-      };
+    | YamlValidationFailure<{ errorCode: MetricValidationErrorCode }>;
 
 export type MetricValidationErrorCode =
     | "empty"
@@ -38,35 +33,25 @@ export function validateMetricYaml(
     const result = validateYaml(value, {
         schema: metricSchema,
         fixedIdentifier: options.fixedIdentifier,
+        classifyIssue: classifyMetricIssue,
     });
 
-    if (result.ok) {
+    if (result.isValid) {
         return { isValid: true, measure: metricYamlToDefinition(result.data) };
     }
-    return {
-        isValid: false,
-        errorCode: result.kind === "schema" ? classifyMetricError(result.error, result.parsed) : result.kind,
-    };
+    return result;
 }
 
-function classifyMetricError(
-    error: z.core.$ZodError,
+function classifyMetricIssue(
+    path: string,
     parsed: unknown,
-): "invalidStructure" | "missingMaql" | "invalidTags" {
-    const maqlProvided =
-        typeof parsed === "object" && (parsed as { maql?: unknown } | null)?.maql !== undefined;
-
-    for (const issue of error.issues) {
-        const path = issue.path.map(String).join(".");
-
-        if (path === "maql") {
-            // A present-but-wrong-typed maql is a structural error, not a missing field.
-            return maqlProvided ? "invalidStructure" : "missingMaql";
-        }
-        if (path === "tags" || path.startsWith("tags.")) {
-            return "invalidTags";
-        }
+): { errorCode: MetricValidationErrorCode } | undefined {
+    if (path === "maql") {
+        // A present-but-wrong-typed maql is a structural error, not a missing field.
+        return { errorCode: isMaqlWritten(parsed) ? "invalidStructure" : "missingMaql" };
     }
-
-    return "invalidStructure";
+    if (path === "tags" || path.startsWith("tags.")) {
+        return { errorCode: "invalidTags" };
+    }
+    return undefined;
 }

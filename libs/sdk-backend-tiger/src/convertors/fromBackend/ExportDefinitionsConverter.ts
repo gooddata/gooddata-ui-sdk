@@ -1,6 +1,5 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import { v4 as uuid } from "uuid";
 
 import {
@@ -30,6 +29,7 @@ import {
     type IExportDefinitionVisualizationObjectSettings,
     idRef,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { convertTigerToSdkFilters } from "../shared/storedFilterConverter.js";
 
@@ -410,7 +410,7 @@ const convertExportDefinitionRequestPayload = (
             ...(mergeHeaders ? { mergeHeaders } : {}),
             ...(delimiter ? { delimiter } : {}),
         };
-        const settingsObj = isEmpty(settings) ? {} : { settings };
+        const settingsObj = _isEmpty(settings) ? {} : { settings };
 
         return {
             type: "visualizationObject",
@@ -465,5 +465,5 @@ const convertExportDefinitionRequestPayload = (
 const isTabularRequest = (
     request: VisualExportRequest | TabularExportRequest,
 ): request is TabularExportRequest => {
-    return !isEmpty(request) && typeof (request as TabularExportRequest).visualizationObject === "string";
+    return !_isEmpty(request) && typeof (request as TabularExportRequest).visualizationObject === "string";
 };

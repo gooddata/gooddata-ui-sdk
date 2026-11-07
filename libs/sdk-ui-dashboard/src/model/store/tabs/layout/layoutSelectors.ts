@@ -1,7 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
-import { isEmpty, partition } from "lodash-es";
+import { partition } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {
@@ -27,6 +27,7 @@ import {
     isVisualizationSwitcherWidget,
     objRefToString,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { type ObjRefMap, newMapForObjectWithIdentity } from "../../../../_staging/metadata/objRefMap.js";
 import { type IDashboardFilter, type ILayoutCoordinates, type ILayoutItemPath } from "../../../../types.js";
@@ -254,7 +255,7 @@ export const filterOutCustomWidgets = (layout: IDashboardLayout<ExtendedDashboar
                     }),
                 };
             })
-            .filter((section) => !isEmpty(section.items)),
+            .filter((section) => !_isEmpty(section.items)),
     };
 
     return dashboardLayout;

@@ -1,7 +1,5 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import { type DimensionHeader, type ExecutionResultGrandTotal } from "@gooddata/api-client-tiger";
 import {
     type DataValue,
@@ -11,6 +9,7 @@ import {
     isMeasureGroupIdentifier,
     isResultTotalHeader,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { dimensionLocalIdentifier } from "../../toBackend/afm/DimensionsConverter.js";
 
@@ -27,7 +26,7 @@ export function transformGrandTotalData(
     dataHeaderItems: IResultHeader[][][],
     transformDimensionHeaders: (headers: DimensionHeader[]) => IResultHeader[][][],
 ): DataValue[][][] | undefined {
-    if (definition.dimensions.every((dim) => isEmpty(dim.totals))) {
+    if (definition.dimensions.every((dim) => _isEmpty(dim.totals))) {
         // SDK cannot work with explicit empty totals, undefined must be returned instead
         return undefined;
     }

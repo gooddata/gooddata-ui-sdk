@@ -1,6 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
-
-import { isEmpty } from "lodash-es";
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type IAttributeDescriptor,
@@ -10,6 +8,7 @@ import {
     type IResultMeasureHeader,
     type IResultTotalHeader,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { type ITableDataHeaderScope } from "./scope.js";
 
@@ -447,7 +446,7 @@ export function isAttributeColumnDefinition(
     columnDefinition: unknown,
 ): columnDefinition is ITableAttributeColumnDefinition {
     return (
-        !isEmpty(columnDefinition) &&
+        !_isEmpty(columnDefinition) &&
         (columnDefinition as ITableAttributeColumnDefinition).type === "attribute"
     );
 }
@@ -459,7 +458,7 @@ export function isAttributeColumnDefinition(
 export function isValueColumnDefinition(
     columnDefinition: unknown,
 ): columnDefinition is ITableValueColumnDefinition {
-    return !isEmpty(columnDefinition) && (columnDefinition as ITableValueColumnDefinition).type === "value";
+    return !_isEmpty(columnDefinition) && (columnDefinition as ITableValueColumnDefinition).type === "value";
 }
 
 /**
@@ -470,7 +469,7 @@ export function isMeasureGroupHeaderColumnDefinition(
     columnDefinition: unknown,
 ): columnDefinition is ITableMeasureGroupHeaderColumnDefinition {
     return (
-        !isEmpty(columnDefinition) &&
+        !_isEmpty(columnDefinition) &&
         (columnDefinition as ITableMeasureGroupHeaderColumnDefinition).type === "measureGroupHeader"
     );
 }
@@ -483,7 +482,7 @@ export function isMeasureGroupValueColumnDefinition(
     columnDefinition: unknown,
 ): columnDefinition is ITableMeasureGroupValueColumnDefinition {
     return (
-        !isEmpty(columnDefinition) &&
+        !_isEmpty(columnDefinition) &&
         (columnDefinition as ITableMeasureGroupValueColumnDefinition).type === "measureGroupValue"
     );
 }
@@ -496,7 +495,8 @@ export function isSubtotalColumnDefinition(
     columnDefinition: unknown,
 ): columnDefinition is ITableSubtotalColumnDefinition {
     return (
-        !isEmpty(columnDefinition) && (columnDefinition as ITableSubtotalColumnDefinition).type === "subtotal"
+        !_isEmpty(columnDefinition) &&
+        (columnDefinition as ITableSubtotalColumnDefinition).type === "subtotal"
     );
 }
 
@@ -529,7 +529,7 @@ export function isGrandTotalColumnDefinition(
     columnDefinition: unknown,
 ): columnDefinition is ITableGrandTotalColumnDefinition {
     return (
-        !isEmpty(columnDefinition) &&
+        !_isEmpty(columnDefinition) &&
         (columnDefinition as ITableGrandTotalColumnDefinition).type === "grandTotal"
     );
 }

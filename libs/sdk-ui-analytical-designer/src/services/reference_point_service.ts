@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type GeoLabelType, getGeoLabelTypeFromVisualization } from "../constants/geo.js";
 import { isDerived, isMeasure } from "../models/bucket_item.js";
@@ -137,7 +137,7 @@ function convertMeasureValueFilterToRefPointFilter(
 ): IRefPointFilterItem {
     const { measureLocalIdentifier, measureRef, dimensionality, applyOnResult } = measureValueFilter;
     const conditions = normalizeMeasureValueFilterConditions(measureValueFilter);
-    const conditionsProps = isEmpty(conditions) ? {} : { conditions };
+    const conditionsProps = _isEmpty(conditions) ? {} : { conditions };
     const dimensionalityProps = dimensionality?.length ? { dimensionality } : {};
     const applyOnResultProp = applyOnResult === undefined ? {} : { applyOnResult };
 
@@ -169,7 +169,7 @@ function convertRankingFilterToRefPointFilter(rankingFilter: IRankingFilter): IR
         applyOnResult,
         strictLimitOfRows,
     } = rankingFilter;
-    const conditionProps = isEmpty(attributes) ? {} : { attributes: attributes };
+    const conditionProps = _isEmpty(attributes) ? {} : { attributes: attributes };
     const applyOnResultProp = applyOnResult === undefined ? {} : { applyOnResult };
     const strictLimitOfRowsProp = strictLimitOfRows === undefined ? {} : { strictLimitOfRows };
 

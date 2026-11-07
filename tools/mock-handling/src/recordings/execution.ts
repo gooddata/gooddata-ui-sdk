@@ -3,7 +3,7 @@
 import * as fs from "fs";
 import * as path from "path";
 
-import { isEmpty, pickBy } from "lodash-es";
+import { pickBy } from "lodash-es";
 
 import {
     collectionItemsIdentityKey,
@@ -22,6 +22,7 @@ import {
     isAttributeDescriptor,
     isResultAttributeHeader,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { logWarn } from "../cli/loggers.js";
 import {
@@ -288,7 +289,7 @@ export class ExecutionRecording implements IRecording {
     }
 
     private hasAllDataViewFiles(): boolean {
-        return isEmpty(Object.keys(this.getMissingDataViewFiles()));
+        return _isEmpty(Object.keys(this.getMissingDataViewFiles()));
     }
 
     private getMissingDataViewFiles(): DataViewFiles {

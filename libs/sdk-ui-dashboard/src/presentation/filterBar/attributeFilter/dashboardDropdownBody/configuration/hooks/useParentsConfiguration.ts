@@ -2,7 +2,6 @@
 
 import { useCallback, useMemo, useState } from "react";
 
-import { isEqual } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {
@@ -12,6 +11,7 @@ import {
     type ObjRef,
 } from "@gooddata/sdk-model";
 import { useBackend } from "@gooddata/sdk-ui";
+import { _isEqual } from "@gooddata/util";
 
 import { setAttributeFilterParents } from "../../../../../../model/commands/filters.js";
 import { useDispatchDashboardCommand } from "../../../../../../model/react/useDispatchDashboardCommand.js";
@@ -77,7 +77,7 @@ export function useParentsConfiguration(
     }
 
     const configurationChanged = useMemo<boolean>(() => {
-        return !isEqual(parents, originalState);
+        return !_isEqual(parents, originalState);
     }, [parents, originalState]);
 
     const onParentFiltersChange = useCallback(() => {

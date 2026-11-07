@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/mock-handling",
-    "version": "11.68.0-alpha.2",
+    "version": "11.68.0-alpha.4",
     "description": "GoodData SDK Mock data capture and management tool",
     "license": "MIT",
     "author": "GoodData",
@@ -45,6 +45,7 @@
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-backend-tiger": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
+        "@gooddata/util": "workspace:*",
         "chalk": "5.3.0",
         "commander": "8.3.0",
         "inquirer": "9.3.8",

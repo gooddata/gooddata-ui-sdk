@@ -1,10 +1,9 @@
 // (C) 2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import { isAllTimeDateFilterOption } from "@gooddata/sdk-model";
 import { DateFilterHelpers } from "@gooddata/sdk-ui-filters";
 import { normalizeSelectedFilterOption } from "@gooddata/sdk-ui-filters/internal";
+import { _isEmpty } from "@gooddata/util";
 
 import { ALL_TIME } from "../../constants/presets.js";
 import { type IDecoratedDateFilter } from "../../models/date_filter.js";
@@ -44,7 +43,7 @@ export function measureDateFilterToOption(
     filter: IDecoratedDateFilter | undefined,
 ): IDateFilterOption | undefined {
     const stored = filter?.interval?.original;
-    if (!stored || isEmpty(stored)) {
+    if (!stored || _isEmpty(stored)) {
         return undefined;
     }
     // the legacy All time filter is stored as the bare preset name, without an interval

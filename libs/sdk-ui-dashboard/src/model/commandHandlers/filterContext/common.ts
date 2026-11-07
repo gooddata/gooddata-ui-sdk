@@ -1,6 +1,5 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
@@ -10,6 +9,7 @@ import {
     type IDashboardDateFilter,
     type IFilterContextDefinition,
 } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { findDateFilterOptionByValue } from "../../../_staging/dateFilterConfig/dateFilterOptionMapping.js";
 import { type IDashboardCommand } from "../../commands/base.js";
@@ -88,9 +88,9 @@ export function* dispatchFilterContextChangedForMutatedTabs(
         }
         const configs = attributeFilterConfigs[tabId] ?? [];
         if (
-            isEqual(snapshot.filterContexts[tabId], filterContexts[tabId]) &&
-            isEqual(snapshot.workingFilterContexts[tabId], workingFilterContexts[tabId]) &&
-            isEqual(snapshot.attributeFilterConfigs[tabId] ?? [], configs)
+            _isEqual(snapshot.filterContexts[tabId], filterContexts[tabId]) &&
+            _isEqual(snapshot.workingFilterContexts[tabId], workingFilterContexts[tabId]) &&
+            _isEqual(snapshot.attributeFilterConfigs[tabId] ?? [], configs)
         ) {
             continue;
         }

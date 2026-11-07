@@ -1,10 +1,10 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import ora from "ora";
 
 import { type IAnalyticalBackend, type IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { areObjRefsEqual, idRef } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { createBackend } from "../_base/backend.js";
 import { getDashboardFromOptions } from "../_base/inputHandling/extractors.js";
@@ -36,7 +36,7 @@ function createPluginExistsValidator(identifier: string): InputValidator<IDashbo
             references: { plugins },
         } = dashboardWithReferences;
 
-        if (isEmpty(plugins)) {
+        if (_isEmpty(plugins)) {
             return false;
         }
 
@@ -138,7 +138,7 @@ export async function getRemovePluginParamsCmdConfig(
 
     const originalParameters = await getOriginalParameters(config);
 
-    if (isEmpty(originalParameters?.trim())) {
+    if (_isEmpty(originalParameters?.trim())) {
         logInfo(`The plugin ${config.identifier} has no parameters. There is nothing to remove.`);
 
         process.exit(1);

@@ -2,8 +2,6 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-import { isEqual } from "lodash-es";
-
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     type ISemanticConditionalFormatting,
@@ -13,6 +11,7 @@ import {
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { _isEqual } from "@gooddata/util";
 
 import { getDisplayName } from "../../catalogItem/converter.js";
 import {
@@ -335,7 +334,7 @@ function makeUpdatedItem<TItem extends ICatalogItem>(
 function hasChanges<TItem extends ICatalogItem>(item: TItem, changes: Partial<TItem>): boolean {
     return Object.keys(changes).some((key) => {
         const typedKey = key as keyof TItem;
-        return !isEqual(item[typedKey], changes[typedKey]);
+        return !_isEqual(item[typedKey], changes[typedKey]);
     });
 }
 

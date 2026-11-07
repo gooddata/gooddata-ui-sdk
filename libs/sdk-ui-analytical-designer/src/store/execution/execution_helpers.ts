@@ -1,8 +1,7 @@
 // (C) 2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
-
 import { type IExecutionResultLimitBreak } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { type IMissingDateFilterItem } from "../../typings/report.js";
 
@@ -39,7 +38,7 @@ export function applyExecutionError(target: IExecutionState, error: IExecutionSt
     const responseData = error?.responseData || {};
     const current = target.error;
 
-    if (!current || current.status !== status || !isEqual(current.responseData, responseData)) {
+    if (!current || current.status !== status || !_isEqual(current.responseData, responseData)) {
         target.error = { status, responseData };
     }
     delete target.warning;
@@ -60,7 +59,7 @@ export function applyExecutionWarning(
     // idempotent for the same reason applyExecutionError is: the limit-break warning is also
     // re-reported from the render path, and an unguarded write would
     // a no-op for an equal value.
-    if (!target.warning || !isEqual(target.warning.limitBreaks, limitBreaks)) {
+    if (!target.warning || !_isEqual(target.warning.limitBreaks, limitBreaks)) {
         target.warning = { limitBreaks };
     }
 }

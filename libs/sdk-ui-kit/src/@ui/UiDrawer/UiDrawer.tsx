@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 
 import { Portal } from "react-portal";
 
@@ -10,6 +10,7 @@ import { OverlayContent, OverlayProvider } from "../@utils/OverlayStack.js";
 import { useElementSize } from "../hooks/useElementSize.js";
 import { UiAutofocus } from "../UiFocusManager/UiAutofocus.js";
 import { UiFocusTrap } from "../UiFocusManager/UiFocusTrap.js";
+import { UiModalOwnerProvider, modalOwnerAttributes } from "../UiFocusManager/UiModalOwner.js";
 import { UiReturnFocusOnUnmount } from "../UiFocusManager/UiReturnFocusOnUnmount.js";
 import { UiIconButton } from "../UiIconButton/UiIconButton.js";
 
@@ -44,6 +45,12 @@ export function UiDrawer({
     accessibilityConfig,
 }: IUiDrawerProps) {
     const ref = useRef(null);
+    const contentRef = useRef<HTMLDivElement | null>(null);
+    const [content, setContent] = useState<HTMLDivElement | null>(null);
+    const setContentElement = useCallback((element: HTMLDivElement | null) => {
+        contentRef.current = element;
+        setContent(element);
+    }, []);
 
     const { isOpen, isFullyOpen, view, backdropStyle, contentStyle } = useToggleDrawer(
         open ?? false,
@@ -65,7 +72,10 @@ export function UiDrawer({
         [onEscapeKey],
     );
 
-    const { ref: headerRef, height } = useElementSize<HTMLDivElement>([isOpen, ref.current]);
+    const { ref: headerRef, height } = useElementSize<HTMLDivElement>([
+        isOpen,
+        showCloseButton ? ref.current : content,
+    ]);
 
     if (!isOpen) {
         return null;
@@ -100,13 +110,16 @@ export function UiDrawer({
                                         aria-labelledby={accessibilityConfig?.ariaLabelledBy}
                                         aria-describedby={accessibilityConfig?.ariaDescribedBy}
                                         aria-modal="true"
+                                        {...modalOwnerAttributes}
                                         className={e("content", {
                                             showCloseButton: showCloseButton || Boolean(header),
                                         })}
-                                        ref={showCloseButton ? undefined : ref}
+                                        ref={setContentElement}
                                     >
                                         <div className={e("header")} ref={headerRef}>
-                                            {header}
+                                            <UiModalOwnerProvider modal={content}>
+                                                {header}
+                                            </UiModalOwnerProvider>
                                             {showCloseButton ? (
                                                 <div className={e("close-button")}>
                                                     <UiIconButton
@@ -124,9 +137,13 @@ export function UiDrawer({
                                             root={<div className={e("scrollable")} />}
                                             active={isFullyOpen}
                                             refocusKey={refocusKey}
-                                            initialFocus={initialFocus || ref}
+                                            initialFocus={
+                                                initialFocus || (showCloseButton ? ref : contentRef)
+                                            }
                                         >
-                                            {children}
+                                            <UiModalOwnerProvider modal={content}>
+                                                {children}
+                                            </UiModalOwnerProvider>
                                         </UiAutofocus>
                                     </div>
                                 </UiFocusTrap>

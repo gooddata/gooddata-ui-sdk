@@ -1,6 +1,5 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
@@ -13,6 +12,7 @@ import {
     isDashboardAttributeFilterItem,
     objRefToString,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { type ObjRefMap } from "../../_staging/metadata/objRefMap.js";
 import { type DashboardContext } from "../types/commonTypes.js";
@@ -50,7 +50,7 @@ export function* resolveFilterDisplayForms(
     // TODO: this is too strict; instead of exploding, the resolver should communicate that some filters are invalid so
     //  that the upstream code can remove the filter from the filter context
     invariant(
-        isEmpty(resolvedDisplayForms.missing),
+        _isEmpty(resolvedDisplayForms.missing),
         `Unable to resolve display forms used in filter context filters: ${resolvedDisplayForms.missing
             .map((m) => objRefToString(m))
             .join(", ")}.`,

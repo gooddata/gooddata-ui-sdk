@@ -3,7 +3,6 @@
 import { type ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import classNames from "classnames";
-import { isEmpty, isEqual } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
 import { connect } from "react-redux";
 
@@ -25,6 +24,7 @@ import {
 } from "@gooddata/sdk-ui-filters";
 import { CalendarTypeTabs } from "@gooddata/sdk-ui-filters/internal";
 import { Bubble, BubbleHoverTrigger, Button, NoData, Overlay, ShortenedText } from "@gooddata/sdk-ui-kit";
+import { _isEmpty, _isEqual } from "@gooddata/util";
 
 import {
     MeasureDateDatasetsActions,
@@ -105,7 +105,7 @@ const DROPDOWN_ITEM_HEIGHT = 23;
 
 // A filter/preset value is "unset" while it is still the {} default; once selected it carries
 // the decorated model fields (original, interval, ...).
-const isEmptyFilter = (value: unknown): boolean => isEmpty(value);
+const isEmptyFilter = (value: unknown): boolean => _isEmpty(value);
 
 enum ContentId {
     PRESETS_CONTENT_ID = "presets",
@@ -298,7 +298,7 @@ export function MeasureDateFilterBase({
             const filterInterval = dateFilter.interval;
             const sameInterval =
                 presetInterval && filterInterval
-                    ? isEqual(presetInterval, filterInterval)
+                    ? _isEqual(presetInterval, filterInterval)
                     : presetInterval === filterInterval;
 
             // Compare boundedFilter to distinguish between regular filters and "to date" filters;
@@ -960,7 +960,7 @@ export function MeasureDateFilterBase({
     };
 
     const renderImprovedContent = (): ReactElement => {
-        if (!dateDatasetsIsLoading && (isEmpty(dateDatasetsList) || !state.selectedDateDataset)) {
+        if (!dateDatasetsIsLoading && (_isEmpty(dateDatasetsList) || !state.selectedDateDataset)) {
             return renderNoDateDatasets();
         }
 
@@ -1010,7 +1010,7 @@ export function MeasureDateFilterBase({
             return <LoadingDropdown />;
         }
 
-        if (isEmpty(dateDatasetsList) || !state.selectedDateDataset) {
+        if (_isEmpty(dateDatasetsList) || !state.selectedDateDataset) {
             return renderNoDateDatasets();
         }
 

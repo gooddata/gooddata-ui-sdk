@@ -47,6 +47,7 @@ const mocks = vi.hoisted(() => ({
 vi.mock("../loader/pluggableApplicationsLoader.js", () => ({
     loadPluggableApplication: mocks.loadPluggableApplication,
     getAppLifecycleCallbacks: mocks.getAppLifecycleCallbacks,
+    getHostTelemetryServices: () => undefined,
 }));
 
 vi.mock("../loader/appSecurityValidation.js", () => ({

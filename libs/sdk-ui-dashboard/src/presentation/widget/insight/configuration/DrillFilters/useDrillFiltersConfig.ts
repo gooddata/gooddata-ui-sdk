@@ -2,7 +2,6 @@
 
 import { useCallback, useMemo } from "react";
 
-import { isEqual } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import {
@@ -19,6 +18,7 @@ import {
     measureFilters,
     measureLocalId,
 } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { isSourceInsightFilterObjRefEqual } from "../../../../../_staging/drills/drillingUtils.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
@@ -365,19 +365,19 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
                 ...selection,
             };
             const targetDrill = widgetDrills.find((d) => d.localIdentifier === item.localIdentifier);
-            const isIntersectionAttributesChanged = !isEqual(
+            const isIntersectionAttributesChanged = !_isEqual(
                 currentSelection.drillIntersectionIgnoredAttributes,
                 drillIntersectionIgnoredAttributes,
             );
-            const isSourceInsightFiltersChanged = !isEqual(
+            const isSourceInsightFiltersChanged = !_isEqual(
                 currentSelection.includedSourceInsightFiltersObjRefs,
                 includedSourceInsightFiltersObjRefs,
             );
-            const isIgnoredDashboardFiltersChanged = !isEqual(
+            const isIgnoredDashboardFiltersChanged = !_isEqual(
                 currentSelection.ignoredDashboardFilters,
                 ignoredDashboardFilters,
             );
-            const isSourceMeasureFiltersChanged = !isEqual(
+            const isSourceMeasureFiltersChanged = !_isEqual(
                 currentSelection.includedSourceMeasureFiltersObjRefs,
                 includedSourceMeasureFiltersObjRefs,
             );

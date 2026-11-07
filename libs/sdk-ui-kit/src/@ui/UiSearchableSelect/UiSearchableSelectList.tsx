@@ -34,7 +34,8 @@ export function UiSearchableSelectList<T>({ noItemsText }: IUiSearchableSelectLi
     const {
         listboxItems,
         query,
-        buttonId,
+        listboxLabelledBy,
+        listboxLabel,
         listboxId,
         focusedItemId,
         setFocusedItemId,
@@ -42,6 +43,8 @@ export function UiSearchableSelectList<T>({ noItemsText }: IUiSearchableSelectLi
         value,
         onChange,
         closeDropdown,
+        shouldCloseOnSelect,
+        isFullscreen,
     } = useUiSearchableSelectContext();
     const noItemsMessage = noItemsText ?? intl.formatMessage(messages.noItems);
     // the results of the search, without the dividers
@@ -51,7 +54,6 @@ export function UiSearchableSelectList<T>({ noItemsText }: IUiSearchableSelectLi
 
     return (
         <>
-            {/* tells screen readers the results while searching, the no items text too */}
             <UiSearchResultsAnnouncement
                 totalResults={query ? options.length : undefined}
                 resultValues={options.map((option) => option.stringTitle)}
@@ -62,27 +64,26 @@ export function UiSearchableSelectList<T>({ noItemsText }: IUiSearchableSelectLi
                 items={listboxItems}
                 selectedItemId={value ?? undefined}
                 onSelect={(item) => {
-                    // like a native <select>, picking the already selected item only closes the list
                     if (item.id !== value) {
                         onChange(item.id);
                     }
                 }}
-                // UiListbox closes after a selection (shouldCloseOnSelect defaults to true) through onClose
                 onClose={closeDropdown}
-                // selects on clicks on the option element itself too (tests, assistive technologies)
+                shouldCloseOnSelect={shouldCloseOnSelect}
                 shouldSelectOnOptionClick
-                // the highlight is moved by the search, which keeps focus (virtual focus)
                 focusedItemId={focusedItemId}
-                // hovering moves the same highlight, so keyboard and mouse don't highlight two rows, and like
-                // an arrow key, it lets the search point at it
                 onFocusedItemIdChange={(itemId) => {
                     setFocusedItemId(itemId);
                     setIsActiveDescendantShown(true);
                 }}
-                isCompact
+                isCompact={!isFullscreen}
                 padding="none"
-                maxHeight={LIST_MAX_HEIGHT}
-                ariaAttributes={{ id: listboxId, "aria-labelledby": buttonId }}
+                maxHeight={isFullscreen ? undefined : LIST_MAX_HEIGHT}
+                ariaAttributes={{
+                    id: listboxId,
+                    "aria-labelledby": listboxLabelledBy,
+                    "aria-label": listboxLabel,
+                }}
                 supportedViews={["desktop"]}
             />
 

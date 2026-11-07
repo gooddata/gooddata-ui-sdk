@@ -1,10 +1,10 @@
 // (C) 2019-2026 GoodData Corporation
 
 import cx from "classnames";
-import { isEmpty } from "lodash-es";
 
 import { type OnError, type OnLoadingChanged } from "@gooddata/sdk-ui";
 import { Typography } from "@gooddata/sdk-ui-kit";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { getLayoutConfiguration } from "../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
@@ -39,7 +39,7 @@ export function DashboardLayoutViewSectionHeader({
 
     const title = section.title();
     const description = section.description();
-    if (!sections.areHeadersEnabled || (isEmpty(title) && isEmpty(description))) {
+    if (!sections.areHeadersEnabled || (_isEmpty(title) && _isEmpty(description))) {
         return null;
     }
     const isNestedLayout = section.layout().path() !== undefined;

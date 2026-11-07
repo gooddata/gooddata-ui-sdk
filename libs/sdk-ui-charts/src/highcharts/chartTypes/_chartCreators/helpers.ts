@@ -1,8 +1,9 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { compact, initial, isEmpty, max, maxBy, min, minBy, pick, tail, unzip, zip } from "lodash-es";
+import { compact, initial, max, maxBy, min, minBy, pick, tail, unzip, zip } from "lodash-es";
 
 import { type VisType, VisualizationTypes } from "@gooddata/sdk-ui";
+import { _isEmpty } from "@gooddata/util";
 
 import { type ChartAlignTypes, type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { BOTTOM, MIDDLE, TOP } from "../../constants/alignments.js";
@@ -78,7 +79,7 @@ export const isStacked = (chart: Highcharts.Chart): boolean => {
     };
     const isStackedByChartType = !!chartTypeOptions?.stacking;
     const isStackedBySeries = !!chart.userOptions?.plotOptions?.series?.stacking;
-    const hasStackedAxis = chart.axes.some((axis: any) => !isEmpty(axis?.stacking?.stacks));
+    const hasStackedAxis = chart.axes.some((axis: any) => !_isEmpty(axis?.stacking?.stacks));
 
     return (isStackedByChartType || isStackedBySeries) && hasStackedAxis;
 };
@@ -97,10 +98,10 @@ export function getChartProperties(config: IChartConfig, type: VisType | undefin
         ? { ...config.secondary_xaxis }
         : { ...config.secondary_yaxis };
 
-    if (!isEmpty(secondaryXAxisProps)) {
+    if (!_isEmpty(secondaryXAxisProps)) {
         chartProps.secondary_xAxisProps = secondaryXAxisProps;
     }
-    if (!isEmpty(secondaryYAxisProps)) {
+    if (!_isEmpty(secondaryYAxisProps)) {
         chartProps.secondary_yAxisProps = secondaryYAxisProps;
     }
 
@@ -177,7 +178,7 @@ export function shouldFollowPointerForDualAxes(chartOptions: IChartOptions): boo
         chartOptions?.yAxisProps?.max,
         chartOptions?.secondary_yAxisProps?.min,
         chartOptions?.secondary_yAxisProps?.max,
-    ].some((item) => !isEmpty(item));
+    ].some((item) => !_isEmpty(item));
 
     return yAxes.length > 1 && hasMinMaxValue;
 }

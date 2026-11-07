@@ -80,6 +80,7 @@ export function RestrictedReferencesDialog({
                 variant="confirmation"
                 isOpen
                 width={440}
+                size="large"
                 initialFocus={cancelButtonRef}
                 dataTestId="rich-text-sanitize-references-dialog"
                 accessibilityConfig={{ role: "alertdialog" }}
@@ -87,7 +88,6 @@ export function RestrictedReferencesDialog({
             >
                 <UiDialogHeader
                     title={intl.formatMessage({ id: "richText.restrictedReferences.dialog.header" })}
-                    titleSize="large"
                     onClose={onCancel}
                 />
                 <UiDialogBody>

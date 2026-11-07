@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type FilterContextItem, type IDashboardFilterReference } from "../../dashboard/filterContext.js";
 import { type VisualizationProperties } from "../../insight/index.js";
@@ -314,7 +314,7 @@ export function publisherTextSlotTypeV1(slot: IPublisherTextSlotV1): PublisherTe
  * @alpha
  */
 export function isPublisherVisualizationSlotV1(obj: unknown): obj is IPublisherVisualizationSlotV1 {
-    return !isEmpty(obj) && (obj as IPublisherVisualizationSlotV1).type === "visualization";
+    return !_isEmpty(obj) && (obj as IPublisherVisualizationSlotV1).type === "visualization";
 }
 
 /**
@@ -323,7 +323,7 @@ export function isPublisherVisualizationSlotV1(obj: unknown): obj is IPublisherV
  * @alpha
  */
 export function isPublisherHeadingSlotV1(obj: unknown): obj is IPublisherHeadingSlotV1 {
-    return !isEmpty(obj) && (obj as IPublisherHeadingSlotV1).type === "heading";
+    return !_isEmpty(obj) && (obj as IPublisherHeadingSlotV1).type === "heading";
 }
 
 /**
@@ -332,7 +332,7 @@ export function isPublisherHeadingSlotV1(obj: unknown): obj is IPublisherHeading
  * @alpha
  */
 export function isPublisherParagraphSlotV1(obj: unknown): obj is IPublisherParagraphSlotV1 {
-    return !isEmpty(obj) && (obj as IPublisherParagraphSlotV1).type === "paragraph";
+    return !_isEmpty(obj) && (obj as IPublisherParagraphSlotV1).type === "paragraph";
 }
 
 /**
@@ -350,7 +350,7 @@ export function isPublisherTextSlotV1(obj: unknown): obj is IPublisherTextSlotV1
  * @alpha
  */
 export function isPublisherImageSlotV1(obj: unknown): obj is IPublisherImageSlotV1 {
-    return !isEmpty(obj) && (obj as IPublisherImageSlotV1).type === "image";
+    return !_isEmpty(obj) && (obj as IPublisherImageSlotV1).type === "image";
 }
 
 /**

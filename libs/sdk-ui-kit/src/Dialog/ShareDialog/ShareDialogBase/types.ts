@@ -2,8 +2,6 @@
 
 import { type MutableRefObject, type ReactNode } from "react";
 
-import { isEmpty } from "lodash-es";
-
 import {
     type AccessGranularPermission,
     type FilterContextItem,
@@ -12,6 +10,7 @@ import {
     type ObjRef,
     type ShareStatus,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { type CurrentUserPermissions, type IShareDialogLabels } from "../types.js";
 
@@ -70,7 +69,7 @@ export interface IGranteeUser extends IGranteeBase {
  * @internal
  */
 export const isGranteeUser = (obj: unknown): obj is IGranteeUser => {
-    return !isEmpty(obj) && (obj as IGranteeUser).type === "user";
+    return !_isEmpty(obj) && (obj as IGranteeUser).type === "user";
 };
 
 /**
@@ -91,7 +90,7 @@ export interface IGranularGranteeUser extends IGranteeBase {
  * @internal
  */
 export const isGranularGranteeUser = (obj: unknown): obj is IGranularGranteeUser => {
-    return !isEmpty(obj) && (obj as IGranularGranteeUser).type === "granularUser";
+    return !_isEmpty(obj) && (obj as IGranularGranteeUser).type === "granularUser";
 };
 
 /**
@@ -105,7 +104,7 @@ export interface IGranteeInactiveOwner extends IGranteeBase {
  * @internal
  */
 export const isGranteeUserInactive = (obj: unknown): obj is IGranteeInactiveOwner => {
-    return !isEmpty(obj) && (obj as IGranteeInactiveOwner).type === "inactive_owner";
+    return !_isEmpty(obj) && (obj as IGranteeInactiveOwner).type === "inactive_owner";
 };
 
 /**
@@ -120,7 +119,7 @@ export interface IGranteeGroup extends IGranteeBase {
  * @internal
  */
 export const isGranteeGroup = (obj: unknown): obj is IGranteeGroup => {
-    return !isEmpty(obj) && (obj as IGranteeGroup).type === "group";
+    return !_isEmpty(obj) && (obj as IGranteeGroup).type === "group";
 };
 
 /**
@@ -137,7 +136,7 @@ export interface IGranularGranteeGroup extends IGranteeBase {
  * @internal
  */
 export const isGranularGranteeGroup = (obj: unknown): obj is IGranularGranteeGroup => {
-    return !isEmpty(obj) && (obj as IGranularGranteeGroup).type === "granularGroup";
+    return !_isEmpty(obj) && (obj as IGranularGranteeGroup).type === "granularGroup";
 };
 
 /**
@@ -164,7 +163,7 @@ export interface IGranteeGroupAll extends IGranteeBase {
  * @internal
  */
 export const isGranteeGroupAll = (obj: unknown): obj is IGranteeGroupAll => {
-    return !isEmpty(obj) && (obj as IGranteeGroupAll).type === "groupAll";
+    return !_isEmpty(obj) && (obj as IGranteeGroupAll).type === "groupAll";
 };
 
 /**
@@ -183,7 +182,7 @@ export interface IGranteeRules extends IGranteeBase {
  * @internal
  */
 export const isGranteeRules = (obj: unknown): obj is IGranteeRules => {
-    return !isEmpty(obj) && (obj as IGranteeRules).type === "allWorkspaceUsers";
+    return !_isEmpty(obj) && (obj as IGranteeRules).type === "allWorkspaceUsers";
 };
 
 /**
@@ -191,7 +190,7 @@ export const isGranteeRules = (obj: unknown): obj is IGranteeRules => {
  */
 export const isGranteeItem = (obj: unknown): obj is GranteeItem => {
     return (
-        !isEmpty(obj) &&
+        !_isEmpty(obj) &&
         (isGranteeGroupAll(obj) ||
             isGranteeGroup(obj) ||
             isGranteeUserInactive(obj) ||
@@ -420,7 +419,7 @@ export interface ISelectErrorOption {
  * @internal
  */
 export const isSelectErrorOption = (obj: unknown): obj is ISelectErrorOption => {
-    return !isEmpty(obj) && (obj as ISelectErrorOption).type === "error";
+    return !_isEmpty(obj) && (obj as ISelectErrorOption).type === "error";
 };
 
 /**

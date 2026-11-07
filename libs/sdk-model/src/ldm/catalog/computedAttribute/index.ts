@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IAttributeMetadataObject } from "../../metadata/attribute/index.js";
 import { type IAttributeDisplayFormMetadataObject } from "../../metadata/attributeDisplayForm/index.js";
@@ -46,7 +46,7 @@ export interface ICatalogComputedAttribute extends IGroupableCatalogItemBase {
  * @public
  */
 export function isCatalogComputedAttribute(obj: unknown): obj is ICatalogComputedAttribute {
-    return !isEmpty(obj) && (obj as ICatalogComputedAttribute).type === "computedAttribute";
+    return !_isEmpty(obj) && (obj as ICatalogComputedAttribute).type === "computedAttribute";
 }
 
 /**

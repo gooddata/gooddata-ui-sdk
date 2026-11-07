@@ -12,7 +12,6 @@ import {
 } from "react";
 
 import { format } from "date-fns";
-import { isEmpty } from "lodash-es";
 import { MediaQuery } from "react-responsive";
 
 import { type DateFilterGranularity, type IActiveCalendars, type WeekStart } from "@gooddata/sdk-model";
@@ -23,6 +22,7 @@ import {
     useValidationContextValue,
 } from "@gooddata/sdk-ui";
 import { Dropdown, type OverlayPositionType } from "@gooddata/sdk-ui-kit";
+import { _isEmpty } from "@gooddata/util";
 
 import { MediaQueries } from "../constants/MediaQueries.js";
 import { type IFilterButtonCustomIcon } from "../shared/interfaces/index.js";
@@ -241,12 +241,12 @@ export function DateFilterCore({
 
     const lastValidSelectedFilterOption = useLastValidValue(
         selectedFilterOption,
-        isEmpty(dropdownBodyProps.errors),
+        _isEmpty(dropdownBodyProps.errors),
     );
 
     const lastValidExcludeCurrentPeriod = useLastValidValue(
         excludeCurrentPeriod,
-        isEmpty(dropdownBodyProps.errors),
+        _isEmpty(dropdownBodyProps.errors),
     );
 
     const handleKeyDown = useCallback(

@@ -1,8 +1,10 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, isEmpty } from "lodash-es";
+import { cloneDeep } from "lodash-es";
 import SparkMD5 from "spark-md5";
 import { InvariantError, invariant } from "ts-invariant";
+
+import { _isEmpty } from "@gooddata/util";
 
 import { idRef } from "../../objRef/factory.js";
 import { type Identifier, type ObjRef, isObjRef, objRefToString } from "../../objRef/index.js";
@@ -244,13 +246,13 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
      * These three parts are separated using underscore.
      */
     private getOrGenerateLocalId(): string {
-        if (this.customLocalId && !isEmpty(this.measure.localIdentifier)) {
+        if (this.customLocalId && !_isEmpty(this.measure.localIdentifier)) {
             return this.measure.localIdentifier;
         }
 
         return sanitizeLocalId(
             ["m", this.buildEnvelopeLocalIdPart(), this.generateLocalId()]
-                .filter((part) => !isEmpty(part))
+                .filter((part) => !_isEmpty(part))
                 .join("_"),
         );
     }
@@ -416,7 +418,7 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
     }
 
     private filterLocalIdString(): string {
-        if (isEmpty(this.measureDefinition.filters)) {
+        if (_isEmpty(this.measureDefinition.filters)) {
             return "";
         }
 

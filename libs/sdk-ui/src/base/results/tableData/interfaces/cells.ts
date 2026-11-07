@@ -1,5 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
-import { isEmpty } from "lodash-es";
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type DataValue,
@@ -7,6 +6,7 @@ import {
     type IResultMeasureHeader,
     type IResultTotalHeader,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import {
     type ITableAttributeColumnDefinition,
@@ -532,7 +532,7 @@ export interface ITableGrandTotalHeaderValue {
  * @alpha
  */
 export function isTableAttributeHeaderValue(obj: unknown): obj is ITableAttributeHeaderValue {
-    return !isEmpty(obj) && (obj as ITableAttributeHeaderValue).type === "attributeHeader";
+    return !_isEmpty(obj) && (obj as ITableAttributeHeaderValue).type === "attributeHeader";
 }
 
 /**
@@ -541,7 +541,7 @@ export function isTableAttributeHeaderValue(obj: unknown): obj is ITableAttribut
  * @alpha
  */
 export function isTableMeasureHeaderValue(obj: unknown): obj is ITableMeasureHeaderValue {
-    return !isEmpty(obj) && (obj as ITableMeasureHeaderValue).type === "measureHeader";
+    return !_isEmpty(obj) && (obj as ITableMeasureHeaderValue).type === "measureHeader";
 }
 
 /**
@@ -550,7 +550,7 @@ export function isTableMeasureHeaderValue(obj: unknown): obj is ITableMeasureHea
  * @alpha
  */
 export function isTableTotalHeaderValue(obj: unknown): obj is ITableTotalHeaderValue {
-    return !isEmpty(obj) && (obj as ITableTotalHeaderValue).type === "totalHeader";
+    return !_isEmpty(obj) && (obj as ITableTotalHeaderValue).type === "totalHeader";
 }
 
 /**
@@ -559,7 +559,7 @@ export function isTableTotalHeaderValue(obj: unknown): obj is ITableTotalHeaderV
  * @alpha
  */
 export function isTableMeasureValue(obj: unknown): obj is ITableMeasureValue {
-    return !isEmpty(obj) && (obj as ITableMeasureValue).type === "value";
+    return !_isEmpty(obj) && (obj as ITableMeasureValue).type === "value";
 }
 
 /**
@@ -568,7 +568,7 @@ export function isTableMeasureValue(obj: unknown): obj is ITableMeasureValue {
  * @alpha
  */
 export function isTableSubtotalMeasureValue(obj: unknown): obj is ITableSubtotalMeasureValue {
-    return !isEmpty(obj) && (obj as ITableSubtotalMeasureValue).type === "subtotalValue";
+    return !_isEmpty(obj) && (obj as ITableSubtotalMeasureValue).type === "subtotalValue";
 }
 
 /**
@@ -577,7 +577,7 @@ export function isTableSubtotalMeasureValue(obj: unknown): obj is ITableSubtotal
  * @alpha
  */
 export function isTableGrandTotalMeasureValue(obj: unknown): obj is ITableGrandTotalMeasureValue {
-    return !isEmpty(obj) && (obj as ITableGrandTotalMeasureValue).type === "grandTotalValue";
+    return !_isEmpty(obj) && (obj as ITableGrandTotalMeasureValue).type === "grandTotalValue";
 }
 
 /**
@@ -588,7 +588,7 @@ export function isTableGrandTotalMeasureValue(obj: unknown): obj is ITableGrandT
 export function isTableGrandTotalSubtotalMeasureValue(
     obj: unknown,
 ): obj is ITableGrandTotalSubtotalMeasureValue {
-    return !isEmpty(obj) && (obj as ITableGrandTotalSubtotalMeasureValue).type === "grandTotalSubtotalValue";
+    return !_isEmpty(obj) && (obj as ITableGrandTotalSubtotalMeasureValue).type === "grandTotalSubtotalValue";
 }
 
 /**
@@ -597,7 +597,7 @@ export function isTableGrandTotalSubtotalMeasureValue(
  * @alpha
  */
 export function isTableOverallTotalMeasureValue(obj: unknown): obj is ITableOverallTotalMeasureValue {
-    return !isEmpty(obj) && (obj as ITableOverallTotalMeasureValue).type === "overallTotalValue";
+    return !_isEmpty(obj) && (obj as ITableOverallTotalMeasureValue).type === "overallTotalValue";
 }
 
 /**
@@ -606,5 +606,5 @@ export function isTableOverallTotalMeasureValue(obj: unknown): obj is ITableOver
  * @alpha
  */
 export function isTableGrandTotalHeaderValue(obj: unknown): obj is ITableGrandTotalHeaderValue {
-    return !isEmpty(obj) && (obj as ITableGrandTotalHeaderValue).type === "grandTotalHeader";
+    return !_isEmpty(obj) && (obj as ITableGrandTotalHeaderValue).type === "grandTotalHeader";
 }

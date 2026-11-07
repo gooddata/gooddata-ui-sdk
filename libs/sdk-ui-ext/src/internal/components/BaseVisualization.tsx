@@ -2,7 +2,7 @@
 
 import { forwardRef, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState } from "react";
 
-import { isEmpty, isEqual, omit } from "lodash-es";
+import { omit } from "lodash-es";
 import { type Root, createRoot } from "react-dom/client";
 import { v4 as uuidv4 } from "uuid";
 
@@ -32,6 +32,7 @@ import {
     type VisualizationEnvironment,
 } from "@gooddata/sdk-ui";
 import { OverlayZIndexContext, useContainingOverlayZIndex } from "@gooddata/sdk-ui-kit";
+import { _isEmpty, _isEqual } from "@gooddata/util";
 
 import { type ISortConfig } from "../interfaces/SortConfig.js";
 import {
@@ -118,7 +119,7 @@ function bucketReferencePointHasChanged(
     currentReferencePoint: IReferencePoint,
     nextReferencePoint: IReferencePoint,
 ) {
-    return !isEqual(
+    return !_isEqual(
         omit(currentReferencePoint, ["properties", "availableSorts"]),
         omit(nextReferencePoint, ["properties", "availableSorts"]),
     );
@@ -128,7 +129,7 @@ function propertiesControlsHasChanged(
     currentReferencePoint: IReferencePoint,
     nextReferencePoint: IReferencePoint,
 ) {
-    return !isEqual(currentReferencePoint?.properties?.controls, nextReferencePoint?.properties?.controls);
+    return !_isEqual(currentReferencePoint?.properties?.controls, nextReferencePoint?.properties?.controls);
 }
 
 export const BaseVisualization = forwardRef<IBaseVisualizationApi, IBaseVisualizationProps>(
@@ -476,8 +477,8 @@ export const BaseVisualization = forwardRef<IBaseVisualizationApi, IBaseVisualiz
             }
 
             const newDerivedBucketItemsChanged =
-                !isEmpty(currentProps.newDerivedBucketItems) &&
-                !isEqual(currentProps.newDerivedBucketItems, previousProps.newDerivedBucketItems);
+                !_isEmpty(currentProps.newDerivedBucketItems) &&
+                !_isEqual(currentProps.newDerivedBucketItems, previousProps.newDerivedBucketItems);
 
             if (newDerivedBucketItemsChanged) {
                 triggerPlaceNewDerivedBucketItems(currentProps);
@@ -496,7 +497,7 @@ export const BaseVisualization = forwardRef<IBaseVisualizationApi, IBaseVisualiz
                 return;
             }
 
-            const visualizationClassChanged = !isEqual(
+            const visualizationClassChanged = !_isEqual(
                 currentProps.visualizationClass,
                 previousProps.visualizationClass,
             );
@@ -510,7 +511,7 @@ export const BaseVisualization = forwardRef<IBaseVisualizationApi, IBaseVisualiz
                 currentProps.referencePoint!,
             );
 
-            const labelsChanged = !isEqual(
+            const labelsChanged = !_isEqual(
                 previousProps.insight?.insight.attributeFilterConfigs,
                 currentProps.insight?.insight.attributeFilterConfigs,
             );

@@ -1,10 +1,10 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import ora from "ora";
 
 import { type IAnalyticalBackend, type IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { type IDashboardPlugin } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { createBackend } from "../_base/backend.js";
 import { getDashboardFromOptions } from "../_base/inputHandling/extractors.js";
@@ -50,7 +50,7 @@ function createDuplicatePluginLinkValidator(
             references: { plugins },
         } = dashboardWithReferences;
 
-        if (isEmpty(plugins)) {
+        if (_isEmpty(plugins)) {
             return true;
         }
 
@@ -163,7 +163,7 @@ export async function getLinkCmdActionConfig(
     if (config.withParameters) {
         const parameters = await promptPluginParameters();
 
-        if (isEmpty(parameters.trim())) {
+        if (_isEmpty(parameters.trim())) {
             logError(
                 "You did not specify any parameters. If you do not want to use plugin parameterization, remove the --with-parameters option.",
             );

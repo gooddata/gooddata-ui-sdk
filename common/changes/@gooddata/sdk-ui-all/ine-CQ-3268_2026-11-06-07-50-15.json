@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-backend-tiger: Date computed attribute values sent as ISO date-times, such as 2026-08-24T00:00:00, are now formatted by the format of the attribute instead of being shown raw.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

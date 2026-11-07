@@ -513,9 +513,6 @@ export const DialogBase: NamedExoticComponent<IDialogBaseProps>;
 // @internal (undocumented)
 export function DialogCloseButton(props: IDialogCloseButtonProps): JSX.Element;
 
-// @internal
-export type DialogHeaderTitleSize = "default" | "large";
-
 // @internal (undocumented)
 export function DialogList(input: IDialogListProps): JSX.Element;
 
@@ -5013,6 +5010,9 @@ export interface IRowsIconProps extends IIconProps {
 // @internal
 export const isActionKey: (event: KeyboardEvent_2) => boolean;
 
+// @internal (undocumented)
+export function isApplePlatform(): boolean;
+
 // @internal
 export const isArrowDownKey: (event: KeyboardEvent_2) => boolean;
 
@@ -6606,6 +6606,17 @@ export interface IUiConfigEditorContextMenuProps {
 }
 
 // @internal
+export interface IUiConfigEditorDiagnostic {
+    // (undocumented)
+    message: string;
+    part?: string;
+    path: ReadonlyArray<string | number>;
+    // (undocumented)
+    severity: "error" | "warning";
+    target?: "key";
+}
+
+// @internal
 export interface IUiConfigEditorLabels {
     autoFormat?: string;
     contextMenu?: string;
@@ -6619,6 +6630,7 @@ export interface IUiConfigEditorProps {
     completionSource?: YamlCompletionSource;
     // (undocumented)
     dataTestId?: string;
+    diagnostics?: readonly IUiConfigEditorDiagnostic[];
     disabled?: boolean;
     // (undocumented)
     editorRef?: Ref<IUiConfigEditorApi>;
@@ -6635,15 +6647,6 @@ export interface IUiConfigEditorProps {
     renderContextMenu?: (props: IUiConfigEditorContextMenuProps) => ReactNode;
     rows?: number;
     value: string;
-    warnings?: readonly IUiConfigEditorWarning[];
-}
-
-// @internal
-export interface IUiConfigEditorWarning {
-    // (undocumented)
-    message: string;
-    part?: string;
-    path: ReadonlyArray<string | number>;
 }
 
 // @internal (undocumented)
@@ -6756,7 +6759,6 @@ export interface IUiDialogHeaderProps {
     leading?: ReactNode;
     onClose?: () => void;
     title: string;
-    titleSize?: DialogHeaderTitleSize;
 }
 
 // @internal (undocumented)
@@ -7662,9 +7664,12 @@ export interface IUiModalDialogProps {
     children: ReactNode;
     closeOnOutsideClick?: boolean;
     dataTestId?: string;
+    id?: string;
     initialFocus?: RefObject<HTMLElement | null>;
+    isFullscreen?: boolean;
     isOpen: boolean;
     onClose: () => void;
+    size?: UiModalDialogSize;
     variant?: "default" | "confirmation";
     width?: number;
 }
@@ -8101,11 +8106,19 @@ export interface IUiSearchableSelectProps<T> {
     defaultOpen?: boolean;
     filter?: (item: T, query: string) => boolean;
     // (undocumented)
+    isOpen?: boolean;
+    // (undocumented)
     items: T[];
     // (undocumented)
     onChange: (value: string) => void;
     // (undocumented)
+    onOpenChange?: (isOpen: boolean) => void;
+    // (undocumented)
     placeholder: string;
+    renderButton?: null;
+    // (undocumented)
+    shouldCloseOnSelect?: boolean;
+    title: string;
     // (undocumented)
     value: string | null;
 }
@@ -10051,6 +10064,9 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
 
 // @internal
 export function UiModalDialog(input: IUiModalDialogProps): JSX.Element | null;
+
+// @internal
+export type UiModalDialogSize = "default" | "large";
 
 // @internal (undocumented)
 export function UiNavigationBypass(input: IUiNavigationBypassProps): JSX.Element;

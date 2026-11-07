@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import {
     type AfmLocalIdentifier,
@@ -106,6 +106,6 @@ export function isVisualizationObject(
     visualizationObject: unknown,
 ): visualizationObject is IVisualizationObject {
     return (
-        !isEmpty(visualizationObject) && !!(visualizationObject as IVisualizationObject).visualizationObject
+        !_isEmpty(visualizationObject) && !!(visualizationObject as IVisualizationObject).visualizationObject
     );
 }

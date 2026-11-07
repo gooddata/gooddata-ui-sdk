@@ -1,11 +1,12 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { useCallback, useEffect, useState } from "react";
 
-import { isEqual } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
 
 import { type InsightDrillDefinition, type ObjRef } from "@gooddata/sdk-model";
 import { usePrevious } from "@gooddata/sdk-ui";
+import { _isEqual } from "@gooddata/util";
 
 import { type IAvailableDrillTargetItem } from "../../../../drill/DrillSelect/types.js";
 import { type IDrillConfigItem, isAvailableDrillTargetMeasure } from "../../../../drill/types.js";
@@ -44,7 +45,7 @@ export const useIncompleteItems = (props: IUseIncompleteItemsProps) => {
 
     useEffect(() => {
         //when widgetDrills changed remove all complete widget items
-        if (!isEqual(widgetDrills, prevWidgetDrills)) {
+        if (!_isEqual(widgetDrills, prevWidgetDrills)) {
             const incompleteItemsUpdated = incompleteItems.filter(
                 (incompleteItem) => !incompleteItem.complete,
             );

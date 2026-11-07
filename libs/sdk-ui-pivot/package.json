@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-pivot",
-    "version": "11.68.0-alpha.2",
+    "version": "11.68.0-alpha.4",
     "description": "GoodData.UI SDK - Pivot Table",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
@@ -65,6 +65,7 @@
         "@gooddata/sdk-ui-kit": "workspace:*",
         "@gooddata/sdk-ui-theme-provider": "workspace:*",
         "@gooddata/sdk-ui-vis-commons": "workspace:*",
+        "@gooddata/util": "workspace:*",
         "ag-grid-community": "35.1.0",
         "ag-grid-enterprise": "35.1.0",
         "ag-grid-react": "35.1.0",

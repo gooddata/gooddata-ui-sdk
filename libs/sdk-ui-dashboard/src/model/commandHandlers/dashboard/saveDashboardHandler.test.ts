@@ -75,6 +75,7 @@ describe("save dashboard handler", () => {
 
             expect(event.payload.dashboard.ref).toBeDefined();
             expect(event.payload.newDashboard).toEqual(true);
+            expect(event.payload.savedInsights).toEqual([]);
 
             const state = Tester.state();
 
@@ -161,6 +162,7 @@ describe("save dashboard handler", () => {
             );
 
             expect(event.payload.newDashboard).toEqual(false);
+            expect(event.payload.savedInsights).toEqual([]);
             const newState = Tester.state();
 
             const originalLayout = selectBasicLayout(originalState);
@@ -189,6 +191,7 @@ describe("save dashboard handler", () => {
             );
 
             expect(event.payload.originalDashboardId).toEqual(SimpleDashboardIdentifier);
+            expect(event.payload.savedInsights).toEqual([]);
         });
 
         it("should emit correct events", async () => {
@@ -443,6 +446,7 @@ describe("save dashboard handler", () => {
             );
 
             expect(savedEvent.correlationId).toBe(TestCorrelation);
+            expect(savedEvent.payload.savedInsights).toEqual([]);
             expect(selectIsInsightNotSavedDialogOpen(Tester.state())).toBe(false);
             expect(selectInsightNotSavedDialogDraftInsightsToPersist(Tester.state())).toEqual([]);
         });

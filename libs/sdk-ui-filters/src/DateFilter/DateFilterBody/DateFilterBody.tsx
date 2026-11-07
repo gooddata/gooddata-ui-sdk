@@ -13,7 +13,6 @@ import {
 } from "react";
 
 import cx from "classnames";
-import { isEmpty } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import {
@@ -26,6 +25,7 @@ import {
     isRelativeDateFilterForm,
 } from "@gooddata/sdk-model";
 import { isEscapeKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import { _isEmpty } from "@gooddata/util";
 
 import { isEditableElement } from "../../shared/utils/domUtilities.js";
 import { CheckboxSection } from "../CheckboxSection/CheckboxSection.js";
@@ -567,7 +567,7 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
                                 isMobile ? "gd-button-medium" : "gd-button-small",
                                 "s-date-filter-apply",
                             )}
-                            disabled={!isEmpty(errors) || !isPeriodRangeValid}
+                            disabled={!_isEmpty(errors) || !isPeriodRangeValid}
                             onClick={() => {
                                 onApplyClick();
                                 closeDropdown();

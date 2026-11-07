@@ -2,6 +2,8 @@
 
 import { defineConfig } from "vitest/config";
 
+import { DESKTOP_VIEWPORT } from "./test/viewport.js";
+
 export default defineConfig({
     define: {
         PRODUCTION: JSON.stringify(false),
@@ -22,14 +24,8 @@ export default defineConfig({
         unstubGlobals: true,
         maxConcurrency: 8,
         environmentOptions: {
-            "happy-dom": {
-                url: "http://localhost",
-                features: {
-                    FetchAPI: false,
-                    WebSocket: false,
-                    ProcessExternalResources: false,
-                },
-            },
+            // Vitest only reads happyDOM, not happy-dom
+            happyDOM: DESKTOP_VIEWPORT,
         },
     },
 });

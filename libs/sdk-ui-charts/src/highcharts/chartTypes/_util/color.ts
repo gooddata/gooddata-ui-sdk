@@ -1,11 +1,11 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import { defineMessages } from "react-intl";
 
 import { type IColorPalette, type IRgbColorValue } from "@gooddata/sdk-model";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
 import { getColorPaletteFromColors } from "@gooddata/sdk-ui-vis-commons";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 
@@ -51,8 +51,8 @@ export const DEFAULT_WATERFALL_COLORS_MESSAGES = defineMessages({
  * @internal
  */
 export function getValidColorPalette(config: IChartConfig): IColorPalette {
-    return isEmpty(config.colorPalette)
-        ? isEmpty(config.colors)
+    return _isEmpty(config.colorPalette)
+        ? _isEmpty(config.colors)
             ? DefaultColorPalette
             : getColorPaletteFromColors(config.colors!)
         : config.colorPalette!;

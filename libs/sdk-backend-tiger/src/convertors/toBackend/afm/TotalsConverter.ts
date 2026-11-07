@@ -1,6 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
-
-import { isEqual } from "lodash-es";
+// (C) 2007-2026 GoodData Corporation
 
 import { type Total, type TotalDimension, type TotalFunctionEnum } from "@gooddata/api-client-tiger";
 import {
@@ -17,6 +15,7 @@ import {
     bucketTotals,
     bucketsFind,
 } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { dimensionLocalIdentifier } from "./DimensionsConverter.js";
 
@@ -417,5 +416,5 @@ function attributeAndColumnHasSameTotal(
     columnMeasureId: string,
     columnType: string,
 ): boolean {
-    return isEqual(attributeMeasureId, columnMeasureId) && isEqual(attributeType, columnType);
+    return _isEqual(attributeMeasureId, columnMeasureId) && _isEqual(attributeType, columnType);
 }

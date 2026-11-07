@@ -130,6 +130,7 @@ export {
 } from "./syntaxHighlightingInput/SyntaxHighlightingInput.js";
 export { defaultSyntaxHighlightStyle } from "./syntaxHighlightingInput/defaultHighlightStyle.js";
 export { type ExternalChangeSelection } from "./syntaxHighlightingInput/hooks/useCodemirrorChange.js";
+export { isApplePlatform } from "./syntaxHighlightingInput/hooks/useCodemirrorKeymap.js";
 export {
     type IYamlPosition,
     type YamlCompletionSource,
@@ -1343,11 +1344,7 @@ export {
 export { ParameterControl, type IParameterControlProps } from "./ParameterControl/ParameterControl.js";
 export { type ParameterSubmitModeProps } from "./ParameterControl/submitMode.js";
 export { UiSectionHeading, type IUiSectionHeadingProps } from "./@ui/UiSectionHeading/UiSectionHeading.js";
-export {
-    UiDialogHeader,
-    type IUiDialogHeaderProps,
-    type DialogHeaderTitleSize,
-} from "./@ui/UiModalDialog/UiDialogHeader.js";
+export { UiDialogHeader, type IUiDialogHeaderProps } from "./@ui/UiModalDialog/UiDialogHeader.js";
 export { UiDialogFooter, type IUiDialogFooterProps } from "./@ui/UiModalDialog/UiDialogFooter.js";
 export { UiConfirmDialog, type IUiConfirmDialogProps } from "./@ui/UiConfirmDialog/UiConfirmDialog.js";
 export {
@@ -1355,7 +1352,11 @@ export {
     type IUiConfirmDialogCardProps,
     type ConfirmDialogVariant,
 } from "./@ui/UiConfirmDialog/UiConfirmDialogCard.js";
-export { UiModalDialog, type IUiModalDialogProps } from "./@ui/UiModalDialog/UiModalDialog.js";
+export {
+    UiModalDialog,
+    type IUiModalDialogProps,
+    type UiModalDialogSize,
+} from "./@ui/UiModalDialog/UiModalDialog.js";
 export {
     UiSearchableSelect,
     type IUiSearchableSelectProps,
@@ -1385,7 +1386,7 @@ export {
     type IUiConfigEditorApi,
     type IUiConfigEditorContextMenuProps,
     type IUiConfigEditorLabels,
-    type IUiConfigEditorWarning,
+    type IUiConfigEditorDiagnostic,
 } from "./@ui/UiConfigEditor/types.js";
 export { preloadUiConfigEditorGrammars } from "./@ui/UiConfigEditor/configEditorGrammars.js";
 export { type ConfigEditorLanguage } from "./@ui/UiConfigEditor/configEditorLanguage.js";

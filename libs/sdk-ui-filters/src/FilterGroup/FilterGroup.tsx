@@ -16,7 +16,6 @@ import {
 } from "react";
 
 import cx from "classnames";
-import { isEqual } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
@@ -33,6 +32,7 @@ import {
     isSpaceKey,
     useMediaQuery,
 } from "@gooddata/sdk-ui-kit";
+import { _isEqual } from "@gooddata/util";
 
 import type { IAttributeFilterProps } from "../AttributeFilter/AttributeFilter.js";
 import { AttributeFilterButton } from "../AttributeFilter/AttributeFilterButton.js";
@@ -539,7 +539,7 @@ export function useDeepEqualRefStablizer<T>(unstableState: T): T {
     const stableRef = useRef<T>(unstableState);
     // Compare and update the ref synchronously to keep the reference stable
     const prevState = stableRef.current;
-    if (!isEqual(prevState, unstableState)) {
+    if (!_isEqual(prevState, unstableState)) {
         stableRef.current = unstableState;
     }
     return stableRef.current;

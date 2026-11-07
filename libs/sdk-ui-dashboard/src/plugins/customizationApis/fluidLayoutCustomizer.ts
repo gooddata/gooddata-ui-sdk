@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { cloneDeep, isEmpty } from "lodash-es";
+import { cloneDeep } from "lodash-es";
 
 import {
     type IDashboardLayout,
@@ -8,6 +8,7 @@ import {
     type IDashboardLayoutSection,
     objRefToString,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { DashboardLayoutBuilder } from "../../_staging/dashboard/flexibleLayout/builder/layout.js";
 import { type ExtendedDashboardWidget, type ICustomWidget } from "../../model/types/layoutTypes.js";
@@ -76,7 +77,7 @@ export class FluidLayoutCustomizer implements IFluidLayoutCustomizer {
         sectionPath: ILayoutSectionPath,
         section: IDashboardLayoutSection<ICustomWidget>,
     ): IFluidLayoutCustomizer {
-        if (isEmpty(section.items)) {
+        if (_isEmpty(section.items)) {
             this.logger.warn(
                 `Section to add at path ${sectionPath} contains no items. The section will not be added at all.`,
                 section,
@@ -87,7 +88,7 @@ export class FluidLayoutCustomizer implements IFluidLayoutCustomizer {
 
         const itemsWithoutWidget = section.items.filter((item) => item.widget === undefined);
 
-        if (!isEmpty(itemsWithoutWidget)) {
+        if (!_isEmpty(itemsWithoutWidget)) {
             this.logger.warn(
                 `Section to add at path ${sectionPath} contains items that do not specify any widgets. The section will not be added at all.`,
                 section,

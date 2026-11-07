@@ -1,7 +1,8 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
+
+import { _isEmpty } from "@gooddata/util";
 
 import { type AllTimeGranularity, type DateAttributeGranularity } from "../../base/dateGranularities.js";
 import { type Identifier, type ObjRef, type ObjRefInScope, isObjRef } from "../../objRef/index.js";
@@ -585,7 +586,7 @@ export function isSimpleMeasureFilter(obj: unknown): obj is IMeasureFilter {
  * @public
  */
 export function isPositiveAttributeFilter(obj: unknown): obj is IPositiveAttributeFilter {
-    return !isEmpty(obj) && (obj as IPositiveAttributeFilter).positiveAttributeFilter !== undefined;
+    return !_isEmpty(obj) && (obj as IPositiveAttributeFilter).positiveAttributeFilter !== undefined;
 }
 
 /**
@@ -594,7 +595,7 @@ export function isPositiveAttributeFilter(obj: unknown): obj is IPositiveAttribu
  * @public
  */
 export function isNegativeAttributeFilter(obj: unknown): obj is INegativeAttributeFilter {
-    return !isEmpty(obj) && (obj as INegativeAttributeFilter).negativeAttributeFilter !== undefined;
+    return !_isEmpty(obj) && (obj as INegativeAttributeFilter).negativeAttributeFilter !== undefined;
 }
 
 /**
@@ -622,7 +623,7 @@ export function isNegativeFilter(filter: IAttributeFilter): boolean {
  */
 export function isArbitraryAttributeFilter(obj: unknown): obj is IArbitraryAttributeFilter {
     return (
-        !isEmpty(obj) &&
+        !_isEmpty(obj) &&
         (obj as IArbitraryAttributeFilter).arbitraryAttributeFilter !== undefined &&
         isObjRef((obj as IArbitraryAttributeFilter).arbitraryAttributeFilter.label)
     );
@@ -635,7 +636,7 @@ export function isArbitraryAttributeFilter(obj: unknown): obj is IArbitraryAttri
  */
 export function isMatchAttributeFilter(obj: unknown): obj is IMatchAttributeFilter {
     return (
-        !isEmpty(obj) &&
+        !_isEmpty(obj) &&
         (obj as IMatchAttributeFilter).matchAttributeFilter !== undefined &&
         isObjRef((obj as IMatchAttributeFilter).matchAttributeFilter.label)
     );
@@ -656,7 +657,7 @@ export function isTextAttributeFilter(obj: unknown): obj is TextAttributeFilter 
  * @public
  */
 export function isAbsoluteDateFilter(obj: unknown): obj is IAbsoluteDateFilter {
-    return !isEmpty(obj) && (obj as IAbsoluteDateFilter).absoluteDateFilter !== undefined;
+    return !_isEmpty(obj) && (obj as IAbsoluteDateFilter).absoluteDateFilter !== undefined;
 }
 
 /**
@@ -665,7 +666,7 @@ export function isAbsoluteDateFilter(obj: unknown): obj is IAbsoluteDateFilter {
  * @public
  */
 export function isRelativeDateFilter(obj: unknown): obj is IRelativeDateFilter {
-    return !isEmpty(obj) && (obj as IRelativeDateFilter).relativeDateFilter !== undefined;
+    return !_isEmpty(obj) && (obj as IRelativeDateFilter).relativeDateFilter !== undefined;
 }
 
 /**
@@ -767,7 +768,7 @@ export function isAllTimeDateFilter(obj: unknown): obj is IRelativeDateFilter & 
     relativeDateFilter: { granularity: "ALL_TIME_GRANULARITY" };
 } {
     return (
-        !isEmpty(obj) &&
+        !_isEmpty(obj) &&
         (obj as IRelativeDateFilter).relativeDateFilter?.granularity === "ALL_TIME_GRANULARITY"
     );
 }
@@ -870,7 +871,7 @@ export function isDateFilter(obj: unknown): obj is IDateFilter {
  * @public
  */
 export function isMeasureValueFilter(obj: unknown): obj is IMeasureValueFilter {
-    return !isEmpty(obj) && (obj as IMeasureValueFilter).measureValueFilter !== undefined;
+    return !_isEmpty(obj) && (obj as IMeasureValueFilter).measureValueFilter !== undefined;
 }
 
 /**
@@ -879,7 +880,7 @@ export function isMeasureValueFilter(obj: unknown): obj is IMeasureValueFilter {
  * @public
  */
 export function isRankingFilter(obj: unknown): obj is IRankingFilter {
-    return !isEmpty(obj) && (obj as IRankingFilter).rankingFilter !== undefined;
+    return !_isEmpty(obj) && (obj as IRankingFilter).rankingFilter !== undefined;
 }
 
 /**
@@ -897,7 +898,7 @@ export function isFilter(obj: unknown): obj is IFilter {
  * @public
  */
 export function isComparisonCondition(obj: unknown): obj is IComparisonCondition {
-    return !isEmpty(obj) && (obj as IComparisonCondition).comparison !== undefined;
+    return !_isEmpty(obj) && (obj as IComparisonCondition).comparison !== undefined;
 }
 
 /**
@@ -922,7 +923,7 @@ export function isComparisonConditionOperator(obj: unknown): obj is ComparisonCo
  * @public
  */
 export function isRangeCondition(obj: unknown): obj is IRangeCondition {
-    return !isEmpty(obj) && (obj as IRangeCondition).range !== undefined;
+    return !_isEmpty(obj) && (obj as IRangeCondition).range !== undefined;
 }
 
 /**
@@ -940,7 +941,7 @@ export function isRangeConditionOperator(obj: unknown): obj is RangeConditionOpe
  * @public
  */
 export function isAttributeElementsByRef(obj: unknown): obj is IAttributeElementsByRef {
-    return !isEmpty(obj) && (obj as IAttributeElementsByRef).uris !== undefined;
+    return !_isEmpty(obj) && (obj as IAttributeElementsByRef).uris !== undefined;
 }
 
 /**
@@ -949,7 +950,7 @@ export function isAttributeElementsByRef(obj: unknown): obj is IAttributeElement
  * @public
  */
 export function isAttributeElementsByValue(obj: unknown): obj is IAttributeElementsByValue {
-    return !isEmpty(obj) && (obj as IAttributeElementsByValue).values !== undefined;
+    return !_isEmpty(obj) && (obj as IAttributeElementsByValue).values !== undefined;
 }
 
 //
@@ -971,11 +972,11 @@ export function filterIsEmpty(filter: IAttributeFilter): boolean {
     }
 
     if (isArbitraryAttributeFilter(filter)) {
-        return isEmpty(filter.arbitraryAttributeFilter.values);
+        return _isEmpty(filter.arbitraryAttributeFilter.values);
     }
 
     if (isMatchAttributeFilter(filter)) {
-        return isEmpty(filter.matchAttributeFilter.literal);
+        return _isEmpty(filter.matchAttributeFilter.literal);
     }
 
     return attributeElementsIsEmpty(filter.negativeAttributeFilter.notIn);
@@ -1008,10 +1009,10 @@ export function attributeElementsIsEmpty(attributeElements: IAttributeElements):
     invariant(attributeElements, "attribute elements must be specified");
 
     if (isAttributeElementsByRef(attributeElements)) {
-        return isEmpty(attributeElements.uris);
+        return _isEmpty(attributeElements.uris);
     }
 
-    return isEmpty(attributeElements.values);
+    return _isEmpty(attributeElements.values);
 }
 
 /**

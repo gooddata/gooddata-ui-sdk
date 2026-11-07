@@ -68,6 +68,69 @@ function getLocalApplications(): PluggableApplicationRegistryItem[] {
     return registeredLocalApplications.applications;
 }
 
+function remoteLocationOf(item: unknown): { scope: string; url: string } | undefined {
+    if (typeof item !== "object" || item === null) {
+        return undefined;
+    }
+    const remote = (item as { remote?: unknown }).remote;
+    if (typeof remote !== "object" || remote === null) {
+        return undefined;
+    }
+    const { scope, url } = remote as { scope?: unknown; url?: unknown };
+    return typeof scope === "string" && typeof url === "string" ? { scope, url } : undefined;
+}
+
+// An empty URL marks a scope that the entries use with different URLs. No module matches it.
+function addScope(scopes: Map<string, string>, location: { scope: string; url: string }): void {
+    const knownUrl = scopes.get(location.scope);
+    scopes.set(location.scope, knownUrl === undefined || knownUrl === location.url ? location.url : "");
+}
+
+/**
+ * Returns the federation scopes, mapped to their URLs, of the enabled remote applications with overrides
+ * applied and of the remote UI module.
+ *
+ * @internal
+ */
+export function getApplicationRemoteScopes(ctx: IPlatformContext): Map<string, string> {
+    const remoteRegistry = getRemoteRegistry(ctx);
+    const overrides: Record<string, unknown> =
+        typeof remoteRegistry?.overrides === "object" && remoteRegistry.overrides !== null
+            ? remoteRegistry.overrides
+            : {};
+    const applications: unknown[] = [
+        ...getLocalApplications(),
+        ...(Array.isArray(remoteRegistry?.applications) ? remoteRegistry.applications : []),
+    ];
+    const scopes = new Map<string, string>();
+    const seenIds = new Set<unknown>();
+    for (const application of applications) {
+        if (typeof application !== "object" || application === null) {
+            continue;
+        }
+        const id = (application as { id?: unknown }).id;
+        // Same precedence as mergeApplications: the first application with an id wins.
+        if (seenIds.has(id)) {
+            continue;
+        }
+        seenIds.add(id);
+        const override = typeof id === "string" ? overrides[id] : undefined;
+        const effective = {
+            ...application,
+            ...(typeof override === "object" && override !== null ? override : {}),
+        } as { isEnabled?: unknown };
+        const location = remoteLocationOf(effective);
+        if (effective.isEnabled !== false && location !== undefined) {
+            addScope(scopes, location);
+        }
+    }
+    const uiLocation = remoteLocationOf({ remote: remoteRegistry?.uiModule });
+    if (uiLocation !== undefined) {
+        addScope(scopes, uiLocation);
+    }
+    return scopes;
+}
+
 function mergeApplications(
     localApps: PluggableApplicationRegistryItem[],
     remoteApps: PluggableApplicationRegistryItem[],
@@ -137,7 +200,7 @@ function filterDisabled(apps: PluggableApplicationRegistryItem[]): PluggableAppl
     return apps.filter((app) => app.isEnabled === undefined || app.isEnabled);
 }
 
-function entitlementsToRecord(
+export function entitlementsToRecord(
     entitlements: IPlatformContext["entitlements"],
 ): Record<string, string | boolean> {
     return Object.fromEntries(
@@ -145,7 +208,7 @@ function entitlementsToRecord(
     );
 }
 
-function toPluggableApplicationOrganizationPermissions(
+export function toPluggableApplicationOrganizationPermissions(
     permissions: IOrganizationPermissions,
 ): IPluggableApplicationOrganizationPermissions {
     return {

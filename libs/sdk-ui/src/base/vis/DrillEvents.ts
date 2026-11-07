@@ -1,7 +1,5 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import { type IDataView } from "@gooddata/sdk-backend-spi";
 import {
     type IAttributeDescriptor,
@@ -9,6 +7,7 @@ import {
     type IResultAttributeHeader,
     type ITotalDescriptor,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IHeaderPredicate, isHeaderPredicate } from "../headerMatching/HeaderPredicate.js";
 
@@ -68,14 +67,14 @@ export type IDrillableItem =
  * @public
  */
 export function isDrillableItemUri(item: unknown): item is IDrillableItemUri {
-    return !isEmpty(item) && (item as IDrillableItemUri).uri !== undefined;
+    return !_isEmpty(item) && (item as IDrillableItemUri).uri !== undefined;
 }
 
 /**
  * @public
  */
 export function isDrillableItemIdentifier(item: unknown): item is IDrillableItemIdentifier {
-    return !isEmpty(item) && (item as IDrillableItemIdentifier).identifier !== undefined;
+    return !_isEmpty(item) && (item as IDrillableItemIdentifier).identifier !== undefined;
 }
 
 /**
@@ -101,7 +100,7 @@ export interface IDrillIntersectionAttributeItem extends IAttributeDescriptor, I
 export function isDrillIntersectionAttributeItem(
     header: DrillEventIntersectionElementHeader,
 ): header is IDrillIntersectionAttributeItem {
-    return !isEmpty(header) && (header as IDrillIntersectionAttributeItem).attributeHeaderItem !== undefined;
+    return !_isEmpty(header) && (header as IDrillIntersectionAttributeItem).attributeHeaderItem !== undefined;
 }
 
 /**
@@ -111,7 +110,7 @@ export function isDrillIntersectionDateAttributeItem(
     header: DrillEventIntersectionElementHeader,
 ): header is IDrillIntersectionAttributeItem {
     return (
-        !isEmpty(header) &&
+        !_isEmpty(header) &&
         (header as IDrillIntersectionAttributeItem).attributeHeaderItem !== undefined &&
         Boolean((header as IDrillIntersectionAttributeItem).attributeHeader.granularity)
     );

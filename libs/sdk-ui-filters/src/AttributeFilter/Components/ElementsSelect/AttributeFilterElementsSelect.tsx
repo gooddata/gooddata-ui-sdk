@@ -13,7 +13,12 @@ import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilt
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
 import { BACKEND_PAGE_SIZE, MAX_SELECTION_SIZE } from "../../hooks/constants.js";
 import { useAttributeFilterDropdownHeader } from "../../hooks/useAttributeFilterDropdownHeader.js";
-import { getElementKey, getElementPrimaryTitle, getElementTitle } from "../../utils.js";
+import {
+    getDateFormattedElementRawTitle,
+    getElementKey,
+    getElementPrimaryTitle,
+    getElementTitle,
+} from "../../utils.js";
 import { AttributeFilterDropdownHeader } from "../Dropdown/AttributeFilterDropdownHeader.js";
 
 import { type IAttributeFilterElementsSelectProps } from "./types.js";
@@ -107,11 +112,14 @@ export function AttributeFilterElementsSelect({
         return primaryLabel?.title;
     }, [attribute]);
 
-    // Number-formatted values may be rounded or scaled; the tooltip then tells the raw value users search by.
+    // Number-formatted values may be rounded or scaled and date-formatted values of computed attributes
+    // differ from their raw values; the tooltip then tells the raw value users search by.
     const getRawValueTitle = useCallback(
         (item: IAttributeElement) =>
-            elementsNumberFormat ? getNumberFormattedElementRawTitle(item, separators) : undefined,
-        [elementsNumberFormat, separators],
+            elementsNumberFormat
+                ? getNumberFormattedElementRawTitle(item, separators)
+                : getDateFormattedElementRawTitle(item, attribute?.ref),
+        [elementsNumberFormat, separators, attribute?.ref],
     );
 
     const handleShowFilteredElements = useCallback(() => {

@@ -2,9 +2,8 @@
 
 import { type ComponentType, useEffect, useMemo, useState } from "react";
 
-import { isEqual } from "lodash-es";
-
 import { type ObjRef } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { type IUiPagedVirtualListSkeletonItemProps } from "../../UiPagedVirtualList/UiPagedVirtualList.js";
 import { UiSkeleton } from "../../UiSkeleton/UiSkeleton.js";
@@ -45,7 +44,7 @@ export const useSkeletonItem = <T extends { id: string } | { ref: ObjRef }>(
     // this prevents the skeleton item from re-rendering when
     // irrelevant columns properties change(e.g. permissions)
     useEffect(() => {
-        if (!isEqual(columnWidths, computedColumnWidths)) {
+        if (!_isEqual(columnWidths, computedColumnWidths)) {
             setColumnWidths(computedColumnWidths);
         }
     }, [computedColumnWidths, columnWidths]);

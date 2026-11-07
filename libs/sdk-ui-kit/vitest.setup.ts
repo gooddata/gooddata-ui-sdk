@@ -4,8 +4,11 @@ import "@testing-library/jest-dom/vitest";
 import { cleanup } from "@testing-library/react";
 import { afterEach, vi } from "vitest";
 
+import { DESKTOP_VIEWPORT } from "./test/viewport.js";
+
 afterEach(() => {
     cleanup();
+    window.happyDOM.setViewport(DESKTOP_VIEWPORT);
 });
 
 // some tests need createRange function

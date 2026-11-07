@@ -1,7 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
-import { isEqual } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { isDashboardLayoutEmpty } from "@gooddata/sdk-backend-spi";
@@ -39,6 +38,7 @@ import {
     resolveTimezoneId,
     uriRef,
 } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import {
     selectEnableDashboardPersistentFiltersAcrossTabs,
@@ -939,7 +939,7 @@ export const selectIsAttributeFilterConfigsChanged: DashboardSelector<boolean> =
             const persistedConfigs = persistedAttributeFilterConfigsByTab[tabId] ?? [];
             const currentConfigs = currentAttributeFilterConfigsByTab[tabId] ?? [];
 
-            return !isEqual(persistedConfigs, currentConfigs);
+            return !_isEqual(persistedConfigs, currentConfigs);
         });
     },
 );
@@ -981,7 +981,7 @@ export const selectIsDateFilterConfigsChanged: DashboardSelector<boolean> = crea
             const persistedConfigs = persistedDateFilterConfigsByTab[tabId] ?? [];
             const currentConfigs = currentDateFilterConfigsByTab[tabId] ?? [];
 
-            return !isEqual(persistedConfigs, currentConfigs);
+            return !_isEqual(persistedConfigs, currentConfigs);
         });
     },
 );
@@ -1003,7 +1003,7 @@ export const selectIsMeasureValueFilterConfigsChanged: DashboardSelector<boolean
             const persistedConfigs = persistedMeasureValueFilterConfigsByTab[tabId] ?? [];
             const currentConfigs = currentMeasureValueFilterConfigsByTab[tabId] ?? [];
 
-            return !isEqual(persistedConfigs, currentConfigs);
+            return !_isEqual(persistedConfigs, currentConfigs);
         });
     },
 );
@@ -1025,7 +1025,7 @@ export const selectIsDateFilterChanged: DashboardSelector<boolean> = createSelec
             const persistedDateFilter = persistedFilters.find(isDashboardCommonDateFilter);
             const workingDateFilter = workingFilters.find(isDashboardCommonDateFilter);
 
-            return !isEqual(persistedDateFilter, workingDateFilter);
+            return !_isEqual(persistedDateFilter, workingDateFilter);
         });
     },
 );
@@ -1043,7 +1043,7 @@ export const selectIsDateFilterConfigChanged: DashboardSelector<boolean> = creat
             const persistedConfig = persistedDateFilterConfigByTab[tabId];
             const currentConfig = currentDateFilterConfigByTab[tabId];
 
-            return !isEqual(persistedConfig, currentConfig);
+            return !_isEqual(persistedConfig, currentConfig);
         });
     },
 );
@@ -1066,7 +1066,7 @@ export const selectIsAttributeFiltersChanged: DashboardSelector<boolean> = creat
             const persistedFilters = persistedAttributeFiltersByTab[tabId] ?? [];
             const workingFilters = workingAttributeFiltersByTab[tabId] ?? [];
 
-            return !isEqual(persistedFilters, workingFilters);
+            return !_isEqual(persistedFilters, workingFilters);
         });
     },
 );
@@ -1089,7 +1089,7 @@ export const selectIsOtherFiltersChanged: DashboardSelector<boolean> = createSel
             const persistedFilters = persistedDraggableFiltersByTab[tabId] ?? [];
             const workingFilters = workingDraggableFiltersByTab[tabId] ?? [];
 
-            return !isEqual(persistedFilters, workingFilters);
+            return !_isEqual(persistedFilters, workingFilters);
         });
     },
 );
@@ -1196,7 +1196,7 @@ export const selectIsSectionHeadersDateDataSetChanged: DashboardSelector<boolean
     selectPersistedDashboardSectionHeadersDateDataSet,
     selectSectionHeadersDateDataSet,
     (persistedDateDataSet, currentDateDataSet) => {
-        return !isEqual(persistedDateDataSet, currentDateDataSet);
+        return !_isEqual(persistedDateDataSet, currentDateDataSet);
     },
 );
 
@@ -1211,7 +1211,7 @@ export const selectIsTimezoneConfigChanged: DashboardSelector<boolean> = createS
     (persistedTimezoneConfig, currentTimezoneConfig) => {
         // normalize both sides so that a persisted config carrying explicit default (false)
         // values compares equal to an absent configuration
-        return !isEqual(
+        return !_isEqual(
             normalizeDashboardTimezoneConfig(persistedTimezoneConfig),
             normalizeDashboardTimezoneConfig(currentTimezoneConfig),
         );
@@ -1249,7 +1249,7 @@ const selectIsTabsChanged: DashboardSelector<boolean> = createSelector(
         const normalizedCurrentTabs = normalizeTabsForComparison(currentTabs);
 
         // Compare normalized tabs arrays
-        return !isEqual(normalizedPersistedTabs, normalizedCurrentTabs);
+        return !_isEqual(normalizedPersistedTabs, normalizedCurrentTabs);
     },
 );
 
@@ -1284,7 +1284,7 @@ export const selectIsLayoutChanged: DashboardSelector<boolean> = createSelector(
             const persistedLayout = persistedLayoutByTab[tabId] ?? [];
             const currentLayout = currentLayoutByTab[tabId] ?? [];
 
-            return !isEqual(persistedLayout, currentLayout);
+            return !_isEqual(persistedLayout, currentLayout);
         });
     },
 );

@@ -1,7 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
-
 import {
     type DataValue,
     type IBucket,
@@ -10,6 +8,7 @@ import {
     bucketsFind,
 } from "@gooddata/sdk-model";
 import { BucketNames, type DataViewFacade, type IColorAssignment } from "@gooddata/sdk-ui";
+import { _isEqual } from "@gooddata/util";
 
 import { type IGeoData, type IGeoPointsConfig } from "../../../../GeoChart.js";
 
@@ -70,7 +69,7 @@ export function isPointsConfigChanged(
     prevPointsConfig: IGeoPointsConfig | undefined,
     pointsConfig: IGeoPointsConfig | undefined,
 ): boolean {
-    return !isEqual(prevPointsConfig, pointsConfig);
+    return !_isEqual(prevPointsConfig, pointsConfig);
 }
 
 interface IMinMax {
@@ -125,5 +124,5 @@ export function isColorAssignmentItemChanged(
     prevColorAssignment: IColorAssignment[],
     colorAssignment: IColorAssignment[],
 ): boolean {
-    return !isEqual(prevColorAssignment, colorAssignment);
+    return !_isEqual(prevColorAssignment, colorAssignment);
 }

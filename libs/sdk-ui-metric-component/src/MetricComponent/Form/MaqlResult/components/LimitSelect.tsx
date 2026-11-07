@@ -3,7 +3,6 @@
 import { type ReactElement, type ReactNode, useCallback, useMemo } from "react";
 
 import classNames from "classnames";
-import { isEqual } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {
@@ -14,6 +13,7 @@ import {
     type IDropdownButtonRenderProps,
     SingleSelectListItem,
 } from "@gooddata/sdk-ui-kit";
+import { _isEqual } from "@gooddata/util";
 
 import { useProp } from "../../../../shared/hooks/useProp.js";
 import { type DefaultTheme, makeStyles } from "../../../../shared/theme/index.js";
@@ -225,7 +225,7 @@ function useSelected(preselectedLimit: 10 | 100 | 1000 | 10000, preselectedRanki
     const [selectedRanking, setRanking] = useProp(preselectedRanking);
 
     const changed = useMemo(
-        () => !isEqual(selectedLimit, preselectedLimit) || !isEqual(selectedRanking, preselectedRanking),
+        () => !_isEqual(selectedLimit, preselectedLimit) || !_isEqual(selectedRanking, preselectedRanking),
         [preselectedLimit, preselectedRanking, selectedLimit, selectedRanking],
     );
 

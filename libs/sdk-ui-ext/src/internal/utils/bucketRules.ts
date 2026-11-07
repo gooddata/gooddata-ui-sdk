@@ -1,8 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { isEmpty, reduce } from "lodash-es";
+import { reduce } from "lodash-es";
 
 import { BucketNames } from "@gooddata/sdk-ui";
+import { _isEmpty } from "@gooddata/util";
 
 import { ALL_TIME, ATTRIBUTE, DATE, METRIC } from "../constants/bucket.js";
 import {
@@ -202,7 +203,7 @@ export function hasNonAllTimeFilter(filters: IFilters): boolean {
     });
 
     const filterInterval = (dateFilter?.filters?.[0] as IDateFilter)?.interval?.interval ?? [];
-    return !isEmpty(filterInterval);
+    return !_isEmpty(filterInterval);
 }
 
 function hasNoRankingFilter(_: IBucketOfFun[], filters?: IFilters): boolean {

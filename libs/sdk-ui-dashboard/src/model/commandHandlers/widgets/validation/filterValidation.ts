@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { isEmpty, partition } from "lodash-es";
+import { partition } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, select } from "redux-saga/effects";
 
@@ -19,6 +19,7 @@ import {
     dashboardAttributeFilterItemLocalIdentifier,
     objRefToString,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { newInsight } from "../../../../_staging/insight/insightBuilder.js";
 import { newCatalogDateDatasetMap } from "../../../../_staging/metadata/objRefMap.js";
@@ -215,7 +216,7 @@ export function* validateAttributeFiltersToIgnore(
     );
     const { missing, resolved } = resolvedDisplayForms;
 
-    if (!isEmpty(missing)) {
+    if (!_isEmpty(missing)) {
         throw invalidArgumentsProvided(
             ctx,
             cmd,
@@ -251,7 +252,7 @@ export function* validateAttributeFiltersToIgnore(
         }
     }
 
-    if (!isEmpty(badIgnores)) {
+    if (!_isEmpty(badIgnores)) {
         throw invalidArgumentsProvided(
             ctx,
             cmd,
@@ -291,7 +292,7 @@ export function* validateDateFiltersToIgnore(
     );
     const [resolved, missing] = partition(toIgnore, (ref) => allAvailableDateDatasetsMap.has(ref));
 
-    if (!isEmpty(missing)) {
+    if (!_isEmpty(missing)) {
         throw invalidArgumentsProvided(
             ctx,
             cmd,
@@ -319,7 +320,7 @@ export function* validateDateFiltersToIgnore(
         }
     }
 
-    if (!isEmpty(badIgnores)) {
+    if (!_isEmpty(badIgnores)) {
         throw invalidArgumentsProvided(
             ctx,
             cmd,

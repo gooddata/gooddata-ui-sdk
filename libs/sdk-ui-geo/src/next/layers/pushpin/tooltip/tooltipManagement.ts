@@ -1,11 +1,12 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { escape, isEmpty } from "lodash-es";
+import { escape } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { type ISeparators } from "@gooddata/sdk-model";
 import { type IHeaderPredicate } from "@gooddata/sdk-ui";
 import { type ICustomTooltipConfig, buildTooltipLocalizedStrings } from "@gooddata/sdk-ui-vis-commons";
+import { _isEmpty } from "@gooddata/util";
 
 import { getTooltipContentWidth } from "../../../map/style/tooltipFormatting.js";
 import { type IGeoPushpinChartConfig } from "../../../types/config/pushpinChart.js";
@@ -119,7 +120,7 @@ function isTooltipShownInFullScreen() {
  * @internal
  */
 export function shouldShowTooltip(geoProperties: GeoJSON.GeoJsonProperties | undefined): boolean {
-    if (isEmpty(geoProperties)) {
+    if (_isEmpty(geoProperties)) {
         return false;
     }
 

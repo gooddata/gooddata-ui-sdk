@@ -1,11 +1,12 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type ComponentType } from "react";
 
-import { clone, isEmpty } from "lodash-es";
+import { clone } from "lodash-es";
 
 import { type IExecutionFactory, type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { type IBucket, MeasureGroupIdentifier, newDimension } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import {
     type ICreateExecutionParams,
@@ -28,7 +29,7 @@ export abstract class AbstractProvider implements IHeadlineProvider {
             execution.withDateFormat(dateFormat);
         }
 
-        if (!isEmpty(sortItems)) {
+        if (!_isEmpty(sortItems)) {
             execution.withSorting(...(sortItems ?? []));
         }
 

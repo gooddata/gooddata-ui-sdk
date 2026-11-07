@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useRef } from "react";
 
 import cx from "classnames";
-import { isEqual } from "lodash-es";
 import mapboxgl from "mapbox-gl";
 import { type IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
@@ -17,6 +16,7 @@ import {
     type OnError,
 } from "@gooddata/sdk-ui";
 import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import { _isEqual } from "@gooddata/util";
 
 import { type IGeoConfig, type IGeoData } from "../../GeoChart.js";
 import type { IGeoLngLat } from "../../publicTypes/geoCommon.js";
@@ -605,7 +605,7 @@ export function GeoChartRenderer({
             colorStrategy.getColorAssignment(),
         );
         const selectedSegmentItemsChanged =
-            selectedSegmentItems && !isEqual(selectedSegmentItems, prevSelectedSegmentItems);
+            selectedSegmentItems && !_isEqual(selectedSegmentItems, prevSelectedSegmentItems);
         if (!isColorChanged && selectedSegmentItemsChanged) {
             setFilterMap();
             prevPropsRef.current = {

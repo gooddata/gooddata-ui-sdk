@@ -44,7 +44,9 @@
     }
 
     &__item {
-        padding: 8px 10px;
+        box-sizing: border-box;
+        min-height: 32px;
+        padding: var(--gd-spacing-5px) var(--gd-spacing-10px);
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -85,9 +87,9 @@
         }
 
         &--isCompact {
+            min-height: 28px;
             font-size: 12px;
             line-height: 18px;
-            padding: 5px 10px;
         }
     }
 

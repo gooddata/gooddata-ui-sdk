@@ -1,6 +1,6 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
+import { _isEqual } from "@gooddata/util";
 
 import { type IColumnTextWrappingItem } from "../../types/textWrapping.js";
 
@@ -20,5 +20,5 @@ export function isColumnTextWrappingItemMatch(
 ): boolean {
     // Deep equality check on locator arrays
     // Locators must match exactly in order and content
-    return isEqual(item1.locators, item2.locators);
+    return _isEqual(item1.locators, item2.locators);
 }

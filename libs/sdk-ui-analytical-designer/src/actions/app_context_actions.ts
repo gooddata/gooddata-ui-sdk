@@ -38,7 +38,6 @@ export interface IBootstrapData {
     uiSettings: {
         organizationName: string;
         organizationId?: string;
-        logoUrl: string;
 
         // Branding
         documentationUrl?: string;

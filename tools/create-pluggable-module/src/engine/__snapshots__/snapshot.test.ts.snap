@@ -1,5 +1,1131 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`snapshot: client profile end-to-end scaffold > produces a deterministic headless scaffold (client profile, fresh non-rush dir) 1`] = `
+{
+  "harness/.env.template": "# JSON object that the harness passes to the module as its registry \`config\`.
+# Use the same value you plan to put in the organization's registeredPluggableApplications setting.
+HEADLESS_MODULE_CONFIG={"logPrefix":"[harness]"}
+",
+  "harness/.gitignore": "node_modules
+dist
+.vite
+rush-logs
+.rush
+.idea
+.vscode
+.DS_Store
+.env
+*.tgz
+",
+  "harness/.goodchangesrc.json": "{
+    "targets": [{}],
+    "ignores": ["README.md", ".oxlintrc.json", "eslint.config.ts", ".env.template", ".gitignore"]
+}
+",
+  "harness/.oxlintrc.json": "{
+    "$schema": "./node_modules/oxlint/configuration_schema.json",
+    "extends": ["node_modules/@gooddata/oxlint-config/dist/browser-esm.json"],
+    "options": {
+        "typeAware": true
+    },
+    "ignorePatterns": ["typings.d.ts", "dist/**", "esm/**"]
+}
+",
+  "harness/config/rush-project.json": "{
+    "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush-project.schema.json",
+    "incrementalBuildIgnoredGlobs": [],
+    "operationSettings": [
+        {
+            "operationName": "_phase:build",
+            "outputFolderNames": ["dist"]
+        },
+        {
+            "operationName": "_phase:validate",
+            "outputFolderNames": []
+        },
+        {
+            "operationName": "_phase:test",
+            "outputFolderNames": []
+        },
+        {
+            "operationName": "_phase:pack-build",
+            "outputFolderNames": [],
+            "disableBuildCacheForOperation": true
+        },
+        {
+            "operationName": "_phase:publish-test-docker-images",
+            "outputFolderNames": [],
+            "disableBuildCacheForOperation": true
+        }
+    ]
+}
+",
+  "harness/eslint.config.ts": "// (C) 2026 GoodData Corporation
+
+export { default } from "@gooddata/eslint-config/v10/oxlint/browser-esm";
+",
+  "harness/index.html": "<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Snapshot Headless — Harness</title>
+        <style>
+            body {
+                font-family: system-ui, sans-serif;
+                margin: 24px;
+                max-width: 960px;
+            }
+            .actions {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                margin: 16px 0;
+            }
+            #log {
+                font-family: ui-monospace, monospace;
+                font-size: 13px;
+                padding-left: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Snapshot Headless</h1>
+        <p>
+            The harness mounts the module with the config from <code>.env</code>, gives it a sample platform
+            context and sends sample telemetry to every registered provider. Open the browser console to see
+            what the provider does with it.
+        </p>
+        <div class="actions">
+            <button id="send-event" type="button">Send event</button>
+            <button id="send-page-view" type="button">Send page view</button>
+            <button id="send-timing" type="button">Send timing</button>
+            <button id="unmount" type="button">Unmount module</button>
+        </div>
+        <ol id="log"></ol>
+        <script type="module" src="/src/app.ts"></script>
+    </body>
+</html>
+",
+  "harness/package.json": "{
+    "name": "gdc-snap-headless-harness",
+    "version": "<VERSION>",
+    "private": true,
+    "description": "Standalone harness for gdc-snap-headless module",
+    "license": "UNLICENSED",
+    "author": "team@gooddata.com",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gdc-ui/",
+        "directory": "modules/gdc-snap-headless/harness"
+    },
+    "type": "module",
+    "exports": {
+        "./tsconfig.json": "./tsconfig.json"
+    },
+    "scripts": {
+        "build": "rm -rf dist && npm-run-all -p dist build-check",
+        "build-check": "tsc",
+        "clean": "rm -rf dist *.tgz *.log tsconfig.tsbuildinfo",
+        "dev": "vite --force",
+        "dist": "vite build",
+        "format-check": "oxfmt --check .",
+        "format-write": "oxfmt .",
+        "lint": "oxlint . --quiet && eslint .",
+        "lint-fix": "oxlint . --quiet --fix && eslint . --fix",
+        "validate": "npm run lint && npm run format-check"
+    },
+    "dependencies": {
+        "@gooddata/sdk-model": "<VERSION>",
+        "@gooddata/sdk-pluggable-application-model": "<VERSION>",
+        "gdc-snap-headless-module": "<VERSION>"
+    },
+    "devDependencies": {
+        "@gooddata/eslint-config": "<VERSION>",
+        "@gooddata/oxlint-config": "<VERSION>",
+        "@types/node": "<VERSION>",
+        "@typescript-eslint/eslint-plugin": "<VERSION>",
+        "@typescript-eslint/parser": "<VERSION>",
+        "eslint": "<VERSION>",
+        "eslint-plugin-headers": "<VERSION>",
+        "eslint-plugin-import-esm": "<VERSION>",
+        "eslint-plugin-jsdoc": "<VERSION>",
+        "eslint-plugin-no-barrel-files": "<VERSION>",
+        "eslint-plugin-sonarjs": "<VERSION>",
+        "jiti": "<VERSION>",
+        "npm-run-all": "<VERSION>",
+        "oxfmt": "<VERSION>",
+        "oxlint": "<VERSION>",
+        "oxlint-plugin-eslint": "<VERSION>",
+        "oxlint-tsgolint": "<VERSION>",
+        "rolldown": "<VERSION>",
+        "typescript": "<VERSION>",
+        "vite": "<VERSION>"
+    }
+}
+",
+  "harness/src/app.ts": "// (C) 2026 GoodData Corporation
+
+import {
+    type IPlatformContext,
+    type ITelemetryProvider,
+    type ITelemetryProviderEventData,
+} from "@gooddata/sdk-pluggable-application-model";
+import { headlessModule } from "gdc-snap-headless-module";
+
+// Sample values only. In the real host, the shell hashes the identifiers and resolves the identity.
+const SAMPLE_DATA: ITelemetryProviderEventData = {
+    sourceApplication: "gdc-dashboards",
+    identifiers: { workspaceId: "3f786850e387550fdab836ed7e6dc881de23001b" },
+    stats: { widgetCount: 12 },
+};
+
+const sampleContext: IPlatformContext = {
+    version: "1.0",
+    auth: { type: "contextDeferred" },
+    user: {
+        login: "harness.user@example.com",
+        email: "harness.user@example.com",
+        ref: { identifier: "harness-user" },
+    },
+    organization: { id: "harness-organization", title: "Harness organization" },
+    userSettings: { userId: "harness-user", locale: "en-US", separators: { thousand: ",", decimal: "." } },
+    settings: { userId: "harness-user", locale: "en-US", separators: { thousand: ",", decimal: "." } },
+    whiteLabeling: undefined,
+    embeddingMode: "none",
+};
+
+const providers = new Set<ITelemetryProvider>();
+let unmounted = false;
+
+function getElement<T extends HTMLElement>(id: string): T {
+    const element = document.getElementById(id);
+    if (!element) {
+        throw new Error(\`Missing #\${id} element in index.html.\`);
+    }
+    return element as T;
+}
+
+const logList = getElement<HTMLOListElement>("log");
+
+function record(message: string): void {
+    const item = document.createElement("li");
+    item.textContent = \`\${new Date().toLocaleTimeString()} \${message}\`;
+    logList.prepend(item);
+}
+
+function forEachProvider(call: (provider: ITelemetryProvider) => void): void {
+    providers.forEach((provider) => {
+        try {
+            call(provider);
+        } catch (error) {
+            record(\`provider threw: \${String(error)}\`);
+        }
+    });
+}
+
+const handle = headlessModule.mount({
+    id: "gdc-snap-headless",
+    ctx: sampleContext,
+    config: HEADLESS_MODULE_CONFIG,
+    registerTelemetryProvider(provider) {
+        if (unmounted) {
+            record("provider registration after unmount ignored");
+            return () => undefined;
+        }
+        let connected = true;
+        record("provider registered");
+        void (async () => {
+            try {
+                await provider.identify?.({
+                    userId: "sample-user-hash",
+                    organizationId: "sample-organization-hash",
+                });
+            } catch (error) {
+                record(\`provider failed in identify, not connected: \${String(error)}\`);
+                return;
+            }
+            if (connected && !unmounted) {
+                providers.add(provider);
+                record("identify done, provider connected");
+            }
+        })();
+        return () => {
+            connected = false;
+            if (providers.delete(provider)) {
+                provider.dispose?.();
+                record("provider unregistered");
+            }
+        };
+    },
+});
+record("module mounted");
+
+getElement<HTMLButtonElement>("send-event").addEventListener("click", () => {
+    forEachProvider((provider) => provider.trackEvent("app-load-completed", { ...SAMPLE_DATA, value: 812 }));
+    record("event sent: app-load-completed");
+});
+
+getElement<HTMLButtonElement>("send-page-view").addEventListener("click", () => {
+    forEachProvider((provider) => provider.trackPageView("gdc-dashboards", SAMPLE_DATA));
+    record("page view sent: gdc-dashboards");
+});
+
+getElement<HTMLButtonElement>("send-timing").addEventListener("click", () => {
+    forEachProvider((provider) => provider.trackTiming?.("app-load-ms", 812, SAMPLE_DATA));
+    record("timing sent: app-load-ms");
+});
+
+const unmountButton = getElement<HTMLButtonElement>("unmount");
+unmountButton.addEventListener("click", () => {
+    unmounted = true;
+    forEachProvider((provider) => provider.dispose?.());
+    providers.clear();
+    handle.unmount();
+    unmountButton.disabled = true;
+    record("module unmounted");
+});
+",
+  "harness/src/typings.d.ts": "// (C) 2026 GoodData Corporation
+
+declare const HEADLESS_MODULE_CONFIG: Record<string, unknown>;
+",
+  "harness/tsconfig.json": "{
+    "compilerOptions": {
+        "strict": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitOverride": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "exactOptionalPropertyTypes": false,
+        "useUnknownInCatchVariables": true,
+        "noUncheckedIndexedAccess": false,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "noImplicitReturns": true,
+        "alwaysStrict": true,
+        "forceConsistentCasingInFileNames": true,
+        "lib": ["ES2022", "dom", "dom.iterable"],
+        "target": "ES2022",
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "noEmit": true,
+        "outDir": "dist",
+        "resolveJsonModule": true,
+        "typeRoots": ["node_modules/@types", "typings.d.ts"]
+    },
+    "include": ["src", "./*"],
+    "exclude": ["**/node_modules", "**/esm", "**/temp", "**/dist"]
+}
+",
+  "harness/vite.config.ts": "// (C) 2026 GoodData Corporation
+
+import { readFileSync } from "fs";
+import { join, resolve } from "path";
+
+import { type ServerOptions, type UserConfig, defaultClientConditions, defineConfig, loadEnv } from "vite";
+
+const certDir = join(process.env["HOME"] || process.env["USERPROFILE"] || "", ".gooddata", "certs");
+let httpsConfig: ServerOptions["https"] | undefined;
+
+try {
+    httpsConfig = {
+        ca: readFileSync(join(certDir, "rootCA.pem")),
+        key: readFileSync(join(certDir, "localhost-key.pem")),
+        cert: readFileSync(join(certDir, "localhost-cert.pem")),
+    };
+    // oxlint-disable-next-line @typescript-eslint/no-unused-vars
+} catch (e) {
+    // oxlint-disable-next-line eslint-js/no-console
+    console.info(\`No certificates found in \${certDir}, skipping HTTPS configuration\`);
+    httpsConfig = undefined;
+}
+
+function parseModuleConfig(value: string | undefined): Record<string, unknown> {
+    if (!value) {
+        return {};
+    }
+    const parsed: unknown = JSON.parse(value);
+    if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) {
+        throw new Error("HEADLESS_MODULE_CONFIG in .env must be a JSON object.");
+    }
+    return parsed as Record<string, unknown>;
+}
+
+export default defineConfig(({ mode }): UserConfig => {
+    const env = loadEnv(mode, process.cwd(), "");
+    const isProduction = mode === "production";
+    // @gooddata/create-pluggable-module's computeDevPort() matches this line shape
+    // (\`env["PORT"] || "NNNN"\`) to pick a free port for the next scaffolded module.
+    const port = parseInt(env["PORT"] || "8450");
+
+    return {
+        root: ".",
+        publicDir: false,
+        define: {
+            HEADLESS_MODULE_CONFIG: JSON.stringify(parseModuleConfig(env["HEADLESS_MODULE_CONFIG"])),
+            // The harness bundles the module source, which reads these build-time values.
+            __BUILD_TIMESTAMP__: JSON.stringify(Date.now()),
+            __ALLOWED_ORGANIZATIONS__: "[]",
+        },
+        resolve: {
+            // resolve.conditions replaces Vite's defaults, so keep them and add \`source\` in dev only.
+            conditions: [...defaultClientConditions, ...(isProduction ? [] : ["source"])],
+        },
+        server: {
+            port,
+            https: httpsConfig,
+            fs: {
+                allow: ["../../../"],
+            },
+        },
+        build: {
+            outDir: "dist",
+            sourcemap: !isProduction,
+            target: "es2022",
+            rolldownOptions: {
+                input: resolve(import.meta.dirname, "index.html"),
+                checks: {
+                    pluginTimings: false,
+                },
+            },
+        },
+    };
+});
+",
+  "module/.env.template": "# Comma-separated organization IDs that may load this build from the GoodData plugins bucket.
+# The build bakes the list into the module. The host refuses to mount the module in other organizations,
+# and also refuses builds older than 30 days.
+ALLOWED_ORGANIZATIONS=
+",
+  "module/.gitignore": "node_modules
+esm
+dist
+*.tgz
+rush-logs
+.rush
+.idea
+.vscode
+.DS_Store
+.env
+.__mf__temp
+",
+  "module/.goodchangesrc.json": "{
+    "type": "app",
+    "targets": [
+        {
+            "targetName": "gdc-snap-headless-module-unit-tests",
+            "changeDirs": [
+                {
+                    "glob": "**/*",
+                    "type": "fine-grained",
+                    "filter": "**/*.test.ts"
+                }
+            ]
+        }
+    ],
+    "ignores": ["README.md", ".oxlintrc.json", "eslint.config.ts", ".env.template", ".gitignore"]
+}
+",
+  "module/.oxlintrc.json": "{
+    "$schema": "./node_modules/oxlint/configuration_schema.json",
+    "extends": ["node_modules/@gooddata/oxlint-config/dist/esm-vitest.json"],
+    "options": {
+        "typeAware": true
+    },
+    "ignorePatterns": ["dist/**", "esm/**"]
+}
+",
+  "module/README.md": "# gdc-snap-headless-module
+
+Headless module for **Snapshot Headless**.
+
+A headless module has no UI, no route and no menu item. The GoodData host loads it with Module Federation and mounts it once per page, in the full application and in the embedded (iframe) mode. The host never mounts it in export mode. The module stays mounted while the user moves between applications, workspaces and the organization scope.
+
+The starter module registers a telemetry provider. The host sends its telemetry, and the telemetry of every pluggable application, to that provider. Replace the starter provider with one of the recipes below to send the telemetry to Amplitude, Mixpanel, PostHog or Pendo.
+
+## Structure
+
+- \`src/headlessModule.ts\`: the exported \`headlessModule\` (\`mount\`, \`allowedOrganizations\`, \`buildTimestamp\`) and the starter provider that writes to the browser console.
+- \`vite.config.ts\`: builds \`remoteEntry.js\` and exposes \`./headlessModule\`.
+- \`../harness\`: a page without a backend that mounts the module and sends it sample telemetry.
+
+## What the provider receives
+
+| Call                                   | When                                                                                                                           |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| \`identify({ userId, organizationId })\` | Once, before the first record. The host waits for a returned promise, and does not connect the provider when \`identify\` fails. |
+| \`trackEvent(eventName, data)\`          | Host and application events, for example \`app-load-completed\`.                                                                 |
+| \`trackPageView(page, data)\`            | Application page views. \`page\` is the application id.                                                                          |
+| \`trackTiming(variable, valueMs, data)\` | Performance timings, for example \`app-load-ms\`.                                                                                |
+| \`dispose()\`                            | When the host unregisters the provider.                                                                                        |
+
+\`data\` contains only \`sourceApplication\`, \`value\`, \`identifiers\` and \`stats\`. The host hashes every value of \`identifiers\` (for example \`workspaceId\`) with SHA-1, the same way it does for its own telemetry. \`stats\` holds the string, number and boolean context values that the applications send, the same values that the platform telemetry records, for example a data source type or a widget count. The host does not forward labels or categories, and never forwards records from the AI channel.
+
+A provider that registers soon after the page loads still receives the records from the page start. The host catches every error that a provider throws.
+
+### Identity
+
+Set \`telemetry.identity\` on the registry item. The host does not read \`config\`, which holds only the values for your module:
+
+| Value              | \`userId\`                            | \`organizationId\`                            |
+| ------------------ | ----------------------------------- | ------------------------------------------- |
+| \`hashed\` (default) | Platform telemetry hash of the user | Platform telemetry hash of the organization |
+| \`userId\`           | GoodData user id                    | Organization id                             |
+| \`email\`            | User email                          | Organization id                             |
+
+The \`hashed\` values come from the platform telemetry. When the organization has none, the host does not connect the provider and logs a warning; use \`userId\` in that case. With \`email\`, the host does not connect the provider for a user without an email. Use \`userId\` or \`email\` only when your privacy policy and your users' consent allow it.
+
+## Develop
+
+\`\`\`bash
+cd ../harness
+cp .env.template .env      # set HEADLESS_MODULE_CONFIG to the config you plan to register
+npm run dev
+\`\`\`
+
+The harness imports the module source directly. Click the buttons to send sample records, and check the browser console and your analytics tool.
+
+## Build and deploy
+
+The host loads remote modules only from the same hostname as the host, or from the GoodData plugins bucket (\`demo-dashboard-plugins.gooddata.com\`). For the plugins bucket, the build must allow your organization and must be younger than 30 days.
+
+\`\`\`bash
+cp .env.template .env      # set ALLOWED_ORGANIZATIONS=<your organization id>
+npm run dist               # writes dist/
+\`\`\`
+
+Upload the contents of \`dist/\` to one folder in the bucket, for example \`<your-prefix>/gdc-snap-headless/\`. Rebuild and upload again at least every 30 days. After 30 days the host stops mounting the build.
+
+## Register
+
+Add the module to the \`REGISTERED_PLUGGABLE_APPLICATIONS\` organization setting. Keep the existing \`applications\`, \`overrides\` and other keys of the setting.
+
+\`\`\`json
+{
+    "apiVersion": "1.0",
+    "headlessModules": [
+        {
+            "apiVersion": "1.0",
+            "id": "gdc-snap-headless",
+            "title": "Snapshot Headless",
+            "remote": {
+                "url": "https://demo-dashboard-plugins.gooddata.com/<your-prefix>/gdc-snap-headless/remoteEntry.js",
+                "scope": "gdc_snap_headless",
+                "module": "./headlessModule"
+            },
+            "telemetry": {
+                "identity": "hashed"
+            }
+        }
+    ]
+}
+\`\`\`
+
+To create the setting with the API, save the JSON above as \`registry.json\` and wrap it in the organization setting payload (use \`PATCH /api/v1/entities/organizationSettings/{id}\` when the setting already exists):
+
+\`\`\`bash
+jq '{data: {type: "organizationSetting", id: "registeredPluggableApplications", attributes: {type: "REGISTERED_PLUGGABLE_APPLICATIONS", content: .}}}' registry.json > setting.json
+curl -X POST "$GOODDATA_HOST/api/v1/entities/organizationSettings" \\
+  -H "Authorization: Bearer $GOODDATA_API_TOKEN" \\
+  -H "Content-Type: application/vnd.gooddata.api+json" \\
+  -d @setting.json
+\`\`\`
+
+Every authenticated user of the organization can read this setting. Put only public values in \`config\`, for example the public project key of your analytics tool. Never put a server-side secret in it.
+
+Optional registry keys: \`isEnabled: false\` stops the module without removing it. \`requiredOrganizationPermissions\` and \`requiredEntitlements\` limit who loads it. \`requiredSettings\` is evaluated against the organization-level settings of the user.
+
+## Allow the analytics hosts (CSP)
+
+The browser blocks requests to hosts that the organization's Content Security Policy does not allow. Add the hosts of your tool in the organization settings, under **Content security policy (CSP)**.
+
+| Tool      | \`connect-src\` (US)                            | \`connect-src\` (EU)                            | \`script-src\`                                                   |
+| --------- | --------------------------------------------- | --------------------------------------------- | -------------------------------------------------------------- |
+| Amplitude | \`api2.amplitude.com\`                          | \`api.eu.amplitude.com\`                        | none with the recipe options                                   |
+| Mixpanel  | \`api-js.mixpanel.com\`                         | \`api-eu.mixpanel.com\`                         | none                                                           |
+| PostHog   | \`us.i.posthog.com\`, \`us-assets.i.posthog.com\` | \`eu.i.posthog.com\`, \`eu-assets.i.posthog.com\` | none with the recipe options                                   |
+| Pendo     | \`data.pendo.io\` (also \`img-src\`)              | \`data.eu.pendo.io\` (also \`img-src\`)           | \`cdn.pendo.io\` / \`cdn.eu.pendo.io\` for guides and the designer |
+
+## Recipes
+
+Each recipe replaces \`createTelemetryProvider\` in \`src/headlessModule.ts\`. All recipes bundle the vendor SDK from npm and turn off the vendor's automatic tracking.
+
+The vendor SDKs also add browser context to every record on their own: the page URL, the path, the referrer and the page title. A GoodData URL contains workspace, dashboard and other object ids, and its query string can contain more. The recipes remove these properties so that the vendor receives only what the host gives the provider. Check the removed property names again after you upgrade a vendor SDK.
+
+The recipes use this helper:
+
+\`\`\`ts
+import { type ITelemetryProviderEventData } from "@gooddata/sdk-pluggable-application-model";
+
+function toProperties({ identifiers, stats, ...rest }: ITelemetryProviderEventData): Record<string, unknown> {
+    return { ...rest, ...identifiers, ...stats };
+}
+\`\`\`
+
+### Amplitude
+
+\`\`\`bash
+npm install @amplitude/analytics-browser
+\`\`\`
+
+\`\`\`ts
+import * as amplitude from "@amplitude/analytics-browser";
+
+export function createTelemetryProvider(config: Record<string, unknown>): ITelemetryProvider {
+    amplitude.init(String(config["apiKey"]), {
+        serverZone: config["serverZone"] === "EU" ? "EU" : "US",
+        autocapture: false,
+        remoteConfig: { fetchRemoteConfig: false },
+    });
+    return {
+        identify({ userId, organizationId }) {
+            amplitude.setUserId(userId);
+            amplitude.identify(new amplitude.Identify().set("organizationId", organizationId));
+        },
+        trackEvent(eventName, data) {
+            amplitude.track(eventName, toProperties(data));
+        },
+        trackPageView(page, data) {
+            amplitude.track("Page Viewed", { page, ...toProperties(data) });
+        },
+        trackTiming(variable, valueMs, data) {
+            amplitude.track("Timing", { variable, valueMs, ...toProperties(data) });
+        },
+        dispose() {
+            void amplitude.flush().promise;
+        },
+    };
+}
+\`\`\`
+
+\`autocapture: false\` also turns off \`pageUrlEnrichment\`, which otherwise adds the page URL to every event. Registry config: \`{ "apiKey": "<public API key>", "serverZone": "EU" }\`. The Amplitude **secret key** is server-side only.
+
+### Mixpanel
+
+\`\`\`bash
+npm install mixpanel-browser && npm install -D @types/mixpanel-browser
+\`\`\`
+
+\`\`\`ts
+import mixpanel from "mixpanel-browser";
+
+export function createTelemetryProvider(config: Record<string, unknown>): ITelemetryProvider {
+    mixpanel.init(String(config["token"]), {
+        api_host: config["region"] === "EU" ? "https://api-eu.mixpanel.com" : "https://api-js.mixpanel.com",
+        autocapture: false,
+        track_pageview: false,
+        record_sessions_percent: 0,
+        ip: false,
+        property_blacklist: [
+            "$current_url",
+            "$referrer",
+            "$referring_domain",
+            "$initial_referrer",
+            "$initial_referring_domain",
+            "current_url_path",
+            "current_url_search",
+            "current_page_title",
+        ],
+    });
+    return {
+        identify({ userId, organizationId }) {
+            mixpanel.identify(userId);
+            mixpanel.register({ organizationId });
+        },
+        trackEvent(eventName, data) {
+            mixpanel.track(eventName, toProperties(data));
+        },
+        trackPageView(page, data) {
+            mixpanel.track("Page Viewed", { page, ...toProperties(data) });
+        },
+        trackTiming(variable, valueMs, data) {
+            mixpanel.track("Timing", { variable, valueMs, ...toProperties(data) });
+        },
+    };
+}
+\`\`\`
+
+Registry config: \`{ "token": "<project token>", "region": "EU" }\`. Mixpanel service account secrets are server-side only.
+
+### PostHog
+
+\`\`\`bash
+npm install posthog-js
+\`\`\`
+
+\`\`\`ts
+import posthog from "posthog-js";
+
+export function createTelemetryProvider(config: Record<string, unknown>): ITelemetryProvider {
+    posthog.init(String(config["token"]), {
+        api_host: config["region"] === "EU" ? "https://eu.i.posthog.com" : "https://us.i.posthog.com",
+        autocapture: false,
+        capture_pageview: false,
+        capture_pageleave: false,
+        disable_session_recording: true,
+        disable_surveys: true,
+        rageclick: false,
+        capture_dead_clicks: false,
+        capture_exceptions: false,
+        capture_heatmaps: false,
+        capture_performance: false,
+        advanced_disable_flags: true,
+        disable_external_dependency_loading: true,
+        property_denylist: [
+            "$current_url",
+            "$pathname",
+            "$host",
+            "$referrer",
+            "$referring_domain",
+            "$initial_current_url",
+            "$initial_pathname",
+            "$initial_referrer",
+            "$initial_referring_domain",
+            "title",
+        ],
+    });
+    return {
+        identify({ userId, organizationId }) {
+            posthog.identify(userId);
+            posthog.register({ organizationId });
+        },
+        trackEvent(eventName, data) {
+            posthog.capture(eventName, toProperties(data));
+        },
+        trackPageView(page, data) {
+            posthog.capture("Page Viewed", { page, ...toProperties(data) });
+        },
+        trackTiming(variable, valueMs, data) {
+            posthog.capture("Timing", { variable, valueMs, ...toProperties(data) });
+        },
+        dispose() {
+            posthog.shutdown();
+        },
+    };
+}
+\`\`\`
+
+Registry config: \`{ "token": "<project token>", "region": "EU" }\`. PostHog personal API keys are server-side only. Without \`disable_external_dependency_loading\`, PostHog loads extra scripts from \`*-assets.i.posthog.com\`, which then must be in \`script-src\`.
+
+### Pendo
+
+\`\`\`bash
+npm install @pendo/web-sdk
+\`\`\`
+
+Pendo starts only when it knows the visitor and the account, so the provider holds the records until \`identify\` arrives. \`sanitizeUrl\` replaces the page URL that Pendo records with the origin. Pendo event names allow only letters, digits and \`_\`, at most 31 characters, and properties of at most 512 bytes.
+
+\`\`\`ts
+import { initialize } from "@pendo/web-sdk";
+
+type PendoAgent = Awaited<ReturnType<typeof initialize>>;
+
+function pendoEventName(name: string): string {
+    return name.replace(/[^A-Za-z0-9_]/g, "_").slice(0, 31);
+}
+
+export function createTelemetryProvider(config: Record<string, unknown>): ITelemetryProvider {
+    let agent: PendoAgent | undefined;
+    let disposed = false;
+    const pending: Array<(pendo: PendoAgent) => void> = [];
+    const run = (call: (pendo: PendoAgent) => void) => {
+        if (disposed) {
+            return;
+        }
+        if (agent) {
+            call(agent);
+        } else {
+            pending.push(call);
+        }
+    };
+
+    return {
+        identify({ userId, organizationId }) {
+            return initialize({
+                publicAppId: String(config["publicAppId"]),
+                env: config["region"] === "EU" ? "eu" : "io",
+                visitor: { id: userId },
+                account: { id: organizationId },
+                analytics: { excludeEvents: ["load", "click", "focus", "submit", "change"] },
+                guides: { disabled: true },
+                excludeAllText: true,
+                sanitizeUrl: () => window.location.origin,
+            }).then((pendo) => {
+                if (disposed) {
+                    pendo.teardown();
+                    return;
+                }
+                agent = pendo;
+                pending.splice(0).forEach((call) => call(pendo));
+            });
+        },
+        trackEvent(eventName, data) {
+            run((pendo) => pendo.track(pendoEventName(eventName), toProperties(data)));
+        },
+        trackPageView(page, data) {
+            run((pendo) => pendo.track("Page_Viewed", { page, ...toProperties(data) }));
+        },
+        trackTiming(variable, valueMs, data) {
+            run((pendo) => pendo.track("Timing", { variable, valueMs, ...toProperties(data) }));
+        },
+        dispose() {
+            disposed = true;
+            pending.length = 0;
+            agent?.flushNow();
+            agent?.teardown();
+        },
+    };
+}
+\`\`\`
+
+Registry config: \`{ "publicAppId": "<public app id>", "region": "EU" }\`. The Pendo public app id is not a secret; the Track Event shared secret and integration keys are server-side only. Pendo renames its agent options between versions: check \`analytics\`, \`guides\`, \`excludeAllText\`, \`sanitizeUrl\`, \`flushNow\` and \`teardown\` against the web SDK docs for the version you install.
+",
+  "module/config/rush-project.json": "{
+    "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush-project.schema.json",
+    "incrementalBuildIgnoredGlobs": [],
+    "operationSettings": [
+        {
+            "operationName": "_phase:build",
+            "outputFolderNames": ["dist"]
+        },
+        {
+            "operationName": "_phase:validate",
+            "outputFolderNames": []
+        },
+        {
+            "operationName": "_phase:test",
+            "outputFolderNames": [],
+            "weight": 4
+        },
+        {
+            "operationName": "_phase:pack-build",
+            "outputFolderNames": [],
+            "disableBuildCacheForOperation": true
+        },
+        {
+            "operationName": "_phase:publish-docker-images",
+            "outputFolderNames": [],
+            "disableBuildCacheForOperation": true
+        }
+    ]
+}
+",
+  "module/eslint.config.ts": "// (C) 2026 GoodData Corporation
+
+export { default } from "@gooddata/eslint-config/v10/oxlint/esm-vitest";
+",
+  "module/package.json": "{
+    "name": "gdc-snap-headless-module",
+    "version": "<VERSION>",
+    "private": true,
+    "description": "Snapshot Headless headless module",
+    "license": "UNLICENSED",
+    "author": "team@gooddata.com",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gdc-ui/",
+        "directory": "modules/gdc-snap-headless/module"
+    },
+    "type": "module",
+    "sideEffects": false,
+    "types": "./src/index.ts",
+    "exports": {
+        ".": {
+            "types": "./src/index.ts",
+            "source": "./src/index.ts",
+            "default": "./src/index.ts"
+        },
+        "./tsconfig.json": "./tsconfig.json"
+    },
+    "scripts": {
+        "build": "npm-run-all -p build-check dist",
+        "build-check": "tsc",
+        "clean": "rm -rf esm dist *.tgz *.log tsconfig.tsbuildinfo",
+        "dev": "vite build && npm-run-all --parallel dev:build dev:serve",
+        "dev:build": "vite build --watch",
+        "dev:serve": "vite preview",
+        "dist": "vite build",
+        "format-check": "oxfmt --check .",
+        "format-write": "oxfmt .",
+        "lint": "oxlint . --quiet && eslint .",
+        "lint-fix": "oxlint . --quiet --fix && eslint . --fix",
+        "test-once": "vitest run",
+        "validate": "npm run lint && npm run format-check"
+    },
+    "dependencies": {
+        "@gooddata/sdk-pluggable-application-model": "<VERSION>"
+    },
+    "devDependencies": {
+        "@gooddata/eslint-config": "<VERSION>",
+        "@gooddata/oxlint-config": "<VERSION>",
+        "@module-federation/vite": "<VERSION>",
+        "@types/node": "<VERSION>",
+        "@typescript-eslint/eslint-plugin": "<VERSION>",
+        "@typescript-eslint/parser": "<VERSION>",
+        "eslint": "<VERSION>",
+        "eslint-plugin-headers": "<VERSION>",
+        "eslint-plugin-import-esm": "<VERSION>",
+        "eslint-plugin-jsdoc": "<VERSION>",
+        "eslint-plugin-no-barrel-files": "<VERSION>",
+        "eslint-plugin-no-only-tests": "<VERSION>",
+        "eslint-plugin-sonarjs": "<VERSION>",
+        "jiti": "<VERSION>",
+        "npm-run-all": "<VERSION>",
+        "oxfmt": "<VERSION>",
+        "oxlint": "<VERSION>",
+        "oxlint-plugin-eslint": "<VERSION>",
+        "oxlint-tsgolint": "<VERSION>",
+        "rolldown": "<VERSION>",
+        "typescript": "<VERSION>",
+        "vite": "<VERSION>",
+        "vitest": "<VERSION>"
+    }
+}
+",
+  "module/src/headlessModule.test.ts": "// (C) 2026 GoodData Corporation
+
+import { describe, expect, it, vi } from "vitest";
+
+import { type IPlatformContext, type ITelemetryProvider } from "@gooddata/sdk-pluggable-application-model";
+
+import { createTelemetryProvider, headlessModule } from "./headlessModule.js";
+
+describe("headlessModule", () => {
+    it("registers one telemetry provider and unregisters it on unmount", () => {
+        const unregister = vi.fn();
+        const registerTelemetryProvider = vi.fn((_provider: ITelemetryProvider) => unregister);
+
+        const handle = headlessModule.mount({
+            id: "gdc-snap-headless",
+            ctx: {} as IPlatformContext,
+            config: {},
+            registerTelemetryProvider,
+        });
+
+        expect(registerTelemetryProvider).toHaveBeenCalledTimes(1);
+        handle.unmount();
+        expect(unregister).toHaveBeenCalledTimes(1);
+    });
+});
+
+describe("createTelemetryProvider", () => {
+    it("writes events with the configured prefix", () => {
+        const info = vi.spyOn(console, "info").mockImplementation(() => {});
+
+        createTelemetryProvider({ logPrefix: "[test]" }).trackEvent("app-load-completed", {
+            sourceApplication: "gdc-dashboards",
+        });
+
+        expect(info).toHaveBeenCalledWith("[test]", "event", "app-load-completed", {
+            sourceApplication: "gdc-dashboards",
+        });
+    });
+});
+",
+  "module/src/headlessModule.ts": "// (C) 2026 GoodData Corporation
+
+// oxlint-disable eslint-js/no-console
+
+import {
+    type IHeadlessModule,
+    type IHeadlessModuleMountOptions,
+    type ITelemetryProvider,
+} from "@gooddata/sdk-pluggable-application-model";
+
+// vite.config.ts and vitest.config.ts define both values at build time.
+declare const __BUILD_TIMESTAMP__: number;
+declare const __ALLOWED_ORGANIZATIONS__: string[];
+
+const DEFAULT_LOG_PREFIX = "[gdc-snap-headless]";
+
+// The starter provider writes the telemetry to the browser console. README.md has provider recipes
+// for Amplitude, Mixpanel, PostHog and Pendo.
+export function createTelemetryProvider(config: Record<string, unknown>): ITelemetryProvider {
+    const prefix = typeof config["logPrefix"] === "string" ? config["logPrefix"] : DEFAULT_LOG_PREFIX;
+    return {
+        identify(identity) {
+            console.info(prefix, "identify", identity);
+        },
+        trackEvent(eventName, data) {
+            console.info(prefix, "event", eventName, data);
+        },
+        trackPageView(page, data) {
+            console.info(prefix, "page", page, data);
+        },
+        trackTiming(variable, valueMs, data) {
+            console.info(prefix, "timing", variable, valueMs, data);
+        },
+    };
+}
+
+export const headlessModule: IHeadlessModule = {
+    allowedOrganizations: __ALLOWED_ORGANIZATIONS__,
+    buildTimestamp: __BUILD_TIMESTAMP__,
+    mount({ config, registerTelemetryProvider }: IHeadlessModuleMountOptions) {
+        const unregister = registerTelemetryProvider(createTelemetryProvider(config));
+        return {
+            unmount: unregister,
+        };
+    },
+};
+",
+  "module/src/index.ts": "// (C) 2026 GoodData Corporation
+
+// oxlint-disable no-barrel-files/no-barrel-files
+export { createTelemetryProvider, headlessModule } from "./headlessModule.js";
+",
+  "module/tsconfig.json": "{
+    "compilerOptions": {
+        "strict": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitOverride": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "exactOptionalPropertyTypes": false,
+        "useUnknownInCatchVariables": true,
+        "noUncheckedIndexedAccess": false,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "noImplicitReturns": true,
+        "alwaysStrict": true,
+        "forceConsistentCasingInFileNames": true,
+        "lib": ["ES2022", "dom", "dom.iterable"],
+        "target": "ES2022",
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "importHelpers": true,
+        "incremental": false,
+        "resolveJsonModule": true,
+        "declaration": true,
+        "noEmit": true,
+        "outDir": "dist"
+    },
+    "exclude": ["**/node_modules", "**/esm", "**/temp", "**/dist"]
+}
+",
+  "module/vite.config.ts": "// (C) 2026 GoodData Corporation
+
+//
+// Builds the Module Federation artifacts (remoteEntry.js + headlessModule chunks) that the host loads.
+// With \`base: "./"\` the same dist/ works from any path, for example from S3:
+// https://<bucket>/<prefix>/gdc-snap-headless/remoteEntry.js
+//
+// Build:      \`vite build\` → dist/
+// Local dev:  \`vite build --watch\` and \`vite preview\` (see the \`dev\` script).
+//
+import { readFileSync } from "fs";
+import { join, resolve } from "path";
+
+import { federation } from "@module-federation/vite";
+import { type ServerOptions, type UserConfig, defaultClientConditions, defineConfig, loadEnv } from "vite";
+
+const certDir = join(process.env["HOME"] || process.env["USERPROFILE"] || "", ".gooddata", "certs");
+let httpsConfig: ServerOptions["https"] | undefined;
+
+try {
+    httpsConfig = {
+        ca: readFileSync(join(certDir, "rootCA.pem")),
+        key: readFileSync(join(certDir, "localhost-key.pem")),
+        cert: readFileSync(join(certDir, "localhost-cert.pem")),
+    };
+    // oxlint-disable-next-line @typescript-eslint/no-unused-vars
+} catch (e) {
+    // oxlint-disable-next-line eslint-js/no-console
+    console.info(\`No certificates found in \${certDir}, skipping HTTPS configuration\`);
+    httpsConfig = undefined;
+}
+
+function parseAllowedOrganizations(value: string | undefined): string[] {
+    return (value ?? "")
+        .split(",")
+        .map((organizationId) => organizationId.trim())
+        .filter((organizationId) => organizationId.length > 0);
+}
+
+export default defineConfig(({ mode, command }): UserConfig => {
+    const env = loadEnv(mode, process.cwd(), "");
+    const port = parseInt(env["PORT"] || "8550");
+    const isDev = command === "serve";
+
+    return {
+        root: ".",
+        base: "./",
+        publicDir: false,
+        resolve: {
+            // resolve.conditions replaces Vite's defaults, so keep them and add \`source\` in dev only.
+            conditions: [...defaultClientConditions, ...(isDev ? ["source"] : [])],
+        },
+        define: {
+            __BUILD_TIMESTAMP__: JSON.stringify(Date.now()),
+            __ALLOWED_ORGANIZATIONS__: JSON.stringify(
+                parseAllowedOrganizations(env["ALLOWED_ORGANIZATIONS"]),
+            ),
+        },
+        preview: {
+            port,
+            https: httpsConfig,
+            cors: true,
+        },
+        build: {
+            outDir: "dist",
+            sourcemap: mode !== "production",
+            target: "es2022",
+            rolldownOptions: {
+                input: resolve(import.meta.dirname, "src/headlessModule.ts"),
+                output: {
+                    entryFileNames: "static/js/[name].[hash].js",
+                    chunkFileNames: "static/js/[name].[hash].chunk.js",
+                    assetFileNames: "static/[hash][extname]",
+                },
+                checks: {
+                    pluginTimings: false,
+                },
+            },
+        },
+        plugins: [
+            federation({
+                name: "gdc_snap_headless",
+                filename: "remoteEntry.js",
+                manifest: true,
+                publicPath: "auto",
+                dts: false,
+                exposes: {
+                    "./headlessModule": "./src/headlessModule.ts",
+                },
+                shared: [],
+                moduleParseIdleTimeout: 60,
+            }),
+        ],
+    };
+});
+",
+  "module/vitest.config.ts": "// (C) 2026 GoodData Corporation
+
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+    define: {
+        __BUILD_TIMESTAMP__: "0",
+        __ALLOWED_ORGANIZATIONS__: "[]",
+    },
+    test: {
+        environment: "node",
+        reporters: ["default"],
+        include: ["src/**/*.test.ts"],
+        restoreMocks: true,
+    },
+});
+",
+}
+`;
+
 exports[`snapshot: client profile end-to-end scaffold > produces a deterministic scaffold (client profile, fresh non-rush dir) 1`] = `
 {
   "harness/.env.template": "BACKEND_URL=

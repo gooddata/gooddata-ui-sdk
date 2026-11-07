@@ -1,7 +1,5 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import {
     type IAttributeSortItem,
     type IBucket,
@@ -27,6 +25,7 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { type MeasureGroupDimension } from "@gooddata/sdk-ui-pivot";
+import { _isEmpty } from "@gooddata/util";
 
 import {
     type IAttributeFilter,
@@ -234,7 +233,7 @@ export const getPivotTableSortItems = (insight: IInsightDefinition): ISortItem[]
     const sorts = insightSorts(insight);
     const mesureGroupDimension = getMeasureGroupDimensionFromProperties(insightProperties(insight));
 
-    if (!isEmpty(sorts)) {
+    if (!_isEmpty(sorts)) {
         /*
          * This is here to ensure that when rendering pivot table in KD, all invalid sort items
          * are filtered out. At this moment, core pivot table does not handle invalid sorts so well and

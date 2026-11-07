@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type ObjRef, isObjRef } from "../objRef/index.js";
 
@@ -101,7 +101,7 @@ export function isWidgetAlert(obj: unknown): obj is IWidgetAlert {
  */
 function hasWidgetAlertBaseProps(obj: unknown): boolean {
     return (
-        !isEmpty(obj) &&
+        !_isEmpty(obj) &&
         ((obj as IWidgetAlertBase).whenTriggered === "underThreshold" ||
             (obj as IWidgetAlertBase).whenTriggered === "aboveThreshold")
     );

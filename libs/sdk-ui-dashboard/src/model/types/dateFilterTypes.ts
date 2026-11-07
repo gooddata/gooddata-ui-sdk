@@ -1,8 +1,7 @@
-// (C) 2024-2025 GoodData Corporation
-
-import { isEmpty } from "lodash-es";
+// (C) 2024-2026 GoodData Corporation
 
 import { type DateFilterGranularity, type DateString, type ObjRef } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 /**
  * @internal
@@ -29,5 +28,5 @@ export interface IDashboardDependentDateFilter {
 export function isDashboardDependentDateFilter(obj: unknown): obj is IDashboardDependentDateFilter {
     const w = obj as IDashboardDependentDateFilter;
 
-    return (!isEmpty(w) && w.type === "relative") || w.type === "absolute";
+    return (!_isEmpty(w) && w.type === "relative") || w.type === "absolute";
 }

@@ -2,7 +2,7 @@
 
 import { type ReactElement, useMemo, useState } from "react";
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { determineWidthForScreen } from "../../../_staging/layout/sizing.js";
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
@@ -30,7 +30,7 @@ export function DashboardLayoutExportSectionHeaderRenderer(
     const exportData = useSectionDescriptionExportData(props.exportData, loading, error);
 
     //remove empty section headers; avoid in nested containers as this would delete the first child in some cases
-    if (isEmpty(sectionHeader) && !section.index()?.parent) {
+    if (_isEmpty(sectionHeader) && !section.index()?.parent) {
         return null;
     }
     return (
@@ -41,7 +41,7 @@ export function DashboardLayoutExportSectionHeaderRenderer(
             // the shared interface with widget
             rowIndex={-1}
         >
-            {isEmpty(sectionHeader) ? null : (
+            {_isEmpty(sectionHeader) ? null : (
                 <DashboardLayoutViewSectionHeader
                     section={section}
                     exportData={exportData}

@@ -1,6 +1,5 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, all, call, put, select } from "redux-saga/effects";
 
@@ -14,6 +13,7 @@ import {
     isInsightWidget,
     widgetRef,
 } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { type IDashboardCommand } from "../../commands/base.js";
 import { insightWidgetDrillsRemoved } from "../../events/insight.js";
@@ -57,7 +57,7 @@ export function* validateDrills(
     );
 
     const widgetsToSanitize = drillValidationResults.filter(({ sanitizedDrills, widget }) => {
-        return !isEqual(widget.drills, sanitizedDrills);
+        return !_isEqual(widget.drills, sanitizedDrills);
     });
     const widgetsWithInvalidDrills = drillValidationResults.filter(
         ({ invalidDrills }) => invalidDrills.length > 0,

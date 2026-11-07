@@ -1,11 +1,11 @@
 // (C) 2026 GoodData Corporation
 
-import { union } from "lodash-es";
 import * as z from "zod/mini";
 
 import type { ParameterType } from "@gooddata/sdk-model";
 
 import type { AacSchemaParity, AssertAacParity } from "../asCode/aacParity.js";
+import { type SchemaKeys, deriveSchemaKeys } from "../asCode/schemaKeys.js";
 import type { ObjectTypes } from "../objectType/constants.js";
 
 /**
@@ -33,16 +33,8 @@ export type ParameterAacParity = AssertAacParity<
     AacSchemaParity<typeof ObjectTypes.PARAMETER, ParameterSchema>
 >;
 
-export type ParameterSchemaKeys = Record<string, SchemaKeysEntry>;
-
-/** Child keys reachable under a parent key: directly in its mapping, or inside each item of its sequence. */
-export type SchemaKeysEntry = {
-    kind: "mapping" | "sequence";
-    keys: string[];
-};
-
 /** Parent key → child-key entry for the schema restricted to `enabledTypes`; powers YAML editor autocompletion. */
-export function parameterSchemaKeys(enabledTypes: ParameterType[]): ParameterSchemaKeys {
+export function parameterSchemaKeys(enabledTypes: ParameterType[]): SchemaKeys {
     return deriveSchemaKeys(buildParameterSchema(enabledTypes));
 }
 
@@ -160,52 +152,4 @@ function rule<TValue>(
 
 function allUnique(items: string[]): boolean {
     return new Set(items).size === items.length;
-}
-
-/** Map of parent key → child-key entry; an array-of-objects child is recorded as a `sequence` entry. */
-function deriveSchemaKeys(
-    schema: z.core.$ZodType,
-    parentKey = "",
-    kind: SchemaKeysEntry["kind"] = "mapping",
-    result: ParameterSchemaKeys = {},
-): ParameterSchemaKeys {
-    for (const object of objectSchemasOf(schema)) {
-        const { shape } = object._zod.def as z.core.$ZodObjectDef;
-        result[parentKey] = { kind, keys: union(result[parentKey]?.keys, Object.keys(shape)) };
-
-        for (const [key, child] of Object.entries(shape)) {
-            const inner = unwrap(child);
-            if (inner._zod.def.type === "array") {
-                const element = unwrap((inner._zod.def as z.core.$ZodArrayDef).element);
-                deriveSchemaKeys(element, key, "sequence", result);
-            } else {
-                deriveSchemaKeys(inner, key, "mapping", result);
-            }
-        }
-    }
-
-    return result;
-}
-
-/** Object schemas reachable from `schema`, flattening a discriminated union into its arms. */
-function objectSchemasOf(schema: z.core.$ZodType): z.core.$ZodType[] {
-    const { def } = schema._zod;
-    if (def.type === "object") {
-        return [schema];
-    }
-    if (def.type === "union") {
-        return (def as z.core.$ZodUnionDef).options.flatMap((option) => objectSchemasOf(unwrap(option)));
-    }
-    return [];
-}
-
-function unwrap(schema: z.core.$ZodType): z.core.$ZodType {
-    const { type } = schema._zod.def;
-    if (type === "optional" || type === "default") {
-        return unwrap((schema._zod.def as z.core.$ZodOptionalDef).innerType);
-    }
-    if (type === "pipe") {
-        return unwrap((schema._zod.def as z.core.$ZodPipeDef).in);
-    }
-    return schema;
 }

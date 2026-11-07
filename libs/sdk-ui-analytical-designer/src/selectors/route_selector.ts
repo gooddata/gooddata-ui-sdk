@@ -1,11 +1,10 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
 import { createSelector } from "reselect";
 
 import { type ExplainConfig } from "@gooddata/sdk-backend-spi";
 import { idRef, objRefToString } from "@gooddata/sdk-model";
-import { parseStringToArray } from "@gooddata/util";
+import { _isEqual, parseStringToArray } from "@gooddata/util";
 
 import { DEFAULT_REPORT_ID } from "../constants/route_params.js";
 import { getAppReadyState } from "../store/app_context/app_context_selectors.js";
@@ -139,7 +138,7 @@ export const isTagsConfigurationChanged = createSelector(
     getTagsConfiguration,
     getPreviousTagsConfiguration,
     (tagsConfiguration, previousTagsConfiguration): boolean => {
-        return !isEqual(tagsConfiguration, previousTagsConfiguration);
+        return !_isEqual(tagsConfiguration, previousTagsConfiguration);
     },
 );
 

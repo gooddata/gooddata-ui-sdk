@@ -1,8 +1,8 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { useCallback, useEffect, useState } from "react";
 
-import { isEqual } from "lodash-es";
+import { _isEqual } from "@gooddata/util";
 
 /**
  * Safely parse JSON string, fallback to default value if parsing fails.
@@ -45,7 +45,7 @@ export const useLocalStorage = <T>(key: string, initialValue: T): [T, (value: T)
             if (event.key !== key) return;
 
             setStoredValue((value: T) => {
-                if (isEqual(event.newValue, value)) {
+                if (_isEqual(event.newValue, value)) {
                     // Return the same value to avoid re-renders
                     return value;
                 }

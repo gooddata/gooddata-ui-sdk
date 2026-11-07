@@ -1,5 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
-import { isEqual } from "lodash-es";
+// (C) 2007-2026 GoodData Corporation
 
 import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
@@ -8,6 +7,7 @@ import {
     type ILoadingState,
     createExportErrorFunction,
 } from "@gooddata/sdk-ui";
+import { _isEqual } from "@gooddata/util";
 
 import { type ICorePivotTableProps } from "../../publicTypes.js";
 import { type InternalTableState } from "../../tableState.js";
@@ -63,7 +63,7 @@ export class DataLoadingEventHandlers {
 
         // Force double execution only when totals/subtotals for columns change, so table is render properly.
         if (
-            !isEqual(this.context.props.execution.definition.buckets[2], newExecution.definition.buckets[2])
+            !_isEqual(this.context.props.execution.definition.buckets[2], newExecution.definition.buckets[2])
         ) {
             setState({
                 tempExecution: newExecution,

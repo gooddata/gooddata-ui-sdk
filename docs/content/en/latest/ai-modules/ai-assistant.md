@@ -461,9 +461,9 @@ Example usage:
 | action              | "open" \| "copy"                          | Whether the user wants to open the object or copy its link                                             |
 | preventDefault      | () => void                                | Prevent default behavior of the link click                                                             |
 | section             | "ai"                                      | (Optional) The settings section to open, for `type: "setting"`                                         |
-| dashboard           | IDashboard                                | (Optional) The dashboard definition, if the clicked item is a dashboard.                               |
-| dashboardStatus     | "saved" \| "draft"                        | (Optional) Whether the dashboard is already saved or still a draft generated in the chat.              |
-| insights            | IInsight[]                                | (Optional) The visualizations placed on the dashboard, if the clicked item is a dashboard.             |
+| dashboard           | IDashboard                                | The dashboard definition for a generated proposal; optional on generic catalog links.                  |
+| dashboardStatus     | "saved" \| "draft"                        | The saved or draft status for a generated proposal; optional on generic catalog links.                 |
+| insights            | IInsight[]                                | The referenced visualization definitions for a generated proposal; optional on generic catalog links. |
 | visualization       | IInsight                                  | (Optional) The visualization definition, if the clicked item is a visualization.                       |
 | visualizationStatus | "saved" \| "draft"                        | (Optional) Whether the visualization is already saved or still a draft generated in the chat.          |
 
@@ -564,6 +564,8 @@ in `@gooddata/sdk-ui-gen-ai` and may change or be removed without a major versio
 | `ConversationFooter` | Alpha | Custom content rendered below each conversation list group. |
 | `ConversationDateGrouping` | Alpha | Custom rendering for date grouping rows in conversation history. |
 | `ConversationItem` | Alpha | Custom rendering for each conversation in the history list. |
+| `ConversationRenameDialog` | Alpha | Custom rendering for the conversation rename confirmation dialog. |
+| `ConversationDeleteDialog` | Alpha | Custom rendering for the conversation delete confirmation dialog. |
 | `UserMessage` | Alpha | Custom wrapper for user messages. |
 | `AssistantMessage` | Alpha | Custom wrapper for assistant messages. |
 | `MessageTextContent` | Alpha | Custom rendering for text message content. |
@@ -592,6 +594,7 @@ Dispatch these actions through the store dispatcher that `onDispatcher` or `useG
 - `pinConversationAction` - pin or unpin a conversation
 - `renameConversationAction` - rename an existing conversation
 - `deleteConversationAction` - delete a conversation
+- `dashboardSavedAction` - synchronize saved dashboard and visualization identifiers with the conversation
 
 ### useGenAiDispatcher hook
 

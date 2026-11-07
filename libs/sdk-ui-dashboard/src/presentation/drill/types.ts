@@ -1,7 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import {
     type IDrillToAttributeUrl as IDrillToAttributeUrlModel,
     type IDrillToCustomUrl as IDrillToCustomUrlModel,
@@ -16,6 +14,7 @@ import {
     isDrillToCustomUrl,
 } from "@gooddata/sdk-model";
 import { type IAvailableDrillTargetMeasure, type IAvailableDrillTargets } from "@gooddata/sdk-ui";
+import { _isEmpty } from "@gooddata/util";
 
 import type { IKdaDefinition } from "../../kdaDialog/types.js";
 import type {
@@ -231,7 +230,7 @@ export type IDrillToDashboardConfig = IDrillConfigItemBase &
     IDrillFiltersConfigExtended;
 
 export function isDrillToDashboardConfig(item: unknown): item is IDrillToDashboardConfig {
-    return !isEmpty(item) && (item as IDrillToDashboardConfig).dashboard !== undefined;
+    return !_isEmpty(item) && (item as IDrillToDashboardConfig).dashboard !== undefined;
 }
 
 export interface IDrillToInsightConfigTarget {
@@ -249,7 +248,7 @@ export type IDrillToInsightConfig = IDrillConfigItemBase &
     IDrillFiltersConfigExtended;
 
 export function isDrillToInsightConfig(item: unknown): item is IDrillToInsightConfig {
-    return !isEmpty(item) && (item as IDrillToInsightConfig).insightRef !== undefined;
+    return !_isEmpty(item) && (item as IDrillToInsightConfig).insightRef !== undefined;
 }
 
 export interface IDrillToCustomUrlConfig {
@@ -257,7 +256,7 @@ export interface IDrillToCustomUrlConfig {
 }
 
 export function isDrillToCustomUrlConfig(item: unknown): item is IDrillToCustomUrlConfig {
-    return !isEmpty(item) && (item as IDrillToCustomUrlConfig).customUrl !== undefined;
+    return !_isEmpty(item) && (item as IDrillToCustomUrlConfig).customUrl !== undefined;
 }
 
 export interface IDrillToAttributeUrlConfig {
@@ -267,7 +266,7 @@ export interface IDrillToAttributeUrlConfig {
 }
 
 export function isDrillToAttributeUrlConfig(item: unknown): item is IDrillToAttributeUrlConfig {
-    return !isEmpty(item) && (item as IDrillToAttributeUrlConfig).insightAttributeDisplayForm !== undefined;
+    return !_isEmpty(item) && (item as IDrillToAttributeUrlConfig).insightAttributeDisplayForm !== undefined;
 }
 
 export type UrlDrillTarget = IDrillToCustomUrlConfig | IDrillToAttributeUrlConfig;
@@ -279,7 +278,7 @@ export interface IDrillToUrlConfigTarget {
 export type IDrillToUrlConfig = IDrillConfigItemBase & IDrillToUrlConfigTarget;
 
 export function isDrillToUrlConfig(item: unknown): item is IDrillToUrlConfig {
-    return !isEmpty(item) && (item as IDrillToUrlConfig).urlDrillTarget !== undefined;
+    return !_isEmpty(item) && (item as IDrillToUrlConfig).urlDrillTarget !== undefined;
 }
 
 /**
@@ -295,7 +294,9 @@ export type IDrillDownAttributeHierarchyConfig = IDrillConfigItemBase & IDrillDo
 export function isDrillDownToAttributeHierarchyConfig(
     item: unknown,
 ): item is IDrillDownAttributeHierarchyConfig {
-    return !isEmpty(item) && (item as IDrillDownAttributeHierarchyConfig).attributeHierarchyRef !== undefined;
+    return (
+        !_isEmpty(item) && (item as IDrillDownAttributeHierarchyConfig).attributeHierarchyRef !== undefined
+    );
 }
 
 // check type AttributeDisplayFormType from @gooddata/sdk-model to keep it in sync
@@ -325,7 +326,7 @@ export interface IDefinitionValidationData {
 }
 
 export function isAvailableDrillTargetMeasure(obj: unknown): obj is IAvailableDrillTargetMeasure {
-    return !isEmpty(obj) && (obj as IAvailableDrillTargetMeasure).measure !== undefined;
+    return !_isEmpty(obj) && (obj as IAvailableDrillTargetMeasure).measure !== undefined;
 }
 
 export interface IDrillDownAttributeHierarchyDefinition {
@@ -340,6 +341,7 @@ export function isDrillDownToAttributeHierarchyDefinition(
     item: unknown,
 ): item is IDrillDownAttributeHierarchyDefinition {
     return (
-        !isEmpty(item) && (item as IDrillDownAttributeHierarchyDefinition).attributeHierarchyRef !== undefined
+        !_isEmpty(item) &&
+        (item as IDrillDownAttributeHierarchyDefinition).attributeHierarchyRef !== undefined
     );
 }

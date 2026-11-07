@@ -149,6 +149,77 @@ export type IGenAIAssistantConversationDateGroupingProps = {
 };
 
 /**
+ * Properties for the ConversationRenameDialog slot.
+ * @alpha
+ */
+export type IGenAIAssistantConversationRenameDialogProps = {
+    /**
+     * The conversation to be renamed.
+     */
+    conversation: IChatConversationLocal;
+    /**
+     * Callback invoked when the conversation rename is confirmed.
+     */
+    onRename: (name: string) => void;
+    /**
+     * Callback invoked when the dialog is closed or cancelled.
+     */
+    onClose: () => void;
+    /**
+     * Optional custom title for the dialog.
+     */
+    title?: string;
+    /**
+     * Optional custom label for the input field.
+     */
+    label?: string;
+    /**
+     * Optional custom text for the submit button.
+     */
+    submitButtonText?: string;
+    /**
+     * Optional custom text for the cancel button.
+     */
+    cancelButtonText?: string;
+};
+
+/**
+ * Properties for the ConversationDeleteDialog slot.
+ * @alpha
+ */
+export type IGenAIAssistantConversationDeleteDialogProps = {
+    /**
+     * The conversation to be deleted.
+     */
+    conversation: IChatConversationLocal;
+    /**
+     * Callback invoked when the conversation deletion is confirmed.
+     */
+    onDelete: () => void;
+    /**
+     * Callback invoked when the dialog is closed or cancelled.
+     */
+    onClose: () => void;
+    /**
+     * Optional custom title for the dialog.
+     */
+    title?: string;
+    /**
+     * Optional custom body/message for the dialog.
+     * Name is cleared conversation name
+     */
+    body?: (props: { name: string }) => ReactNode;
+    /**
+     * Optional custom text for the submit button.
+     */
+    submitButtonText?: string;
+    /**
+     * Optional custom text for the cancel button.
+     */
+    cancelButtonText?: string;
+};
+
+/**
  * Properties for the UserMessage slot.
  * @alpha
  */
@@ -578,6 +649,18 @@ export interface IGenAIAssistantSlots {
      * Custom React component rendered for date grouped conversation sections.
      */
     ConversationDateGrouping?: ComponentType<ISlotProps<IGenAIAssistantConversationDateGroupingProps>>;
+
+    /**
+     * @alpha
+     * Custom React component rendered as the dialog for renaming a conversation.
+     */
+    ConversationRenameDialog?: ComponentType<ISlotProps<IGenAIAssistantConversationRenameDialogProps>>;
+
+    /**
+     * @alpha
+     * Custom React component rendered as the dialog for deleting a conversation.
+     */
+    ConversationDeleteDialog?: ComponentType<ISlotProps<IGenAIAssistantConversationDeleteDialogProps>>;
 
     /**
      * @alpha

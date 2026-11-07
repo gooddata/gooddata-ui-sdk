@@ -1,11 +1,11 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type ReactNode, createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import stableStringify from "json-stable-stringify";
-import { isEmpty } from "lodash-es";
 
 import { type ICatalogAttributeHierarchy, type ObjRef } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import {
     type EmptyParamCallback,
@@ -132,7 +132,7 @@ export function AttributeHierarchyDialogProvider({
     };
 
     useEffect(() => {
-        if (editingAttributeHierarchy && !isEmpty(catalogAttributesMap)) {
+        if (editingAttributeHierarchy && !_isEmpty(catalogAttributesMap)) {
             const refs = editingAttributeHierarchy.attributeHierarchy.attributes;
             const initialAttributes = convertToCatalogAttributeDataByRefs(catalogAttributesMap, refs).map(
                 (attribute) => ({
@@ -145,7 +145,7 @@ export function AttributeHierarchyDialogProvider({
             return;
         }
 
-        if (initialAttributeRef && !isEmpty(catalogAttributesMap)) {
+        if (initialAttributeRef && !_isEmpty(catalogAttributesMap)) {
             const initialAttribute = findCatalogAttributeByRef(catalogAttributesMap, initialAttributeRef);
             if (initialAttribute) {
                 const initialAttributes = [

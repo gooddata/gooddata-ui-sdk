@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type FilterContextItem, type IDashboardFilterReference } from "../../dashboard/filterContext.js";
 
@@ -314,7 +314,7 @@ export function publisherHeadingDefaultTextStyleV2(
  * @alpha
  */
 export function isPublisherWidgetV2(obj: unknown): obj is PublisherWidgetV2 {
-    if (isEmpty(obj)) {
+    if (_isEmpty(obj)) {
         return false;
     }
     const { type } = obj as PublisherWidgetV2;
@@ -325,40 +325,40 @@ export function isPublisherWidgetV2(obj: unknown): obj is PublisherWidgetV2 {
  * @alpha
  */
 export function isPublisherTitleWidgetV2(obj: unknown): obj is IPublisherTitleWidgetV2 {
-    return !isEmpty(obj) && (obj as IPublisherTitleWidgetV2).type === "title";
+    return !_isEmpty(obj) && (obj as IPublisherTitleWidgetV2).type === "title";
 }
 
 /**
  * @alpha
  */
 export function isPublisherHeadingWidgetV2(obj: unknown): obj is IPublisherHeadingWidgetV2 {
-    return !isEmpty(obj) && (obj as IPublisherHeadingWidgetV2).type === "heading";
+    return !_isEmpty(obj) && (obj as IPublisherHeadingWidgetV2).type === "heading";
 }
 
 /**
  * @alpha
  */
 export function isPublisherTextWidgetV2(obj: unknown): obj is IPublisherTextWidgetV2 {
-    return !isEmpty(obj) && (obj as IPublisherTextWidgetV2).type === "text";
+    return !_isEmpty(obj) && (obj as IPublisherTextWidgetV2).type === "text";
 }
 
 /**
  * @alpha
  */
 export function isPublisherImageWidgetV2(obj: unknown): obj is IPublisherImageWidgetV2 {
-    return !isEmpty(obj) && (obj as IPublisherImageWidgetV2).type === "image";
+    return !_isEmpty(obj) && (obj as IPublisherImageWidgetV2).type === "image";
 }
 
 /**
  * @alpha
  */
 export function isPublisherVisualizationWidgetV2(obj: unknown): obj is IPublisherVisualizationWidgetV2 {
-    return !isEmpty(obj) && (obj as IPublisherVisualizationWidgetV2).type === "visualization";
+    return !_isEmpty(obj) && (obj as IPublisherVisualizationWidgetV2).type === "visualization";
 }
 
 /**
  * @alpha
  */
 export function isPublisherTakeawayWidgetV2(obj: unknown): obj is IPublisherTakeawayWidgetV2 {
-    return !isEmpty(obj) && (obj as IPublisherTakeawayWidgetV2).type === "takeaway";
+    return !_isEmpty(obj) && (obj as IPublisherTakeawayWidgetV2).type === "takeaway";
 }

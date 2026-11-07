@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type ParameterType, type ParameterValue } from "../ldm/metadata/parameter/index.js";
 import { type IdentifierRef, isIdentifierRef } from "../objRef/index.js";
@@ -98,7 +98,7 @@ export interface IDashboardExportParameter {
  * @alpha
  */
 export function isDashboardParameter(obj: unknown): obj is IDashboardParameter {
-    if (isEmpty(obj) || typeof obj !== "object") {
+    if (_isEmpty(obj) || typeof obj !== "object") {
         return false;
     }
     const candidate = obj as IDashboardParameter;

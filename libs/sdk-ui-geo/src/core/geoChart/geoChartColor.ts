@@ -1,9 +1,10 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { isEmpty, range } from "lodash-es";
+import { range } from "lodash-es";
 
 import { isAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-model";
 import { type IColorLegendItem, type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IPushpinColor } from "../../GeoChart.js";
 
@@ -130,7 +131,7 @@ export function getPushpinColors(
 }
 
 export function generateLegendColorData(colorSeries: number[], colorString: string): IColorLegendItem[] {
-    if (isEmpty(colorSeries)) {
+    if (_isEmpty(colorSeries)) {
         return [];
     }
     const colorPalette = getColorPalette(colorString, DEFAULT_PUSHPIN_COLOR_OPACITY);

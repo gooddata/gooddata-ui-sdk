@@ -1,9 +1,8 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import { type IInsightDefinition, insightProperties } from "@gooddata/sdk-model";
 import { type IPivotTableConfig } from "@gooddata/sdk-ui-pivot";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
 import { getColumnWidthsFromProperties } from "../../../utils/propertiesHelper.js";
@@ -25,15 +24,15 @@ export function pivotTableConfigFromInsight(
               )
             : {};
 
-    const columnSizingProp = isEmpty(baseConfig.columnSizing)
+    const columnSizingProp = _isEmpty(baseConfig.columnSizing)
         ? {}
         : { columnSizing: baseConfig.columnSizing };
-    const menuProp = isEmpty(baseConfig.menu) ? {} : { menu: baseConfig.menu };
-    const separatorsProp = isEmpty(baseConfig.separators) ? {} : { separators: baseConfig.separators };
+    const menuProp = _isEmpty(baseConfig.menu) ? {} : { menu: baseConfig.menu };
+    const separatorsProp = _isEmpty(baseConfig.separators) ? {} : { separators: baseConfig.separators };
     const measureGroupDimension = insightProperties(insight)?.["controls"]?.measureGroupDimension;
-    const metricsPositionProp = isEmpty(measureGroupDimension) ? {} : { measureGroupDimension };
+    const metricsPositionProp = _isEmpty(measureGroupDimension) ? {} : { measureGroupDimension };
     const columnHeadersPosition = insightProperties(insight)?.["controls"]?.columnHeadersPosition;
-    const columnHeadersPositionProp = isEmpty(columnHeadersPosition) ? {} : { columnHeadersPosition };
+    const columnHeadersPositionProp = _isEmpty(columnHeadersPosition) ? {} : { columnHeadersPosition };
 
     return {
         ...columnSizingProp,

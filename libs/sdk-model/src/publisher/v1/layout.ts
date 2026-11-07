@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IPublisherBoxStyleV1 } from "./styling.js";
 
@@ -68,7 +68,7 @@ export interface IPublisherLayoutSlotRefV1 extends IPublisherLayoutNodeBaseV1 {
  * @alpha
  */
 export function isPublisherLayoutSectionV1(obj: unknown): obj is IPublisherLayoutSectionV1 {
-    return !isEmpty(obj) && (obj as IPublisherLayoutSectionV1).type === "section";
+    return !_isEmpty(obj) && (obj as IPublisherLayoutSectionV1).type === "section";
 }
 
 /**
@@ -77,5 +77,5 @@ export function isPublisherLayoutSectionV1(obj: unknown): obj is IPublisherLayou
  * @alpha
  */
 export function isPublisherLayoutSlotRefV1(obj: unknown): obj is IPublisherLayoutSlotRefV1 {
-    return !isEmpty(obj) && (obj as IPublisherLayoutSlotRefV1).type === "slotRef";
+    return !_isEmpty(obj) && (obj as IPublisherLayoutSlotRefV1).type === "slotRef";
 }

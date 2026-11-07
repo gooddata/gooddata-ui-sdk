@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 /**
  * Where content sits inside the box that carries it, along one axis.
@@ -200,7 +200,7 @@ export interface IPublisherImageStyleV1 {
  * @alpha
  */
 export function isPublisherColorBackgroundV1(obj: unknown): obj is IPublisherColorBackgroundV1 {
-    return !isEmpty(obj) && (obj as IPublisherColorBackgroundV1).type === "color";
+    return !_isEmpty(obj) && (obj as IPublisherColorBackgroundV1).type === "color";
 }
 
 /**
@@ -209,5 +209,5 @@ export function isPublisherColorBackgroundV1(obj: unknown): obj is IPublisherCol
  * @alpha
  */
 export function isPublisherImageBackgroundV1(obj: unknown): obj is IPublisherImageBackgroundV1 {
-    return !isEmpty(obj) && (obj as IPublisherImageBackgroundV1).type === "image";
+    return !_isEmpty(obj) && (obj as IPublisherImageBackgroundV1).type === "image";
 }

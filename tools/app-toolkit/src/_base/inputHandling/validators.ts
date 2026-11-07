@@ -1,6 +1,9 @@
-// (C) 2007-2025 GoodData Corporation
-import { capitalize, isEmpty } from "lodash-es";
+// (C) 2007-2026 GoodData Corporation
+
+import { capitalize } from "lodash-es";
 import validateNpmPackageName from "validate-npm-package-name";
+
+import { _isEmpty } from "@gooddata/util";
 
 import { InputValidationError } from "../types.js";
 
@@ -15,7 +18,7 @@ export type AsyncInputValidator = (value: string) => Promise<boolean | string>;
  * Validates that application name matches required regex.
  */
 export function applicationNameValidator(value: string): boolean | string {
-    if (isEmpty(value) || (value && isEmpty(value.trim()))) {
+    if (_isEmpty(value) || (value && _isEmpty(value.trim()))) {
         return "Please enter non-empty application name.";
     }
 

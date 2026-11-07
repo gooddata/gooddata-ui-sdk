@@ -1,9 +1,9 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import url from "url";
 
 import axios, { type AxiosError } from "axios";
-import { capitalize, isEmpty } from "lodash-es";
+import { capitalize } from "lodash-es";
 import validateNpmPackageName from "validate-npm-package-name";
 
 import {
@@ -13,6 +13,7 @@ import {
     isUnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 import { type IDashboardPlugin, idRef } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { InputValidationError } from "../types.js";
 import { convertToPluginEntrypoint, extractRootCause } from "../utils.js";
@@ -28,7 +29,7 @@ export type AsyncInputValidator = (value: string) => Promise<boolean | string>;
  * Validates that plugin name matches required regex.
  */
 export function pluginNameValidator(value: string): boolean | string {
-    if (isEmpty(value) || (value && isEmpty(value.trim()))) {
+    if (_isEmpty(value) || (value && _isEmpty(value.trim()))) {
         return "Please enter non-empty plugin name.";
     }
 
@@ -88,7 +89,7 @@ export function createHostnameValidator(): InputValidator {
         "Invalid hostname. Please provide a valid hostname in format [[https|http]://]host[:port]";
 
     return (input: string): boolean | string => {
-        if (isEmpty(input)) {
+        if (_isEmpty(input)) {
             return InvalidHostnameMessage;
         }
 
@@ -174,7 +175,7 @@ export function createWorkspaceValidator(
     additionalValidation?: InputValidator<IAnalyticalWorkspace>,
 ): AsyncInputValidator {
     return async (value): Promise<boolean | string> => {
-        if (isEmpty(value)) {
+        if (_isEmpty(value)) {
             return "Invalid workspace. Specify a valid workspace identifier.";
         }
 
@@ -215,7 +216,7 @@ export function createDashboardValidator(
     additionalValidation?: InputValidator<IDashboardWithReferences>,
 ): AsyncInputValidator {
     return async (value): Promise<boolean | string> => {
-        if (isEmpty(value)) {
+        if (_isEmpty(value)) {
             return "Invalid dashboard. Specify a valid dashboard identifier.";
         }
 
@@ -253,7 +254,7 @@ export function createDashboardPluginValidator(
     additionalValidation?: InputValidator<IDashboardPlugin>,
 ): AsyncInputValidator {
     return async (value): Promise<boolean | string> => {
-        if (isEmpty(value)) {
+        if (_isEmpty(value)) {
             return "Invalid dashboard. Specify a valid dashboard identifier.";
         }
 

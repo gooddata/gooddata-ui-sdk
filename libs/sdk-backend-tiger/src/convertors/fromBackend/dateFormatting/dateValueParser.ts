@@ -13,6 +13,16 @@ const pad2 = (n: number): string => String(n).padStart(2, "0");
 const granularityParseValueTransformations: {
     [granularity in DateAttributeGranularity]?: ValueTransform;
 } = {
+    // Date attributes are sent with a space separator ("2026-08-24 14:05:09"). Date computed attributes are
+    // temporarily sent as ISO local date-times instead, with seconds in execution results
+    // ("2026-08-24T14:05:09") and without them in attribute elements ("2026-08-24T14:05"), see CQ-3231.
+    // Both ISO variants are accepted until the backend sends the space separated form; fractional seconds
+    // are dropped.
+    "GDC.time.second": (value) =>
+        value.replace(
+            /^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2})(?::(\d{2})(?:\.\d+)?)?$/,
+            (_, date: string, time: string, seconds?: string) => `${date} ${time}:${seconds ?? "00"}`,
+        ),
     "GDC.time.day_in_week": (value) => {
         // server returns 00 = Sunday, 06 = Saturday
         // date-fns expects 1 = Sunday, 7 = Saturday

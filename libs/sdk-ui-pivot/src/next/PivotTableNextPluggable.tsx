@@ -2,7 +2,7 @@
 
 import { memo } from "react";
 
-import { isEqual } from "lodash-es";
+import { _isEqual } from "@gooddata/util";
 
 import { PivotTableNextImplementation } from "./PivotTableNext.js";
 
@@ -21,7 +21,7 @@ export const CorePivotTableNext = memo(PivotTableNextImplementation, (prevProps,
         [prevProps.totals, nextProps.totals],
         [prevProps.drillableItems, nextProps.drillableItems],
         [prevProps.pageSize, nextProps.pageSize],
-    ].some(([prev, next]) => !isEqual(prev, next));
+    ].some(([prev, next]) => !_isEqual(prev, next));
 
     return !deepEqualPropsChanged;
 });
