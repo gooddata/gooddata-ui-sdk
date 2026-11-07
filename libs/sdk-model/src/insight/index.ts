@@ -1,7 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { intersection, isEmpty, uniqBy } from "lodash-es";
+import { intersection, uniqBy } from "lodash-es";
 import { invariant } from "ts-invariant";
+
+import { _isEmpty } from "@gooddata/util";
 
 import { type AccessGranularPermission } from "../accessControl/index.js";
 import { type IAuditable, type IObjectCertification } from "../base/metadata.js";
@@ -478,7 +480,7 @@ export interface IInsightLayerDefinition {
  */
 export function isInsightLayerDefinition(obj: unknown): obj is IInsightLayerDefinition {
     return (
-        !isEmpty(obj) &&
+        !_isEmpty(obj) &&
         typeof obj === "object" &&
         obj !== null &&
         "id" in obj &&
@@ -496,7 +498,7 @@ export function isInsightLayerDefinition(obj: unknown): obj is IInsightLayerDefi
  * @public
  */
 export function isColorMappingItem(obj: unknown): obj is IColorMappingItem {
-    return !isEmpty(obj) && !!(obj as IColorMappingItem).color && !!(obj as IColorMappingItem).id;
+    return !_isEmpty(obj) && !!(obj as IColorMappingItem).color && !!(obj as IColorMappingItem).id;
 }
 
 //
@@ -509,7 +511,7 @@ export function isColorMappingItem(obj: unknown): obj is IColorMappingItem {
  * @public
  */
 export function isInsight(obj: unknown): obj is IInsight {
-    return !isEmpty(obj) && (obj as IInsight).insight !== undefined;
+    return !_isEmpty(obj) && (obj as IInsight).insight !== undefined;
 }
 
 //
@@ -548,7 +550,7 @@ export function insightBucket(
 export function insightBuckets(insight: IInsightDefinition, ...ids: string[]): IBucket[] {
     invariant(insight, "insight must be specified");
 
-    if (isEmpty(ids)) {
+    if (_isEmpty(ids)) {
         return insight.insight.buckets;
     }
 

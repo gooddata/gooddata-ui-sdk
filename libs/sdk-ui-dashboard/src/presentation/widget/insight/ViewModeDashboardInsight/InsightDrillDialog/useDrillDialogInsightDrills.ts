@@ -2,8 +2,6 @@
 
 import { useCallback, useState } from "react";
 
-import { isEqual } from "lodash-es";
-
 import { type IInsight, type IInsightWidget } from "@gooddata/sdk-model";
 import {
     DataViewFacade,
@@ -12,6 +10,7 @@ import {
     type IPushData,
     isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
+import { _isEqual } from "@gooddata/util";
 
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { selectEnableDrillToUrlByDefault } from "../../../../../model/store/config/configSelectors.js";
@@ -55,7 +54,7 @@ export const useDrillDialogInsightDrills = ({
                 !disableDrillIntoURL,
             );
 
-            if (targets && !isEqual(drillTargets, data.availableDrillTargets)) {
+            if (targets && !_isEqual(drillTargets, data.availableDrillTargets)) {
                 setDrillTargets(targets);
             }
         },

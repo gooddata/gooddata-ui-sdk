@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IDashboardAttributeFilterConfig } from "../../dashboard/dashboard.js";
 import { type FilterContextItem } from "../../dashboard/filterContext.js";
@@ -90,7 +90,7 @@ export interface IPublisherDocumentContentV1 {
  */
 export function isPublisherDocumentContentV1(obj: unknown): obj is IPublisherDocumentContentV1 {
     return (
-        !isEmpty(obj) &&
+        !_isEmpty(obj) &&
         (obj as IPublisherDocumentContentV1).version === "1" &&
         Array.isArray((obj as IPublisherDocumentContentV1).pages)
     );

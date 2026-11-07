@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
-import { isEqual, uniq } from "lodash-es";
+import { uniq } from "lodash-es";
 
 import {
     type IDashboardExportParameter,
@@ -18,6 +18,7 @@ import {
     isWidget,
     objRefToString,
 } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { createMemoizedSelector } from "../../_infra/selectors.js";
 import {
@@ -386,7 +387,7 @@ export const selectIsParametersChanged: DashboardSelector<boolean> = createSelec
         for (const tabId of allTabIds) {
             const smart = smartPersistedByTab[tabId] ?? EMPTY_PARAMETERS;
             const persisted = persistedByTab[tabId] ?? EMPTY_PARAMETERS;
-            if (!isEqual(smart, persisted)) {
+            if (!_isEqual(smart, persisted)) {
                 return true;
             }
         }

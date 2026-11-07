@@ -93,6 +93,31 @@ describe("remoteLoader.loadRemotePluggableApplication", () => {
         await expect(loadRemotePluggableApplication(remote)).resolves.toBe(app);
     });
 
+    it("rejects a load when another load registers the same scope with another URL before it resolves", async () => {
+        const headlessModule = { mount: vi.fn() };
+        let resolveFirst: (value: unknown) => void = () => undefined;
+        loadRemoteMock
+            .mockImplementationOnce(() => new Promise((resolve) => (resolveFirst = resolve)))
+            .mockResolvedValueOnce({ headlessModule });
+
+        const { loadRemoteHeadlessModule } = await import("./remoteLoader.js");
+
+        const first = loadRemoteHeadlessModule({
+            url: "/first/remoteEntry.js",
+            scope: "shared",
+            module: "./headlessModule",
+        });
+        const second = loadRemoteHeadlessModule({
+            url: "/second/remoteEntry.js",
+            scope: "shared",
+            module: "./headlessModule",
+        });
+        resolveFirst({ headlessModule });
+
+        await expect(first).rejects.toThrow(/was registered from "\/second\/remoteEntry.js"/);
+        await expect(second).resolves.toBe(headlessModule);
+    });
+
     describe("preloadRemotePluggableApplication", () => {
         it('warms only the expose\'s "sync" assets', async () => {
             // "all" additionally pulls the expose's whole async chunk graph — hundreds of files

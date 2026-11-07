@@ -1,7 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
-import { isEmpty, negate } from "lodash-es";
+import { negate } from "lodash-es";
 
 import {
     type IAttributeDisplayFormMetadataObject,
@@ -23,6 +23,7 @@ import {
     idRef,
     objRefToString,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { mergeAttributesWithComputed } from "../../../_staging/catalog/computedAttributes.js";
 import {
@@ -167,7 +168,7 @@ export const selectCatalogRequestedParameterRoots: DashboardSelector<Record<stri
  */
 export const selectHasCatalogAttributes: DashboardSelector<boolean> = createSelector(
     selectCatalogAttributes,
-    negate(isEmpty),
+    negate(_isEmpty),
 );
 
 /**
@@ -211,7 +212,7 @@ export const selectCatalogMeasures: DashboardSelector<ICatalogMeasure[]> = creat
  */
 export const selectHasCatalogMeasures: DashboardSelector<boolean> = createSelector(
     selectCatalogMeasures,
-    negate(isEmpty),
+    negate(_isEmpty),
 );
 
 /**
@@ -226,7 +227,7 @@ export const selectCatalogFacts: DashboardSelector<ICatalogFact[]> = createSelec
  */
 export const selectHasCatalogFacts: DashboardSelector<boolean> = createSelector(
     selectCatalogFacts,
-    negate(isEmpty),
+    negate(_isEmpty),
 );
 
 /**
@@ -244,7 +245,7 @@ export const selectCatalogDateDatasets: DashboardSelector<ICatalogDateDataset[]>
  */
 export const selectHasCatalogDateDatasets: DashboardSelector<boolean> = createSelector(
     selectCatalogDateDatasets,
-    negate(isEmpty),
+    negate(_isEmpty),
 );
 
 /**
@@ -543,7 +544,7 @@ function buildDateHierarchy(
             dateAttributesInHierarchy.push(dateAttribute.attribute.ref);
         }
     });
-    if (!isEmpty(dateAttributesInHierarchy)) {
+    if (!_isEmpty(dateAttributesInHierarchy)) {
         return {
             type: "dateAttributeHierarchy",
             // create ref of adhoc date hierarchy by combining date dataset id and date template id

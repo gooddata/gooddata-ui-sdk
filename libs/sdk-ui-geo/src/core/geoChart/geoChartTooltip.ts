@@ -1,11 +1,12 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { escape, isEmpty } from "lodash-es";
+import { escape } from "lodash-es";
 import type mapboxgl from "mapbox-gl";
 import { type IntlShape } from "react-intl";
 
 import { type ISeparators } from "@gooddata/sdk-model";
 import { type IHeaderPredicate } from "@gooddata/sdk-ui";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IGeoConfig, type IGeoTooltipItem } from "../../GeoChart.js";
 
@@ -54,7 +55,7 @@ function isTooltipShownInFullScreen() {
 }
 
 export function shouldShowTooltip(geoProperties: GeoJSON.GeoJsonProperties | undefined): boolean {
-    if (isEmpty(geoProperties)) {
+    if (_isEmpty(geoProperties)) {
         return false;
     }
 

@@ -7,6 +7,7 @@ import { act, screen, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { render } from "../../../test/render.js";
+import { MOBILE_VIEWPORT } from "../../../test/viewport.js";
 import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 
 import { type IUiSearchableSelectProps, UiSearchableSelect } from "./UiSearchableSelect.js";
@@ -19,6 +20,7 @@ const requiredProps = {
     items: [{ name: "Option #1" }],
     onChange: () => {},
     placeholder: "Placeholder",
+    title: "Title",
     value: null,
     children: (
         <>
@@ -83,6 +85,23 @@ describe("UiSearchableSelect", async () => {
         expect(screen.getByRole("listbox", { name: "Select label" })).toBeVisible();
         expect(screen.getByRole("option", { name: "Item #1" })).toBeVisible();
         expect(screen.getByRole("option", { name: "Item #2" })).toBeVisible();
+    });
+
+    it("should name the popover list by ariaLabelledBy over ariaLabel, like native elements", async () => {
+        const { user } = render(
+            <>
+                <span id="label-id">Select aria labelled by</span>
+                <UiSearchableSelect
+                    {...requiredProps}
+                    accessibilityConfig={{ ariaLabel: "Select aria label", ariaLabelledBy: "label-id" }}
+                    placeholder="Select placeholder"
+                />
+            </>,
+        );
+
+        await user.click(screen.getByRole("button", { name: "Select placeholder Select aria labelled by" }));
+
+        expect(screen.getByRole("listbox", { name: "Select aria labelled by" })).toBeVisible();
     });
 
     it("should have default search label and search placeholder", async () => {
@@ -580,11 +599,11 @@ describe("UiSearchableSelect", async () => {
         expect(screen.getByRole("option", { name: "Item #2" })).toBeVisible();
     });
 
-    it("should not let the enter that selects an option reach the elements around", async () => {
+    it("should not let the enter that selects an option reach the parent elements", async () => {
         const onChange = vi.fn();
         const onKeyDown = vi.fn();
         const { user } = render(
-            // NOTE: Like a dialog that submits on enter; the popup is portaled, but React events bubble to it
+            // NOTE: Like a dialog that submits on enter
             <div onKeyDown={(event) => onKeyDown(event.key)}>
                 <UiSearchableSelect {...requiredProps} onChange={onChange} />
             </div>,
@@ -596,5 +615,140 @@ describe("UiSearchableSelect", async () => {
 
         expect(onChange.mock.calls).toEqual([["Option #1"]]);
         expect(onKeyDown).not.toHaveBeenCalledWith("Enter");
+    });
+
+    it("should support mobile full screen view", async () => {
+        window.happyDOM.setViewport(MOBILE_VIEWPORT);
+        const { user } = render(
+            <UiSearchableSelect
+                {...requiredProps}
+                accessibilityConfig={{ ariaLabel: "Select label" }}
+                title="Select title"
+            />,
+        );
+
+        // The dialog is rendered only while open, so the button points at it only then
+        expect(screen.getByRole("button")).not.toHaveAttribute("aria-controls");
+        expect(screen.getByRole("button")).toHaveAttribute("aria-haspopup", "dialog");
+
+        await user.click(screen.getByRole("button"));
+
+        expect(screen.getByRole("button", { name: /Select label/, hidden: true })).toHaveAttribute(
+            "aria-controls",
+            screen.getByRole("dialog").id,
+        );
+        expect(screen.getByRole("dialog", { name: "Select title" })).toBeVisible();
+        expect(screen.getByRole("heading", { name: "Select title" })).toBeVisible();
+        expect(screen.getByRole("button", { name: "Close" })).toBeVisible();
+        expect(screen.getByRole("combobox")).toHaveFocus();
+
+        await user.click(screen.getByRole("button", { name: "Close" }));
+
+        expect(screen.getByRole("button", { name: /Select label/ })).toHaveFocus();
+    });
+
+    it("should support null custom anchor in fullscreen and controlled opening", async () => {
+        window.happyDOM.setViewport(MOBILE_VIEWPORT);
+        function Wrapper() {
+            const [isOpen, setIsOpen] = useState(false);
+            return (
+                <>
+                    <button type="button" onClick={() => setIsOpen(true)}>
+                        Open mobile select
+                    </button>
+                    <UiSearchableSelect
+                        {...requiredProps}
+                        accessibilityConfig={{ ariaLabel: "Select label" }}
+                        isOpen={isOpen}
+                        onOpenChange={setIsOpen}
+                        renderButton={null}
+                        placeholder="Select placeholder"
+                        title="Select title"
+                    />
+                </>
+            );
+        }
+        const { user } = render(<Wrapper />);
+
+        // Assert that no select button is visible.
+        expect(screen.queryByRole("button", { name: /Select placeholder/ })).not.toBeInTheDocument();
+
+        await user.click(screen.getByRole("button", { name: "Open mobile select" }));
+
+        expect(screen.getByRole("dialog", { name: "Select title" })).toBeVisible();
+        expect(screen.getByRole("listbox", { name: "Select label" })).toBeVisible();
+
+        await user.click(screen.getByRole("button", { name: "Close" }));
+
+        expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Open mobile select" })).toHaveFocus();
+    });
+
+    it("should not reset search query on close while still open by parent", async () => {
+        window.happyDOM.setViewport(MOBILE_VIEWPORT);
+        const { user } = render(
+            // Note the controlled opening (`isOpen`)
+            <UiSearchableSelect {...requiredProps} isOpen renderButton={null} title="Select title" />,
+        );
+
+        await user.type(screen.getByRole("combobox"), "apple");
+        await user.click(screen.getByRole("button", { name: "Close" }));
+
+        expect(screen.getByRole("combobox")).toHaveValue("apple");
+    });
+
+    it("should reset search query when the parent closes it", async () => {
+        function Wrapper() {
+            const [isOpen, setIsOpen] = useState(true);
+            return (
+                <>
+                    <button type="button" onClick={() => setIsOpen(false)}>
+                        Close select
+                    </button>
+                    <button type="button" onClick={() => setIsOpen(true)}>
+                        Open select
+                    </button>
+                    <UiSearchableSelect {...requiredProps} isOpen={isOpen} />
+                </>
+            );
+        }
+        const { user } = render(<Wrapper />);
+
+        await user.type(screen.getByRole("combobox"), "apple");
+        await user.click(screen.getByRole("button", { name: "Close select" }));
+        await user.click(screen.getByRole("button", { name: "Open select" }));
+
+        expect(screen.getByRole("combobox")).toHaveValue("");
+    });
+
+    it("should support leaving popover open on select", async () => {
+        const onOpenChange = vi.fn();
+        function Wrapper() {
+            const [value, setValue] = useState<string | null>(null);
+            return (
+                <UiSearchableSelect
+                    {...requiredProps}
+                    accessibilityConfig={{ ariaLabel: "Select label" }}
+                    defaultOpen
+                    items={[{ name: "Option #1" }, { name: "Option #2" }]}
+                    value={value}
+                    onChange={setValue}
+                    onOpenChange={onOpenChange}
+                    shouldCloseOnSelect={false}
+                />
+            );
+        }
+        const { user } = render(<Wrapper />);
+
+        await user.click(screen.getByRole("option", { name: "Option #1" }));
+
+        expect(screen.getByRole("button", { name: /Option #1/, expanded: true })).toBeVisible();
+        expect(screen.getByRole("option", { name: "Option #1" })).toBeVisible();
+
+        await user.type(screen.getByRole("combobox"), "#2{Enter}");
+
+        expect(screen.getByRole("button", { name: /Option #2/, expanded: true })).toBeVisible();
+        expect(screen.getByRole("option", { name: "Option #2" })).toBeVisible();
+        expect(onOpenChange).not.toHaveBeenCalled();
     });
 });

@@ -1,8 +1,9 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { compact, groupBy, isEmpty, partition, sortBy, uniqBy } from "lodash-es";
+import { compact, groupBy, partition, sortBy, uniqBy } from "lodash-es";
 
 import { type IInsightDefinition, factoryNotationFor } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IEmbeddingCodeConfig } from "../../interfaces/VisualizationDescriptor.js";
 
@@ -118,13 +119,13 @@ function walkProps<TProps>(
     const importsUsed: IImportInfo[] = [];
 
     // we ignore undefined values and functions as there is no bullet-proof way to serialize them
-    // Note: isEmpty() returns true for primitive values like numbers/booleans, so we check for them explicitly
-    // Non-empty strings are handled correctly by isEmpty(), but we explicitly check to be safe
+    // Note: _isEmpty() returns true for primitive values like numbers/booleans, so we check for them explicitly
+    // Non-empty strings are handled correctly by _isEmpty(), but we explicitly check to be safe
     const propPairsIgnoredFunctions = Object.entries<PropWithMeta<any>>(props).filter(
         ([_, meta]) =>
             meta !== undefined &&
             !(typeof meta.value === "function") &&
-            (typeof meta.value === "number" || typeof meta.value === "boolean" || !isEmpty(meta.value)),
+            (typeof meta.value === "number" || typeof meta.value === "boolean" || !_isEmpty(meta.value)),
     );
 
     //omit chart configuration when define in config

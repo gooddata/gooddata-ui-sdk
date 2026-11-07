@@ -1,10 +1,11 @@
 // (C) 2026 GoodData Corporation
 
-import { isEqual, omit } from "lodash-es";
+import { omit } from "lodash-es";
 
 import { type DisplayFormRefType } from "@gooddata/sdk-embedding/internal";
 import { type ObjRef, areObjRefsEqual, idRef } from "@gooddata/sdk-model";
 import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
+import { _isEqual } from "@gooddata/util";
 
 import { COMPUTED_ATTRIBUTE } from "../../constants/bucket.js";
 import { DATE_DATASET_ATTRIBUTE } from "../../models/date_item.js";
@@ -1056,7 +1057,7 @@ export function applyMetricFilterUpdate(
             const currentLocalIdentifier = currentFilter?.localIdentifier;
             if (
                 (currentLocalIdentifier && currentLocalIdentifier === filterLocalIdentifier) ||
-                isEqual(currentFilter, filter)
+                _isEqual(currentFilter, filter)
             ) {
                 return patchMetricFilter(currentFilter, changes);
             }

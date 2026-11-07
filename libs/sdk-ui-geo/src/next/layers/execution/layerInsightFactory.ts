@@ -1,7 +1,5 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
-
 import {
     type IBucket,
     type IFilter,
@@ -10,6 +8,7 @@ import {
     type ISortItem,
     newInsightDefinition,
 } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 const GEO_LAYER_VIZ_URL = "local:geo.layer";
 
@@ -71,6 +70,6 @@ export function sanitizeDeduplicatedGlobalFilters(
     const sanitizedGlobalFilters = sanitizeGlobalFilters(globalFilters);
 
     return sanitizedGlobalFilters.filter(
-        (globalFilter) => !sanitizedLayerFilters.some((layerFilter) => isEqual(layerFilter, globalFilter)),
+        (globalFilter) => !sanitizedLayerFilters.some((layerFilter) => _isEqual(layerFilter, globalFilter)),
     );
 }

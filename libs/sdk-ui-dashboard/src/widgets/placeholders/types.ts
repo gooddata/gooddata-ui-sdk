@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type ICustomWidget, newCustomWidget } from "../../model/types/layoutTypes.js";
 
@@ -18,7 +18,7 @@ export interface IKpiPlaceholderWidget extends ICustomWidget {
  * @alpha
  */
 export function isKpiPlaceholderWidget(obj: unknown): obj is IKpiPlaceholderWidget {
-    return !isEmpty(obj) && (obj as IKpiPlaceholderWidget).customType === "gd-kpi-placeholder";
+    return !_isEmpty(obj) && (obj as IKpiPlaceholderWidget).customType === "gd-kpi-placeholder";
 }
 
 /**
@@ -47,7 +47,7 @@ export interface IInsightPlaceholderWidget extends ICustomWidget {
  * @alpha
  */
 export function isInsightPlaceholderWidget(obj: unknown): obj is IInsightPlaceholderWidget {
-    return !isEmpty(obj) && (obj as IInsightPlaceholderWidget).customType === "gd-insight-placeholder";
+    return !_isEmpty(obj) && (obj as IInsightPlaceholderWidget).customType === "gd-insight-placeholder";
 }
 
 /**
@@ -78,7 +78,7 @@ export interface IPlaceholderWidget extends ICustomWidget {
  * @alpha
  */
 export function isPlaceholderWidget(obj: unknown): obj is IPlaceholderWidget {
-    return !isEmpty(obj) && (obj as IPlaceholderWidget).customType === "gd-widget-placeholder";
+    return !_isEmpty(obj) && (obj as IPlaceholderWidget).customType === "gd-widget-placeholder";
 }
 
 /**

@@ -1,8 +1,8 @@
 {
     "name": "@gooddata/sdk-ui-catalog",
-    "version": "11.68.0-alpha.2",
+    "version": "11.68.0-alpha.4",
     "description": "GoodData SDK - Analytics Catalog",
-    "license": "MIT",
+    "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
     "repository": {
         "type": "git",
@@ -15,7 +15,8 @@
         "esm/**/*.d.ts",
         "esm/**/*.map",
         "esm/**/*.svg",
-        "styles"
+        "styles",
+        "NOTICE"
     ],
     "type": "module",
     "sideEffects": [

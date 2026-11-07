@@ -1,11 +1,12 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ChangeEvent, useCallback, useEffect, useState } from "react";
 
 import cx from "classnames";
-import { isEmpty } from "lodash-es";
 import { FormattedMessage } from "react-intl";
 import { v4 } from "uuid";
+
+import { _isEmpty } from "@gooddata/util";
 
 import { Bubble } from "../../../../Bubble/Bubble.js";
 import { type ArrowOffsets } from "../../../../Bubble/typings.js";
@@ -46,7 +47,7 @@ export function NumericInput({ value, onValueChanged }: INumericInputProps) {
             const val = e.target.value.replace(/,/, ".");
             if (val.match(VALID_INPUT)) {
                 onValueChanged(val);
-            } else if (isEmpty(val)) {
+            } else if (_isEmpty(val)) {
                 onValueChanged("");
             }
         },
@@ -55,7 +56,7 @@ export function NumericInput({ value, onValueChanged }: INumericInputProps) {
 
     const correctKeyPressed = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value.replace(/,/, ".");
-        setValidPressedButton((value.match(VALID_INPUT) || isEmpty(value)) && value.split(".").length <= 2);
+        setValidPressedButton((value.match(VALID_INPUT) || _isEmpty(value)) && value.split(".").length <= 2);
     }, []);
 
     const onChanged = useCallback(

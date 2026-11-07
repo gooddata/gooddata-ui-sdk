@@ -145,7 +145,7 @@ describe("applyConfigToBootstrapData", () => {
     const data = {
         mapboxToken: "loaded-mapbox",
         user: { formatLocale: "en-US", separators: { thousand: ",", decimal: "." } },
-        uiSettings: { logoUrl: "/loaded.svg", isBranded: false, organizationName: "Acme" },
+        uiSettings: { isBranded: false, organizationName: "Acme" },
         tiger: { isOrganizationAdmin: false, organizationEntitlements: [] },
     } as unknown as IBootstrapData;
 
@@ -165,7 +165,7 @@ describe("applyConfigToBootstrapData", () => {
                 mapboxToken: "own-mapbox",
                 agGridToken: "own-ag-grid",
                 formatLocale: "cs-CZ",
-                whiteLabeling: { logoUrl: "/own.svg", isBranded: true },
+                whiteLabeling: { isBranded: true },
                 organization: { isAdmin: true, expiredDate: "2026-12-31" },
             },
             theme,
@@ -174,7 +174,6 @@ describe("applyConfigToBootstrapData", () => {
         expect(result.mapboxToken).toBe("own-mapbox");
         expect(result.agGridToken).toBe("own-ag-grid");
         expect(result.user.formatLocale).toBe("cs-CZ");
-        expect(result.uiSettings.logoUrl).toBe("/own.svg");
         expect(result.uiSettings.isBranded).toBe(true);
         expect(result.tiger).toMatchObject({
             isOrganizationAdmin: true,

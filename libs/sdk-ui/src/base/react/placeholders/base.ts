@@ -1,8 +1,8 @@
-// (C) 2019-2025 GoodData Corporation
-import { isEmpty } from "lodash-es";
+// (C) 2019-2026 GoodData Corporation
 
 import { type ValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
 import { type IMeasure, type IMeasureDefinitionType } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 /**
  * Any placeholder type - placeholder or composed placeholder.
@@ -65,7 +65,7 @@ export type IPlaceholder<T> = {
  * @public
  */
 export function isPlaceholder<T>(obj: unknown): obj is IPlaceholder<T> {
-    return !isEmpty(obj) && (obj as IPlaceholder<T>).type === "IPlaceholder";
+    return !_isEmpty(obj) && (obj as IPlaceholder<T>).type === "IPlaceholder";
 }
 
 /**
@@ -97,7 +97,7 @@ export function isComposedPlaceholder<TReturn, TValue extends any[], TContext>(
     obj: unknown,
 ): obj is IComposedPlaceholder<TReturn, TValue, TContext> {
     return (
-        !isEmpty(obj) &&
+        !_isEmpty(obj) &&
         (obj as IComposedPlaceholder<TReturn, TValue, TContext>).type === "IComposedPlaceholder"
     );
 }

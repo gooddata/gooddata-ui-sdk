@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, isEmpty } from "lodash-es";
+import { cloneDeep } from "lodash-es";
 
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import {
@@ -40,6 +40,7 @@ import {
     visClassId,
     visClassUri,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { type InsightRecording, type RecordedRefType, type RecordingIndex } from "./types.js";
 import { identifierToRecording } from "./utils.js";
@@ -77,7 +78,7 @@ export class RecordedInsights implements IWorkspaceInsightsService {
     }
 
     public async getInsight(ref: ObjRef): Promise<IInsight> {
-        if (isEmpty(this.insights)) {
+        if (_isEmpty(this.insights)) {
             throw new UnexpectedResponseError("No insight recordings", 404, {});
         }
 
@@ -99,7 +100,7 @@ export class RecordedInsights implements IWorkspaceInsightsService {
     public async getInsights(query?: IInsightsQueryOptions): Promise<IInsightsQueryResult> {
         const { limit, offset, orderBy } = query ?? {};
 
-        if (isEmpty(this.insights)) {
+        if (_isEmpty(this.insights)) {
             return new InMemoryPaging<IInsight>([], limit, offset);
         }
 

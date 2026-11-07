@@ -2,11 +2,12 @@
 
 import { useCallback, useMemo, useRef, useState } from "react";
 
-import { debounce, isEmpty } from "lodash-es";
+import { debounce } from "lodash-es";
 
 import { type IAnalyticalBackend, type IFilterBaseOptions } from "@gooddata/sdk-backend-spi";
 import { type IInsight } from "@gooddata/sdk-model";
 import { type ITab } from "@gooddata/sdk-ui-kit";
+import { _isEmpty } from "@gooddata/util";
 
 const ITEMS_PER_PAGE = 50;
 
@@ -176,7 +177,7 @@ export function useInsightPagedList({
             // When includeAuthorInfo is true (picker mode), only use the explicit createdByFilter.
             // Otherwise fall back to the legacy tab-based author filtering.
             const searchedAuthor =
-                !includeAuthorInfo && tabId === tabsIds.my && isEmpty(searchValue) ? author : undefined;
+                !includeAuthorInfo && tabId === tabsIds.my && _isEmpty(searchValue) ? author : undefined;
             const effectiveCreatedBy = createdByFilter?.length
                 ? createdByFilter
                 : searchedAuthor

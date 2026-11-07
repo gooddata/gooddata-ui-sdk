@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
+import { _isEqual } from "@gooddata/util";
 
 import { usePrevious } from "./usePrevious.js";
 
@@ -24,7 +24,7 @@ export const useDebugEquality = <T extends object>(
         const previousValue = previousProps[key as keyof typeof previousProps];
 
         const strictEquality = currentValue === previousValue;
-        const deepEquality = isEqual(currentValue, previousValue);
+        const deepEquality = _isEqual(currentValue, previousValue);
 
         return {
             Property: key,
@@ -35,7 +35,7 @@ export const useDebugEquality = <T extends object>(
 
     const previousResults = usePrevious(results);
 
-    const shouldPrint = render === "eachRender" || !previousResults || !isEqual(results, previousResults);
+    const shouldPrint = render === "eachRender" || !previousResults || !_isEqual(results, previousResults);
 
     if (shouldPrint) {
         // oxlint-disable-next-line eslint-js/no-console

@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type DateFilterGranularity, type DateString } from "../dateFilterConfig/index.js";
 import {
@@ -151,7 +151,7 @@ export interface IDashboardAttributeFilter {
  * @alpha
  */
 export function isDashboardAttributeFilter(obj: unknown): obj is IDashboardAttributeFilter {
-    return !isEmpty(obj) && !!(obj as IDashboardAttributeFilter).attributeFilter;
+    return !_isEmpty(obj) && !!(obj as IDashboardAttributeFilter).attributeFilter;
 }
 
 /**
@@ -242,7 +242,7 @@ export interface IDashboardArbitraryAttributeFilter {
  */
 export function isDashboardArbitraryAttributeFilter(obj: unknown): obj is IDashboardArbitraryAttributeFilter {
     return (
-        !isEmpty(obj) &&
+        !_isEmpty(obj) &&
         !!(obj as IDashboardArbitraryAttributeFilter).arbitraryAttributeFilter &&
         isObjRef((obj as IDashboardArbitraryAttributeFilter).arbitraryAttributeFilter.displayForm)
     );
@@ -302,7 +302,7 @@ export interface IDashboardMatchAttributeFilter {
  */
 export function isDashboardMatchAttributeFilter(obj: unknown): obj is IDashboardMatchAttributeFilter {
     return (
-        !isEmpty(obj) &&
+        !_isEmpty(obj) &&
         !!(obj as IDashboardMatchAttributeFilter).matchAttributeFilter &&
         isObjRef((obj as IDashboardMatchAttributeFilter).matchAttributeFilter.displayForm)
     );
@@ -417,7 +417,7 @@ export interface IDashboardDateFilter {
  * @alpha
  */
 export function isDashboardDateFilter(obj: unknown): obj is IDashboardDateFilter {
-    return !isEmpty(obj) && !!(obj as IDashboardDateFilter).dateFilter;
+    return !_isEmpty(obj) && !!(obj as IDashboardDateFilter).dateFilter;
 }
 
 /**
@@ -426,7 +426,7 @@ export function isDashboardDateFilter(obj: unknown): obj is IDashboardDateFilter
  */
 export function isDashboardCommonDateFilter(obj: unknown): obj is IDashboardDateFilter {
     return (
-        !isEmpty(obj) &&
+        !_isEmpty(obj) &&
         !!(obj as IDashboardDateFilter).dateFilter &&
         !(obj as IDashboardDateFilter).dateFilter.dataSet
     );
@@ -438,7 +438,7 @@ export function isDashboardCommonDateFilter(obj: unknown): obj is IDashboardDate
  */
 export function isDashboardDateFilterWithDimension(obj: unknown): obj is IDashboardDateFilter {
     return (
-        !isEmpty(obj) &&
+        !_isEmpty(obj) &&
         !!(obj as IDashboardDateFilter).dateFilter &&
         !!(obj as IDashboardDateFilter).dateFilter.dataSet
     );
@@ -457,7 +457,7 @@ export function isRelativeDashboardDateFilter(dateFilter: IDashboardDateFilter):
  * @alpha
  */
 export function isRelativeBoundedDashboardDateFilter(dateFilter: IDashboardDateFilter): boolean {
-    return isRelativeDashboardDateFilter(dateFilter) && !isEmpty(dateFilter.dateFilter.boundedFilter);
+    return isRelativeDashboardDateFilter(dateFilter) && !_isEmpty(dateFilter.dateFilter.boundedFilter);
 }
 
 /**
@@ -643,7 +643,7 @@ export interface IDashboardMeasureValueFilter {
  * @alpha
  */
 export function isDashboardMeasureValueFilter(obj: unknown): obj is IDashboardMeasureValueFilter {
-    return !isEmpty(obj) && !!(obj as IDashboardMeasureValueFilter).dashboardMeasureValueFilter;
+    return !_isEmpty(obj) && !!(obj as IDashboardMeasureValueFilter).dashboardMeasureValueFilter;
 }
 
 /**
@@ -1018,7 +1018,7 @@ export interface IDashboardDateFilterReference {
  * @alpha
  */
 export function isDashboardDateFilterReference(obj: unknown): obj is IDashboardDateFilterReference {
-    return !isEmpty(obj) && (obj as IDashboardDateFilterReference).type === "dateFilterReference";
+    return !_isEmpty(obj) && (obj as IDashboardDateFilterReference).type === "dateFilterReference";
 }
 
 /**
@@ -1045,7 +1045,7 @@ export interface IDashboardAttributeFilterReference {
  * @public
  */
 export function isDashboardAttributeFilterReference(obj: unknown): obj is IDashboardAttributeFilterReference {
-    return !isEmpty(obj) && (obj as IDashboardAttributeFilterReference).type === "attributeFilterReference";
+    return !_isEmpty(obj) && (obj as IDashboardAttributeFilterReference).type === "attributeFilterReference";
 }
 
 /**
@@ -1075,7 +1075,8 @@ export function isDashboardMeasureValueFilterReference(
     obj: unknown,
 ): obj is IDashboardMeasureValueFilterReference {
     return (
-        !isEmpty(obj) && (obj as IDashboardMeasureValueFilterReference).type === "measureValueFilterReference"
+        !_isEmpty(obj) &&
+        (obj as IDashboardMeasureValueFilterReference).type === "measureValueFilterReference"
     );
 }
 
@@ -1112,7 +1113,7 @@ export function dashboardFilterReferenceObjRef(ref: IDashboardFilterReference): 
  * @internal
  */
 function hasFilterContextBaseProps(obj: unknown): boolean {
-    return !isEmpty(obj) && !!(obj as IFilterContextBase).filters;
+    return !_isEmpty(obj) && !!(obj as IFilterContextBase).filters;
 }
 
 /**

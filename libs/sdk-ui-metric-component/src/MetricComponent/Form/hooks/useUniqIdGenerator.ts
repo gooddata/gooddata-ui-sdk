@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { generateUniqId } from "../../metric/nameGenerators.js";
 import { FormField } from "../data.js";
@@ -41,7 +41,7 @@ function useGenerateId(title: string, defaultId: string, regenerateId = false) {
     const { parents } = usePrefixes();
 
     useEffect(() => {
-        if (!changed && (isEmpty(defaultId) || regenerateId)) {
+        if (!changed && (_isEmpty(defaultId) || regenerateId)) {
             setValue(generateUniqId(title, prefix.value, otherMetrics, parents));
         }
     }, [defaultId, changed, otherMetrics, title, regenerateId, setValue, prefix.value, parents]);
@@ -54,7 +54,7 @@ function useDefaultIdByTitle(title: string, defaultId: string) {
     const [defaultIdByTitle, setId] = useState(generateUniqId(title, prefix.value, otherMetrics, parents));
 
     useEffect(() => {
-        if (isEmpty(defaultId)) {
+        if (_isEmpty(defaultId)) {
             setId(generateUniqId(title, prefix.value, otherMetrics, parents));
         }
     }, [defaultId, otherMetrics, setId, title, prefix.value, parents]);

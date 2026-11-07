@@ -1,6 +1,6 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
-import { isEmpty, update } from "lodash-es";
+import { update } from "lodash-es";
 
 import { type LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
 import {
@@ -20,6 +20,7 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 import { joinDrillUrlParts, splitDrillUrlParts } from "@gooddata/sdk-model/internal";
+import { _isEmpty } from "@gooddata/util";
 
 export interface IPathConverterPair {
     path: LayoutPath;
@@ -104,7 +105,7 @@ export function convertLayout(fromBackend: boolean, layout?: IDashboardLayout) {
           };
 
     const paths = collectPathConverterPairs(layout, callbacks);
-    if (isEmpty(paths)) {
+    if (_isEmpty(paths)) {
         return layout;
     }
 

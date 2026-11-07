@@ -1,8 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import { type ObjRef } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 /**
  * @beta
@@ -28,7 +27,7 @@ export interface IWidgetDescription {
  * @internal
  */
 export function isWidgetHeader(obj: unknown): obj is IWidgetHeader {
-    return !isEmpty(obj) && (obj as IWidgetHeader).title !== undefined;
+    return !_isEmpty(obj) && (obj as IWidgetHeader).title !== undefined;
 }
 
 /**

@@ -1,7 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
 import invariant from "invariant";
-import { cloneDeep, isEmpty, negate, omit, pick, pickBy } from "lodash-es";
+import { cloneDeep, negate, omit, pick, pickBy } from "lodash-es";
 
 import {
     type AllTimeGranularity,
@@ -26,6 +26,7 @@ import {
     fillMissingFormat,
 } from "@gooddata/sdk-ui";
 import { Axis } from "@gooddata/sdk-ui-ext/internal";
+import { _isEmpty } from "@gooddata/util";
 
 import { ATTRIBUTE, COMPUTED_ATTRIBUTE, DATE, GEO_ATTRIBUTE, METRIC } from "../constants/bucket.js";
 import { ALL_TIME } from "../constants/presets.js";
@@ -207,7 +208,7 @@ function measureFilterToMd(filter: IDecoratedMetricFilter): IVisualizationObject
         const relativeTo = numberOrUndefined(to);
         // All time is stored without bounds, a no-op the execution drops; to carry the empty date values
         // mode it has to be the real All time filter, the one the execution sends (as on the filter bar)
-        if ((relativeFrom === undefined || relativeTo === undefined) && !isEmpty(emptyValueHandlingProp)) {
+        if ((relativeFrom === undefined || relativeTo === undefined) && !_isEmpty(emptyValueHandlingProp)) {
             return {
                 relativeDateFilter: {
                     dataSet,
@@ -316,7 +317,7 @@ function dateFilterToMd(
 
     // All time is stored without bounds, a no-op the execution drops. To carry the empty date values mode
     // it has to be the real All time filter, the one the execution sends.
-    if ((from === undefined || to === undefined) && !isEmpty(emptyValueHandlingProp)) {
+    if ((from === undefined || to === undefined) && !_isEmpty(emptyValueHandlingProp)) {
         return {
             relativeDateFilter: {
                 dataSet: dateDatasetRef,
@@ -1456,7 +1457,7 @@ function transformVisualizationMeasureValueFilter(
         | undefined;
     if (Array.isArray(conditions) && conditions.length) {
         normalizedConditions = conditions;
-    } else if (isEmpty(condition)) {
+    } else if (_isEmpty(condition)) {
         normalizedConditions = undefined;
     } else {
         normalizedConditions = [condition];
@@ -1490,7 +1491,9 @@ function transformVisualizationRankingFilter({
     // Local-identifier qualifiers map back to bucket attribute local ids (strings); any other qualifier
     // (uri/identifier) is a catalog attribute kept as an ObjRef. Uses the same dimensionality converter as
     // the measure value filter, preserving the qualifier shape (incl. the ref type) without an unsafe cast.
-    const attributesProps = isEmpty(attributes) ? {} : { attributes: fromSdkModelDimensionality(attributes) };
+    const attributesProps = _isEmpty(attributes)
+        ? {}
+        : { attributes: fromSdkModelDimensionality(attributes) };
 
     // A local identifier qualifier means the ranked measure is in the buckets; any other qualifier
     // (uri/identifier) means it is a catalog measure referenced by ObjRef.
@@ -1629,7 +1632,7 @@ export function normalizeEmptyDateValuesFilters(
             }
             const { granularity, from, to } = filter.relativeDateFilter;
             const isAllTime = granularity === ALL_TIME_GRANULARITY || from === undefined || to === undefined;
-            if (isAllTime && !isEmpty(mode)) {
+            if (isAllTime && !_isEmpty(mode)) {
                 return {
                     relativeDateFilter: {
                         dataSet,

@@ -3,7 +3,8 @@
 import { type ReactElement, useCallback, useMemo, useRef } from "react";
 
 import cx from "classnames";
-import { isEqual } from "lodash-es";
+
+import { _isEqual } from "@gooddata/util";
 
 import { DashboardLayoutFacade } from "../../../_staging/dashboard/flexibleLayout/facade/layout.js";
 import { getItemIndex, serializeLayoutSectionPath } from "../../../_staging/layout/coordinates.js";
@@ -88,7 +89,7 @@ export function DashboardLayout<TWidget>({
     const widgetRendererWrapped = useCallback<IDashboardLayoutWidgetRenderer<TWidget>>(
         (renderProps) => {
             const isResizedByLayoutSizingStrategy = resizedItemPositions.some((position) =>
-                isEqual(position, [
+                _isEqual(position, [
                     renderProps.item.section().index().sectionIndex,
                     getItemIndex(renderProps.item.index()),
                 ]),

@@ -1,8 +1,7 @@
 // (C) 2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
-
 import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { type IDateDataset } from "../../typings/datasets.js";
 import { DateDatasetUtils } from "../../utils/date_datasets.js";
@@ -64,7 +63,7 @@ export function setStatusInState(
         isLoading: false,
         ...(preservedSelection === undefined ? {} : { selectedDateDatasetUri: preservedSelection }),
     };
-    return isEqual(state[measureIdentifier], nextEntry)
+    return _isEqual(state[measureIdentifier], nextEntry)
         ? state
         : { ...state, [measureIdentifier]: nextEntry };
 }

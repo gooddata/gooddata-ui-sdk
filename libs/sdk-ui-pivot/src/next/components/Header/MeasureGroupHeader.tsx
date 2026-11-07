@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { useColumnDefs } from "../../context/ColumnDefsContext.js";
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
@@ -132,5 +132,5 @@ export function MeasureGroupHeader(params: AgGridCellRendererParams | AgGridHead
 
 // Distinguish between header params and cell params here
 function isHeaderParams(p: unknown): p is AgGridHeaderParams {
-    return !isEmpty(p) && (p as AgGridHeaderParams).displayName !== undefined;
+    return !_isEmpty(p) && (p as AgGridHeaderParams).displayName !== undefined;
 }

@@ -3,8 +3,6 @@
 // Builds an IDataView from inline execution-recording data (definition/response/result triple) for
 // hermetic chart tests.
 
-import { isEmpty, isEqual } from "lodash-es";
-
 import {
     type ExplainType,
     type IAnomalyDetectionResult,
@@ -55,6 +53,7 @@ import {
     newDefForItems,
     uriRef,
 } from "@gooddata/sdk-model";
+import { _isEmpty, _isEqual } from "@gooddata/util";
 
 //
 // AFM response / result types
@@ -156,7 +155,7 @@ interface IExecutionResponse {
 }
 
 function isAttributeHeader(header: IHeader): header is IAttributeHeader {
-    return !isEmpty(header) && (header as IAttributeHeader).attributeHeader !== undefined;
+    return !_isEmpty(header) && (header as IAttributeHeader).attributeHeader !== undefined;
 }
 
 //
@@ -439,7 +438,7 @@ function recordedPreparedExecution(
             return executionFactory.forDefinition(defWithDateFormat(definition, dateFormat));
         },
         withExecConfig(config: IExecutionConfig): IPreparedExecution {
-            if (!isEmpty(config?.dataSamplingPercentage)) {
+            if (!_isEmpty(config?.dataSamplingPercentage)) {
                 console.warn("Backend does not support data sampling, result will be not affected");
             }
             return executionFactory.forDefinition(definition);
@@ -478,7 +477,7 @@ function recordedPreparedExecution(
             return fp;
         },
         equals(other: IPreparedExecution): boolean {
-            return isEqual(this.definition, other.definition);
+            return _isEqual(this.definition, other.definition);
         },
     };
 }

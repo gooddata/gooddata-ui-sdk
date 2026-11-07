@@ -73,7 +73,7 @@ function createParameterValue(intl: IntlShape, text: TextNode | null, value: str
         type: "element",
         tagName: "span",
         properties: {
-            className: "gd-rich-text-parameter",
+            className: cx("gd-rich-text-parameter", { "gd-rich-text-parameter-error": value === undefined }),
         },
         position: text?.position ?? undefined,
         children: [

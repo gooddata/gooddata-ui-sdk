@@ -11,6 +11,7 @@ import {
     type IAsCodeMessages,
     defineAsCodeDescriptor,
     fixedIdentifierOf,
+    toAsCodeFailure,
 } from "../asCode/descriptor.js";
 import type { ICatalogItemComputedAttribute } from "../catalogItem/types.js";
 import { ObjectTypes } from "../objectType/constants.js";
@@ -92,7 +93,7 @@ function useComputedAttributeEditing(): IAsCodeEditing<IComputedAttributeMetadat
                 });
                 return result.isValid
                     ? { isValid: true, definition: result.computedAttribute }
-                    : { isValid: false, error: intl.formatMessage(errorMessages[result.errorCode]) };
+                    : toAsCodeFailure(result, intl.formatMessage(errorMessages[result.errorCode]));
             },
             reconcile: reconcileComputedAttributeDefinition,
         }),

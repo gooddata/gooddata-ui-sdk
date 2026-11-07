@@ -11,11 +11,13 @@ import { type IPluggableApp } from "@gooddata/sdk-pluggable-application-model";
 import { now } from "../debug.js";
 import { registerAppStylesheetScope } from "../lib/stylesheetRegistry.js";
 import { type IAppLifecycleCallbacks } from "../types/lifecycle.js";
+import { type IHostTelemetryServices } from "../types/telemetryServices.js";
 
 import { loadLocalPluggableApplication } from "./localLoader.js";
 import { loadRemotePluggableApplication, preloadRemotePluggableApplication } from "./remoteLoader.js";
 
 let registeredLifecycle: IAppLifecycleCallbacks | undefined;
+let registeredTelemetryServices: IHostTelemetryServices | undefined;
 
 /**
  * Registers app lifecycle callbacks used by the loader (e.g. for preload telemetry).
@@ -29,6 +31,19 @@ export function registerAppLifecycleCallbacks(callbacks: IAppLifecycleCallbacks)
 
 export function getAppLifecycleCallbacks(): IAppLifecycleCallbacks | undefined {
     return registeredLifecycle;
+}
+
+/**
+ * Registers the telemetry services of the host. Called by the host or harness at startup.
+ *
+ * @alpha
+ */
+export function registerHostTelemetryServices(services: IHostTelemetryServices): void {
+    registeredTelemetryServices = services;
+}
+
+export function getHostTelemetryServices(): IHostTelemetryServices | undefined {
+    return registeredTelemetryServices;
 }
 
 interface INetworkInformation {

@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+@use "../../../styles/scss/variables";
+
 // `UiToast` reuses the existing `--gd-toastMessage-{variant}-*` theme variables
 // (registered in sdk-ui-theme-provider, defaulted in defaultTheme.scss) so it
 // matches the look of the legacy `<Message>` overlay and any theme overrides
@@ -29,6 +31,11 @@
     pointer-events: none;
     max-width: 620px;
     width: 90%;
+
+    @media #{variables.$small-only} {
+        width: calc(100% - 2 * var(--gd-spacing-15px));
+        align-items: stretch;
+    }
 
     &__item {
         pointer-events: auto;

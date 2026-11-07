@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { createContext, useContext } from "react";
+import { type RefObject, createContext, useContext } from "react";
 
 import { type IUiListboxItem } from "../UiListbox/types.js";
 
@@ -9,8 +9,12 @@ interface IUiSearchableSelectContext {
     listboxItems: IUiListboxItem<unknown>[];
     query: string;
     setQuery: (query: string) => void;
-    /** The id of the trigger button, which labels the listbox. */
-    buttonId: string;
+    /**
+     * Names the listbox: the select's ariaLabelledBy, or the trigger button (named by its ariaLabel), or the
+     * ariaLabel itself when there's no button.
+     */
+    listboxLabelledBy?: string;
+    listboxLabel?: string;
     /** The id of the listbox, which the search points into with aria-activedescendant. */
     listboxId: string;
     /** The highlighted option: the search moves it, the list shows it. */
@@ -22,6 +26,11 @@ interface IUiSearchableSelectContext {
     value: string | null;
     onChange: (value: string) => void;
     closeDropdown: () => void;
+    shouldCloseOnSelect: boolean;
+    /** The search's input, which the full-screen dialog (on mobile) focuses when it opens. */
+    searchInputRef: RefObject<HTMLInputElement | null>;
+    /** Whether the select is shown full screen (on mobile), where the list fills the screen. */
+    isFullscreen: boolean;
 }
 
 export const UiSearchableSelectContext = createContext<IUiSearchableSelectContext | null>(null);

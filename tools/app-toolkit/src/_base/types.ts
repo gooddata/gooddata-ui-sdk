@@ -1,7 +1,8 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type OptionValues } from "commander";
-import { isEmpty } from "lodash-es";
+
+import { _isEmpty } from "@gooddata/util";
 
 /**
  * Program & command level options are grabbed from the commander and sent together to the action.
@@ -55,5 +56,5 @@ export class InputValidationError extends Error {
  * Type guard testing whether object is a type of {@link InputValidationError}.
  */
 export function isInputValidationError(obj: unknown): obj is InputValidationError {
-    return !isEmpty(obj) && (obj as InputValidationError).type === "IVE";
+    return !_isEmpty(obj) && (obj as InputValidationError).type === "IVE";
 }

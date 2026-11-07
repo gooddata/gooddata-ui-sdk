@@ -14,7 +14,7 @@ import {
 
 import cx from "classnames";
 import * as jsYaml from "js-yaml";
-import { isEqual, partial, set, throttle } from "lodash-es";
+import { partial, set, throttle } from "lodash-es";
 import { type ContentRect, type Rect } from "react-measure";
 import { v4 } from "uuid";
 
@@ -29,6 +29,7 @@ import {
     type PositionType,
     getLegendDetails,
 } from "@gooddata/sdk-ui-vis-commons";
+import { _isEqual } from "@gooddata/util";
 
 import { type IChartConfig } from "../../interfaces/chartConfig.js";
 import { type OnLegendReady } from "../../interfaces/chartProps.js";
@@ -361,12 +362,12 @@ export const HighChartsRenderer = memo(function HighChartsRenderer({
     useEffect(() => {
         const thisLegendItems = previousLegendItemsRef.current;
         const nextLegendItems = legend?.items ?? [];
-        const hasLegendChanged = !isEqual(thisLegendItems, nextLegendItems);
+        const hasLegendChanged = !_isEqual(thisLegendItems, nextLegendItems);
         if (hasLegendChanged) {
             resetLegendState(nextLegendItems);
         }
 
-        if (!isEqual(previousLegendItemsRef.current, nextLegendItems)) {
+        if (!_isEqual(previousLegendItemsRef.current, nextLegendItems)) {
             onLegendReady({
                 legendItems: getItems(nextLegendItems),
             });

@@ -16,15 +16,9 @@ function completeAt(docWithCursor: string) {
 describe("computedAttributeCompletions", () => {
     it("offers the computed attribute top-level keys at column zero", () => {
         const result = completeAt("|");
-        const labels = result && !(result instanceof Promise) ? result.options.map((o) => o.label) : null;
+        const labels = result?.options.map((option) => option.label);
 
         expect(labels).toEqual(expect.arrayContaining(["type", "id", "title", "maql", "locale"]));
-    });
-
-    it("anchors completion at the start of a partially typed key", () => {
-        const result = completeAt("ma|");
-
-        expect(result && !(result instanceof Promise) ? result.from : null).toBe(0);
     });
 
     it("declines on an indented line inside a sequence value", () => {

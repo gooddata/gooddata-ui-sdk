@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IAuditableUsers } from "../base/metadata.js";
 import { type ObjRef } from "../objRef/index.js";
@@ -137,7 +137,7 @@ export interface IDashboardAttachment {
  */
 
 export function isDashboardAttachment(obj: unknown): obj is IDashboardAttachment {
-    return !isEmpty(obj) && (obj as IDashboardAttachment).dashboard !== undefined;
+    return !_isEmpty(obj) && (obj as IDashboardAttachment).dashboard !== undefined;
 }
 
 /**
@@ -182,7 +182,7 @@ export interface IWidgetAttachment {
  */
 
 export function isWidgetAttachment(obj: unknown): obj is IWidgetAttachment {
-    return !isEmpty(obj) && (obj as IWidgetAttachment).widget !== undefined;
+    return !_isEmpty(obj) && (obj as IWidgetAttachment).widget !== undefined;
 }
 
 /**

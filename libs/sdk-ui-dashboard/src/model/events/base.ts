@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type DashboardContext } from "../types/commonTypes.js";
 
@@ -234,7 +234,7 @@ export interface IDashboardEvent<TPayload = any> {
  * @public
  */
 export function isDashboardEvent(obj: unknown): obj is IDashboardEvent {
-    return !isEmpty(obj) && (obj as IDashboardEvent).type?.startsWith("GDC.DASH/EVT");
+    return !_isEmpty(obj) && (obj as IDashboardEvent).type?.startsWith("GDC.DASH/EVT");
 }
 
 /**
@@ -277,7 +277,7 @@ export interface ICustomDashboardEvent<TPayload = any> {
  * @public
  */
 export function isCustomDashboardEvent(obj: unknown): obj is ICustomDashboardEvent {
-    return !isEmpty(obj) && (obj as IDashboardEvent).type?.startsWith("CUSTOM/EVT");
+    return !_isEmpty(obj) && (obj as IDashboardEvent).type?.startsWith("CUSTOM/EVT");
 }
 
 /**

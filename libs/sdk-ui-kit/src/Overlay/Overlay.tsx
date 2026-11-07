@@ -10,11 +10,13 @@ import {
 } from "react";
 
 import cx from "classnames";
-import { bindAll, debounce, isEqual, pick } from "lodash-es";
+import { bindAll, debounce, pick } from "lodash-es";
 import { flushSync } from "react-dom";
 import isReactEqual from "react-fast-compare";
 import { Portal } from "react-portal";
 import { v4 as uuid } from "uuid";
+
+import { _isEqual } from "@gooddata/util";
 
 import { isClickInsideOwnSubtree } from "../@ui/hooks/useCloseOnOutsideClick.js";
 import { type Alignment, type OverlayPositionType, type SameAsTargetPosition } from "../typings/overlay.js";
@@ -86,6 +88,9 @@ const stopPropagation = (e: ReactMouseEvent<HTMLDivElement, MouseEvent>): void =
     document.dispatchEvent(evt);
     document.documentElement.dispatchEvent(evt);
 };
+
+const getEventPath = (e: Partial<Event>): readonly EventTarget[] =>
+    typeof e.composedPath === "function" ? e.composedPath() : [];
 
 /**
  * @internal
@@ -183,7 +188,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
     }
 
     public override UNSAFE_componentWillReceiveProps(nextProps: IOverlayProps<T>): void {
-        if (!isEqual(pick(this.props, eventProps), pick(nextProps, eventProps))) {
+        if (!_isEqual(pick(this.props, eventProps), pick(nextProps, eventProps))) {
             this.removeListeners(this.props);
             this.addListeners(nextProps);
         }
@@ -191,7 +196,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
 
     public override shouldComponentUpdate(nextProps: IOverlayProps<T>, nextState: IOverlayState): boolean {
         const propsChanged = !isReactEqual(this.props, nextProps);
-        const positionChanged = !isEqual(this.state.alignment, nextState.alignment);
+        const positionChanged = !_isEqual(this.state.alignment, nextState.alignment);
         const visibilityChanged =
             Math.abs(this.state.visiblePart - nextState.visiblePart) > VISIBLE_PART_TOLERANCE;
 
@@ -343,7 +348,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
             Math.min(targetTop + this.bottomFromTarget - height, viewportTop + viewportHeight - height),
         );
 
-        return { ...alignment, top };
+        return { ...alignment, top, height };
     };
 
     private calculateConstrainedAlignment = (
@@ -430,7 +435,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
     }
 
     public getOverlayStyles = (): CSSProperties => {
-        const { alignTo, positionType } = this.props;
+        const { alignTo, positionType, keepBottomOnResize } = this.props;
         const { alignment } = this.state;
 
         const position = this.isSameAsTargetPosition(positionType)
@@ -443,7 +448,9 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
         return {
             position,
             left: alignment.left,
-            top: alignment.top,
+            ...(keepBottomOnResize
+                ? { top: alignment.top + (alignment.height ?? 0), transform: "translateY(-100%)" }
+                : { top: alignment.top }),
             zIndex: this.getZIndex(),
             visibility: this.isAligned() ? undefined : "hidden",
             ...(this.props.ensureVisibility &&
@@ -550,20 +557,26 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
         }
 
         const clickedElement = e.target;
+        // React may have re-rendered the target out of the DOM by now; the dispatch path still has it
+        const eventPath = getEventPath(e);
 
-        if (this.isElementInChildOverlay(clickedElement) || this.clickedInside) {
+        if (this.isElementInChildOverlay(clickedElement, eventPath) || this.clickedInside) {
             return true;
         }
 
         const ignoredRefElements = [this.overlayRef.current, ...(this.props.ignoreClicksOn ?? [])];
         const clickInsideIgnoredRefElement = ignoredRefElements.some((ref: any) => {
-            return ref?.contains(clickedElement);
+            return ref?.contains(clickedElement) || eventPath.includes(ref);
         });
         if (clickInsideIgnoredRefElement) {
             return true;
         }
 
-        return (this.props.ignoreClicksOnByClass ?? []).some((selector) => clickedElement.closest(selector));
+        return (this.props.ignoreClicksOnByClass ?? []).some(
+            (selector) =>
+                clickedElement.closest(selector) ||
+                eventPath.some((node) => node instanceof Element && node.matches(selector)),
+        );
     };
 
     private isAligned = () => {
@@ -571,7 +584,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
     };
 
     // makes assumption that overlays later in the DOM are child overlays
-    private isElementInChildOverlay = (element: HTMLElement) => {
+    private isElementInChildOverlay = (element: HTMLElement, eventPath: readonly EventTarget[]) => {
         const overlays = Array.from(document.querySelectorAll(".overlay-wrapper"));
         const thisOverlayIndex = overlays.findIndex((overlay) => overlay === this.overlayRef.current);
 
@@ -579,7 +592,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
         // misses a popup anchored inside a child overlay — attribute it through its anchor chain
         return overlays
             .slice(thisOverlayIndex + 1)
-            .some((overlay) => isClickInsideOwnSubtree(element, overlay));
+            .some((overlay) => isClickInsideOwnSubtree(element, overlay) || eventPath.includes(overlay));
     };
 
     public onDocumentMouseDown(e: MouseEvent): void {

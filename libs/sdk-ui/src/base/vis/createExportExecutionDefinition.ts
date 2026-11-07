@@ -1,7 +1,5 @@
 // (C) 2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
-
 import {
     type IExecutionDefinition,
     type IFilter,
@@ -20,6 +18,7 @@ import {
     mergeFilters,
     newDefForInsight,
 } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 /**
  * @internal
@@ -135,7 +134,8 @@ export function createExportExecutionDefinition(
         // the insight and the base definition typically both carry the root insight's filters
         // (mergeFilters concatenates attribute/ranking filters), so drop exact duplicates
         const dedupedFilters = remappedFilters.filter(
-            (filter, index) => remappedFilters.findIndex((candidate) => isEqual(candidate, filter)) === index,
+            (filter, index) =>
+                remappedFilters.findIndex((candidate) => _isEqual(candidate, filter)) === index,
         );
         return dedupedFilters.filter(createLocalIdFilterPredicate(exportDefinitionTemplate));
     };

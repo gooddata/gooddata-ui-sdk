@@ -2,7 +2,6 @@
 
 import { type ComponentType, type ReactElement, type ReactNode, useCallback, useMemo } from "react";
 
-import { isEmpty } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import {
@@ -25,6 +24,7 @@ import {
     type IMeasureValueFilterProps,
     useDeepEqualRefStablizer,
 } from "@gooddata/sdk-ui-filters";
+import { _isEmpty } from "@gooddata/util";
 
 import { convertDashboardAttributeFilterElementsUrisToValues } from "../../../_staging/dashboard/legacyFilterConvertors.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
@@ -229,7 +229,7 @@ export function DefaultDashboardFilterGroup(props: IDashboardFilterGroupProps): 
                 }
                 const filterElementsBy = dashboardAttributeFilterItemFilterElementsBy(filter.filter);
                 const filterElementsByDate = dashboardAttributeFilterItemFilterElementsByDate(filter.filter);
-                const isDependent = !isEmpty(filterElementsBy) || !isEmpty(filterElementsByDate);
+                const isDependent = !_isEmpty(filterElementsBy) || !_isEmpty(filterElementsByDate);
                 return [localId, isDependent];
             }),
         );

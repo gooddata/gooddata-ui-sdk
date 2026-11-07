@@ -1,5 +1,6 @@
-// (C) 2020-2025 GoodData Corporation
-import { isEmpty } from "lodash-es";
+// (C) 2020-2026 GoodData Corporation
+
+import { _isEmpty } from "@gooddata/util";
 
 import { type ObjRef } from "../objRef/index.js";
 
@@ -57,7 +58,7 @@ export interface IKpiWithPopComparison extends IKpiBase {
  */
 export function isKpiWithComparison(obj: unknown): obj is IKpiWithComparison {
     return (
-        !isEmpty(obj) &&
+        !_isEmpty(obj) &&
         ((obj as IKpiWithComparison).comparisonType === "previousPeriod" ||
             (obj as IKpiWithComparison).comparisonType === "lastYear")
     );
@@ -76,7 +77,7 @@ export interface IKpiWithoutComparison extends IKpiBase {
  * @alpha
  */
 export function isKpiWithoutComparison(obj: unknown): obj is IKpiWithoutComparison {
-    return !isEmpty(obj) && (obj as IKpiWithoutComparison).comparisonType === "none";
+    return !_isEmpty(obj) && (obj as IKpiWithoutComparison).comparisonType === "none";
 }
 
 /**

@@ -2,10 +2,10 @@
 
 import { useEffect } from "react";
 
-import { isEmpty } from "lodash-es";
 import { type MessageDescriptor } from "react-intl";
 
 import { type MessageParameters, useToastMessage } from "@gooddata/sdk-ui-kit";
+import { _isEmpty } from "@gooddata/util";
 
 import {
     type DashboardEventEvalFn,
@@ -16,12 +16,12 @@ import { type DashboardEvents } from "../../model/events/index.js";
 import { useDashboardEventsContext } from "../../model/react/DashboardEventsContext.js";
 
 export function isMessageDescriptor(obj: unknown): obj is MessageDescriptor {
-    return !isEmpty(obj) && (obj as MessageDescriptor).id !== undefined;
+    return !_isEmpty(obj) && (obj as MessageDescriptor).id !== undefined;
 }
 
 export function isMessageParameters(obj: unknown): obj is MessageParameters {
     return (
-        !isEmpty(obj) &&
+        !_isEmpty(obj) &&
         ((obj as MessageParameters).values !== undefined ||
             (obj as MessageParameters).duration !== undefined ||
             (obj as MessageParameters).intensive !== undefined)

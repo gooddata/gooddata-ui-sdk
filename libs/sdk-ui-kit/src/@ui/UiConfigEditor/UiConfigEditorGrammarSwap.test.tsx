@@ -14,9 +14,7 @@ import type { UiConfigEditor as UiConfigEditorComponent } from "./UiConfigEditor
 // The YAML grammar never finishes loading in this file: switching to it must CLEAR the JSON grammar
 // rather than keep parsing (and linting) the document as JSON while the chunk is on the wire — or
 // forever, when the import fails.
-vi.mock("@codemirror/lang-yaml", () => ({
-    yaml: () => new Promise(() => {}),
-}));
+vi.mock("@codemirror/lang-yaml", () => new Promise(() => {}));
 
 // A grammar that never loads is only reachable with a cold grammar cache, and that cache is a module
 // singleton shared by every suite in the worker once test isolation is off — warm, it would hand

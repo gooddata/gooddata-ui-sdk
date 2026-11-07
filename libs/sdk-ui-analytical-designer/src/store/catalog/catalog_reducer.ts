@@ -1,7 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
-
 import {
     type CatalogItem,
     type ICatalogAttributeHierarchy,
@@ -9,6 +7,7 @@ import {
     type ICatalogGroup,
     type IParameterMetadataObject,
 } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { type CatalogAction, CatalogActionTypeKeys } from "./catalog_store_actions.js";
 import { type ICatalogState } from "./catalog_types.js";
@@ -95,7 +94,7 @@ export const catalogReducer = (state = initialCatalogState, action: CatalogActio
             const { items } = action.payload;
 
             // prevent setting identical catalog items thus avoiding unnecessary expensive re-renders
-            if (isEqual(items, catalogStateItems(state))) {
+            if (_isEqual(items, catalogStateItems(state))) {
                 return state;
             }
 
@@ -108,7 +107,7 @@ export const catalogReducer = (state = initialCatalogState, action: CatalogActio
             const { groups } = action.payload;
 
             // prevent setting identical catalog groups thus avoiding unnecessary expensive re-renders
-            if (isEqual(groups, catalogStateGroups(state))) {
+            if (_isEqual(groups, catalogStateGroups(state))) {
                 return state;
             }
 
@@ -121,7 +120,7 @@ export const catalogReducer = (state = initialCatalogState, action: CatalogActio
             const { items: availableItemsUris } = action.payload;
 
             // prevent setting identical available uris thus avoiding unnecessary expensive re-renders
-            if (isEqual(availableItemsUris, catalogStateAvailableItemsUris(state))) {
+            if (_isEqual(availableItemsUris, catalogStateAvailableItemsUris(state))) {
                 return state;
             }
 

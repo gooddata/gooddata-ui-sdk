@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-tests-scenarios",
-    "version": "11.68.0-alpha.2",
+    "version": "11.68.0-alpha.4",
     "description": "GoodData React components scenarios project",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
@@ -57,6 +57,7 @@
         "@gooddata/sdk-ui-ext": "workspace:*",
         "@gooddata/sdk-ui-geo": "workspace:*",
         "@gooddata/sdk-ui-pivot": "workspace:*",
+        "@gooddata/util": "workspace:*",
         "@testing-library/dom": "10.4.2",
         "@testing-library/react": "16.3.0",
         "@types/lodash-es": "4.17.12",

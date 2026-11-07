@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-analytical-designer: Fixed duplicated XLSX and raw CSV icons in the dashboard widget export menu after opening a visualization in Analytical Designer.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

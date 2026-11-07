@@ -1,7 +1,8 @@
 // (C) 2019-2026 GoodData Corporation
 
 import type { Feature, GeoJsonProperties, Geometry } from "geojson";
-import { isEmpty } from "lodash-es";
+
+import { _isEmpty } from "@gooddata/util";
 
 import { type ISemanticConditionalFormatting } from "../../conditionalFormatting/index.js";
 import {
@@ -657,7 +658,7 @@ export function executionResultLimitTypeToKind(limitType: string): ExecutionResu
  * @public
  */
 export function isAttributeDescriptor(obj: unknown): obj is IAttributeDescriptor {
-    return !isEmpty(obj) && (obj as IAttributeDescriptor).attributeHeader !== undefined;
+    return !_isEmpty(obj) && (obj as IAttributeDescriptor).attributeHeader !== undefined;
 }
 
 /**
@@ -666,7 +667,7 @@ export function isAttributeDescriptor(obj: unknown): obj is IAttributeDescriptor
  * @public
  */
 export function isMeasureGroupDescriptor(obj: unknown): obj is IMeasureGroupDescriptor {
-    return !isEmpty(obj) && (obj as IMeasureGroupDescriptor).measureGroupHeader !== undefined;
+    return !_isEmpty(obj) && (obj as IMeasureGroupDescriptor).measureGroupHeader !== undefined;
 }
 
 /**
@@ -675,7 +676,7 @@ export function isMeasureGroupDescriptor(obj: unknown): obj is IMeasureGroupDesc
  * @public
  */
 export function isMeasureDescriptor(obj: unknown): obj is IMeasureDescriptor {
-    return !isEmpty(obj) && (obj as IMeasureDescriptor).measureHeaderItem !== undefined;
+    return !_isEmpty(obj) && (obj as IMeasureDescriptor).measureHeaderItem !== undefined;
 }
 
 /**
@@ -684,7 +685,7 @@ export function isMeasureDescriptor(obj: unknown): obj is IMeasureDescriptor {
  * @public
  */
 export function isTotalDescriptor(obj: unknown): obj is ITotalDescriptor {
-    return !isEmpty(obj) && (obj as ITotalDescriptor).totalHeaderItem !== undefined;
+    return !_isEmpty(obj) && (obj as ITotalDescriptor).totalHeaderItem !== undefined;
 }
 
 /**
@@ -693,7 +694,7 @@ export function isTotalDescriptor(obj: unknown): obj is ITotalDescriptor {
  * @public
  */
 export function isColorDescriptor(obj: unknown): obj is IColorDescriptor {
-    return !isEmpty(obj) && (obj as IColorDescriptor).colorHeaderItem !== undefined;
+    return !_isEmpty(obj) && (obj as IColorDescriptor).colorHeaderItem !== undefined;
 }
 
 /**
@@ -702,7 +703,7 @@ export function isColorDescriptor(obj: unknown): obj is IColorDescriptor {
  * @public
  */
 export function isResultAttributeHeader(obj: unknown): obj is IResultAttributeHeader {
-    return !isEmpty(obj) && (obj as IResultAttributeHeader).attributeHeaderItem !== undefined;
+    return !_isEmpty(obj) && (obj as IResultAttributeHeader).attributeHeaderItem !== undefined;
 }
 
 /**
@@ -711,7 +712,7 @@ export function isResultAttributeHeader(obj: unknown): obj is IResultAttributeHe
  * @public
  */
 export function isResultMeasureHeader(obj: unknown): obj is IResultMeasureHeader {
-    return !isEmpty(obj) && (obj as IResultMeasureHeader).measureHeaderItem?.order !== undefined;
+    return !_isEmpty(obj) && (obj as IResultMeasureHeader).measureHeaderItem?.order !== undefined;
 }
 
 /**
@@ -720,7 +721,7 @@ export function isResultMeasureHeader(obj: unknown): obj is IResultMeasureHeader
  * @public
  */
 export function isResultTotalHeader(obj: unknown): obj is IResultTotalHeader {
-    return !isEmpty(obj) && (obj as IResultTotalHeader).totalHeaderItem?.type !== undefined;
+    return !_isEmpty(obj) && (obj as IResultTotalHeader).totalHeaderItem?.type !== undefined;
 }
 
 //

@@ -30,6 +30,14 @@ describe("clientProfile", () => {
         expect(clientProfile.templateSubtrees).toEqual(["module", "harness"]);
     });
 
+    it("maps the headless kind to the headless templates under the same destination names", () => {
+        expect(clientProfile.supportedKinds).toEqual(["application", "headless"]);
+        expect(clientProfile.templateSubtreesForKind?.("headless")).toEqual([
+            { source: "headless-module", dest: "module" },
+            { source: "headless-harness", dest: "harness" },
+        ]);
+    });
+
     it("does not prefer workspace templates (would leak workspace tsconfig paths to clients)", () => {
         expect(clientProfile.preferWorkspaceTemplate ?? false).toBe(false);
     });

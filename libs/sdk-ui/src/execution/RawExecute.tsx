@@ -1,10 +1,9 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
-import { isEqual } from "lodash-es";
-
 import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { _isEqual } from "@gooddata/util";
 
 import { type IExecuteErrorComponent, type IExecuteLoadingComponent } from "./interfaces.js";
 import { withExecution } from "./withExecution.js";
@@ -173,7 +172,7 @@ export const RawExecute = withExecution<IRawExecuteProps>({
 
         return (
             relevantProps.some((propName) => prevProps[propName] !== nextProps[propName]) ||
-            relevantPropsDeepEqual.some((propName) => !isEqual(prevProps[propName], nextProps[propName])) ||
+            relevantPropsDeepEqual.some((propName) => !_isEqual(prevProps[propName], nextProps[propName])) ||
             prevProps.execution.fingerprint() !== nextProps.execution.fingerprint()
         );
     },

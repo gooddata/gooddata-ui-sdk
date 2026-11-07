@@ -1,7 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
 import { type ColDef, type GridApi, type IDatasource, type IGetRowsParams } from "ag-grid-community";
-import { isEqual } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { type IDataView, type IExecutionResult, type IPreparedExecution } from "@gooddata/sdk-backend-spi";
@@ -17,6 +16,7 @@ import {
     isAttributeSort,
 } from "@gooddata/sdk-model";
 import { BucketNames, DataViewFacade, emptyHeaderTitleFromIntl } from "@gooddata/sdk-ui";
+import { _isEqual } from "@gooddata/util";
 
 import { type ColumnHeadersPosition } from "../../publicTypes.js";
 import { COLS_PER_PAGE } from "../base/constants.js";
@@ -276,9 +276,9 @@ export class AgGridDatasource implements IDatasource {
         const desiredRowTotals = this.config.getRowTotals();
 
         if (
-            !isEqual(this.currentSorts, desiredSorts) ||
-            !isEqual(currentTotals, desiredTotals) ||
-            !isEqual(currentRowTotals, desiredRowTotals)
+            !_isEqual(this.currentSorts, desiredSorts) ||
+            !_isEqual(currentTotals, desiredTotals) ||
+            !_isEqual(currentRowTotals, desiredRowTotals)
         ) {
             // Due to timing issues in react18, transform result needs to be deferred so that remaining
             // re-renders can finish in the meantime -- this fixes the cases in AD: immediate undo after

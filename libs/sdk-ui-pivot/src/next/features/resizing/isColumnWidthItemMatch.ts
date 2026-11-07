@@ -1,5 +1,6 @@
-// (C) 2025 GoodData Corporation
-import { isEqual } from "lodash-es";
+// (C) 2025-2026 GoodData Corporation
+
+import { _isEqual } from "@gooddata/util";
 
 import {
     type ColumnWidthItem,
@@ -34,21 +35,21 @@ export function isColumnWidthItemMatch(
     }
 
     if (isMeasureColumnWidthItem(columnWidthItem1) && isMeasureColumnWidthItem(columnWidthItem2)) {
-        return isEqual(
+        return _isEqual(
             columnWidthItem1.measureColumnWidthItem.locators,
             columnWidthItem2.measureColumnWidthItem.locators,
         );
     }
 
     if (isSliceMeasureColumnWidthItem(columnWidthItem1) && isSliceMeasureColumnWidthItem(columnWidthItem2)) {
-        return isEqual(
+        return _isEqual(
             columnWidthItem1.sliceMeasureColumnWidthItem.locators,
             columnWidthItem2.sliceMeasureColumnWidthItem.locators,
         );
     }
 
     if (isMixedValuesColumnWidthItem(columnWidthItem1) && isMixedValuesColumnWidthItem(columnWidthItem2)) {
-        return isEqual(
+        return _isEqual(
             columnWidthItem1.mixedValuesColumnWidthItem.locators,
             columnWidthItem2.mixedValuesColumnWidthItem.locators,
         );

@@ -1,8 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import { type AuthenticationFlow } from "@gooddata/sdk-backend-spi";
+import { _isEmpty } from "@gooddata/util";
 
 /**
  * Error codes recognized by the SDK.
@@ -305,7 +304,7 @@ export class ContractExpiredSdkError extends GoodDataSdkError {
  * @public
  */
 export function isGoodDataSdkError(obj: unknown): obj is GoodDataSdkError {
-    return !isEmpty(obj) && (obj as GoodDataSdkError).seType !== undefined;
+    return !_isEmpty(obj) && (obj as GoodDataSdkError).seType !== undefined;
 }
 
 /**
@@ -314,7 +313,7 @@ export function isGoodDataSdkError(obj: unknown): obj is GoodDataSdkError {
  * @public
  */
 export function isBadRequest(obj: unknown): obj is BadRequestSdkError {
-    return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "BAD_REQUEST";
+    return !_isEmpty(obj) && (obj as GoodDataSdkError).seType === "BAD_REQUEST";
 }
 
 /**
@@ -323,7 +322,7 @@ export function isBadRequest(obj: unknown): obj is BadRequestSdkError {
  * @public
  */
 export function isUnauthorized(obj: unknown): obj is UnauthorizedSdkError {
-    return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "UNAUTHORIZED";
+    return !_isEmpty(obj) && (obj as GoodDataSdkError).seType === "UNAUTHORIZED";
 }
 
 /**
@@ -332,7 +331,7 @@ export function isUnauthorized(obj: unknown): obj is UnauthorizedSdkError {
  * @public
  */
 export function isGeoLocationMissing(obj: unknown): obj is GeoLocationMissingSdkError {
-    return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "GEO_LOCATION_MISSING";
+    return !_isEmpty(obj) && (obj as GoodDataSdkError).seType === "GEO_LOCATION_MISSING";
 }
 
 /**
@@ -341,7 +340,7 @@ export function isGeoLocationMissing(obj: unknown): obj is GeoLocationMissingSdk
  * @public
  */
 export function isGeoAreaMissing(obj: unknown): obj is GeoAreaMissingSdkError {
-    return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "GEO_AREA_MISSING";
+    return !_isEmpty(obj) && (obj as GoodDataSdkError).seType === "GEO_AREA_MISSING";
 }
 
 /**
@@ -350,7 +349,7 @@ export function isGeoAreaMissing(obj: unknown): obj is GeoAreaMissingSdkError {
  * @public
  */
 export function isGeoTokenMissing(obj: unknown): obj is GeoTokenMissingSdkError {
-    return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "GEO_MAPBOX_TOKEN_MISSING";
+    return !_isEmpty(obj) && (obj as GoodDataSdkError).seType === "GEO_MAPBOX_TOKEN_MISSING";
 }
 
 /**
@@ -359,7 +358,7 @@ export function isGeoTokenMissing(obj: unknown): obj is GeoTokenMissingSdkError 
  * @public
  */
 export function isDataTooLargeToDisplay(obj: unknown): obj is DataTooLargeToDisplaySdkError {
-    return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "DATA_TOO_LARGE_TO_DISPLAY";
+    return !_isEmpty(obj) && (obj as GoodDataSdkError).seType === "DATA_TOO_LARGE_TO_DISPLAY";
 }
 
 /**
@@ -368,7 +367,7 @@ export function isDataTooLargeToDisplay(obj: unknown): obj is DataTooLargeToDisp
  * @public
  */
 export function isDataTooLargeToCompute(obj: unknown): obj is DataTooLargeToComputeSdkError {
-    return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "DATA_TOO_LARGE_TO_COMPUTE";
+    return !_isEmpty(obj) && (obj as GoodDataSdkError).seType === "DATA_TOO_LARGE_TO_COMPUTE";
 }
 
 /**
@@ -377,7 +376,7 @@ export function isDataTooLargeToCompute(obj: unknown): obj is DataTooLargeToComp
  * @public
  */
 export function isForecastNotReceived(obj: unknown): obj is ForecastNotReceivedSdkError {
-    return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "FORECAST_NOT_RECEIVED";
+    return !_isEmpty(obj) && (obj as GoodDataSdkError).seType === "FORECAST_NOT_RECEIVED";
 }
 
 /**
@@ -386,7 +385,7 @@ export function isForecastNotReceived(obj: unknown): obj is ForecastNotReceivedS
  * @public
  */
 export function isClusteringNotReceived(obj: unknown): obj is ClusteringNotReceivedSdkError {
-    return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "CLUSTERING_NOT_RECEIVED";
+    return !_isEmpty(obj) && (obj as GoodDataSdkError).seType === "CLUSTERING_NOT_RECEIVED";
 }
 
 /**
@@ -395,7 +394,7 @@ export function isClusteringNotReceived(obj: unknown): obj is ClusteringNotRecei
  * @public
  */
 export function isNegativeValues(obj: unknown): obj is NegativeValuesSdkError {
-    return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "NEGATIVE_VALUES";
+    return !_isEmpty(obj) && (obj as GoodDataSdkError).seType === "NEGATIVE_VALUES";
 }
 
 /**
@@ -404,7 +403,7 @@ export function isNegativeValues(obj: unknown): obj is NegativeValuesSdkError {
  * @public
  */
 export function isNoDataSdkError(obj: unknown): obj is NoDataSdkError {
-    return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "NO_DATA";
+    return !_isEmpty(obj) && (obj as GoodDataSdkError).seType === "NO_DATA";
 }
 
 /**
@@ -413,7 +412,7 @@ export function isNoDataSdkError(obj: unknown): obj is NoDataSdkError {
  * @public
  */
 export function isNotFound(obj: unknown): obj is NotFoundSdkError {
-    return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "NOT_FOUND";
+    return !_isEmpty(obj) && (obj as GoodDataSdkError).seType === "NOT_FOUND";
 }
 
 /**
@@ -422,7 +421,7 @@ export function isNotFound(obj: unknown): obj is NotFoundSdkError {
  * @public
  */
 export function isProtectedReport(obj: unknown): obj is ProtectedReportSdkError {
-    return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "PROTECTED_REPORT";
+    return !_isEmpty(obj) && (obj as GoodDataSdkError).seType === "PROTECTED_REPORT";
 }
 
 /**
@@ -431,7 +430,7 @@ export function isProtectedReport(obj: unknown): obj is ProtectedReportSdkError 
  * @public
  */
 export function isUnknownSdkError(obj: unknown): obj is UnexpectedSdkError {
-    return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "UNKNOWN_ERROR";
+    return !_isEmpty(obj) && (obj as GoodDataSdkError).seType === "UNKNOWN_ERROR";
 }
 
 /**
@@ -440,7 +439,7 @@ export function isUnknownSdkError(obj: unknown): obj is UnexpectedSdkError {
  * @public
  */
 export function isCancelledSdkError(obj: unknown): obj is CancelledSdkError {
-    return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "CANCELLED";
+    return !_isEmpty(obj) && (obj as GoodDataSdkError).seType === "CANCELLED";
 }
 
 /**
@@ -449,7 +448,7 @@ export function isCancelledSdkError(obj: unknown): obj is CancelledSdkError {
  * @public
  */
 export function isDynamicScriptLoadSdkError(obj: unknown): obj is DynamicScriptLoadSdkError {
-    return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "DYNAMIC_SCRIPT_LOAD_ERROR";
+    return !_isEmpty(obj) && (obj as GoodDataSdkError).seType === "DYNAMIC_SCRIPT_LOAD_ERROR";
 }
 
 /**
@@ -458,7 +457,7 @@ export function isDynamicScriptLoadSdkError(obj: unknown): obj is DynamicScriptL
  * @public
  */
 export function isResultCacheMissingSdkError(obj: unknown): obj is ResultCacheMissingSdkError {
-    return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "RESULT_CACHE_MISSING";
+    return !_isEmpty(obj) && (obj as GoodDataSdkError).seType === "RESULT_CACHE_MISSING";
 }
 
 /**
@@ -467,5 +466,5 @@ export function isResultCacheMissingSdkError(obj: unknown): obj is ResultCacheMi
  * @public
  */
 export function isContractExpiredSdkError(obj: unknown): obj is ContractExpiredSdkError {
-    return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "CONTRACT_EXPIRED";
+    return !_isEmpty(obj) && (obj as GoodDataSdkError).seType === "CONTRACT_EXPIRED";
 }

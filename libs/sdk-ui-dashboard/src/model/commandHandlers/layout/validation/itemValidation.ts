@@ -1,6 +1,5 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
@@ -27,6 +26,7 @@ import {
     measureItem,
     objRefToString,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { newInsight } from "../../../../_staging/insight/insightBuilder.js";
 import { type ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
@@ -108,7 +108,7 @@ export function* validateAndNormalizeWidgetItems(
         insightRefs,
     );
 
-    if (!isEmpty(resolvedInsights.missing)) {
+    if (!_isEmpty(resolvedInsights.missing)) {
         throw invalidArgumentsProvided(
             ctx,
             cmd,

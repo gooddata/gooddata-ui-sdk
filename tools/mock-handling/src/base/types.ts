@@ -1,5 +1,6 @@
-// (C) 2007-2025 GoodData Corporation
-import { isEmpty } from "lodash-es";
+// (C) 2007-2026 GoodData Corporation
+
+import { _isEmpty } from "@gooddata/util";
 
 /**
  * This exception is thrown when a fatal error occurs during the data recording.
@@ -53,5 +54,5 @@ export type DataRecorderConfig = {
 };
 
 export function isDataRecorderError(obj: unknown): obj is DataRecorderError {
-    return !isEmpty(obj) && (obj as DataRecorderError).rc !== undefined;
+    return !_isEmpty(obj) && (obj as DataRecorderError).rc !== undefined;
 }

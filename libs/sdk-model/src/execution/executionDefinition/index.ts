@@ -1,8 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import SparkMD5 from "spark-md5";
 import { invariant } from "ts-invariant";
+
+import { _isEmpty } from "@gooddata/util";
 
 import { type IAttribute } from "../attribute/index.js";
 import { type IDimension, dimensionTotals } from "../base/dimension.js";
@@ -198,7 +199,7 @@ export function defWithFilters(
 ): IExecutionDefinition {
     invariant(def, "execution definition to add more filters to must be defined");
 
-    if (isEmpty(filters)) {
+    if (_isEmpty(filters)) {
         return def;
     }
 

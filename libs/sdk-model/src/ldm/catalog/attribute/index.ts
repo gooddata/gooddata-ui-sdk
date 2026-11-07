@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IDataSetMetadataObject } from "../../../ldm/metadata/dataSet/index.js";
 import { type IUnavailableReference } from "../../../objRef/unavailableReference.js";
@@ -62,5 +62,5 @@ export interface ICatalogAttribute extends IGroupableCatalogItemBase {
  * @public
  */
 export function isCatalogAttribute(obj: unknown): obj is ICatalogAttribute {
-    return !isEmpty(obj) && (obj as ICatalogAttribute).type === "attribute";
+    return !_isEmpty(obj) && (obj as ICatalogAttribute).type === "attribute";
 }

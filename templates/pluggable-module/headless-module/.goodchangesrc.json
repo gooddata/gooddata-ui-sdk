@@ -1,0 +1,16 @@
+{
+    "type": "app",
+    "targets": [
+        {
+            "targetName": "gdc-headless-template-name-module-unit-tests",
+            "changeDirs": [
+                {
+                    "glob": "**/*",
+                    "type": "fine-grained",
+                    "filter": "**/*.test.ts"
+                }
+            ]
+        }
+    ],
+    "ignores": ["README.md", ".oxlintrc.json", "eslint.config.ts", ".env.template", ".gitignore"]
+}

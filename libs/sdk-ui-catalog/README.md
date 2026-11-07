@@ -90,4 +90,4 @@ export function App() {
 
 (C) 2025 GoodData Corporation
 
-This project is licensed under the MIT License. See [LICENSE](./LICENSE).
+This project is licensed under the GoodData commercial license. See [LICENSE](./LICENSE).

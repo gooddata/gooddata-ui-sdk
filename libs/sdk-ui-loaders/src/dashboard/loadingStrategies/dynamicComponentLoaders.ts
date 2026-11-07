@@ -1,6 +1,5 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { type IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
@@ -11,6 +10,7 @@ import {
     type IDashboardEngine,
     type IDashboardPluginContract_V1,
 } from "@gooddata/sdk-ui-dashboard";
+import { _isEmpty } from "@gooddata/util";
 
 import { type LoadedPlugin, type ModuleFederationIntegration } from "../types.js";
 
@@ -31,7 +31,7 @@ export async function dynamicDashboardEngineLoader(
 ): Promise<IDashboardEngine> {
     const { plugins } = dashboard.references;
     // if this bombs, this loader was called with no plugins (which means noop version should have been used)
-    invariant(!isEmpty(plugins));
+    invariant(!_isEmpty(plugins));
 
     const loadedEngines: IDashboardEngine[] = await Promise.all(
         plugins.map(async (plugin) => {

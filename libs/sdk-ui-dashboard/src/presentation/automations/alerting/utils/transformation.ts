@@ -1,6 +1,5 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {
@@ -31,6 +30,7 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 import { ARITHMETIC_OPERATORS, COMPARISON_OPERATORS, RELATIVE_OPERATORS } from "@gooddata/sdk-ui-ext";
+import { _isEqual } from "@gooddata/util";
 
 import {
     type AlertAttribute,
@@ -198,7 +198,8 @@ export function transformAlertByAttribute(
         alert,
         alert.alert?.execution.attributes[0],
     );
-    const originalFilters = alert.alert?.execution.filters.filter((f) => !isEqual(f, filterDefinition)) ?? [];
+    const originalFilters =
+        alert.alert?.execution.filters.filter((f) => !_isEqual(f, filterDefinition)) ?? [];
 
     const customFilters: IFilter[] = [];
     if (attr) {

@@ -2,13 +2,13 @@
 
 import { useCallback, useRef, useState } from "react";
 
-import { isEqual } from "lodash-es";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 import { type ObjRef, areObjRefsEqual, isAllTimeDateFilterOption } from "@gooddata/sdk-model";
 import { type OverTimeComparisonType, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 import { DateFilterHelpers } from "@gooddata/sdk-ui-filters";
 import { normalizeSelectedFilterOption } from "@gooddata/sdk-ui-filters/internal";
+import { _isEqual } from "@gooddata/util";
 
 import { type IDecoratedDateDataset } from "../../../models/decorated_date_dataset.js";
 import { loadDateDatasetsToDateDropdown } from "../../../sagas/date_datasets/date_datasets_actions.js";
@@ -108,7 +108,7 @@ export function DateFilter(ownProps: IDateFilterProps) {
 
     const lastMigratedFilters = useRef(migratedAdditionalFilters);
 
-    if (!isEqual(migratedAdditionalFilters, lastMigratedFilters.current)) {
+    if (!_isEqual(migratedAdditionalFilters, lastMigratedFilters.current)) {
         setCurrentMigratedFilters(migratedAdditionalFilters);
     }
     lastMigratedFilters.current = migratedAdditionalFilters;

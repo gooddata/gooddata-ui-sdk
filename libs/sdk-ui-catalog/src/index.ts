@@ -30,6 +30,8 @@ export type {
     AsCodeSerialization,
     AsCodeValidation,
     AsCodeValidationContext,
+    AsCodeDocumentPath,
+    AsCodeFieldMark,
 } from "./asCode/descriptor.js";
 
 /*

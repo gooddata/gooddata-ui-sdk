@@ -1,6 +1,5 @@
 // (C) 2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, put, select } from "redux-saga/effects";
@@ -13,6 +12,7 @@ import {
     isInsightWidget,
     objRefToString,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IAddTextAttributeFilter } from "../../../commands/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
@@ -140,7 +140,7 @@ export function* addTextAttributeFilterHandler(
             selectionType: DashboardAttributeFilterSelectionTypeValues.LIST_OR_TEXT,
         }),
     );
-    if (!isEmpty(configActions)) {
+    if (!_isEmpty(configActions)) {
         yield put(batchActions(configActions));
     }
 

@@ -1,6 +1,5 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { isEmpty, isEqual } from "lodash-es";
 import { invariant } from "ts-invariant";
 import { v4 as uuid } from "uuid";
 
@@ -112,6 +111,7 @@ import {
     isTempFilterContext,
     objRefToString,
 } from "@gooddata/sdk-model";
+import { _isEmpty, _isEqual } from "@gooddata/util";
 
 import {
     convertAnalyticalDashboardToListItems,
@@ -526,7 +526,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     ): Promise<IDashboard> => {
         if (!areObjRefsEqual(originalDashboard.ref, updatedDashboard.ref)) {
             throw new Error("Cannot update dashboard with different refs!");
-        } else if (isEqual(originalDashboard, updatedDashboard)) {
+        } else if (_isEqual(originalDashboard, updatedDashboard)) {
             return originalDashboard;
         }
 
@@ -978,7 +978,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             fileName: filename,
             delimiter,
             executionSettings,
-            customOverride: isEmpty(customOverrides)
+            customOverride: _isEmpty(customOverrides)
                 ? undefined
                 : {
                       metrics: customOverrides?.measures,
@@ -1623,7 +1623,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             return this.createFilterContext(sanitizedFilterContext);
         } else if (isFilterContext(sanitizedFilterContext)) {
             // Update the current filter context
-            const shouldUpdateFilterContext = !isEqual(originalFilterContext, sanitizedFilterContext);
+            const shouldUpdateFilterContext = !_isEqual(originalFilterContext, sanitizedFilterContext);
             if (shouldUpdateFilterContext) {
                 return this.updateFilterContext(sanitizedFilterContext);
             }

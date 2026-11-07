@@ -1,7 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import {
     type ILowerBoundedFilter,
     type IUpperBoundedFilter,
@@ -9,6 +7,7 @@ import {
     type ObjRef,
 } from "@gooddata/sdk-model";
 import { type OverTimeComparisonType } from "@gooddata/sdk-ui";
+import { _isEmpty } from "@gooddata/util";
 
 import { type Granularity } from "../../models/granularity.js";
 
@@ -248,27 +247,27 @@ export type IOnAttributeFilterApplyProps = {
 };
 
 const isDateFilter = (filterItem: IFilterBarItem): filterItem is IDateFilter => {
-    return !isEmpty(filterItem) && filterItem.type === "date";
+    return !_isEmpty(filterItem) && filterItem.type === "date";
 };
 
 const isAttributeFilter = (filterItem: IFilterBarItem): filterItem is IAttributeFilter => {
-    return !isEmpty(filterItem) && filterItem.type === "attribute";
+    return !_isEmpty(filterItem) && filterItem.type === "attribute";
 };
 
 const isMeasureValueFilter = (filterItem: IFilterBarItem): filterItem is IMeasureValueFilter => {
-    return !isEmpty(filterItem) && filterItem.type === "measure";
+    return !_isEmpty(filterItem) && filterItem.type === "measure";
 };
 
 const isRankingFilter = (filterItem: IFilterBarItem): filterItem is IRankingFilter => {
-    return !isEmpty(filterItem) && filterItem.type === "ranking";
+    return !_isEmpty(filterItem) && filterItem.type === "ranking";
 };
 
 const isComparisonCondition = (condition: MeasureValueFilterCondition): condition is IComparisonCondition => {
-    return !isEmpty(condition) && (condition as IComparisonCondition).comparison !== undefined;
+    return !_isEmpty(condition) && (condition as IComparisonCondition).comparison !== undefined;
 };
 
 const isRangeCondition = (condition: MeasureValueFilterCondition): condition is IRangeCondition => {
-    return !isEmpty(condition) && (condition as IRangeCondition).range !== undefined;
+    return !_isEmpty(condition) && (condition as IRangeCondition).range !== undefined;
 };
 
 const isAttributeFilterSelectAll = ({ selectedElements, isInverted }: IAttributeFilterConfig): boolean => {

@@ -1,8 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
-
 import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { _isEqual } from "@gooddata/util";
 
 import { type ICorePivotTableProps } from "../../publicTypes.js";
 import { type ICorePivotTableState, type InternalTableState } from "../../tableState.js";
@@ -50,9 +49,9 @@ export class ComponentUpdateAnalyzer {
      * - prepared execution has changed AND the new prep execution definition does not match currently shown data.
      */
     public isReinitNeeded(prevProps: ICorePivotTableProps): boolean {
-        const drillingIsSame = isEqual(prevProps.drillableItems, this.context.props.drillableItems);
+        const drillingIsSame = _isEqual(prevProps.drillableItems, this.context.props.drillableItems);
 
-        const columnHeadersPositionIsSame = isEqual(
+        const columnHeadersPositionIsSame = _isEqual(
             prevProps.config?.columnHeadersPosition,
             this.context.props.config?.columnHeadersPosition,
         );
@@ -121,7 +120,7 @@ export class ComponentUpdateAnalyzer {
             (props) => props?.config?.menu,
         ];
         return propsRequiringAgGridRerender.some(
-            (propGetter) => !isEqual(propGetter(this.context.props), propGetter(prevProps)),
+            (propGetter) => !_isEqual(propGetter(this.context.props), propGetter(prevProps)),
         );
     }
 
@@ -154,7 +153,7 @@ export class ComponentUpdateAnalyzer {
     ): boolean {
         const prevColumnWidths = getColumnWidths(prevProps);
         const columnWidths = getColumnWidths(this.context.props);
-        return !isEqual(prevColumnWidths, columnWidths);
+        return !_isEqual(prevColumnWidths, columnWidths);
     }
 
     /**
@@ -163,7 +162,7 @@ export class ComponentUpdateAnalyzer {
     public hasMaxHeightChanged(prevProps: ICorePivotTableProps): boolean {
         return (
             !!this.context.props.config?.maxHeight &&
-            !isEqual(this.context.props.config?.maxHeight, prevProps.config?.maxHeight)
+            !_isEqual(this.context.props.config?.maxHeight, prevProps.config?.maxHeight)
         );
     }
 

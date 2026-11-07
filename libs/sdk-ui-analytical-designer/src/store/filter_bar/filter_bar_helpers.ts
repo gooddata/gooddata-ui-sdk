@@ -1,7 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
 import invariant from "invariant";
-import { isEqual, omitBy, union } from "lodash-es";
+import { omitBy, union } from "lodash-es";
 
 import { type IAttributeFilterConfigs, type ObjRef, areObjRefsEqual, idRef } from "@gooddata/sdk-model";
 import { type OverTimeComparisonType } from "@gooddata/sdk-ui";
@@ -16,6 +16,7 @@ import {
     isDateFilter,
     isMeasureValueFilter,
 } from "@gooddata/sdk-ui-ext/internal";
+import { _isEqual } from "@gooddata/util";
 
 import { generateBucketItemIdentifier } from "../../models/bucket_item_identifier.js";
 import { DATE_DATASET_ATTRIBUTE } from "../../models/date_item.js";
@@ -458,7 +459,7 @@ export const updateDateFilter = (
         ),
     };
 
-    if (isEqual(currentFilterConfigDefinedValues, updatedFilterItem)) {
+    if (_isEqual(currentFilterConfigDefinedValues, updatedFilterItem)) {
         return filterBar;
     }
 

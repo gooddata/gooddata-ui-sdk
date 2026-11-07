@@ -6,7 +6,8 @@
 // we need direct import from esm module otherwise import ar not node compatible
 // https://github.com/reduxjs/redux-toolkit/issues/1960
 import { createSelector } from "@reduxjs/toolkit";
-import { isEmpty, isEqual } from "lodash-es";
+
+import { _isEmpty, _isEqual } from "@gooddata/util";
 
 import { type InvertableAttributeElementSelection } from "../../../types/attributeFilterHandler.js";
 import { type AttributeElementKey } from "../../../types/common.js";
@@ -101,7 +102,7 @@ export const selectIsWorkingSelectionChanged: FilterSelector<boolean> = createSe
     selectCommittedSelection,
     (isWorkingSelectionInverted, workingSelection, isCommitedSelectionInverted, commitedSelection) =>
         isWorkingSelectionInverted !== isCommitedSelectionInverted ||
-        !isEqual([...commitedSelection].sort(), [...workingSelection].sort()),
+        !_isEqual([...commitedSelection].sort(), [...workingSelection].sort()),
 );
 
 /**
@@ -109,5 +110,5 @@ export const selectIsWorkingSelectionChanged: FilterSelector<boolean> = createSe
  */
 export const selectIsWorkingSelectionEmpty: FilterSelector<boolean> = createSelector(
     selectWorkingSelection,
-    isEmpty,
+    _isEmpty,
 );

@@ -1,7 +1,5 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import {
     type IAttributeMetadataObject,
     type ICatalogDateDataset,
@@ -20,6 +18,7 @@ import {
     sortDateDatasets,
     unrelatedHeader,
 } from "@gooddata/sdk-ui-kit";
+import { _isEmpty } from "@gooddata/util";
 
 const DATE_DROPDOWN_BODY_MARGIN = 6;
 const UNRELATED_HEIGHT = 37;
@@ -52,7 +51,7 @@ function isDateFiltered(measure: IMeasure): boolean {
 
 export function getDateOptionsDisabledForInsight(insight: IInsightDefinition): boolean {
     const measures = insightMeasures(insight);
-    return isEmpty(measures) ? false : measures.every(isDateFiltered);
+    return _isEmpty(measures) ? false : measures.every(isDateFiltered);
 }
 
 export function removeDateFromTitle(title: string): string {

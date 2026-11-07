@@ -1,6 +1,8 @@
-// (C) 2019-2025 GoodData Corporation
-import { isEmpty } from "lodash-es";
+// (C) 2019-2026 GoodData Corporation
+
 import { invariant } from "ts-invariant";
+
+import { _isEmpty } from "@gooddata/util";
 
 import { type Identifier } from "../../objRef/index.js";
 import { type IAttribute, attributeLocalId } from "../attribute/index.js";
@@ -184,7 +186,7 @@ export interface IMeasureLocatorItem {
  * @public
  */
 export function isAttributeSort(obj: unknown): obj is IAttributeSortItem {
-    return !isEmpty(obj) && (obj as IAttributeSortItem).attributeSortItem !== undefined;
+    return !_isEmpty(obj) && (obj as IAttributeSortItem).attributeSortItem !== undefined;
 }
 
 /**
@@ -211,7 +213,7 @@ export function isAttributeValueSort(obj: unknown): obj is IAttributeSortItem {
  * @public
  */
 export function isMeasureSort(obj: unknown): obj is IMeasureSortItem {
-    return !isEmpty(obj) && (obj as IMeasureSortItem).measureSortItem !== undefined;
+    return !_isEmpty(obj) && (obj as IMeasureSortItem).measureSortItem !== undefined;
 }
 
 /**
@@ -220,7 +222,7 @@ export function isMeasureSort(obj: unknown): obj is IMeasureSortItem {
  * @public
  */
 export function isAttributeLocator(obj: unknown): obj is IAttributeLocatorItem {
-    return !isEmpty(obj) && (obj as IAttributeLocatorItem).attributeLocatorItem !== undefined;
+    return !_isEmpty(obj) && (obj as IAttributeLocatorItem).attributeLocatorItem !== undefined;
 }
 
 /**
@@ -229,7 +231,7 @@ export function isAttributeLocator(obj: unknown): obj is IAttributeLocatorItem {
  * @public
  */
 export function isTotalLocator(obj: unknown): obj is ITotalLocatorItem {
-    return !isEmpty(obj) && (obj as ITotalLocatorItem).totalLocatorItem !== undefined;
+    return !_isEmpty(obj) && (obj as ITotalLocatorItem).totalLocatorItem !== undefined;
 }
 
 /**
@@ -238,7 +240,7 @@ export function isTotalLocator(obj: unknown): obj is ITotalLocatorItem {
  * @public
  */
 export function isMeasureLocator(obj: unknown): obj is IMeasureLocatorItem {
-    return !isEmpty(obj) && (obj as IMeasureLocatorItem).measureLocatorItem !== undefined;
+    return !_isEmpty(obj) && (obj as IMeasureLocatorItem).measureLocatorItem !== undefined;
 }
 
 //

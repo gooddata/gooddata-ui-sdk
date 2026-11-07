@@ -11,6 +11,12 @@ import type { ObjectTypes } from "../objectType/constants.js";
 import type { ObjectType } from "../objectType/types.js";
 import type { useFeatureFlag } from "../permission/PermissionsContext.js";
 
+/**
+ * Where a value sits in the document, as object keys and array indexes.
+ * @internal
+ */
+export type AsCodeDocumentPath = ReadonlyArray<string | number>;
+
 export type AsCodeFeatureFlag = Parameters<typeof useFeatureFlag>[0];
 
 export type AsCodeObjectType =
@@ -39,8 +45,18 @@ export interface IAsCodeMessages {
     deleteError: MessageDescriptor;
 }
 
+/**
+ * The field a failure marks in the editor: the value at `path`, or with `target: "key"` the key that
+ * names it, as for an unknown key. A failure without a path (empty or malformed document) has nothing
+ * to mark and shows only as a banner.
+ * @internal
+ */
+export type AsCodeFieldMark = { path?: AsCodeDocumentPath; target?: "key" };
+
 /** @internal */
-export type AsCodeValidation<TDef> = { isValid: true; definition: TDef } | { isValid: false; error: string };
+export type AsCodeValidation<TDef> =
+    | { isValid: true; definition: TDef }
+    | ({ isValid: false; error: string } & AsCodeFieldMark);
 
 /**
  * Identity rule per flow: `edit` keeps `fixedIdentifier`; `duplicate` accepts and ignores any id (the
@@ -51,6 +67,15 @@ export type AsCodeValidationContext =
     | { intent: "create" }
     | { intent: "edit"; fixedIdentifier: string }
     | { intent: "duplicate" };
+
+/**
+ * The failure of {@link IAsCodeEditing.validate} for a failed per-type validation and its localized
+ * message.
+ * @internal
+ */
+export function toAsCodeFailure(failure: AsCodeFieldMark, error: string): AsCodeValidation<never> {
+    return { isValid: false, error, path: failure.path, target: failure.target };
+}
 
 /** @internal */
 export function fixedIdentifierOf(context: AsCodeValidationContext): string | undefined {

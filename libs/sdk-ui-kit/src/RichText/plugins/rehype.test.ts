@@ -367,6 +367,7 @@ describe("testing rehype plugin to extract references", () => {
         const updated = walk(tree as Root) as Root;
 
         const [span, anchor] = (updated.children[0] as unknown as HtmlNode).children as any[];
+        expect(span.properties.className).toEqual("gd-rich-text-parameter gd-rich-text-parameter-error");
         expect(span.children[0].value).toEqual("(unknown parameter)");
         expect(anchor.properties.title).toEqual("Link to (unknown parameter)");
     });

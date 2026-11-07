@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { useEffect } from "react";
+
 import { IntlProvider } from "react-intl";
 import { action } from "storybook/actions";
 
@@ -182,3 +184,32 @@ Themed.parameters = {
     kind: "themed",
     screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
 } satisfies IStoryParameters;
+
+function MobileToasts() {
+    const toast = useUiToast();
+    useEffect(() => {
+        toast.addInfo("Working on it…", { id: "mobile-info", sticky: true });
+        toast.addError("Could not update access — try again.", { id: "mobile-error", sticky: true });
+    }, [toast]);
+    return null;
+}
+
+export function Mobile() {
+    return (
+        <IntlProvider locale={DEFAULT_LANGUAGE} messages={DEFAULT_MESSAGES[DEFAULT_LANGUAGE]}>
+            <UiToastProvider>
+                <MobileToasts />
+                <UiToastsContainer />
+            </UiToastProvider>
+        </IntlProvider>
+    );
+}
+Mobile.parameters = {
+    kind: "mobile",
+    screenshot: {
+        readySelector: { selector: ".gd-ui-kit-toast__item", state: State.Attached },
+        // The viewport matches "mobile2" Storybook viewport
+        viewports: [{ label: "mobile", width: 414, height: 896 }],
+    },
+} satisfies IStoryParameters;
+Mobile.globals = { viewport: { value: "mobile2" } };

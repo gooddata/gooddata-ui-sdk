@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, compact, isEmpty, isEqual, set, uniqBy } from "lodash-es";
+import { cloneDeep, compact, set, uniqBy } from "lodash-es";
 
 import {
     type IColor,
@@ -16,6 +16,7 @@ import {
 } from "@gooddata/sdk-model";
 import { type IColorAssignment, type IMappingHeader, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { ColorUtils, type ILineStyleMappingItem } from "@gooddata/sdk-ui-charts";
+import { _isEmpty, _isEqual } from "@gooddata/util";
 
 import { type IColorConfiguration, type IColoredItem } from "../interfaces/Colors.js";
 import { type IVisualizationProperties } from "../interfaces/Visualization.js";
@@ -29,7 +30,7 @@ function getItemName(item: IColoredItem): string {
 }
 
 export function getSearchedItems(inputItems: IColoredItem[], searchString: string): IColoredItem[] {
-    if (isEmpty(searchString)) {
+    if (_isEmpty(searchString)) {
         return inputItems;
     }
     return inputItems.filter((item: IColoredItem) => {
@@ -229,7 +230,7 @@ export function getValidProperties(
                     if (isMeasureDescriptor(colorAssignment.headerItem)) {
                         return (
                             colorAssignment.headerItem.measureHeaderItem.localIdentifier === id &&
-                            isEqual(colorAssignment.color?.value, colorValue)
+                            _isEqual(colorAssignment.color?.value, colorValue)
                         );
                     } else if (isResultAttributeHeader(colorAssignment.headerItem)) {
                         return colorAssignment.headerItem.attributeHeaderItem.uri === id;

@@ -7,11 +7,11 @@ import { useSelector } from "react-redux";
 
 import { ConfirmDialog, Input } from "@gooddata/sdk-ui-kit";
 
-import { type IChatConversationLocal } from "../model.js";
 import { catalogItemsSelector } from "../store/chatWindow/chatWindowSelectors.js";
 import { generateTemporaryTitle } from "../utils.js";
 
 import { collectReferences, replaceReferences } from "./completion/references.js";
+import type { IGenAIAssistantConversationRenameDialogProps } from "./customized/types.js";
 
 const messages = defineMessages({
     title: { id: "gd.gen-ai.conversations.rename-dialog.title" },
@@ -20,13 +20,17 @@ const messages = defineMessages({
     cancel: { id: "gd.gen-ai.conversations.rename-dialog.cancel" },
 });
 
-type ConversationRenameDialogProps = {
-    conversation: IChatConversationLocal;
-    onRename: (name: string) => void;
-    onClose: () => void;
-};
+export type ConversationRenameDialogProps = IGenAIAssistantConversationRenameDialogProps;
 
-export function ConversationRenameDialog({ conversation, onRename, onClose }: ConversationRenameDialogProps) {
+export function ConversationRenameDialog({
+    conversation,
+    onRename,
+    onClose,
+    title,
+    label,
+    submitButtonText,
+    cancelButtonText,
+}: ConversationRenameDialogProps) {
     const intl = useIntl();
     const catalogItems = useSelector(catalogItemsSelector);
 
@@ -43,9 +47,9 @@ export function ConversationRenameDialog({ conversation, onRename, onClose }: Co
 
     return (
         <ConfirmDialog
-            headline={intl.formatMessage(messages.title)}
-            cancelButtonText={intl.formatMessage(messages.cancel)}
-            submitButtonText={intl.formatMessage(messages.submit)}
+            headline={title ?? intl.formatMessage(messages.title)}
+            cancelButtonText={cancelButtonText ?? intl.formatMessage(messages.cancel)}
+            submitButtonText={submitButtonText ?? intl.formatMessage(messages.submit)}
             isPositive
             autofocusOnOpen={false}
             submitOnEnterKey
@@ -57,7 +61,7 @@ export function ConversationRenameDialog({ conversation, onRename, onClose }: Co
         >
             <Input
                 autofocus
-                label={intl.formatMessage(messages.label)}
+                label={label ?? intl.formatMessage(messages.label)}
                 className="gd-gen-ai-chat__rename-dialog__input"
                 labelPositionTop
                 value={value}

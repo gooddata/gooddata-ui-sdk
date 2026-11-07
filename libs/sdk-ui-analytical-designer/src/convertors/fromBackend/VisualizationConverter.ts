@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { compact, isEmpty, omit } from "lodash-es";
+import { compact, omit } from "lodash-es";
 
 import {
     type DateAttributeGranularity,
@@ -22,6 +22,7 @@ import {
     isComputedAttributeRef,
     uriRef,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import {
     type BucketItem,
@@ -332,7 +333,7 @@ const resolveReferences = (mdObject: IVisualizationObject): IVisualizationObject
     });
 
     // set the new properties and references
-    const referencesProp = isEmpty(convertedReferences) ? undefined : { references: convertedReferences };
+    const referencesProp = _isEmpty(convertedReferences) ? undefined : { references: convertedReferences };
 
     return {
         ...mdObject,

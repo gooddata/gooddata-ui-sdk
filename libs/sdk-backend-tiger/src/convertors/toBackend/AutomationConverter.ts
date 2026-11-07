@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { isEmpty, omit, omitBy } from "lodash-es";
+import { omit, omitBy } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
 
 import {
@@ -22,6 +22,7 @@ import {
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { fixNumber } from "../../utils/fixNumber.js";
 
@@ -81,12 +82,12 @@ export function convertAutomation(
                 ? { data: { type: "analyticalDashboard", id: dashboard?.id } }
                 : undefined,
         },
-        isEmpty,
+        _isEmpty,
     );
     const externalRecipients =
         recipients?.filter(isAutomationExternalUserRecipient).map((r) => ({ email: r.email })) ?? [];
 
-    const hasRelationships = !isEmpty(relationships);
+    const hasRelationships = !_isEmpty(relationships);
 
     const scheduleObj = schedule ? { schedule } : {};
     const evaluationModeObj = evaluationMode ? { evaluationMode } : {};
@@ -245,7 +246,7 @@ export function convertAutomation(
             ...evaluationModeObj,
             ...alertObj,
         },
-        isEmpty,
+        _isEmpty,
     );
 
     return {

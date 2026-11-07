@@ -1,5 +1,6 @@
-// (C) 2007-2025 GoodData Corporation
-import { isEmpty } from "lodash-es";
+// (C) 2007-2026 GoodData Corporation
+
+import { _isEmpty } from "@gooddata/util";
 
 /**
  * This exception is thrown when a fatal error occurs during the export processing - be it during interfacing with
@@ -125,17 +126,17 @@ export type WorkspaceMetadata = {
 //
 
 export function isAttribute(obj: unknown): obj is Attribute {
-    return !isEmpty(obj) && (obj as Attribute).attribute !== undefined;
+    return !_isEmpty(obj) && (obj as Attribute).attribute !== undefined;
 }
 
 export function isMetric(obj: unknown): obj is Metric {
-    return !isEmpty(obj) && (obj as Metric).metric !== undefined;
+    return !_isEmpty(obj) && (obj as Metric).metric !== undefined;
 }
 
 export function isFact(obj: unknown): obj is Fact {
-    return !isEmpty(obj) && (obj as Fact).fact !== undefined;
+    return !_isEmpty(obj) && (obj as Fact).fact !== undefined;
 }
 
 export function isCatalogExportError(obj: unknown): obj is CatalogExportError {
-    return !isEmpty(obj) && (obj as CatalogExportError).rc !== undefined;
+    return !_isEmpty(obj) && (obj as CatalogExportError).rc !== undefined;
 }

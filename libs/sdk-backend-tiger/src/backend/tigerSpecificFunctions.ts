@@ -2,7 +2,7 @@
 
 import { type AxiosRequestConfig } from "axios";
 import { backOff } from "exponential-backoff";
-import { isEmpty, uniq } from "lodash-es";
+import { uniq } from "lodash-es";
 
 import {
     type ActionsApiProcessInvitationRequest,
@@ -144,6 +144,7 @@ import {
     isUnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 import { type IUser } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { getApiProblemDetail, getDataSourceErrorMessage } from "../utils/apiProblemDetail.js";
 import { convertApiError } from "../utils/errorHandling.js";
@@ -507,7 +508,6 @@ export type WorkspaceEntitiesDatasets = JsonApiDatasetOutList;
  * @deprecated Tiger-specific functions are legacy and will be removed in the next major version. Use the services of IAnalyticalBackend instead.
  */
 export type TigerSpecificFunctions = {
-    isCommunityEdition?: () => Promise<boolean>;
     isOrganizationAdmin?: () => Promise<boolean>;
     organizationExpiredDate?: () => Promise<string>;
     getOrganizationAllowedOrigins?: (organizationId: string) => Promise<string[]>;
@@ -516,7 +516,6 @@ export type TigerSpecificFunctions = {
         organizationId: string,
         updatedOrigins: string[],
     ) => Promise<string[]>;
-    getDeploymentVersion?: () => Promise<string>;
     getAllApiTokens?: (userId: string) => Promise<IApiToken[]>;
     generateApiToken?: (userId: string, tokenId: string) => Promise<IApiTokenExtended | undefined>;
     deleteApiToken?: (userId: string, tokenId: string) => Promise<void>;
@@ -829,21 +828,6 @@ export const buildTigerSpecificFunctions = (
         errorConverter?: ErrorConverter,
     ) => Promise<T>,
 ): TigerSpecificFunctions => ({
-    isCommunityEdition: async () => {
-        try {
-            return await authApiCall(async (sdk) => {
-                const response = await EntitiesApi_GetAllEntitiesWorkspaces(sdk.axios, "", {
-                    page: 0,
-                    size: 1,
-                });
-
-                // the header name are all lowercase in this object
-                return response.headers["gooddata-deployment"] === "aio";
-            });
-        } catch {
-            return false;
-        }
-    },
     isOrganizationAdmin: async () => {
         try {
             const orgPermissions = await authApiCall(async (sdk) => {
@@ -930,17 +914,6 @@ export const buildTigerSpecificFunctions = (
                 throw new UnexpectedError(getApiProblemDetail(error) ?? "Server error", error);
             }
             throw convertApiError(error);
-        }
-    },
-    getDeploymentVersion: async () => {
-        try {
-            return await authApiCall(async (sdk) => {
-                // TODO use a client call when available via some endpoint described in OpenAPI
-                const profile = await sdk.axios.get("/api/v1/profile");
-                return profile?.headers?.["gooddata-deployment"];
-            });
-        } catch {
-            return undefined;
         }
     },
     getAllApiTokens: async (userId: string) => {
@@ -1126,7 +1099,7 @@ export const buildTigerSpecificFunctions = (
                         filter: `parent.id==${id}`,
                     })
                 ).data.data;
-                return isEmpty(childWorkspaces);
+                return _isEmpty(childWorkspaces);
             });
         } catch {
             return true;

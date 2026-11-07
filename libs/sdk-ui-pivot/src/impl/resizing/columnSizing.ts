@@ -1,10 +1,11 @@
 // (C) 2007-2026 GoodData Corporation
 
 import { type ColDef, type Column, type GridApi } from "ag-grid-community";
-import { chunk, isEmpty, omit, omitBy } from "lodash-es";
+import { chunk, omit, omitBy } from "lodash-es";
 import { InvariantError, invariant } from "ts-invariant";
 
 import { type IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { _isEmpty } from "@gooddata/util";
 
 import {
     type ColumnWidth,
@@ -1002,7 +1003,7 @@ function getTableFont(containerRef: HTMLDivElement, className: string, defaultFo
     }
 
     const { font, fontWeight, fontSize, fontFamily } = window.getComputedStyle(element);
-    return isEmpty(font) ? `${fontWeight} ${fontSize} ${fontFamily}` : font;
+    return _isEmpty(font) ? `${fontWeight} ${fontSize} ${fontFamily}` : font;
 }
 
 function getTableFonts(containerRef: HTMLDivElement): {

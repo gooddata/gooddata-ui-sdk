@@ -1,0 +1,9 @@
+// (C) 2026 GoodData Corporation
+
+// Use `.gd-message` to win over `.gd-message` styles set globally
+.gd-message.gd-language-mobile-select__note {
+    margin-bottom: 12px;
+    padding: 4px var(--gd-spacing-10px);
+    line-height: 20px;
+    background-color: var(--gd-palette-primary-dimmed, #e8f7fc);
+}

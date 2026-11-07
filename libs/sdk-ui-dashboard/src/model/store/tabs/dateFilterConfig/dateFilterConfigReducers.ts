@@ -1,13 +1,13 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
-import { isEmpty } from "lodash-es";
 
 import {
     type DashboardDateFilterConfigMode,
     type IDashboardDateFilterConfig,
     type IDateFilterConfig,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { type DateFilterValidationResult } from "../../../../types.js";
 import { type ITabsState, getActiveTab } from "../tabsState.js";
@@ -83,7 +83,7 @@ const setDateFilterConfigMode: DateFilterConfigReducer<PayloadAction<DashboardDa
 
     const mode = action.payload;
     const currentConfig = activeTab.dateFilterConfig.dateFilterConfig;
-    const newDateFilterConfig = isEmpty(currentConfig)
+    const newDateFilterConfig = _isEmpty(currentConfig)
         ? {
               mode,
               filterName: "", // will fallback to default name
@@ -112,7 +112,7 @@ const setDateFilterConfigTitle: DateFilterConfigReducer<PayloadAction<string | u
 
     const title = action.payload ?? "";
     const currentConfig = activeTab.dateFilterConfig.dateFilterConfig;
-    const newDateFilterConfig: IDashboardDateFilterConfig = isEmpty(currentConfig)
+    const newDateFilterConfig: IDashboardDateFilterConfig = _isEmpty(currentConfig)
         ? {
               mode: "active",
               filterName: title,

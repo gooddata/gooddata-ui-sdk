@@ -89,7 +89,6 @@ export function hostValuesToBootstrapData({
         uiSettings: {
             organizationName: organization?.title ?? "",
             organizationId: organization?.id,
-            logoUrl: whiteLabeling?.logoUrl ?? "",
             isBranded: !!whiteLabeling?.enabled,
             documentationUrl: "https://www.gooddata.com/developers/cloud-native/doc/cloud/",
         },

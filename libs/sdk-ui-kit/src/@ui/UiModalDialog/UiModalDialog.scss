@@ -29,6 +29,37 @@
         box-shadow: 0 2px 8px var(--gd-shadow-color);
         overflow-wrap: break-word;
 
+        &--isFullscreen {
+            box-sizing: border-box;
+            width: 100vw; // Fallback
+            height: 100vh; // Fallback
+            width: 100dvw;
+            height: 100dvh;
+            max-width: none;
+            max-height: none;
+            padding: 0;
+            border-radius: 0;
+            box-shadow: none;
+
+            .gd-ui-kit-dialog-header {
+                box-sizing: border-box;
+                flex-shrink: 0;
+                height: 56px;
+                margin-bottom: 0;
+                padding: 0 var(--gd-spacing-15px);
+                border-bottom: 1px solid var(--gd-palette-complementary-3);
+            }
+
+            .gd-ui-kit-dialog-body {
+                padding: var(--gd-spacing-15px) var(--gd-spacing-15px) 0;
+            }
+
+            .gd-ui-kit-dialog-footer {
+                padding-right: var(--gd-spacing-15px);
+                padding-left: var(--gd-spacing-15px);
+            }
+        }
+
         &--variant-confirmation {
             box-sizing: border-box;
             border: 1px solid var(--gd-modal-borderColor);
@@ -58,15 +89,25 @@
         flex-shrink: 0;
     }
 
-    // The close button's 32px hit area is taller than the title's 23px line box. Left to
-    // stretch the row it would push the title down and the content below further away than
-    // the design places them, so pull the extra back at both ends. The target size itself
-    // is untouched: only the button's contribution to the row's height changes.
+    &--size-default {
+        --dialog-header-line-height: 23px;
+        --dialog-header-close-icon-size: 18px;
+        --dialog-header-close-button-size: var(--gd-button-M);
+    }
+
+    &--size-large {
+        --dialog-header-line-height: 26px;
+        --dialog-header-close-icon-size: 20px;
+        --dialog-header-close-button-size: var(--gd-button-L);
+    }
+
     &__close {
         display: inline-flex;
         align-items: center;
         flex-shrink: 0;
-        margin-block: calc((23px - 32px) / 2);
+        margin: calc((var(--dialog-header-line-height) - var(--dialog-header-close-button-size)) / 2)
+            calc((var(--dialog-header-close-icon-size) - var(--dialog-header-close-button-size)) / 2)
+            calc((var(--dialog-header-line-height) - var(--dialog-header-close-button-size)) / 2) 0;
     }
 
     &__title {
@@ -74,6 +115,7 @@
         min-width: 0;
         margin: 0;
         font-weight: 700;
+        line-height: var(--dialog-header-line-height);
         color: var(--gd-palette-complementary-8);
         overflow: hidden;
         text-overflow: ellipsis;
@@ -81,12 +123,12 @@
 
         &--size-default {
             font-size: 17px;
-            line-height: 23px;
         }
 
         &--size-large {
             font-size: 20px;
-            line-height: 26px;
+            // Optical nudge
+            transform: translateY(1px);
         }
     }
 }

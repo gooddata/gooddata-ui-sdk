@@ -156,6 +156,7 @@ title: "Test"
         expect(result).toEqual({
             isValid: false,
             errorCode: "invalidStructure",
+            path: ["definition"],
         });
     });
 
@@ -169,6 +170,7 @@ title: "Test"
             isValid: false,
             errorCode: "invalidDefaultValue",
             type: "NUMBER",
+            path: ["definition", "defaultValue"],
         });
     });
 
@@ -182,6 +184,7 @@ title: "Test"
             isValid: false,
             errorCode: "invalidDefaultValue",
             type: "NUMBER",
+            path: ["definition", "defaultValue"],
         });
     });
 
@@ -197,6 +200,7 @@ title: "Test"
             isValid: false,
             errorCode: "invalidConstraints",
             type: "NUMBER",
+            path: ["definition", "constraints", "min"],
         });
     });
 
@@ -213,6 +217,7 @@ title: "Test"
             isValid: false,
             errorCode: "invalidConstraintRange",
             type: "NUMBER",
+            path: ["definition", "constraints"],
         });
     });
 
@@ -227,6 +232,7 @@ definition:
         expect(result).toEqual({
             isValid: false,
             errorCode: "invalidTags",
+            path: ["tags", 0],
         });
     });
 
@@ -240,6 +246,8 @@ definition:
         expect(result).toEqual({
             isValid: false,
             errorCode: "invalidStructure",
+            path: ["unknown"],
+            target: "key",
         });
     });
 
@@ -269,6 +277,7 @@ definition:
             expect(result).toEqual({
                 isValid: false,
                 errorCode: "invalidType",
+                path: ["type"],
             });
         },
     );
@@ -286,6 +295,7 @@ definition:
         expect(result).toEqual({
             isValid: false,
             errorCode: "invalidType",
+            path: ["type"],
         });
     });
 
@@ -302,6 +312,7 @@ definition:
         expect(result).toEqual({
             isValid: false,
             errorCode: "idImmutable",
+            path: ["id"],
         });
     });
 
@@ -318,6 +329,7 @@ definition:
         expect(result).toEqual({
             isValid: false,
             errorCode: "idImmutable",
+            path: ["id"],
         });
     });
 
@@ -331,6 +343,8 @@ definition:
         expect(result).toEqual({
             isValid: false,
             errorCode: "invalidStructure",
+            path: ["definition", "extra"],
+            target: "key",
         });
     });
 
@@ -347,6 +361,8 @@ definition:
             isValid: false,
             errorCode: "invalidConstraints",
             type: "NUMBER",
+            path: ["definition", "constraints", "step"],
+            target: "key",
         });
     });
 
@@ -363,6 +379,7 @@ definition:
             expect(result).toEqual({
                 isValid: false,
                 errorCode: "unsupportedType",
+                path: ["definition", "type"],
             });
         });
 
@@ -378,6 +395,7 @@ definition:
             expect(result).toEqual({
                 isValid: false,
                 errorCode: "unsupportedType",
+                path: ["definition", "type"],
             });
         });
     });
@@ -419,6 +437,7 @@ definition:
                 isValid: false,
                 errorCode: "invalidDefaultValue",
                 type: "STRING",
+                path: ["definition", "defaultValue"],
             });
         });
 
@@ -466,6 +485,7 @@ definition:
                 isValid: false,
                 errorCode: "invalidConstraintRange",
                 type: "STRING",
+                path: ["definition", "constraints"],
             });
         });
 
@@ -484,6 +504,7 @@ definition:
                 isValid: false,
                 errorCode: "invalidConstraints",
                 type: "STRING",
+                path: ["definition", "constraints", "minLength"],
             });
         });
 
@@ -502,6 +523,7 @@ definition:
                 isValid: false,
                 errorCode: "invalidConstraints",
                 type: "STRING",
+                path: ["definition", "constraints", "maxLength"],
             });
         });
 
@@ -520,6 +542,7 @@ definition:
                 isValid: false,
                 errorCode: "emptyAllowedValues",
                 type: "STRING",
+                path: ["definition", "constraints", "allowedValues"],
             });
         });
 
@@ -539,6 +562,7 @@ definition:
                 isValid: false,
                 errorCode: "invalidAllowedValue",
                 type: "STRING",
+                path: ["definition", "constraints", "allowedValues", 0],
             });
         });
 
@@ -558,6 +582,7 @@ definition:
                 isValid: false,
                 errorCode: "invalidAllowedValue",
                 type: "STRING",
+                path: ["definition", "constraints", "allowedValues", 0, "value"],
             });
         });
 
@@ -577,6 +602,7 @@ definition:
                 isValid: false,
                 errorCode: "invalidAllowedValue",
                 type: "STRING",
+                path: ["definition", "constraints", "allowedValues", 0, "value"],
             });
         });
 
@@ -597,6 +623,7 @@ definition:
                 isValid: false,
                 errorCode: "invalidAllowedValueTitle",
                 type: "STRING",
+                path: ["definition", "constraints", "allowedValues", 0],
             });
         });
 
@@ -616,6 +643,7 @@ definition:
                 isValid: false,
                 errorCode: "invalidAllowedValueTitle",
                 type: "STRING",
+                path: ["definition", "constraints", "allowedValues", 0],
             });
         });
 
@@ -636,6 +664,7 @@ definition:
                 isValid: false,
                 errorCode: "invalidAllowedValueTitle",
                 type: "STRING",
+                path: ["definition", "constraints", "allowedValues", 0, "title"],
             });
         });
 
@@ -684,6 +713,7 @@ definition:
                 isValid: false,
                 errorCode: "duplicateAllowedValues",
                 type: "STRING",
+                path: ["definition", "constraints", "allowedValues"],
             });
         });
 
@@ -706,6 +736,7 @@ definition:
                 isValid: false,
                 errorCode: "duplicateAllowedValues",
                 type: "STRING",
+                path: ["definition", "constraints", "allowedValues"],
             });
         });
 
@@ -727,6 +758,7 @@ definition:
                 isValid: false,
                 errorCode: "duplicateAllowedValues",
                 type: "STRING",
+                path: ["definition", "constraints", "allowedValues"],
             });
         });
 
@@ -775,6 +807,7 @@ definition:
                 isValid: false,
                 errorCode: "invalidDefaultValue",
                 type: "STRING",
+                path: ["definition", "defaultValue"],
             });
         });
 
@@ -823,6 +856,7 @@ definition:
                 isValid: false,
                 errorCode: "constraintsAllowedValuesExclusive",
                 type: "STRING",
+                path: ["definition", "constraints"],
             });
         });
 
@@ -843,6 +877,7 @@ definition:
                 isValid: false,
                 errorCode: "constraintsAllowedValuesExclusive",
                 type: "STRING",
+                path: ["definition", "constraints"],
             });
         });
 
@@ -891,6 +926,7 @@ definition:
                 isValid: false,
                 errorCode: "unsupportedCardinality",
                 type: "STRING",
+                path: ["definition", "cardinality"],
             });
         });
 
@@ -908,6 +944,7 @@ definition:
                 isValid: false,
                 errorCode: "unsupportedCardinality",
                 type: "STRING",
+                path: ["definition", "cardinality"],
             });
         });
 

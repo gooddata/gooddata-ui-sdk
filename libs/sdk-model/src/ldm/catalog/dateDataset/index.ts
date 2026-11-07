@@ -1,5 +1,6 @@
-// (C) 2019-2025 GoodData Corporation
-import { isEmpty } from "lodash-es";
+// (C) 2019-2026 GoodData Corporation
+
+import { _isEmpty } from "@gooddata/util";
 
 import { type DateAttributeGranularity } from "../../../base/dateGranularities.js";
 import { type IAttributeMetadataObject } from "../../metadata/attribute/index.js";
@@ -36,7 +37,7 @@ export interface ICatalogDateAttribute {
  */
 export function isCatalogDateAttribute(obj: unknown): obj is ICatalogDateAttribute {
     const o = obj as ICatalogDateAttribute;
-    return !isEmpty(obj) && Boolean(o.attribute && o.defaultDisplayForm && o.granularity);
+    return !_isEmpty(obj) && Boolean(o.attribute && o.defaultDisplayForm && o.granularity);
 }
 
 /**
@@ -72,5 +73,5 @@ export interface ICatalogDateDataset extends ICatalogItemBase {
  * @public
  */
 export function isCatalogDateDataset(obj: unknown): obj is ICatalogDateDataset {
-    return !isEmpty(obj) && (obj as ICatalogDateDataset).type === "dateDataset";
+    return !_isEmpty(obj) && (obj as ICatalogDateDataset).type === "dateDataset";
 }

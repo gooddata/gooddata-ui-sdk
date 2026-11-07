@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { compact, isEmpty, isEqual } from "lodash-es";
+import { compact } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
@@ -32,6 +32,7 @@ import {
     measureFilters,
     newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
+import { _isEmpty, _isEqual } from "@gooddata/util";
 
 import { type IDashboardFilter } from "../../../types.js";
 import { type IDrillToDashboard } from "../../commands/drill.js";
@@ -329,14 +330,14 @@ function* getWidgetAwareDashboardFilters(
         attributeFilterConfigs,
     );
     return filtersPairs
-        .filter((pair) => widgetFilters.some((wf: IFilter) => isEqual(wf, pair.filter)))
+        .filter((pair) => widgetFilters.some((wf: IFilter) => _isEqual(wf, pair.filter)))
         .map((pair) => pair.originalFilter);
 }
 
 function isDateFilterDisabled(insight: IInsight): boolean {
     const measures = insightMeasures(insight);
 
-    return isEmpty(measures)
+    return _isEmpty(measures)
         ? false
         : measures.every((measure) => {
               if (isSimpleMeasure(measure)) {

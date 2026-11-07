@@ -1,7 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
-
 import {
     type ExplainType,
     type IAnomalyDetectionResult,
@@ -33,6 +31,7 @@ import {
     defWithExecConfig,
     defWithSorting,
 } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { AbstractExecutionFactory } from "../toolkit/execution.js";
 
@@ -122,7 +121,7 @@ class CustomPreparedExecution implements IPreparedExecution {
     };
 
     public equals = (other: IPreparedExecution): boolean => {
-        return isEqual(this.definition, other.definition);
+        return _isEqual(this.definition, other.definition);
     };
 
     public fingerprint = (): string => {

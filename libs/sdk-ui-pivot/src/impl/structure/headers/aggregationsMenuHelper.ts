@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { intersection, isEqual, sortBy, uniq } from "lodash-es";
+import { intersection, sortBy, uniq } from "lodash-es";
 
 import {
     type IAttributeDescriptor,
@@ -8,6 +8,7 @@ import {
     type TotalType,
     attributeDescriptorLocalId,
 } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { AVAILABLE_TOTALS } from "../../base/constants.js";
 import { type IMenuAggregationClickConfig } from "../../privateTypes.js";
@@ -113,14 +114,14 @@ export function isTotalEnabledForSubMenuAttribute(
 
 function includeTotals(totals: ITotal[], totalsChanged: ITotal[]) {
     const columnTotalsChangedUnique = totalsChanged.filter(
-        (totalChanged) => !totals.some((total) => isEqual(total, totalChanged)),
+        (totalChanged) => !totals.some((total) => _isEqual(total, totalChanged)),
     );
 
     return [...totals, ...columnTotalsChangedUnique];
 }
 
 function excludeTotals(totals: ITotal[], totalsChanged: ITotal[]): ITotal[] {
-    return totals.filter((total) => !totalsChanged.find((totalChanged) => isEqual(totalChanged, total)));
+    return totals.filter((total) => !totalsChanged.find((totalChanged) => _isEqual(totalChanged, total)));
 }
 
 export function getUpdatedColumnOrRowTotals(

@@ -12,6 +12,7 @@ import {
     BUILD_FRESHNESS_WINDOW_MS,
     isSecuredRemoteUrl,
     validateAppSecurity,
+    validateRemoteModuleSecurity,
 } from "./appSecurityValidation.js";
 
 const ORG_ID = "org-allowed";
@@ -202,5 +203,22 @@ describe("validateAppSecurity", () => {
 
     it("returns undefined for a fresh build with a permitted organization", () => {
         expect(validateAppSecurity(securedRemoteApp(), loadedApp(), ctx(ORG_ID), NOW)).toBeUndefined();
+    });
+});
+
+describe("validateRemoteModuleSecurity", () => {
+    it("applies the secured-remote rules to any module metadata", () => {
+        const metadata = { allowedOrganizations: [ORG_ID], buildTimestamp: NOW - 1000 };
+        expect(validateRemoteModuleSecurity(SECURED_URL, metadata, ctx(ORG_ID), NOW)).toBeUndefined();
+        expect(validateRemoteModuleSecurity(SECURED_URL, metadata, ctx(ORG_ID_OTHER), NOW)).toEqual({
+            kind: "organization-not-allowed",
+        });
+        expect(validateRemoteModuleSecurity(SECURED_URL, {}, ctx(ORG_ID), NOW)).toEqual({
+            kind: "metadata-missing",
+        });
+    });
+
+    it("skips the checks for a module outside the secured hostnames", () => {
+        expect(validateRemoteModuleSecurity(SAME_ORIGIN_URL, {}, ctx(ORG_ID), NOW)).toBeUndefined();
     });
 });

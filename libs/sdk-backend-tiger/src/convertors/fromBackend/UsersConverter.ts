@@ -1,7 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import {
     type IUserProfile,
     type JsonApiAnalyticalDashboardOutIncludes,
@@ -14,6 +12,7 @@ import {
     type JsonApiWorkspaceAutomationOutWithLinks,
 } from "@gooddata/api-client-tiger";
 import { type IUser, type IUserGroup, idRef, uriRef } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 /**
  * To preserve the typing and bootstrap concept, we are using firstName
@@ -58,7 +57,7 @@ function isJsonApiUserIdentifierOutAttributes(
 ): attributes is JsonApiUserIdentifierOutAttributes {
     const typedAttributes = attributes as JsonApiUserIdentifierOutAttributes;
     return (
-        !isEmpty(typedAttributes) &&
+        !_isEmpty(typedAttributes) &&
         (typedAttributes.firstname !== undefined ||
             typedAttributes.lastname !== undefined ||
             typedAttributes.email !== undefined)

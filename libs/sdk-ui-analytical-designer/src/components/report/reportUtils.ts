@@ -1,8 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import { isGoodDataSdkError } from "@gooddata/sdk-ui";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IErrorRawData } from "../../typings/report.js";
 
@@ -33,7 +32,7 @@ const parseArrayToTextareaContent = (arr: unknown[], level: number): string => {
         return `${BREAK_LINE}${tabs}${TAB}${parsedValue}`;
     });
 
-    return isEmpty(data) ? "[]" : `[${tabs}${data}${BREAK_LINE}${tabs}]`;
+    return _isEmpty(data) ? "[]" : `[${tabs}${data}${BREAK_LINE}${tabs}]`;
 };
 
 const parseObjectTextareaContent = (obj: object, level: number): string => {
@@ -43,7 +42,7 @@ const parseObjectTextareaContent = (obj: object, level: number): string => {
         return `${BREAK_LINE}${tabs}${TAB}"${key}": ${parsedValue}`;
     });
 
-    return isEmpty(data) ? "{}" : `{${data.join(",")}${BREAK_LINE}${tabs}}`;
+    return _isEmpty(data) ? "{}" : `{${data.join(",")}${BREAK_LINE}${tabs}}`;
 };
 
 export const parseRawDataToTextareaContent = (errorRawData: IErrorRawData): string => {

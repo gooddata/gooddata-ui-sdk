@@ -104,7 +104,6 @@ const expected: IBootstrapData = {
     uiSettings: {
         organizationName: "Acme",
         organizationId: "org1",
-        logoUrl: "/logo.svg",
         isBranded: true,
         documentationUrl: "https://www.gooddata.com/developers/cloud-native/doc/cloud/",
     },

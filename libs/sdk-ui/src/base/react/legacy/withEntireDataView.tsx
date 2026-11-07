@@ -2,7 +2,7 @@
 
 import { type ComponentClass, type ComponentType, useCallback, useEffect, useRef, useState } from "react";
 
-import { isEqual, omit } from "lodash-es";
+import { omit } from "lodash-es";
 import { type IntlShape, useIntl } from "react-intl";
 
 import {
@@ -16,6 +16,7 @@ import {
     isUnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 import { defFingerprint } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { convertError } from "../../errors/errorHandling.js";
 import {
@@ -531,10 +532,10 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             //  we need strict equality here in case only the buckets changed (not measures or attributes)
             if (
                 !prev.execution.equals(execution) ||
-                !isEqual(prev.execution.definition.buckets, execution.definition.buckets) ||
-                !isEqual(prev.forecastConfig, forecastConfig) ||
-                !isEqual(prev.clusteringConfig, clusteringConfig) ||
-                !isEqual(prev.outliersConfig, outliersConfig)
+                !_isEqual(prev.execution.definition.buckets, execution.definition.buckets) ||
+                !_isEqual(prev.forecastConfig, forecastConfig) ||
+                !_isEqual(prev.clusteringConfig, clusteringConfig) ||
+                !_isEqual(prev.outliersConfig, outliersConfig)
             ) {
                 refreshAbortController();
                 void initDataLoading(execution, forecastConfig, outliersConfig, clusteringConfig);

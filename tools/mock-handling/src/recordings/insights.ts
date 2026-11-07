@@ -3,10 +3,9 @@
 import fs from "fs";
 import path from "path";
 
-import { isEmpty } from "lodash-es";
-
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { createUniqueVariableNameForIdentifier } from "../base/variableNaming.js";
 import { type InsightRecordingSpec, RecordingFiles } from "../interface.js";
@@ -96,6 +95,6 @@ export class InsightRecording implements IRecording {
      * insights index.
      */
     public hasVisAndScenarioInfo(): boolean {
-        return !isEmpty(this.spec.visName) && !isEmpty(this.spec.scenarioName);
+        return !_isEmpty(this.spec.visName) && !_isEmpty(this.spec.scenarioName);
     }
 }

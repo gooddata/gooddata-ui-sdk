@@ -2,14 +2,13 @@
 
 import { type PropsWithChildren, createContext, useContext, useMemo, useReducer } from "react";
 
-import { isEqual } from "lodash-es";
-
 import {
     type Identifier,
     type ObjectOrigin,
     type SemanticQualityIssueCode,
     SemanticQualityIssueCodeValues,
 } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { type ObjectType } from "../objectType/types.js";
 import { useQualityReportState } from "../quality/QualityContext.js";
@@ -109,7 +108,7 @@ export function FilterProvider({ children }: PropsWithChildren) {
         () => ({
             ...filters,
             // Derived state
-            isModified: !isEqual(filters, initialState),
+            isModified: !_isEqual(filters, initialState),
         }),
         [filters],
     );
@@ -141,31 +140,31 @@ function filterReducer(state: IFilterStateBase, action: FilterReducerAction): IF
     switch (action.type) {
         // Setters
         case "setTypes": {
-            if (isEqual(state.types, action.payload)) return state;
+            if (_isEqual(state.types, action.payload)) return state;
             return { ...state, types: action.payload };
         }
         case "setOrigin": {
-            if (isEqual(state.origin, action.payload)) return state;
+            if (_isEqual(state.origin, action.payload)) return state;
             return { ...state, origin: action.payload };
         }
         case "setCreatedBy": {
-            if (isEqual(state.createdBy, action.payload)) return state;
+            if (_isEqual(state.createdBy, action.payload)) return state;
             return { ...state, createdBy: action.payload };
         }
         case "setTags": {
-            if (isEqual(state.tags, action.payload)) return state;
+            if (_isEqual(state.tags, action.payload)) return state;
             return { ...state, tags: action.payload };
         }
         case "setQualityCodes": {
-            if (isEqual(state.qualityCodes, action.payload)) return state;
+            if (_isEqual(state.qualityCodes, action.payload)) return state;
             return { ...state, qualityCodes: action.payload };
         }
         case "setIsHidden": {
-            if (isEqual(state.isHidden, action.payload)) return state;
+            if (_isEqual(state.isHidden, action.payload)) return state;
             return { ...state, isHidden: action.payload };
         }
         case "setCertification": {
-            if (isEqual(state.certification, action.payload)) return state;
+            if (_isEqual(state.certification, action.payload)) return state;
             return { ...state, certification: action.payload };
         }
         // Actions

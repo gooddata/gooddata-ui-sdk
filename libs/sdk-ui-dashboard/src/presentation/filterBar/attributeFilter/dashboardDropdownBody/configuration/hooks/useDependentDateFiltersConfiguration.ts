@@ -2,7 +2,6 @@
 
 import { useCallback, useMemo, useState } from "react";
 
-import { isEqual } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
@@ -12,6 +11,7 @@ import {
     type IDashboardDateFilter,
     isUriRef,
 } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { setAttributeFilterDependentDateFilters } from "../../../../../../model/commands/filters.js";
 import { useDispatchDashboardCommand } from "../../../../../../model/react/useDispatchDashboardCommand.js";
@@ -91,7 +91,7 @@ export function useDependentDateFiltersConfiguration(
     };
 
     const onDependentDateFiltersConfigurationChanged = useMemo<boolean>(() => {
-        return !isEqual(dependentDateFilters, originalState);
+        return !_isEqual(dependentDateFilters, originalState);
     }, [dependentDateFilters, originalState]);
 
     const onConfigurationClose = useCallback(() => {

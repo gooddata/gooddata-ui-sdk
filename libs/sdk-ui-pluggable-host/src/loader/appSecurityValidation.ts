@@ -55,21 +55,65 @@ export function isSecuredRemoteUrl(url: string | undefined): boolean {
 }
 
 /**
- * Validates the build-time-baked security metadata of a loaded pluggable app
- * against the current platform context.
+ * Build-time-baked security metadata that a remote module exports.
+ */
+export interface IRemoteModuleSecurityMetadata {
+    allowedOrganizations?: string[];
+    buildTimestamp?: number;
+}
+
+/**
+ * Validates the build-time-baked security metadata of a loaded remote module (a pluggable app or a
+ * headless module) against the current platform context.
  *
  * @remarks
- * Returns `undefined` when the app is not subject to these checks (i.e. it
+ * Returns `undefined` when the module is not subject to these checks (i.e. it
  * was not loaded from a secured remote hostname). Otherwise returns a
  * structured failure describing the reason; the caller is responsible for
- * surfacing it via the renderer's error UI.
+ * surfacing it.
  *
- * The check fails closed: a secured-remote app missing either
+ * The check fails closed: a secured-remote module missing either
  * `allowedOrganizations` or `buildTimestamp` — or carrying a non-finite or
  * future-dated `buildTimestamp` (which would otherwise bypass the
  * freshness window via a negative age) — is rejected with
  * `metadata-missing`. An empty allowlist is treated like any other
  * allowlist — it simply matches no organization.
+ */
+export function validateRemoteModuleSecurity(
+    remoteUrl: string | undefined,
+    metadata: IRemoteModuleSecurityMetadata,
+    ctx: IPlatformContext,
+    now: number = Date.now(),
+): AppSecurityFailure | undefined {
+    if (!isSecuredRemoteUrl(remoteUrl)) {
+        return undefined;
+    }
+
+    if (
+        !Array.isArray(metadata.allowedOrganizations) ||
+        typeof metadata.buildTimestamp !== "number" ||
+        !Number.isFinite(metadata.buildTimestamp) ||
+        metadata.buildTimestamp > now
+    ) {
+        return { kind: "metadata-missing" };
+    }
+
+    const orgId = ctx.organization?.id;
+    if (!orgId || !metadata.allowedOrganizations.includes(orgId)) {
+        return { kind: "organization-not-allowed" };
+    }
+
+    const ageMs = now - metadata.buildTimestamp;
+    if (ageMs > BUILD_FRESHNESS_WINDOW_MS) {
+        return { kind: "build-expired", ageMs };
+    }
+
+    return undefined;
+}
+
+/**
+ * Validates the build-time-baked security metadata of a loaded pluggable app.
+ * See {@link validateRemoteModuleSecurity}.
  */
 export function validateAppSecurity(
     app: PluggableApplicationRegistryItem,
@@ -80,30 +124,7 @@ export function validateAppSecurity(
     if (!isRemotePluggableApplicationRegistryItem(app)) {
         return undefined;
     }
-    if (!isSecuredRemoteUrl(app.remote.url)) {
-        return undefined;
-    }
-
-    if (
-        !Array.isArray(loadedApp.allowedOrganizations) ||
-        typeof loadedApp.buildTimestamp !== "number" ||
-        !Number.isFinite(loadedApp.buildTimestamp) ||
-        loadedApp.buildTimestamp > now
-    ) {
-        return { kind: "metadata-missing" };
-    }
-
-    const orgId = ctx.organization?.id;
-    if (!orgId || !loadedApp.allowedOrganizations.includes(orgId)) {
-        return { kind: "organization-not-allowed" };
-    }
-
-    const ageMs = now - loadedApp.buildTimestamp;
-    if (ageMs > BUILD_FRESHNESS_WINDOW_MS) {
-        return { kind: "build-expired", ageMs };
-    }
-
-    return undefined;
+    return validateRemoteModuleSecurity(app.remote.url, loadedApp, ctx, now);
 }
 
 /**

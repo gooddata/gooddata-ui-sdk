@@ -1,5 +1,6 @@
-// (C) 2019-2025 GoodData Corporation
-import { isEmpty } from "lodash-es";
+// (C) 2019-2026 GoodData Corporation
+
+import { _isEmpty } from "@gooddata/util";
 
 import { type IMeasureMetadataObject } from "../../metadata/measure/index.js";
 import { type IGroupableCatalogItemBase } from "../group/index.js";
@@ -27,5 +28,5 @@ export interface ICatalogMeasure extends IGroupableCatalogItemBase {
  * @public
  */
 export function isCatalogMeasure(obj: unknown): obj is ICatalogMeasure {
-    return !isEmpty(obj) && (obj as ICatalogMeasure).type === "measure";
+    return !_isEmpty(obj) && (obj as ICatalogMeasure).type === "measure";
 }

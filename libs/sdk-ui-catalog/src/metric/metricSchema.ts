@@ -3,6 +3,7 @@
 import * as z from "zod/mini";
 
 import type { AacSchemaParity, AssertAacParity } from "../asCode/aacParity.js";
+import { type SchemaKeys, deriveSchemaKeys } from "../asCode/schemaKeys.js";
 import type { ObjectTypes } from "../objectType/constants.js";
 
 /**
@@ -32,11 +33,4 @@ export type MetricSchema = z.infer<typeof metricSchema>;
 /** Fails the build when this schema drifts from the AAC `metric` document type. */
 export type MetricAacParity = AssertAacParity<AacSchemaParity<typeof ObjectTypes.METRIC, MetricSchema>>;
 
-/**
- * Allowed YAML property names keyed by parent mapping, used to power editor autocompletion.
- * The metric schema is flat, so the only entry is the top-level mapping (keyed by `""`), whose
- * value is the object's property names read from zod's public `shape`.
- */
-export const METRIC_SCHEMA_KEYS: Record<string, string[]> = {
-    "": Object.keys(metricSchema.shape),
-};
+export const METRIC_SCHEMA_KEYS: SchemaKeys = deriveSchemaKeys(metricSchema);

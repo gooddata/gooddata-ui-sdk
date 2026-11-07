@@ -2,9 +2,8 @@
 
 import { type ReactElement, useMemo } from "react";
 
-import { isEmpty } from "lodash-es";
-
 import { type IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import {
     type IDashboardLayoutItemFacade,
@@ -72,7 +71,7 @@ const defaultItemKeyGetter: IDashboardLayoutItemKeyGetter<unknown> = ({ item }) 
  */
 function hasVisibleSectionHeader<TWidget>(section: IDashboardLayoutSectionFacade<TWidget>): boolean {
     const { sections } = getLayoutConfiguration(section.layout().raw());
-    return sections.areHeadersEnabled && (!isEmpty(section.title()) || !isEmpty(section.description()));
+    return sections.areHeadersEnabled && (!_isEmpty(section.title()) || !_isEmpty(section.description()));
 }
 
 export function DashboardLayoutSection<TWidget>({

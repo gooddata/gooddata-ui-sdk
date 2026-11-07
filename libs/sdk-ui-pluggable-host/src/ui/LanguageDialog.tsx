@@ -100,6 +100,7 @@ export function LanguageDialog({
                             value={selectedItem}
                             onChange={setSelectedItem}
                             placeholder={title}
+                            title={title}
                             filter={(item, query) =>
                                 item === DEFAULT_ITEM ? !query : matchesLanguage(item, query)
                             }

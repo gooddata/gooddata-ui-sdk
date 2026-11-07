@@ -1,8 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import { isResultTotalHeader } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import {
     type ColumnLocator,
@@ -59,7 +58,7 @@ export function searchForLocatorMatch(
                 return undefined;
             });
 
-            if (isEmpty(matchingLocator)) {
+            if (_isEmpty(matchingLocator)) {
                 // if there is no matching attribute/total locator yet code is on scope col, then it
                 // means there are less attributes in the table than there are attribute locators. the
                 // table has changed yet some sort items hang around. bail out immediately with no match.

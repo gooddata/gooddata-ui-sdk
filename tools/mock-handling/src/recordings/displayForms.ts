@@ -3,10 +3,9 @@
 import fs from "fs";
 import path from "path";
 
-import { isEqual } from "lodash-es";
-
 import { type IAnalyticalBackend, type IElementsQuery } from "@gooddata/sdk-backend-spi";
 import { type IAttributeDisplayFormMetadataObject, type IAttributeElement, idRef } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { createUniqueVariableNameForIdentifier } from "../base/variableNaming.js";
 
@@ -82,7 +81,7 @@ export class DisplayFormRecording implements IRecording {
             fs.existsSync(this.directory) &&
             fs.existsSync(this.elementFile) &&
             fs.existsSync(this.objFile) &&
-            isEqual(this.spec, this.getRecordedSpec())
+            _isEqual(this.spec, this.getRecordedSpec())
         );
     }
 

@@ -1,7 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
-import { compact, isEmpty, isEqual, keyBy, sortBy } from "lodash-es";
+import { compact, keyBy, sortBy } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { type IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
@@ -33,6 +33,7 @@ import {
     isObjRef,
     uriRef,
 } from "@gooddata/sdk-model";
+import { _isEmpty, _isEqual } from "@gooddata/util";
 
 import { type ObjRefMap, newDisplayFormMap } from "../../../../_staging/metadata/objRefMap.js";
 import { createMemoizedSelector } from "../../_infra/selectors.js";
@@ -303,8 +304,8 @@ export const selectIsWorkingFilterContextChanged: DashboardSelector<boolean | un
                     }
 
                     return (
-                        isEqual(partialAppliedFilter, partialWorkingFilter) &&
-                        isEqual(
+                        _isEqual(partialAppliedFilter, partialWorkingFilter) &&
+                        _isEqual(
                             sortBy(getAttributeElementsItems(appliedElements)),
                             sortBy(getAttributeElementsItems(workingElements)),
                         )
@@ -316,10 +317,10 @@ export const selectIsWorkingFilterContextChanged: DashboardSelector<boolean | un
                     isDashboardTextAttributeFilter(appliedFilter) ||
                     isDashboardTextAttributeFilter(workingFilter)
                 ) {
-                    return isEqual(appliedFilter, workingFilter);
+                    return _isEqual(appliedFilter, workingFilter);
                 }
                 // Date filters
-                return isEqual(appliedFilter, workingFilter);
+                return _isEqual(appliedFilter, workingFilter);
             })
             .every((v) => v);
     },
@@ -1243,8 +1244,8 @@ export const selectIsAttributeFilterDependentByLocalIdentifier: (
                 return false;
             }
             return (
-                !isEmpty(dashboardAttributeFilterItemFilterElementsBy(filterContextAttributeFilter)) ||
-                !isEmpty(dashboardAttributeFilterItemFilterElementsByDate(filterContextAttributeFilter))
+                !_isEmpty(dashboardAttributeFilterItemFilterElementsBy(filterContextAttributeFilter)) ||
+                !_isEmpty(dashboardAttributeFilterItemFilterElementsByDate(filterContextAttributeFilter))
             );
         },
     ),
@@ -1409,8 +1410,8 @@ export const selectIsAttributeFilterDependentByLocalIdentifierForTab: (
                     return false;
                 }
                 return (
-                    !isEmpty(dashboardAttributeFilterItemFilterElementsBy(filterContextAttributeFilter)) ||
-                    !isEmpty(dashboardAttributeFilterItemFilterElementsByDate(filterContextAttributeFilter))
+                    !_isEmpty(dashboardAttributeFilterItemFilterElementsBy(filterContextAttributeFilter)) ||
+                    !_isEmpty(dashboardAttributeFilterItemFilterElementsByDate(filterContextAttributeFilter))
                 );
             },
         ),

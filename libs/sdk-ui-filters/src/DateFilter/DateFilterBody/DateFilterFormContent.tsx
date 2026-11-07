@@ -2,7 +2,6 @@
 
 import { type ReactNode, useRef } from "react";
 
-import { isEmpty } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import {
@@ -14,6 +13,7 @@ import {
     isRelativeDateFilterForm,
 } from "@gooddata/sdk-model";
 import { useId } from "@gooddata/sdk-ui-kit";
+import { _isEmpty } from "@gooddata/util";
 
 import { AbsoluteDateFilterForm } from "../AbsoluteDateFilterForm/AbsoluteDateFilterForm.js";
 import {
@@ -198,7 +198,7 @@ export function DateFilterFormContent({
                                 onKeyDown={(event) =>
                                     submitRelativeDateFilterForm(
                                         event,
-                                        isEmpty(errors),
+                                        _isEmpty(errors),
                                         withoutApply ?? false,
                                         submitForm,
                                     )

@@ -1,7 +1,9 @@
-// (C) 2020-2025 GoodData Corporation
-import { cloneDeep, isEmpty } from "lodash-es";
+// (C) 2020-2026 GoodData Corporation
+
+import { cloneDeep } from "lodash-es";
 
 import { type ITheme } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 /**
  * Default modifier applied to any theme passed to Dashboard component
@@ -35,7 +37,7 @@ export const defaultDashboardThemeModifier = (theme: ITheme): ITheme => {
         );
     }
 
-    if (!isEmpty(additionalCssProperties)) {
+    if (!_isEmpty(additionalCssProperties)) {
         const styleTag = document.createElement("style");
         styleTag.appendChild(document.createTextNode(`:root{${additionalCssProperties.join("")}}`));
         document.head.appendChild(styleTag);

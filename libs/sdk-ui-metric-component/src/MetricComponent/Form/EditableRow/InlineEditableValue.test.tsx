@@ -3,8 +3,9 @@
 import { useState } from "react";
 
 import { fireEvent, render, screen } from "@testing-library/react";
-import { isEmpty } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
+
+import { _isEmpty } from "@gooddata/util";
 
 import { passOnlyValidOrEmpty } from "../Header/MetricIdField.js";
 
@@ -20,7 +21,7 @@ function IdHarness({ initial = "" }: { initial?: string }) {
             placeholder="generated_id"
             ariaLabel="Metric ID"
             onChangeValueTransformer={passOnlyValidOrEmpty}
-            onEditEndsValueTransformer={(v) => (isEmpty(v.trim()) ? "generated_id" : v.trim())}
+            onEditEndsValueTransformer={(v) => (_isEmpty(v.trim()) ? "generated_id" : v.trim())}
             value={value}
             onChange={setValue}
         />

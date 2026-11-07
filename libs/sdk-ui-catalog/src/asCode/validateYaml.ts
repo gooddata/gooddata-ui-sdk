@@ -3,58 +3,76 @@
 import { parse as parseYaml } from "yaml";
 import type * as z from "zod/mini";
 
-/**
- * Neutral result of the shared YAML validation skeleton, before a type shapes it into its own result.
- * `data` is the parsed-and-schema-validated value; the caller converts it to a definition. A `schema`
- * failure hands the caller the `error` and the `parsed` value to classify against its own error codes;
- * the other kinds are already the codes every as-code type shares.
- */
-export type YamlValidation<TData> =
-    | { ok: true; data: TData }
-    | { ok: false; kind: "empty" | "syntax" | "idImmutable" }
-    | { ok: false; kind: "schema"; error: z.core.$ZodError; parsed: unknown };
+import type { AsCodeFieldMark } from "./descriptor.js";
 
 type SafeParseSchema<TData> = {
     safeParse(value: unknown): { success: true; data: TData } | { success: false; error: z.core.$ZodError };
 };
 
-type ValidateYamlOptions<TData> = {
+type YamlErrorCode = "empty" | "syntax" | "invalidStructure" | "idImmutable";
+
+// A shared failure carries none of the type's own fields; naming them absent keeps them readable on
+// the whole union.
+type SharedYamlFailure<TFailure> = { errorCode: YamlErrorCode } & {
+    [TKey in Exclude<keyof TFailure, "errorCode">]?: undefined;
+};
+
+export type YamlValidationFailure<TFailure extends { errorCode: string }> = {
+    isValid: false;
+} & AsCodeFieldMark &
+    (TFailure | SharedYamlFailure<TFailure>);
+
+export type YamlValidation<TData, TFailure extends { errorCode: string }> =
+    | { isValid: true; data: TData }
+    | YamlValidationFailure<TFailure>;
+
+type ValidateYamlOptions<TData, TFailure> = {
     schema: SafeParseSchema<TData>;
     /** When set, the parsed `id` must match it, else `idImmutable` (identity is fixed while editing). */
     fixedIdentifier?: string;
+    classifyIssue: (dottedPath: string, parsed: unknown, issue: z.core.$ZodIssue) => TFailure | undefined;
 };
 
-/**
- * Runs the steps every as-code YAML shares: reject empty input, parse (strict) YAML, drop a blank
- * identity, validate against the schema, and enforce identity immutability. The schema itself and the
- * conversion of validated data into a definition are the caller's.
- */
-export function validateYaml<TData extends { id?: string }>(
+export function validateYaml<TData extends { id?: string }, TFailure extends { errorCode: string }>(
     value: string,
-    { schema, fixedIdentifier }: ValidateYamlOptions<TData>,
-): YamlValidation<TData> {
+    { schema, fixedIdentifier, classifyIssue }: ValidateYamlOptions<TData, TFailure>,
+): YamlValidation<TData, TFailure> {
     if (value.trim() === "") {
-        return { ok: false, kind: "empty" };
+        return { isValid: false, errorCode: "empty" };
     }
 
     let parsed: unknown;
     try {
         parsed = parseYaml(value, { strict: true });
     } catch {
-        return { ok: false, kind: "syntax" };
+        return { isValid: false, errorCode: "syntax" };
     }
 
     const document = withoutBlankIdentity(parsed);
     const result = schema.safeParse(document);
     if (!result.success) {
-        return { ok: false, kind: "schema", error: result.error, parsed: document };
+        for (const issue of result.error.issues) {
+            const failure = classifyIssue(issue.path.map(String).join("."), document, issue);
+            if (failure) {
+                return { isValid: false, ...failure, ...markedField(issue) };
+            }
+        }
+        return { isValid: false, errorCode: "invalidStructure", ...markedField(result.error.issues[0]) };
     }
 
     if (fixedIdentifier !== undefined && result.data.id !== fixedIdentifier) {
-        return { ok: false, kind: "idImmutable" };
+        return { isValid: false, errorCode: "idImmutable", path: ["id"] };
     }
 
-    return { ok: true, data: result.data };
+    return { isValid: true, data: result.data };
+}
+
+/**
+ * A blank `maql:` / `maql: ` line parses to null - the seeded template's state - and counts as
+ * unwritten, not as a value of the wrong type.
+ */
+export function isMaqlWritten(parsed: unknown): boolean {
+    return parsed !== null && typeof parsed === "object" && "maql" in parsed && parsed.maql != null;
 }
 
 /**
@@ -71,4 +89,21 @@ function withoutBlankIdentity(parsed: unknown): unknown {
     }
     const { id, ...rest } = parsed as { id?: unknown };
     return id === null || (typeof id === "string" && id.trim() === "") ? rest : parsed;
+}
+
+/**
+ * The field to mark for an issue. Symbols cannot name a YAML node, so they are dropped, and an empty
+ * path names no field. Zod reports an unknown key on its parent object, so the first unknown key is
+ * appended and marked by its key.
+ */
+function markedField(issue: z.core.$ZodIssue): AsCodeFieldMark {
+    if (issue.code === "unrecognized_keys") {
+        return { path: [...issue.path.filter(isDocumentKey), issue.keys[0]], target: "key" };
+    }
+    const keys = issue.path.filter(isDocumentKey);
+    return { path: keys.length > 0 ? keys : undefined };
+}
+
+function isDocumentKey(key: PropertyKey): key is string | number {
+    return typeof key !== "symbol";
 }

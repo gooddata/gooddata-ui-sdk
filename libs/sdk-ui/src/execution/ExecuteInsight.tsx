@@ -2,7 +2,6 @@
 
 import { type ReactElement } from "react";
 
-import { isEqual } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -13,6 +12,7 @@ import {
     type ISortItem,
     type ObjRef,
 } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { withContexts } from "../base/react/withContexts.js";
 
@@ -300,7 +300,7 @@ export const ExecuteInsight = withContexts(
 
             return (
                 relevantProps.some((propName) => prevProps[propName] !== nextProps[propName]) ||
-                relevantPropsDeepEqual.some((propName) => !isEqual(prevProps[propName], nextProps[propName]))
+                relevantPropsDeepEqual.some((propName) => !_isEqual(prevProps[propName], nextProps[propName]))
             );
         },
         loadOnMount: (props?: IExecuteInsightProps) => {

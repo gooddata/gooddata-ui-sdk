@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { groupBy, isEmpty } from "lodash-es";
+import { groupBy } from "lodash-es";
 
 import {
     type DateFilterGranularity,
@@ -10,6 +10,7 @@ import {
     type ISettings,
     getDateFilterGranularities,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { defaultDateFilterConfig } from "./defaultConfig.js";
 
@@ -34,7 +35,7 @@ function containsVisibleFilter(filters?: IDateFilterOption[]): boolean {
 }
 
 function isRelativeFormVisible(filter?: IRelativeDateFilterForm): boolean {
-    return isFilterVisible(filter) && !isEmpty(filter?.availableGranularities ?? []);
+    return isFilterVisible(filter) && !_isEmpty(filter?.availableGranularities ?? []);
 }
 
 function isAnyFilterVisible(config: IDateFilterConfig): boolean {

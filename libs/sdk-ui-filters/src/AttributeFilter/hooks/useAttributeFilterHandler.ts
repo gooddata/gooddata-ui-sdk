@@ -2,8 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { isEqual } from "lodash-es";
-
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     type IAttributeElement,
@@ -15,6 +13,7 @@ import {
     isMatchAttributeFilter,
 } from "@gooddata/sdk-model";
 import { usePrevious } from "@gooddata/sdk-ui";
+import { _isEqual } from "@gooddata/util";
 
 import { newAttributeFilterHandler } from "../../AttributeFilterHandler/factory.js";
 import { type IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler/types/attributeFilterHandler.js";
@@ -122,8 +121,8 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
             return (
                 currentFilter &&
                 originalFilter &&
-                !isEqual(filterObjRef(filter), filterObjRef(currentFilter)) &&
-                !isEqual(filterObjRef(filter), filterObjRef(originalFilter))
+                !_isEqual(filterObjRef(filter), filterObjRef(currentFilter)) &&
+                !_isEqual(filterObjRef(filter), filterObjRef(originalFilter))
             );
         };
 
@@ -131,9 +130,9 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
             backend !== prevProps?.backend ||
             workspace !== prevProps?.workspace ||
             filterChanged(filter, handler) ||
-            !isEqual(staticElements, prevProps?.staticElements) ||
-            !isEqual(hiddenElements, prevProps?.hiddenElements) ||
-            !isEqual(separators, prevProps?.separators)
+            !_isEqual(staticElements, prevProps?.staticElements) ||
+            !_isEqual(hiddenElements, prevProps?.hiddenElements) ||
+            !_isEqual(separators, prevProps?.separators)
         ) {
             createNewHandler();
             invalidate();

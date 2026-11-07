@@ -1188,6 +1188,9 @@ export type GuidType = "guid";
 // @public
 export function hasMeasureValueFilterConditions(filter: IMeasureValueFilter): boolean;
 
+// @alpha
+export type HeadlessModuleRegistryItem = RemoteHeadlessModuleRegistryItem | LocalHeadlessModuleRegistryItem;
+
 // @public
 export interface IAbsoluteDateFilter {
     // (undocumented)
@@ -4612,6 +4615,35 @@ export interface IGroupableCatalogItemBase extends ICatalogItemBase {
     groups: ObjRef[];
 }
 
+// @alpha
+export interface IHeadlessModuleRegistryItemMetaV1 {
+    // (undocumented)
+    apiVersion: "1.0";
+    config?: Record<string, unknown>;
+    // (undocumented)
+    id: string;
+    isEnabled?: boolean;
+    // (undocumented)
+    maintainer?: string;
+    // (undocumented)
+    requiredEntitlements?: RequiredEntitlements;
+    // (undocumented)
+    requiredOrganizationPermissions?: RequiredOrganizationPermissions;
+    // (undocumented)
+    requiredSettings?: RequiredSettings;
+    title?: string;
+}
+
+// @alpha
+export interface IHeadlessModuleTelemetryOptionsV1 {
+    identity?: "hashed" | "userId" | "email";
+}
+
+// @alpha
+export interface IHeadlessTelemetryModuleRegistryItemMetaV1 extends IHeadlessModuleRegistryItemMetaV1 {
+    telemetry: IHeadlessModuleTelemetryOptionsV1;
+}
+
 // @public
 export interface IIdentifiableFilter {
     // (undocumented)
@@ -4916,6 +4948,12 @@ export interface ILlmProvider {
 
 // @public
 export type ILocale = "en-US" | "en-US-x-24h" | "de-DE" | "es-ES" | "fr-FR" | "ja-JP" | "nl-NL" | "pt-BR" | "pt-PT" | "zh-Hans" | "ru-RU" | "it-IT" | "es-419" | "fr-CA" | "en-GB" | "en-AU" | "fi-FI" | "zh-Hant" | "zh-HK" | "tr-TR" | "pl-PL" | "ko-KR" | "sl-SI" | "id-ID" | "th-TH" | "vi-VN" | "uk-UA";
+
+// @alpha
+export interface ILocalHeadlessModuleRegistryItemV1 extends IHeadlessModuleRegistryItemMetaV1 {
+    // (undocumented)
+    local: true;
+}
 
 // @alpha
 export interface ILocalPluggableApplicationModule {
@@ -6987,11 +7025,21 @@ export interface IRelativeDateFilterValues {
 }
 
 // @alpha
-export interface IRemotePluggableApplicationModule {
+export interface IRemoteHeadlessModuleRegistryItemV1 extends IHeadlessModuleRegistryItemMetaV1 {
+    // (undocumented)
+    remote: IRemoteModuleLocation;
+}
+
+// @alpha
+export interface IRemoteModuleLocation {
     module: string;
-    routeBase: string;
     scope: string;
     url: string;
+}
+
+// @alpha
+export interface IRemotePluggableApplicationModule extends IRemoteModuleLocation {
+    routeBase: string;
 }
 
 // @alpha
@@ -7004,6 +7052,7 @@ export interface IRemotePluggableApplicationsRegistryV1 {
     allowedStandardApplications?: string[];
     apiVersion: "1.0";
     applications?: PluggableApplicationRegistryItem[];
+    headlessModules?: RemoteHeadlessModuleRegistryItem[];
     overrides?: {
         [applicationId: string]: Partial<PluggableApplicationRegistryItem>;
     };
@@ -7677,6 +7726,9 @@ export const isGranularUserGroupAccess: (obj: unknown) => obj is IGranularUserGr
 // @alpha
 export const isGranularUserGroupAccessGrantee: (obj: unknown) => obj is IGranularUserGroupAccessGrantee;
 
+// @alpha
+export function isHeadlessTelemetryModuleRegistryItem<T extends IHeadlessModuleRegistryItemMetaV1>(item: T): item is T & IHeadlessTelemetryModuleRegistryItemMetaV1;
+
 // @public
 export function isIdentifierRef(obj: unknown): obj is IdentifierRef;
 
@@ -7727,6 +7779,9 @@ export function isListedDashboard(obj: unknown): obj is IListedDashboard;
 
 // @public
 export const isLocale: (locale: unknown) => locale is ILocale;
+
+// @alpha
+export function isLocalHeadlessModuleRegistryItem(item: HeadlessModuleRegistryItem): item is LocalHeadlessModuleRegistryItem;
 
 // @public
 export function isLocalIdRef(obj: unknown): obj is LocalIdRef;
@@ -8162,6 +8217,9 @@ export function isRelativeUpperBoundedDateFilter(obj: unknown): obj is IRelative
 export function isRelativeUpperBoundedDateFilterBody(obj: unknown): obj is IRelativeBoundedDateFilterBody & {
     boundedFilter: IUpperBoundedFilter;
 };
+
+// @alpha
+export function isRemoteHeadlessModuleRegistryItem(item: HeadlessModuleRegistryItem): item is RemoteHeadlessModuleRegistryItem;
 
 // @alpha
 export function isRemotePluggableApplicationRegistryItem(app: PluggableApplicationRegistryItem): app is RemotePluggableApplicationRegistryItem;
@@ -9542,6 +9600,9 @@ export type LlmProviderTestResults = {
 // @internal
 export const LOCALES: ("de-DE" | "en-AU" | "en-GB" | "en-US" | "en-US-x-24h" | "es-419" | "es-ES" | "fi-FI" | "fr-CA" | "fr-FR" | "id-ID" | "it-IT" | "ja-JP" | "ko-KR" | "nl-NL" | "pl-PL" | "pt-BR" | "pt-PT" | "ru-RU" | "sl-SI" | "th-TH" | "tr-TR" | "uk-UA" | "vi-VN" | "zh-HK" | "zh-Hans" | "zh-Hant")[];
 
+// @alpha
+export type LocalHeadlessModuleRegistryItem = ILocalHeadlessModuleRegistryItemV1 | (ILocalHeadlessModuleRegistryItemV1 & IHeadlessTelemetryModuleRegistryItemMetaV1);
+
 // @public
 export type LocalIdRef = {
     localIdentifier: Identifier;
@@ -10383,6 +10444,9 @@ export type RelativeDateFilterGranularityOffset = number;
 
 // @public
 export function relativeDateFilterValues(filter: IRelativeDateFilter, includeDataSet?: boolean): IRelativeDateFilterValues;
+
+// @alpha
+export type RemoteHeadlessModuleRegistryItem = IRemoteHeadlessModuleRegistryItemV1 | (IRemoteHeadlessModuleRegistryItemV1 & IHeadlessTelemetryModuleRegistryItemMetaV1);
 
 // @alpha
 export type RemotePluggableApplicationRegistryItem = IRemotePluggableApplicationRegistryItemV1;

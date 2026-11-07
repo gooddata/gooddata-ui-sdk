@@ -696,7 +696,7 @@
         "crowdinContext": "Section header label above the YAML editor in the parameter dialog."
     },
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": {
-        "text": "Create a YAML statement that defines a parameter.",
+        "text": "Create a YAML statement that defines a parameter. Press {platform, select, apple {⌘I} other {Ctrl+I}} for suggestions.",
         "crowdinContext": "Tooltip shown for the help icon next to the parameter definition section header."
     },
     "analyticsCatalog.parameter.dialog.edit.duplicate": {
@@ -840,7 +840,7 @@
         "crowdinContext": "Header above the as-code editor in the computed attribute dialog."
     },
     "analyticsCatalog.computedAttribute.dialog.sectionHeader.tooltip": {
-        "text": "Write a MAQL expression that assigns each row a value, using CASE WHEN branches over a metric or a fact.",
+        "text": "Write a MAQL expression that assigns each row a value, using CASE WHEN branches over a metric or a fact. Press {platform, select, apple {⌘I} other {Ctrl+I}} for suggestions.",
         "crowdinContext": "Tooltip shown for the help icon next to the computed attribute definition section header."
     },
     "analyticsCatalog.computedAttribute.dialog.help": {
@@ -952,7 +952,7 @@
         "crowdinContext": "Header above the as-code editor in the metric dialog."
     },
     "analyticsCatalog.metric.dialog.sectionHeader.tooltip": {
-        "text": "Define the metric in YAML, including its MAQL expression and format.",
+        "text": "Define the metric in YAML, including its MAQL expression and format. Press {platform, select, apple {⌘I} other {Ctrl+I}} for suggestions.",
         "crowdinContext": "Tooltip explaining the as-code metric editor."
     },
     "analyticsCatalog.metric.actions.openInEditor": {
@@ -1120,7 +1120,7 @@
         "crowdinContext": "Header above the as-code editor in the visualization dialog."
     },
     "analyticsCatalog.visualization.dialog.sectionHeader.tooltip": {
-        "text": "Define the visualization in YAML, including its type, query, and configuration.",
+        "text": "Define the visualization in YAML, including its type, query, and configuration. Press {platform, select, apple {⌘I} other {Ctrl+I}} for suggestions.",
         "crowdinContext": "Tooltip explaining the as-code visualization editor."
     },
     "analyticsCatalog.visualization.actions.openInAnalyticalDesigner": {

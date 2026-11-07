@@ -1,6 +1,5 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, all, call, put, select } from "redux-saga/effects";
@@ -15,6 +14,7 @@ import {
     isInsightWidget,
     objRefToString,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IAddAttributeFilter } from "../../../commands/filters.js";
 import { attributeFilterAdded } from "../../../events/filters.js";
@@ -98,7 +98,7 @@ export function* addAttributeFilterHandler(
         [usedDisplayForm],
     );
 
-    if (!isEmpty(resolvedDisplayForm.missing)) {
+    if (!_isEmpty(resolvedDisplayForm.missing)) {
         throw invalidArgumentsProvided(
             ctx,
             cmd,

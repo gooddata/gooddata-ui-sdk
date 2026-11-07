@@ -3,9 +3,10 @@
 import fs from "fs";
 
 import stringify from "json-stable-stringify";
-import { isEmpty, pick } from "lodash-es";
+import { pick } from "lodash-es";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { _isEmpty } from "@gooddata/util";
 
 /**
  * A mapping of recording file type to file name. The file type is opaque - it is not handled in any way and
@@ -107,5 +108,5 @@ export function readJsonSync(file: string): any {
 }
 
 export function isNonNullRecording(rec: any): rec is IRecording {
-    return !isEmpty(rec) && (rec as IRecording).directory !== undefined;
+    return !_isEmpty(rec) && (rec as IRecording).directory !== undefined;
 }

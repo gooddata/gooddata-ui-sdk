@@ -160,6 +160,25 @@ describe("getTransformDimensionHeaders for computed attributes", () => {
         },
     );
 
+    it.each(["TIMESTAMP", "TIMESTAMP_TZ"] as const)(
+        "should format ISO local date-time values of a %s computed attribute",
+        (dataType) => {
+            expect(
+                formattedNames({ format: { ...dateFormat, pattern: "dd.MM.yyyy HH:mm:ss" }, dataType }, [
+                    "2026-08-24T00:00:00",
+                    "2026-03-15T14:05:09.123",
+                    "2026-03-15T14:05",
+                ]),
+            ).toEqual(["24.08.2026 00:00:00", "15.03.2026 14:05:09", "15.03.2026 14:05:00"]);
+        },
+    );
+
+    it("should keep the raw ISO value of a computed attribute while formatting it", () => {
+        const [item] = headerItems({ format: dateFormat, dataType: "TIMESTAMP" }, ["2026-08-24T00:00:00"]);
+
+        expect(item).toMatchObject({ name: "2026-08-24T00:00:00", formattedName: "24.08.2026" });
+    });
+
     it("should parse values with the granularity the backend states for a computed attribute", () => {
         expect(
             formattedNames(

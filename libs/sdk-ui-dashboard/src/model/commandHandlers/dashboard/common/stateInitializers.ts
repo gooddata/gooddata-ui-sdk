@@ -1,7 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { type PayloadAction } from "@reduxjs/toolkit";
-import { cloneDeep, compact, isEmpty, update } from "lodash-es";
+import { cloneDeep, compact, update } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, select } from "redux-saga/effects";
 
@@ -37,6 +37,7 @@ import {
     isInsightWidget,
     isObjRef,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import {
     dashboardFilterContextDefinition,
@@ -525,7 +526,7 @@ function* sanitizeFilterContext(
         return filterContext;
     }
 
-    if (!filterContext || isEmpty(filterContext.filters)) {
+    if (!filterContext || _isEmpty(filterContext.filters)) {
         return filterContext;
     }
 

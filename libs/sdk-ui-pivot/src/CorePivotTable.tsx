@@ -24,7 +24,7 @@ import {
 } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import cx from "classnames";
-import { cloneDeep, isEqual } from "lodash-es";
+import { cloneDeep } from "lodash-es";
 import { useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 import { v4 as uuidv4 } from "uuid";
@@ -39,6 +39,7 @@ import {
     newErrorMapping,
 } from "@gooddata/sdk-ui";
 import { ThemeContextProvider, useTheme } from "@gooddata/sdk-ui-theme-provider";
+import { _isEqual } from "@gooddata/util";
 
 import { PivotTableError } from "./components/PivotTableError.js";
 import { PivotTableLoading } from "./components/PivotTableLoading.js";
@@ -708,7 +709,7 @@ export function CorePivotTableAgImpl(props: ICorePivotTableProps) {
 
             // Force double execution only when totals/subtotals for columns change, so table is render properly.
             if (
-                !isEqual(
+                !_isEqual(
                     stateRef.current.tempExecution.definition.buckets[2],
                     newExecution.definition.buckets[2],
                 )

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { isEmpty, omitBy, sortBy } from "lodash-es";
+import { omitBy, sortBy } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import {
@@ -24,6 +24,7 @@ import {
     isCatalogMeasure,
     objRefToString,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { type GeoLabelType } from "../../../constants/geo.js";
 import { type IOrganizedCatalogGroup, type IOrganizedCatalogItem } from "../../../typings/catalog.js";
@@ -255,7 +256,7 @@ const createGroupItems = (
     return items
         .filter((item) => {
             const groups = isNonGroupableCatalogItem(item) ? [] : item.groups;
-            const hasGroup = !isEmpty(groups);
+            const hasGroup = !_isEmpty(groups);
             const belongsToGroup = hasGroup && groups.some((tagRef) => id === getGroupId(tagRef));
             const belongsToUngrouped = !hasGroup && isUngroupedGroup;
             return belongsToGroup || belongsToUngrouped;
@@ -312,7 +313,7 @@ const createItemGroupsBase = (
         return acc;
     }, []);
 
-    const hasUngroupedItems = items.some((item) => !isNonGroupableCatalogItem(item) && isEmpty(item.groups));
+    const hasUngroupedItems = items.some((item) => !isNonGroupableCatalogItem(item) && _isEmpty(item.groups));
     if (hasUngroupedItems && groups.length > 0) {
         itemGroups.push(
             createItemGroupBase(

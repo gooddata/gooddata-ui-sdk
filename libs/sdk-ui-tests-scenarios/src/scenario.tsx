@@ -2,7 +2,6 @@
 
 import { type ComponentType } from "react";
 
-import { isEmpty } from "lodash-es";
 import SparkMD5 from "spark-md5";
 
 import { type DataViewRequests } from "@gooddata/mock-handling";
@@ -17,6 +16,7 @@ import {
     type IGeoPushpinChartProps,
 } from "@gooddata/sdk-ui-geo";
 import { type IPivotTableProps } from "@gooddata/sdk-ui-pivot";
+import { _isEmpty } from "@gooddata/util";
 
 export type VisProps =
     | IPivotTableProps
@@ -180,13 +180,13 @@ export class ScenarioBuilder<T extends VisProps> {
      * @param tags - tags to assign, may be undefined or empty if no flags desired
      */
     public withTags(...tags: ScenarioTag[]): ScenarioBuilder<T> {
-        this.tags = isEmpty(tags) ? [] : tags;
+        this.tags = _isEmpty(tags) ? [] : tags;
 
         return this;
     }
 
     public withTests(...tests: TestTypes[]): ScenarioBuilder<T> {
-        this.tests = isEmpty(tests) ? [] : tests;
+        this.tests = _isEmpty(tests) ? [] : tests;
 
         return this;
     }

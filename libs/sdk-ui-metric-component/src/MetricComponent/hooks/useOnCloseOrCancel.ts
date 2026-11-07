@@ -2,9 +2,8 @@
 
 import { useMemo } from "react";
 
-import { isEmpty } from "lodash-es";
-
 import { isMeasureMetadataObject, isMeasureMetadataObjectDefinition } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { CancelMode, type IEditMetricContentProps } from "../Content/EditMetricContent.data.js";
 import { type IMeasureDef } from "../metric/metricHelpers.js";
@@ -20,7 +19,7 @@ export function useOnCloseOrCancel(
 } {
     return useMemo(() => {
         function onCloseCallback(metric: Partial<IMeasureDef>, valid: boolean) {
-            if (isEmpty(metric.expression?.trim()) || !dirty) {
+            if (_isEmpty(metric.expression?.trim()) || !dirty) {
                 onCancel({ cancelMode: CancelMode.Cross });
                 return;
             }

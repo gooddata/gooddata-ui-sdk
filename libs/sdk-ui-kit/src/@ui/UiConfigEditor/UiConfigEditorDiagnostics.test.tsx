@@ -10,7 +10,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 import { type YamlCompletionSource } from "../../syntaxHighlightingInput/yamlPosition.js";
 
 import { preloadUiConfigEditorGrammars } from "./configEditorGrammars.js";
-import { type IUiConfigEditorWarning } from "./types.js";
+import { type IUiConfigEditorDiagnostic } from "./types.js";
 import { UiConfigEditor } from "./UiConfigEditor.js";
 
 beforeAll(() => preloadUiConfigEditorGrammars());
@@ -22,7 +22,7 @@ function editorView(container: HTMLElement): EditorView | null {
     return editor ? EditorView.findFromDOM(editor) : null;
 }
 
-function shownWarnings(container: HTMLElement): string[] {
+function shownDiagnostics(container: HTMLElement): string[] {
     const view = editorView(container);
     const shown: string[] = [];
     if (view) {
@@ -33,18 +33,22 @@ function shownWarnings(container: HTMLElement): string[] {
     return shown;
 }
 
-function editor(warnings: IUiConfigEditorWarning[], completionSource?: YamlCompletionSource) {
+function editor(diagnostics: IUiConfigEditorDiagnostic[], completionSource?: YamlCompletionSource) {
     return (
         <UiConfigEditor
             value={VALUE}
             onChange={() => {}}
-            warnings={warnings}
+            diagnostics={diagnostics}
             completionSource={completionSource}
         />
     );
 }
 
-const WARNING: IUiConfigEditorWarning = { path: ["style", "color"], message: "Not in the theme." };
+const WARNING: IUiConfigEditorDiagnostic = {
+    path: ["style", "color"],
+    severity: "warning",
+    message: "Not in the theme.",
+};
 
 // Waits out the editor's 750 ms lint delay with room to spare.
 const LINTED = { timeout: 3000 };
@@ -59,36 +63,42 @@ function RerenderingEditor() {
         <UiConfigEditor
             value={VALUE}
             onChange={() => {}}
-            warnings={renders === 0 ? [] : [{ ...WARNING }]}
+            diagnostics={renders === 0 ? [] : [{ ...WARNING }]}
             labels={{ syntaxError: "Syntax error" }}
         />
     );
 }
 
-describe("UiConfigEditor warnings", () => {
+describe("UiConfigEditor diagnostics", () => {
     it("shows the caller's warnings, and shows them again when they change", async () => {
         const { container, rerender } = render(editor([]));
-        expect(shownWarnings(container)).toEqual([]);
+        expect(shownDiagnostics(container)).toEqual([]);
 
         rerender(editor([WARNING]));
 
         await waitFor(
             () =>
-                expect(shownWarnings(container)).toEqual([
+                expect(shownDiagnostics(container)).toEqual([
                     'warning: "{theme.colors.texts.nope}" Not in the theme.',
                 ]),
             LINTED,
         );
     });
 
+    it("shows an error as an error", async () => {
+        const { container } = render(editor([{ path: ["title"], severity: "error", message: "Unknown." }]));
+
+        await waitFor(() => expect(shownDiagnostics(container)).toEqual(['error: "Q3" Unknown.']), LINTED);
+    });
+
     it("keeps showing the warnings in an editor remounted for a completion source", async () => {
         const { container, rerender } = render(editor([]));
         rerender(editor([WARNING]));
-        await waitFor(() => expect(shownWarnings(container)).toHaveLength(1), LINTED);
+        await waitFor(() => expect(shownDiagnostics(container)).toHaveLength(1), LINTED);
 
         rerender(editor([WARNING], () => null));
 
-        await waitFor(() => expect(shownWarnings(container)).toHaveLength(1), LINTED);
+        await waitFor(() => expect(shownDiagnostics(container)).toHaveLength(1), LINTED);
     });
 
     it("keeps linting while the caller re-renders with new warnings of the same content", async () => {
@@ -96,7 +106,7 @@ describe("UiConfigEditor warnings", () => {
 
         act(() => editorView(container)?.dispatch({ changes: { from: 1, insert: "," } }));
 
-        const hasSyntaxError = () => shownWarnings(container).some((shown) => shown.startsWith("error:"));
+        const hasSyntaxError = () => shownDiagnostics(container).some((shown) => shown.startsWith("error:"));
         await waitFor(() => expect(hasSyntaxError()).toBe(true), LINTED);
     });
 });

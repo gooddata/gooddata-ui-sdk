@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type ILocale } from "../base/localization.js";
 import { type IEntitlementsName } from "../entitlements/index.js";
@@ -398,12 +398,11 @@ export interface IPluggableApplicationMetaV1 {
 export type PluggableApplicationMeta = IPluggableApplicationMetaV1;
 
 /**
- * Definition of the remote pluggable application.
- * The application is loaded via Module Federation.
+ * Location of a module loaded via Module Federation.
  *
  * @alpha
  */
-export interface IRemotePluggableApplicationModule {
+export interface IRemoteModuleLocation {
     /**
      * Full URL of the remote federated module with the application bundle.
      *
@@ -430,7 +429,15 @@ export interface IRemotePluggableApplicationModule {
      * "./AppModule"
      */
     module: string;
+}
 
+/**
+ * Definition of the remote pluggable application.
+ * The application is loaded via Module Federation.
+ *
+ * @alpha
+ */
+export interface IRemotePluggableApplicationModule extends IRemoteModuleLocation {
     /**
      * Base route of the application.
      * It is relative to the shell application route.
@@ -642,6 +649,15 @@ export interface IRemotePluggableApplicationsRegistryV1 {
      * management intact.
      */
     uiModule?: IRemotePluggableApplicationModule;
+    /**
+     * Optional list of headless modules registered to the shell application.
+     *
+     * @remarks
+     * A headless module has no route, no menu item and no application scope. The shell application
+     * mounts each enabled module once per page and keeps it mounted while the user moves between
+     * applications, workspaces and the organization scope. See {@link IHeadlessModuleRegistryItemMetaV1}.
+     */
+    headlessModules?: RemoteHeadlessModuleRegistryItem[];
 }
 
 /**
@@ -659,7 +675,7 @@ export type RemotePluggableApplicationsRegistry = IRemotePluggableApplicationsRe
 export function isExternalPluggableApplicationRegistryItem(
     app: PluggableApplicationRegistryItem,
 ): app is ExternalPluggableApplicationRegistryItem {
-    return !isEmpty(app) && (app as ExternalPluggableApplicationRegistryItem).external !== undefined;
+    return !_isEmpty(app) && (app as ExternalPluggableApplicationRegistryItem).external !== undefined;
 }
 
 /**
@@ -670,7 +686,7 @@ export function isExternalPluggableApplicationRegistryItem(
 export function isLocalPluggableApplicationRegistryItem(
     app: PluggableApplicationRegistryItem,
 ): app is LocalPluggableApplicationRegistryItem {
-    return !isEmpty(app) && (app as LocalPluggableApplicationRegistryItem).local !== undefined;
+    return !_isEmpty(app) && (app as LocalPluggableApplicationRegistryItem).local !== undefined;
 }
 
 /**
@@ -681,5 +697,155 @@ export function isLocalPluggableApplicationRegistryItem(
 export function isRemotePluggableApplicationRegistryItem(
     app: PluggableApplicationRegistryItem,
 ): app is RemotePluggableApplicationRegistryItem {
-    return !isEmpty(app) && (app as RemotePluggableApplicationRegistryItem).remote !== undefined;
+    return !_isEmpty(app) && (app as RemotePluggableApplicationRegistryItem).remote !== undefined;
+}
+
+/**
+ * Common properties of a headless module registry item, v1.
+ *
+ * @remarks
+ * A headless module is a remote module without UI. The shell application mounts it once per page, in
+ * both the full application and the embedded (iframe) mode, and never in export mode. A typical use is a
+ * telemetry module that forwards the shell's telemetry events to a third-party analytics tool.
+ *
+ * The shell evaluates the requirements once, when it mounts the module. A headless module has no
+ * application scope, so `requiredSettings` is evaluated against the organization-level user settings,
+ * not against the settings of the active workspace.
+ *
+ * @alpha
+ */
+export interface IHeadlessModuleRegistryItemMetaV1 {
+    apiVersion: "1.0";
+    id: string;
+    /**
+     * Default is `true`.
+     */
+    isEnabled?: boolean;
+    /**
+     * The shell uses the title only in logs and error reports.
+     */
+    title?: string;
+    maintainer?: string;
+    requiredSettings?: RequiredSettings;
+    requiredEntitlements?: RequiredEntitlements;
+    requiredOrganizationPermissions?: RequiredOrganizationPermissions;
+    /**
+     * Configuration that the shell passes to the module when it mounts it.
+     *
+     * @remarks
+     * The registry is an organization setting that every authenticated user of the organization can
+     * read. Put only public values here, for example the public project key of an analytics tool. Never
+     * put a server-side secret here. The shell does not read the values.
+     */
+    config?: Record<string, unknown>;
+}
+
+/**
+ * Common properties of a headless module that registers telemetry providers, v1.
+ *
+ * @remarks
+ * A headless module without `telemetry` can also register a telemetry provider. The shell then uses
+ * the default options.
+ *
+ * @alpha
+ */
+export interface IHeadlessTelemetryModuleRegistryItemMetaV1 extends IHeadlessModuleRegistryItemMetaV1 {
+    /**
+     * Options that the shell applies to the telemetry providers of the module.
+     */
+    telemetry: IHeadlessModuleTelemetryOptionsV1;
+}
+
+/**
+ * Telemetry options of a headless module, v1.
+ *
+ * @alpha
+ */
+export interface IHeadlessModuleTelemetryOptionsV1 {
+    /**
+     * How the shell identifies the user to the telemetry providers of the module. Default is `hashed`.
+     * See {@link @gooddata/sdk-pluggable-application-model#TelemetryIdentityMode}.
+     */
+    identity?: "hashed" | "userId" | "email";
+}
+
+/**
+ * Headless module loaded via Module Federation, v1.
+ *
+ * @alpha
+ */
+export interface IRemoteHeadlessModuleRegistryItemV1 extends IHeadlessModuleRegistryItemMetaV1 {
+    remote: IRemoteModuleLocation;
+}
+
+/**
+ * Headless module loaded via Module Federation.
+ *
+ * @alpha
+ */
+export type RemoteHeadlessModuleRegistryItem =
+    | IRemoteHeadlessModuleRegistryItemV1
+    | (IRemoteHeadlessModuleRegistryItemV1 & IHeadlessTelemetryModuleRegistryItemMetaV1);
+
+/**
+ * Headless module deployed with the shell application, v1.
+ *
+ * @remarks
+ * The shell resolves the loader from the module `id`. Development harnesses use this kind to load the
+ * module source directly, without Module Federation.
+ *
+ * @alpha
+ */
+export interface ILocalHeadlessModuleRegistryItemV1 extends IHeadlessModuleRegistryItemMetaV1 {
+    local: true;
+}
+
+/**
+ * Headless module deployed with the shell application.
+ *
+ * @alpha
+ */
+export type LocalHeadlessModuleRegistryItem =
+    | ILocalHeadlessModuleRegistryItemV1
+    | (ILocalHeadlessModuleRegistryItemV1 & IHeadlessTelemetryModuleRegistryItemMetaV1);
+
+/**
+ * Headless module registry item.
+ *
+ * @alpha
+ */
+export type HeadlessModuleRegistryItem = RemoteHeadlessModuleRegistryItem | LocalHeadlessModuleRegistryItem;
+
+/**
+ * Type guard for {@link RemoteHeadlessModuleRegistryItem}.
+ *
+ * @alpha
+ */
+export function isRemoteHeadlessModuleRegistryItem(
+    item: HeadlessModuleRegistryItem,
+): item is RemoteHeadlessModuleRegistryItem {
+    return !_isEmpty(item) && (item as RemoteHeadlessModuleRegistryItem).remote !== undefined;
+}
+
+/**
+ * Type guard for a headless module item with telemetry options.
+ *
+ * @alpha
+ */
+export function isHeadlessTelemetryModuleRegistryItem<T extends IHeadlessModuleRegistryItemMetaV1>(
+    item: T,
+): item is T & IHeadlessTelemetryModuleRegistryItemMetaV1 {
+    const telemetry = (item as Partial<IHeadlessTelemetryModuleRegistryItemMetaV1>).telemetry;
+    return !_isEmpty(item) && typeof telemetry === "object" && telemetry !== null;
+}
+
+/**
+ * Type guard for {@link LocalHeadlessModuleRegistryItem}.
+ *
+ * @alpha
+ */
+export function isLocalHeadlessModuleRegistryItem(
+    item: HeadlessModuleRegistryItem,
+): item is LocalHeadlessModuleRegistryItem {
+    return !_isEmpty(item) && (item as LocalHeadlessModuleRegistryItem).local === true;
 }

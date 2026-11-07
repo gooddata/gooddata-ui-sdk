@@ -4,10 +4,10 @@ import { type NamedExoticComponent, type ReactNode, memo, useCallback } from "re
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
-import { isEmpty } from "lodash-es";
 import ReactMeasure, { type Rect } from "react-measure";
 
 import { type ITranslationsComponentProps, IntlTranslationsProvider, IntlWrapper } from "@gooddata/sdk-ui";
+import { _isEmpty } from "@gooddata/util";
 
 import { type ChartFillType } from "../coloring/types.js";
 
@@ -156,7 +156,7 @@ export const Legend: NamedExoticComponent<ILegendProps> = memo(function Legend({
                         : 0;
                     const usedHeight = height || measuredHeight;
 
-                    if (!isEmpty(contentRect.client)) {
+                    if (!_isEmpty(contentRect.client)) {
                         validateOverHeight(contentRect.client);
                     }
 

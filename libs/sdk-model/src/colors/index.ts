@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IMetadataObject } from "../ldm/metadata/types.js";
 
@@ -20,7 +20,7 @@ function isRgbChannel(c: unknown): c is number {
 }
 
 function isRgbColorValue(obj: unknown): obj is IRgbColorValue {
-    if (!isEmpty(obj)) {
+    if (!_isEmpty(obj)) {
         const { r, g, b } = obj as IRgbColorValue;
         return isRgbChannel(r) && isRgbChannel(g) && isRgbChannel(b);
     }
@@ -44,7 +44,7 @@ export interface IColorPaletteItem {
  * @public
  */
 export function isColorPaletteItem(obj: unknown): obj is IColorPaletteItem {
-    if (!isEmpty(obj)) {
+    if (!_isEmpty(obj)) {
         const { guid, fill } = obj as IColorPaletteItem;
         return typeof guid === "string" && guid !== undefined && isRgbColorValue(fill);
     }
@@ -126,7 +126,7 @@ export interface IColorPaletteDefinition extends Partial<IMetadataObject> {
  * @public
  */
 export function isColorFromPalette(obj: unknown): obj is IColorFromPalette {
-    return !isEmpty(obj) && (obj as IColorFromPalette).type === "guid";
+    return !_isEmpty(obj) && (obj as IColorFromPalette).type === "guid";
 }
 
 /**
@@ -135,7 +135,7 @@ export function isColorFromPalette(obj: unknown): obj is IColorFromPalette {
  * @public
  */
 export function isRgbColor(obj: unknown): obj is IRgbColor {
-    return !isEmpty(obj) && (obj as IRgbColor).type === "rgb";
+    return !_isEmpty(obj) && (obj as IRgbColor).type === "rgb";
 }
 
 /**

@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { compact, isEmpty, omitBy } from "lodash-es";
+import { compact, omitBy } from "lodash-es";
 
 import {
     type IAttribute,
@@ -30,6 +30,7 @@ import {
     insightVisualizationUrl,
     isMeasure,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import {
     type BucketItem,
@@ -74,7 +75,7 @@ const convertBucket = (
     return {
         items: bucket.items.map((item) => convertBucketItem(item, autoGenerateFilterLocalIdentifier)),
         localIdentifier: bucket.localIdentifier,
-        ...(!isEmpty(totals) && { totals }),
+        ...(!_isEmpty(totals) && { totals }),
     };
 };
 
@@ -87,7 +88,7 @@ export const convertInsightContent = (
         references: {},
     });
 
-    const nonEmptyProperties = omitBy(properties, (value, key) => key !== "controls" && isEmpty(value));
+    const nonEmptyProperties = omitBy(properties, (value, key) => key !== "controls" && _isEmpty(value));
 
     const filters = compact(
         insightFilters(insight).map((filter) =>
@@ -104,14 +105,14 @@ export const convertInsightContent = (
             convertBucket(bucket, autoGenerateFilterLocalIdentifier),
         ),
         visualizationClass: { uri: insightVisualizationUrl(insight) },
-        ...(!isEmpty(nonEmptyProperties) && {
+        ...(!_isEmpty(nonEmptyProperties) && {
             properties: serializeProperties(nonEmptyProperties),
         }),
-        ...(!isEmpty(filters) && { filters }),
-        ...(!isEmpty(attributeFilterConfigs) && { attributeFilterConfigs }),
-        ...(!isEmpty(references) && { references }),
-        ...(!isEmpty(layers) && { layers }),
-        ...(!isEmpty(parameters) && { parameters }),
+        ...(!_isEmpty(filters) && { filters }),
+        ...(!_isEmpty(attributeFilterConfigs) && { attributeFilterConfigs }),
+        ...(!_isEmpty(references) && { references }),
+        ...(!_isEmpty(layers) && { layers }),
+        ...(!_isEmpty(parameters) && { parameters }),
     };
 };
 

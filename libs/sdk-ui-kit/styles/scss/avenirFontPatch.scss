@@ -1,0 +1,63 @@
+// (C) 2026 GoodData Corporation
+
+/**
+ * Fixes the incorrect weight mappings of the (local) Avenir font that ships with macOS and normalizes them
+ * across browsers.
+ *
+ * The problem this patch resolves:
+ * On macOS, the local "Avenir" font labels its weights incorrectly. As a result, Chrome and Safari render
+ * `font-weight: 700` as "Avenir Black" and `font-weight: 900` as "Avenir Heavy", so `font-weight: 700`
+ * renders _bolder_ text than `font-weight: 900`.
+ *
+ * (The Chrome / Safari rendering then also doesn't match the rendering in Figma.)
+ *
+ * Firefox ships its own patch for these font weights, but Chrome and Safari don't. See the following links
+ * for more information:
+ * - https://github.com/mozilla-firefox/firefox/blob/cf103b9362d64aa14c7adc0c0e4b9469ccbf6caa/modules/libpref/init/all.js#L2482-L2486
+ * - https://bugzilla.mozilla.org/show_bug.cgi?id=931426#c55
+ * - https://bugzilla.mozilla.org/show_bug.cgi?id=931426#c66
+ *
+ * The patch below normalizes the font-weight behavior across all browsers as follows:
+ *
+ * | font-weight | Chrome / Safari | Firefox | With this fix (all browsers) |
+ * | ----------- | --------------- | ------- | ---------------------------- |
+ * | 100         | Light           | Book *  | Light                        |
+ * | 200         | Light           | Book *  | Light                        |
+ * | 300         | Light *         | Book    | Book                         |
+ * | 400         | Book *          | Roman   | Roman                        |
+ * | 500         | Medium          | Medium  | Medium                       |
+ * | 600         | Black *         | Heavy   | Heavy                        |
+ * | 700         | Black *         | Heavy   | Heavy                        |
+ * | 800         | Black *         | Heavy   | Heavy                        |
+ * | 900         | Heavy *         | Black   | Black                        |
+ *
+ * Only the installed font is used (the `local()` function), so this is not subject to copyright.
+ *
+ * Note that the problem described above affects only macOS. Windows doesn't ship Avenir
+ * (https://learn.microsoft.com/en-us/typography/fonts/windows_11_font_list), so there the faces don't
+ * load and the font stack moves on to the next family, as without them.
+ */
+$faces: (
+    // full name, PostScript name, weight, style
+    ("Avenir Light", "Avenir-Light", 200, normal),
+    ("Avenir Light Oblique", "Avenir-LightOblique", 200, italic),
+    ("Avenir Book", "Avenir-Book", 300, normal),
+    ("Avenir Book Oblique", "Avenir-BookOblique", 300, italic),
+    ("Avenir Roman", "Avenir-Roman", 400, normal),
+    ("Avenir Oblique", "Avenir-Oblique", 400, italic),
+    ("Avenir Medium", "Avenir-Medium", 500, normal),
+    ("Avenir Medium Oblique", "Avenir-MediumOblique", 500, italic),
+    ("Avenir Heavy", "Avenir-Heavy", 800, normal),
+    ("Avenir Heavy Oblique", "Avenir-HeavyOblique", 800, italic),
+    ("Avenir Black", "Avenir-Black", 900, normal),
+    ("Avenir Black Oblique", "Avenir-BlackOblique", 900, italic)
+);
+
+@each $full-name, $postscript-name, $weight, $style in $faces {
+    @font-face {
+        font-family: "Avenir";
+        src: local($full-name), local($postscript-name);
+        font-weight: $weight;
+        font-style: $style;
+    }
+}

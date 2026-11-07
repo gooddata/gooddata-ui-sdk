@@ -2,9 +2,8 @@
 
 import { useCallback, useEffect, useRef } from "react";
 
-import { isEqual } from "lodash-es";
-
 import { usePrevious } from "@gooddata/sdk-ui";
+import { _isEqual } from "@gooddata/util";
 
 import { useAgGridApi } from "../../context/AgGridApiContext.js";
 import { useColumnDefs } from "../../context/ColumnDefsContext.js";
@@ -58,7 +57,7 @@ export function useSyncColumnWidths() {
     );
 
     useEffect(() => {
-        if (agGridApi && !isEqual(columnWidths, prevColumnWidths)) {
+        if (agGridApi && !_isEqual(columnWidths, prevColumnWidths)) {
             const allColumns = getAgGridColumns(agGridApi);
             const updatedColDefs = allColumns?.map((column) => {
                 const colDef = column.getColDef();

@@ -2,12 +2,12 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-import { isEmpty } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { type ICatalogAttributeHierarchy, type ObjRef } from "@gooddata/sdk-model";
 import { messages, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
+import { _isEmpty } from "@gooddata/util";
 
 import {
     type EmptyParamCallback,
@@ -155,7 +155,7 @@ export const useBackendProvider = (params: IUseBackendProvideDataProps) => {
 
     // Prepare all catalog attributes
     useEffect(() => {
-        if (isEmpty(catalogAttributesMap)) {
+        if (_isEmpty(catalogAttributesMap)) {
             void backend
                 .workspace(workspace)
                 .catalog()

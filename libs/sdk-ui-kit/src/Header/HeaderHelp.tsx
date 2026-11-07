@@ -3,8 +3,9 @@
 import { type MouseEvent, type ReactNode, useCallback, useRef, useState } from "react";
 
 import cx from "classnames";
-import { isEmpty } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
+
+import { _isEmpty } from "@gooddata/util";
 
 import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";
 import { Button } from "../Button/Button.js";
@@ -54,7 +55,7 @@ export function HeaderHelp({
         "gd-header-help": true,
         "gd-icon-header-help": true,
         "is-open": isOpen && !helpRedirectUrl,
-        "anchor-tag-header-help": !isEmpty(helpRedirectUrl),
+        "anchor-tag-header-help": !_isEmpty(helpRedirectUrl),
         [className]: !!className,
     });
 

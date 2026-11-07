@@ -10,7 +10,7 @@ import { type ILanguageDialogProps, LanguageDialog } from "./LanguageDialog.js";
 const requiredProps = {
     currentLanguage: "default",
     defaultLanguage: "en-US",
-    languages: ["en-US", "de-DE"],
+    languages: ["en-US"],
     changeLanguage: () => Promise.resolve(),
     onClose: () => {},
 } satisfies ILanguageDialogProps;
@@ -21,7 +21,7 @@ afterEach(() => {
 
 describe("LanguageDialog", () => {
     it("should show a dialog with a language select, a note and cancel and apply buttons", async () => {
-        render(<LanguageDialog {...requiredProps} />);
+        render(<LanguageDialog {...requiredProps} currentLanguage="default" defaultLanguage="en-US" />);
 
         // NOTE: The dialog shows once it's positioned, a moment after it renders
         expect(await screen.findByRole("dialog", { name: "Change language" })).toBeVisible();
@@ -35,13 +35,15 @@ describe("LanguageDialog", () => {
     });
 
     it("should show the user's own language in the select", async () => {
-        render(<LanguageDialog {...requiredProps} currentLanguage="de-DE" />);
+        render(<LanguageDialog {...requiredProps} currentLanguage="de-DE" languages={["en-US", "de-DE"]} />);
 
         expect(await screen.findByRole("button", { name: "Deutsch Change language" })).toBeVisible();
     });
 
     it("should find a language by its English name and hide the default language while searching", async () => {
-        const { user } = render(<LanguageDialog {...requiredProps} />);
+        const { user } = render(
+            <LanguageDialog {...requiredProps} defaultLanguage="en-US" languages={["en-US", "de-DE"]} />,
+        );
 
         await user.click(await screen.findByRole("button", { name: /Change language/ }));
         await user.type(screen.getByRole("combobox", { name: "Search languages" }), "german");
@@ -64,7 +66,13 @@ describe("LanguageDialog", () => {
 
     it("should save the picked language on apply", async () => {
         const changeLanguage = vi.fn(() => Promise.resolve());
-        const { user } = render(<LanguageDialog {...requiredProps} changeLanguage={changeLanguage} />);
+        const { user } = render(
+            <LanguageDialog
+                {...requiredProps}
+                changeLanguage={changeLanguage}
+                languages={["en-US", "de-DE"]}
+            />,
+        );
 
         await user.click(await screen.findByRole("button", { name: /Change language/ }));
         await user.click(screen.getByRole("option", { name: "Deutsch" }));
@@ -76,7 +84,12 @@ describe("LanguageDialog", () => {
     it("should save the default language when it is applied", async () => {
         const changeLanguage = vi.fn(() => Promise.resolve());
         const { user } = render(
-            <LanguageDialog {...requiredProps} currentLanguage="de-DE" changeLanguage={changeLanguage} />,
+            <LanguageDialog
+                {...requiredProps}
+                changeLanguage={changeLanguage}
+                currentLanguage="de-DE"
+                defaultLanguage="en-US"
+            />,
         );
 
         await user.click(await screen.findByRole("button", { name: /Change language/ }));
@@ -91,7 +104,12 @@ describe("LanguageDialog", () => {
         const changeLanguage = () => new Promise<void>((resolve) => (finishSaving = resolve));
         const onClose = vi.fn();
         const { user } = render(
-            <LanguageDialog {...requiredProps} changeLanguage={changeLanguage} onClose={onClose} />,
+            <LanguageDialog
+                {...requiredProps}
+                changeLanguage={changeLanguage}
+                languages={["en-US", "de-DE"]}
+                onClose={onClose}
+            />,
         );
 
         await user.click(await screen.findByRole("button", { name: /Change language/ }));
@@ -109,7 +127,12 @@ describe("LanguageDialog", () => {
         const changeLanguage = vi.fn(() => Promise.resolve());
         const onClose = vi.fn();
         const { user } = render(
-            <LanguageDialog {...requiredProps} changeLanguage={changeLanguage} onClose={onClose} />,
+            <LanguageDialog
+                {...requiredProps}
+                changeLanguage={changeLanguage}
+                languages={["en-US", "de-DE"]}
+                onClose={onClose}
+            />,
         );
 
         await user.click(await screen.findByRole("button", { name: /Change language/ }));
@@ -124,12 +147,7 @@ describe("LanguageDialog", () => {
         const changeLanguage = vi.fn(() => Promise.resolve());
         const onClose = vi.fn();
         const { user } = render(
-            <LanguageDialog
-                {...requiredProps}
-                currentLanguage="de-DE"
-                changeLanguage={changeLanguage}
-                onClose={onClose}
-            />,
+            <LanguageDialog {...requiredProps} changeLanguage={changeLanguage} onClose={onClose} />,
         );
 
         await user.click(await screen.findByRole("button", { name: "Apply" }));
@@ -155,7 +173,13 @@ describe("LanguageDialog", () => {
 
     it("should show apply as pending while the language is saving", async () => {
         const changeLanguage = () => new Promise<void>(() => {});
-        const { user } = render(<LanguageDialog {...requiredProps} changeLanguage={changeLanguage} />);
+        const { user } = render(
+            <LanguageDialog
+                {...requiredProps}
+                changeLanguage={changeLanguage}
+                languages={["en-US", "de-DE"]}
+            />,
+        );
 
         await user.click(await screen.findByRole("button", { name: /Change language/ }));
         await user.click(screen.getByRole("option", { name: "Deutsch" }));
@@ -171,7 +195,13 @@ describe("LanguageDialog", () => {
     it("should show an error toast when saving fails, and clear it when apply is clicked again", async () => {
         vi.useFakeTimers({ shouldAdvanceTime: true, advanceTimeDelta: 1 });
         const changeLanguage = () => new Promise<void>((_, reject) => setTimeout(reject, 1000));
-        const { user } = render(<LanguageDialog {...requiredProps} changeLanguage={changeLanguage} />);
+        const { user } = render(
+            <LanguageDialog
+                {...requiredProps}
+                changeLanguage={changeLanguage}
+                languages={["en-US", "de-DE"]}
+            />,
+        );
 
         await user.click(await screen.findByRole("button", { name: /Change language/ }));
         await user.click(screen.getByRole("option", { name: "Deutsch" }));
@@ -204,7 +234,12 @@ describe("LanguageDialog", () => {
         const changeLanguage = () => new Promise<void>(() => {});
         const onClose = vi.fn();
         const { user } = render(
-            <LanguageDialog {...requiredProps} changeLanguage={changeLanguage} onClose={onClose} />,
+            <LanguageDialog
+                {...requiredProps}
+                changeLanguage={changeLanguage}
+                languages={["en-US", "de-DE"]}
+                onClose={onClose}
+            />,
         );
 
         await user.click(await screen.findByRole("button", { name: /Change language/ }));

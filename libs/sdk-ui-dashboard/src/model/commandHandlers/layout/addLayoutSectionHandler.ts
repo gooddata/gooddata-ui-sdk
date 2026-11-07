@@ -1,9 +1,10 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, put, select } from "redux-saga/effects";
+
+import { _isEmpty } from "@gooddata/util";
 
 import {
     asLayoutItemPath,
@@ -67,7 +68,7 @@ function validateAndResolveItems(commandCtx: AddLayoutSectionContext): IItemReso
 
     const stashValidationResult = validateAndResolveStashedItems(stash, initialItems);
 
-    if (!isEmpty(stashValidationResult.missing)) {
+    if (!_isEmpty(stashValidationResult.missing)) {
         throw invalidArgumentsProvided(
             ctx,
             commandCtx.cmd,

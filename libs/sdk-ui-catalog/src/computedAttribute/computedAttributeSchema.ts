@@ -5,6 +5,7 @@ import * as z from "zod/mini";
 import type { ComputedAttributeDataType, ComputedAttributeValueType, MetricType } from "@gooddata/sdk-model";
 
 import type { AacSchemaParity, AssertAacParity } from "../asCode/aacParity.js";
+import { type SchemaKeys, deriveSchemaKeys } from "../asCode/schemaKeys.js";
 import type { ObjectTypes } from "../objectType/constants.js";
 
 /**
@@ -83,11 +84,4 @@ export type ComputedAttributeAacParity = AssertAacParity<
     AacSchemaParity<typeof ObjectTypes.COMPUTED_ATTRIBUTE, ComputedAttributeSchema>
 >;
 
-/**
- * Allowed YAML property names keyed by parent mapping, used to power editor autocompletion.
- * The computed attribute schema is flat, so the only entry is the top-level mapping (keyed by `""`),
- * whose value is the object's property names read from zod's public `shape`.
- */
-export const COMPUTED_ATTRIBUTE_SCHEMA_KEYS: Record<string, string[]> = {
-    "": Object.keys(computedAttributeSchema.shape),
-};
+export const COMPUTED_ATTRIBUTE_SCHEMA_KEYS: SchemaKeys = deriveSchemaKeys(computedAttributeSchema);

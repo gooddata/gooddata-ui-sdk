@@ -1,7 +1,8 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
+
+import { _isEmpty } from "@gooddata/util";
 
 import { type ObjRef, isObjRef } from "../objRef/index.js";
 
@@ -54,7 +55,7 @@ export function isWidget(obj: unknown): obj is IWidget {
  */
 function hasWidgetProps(obj: unknown): boolean {
     return (
-        !isEmpty(obj) &&
+        !_isEmpty(obj) &&
         (["kpi", "richText", "insight", "visualizationSwitcher"] as IAnalyticalWidget["type"][]).some(
             (x) => (obj as IAnalyticalWidget).type === x,
         )

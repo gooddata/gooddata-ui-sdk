@@ -10,11 +10,12 @@ import {
 } from "react";
 
 import classNames from "classnames";
-import { isEmpty } from "lodash-es";
 import { defineMessage } from "react-intl";
 // NodeNext types react-measure's default as the module namespace; cast restores the component type.
 import MeasureRaw, { type ContentRect, type MeasureProps } from "react-measure";
 import { useDispatch } from "react-redux";
+
+import { _isEmpty } from "@gooddata/util";
 
 import { type AppDispatch } from "../../store/types.js";
 
@@ -358,7 +359,7 @@ export function ReportVisualization({
     // keys (e.g. "dashboard.bucket.measures_title.column") into the bucket panel. Wait for the
     // messages to be available so the very first reference point is computed with real strings.
 
-    if (isEmpty(messages)) {
+    if (_isEmpty(messages)) {
         return null;
     }
 

@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, isEmpty, set, tail } from "lodash-es";
+import { cloneDeep, set, tail } from "lodash-es";
 
 import { type IInsight, type IInsightDefinition, newAttributeSort } from "@gooddata/sdk-model";
 import {
@@ -9,6 +9,7 @@ import {
     VisualizationTypes,
     isDrillIntersectionAttributeItem,
 } from "@gooddata/sdk-ui";
+import { _isEmpty } from "@gooddata/util";
 
 import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket.js";
 import { HEATMAP_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
@@ -178,7 +179,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
         defaultSort: ISortConfig["defaultSort"];
         availableSorts: ISortConfig["availableSorts"];
     } {
-        if (!isEmpty(viewBy) && !isEmpty(stackBy) && !isEmpty(measures)) {
+        if (!_isEmpty(viewBy) && !_isEmpty(stackBy) && !_isEmpty(measures)) {
             return {
                 defaultSort: [
                     newAttributeSort(viewBy[0].localIdentifier, "desc"),
@@ -190,7 +191,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
                 ],
             };
         }
-        if (!isEmpty(measures) && !isEmpty(viewBy)) {
+        if (!_isEmpty(measures) && !_isEmpty(viewBy)) {
             return {
                 defaultSort: [newAttributeSort(viewBy[0].localIdentifier, "desc")],
                 availableSorts: [
@@ -203,7 +204,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
                 ],
             };
         }
-        if (!isEmpty(measures) && !isEmpty(stackBy)) {
+        if (!_isEmpty(measures) && !_isEmpty(stackBy)) {
             return {
                 defaultSort: [newAttributeSort(stackBy[0].localIdentifier, "asc")],
                 availableSorts: [newAvailableSortsGroup(stackBy[0].localIdentifier)],

@@ -6,15 +6,19 @@
 
 import { Component } from 'react';
 import { ErrorInfo } from 'react';
+import { HeadlessModuleRegistryItem } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { IHeadlessModule } from '@gooddata/sdk-pluggable-application-model';
 import { IHostUiNotification } from '@gooddata/sdk-pluggable-application-model';
 import { ILocale } from '@gooddata/sdk-model';
 import { IPlatformContext } from '@gooddata/sdk-pluggable-application-model';
 import { IPluggableApp } from '@gooddata/sdk-pluggable-application-model';
 import { IPluggableAppTelemetryCallbacks } from '@gooddata/sdk-pluggable-application-model';
+import { ITelemetryProvider } from '@gooddata/sdk-pluggable-application-model';
 import { JSX } from 'react/jsx-runtime';
 import { LocalPluggableApplicationsRegistry } from '@gooddata/sdk-model';
 import { ReactNode } from 'react';
+import { TelemetryIdentityMode } from '@gooddata/sdk-pluggable-application-model';
 
 // @alpha
 export function dispatchHostNotification(notification: IHostUiNotification): void;
@@ -42,22 +46,20 @@ export class HostErrorBoundary extends Component<IHostErrorBoundaryProps, IHostE
 // @internal (undocumented)
 export function HostIntlProvider(input: IHostIntlProviderProps): JSX.Element;
 
-// @alpha (undocumented)
+// @alpha
 export interface IAppLifecycleCallbacks {
-    // (undocumented)
-    createTelemetryCallbacks?: (appId: string) => IPluggableAppTelemetryCallbacks;
     // (undocumented)
     onAppNavigation?: (appId: string, pathname: string) => void;
     // (undocumented)
     onHostUiMounted?: (durationMs: number) => void;
     // (undocumented)
-    onLoadCompleted?: (appId: string, durationMs: number) => void;
+    onLoadCompleted?: (appId: string, durationMs: number, info?: IPluggableModuleLifecycleInfo) => void;
     // (undocumented)
-    onLoadFailed?: (appId: string, error: string) => void;
+    onLoadFailed?: (appId: string, error: string, info?: IPluggableModuleFailureInfo) => void;
     // (undocumented)
-    onLoadStarted?: (appId: string) => void;
+    onLoadStarted?: (appId: string, info?: IPluggableModuleLifecycleInfo) => void;
     // (undocumented)
-    onMountCompleted?: (appId: string, durationMs: number) => void;
+    onMountCompleted?: (appId: string, durationMs: number, info?: IPluggableModuleLifecycleInfo) => void;
     // (undocumented)
     onPageVisited?: (appId: string) => void;
     // (undocumented)
@@ -67,7 +69,20 @@ export interface IAppLifecycleCallbacks {
     // (undocumented)
     onRendered?: (appId: string, totalDurationMs: number) => void;
     // (undocumented)
-    onUnmounted?: (appId: string) => void;
+    onUnmounted?: (appId: string, info?: IPluggableModuleLifecycleInfo) => void;
+}
+
+// @alpha
+export interface IHeadlessTelemetryProviderRegistration {
+    // (undocumented)
+    ctx: IPlatformContext;
+    // (undocumented)
+    identity: TelemetryIdentityMode;
+    // (undocumented)
+    moduleId: string;
+    // (undocumented)
+    provider: ITelemetryProvider;
+    replayPageStart: boolean;
 }
 
 // @alpha
@@ -118,8 +133,20 @@ export interface IHostIntlProviderProps {
     locale: ILocale;
 }
 
+// @alpha
+export interface IHostTelemetryServices {
+    createTelemetryCallbacks?: (appId: string) => IPluggableAppTelemetryCallbacks;
+    registerTelemetryProvider?: (registration: IHeadlessTelemetryProviderRegistration) => () => void;
+}
+
 // @internal (undocumented)
 export interface ILanguageDialogProps extends ILanguages {
+    // (undocumented)
+    onClose: () => void;
+}
+
+// @internal (undocumented)
+export interface ILanguageMobileSelectProps extends ILanguages {
     // (undocumented)
     onClose: () => void;
 }
@@ -161,6 +188,18 @@ export function installPreloadErrorHandler(): void;
 export function installVersionWatcher(input: IVersionWatcherOptions): void;
 
 // @alpha (undocumented)
+export interface IPluggableModuleFailureInfo extends IPluggableModuleLifecycleInfo {
+    // (undocumented)
+    phase: PluggableModuleFailurePhase;
+}
+
+// @alpha (undocumented)
+export interface IPluggableModuleLifecycleInfo {
+    // (undocumented)
+    kind: PluggableModuleKind;
+}
+
+// @alpha (undocumented)
 export interface IRootCallbacks {
     // (undocumented)
     onError?: (error: string, context: string) => void;
@@ -187,6 +226,18 @@ export type LanguageChoice = ILocale | "default";
 // @internal (undocumented)
 export function LanguageDialog(input: ILanguageDialogProps): JSX.Element;
 
+// @internal (undocumented)
+export function LanguageMobileSelect(input: ILanguageMobileSelectProps): JSX.Element;
+
+// @internal
+export const LANGUAGES: ILocale[];
+
+// @alpha (undocumented)
+export type LocalHeadlessModuleLoader = () => Promise<{
+    default?: IHeadlessModule | unknown;
+    headlessModule?: IHeadlessModule;
+}>;
+
 // @alpha (undocumented)
 export type LocalPluggableApplicationLoader = () => Promise<{
     default?: IPluggableApp | unknown;
@@ -197,13 +248,28 @@ export type LocalPluggableApplicationLoader = () => Promise<{
 export function mapLegacyUrlToHost(location: ILegacyLocation): string | null;
 
 // @alpha
+export type PluggableModuleFailurePhase = "load" | "security" | "mount" | "update" | "unmount";
+
+// @alpha
+export type PluggableModuleKind = "application" | "headless";
+
+// @alpha
 export function registerAppLifecycleCallbacks(callbacks: IAppLifecycleCallbacks): void;
+
+// @alpha
+export function registerHostTelemetryServices(services: IHostTelemetryServices): void;
 
 // @alpha
 export function registerLocalApplicationLoaders(loaders: Record<string, LocalPluggableApplicationLoader>): void;
 
 // @alpha
 export function registerLocalApplications(registry: LocalPluggableApplicationsRegistry): void;
+
+// @alpha
+export function registerLocalHeadlessModuleLoaders(loaders: Record<string, LocalHeadlessModuleLoader>): void;
+
+// @alpha
+export function registerLocalHeadlessModules(modules: HeadlessModuleRegistryItem[]): void;
 
 // @alpha
 export function registerPlatformContextCallbacks(callbacks: ILoadPlatformContextCallbacks): void;

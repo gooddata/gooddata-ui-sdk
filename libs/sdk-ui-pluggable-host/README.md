@@ -17,4 +17,4 @@ Currently only the GoodData Cloud (Tiger) backend is supported. The package depe
 
 (C) 2026 GoodData Corporation
 
-This project is under MIT License. See [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-pluggable-host/LICENSE).
+This project is under commercial license. See [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-pluggable-host/LICENSE).

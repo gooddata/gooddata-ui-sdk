@@ -1,9 +1,10 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { inRange, isEqual, range } from "lodash-es";
+import { inRange, range } from "lodash-es";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { type ITheme } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { parseRGBString } from "../coloring/color.js";
 
@@ -548,7 +549,7 @@ function getColorBoxes(series: IColorLegendItem[], theme?: ITheme): IColorLegend
 
     const getBoxStyle = (item: IColorLegendItem) => ({
         backgroundColor: item.color,
-        border: isEqual(parseRGBString(item.color), parseRGBString(backgroundColor))
+        border: _isEqual(parseRGBString(item.color), parseRGBString(backgroundColor))
             ? `1px solid ${borderColor}`
             : "none",
     });

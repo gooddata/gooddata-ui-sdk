@@ -36,3 +36,31 @@ export {
     suppressConsole,
     createTightWaitFor,
 } from "./testUtils.js";
+
+// local functions from lodash-es
+export { _cloneDeep } from "./_/cloneDeep.js";
+export { type _Falsey, _compact } from "./_/compact.js";
+export {
+    type _DebouncedFunc,
+    type _DebouncedFuncLeading,
+    type _DebounceSettings,
+    type _DebounceSettingsLeading,
+    _debounce,
+} from "./_/debounce.js";
+export { _groupBy } from "./_/groupBy.js";
+export { _isEqual } from "./_/isEqual.js";
+export { type _EmptyObject, type _EmptyObjectOf, _isEmpty } from "./_/isEmpty.js";
+export { type _PartialObject, _omit } from "./_/omit.js";
+export { _range } from "./_/range.js";
+export { type _PropertyPath, _set } from "./_/set.js";
+export { _uniqBy } from "./_/uniqBy.js";
+export type {
+    _Dictionary,
+    _IterateeShorthand,
+    _List,
+    _Many,
+    _NotVoid,
+    _PartialShallow,
+    _PropertyName,
+    _ValueIteratee,
+} from "./_/types.js";

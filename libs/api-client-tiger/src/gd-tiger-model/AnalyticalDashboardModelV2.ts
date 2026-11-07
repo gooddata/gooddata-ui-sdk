@@ -1,8 +1,7 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import { type IDashboardTimezoneConfig, type ObjRef } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import {
     type ITigerDashboardAttributeFilterConfig,
@@ -120,14 +119,14 @@ export interface IDashboardPluginLink {
  * @public
  */
 export function isAnalyticalDashboard(dashboard: unknown): dashboard is IAnalyticalDashboard {
-    return !isEmpty(dashboard) && (dashboard as IAnalyticalDashboard).version === "2";
+    return !_isEmpty(dashboard) && (dashboard as IAnalyticalDashboard).version === "2";
 }
 
 /**
  * @public
  */
 export function isFilterContext(filterContext: unknown): filterContext is IFilterContext {
-    return !isEmpty(filterContext) && (filterContext as IFilterContext).version === "2";
+    return !_isEmpty(filterContext) && (filterContext as IFilterContext).version === "2";
 }
 
 /**
@@ -135,7 +134,7 @@ export function isFilterContext(filterContext: unknown): filterContext is IFilte
  */
 export function isFilterContextWithTab(filterContext: unknown): filterContext is IFilterContextWithTab {
     return (
-        (!isEmpty(filterContext) &&
+        (!_isEmpty(filterContext) &&
             (filterContext as IFilterContextWithTab).version === "2" &&
             typeof (filterContext as IFilterContextWithTab).tabLocalIdentifier === "string") ||
         (filterContext as IFilterContextWithTab).tabLocalIdentifier === undefined
@@ -146,14 +145,14 @@ export function isFilterContextWithTab(filterContext: unknown): filterContext is
  * @public
  */
 export function isDashboardPlugin(plugin: unknown): plugin is IDashboardPlugin {
-    return !isEmpty(plugin) && (plugin as IDashboardPlugin).version === "2";
+    return !_isEmpty(plugin) && (plugin as IDashboardPlugin).version === "2";
 }
 
 /**
  * @public
  */
 export function isDashboardPluginLink(pluginLink: unknown): pluginLink is IDashboardPluginLink {
-    return !isEmpty(pluginLink) && (pluginLink as IDashboardPluginLink).version === "2";
+    return !_isEmpty(pluginLink) && (pluginLink as IDashboardPluginLink).version === "2";
 }
 
 /**
@@ -161,7 +160,7 @@ export function isDashboardPluginLink(pluginLink: unknown): pluginLink is IDashb
  */
 export function isDashboardTab(tab: unknown): tab is ITigerDashboardTab {
     return (
-        !isEmpty(tab) &&
+        !_isEmpty(tab) &&
         typeof (tab as ITigerDashboardTab).localIdentifier === "string" &&
         typeof (tab as ITigerDashboardTab).title === "string" &&
         typeof (tab as ITigerDashboardTab).layout === "object" &&

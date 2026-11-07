@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { cloneDeep, isEmpty, set } from "lodash-es";
+import { cloneDeep, set } from "lodash-es";
 
 import { type IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
@@ -14,6 +14,7 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { type IChartConfig } from "@gooddata/sdk-ui-charts";
+import { _isEmpty } from "@gooddata/util";
 
 import { BUCKETS } from "../../../constants/bucket.js";
 import { MEKKO_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
@@ -42,9 +43,9 @@ import { transformBuckets } from "./bucketHelper.js";
 /** Declares "Stack to 100%" visibility (the app heuristic misses a Height-only metric) and locks it checked for Width-only + Stack By — uiConfig only, never the durable user property. */
 function configurePercentStacking(referencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
     const buckets = referencePoint[BUCKETS];
-    const hasWidth = !isEmpty(getBucketItems(buckets, BucketNames.MEASURES));
-    const hasHeight = !isEmpty(getBucketItems(buckets, BucketNames.SECONDARY_MEASURES));
-    const hasStack = !isEmpty(getBucketItems(buckets, BucketNames.STACK));
+    const hasWidth = !_isEmpty(getBucketItems(buckets, BucketNames.MEASURES));
+    const hasHeight = !_isEmpty(getBucketItems(buckets, BucketNames.SECONDARY_MEASURES));
+    const hasStack = !_isEmpty(getBucketItems(buckets, BucketNames.STACK));
 
     set(
         referencePoint,
@@ -165,7 +166,7 @@ export class PluggableMekko extends PluggableBaseChart {
         ];
 
         // Sorting needs a column attribute and at least one measure to sort by.
-        const disabled = isEmpty(viewBy) || isEmpty(measures);
+        const disabled = _isEmpty(viewBy) || _isEmpty(measures);
 
         // Sort by the single view-by attribute; use viewBy[0] to stay consistent with availableSorts.
         const defaultSort: ISortItem[] = viewBy
@@ -181,7 +182,7 @@ export class PluggableMekko extends PluggableBaseChart {
                       measures.map((m) => m.localIdentifier),
                       true,
                       // area sort (by the stacked total) only makes sense with stacked segments
-                      !isEmpty(stackBy),
+                      !_isEmpty(stackBy),
                   ),
               ];
 

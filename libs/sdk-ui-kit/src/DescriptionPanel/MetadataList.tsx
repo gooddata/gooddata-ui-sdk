@@ -1,8 +1,7 @@
-// (C) 2022-2025 GoodData Corporation
-
-import { isEmpty } from "lodash-es";
+// (C) 2022-2026 GoodData Corporation
 
 import { type IMetadataObjectBase } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { Bubble } from "../Bubble/Bubble.js";
 import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
@@ -33,7 +32,7 @@ export function MetadataList({ title, list }: IMetadataListProps) {
             {list?.map((element, index) => (
                 <div className="gd-metadata-list-element" key={index}>
                     <span title={element.title}>{element.title}</span>
-                    {!isEmpty(element.description) && (
+                    {!_isEmpty(element.description) && (
                         <BubbleHoverTrigger className="gd-metadata-list-icon" showDelay={0} hideDelay={0}>
                             <div className="gd-icon-circle-question" />
                             <Bubble

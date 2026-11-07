@@ -1,7 +1,5 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import {
     type CustomLabel,
     type CustomMetric,
@@ -18,6 +16,7 @@ import {
     isMeasureGroupDescriptor,
     measureMasterIdentifier,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 export type ExportMetrics = { [key: string]: CustomMetric };
 export type ExportLabels = { [key: string]: CustomLabel };
@@ -39,13 +38,13 @@ export const resolveCustomOverride = (
     );
     const labels = setCustomLabels(definition, customOverride?.labels ?? {});
     const result: CustomOverride = {};
-    if (!isEmpty(metrics)) {
+    if (!_isEmpty(metrics)) {
         result.metrics = metrics;
     }
-    if (!isEmpty(labels)) {
+    if (!_isEmpty(labels)) {
         result.labels = labels;
     }
-    return isEmpty(result) ? undefined : result;
+    return _isEmpty(result) ? undefined : result;
 };
 
 /**

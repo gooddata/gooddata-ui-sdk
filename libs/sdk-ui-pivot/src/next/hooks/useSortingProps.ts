@@ -3,9 +3,9 @@
 import { useCallback } from "react";
 
 import { type SortChangedEvent } from "ag-grid-enterprise";
-import { isEqual } from "lodash-es";
 
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
+import { _isEqual } from "@gooddata/util";
 
 import { useColumnDefs } from "../context/ColumnDefsContext.js";
 import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
@@ -35,7 +35,7 @@ export function useSortingProps(): (agGridReactProps: AgGridProps) => AgGridProp
             const sortModel = getSortModel(event.api);
             const sortItems = sortModelToSortItems(sortModel, columnDefinitionByColId);
 
-            if (!isEqual(sortItems, sortBy)) {
+            if (!_isEqual(sortItems, sortBy)) {
                 pushData({
                     properties: {
                         sortItems,

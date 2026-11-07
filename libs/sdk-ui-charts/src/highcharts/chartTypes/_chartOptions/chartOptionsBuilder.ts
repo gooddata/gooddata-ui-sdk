@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { cloneDeep, isEmpty, without } from "lodash-es";
+import { cloneDeep, without } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { type IDataView } from "@gooddata/sdk-backend-spi";
@@ -13,6 +13,7 @@ import {
     getMappingHeaderFormattedName,
 } from "@gooddata/sdk-ui";
 import { type IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { ViewByAttributesLimit } from "../../../interfaces/limits.js";
@@ -210,7 +211,7 @@ export function getHeatmapDataClasses(
         NaN,
     );
 
-    if (isEmpty(values)) {
+    if (_isEmpty(values)) {
         return [];
     }
 

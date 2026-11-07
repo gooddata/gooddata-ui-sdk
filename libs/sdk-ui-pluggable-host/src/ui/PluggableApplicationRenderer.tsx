@@ -37,13 +37,20 @@ import {
     getSecuredRemoteAppValidUntil,
     validateAppSecurity,
 } from "../loader/appSecurityValidation.js";
-import { getAppLifecycleCallbacks, loadPluggableApplication } from "../loader/pluggableApplicationsLoader.js";
+import {
+    getAppLifecycleCallbacks,
+    getHostTelemetryServices,
+    loadPluggableApplication,
+} from "../loader/pluggableApplicationsLoader.js";
 import { getApplicationHref } from "../loader/routing.js";
 import { BackendPlatformContextProvider } from "../platformContext/useLoadPlatformContext.js";
+import { type IPluggableModuleLifecycleInfo, type PluggableModuleFailurePhase } from "../types/lifecycle.js";
 
 import "./PluggableApplicationRenderer.scss";
 
 const { b, e } = bemFactory("gd-pluggable-application-renderer");
+
+const APPLICATION: IPluggableModuleLifecycleInfo = { kind: "application" };
 
 type RendererViewState =
     | { state: "loading" }
@@ -151,9 +158,10 @@ export function PluggableApplicationRenderer({
     const appBasePath = ctx.embeddingMode === "iframe" ? `/embedded${baseHref}` : baseHref;
 
     const lifecycle = getAppLifecycleCallbacks();
+    const telemetryServices = getHostTelemetryServices();
     const onTelemetryEvent = useMemo(
-        () => lifecycle?.createTelemetryCallbacks?.(app.id),
-        [lifecycle, app.id],
+        () => telemetryServices?.createTelemetryCallbacks?.(app.id),
+        [telemetryServices, app.id],
     );
 
     // onEvent is intentionally stable (empty deps) — pluggable apps capture it at mount time
@@ -233,8 +241,9 @@ export function PluggableApplicationRenderer({
             queueMicrotask(() => prevHandle.unmount());
         }
 
-        lifecycle?.onLoadStarted?.(app.id);
+        lifecycle?.onLoadStarted?.(app.id, APPLICATION);
         const loadStart = now();
+        let phase: PluggableModuleFailurePhase = "load";
 
         loadPluggableApplication(app)
             .then((loadedApp) => {
@@ -251,7 +260,10 @@ export function PluggableApplicationRenderer({
                         `[host-runtime/renderer] Refusing to mount app "${app.id}": ${securityFailure.kind}.`,
                         securityFailure,
                     );
-                    lifecycle?.onLoadFailed?.(app.id, securityFailure.kind);
+                    lifecycle?.onLoadFailed?.(app.id, securityFailure.kind, {
+                        kind: "application",
+                        phase: "security",
+                    });
                     deactivateAppStylesheets(app.id);
                     setViewState({ state: "error", message });
                     return;
@@ -260,7 +272,8 @@ export function PluggableApplicationRenderer({
                 // Report load success only after the security check passes, so a rejected
                 // app never produces both an onLoadCompleted and an onLoadFailed for the
                 // same attempt.
-                lifecycle?.onLoadCompleted?.(app.id, now() - loadStart);
+                lifecycle?.onLoadCompleted?.(app.id, now() - loadStart, APPLICATION);
+                phase = "mount";
 
                 const container = containerRef.current;
                 if (!container) {
@@ -285,7 +298,7 @@ export function PluggableApplicationRenderer({
                     navigationRequestRef.current = navigationRequest;
                 }
 
-                lifecycle?.onMountCompleted?.(app.id, now() - mountStart);
+                lifecycle?.onMountCompleted?.(app.id, now() - mountStart, APPLICATION);
                 lifecycle?.onRendered?.(app.id, now() - totalStart);
                 setViewState({ state: "ready", validUntil: getSecuredRemoteAppValidUntil(app, loadedApp) });
             })
@@ -301,7 +314,7 @@ export function PluggableApplicationRenderer({
                 const errorMessage =
                     mountError instanceof Error ? mountError.message : "Unknown module loading error.";
                 console.error(`[host-runtime/renderer] Failed to mount app "${app.id}".`, mountError);
-                lifecycle?.onLoadFailed?.(app.id, errorMessage);
+                lifecycle?.onLoadFailed?.(app.id, errorMessage, { kind: "application", phase });
                 deactivateAppStylesheets(app.id);
                 setViewState({
                     state: "error",
@@ -322,7 +335,7 @@ export function PluggableApplicationRenderer({
                 mountedAppRef.current = undefined;
                 queueMicrotask(() => {
                     handle.unmount();
-                    lifecycle?.onUnmounted?.(app.id);
+                    lifecycle?.onUnmounted?.(app.id, APPLICATION);
                 });
             }
         };
@@ -363,8 +376,11 @@ export function PluggableApplicationRenderer({
             }
             deactivateAppStylesheets(mounted.app.id);
             handle.unmount();
-            lifecycle?.onUnmounted?.(mounted.app.id);
-            lifecycle?.onLoadFailed?.(mounted.app.id, securityFailure.kind);
+            lifecycle?.onUnmounted?.(mounted.app.id, APPLICATION);
+            lifecycle?.onLoadFailed?.(mounted.app.id, securityFailure.kind, {
+                kind: "application",
+                phase: "security",
+            });
             setViewState({ state: "error", message });
             return;
         }

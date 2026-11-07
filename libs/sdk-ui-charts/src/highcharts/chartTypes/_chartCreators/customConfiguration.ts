@@ -2,13 +2,14 @@
 
 import cx from "classnames";
 import { type OptionsLandmarkVerbosityValue, type Point } from "highcharts";
-import { compact, isEmpty, merge, partial, pickBy } from "lodash-es";
+import { compact, merge, partial, pickBy } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { type ITheme, isMeasureFormatInPercent } from "@gooddata/sdk-model";
 import { type ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 import { buildTooltipLocalizedStrings, getLighterColor, isPatternObject } from "@gooddata/sdk-ui-vis-commons";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IAxisConfig, type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { getBlackLabelStyle } from "../../constants/label.js";
@@ -573,7 +574,7 @@ function formatLabel(value: LabelValue, format?: string, config: IChartConfig = 
 
     // Based on the tests, when a format is not provided, we should refrain from formatting the value using the formatter, as the default format "#,##0.00" will be used.
     // Additionally, the test necessitates that the value should remain unformatted.
-    if (!isEmpty(format)) {
+    if (!_isEmpty(format)) {
         const formatted = ClientFormatterFacade.formatValue(parsedNumber, format, separators);
         return escapeAngleBrackets(formatted.formattedValue);
     }
@@ -1401,7 +1402,7 @@ export function areAxisLabelsEnabled(
 
     const { type } = chartOptions;
     const categories = isHeatmap(type) ? data.categories : escapeCategories(data.categories);
-    const categoriesFlag = shouldCheckForEmptyCategories ? !isEmpty(compact<unknown>(categories)) : true;
+    const categoriesFlag = shouldCheckForEmptyCategories ? !_isEmpty(compact<unknown>(categories)) : true;
 
     const axisOptions = chartOptions?.[axisPropsName] as IAxisConfig;
     const visible = axisOptions?.visible ?? true;

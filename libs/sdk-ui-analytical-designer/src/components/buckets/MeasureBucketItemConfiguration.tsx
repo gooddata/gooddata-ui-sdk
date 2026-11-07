@@ -3,12 +3,12 @@
 import { type ReactElement, memo } from "react";
 
 import cx from "classnames";
-import { isEqual } from "lodash-es";
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 
 import { type ChartInlineVisualizationType } from "@gooddata/sdk-ui-ext";
 import { Button, IconHash, InsightIcon } from "@gooddata/sdk-ui-kit";
+import { _isEqual } from "@gooddata/util";
 
 import { visualizationPropertiesChanged } from "../../actions/properties_actions.js";
 import { ATTRIBUTE, FACT } from "../../constants/bucket.js";
@@ -64,7 +64,7 @@ export const MeasureBucketItemConfigurationBase = memo(function MeasureBucketIte
 
         const onSelect = (aggregation: string) =>
             onSetAttributeAggregation(bucketItem.original as IRawBucketItem, aggregation);
-        const isApproximateCountSelected = isEqual(bucketItem.aggregation, APPROXIMATE_COUNT_AGGREGATION);
+        const isApproximateCountSelected = _isEqual(bucketItem.aggregation, APPROXIMATE_COUNT_AGGREGATION);
         const metricTitle = isApproximateCountSelected
             ? defineMessage({ id: "aggregations.metric_title.approximate_count.static" }).id
             : defineMessage({ id: "aggregations.title.count" }).id;

@@ -1,7 +1,5 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
-
 import {
     type FilterContextItem,
     type IAttribute,
@@ -36,7 +34,7 @@ import {
     getInsightAttributeFilterPlaceholdersFromUrl,
 } from "@gooddata/sdk-model/internal";
 import { type IAvailableDrillTargets } from "@gooddata/sdk-ui";
-import { combineGuards } from "@gooddata/util";
+import { _isEqual, combineGuards } from "@gooddata/util";
 
 import {
     getDrillOriginLocalIdentifier,
@@ -120,7 +118,7 @@ export function wasDrillFilterConfigurationSanitized(
     validatedDrillDefinition: InsightDrillDefinition,
 ): boolean {
     if (
-        !isEqual(
+        !_isEqual(
             originalDrillDefinition.drillIntersectionIgnoredAttributes ?? [],
             validatedDrillDefinition.drillIntersectionIgnoredAttributes ?? [],
         )
@@ -133,15 +131,15 @@ export function wasDrillFilterConfigurationSanitized(
         (isDrillToDashboard(originalDrillDefinition) && isDrillToDashboard(validatedDrillDefinition))
     ) {
         return (
-            !isEqual(
+            !_isEqual(
                 originalDrillDefinition.includedSourceInsightFiltersObjRefs ?? [],
                 validatedDrillDefinition.includedSourceInsightFiltersObjRefs ?? [],
             ) ||
-            !isEqual(
+            !_isEqual(
                 originalDrillDefinition.includedSourceMeasureFiltersObjRefs ?? [],
                 validatedDrillDefinition.includedSourceMeasureFiltersObjRefs ?? [],
             ) ||
-            !isEqual(
+            !_isEqual(
                 originalDrillDefinition.ignoredDashboardFilters ?? [],
                 validatedDrillDefinition.ignoredDashboardFilters ?? [],
             )

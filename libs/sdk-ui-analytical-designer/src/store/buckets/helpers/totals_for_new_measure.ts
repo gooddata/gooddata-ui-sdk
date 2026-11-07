@@ -1,8 +1,9 @@
 // (C) 2026 GoodData Corporation
 
-import { isEqual, uniq, uniqWith } from "lodash-es";
+import { uniq, uniqWith } from "lodash-es";
 
 import { type ITotal, type TotalType } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 /**
  * When a measure is dropped into a bucket, it inherits every total that is currently enabled for
@@ -38,7 +39,7 @@ export function getTotalsForMeasureEnabledOnAllOtherMeasures(
 
 function getDistinctTotalsWithoutMeasureReference(totals: ITotal[]): ITotalWithoutMeasureReference[] {
     const totalsWithoutMeasure = totals.map(removeTotalMeasureReference);
-    return uniqWith(totalsWithoutMeasure, isEqual);
+    return uniqWith(totalsWithoutMeasure, _isEqual);
 }
 
 function removeTotalMeasureReference(total: ITotal): ITotalWithoutMeasureReference {

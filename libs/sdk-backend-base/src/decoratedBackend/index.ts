@@ -1,7 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import {
     type IAnalyticalBackend,
     type IAnalyticalBackendConfig,
@@ -17,6 +15,7 @@ import {
     type IUserService,
     type IWorkspacesQueryFactory,
 } from "@gooddata/sdk-backend-spi";
+import { _isEmpty } from "@gooddata/util";
 
 import { AnalyticalWorkspaceDecorator } from "./analyticalWorkspace.js";
 import { OrganizationDecorator } from "./organization.js";
@@ -125,7 +124,7 @@ export function decoratedBackend(
     backend: IAnalyticalBackend,
     decorators: DecoratorFactories,
 ): IAnalyticalBackend {
-    if (isEmpty(decorators)) {
+    if (_isEmpty(decorators)) {
         return backend;
     }
 

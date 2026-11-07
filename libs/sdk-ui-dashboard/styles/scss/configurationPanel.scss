@@ -66,10 +66,6 @@
 
     z-index: zIndexes.$configuration-panel;
 
-    &.is-sticky {
-        z-index: zIndexes.$configuration-panel-sticky;
-    }
-
     // make configuration panel visible over dashboard headers when screen size is limited
     // and alignPoints matches the custom class
     &.target-br {
@@ -79,10 +75,6 @@
     .gd-configuration-bubble {
         z-index: zIndexes.$configuration-panel-bubble;
         width: variables.$gd-configuration-bubble-width;
-
-        &.is-sticky {
-            z-index: zIndexes.$configuration-panel-bubble-sticky;
-        }
 
         &.arrow-right-direction {
             margin-left: 20px;

@@ -1,6 +1,5 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import { type IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
 
@@ -9,15 +8,18 @@ import {
     type DashboardAttributeFilterSelectionMode,
     type IAttributeElement,
     type IAttributeFilter,
+    type ObjRef,
     areObjRefsEqual,
     attributeElementsCount,
     filterAttributeElements,
     filterObjRef,
     isArbitraryAttributeFilter,
+    isComputedAttributeRef,
     isMatchAttributeFilter,
     isPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
+import { _isEmpty } from "@gooddata/util";
 
 import { getElementCacheKey } from "../AttributeFilterHandler/internal/redux/common/selectors.js";
 
@@ -54,6 +56,33 @@ export function getElementTitle(element: IAttributeElement, intl: IntlShape) {
  */
 export function getElementPrimaryTitle(element: IAttributeElement) {
     return element.uri && element.uri !== element.title ? element.uri : "";
+}
+
+/**
+ * Gets the raw value of a formatted element of a computed attribute when it differs from the displayed
+ * value, e.g. "2026-08-24T00:00" for a date formatted as "24.08.2026". Elements are searched by their raw
+ * value, so the tooltip of the element tells it.
+ *
+ * @remarks
+ * Meant for elements without a number format, whose formatted values are dates; number-formatted elements
+ * are covered by their own rule, which ignores differences in separators only. Values of date attributes
+ * are not covered. Returns undefined for other attributes and for elements without a formatted value.
+ *
+ * @param element - element of the attribute
+ * @param attributeRef - ref of the attribute the element belongs to
+ * @internal
+ */
+export function getDateFormattedElementRawTitle(
+    element: IAttributeElement,
+    attributeRef: ObjRef | undefined,
+): string | undefined {
+    const { title, formattedTitle } = element;
+
+    if (!attributeRef || !isComputedAttributeRef(attributeRef)) {
+        return undefined;
+    }
+
+    return title && formattedTitle && formattedTitle !== title ? title : undefined;
 }
 
 /**
@@ -98,7 +127,7 @@ export function validateAttributeFilterProps({
     );
 
     invariant(
-        !(!isEmpty(hiddenElements) && isEmpty(staticElements)),
+        !(!_isEmpty(hiddenElements) && _isEmpty(staticElements)),
         "Hidden elements are not supported by the current backend implementation.",
     );
     if (
@@ -122,7 +151,7 @@ export function isValidSingleSelectionFilter(
     supportsSingleSelectDependentFilters: boolean,
 ) {
     const isSingleSelect = selectionMode === "single";
-    const hasEmptyParentFilters = isEmpty(limitingAttributeFilters);
+    const hasEmptyParentFilters = _isEmpty(limitingAttributeFilters);
     const isPositiveWithMaxOneElement =
         isPositiveAttributeFilter(filter) && attributeElementsCount(filterAttributeElements(filter)) < 2;
 

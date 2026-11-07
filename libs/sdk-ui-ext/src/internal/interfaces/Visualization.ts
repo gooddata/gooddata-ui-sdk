@@ -2,8 +2,6 @@
 
 import { type ReactNode } from "react";
 
-import { isEmpty } from "lodash-es";
-
 import {
     type IAnalyticalBackend,
     type IExecutionFactory,
@@ -43,6 +41,7 @@ import {
     type VisualizationEnvironment,
 } from "@gooddata/sdk-ui";
 import { type ChartInlineVisualizationType } from "@gooddata/sdk-ui-charts";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IDefaultControlProperties } from "./ControlProperties.js";
 import { type IAvailableSortsGroup, type ISortConfig } from "./SortConfig.js";
@@ -699,28 +698,28 @@ export type PluggableVisualizationError = InvalidBucketsSdkError | EmptyAfmSdkEr
  * @alpha
  */
 export function isPluggableVisualizationError(obj: unknown): obj is PluggableVisualizationError {
-    return !isEmpty(obj) && (obj as any).pveType !== undefined;
+    return !_isEmpty(obj) && (obj as any).pveType !== undefined;
 }
 
 /**
  * @alpha
  */
 export function isInvalidBuckets(obj: unknown): obj is InvalidBucketsSdkError {
-    return !isEmpty(obj) && (obj as InvalidBucketsSdkError).pveType === "INVALID_BUCKETS";
+    return !_isEmpty(obj) && (obj as InvalidBucketsSdkError).pveType === "INVALID_BUCKETS";
 }
 
 /**
  * @alpha
  */
 export function isInvalidColumns(obj: unknown): obj is InvalidColumnsSdkError {
-    return !isEmpty(obj) && (obj as InvalidColumnsSdkError).pveType === "INVALID_COLUMNS";
+    return !_isEmpty(obj) && (obj as InvalidColumnsSdkError).pveType === "INVALID_COLUMNS";
 }
 
 /**
  * @alpha
  */
 export function isEmptyAfm(obj: unknown): obj is EmptyAfmSdkError {
-    return !isEmpty(obj) && (obj as EmptyAfmSdkError).pveType === "EMPTY_AFM";
+    return !_isEmpty(obj) && (obj as EmptyAfmSdkError).pveType === "EMPTY_AFM";
 }
 
 /**
@@ -756,5 +755,5 @@ export interface IDrillDownDefinition {
  * @beta
  */
 export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition {
-    return !isEmpty(obj) && (obj as IDrillDownDefinition).type === "drillDown";
+    return !_isEmpty(obj) && (obj as IDrillDownDefinition).type === "drillDown";
 }

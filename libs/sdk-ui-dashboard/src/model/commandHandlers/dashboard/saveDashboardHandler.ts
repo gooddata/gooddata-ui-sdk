@@ -803,7 +803,7 @@ export function* saveDashboardHandler(
         yield put(savingActions.setSavingSuccess());
         return dashboardSaved(ctx, dashboard, created, cmd.correlationId, {
             ...(isAiBuilder ? { originalDashboardId: saveCtx.dashboardFromState.identifier } : {}),
-            ...(savedInsights.length > 0 ? { savedInsights } : {}),
+            savedInsights,
         });
     } catch (e: any) {
         yield put(savingActions.setSavingError(e));

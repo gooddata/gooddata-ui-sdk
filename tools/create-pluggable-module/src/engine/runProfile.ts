@@ -10,6 +10,7 @@ import type {
     IRepoInfo,
     IScaffoldAnswers,
     IScaffoldProfile,
+    ITemplateSubtree,
 } from "../types.js";
 
 import { insertBeforeAnchor } from "./anchors.js";
@@ -87,7 +88,7 @@ export async function runProfile(profile: IScaffoldProfile): Promise<void> {
     checkAnchors(steps, repo.repoRoot);
 
     // 3. Prompts: shared appName/title/scope + the profile's extras.
-    const answers = await runPrompts(profile.extraPrompts);
+    const answers = await runPrompts(profile.extraPrompts, profile.supportedKinds);
 
     await runProfileWithAnswers(profile, answers, { repo, steps });
 }
@@ -114,6 +115,7 @@ export async function runProfileWithAnswers(
 ): Promise<void> {
     const repo = options?.repo ?? detectRepo(process.cwd());
     const steps = options?.steps ?? profile.registrations(repo);
+    const subtrees = resolveTemplateSubtrees(profile, answers);
 
     // Pre-flight in case caller didn't already do it (the prompts entry does).
     if (!options?.steps) {
@@ -151,12 +153,12 @@ export async function runProfileWithAnswers(
     const packageJsonsToTransform: string[] = [];
 
     const preferWorkspace = profile.preferWorkspaceTemplate ?? false;
-    for (const subtree of profile.templateSubtrees) {
+    for (const { source, dest } of subtrees) {
         // getTemplateSubtreeRoot guarantees the returned path exists — every
         // branch either throws or returns a path that just passed existsSync.
-        const srcDir = getTemplateSubtreeRoot(subtree, preferWorkspace, profile.templateSubtreeRoots);
-        const destSubtree = join(destRoot, subtree);
-        console.log(`\n  Copying template ${subtree}/ → ${relativeTo(repo.repoRoot, destSubtree)}/ ...`);
+        const srcDir = getTemplateSubtreeRoot(source, preferWorkspace, profile.templateSubtreeRoots);
+        const destSubtree = join(destRoot, dest);
+        console.log(`\n  Copying template ${source}/ → ${relativeTo(repo.repoRoot, destSubtree)}/ ...`);
         const { written } = copyTemplate(srcDir, destSubtree, replacements);
 
         // Collect package.json paths for the post-copy transform pass.
@@ -219,6 +221,20 @@ export async function runProfileWithAnswers(
     await profile.postCopy(ctx);
 }
 
+function resolveTemplateSubtrees(
+    profile: IScaffoldProfile,
+    answers: IScaffoldAnswers,
+): readonly ITemplateSubtree[] {
+    const kind = answers.kind ?? "application";
+    if (!(profile.supportedKinds ?? ["application"]).includes(kind)) {
+        throw new Error(`Profile "${profile.name}" cannot scaffold a module of kind "${kind}".`);
+    }
+    return (
+        profile.templateSubtreesForKind?.(kind) ??
+        profile.templateSubtrees.map((subtree) => ({ source: subtree, dest: subtree }))
+    );
+}
+
 function relativeTo(repoRoot: string, abs: string): string {
     if (abs.startsWith(repoRoot)) {
         return abs.slice(repoRoot.length).replace(/^[\\/]/, "");
@@ -228,12 +244,17 @@ function relativeTo(repoRoot: string, abs: string): string {
 
 function printPlan(ctx: IProfileContext, profile: IScaffoldProfile): void {
     const { answers, derived } = ctx;
-    console.log(`\n  Creating ${answers.appName} (profile: ${profile.name})...`);
-    console.log(`    Route:           ${derived.route}`);
-    console.log(`    Scope:           ${answers.scope}`);
-    console.log(`    Menu order:      ${derived.menuOrder}`);
+    const kind = answers.kind ?? "application";
+    console.log(`\n  Creating ${answers.appName} (profile: ${profile.name}, kind: ${kind})...`);
+    if (kind === "application") {
+        console.log(`    Route:           ${derived.route}`);
+        console.log(`    Scope:           ${answers.scope}`);
+        console.log(`    Menu order:      ${derived.menuOrder}`);
+    }
     console.log(`    Harness port:    ${derived.devPort}`);
     console.log(`    Module fed port: ${derived.moduleDevPort}`);
     console.log(`    Federation name: ${derived.federationName}`);
-    console.log(`    Remote URL env:  ${derived.remoteUrlEnvVar}`);
+    if (kind === "application") {
+        console.log(`    Remote URL env:  ${derived.remoteUrlEnvVar}`);
+    }
 }

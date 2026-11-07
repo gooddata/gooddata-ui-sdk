@@ -1,9 +1,9 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { isEqual } from "lodash-es";
 import ora from "ora";
 
 import { type IDashboard, type IDashboardDefinition, areObjRefsEqual, idRef } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
 import { type ActionOptions } from "../_base/types.js";
@@ -44,7 +44,7 @@ async function updateDashboardWithRemovedParams({
         .getDashboardReferencedObjects(dashboardObj, ["dashboardPlugin"]);
 
     const touchedPlugin = dashboardReferencedObjects.plugins.find((plugin) =>
-        isEqual(plugin.identifier, validIdentifier),
+        _isEqual(plugin.identifier, validIdentifier),
     );
 
     const plugins = dashboardObj.plugins?.map((plugin) => {

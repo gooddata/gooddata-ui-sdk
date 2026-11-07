@@ -2,6 +2,8 @@
 
 import { defineConfig } from "vitest/config";
 
+import { DESKTOP_VIEWPORT } from "./test/viewport.js";
+
 export default defineConfig({
     resolve: {
         preserveSymlinks: true,
@@ -19,17 +21,9 @@ export default defineConfig({
         restoreMocks: true,
         unstubEnvs: true,
         unstubGlobals: true,
-        // Speed up test runs by avoiding unnecessary operations
         environmentOptions: {
-            "happy-dom": {
-                url: "http://localhost",
-                // Disable features not needed for tests
-                features: {
-                    FetchAPI: false,
-                    WebSocket: false,
-                    ProcessExternalResources: false,
-                },
-            },
+            // Vitest only reads happyDOM, not happy-dom
+            happyDOM: DESKTOP_VIEWPORT,
         },
     },
 });

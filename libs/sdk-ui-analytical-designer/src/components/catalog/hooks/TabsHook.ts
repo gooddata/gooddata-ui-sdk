@@ -2,10 +2,10 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { isEqual } from "lodash-es";
 import { defineMessage } from "react-intl";
 
 import { type CatalogItem, type GenAIObjectType } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { type GeoLabelType } from "../../../constants/geo.js";
 import { type ICatalogFilter, TabIconGroups, TabIcons, TabNames, TabTypes } from "../model/catalogFilter.js";
@@ -363,11 +363,11 @@ export const useTabs = (
                 { updatedTabIconSelectionNames: [], updatedTabSelectionStates: [] },
             );
 
-            if (!isEqual(updatedTabIconSelectionNames, tabIconSelectionNames)) {
+            if (!_isEqual(updatedTabIconSelectionNames, tabIconSelectionNames)) {
                 setTabIconSelectionNames(updatedTabIconSelectionNames);
             }
 
-            if (!isEqual(updatedTabSelectionStates, tabSelectionStates)) {
+            if (!_isEqual(updatedTabSelectionStates, tabSelectionStates)) {
                 setTabSelectionStates(updatedTabSelectionStates);
             }
         }

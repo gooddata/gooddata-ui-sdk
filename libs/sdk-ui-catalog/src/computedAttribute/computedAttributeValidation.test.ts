@@ -71,6 +71,7 @@ locale: en-US
         expect(validateComputedAttributeYaml(`title: No expression`)).toEqual({
             isValid: false,
             errorCode: "missingMaql",
+            path: ["maql"],
         });
     });
 
@@ -80,6 +81,7 @@ locale: en-US
             expect(validateComputedAttributeYaml(`type: ${type}\nmaql: SELECT 1`)).toEqual({
                 isValid: false,
                 errorCode: "invalidType",
+                path: ["type"],
             });
         },
     );
@@ -88,10 +90,12 @@ locale: en-US
         expect(validateComputedAttributeYaml(`title: Draft\ndescription: ""\nmaql:`)).toEqual({
             isValid: false,
             errorCode: "missingMaql",
+            path: ["maql"],
         });
         expect(validateComputedAttributeYaml(`title: Draft\ndescription: ""\nmaql: `)).toEqual({
             isValid: false,
             errorCode: "missingMaql",
+            path: ["maql"],
         });
     });
 
@@ -99,6 +103,7 @@ locale: en-US
         expect(validateComputedAttributeYaml(`maql:\n  nested: value`)).toEqual({
             isValid: false,
             errorCode: "invalidStructure",
+            path: ["maql"],
         });
     });
 
@@ -106,15 +111,26 @@ locale: en-US
         expect(validateComputedAttributeYaml(`maql: SELECT 1\ntags: 5`)).toEqual({
             isValid: false,
             errorCode: "invalidTags",
+            path: ["tags"],
+        });
+    });
+
+    it("points at the offending tag entry", () => {
+        expect(validateComputedAttributeYaml(`maql: SELECT 1\ntags:\n  - sales\n  - 5`)).toEqual({
+            isValid: false,
+            errorCode: "invalidTags",
+            path: ["tags", 1],
         });
     });
 
     // The bucketing sugar the design mocked up (using/buckets) is not part of the entity, so it must
     // not silently pass through as an unknown field.
-    it("rejects unknown fields", () => {
-        expect(validateComputedAttributeYaml(`maql: SELECT 1\nusing: customer_age`)).toEqual({
+    it("rejects unknown fields and marks the unknown key", () => {
+        expect(validateComputedAttributeYaml(`maql: SELECT 1\nusing: customer_age`)).toStrictEqual({
             isValid: false,
             errorCode: "invalidStructure",
+            path: ["using"],
+            target: "key",
         });
     });
 
@@ -153,6 +169,7 @@ locale: cs-CZ-u-kn-true`),
         expect(validateComputedAttributeYaml(`maql: SELECT 1\nlocale: ${locale}`)).toEqual({
             isValid: false,
             errorCode: "invalidLocale",
+            path: ["locale"],
         });
     });
 
@@ -164,6 +181,7 @@ locale: cs-CZ-u-kn-true`),
         expect(validateComputedAttributeYaml(`maql: SELECT 1\n${key}: ${value}`)).toEqual({
             isValid: false,
             errorCode,
+            path: [key],
         });
     });
 
@@ -172,7 +190,7 @@ locale: cs-CZ-u-kn-true`),
             validateComputedAttributeYaml(`id: changed\nmaql: SELECT 1`, {
                 fixedIdentifier: "original",
             }),
-        ).toEqual({ isValid: false, errorCode: "idImmutable" });
+        ).toEqual({ isValid: false, errorCode: "idImmutable", path: ["id"] });
     });
 
     it("accepts an unchanged fixed identifier in edit mode", () => {

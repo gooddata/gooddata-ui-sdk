@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 
-import { isEqual } from "lodash-es";
-
 import { normalizeDashboardTimezoneConfig } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
 import {
@@ -51,6 +50,6 @@ export function useDialogData() {
         currentData,
         originalData,
         setCurrentData,
-        isDirty: () => !isEqual(currentData, originalData),
+        isDirty: () => !_isEqual(currentData, originalData),
     };
 }

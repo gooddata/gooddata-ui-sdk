@@ -2,10 +2,10 @@
 
 import { type ReactNode, createContext, useContext } from "react";
 
-import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { _isEmpty } from "@gooddata/util";
 
 import { type GoodDataSdkError } from "../../errors/GoodDataSdkError.js";
 import { useBackendStrict } from "../BackendContext.js";
@@ -211,7 +211,7 @@ export const useClientWorkspaceInitialized = (): boolean => {
 //
 
 function hasWorkspaceProp<T>(obj: T): obj is T & { workspace: string } {
-    return !isEmpty(obj) && !!(obj as Record<string, any>)["workspace"];
+    return !_isEmpty(obj) && !!(obj as Record<string, any>)["workspace"];
 }
 
 function getInputLCMIdentifiersFromProps(props: IClientWorkspaceProviderProps): IClientWorkspaceIdentifiers {

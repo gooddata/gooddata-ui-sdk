@@ -6,6 +6,11 @@ import { startCompletion } from "@codemirror/autocomplete";
 import { defaultKeymap, history, historyKeymap } from "@codemirror/commands";
 import { type EditorView, keymap } from "@codemirror/view";
 
+/** @internal */
+export function isApplePlatform(): boolean {
+    return /Mac|iPhone|iPad|iPod/.test(globalThis.navigator?.platform ?? "");
+}
+
 export function useCodemirrorKeymap({
     handleKeyDown,
 }: {
@@ -23,12 +28,11 @@ export function useCodemirrorKeymap({
                         return handleKeyDown.current?.(event, view) ?? false;
                     },
                 },
-                // "Mod" is Ctrl on Windows/Linux, Cmd on macOS
+                // Both Meta-i and Ctrl-i are bound so the named shortcut works even when the platform check is wrong.
                 {
-                    key: "Mod-i",
+                    key: "Meta-i",
                     run: startCompletion,
                 },
-                // Ctrl on Windows
                 {
                     key: "Ctrl-i",
                     run: startCompletion,

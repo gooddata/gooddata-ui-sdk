@@ -3,7 +3,7 @@
 import { type ReactElement, memo, useEffect, useMemo, useRef } from "react";
 
 import Highcharts from "highcharts/esm/highcharts.js";
-import { isEqual, omitBy } from "lodash-es";
+import { omitBy } from "lodash-es";
 import { useIntl } from "react-intl";
 import { type ContentRect } from "react-measure";
 import { invariant } from "ts-invariant";
@@ -25,6 +25,7 @@ import {
 import { useContainingOverlayZIndex } from "@gooddata/sdk-ui-kit";
 import { useReferenceTheme, useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { type ILegendOptions, type ITooltipExecution, useTooltipLookup } from "@gooddata/sdk-ui-vis-commons";
+import { _isEqual } from "@gooddata/util";
 
 import { type IChartConfig } from "../interfaces/chartConfig.js";
 import { type OnLegendReady } from "../interfaces/chartProps.js";
@@ -276,7 +277,7 @@ export const ChartTransformation = memo(
         });
     },
     (props, nextProps) => {
-        return isEqual(
+        return _isEqual(
             omitBy(props, (v) => typeof v === "function"),
             omitBy(nextProps, (v) => typeof v === "function"),
         );

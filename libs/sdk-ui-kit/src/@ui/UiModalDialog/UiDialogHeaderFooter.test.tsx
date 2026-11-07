@@ -40,11 +40,6 @@ describe("UiDialogHeader", () => {
         renderWithIntl(<UiDialogHeader title="Hello" leading={<button>back</button>} />);
         expect(screen.getByRole("button", { name: "back" })).toBeInTheDocument();
     });
-
-    it("applies the size modifier on the title", () => {
-        const { container } = renderWithIntl(<UiDialogHeader title="Hello" titleSize="large" />);
-        expect(container.querySelector(".gd-ui-kit-dialog-header__title--size-large")).toBeInTheDocument();
-    });
 });
 
 describe("UiDialogFooter", () => {

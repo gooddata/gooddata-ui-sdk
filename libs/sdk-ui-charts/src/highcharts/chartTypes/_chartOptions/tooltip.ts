@@ -1,9 +1,8 @@
-// (C) 2007-2025 GoodData Corporation
-
-import { isEmpty } from "lodash-es";
+// (C) 2007-2026 GoodData Corporation
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { type ISeparators } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { type IUnsafeHighchartsTooltipPoint } from "../../typings/unsafe.js";
 import { customEscape, percentFormatter } from "../_util/common.js";
@@ -17,7 +16,7 @@ export function formatValueForTooltip(
 
     // Based on the tests, when a format is not provided, we should refrain from formatting the value using the formatter, as the default format "#,##0.00" will be used.
     // Additionally, the test necessitates that the value should remain unformatted.
-    if (!isEmpty(format)) {
+    if (!_isEmpty(format)) {
         const result = ClientFormatterFacade.formatValue(parsedNumber, format, separators);
         return customEscape(result.formattedValue);
     }

@@ -1,8 +1,9 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { has, isEqual, uniq, uniqWith } from "lodash-es";
+import { has, uniq, uniqWith } from "lodash-es";
 
 import { type ObjRef, isUriRef, objRefToString } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { currentReportMDObject } from "../selectors/buckets_selector.js";
 import { getInsightForSaveViaMd } from "../selectors/insight_selectors.js";
@@ -139,7 +140,7 @@ export const indexValidElements = (
                 [objRefToString(result.filterItemsRef)]: {
                     items: uniqWith(
                         [...result.items, ...filterItems[objRefToString(result.filterItemsRef)].items],
-                        isEqual,
+                        _isEqual,
                     ),
                     total: result.total,
                 },

@@ -2,7 +2,7 @@
 
 import { type CSSProperties } from "react";
 
-import { clamp, isEqual, round } from "lodash-es";
+import { clamp, round } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {
@@ -23,6 +23,7 @@ import {
     isWidgetDefinition,
 } from "@gooddata/sdk-model";
 import { fluidLayoutDescriptor } from "@gooddata/sdk-ui-ext";
+import { _isEqual } from "@gooddata/util";
 
 import { DashboardLayoutBuilder } from "../../../../_staging/dashboard/flexibleLayout/builder/layout.js";
 import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../../_staging/dashboard/flexibleLayout/config.js";
@@ -257,7 +258,7 @@ export const getResizedItemPositions = <TWidget>(
                 }
 
                 if (
-                    !isEqual(originalColumn.size(), item.size()) &&
+                    !_isEqual(originalColumn.size(), item.size()) &&
                     (isWidget(updatedContent) || isWidgetDefinition(updatedContent))
                 ) {
                     acc.push([item.section().index().sectionIndex, getItemIndex(item.index())]);

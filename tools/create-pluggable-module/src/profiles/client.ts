@@ -100,6 +100,18 @@ export const clientProfile: IScaffoldProfile = {
     },
 
     templateSubtrees: ["module", "harness"],
+    supportedKinds: ["application", "headless"],
+    templateSubtreesForKind(kind) {
+        return kind === "headless"
+            ? [
+                  { source: "headless-module", dest: "module" },
+                  { source: "headless-harness", dest: "harness" },
+              ]
+            : [
+                  { source: "module", dest: "module" },
+                  { source: "harness", dest: "harness" },
+              ];
+    },
 
     derive(answers: IScaffoldAnswers, repo: IRepoInfo): IDerivedValues {
         const devPort = computeDevPort(repo.repoRoot);
@@ -120,6 +132,9 @@ export const clientProfile: IScaffoldProfile = {
         // Order matters: longer tokens (containing shorter ones as substring)
         // MUST come first. `gdc-app-template-module` before `gdc-app-template`.
         return [
+            ["gdc-headless-template-name-module", `${answers.appName}-module`],
+            ["gdc-headless-template-name-harness", `${answers.appName}-harness`],
+            ["gdc-headless-template-name", answers.appName],
             ["gdc-app-template-name-module", `${answers.appName}-module`],
             ["gdc-app-template-name-harness", `${answers.appName}-harness`],
             ["gdc-app-template-name", answers.appName],
@@ -201,7 +216,11 @@ export const clientProfile: IScaffoldProfile = {
         const { command, args } = installCommand(ctx.packageManager);
         console.log(`\n  Running ${command} ${args.join(" ")} ...\n`);
         const ok = runCommand(command, args, ctx.repoRoot);
-        printClientNextSteps(ctx, command, args, ok);
+        if (ctx.answers.kind === "headless") {
+            printHeadlessNextSteps(ctx, command, args, ok);
+        } else {
+            printClientNextSteps(ctx, command, args, ok);
+        }
     },
 };
 
@@ -267,4 +286,43 @@ ${numbered}
             `  Warning: ${harnessDir}/.env.template not found. Expected one from the template subtree.`,
         );
     }
+}
+
+function printHeadlessNextSteps(
+    ctx: IProfileContext,
+    installCmd: string,
+    installArgs: readonly string[],
+    installOk: boolean,
+): void {
+    const { answers, derived, destRoot, repoRoot } = ctx;
+    const relativeDest = destRoot.startsWith(repoRoot)
+        ? destRoot.slice(repoRoot.length).replace(/^[\\/]/, "")
+        : destRoot;
+
+    const nextSteps: string[] = [];
+    if (!installOk) nextSteps.push(`${installCmd} ${installArgs.join(" ")}`);
+    nextSteps.push(`cd ${relativeDest}/harness`);
+    nextSteps.push("# Harness without a backend: mounts the module and sends it sample telemetry:");
+    nextSteps.push("cp .env.template .env   # and set HEADLESS_MODULE_CONFIG");
+    nextSteps.push("npm run dev");
+    nextSteps.push(`# Build for deployment (see ${relativeDest}/module/README.md for the registry entry):`);
+    nextSteps.push("cd ../module && cp .env.template .env && npm run dist");
+
+    const numbered = nextSteps.map((step, i) => `    ${i + 1}. ${step}`).join("\n");
+    const header = installOk
+        ? "Done! Your new headless module has been scaffolded and dependencies installed."
+        : "Your new headless module has been scaffolded, but the dependency install failed — re-run it before continuing.";
+
+    console.log(`
+  ${header}
+
+  Next steps:
+${numbered}
+
+  Summary:
+    - ID:              ${answers.appName}
+    - Federation name: ${derived.federationName}
+    - Exposed module:  ./headlessModule
+    - Dev default:     https://localhost:${derived.moduleDevPort}/remoteEntry.js
+`);
 }

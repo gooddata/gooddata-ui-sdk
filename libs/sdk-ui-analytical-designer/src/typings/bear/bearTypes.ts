@@ -1,7 +1,5 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import {
     type AccessGranularPermission,
     type EmptyValues,
@@ -12,6 +10,7 @@ import {
     type IUpperBoundedFilter,
     type MatchFilterOperator as MatchFilterOperatorSdkModel,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 export type Email = string;
 
@@ -880,18 +879,18 @@ export interface IAfm {
 }
 
 export function isObjectUriQualifier(qualifier: ObjQualifier): qualifier is IObjUriQualifier {
-    return !isEmpty(qualifier) && (qualifier as IObjUriQualifier).uri !== undefined;
+    return !_isEmpty(qualifier) && (qualifier as IObjUriQualifier).uri !== undefined;
 }
 
 export function isLocalIdentifierQualifier(qualifier: unknown): qualifier is ILocalIdentifierQualifier {
-    return !isEmpty(qualifier) && (qualifier as ILocalIdentifierQualifier).localIdentifier !== undefined;
+    return !_isEmpty(qualifier) && (qualifier as ILocalIdentifierQualifier).localIdentifier !== undefined;
 }
 
 export function isVisualizationObjectAbsoluteDateFilter(
     filter: VisualizationObjectDateFilter,
 ): filter is IVisualizationObjectAbsoluteDateFilter {
     return (
-        !isEmpty(filter) &&
+        !_isEmpty(filter) &&
         (filter as IVisualizationObjectAbsoluteDateFilter).absoluteDateFilter !== undefined
     );
 }
@@ -900,7 +899,7 @@ export function isVisualizationObjectArithmeticMeasureDefinition(
     definition: VisualizationObjectMeasureDefinitionType,
 ): definition is IVisualizationObjectArithmeticMeasureDefinition {
     return (
-        !isEmpty(definition) &&
+        !_isEmpty(definition) &&
         (definition as IVisualizationObjectArithmeticMeasureDefinition).arithmeticMeasure !== undefined
     );
 }
@@ -909,7 +908,7 @@ export function isVisualizationObjectAttribute(
     bucketItem: IVisualizationObjectMeasure | IVisualizationObjectAttribute,
 ): bucketItem is IVisualizationObjectAttribute {
     return (
-        !isEmpty(bucketItem) &&
+        !_isEmpty(bucketItem) &&
         (bucketItem as IVisualizationObjectAttribute).visualizationAttribute !== undefined
     );
 }
@@ -918,7 +917,7 @@ export function isVisualizationObjectAttributeFilter(
     filter: VisualizationObjectExtendedFilter,
 ): filter is VisualizationObjectAttributeFilter {
     return (
-        !isEmpty(filter) &&
+        !_isEmpty(filter) &&
         ((filter as IVisualizationObjectPositiveAttributeFilter).positiveAttributeFilter !== undefined ||
             (filter as IVisualizationObjectNegativeAttributeFilter).negativeAttributeFilter !== undefined ||
             (filter as IVisualizationObjectArbitraryAttributeFilter).arbitraryAttributeFilter !== undefined ||
@@ -930,7 +929,7 @@ export function isVisualizationObjectArbitraryAttributeFilter(
     filter: VisualizationObjectExtendedFilter,
 ): filter is IVisualizationObjectArbitraryAttributeFilter {
     return (
-        !isEmpty(filter) &&
+        !_isEmpty(filter) &&
         (filter as IVisualizationObjectArbitraryAttributeFilter).arbitraryAttributeFilter !== undefined
     );
 }
@@ -939,7 +938,7 @@ export function isVisualizationObjectMatchAttributeFilter(
     filter: VisualizationObjectExtendedFilter,
 ): filter is IVisualizationObjectMatchAttributeFilter {
     return (
-        !isEmpty(filter) &&
+        !_isEmpty(filter) &&
         (filter as IVisualizationObjectMatchAttributeFilter).matchAttributeFilter !== undefined
     );
 }
@@ -948,7 +947,7 @@ export function isVisualizationObjectNegativeAttributeFilter(
     filter: VisualizationObjectExtendedFilter,
 ): filter is IVisualizationObjectNegativeAttributeFilter {
     return (
-        !isEmpty(filter) &&
+        !_isEmpty(filter) &&
         (filter as IVisualizationObjectNegativeAttributeFilter).negativeAttributeFilter !== undefined
     );
 }
@@ -957,7 +956,7 @@ export function isVisualizationObjectDateFilter(
     filter: VisualizationObjectExtendedFilter,
 ): filter is VisualizationObjectDateFilter {
     return (
-        !isEmpty(filter) &&
+        !_isEmpty(filter) &&
         ((filter as IVisualizationObjectAbsoluteDateFilter).absoluteDateFilter !== undefined ||
             (filter as IVisualizationObjectRelativeDateFilter).relativeDateFilter !== undefined)
     );
@@ -966,14 +965,14 @@ export function isVisualizationObjectDateFilter(
 export function isVisualizationObjectMeasure(
     bucketItem: IVisualizationObjectMeasure | IVisualizationObjectAttribute,
 ): bucketItem is IVisualizationObjectMeasure {
-    return !isEmpty(bucketItem) && (bucketItem as IVisualizationObjectMeasure).measure !== undefined;
+    return !_isEmpty(bucketItem) && (bucketItem as IVisualizationObjectMeasure).measure !== undefined;
 }
 
 export function isVisualizationObjectMeasureValueFilter(
     filter: VisualizationObjectExtendedFilter,
 ): filter is IVisualizationObjectMeasureValueFilter {
     return (
-        !isEmpty(filter) &&
+        !_isEmpty(filter) &&
         (filter as IVisualizationObjectMeasureValueFilter).measureValueFilter !== undefined
     );
 }
@@ -982,7 +981,7 @@ export function isVisualizationObjectPoPMeasureDefinition(
     definition: VisualizationObjectMeasureDefinitionType,
 ): definition is IVisualizationObjectPoPMeasureDefinition {
     return (
-        !isEmpty(definition) &&
+        !_isEmpty(definition) &&
         (definition as IVisualizationObjectPoPMeasureDefinition).popMeasureDefinition !== undefined
     );
 }
@@ -991,7 +990,7 @@ export function isVisualizationObjectPositiveAttributeFilter(
     filter: VisualizationObjectAttributeFilter,
 ): filter is IVisualizationObjectPositiveAttributeFilter {
     return (
-        !isEmpty(filter) &&
+        !_isEmpty(filter) &&
         (filter as IVisualizationObjectPositiveAttributeFilter).positiveAttributeFilter !== undefined
     );
 }
@@ -1000,7 +999,7 @@ export function isVisualizationObjectPreviousPeriodMeasureDefinition(
     definition: VisualizationObjectMeasureDefinitionType,
 ): definition is IVisualizationObjectPreviousPeriodMeasureDefinition {
     return (
-        !isEmpty(definition) &&
+        !_isEmpty(definition) &&
         (definition as IVisualizationObjectPreviousPeriodMeasureDefinition).previousPeriodMeasure !==
             undefined
     );
@@ -1009,20 +1008,20 @@ export function isVisualizationObjectPreviousPeriodMeasureDefinition(
 export function isVisualizationObjectRankingFilter(
     filter: VisualizationObjectExtendedFilter,
 ): filter is IVisualizationObjectRankingFilter {
-    return !isEmpty(filter) && (filter as IVisualizationObjectRankingFilter).rankingFilter !== undefined;
+    return !_isEmpty(filter) && (filter as IVisualizationObjectRankingFilter).rankingFilter !== undefined;
 }
 
 export function isVisualizationObjectRelativeDateFilter(
     filter: VisualizationObjectDateFilter,
 ): filter is IVisualizationObjectRelativeDateFilter {
     return (
-        !isEmpty(filter) &&
+        !_isEmpty(filter) &&
         (filter as IVisualizationObjectRelativeDateFilter).relativeDateFilter !== undefined
     );
 }
 
 export function isVisualization(obj: unknown): obj is IVisualization {
-    return !isEmpty(obj) && (obj as IVisualization).visualizationObject !== undefined;
+    return !_isEmpty(obj) && (obj as IVisualization).visualizationObject !== undefined;
 }
 
 export function isAttributeElementsArray(
@@ -1034,39 +1033,39 @@ export function isAttributeElementsArray(
 export function isAttributeElementsByRef(
     attributeElements: AttributeElements,
 ): attributeElements is IAttributeElementsByRef {
-    return !isEmpty(attributeElements) && (attributeElements as IAttributeElementsByRef).uris !== undefined;
+    return !_isEmpty(attributeElements) && (attributeElements as IAttributeElementsByRef).uris !== undefined;
 }
 
 export function isAttributeElementsByValue(
     attributeElements: AttributeElements,
 ): attributeElements is IAttributeElementsByValue {
     return (
-        !isEmpty(attributeElements) &&
+        !_isEmpty(attributeElements) &&
         !Array.isArray(attributeElements) &&
         (attributeElements as IAttributeElementsByValue).values !== undefined
     );
 }
 
 export function isExpressionFilter(filter: CompatibilityFilter): filter is IExpressionFilter {
-    return !isEmpty(filter) && (filter as IExpressionFilter).expression !== undefined;
+    return !_isEmpty(filter) && (filter as IExpressionFilter).expression !== undefined;
 }
 
 export function isPositiveAttributeFilter(filter: CompatibilityFilter): filter is IPositiveAttributeFilter {
-    return !isEmpty(filter) && (filter as IPositiveAttributeFilter).positiveAttributeFilter !== undefined;
+    return !_isEmpty(filter) && (filter as IPositiveAttributeFilter).positiveAttributeFilter !== undefined;
 }
 
 export function isNegativeAttributeFilter(filter: CompatibilityFilter): filter is INegativeAttributeFilter {
-    return !isEmpty(filter) && (filter as INegativeAttributeFilter).negativeAttributeFilter !== undefined;
+    return !_isEmpty(filter) && (filter as INegativeAttributeFilter).negativeAttributeFilter !== undefined;
 }
 
 export function isRankingFilter(filter: CompatibilityFilter): filter is IRankingFilter {
-    return !isEmpty(filter) && (filter as IRankingFilter).rankingFilter !== undefined;
+    return !_isEmpty(filter) && (filter as IRankingFilter).rankingFilter !== undefined;
 }
 
 export function isSimpleMeasureDefinition(
     definition: MeasureDefinition,
 ): definition is ISimpleMeasureDefinition {
-    return !isEmpty(definition) && (definition as ISimpleMeasureDefinition).measure !== undefined;
+    return !_isEmpty(definition) && (definition as ISimpleMeasureDefinition).measure !== undefined;
 }
 
 export interface ITotalItem {

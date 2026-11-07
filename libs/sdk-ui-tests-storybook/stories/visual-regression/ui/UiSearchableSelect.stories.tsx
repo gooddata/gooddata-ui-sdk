@@ -48,6 +48,7 @@ const requiredProps = {
     })) satisfies IItem[],
     onChange: action("onChange"),
     placeholder: "Select placeholder",
+    title: "Select title",
     value: null,
     children: (
         <>
@@ -176,3 +177,28 @@ export function LongValues() {
     );
 }
 LongValues.parameters = { kind: "long values", screenshot: openedScreenshot } satisfies IStoryParameters;
+
+export function Mobile() {
+    return (
+        <div style={wrapperStyle}>
+            <UiSearchableSelect {...requiredProps} defaultOpen value="item-4" />
+        </div>
+    );
+}
+Mobile.parameters = {
+    kind: "mobile",
+    screenshot: {
+        ...openedScreenshot,
+        // The viewport matches "mobile2" Storybook viewport
+        viewports: [{ label: "mobile", width: 414, height: 896 }],
+    },
+} satisfies IStoryParameters;
+Mobile.globals = { viewport: { value: "mobile2" } };
+
+export const MobileThemed = () => wrapWithTheme(<Mobile />);
+MobileThemed.parameters = { ...Mobile.parameters, kind: "mobile themed" } satisfies IStoryParameters;
+MobileThemed.globals = Mobile.globals;
+
+export const MobileNoItems = () => <NoItems />;
+MobileNoItems.parameters = { ...Mobile.parameters, kind: "mobile no items" } satisfies IStoryParameters;
+MobileNoItems.globals = Mobile.globals;

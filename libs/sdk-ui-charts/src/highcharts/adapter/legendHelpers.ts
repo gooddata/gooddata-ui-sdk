@@ -1,6 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { type IColorDescriptor, type ITheme } from "@gooddata/sdk-model";
@@ -11,6 +10,7 @@ import {
     getColorByGuid,
     getRgbStringFromRGB,
 } from "@gooddata/sdk-ui-vis-commons";
+import { _isEmpty } from "@gooddata/util";
 
 import { supportedDualAxesChartTypes } from "../chartTypes/_chartOptions/chartCapabilities.js";
 import { getChartFillProperties } from "../chartTypes/_chartOptions/patternFillOptions.js";
@@ -155,7 +155,7 @@ export function getComboChartSeries(series: any[]): any[] {
     const [firstAxisKey, secondAxisKey] = LEGEND_TEXT_KEYS["combo"];
 
     // convert to dual axis series when there is only one chart type
-    if (isEmpty(secondaryItems)) {
+    if (_isEmpty(secondaryItems)) {
         return transformToDualAxesSeries(series, primaryType);
     }
 

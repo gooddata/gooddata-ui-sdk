@@ -1,7 +1,5 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
-
 import { type DataViewRequests } from "@gooddata/mock-handling";
 import {
     type NormalizationState,
@@ -12,6 +10,7 @@ import {
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type IExecutionDefinition, type ISettings } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 /**
  * Schedules `cb` on the next macrotask and returns a canceller.
@@ -189,7 +188,7 @@ export function backendWithCapturing(
         });
     }
 
-    if (!isEmpty(backendSetting)) {
+    if (!_isEmpty(backendSetting)) {
         backend = withCustomWorkspaceSettings(backend, {
             commonSettingsWrapper: (settings: ISettings) => {
                 return {

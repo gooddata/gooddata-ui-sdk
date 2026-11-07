@@ -2,8 +2,6 @@
 
 import { type ReactElement } from "react";
 
-import { isEqual } from "lodash-es";
-
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     type IAttribute,
@@ -12,6 +10,7 @@ import {
     type ISortItem,
     type ITotal,
 } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { UnexpectedSdkError } from "../base/errors/GoodDataSdkError.js";
 import {
@@ -262,7 +261,7 @@ const WrappedExecute = withContexts(
 
             return (
                 relevantProps.some((propName) => prevProps[propName] !== nextProps[propName]) ||
-                relevantPropsDeepEqual.some((propName) => !isEqual(prevProps[propName], nextProps[propName]))
+                relevantPropsDeepEqual.some((propName) => !_isEqual(prevProps[propName], nextProps[propName]))
             );
         },
         loadOnMount: (props?: IExecuteProps) => {

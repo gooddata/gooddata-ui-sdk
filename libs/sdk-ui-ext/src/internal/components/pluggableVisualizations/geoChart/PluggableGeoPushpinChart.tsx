@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, isEmpty, set } from "lodash-es";
+import { cloneDeep, set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { type IExecutionFactory } from "@gooddata/sdk-backend-spi";
@@ -32,6 +32,7 @@ import {
     type IGeoConfig,
     getGeoChartDimensions,
 } from "@gooddata/sdk-ui-geo";
+import { _isEmpty } from "@gooddata/util";
 
 import { ATTRIBUTE, BUCKETS, METRIC } from "../../../constants/bucket.js";
 import { sanitizeGeoMapStyleOptions } from "../../../constants/geoMapStyle.js";
@@ -410,7 +411,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             [ATTRIBUTE],
         );
         const nonSegmentAttributes = getAttributeItemsWithoutStacks(buckets);
-        if (nonSegmentAttributes.length > 1 && isEmpty(segments)) {
+        if (nonSegmentAttributes.length > 1 && _isEmpty(segments)) {
             const locationItems = this.getLocationItems(buckets);
             segments = nonSegmentAttributes
                 .filter((attribute) => !locationItems.includes(attribute))

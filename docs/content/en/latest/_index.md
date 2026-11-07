@@ -11,7 +11,7 @@ cascade:
           path: "/*/**"
 ---
 
-{{< home/actions primary="Start with the React quick start" primaryHref="./getting-started/quickstart/" secondary="Browse the visual components" secondaryHref="./visualisations/" >}}
+{{< home/actions primary="React quick start" primaryHref="./getting-started/quickstart/" secondary="Embed a dashboard" secondaryHref="./integrations/embedding/embed-dashboards/" >}}
 
 ## Build with GoodData.UI
 

@@ -367,6 +367,9 @@ export function DefaultAssistantMessage(props: IGenAIAssistantAssistantMessagePr
 export function DefaultConversationDateGrouping(props: IGenAIAssistantConversationDateGroupingProps): JSX.Element;
 
 // @alpha
+export function DefaultConversationDeleteDialog(props: IGenAIAssistantConversationDeleteDialogProps): JSX.Element;
+
+// @alpha
 export function DefaultConversationDrawerHeader(props: IGenAIAssistantConversationDrawerHeaderProps): JSX.Element;
 
 // @alpha
@@ -380,6 +383,9 @@ export function DefaultConversationItem(props: IGenAIAssistantConversationItemPr
 
 // @alpha
 export function DefaultConversationKdaContent(props: IGenAIAssistantConversationKdaContentProps): JSX.Element;
+
+// @alpha
+export function DefaultConversationRenameDialog(props: IGenAIAssistantConversationRenameDialogProps): JSX.Element;
 
 // @alpha
 export function DefaultConversationVisualizationContent(props: IGenAIAssistantConversationVisualizationContentProps): JSX.Element;
@@ -743,6 +749,19 @@ export type IGenAIAssistantConversationDateGroupingProps = {
 };
 
 // @alpha
+export type IGenAIAssistantConversationDeleteDialogProps = {
+    conversation: IChatConversationLocal;
+    onDelete: () => void;
+    onClose: () => void;
+    title?: string;
+    body?: (props: {
+        name: string;
+    }) => ReactNode;
+    submitButtonText?: string;
+    cancelButtonText?: string;
+};
+
+// @alpha
 export type IGenAIAssistantConversationDrawerHeaderProps = {
     title: string;
 };
@@ -770,6 +789,17 @@ export type IGenAIAssistantConversationKdaContentProps = {
     kda: IChatKdaDefinition;
     className?: string;
     enableKeyDriverAnalysis?: boolean;
+};
+
+// @alpha
+export type IGenAIAssistantConversationRenameDialogProps = {
+    conversation: IChatConversationLocal;
+    onRename: (name: string) => void;
+    onClose: () => void;
+    title?: string;
+    label?: string;
+    submitButtonText?: string;
+    cancelButtonText?: string;
 };
 
 // @alpha
@@ -861,6 +891,8 @@ export interface IGenAIAssistantSlots {
     // @alpha
     ConversationDateGrouping?: ComponentType<ISlotProps<IGenAIAssistantConversationDateGroupingProps>>;
     // @alpha
+    ConversationDeleteDialog?: ComponentType<ISlotProps<IGenAIAssistantConversationDeleteDialogProps>>;
+    // @alpha
     ConversationDrawerHeader?: ComponentType<ISlotProps<IGenAIAssistantConversationDrawerHeaderProps>>;
     // @alpha
     ConversationFooter?: ComponentType<ISlotProps<IGenAIAssistantConversationFooterProps>>;
@@ -870,6 +902,8 @@ export interface IGenAIAssistantSlots {
     ConversationItem?: ComponentType<ISlotProps<IGenAIAssistantConversationItemProps>>;
     // @alpha
     ConversationKdaContent?: ComponentType<ISlotProps<IGenAIAssistantConversationKdaContentProps>>;
+    // @alpha
+    ConversationRenameDialog?: ComponentType<ISlotProps<IGenAIAssistantConversationRenameDialogProps>>;
     // @alpha
     ConversationVisualizationContent?: ComponentType<ISlotProps<IGenAIAssistantConversationVisualizationContentProps>>;
     Disclaimer?: ComponentType<ISlotProps<IGenAIAssistantDisclaimerProps>>;
@@ -1059,7 +1093,7 @@ export type LandingScreenProps = IGenAIAssistantLandingScreenProps & {
     LandingScreen?: ComponentType;
 };
 
-// @public (undocumented)
+// @public
 export type LinkHandlerEvent = {
     type: "setting" | "report" | GenAIObjectType;
     id: string;
@@ -1069,12 +1103,12 @@ export type LinkHandlerEvent = {
     preventDefault: () => void;
     conversationId?: string;
     section?: "ai";
+    action: "copy" | "open";
     dashboard?: IDashboard;
     insights?: IInsight[];
     dashboardStatus?: "saved" | "draft";
     visualization?: IInsight;
     visualizationStatus?: "saved" | "draft";
-    action: "copy" | "open";
 };
 
 // @public

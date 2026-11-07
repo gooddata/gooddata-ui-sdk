@@ -2,7 +2,7 @@
 
 import { type Interface as ReadlineInterface, createInterface } from "readline";
 
-import type { ApplicationScope, IPromptDescriptor, IScaffoldAnswers } from "../types.js";
+import type { ApplicationScope, IPromptDescriptor, IScaffoldAnswers, ModuleKind } from "../types.js";
 
 /**
  * Thin wrapper over readline's `line` events. The reason we can't use
@@ -129,7 +129,21 @@ async function askScope(reader: LineReader): Promise<ApplicationScope> {
  * Drives the full prompt sequence: shared appName/title/scope, then the
  * profile's extraPrompts in order. Returns once every answer is collected.
  */
-export async function runPrompts(extraPrompts: readonly IPromptDescriptor[]): Promise<IScaffoldAnswers> {
+async function askKind(reader: LineReader): Promise<ModuleKind> {
+    while (true) {
+        const choice = (
+            await ask(reader, "  Module kind (1 = application, 2 = headless module without UI): ")
+        ).trim();
+        if (choice === "1") return "application";
+        if (choice === "2") return "headless";
+        console.log('  Error: Enter "1" or "2".');
+    }
+}
+
+export async function runPrompts(
+    extraPrompts: readonly IPromptDescriptor[],
+    supportedKinds: readonly ModuleKind[] = ["application"],
+): Promise<IScaffoldAnswers> {
     const reader = new LineReader();
     try {
         console.log("\n  Scaffold a new pluggable application\n");
@@ -141,7 +155,9 @@ export async function runPrompts(extraPrompts: readonly IPromptDescriptor[]): Pr
             return validateTextValue(v);
         });
 
-        const scope = await askScope(reader);
+        const kind: ModuleKind =
+            supportedKinds.length > 1 ? await askKind(reader) : (supportedKinds[0] ?? "application");
+        const scope: ApplicationScope = kind === "headless" ? "organization" : await askScope(reader);
 
         const maintainer = await askUntilValid(
             reader,
@@ -152,7 +168,7 @@ export async function runPrompts(extraPrompts: readonly IPromptDescriptor[]): Pr
             },
         );
 
-        const answers: IScaffoldAnswers = { appName, title, scope, maintainer };
+        const answers: IScaffoldAnswers = { appName, title, kind, scope, maintainer };
 
         for (const prompt of extraPrompts) {
             const value = await askExtra(reader, prompt);

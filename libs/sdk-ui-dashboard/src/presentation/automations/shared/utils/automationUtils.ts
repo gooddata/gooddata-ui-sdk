@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { isEqual, omit, pick } from "lodash-es";
+import { omit, pick } from "lodash-es";
 
 import {
     type FilterContextItem,
@@ -18,6 +18,7 @@ import {
     isFilter,
     isFilterContextItem,
 } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 export const isDashboardAutomation = (
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
@@ -183,8 +184,8 @@ export const areAutomationsEqual = (
         .sort(sortByFormat);
 
     return (
-        isEqual(automationWithoutExportDefinitions, origAutomationWithoutExportDefinitions) &&
-        isEqual(automationExportDefinitions, origAutomationExportDefinitions)
+        _isEqual(automationWithoutExportDefinitions, origAutomationWithoutExportDefinitions) &&
+        _isEqual(automationExportDefinitions, origAutomationExportDefinitions)
     );
 };
 

@@ -1,7 +1,8 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
+
+import { _isEmpty } from "@gooddata/util";
 
 import { type IAuditable } from "../base/metadata.js";
 import { type FilterContextItem } from "../dashboard/filterContext.js";
@@ -265,7 +266,7 @@ export type IExportDefinitionDashboardRequestPayload = {
 export function isExportDefinitionDashboardRequestPayload(
     obj: unknown,
 ): obj is IExportDefinitionDashboardRequestPayload {
-    return !isEmpty(obj) && (obj as IExportDefinitionDashboardRequestPayload).type === "dashboard";
+    return !_isEmpty(obj) && (obj as IExportDefinitionDashboardRequestPayload).type === "dashboard";
 }
 
 /**
@@ -313,7 +314,7 @@ export function isExportDefinitionVisualizationObjectRequestPayload(
     obj: unknown,
 ): obj is IExportDefinitionVisualizationObjectRequestPayload {
     return (
-        !isEmpty(obj) &&
+        !_isEmpty(obj) &&
         (obj as IExportDefinitionVisualizationObjectRequestPayload).type === "visualizationObject"
     );
 }

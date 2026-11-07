@@ -1,6 +1,5 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import { all, call, put, select } from "redux-saga/effects";
 import { v4 as uuid } from "uuid";
 
@@ -13,6 +12,7 @@ import {
     dashboardAttributeFilterItemLocalIdentifier,
     isDashboardAttributeFilterItem,
 } from "@gooddata/sdk-model";
+import { _isEmpty } from "@gooddata/util";
 
 import { type ICrossFiltering } from "../../commands/drill.js";
 import {
@@ -88,7 +88,7 @@ function shouldUpdateExistingFiltering(
     currentVirtualFilters: DashboardAttributeFilterItem[],
     attributeFilterDisplayAsLabelMap: Map<string, ObjRef>,
 ): boolean {
-    if (isEmpty(crossFilteringItemByWidget)) {
+    if (_isEmpty(crossFilteringItemByWidget)) {
         return false;
     }
 

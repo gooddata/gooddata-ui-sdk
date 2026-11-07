@@ -1,7 +1,8 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
+
+import { _isEmpty } from "@gooddata/util";
 
 import { type Identifier } from "../../objRef/index.js";
 import { type IAttribute, attributeLocalId, isAttribute } from "../attribute/index.js";
@@ -59,7 +60,7 @@ export const isMeasureGroupIdentifier = (itemOrTotal: DimensionItem) =>
  * @public
  */
 export function isDimension(obj: unknown): obj is IDimension {
-    return !isEmpty(obj) && (obj as IDimension).itemIdentifiers !== undefined;
+    return !_isEmpty(obj) && (obj as IDimension).itemIdentifiers !== undefined;
 }
 
 //
@@ -90,7 +91,7 @@ export function dimensionTotals(dim: IDimension): ITotal[] {
 export function dimensionSetTotals(dim: IDimension, totals: ITotal[] = []): IDimension {
     invariant(dim, "dimension must be specified");
 
-    const totalsProp = isEmpty(totals) ? {} : { totals };
+    const totalsProp = _isEmpty(totals) ? {} : { totals };
 
     return {
         itemIdentifiers: dim.itemIdentifiers,
@@ -166,7 +167,7 @@ export function newDimension(items: DimensionItem[] = [], totals: ITotal[] = [])
     );
 
     input.totals.push(...totals);
-    const totalsProp = isEmpty(input.totals) ? {} : { totals: input.totals };
+    const totalsProp = _isEmpty(input.totals) ? {} : { totals: input.totals };
 
     return {
         itemIdentifiers: input.ids,

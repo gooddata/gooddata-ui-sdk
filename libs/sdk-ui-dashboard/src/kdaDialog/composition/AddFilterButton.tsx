@@ -13,7 +13,7 @@ import { useKdaState } from "../providers/KdaState.js";
 import { useAddNewAttributeHandler } from "./hooks/useAddNewAttributeHandler.js";
 import { useUnusedAttributes } from "./hooks/useUnusedAttributes.js";
 
-export function AddFilterButton() {
+export function AddFilterButton({ buttonId }: { buttonId: string }) {
     const intl = useIntl();
     const attributes = useUnusedAttributes();
     const dateDatasets = useMemo(() => [], []);
@@ -29,14 +29,14 @@ export function AddFilterButton() {
     const { onSelectCallback } = useAddNewAttributeHandler();
 
     const DropdownButtonComponent = useCallback(
-        ({ id, buttonRef, isOpen, onClick }: IAddAttributeFilterButtonProps) => (
+        ({ buttonRef, isOpen, onClick }: IAddAttributeFilterButtonProps) => (
             <UiTooltip
                 arrowPlacement="left"
                 triggerBy={["hover", "focus"]}
                 content={tooltipText}
                 anchor={
                     <UiIconButton
-                        id={id}
+                        id={buttonId}
                         icon="plus"
                         label={tooltipText}
                         onClick={onClick}
@@ -54,13 +54,14 @@ export function AddFilterButton() {
                 }
             />
         ),
-        [attributesDropdownId, isAddButtonDisabled, tooltipText],
+        [attributesDropdownId, buttonId, isAddButtonDisabled, tooltipText],
     );
 
     return (
         <AttributesDropdown
             id={attributesDropdownId}
             openOnInit={false}
+            returnFocusTo={buttonId}
             dateDatasets={dateDatasets}
             attributes={attributes}
             onSelect={onSelectCallback}
