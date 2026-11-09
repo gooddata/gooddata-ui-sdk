@@ -16,7 +16,12 @@ import { Input } from "../Form/Input.js";
 import { NoData } from "../NoData/NoData.js";
 import { type IAlignPoint } from "../typings/positioning.js";
 
-import { getTimezoneDisplayLabel, getTimezones, timezoneMatchesSearch } from "./timezones.js";
+import {
+    getTimezoneById,
+    getTimezoneDisplayLabel,
+    getTimezones,
+    timezoneMatchesSearch,
+} from "./timezones.js";
 
 const DROPDOWN_ALIGN_POINTS: IAlignPoint[] = [{ align: "bl tl" }, { align: "tl bl" }];
 const DROPDOWN_BODY_WIDTH = 300;
@@ -208,7 +213,13 @@ export function buildListboxItems(
         : [...specialListItems, ...timezoneListItems];
 }
 
-// exported for tests
+/**
+ * Returns the listbox item id to highlight for the selected value: the id of the matching
+ * special item, otherwise the curated timezone id. A legacy alias (e.g. "Europe/Kiev")
+ * resolves to its canonical item; an id outside the curated list is returned as is.
+ *
+ * Exported for tests.
+ */
 export function getSelectedItemId(
     value: string | undefined,
     specialItems: ITimezoneSelectSpecialItem[],
@@ -217,7 +228,7 @@ export function getSelectedItemId(
     if (specialIndex >= 0) {
         return `${SPECIAL_ITEM_ID_PREFIX}${specialIndex}`;
     }
-    return value;
+    return getTimezoneById(value)?.id ?? value;
 }
 
 /**

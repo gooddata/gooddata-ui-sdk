@@ -17,9 +17,12 @@ import {
     publisherDocumentDefinitionToYamlV2,
 } from "@gooddata/sdk-code-convertors";
 import {
+    type FilterContextItem,
     type IDashboardDefinition,
+    type IDashboardFilterGroupsConfig,
     type IFilterContext,
     type IFilterContextDefinition,
+    type IGenAIDashboardLiveFilters,
     type IGenAIUserContext,
     type IPublisherDocumentDefinition,
     type ITempFilterContext,
@@ -728,6 +731,284 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
         expect(definition).toEqual(originalDefinitionSnapshot);
         expect((definition.filterContext as any)?.ref).toBeUndefined();
         expect((definition.tabs?.[0].filterContext as any)?.ref).toBeUndefined();
+    });
+
+    describe("view filters", () => {
+        const regionFilter = (values: string[], localIdentifier = "region_filter"): FilterContextItem => ({
+            attributeFilter: {
+                displayForm: idRef("label.region", "displayForm"),
+                negativeSelection: values.length === 0,
+                attributeElements: { values },
+                localIdentifier,
+            },
+        });
+
+        const countryFilter = (values: string[]): FilterContextItem => ({
+            attributeFilter: {
+                displayForm: idRef("label.country", "displayForm"),
+                negativeSelection: values.length === 0,
+                attributeElements: { values },
+                localIdentifier: "country_filter",
+            },
+        });
+
+        const flatDashboard = (filters: FilterContextItem[]) =>
+            createDashboardDefinition({ ...createFilterContextDefinition(), filters }, undefined, false);
+
+        const singleTabDashboard = (
+            filters: FilterContextItem[],
+            tabTitle: string,
+            filterGroupsConfig?: IDashboardFilterGroupsConfig,
+        ): IDashboardDefinition =>
+            ({
+                ...createDashboardDefinition(undefined, undefined, false),
+                tabs: [
+                    {
+                        localIdentifier: "tab-1",
+                        title: tabTitle,
+                        layout: emptyLayout,
+                        filterContext: { ...createFilterContextDefinition(), filters },
+                        ...(filterGroupsConfig ? { filterGroupsConfig } : {}),
+                    },
+                ],
+            }) as IDashboardDefinition;
+
+        // The client sends the filters on screen; a whole live definition keeps each case readable.
+        const liveFiltersOf = (live: IDashboardDefinition): IGenAIDashboardLiveFilters => ({
+            filters: live.filterContext?.filters,
+            tabs: Object.fromEntries(
+                (live.tabs ?? []).flatMap((tab) =>
+                    tab.filterContext ? [[tab.localIdentifier, tab.filterContext.filters]] : [],
+                ),
+            ),
+        });
+
+        const sendDashboard = (definition: IDashboardDefinition, onScreen?: IDashboardDefinition) => {
+            const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
+                workspaceId: "workspace",
+                conversationId: "conversation",
+                documentFormat: "aac-v1",
+                userQuestion: "Remove the widget",
+                userContext: {
+                    view: {
+                        dashboard: {
+                            ref: idRef("dashboard-1", "analyticalDashboard"),
+                            widgets: [],
+                            definition,
+                            ...(onScreen ? { liveFilters: liveFiltersOf(onScreen) } : {}),
+                        },
+                    },
+                },
+            });
+            query.stream([]);
+            const request = vi.mocked(GenAiApi_PostMessages).mock.calls[0][2];
+            return request.aiSendMessageRequest.userContext?.view?.dashboard as unknown as Record<
+                string,
+                unknown
+            >;
+        };
+
+        it("sends no viewFilters when the screen shows the saved filters", () => {
+            const sent = sendDashboard(flatDashboard([regionFilter([])]), flatDashboard([regionFilter([])]));
+
+            expect(sent).not.toHaveProperty("viewFilters");
+            expect(sent).not.toHaveProperty("liveFilters");
+        });
+
+        it("sends no viewFilters without a live definition", () => {
+            const sent = sendDashboard(flatDashboard([regionFilter([])]));
+
+            expect(sent).not.toHaveProperty("viewFilters");
+        });
+
+        it("sends one entry, keyed like the saved document, for a changed attribute filter", () => {
+            const sent = sendDashboard(
+                flatDashboard([regionFilter([]), countryFilter([])]),
+                flatDashboard([regionFilter(["Europe"]), countryFilter([])]),
+            );
+
+            expect(sent["viewFilters"]).toEqual([
+                {
+                    key: "region_filter",
+                    filter: expect.objectContaining({
+                        type: "attribute_filter",
+                        state: { include: ["Europe"] },
+                    }),
+                },
+            ]);
+            // The saved "All" is what the assistant edits; AaC writes it without a state.
+            expect(
+                (sent["definition"] as { filters: Record<string, object> }).filters["region_filter"],
+            ).toEqual({
+                type: "attribute_filter",
+                using: "label/label.region",
+            });
+        });
+
+        it("sends a cross-filter the saved document does not have", () => {
+            const sent = sendDashboard(
+                flatDashboard([regionFilter([])]),
+                flatDashboard([regionFilter([]), regionFilter(["California"], "state_2_attributeFilter")]),
+            );
+
+            expect(sent["viewFilters"]).toEqual([
+                {
+                    key: "state_2_attributeFilter",
+                    filter: expect.objectContaining({ state: { include: ["California"] } }),
+                },
+            ]);
+        });
+
+        it("compares grouped filters by their member key", () => {
+            const groups: IDashboardFilterGroupsConfig = {
+                groups: [
+                    {
+                        title: "Geography",
+                        filters: [
+                            { filterLocalIdentifier: "region_filter" },
+                            { filterLocalIdentifier: "country_filter" },
+                        ],
+                    },
+                ],
+            };
+            const sent = sendDashboard(
+                singleTabDashboard([regionFilter([]), countryFilter([])], "", groups),
+                singleTabDashboard([regionFilter(["Europe"]), countryFilter([])], "", groups),
+            );
+
+            expect(sent["viewFilters"]).toEqual([
+                { key: "region_filter", filter: expect.objectContaining({ state: { include: ["Europe"] } }) },
+            ]);
+        });
+
+        it("matches tabs by id, not by position", () => {
+            const twoTabs = (secondTabFilters: FilterContextItem[]): IDashboardDefinition =>
+                ({
+                    ...createDashboardDefinition(undefined, undefined, false),
+                    tabs: [
+                        {
+                            localIdentifier: "tab-1",
+                            title: "Tab 1",
+                            layout: emptyLayout,
+                            filterContext: {
+                                ...createFilterContextDefinition(),
+                                filters: [regionFilter([])],
+                            },
+                        },
+                        {
+                            localIdentifier: "tab-2",
+                            title: "Tab 2",
+                            layout: emptyLayout,
+                            filterContext: { ...createFilterContextDefinition(), filters: secondTabFilters },
+                        },
+                    ],
+                }) as IDashboardDefinition;
+
+            const sent = sendDashboard(twoTabs([countryFilter([])]), twoTabs([countryFilter(["Canada"])]));
+
+            expect(sent["viewFilters"]).toEqual([
+                {
+                    tabId: "tab-2",
+                    key: "country_filter",
+                    filter: expect.objectContaining({ state: { include: ["Canada"] } }),
+                },
+            ]);
+        });
+
+        it("compares each tab with its own saved tab", () => {
+            const twoTabs = (firstTabValues: string[], secondTabValues: string[]): IDashboardDefinition =>
+                ({
+                    ...createDashboardDefinition(undefined, undefined, false),
+                    tabs: [
+                        {
+                            localIdentifier: "tab-1",
+                            title: "Tab 1",
+                            layout: emptyLayout,
+                            filterContext: {
+                                ...createFilterContextDefinition(),
+                                filters: [regionFilter(firstTabValues)],
+                            },
+                        },
+                        {
+                            localIdentifier: "tab-2",
+                            title: "Tab 2",
+                            layout: emptyLayout,
+                            filterContext: {
+                                ...createFilterContextDefinition(),
+                                filters: [regionFilter(secondTabValues)],
+                            },
+                        },
+                    ],
+                }) as IDashboardDefinition;
+
+            const sent = sendDashboard(twoTabs(["Europe"], []), twoTabs(["Europe"], []));
+
+            expect(sent).not.toHaveProperty("viewFilters");
+        });
+
+        describe("common date filter", () => {
+            const lastMonth: FilterContextItem = {
+                dateFilter: {
+                    type: "relative",
+                    granularity: "GDC.time.month",
+                    from: -1,
+                    to: -1,
+                    localIdentifier: "0_dateFilter",
+                },
+            };
+            const withDateConfig = (definition: IDashboardDefinition): IDashboardDefinition => ({
+                ...definition,
+                dateFilterConfig: { filterName: "Date range", mode: "active" },
+            });
+
+            // All time removes the common date filter from the screen's filter context.
+            it.each([
+                ["without a date filter config", (d: IDashboardDefinition) => d],
+                ["with a date filter config", withDateConfig],
+            ])(
+                "sends All time under the saved key when the screen drops the saved date %s",
+                (_, configure) => {
+                    const sent = sendDashboard(
+                        configure(flatDashboard([lastMonth, regionFilter([])])),
+                        configure(flatDashboard([regionFilter([])])),
+                    );
+
+                    expect(sent["viewFilters"]).toEqual([
+                        { key: "0_dateFilter", filter: expect.objectContaining({ type: "date_filter" }) },
+                    ]);
+                    const [{ filter }] = sent["viewFilters"] as Array<{ filter: Record<string, unknown> }>;
+                    expect(filter).not.toHaveProperty("from");
+                    expect(filter).not.toHaveProperty("to");
+                },
+            );
+
+            it("sends nothing when the screen keeps the saved date", () => {
+                const dashboard = withDateConfig(flatDashboard([lastMonth, regionFilter([])]));
+
+                expect(sendDashboard(dashboard, dashboard)).not.toHaveProperty("viewFilters");
+            });
+
+            it("sends nothing when neither the saved dashboard nor the screen has a common date", () => {
+                const dashboard = withDateConfig(flatDashboard([regionFilter([])]));
+
+                expect(sendDashboard(dashboard, dashboard)).not.toHaveProperty("viewFilters");
+            });
+        });
+
+        it("names the tab of a changed filter in a document with tabs", () => {
+            const sent = sendDashboard(
+                singleTabDashboard([regionFilter([])], "Tab 1"),
+                singleTabDashboard([regionFilter(["Europe"])], "Tab 1"),
+            );
+
+            expect(sent["viewFilters"]).toEqual([
+                {
+                    tabId: "tab-1",
+                    key: "region_filter",
+                    filter: expect.objectContaining({ state: { include: ["Europe"] } }),
+                },
+            ]);
+        });
     });
 
     describe("document view", () => {

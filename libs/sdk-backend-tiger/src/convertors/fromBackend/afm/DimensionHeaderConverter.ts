@@ -306,9 +306,11 @@ function attributeHeaderItem(
             dateFormatProps.format.locale,
             dateFormatProps.format.timezone,
         );
+        // a null value is formatted and normalized to "", which is no formatted value: leaving it out lets
+        // consumers fall back to the empty value placeholder (the forecast formats it to its own placeholder)
         formattedNameObj = {
-            formattedName,
-            normalizedValue,
+            ...(formattedName ? { formattedName } : {}),
+            ...(normalizedValue ? { normalizedValue } : {}),
         };
     }
 

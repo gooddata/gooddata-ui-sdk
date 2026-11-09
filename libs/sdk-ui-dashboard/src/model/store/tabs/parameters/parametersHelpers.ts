@@ -272,26 +272,54 @@ export function resolveParameterDisplayValues(
     context: IParameterResolutionContext,
     insight?: IInsight,
 ): ReadonlyMap<string, string> {
-    const workspaceParameters = [...context.workspaceParameterByRef.values()];
+    const identifierRefs: IdentifierRef[] = [];
+    for (const { ref } of context.workspaceParameterByRef.values()) {
+        // a text names a parameter by identifier, so one referenced by uri cannot be written at all
+        if (isIdentifierRef(ref)) {
+            identifierRefs.push(ref);
+        }
+    }
+    const values = resolveParameterValues(context, identifierRefs, insight);
+    const displayValues = new Map<string, string>();
+    for (const [identifier, value] of values.entries()) {
+        const workspaceParameter = context.workspaceParameterByRef.get(identifier);
+        if (workspaceParameter) {
+            displayValues.set(identifier, getParameterValueTitle(workspaceParameter.definition, value));
+        }
+    }
+    return displayValues;
+}
+
+/**
+ * The value of each of `refs`, by parameter identifier: chip, then insight-authored value, then the
+ * workspace default.
+ *
+ * @internal
+ */
+export function resolveParameterValues(
+    context: IParameterResolutionContext,
+    refs: IdentifierRef[],
+    insight?: IInsight,
+): ReadonlyMap<string, ParameterValue> {
     const effectiveValues = resolveEffectiveParameterValuesForRefs(
         context.entries,
-        workspaceParameters.map((parameter) => parameter.ref).filter(isIdentifierRef),
+        refs,
         insight ? ungatedInsightParameterValues(insight, context.isStringEnabled) : [],
         context.workspaceParameterByRef,
     );
-    const valueByRef = new Map(
+    const valueByIdentifier = new Map(
         effectiveValues.map((effective) => [objRefToString(effective.ref), effective.value]),
     );
-    const displayValues = new Map<string, string>();
-    for (const { definition, ref } of workspaceParameters) {
-        // a text names a parameter by identifier, so one referenced by uri cannot be written at all
-        if (!isIdentifierRef(ref)) {
-            continue;
+    const values = new Map<string, ParameterValue>();
+    for (const ref of refs) {
+        const value =
+            valueByIdentifier.get(ref.identifier) ??
+            context.workspaceParameterByRef.get(objRefToString(ref))?.definition.defaultValue;
+        if (value !== undefined) {
+            values.set(ref.identifier, value);
         }
-        const value = valueByRef.get(objRefToString(ref)) ?? definition.defaultValue;
-        displayValues.set(ref.identifier, getParameterValueTitle(definition, value));
     }
-    return displayValues;
+    return values;
 }
 
 /**

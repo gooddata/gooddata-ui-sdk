@@ -59,6 +59,7 @@ import { IDashboardFilterGroupsConfig } from '@gooddata/sdk-model';
 import { IDashboardLayout } from '@gooddata/sdk-model';
 import { IDashboardLayoutItem } from '@gooddata/sdk-model';
 import { IDashboardMeasureValueFilterConfig } from '@gooddata/sdk-model';
+import { IDashboardParameter } from '@gooddata/sdk-model';
 import { IDashboardPluginLink } from '@gooddata/sdk-model';
 import { IDashboardWidget } from '@gooddata/sdk-model';
 import { IDrillToAttributeUrl } from '@gooddata/sdk-model';
@@ -1271,7 +1272,7 @@ export const CoreErrorTypes: Record<CoreErrorCode, string>;
 // @public (undocumented)
 export function createIdentifier<T = AfmObjectIdentifier>(data: string, input?: {
     forceMetric?: boolean;
-    forceType?: "user" | "userGroup" | "dataset" | "date" | "attribute" | "label" | "measure" | "workspaceDataFilter" | "visualizationObject" | "analyticalDashboard" | "dashboardPlugin" | "filterContext";
+    forceType?: "user" | "userGroup" | "dataset" | "date" | "attribute" | "label" | "measure" | "workspaceDataFilter" | "visualizationObject" | "analyticalDashboard" | "dashboardPlugin" | "filterContext" | "parameter";
 }): T | null;
 
 // @internal (undocumented)
@@ -1288,7 +1289,7 @@ export interface CustomTooltip {
 export type CustomTooltipPlacement = "above" | "below" | "replace";
 
 // @internal (undocumented)
-export type DashboardDefinition = Pick<OverrideDashboardDefinition, "layout" | "plugins" | "dateFilterConfig" | "dateFilterConfigs" | "timezoneConfig" | "disableCrossFiltering" | "disableUserFilterSave" | "disableUserFilterReset" | "disableFilterViews" | "enablePersistentFiltersAcrossTabs" | "attributeFilterConfigs" | "measureValueFilterConfigs" | "filterContextRef" | "tabs" | "activeTabLocalIdentifier"> & {
+export type DashboardDefinition = Pick<OverrideDashboardDefinition, "layout" | "plugins" | "dateFilterConfig" | "dateFilterConfigs" | "timezoneConfig" | "disableCrossFiltering" | "disableUserFilterSave" | "disableUserFilterReset" | "disableFilterViews" | "enablePersistentFiltersAcrossTabs" | "attributeFilterConfigs" | "measureValueFilterConfigs" | "filterContextRef" | "tabs" | "activeTabLocalIdentifier" | "parameters"> & {
     version: string;
 };
 
@@ -1306,6 +1307,7 @@ export type DashboardTab = {
     attributeFilterConfigs?: IDashboardDefinition["attributeFilterConfigs"];
     measureValueFilterConfigs?: IDashboardDefinition["measureValueFilterConfigs"];
     filterGroupsConfig?: IDashboardFilterGroupsConfig;
+    parameters?: IDashboardDefinition["parameters"];
 };
 
 // @internal (undocumented)
@@ -1532,7 +1534,10 @@ export type DeclarativeStringParameter = DeclarativeParameter & {
 };
 
 // @internal (undocumented)
-export function declarativeTabsToYaml(tabs: DashboardTab[], filterContexts?: DeclarativeFilterContext[], entities?: FromEntities, errorContext?: IErrorContext): YAMLSeq | undefined;
+export function declarativeTabsToYaml(tabs: DashboardTab[], dependencies?: {
+    filterContexts?: DeclarativeFilterContext[];
+    rootParameters?: IDashboardParameter[];
+}, entities?: FromEntities, errorContext?: IErrorContext): YAMLSeq | undefined;
 
 // @internal (undocumented)
 export function declarativeTotalToYaml(total: ITotal, _errorContext?: IErrorContext): {

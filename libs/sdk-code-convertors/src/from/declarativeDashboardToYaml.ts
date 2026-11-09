@@ -24,6 +24,7 @@ import {
     type IDashboardMatchAttributeFilter,
     type IDashboardMeasureValueFilter,
     type IDashboardMeasureValueFilterConfig,
+    type IDashboardParameter,
     type IDashboardTimezoneConfig,
     type IDashboardWidget,
     type IDrillDownIntersectionIgnoredAttributes,
@@ -163,7 +164,7 @@ export function declarativeDashboardToYaml(
         }
         const tabs = declarativeTabsToYaml(
             content.tabs,
-            filterContexts,
+            { filterContexts, rootParameters: content.parameters },
             entities,
             updateErrorContext(errorContext, { path: ["tabs"] }),
         );
@@ -216,6 +217,13 @@ export function declarativeDashboardToYaml(
         if (groupedFilters.items.length > 0) {
             doc.add(entryWithSpace("filters", groupedFilters));
         }
+        const parameters = declarativeParametersToYaml(
+            tabParameters(tab, content.tabs, content.parameters),
+            updateErrorContext(errorContext, { path: ["tabs", "0", "parameters"] }),
+        );
+        if (parameters) {
+            doc.add(entryWithSpace("parameters", parameters));
+        }
     } else {
         // Dashboard without tabs - add sections and filters
         // Add enable_section_headers
@@ -259,6 +267,13 @@ export function declarativeDashboardToYaml(
         if (filters.items.length > 0) {
             doc.add(entryWithSpace("filters", filters));
         }
+        const parameters = declarativeParametersToYaml(
+            content.parameters,
+            updateErrorContext(errorContext, { path: ["parameters"] }),
+        );
+        if (parameters) {
+            doc.add(entryWithSpace("parameters", parameters));
+        }
     }
 
     // Add KD plugins definitions
@@ -287,10 +302,14 @@ export function declarativeDashboardToYaml(
 /** @internal */
 export function declarativeTabsToYaml(
     tabs: DashboardTab[],
-    filterContexts?: DeclarativeFilterContext[],
+    dependencies: {
+        filterContexts?: DeclarativeFilterContext[];
+        rootParameters?: IDashboardParameter[];
+    } = {},
     entities?: FromEntities,
     errorContext?: IErrorContext,
 ): YAMLSeq | undefined {
+    const { filterContexts, rootParameters } = dependencies;
     // no tabs
     if (!tabs || tabs.length === 0) {
         return;
@@ -332,6 +351,14 @@ export function declarativeTabsToYaml(
             if (groupedFilters.items.length > 0) {
                 yamlTab.add(new Pair("filters", groupedFilters));
             }
+        }
+
+        const parameters = declarativeParametersToYaml(
+            tabParameters(tab, tabs, rootParameters),
+            updateErrorContext(tabErrorContext, { path: ["parameters"] }),
+        );
+        if (parameters) {
+            yamlTab.add(new Pair("parameters", parameters));
         }
 
         // Add tab sections
@@ -1621,6 +1648,48 @@ function getFilterGroupIdBase({ title, localIdentifier }: IDashboardFilterGroup)
         .normalize()
         .replace(/[^a-zA-Z0-9]/g, "_")
         .toLowerCase();
+}
+
+/**
+ * The parameters a tab shows: its own list, or the legacy root list when no tab has one.
+ * Mirrors `pickTabParametersSource` in sdk-ui-dashboard, which this package cannot import.
+ */
+function tabParameters(
+    tab: DashboardTab,
+    allTabs: DashboardTab[],
+    rootParameters: IDashboardParameter[] | undefined,
+): IDashboardParameter[] | undefined {
+    if (tab.parameters !== undefined) {
+        return tab.parameters;
+    }
+    return allTabs.every((other) => other.parameters === undefined) ? rootParameters : undefined;
+}
+
+function declarativeParametersToYaml(
+    parameters: IDashboardParameter[] | undefined,
+    errorContext?: IErrorContext,
+): YAMLSeq | undefined {
+    if (!parameters?.length) {
+        return;
+    }
+
+    const yamlParameters = new YAMLSeq();
+
+    parameters.forEach((parameter, i) => {
+        yamlParameters.add({
+            id: getIdentifier(
+                parameter.ref,
+                true,
+                updateErrorContext(errorContext, { path: [i.toString()] }),
+            ),
+            type: parameter.parameterType,
+            ...(parameter.value === undefined ? {} : { value: parameter.value }),
+            ...(parameter.label === undefined ? {} : { title: parameter.label }),
+            ...(parameter.mode && parameter.mode !== "active" ? { mode: parameter.mode } : {}),
+        });
+    });
+
+    return yamlParameters;
 }
 
 /** @internal */

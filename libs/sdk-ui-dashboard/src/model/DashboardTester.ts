@@ -12,6 +12,7 @@ import {
 import { type IBackendCapabilities } from "@gooddata/sdk-backend-spi";
 import { type Identifier, type ObjRef, idRef } from "@gooddata/sdk-model";
 
+import { newCustomUrlDrillParametersWorker } from "./commandHandlers/parameters/customUrlDrillParametersWorker.js";
 import { newParameterDependenciesWorker } from "./commandHandlers/parameters/parameterDependenciesWorker.js";
 import { newRenderingWorker } from "./commandHandlers/render/renderingWorker.js";
 import { type IRenderingWorkerConfiguration } from "./commandHandlers/render/types.js";
@@ -48,6 +49,7 @@ export class DashboardTester extends HeadlessDashboard {
             backgroundWorkers: [
                 newRenderingWorker(config?.renderingWorkerConfig || {}),
                 newParameterDependenciesWorker(),
+                newCustomUrlDrillParametersWorker(),
             ],
             customizationFns: config?.customizationFns,
         };

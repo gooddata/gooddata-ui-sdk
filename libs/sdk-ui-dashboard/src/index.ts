@@ -1801,6 +1801,8 @@ export {
     selectIsDashboardDirty,
     selectIsDashboardPrivate,
     selectDashboardWorkingDefinition,
+    selectDashboardAiDefinition,
+    selectDashboardAiLiveFilters,
     selectDisableDashboardCrossFiltering,
     selectDashboardPersistentFiltersAcrossTabs,
     selectDisableDashboardUserFilterReset,

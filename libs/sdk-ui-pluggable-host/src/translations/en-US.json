@@ -174,5 +174,357 @@
     "languageDialog.success": {
         "text": "Great! We changed the language!",
         "crowdinContext": "Success toast after the user changes their own interface language and the page reloads in it. Shown in the new language."
+    },
+    "featureFlagOverrides.badge": {
+        "text": "{count, plural, one {# flag override} other {# flag overrides}}",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Label of the small button in the page corner that opens the panel. It shows only when at least one override applies. # is the number of flag overrides that apply on the current page."
+    },
+    "featureFlagOverrides.menuItem": {
+        "text": "Feature flag overrides",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Item in the user account menu, next to Log out, that opens the panel."
+    },
+    "featureFlagOverrides.title": {
+        "text": "Feature flag overrides",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Headline of the panel."
+    },
+    "featureFlagOverrides.disclaimer": {
+        "text": "Overrides affect only the frontend in this browser. The backend keeps the server values, so a mismatch can cause errors.",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Warning always shown at the top of the panel. Overrides change only what the user interface sees; the server keeps its own flag values, so some features can fail."
+    },
+    "featureFlagOverrides.search": {
+        "text": "Search flags",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Placeholder and accessible name of the search field that filters flags by name."
+    },
+    "featureFlagOverrides.setInCode": {
+        "text": "Set in code",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Badge next to a flag whose value a developer forced in the source code. That value wins over the overrides in the panel."
+    },
+    "featureFlagOverrides.value.on": {
+        "text": "On",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. A yes/no flag value that is on, e.g. in the Server column."
+    },
+    "featureFlagOverrides.value.label": {
+        "text": "Value of {flag}",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Accessible name of the field that edits a flag's value. {flag} is the technical flag name, e.g. enableRadarChart."
+    },
+    "featureFlagOverrides.value.invalidJson": {
+        "text": "Enter a JSON object.",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Error under the field for a flag that takes a JSON object, when the text is not one."
+    },
+    "featureFlagOverrides.scope.label": {
+        "text": "Where {flag} is overridden",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Accessible name of the list that picks where an override applies. {flag} is the technical flag name."
+    },
+    "featureFlagOverrides.scope.group.label": {
+        "text": "{flag} applies to",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Accessible name of the joined pair of buttons that set where an override applies and whether it applies only to the signed-in user. {flag} is the technical flag name."
+    },
+    "featureFlagOverrides.scope.everywhere": {
+        "text": "Everywhere",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Where an override applies: every organization and workspace. Used inside the accessible name of the button that opens the list of places, as {scope} in \"{flag} applies to: {scope}\"."
+    },
+    "featureFlagOverrides.scope.organization": {
+        "text": "This organization",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Where an override applies: only the current organization. Used inside the accessible name of the button that opens the list of places, as {scope} in \"{flag} applies to: {scope}\"."
+    },
+    "featureFlagOverrides.scope.workspace": {
+        "text": "This workspace",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Where an override applies: only the current workspace. Used inside the accessible name of the button that opens the list of places, as {scope} in \"{flag} applies to: {scope}\"."
+    },
+    "featureFlagOverrides.scope.short.everywhere": {
+        "text": "Everywhere",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Short label on the button that shows where an override applies, and an option in the list that picks it: in every organization and workspace."
+    },
+    "featureFlagOverrides.scope.short.organization": {
+        "text": "Organization",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Short label on the button that shows where an override applies, and an option in the list that picks it: only in the current organization."
+    },
+    "featureFlagOverrides.scope.short.workspace": {
+        "text": "Workspace",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Short label on the button that shows where an override applies, and an option in the list that picks it: only in the current workspace."
+    },
+    "featureFlagOverrides.scope.option": {
+        "text": "<label>{place}</label> <muted>({name})</muted>",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. An option in the list that picks where an override applies, e.g. Organization (Acme). {place} is Organization or Workspace, {name} is the name of the current organization or workspace, or its technical ID when the name is not known. The part in <muted> is shown smaller and gray. Keep the <label> and <muted> tags, each around its part; you may change the order and the parentheses."
+    },
+    "featureFlagOverrides.scope.otherOverrideWins": {
+        "text": "Another override would apply instead.",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Explains why an option in the list that picks where an override applies, or the button that limits it to the signed-in user, is disabled: after the change, another override of the same flag would apply instead of this one."
+    },
+    "featureFlagOverrides.scope.signedInAs": {
+        "text": "Only when signed in as {user}",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Used in two places: the accessible name and tooltip of the person icon button next to the menu that picks where an override applies, and the tooltip of the person icon in the Applies to column of saved overrides for other pages. The override applies only while this user is signed in, in this browser. {user} is the user's name, e-mail or login, or a technical user ID when the name is not known."
+    },
+    "featureFlagOverrides.reset.label": {
+        "text": "Remove override of {flag}",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Accessible name of the reset button. {flag} is the technical flag name. Must start with the same words as the button's tooltip."
+    },
+    "featureFlagOverrides.reset.savedRules.label": {
+        "text": "Remove saved overrides of {flag}",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Accessible name of the button that removes all saved overrides of a flag whose value a developer forced in the source code. {flag} is the technical flag name. Must start with the same words as the button's tooltip, Remove saved overrides."
+    },
+    "featureFlagOverrides.reset.tooltip": {
+        "text": "Remove override",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Tooltip of the undo icon button that removes the override of one flag."
+    },
+    "featureFlagOverrides.reset.savedRules.tooltip": {
+        "text": "Remove saved overrides",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Tooltip of the undo icon button on a flag set in the code, which removes the overrides saved for that flag. They have no effect while the code sets the flag."
+    },
+    "featureFlagOverrides.discard.label": {
+        "text": "Discard invalid value of {flag}",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Accessible name of the reset button on a flag with no override whose value field holds text that does not fit the flag. The button clears that text. {flag} is the technical flag name. Must start with the same words as the button's tooltip."
+    },
+    "featureFlagOverrides.discard.tooltip": {
+        "text": "Discard invalid value",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Tooltip of the undo icon button that clears a value field holding text that does not fit the flag, on a flag with no override."
+    },
+    "featureFlagOverrides.stale.invalidRule": {
+        "text": "Not a valid override",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Why a stored override is stale: it is missing required parts."
+    },
+    "featureFlagOverrides.stale.unknownFlag": {
+        "text": "Unknown flag",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Why a stored override is stale: the flag no longer exists."
+    },
+    "featureFlagOverrides.stale.gateFlag": {
+        "text": "This flag can't be overridden",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Why a stored override is stale: it targets the flag that turns this panel on."
+    },
+    "featureFlagOverrides.stale.invalidValue": {
+        "text": "Wrong value type for the flag",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Why a stored override is stale: the value does not fit the flag, e.g. text for a yes/no flag."
+    },
+    "featureFlagOverrides.unreadable": {
+        "text": "The stored overrides could not be read. Applying replaces them.",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Warning when the stored data is broken or from a newer version."
+    },
+    "featureFlagOverrides.clearAll": {
+        "text": "Clear all",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Button that removes all overrides, including those for other organizations and workspaces. Nothing is saved until the user applies."
+    },
+    "featureFlagOverrides.export": {
+        "text": "Export JSON",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Button that downloads all overrides as a JSON file."
+    },
+    "featureFlagOverrides.import": {
+        "text": "Import JSON",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Button that loads overrides from a JSON file and replaces the current ones."
+    },
+    "featureFlagOverrides.apply": {
+        "text": "Apply & reload",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Button that saves the overrides and reloads the page so they take effect."
+    },
+    "featureFlagOverrides.error.write": {
+        "text": "The overrides could not be saved. The browser may block its storage.",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Error when saving to the browser storage fails."
+    },
+    "featureFlagOverrides.error.invalidValues": {
+        "text": "Fix or reset the invalid values to apply.",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Error when a value field is empty or holds text that does not fit the flag. The apply button stays disabled until the user fixes the value or resets the override."
+    },
+    "featureFlagOverrides.error.importUnreadable": {
+        "text": "The file is not a valid overrides export.",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Error when an imported file is not JSON or not in the expected format."
+    },
+    "featureFlagOverrides.column.flag": {
+        "text": "Flag",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Column header above the flag names."
+    },
+    "featureFlagOverrides.column.server": {
+        "text": "Server",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Column header above the value the server sends for each flag."
+    },
+    "featureFlagOverrides.column.value": {
+        "text": "Value",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Column header above the editors that set each flag's value."
+    },
+    "featureFlagOverrides.column.appliesTo": {
+        "text": "Applies to",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Column header above where each override applies (everywhere, this organization or this workspace)."
+    },
+    "featureFlagOverrides.group.overridden": {
+        "text": "Overridden · {count}",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Heading of the group of flags that have an override on the current page. {count} is the number of flags in the group."
+    },
+    "featureFlagOverrides.group.other": {
+        "text": "Other flags · {count}",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Heading of the group of flags without an override. {count} is the number of flags in the group."
+    },
+    "featureFlagOverrides.view.label": {
+        "text": "Show",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Accessible name of the two buttons that switch between all flags and only the overridden ones."
+    },
+    "featureFlagOverrides.view.all": {
+        "text": "All flags",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Button that lists all flags. A count of all flags is shown next to it."
+    },
+    "featureFlagOverrides.view.overridden": {
+        "text": "Overridden",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Button that lists only the flags with an override. The number of overridden flags is shown next to it."
+    },
+    "featureFlagOverrides.value.off": {
+        "text": "Off",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. A yes/no flag value that is off, e.g. in the Server column."
+    },
+    "featureFlagOverrides.value.editJson": {
+        "text": "Edit JSON",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Button that opens the editors for a flag whose value is a JSON object."
+    },
+    "featureFlagOverrides.value.editJson.label": {
+        "text": "Edit JSON of {flag}",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Accessible name of the Edit JSON button. {flag} is the technical flag name. Must start with the same words as Edit JSON."
+    },
+    "featureFlagOverrides.value.invalidNumber": {
+        "text": "Enter a number",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Error under the field of a numeric flag when the text is not a number."
+    },
+    "featureFlagOverrides.value.notApplied": {
+        "text": "Not applied yet",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Shown under a flag's value after a change that takes effect only after Apply & reload."
+    },
+    "featureFlagOverrides.value.savedOverrideInCode": {
+        "text": "Saved overrides for this flag take effect once the code value is removed.",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Shown under a flag whose value a developer forced in the source code, when overrides for it are also saved (for this or another organization or workspace). They have no effect until that code value is removed."
+    },
+    "featureFlagOverrides.value.pageUses": {
+        "text": "Page uses {value}",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Shown under an override that the page does not use, because another setting wins. {value} is the value the page uses, e.g. On, Off or a number."
+    },
+    "featureFlagOverrides.value.pageUsesDifferent": {
+        "text": "Page uses a different value",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Shown under an override of a flag that holds a JSON object, when the page does not use the override because another setting wins."
+    },
+    "featureFlagOverrides.value.summary.keys": {
+        "text": "{count, plural, one {# key} other {# keys}}",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Short summary of a JSON object value: how many keys it has."
+    },
+    "featureFlagOverrides.value.summary.items": {
+        "text": "{count, plural, one {# item} other {# items}}",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Short summary of a JSON value that holds a list: how many items the list has."
+    },
+    "featureFlagOverrides.serverValueCaption": {
+        "text": "Server value",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Caption above the read-only editor that shows the server's JSON value. Also read by screen readers before the value in the Server column."
+    },
+    "featureFlagOverrides.json.overrideCaption": {
+        "text": "Override",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Caption above the editor of the JSON value that overrides the server's one."
+    },
+    "featureFlagOverrides.json.serverLabel": {
+        "text": "Server value of {flag}",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Accessible name of the read-only JSON editor. {flag} is the technical flag name."
+    },
+    "featureFlagOverrides.json.overrideLabel": {
+        "text": "Override of {flag}",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Accessible name of the JSON editor of the override. {flag} is the technical flag name."
+    },
+    "featureFlagOverrides.json.syntaxError": {
+        "text": "The JSON is not valid.",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Shown by the JSON editor when the text is not valid JSON."
+    },
+    "featureFlagOverrides.json.autoFormat": {
+        "text": "Auto-format",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Button of the JSON editor that tidies the indentation of the text."
+    },
+    "featureFlagOverrides.fixedInCode": {
+        "text": "Fixed in code",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Shown instead of where an override applies, for a flag whose value a developer forced in the source code."
+    },
+    "featureFlagOverrides.setInCode.tooltip": {
+        "text": "A developer set this flag in the code, so overrides have no effect.",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Tooltip of the Set in code badge."
+    },
+    "featureFlagOverrides.scope.button.label": {
+        "text": "{flag} applies to: {scope}",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Accessible name of the button that opens the choice of where an override applies. {flag} is the technical flag name; {scope} is the current choice, e.g. This workspace."
+    },
+    "featureFlagOverrides.empty.search": {
+        "text": "No flag matches “{search}”.",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Shown instead of the list when the search finds nothing. {search} is the text the user typed."
+    },
+    "featureFlagOverrides.empty.clearSearch": {
+        "text": "Clear search",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Link that empties the search field."
+    },
+    "featureFlagOverrides.empty.overridden": {
+        "text": "No overrides apply on this page.",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Shown when only overridden flags are listed and there are none."
+    },
+    "featureFlagOverrides.empty.showAll": {
+        "text": "Show all flags",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Link that switches the list to all flags."
+    },
+    "featureFlagOverrides.pending": {
+        "text": "{count, plural, one {# change not applied} other {# changes not applied}}",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Shown next to the Apply & reload button. # is the number of overrides changed in the panel since it opened."
+    },
+    "featureFlagOverrides.stale.delete.label": {
+        "text": "Delete stale override of {flag}",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Accessible name of the delete button of a stale override. {flag} is the technical flag name stored in it. Must start with the same words as the button's tooltip."
+    },
+    "featureFlagOverrides.stale.delete.tooltip": {
+        "text": "Delete",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Tooltip of the trash icon button that deletes one override from the list of stale overrides or of overrides for other pages."
+    },
+    "featureFlagOverrides.stale.title": {
+        "text": "Not valid · {count}",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Heading of the group of saved overrides that cannot be used, e.g. because the flag no longer exists or the value has the wrong type. {count} is how many there are."
+    },
+    "featureFlagOverrides.stale.unnamed": {
+        "text": "Unreadable rule",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Shown instead of the flag name for a saved override that cannot be used and has no readable flag name."
+    },
+    "featureFlagOverrides.otherPages.heading": {
+        "text": "On other pages · {count}",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Heading of the list of overrides that do not apply on the current page because they are for another organization, workspace or user. {count} is how many there are."
+    },
+    "featureFlagOverrides.otherPages.organization.id": {
+        "text": "Organization {id}",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Part of the line under a flag name in the list of overrides for other pages that says where the override applies, when the organization's name is not known. {id} is the organization's technical ID."
+    },
+    "featureFlagOverrides.otherPages.organization.named": {
+        "text": "Organization ({name})",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Part of the line under a flag name in the list of overrides for other pages that says where the override applies, e.g. Organization (Acme). {name} is the name of the current organization."
+    },
+    "featureFlagOverrides.otherPages.organization.namedWithId": {
+        "text": "Organization {name} ({id})",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Part of the tooltip of the line under a flag name in the list of overrides for other pages, which lists where the override applies with names and technical IDs, e.g. Organization Acme (acme-prod). {name} is the organization's name, {id} its technical ID."
+    },
+    "featureFlagOverrides.otherPages.workspace.id": {
+        "text": "Workspace {id}",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Part of the line under a flag name in the list of overrides for other pages that says where the override applies, when the workspace's name is not known. {id} is the workspace's technical ID."
+    },
+    "featureFlagOverrides.otherPages.workspace.named": {
+        "text": "Workspace ({name})",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Part of the line under a flag name in the list of overrides for other pages that says where the override applies, e.g. Workspace (Sales demo). {name} is the workspace's name."
+    },
+    "featureFlagOverrides.otherPages.workspace.namedWithId": {
+        "text": "Workspace {name} ({id})",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Part of the tooltip of the line under a flag name in the list of overrides for other pages, which lists where the override applies with names and technical IDs, e.g. Workspace Sales demo (sales-ws). {name} is the workspace's name, {id} its technical ID."
+    },
+    "featureFlagOverrides.otherPages.user.id": {
+        "text": "User {id}",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Part of the line under a flag name in the list of overrides for other pages that says where the override applies, when the user's name is not known. {id} is the user's technical ID."
+    },
+    "featureFlagOverrides.otherPages.user.named": {
+        "text": "User ({name})",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Part of the line under a flag name in the list of overrides for other pages that says where the override applies, e.g. User (Jane Doe). {name} is the name of the signed-in user."
+    },
+    "featureFlagOverrides.otherPages.user.namedWithId": {
+        "text": "User {name} ({id})",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Part of the tooltip of the line under a flag name in the list of overrides for other pages, which lists where the override applies with names and technical IDs, e.g. User Jane Doe (jane). {name} is the user's name, {id} its technical ID."
+    },
+    "featureFlagOverrides.otherPages.id": {
+        "text": "ID {id}",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Read only by screen readers after the name of an organization, workspace or user in the list of overrides for other pages. {id} is its technical ID."
+    },
+    "featureFlagOverrides.otherPages.delete.label": {
+        "text": "Delete override of {flag} for {conditions}",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Accessible name of the trash icon button that deletes one override in the list of overrides for other pages. {flag} is the technical flag name; {conditions} says where the override applies, e.g. Workspace (Sales demo) · User (Jane Doe)."
+    },
+    "featureFlagOverrides.stale.delete.labelNoFlag": {
+        "text": "Delete stale override",
+        "crowdinContext": "Shown in the feature flag override tool, a developer and QA panel that changes feature flags in the browser. Accessible name of the delete button of a stale override that has no flag name."
     }
 }

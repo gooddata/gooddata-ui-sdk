@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-maql-language-server",
-    "version": "11.68.0-alpha.5",
+    "version": "11.68.0-alpha.6",
     "license": "MIT",
     "author": {
         "name": "Stellar",
@@ -13,7 +13,8 @@
     },
     "files": [
         "esm",
-        "README.md"
+        "README.md",
+        "NOTICE"
     ],
     "type": "module",
     "browser": "esm/index.js",

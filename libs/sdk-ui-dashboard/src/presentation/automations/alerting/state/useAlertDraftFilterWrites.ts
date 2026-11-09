@@ -116,11 +116,14 @@ export function useAlertDraftFilterWrites({
                     supportedAttributes,
                     updatedAutomationWithFilters as IAutomationMetadataObject,
                     selectedAttribute,
-                    {
-                        name: selectedValue ?? "",
-                        title: "",
-                        value: "",
-                    },
+                    // No value means All; "" would filter to an empty value.
+                    selectedValue === undefined
+                        ? undefined
+                        : {
+                              name: selectedValue ?? "",
+                              title: "",
+                              value: "",
+                          },
                 );
 
                 return selectedMeasure

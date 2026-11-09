@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { type IInsight, type ITotal, idRef, uriRef } from "@gooddata/sdk-model";
 import { ErrorCodes } from "@gooddata/sdk-ui";
@@ -907,7 +907,7 @@ describe("Save selectors", () => {
                     },
                 ],
             };
-            const openedWith = (content: IReportContent, mode: "exclude" | "only") => {
+            const openedWith = (content: IReportContent, mode: "include" | "exclude" | "only") => {
                 const withDateDatasets = withData(validReportWithoutChanges, {
                     dateDatasets: {
                         ...validReportWithoutChanges.data.dateDatasets,
@@ -946,6 +946,29 @@ describe("Save selectors", () => {
 
             it("still sees a changed mode", () => {
                 expect(isSavedReportCurrentReport(openedWith(legacyContent, "only"))).toBe(false);
+            });
+
+            it("treats All time stored with the include default and opened without edits as saved", () => {
+                // AD writes All time without a mode bound-less, which its convertor warns about
+                const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+                const content: IReportContent = {
+                    ...legacyContent,
+                    filters: [
+                        {
+                            relativeDateFilter: {
+                                dataSet,
+                                granularity: "ALL_TIME_GRANULARITY",
+                                from: 0,
+                                to: 0,
+                                emptyValueHandling: "include",
+                            },
+                        },
+                    ],
+                };
+
+                expect(isSavedReportCurrentReport(openedWith(content, "include"))).toBe(true);
+                expect(isSavedReportCurrentReport(openedWith(content, "exclude"))).toBe(false);
+                warn.mockRestore();
             });
         });
 

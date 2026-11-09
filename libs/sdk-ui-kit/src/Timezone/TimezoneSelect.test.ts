@@ -45,4 +45,13 @@ describe("TimezoneSelect listbox items", () => {
     it("should resolve the selected id of a regular timezone to its IANA id", () => {
         expect(getSelectedItemId("Europe/Prague", specialItems)).toBe("Europe/Prague");
     });
+
+    it("should resolve the selected id of a legacy alias to its canonical list item", () => {
+        expect(getSelectedItemId("Europe/Kiev", specialItems)).toBe("Europe/Kyiv");
+        expect(getSelectedItemId("Asia/Chongqing", specialItems)).toBe("Asia/Shanghai");
+    });
+
+    it("should keep an id outside the curated list as is", () => {
+        expect(getSelectedItemId("Australia/Eucla", specialItems)).toBe("Australia/Eucla");
+    });
 });

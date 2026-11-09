@@ -2726,6 +2726,8 @@ export interface IOrganizationSettingsService {
     // @alpha
     getDataLocale(): Promise<string | undefined>;
     // @alpha
+    getEmbeddingOrigins(): Promise<string[] | undefined>;
+    // @alpha
     getMetadataLocale(): Promise<string | undefined>;
     getSettings(): Promise<ISettings>;
     setActiveCalendars(calendars: IActiveCalendars): Promise<void>;
@@ -2741,6 +2743,8 @@ export interface IOrganizationSettingsService {
     setDateFormat(dateFormat: string): Promise<void>;
     // @beta
     setDefaultExportTemplate(value: IDefaultExportTemplate): Promise<void>;
+    // @alpha
+    setEmbeddingOrigins(origins: string[]): Promise<void>;
     // @alpha
     setEnableAiOnData(enabled: boolean): Promise<void>;
     // @alpha

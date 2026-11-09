@@ -1229,16 +1229,6 @@ export interface IFeatureFlags {
     enablePublisherV2?: boolean;
 
     /**
-     * Enable the Reports features planned after its general availability.
-     *
-     * @remarks
-     * Has an effect only with {@link IFeatureFlags.enablePublisherV2} enabled.
-     *
-     * Disabled by default.
-     */
-    enableReportsPostGA?: boolean;
-
-    /**
      * Enable AI takeaways in the Business Briefing reports application: generating them and their instructions.
      *
      * @remarks
@@ -1302,4 +1292,13 @@ export interface IFeatureFlags {
      * Takes effect only together with `enableLocalizationOverview`. Disabled by default.
      */
     enableLocalizationValidations?: boolean;
+
+    /**
+     * Enable the local feature flag override tool: a badge and a panel in the shell that store
+     * flag overrides in the browser's localStorage.
+     *
+     * @remarks
+     * Meant for developers and QA.
+     */
+    enableFeatureFlagOverrides?: boolean;
 }

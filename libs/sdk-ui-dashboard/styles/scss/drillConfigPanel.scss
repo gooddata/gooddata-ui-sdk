@@ -634,6 +634,12 @@ $gd-gd-drill-to-url-body-width: 230px;
         margin: 5px 0;
         padding: 0 12px;
     }
+
+    .gd-drill-to-url-section-empty {
+        margin: 5px 0;
+        padding: 0 12px;
+        color: kit-variables.$gd-color-state-blank;
+    }
 }
 
 .gd-dialog.gd-drill-custom-url-editor {

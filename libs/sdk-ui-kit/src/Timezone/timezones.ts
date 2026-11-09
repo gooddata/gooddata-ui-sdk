@@ -135,7 +135,6 @@ const timezonesRaw: [
     ["Asia/Jakarta", "Jakarta", "GMT+07:00", 420, 420],
     ["Asia/Krasnoyarsk", "Krasnoyarsk", "GMT+07:00", 420, 480],
     ["Asia/Shanghai", "Beijing", "GMT+08:00", 480, 480],
-    ["Asia/Chongqing", "Chongqing", "GMT+08:00", 480, 480],
     ["Asia/Hong_Kong", "Hong Kong", "GMT+08:00", 480, 480],
     ["Asia/Irkutsk", "Irkutsk", "GMT+08:00", 480, 540],
     ["Asia/Kuala_Lumpur", "Kuala Lumpur", "GMT+08:00", 480, 480],
@@ -176,12 +175,14 @@ const timezones: ITimezoneItem[] = timezonesRaw.map(([id, name, offsetLabel, jan
 
 const TIMEZONE_DEFAULT = timezones.find((tz) => tz.id === "Etc/UTC")!;
 
-// V8 (Chrome, Node) reports the runtime timezone by its legacy CLDR name, e.g. "Europe/Kiev"
-// even when the system is set to "Europe/Kyiv"; map those to the canonical IDs used above
+// Non-canonical IANA IDs (tzdata backward links not listed in zone.tab) mapped to the canonical
+// IDs used above. Some were in this list before, and V8 (Chrome, Node) reports the runtime
+// timezone by its legacy CLDR name, e.g. "Europe/Kiev" even when the system uses "Europe/Kyiv".
 const LEGACY_TIMEZONE_ALIASES = new Map<string, string>([
     ["America/Godthab", "America/Nuuk"],
     ["Europe/Kiev", "Europe/Kyiv"],
     ["Asia/Rangoon", "Asia/Yangon"],
+    ["Asia/Chongqing", "Asia/Shanghai"],
 ]);
 
 /**
@@ -208,10 +209,15 @@ export function getTimezones(): ITimezoneItem[] {
  * Returns the timezone from the curated list matching the provided IANA timezone ID,
  * or undefined when the ID is not in the curated list.
  *
+ * @remarks
+ * Legacy aliases of curated timezones (e.g. "Europe/Kiev" stored before the rename) resolve
+ * to the canonical item, so the returned `id` may differ from the provided one.
+ *
  * @internal
  */
 export function getTimezoneById(id: string | undefined): ITimezoneItem | undefined {
-    return timezones.find((tz) => tz.id === id);
+    const canonicalId = id === undefined ? undefined : (LEGACY_TIMEZONE_ALIASES.get(id) ?? id);
+    return timezones.find((tz) => tz.id === canonicalId);
 }
 
 /**
@@ -225,7 +231,7 @@ export function getUserTimezone(): ITimezoneItem {
     // resolve to the viewer's actual zone; fall back to offset matching for runtime ids
     // that are not part of the curated list
     const runtimeTimezoneId = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const exactMatch = getTimezoneById(LEGACY_TIMEZONE_ALIASES.get(runtimeTimezoneId) ?? runtimeTimezoneId);
+    const exactMatch = getTimezoneById(runtimeTimezoneId);
     if (exactMatch) {
         return exactMatch;
     }

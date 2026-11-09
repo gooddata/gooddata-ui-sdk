@@ -1,5 +1,28 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`drill url placeholders > should build and extract parameter placeholders 1`] = `
+[
+  {
+    "identifier": "p1",
+    "placeholder": "{parameter(p1)}",
+    "ref": {
+      "identifier": "p1",
+      "type": "parameter",
+    },
+    "toBeEncoded": false,
+  },
+  {
+    "identifier": "p2",
+    "placeholder": "{parameter(p2)}",
+    "ref": {
+      "identifier": "p2",
+      "type": "parameter",
+    },
+    "toBeEncoded": true,
+  },
+]
+`;
+
 exports[`drill url placeholders > should extracted placeholders 1`] = `
 [
   {

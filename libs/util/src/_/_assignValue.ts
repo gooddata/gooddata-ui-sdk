@@ -31,6 +31,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+import { _baseAssignValue } from "./_baseAssignValue.js";
 import { _eq } from "./eq.js";
 
 /**
@@ -48,9 +49,5 @@ export function _assignValue(object: Record<PropertyKey, unknown>, key: Property
         return;
     }
 
-    if (key === "__proto__") {
-        Object.defineProperty(object, key, { configurable: true, enumerable: true, value, writable: true });
-    } else {
-        object[key] = value;
-    }
+    _baseAssignValue(object, key, value);
 }

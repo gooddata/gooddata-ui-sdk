@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 59eac68b67b20d27fd2b953ff0e64a2801a41f8fb305e63739c6dc1f586f0478
+# schema-hash: 31c82b64cd50bc5c4dda79fd3411c77bdbc2f4f60e84879cf91073757073d77f
 
 from __future__ import annotations
 
@@ -86,6 +86,7 @@ __all__ = [
     "DashboardFilters",
     "DashboardFiltersNoGroups",
     "DashboardMetricValueFilter",
+    "DashboardParameters",
     "DashboardRelativeDateFilter",
     "DashboardStateMultiselect",
     "DashboardStateMultiselect1",
@@ -194,6 +195,7 @@ __all__ = [
     "MvfCondition2",
     "MvfCondition3",
     "Name",
+    "NumberDashboardParameter",
     "NumberParameterDefinition",
     "OpenUrl",
     "Operator",
@@ -350,6 +352,7 @@ __all__ = [
     "Source",
     "SourceColumn",
     "State",
+    "StringDashboardParameter",
     "StringParameterDefinition",
     "Style",
     "SuppressedTargets",
@@ -378,8 +381,8 @@ __all__ = [
     "Type20",
     "Type21",
     "Type22",
-    "Type25",
-    "Type26",
+    "Type23",
+    "Type24",
     "Type27",
     "Type28",
     "Type29",
@@ -413,8 +416,8 @@ __all__ = [
     "Type55",
     "Type56",
     "Type57",
-    "Type60",
-    "Type61",
+    "Type58",
+    "Type59",
     "Type62",
     "Type63",
     "Type64",
@@ -449,6 +452,8 @@ __all__ = [
     "Type90",
     "Type91",
     "Type92",
+    "Type93",
+    "Type94",
     "Using",
     "Value",
     "Value1",
@@ -1253,6 +1258,14 @@ class Version(Enum):
     field_3 = '3'
 
 
+class Type22(Enum):
+    STRING = 'STRING'
+
+
+class Type23(Enum):
+    NUMBER = 'NUMBER'
+
+
 class TimezoneId(
     RootModel[
         Literal['$browserDetected']
@@ -1380,7 +1393,7 @@ class InteractionFilters(BaseModel):
     include: InteractionFiltersInclude | None = None
 
 
-class Type22(Enum):
+class Type24(Enum):
     dataset = 'dataset'
     dataset_1 = 'dataset'
 
@@ -1397,7 +1410,7 @@ class DatasetType2(Enum):
     auxiliary = 'auxiliary'
 
 
-class Type25(Enum):
+class Type27(Enum):
     date = 'date'
 
 
@@ -1433,7 +1446,7 @@ class Granularity1(Enum):
     FISCAL_MONTH = 'FISCAL_MONTH'
 
 
-class Type26(Enum):
+class Type28(Enum):
     attribute = 'attribute'
 
 
@@ -1442,11 +1455,11 @@ class SortDirection(Enum):
     DESC = 'DESC'
 
 
-class Type27(Enum):
+class Type29(Enum):
     fact = 'fact'
 
 
-class Type28(Enum):
+class Type30(Enum):
     aggregated_fact = 'aggregated_fact'
 
 
@@ -1496,7 +1509,7 @@ class GeoCollectionKind(Enum):
     CUSTOM = 'CUSTOM'
 
 
-class Type29(Enum):
+class Type31(Enum):
     document = 'document'
 
 
@@ -1504,11 +1517,11 @@ class Version1(Enum):
     field_2 = '2'
 
 
-class Type30(Enum):
+class Type32(Enum):
     document_template = 'document_template'
 
 
-class Type31(Enum):
+class Type33(Enum):
     metric = 'metric'
 
 
@@ -1599,16 +1612,16 @@ class PublisherVisualizationDisplayV2(BaseModel):
     data_points: DataPoints | None = Field(None, title='Publisher Auto Visibility V2')
 
 
-class Type32(Enum):
+class Type34(Enum):
     row = 'row'
     column = 'column'
 
 
-class Type33(Enum):
+class Type35(Enum):
     title = 'title'
 
 
-class Type34(Enum):
+class Type36(Enum):
     heading = 'heading'
 
 
@@ -1621,35 +1634,35 @@ class Level(IntEnum):
     integer_6 = 6
 
 
-class Type35(Enum):
+class Type37(Enum):
     text = 'text'
 
 
-class Type36(Enum):
+class Type38(Enum):
     image = 'image'
 
 
-class Type37(Enum):
+class Type39(Enum):
     visualization = 'visualization'
 
 
-class Type38(Enum):
+class Type40(Enum):
     takeaway = 'takeaway'
 
 
-class Type39(Enum):
+class Type41(Enum):
     page_template = 'page_template'
 
 
-class Type40(Enum):
+class Type42(Enum):
     parameter = 'parameter'
 
 
-class Type41(Enum):
+class Type43(Enum):
     STRING = 'STRING'
 
 
-class Type42(Enum):
+class Type44(Enum):
     NUMBER = 'NUMBER'
 
 
@@ -1669,7 +1682,7 @@ class NumberParameterDefinition(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type42
+    type: Type44
     defaultValue: float = Field(
         ..., description='The value used whenever the parameter is not overridden.'
     )
@@ -1693,7 +1706,7 @@ class ParameterAllowedValue(BaseModel):
     )
 
 
-class Type43(Enum):
+class Type45(Enum):
     plugin = 'plugin'
 
 
@@ -1716,15 +1729,15 @@ class Operator(Enum):
     CHANGE = 'CHANGE'
 
 
-class Type44(Enum):
+class Type46(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
 
 
-class Type45(Enum):
+class Type47(Enum):
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
 
 
-class Type46(Enum):
+class Type48(Enum):
     attribute_sort = 'attribute_sort'
 
 
@@ -1737,7 +1750,7 @@ class Aggregation1(Enum):
     SUM = 'SUM'
 
 
-class Type47(Enum):
+class Type49(Enum):
     metric_sort = 'metric_sort'
 
 
@@ -1750,15 +1763,15 @@ class Function(Enum):
     NAT = 'NAT'
 
 
-class Type48(Enum):
+class Type50(Enum):
     report = 'report'
 
 
-class Type49(Enum):
+class Type51(Enum):
     report_page_layout = 'report_page_layout'
 
 
-class Type50(Enum):
+class Type52(Enum):
     report_template = 'report_template'
 
 
@@ -1792,7 +1805,7 @@ class BucketGeoAreaItem(RootModel[str]):
     root: str = Field(..., title='Geo Area Bucket')
 
 
-class Type51(Enum):
+class Type53(Enum):
     SUM = 'SUM'
     AVG = 'AVG'
     MAX = 'MAX'
@@ -1805,16 +1818,16 @@ class BucketLocationItem(RootModel[str]):
     root: str = Field(..., title='Location Bucket')
 
 
-class Type52(Enum):
+class Type54(Enum):
     pushpin = 'pushpin'
     area = 'area'
 
 
-class Type53(Enum):
+class Type55(Enum):
     attribute_hierarchy = 'attribute_hierarchy'
 
 
-class Type54(Enum):
+class Type56(Enum):
     computed_attribute = 'computed_attribute'
 
 
@@ -1835,7 +1848,7 @@ class DataLabelsStyle(Enum):
     backplate = 'backplate'
 
 
-class Type55(Enum):
+class Type57(Enum):
     solid = 'solid'
     pattern = 'pattern'
     outline = 'outline'
@@ -1869,7 +1882,7 @@ class PatternNameMapping(Enum):
 
 
 class ChartFill(BaseModel):
-    type: Type55 | None = None
+    type: Type57 | None = None
     pattern_name_mapping: dict[str, PatternNameMapping] | None = None
 
 
@@ -2208,7 +2221,7 @@ class ConditionalFormatting(BaseModel):
     )
 
 
-class Type56(Enum):
+class Type58(Enum):
     dashboard = 'dashboard'
 
 
@@ -2217,7 +2230,7 @@ class Version4(Enum):
     field_3 = '3'
 
 
-class Type57(Enum):
+class Type59(Enum):
     dataset = 'dataset'
     dataset_1 = 'dataset'
 
@@ -2234,7 +2247,7 @@ class DatasetType5(Enum):
     auxiliary = 'auxiliary'
 
 
-class Type60(Enum):
+class Type62(Enum):
     date = 'date'
 
 
@@ -2282,15 +2295,15 @@ class Locale(RootModel[constr(pattern=r'^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{1,8})*$')]):
     )
 
 
-class Type61(Enum):
+class Type63(Enum):
     metric = 'metric'
 
 
-class Type62(Enum):
+class Type64(Enum):
     parameter = 'parameter'
 
 
-class Type63(Enum):
+class Type65(Enum):
     plugin = 'plugin'
 
 
@@ -2342,7 +2355,7 @@ class TextOverflow(Enum):
     ellipsis = 'ellipsis'
 
 
-class Type64(Enum):
+class Type66(Enum):
     document_template = 'document_template'
 
 
@@ -2350,7 +2363,7 @@ class Version5(Enum):
     field_2 = '2'
 
 
-class Type65(Enum):
+class Type67(Enum):
     document = 'document'
 
 
@@ -2422,7 +2435,7 @@ class PublisherPageProportionV2(RootModel[PositiveFloat]):
     )
 
 
-class Type66(Enum):
+class Type68(Enum):
     page_template = 'page_template'
 
 
@@ -2513,7 +2526,7 @@ class PublisherWidgetPlaceholderV2(BaseModel):
     required: bool | None = None
 
 
-class Type67(Enum):
+class Type69(Enum):
     report = 'report'
 
 
@@ -2605,11 +2618,11 @@ class ReportWeight(RootModel[float]):
     )
 
 
-class Type68(Enum):
+class Type70(Enum):
     report_page_layout = 'report_page_layout'
 
 
-class Type69(Enum):
+class Type71(Enum):
     report_template = 'report_template'
 
 
@@ -2617,95 +2630,95 @@ class Title(RootModel[constr(max_length=255)]):
     root: constr(max_length=255)
 
 
-class Type70(Enum):
+class Type72(Enum):
     table = 'table'
 
 
-class Type71(Enum):
+class Type73(Enum):
     bar_chart = 'bar_chart'
 
 
-class Type72(Enum):
+class Type74(Enum):
     column_chart = 'column_chart'
 
 
-class Type73(Enum):
+class Type75(Enum):
     line_chart = 'line_chart'
 
 
-class Type74(Enum):
+class Type76(Enum):
     area_chart = 'area_chart'
 
 
-class Type75(Enum):
+class Type77(Enum):
     scatter_chart = 'scatter_chart'
 
 
-class Type76(Enum):
+class Type78(Enum):
     bubble_chart = 'bubble_chart'
 
 
-class Type77(Enum):
+class Type79(Enum):
     pie_chart = 'pie_chart'
 
 
-class Type78(Enum):
+class Type80(Enum):
     donut_chart = 'donut_chart'
 
 
-class Type79(Enum):
+class Type81(Enum):
     treemap_chart = 'treemap_chart'
 
 
-class Type80(Enum):
+class Type82(Enum):
     pyramid_chart = 'pyramid_chart'
 
 
-class Type81(Enum):
+class Type83(Enum):
     funnel_chart = 'funnel_chart'
 
 
-class Type82(Enum):
+class Type84(Enum):
     heatmap_chart = 'heatmap_chart'
 
 
-class Type83(Enum):
+class Type85(Enum):
     bullet_chart = 'bullet_chart'
 
 
-class Type84(Enum):
+class Type86(Enum):
     waterfall_chart = 'waterfall_chart'
 
 
-class Type85(Enum):
+class Type87(Enum):
     dependency_wheel_chart = 'dependency_wheel_chart'
 
 
-class Type86(Enum):
+class Type88(Enum):
     sankey_chart = 'sankey_chart'
 
 
-class Type87(Enum):
+class Type89(Enum):
     headline_chart = 'headline_chart'
 
 
-class Type88(Enum):
+class Type90(Enum):
     combo_chart = 'combo_chart'
 
 
-class Type89(Enum):
+class Type91(Enum):
     geo_chart = 'geo_chart'
 
 
-class Type90(Enum):
+class Type92(Enum):
     geo_area_chart = 'geo_area_chart'
 
 
-class Type91(Enum):
+class Type93(Enum):
     repeater_chart = 'repeater_chart'
 
 
-class Type92(Enum):
+class Type94(Enum):
     radar_chart = 'radar_chart'
 
 
@@ -3276,6 +3289,52 @@ class TimezoneConfig(BaseModel):
     )
 
 
+class StringDashboardParameter(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    id: Identifier = Field(..., description='An identifier of the parameter.')
+    type: Type22 = Field(
+        ...,
+        description='The data type of the parameter. Must match the type in the parameter definition.',
+    )
+    value: str | None = Field(
+        None,
+        description="The value this dashboard uses instead of the parameter's default value.",
+    )
+    title: Title | None = Field(
+        None,
+        description="The label shown in the filter bar instead of the parameter's title.",
+    )
+    mode: Mode6 | None = Field(
+        None,
+        description='Setting parameter mode to readonly will disable the parameter. Setting it to hidden will hide the parameter from the dashboard. Setting it to active will enable the parameter.',
+    )
+
+
+class NumberDashboardParameter(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    id: Identifier = Field(..., description='An identifier of the parameter.')
+    type: Type23 = Field(
+        ...,
+        description='The data type of the parameter. Must match the type in the parameter definition.',
+    )
+    value: float | None = Field(
+        None,
+        description="The value this dashboard uses instead of the parameter's default value.",
+    )
+    title: Title | None = Field(
+        None,
+        description="The label shown in the filter bar instead of the parameter's title.",
+    )
+    mode: Mode6 | None = Field(
+        None,
+        description='Setting parameter mode to readonly will disable the parameter. Setting it to hidden will hide the parameter from the dashboard. Setting it to active will enable the parameter.',
+    )
+
+
 class Widget1(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
@@ -3350,7 +3409,7 @@ class DateDataset1(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the date instance.')
-    type: Type25
+    type: Type27
     title: Title | None = Field(
         None,
         description='An optional human readable title for the date instance. Will be derived from id if not provided explicitly.',
@@ -3404,7 +3463,7 @@ class Fact(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type27
+    type: Type29
     title: Title | None = Field(
         None,
         description='A human readable title of the field. Optional, derived from id if not provided explicitly.',
@@ -3443,7 +3502,7 @@ class AggregatedFact(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type28
+    type: Type30
     description: Description | None = Field(
         None, description='An optional description of the field.'
     )
@@ -3511,7 +3570,7 @@ class Metric1(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the metric.')
-    type: Type31
+    type: Type33
     title: Title | None = Field(
         None,
         description='An optional human readable title for the metric. Will be derived from id if not provided explicitly.',
@@ -3603,7 +3662,7 @@ class StringParameterDefinition(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type41
+    type: Type43
     defaultValue: str = Field(
         ..., description='The value used whenever the parameter is not overridden.'
     )
@@ -3619,7 +3678,7 @@ class Plugin1(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the plugin.')
-    type: Type43
+    type: Type45
     title: Title | None = Field(
         None,
         description='An optional human readable title for the plugin. Will be derived from id if not provided explicitly.',
@@ -3677,7 +3736,7 @@ class QueryField6(BaseModel):
         extra='forbid',
     )
     title: Title | None = Field(None, description='A field title.')
-    type: Type44 = Field(
+    type: Type46 = Field(
         ...,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -3690,7 +3749,7 @@ class QueryField7(BaseModel):
         extra='forbid',
     )
     title: Title | None = Field(None, description='A field title.')
-    type: Type45 = Field(
+    type: Type47 = Field(
         ...,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -3705,7 +3764,7 @@ class QueryAttributeSort(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type46
+    type: Type48
     by: str | AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier = (
         Field(..., description='Local attribute or label to use in this sort.')
     )
@@ -3734,7 +3793,7 @@ class QueryMetricSort(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type47
+    type: Type49
     direction: Direction = Field(..., description='Sort direction.')
     metrics: list[str | Metrics] = Field(..., min_length=1)
 
@@ -3750,7 +3809,7 @@ class TotalItem(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type51
+    type: Type53
     title: Title | None = Field(None, description='A total title.')
     using: str = Field(
         ..., description='Local metric identifier to use for this total.'
@@ -3764,7 +3823,7 @@ class AttributeHierarchy(BaseModel):
     id: Identifier = Field(
         ..., description='A unique identifier of the attribute hierarchy.'
     )
-    type: Type53
+    type: Type55
     title: Title | None = Field(
         None,
         description='An optional human readable title for the attribute hierarchy. Will be derived from id if not provided explicitly.',
@@ -3791,7 +3850,7 @@ class ComputedAttribute(BaseModel):
         ...,
         description='A unique identifier of the computed attribute. Must not collide with the identifier of an attribute or a label.',
     )
-    type: Type54
+    type: Type56
     title: Title | None = Field(
         None,
         description='An optional human readable title for the computed attribute. Will be derived from id if not provided explicitly.',
@@ -4002,7 +4061,7 @@ class DateDataset(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the date instance.')
-    type: Type60
+    type: Type62
     title: Title | None = Field(
         None,
         description='An optional human readable title for the date instance. Will be derived from id if not provided explicitly.',
@@ -4027,7 +4086,7 @@ class Metric(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the metric.')
-    type: Type61
+    type: Type63
     title: Title | None = Field(
         None,
         description='An optional human readable title for the metric. Will be derived from id if not provided explicitly.',
@@ -4056,7 +4115,7 @@ class Plugin(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the plugin.')
-    type: Type63
+    type: Type65
     title: Title | None = Field(
         None,
         description='An optional human readable title for the plugin. Will be derived from id if not provided explicitly.',
@@ -4484,6 +4543,12 @@ class QueryFilter(
     ) = Field(..., title='Filter')
 
 
+class DashboardParameters(
+    RootModel[list[StringDashboardParameter | NumberDashboardParameter]]
+):
+    root: list[StringDashboardParameter | NumberDashboardParameter]
+
+
 class Interaction(
     RootModel[
         InteractionOpenPlainUrl
@@ -4601,7 +4666,7 @@ class PublisherTitleWidgetV2(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type33
+    type: Type35
     id: PublisherPageNodeIdV2 = Field(..., description='Unique within the page.')
     proportion: PublisherPageProportionV2 | None = None
     placeholder: PublisherWidgetPlaceholderV2 | None = None
@@ -4617,7 +4682,7 @@ class PublisherHeadingWidgetV2(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type34
+    type: Type36
     id: PublisherPageNodeIdV2 = Field(..., description='Unique within the page.')
     proportion: PublisherPageProportionV2 | None = None
     placeholder: PublisherWidgetPlaceholderV2 | None = None
@@ -4633,7 +4698,7 @@ class PublisherTextWidgetV2(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type35
+    type: Type37
     id: PublisherPageNodeIdV2 = Field(..., description='Unique within the page.')
     proportion: PublisherPageProportionV2 | None = None
     placeholder: PublisherWidgetPlaceholderV2 | None = None
@@ -4652,7 +4717,7 @@ class PublisherImageWidgetV2(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type36
+    type: Type38
     id: PublisherPageNodeIdV2 = Field(..., description='Unique within the page.')
     proportion: PublisherPageProportionV2 | None = None
     placeholder: PublisherWidgetPlaceholderV2 | None = None
@@ -4723,7 +4788,7 @@ class LayerItemBase(BaseModel):
         None,
         description='An optional human readable title for the layer. Will be derived from id if not provided explicitly.',
     )
-    type: Type52 | None = Field(
+    type: Type54 | None = Field(
         None, description='Type of visualisation for this layer.'
     )
     config: Config | None = Field(
@@ -4772,7 +4837,7 @@ class Parameter(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the parameter.')
-    type: Type62
+    type: Type64
     title: Title | None = Field(
         None,
         description='An optional human readable title for the parameter. Will be derived from id if not provided explicitly.',
@@ -4873,7 +4938,7 @@ class Attribute(BaseModel):
         extra='forbid',
         regex_engine="python-re",
     )
-    type: Type26
+    type: Type28
     title: Title | None = Field(
         None,
         description='A human readable title of the field. Optional, derived from id if not provided explicitly.',
@@ -4925,7 +4990,7 @@ class PublisherVisualizationWidgetV2(BaseModel):
         extra='forbid',
         regex_engine="python-re",
     )
-    type: Type37
+    type: Type39
     id: PublisherPageNodeIdV2 = Field(..., description='Unique within the page.')
     proportion: PublisherPageProportionV2 | None = None
     placeholder: PublisherWidgetPlaceholderV2 | None = None
@@ -4960,7 +5025,7 @@ class PublisherTakeawayWidgetV2(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type38
+    type: Type40
     id: PublisherPageNodeIdV2 = Field(..., description='Unique within the page.')
     proportion: PublisherPageProportionV2 | None = None
     placeholder: PublisherWidgetPlaceholderV2 | None = None
@@ -4978,7 +5043,7 @@ class Parameter1(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the parameter.')
-    type: Type40
+    type: Type42
     title: Title | None = Field(
         None,
         description='An optional human readable title for the parameter. Will be derived from id if not provided explicitly.',
@@ -5162,7 +5227,7 @@ class Dataset5(BaseModel):
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type57
+    type: Type59
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -5208,7 +5273,7 @@ class Dataset6(BaseModel):
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type57
+    type: Type59
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -5254,7 +5319,7 @@ class Dataset7(BaseModel):
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type57
+    type: Type59
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -5309,7 +5374,7 @@ class Dataset2(BaseModel):
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type22
+    type: Type24
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -5355,7 +5420,7 @@ class Dataset3(BaseModel):
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type22
+    type: Type24
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -5401,7 +5466,7 @@ class Dataset4(BaseModel):
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type22
+    type: Type24
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -5441,7 +5506,7 @@ class Visualisation1(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type70 = Field(..., description='Type of visualisation.')
+    type: Type72 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5487,7 +5552,7 @@ class Visualisation2(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type71 = Field(..., description='Type of visualisation.')
+    type: Type73 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5530,7 +5595,7 @@ class Visualisation3(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type72 = Field(..., description='Type of visualisation.')
+    type: Type74 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5573,7 +5638,7 @@ class Visualisation4(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type73 = Field(..., description='Type of visualisation.')
+    type: Type75 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5616,7 +5681,7 @@ class Visualisation5(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type74 = Field(..., description='Type of visualisation.')
+    type: Type76 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5659,7 +5724,7 @@ class Visualisation6(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type75 = Field(..., description='Type of visualisation.')
+    type: Type77 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5702,7 +5767,7 @@ class Visualisation7(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type76 = Field(..., description='Type of visualisation.')
+    type: Type78 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5745,7 +5810,7 @@ class Visualisation8(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type77 = Field(..., description='Type of visualisation.')
+    type: Type79 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5785,7 +5850,7 @@ class Visualisation9(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type78 = Field(..., description='Type of visualisation.')
+    type: Type80 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5825,7 +5890,7 @@ class Visualisation10(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type79 = Field(..., description='Type of visualisation.')
+    type: Type81 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5865,7 +5930,7 @@ class Visualisation11(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type80 = Field(..., description='Type of visualisation.')
+    type: Type82 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5905,7 +5970,7 @@ class Visualisation12(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type81 = Field(..., description='Type of visualisation.')
+    type: Type83 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5945,7 +6010,7 @@ class Visualisation13(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type82 = Field(..., description='Type of visualisation.')
+    type: Type84 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5991,7 +6056,7 @@ class Visualisation14(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type83 = Field(..., description='Type of visualisation.')
+    type: Type85 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6031,7 +6096,7 @@ class Visualisation15(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type84 = Field(..., description='Type of visualisation.')
+    type: Type86 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6071,7 +6136,7 @@ class Visualisation16(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type85 = Field(..., description='Type of visualisation.')
+    type: Type87 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6117,7 +6182,7 @@ class Visualisation17(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type86 = Field(..., description='Type of visualisation.')
+    type: Type88 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6163,7 +6228,7 @@ class Visualisation18(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type87 = Field(..., description='Type of visualisation.')
+    type: Type89 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6201,7 +6266,7 @@ class Visualisation19(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type88 = Field(..., description='Type of visualisation.')
+    type: Type90 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6241,7 +6306,7 @@ class Visualisation20(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type89 = Field(..., description='Type of visualisation.')
+    type: Type91 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6285,7 +6350,7 @@ class Visualisation21(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type90 = Field(..., description='Type of visualisation.')
+    type: Type92 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6329,7 +6394,7 @@ class Visualisation22(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type91 = Field(..., description='Type of visualisation.')
+    type: Type93 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6375,7 +6440,7 @@ class Visualisation23(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type92 = Field(..., description='Type of visualisation.')
+    type: Type94 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6477,7 +6542,7 @@ class Dashboard1(BaseModel):
     type: Type21
     version: Version | None = Field(
         None,
-        description='Dashboard model version. "2" (default if omitted) — legacy shape: root-level sections/filters are also mirrored into a default tab, producing a declarative model with duplicated content for backward compatibility with older SDK readers. "3" — clean shape: tabs are the sole source of layout and filters; root sections/filters in YAML are still allowed as an authoring shortcut but are wrapped into a single synthetic tab without duplication. Use "3" for new dashboards; "2" exists to keep existing files round-trippable.',
+        description='Dashboard model version. "2" (default if omitted) — legacy shape: root-level sections/filters/parameters are also mirrored into a default tab, producing a declarative model with duplicated content for backward compatibility with older SDK readers. "3" — clean shape: tabs are the sole source of layout, filters and parameters; root sections/filters/parameters in YAML are still allowed as an authoring shortcut but are wrapped into a single synthetic tab without duplication. Use "3" for new dashboards; "2" exists to keep existing files round-trippable.',
     )
     title: Title | None = Field(
         None,
@@ -6524,9 +6589,12 @@ class Dashboard1(BaseModel):
     plugins: list[Plugins | Identifier] | None = Field(
         None, description='A list of plugins in this dashboard.'
     )
+    parameters: DashboardParameters | None = Field(
+        None, description='Parameters shown in the filter bar of this dashboard.'
+    )
     tabs: list[Tab] | None = Field(
         None,
-        description='A list of tabs in this dashboard. Each tab has its own layout, filters, and filter configurations. Mutually exclusive with sections and filters at dashboard level.',
+        description='A list of tabs in this dashboard. Each tab has its own layout, filters, parameters, and filter configurations. Mutually exclusive with sections, filters and parameters at dashboard level.',
     )
     permissions: Permissions | None = Field(
         None, description='Permissions for the dashboard'
@@ -6552,6 +6620,9 @@ class Tab(BaseModel):
     title: Title = Field(..., description='Display title for the tab.')
     filters: DashboardFilters | None = Field(
         None, description='Filters specific to this tab.'
+    )
+    parameters: DashboardParameters | None = Field(
+        None, description='Parameters shown in the filter bar of this tab.'
     )
     sections: list[Section] = Field(..., description='A list of sections in this tab.')
 
@@ -6601,7 +6672,7 @@ class PublisherDocumentV21(BaseModel):
         ...,
         description='A unique identifier of the document. Ids starting with default. are reserved.',
     )
-    type: Type29
+    type: Type31
     version: Version1 = Field(..., description='Version of the content format.')
     title: PublisherEntityTitleV2
     description: PublisherEntityDescriptionV2 | None = None
@@ -6619,7 +6690,7 @@ class PublisherDocumentTemplateV21(BaseModel):
         ...,
         description='A unique identifier of the document template. Ids starting with default. are reserved.',
     )
-    type: Type30
+    type: Type32
     version: Version1 = Field(..., description='Version of the content format.')
     title: PublisherEntityTitleV2
     description: PublisherEntityDescriptionV2 | None = None
@@ -6631,7 +6702,7 @@ class PublisherContainerV2(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type32
+    type: Type34
     id: PublisherPageNodeIdV2 | None = None
     children: list[PublisherLayoutNodeV2] = Field(
         ...,
@@ -6651,7 +6722,7 @@ class PublisherPageTemplateV21(BaseModel):
         ...,
         description='A unique identifier of the page template. Ids starting with default. are reserved.',
     )
-    type: Type39
+    type: Type41
     version: Version1 = Field(..., description='Version of the content format.')
     title: PublisherEntityTitleV2
     description: PublisherEntityDescriptionV2 | None = None
@@ -6667,7 +6738,7 @@ class Report1(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the document.')
-    type: Type48
+    type: Type50
     title: Title = Field(..., description='A human readable title for the document.')
     description: Description | None = Field(
         None, description='An optional description of the document.'
@@ -6736,7 +6807,7 @@ class ReportPageLayout1(BaseModel):
     id: Identifier = Field(
         ..., description='A unique identifier of the document page layout.'
     )
-    type: Type49
+    type: Type51
     title: Title = Field(
         ..., description='A human readable title for the document page layout.'
     )
@@ -6767,7 +6838,7 @@ class ReportTemplate1(BaseModel):
     id: Identifier = Field(
         ..., description='A unique identifier of the document template.'
     )
-    type: Type50
+    type: Type52
     title: Title = Field(
         ..., description='A human readable title for the document template.'
     )
@@ -6800,10 +6871,10 @@ class Dashboard(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the dashboard.')
-    type: Type56
+    type: Type58
     version: Version4 | None = Field(
         None,
-        description='Dashboard model version. "2" (default if omitted) — legacy shape: root-level sections/filters are also mirrored into a default tab, producing a declarative model with duplicated content for backward compatibility with older SDK readers. "3" — clean shape: tabs are the sole source of layout and filters; root sections/filters in YAML are still allowed as an authoring shortcut but are wrapped into a single synthetic tab without duplication. Use "3" for new dashboards; "2" exists to keep existing files round-trippable.',
+        description='Dashboard model version. "2" (default if omitted) — legacy shape: root-level sections/filters/parameters are also mirrored into a default tab, producing a declarative model with duplicated content for backward compatibility with older SDK readers. "3" — clean shape: tabs are the sole source of layout, filters and parameters; root sections/filters/parameters in YAML are still allowed as an authoring shortcut but are wrapped into a single synthetic tab without duplication. Use "3" for new dashboards; "2" exists to keep existing files round-trippable.',
     )
     title: Title | None = Field(
         None,
@@ -6850,9 +6921,12 @@ class Dashboard(BaseModel):
     plugins: list[Plugins | Identifier] | None = Field(
         None, description='A list of plugins in this dashboard.'
     )
+    parameters: DashboardParameters | None = Field(
+        None, description='Parameters shown in the filter bar of this dashboard.'
+    )
     tabs: list[Tab] | None = Field(
         None,
-        description='A list of tabs in this dashboard. Each tab has its own layout, filters, and filter configurations. Mutually exclusive with sections and filters at dashboard level.',
+        description='A list of tabs in this dashboard. Each tab has its own layout, filters, parameters, and filter configurations. Mutually exclusive with sections, filters and parameters at dashboard level.',
     )
     permissions: Permissions | None = Field(
         None, description='Permissions for the dashboard'
@@ -6888,7 +6962,7 @@ class PublisherDocumentTemplateV2(BaseModel):
         ...,
         description='A unique identifier of the document template. Ids starting with default. are reserved.',
     )
-    type: Type64
+    type: Type66
     version: Version5 = Field(..., description='Version of the content format.')
     title: PublisherEntityTitleV2
     description: PublisherEntityDescriptionV2 | None = None
@@ -6905,7 +6979,7 @@ class PublisherDocumentV2(BaseModel):
         ...,
         description='A unique identifier of the document. Ids starting with default. are reserved.',
     )
-    type: Type65
+    type: Type67
     version: Version5 = Field(..., description='Version of the content format.')
     title: PublisherEntityTitleV2
     description: PublisherEntityDescriptionV2 | None = None
@@ -6943,7 +7017,7 @@ class PublisherPageTemplateV2(BaseModel):
         ...,
         description='A unique identifier of the page template. Ids starting with default. are reserved.',
     )
-    type: Type66
+    type: Type68
     version: Version5 = Field(..., description='Version of the content format.')
     title: PublisherEntityTitleV2
     description: PublisherEntityDescriptionV2 | None = None
@@ -6959,7 +7033,7 @@ class Report(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the document.')
-    type: Type67
+    type: Type69
     title: Title = Field(..., description='A human readable title for the document.')
     description: Description | None = Field(
         None, description='An optional description of the document.'
@@ -7020,7 +7094,7 @@ class ReportPageLayout(BaseModel):
     id: Identifier = Field(
         ..., description='A unique identifier of the document page layout.'
     )
-    type: Type68
+    type: Type70
     title: Title = Field(
         ..., description='A human readable title for the document page layout.'
     )
@@ -7051,7 +7125,7 @@ class ReportTemplate(BaseModel):
     id: Identifier = Field(
         ..., description='A unique identifier of the document template.'
     )
-    type: Type69
+    type: Type71
     title: Title = Field(
         ..., description='A human readable title for the document template.'
     )

@@ -479,9 +479,37 @@ export type Id15 = string;
  */
 export type Id16 = string;
 /**
- * A unique identifier of the tab.
+ * A parameter shown in the filter bar: its value must have the parameter's type.
+ */
+export type DashboardParameter = DashboardParameter1 | DashboardParameter2;
+/**
+ * A parameter shown in the filter bar: its value must have the parameter's type.
+ */
+export type DashboardParameter1 = StringDashboardParameter;
+/**
+ * An identifier of the parameter.
  */
 export type Id17 = string;
+/**
+ * A parameter shown in the filter bar: its value must have the parameter's type.
+ */
+export type DashboardParameter2 = NumberDashboardParameter;
+/**
+ * An identifier of the parameter.
+ */
+export type Id18 = string;
+/**
+ * Parameters shown in the filter bar of this dashboard.
+ */
+export type DashboardParameters = DashboardParameter[];
+/**
+ * A unique identifier of the tab.
+ */
+export type Id19 = string;
+/**
+ * Parameters shown in the filter bar of this tab.
+ */
+export type DashboardParameters1 = DashboardParameter[];
 /**
  * JSON schema for Gooddata Analytics
  */
@@ -490,7 +518,7 @@ export type Metadata20 = Plugin;
 /**
  * A unique identifier of the plugin.
  */
-export type Id18 = string;
+export type Id20 = string;
 /**
  * A list of strings - metadata tags of this plugin.
  */
@@ -503,7 +531,7 @@ export type Metadata23 = AttributeHierarchy;
 /**
  * A unique identifier of the attribute hierarchy.
  */
-export type Id19 = string;
+export type Id21 = string;
 /**
  * A list of strings - metadata tags of this attribute hierarchy.
  */
@@ -520,7 +548,7 @@ export type Metadata26 = Parameter;
 /**
  * A unique identifier of the parameter.
  */
-export type Id20 = string;
+export type Id22 = string;
 /**
  * A list of strings - metadata tags of this parameter.
  */
@@ -576,7 +604,7 @@ export type Visualisation1 = Table;
 /**
  * A unique identifier of the visualisation.
  */
-export type Id21 = string;
+export type Id23 = string;
 /**
  * A list of strings - metadata tags of this visualisation.
  */
@@ -913,7 +941,7 @@ export type Visualisation2 = BarChart;
 /**
  * A unique identifier of the visualisation.
  */
-export type Id22 = string;
+export type Id24 = string;
 /**
  * A list of strings - metadata tags of this visualisation.
  */
@@ -925,7 +953,7 @@ export type Visualisation3 = ColumnChart;
 /**
  * A unique identifier of the visualisation.
  */
-export type Id23 = string;
+export type Id25 = string;
 /**
  * A list of strings - metadata tags of this visualisation.
  */
@@ -937,7 +965,7 @@ export type Visualisation4 = LineChart;
 /**
  * A unique identifier of the visualisation.
  */
-export type Id24 = string;
+export type Id26 = string;
 /**
  * A list of strings - metadata tags of this visualisation.
  */
@@ -949,7 +977,7 @@ export type Visualisation5 = AreaChart;
 /**
  * A unique identifier of the visualisation.
  */
-export type Id25 = string;
+export type Id27 = string;
 /**
  * A list of strings - metadata tags of this visualisation.
  */
@@ -961,7 +989,7 @@ export type Visualisation6 = ScatterChart;
 /**
  * A unique identifier of the visualisation.
  */
-export type Id26 = string;
+export type Id28 = string;
 /**
  * A list of strings - metadata tags of this visualisation.
  */
@@ -974,7 +1002,7 @@ export type Visualisation7 = BubbleChart;
 /**
  * A unique identifier of the visualisation.
  */
-export type Id27 = string;
+export type Id29 = string;
 /**
  * A list of strings - metadata tags of this visualisation.
  */
@@ -986,7 +1014,7 @@ export type Visualisation8 = PieChart;
 /**
  * A unique identifier of the visualisation.
  */
-export type Id28 = string;
+export type Id30 = string;
 /**
  * A list of strings - metadata tags of this visualisation.
  */
@@ -998,7 +1026,7 @@ export type Visualisation9 = PieChart1;
 /**
  * A unique identifier of the visualisation.
  */
-export type Id29 = string;
+export type Id31 = string;
 /**
  * A list of strings - metadata tags of this visualisation.
  */
@@ -1010,7 +1038,7 @@ export type Visualisation10 = TreemapChart;
 /**
  * A unique identifier of the visualisation.
  */
-export type Id30 = string;
+export type Id32 = string;
 /**
  * A list of strings - metadata tags of this visualisation.
  */
@@ -1022,7 +1050,7 @@ export type Visualisation11 = PyramidChart;
 /**
  * A unique identifier of the visualisation.
  */
-export type Id31 = string;
+export type Id33 = string;
 /**
  * A list of strings - metadata tags of this visualisation.
  */
@@ -1034,7 +1062,7 @@ export type Visualisation12 = FunnelChart;
 /**
  * A unique identifier of the visualisation.
  */
-export type Id32 = string;
+export type Id34 = string;
 /**
  * A list of strings - metadata tags of this visualisation.
  */
@@ -1046,7 +1074,7 @@ export type Visualisation13 = HeatmapChart;
 /**
  * A unique identifier of the visualisation.
  */
-export type Id33 = string;
+export type Id35 = string;
 /**
  * A list of strings - metadata tags of this visualisation.
  */
@@ -1058,7 +1086,7 @@ export type Visualisation14 = BulletChart;
 /**
  * A unique identifier of the visualisation.
  */
-export type Id34 = string;
+export type Id36 = string;
 /**
  * A list of strings - metadata tags of this visualisation.
  */
@@ -1070,7 +1098,7 @@ export type Visualisation15 = WaterfallChart;
 /**
  * A unique identifier of the visualisation.
  */
-export type Id35 = string;
+export type Id37 = string;
 /**
  * A list of strings - metadata tags of this visualisation.
  */
@@ -1082,7 +1110,7 @@ export type Visualisation16 = DependencyWheelChart;
 /**
  * A unique identifier of the visualisation.
  */
-export type Id36 = string;
+export type Id38 = string;
 /**
  * A list of strings - metadata tags of this visualisation.
  */
@@ -1102,7 +1130,7 @@ export type Visualisation17 = SankeyChart;
 /**
  * A unique identifier of the visualisation.
  */
-export type Id37 = string;
+export type Id39 = string;
 /**
  * A list of strings - metadata tags of this visualisation.
  */
@@ -1122,7 +1150,7 @@ export type Visualisation18 = HeadlineChart;
 /**
  * A unique identifier of the visualisation.
  */
-export type Id38 = string;
+export type Id40 = string;
 /**
  * A list of strings - metadata tags of this visualisation.
  */
@@ -1134,7 +1162,7 @@ export type Visualisation19 = ComboChart;
 /**
  * A unique identifier of the visualisation.
  */
-export type Id39 = string;
+export type Id41 = string;
 /**
  * A list of strings - metadata tags of this visualisation.
  */
@@ -1146,7 +1174,7 @@ export type Visualisation20 = GeoChart;
 /**
  * A unique identifier of the visualisation.
  */
-export type Id40 = string;
+export type Id42 = string;
 /**
  * A list of strings - metadata tags of this visualisation.
  */
@@ -1175,7 +1203,7 @@ export type LayerItem =
 /**
  * A unique identifier of the visualization data layer.
  */
-export type Id41 = string;
+export type Id43 = string;
 export type LocationBucket = string;
 export type GeoAreaBucket = string;
 /**
@@ -1185,7 +1213,7 @@ export type Visualisation21 = GeoAreaChart;
 /**
  * A unique identifier of the visualisation.
  */
-export type Id42 = string;
+export type Id44 = string;
 /**
  * A list of strings - metadata tags of this visualisation.
  */
@@ -1197,7 +1225,7 @@ export type Visualisation22 = RepeaterChart;
 /**
  * A unique identifier of the visualisation.
  */
-export type Id43 = string;
+export type Id45 = string;
 /**
  * A list of strings - metadata tags of this visualisation.
  */
@@ -1209,7 +1237,7 @@ export type Visualisation23 = RadarChart;
 /**
  * A unique identifier of the visualisation.
  */
-export type Id44 = string;
+export type Id46 = string;
 /**
  * A list of strings - metadata tags of this visualisation.
  */
@@ -1222,7 +1250,7 @@ export type Metadata32 = Report;
 /**
  * A unique identifier of the document.
  */
-export type Id45 = string;
+export type Id47 = string;
 /**
  * A list of strings - metadata tags of this document.
  */
@@ -1230,7 +1258,7 @@ export type Tags37 = string[];
 /**
  * An id for this page, unique within the document.
  */
-export type Id46 = string;
+export type Id48 = string;
 /**
  * Editor hint only, for template galleries, default styling and AI context. Geometry always comes from the layout.
  */
@@ -1254,15 +1282,15 @@ export type ReportBackgroundImage = ReportBackgroundImage1 | ReportBackgroundIma
 /**
  * An id of an image already written down elsewhere on this page, drawn here as well.
  */
-export type Id47 = string;
+export type Id49 = string;
 /**
  * An id for this area, unique within the page. It is what a document fills when it takes this page from a template, so an id written down here survives edits to the layout around it.
  */
-export type Id48 = string;
+export type Id50 = string;
 /**
  * Backend-managed asset rendered as the image. Mutually exclusive with url.
  */
-export type Id49 = string;
+export type Id51 = string;
 export type ReportContentAlignment = "start" | "center" | "end";
 /**
  * Metadata of a slot intentionally left unfilled. A bare true marks it required; a bare string is the authoring hint.
@@ -1315,7 +1343,7 @@ export type ReportLayoutNode4 = ReportVisualizationSlot;
 /**
  * An id of the date dataset the document's period is applied to as an absolute date filter. Omitted leaves the backend date dataset resolution to decide.
  */
-export type Id50 = string;
+export type Id52 = string;
 /**
  * A node of the page layout. A node carrying column or row splits its area along that direction; every other node draws content, told apart by the content key it carries.
  */
@@ -1385,7 +1413,7 @@ export type ReportImage1 = string;
 /**
  * Backend-managed asset rendered as the image. Mutually exclusive with url.
  */
-export type Id51 = string;
+export type Id53 = string;
 /**
  * JSON schema for Gooddata Analytics
  */
@@ -1394,7 +1422,7 @@ export type Metadata35 = ReportTemplate;
 /**
  * A unique identifier of the document template.
  */
-export type Id52 = string;
+export type Id54 = string;
 /**
  * A list of strings - metadata tags of this document template.
  */
@@ -1407,7 +1435,7 @@ export type Metadata38 = ReportPageLayout;
 /**
  * A unique identifier of the document page layout.
  */
-export type Id53 = string;
+export type Id55 = string;
 /**
  * A list of strings - metadata tags of this document page layout.
  */
@@ -1625,11 +1653,11 @@ export type PublisherPageNodeIdV26 = string;
 /**
  * An id of the visualization rendered here.
  */
-export type Id54 = string;
+export type Id56 = string;
 /**
  * An id of the date dataset the document period applies to.
  */
-export type Id55 = string;
+export type Id57 = string;
 /**
  * A row or column container, or a widget.
  */
@@ -2481,7 +2509,7 @@ export interface Dashboard {
     id: Id9;
     type: "dashboard";
     /**
-     * Dashboard model version. "2" (default if omitted) — legacy shape: root-level sections/filters are also mirrored into a default tab, producing a declarative model with duplicated content for backward compatibility with older SDK readers. "3" — clean shape: tabs are the sole source of layout and filters; root sections/filters in YAML are still allowed as an authoring shortcut but are wrapped into a single synthetic tab without duplication. Use "3" for new dashboards; "2" exists to keep existing files round-trippable.
+     * Dashboard model version. "2" (default if omitted) — legacy shape: root-level sections/filters/parameters are also mirrored into a default tab, producing a declarative model with duplicated content for backward compatibility with older SDK readers. "3" — clean shape: tabs are the sole source of layout, filters and parameters; root sections/filters/parameters in YAML are still allowed as an authoring shortcut but are wrapped into a single synthetic tab without duplication. Use "3" for new dashboards; "2" exists to keep existing files round-trippable.
      */
     version?: "2" | "3";
     /**
@@ -2544,8 +2572,9 @@ export interface Dashboard {
           }
         | Id16
     )[];
+    parameters?: DashboardParameters;
     /**
-     * A list of tabs in this dashboard. Each tab has its own layout, filters, and filter configurations. Mutually exclusive with sections and filters at dashboard level.
+     * A list of tabs in this dashboard. Each tab has its own layout, filters, parameters, and filter configurations. Mutually exclusive with sections, filters and parameters at dashboard level.
      */
     tabs?: Tab[];
     /**
@@ -2988,13 +3017,52 @@ export interface DashboardMetricValueFilter {
 export interface DashboardFilterGroup {
     type: "date_filter" | "attribute_filter" | "text_filter" | "metric_value_filter" | "filter_group";
 }
-export interface Tab {
+export interface StringDashboardParameter {
     id: Id17;
+    /**
+     * The data type of the parameter. Must match the type in the parameter definition.
+     */
+    type: "STRING";
+    /**
+     * The value this dashboard uses instead of the parameter's default value.
+     */
+    value?: string;
+    /**
+     * The label shown in the filter bar instead of the parameter's title.
+     */
+    title?: string;
+    /**
+     * Setting parameter mode to readonly will disable the parameter. Setting it to hidden will hide the parameter from the dashboard. Setting it to active will enable the parameter.
+     */
+    mode?: "readonly" | "hidden" | "active";
+}
+export interface NumberDashboardParameter {
+    id: Id18;
+    /**
+     * The data type of the parameter. Must match the type in the parameter definition.
+     */
+    type: "NUMBER";
+    /**
+     * The value this dashboard uses instead of the parameter's default value.
+     */
+    value?: number;
+    /**
+     * The label shown in the filter bar instead of the parameter's title.
+     */
+    title?: string;
+    /**
+     * Setting parameter mode to readonly will disable the parameter. Setting it to hidden will hide the parameter from the dashboard. Setting it to active will enable the parameter.
+     */
+    mode?: "readonly" | "hidden" | "active";
+}
+export interface Tab {
+    id: Id19;
     /**
      * Display title for the tab.
      */
     title: string;
     filters?: DashboardFilters1;
+    parameters?: DashboardParameters1;
     /**
      * A list of sections in this tab.
      */
@@ -3087,7 +3155,7 @@ export interface Metadata19 {
     [k: string]: unknown;
 }
 export interface Plugin {
-    id: Id18;
+    id: Id20;
     type: "plugin";
     /**
      * An optional human readable title for the plugin. Will be derived from id if not provided explicitly.
@@ -3145,7 +3213,7 @@ export interface Metadata22 {
     [k: string]: unknown;
 }
 export interface AttributeHierarchy {
-    id: Id19;
+    id: Id21;
     type: "attribute_hierarchy";
     /**
      * An optional human readable title for the attribute hierarchy. Will be derived from id if not provided explicitly.
@@ -3203,7 +3271,7 @@ export interface Metadata25 {
     [k: string]: unknown;
 }
 export interface Parameter {
-    id: Id20;
+    id: Id22;
     type: "parameter";
     /**
      * An optional human readable title for the parameter. Will be derived from id if not provided explicitly.
@@ -3324,7 +3392,7 @@ export interface Table {
      * Type of visualisation.
      */
     type: "table";
-    id: Id21;
+    id: Id23;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -4400,7 +4468,7 @@ export interface BarChart {
      * Type of visualisation.
      */
     type: "bar_chart";
-    id: Id22;
+    id: Id24;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -4808,7 +4876,7 @@ export interface ColumnChart {
      * Type of visualisation.
      */
     type: "column_chart";
-    id: Id23;
+    id: Id25;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -5216,7 +5284,7 @@ export interface LineChart {
      * Type of visualisation.
      */
     type: "line_chart";
-    id: Id24;
+    id: Id26;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -5624,7 +5692,7 @@ export interface AreaChart {
      * Type of visualisation.
      */
     type: "area_chart";
-    id: Id25;
+    id: Id27;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -6032,7 +6100,7 @@ export interface ScatterChart {
      * Type of visualisation.
      */
     type: "scatter_chart";
-    id: Id26;
+    id: Id28;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -6440,7 +6508,7 @@ export interface BubbleChart {
      * Type of visualisation.
      */
     type: "bubble_chart";
-    id: Id27;
+    id: Id29;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -6848,7 +6916,7 @@ export interface PieChart {
      * Type of visualisation.
      */
     type: "pie_chart";
-    id: Id28;
+    id: Id30;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -7252,7 +7320,7 @@ export interface PieChart1 {
      * Type of visualisation.
      */
     type: "donut_chart";
-    id: Id29;
+    id: Id31;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -7656,7 +7724,7 @@ export interface TreemapChart {
      * Type of visualisation.
      */
     type: "treemap_chart";
-    id: Id30;
+    id: Id32;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -8060,7 +8128,7 @@ export interface PyramidChart {
      * Type of visualisation.
      */
     type: "pyramid_chart";
-    id: Id31;
+    id: Id33;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -8464,7 +8532,7 @@ export interface FunnelChart {
      * Type of visualisation.
      */
     type: "funnel_chart";
-    id: Id32;
+    id: Id34;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -8868,7 +8936,7 @@ export interface HeatmapChart {
      * Type of visualisation.
      */
     type: "heatmap_chart";
-    id: Id33;
+    id: Id35;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -9280,7 +9348,7 @@ export interface BulletChart {
      * Type of visualisation.
      */
     type: "bullet_chart";
-    id: Id34;
+    id: Id36;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -9684,7 +9752,7 @@ export interface WaterfallChart {
      * Type of visualisation.
      */
     type: "waterfall_chart";
-    id: Id35;
+    id: Id37;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -10088,7 +10156,7 @@ export interface DependencyWheelChart {
      * Type of visualisation.
      */
     type: "dependency_wheel_chart";
-    id: Id36;
+    id: Id38;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -10494,7 +10562,7 @@ export interface SankeyChart {
      * Type of visualisation.
      */
     type: "sankey_chart";
-    id: Id37;
+    id: Id39;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -10900,7 +10968,7 @@ export interface HeadlineChart {
      * Type of visualisation.
      */
     type: "headline_chart";
-    id: Id38;
+    id: Id40;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -11304,7 +11372,7 @@ export interface ComboChart {
      * Type of visualisation.
      */
     type: "combo_chart";
-    id: Id39;
+    id: Id41;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -11708,7 +11776,7 @@ export interface GeoChart {
      * Type of visualisation.
      */
     type: "geo_chart";
-    id: Id40;
+    id: Id42;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -12112,7 +12180,7 @@ export interface VisualisationConfig19 {
     [k: string]: unknown;
 }
 export interface VisualizationDataLayer {
-    id: Id41;
+    id: Id43;
     /**
      * An optional human readable title for the layer. Will be derived from id if not provided explicitly.
      */
@@ -12497,7 +12565,7 @@ export interface GeoAreaChart {
      * Type of visualisation.
      */
     type: "geo_area_chart";
-    id: Id42;
+    id: Id44;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -12905,7 +12973,7 @@ export interface RepeaterChart {
      * Type of visualisation.
      */
     type: "repeater_chart";
-    id: Id43;
+    id: Id45;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -13317,7 +13385,7 @@ export interface RadarChart {
      * Type of visualisation.
      */
     type: "radar_chart";
-    id: Id44;
+    id: Id46;
     /**
      * An optional human readable title for the visualisation. Will be derived from id if not provided explicitly.
      */
@@ -13758,7 +13826,7 @@ export interface Metadata31 {
     [k: string]: unknown;
 }
 export interface Report {
-    id: Id45;
+    id: Id47;
     type: "report";
     /**
      * A human readable title for the document.
@@ -13804,7 +13872,7 @@ export interface ReportPeriod {
     end: string;
 }
 export interface ReportPageBody {
-    id: Id46;
+    id: Id48;
     kind?: ReportPageKind;
     format?: ReportPageFormat;
     style?: ReportBoxStyle;
@@ -13835,18 +13903,18 @@ export interface ReportBackground2 {
  * The image a box paints behind its content. It is drawn from a slot of its own, which is what keeps a backdrop fillable and gives it placeholder metadata, so it is written down with an id - or it names an image another box on the page already wrote down.
  */
 export interface ReportBackgroundImage1 {
-    ref: Id47;
+    ref: Id49;
 }
 /**
  * The image a box paints behind its content. It is drawn from a slot of its own, which is what keeps a backdrop fillable and gives it placeholder metadata, so it is written down with an id - or it names an image another box on the page already wrote down.
  */
 export interface ReportBackgroundImage2 {
-    id: Id48;
+    id: Id50;
     /**
      * Image URL, supporting \{variables\} - a logo uses \{logo\}. Mutually exclusive with asset.
      */
     url?: string;
-    asset?: Id49;
+    asset?: Id51;
     alt_text?: string;
     /**
      * How the image fills its area: kept whole inside it, filling it and cropped to do so, or stretched to its shape. Defaults to contain.
@@ -13906,7 +13974,7 @@ export interface ReportBoxStyle1 {
     padding?: number;
 }
 export interface ReportVisualizationSlot {
-    id: Id48;
+    id: Id50;
     weight?: ReportLayoutWeight;
     /**
      * An id of the visualization to be rendered in this area. Null leaves the area declared but empty, which renders a placeholder.
@@ -13926,7 +13994,7 @@ export interface ReportVisualizationSlot {
     properties?: {
         [k: string]: unknown;
     };
-    date?: Id50;
+    date?: Id52;
     /**
      * When true, the implicit date filter derived from the document's period is not applied here.
      */
@@ -13975,7 +14043,7 @@ export interface DashboardFilters2 {
         | DashboardFilterGroup;
 }
 export interface ReportHeadingSlot {
-    id: Id48;
+    id: Id50;
     weight?: ReportLayoutWeight;
     heading: ReportText;
     style?: ReportTextStyle;
@@ -14014,14 +14082,14 @@ export interface ReportTextStyle2 {
     padding?: number;
 }
 export interface ReportParagraphSlot {
-    id: Id48;
+    id: Id50;
     weight?: ReportLayoutWeight;
     paragraph: ReportText3;
     style?: ReportTextStyle;
     placeholder?: ReportSlotPlaceholder;
 }
 export interface ReportImageSlot {
-    id: Id48;
+    id: Id50;
     weight?: ReportLayoutWeight;
     image: ReportImage;
     placeholder?: ReportSlotPlaceholder;
@@ -14034,7 +14102,7 @@ export interface ReportImage2 {
      * Image URL, supporting \{variables\} - a logo uses \{logo\}. Mutually exclusive with asset.
      */
     url?: string;
-    asset?: Id51;
+    asset?: Id53;
     alt_text?: string;
     /**
      * How the image fills its area: kept whole inside it, filling it and cropped to do so, or stretched to its shape. Defaults to contain.
@@ -14183,7 +14251,7 @@ export interface Metadata34 {
     [k: string]: unknown;
 }
 export interface ReportTemplate {
-    id: Id52;
+    id: Id54;
     type: "report_template";
     /**
      * A human readable title for the document template.
@@ -14289,7 +14357,7 @@ export interface Metadata37 {
  * A reusable page. Its content fields are the same page body a document and a document template carry inline, so a field added to /gaac/reportPageBody belongs here too: JSON Schema cannot compose the two, because the page body closes itself to the entity's own id, title and tags.
  */
 export interface ReportPageLayout {
-    id: Id53;
+    id: Id55;
     type: "report_page_layout";
     /**
      * A human readable title for the document page layout.
@@ -14791,10 +14859,10 @@ export interface PublisherVisualizationWidgetV2 {
     proportion?: PublisherPageProportionV2;
     placeholder?: PublisherWidgetPlaceholderV2;
     locked?: boolean;
-    visualization?: Id54;
+    visualization?: Id56;
     title?: PublisherWidgetTitleV2;
     alt_text?: string;
-    date?: Id55;
+    date?: Id57;
     /**
      * When true, the document period does not apply here.
      */

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-all",
-    "version": "11.68.0-alpha.5",
+    "version": "11.68.0-alpha.6",
     "description": "GoodData SDK - All-In-One",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData",
@@ -35,7 +35,6 @@
         "format-write": "oxfmt .",
         "lint": "oxlint . --quiet && eslint .",
         "lint-fix": "oxlint . --quiet --fix && eslint . --fix",
-        "prepack": "cp -f ../../NOTICE ./NOTICE",
         "validate": "npm run lint && npm run dep-cruiser && npm run format-check"
     },
     "dependencies": {

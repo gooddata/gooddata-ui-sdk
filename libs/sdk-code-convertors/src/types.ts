@@ -114,6 +114,7 @@ export type DashboardTab = {
     attributeFilterConfigs?: IDashboardDefinition["attributeFilterConfigs"];
     measureValueFilterConfigs?: IDashboardDefinition["measureValueFilterConfigs"];
     filterGroupsConfig?: IDashboardFilterGroupsConfig;
+    parameters?: IDashboardDefinition["parameters"];
 };
 
 /** @public */

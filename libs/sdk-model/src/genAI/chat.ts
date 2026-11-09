@@ -2,6 +2,7 @@
 
 import type { DateAttributeGranularity } from "../base/dateGranularities.js";
 import type { IDashboardDefinition } from "../dashboard/dashboard.js";
+import type { FilterContextItem } from "../dashboard/filterContext.js";
 import type { IAttribute } from "../execution/attribute/index.js";
 import type { IFilter } from "../execution/filter/index.js";
 import type { IMeasure } from "../execution/measure/index.js";
@@ -59,6 +60,8 @@ export type GenAIChatRoutingUseCase =
     | "SEARCH_DASHBOARDS"
     | "CREATE_VISUALIZATION"
     | "EXTEND_VISUALIZATION"
+    | "BUILD_DASHBOARD"
+    | "BUILD_DOCUMENT"
     | "GENERAL"
     | "WHAT_IF"
     | "INVALID";
@@ -231,9 +234,31 @@ export interface IGenAIDashboardContext {
      */
     activeTabId?: string;
     /**
-     * Dashboard definition.
+     * Dashboard definition the assistant edits: the saved filters outside edit mode, the unsaved edits in edit mode.
      */
     definition?: IDashboardDefinition;
+    /**
+     * The filters on the user's screen, outside edit mode only. Never sent as is: the backend receives just
+     * the filters in which they differ from `definition`.
+     *
+     * @internal
+     */
+    liveFilters?: IGenAIDashboardLiveFilters;
+}
+
+/**
+ * Filter context items on the user's screen, for the root filter context and for each tab.
+ * @internal
+ */
+export interface IGenAIDashboardLiveFilters {
+    /**
+     * Items of the root filter context.
+     */
+    filters?: FilterContextItem[];
+    /**
+     * Items of each tab's filter context, by the tab's local identifier.
+     */
+    tabs?: Record<string, FilterContextItem[]>;
 }
 
 /**

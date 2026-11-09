@@ -302,7 +302,8 @@ export function createIdentifier<T = AfmObjectIdentifier>(
             | "visualizationObject"
             | "analyticalDashboard"
             | "dashboardPlugin"
-            | "filterContext";
+            | "filterContext"
+            | "parameter";
     } = {},
 ): T | null {
     const [type, objId] = data.split("/");

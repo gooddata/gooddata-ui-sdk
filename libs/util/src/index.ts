@@ -38,6 +38,7 @@ export {
 } from "./testUtils.js";
 
 // local functions from lodash-es
+export { _camelCase } from "./_/camelCase.js";
 export { _cloneDeep } from "./_/cloneDeep.js";
 export { type _Falsey, _compact } from "./_/compact.js";
 export {
@@ -50,17 +51,39 @@ export {
 export { _groupBy } from "./_/groupBy.js";
 export { _isEqual } from "./_/isEqual.js";
 export { type _EmptyObject, type _EmptyObjectOf, _isEmpty } from "./_/isEmpty.js";
-export { type _PartialObject, _omit } from "./_/omit.js";
+export {
+    type _MapCache,
+    type _MapCacheConstructor,
+    type _Memoize,
+    type _MemoizedFunction,
+    _memoize,
+} from "./_/memoize.js";
+export { _merge } from "./_/merge.js";
+export { _omit } from "./_/omit.js";
+export { _omitBy } from "./_/omitBy.js";
+export { _partition } from "./_/partition.js";
+export { _pick } from "./_/pick.js";
 export { _range } from "./_/range.js";
 export { type _PropertyPath, _set } from "./_/set.js";
+export { _sortBy } from "./_/sortBy.js";
+export { type _ThrottleSettings, type _ThrottleSettingsLeading, _throttle } from "./_/throttle.js";
+export { _uniq } from "./_/uniq.js";
 export { _uniqBy } from "./_/uniqBy.js";
 export type {
     _Dictionary,
     _IterateeShorthand,
     _List,
+    _ListIteratee,
+    _ListIterator,
     _Many,
     _NotVoid,
+    _NumericDictionary,
+    _ObjectIteratee,
+    _ObjectIterator,
+    _PartialObject,
     _PartialShallow,
     _PropertyName,
     _ValueIteratee,
+    _ValueIteratorTypeGuard,
+    _ValueKeyIteratee,
 } from "./_/types.js";

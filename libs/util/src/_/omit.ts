@@ -36,12 +36,7 @@ import { _baseUnset } from "./_baseUnset.js";
 import { _castPath } from "./_castPath.js";
 import { _getAllKeysIn } from "./_getAllKeysIn.js";
 import { _isPlainObject } from "./isPlainObject.js";
-import type { _Many, _PropertyName } from "./types.js";
-
-/**
- * @internal
- */
-export type _PartialObject<T> = Partial<T>;
+import type { _Many, _PartialObject, _PropertyName } from "./types.js";
 
 type _AnyRecord = Record<PropertyKey, unknown>;
 

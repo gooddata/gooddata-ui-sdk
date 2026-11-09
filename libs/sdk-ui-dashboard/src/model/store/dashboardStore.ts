@@ -255,6 +255,10 @@ export interface IReduxedDashboardStore {
     registerEventHandler: (handler: DashboardEventHandler) => void;
     unregisterEventHandler: (handler: DashboardEventHandler) => void;
     rootSagaTask: Task;
+    /**
+     * Starts the root saga if it is no longer running, preserving the existing store and event handlers.
+     */
+    startRootSaga: () => void;
 }
 
 /**
@@ -412,18 +416,25 @@ export function createDashboardStore(config: IDashboardStoreConfig): IReduxedDas
     const rootEventEmitter = createRootEventEmitter(eventing.initialEventHandlers, store.dispatch);
     eventing.onEventingInitialized?.(rootEventEmitter.registerHandler, rootEventEmitter.unregisterHandler);
 
-    const rootSagaTask = sagaMiddleware.run(
-        rootSaga,
-        rootEventEmitter.eventEmitterSaga,
-        rootCommandHandler,
-        queryProcessing.rootQueryProcessor,
-        config.backgroundWorkers,
-    );
+    const runRootSaga = () =>
+        sagaMiddleware.run(
+            rootSaga,
+            rootEventEmitter.eventEmitterSaga,
+            rootCommandHandler,
+            queryProcessing.rootQueryProcessor,
+            config.backgroundWorkers,
+        );
 
-    return {
+    const dashboardStore: IReduxedDashboardStore = {
         store,
         registerEventHandler: rootEventEmitter.registerHandler,
         unregisterEventHandler: rootEventEmitter.unregisterHandler,
-        rootSagaTask,
+        rootSagaTask: runRootSaga(),
+        startRootSaga: () => {
+            if (!dashboardStore.rootSagaTask.isRunning()) {
+                dashboardStore.rootSagaTask = runRootSaga();
+            }
+        },
     };
+    return dashboardStore;
 }

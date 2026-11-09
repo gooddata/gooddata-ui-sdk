@@ -9,7 +9,12 @@ import { describe, expect, it } from "vitest";
 
 import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
-import { type DashboardSelectorEvaluator, selectFilterContextFilters } from "@gooddata/sdk-ui-dashboard";
+import {
+    type DashboardSelectorEvaluator,
+    selectDashboardAiDefinition,
+    selectDashboardAiLiveFilters,
+    selectFilterContextFilters,
+} from "@gooddata/sdk-ui-dashboard";
 
 import {
     chatWindowSliceName,
@@ -196,5 +201,28 @@ describe("useDashboardAmbientContext", () => {
         });
 
         expect(store.getState().chatWindow.context.ambient).toBe(ambientContext);
+    });
+
+    it("sends the saved definition as definition and the filters on screen as liveFilters", () => {
+        const saved = { type: "IDashboard", title: "Saved" };
+        const live = { filters: [], tabs: { live: [] } };
+        const store = makeStore();
+        store.dispatch(
+            setSettingsAction({ settings: { enableAiContextSetup: true } as IUserWorkspaceSettings }),
+        );
+
+        renderDashboardAmbientContext(store, (selector) => {
+            if (selector === selectDashboardAiDefinition) {
+                return saved as never;
+            }
+            if (selector === selectDashboardAiLiveFilters) {
+                return live as never;
+            }
+            return dashboardSelector(selector);
+        });
+
+        const dashboard = store.getState().chatWindow.context.ambient?.view?.dashboard;
+        expect(dashboard?.definition).toBe(saved);
+        expect(dashboard?.liveFilters).toBe(live);
     });
 });

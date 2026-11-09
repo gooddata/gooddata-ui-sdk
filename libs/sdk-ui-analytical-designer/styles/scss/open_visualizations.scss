@@ -1,8 +1,9 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 @use "variables";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
-.open-visualizations {
+// Not .open-visualizations: the dashboard visualization pickers use that class with their own paddings.
+.adi-open-visualizations {
     padding-top: 10px;
 
     .gd-visualizations-list-item {
@@ -70,7 +71,7 @@
     box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
     padding: 10px 0;
 
-    .open-visualizations {
+    .adi-open-visualizations {
         padding: 0;
     }
 }

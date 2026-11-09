@@ -1598,11 +1598,13 @@ function collectLegacyEmptyDateValuesFilters(
 }
 
 /**
- * Rewrites the stored filters so that every representation of the same empty date values mode compares
- * equal: the legacy `""` attribute filter is folded into its date filter's `emptyValueHandling` (the way
- * the reader does), All time with a mode becomes the ALL_TIME_GRANULARITY filter whether it is stored with
- * bounds or without, and the `include` default is dropped as the writer drops it. Only for comparing
- * stored content, the result is never saved.
+ * Brings the stored filters to one shape, so that filters with the same meaning compare equal:
+ * - a legacy `""` attribute filter becomes the empty values mode of its date filter, as when the insight
+ *   is loaded,
+ * - every All time filter becomes `ALL_TIME_GRANULARITY` from 0 to 0, however it is stored,
+ * - the default `include` mode is dropped, as when the insight is saved.
+ *
+ * Used only to compare stored content; the result is never saved.
  */
 export function normalizeEmptyDateValuesFilters(
     visualizationFilters: ReadonlyArray<VisualizationObjectExtendedFilter>,
@@ -1632,7 +1634,9 @@ export function normalizeEmptyDateValuesFilters(
             }
             const { granularity, from, to } = filter.relativeDateFilter;
             const isAllTime = granularity === ALL_TIME_GRANULARITY || from === undefined || to === undefined;
-            if (isAllTime && !_isEmpty(mode)) {
+            // AD saves All time as GDC.time.year without from/to, or as ALL_TIME_GRANULARITY 0..0 when it has
+            // an empty values mode. API clients can store either shape, e.g. ALL_TIME_GRANULARITY with "include".
+            if (isAllTime) {
                 return {
                     relativeDateFilter: {
                         dataSet,

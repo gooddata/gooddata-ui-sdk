@@ -13,9 +13,10 @@ import {
     selectAllFiltersForWidgetByRefAcrossTabs,
     selectAllTabsWidgetContexts,
     selectAttributeFilterDisplayFormsMap,
+    selectDashboardAiDefinition,
+    selectDashboardAiLiveFilters,
     selectDashboardId,
     selectDashboardTitle,
-    selectDashboardWorkingDefinition,
     selectFilterContextFilters,
     selectIsNewDashboard,
     selectVisualizationSwitcherActiveVisualizations,
@@ -87,7 +88,8 @@ function buildFromDashboard(dashboardSelector: DashboardSelectorEvaluator) {
     }
 
     const activeTab = selectWithOptional(dashboardSelector, selectActiveTab);
-    const workingDefinition = selectWithOptional(dashboardSelector, selectDashboardWorkingDefinition);
+    const aiDefinition = selectWithOptional(dashboardSelector, selectDashboardAiDefinition);
+    const liveFilters = selectWithOptional(dashboardSelector, selectDashboardAiLiveFilters);
     const visualizationSwitcherActiveVisualizations = selectWithDefault(
         dashboardSelector,
         selectVisualizationSwitcherActiveVisualizations,
@@ -119,7 +121,8 @@ function buildFromDashboard(dashboardSelector: DashboardSelectorEvaluator) {
                 filters,
                 ...(activeTab ? { activeTabId: activeTab.localIdentifier } : {}),
             },
-            workingDefinition,
+            aiDefinition,
+            liveFilters,
         ),
     );
 }

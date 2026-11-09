@@ -13,11 +13,16 @@ import {
     type IInsightParametersSectionProps,
     InsightParametersSection,
 } from "./CustomUrlEditorParametersSections/InsightParametersSection.js";
+import {
+    type IParameterParametersSectionProps,
+    ParameterParametersSection,
+} from "./CustomUrlEditorParametersSections/ParameterParametersSection.js";
 import { type IIdentifierParametersSectionProps } from "./types.js";
 
 type IParametersPanelProps = IInsightParametersSectionProps &
     IIdentifierParametersSectionProps &
-    IDashboardParametersSectionProps;
+    IDashboardParametersSectionProps &
+    IParameterParametersSectionProps;
 
 export function ParametersPanel({
     attributeDisplayForms,
@@ -31,6 +36,7 @@ export function ParametersPanel({
     dashboardMeasureValueFilters,
     insightMeasureValueFilters,
     attributeFilterConfigs,
+    dashboardParameters,
     insightFilters,
     widgetRef,
 }: IParametersPanelProps) {
@@ -61,6 +67,11 @@ export function ParametersPanel({
                     dashboardFilters={dashboardFilters}
                     dashboardMeasureValueFilters={dashboardMeasureValueFilters}
                     attributeFilterConfigs={attributeFilterConfigs}
+                />
+                <ParameterParametersSection
+                    dashboardParameters={dashboardParameters}
+                    onAdd={onAdd}
+                    intl={intl}
                 />
                 <IdentifierParametersSection
                     enableClientIdParameter={enableClientIdParameter}

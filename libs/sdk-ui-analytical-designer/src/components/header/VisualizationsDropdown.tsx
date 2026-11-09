@@ -244,7 +244,7 @@ export function VisualizationsDropdown({
             )}
             renderBody={({ closeDropdown, isMobile }) => {
                 return (
-                    <div className="open-visualizations s-open-visualizations">
+                    <div className="adi-open-visualizations s-open-visualizations">
                         <DropdownList
                             width={350}
                             isMobile={isMobile}

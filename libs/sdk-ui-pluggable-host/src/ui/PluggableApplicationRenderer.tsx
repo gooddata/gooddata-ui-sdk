@@ -106,6 +106,8 @@ export interface IPluggableApplicationRendererProps {
     /**
      * Ref the renderer populates with a handler that delegates a host-chat event to the active
      * app's mount handle (`onAiAssistantEventReceive`), so an embedded app can handle it in-app.
+     * Events received during startup are buffered until mount returns. Must be referentially
+     * stable — a new ref object remounts the application.
      */
     aiEventReceiveRef?: RefObject<((event: IAiAssistantChatEvent) => void) | undefined>;
     /**
@@ -229,6 +231,29 @@ export function PluggableApplicationRenderer({
         const navigationRequest = (request: IHostNavigationRequest) =>
             mountHandleRef.current?.onHostNavigationRequested?.(request) ?? false;
 
+        // Keep opaque chat events with this mount attempt, not the renderer instance: a workspace
+        // switch can remount the app without replacing the renderer.
+        let pendingAiEvents: IAiAssistantChatEvent[] | undefined = [];
+        const aiEventReceive = (event: IAiAssistantChatEvent) => {
+            if (cancelled || aiEventReceiveRef?.current !== aiEventReceive) {
+                return;
+            }
+            if (pendingAiEvents) {
+                pendingAiEvents.push(event);
+                return;
+            }
+            mountHandleRef.current?.onAiAssistantEventReceive?.(event);
+        };
+        const clearAiEventReceive = () => {
+            pendingAiEvents = undefined;
+            if (aiEventReceiveRef?.current === aiEventReceive) {
+                aiEventReceiveRef.current = undefined;
+            }
+        };
+        if (aiEventReceiveRef) {
+            aiEventReceiveRef.current = aiEventReceive;
+        }
+
         const prevHandle = mountHandleRef.current;
         mountHandleRef.current = undefined;
         mountedAppRef.current = undefined;
@@ -253,6 +278,7 @@ export function PluggableApplicationRenderer({
 
                 const securityFailure = validateAppSecurity(app, loadedApp, ctxRef.current);
                 if (securityFailure) {
+                    clearAiEventReceive();
                     const message = intlRef.current.formatMessage(
                         SECURITY_FAILURE_MESSAGES[securityFailure.kind],
                     );
@@ -298,6 +324,22 @@ export function PluggableApplicationRenderer({
                     navigationRequestRef.current = navigationRequest;
                 }
 
+                // Continue queueing during replay so reentrant deliveries cannot overtake older events.
+                while (pendingAiEvents?.length && !cancelled) {
+                    const event = pendingAiEvents.shift();
+                    if (event) {
+                        try {
+                            mountHandleRef.current?.onAiAssistantEventReceive?.(event);
+                        } catch (error) {
+                            console.error(
+                                `[host-runtime/renderer] Failed to replay AI assistant event for app "${app.id}".`,
+                                error,
+                            );
+                        }
+                    }
+                }
+                pendingAiEvents = undefined;
+
                 lifecycle?.onMountCompleted?.(app.id, now() - mountStart, APPLICATION);
                 lifecycle?.onRendered?.(app.id, now() - totalStart);
                 setViewState({ state: "ready", validUntil: getSecuredRemoteAppValidUntil(app, loadedApp) });
@@ -306,6 +348,7 @@ export function PluggableApplicationRenderer({
                 if (cancelled) {
                     return;
                 }
+                clearAiEventReceive();
                 // An application shown as failed must not veto navigation — its dialog would render
                 // into a hidden container.
                 if (navigationRequestRef?.current === navigationRequest) {
@@ -324,6 +367,7 @@ export function PluggableApplicationRenderer({
 
         return () => {
             cancelled = true;
+            clearAiEventReceive();
             // Only ever clear this mount's own registration, never a newer mount's.
             if (navigationRequestRef?.current === navigationRequest) {
                 navigationRequestRef.current = undefined;
@@ -349,6 +393,7 @@ export function PluggableApplicationRenderer({
         lifecycle,
         onEvent,
         navigationRequestRef,
+        aiEventReceiveRef,
     ]);
 
     useEffect(() => {
@@ -420,20 +465,6 @@ export function PluggableApplicationRenderer({
             ref.current = undefined;
         };
     }, [aiLinkClickHandlerRef]);
-
-    // Expose a host-chat event delegate that defers to the active app's mount handle, so an
-    // embedded app can handle events in-app. Read through the ref at call time so it
-    // always targets the currently mounted app.
-    useEffect(() => {
-        const ref = aiEventReceiveRef;
-        if (!ref) {
-            return;
-        }
-        ref.current = (event) => mountHandleRef.current?.onAiAssistantEventReceive?.(event);
-        return () => {
-            ref.current = undefined;
-        };
-    }, [aiEventReceiveRef]);
 
     return (
         <section className={b()}>

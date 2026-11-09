@@ -565,6 +565,15 @@ function convertMessageTypeTo(
             return "CREATE_VISUALIZATION";
         case "kda":
             return "CHANGE_ANALYSIS";
+        case "dashboard":
+            return "BUILD_DASHBOARD";
+        case "alertProposal":
+            return "ALERT";
+        case "publisherDocument":
+        case "publisherDocumentV2":
+            return "BUILD_DOCUMENT";
+        case "searchResults":
+            return "SEARCH_ALL";
         default:
             return "GENERAL";
     }

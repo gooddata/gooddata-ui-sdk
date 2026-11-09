@@ -12,6 +12,7 @@ import { enrichAgGridToken, useAgGridToken } from "@gooddata/sdk-ui-pivot/next";
 import { shallowEqualObjects } from "@gooddata/util";
 
 import { newDashboardSummaryWorkflowWorker } from "../commandHandlers/dashboard/dashboardSummaryWorkflowWorker.js";
+import { newCustomUrlDrillParametersWorker } from "../commandHandlers/parameters/customUrlDrillParametersWorker.js";
 import { newParameterDependenciesWorker } from "../commandHandlers/parameters/parameterDependenciesWorker.js";
 import { newRenderingWorker } from "../commandHandlers/render/renderingWorker.js";
 import {
@@ -69,8 +70,13 @@ function useNotifyDeinitializedOnUnmount(
     });
 
     useEffect(() => {
+        // Restart saga listeners when effects reconnect.
+        // This does not resume initialization cancelled during cleanup.
+        dashboardStoreRef.current?.startRootSaga();
         return () => {
             dispatchDeinitialized(dashboardStoreRef.current, initPropsRef.current);
+            // A disconnected store must not finish initialization and notify shared event handlers.
+            dashboardStoreRef.current?.rootSagaTask.cancel();
         };
     }, []);
 }
@@ -156,6 +162,7 @@ export const useInitializeDashboardStore = (
                 }),
                 newDashboardSummaryWorkflowWorker(),
                 newParameterDependenciesWorker(),
+                newCustomUrlDrillParametersWorker(),
             ];
 
             // Create new store and fire load dashboard command.

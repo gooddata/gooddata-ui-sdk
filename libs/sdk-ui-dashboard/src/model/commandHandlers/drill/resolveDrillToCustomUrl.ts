@@ -1,7 +1,7 @@
 // (C) 2020-2026 GoodData Corporation
 
 import stringify from "json-stable-stringify";
-import { groupBy } from "lodash-es";
+import { escapeRegExp, groupBy } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { type CallEffect, type SagaReturnType, all, call, select } from "redux-saga/effects";
 
@@ -55,6 +55,7 @@ import {
     getDrillUrlPlaceholderTypes,
     getInsightAttributeFilterPlaceholdersFromUrl,
     getInsightMeasureValueFilterPlaceholdersFromUrl,
+    getParameterPlaceholdersFromUrl,
 } from "@gooddata/sdk-model/internal";
 import {
     type IDrillEvent,
@@ -79,6 +80,10 @@ import {
     selectFilterContextMeasureValueFilters,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectAnalyticalWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
+import {
+    type IWidgetParameterValue,
+    selectWidgetParameterValues,
+} from "../../store/tabs/parameters/parametersSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
 import { resolveDisplayFormMetadata } from "../../utils/displayFormResolver.js";
@@ -675,6 +680,25 @@ export function* getInsightAttributeFilterReplacements(
     );
 }
 
+function* getParameterReplacements(
+    url: string,
+    widgetRef: ObjRef,
+): SagaIterator<IDrillToUrlPlaceholderReplacement[]> {
+    const parameters: IWidgetParameterValue[] = yield select(selectWidgetParameterValues(widgetRef));
+    const valueByIdentifier = new Map(parameters.map((parameter) => [parameter.identifier, parameter.value]));
+
+    return getParameterPlaceholdersFromUrl(url).map(
+        ({ placeholder: toBeReplaced, identifier, toBeEncoded }) => {
+            const value = valueByIdentifier.get(identifier);
+            if (value === undefined) {
+                return { toBeReplaced, replacement: undefined };
+            }
+            const text = String(value);
+            return { toBeReplaced, replacement: toBeEncoded ? encodeURIComponent(text) : text };
+        },
+    );
+}
+
 const createIdentifierReplacement = (
     toBeReplaced: DRILL_TO_URL_PLACEHOLDER,
     replacement = "",
@@ -726,15 +750,21 @@ export function* getInsightIdentifiersReplacements(
     return replacements;
 }
 
-const applyReplacements = (url: string, replacements: IDrillToUrlPlaceholderReplacement[]) =>
-    replacements.reduce(
-        (customUrlWithReplacedPlaceholders, { toBeReplaced, replacement, replaceGlobally }) =>
-            customUrlWithReplacedPlaceholders.replace(
-                replaceGlobally ? new RegExp(toBeReplaced, "g") : toBeReplaced,
-                replacement!,
-            ),
-        url,
-    );
+const applyReplacements = (url: string, replacements: IDrillToUrlPlaceholderReplacement[]) => {
+    if (replacements.length === 0) {
+        return url;
+    }
+    const pending = groupBy(replacements, ({ toBeReplaced }) => toBeReplaced);
+    const pattern = new RegExp(Object.keys(pending).map(escapeRegExp).join("|"), "g");
+    return url.replace(pattern, (placeholder) => {
+        const queue = pending[placeholder];
+        const next = queue[0];
+        if (!next.replaceGlobally) {
+            queue.shift();
+        }
+        return next.replacement!;
+    });
+};
 
 export function* resolveDrillToCustomUrl(
     drillConfig: IDrillToCustomUrlModel,
@@ -766,6 +796,7 @@ export function* resolveDrillToCustomUrl(
                       replacement: undefined,
                   }));
         },
+        parameter: () => getParameterReplacements(customUrl, widgetRef),
         [DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_PROJECT_ID]: resolveContext,
         [DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_WORKSPACE_ID]: resolveContext,
         [DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_INSIGHT_ID]: resolveContext,

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-metric-component",
-    "version": "11.68.0-alpha.5",
+    "version": "11.68.0-alpha.6",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
     "repository": {
@@ -30,7 +30,6 @@
         "format-write": "oxfmt .",
         "lint": "oxlint . --quiet && eslint .",
         "lint-fix": "oxlint . --quiet --fix && eslint . --fix",
-        "prepack": "cp -f ../../NOTICE ./NOTICE",
         "test": "NODE_OPTIONS=--no-deprecation vitest",
         "test-once": "NODE_OPTIONS=--no-deprecation vitest run --silent=true",
         "validate": "npm run lint && npm run format-check && npm run validate-locales",

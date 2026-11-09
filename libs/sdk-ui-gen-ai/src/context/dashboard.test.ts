@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { idRef, objRefToString, serializeObjRef } from "@gooddata/sdk-model";
+import { type IDashboardDefinition, idRef, objRefToString, serializeObjRef } from "@gooddata/sdk-model";
 
 import {
     buildDashboardContext,
@@ -21,6 +21,17 @@ describe("buildDashboardContext", () => {
         } as any;
         const result = buildDashboardContext(dashboard);
         expect(result).toEqual({ view: { dashboard } });
+    });
+
+    it("carries the definition and the live filters next to each other", () => {
+        const dashboard = { ref: idRef("dash"), widgets: [] };
+        const definition = { type: "IDashboard", title: "Saved" } as IDashboardDefinition;
+        const liveFilters = { filters: [], tabs: { live: [] } };
+
+        const result = buildDashboardContext(dashboard, definition, liveFilters);
+
+        expect(result.view?.dashboard?.definition).toBe(definition);
+        expect(result.view?.dashboard?.liveFilters).toBe(liveFilters);
     });
 });
 

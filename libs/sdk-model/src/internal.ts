@@ -21,4 +21,7 @@ export {
     getDashboardMeasureValueFilterPlaceholdersFromUrl,
     getInsightAttributeFilterPlaceholdersFromUrl,
     getInsightMeasureValueFilterPlaceholdersFromUrl,
+    getParameterPlaceholdersFromUrl,
+    getUnknownParameterIdentifiers,
+    parameterIdentifierToPlaceholder,
 } from "./dashboard/drillUrl.js";

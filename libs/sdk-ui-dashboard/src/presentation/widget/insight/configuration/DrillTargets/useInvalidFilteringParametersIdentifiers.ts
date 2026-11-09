@@ -17,6 +17,7 @@ import {
     getDashboardMeasureValueFilterPlaceholdersFromUrl,
     getInsightAttributeFilterPlaceholdersFromUrl,
     getInsightMeasureValueFilterPlaceholdersFromUrl,
+    getUnknownParameterIdentifiers,
     placeholderIdentifierText,
 } from "@gooddata/sdk-model/internal";
 
@@ -39,6 +40,7 @@ export function useInvalidFilteringParametersIdentifiers(
     insightMeasureValueFilters: IMeasureValueFilter[] | undefined,
     enableInsightMeasureValueFilters: boolean,
     attributeFilterConfigs: IDashboardAttributeFilterConfig[] | undefined,
+    dashboardParameterIdentifiers: string[],
 ) {
     const displayForms = useDashboardSelector(selectAllCatalogDisplayFormsMap);
     const measures = useDashboardSelector(selectAllCatalogMeasuresMap);
@@ -121,11 +123,17 @@ export function useInvalidFilteringParametersIdentifiers(
                       .map(({ identifier }) => identifier)
                 : insightMeasureValueFilterParameters.map(({ identifier }) => identifier);
 
+            const invalidParameterIdentifiers = getUnknownParameterIdentifiers(
+                urlDrillTarget.customUrl,
+                dashboardParameterIdentifiers,
+            );
+
             return uniq([
                 ...invalidDashboardParameters,
                 ...invalidInsightParameters,
                 ...invalidDashboardMvfParameters,
                 ...invalidInsightMvfParameters,
+                ...invalidParameterIdentifiers,
             ]);
         }
         return [];
@@ -139,5 +147,6 @@ export function useInvalidFilteringParametersIdentifiers(
         insightMeasureValueFilters,
         enableInsightMeasureValueFilters,
         attributeFilterConfigs,
+        dashboardParameterIdentifiers,
     ]);
 }

@@ -130,6 +130,32 @@ export {
     type ITigerSpecificFunctionsProxyResult,
 } from "./backend/tigerSpecificFunctionsProxy.js";
 
+export {
+    TigerFeatureDefinitions,
+    type ITigerFeatureFlags,
+    LocalFeatureFlagOverrides,
+} from "./backend/uiFeatures.js";
+export {
+    FEATURE_FLAG_OVERRIDES_STORAGE_KEY,
+    FEATURE_FLAG_OVERRIDES_GATE_FLAG,
+    type OverridableFeatureFlag,
+    type FeatureFlagOverrideRule,
+    type StaleFeatureFlagOverrideReason,
+    type IStaleFeatureFlagOverrideRule,
+    type IFeatureFlagOverrides,
+    type IStoredFeatureFlagOverrides,
+    type IFeatureFlagOverrideContext,
+    parseFeatureFlagOverrides,
+    serializeFeatureFlagOverrides,
+    readFeatureFlagOverrides,
+    writeFeatureFlagOverrides,
+    selectFeatureFlagOverrideRules,
+    isFeatureFlagOverrideRuleInContext,
+    resolveFeatureFlagOverrides,
+    isValidFeatureFlagValue,
+    isOverridableFeatureFlag,
+    getServerFeatureFlags,
+} from "./backend/featureFlagOverrides.js";
 export type { TigerAfmType, TigerMetadataType, TigerObjectType } from "./types/index.js";
 export {
     type TigerCompatibleObjectType,

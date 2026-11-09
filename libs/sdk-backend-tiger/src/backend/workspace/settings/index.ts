@@ -437,7 +437,7 @@ export function getSettingsForCurrentUser(
             ];
         }
 
-        const features = await new TigerFeaturesService(authCall).getFeatures(profile, context);
+        const features = await new TigerFeaturesService(authCall).getFeatures(profile, context, workspace);
 
         return {
             ...DefaultUserSettings,

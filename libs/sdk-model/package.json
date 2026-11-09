@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-model",
-    "version": "11.68.0-alpha.5",
+    "version": "11.68.0-alpha.6",
     "description": "GoodData Model definitions used by UI components and Backend SPI",
     "license": "MIT",
     "author": "GoodData",
@@ -14,7 +14,8 @@
         "esm/**/*.js",
         "esm/**/*.json",
         "esm/**/*.d.ts",
-        "esm/**/*.map"
+        "esm/**/*.map",
+        "NOTICE"
     ],
     "type": "module",
     "sideEffects": false,

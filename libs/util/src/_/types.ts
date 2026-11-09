@@ -78,3 +78,53 @@ export type _IterateeShorthand<T> = _PropertyName | [_PropertyName, any] | _Part
  * @internal
  */
 export type _ValueIteratee<T> = ((value: T) => _NotVoid) | _IterateeShorthand<T>;
+
+/**
+ * A predicate that narrows the element type, so functions like `_partition` can type their result.
+ *
+ * @internal
+ */
+export type _ValueIteratorTypeGuard<T, S extends T> = (value: T) => value is S;
+
+/**
+ * @internal
+ */
+export type _ListIterator<T, TResult> = (value: T, index: number, collection: _List<T>) => TResult;
+
+/**
+ * @internal
+ */
+export type _ListIteratee<T> = _ListIterator<T, _NotVoid> | _IterateeShorthand<T>;
+
+/**
+ * @internal
+ */
+export type _ObjectIterator<TObject, TResult> = (
+    value: TObject[keyof TObject],
+    key: string,
+    collection: TObject,
+) => TResult;
+
+/**
+ * @internal
+ */
+export type _ObjectIteratee<TObject> =
+    | _ObjectIterator<TObject, _NotVoid>
+    | _IterateeShorthand<TObject[keyof TObject]>;
+
+/**
+ * @internal
+ */
+export type _PartialObject<T> = Partial<T>;
+
+/**
+ * @internal
+ */
+export type _ValueKeyIteratee<T> = ((value: T, key: string) => _NotVoid) | _IterateeShorthand<T>;
+
+/**
+ * @internal
+ */
+export type _NumericDictionary<T> = {
+    [index: number]: T;
+};

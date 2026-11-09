@@ -155,6 +155,7 @@ import { IExportTemplate } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterableWidget } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-model';
+import { IGenAIDashboardLiveFilters } from '@gooddata/sdk-model';
 import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
@@ -12221,6 +12222,12 @@ export const selectCurrentUser: DashboardSelector<IUser>;
 
 // @public
 export const selectCurrentUserRef: DashboardSelector<ObjRef>;
+
+// @internal
+export const selectDashboardAiDefinition: DashboardSelector<IDashboardDefinition<IDashboardWidget>>;
+
+// @internal
+export const selectDashboardAiLiveFilters: DashboardSelector<IGenAIDashboardLiveFilters | undefined>;
 
 // @alpha
 export const selectDashboardDensity: DashboardSelector<DashboardDensity>;

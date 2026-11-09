@@ -10,6 +10,7 @@ import {
     type PluggableApplicationRegistryItem,
 } from "@gooddata/sdk-model";
 import {
+    type IAiAssistantChatEvent,
     type IHostNavigationRequest,
     type IPlatformContext,
     type IPluggableApp,
@@ -132,6 +133,7 @@ function renderer(options: {
     onAiAssistantContext?: ComponentProps<typeof PluggableApplicationRenderer>["onAiAssistantContext"];
     onAiAssistantAppEvent?: ComponentProps<typeof PluggableApplicationRenderer>["onAiAssistantAppEvent"];
     onOpenPricingDialog?: () => void;
+    aiEventReceiveRef?: ComponentProps<typeof PluggableApplicationRenderer>["aiEventReceiveRef"];
 }): ReactElement {
     return (
         <HostIntlProvider locale="en-US">
@@ -144,6 +146,7 @@ function renderer(options: {
                 onAiAssistantContext={options.onAiAssistantContext}
                 onAiAssistantAppEvent={options.onAiAssistantAppEvent}
                 onOpenPricingDialog={options.onOpenPricingDialog}
+                aiEventReceiveRef={options.aiEventReceiveRef}
             />
         </HostIntlProvider>
     );
@@ -279,6 +282,221 @@ describe("PluggableApplicationRenderer", () => {
         emitted.onEvent?.(aiAssistantContextChanged(payload));
 
         expect(onAiAssistantContext).toHaveBeenCalledExactlyOnceWith(payload);
+    });
+
+    describe("chat events during application startup", () => {
+        let aiEventReceiveRef: { current: ((event: IAiAssistantChatEvent) => void) | undefined };
+        let onAiAssistantEventReceive: Mock<(event: IAiAssistantChatEvent) => void>;
+
+        const event = (index: number): IAiAssistantChatEvent => ({
+            name: "chat.something-new",
+            payload: { index },
+        });
+        const pendingLoad = () => {
+            let resolve!: (application: IPluggableApp) => void;
+            let reject!: (error: Error) => void;
+            const promise = new Promise<IPluggableApp>((resolvePromise, rejectPromise) => {
+                resolve = resolvePromise;
+                reject = rejectPromise;
+            });
+            mocks.loadPluggableApplication.mockReturnValueOnce(promise);
+            return { resolve, reject };
+        };
+        const renderEvents = (pathname = WS1_PATHNAME, application: PluggableApplicationRegistryItem = app) =>
+            renderer({ pathname, ctx: context(), navigationRequestRef, aiEventReceiveRef, app: application });
+
+        beforeEach(() => {
+            aiEventReceiveRef = { current: undefined };
+            onAiAssistantEventReceive = vi.fn();
+            mocks.loadPluggableApplication.mockResolvedValue({
+                mount: () => ({ unmount: vi.fn(), onAiAssistantEventReceive }),
+            });
+        });
+
+        it("replays opaque events in order only after mount returns, then forwards live events once", async () => {
+            const load = pendingLoad();
+            const definition: IAiAssistantChatEvent = {
+                name: "chat.definition-received",
+                payload: { definitionType: "dashboard", content: { title: "Draft" } },
+            };
+            const duringMount = event(2);
+            const live = event(3);
+            const { rerender } = render(renderEvents());
+
+            aiEventReceiveRef.current?.(definition);
+            expect(onAiAssistantEventReceive).not.toHaveBeenCalled();
+
+            load.resolve({
+                mount: () => {
+                    aiEventReceiveRef.current?.(duringMount);
+                    expect(onAiAssistantEventReceive).not.toHaveBeenCalled();
+                    return { unmount: vi.fn(), onAiAssistantEventReceive };
+                },
+            });
+            await flushMount();
+            aiEventReceiveRef.current?.(live);
+            rerender(renderEvents());
+            await flushMount();
+
+            expect(onAiAssistantEventReceive.mock.calls).toEqual([[definition], [duringMount], [live]]);
+            expect(onAiAssistantEventReceive.mock.calls[0]?.[0]).toBe(definition);
+        });
+
+        it("keeps events received during replay behind events already queued", async () => {
+            const load = pendingLoad();
+            render(renderEvents());
+            aiEventReceiveRef.current?.(event(1));
+            aiEventReceiveRef.current?.(event(2));
+            onAiAssistantEventReceive.mockImplementationOnce(() => aiEventReceiveRef.current?.(event(3)));
+
+            load.resolve({ mount: () => ({ unmount: vi.fn(), onAiAssistantEventReceive }) });
+            await flushMount();
+
+            expect(onAiAssistantEventReceive.mock.calls).toEqual([[event(1)], [event(2)], [event(3)]]);
+        });
+
+        it("reports each replay failure and drains queued and reentrant events without failing mount", async () => {
+            const load = pendingLoad();
+            const consoleError = vi.spyOn(console, "error").mockImplementation(() => undefined);
+            const lifecycle = {
+                onLoadFailed: vi.fn(),
+                onMountCompleted: vi.fn(),
+                onRendered: vi.fn(),
+            };
+            mocks.getAppLifecycleCallbacks.mockReturnValue(lifecycle);
+            render(renderEvents());
+            const delegate = aiEventReceiveRef.current;
+            delegate?.(event(1));
+            delegate?.(event(2));
+            const firstError = new Error("First event failed");
+            const secondError = "Second event failed";
+            onAiAssistantEventReceive
+                .mockImplementationOnce(() => {
+                    delegate?.(event(3));
+                    throw firstError;
+                })
+                .mockImplementationOnce(() => {
+                    throw secondError;
+                });
+
+            load.resolve({ mount: () => ({ unmount: vi.fn(), onAiAssistantEventReceive }) });
+            await flushMount();
+            aiEventReceiveRef.current?.(event(4));
+
+            expect(onAiAssistantEventReceive.mock.calls).toEqual([
+                [event(1)],
+                [event(2)],
+                [event(3)],
+                [event(4)],
+            ]);
+            expect(consoleError.mock.calls).toEqual([
+                [
+                    `[host-runtime/renderer] Failed to replay AI assistant event for app "${app.id}".`,
+                    firstError,
+                ],
+                [
+                    `[host-runtime/renderer] Failed to replay AI assistant event for app "${app.id}".`,
+                    secondError,
+                ],
+            ]);
+            expect(lifecycle.onLoadFailed).not.toHaveBeenCalled();
+            expect(lifecycle.onMountCompleted).toHaveBeenCalledOnce();
+            expect(lifecycle.onRendered).toHaveBeenCalledOnce();
+            expect(mocks.deactivateAppStylesheets).not.toHaveBeenCalled();
+            expect(aiEventReceiveRef.current).toBe(delegate);
+        });
+
+        it("replays all startup events in arrival order", async () => {
+            const load = pendingLoad();
+            render(renderEvents());
+            const events = Array.from({ length: 35 }, (_, index) => event(index));
+            events.forEach((value) => aiEventReceiveRef.current?.(value));
+
+            load.resolve({ mount: () => ({ unmount: vi.fn(), onAiAssistantEventReceive }) });
+            await flushMount();
+
+            expect(onAiAssistantEventReceive.mock.calls).toEqual(events.map((value) => [value]));
+            expect(onAiAssistantEventReceive.mock.calls[0]?.[0]).toBe(events[0]);
+        });
+
+        it.each([
+            { pathname: WS2_PATHNAME, application: app },
+            { pathname: "/workspace/ws1/catalog", application: catalogApp },
+        ])("discards prior startup events on navigation to $pathname", async ({ pathname, application }) => {
+            const oldLoad = pendingLoad();
+            const { rerender } = render(renderEvents());
+            const oldDelegate = aiEventReceiveRef.current;
+            aiEventReceiveRef.current?.(event(1));
+
+            const newLoad = pendingLoad();
+            rerender(renderEvents(pathname, application));
+            oldDelegate?.(event(2));
+            aiEventReceiveRef.current?.(event(3));
+            const oldMount = vi.fn(() => ({ unmount: vi.fn(), onAiAssistantEventReceive }));
+            oldLoad.resolve({ mount: oldMount });
+            newLoad.resolve({ mount: () => ({ unmount: vi.fn(), onAiAssistantEventReceive }) });
+            await flushMount();
+
+            expect(oldMount).not.toHaveBeenCalled();
+            expect(onAiAssistantEventReceive.mock.calls).toEqual([[event(3)]]);
+            oldDelegate?.(event(4));
+            expect(onAiAssistantEventReceive).toHaveBeenCalledOnce();
+        });
+
+        it("clears the delegate and pending events on unmount", async () => {
+            const load = pendingLoad();
+            const { unmount } = render(renderEvents());
+            const delegate = aiEventReceiveRef.current;
+            aiEventReceiveRef.current?.(event(1));
+
+            unmount();
+            delegate?.(event(2));
+            const mount = vi.fn(() => ({ unmount: vi.fn(), onAiAssistantEventReceive }));
+            load.resolve({ mount });
+            await flushMount();
+
+            expect(aiEventReceiveRef.current).toBeUndefined();
+            expect(mount).not.toHaveBeenCalled();
+            expect(onAiAssistantEventReceive).not.toHaveBeenCalled();
+        });
+
+        it.each(["load", "security", "mount"])("discards events after a %s failure", async (failure) => {
+            const load = pendingLoad();
+            vi.spyOn(console, "error").mockImplementation(() => undefined);
+            render(renderEvents());
+            aiEventReceiveRef.current?.(event(1));
+            if (failure === "load") {
+                load.reject(new Error("load failed"));
+            } else {
+                if (failure === "security") {
+                    mocks.validateAppSecurity.mockReturnValue({ kind: "organization-not-allowed" });
+                }
+                load.resolve({
+                    mount: () => {
+                        throw new Error("mount failed");
+                    },
+                });
+            }
+            await flushMount();
+
+            expect(aiEventReceiveRef.current).toBeUndefined();
+            expect(onAiAssistantEventReceive).not.toHaveBeenCalled();
+        });
+
+        it("does not retain events for an application without a chat receiver", async () => {
+            const load = pendingLoad();
+            const { rerender } = render(renderEvents());
+            aiEventReceiveRef.current?.(event(1));
+            load.resolve({ mount: () => ({ unmount: vi.fn() }) });
+            await flushMount();
+            aiEventReceiveRef.current?.(event(2));
+
+            rerender(renderEvents(WS2_PATHNAME));
+            aiEventReceiveRef.current?.(event(3));
+            await flushMount();
+
+            expect(onAiAssistantEventReceive.mock.calls).toEqual([[event(3)]]);
+        });
     });
 
     describe("a document the application saved", () => {

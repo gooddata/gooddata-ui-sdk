@@ -81,7 +81,7 @@ export function MarkdownComponent({ children, references, allowMarkdown = false 
     const componentMap: Components = useMemo(
         () => ({
             p: ({ children }) => <Typography tagName="p">{children}</Typography>,
-            a: ({ children, href }) => <CustomHyperlink href={href ?? ""} text={children as string} />,
+            a: ({ children, href }) => <CustomHyperlink href={href ?? ""} text={children} />,
             h1: ({ children }) => <Typography tagName="h1">{children}</Typography>,
             h2: ({ children }) => <Typography tagName="h2">{children}</Typography>,
             h3: ({ children }) => <Typography tagName="h3">{children}</Typography>,

@@ -578,7 +578,7 @@
                     "version": {
                         "type": "string",
                         "enum": ["2", "3"],
-                        "description": "Dashboard model version. \"2\" (default if omitted) — legacy shape: root-level sections/filters are also mirrored into a default tab, producing a declarative model with duplicated content for backward compatibility with older SDK readers. \"3\" — clean shape: tabs are the sole source of layout and filters; root sections/filters in YAML are still allowed as an authoring shortcut but are wrapped into a single synthetic tab without duplication. Use \"3\" for new dashboards; \"2\" exists to keep existing files round-trippable."
+                        "description": "Dashboard model version. \"2\" (default if omitted) — legacy shape: root-level sections/filters/parameters are also mirrored into a default tab, producing a declarative model with duplicated content for backward compatibility with older SDK readers. \"3\" — clean shape: tabs are the sole source of layout, filters and parameters; root sections/filters/parameters in YAML are still allowed as an authoring shortcut but are wrapped into a single synthetic tab without duplication. Use \"3\" for new dashboards; \"2\" exists to keep existing files round-trippable."
                     },
                     "title": {
                         "$ref": "#/$global/gaac/title",
@@ -661,9 +661,13 @@
                             ]
                         }
                     },
+                    "parameters": {
+                        "$ref": "#/$defs/dashboardParameters",
+                        "description": "Parameters shown in the filter bar of this dashboard."
+                    },
                     "tabs": {
                         "type": "array",
-                        "description": "A list of tabs in this dashboard. Each tab has its own layout, filters, and filter configurations. Mutually exclusive with sections and filters at dashboard level.",
+                        "description": "A list of tabs in this dashboard. Each tab has its own layout, filters, parameters, and filter configurations. Mutually exclusive with sections, filters and parameters at dashboard level.",
                         "items": { "$ref": "#/$defs/tab" },
                         "$semantic": { "type": "unique_tab_identifiers" }
                     },
@@ -6667,7 +6671,7 @@
                 "version": {
                     "type": "string",
                     "enum": ["2", "3"],
-                    "description": "Dashboard model version. \"2\" (default if omitted) — legacy shape: root-level sections/filters are also mirrored into a default tab, producing a declarative model with duplicated content for backward compatibility with older SDK readers. \"3\" — clean shape: tabs are the sole source of layout and filters; root sections/filters in YAML are still allowed as an authoring shortcut but are wrapped into a single synthetic tab without duplication. Use \"3\" for new dashboards; \"2\" exists to keep existing files round-trippable."
+                    "description": "Dashboard model version. \"2\" (default if omitted) — legacy shape: root-level sections/filters/parameters are also mirrored into a default tab, producing a declarative model with duplicated content for backward compatibility with older SDK readers. \"3\" — clean shape: tabs are the sole source of layout, filters and parameters; root sections/filters/parameters in YAML are still allowed as an authoring shortcut but are wrapped into a single synthetic tab without duplication. Use \"3\" for new dashboards; \"2\" exists to keep existing files round-trippable."
                 },
                 "title": {
                     "$ref": "#/$global/gaac/title",
@@ -6750,9 +6754,13 @@
                         ]
                     }
                 },
+                "parameters": {
+                    "$ref": "#/$defs/dashboardParameters",
+                    "description": "Parameters shown in the filter bar of this dashboard."
+                },
                 "tabs": {
                     "type": "array",
-                    "description": "A list of tabs in this dashboard. Each tab has its own layout, filters, and filter configurations. Mutually exclusive with sections and filters at dashboard level.",
+                    "description": "A list of tabs in this dashboard. Each tab has its own layout, filters, parameters, and filter configurations. Mutually exclusive with sections, filters and parameters at dashboard level.",
                     "items": { "$ref": "#/$defs/tab" },
                     "$semantic": { "type": "unique_tab_identifiers" }
                 },
@@ -6801,6 +6809,44 @@
             },
             "required": ["widgets"]
         },
+        "dashboardParameters": {
+            "type": "array",
+            "items": {
+                "title": "Dashboard Parameter",
+                "description": "A parameter shown in the filter bar: its value must have the parameter's type.",
+                "allOf": [
+                    {
+                        "if": { "properties": { "type": { "const": "STRING" } }, "required": ["type"] },
+                        "then": { "$ref": "#/$defs/stringDashboardParameter" }
+                    },
+                    {
+                        "if": { "properties": { "type": { "const": "NUMBER" } }, "required": ["type"] },
+                        "then": { "$ref": "#/$defs/numberDashboardParameter" }
+                    }
+                ],
+                "properties": {
+                    "id": {
+                        "description": "An identifier of the parameter.",
+                        "$semantic": { "type": "reference", "source": "parameter.id" }
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": ["STRING", "NUMBER"],
+                        "description": "The data type of the parameter. Must match the type in the parameter definition."
+                    },
+                    "value": {
+                        "description": "The value this dashboard uses instead of the parameter's default value."
+                    },
+                    "title": {
+                        "description": "The label shown in the filter bar instead of the parameter's title."
+                    },
+                    "mode": {
+                        "description": "Setting parameter mode to readonly will disable the parameter. Setting it to hidden will hide the parameter from the dashboard. Setting it to active will enable the parameter."
+                    }
+                },
+                "required": ["id", "type"]
+            }
+        },
         "tab": {
             "type": "object",
             "additionalProperties": false,
@@ -6816,6 +6862,10 @@
                     "description": "Filters specific to this tab.",
                     "$semantic": { "type": "unique_filter_local_identifiers" }
                 },
+                "parameters": {
+                    "$ref": "#/$defs/dashboardParameters",
+                    "description": "Parameters shown in the filter bar of this tab."
+                },
                 "sections": {
                     "type": "array",
                     "description": "A list of sections in this tab.",
@@ -6823,6 +6873,64 @@
                 }
             },
             "required": ["id", "title", "sections"]
+        },
+        "stringDashboardParameter": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "#/$global/gaac/identifier",
+                    "description": "An identifier of the parameter."
+                },
+                "type": {
+                    "type": "string",
+                    "enum": ["STRING"],
+                    "description": "The data type of the parameter. Must match the type in the parameter definition."
+                },
+                "value": {
+                    "type": "string",
+                    "description": "The value this dashboard uses instead of the parameter's default value."
+                },
+                "title": {
+                    "$ref": "#/$global/gaac/title",
+                    "description": "The label shown in the filter bar instead of the parameter's title."
+                },
+                "mode": {
+                    "type": "string",
+                    "enum": ["readonly", "hidden", "active"],
+                    "description": "Setting parameter mode to readonly will disable the parameter. Setting it to hidden will hide the parameter from the dashboard. Setting it to active will enable the parameter."
+                }
+            },
+            "required": ["id", "type"]
+        },
+        "numberDashboardParameter": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "#/$global/gaac/identifier",
+                    "description": "An identifier of the parameter."
+                },
+                "type": {
+                    "type": "string",
+                    "enum": ["NUMBER"],
+                    "description": "The data type of the parameter. Must match the type in the parameter definition."
+                },
+                "value": {
+                    "type": "number",
+                    "description": "The value this dashboard uses instead of the parameter's default value."
+                },
+                "title": {
+                    "$ref": "#/$global/gaac/title",
+                    "description": "The label shown in the filter bar instead of the parameter's title."
+                },
+                "mode": {
+                    "type": "string",
+                    "enum": ["readonly", "hidden", "active"],
+                    "description": "Setting parameter mode to readonly will disable the parameter. Setting it to hidden will hide the parameter from the dashboard. Setting it to active will enable the parameter."
+                }
+            },
+            "required": ["id", "type"]
         },
         "timezoneId": {
             "description": "An IANA timezone ID (for example, Europe/Prague or UTC) or $browserDetected to use the viewer browser timezone.",

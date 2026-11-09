@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-code-convertors",
-    "version": "11.68.0-alpha.5",
+    "version": "11.68.0-alpha.6",
     "description": "GoodData AAC declarative converters",
     "license": "MIT",
     "author": "GoodData",
@@ -10,7 +10,8 @@
         "directory": "libs/sdk-code-convertors"
     },
     "files": [
-        "esm/**"
+        "esm/**",
+        "NOTICE"
     ],
     "type": "module",
     "sideEffects": false,

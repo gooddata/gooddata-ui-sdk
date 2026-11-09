@@ -22,8 +22,11 @@ import {
     getDrillUrlPlaceholderTypes,
     getInsightAttributeFilterPlaceholdersFromUrl,
     getInsightMeasureValueFilterPlaceholdersFromUrl,
+    getParameterPlaceholdersFromUrl,
+    getUnknownParameterIdentifiers,
     insightAttributeFilterToPlaceholder,
     joinDrillUrlParts,
+    parameterIdentifierToPlaceholder,
     splitDrillUrlParts,
 } from "./drillUrl.js";
 
@@ -122,6 +125,19 @@ describe("drill url placeholders", () => {
         expect(insightAttributeFilterToPlaceholder(idRef("ca1", "computedAttribute"))).toBe(
             "{attribute_filter_selection(computed_attribute/ca1)}",
         );
+    });
+
+    it("should build and extract parameter placeholders", () => {
+        expect(parameterIdentifierToPlaceholder("p1")).toBe("{parameter(p1)}");
+        expect(
+            getParameterPlaceholdersFromUrl("{parameter(p1)}/?q={parameter(p2)}&r={attribute_title(label1)}"),
+        ).toMatchSnapshot();
+    });
+
+    it("should return parameter identifiers that are not known", () => {
+        expect(
+            getUnknownParameterIdentifiers("https://example.com/{parameter(p1)}/{parameter(p2)}", ["p1"]),
+        ).toEqual(["p2"]);
     });
 
     it("should name a display form by identifier even when its ref is a uri", () => {
@@ -308,5 +324,11 @@ describe("custom URL object dependencies", () => {
             expect(getDrillUrlPlaceholderTypes(url)).toEqual([placeholder]);
             expect(getDrillToCustomUrlReferenceMap({ url })).toEqual({});
         }
+    });
+
+    it("recognizes parameter placeholders without storing object dependencies", () => {
+        const url = "https://example.com/{parameter(p1)}/{parameter(p2)}";
+        expect(getDrillUrlPlaceholderTypes(url)).toEqual(["parameter"]);
+        expect(getDrillToCustomUrlReferenceMap({ url })).toEqual({});
     });
 });

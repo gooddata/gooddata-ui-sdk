@@ -53,6 +53,10 @@ import {
     isHeaderHidden,
     isPlainLeftClick,
 } from "./chromeHelpers.js";
+import {
+    FeatureFlagOverrides,
+    useFeatureFlagOverrides,
+} from "./featureFlagOverrides/FeatureFlagOverrides.js";
 import { b, e } from "./hostChromeBem.js";
 import { HostChromeProviders } from "./HostChromeProviders.js";
 import { HostNotificationDispatcher } from "./HostNotificationDispatcher.js";
@@ -80,6 +84,7 @@ import { type ILanguages, useLanguages } from "./useLanguages.js";
 import { AppHeaderWorkspacePicker } from "./WorkspacePicker.js";
 
 const LOGOUT_MENU_ITEM_KEY = "gs.header.logout";
+const FEATURE_FLAG_OVERRIDES_MENU_ITEM_KEY = "featureFlagOverrides.menuItem";
 
 // The favicon that index.html shipped — resolved to "<cdnurl>/organization/favicon.ico" on the live
 // platform, "/favicon.ico" in dev. Captured once at module load, before DocumentHeader can overwrite
@@ -178,12 +183,31 @@ export function HostChrome({
         };
     }, [openPricingDialogRef, isTrial, onUpsellButtonClick]);
     const [isLanguageDialogOpen, setIsLanguageDialogOpen] = useState(false);
-    const [languageDialogWorkspaceId, setLanguageDialogWorkspaceId] = useState(ctx.currentWorkspaceId);
-    if (languageDialogWorkspaceId !== ctx.currentWorkspaceId) {
-        setLanguageDialogWorkspaceId(ctx.currentWorkspaceId);
-        // Close dialog on workspace change (such as navigating back from workspace to an organization)
+    const [featureFlagOverridesOpener, setFeatureFlagOverridesOpener] = useState<"badge" | "accountMenu">();
+    const [dialogsWorkspaceId, setDialogsWorkspaceId] = useState(ctx.currentWorkspaceId);
+    if (dialogsWorkspaceId !== ctx.currentWorkspaceId) {
+        setDialogsWorkspaceId(ctx.currentWorkspaceId);
+        // Close dialogs on workspace change (such as navigating back from workspace to an organization)
         setIsLanguageDialogOpen(false);
+        setFeatureFlagOverridesOpener(undefined);
     }
+
+    const featureFlagOverrides = useFeatureFlagOverrides(ctx);
+    const handleFeatureFlagOverridesBadgeClick = useCallback(() => {
+        setFeatureFlagOverridesOpener("badge");
+    }, []);
+    const handleFeatureFlagOverridesClose = useCallback(() => {
+        setFeatureFlagOverridesOpener(undefined);
+        if (featureFlagOverridesOpener === "accountMenu") {
+            // The menu item is gone, so the dialog's own return focus lands on the body;
+            // it runs on unmount, so focusing the account button has to wait until after it.
+            // The kit exposes no ref to that button, hence its class.
+            window.setTimeout(() =>
+                headerRef.current?.querySelector<HTMLElement>(".gd-header-account")?.focus(),
+            );
+        }
+    }, [featureFlagOverridesOpener]);
+    const areFeatureFlagOverridesEnabled = featureFlagOverrides !== undefined;
 
     // loaded with the chrome, so that the dialog opens without waiting for the default language
     const languages = useLanguages(ctx, shellTelemetry);
@@ -225,15 +249,25 @@ export function HostChrome({
         [headerOptions, ctx.whiteLabeling?.enabled],
     );
 
-    const accountMenuItems = useMemo<IHeaderMenuItem[]>(
-        () =>
-            generateHeaderAccountMenuItems(ctx.workspacePermissions ?? ({} as IWorkspacePermissions), {
+    const accountMenuItems = useMemo<IHeaderMenuItem[]>(() => {
+        const items = generateHeaderAccountMenuItems(
+            ctx.workspacePermissions ?? ({} as IWorkspacePermissions),
+            {
                 workspaceId: features.workspaceId,
                 featureFlags: ctx.settings,
                 currentLanguage: locale,
-            }),
-        [ctx.workspacePermissions, features.workspaceId, ctx.settings, locale],
-    );
+            },
+        );
+        return areFeatureFlagOverridesEnabled
+            ? insertBeforeLogout(items, { key: FEATURE_FLAG_OVERRIDES_MENU_ITEM_KEY })
+            : items;
+    }, [
+        ctx.workspacePermissions,
+        features.workspaceId,
+        ctx.settings,
+        locale,
+        areFeatureFlagOverridesEnabled,
+    ]);
 
     const handleMenuItemClick = useCallback(
         (item: IHeaderMenuItem, e?: MouseEvent | KeyboardEvent) => {
@@ -248,6 +282,10 @@ export function HostChrome({
             }
             if (item.key === LANGUAGE_MENU_ITEM_ID) {
                 setIsLanguageDialogOpen(true);
+                return;
+            }
+            if (item.key === FEATURE_FLAG_OVERRIDES_MENU_ITEM_KEY) {
+                setFeatureFlagOverridesOpener("accountMenu");
                 return;
             }
             if (item.key === LOGOUT_MENU_ITEM_KEY) {
@@ -440,10 +478,27 @@ export function HostChrome({
                     />
                 ) : null}
                 <HostNotificationDispatcher notification={notification} />
+                {featureFlagOverrides ? (
+                    <FeatureFlagOverrides
+                        overrides={featureFlagOverrides}
+                        settings={ctx.settings}
+                        isOpen={featureFlagOverridesOpener !== undefined}
+                        initialOverriddenOnly={featureFlagOverridesOpener === "badge"}
+                        onBadgeClick={handleFeatureFlagOverridesBadgeClick}
+                        onClose={handleFeatureFlagOverridesClose}
+                    />
+                ) : null}
                 <LanguageChangedToast />
             </div>
         </HostChromeProviders>
     );
+}
+
+function insertBeforeLogout(items: IHeaderMenuItem[], item: IHeaderMenuItem): IHeaderMenuItem[] {
+    const logoutIndex = items.findIndex(({ key }) => key === LOGOUT_MENU_ITEM_KEY);
+    return logoutIndex === -1
+        ? [...items, item]
+        : [...items.slice(0, logoutIndex), item, ...items.slice(logoutIndex)];
 }
 
 interface IHostLanguageDialogProps {

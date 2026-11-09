@@ -19,7 +19,7 @@ import {
     isNegativeAttributeFilter,
     widgetRef,
 } from "@gooddata/sdk-model";
-import { displayFormPlaceholderRef } from "@gooddata/sdk-model/internal";
+import { displayFormPlaceholderRef, getUnknownParameterIdentifiers } from "@gooddata/sdk-model/internal";
 
 import { type ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import { queryWidgetFilters } from "../../queries/widgets.js";
@@ -28,6 +28,7 @@ import { selectAllCatalogDisplayFormsMap } from "../../store/catalog/catalogSele
 import { selectDrillTargetsByWidgetRef } from "../../store/drillTargets/drillTargetsSelectors.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectFilterContextAttributeFilterItems } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectWidgetParameterContext } from "../../store/tabs/parameters/parametersSelectors.js";
 import { uiActions } from "../../store/ui/index.js";
 import { selectIsDrillRestricted } from "../../store/widgetDrills/drillRestrictionSelectors.js";
 import {
@@ -49,11 +50,20 @@ export function* validateDrillToCustomUrlParams(widgets: IInsightWidget[]) {
         widgets.map((widget) => call(validateWidgetDrillToCustomUrlParams, widget)),
     );
 
-    const invalidDrills = possibleInvalidDrills.filter(({ invalidDrills }) => invalidDrills.length > 0);
+    const validWidgets: IInsightWidget[] = [];
+    const invalidDrills: IInvalidParamsInfo[] = [];
+    for (const info of possibleInvalidDrills) {
+        if (info.invalidDrills.length === 0) {
+            validWidgets.push(info.widget);
+        } else {
+            invalidDrills.push(info);
+        }
+    }
 
-    if (invalidDrills.length === 0) {
-        yield put(uiActions.resetInvalidCustomUrlDrillParameterWidget(widgets));
-    } else {
+    if (validWidgets.length > 0) {
+        yield put(uiActions.resetInvalidCustomUrlDrillParameterWidget(validWidgets));
+    }
+    if (invalidDrills.length > 0) {
         yield put(uiActions.setInvalidCustomUrlDrillParameterWidgets(invalidDrills));
     }
 }
@@ -91,6 +101,12 @@ function* validateWidgetDrillToCustomUrlParams(widget: IInsightWidget): SagaIter
     const attributeFilterConfigs: ReturnType<typeof selectAttributeFilterConfigsOverrides> = yield select(
         selectAttributeFilterConfigsOverrides,
     );
+
+    const parameterContext: ReturnType<ReturnType<typeof selectWidgetParameterContext>> = yield select(
+        selectWidgetParameterContext(widgetRef(widget)),
+    );
+    const dashboardParameterIdentifiers =
+        parameterContext?.entries.map((entry) => entry.parameter.ref.identifier) ?? [];
 
     const readableUrlDrills = widget.drills
         .filter(isDrillToCustomUrl)
@@ -144,7 +160,16 @@ function* validateWidgetDrillToCustomUrlParams(widget: IInsightWidget): SagaIter
                 );
             });
 
-            if (hasInvalidParam || hasInvalidDashboardFilterParam || hasInvalidInsightFilterParam) {
+            const hasUnknownParameterPlaceholder =
+                getUnknownParameterIdentifiers(drillDefinition.target.url, dashboardParameterIdentifiers)
+                    .length > 0;
+
+            if (
+                hasInvalidParam ||
+                hasInvalidDashboardFilterParam ||
+                hasInvalidInsightFilterParam ||
+                hasUnknownParameterPlaceholder
+            ) {
                 acc.invalidDrills.push(drillDefinition);
             }
 

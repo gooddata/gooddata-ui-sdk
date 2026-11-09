@@ -842,6 +842,8 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 getAiRateLimit: () => Promise.resolve(undefined),
                 getMetadataLocale: () => Promise.resolve(undefined),
                 getDataLocale: () => Promise.resolve(undefined),
+                getEmbeddingOrigins: () => Promise.resolve(undefined),
+                setEmbeddingOrigins: () => Promise.resolve(),
                 setEnableDrillToUrlByDefault: () => Promise.resolve(),
                 setEnablePartialDataResults: () => Promise.resolve(),
                 setEnableNullJoins: () => Promise.resolve(),

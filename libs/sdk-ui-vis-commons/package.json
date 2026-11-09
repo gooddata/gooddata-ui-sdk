@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-vis-commons",
-    "version": "11.68.0-alpha.5",
+    "version": "11.68.0-alpha.6",
     "description": "GoodData.UI SDK - common functionality for different types of visualizations",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -15,7 +15,8 @@
         "esm/**/*.d.ts",
         "esm/**/*.map",
         "esm/**/*.svg",
-        "styles"
+        "styles",
+        "NOTICE"
     ],
     "type": "module",
     "sideEffects": [

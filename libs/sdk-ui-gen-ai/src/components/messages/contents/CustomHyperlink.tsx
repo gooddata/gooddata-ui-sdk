@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type MouseEvent, useMemo } from "react";
+import { type MouseEvent, type ReactNode, useMemo } from "react";
 
 import { useSelector } from "react-redux";
 
@@ -8,11 +8,10 @@ import { type IChatConversationLocal } from "../../../model.js";
 import { conversationSelector } from "../../../store/messages/messagesSelectors.js";
 import { getPublisherDocumentHref } from "../../../utils.js";
 import { type LinkHandlerEvent, useConfig } from "../../ConfigContext.js";
-import { removeMarkdown } from "../../utils/markdownUtils.js";
 
 export type CustomHyperlinkOwnProps = {
     href: string;
-    text: string;
+    text: ReactNode;
 };
 
 type CustomHyperlinkProps = CustomHyperlinkOwnProps & {
@@ -27,7 +26,6 @@ export function CustomHyperlinkComponent({ href, text, conversation }: CustomHyp
     const { linkHandler, allowNativeLinks, canManage, canAnalyze, canCreateDocument } = useConfig();
     const canManageMetrics = canManage || canAnalyze;
     const canManageVisualisations = canManage || canAnalyze;
-    const plainText = removeMarkdown(text);
 
     const parsedRef = useMemo(() => {
         if (!href) {
@@ -69,7 +67,7 @@ export function CustomHyperlinkComponent({ href, text, conversation }: CustomHyp
     }, [href]);
 
     if (!parsedRef) {
-        return plainText;
+        return text;
     }
 
     const handleLinkClick = (e: MouseEvent) => {
@@ -92,28 +90,28 @@ export function CustomHyperlinkComponent({ href, text, conversation }: CustomHyp
     // If the link is for a metric and the user cannot manage metrics,
     // we do not render the link
     if (parsedRef.type === "metric" && !canManageMetrics) {
-        return plainText;
+        return text;
     }
     // If the link is for a visualization and the user cannot manage visualizations,
     // we do not render the link
     if (parsedRef.type === "visualization" && !canManageVisualisations) {
-        return plainText;
+        return text;
     }
     if (parsedRef.type === "report" && !canCreateDocument) {
-        return plainText;
+        return text;
     }
 
     if (allowNativeLinks) {
         return (
             <a className="gd-hyperlink" href={parsedRef.itemUrl} onClick={handleLinkClick}>
-                <span className="gd-hyperlink-text">{plainText}</span>
+                <span className="gd-hyperlink-text">{text}</span>
             </a>
         );
     }
 
     return (
         <span className="gd-hyperlink" onClick={handleLinkClick}>
-            <span className="gd-hyperlink-text">{plainText}</span>
+            <span className="gd-hyperlink-text">{text}</span>
         </span>
     );
 }
