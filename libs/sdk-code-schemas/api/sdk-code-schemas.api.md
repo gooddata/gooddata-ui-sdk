@@ -61,7 +61,7 @@ interface AreaChart {
     config?: VisualisationConfig4;
     description?: string;
     // (undocumented)
-    id: Id25;
+    id: Id27;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -198,7 +198,7 @@ interface AttributeHierarchy {
     attributes: [AttributeIdentifier6, ...AttributeIdentifier6[]];
     description?: string;
     // (undocumented)
-    id: Id19;
+    id: Id21;
     // (undocumented)
     tags?: Tags12;
     title?: string;
@@ -338,7 +338,7 @@ interface BarChart {
     config?: VisualisationConfig1;
     description?: string;
     // (undocumented)
-    id: Id22;
+    id: Id24;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -375,7 +375,7 @@ interface BubbleChart {
     config?: VisualisationConfig6;
     description?: string;
     // (undocumented)
-    id: Id27;
+    id: Id29;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: (Bucket | EmptyBucket)[];
@@ -424,7 +424,7 @@ interface BulletChart {
     config?: VisualisationConfig13;
     description?: string;
     // (undocumented)
-    id: Id34;
+    id: Id36;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: (Bucket | EmptyBucket)[];
@@ -523,7 +523,7 @@ interface ColumnChart {
     config?: VisualisationConfig2;
     description?: string;
     // (undocumented)
-    id: Id23;
+    id: Id25;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -547,7 +547,7 @@ interface ComboChart {
     config?: VisualisationConfig18;
     description?: string;
     // (undocumented)
-    id: Id39;
+    id: Id41;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -748,6 +748,8 @@ interface Dashboard {
     filters?: DashboardFilters;
     // (undocumented)
     id: Id9;
+    // (undocumented)
+    parameters?: DashboardParameters;
     permissions?: {
         VIEW?: Permission;
         EDIT?: Permission;
@@ -913,6 +915,31 @@ interface DashboardMetricValueFilter {
     type: "date_filter" | "attribute_filter" | "text_filter" | "metric_value_filter" | "filter_group";
 }
 
+// Warning: (ae-missing-release-tag) "DashboardParameter" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type DashboardParameter = DashboardParameter1 | DashboardParameter2;
+
+// Warning: (ae-missing-release-tag) "DashboardParameter1" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type DashboardParameter1 = StringDashboardParameter;
+
+// Warning: (ae-missing-release-tag) "DashboardParameter2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type DashboardParameter2 = NumberDashboardParameter;
+
+// Warning: (ae-missing-release-tag) "DashboardParameters" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type DashboardParameters = DashboardParameter[];
+
+// Warning: (ae-missing-release-tag) "DashboardParameters1" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type DashboardParameters1 = DashboardParameter[];
+
 // Warning: (ae-missing-release-tag) "DashboardRelativeDateFilter" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
@@ -1064,7 +1091,7 @@ interface DependencyWheelChart {
     // (undocumented)
     from?: Bucket1;
     // (undocumented)
-    id: Id36;
+    id: Id38;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -1255,7 +1282,7 @@ interface FunnelChart {
     config?: VisualisationConfig11;
     description?: string;
     // (undocumented)
-    id: Id32;
+    id: Id34;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -1283,7 +1310,7 @@ interface GeoAreaChart {
     config?: VisualisationConfig21;
     description?: string;
     // (undocumented)
-    id: Id42;
+    id: Id44;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     layers?: LayerItem[];
@@ -1318,7 +1345,7 @@ interface GeoChart {
     config?: VisualisationConfig19;
     description?: string;
     // (undocumented)
-    id: Id40;
+    id: Id42;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     layers?: LayerItem[];
@@ -1342,7 +1369,7 @@ interface HeadlineChart {
     config?: VisualisationConfig17;
     description?: string;
     // (undocumented)
-    id: Id38;
+    id: Id40;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -1366,7 +1393,7 @@ interface HeatmapChart {
     config?: VisualisationConfig12;
     description?: string;
     // (undocumented)
-    id: Id33;
+    id: Id35;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -1641,6 +1668,16 @@ type Id54 = string;
 //
 // @public
 type Id55 = string;
+
+// Warning: (ae-missing-release-tag) "Id56" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Id56 = string;
+
+// Warning: (ae-missing-release-tag) "Id57" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Id57 = string;
 
 // Warning: (ae-missing-release-tag) "Id6" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -2015,7 +2052,7 @@ interface LineChart {
     config?: VisualisationConfig3;
     description?: string;
     // (undocumented)
-    id: Id24;
+    id: Id26;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -3017,6 +3054,10 @@ export const metadata_v1: {
                                 };
                             })[];
                         };
+                    };
+                    parameters: {
+                        $ref: string;
+                        description: string;
                     };
                     tabs: {
                         type: string;
@@ -9717,6 +9758,10 @@ export const metadata_v1: {
                         })[];
                     };
                 };
+                parameters: {
+                    $ref: string;
+                    description: string;
+                };
                 tabs: {
                     type: string;
                     description: string;
@@ -9786,6 +9831,50 @@ export const metadata_v1: {
             };
             required: string[];
         };
+        dashboardParameters: {
+            type: string;
+            items: {
+                title: string;
+                description: string;
+                allOf: {
+                    if: {
+                        properties: {
+                            type: {
+                                const: string;
+                            };
+                        };
+                        required: string[];
+                    };
+                    then: {
+                        $ref: string;
+                    };
+                }[];
+                properties: {
+                    id: {
+                        description: string;
+                        $semantic: {
+                            type: string;
+                            source: string;
+                        };
+                    };
+                    type: {
+                        type: string;
+                        enum: string[];
+                        description: string;
+                    };
+                    value: {
+                        description: string;
+                    };
+                    title: {
+                        description: string;
+                    };
+                    mode: {
+                        description: string;
+                    };
+                };
+                required: string[];
+            };
+        };
         tab: {
             type: string;
             additionalProperties: boolean;
@@ -9809,12 +9898,74 @@ export const metadata_v1: {
                         type: string;
                     };
                 };
+                parameters: {
+                    $ref: string;
+                    description: string;
+                };
                 sections: {
                     type: string;
                     description: string;
                     items: {
                         $ref: string;
                     };
+                };
+            };
+            required: string[];
+        };
+        stringDashboardParameter: {
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                id: {
+                    $ref: string;
+                    description: string;
+                };
+                type: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+                value: {
+                    type: string;
+                    description: string;
+                };
+                title: {
+                    $ref: string;
+                    description: string;
+                };
+                mode: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+            };
+            required: string[];
+        };
+        numberDashboardParameter: {
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                id: {
+                    $ref: string;
+                    description: string;
+                };
+                type: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+                value: {
+                    type: string;
+                    description: string;
+                };
+                title: {
+                    $ref: string;
+                    description: string;
+                };
+                mode: {
+                    type: string;
+                    enum: string[];
+                    description: string;
                 };
             };
             required: string[];
@@ -13584,6 +13735,18 @@ interface NormalDataset {
     workspace_data_filters?: WorkspaceDataFilter[];
 }
 
+// Warning: (ae-missing-release-tag) "NumberDashboardParameter" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface NumberDashboardParameter {
+    // (undocumented)
+    id: Id18;
+    mode?: "readonly" | "hidden" | "active";
+    title?: string;
+    type: "NUMBER";
+    value?: number;
+}
+
 // Warning: (ae-missing-release-tag) "NumberParameterConstraints" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
@@ -13611,7 +13774,7 @@ interface Parameter {
     definition: ParameterDefinition;
     description?: string;
     // (undocumented)
-    id: Id20;
+    id: Id22;
     // (undocumented)
     tags?: Tags13;
     title?: string;
@@ -13664,7 +13827,7 @@ interface PieChart {
     config?: VisualisationConfig7;
     description?: string;
     // (undocumented)
-    id: Id28;
+    id: Id30;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -13687,7 +13850,7 @@ interface PieChart1 {
     config?: VisualisationConfig8;
     description?: string;
     // (undocumented)
-    id: Id29;
+    id: Id31;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -13708,7 +13871,7 @@ interface PieChart1 {
 interface Plugin_2 {
     description?: string;
     // (undocumented)
-    id: Id18;
+    id: Id20;
     // (undocumented)
     tags?: Tags11;
     title?: string;
@@ -15078,7 +15241,7 @@ interface PublisherVisualizationWidgetV2 {
     // (undocumented)
     alt_text?: string;
     // (undocumented)
-    date?: Id55;
+    date?: Id57;
     // (undocumented)
     display?: PublisherVisualizationDisplayV2;
     // (undocumented)
@@ -15100,7 +15263,7 @@ interface PublisherVisualizationWidgetV2 {
     // (undocumented)
     type: "visualization";
     // (undocumented)
-    visualization?: Id54;
+    visualization?: Id56;
 }
 
 // Warning: (ae-missing-release-tag) "PublisherWidgetPlaceholderV2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -15136,7 +15299,7 @@ interface PyramidChart {
     config?: VisualisationConfig10;
     description?: string;
     // (undocumented)
-    id: Id31;
+    id: Id33;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -15459,7 +15622,7 @@ interface RadarChart {
     config?: VisualisationConfig23;
     description?: string;
     // (undocumented)
-    id: Id44;
+    id: Id46;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -15531,7 +15694,7 @@ interface RepeaterChart {
     config?: VisualisationConfig22;
     description?: string;
     // (undocumented)
-    id: Id43;
+    id: Id45;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -15555,7 +15718,7 @@ interface Report_2 {
     // (undocumented)
     filters?: DashboardFilters4;
     // (undocumented)
-    id: Id45;
+    id: Id47;
     pages: ReportPageBody[];
     // (undocumented)
     period: ReportPeriod;
@@ -15604,7 +15767,7 @@ type ReportBackgroundImage = ReportBackgroundImage1 | ReportBackgroundImage2;
 // @public
 interface ReportBackgroundImage1 {
     // (undocumented)
-    ref: Id47;
+    ref: Id49;
 }
 
 // Warning: (ae-missing-release-tag) "ReportBackgroundImage2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -15614,10 +15777,10 @@ interface ReportBackgroundImage2 {
     // (undocumented)
     alt_text?: string;
     // (undocumented)
-    asset?: Id49;
+    asset?: Id51;
     fit?: "contain" | "cover" | "fill";
     // (undocumented)
-    id: Id48;
+    id: Id50;
     // (undocumented)
     placeholder?: ReportSlotPlaceholder;
     // (undocumented)
@@ -15677,7 +15840,7 @@ interface ReportHeadingSlot {
     // (undocumented)
     heading: ReportText;
     // (undocumented)
-    id: Id48;
+    id: Id50;
     // (undocumented)
     placeholder?: ReportSlotPlaceholder;
     // (undocumented)
@@ -15703,7 +15866,7 @@ interface ReportImage2 {
     // (undocumented)
     alt_text?: string;
     // (undocumented)
-    asset?: Id51;
+    asset?: Id53;
     fit?: "contain" | "cover" | "fill";
     // (undocumented)
     placeholder?: ReportSlotPlaceholder;
@@ -15717,7 +15880,7 @@ interface ReportImage2 {
 // @public (undocumented)
 interface ReportImageSlot {
     // (undocumented)
-    id: Id48;
+    id: Id50;
     // (undocumented)
     image: ReportImage;
     // (undocumented)
@@ -15817,7 +15980,7 @@ interface ReportPageBody {
     // (undocumented)
     format?: ReportPageFormat;
     // (undocumented)
-    id: Id46;
+    id: Id48;
     // (undocumented)
     kind?: ReportPageKind;
     // (undocumented)
@@ -15846,7 +16009,7 @@ interface ReportPageLayout {
     // (undocumented)
     format?: ReportPageFormat;
     // (undocumented)
-    id: Id53;
+    id: Id55;
     // (undocumented)
     kind?: ReportPageKind;
     // (undocumented)
@@ -15865,7 +16028,7 @@ interface ReportPageLayout {
 // @public (undocumented)
 interface ReportParagraphSlot {
     // (undocumented)
-    id: Id48;
+    id: Id50;
     // (undocumented)
     paragraph: ReportText3;
     // (undocumented)
@@ -15915,7 +16078,7 @@ interface ReportTemplate {
     // (undocumented)
     filters?: DashboardFilters5;
     // (undocumented)
-    id: Id52;
+    id: Id54;
     pages: ReportPageBody[];
     // (undocumented)
     tags?: Tags38;
@@ -16001,11 +16164,11 @@ interface ReportVariable {
 // @public (undocumented)
 interface ReportVisualizationSlot {
     // (undocumented)
-    date?: Id50;
+    date?: Id52;
     // (undocumented)
     filters?: DashboardFilters2;
     // (undocumented)
-    id: Id48;
+    id: Id50;
     ignore_report_period?: boolean;
     ignored_filters?: string[];
     // (undocumented)
@@ -16041,7 +16204,7 @@ interface SankeyChart {
     // (undocumented)
     from?: Bucket3;
     // (undocumented)
-    id: Id37;
+    id: Id39;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -16067,7 +16230,7 @@ interface ScatterChart {
     config?: VisualisationConfig5;
     description?: string;
     // (undocumented)
-    id: Id26;
+    id: Id28;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: (Bucket | EmptyBucket)[];
@@ -16175,6 +16338,18 @@ interface State {
     include?: (string | number | boolean)[];
 }
 
+// Warning: (ae-missing-release-tag) "StringDashboardParameter" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface StringDashboardParameter {
+    // (undocumented)
+    id: Id17;
+    mode?: "readonly" | "hidden" | "active";
+    title?: string;
+    type: "STRING";
+    value?: string;
+}
+
 // Warning: (ae-missing-release-tag) "StringParameterConstraints" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
@@ -16207,7 +16382,9 @@ interface Tab {
     // (undocumented)
     filters?: DashboardFilters1;
     // (undocumented)
-    id: Id17;
+    id: Id19;
+    // (undocumented)
+    parameters?: DashboardParameters1;
     sections: Section[];
     title: string;
 }
@@ -16221,7 +16398,7 @@ interface Table {
     config?: VisualisationConfig;
     description?: string;
     // (undocumented)
-    id: Id21;
+    id: Id23;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -16538,7 +16715,7 @@ interface TreemapChart {
     config?: VisualisationConfig9;
     description?: string;
     // (undocumented)
-    id: Id30;
+    id: Id32;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -16655,19 +16832,26 @@ declare namespace v1 {
         DisplayAsLabelIdentifier3,
         Id15,
         Id16,
+        DashboardParameter,
+        DashboardParameter1,
         Id17,
+        DashboardParameter2,
+        Id18,
+        DashboardParameters,
+        Id19,
+        DashboardParameters1,
         Metadata18,
         Metadata20,
-        Id18,
+        Id20,
         Tags11,
         Metadata21,
         Metadata23,
-        Id19,
+        Id21,
         Tags12,
         AttributeIdentifier6,
         Metadata24,
         Metadata26,
-        Id20,
+        Id22,
         Tags13,
         ParameterDefinition,
         ParameterDefinition1,
@@ -16676,7 +16860,7 @@ declare namespace v1 {
         Metadata29,
         Visualisation,
         Visualisation1,
-        Id21,
+        Id23,
         Tags14,
         Field,
         AttributeIdentifier7,
@@ -16769,94 +16953,94 @@ declare namespace v1 {
         Bucket,
         SimpleBucket,
         Visualisation2,
-        Id22,
+        Id24,
         Tags15,
         Visualisation3,
-        Id23,
+        Id25,
         Tags16,
         Visualisation4,
-        Id24,
+        Id26,
         Tags17,
         Visualisation5,
-        Id25,
+        Id27,
         Tags18,
         Visualisation6,
-        Id26,
+        Id28,
         Tags19,
         EmptyBucket,
         Visualisation7,
-        Id27,
+        Id29,
         Tags20,
         Visualisation8,
-        Id28,
+        Id30,
         Tags21,
         Visualisation9,
-        Id29,
+        Id31,
         Tags22,
         Visualisation10,
-        Id30,
+        Id32,
         Tags23,
         Visualisation11,
-        Id31,
+        Id33,
         Tags24,
         Visualisation12,
-        Id32,
+        Id34,
         Tags25,
         Visualisation13,
-        Id33,
+        Id35,
         Tags26,
         Visualisation14,
-        Id34,
+        Id36,
         Tags27,
         Visualisation15,
-        Id35,
+        Id37,
         Tags28,
         Visualisation16,
-        Id36,
+        Id38,
         Tags29,
         Bucket1,
         Bucket2,
         Visualisation17,
-        Id37,
+        Id39,
         Tags30,
         Bucket3,
         Bucket4,
         Visualisation18,
-        Id38,
+        Id40,
         Tags31,
         Visualisation19,
-        Id39,
+        Id41,
         Tags32,
         Visualisation20,
-        Id40,
+        Id42,
         Tags33,
         PushpinLocationBucket,
         LayerItem,
-        Id41,
+        Id43,
         LocationBucket,
         GeoAreaBucket,
         Visualisation21,
-        Id42,
+        Id44,
         Tags34,
         Visualisation22,
-        Id43,
+        Id45,
         Tags35,
         Visualisation23,
-        Id44,
+        Id46,
         Tags36,
         Metadata30,
         Metadata32,
-        Id45,
+        Id47,
         Tags37,
-        Id46,
+        Id48,
         ReportPageKind,
         ReportPageFormat,
         ReportBackground,
         ReportBackground1,
         ReportBackgroundImage,
-        Id47,
-        Id48,
         Id49,
+        Id50,
+        Id51,
         ReportContentAlignment,
         ReportSlotPlaceholder,
         ReportSlotPlaceholder1,
@@ -16867,7 +17051,7 @@ declare namespace v1 {
         ReportLayoutNode2,
         ReportLayoutNode3,
         ReportLayoutNode4,
-        Id50,
+        Id52,
         ReportLayoutNode5,
         ReportText,
         ReportText1,
@@ -16880,14 +17064,14 @@ declare namespace v1 {
         ReportLayoutNode7,
         ReportImage,
         ReportImage1,
-        Id51,
+        Id53,
         Metadata33,
         Metadata35,
-        Id52,
+        Id54,
         Tags38,
         Metadata36,
         Metadata38,
-        Id53,
+        Id55,
         Tags39,
         ReportLayoutNode8,
         Metadata39,
@@ -16936,8 +17120,8 @@ declare namespace v1 {
         PublisherPageNodeIdV25,
         PublisherLayoutNodeV27,
         PublisherPageNodeIdV26,
-        Id54,
-        Id55,
+        Id56,
+        Id57,
         PublisherLayoutNodeV28,
         PublisherPageNodeIdV27,
         PublisherPageNodeIdV28,
@@ -16999,6 +17183,8 @@ declare namespace v1 {
         DashboardTextFilter2,
         DashboardMetricValueFilter,
         DashboardFilterGroup,
+        StringDashboardParameter,
+        NumberDashboardParameter,
         Tab,
         DashboardFilters1,
         Permission,
@@ -25162,7 +25348,7 @@ interface VisualizationDataLayer {
     // (undocumented)
     config?: VisualisationConfig20;
     // (undocumented)
-    id: Id41;
+    id: Id43;
     metrics?: (Bucket | EmptyBucket)[];
     segment_by?: Bucket[];
     title?: string;
@@ -25189,7 +25375,7 @@ interface WaterfallChart {
     config?: VisualisationConfig14;
     description?: string;
     // (undocumented)
-    id: Id35;
+    id: Id37;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];

@@ -21,6 +21,7 @@ import {
     type IDashboardWidget,
     type IFilterContext,
     type IFilterContextDefinition,
+    type IGenAIDashboardLiveFilters,
     type ITempFilterContext,
     type IdentifierRef,
     type ObjRef,
@@ -44,6 +45,7 @@ import {
     selectEnableDashboardPersistentFiltersAcrossTabs,
     selectEnableTimezoneChange,
 } from "../config/configSelectors.js";
+import { selectIsInEditMode } from "../renderMode/renderModeSelectors.js";
 import { selectAttributeFilterConfigsOverridesByTab } from "../tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
     selectDateFilterConfigOverrides,
@@ -55,6 +57,7 @@ import {
     selectFilterContextDefinitionsByTab,
     selectFilterContextIdentity,
 } from "../tabs/filterContext/filterContextSelectors.js";
+import { initializeFilterContextDefinition } from "../tabs/filterContext/filterContextUtils.js";
 import {
     filterOutCustomWidgets,
     selectBasicLayout,
@@ -1420,4 +1423,70 @@ export const selectDashboardWorkingDefinition: DashboardSelector<IDashboardDefin
                 ...pluginsProp,
             };
         },
+    );
+
+/**
+ * The dashboard definition the AI assistant edits: the working definition, except that outside edit
+ * mode every filter context carries the persisted filters, as manual Edit does.
+ *
+ * @internal
+ */
+export const selectDashboardAiDefinition: DashboardSelector<IDashboardDefinition<IDashboardWidget>> =
+    createSelector(
+        selectDashboardWorkingDefinition,
+        selectIsInEditMode,
+        selectPersistedDashboardFilterContextAsFilterContextDefinition,
+        selectPersistedDashboardFilterContextDefinitionsByTab,
+        (working, isEditMode, persistedRoot, persistedByTab): IDashboardDefinition<IDashboardWidget> => {
+            if (isEditMode) {
+                return working;
+            }
+            // Live filters got positional ids on load and the persisted snapshot did not. Both must carry
+            // the same ids, or the AAC convertor cannot match filter configs and groups to them.
+            const savedFilters = (persisted: IFilterContextDefinition) =>
+                initializeFilterContextDefinition(persisted).filters;
+            return {
+                ...working,
+                ...(working.filterContext && persistedRoot
+                    ? { filterContext: { ...working.filterContext, filters: savedFilters(persistedRoot) } }
+                    : {}),
+                ...(working.tabs
+                    ? {
+                          tabs: working.tabs.map((tab) => {
+                              const persisted = persistedByTab[tab.localIdentifier];
+                              return tab.filterContext && persisted
+                                  ? {
+                                        ...tab,
+                                        filterContext: {
+                                            ...tab.filterContext,
+                                            filters: savedFilters(persisted),
+                                        },
+                                    }
+                                  : tab;
+                          }),
+                      }
+                    : {}),
+            };
+        },
+    );
+
+/**
+ * The filters on screen outside edit mode, for the root filter context and each tab, so the AI assistant can
+ * tell which of them differ from {@link selectDashboardAiDefinition}. They are the only part of the working
+ * definition that one replaces. Undefined in edit mode, where the two are the same.
+ *
+ * @internal
+ */
+export const selectDashboardAiLiveFilters: DashboardSelector<IGenAIDashboardLiveFilters | undefined> =
+    createSelector(selectDashboardWorkingDefinition, selectIsInEditMode, (working, isEditMode) =>
+        isEditMode
+            ? undefined
+            : {
+                  filters: working.filterContext?.filters,
+                  tabs: Object.fromEntries(
+                      (working.tabs ?? []).flatMap((tab) =>
+                          tab.filterContext ? [[tab.localIdentifier, tab.filterContext.filters]] : [],
+                      ),
+                  ),
+              },
     );

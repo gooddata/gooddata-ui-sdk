@@ -47,6 +47,8 @@ import {
     type UserQuestionItem,
 } from "@gooddata/sdk-backend-spi";
 import {
+    type AacDashboard,
+    type AacDashboardFilters,
     declarativeDashboardToYaml,
     publisherDocumentDefinitionToYaml,
     publisherDocumentDefinitionToYamlV2,
@@ -60,6 +62,7 @@ import {
     type IFilterContext,
     type IFilterContextDefinition,
     type IGenAIDashboardContext,
+    type IGenAIDashboardLiveFilters,
     type IGenAIPublisherDocumentContext,
     type IGenAIPublisherDocumentContextV2,
     type IGenAIUserContext,
@@ -71,6 +74,7 @@ import {
     isTempFilterContext,
     objRefToString,
 } from "@gooddata/sdk-model";
+import { _isEqual } from "@gooddata/util";
 
 import { type FormattingLocale } from "../../../convertors/fromBackend/dateFormatting/defaultDateFormatter.js";
 import type { DateNormalizer } from "../../../convertors/fromBackend/dateFormatting/types.js";
@@ -887,6 +891,12 @@ function convertReferencedObjects(userContext: IGenAIUserContext) {
 }
 
 function convertDashboardView(dashboard: IGenAIDashboardContext) {
+    const saved = dashboard.definition as IDashboardDefinition | undefined;
+    const definition = saved ? convertDashboard(saved) : undefined;
+    const viewFilters =
+        saved && definition && dashboard.liveFilters
+            ? convertViewFilters(definition, convertDashboard(withLiveFilters(saved, dashboard.liveFilters)))
+            : [];
     return {
         id: objRefToString(dashboard.ref),
         ...(dashboard.title ? { title: dashboard.title } : {}),
@@ -899,12 +909,96 @@ function convertDashboardView(dashboard: IGenAIDashboardContext) {
               }
             : {}),
         widgets: dashboard.widgets.map(convertWidget),
-        ...(dashboard.definition
+        ...(definition ? { definition } : {}),
+        ...(viewFilters.length ? { viewFilters } : {}),
+    };
+}
+
+/**
+ * The definition with the filters on the user's screen in place of its own. Outside edit mode the saved
+ * definition differs from the one on screen only in its filter context items, so this rebuilds the screen's
+ * definition and the convertor keys, configures and groups its filters the same way.
+ */
+function withLiveFilters(
+    definition: IDashboardDefinition,
+    live: IGenAIDashboardLiveFilters,
+): IDashboardDefinition {
+    const liveTabs = live.tabs ?? {};
+    return {
+        ...definition,
+        ...(definition.filterContext && live.filters
+            ? { filterContext: { ...definition.filterContext, filters: live.filters } }
+            : {}),
+        ...(definition.tabs
             ? {
-                  definition: convertDashboard(dashboard.definition as IDashboardDefinition),
+                  tabs: definition.tabs.map((tab) => {
+                      const filters = liveTabs[tab.localIdentifier];
+                      return tab.filterContext && filters
+                          ? { ...tab, filterContext: { ...tab.filterContext, filters } }
+                          : tab;
+                  }),
               }
             : {}),
     };
+}
+
+type AacFilters = AacDashboardFilters;
+
+/**
+ * One entry per filter whose value on screen differs from the saved document, keyed like that document,
+ * so the assistant can keep the saved filters and offer the ones the user is looking at.
+ */
+function convertViewFilters(saved: AacDashboard, live: AacDashboard) {
+    const scopes = live.tabs?.length
+        ? live.tabs.map((tab) => ({
+              tabId: tab.id as string | undefined,
+              live: tab.filters,
+              saved: saved.tabs?.find((savedTab) => savedTab.id === tab.id)?.filters,
+          }))
+        : [{ tabId: undefined, live: live.filters, saved: saved.filters }];
+
+    return scopes.flatMap(({ tabId, live, saved }) => {
+        const savedFilters = flattenFilterGroups(saved);
+        return Object.entries(withSavedCommonDateKey(savedFilters, flattenFilterGroups(live)))
+            .filter(([key, filter]) => !_isEqual(savedFilters[key], filter))
+            .map(([key, filter]) => ({ ...(tabId ? { tabId } : {}), key, filter }));
+    });
+}
+
+/**
+ * The screen's common date filter under the key the saved document gives it. All time removes that filter
+ * from the screen, and the convertor then emits no common date or, with a date filter config, a default one
+ * under a key of its own. Both mean All time against the saved date.
+ */
+function withSavedCommonDateKey(saved: AacFilters, live: AacFilters): AacFilters {
+    const savedKey = Object.keys(saved).find((key) => isCommonDateFilter(saved[key]));
+    const liveKey = Object.keys(live).find((key) => isCommonDateFilter(live[key]));
+    if (savedKey === undefined || liveKey === savedKey) {
+        return live;
+    }
+    const { title } = saved[savedKey] as { title?: string };
+    const others = Object.fromEntries(Object.entries(live).filter(([key]) => key !== liveKey));
+    const allTime = { type: "date_filter" as const, ...(title ? { title } : {}) };
+    return { ...others, [savedKey]: liveKey === undefined ? allTime : live[liveKey] };
+}
+
+// A common date filter applies to every date dataset, so it names none.
+function isCommonDateFilter(filter: unknown): boolean {
+    const candidate = filter as { type?: unknown; date?: unknown } | null | undefined;
+    return candidate?.type === "date_filter" && candidate.date === undefined;
+}
+
+function flattenFilterGroups(filters: AacFilters = {}): AacFilters {
+    return Object.fromEntries(
+        Object.entries(filters).flatMap(([key, filter]) =>
+            isFilterGroup(filter) ? Object.entries(filter.filters ?? {}) : [[key, filter]],
+        ),
+    );
+}
+
+// The generated schema types give a filter group no `filters`.
+function isFilterGroup(filter: AacFilters[string]): filter is AacFilters[string] & { filters?: AacFilters } {
+    return filter.type === "filter_group";
 }
 
 function convertWidget(w: IGenAIWidgetDescriptor): AiUserContextWidgetDescriptor {

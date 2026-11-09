@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 59eac68b67b20d27fd2b953ff0e64a2801a41f8fb305e63739c6dc1f586f0478
+# schema-hash: 31c82b64cd50bc5c4dda79fd3411c77bdbc2f4f60e84879cf91073757073d77f
 
 from __future__ import annotations
 
@@ -44,6 +44,7 @@ __all__ = [
     "DashboardFilters",
     "DashboardFiltersNoGroups",
     "DashboardMetricValueFilter",
+    "DashboardParameters",
     "DashboardRelativeDateFilter",
     "DashboardStateMultiselect",
     "DashboardStateMultiselect1",
@@ -117,6 +118,7 @@ __all__ = [
     "MvfCondition2",
     "MvfCondition3",
     "Name",
+    "NumberDashboardParameter",
     "NumberParameterDefinition",
     "OpenUrl",
     "ParagraphSlot",
@@ -248,6 +250,7 @@ __all__ = [
     "Source",
     "SourceColumn",
     "State",
+    "StringDashboardParameter",
     "StringParameterDefinition",
     "SuppressedTargets",
     "SuppressedTargets1",
@@ -1172,6 +1175,22 @@ class TimezoneConfig(TypedDict):
     allow_user_override_in_view_mode: NotRequired[bool]
 
 
+class StringDashboardParameter(TypedDict):
+    id: Identifier
+    type: Literal['STRING']
+    value: NotRequired[str]
+    title: NotRequired[Title]
+    mode: NotRequired[Literal['readonly', 'hidden', 'active']]
+
+
+class NumberDashboardParameter(TypedDict):
+    id: Identifier
+    type: Literal['NUMBER']
+    value: NotRequired[float]
+    title: NotRequired[Title]
+    mode: NotRequired[Literal['readonly', 'hidden', 'active']]
+
+
 class Widget1(TypedDict):
     id: NotRequired[Identifier]
     content: str
@@ -1882,6 +1901,11 @@ QueryFilter: TypeAlias = (
     | QueryMetricValueFilter
     | QueryRankingFilter
 )
+
+
+DashboardParameters: TypeAlias = list[
+    StringDashboardParameter | NumberDashboardParameter
+]
 
 
 Interaction: TypeAlias = (
@@ -2727,6 +2751,7 @@ class Dashboard1(TypedDict):
     sections: NotRequired[list[Section]]
     filters: NotRequired[DashboardFilters]
     plugins: NotRequired[list[Plugins | Identifier]]
+    parameters: NotRequired[DashboardParameters]
     tabs: NotRequired[list[Tab]]
     permissions: NotRequired[Permissions]
 
@@ -2741,6 +2766,7 @@ class Tab(TypedDict):
     id: Identifier
     title: Title
     filters: NotRequired[DashboardFilters]
+    parameters: NotRequired[DashboardParameters]
     sections: list[Section]
 
 
@@ -2864,6 +2890,7 @@ class Dashboard(TypedDict):
     sections: NotRequired[list[Section]]
     filters: NotRequired[DashboardFilters]
     plugins: NotRequired[list[Plugins | Identifier]]
+    parameters: NotRequired[DashboardParameters]
     tabs: NotRequired[list[Tab]]
     permissions: NotRequired[Permissions]
 

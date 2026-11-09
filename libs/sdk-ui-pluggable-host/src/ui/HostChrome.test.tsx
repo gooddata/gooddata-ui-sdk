@@ -1,8 +1,9 @@
 // (C) 2026 GoodData Corporation
 
 import { act, screen, waitFor } from "@testing-library/react";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, onTestFinished, vi } from "vitest";
 
+import { FEATURE_FLAG_OVERRIDES_STORAGE_KEY, LocalFeatureFlagOverrides } from "@gooddata/sdk-backend-tiger";
 import { type IUserSettings, idRef } from "@gooddata/sdk-model";
 import { type IPlatformContext } from "@gooddata/sdk-pluggable-application-model";
 
@@ -211,5 +212,169 @@ describe("HostChrome", () => {
         await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
 
         expect(screen.queryByRole("dialog", { name: "Change language" })).not.toBeInTheDocument();
+    });
+
+    describe("feature flag overrides", () => {
+        const gateSettings: IUserSettings = { ...userSettings, enableFeatureFlagOverrides: true };
+        const gateCtx: IPlatformContext = { ...ctx, userSettings: gateSettings, settings: gateSettings };
+        const menuItemName = "Feature flag overrides";
+
+        afterEach(() => {
+            localStorage.clear();
+        });
+
+        const openAccountMenu = async (user: ReturnType<typeof render>["user"]) => {
+            await user.click(await screen.findByRole("button", { name: "Jane Doe" }));
+        };
+
+        it("offers no menu item and no badge without the gate flag", async () => {
+            const { user } = render(<HostChrome {...requiredProps} />);
+
+            await openAccountMenu(user);
+
+            expect(await screen.findByRole("button", { name: /Log ?out/i })).toBeVisible();
+            expect(screen.queryByRole("button", { name: menuItemName })).not.toBeInTheDocument();
+            expect(screen.queryByRole("button", { name: /flag override/ })).not.toBeInTheDocument();
+        });
+
+        it("shows no badge in export mode", async () => {
+            localStorage.setItem(
+                FEATURE_FLAG_OVERRIDES_STORAGE_KEY,
+                JSON.stringify({ version: 1, rules: [{ flag: "enableRadarChart", value: true }] }),
+            );
+            render(<HostChrome {...requiredProps} ctx={{ ...gateCtx, isExportMode: true }} />);
+
+            expect(screen.queryByRole("button", { name: /flag override/ })).not.toBeInTheDocument();
+        });
+
+        it("opens the panel from the account menu, with no badge when no override applies", async () => {
+            const { user } = render(<HostChrome {...requiredProps} ctx={gateCtx} />);
+
+            expect(screen.queryByRole("button", { name: /flag override/ })).not.toBeInTheDocument();
+            await openAccountMenu(user);
+            await user.click(await screen.findByRole("button", { name: menuItemName }));
+
+            expect(await screen.findByRole("dialog", { name: "Feature flag overrides" })).toBeVisible();
+        });
+
+        it("shows no badge for a stored rule of a flag set in code", async () => {
+            LocalFeatureFlagOverrides.enableRadarChart = true;
+            onTestFinished(() => {
+                delete LocalFeatureFlagOverrides.enableRadarChart;
+            });
+            localStorage.setItem(
+                FEATURE_FLAG_OVERRIDES_STORAGE_KEY,
+                JSON.stringify({ version: 1, rules: [{ flag: "enableRadarChart", value: false }] }),
+            );
+            const { user } = render(<HostChrome {...requiredProps} ctx={gateCtx} />);
+
+            await openAccountMenu(user);
+            expect(await screen.findByRole("button", { name: menuItemName })).toBeVisible();
+            expect(screen.queryByRole("button", { name: /^\d+ flag override/ })).not.toBeInTheDocument();
+        });
+
+        it("puts the menu item just before logging out", async () => {
+            const { user } = render(<HostChrome {...requiredProps} ctx={gateCtx} />);
+
+            await openAccountMenu(user);
+            const menuItem = await screen.findByRole("button", { name: menuItemName });
+            const logout = screen.getByRole("button", { name: /Log ?out/i });
+
+            expect(menuItem.nextElementSibling).toBe(logout);
+        });
+
+        it("names the user by login when the profile has no name or e-mail", async () => {
+            localStorage.setItem(
+                FEATURE_FLAG_OVERRIDES_STORAGE_KEY,
+                JSON.stringify({
+                    version: 1,
+                    rules: [{ flag: "enableRadarChart", value: true, userId: "jane.doe" }],
+                }),
+            );
+            const { user } = render(
+                <HostChrome
+                    {...requiredProps}
+                    ctx={{ ...gateCtx, user: { ref: idRef("jane"), login: "jane", fullName: "", email: "" } }}
+                />,
+            );
+
+            await user.click(await screen.findByRole("button", { name: "1 flag override" }));
+
+            expect(
+                await screen.findByRole("button", { name: "Only when signed in as jane" }),
+            ).toHaveAttribute("aria-pressed", "true");
+        });
+
+        it("shows a badge with the count that opens the same panel", async () => {
+            localStorage.setItem(
+                FEATURE_FLAG_OVERRIDES_STORAGE_KEY,
+                JSON.stringify({
+                    version: 1,
+                    rules: [
+                        { flag: "enableRadarChart", value: true },
+                        { flag: "enableMekkoChart", value: true, organizationId: "other" },
+                    ],
+                }),
+            );
+            const { user } = render(<HostChrome {...requiredProps} ctx={gateCtx} />);
+
+            await user.click(await screen.findByRole("button", { name: "1 flag override" }));
+            expect(await screen.findByRole("dialog", { name: "Feature flag overrides" })).toBeVisible();
+
+            await user.click(screen.getByRole("button", { name: "Cancel" }));
+            await openAccountMenu(user);
+            await user.click(await screen.findByRole("button", { name: menuItemName }));
+
+            expect(await screen.findAllByRole("dialog", { name: "Feature flag overrides" })).toHaveLength(1);
+        });
+
+        it("starts with only overridden flags from the badge and all flags from the menu", async () => {
+            localStorage.setItem(
+                FEATURE_FLAG_OVERRIDES_STORAGE_KEY,
+                JSON.stringify({ version: 1, rules: [{ flag: "enableRadarChart", value: true }] }),
+            );
+            const { user } = render(<HostChrome {...requiredProps} ctx={gateCtx} />);
+
+            await user.click(await screen.findByRole("button", { name: "1 flag override" }));
+            expect(await screen.findByRole("button", { name: /^Overridden/ })).toHaveAttribute(
+                "aria-pressed",
+                "true",
+            );
+            expect(screen.getByText("enableRadarChart")).toBeVisible();
+            expect(screen.queryByText("enableMekkoChart")).not.toBeInTheDocument();
+
+            await user.click(screen.getByRole("button", { name: "Cancel" }));
+            await openAccountMenu(user);
+            await user.click(await screen.findByRole("button", { name: menuItemName }));
+            expect(await screen.findByRole("button", { name: /^Overridden/ })).toHaveAttribute(
+                "aria-pressed",
+                "false",
+            );
+            expect(screen.getByText("enableMekkoChart")).toBeVisible();
+        });
+
+        it("returns focus to the badge when the panel closes", async () => {
+            localStorage.setItem(
+                FEATURE_FLAG_OVERRIDES_STORAGE_KEY,
+                JSON.stringify({ version: 1, rules: [{ flag: "enableRadarChart", value: true }] }),
+            );
+            const { user } = render(<HostChrome {...requiredProps} ctx={gateCtx} />);
+            const badge = await screen.findByRole("button", { name: "1 flag override" });
+
+            await user.click(badge);
+            await user.click(await screen.findByRole("button", { name: "Cancel" }));
+
+            await waitFor(() => expect(badge).toHaveFocus());
+        });
+
+        it("returns focus to the account menu button when the panel closes", async () => {
+            const { user } = render(<HostChrome {...requiredProps} ctx={gateCtx} />);
+
+            await openAccountMenu(user);
+            await user.click(await screen.findByRole("button", { name: menuItemName }));
+            await user.click(await screen.findByRole("button", { name: "Cancel" }));
+
+            await waitFor(() => expect(screen.getByRole("button", { name: "Jane Doe" })).toHaveFocus());
+        });
     });
 });

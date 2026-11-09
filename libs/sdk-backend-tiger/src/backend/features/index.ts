@@ -14,6 +14,12 @@ import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/endpoints/prof
 
 import { LIB_VERSION } from "../../__version.js";
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
+import {
+    FEATURE_FLAG_OVERRIDES_GATE_FLAG,
+    readFeatureFlagOverrides,
+    rememberServerFeatureFlags,
+    resolveFeatureFlagOverrides,
+} from "../featureFlagOverrides.js";
 import { DefaultFeatureFlags, type ITigerFeatureFlags, LocalFeatureFlagOverrides } from "../uiFeatures.js";
 
 import { getFeatureHubFeatures } from "./hub.js";
@@ -37,6 +43,7 @@ export class TigerFeaturesService {
     public async getFeatures(
         profile?: IUserProfile,
         wsContext?: Partial<FeatureContext>,
+        workspaceId?: string,
     ): Promise<ITigerFeatureFlags> {
         const contextWithVersion: Partial<FeatureContext> = {
             ...wsContext,
@@ -56,8 +63,36 @@ export class TigerFeaturesService {
             });
             responseMap.set(key, response);
         }
-        return { ...(await response), ...LocalFeatureFlagOverrides };
+        const serverFeatures = await response;
+        rememberServerFeatureFlags(withoutLocalOverrides(serverFeatures), workspaceId);
+        const features = { ...serverFeatures, ...LocalFeatureFlagOverrides };
+        const runtimeOverrides =
+            features[FEATURE_FLAG_OVERRIDES_GATE_FLAG] === true
+                ? await this.getRuntimeOverrides(profile, workspaceId)
+                : {};
+        return { ...features, ...runtimeOverrides, ...LocalFeatureFlagOverrides };
     }
+
+    private async getRuntimeOverrides(
+        profile: IUserProfile | undefined,
+        workspaceId: string | undefined,
+    ): Promise<Partial<ITigerFeatureFlags>> {
+        const { rules } = readFeatureFlagOverrides();
+        if (rules.length === 0) {
+            return {};
+        }
+        const { organizationId, userId } =
+            profile ?? (await this.authCall((client) => ProfileApi_GetCurrent(client.axios)));
+        return resolveFeatureFlagOverrides(rules, { organizationId, workspaceId, userId });
+    }
+}
+
+function withoutLocalOverrides(features: ITigerFeatureFlags): Partial<ITigerFeatureFlags> {
+    const result: Partial<ITigerFeatureFlags> = { ...features };
+    for (const name of Object.keys(LocalFeatureFlagOverrides)) {
+        Reflect.deleteProperty(result, name);
+    }
+    return result;
 }
 
 async function loadFeatures(

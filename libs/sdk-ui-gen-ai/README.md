@@ -34,6 +34,14 @@ Omitting the prop keeps the bundled localized placeholder ("Ask here…" in Engl
 An empty string hides the placeholder. The standalone input's existing `placeholder` prop remains
 supported, with `inputPlaceholder` taking precedence when both are supplied.
 
+## Links in assistant answers
+
+External HTTP(S) links in assistant answers are displayed as non-clickable text; enabling external
+navigation is outside the current link-rendering policy. Bare URLs and URLs used as Markdown link
+labels retain their literal URL characters, including underscores. Markdown links with descriptive
+labels display those labels without enabling external navigation. Supported internal `gooddata://`
+links retain their existing navigation and permission checks.
+
 ## Headless copilot workflow (alpha)
 
 `CopilotHandler` owns plain immutable workflow state; it requires no Redux setup.

@@ -172,6 +172,20 @@ export class OrganizationSettingsService
         return this.getOwnedLocale("DATA_LOCALE");
     }
 
+    public async getEmbeddingOrigins(): Promise<string[] | undefined> {
+        // getSettings() reads the resolve endpoint, which never returns this MANAGE_ONLY setting.
+        const settings = await this.getSettingByType("EMBEDDING_ORIGINS");
+        const content = settings.data.data[0]?.attributes?.content as { origins?: unknown } | undefined;
+        if (!Array.isArray(content?.origins)) {
+            return undefined;
+        }
+        return content.origins.filter((origin): origin is string => typeof origin === "string");
+    }
+
+    public async setEmbeddingOrigins(origins: string[]): Promise<void> {
+        return this.setSetting("EMBEDDING_ORIGINS", { origins });
+    }
+
     private async getOwnedLocale(type: "METADATA_LOCALE" | "DATA_LOCALE"): Promise<string | undefined> {
         const settings = await this.getSettingByType(type);
         const content = settings.data.data[0]?.attributes?.content;

@@ -5,6 +5,9 @@
 ```ts
 
 // @internal
+export function _camelCase(string?: string): string;
+
+// @internal
 export function _cloneDeep<T>(value: T): T;
 
 // @internal
@@ -126,7 +129,25 @@ export type _IterateeShorthand<T> = _PropertyName | [_PropertyName, any] | _Part
 export type _List<T> = ArrayLike<T>;
 
 // @internal (undocumented)
+export type _ListIteratee<T> = _ListIterator<T, _NotVoid> | _IterateeShorthand<T>;
+
+// @internal (undocumented)
+export type _ListIterator<T, TResult> = (value: T, index: number, collection: _List<T>) => TResult;
+
+// @internal (undocumented)
 export type _Many<T> = T | readonly T[];
+
+// @internal
+export type _MapCache = {
+    delete(key: unknown): boolean;
+    get(key: unknown): unknown;
+    has(key: unknown): boolean;
+    set(key: unknown, value: unknown): unknown;
+    clear?: (() => void) | undefined;
+};
+
+// @internal (undocumented)
+export type _MapCacheConstructor = new () => _MapCache;
 
 // @internal
 export type Matcher = {
@@ -140,8 +161,48 @@ export type Matcher = {
 // @internal
 export type MatcherFunction = (console: Record<ConsoleType, ConsoleFunction>, type: ConsoleType, message: string) => boolean;
 
+// @internal
+export type _Memoize = {
+    <T extends (...args: any) => any>(func: T, resolver?: (this: ThisParameterType<T>, ...args: Parameters<T>) => unknown): T & _MemoizedFunction;
+    Cache: _MapCacheConstructor;
+};
+
+// @internal
+export const _memoize: _Memoize;
+
+// @internal
+export type _MemoizedFunction = {
+    cache: _MapCache;
+};
+
+// @internal
+export function _merge<TObject, TSource>(object: TObject, source: TSource): TObject & TSource;
+
+// @internal (undocumented)
+export function _merge<TObject, TSource1, TSource2>(object: TObject, source1: TSource1, source2: TSource2): TObject & TSource1 & TSource2;
+
+// @internal (undocumented)
+export function _merge<TObject, TSource1, TSource2, TSource3>(object: TObject, source1: TSource1, source2: TSource2, source3: TSource3): TObject & TSource1 & TSource2 & TSource3;
+
+// @internal (undocumented)
+export function _merge<TObject, TSource1, TSource2, TSource3, TSource4>(object: TObject, source1: TSource1, source2: TSource2, source3: TSource3, source4: TSource4): TObject & TSource1 & TSource2 & TSource3 & TSource4;
+
+// @internal (undocumented)
+export function _merge(object: any, ...otherArgs: any[]): any;
+
 // @internal (undocumented)
 export type _NotVoid = unknown;
+
+// @internal (undocumented)
+export type _NumericDictionary<T> = {
+    [index: number]: T;
+};
+
+// @internal (undocumented)
+export type _ObjectIteratee<TObject> = _ObjectIterator<TObject, _NotVoid> | _IterateeShorthand<TObject[keyof TObject]>;
+
+// @internal (undocumented)
+export type _ObjectIterator<TObject, TResult> = (value: TObject[keyof TObject], key: string, collection: TObject) => TResult;
 
 // @internal
 export function _omit<T extends object, K extends _PropertyName[]>(object: T | null | undefined, ...paths: K): Pick<T, Exclude<keyof T, K[number]>>;
@@ -153,6 +214,15 @@ export function _omit<T extends object, K extends keyof T>(object: T | null | un
 export function _omit<T extends object>(object: T | null | undefined, ...paths: Array<_Many<_PropertyName>>): _PartialObject<T>;
 
 // @internal
+export function _omitBy<T>(object: _Dictionary<T> | null | undefined, predicate?: _ValueKeyIteratee<T>): _Dictionary<T>;
+
+// @internal (undocumented)
+export function _omitBy<T>(object: _NumericDictionary<T> | null | undefined, predicate?: _ValueKeyIteratee<T>): _NumericDictionary<T>;
+
+// @internal (undocumented)
+export function _omitBy<T extends object>(object: T | null | undefined, predicate: _ValueKeyIteratee<T[keyof T]>): _PartialObject<T>;
+
+// @internal
 export function parseStringToArray(str: string): string[] | null;
 
 // @internal (undocumented)
@@ -162,6 +232,21 @@ export type _PartialObject<T> = Partial<T>;
 export type _PartialShallow<T> = {
     [P in keyof T]?: T[P] extends object ? object : T[P];
 };
+
+// @internal
+export function _partition<T, U extends T>(collection: _List<T> | null | undefined, predicate: _ValueIteratorTypeGuard<T, U>): [U[], Array<Exclude<T, U>>];
+
+// @internal (undocumented)
+export function _partition<T>(collection: _List<T> | null | undefined, predicate: _ValueIteratee<T>): [T[], T[]];
+
+// @internal (undocumented)
+export function _partition<T extends object>(collection: T | null | undefined, predicate: _ValueIteratee<T[keyof T]>): [Array<T[keyof T]>, Array<T[keyof T]>];
+
+// @internal
+export function _pick<T extends object, U extends keyof T>(object: T, ...props: _Many<U>[]): Pick<T, U>;
+
+// @internal (undocumented)
+export function _pick<T>(object: T | null | undefined, ...props: _Many<_PropertyPath>[]): _PartialObject<T>;
 
 // @internal (undocumented)
 export type _PropertyName = string | number | symbol;
@@ -203,6 +288,12 @@ export function shortenText(value: string, options?: IShortenTextOptions): strin
 export function simplifyText(value: string | number | null): string;
 
 // @internal
+export function _sortBy<T>(collection: _List<T> | null | undefined, ...iteratees: _Many<_ListIteratee<T>>[]): T[];
+
+// @internal (undocumented)
+export function _sortBy<T extends object>(collection: T | null | undefined, ...iteratees: _Many<_ObjectIteratee<T>>[]): T[keyof T][];
+
+// @internal
 export type SpecificMatcherFunction = (message: string) => boolean;
 
 // @internal
@@ -215,10 +306,36 @@ export function suppressConsole<T>(fn: () => T | Promise<T>, type?: ConsoleType 
 export function suppressConsole<T>(fn: () => T | Promise<T>, matcherFn: MatcherFunction): T | Promise<T>;
 
 // @internal
+export function _throttle<T extends (...args: any) => any>(func: T, wait?: number, options?: _ThrottleSettingsLeading): _DebouncedFuncLeading<T>;
+
+// @internal (undocumented)
+export function _throttle<T extends (...args: any) => any>(func: T, wait?: number, options?: _ThrottleSettings): _DebouncedFunc<T>;
+
+// @internal
+export type _ThrottleSettings = {
+    leading?: boolean | undefined;
+    trailing?: boolean | undefined;
+};
+
+// @internal
+export type _ThrottleSettingsLeading = (_ThrottleSettings & {
+    leading: true;
+}) | Omit<_ThrottleSettings, "leading">;
+
+// @internal
+export function _uniq<T>(array: _List<T> | null | undefined): T[];
+
+// @internal
 export function _uniqBy<T>(array: _List<T> | null | undefined, iteratee: _ValueIteratee<T>): T[];
 
 // @internal
 export type _ValueIteratee<T> = ((value: T) => _NotVoid) | _IterateeShorthand<T>;
+
+// @internal
+export type _ValueIteratorTypeGuard<T, S extends T> = (value: T) => value is S;
+
+// @internal (undocumented)
+export type _ValueKeyIteratee<T> = ((value: T, key: string) => _NotVoid) | _IterateeShorthand<T>;
 
 // @internal
 export type WaitForFn = <T>(callback: () => T | Promise<T>, options?: {

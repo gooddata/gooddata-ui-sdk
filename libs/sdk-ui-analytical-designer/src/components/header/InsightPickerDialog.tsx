@@ -153,7 +153,7 @@ export function InsightPickerDialog({
                     shouldCloseOnClick={() => true}
                     onClose={() => setIsDialogOpen(false)}
                 >
-                    <div className="open-visualizations s-open-visualizations">
+                    <div className="adi-open-visualizations s-open-visualizations">
                         <InsightPicker
                             workspace={workspace}
                             author={hasOwnershipSupport ? author : undefined}

@@ -21,6 +21,19 @@ describe("timezones", () => {
             expect(timezones.every((tz) => tz.id && tz.name && tz.offsetLabel)).toBe(true);
         });
 
+        it("should list every timezone id only once", () => {
+            const ids = getTimezones().map((tz) => tz.id);
+
+            expect(new Set(ids).size).toBe(ids.length);
+        });
+
+        it.each(["America/Godthab", "Europe/Kiev", "Asia/Rangoon", "Asia/Chongqing"])(
+            "should not list the non-canonical id %s",
+            (id) => {
+                expect(getTimezones().some((tz) => tz.id === id)).toBe(false);
+            },
+        );
+
         it("should keep name and offset label as independent fields", () => {
             const prague = getTimezones().find((tz) => tz.id === "Europe/Prague");
 
@@ -53,6 +66,15 @@ describe("timezones", () => {
             },
         );
 
+        it.each([
+            ["America/Godthab", "America/Nuuk"],
+            ["Europe/Kiev", "Europe/Kyiv"],
+            ["Asia/Rangoon", "Asia/Yangon"],
+            ["Asia/Chongqing", "Asia/Shanghai"],
+        ])("should resolve the legacy alias %s to %s", (legacyId, canonicalId) => {
+            expect(getTimezoneById(legacyId)?.id).toBe(canonicalId);
+        });
+
         it("should return undefined for unknown or missing id", () => {
             expect(getTimezoneById("Unknown/Zone")).toBeUndefined();
             expect(getTimezoneById(undefined)).toBeUndefined();
@@ -75,6 +97,14 @@ describe("timezones", () => {
                 name: "Prague",
                 offsetLabel: "GMT+01:00",
             });
+        });
+
+        it("should return the canonical item's labels for a stored legacy alias", () => {
+            expect(getTimezoneLabels("Asia/Chongqing")).toEqual({
+                name: "Beijing",
+                offsetLabel: "GMT+08:00",
+            });
+            expect(getTimezoneDisplayLabel("Europe/Kiev")).toBe("Kyiv");
         });
 
         it("should fall back to Intl computed offset for an ICU-known id outside the curated list", () => {
@@ -156,6 +186,7 @@ describe("timezones", () => {
             ["America/Godthab", "America/Nuuk"],
             ["Europe/Kiev", "Europe/Kyiv"],
             ["Asia/Rangoon", "Asia/Yangon"],
+            ["Asia/Chongqing", "Asia/Shanghai"],
         ])("should resolve the legacy runtime id %s to %s", (legacyId, canonicalId) => {
             const resolvedOptions = Intl.DateTimeFormat().resolvedOptions();
             vi.spyOn(Intl.DateTimeFormat.prototype, "resolvedOptions").mockReturnValue({

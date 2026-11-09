@@ -10,6 +10,7 @@ const LOADING_MASK_HEIGHT = 60;
 
 interface IParameterDetailProps {
     title: string;
+    identifier?: string;
     typeName: string;
     label?: string;
     isLoading?: boolean;
@@ -20,6 +21,7 @@ interface IParameterDetailProps {
 
 export function ParameterDetail({
     title,
+    identifier,
     typeName,
     label,
     isLoading,
@@ -30,6 +32,7 @@ export function ParameterDetail({
     return (
         <div className="gd-drill-to-url-editor-parameter-detail s-parameter-detail">
             <div className="gd-parameter-detail-title">{title}</div>
+            {identifier ? <ParameterIdentifierSection identifier={identifier} /> : null}
             <ParameterTypeSection typeName={typeName} />
             {label ? <ParameterLabelSection label={label} /> : null}
             {!_isEmpty(values) && (
@@ -40,6 +43,17 @@ export function ParameterDetail({
                     additionalValues={additionalValues}
                 />
             )}
+        </div>
+    );
+}
+
+function ParameterIdentifierSection({ identifier }: { identifier: string }) {
+    return (
+        <div className="gd-parameter-detail-section">
+            <div className="gd-parameter-detail-subtitle">
+                <FormattedMessage id="configurationPanel.drillIntoUrl.editor.parameterDetailIdentifier" />
+            </div>
+            <div>{identifier}</div>
         </div>
     );
 }

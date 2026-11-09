@@ -1565,6 +1565,7 @@ export type {
     IGenAIActiveObject,
     IGenAIUIContext,
     IGenAIDashboardContext,
+    IGenAIDashboardLiveFilters,
     IGenAIPublisherDocumentContext,
     IGenAIPublisherDocumentContextV2,
     IGenAIWidgetDescriptor,

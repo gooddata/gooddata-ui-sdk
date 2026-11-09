@@ -1005,7 +1005,7 @@ export type GenAIChatInteractionUserVisualisation = {
 export type GenAIChatRole = "USER" | "AI";
 
 // @internal
-export type GenAIChatRoutingUseCase = "ALERT" | "SEARCH" | "HOWTO" | "CHANGE_ANALYSIS" | "SEARCH_ALL" | "SEARCH_VISUALIZATIONS" | "SEARCH_DASHBOARDS" | "CREATE_VISUALIZATION" | "EXTEND_VISUALIZATION" | "GENERAL" | "WHAT_IF" | "INVALID";
+export type GenAIChatRoutingUseCase = "ALERT" | "SEARCH" | "HOWTO" | "CHANGE_ANALYSIS" | "SEARCH_ALL" | "SEARCH_VISUALIZATIONS" | "SEARCH_DASHBOARDS" | "CREATE_VISUALIZATION" | "EXTEND_VISUALIZATION" | "BUILD_DASHBOARD" | "BUILD_DOCUMENT" | "GENERAL" | "WHAT_IF" | "INVALID";
 
 // @internal
 export type GenAIDateGranularity = "MINUTE" | "HOUR" | "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR" | "MINUTE_OF_HOUR" | "HOUR_OF_DAY" | "DAY_OF_WEEK" | "DAY_OF_MONTH" | "DAY_OF_YEAR" | "WEEK_OF_YEAR" | "MONTH_OF_YEAR" | "QUARTER_OF_YEAR";
@@ -4019,6 +4019,7 @@ export interface IFeatureFlags {
     enableExportTemplatesSettingUi?: boolean;
     enableExportTimeoutFix?: boolean;
     enableExportToDocumentStorage?: boolean;
+    enableFeatureFlagOverrides?: boolean;
     enableFiscalCalendars?: boolean;
     enableGenAiAgenticDataShareOptOut?: boolean;
     enableGenAICatalogQualityChecker?: boolean;
@@ -4076,7 +4077,6 @@ export interface IFeatureFlags {
     enableRankingStrictLimit?: boolean;
     enableRankingWithMvf?: boolean;
     enableRawExports?: boolean;
-    enableReportsPostGA?: boolean;
     enableReportsSubsections?: boolean;
     // @alpha
     enableRichTextWidgetFilterConfiguration?: boolean;
@@ -4249,9 +4249,16 @@ export interface IGenAIDashboardContext {
     definition?: IDashboardDefinition;
     filters?: GenAIUserContextFilter[];
     isNew?: boolean;
+    liveFilters?: IGenAIDashboardLiveFilters;
     ref: ObjRef;
     title?: string;
     widgets: IGenAIWidgetDescriptor[];
+}
+
+// @internal
+export interface IGenAIDashboardLiveFilters {
+    filters?: FilterContextItem[];
+    tabs?: Record<string, FilterContextItem[]>;
 }
 
 // @internal

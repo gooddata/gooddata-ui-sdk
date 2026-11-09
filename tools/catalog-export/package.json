@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/catalog-export",
-    "version": "11.68.0-alpha.5",
+    "version": "11.68.0-alpha.6",
     "description": "GoodData SDK Catalog Export tooling",
     "license": "MIT",
     "author": "GoodData",
@@ -16,7 +16,8 @@
         "esm/**/*.js",
         "esm/**/*.json",
         "esm/**/*.d.ts",
-        "esm/**/*.map"
+        "esm/**/*.map",
+        "NOTICE"
     ],
     "type": "module",
     "types": "./esm/index.d.ts",

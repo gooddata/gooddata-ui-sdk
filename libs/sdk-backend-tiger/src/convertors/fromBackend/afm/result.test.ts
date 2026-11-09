@@ -14,7 +14,7 @@ import {
 
 import { defaultDateFormatter } from "../dateFormatting/defaultDateFormatter.js";
 
-import { getTransformDimensionHeaders } from "./DimensionHeaderConverter.js";
+import { getTransformDimensionHeaders, getTransformForecastHeaders } from "./DimensionHeaderConverter.js";
 import { transformExecutionResult } from "./result.js";
 import {
     mockDimensions,
@@ -267,5 +267,78 @@ describe("getTransformDimensionHeaders for computed attributes", () => {
         expect(
             formattedNames({ format: dateFormat, ref: idRef("label_1", "displayForm") }, ["2026-03-15"]),
         ).toEqual([undefined]);
+    });
+});
+
+describe("null values of a date attribute", () => {
+    const dimensions: IDimensionDescriptor[] = [
+        {
+            headers: [
+                {
+                    attributeHeader: {
+                        identifier: "date.month",
+                        localIdentifier: "a1",
+                        name: "Date - Month/Year",
+                        uri: "",
+                        ref: idRef("date.month", "displayForm"),
+                        formOf: {
+                            identifier: "date.month",
+                            name: "Month/Year",
+                            uri: "",
+                            ref: idRef("date.month"),
+                        },
+                        primaryLabel: idRef("date.month", "displayForm"),
+                        granularity: "MONTH",
+                        format: { locale: "en-US", pattern: "MMM y" },
+                    },
+                },
+            ],
+        },
+    ];
+    const dimensionHeaders = (values: Array<string | null>): DimensionHeader[] => [
+        {
+            headerGroups: [
+                {
+                    headers: values.map((value) => ({
+                        attributeHeader: { labelValue: value, primaryLabelValue: value },
+                    })) as DimensionHeader["headerGroups"][number]["headers"],
+                },
+            ],
+        },
+    ];
+
+    it("should have no formatted or normalized value, so consumers show the empty value placeholder", () => {
+        const [[headers]] = getTransformDimensionHeaders(
+            dimensions,
+            defaultDateFormatter,
+        )(dimensionHeaders([null, "2024-01"]));
+
+        expect(headers).toEqual([
+            { attributeHeaderItem: { uri: null, name: null } },
+            {
+                attributeHeaderItem: {
+                    uri: "2024-01",
+                    name: "2024-01",
+                    formattedName: "Jan 2024",
+                    normalizedValue: new Date(2024, 0, 1).toISOString(),
+                },
+            },
+        ]);
+        expect(headers[0]).not.toHaveProperty("attributeHeaderItem.formattedName");
+        expect(headers[0]).not.toHaveProperty("attributeHeaderItem.normalizedValue");
+    });
+
+    it("should keep the forecast placeholder for missing forecast values", () => {
+        const [[headers]] = getTransformForecastHeaders(dimensions, defaultDateFormatter, {
+            forecastPeriod: 2,
+            confidenceLevel: 0.95,
+            seasonal: false,
+        })(dimensionHeaders(["2024-01", "2024-02"]), undefined);
+
+        expect(
+            headers.map(
+                (header) => isResultAttributeHeader(header) && header.attributeHeaderItem.formattedName,
+            ),
+        ).toEqual([" - ", " - "]);
     });
 });

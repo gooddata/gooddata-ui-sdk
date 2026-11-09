@@ -14,6 +14,7 @@ import { idRef } from "../objRef/factory.js";
 import {
     type IdentifierRef,
     type ObjRef,
+    type ObjectType,
     areObjRefsEqual,
     isComputedAttributeRef,
     isIdentifierRef,
@@ -60,7 +61,7 @@ export enum DRILL_TO_URL_PLACEHOLDER {
     DRILL_TO_URL_PLACEHOLDER_DATA_PRODUCT_ID = "{data_product_id}",
 }
 
-type DrillUrlDependency = "displayForm" | "measure" | "insightMeasure" | "none";
+type DrillUrlDependency = "displayForm" | "measure" | "insightMeasure" | "parameter" | "none";
 
 function definePlaceholder<T extends string>(type: T, pattern: RegExp, dependency: DrillUrlDependency) {
     return { type, pattern, dependency };
@@ -85,6 +86,7 @@ const drillUrlPlaceholderDefinitions = [
     ),
     definePlaceholder("dash_mvf_condition", /\{dash_mvf_condition\((.*?)\)\}/g, "measure"),
     definePlaceholder("mvf_condition", /\{mvf_condition\((.*?)\)\}/g, "insightMeasure"),
+    definePlaceholder("parameter", /\{parameter\((.*?)\)\}/g, "parameter"),
     ...Object.values(DRILL_TO_URL_PLACEHOLDER).map((placeholder) =>
         definePlaceholder(placeholder, new RegExp(placeholder, "g"), "none"),
     ),
@@ -170,6 +172,13 @@ export const dashboardAttributeFilterToPlaceholder = (ref: ObjRef): string =>
 export const insightAttributeFilterToPlaceholder = (ref: ObjRef): string =>
     `{attribute_filter_selection(${placeholderIdentifierText(ref)})}`;
 
+/**
+ * Builds the `{parameter(...)}` placeholder text referencing the given parameter.
+ *
+ * @internal
+ */
+export const parameterIdentifierToPlaceholder = (identifier: string): string => `{parameter(${identifier})}`;
+
 const matchToUrlPlaceholder = (match: RegExpExecArray): IDrillToUrlPlaceholder => ({
     placeholder: match[0],
     identifier: placeholderIdentifier(match[1]),
@@ -177,12 +186,24 @@ const matchToUrlPlaceholder = (match: RegExpExecArray): IDrillToUrlPlaceholder =
     toBeEncoded: match.index !== 0,
 });
 
-const matchToMeasureUrlPlaceholder = (match: RegExpExecArray): IDrillToUrlPlaceholder => ({
-    placeholder: match[0],
-    identifier: match[1],
-    ref: idRef(match[1], "measure"),
-    toBeEncoded: match.index !== 0,
-});
+const matchToTypedUrlPlaceholder =
+    (type: ObjectType) =>
+    (match: RegExpExecArray): IDrillToUrlPlaceholder => ({
+        placeholder: match[0],
+        identifier: match[1],
+        ref: idRef(match[1], type),
+        toBeEncoded: match.index !== 0,
+    });
+
+const placeholderMappers: Record<
+    Exclude<DrillUrlDependency, "none">,
+    (match: RegExpExecArray) => IDrillToUrlPlaceholder
+> = {
+    displayForm: matchToUrlPlaceholder,
+    measure: matchToTypedUrlPlaceholder("measure"),
+    insightMeasure: matchToTypedUrlPlaceholder("measure"),
+    parameter: matchToTypedUrlPlaceholder("parameter"),
+};
 
 const splitAttributeIdentifierUrl = (url: string): string[] => url.split(attributeIdentifierSplitRegexp);
 
@@ -226,9 +247,7 @@ function getObjectPlaceholders(url: string, type: DrillUrlPlaceholderType): IDri
     if (!definition || definition.dependency === "none") {
         return [];
     }
-    return matchAll(definition.pattern, url).map(
-        definition.dependency === "displayForm" ? matchToUrlPlaceholder : matchToMeasureUrlPlaceholder,
-    );
+    return matchAll(definition.pattern, url).map(placeholderMappers[definition.dependency]);
 }
 
 /** @internal */
@@ -250,6 +269,22 @@ export const getInsightAttributeFilterPlaceholdersFromUrl = (url: string): IDril
 /** @internal */
 export const getInsightMeasureValueFilterPlaceholdersFromUrl = (url: string): IDrillToUrlPlaceholder[] =>
     getObjectPlaceholders(url, "mvf_condition");
+
+/** @internal */
+export const getParameterPlaceholdersFromUrl = (url: string): IDrillToUrlPlaceholder[] =>
+    getObjectPlaceholders(url, "parameter");
+
+/** @internal */
+export function getUnknownParameterIdentifiers(url: string, knownIdentifiers: Iterable<string>): string[] {
+    const known = new Set(knownIdentifiers);
+    const unknownIdentifiers: string[] = [];
+    for (const { identifier } of getParameterPlaceholdersFromUrl(url)) {
+        if (!known.has(identifier)) {
+            unknownIdentifiers.push(identifier);
+        }
+    }
+    return unknownIdentifiers;
+}
 
 /** Returns the registered placeholder families present in the URL. @internal */
 export function getDrillUrlPlaceholderTypes(url: string): DrillUrlPlaceholderType[] {
@@ -288,6 +323,10 @@ export function getDrillToCustomUrlReferenceMap(
 ): Record<string, ObjRef[]> {
     const references: Record<string, ObjRef[]> = {};
     for (const definition of drillUrlPlaceholderDefinitions) {
+        // a parameter value is put in at drill time; it is not a persisted dependency of the target
+        if (definition.dependency === "parameter") {
+            continue;
+        }
         for (const { placeholder, identifier, ref } of getObjectPlaceholders(target.url, definition.type)) {
             if (definition.dependency !== "insightMeasure") {
                 references[placeholder] = [ref];

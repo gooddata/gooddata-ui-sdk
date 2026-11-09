@@ -7,7 +7,6 @@ import { ConfigProvider, type LinkHandlerEvent } from "../../ConfigContext.js";
 
 import { CustomHyperlinkComponent } from "./CustomHyperlink.js";
 
-const escapedText = "http://www\\.seznam\\.cz";
 const plainText = "http://www.seznam.cz";
 
 type RenderCustomHyperlinkOptions = {
@@ -22,7 +21,7 @@ type RenderCustomHyperlinkOptions = {
 
 function renderCustomHyperlinkComponent({
     href = "gooddata://dashboard?ws=workspace_1&id=dashboard_1",
-    text = escapedText,
+    text = plainText,
     allowNativeLinks = true,
     canManage = true,
     canAnalyze = false,

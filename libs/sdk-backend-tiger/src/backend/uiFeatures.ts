@@ -7,6 +7,9 @@ const booleanFeature = (defaultValue: boolean) => ({ type: "BOOLEAN" as const, d
 const numberFeature = (defaultValue?: number) => ({ type: "NUMBER" as const, defaultValue });
 const jsonFeature = <T>(defaultValue?: T) => ({ type: "JSON" as const, defaultValue });
 
+/**
+ * @internal
+ */
 export const TigerFeatureDefinitions = {
     enableMetricFormatOverrides: booleanFeature(false),
     enableColumnLevelPermissions: booleanFeature(false),
@@ -123,7 +126,6 @@ export const TigerFeatureDefinitions = {
     enableBusinessBriefingReportsApp: booleanFeature(false),
     enableReportsSubsections: booleanFeature(false),
     enablePublisherV2: booleanFeature(false),
-    enableReportsPostGA: booleanFeature(false),
     enableGenAiReportTakeaways: booleanFeature(false),
     enableEmbeddingWriteCommands: booleanFeature(false),
     enableEmbeddingOriginValidation: booleanFeature(false),
@@ -141,8 +143,12 @@ export const TigerFeatureDefinitions = {
     enableAnalyticalDesignerCatalogSideload: booleanFeature(false),
     enableAiAssistantEmbedding: booleanFeature(false),
     enableLocalizationValidations: booleanFeature(false),
+    enableFeatureFlagOverrides: booleanFeature(false),
 } as const;
 
+/**
+ * @internal
+ */
 export type ITigerFeatureFlags = {
     -readonly [
         Key in keyof typeof TigerFeatureDefinitions
@@ -156,5 +162,7 @@ export const DefaultFeatureFlags = Object.fromEntries(
 /**
  * Local development overrides. A present key wins over FeatureHub and static configuration,
  * including false, zero and undefined. Keep this object empty in committed code.
+ *
+ * @internal
  */
 export const LocalFeatureFlagOverrides: Partial<ITigerFeatureFlags> = {};

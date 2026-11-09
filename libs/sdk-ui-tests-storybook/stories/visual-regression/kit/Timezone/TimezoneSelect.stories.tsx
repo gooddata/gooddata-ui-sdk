@@ -169,6 +169,8 @@ CustomTrigger.parameters = {
             delay: {
                 postOperation: 200,
             },
+            // the search icon antialiasing differs by a few pixels between CI runners
+            misMatchThreshold: 0.01,
         },
     },
 } satisfies IStoryParameters;

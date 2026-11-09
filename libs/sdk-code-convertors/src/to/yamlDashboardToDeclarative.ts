@@ -44,6 +44,7 @@ import {
     type IDashboardFilterGroupsConfig,
     type IDashboardFilterReference,
     type IDashboardMeasureValueFilterConfig,
+    type IDashboardParameter,
     type IDashboardPluginLink,
     type IDashboardTimezoneConfig,
     type IDrillDownIntersectionIgnoredAttributes,
@@ -111,6 +112,7 @@ export type DashboardDefinition = Pick<
     | "filterContextRef"
     | "tabs"
     | "activeTabLocalIdentifier"
+    | "parameters"
 > & {
     version: string;
 };
@@ -151,6 +153,7 @@ function yamlTabsToDeclarative(
         id: string;
         title: string;
         filters?: Dashboard["filters"];
+        parameters?: Dashboard["parameters"];
         sections?: Section[];
     }>,
     enableSectionHeaders?: boolean,
@@ -189,6 +192,7 @@ function yamlTabsToDeclarative(
             attributeFilterConfigs,
             measureValueFilterConfigs,
             ...(filterGroupsConfig ? { filterGroupsConfig } : {}),
+            ...(tab.parameters?.length ? { parameters: yamlParametersToDeclarative(tab.parameters) } : {}),
         });
     });
 
@@ -214,6 +218,7 @@ function processDashboardWithTabsV2(entities: ExportEntities, input: Dashboard) 
         dateFilterConfigs: defaultTab.dateFilterConfigs,
         attributeFilterConfigs: defaultTab.attributeFilterConfigs,
         measureValueFilterConfigs: defaultTab.measureValueFilterConfigs,
+        parameters: defaultTab.parameters,
         tabs: tabsResult.tabs,
         tabFilterContexts: tabsResult.filterContexts,
     };
@@ -236,6 +241,7 @@ function processDashboardWithoutTabsV2(entities: ExportEntities, input: Dashboar
                 id: "defaultTabId",
                 title: "",
                 filters: input.filters,
+                parameters: input.parameters,
                 sections: input.sections ?? [],
             },
         ],
@@ -273,6 +279,7 @@ function processDashboardWithTabsV3(entities: ExportEntities, input: Dashboard) 
         dateFilterConfigs: undefined,
         attributeFilterConfigs: undefined,
         measureValueFilterConfigs: undefined,
+        parameters: undefined,
         tabs: tabsResult.tabs,
         tabFilterContexts: tabsResult.filterContexts,
     };
@@ -290,6 +297,7 @@ function processDashboardWithoutTabsV3(entities: ExportEntities, input: Dashboar
                 id: "defaultTabId",
                 title: "",
                 filters: input.filters,
+                parameters: input.parameters,
                 sections: input.sections ?? [],
             },
         ],
@@ -303,6 +311,7 @@ function processDashboardWithoutTabsV3(entities: ExportEntities, input: Dashboar
         dateFilterConfigs: undefined,
         attributeFilterConfigs: undefined,
         measureValueFilterConfigs: undefined,
+        parameters: undefined,
         tabs: tabsResult.tabs,
         tabFilterContexts: tabsResult.filterContexts,
     };
@@ -320,7 +329,8 @@ export function yamlDashboardToDeclarative(
     const hasTabs = Boolean(input.tabs && input.tabs.length > 0);
     const hasRootContent = Boolean(
         (input.sections && input.sections.length > 0) ||
-        (input.filters && Object.keys(input.filters).length > 0),
+        (input.filters && Object.keys(input.filters).length > 0) ||
+        (input.parameters && input.parameters.length > 0),
     );
 
     if (hasTabs && hasRootContent) {
@@ -338,6 +348,7 @@ export function yamlDashboardToDeclarative(
         dateFilterConfigs,
         attributeFilterConfigs,
         measureValueFilterConfigs,
+        parameters,
         tabs,
         tabFilterContexts,
     } =
@@ -382,6 +393,7 @@ export function yamlDashboardToDeclarative(
                   measureValueFilterConfigs,
                   dateFilterConfig,
                   dateFilterConfigs,
+                  ...(parameters ? { parameters } : {}),
                   ...(timezoneConfig ? { timezoneConfig } : {}),
                   ...(tabs ? { tabs } : {}),
                   ...(input.cross_filtering === false ? { disableCrossFiltering: true } : {}),
@@ -913,6 +925,16 @@ export function yamlIgnoredFilterToDeclarative(input: string): IDashboardFilterR
         };
     }
     return null;
+}
+
+function yamlParametersToDeclarative(parameters: Required<Dashboard>["parameters"]): IDashboardParameter[] {
+    return parameters.map((parameter) => ({
+        ref: createIdentifier<any>(parameter.id, { forceType: "parameter" }),
+        parameterType: parameter.type,
+        ...(parameter.value === undefined ? {} : { value: parameter.value }),
+        ...(parameter.title === undefined ? {} : { label: parameter.title }),
+        ...(parameter.mode && parameter.mode !== "active" ? { mode: parameter.mode } : {}),
+    })) as IDashboardParameter[];
 }
 
 /** @internal */

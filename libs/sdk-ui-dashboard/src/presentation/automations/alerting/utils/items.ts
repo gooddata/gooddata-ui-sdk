@@ -27,6 +27,8 @@ import {
     isPreviousPeriodMeasureDefinition,
     isRelativeDateFilter,
     isSimpleMeasure,
+    measureLocalId,
+    modifyMeasure,
     newAttribute,
     newMeasure,
     newPopMeasure,
@@ -307,47 +309,26 @@ function collectAllMetric(
     }
     if (alert) {
         if (alert.alert?.condition.type === "relative") {
-            const left = alert.alert?.condition.measure.left;
-            const right = alert.alert?.condition.measure.right;
+            const { left, right } = alert.alert.condition.measure;
             return {
                 primaries: [
-                    ...(left
-                        ? [
-                              newMeasure(left.id, (a) =>
-                                  a.format(left.format).title(left.title).localId(left.id),
-                              ),
-                          ]
-                        : []),
-                    ...(right
-                        ? [
-                              newMeasure(right.id, (a) =>
-                                  a.format(right.format).title(right.title).localId(right.id),
-                              ),
-                          ]
-                        : []),
+                    ...(left ? [alertOperandMeasure(alert, left)] : []),
+                    ...(right ? [alertOperandMeasure(alert, right)] : []),
                 ],
                 others: [],
             };
         }
         if (alert.alert?.condition.type === "comparison") {
-            const left = alert.alert?.condition.left;
+            const left = alert.alert.condition.left;
             return {
-                primaries: left
-                    ? [newMeasure(left.id, (a) => a.format(left.format).title(left.title).localId(left.id))]
-                    : [],
+                primaries: left ? [alertOperandMeasure(alert, left)] : [],
                 others: [],
             };
         }
         if (alert.alert?.condition.type === "anomalyDetection") {
-            const measure = alert.alert?.condition.measure;
+            const measure = alert.alert.condition.measure;
             return {
-                primaries: measure
-                    ? [
-                          newMeasure(measure.id, (a) =>
-                              a.format(measure.format).title(measure.title).localId(measure.id),
-                          ),
-                      ]
-                    : [],
+                primaries: measure ? [alertOperandMeasure(alert, measure)] : [],
                 others: [],
             };
         }
@@ -357,6 +338,26 @@ function collectAllMetric(
         primaries: [],
         others: [],
     };
+}
+
+/**
+ * The alert's stored measure for a condition operand. A measure made from the operand's local identifier
+ * alone would be sent as a fact that does not exist.
+ */
+function alertOperandMeasure(
+    alert: IAutomationMetadataObject,
+    operand: { id: string; title?: string; format?: string },
+): IMeasure {
+    const execution = alert.alert?.execution;
+    const stored = [...(execution?.measures ?? []), ...(execution?.auxMeasures ?? [])].find(
+        (measure) => measureLocalId(measure) === operand.id,
+    );
+
+    if (stored) {
+        return modifyMeasure(stored, (m) => m.format(operand.format).title(operand.title));
+    }
+
+    return newMeasure(operand.id, (m) => m.format(operand.format).title(operand.title).localId(operand.id));
 }
 
 function collectAllAttributes(

@@ -518,6 +518,24 @@ describe("empty date values mode", () => {
                 "include stored on All time",
                 [{ relativeDateFilter: { ...allTime.relativeDateFilter, emptyValueHandling: "include" } }],
             ],
+            [
+                "include stored on the ALL_TIME_GRANULARITY All time",
+                [
+                    {
+                        relativeDateFilter: {
+                            dataSet,
+                            granularity: "ALL_TIME_GRANULARITY",
+                            from: 0,
+                            to: 0,
+                            emptyValueHandling: "include",
+                        },
+                    },
+                ],
+            ],
+            [
+                "the ALL_TIME_GRANULARITY All time without the mode",
+                [{ relativeDateFilter: { dataSet, granularity: "ALL_TIME_GRANULARITY", from: 0, to: 0 } }],
+            ],
         ])("compares %s equal to what AD writes back with the flag on and off", (_name, stored) => {
             expect(normalize(reSaved(stored, true))).toEqual(normalize(stored));
             expect(normalize(reSaved(stored, false))).toEqual(normalize(stored));
@@ -535,7 +553,7 @@ describe("empty date values mode", () => {
                 negativeAttributeFilter: { displayForm: idRef("label.region"), notIn: [""] },
             };
 
-            expect(normalize([allTime, attributeFilter])).toEqual([allTime, attributeFilter]);
+            expect(normalize([allTime, attributeFilter])).toEqual([...normalize([allTime]), attributeFilter]);
         });
     });
 });

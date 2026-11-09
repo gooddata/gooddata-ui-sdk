@@ -11,6 +11,7 @@ import {
     type IParameterMetadataObject,
     type IdentifierRef,
     type ObjRef,
+    type ParameterType,
     type ParameterValue,
     areObjRefsEqual,
     insightRef,
@@ -58,6 +59,8 @@ import {
     hydrateParameterEntry,
     isGatedStringEntry,
     resolveEffectiveParameterValuesForRefs,
+    resolveParameterTitle,
+    resolveParameterValues,
     smartPersistResolvedEntry,
     ungatedInsightParameterValues,
     ungatedTabEntries,
@@ -71,6 +74,7 @@ import {
 const EMPTY_PARAMETERS: IDashboardParameter[] = [];
 const EMPTY_EXPORT_PARAMETERS: IDashboardExportParameter[] = [];
 const EMPTY_PARAMETER_VALUES: IInsightParameterValue[] = [];
+const EMPTY_WIDGET_PARAMETER_VALUES: IWidgetParameterValue[] = [];
 const EMPTY_TABS: IDashboardTab[] = [];
 const EMPTY_RESET_TARGETS: IInsightParameterValue[] = [];
 const EMPTY_RECONCILIATIONS: IParameterReconciliationEntry[] = [];
@@ -637,6 +641,51 @@ export const selectReferencedInsightParameterValuesForWidget: (
         );
     }),
 );
+
+/**
+ * A parameter of the widget's tab and the value that a drill to URL puts in place of its
+ * `{parameter(id)}` placeholder.
+ *
+ * @internal
+ */
+export interface IWidgetParameterValue {
+    identifier: string;
+    parameterType: ParameterType;
+    title: string;
+    value: ParameterValue | undefined;
+}
+
+/**
+ * Every ungated parameter of the widget's tab, all modes, with its drill to URL value: the dashboard
+ * `runtimeOverride`, else the insight value, else the workspace default. Returns `[]` when
+ * `enableParameters` is off.
+ *
+ * @internal
+ */
+export const selectWidgetParameterValues: (ref: ObjRef) => DashboardSelector<IWidgetParameterValue[]> =
+    createMemoizedSelector((ref: ObjRef) =>
+        createSelector(selectWidgetParameterContext(ref), selectInsightsMap, (context, insights) => {
+            if (!context) {
+                return EMPTY_WIDGET_PARAMETER_VALUES;
+            }
+            const { entries, workspaceParameterByRef, widgetInsightRef } = context;
+            const insight = widgetInsightRef ? insights.get(widgetInsightRef) : undefined;
+            const values = resolveParameterValues(
+                context,
+                entries.map((entry) => entry.parameter.ref),
+                insight,
+            );
+            return entries.map(({ parameter }): IWidgetParameterValue => {
+                const { identifier } = parameter.ref;
+                return {
+                    identifier,
+                    parameterType: parameter.parameterType,
+                    title: resolveParameterTitle(parameter, workspaceParameterByRef.get(identifier)),
+                    value: values.get(identifier),
+                };
+            });
+        }),
+    );
 
 /**
  * Returns the effective dashboard parameters (persisted shape with any `runtimeOverride` folded

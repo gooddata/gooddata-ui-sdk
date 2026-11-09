@@ -387,7 +387,7 @@ describe("useAlertDraftFilterWrites — undefined state", () => {
 // ---------------------------------------------------------------------------
 
 describe("useAlertDraftFilterWrites — selectedValue nullish", () => {
-    it("passes name: '' to transformAlertByAttribute when selectedValue is undefined", () => {
+    it("keeps the attribute at All (no value) when selectedValue is undefined", () => {
         const { result } = renderDraftFilterWritesHook({ selectedValue: undefined });
 
         result.current.applyFiltersToDraft(SENTINEL_FILTERS);
@@ -398,7 +398,7 @@ describe("useAlertDraftFilterWrites — selectedValue nullish", () => {
             SENTINEL_SUPPORTED_ATTRIBUTES,
             expect.anything(),
             SENTINEL_ATTRIBUTE,
-            { name: "", title: "", value: "" },
+            undefined,
         );
     });
 

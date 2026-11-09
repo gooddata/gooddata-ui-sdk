@@ -298,6 +298,33 @@ export interface IOrganizationSettingsService {
     getDataLocale(): Promise<string | undefined>;
 
     /**
+     * Returns the list of origins that can exchange postMessages with embedded applications.
+     * Returns `undefined` when the organization has no list of its own.
+     *
+     * @remarks
+     * The value is the list set on the organization, without inherited defaults. An organization
+     * without its own list uses the deployment default. User has to have the organization MANAGE
+     * permission to read it.
+     *
+     * @returns promise
+     * @alpha
+     */
+    getEmbeddingOrigins(): Promise<string[] | undefined>;
+
+    /**
+     * Sets the list of origins that can exchange postMessages with embedded applications.
+     *
+     * @remarks
+     * Each entry is `*` or `http[s]://host[:port]`. The host can contain `*` wildcards,
+     * for example `https://*.example.com`. An empty list blocks all origins.
+     *
+     * @param origins - list of allowed origins
+     * @returns promise
+     * @alpha
+     */
+    setEmbeddingOrigins(origins: string[]): Promise<void>;
+
+    /**
      * Sets enable drill to URL by default configuration for organization.
      *
      * @param enabled - whether to enable drill to URL by default for dashboard widgets.

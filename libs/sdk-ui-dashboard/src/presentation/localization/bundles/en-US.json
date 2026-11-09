@@ -2379,6 +2379,10 @@
         "text": "Label",
         "crowdinContext": "Label for parameter name field in URL editor"
     },
+    "configurationPanel.drillIntoUrl.editor.parameterDetailIdentifier": {
+        "text": "ID",
+        "crowdinContext": "Title of the identifier section in parameter detail in 'Custom URL' editor"
+    },
     "configurationPanel.drillIntoUrl.editor.parameterDetailValues": {
         "text": "{numberOfValues, plural, one {Value} other {Values}}",
         "crowdinContext": "Title of values section in parameter detail in 'Custom URL' editor. Uses pluralization based on the number of values. Examples: When there is 1 value, it will show 'Value'. When there are multiple values, it will show 'Values'."
@@ -2419,6 +2423,14 @@
         "text": "Identifier",
         "crowdinContext": "Type label of identifier in parameter detail"
     },
+    "configurationPanel.drillIntoUrl.editor.numberParameterTypeLabel": {
+        "text": "Number",
+        "crowdinContext": "Type label of a number dashboard parameter in parameter detail in 'Custom URL' editor"
+    },
+    "configurationPanel.drillIntoUrl.editor.stringParameterTypeLabel": {
+        "text": "String",
+        "crowdinContext": "Type label of a string dashboard parameter in parameter detail in 'Custom URL' editor"
+    },
     "configurationPanel.drillIntoUrl.editor.insightParametersSectionLabel": {
         "text": "Visualization",
         "crowdinContext": "Section header for insight parameters"
@@ -2430,6 +2442,14 @@
     "configurationPanel.drillIntoUrl.editor.dashboardParametersSectionLabel": {
         "text": "Dashboard",
         "crowdinContext": "Section header for dashboard filter parameters in URL drill editor"
+    },
+    "configurationPanel.drillIntoUrl.editor.parameterParametersSectionLabel": {
+        "text": "Parameters",
+        "crowdinContext": "Section header for dashboard parameters (what-if values) in URL drill editor"
+    },
+    "configurationPanel.drillIntoUrl.editor.parameterParametersSectionEmpty": {
+        "text": "No parameters",
+        "crowdinContext": "Shown in the Parameters section of the URL drill editor when the dashboard tab has no parameters"
     },
     "configurationPanel.drillIntoUrl.editor.applyButtonLabel": {
         "text": "Apply",

@@ -369,9 +369,11 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                 timezone,
             );
             const normalizedValue = dateValueNormalizer(element.title, sdkGranularity, locale, timezone);
+            // a null value is formatted and normalized to "", which is no formatted value: leaving it out lets
+            // consumers fall back to the empty value placeholder
             objWithFormatted = {
-                formattedTitle,
-                normalizedValue,
+                ...(formattedTitle ? { formattedTitle } : {}),
+                ...(normalizedValue ? { normalizedValue } : {}),
             };
         }
 

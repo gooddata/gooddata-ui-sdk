@@ -33,6 +33,7 @@ import { IAuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { IdentifierDuplications } from '@gooddata/api-client-tiger';
+import { IEarlyAccessFeaturesConfig } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { ImportCsvRequest } from '@gooddata/api-client-tiger';
@@ -40,6 +41,7 @@ import { ImportCsvResponse } from '@gooddata/api-client-tiger';
 import { ImportSavRequest } from '@gooddata/api-client-tiger';
 import { ImportSavResponse } from '@gooddata/api-client-tiger';
 import { Invitation } from '@gooddata/api-client-tiger';
+import { IProductionFeaturesConfig } from '@gooddata/sdk-model';
 import { ITigerClient } from '@gooddata/api-client-tiger';
 import { IUser } from '@gooddata/sdk-model';
 import { JsonApiAggregatedFactOutMetaOriginOriginTypeEnum } from '@gooddata/api-client-tiger';
@@ -131,6 +133,21 @@ export type DependentEntitiesGraphRequest = DependentEntitiesRequest;
 // @internal @deprecated (undocumented)
 export type DependentEntitiesGraphResponse = DependentEntitiesResponse;
 
+// @internal (undocumented)
+export const FEATURE_FLAG_OVERRIDES_GATE_FLAG = "enableFeatureFlagOverrides";
+
+// @internal (undocumented)
+export const FEATURE_FLAG_OVERRIDES_STORAGE_KEY = "gdFeatureFlagOverrides";
+
+// @internal (undocumented)
+export type FeatureFlagOverrideRule<K extends OverridableFeatureFlag = OverridableFeatureFlag> = K extends OverridableFeatureFlag ? {
+    flag: K;
+    value: Exclude<ITigerFeatureFlags[K], undefined>;
+    organizationId?: string;
+    workspaceId?: string;
+    userId?: string;
+} : never;
+
 export { GdStorageFile }
 
 export { GenerateLdmRequest }
@@ -140,6 +157,9 @@ export type GenerateLogicalModelRequest = GenerateLdmRequest;
 
 // @internal
 export function getIdOrigin(id: string): IOriginInfoWithId;
+
+// @internal
+export function getServerFeatureFlags(workspaceId?: string): Partial<ITigerFeatureFlags> | undefined;
 
 // @internal @deprecated (undocumented)
 export interface IApiToken {
@@ -356,6 +376,24 @@ export interface IEntitlement {
     value?: string;
 }
 
+// @internal (undocumented)
+export interface IFeatureFlagOverrideContext {
+    // (undocumented)
+    organizationId?: string;
+    // (undocumented)
+    userId?: string;
+    // (undocumented)
+    workspaceId?: string;
+}
+
+// @internal (undocumented)
+export interface IFeatureFlagOverrides {
+    // (undocumented)
+    rules: FeatureFlagOverrideRule[];
+    // (undocumented)
+    staleRules: IStaleFeatureFlagOverrideRule[];
+}
+
 // @internal @deprecated (undocumented)
 export interface IInvitationUserResponse {
     // (undocumented)
@@ -409,11 +447,38 @@ export interface IScanRequest {
     viewPrefix: string;
 }
 
+// @internal
+export function isFeatureFlagOverrideRuleInContext(rule: FeatureFlagOverrideRule, context: IFeatureFlagOverrideContext): boolean;
+
+// @internal (undocumented)
+export function isOverridableFeatureFlag(flag: string): flag is OverridableFeatureFlag;
+
+// @internal (undocumented)
+export interface IStaleFeatureFlagOverrideRule {
+    // (undocumented)
+    reason: StaleFeatureFlagOverrideReason;
+    // (undocumented)
+    rule: unknown;
+}
+
 // @alpha (undocumented)
 export const isTigerCompatibleType: (obj: unknown) => obj is TigerObjectType;
 
 // @alpha (undocumented)
 export const isTigerType: (obj: unknown) => obj is TigerObjectType;
+
+// @internal (undocumented)
+export interface IStoredFeatureFlagOverrides extends IFeatureFlagOverrides {
+    unreadableContent?: string;
+}
+
+// @internal
+export function isValidFeatureFlagValue<K extends OverridableFeatureFlag>(flag: K, value: unknown): value is FeatureFlagOverrideRule<K>["value"];
+
+// @internal (undocumented)
+export type ITigerFeatureFlags = {
+    -readonly [Key in keyof typeof TigerFeatureDefinitions]: (typeof TigerFeatureDefinitions)[Key]["defaultValue"];
+};
 
 // @internal @deprecated
 export interface ITigerSpecificFunctionsProxyResult {
@@ -434,16 +499,28 @@ export interface IVisualizationObjectMetadata {
 // @alpha
 export type JwtIsAboutToExpireHandler = (setJwt: SetJwtCallback) => void;
 
+// @internal
+export const LocalFeatureFlagOverrides: Partial<ITigerFeatureFlags>;
+
 // @alpha (undocumented)
 export const objectTypeToTigerIdType: { [objectType in TigerCompatibleObjectType]: TigerObjectType; };
 
 // @internal @deprecated (undocumented)
 export type OrganizationPermission = JsonApiOrganizationOutMetaPermissionsEnum;
 
+// @internal (undocumented)
+export type OverridableFeatureFlag = Exclude<keyof ITigerFeatureFlags, typeof FEATURE_FLAG_OVERRIDES_GATE_FLAG>;
+
+// @internal (undocumented)
+export function parseFeatureFlagOverrides(content: string): IStoredFeatureFlagOverrides;
+
 // @internal @deprecated (undocumented)
 export type PutWorkspaceLayoutRequest = LayoutApiPutWorkspaceLayoutRequest;
 
 export { ReadCsvFileManifestsResponse }
+
+// @internal (undocumented)
+export function readFeatureFlagOverrides(): IStoredFeatureFlagOverrides;
 
 // @public
 export function redirectToTigerAuthentication(context: IAuthenticationContext, error: NotAuthenticated): void;
@@ -451,14 +528,26 @@ export function redirectToTigerAuthentication(context: IAuthenticationContext, e
 // @public
 export type RedirectToTigerAuthenticationHandler = (context: IAuthenticationContext, error: NotAuthenticated) => void;
 
+// @internal (undocumented)
+export function resolveFeatureFlagOverrides(rules: readonly FeatureFlagOverrideRule[], context: IFeatureFlagOverrideContext): Partial<ITigerFeatureFlags>;
+
 // @internal @deprecated (undocumented)
 export type ScanResult = ScanResultPdm;
 
 // @internal @deprecated (undocumented)
 export type ScanSqlResult = ScanSqlResponse;
 
+// @internal
+export function selectFeatureFlagOverrideRules(rules: readonly FeatureFlagOverrideRule[], context: IFeatureFlagOverrideContext): Map<OverridableFeatureFlag, FeatureFlagOverrideRule>;
+
+// @internal (undocumented)
+export function serializeFeatureFlagOverrides(input: IFeatureFlagOverrides): string;
+
 // @alpha
 export type SetJwtCallback = (jwt: string, secondsBeforeTokenExpirationToCallReminder?: number) => void;
+
+// @internal (undocumented)
+export type StaleFeatureFlagOverrideReason = "invalidRule" | "unknownFlag" | "gateFlag" | "invalidValue";
 
 // @public
 export type TigerAfmType = "label" | "metric" | "dataset" | "fact" | "attribute" | "computedAttribute" | "prompt";
@@ -486,6 +575,542 @@ export type TigerCompatibleObjectType = Exclude<ObjectType, "tag">;
 function tigerFactory(config?: IAnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend;
 export default tigerFactory;
 export { tigerFactory }
+
+// @internal (undocumented)
+export const TigerFeatureDefinitions: {
+    readonly enableMetricFormatOverrides: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableColumnLevelPermissions: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableMetricPermissions: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableCreateVisualizationWorkspacePermission: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableVisualizationPermissions: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableHighchartsAccessibility: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableAccessibleChartTooltip: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableRadarChart: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableMekkoChart: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableChangeAnalysis: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableRankingWithMvf: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableRankingStrictLimit: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableImprovedRankingFilter: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableMySqlDataSource: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableMariaDbDataSource: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableOracleDataSource: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableOidcAuth: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableMotherDuckDataSource: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableStarrocksDataSource: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableSingleStoreDataSource: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableDenodoDataSource: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableTrinoDataSource: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableCacheRetentionPolicy: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableSavFileStorage: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableSemanticSearch: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableCatalogSmartSearchResults: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableGenAICatalogQualityChecker: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableGenAiDashboardBuilderSkill: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableGenAiRightPanel: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableCatalogTrendingObjects: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableCertification: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableSystemAccountFiltering: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableDefaultSmtp: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableVisualizationFineTuning: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableDashboardTabularExport: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableOrchestratedTabularExports: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableDashboardDescriptionDynamicHeight: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableRawExports: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableExportTemplateSelection: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableExportTemplatesSettingUi: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableRichTextWidgetFilterConfiguration: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableDashboardSectionHeadersDateDataSet: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableAnalyticalDashboardVersion3: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableExecutionCancelling: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableImmediateAttributeFilterDisplayAsLabelMigration: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableWorkspaceSettingsAppHeaderMenuItem: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableSnapshotExportAccessibility: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableExportTimeoutFix: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableExportToDocumentStorage: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableNotificationChannelIdentifiers: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableDashboardShareDialogLink: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableDashboardPartialRendering: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly productionFeatures: {
+        type: "JSON";
+        defaultValue: IProductionFeaturesConfig | undefined;
+    };
+    readonly enablePreAggregationDatasets: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableNewPivotTable: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableDonutDataLabels: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableConditionalFormatting: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableSemanticConditionalFormatting: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableNewGeoPushpin: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableGeoArea: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableHLL: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableGeoChartA11yImprovements: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableGeoLayersExport: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableGeoChartsViewportConfig: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableGeoSegmentConflictRecommendation: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableGeoBasemapConfig: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableCustomGeoCollection: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableGeoSatelliteBasemapOption: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableGeoPushpinIcon: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableGenAIMemory: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableOrgLevelAIMemory: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableAIDataSetting: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly aiChatSearchLimit: {
+        type: "NUMBER";
+        defaultValue: number | undefined;
+    };
+    readonly enableAnomalyDetectionAlert: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableAnomalyDetectionVisualization: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableCustomTooltip: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableAlertOncePerInterval: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableFiscalCalendars: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableSecondGranularities: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableImprovedMetricDateFilter: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableDashboardFilterGroups: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableDashboardTimezone: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableMeasureValueFilterKD: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableVisualizationFilteringByTags: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableLogicalModelExtensionsFromParentsCall: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableDashboardDensitySetting: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableDashboardsSearch: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableAnalyticalCatalog: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableAgentInstructions: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableAutomationTrigger: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableUserDataFiltersUi: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableAiContextSetup: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableGenAiAgenticDataShareOptOut: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableParameters: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableAnalyticalCatalogMetricEditor: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableAnalyticalCatalogVisualizationEditor: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableStringParameters: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableEnhancedInsightPicker: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableDashboardVisualizationDelete: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableAiAgenticSuggestions: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableAiAgenticMultiConversations: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableGenAiReasoningEffort: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableGenAiObservability: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableGenAiInteractionIntelligence: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableGenAiInteractionIntelligence_timeline: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableAiLlmAnthropicProvider: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableDashboardSidebarResize: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableCollapsibleLeftSidebar: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableLineChartStyling: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableDashboardPersistentFiltersAcrossTabs: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableAbsoluteDateFilterGranularity: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableComputedAttributes: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableBusinessBriefingReportsApp: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableReportsSubsections: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enablePublisherV2: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableGenAiReportTakeaways: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableEmbeddingWriteCommands: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableEmbeddingOriginValidation: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableLocalizationOverview: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableAiAssistantChartsV2: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableUserLanguageChange: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableMetricSqlAndDataExplain: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableSqlDatasets: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableLabsSmartFunctions: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableDataProfiling: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableExperimentalFeaturesUI: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableCatalogLineage: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableNewInsightChangedPostMessageEvent: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly earlyAccessFeatures: {
+        type: "JSON";
+        defaultValue: IEarlyAccessFeaturesConfig | undefined;
+    };
+    readonly enableAnalyticalDesignerCatalogSideload: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableAiAssistantEmbedding: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableLocalizationValidations: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableFeatureFlagOverrides: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+};
 
 // @alpha (undocumented)
 export const tigerIdTypeToObjectType: {
@@ -615,5 +1240,8 @@ export type WorkspaceDefinition = JsonApiWorkspaceInDocument;
 
 // @internal @deprecated (undocumented)
 export type WorkspaceEntitiesDatasets = JsonApiDatasetOutList;
+
+// @internal (undocumented)
+export function writeFeatureFlagOverrides(overrides: IFeatureFlagOverrides): boolean;
 
 ```

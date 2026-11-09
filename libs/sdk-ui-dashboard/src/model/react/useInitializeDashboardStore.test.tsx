@@ -2,6 +2,8 @@
 
 import { configureStore } from "@reduxjs/toolkit";
 import { renderHook } from "@testing-library/react";
+import { runSaga } from "redux-saga";
+import { call } from "redux-saga/effects";
 import { describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-base";
@@ -96,5 +98,56 @@ describe("useInitializeDashboardStore AI mode config", () => {
         expect(result.current).toBe(dashboardStore);
         expect(createStore).toHaveBeenCalledTimes(1);
         expect(dashboardStore.rootSagaTask.cancel).not.toHaveBeenCalled();
+    });
+});
+
+describe("useInitializeDashboardStore lifecycle", () => {
+    it("deinitializes the dashboard before cancelling its running sagas on unmount", () => {
+        const dispatch = vi.fn();
+        const cancel = vi.fn();
+        createStore.mockReturnValue({ store: { dispatch }, rootSagaTask: { cancel } });
+        const backend = dummyBackend();
+        const { unmount } = renderHook(() =>
+            useInitializeDashboardStore({ backend, workspace: "test-workspace" }),
+        );
+        dispatch.mockClear();
+
+        unmount();
+
+        expect(dispatch).toHaveBeenCalledExactlyOnceWith(
+            expect.objectContaining({ type: "GDC.DASH/EVT.DEINITIALIZED" }),
+        );
+        expect(cancel).toHaveBeenCalledTimes(1);
+        expect(dispatch.mock.invocationCallOrder[0]).toBeLessThan(cancel.mock.invocationCallOrder[0]);
+    });
+
+    it("does not publish a late initialization from an unmounted dashboard after a replacement mounts", async () => {
+        let finishInitialization!: () => void;
+        const initialization = new Promise<void>((resolve) => {
+            finishInitialization = resolve;
+        });
+        const publishInitialized = vi.fn();
+        const rootSagaTask = runSaga({}, function* () {
+            yield call(() => initialization);
+            publishInitialized();
+        });
+        createStore.mockReturnValueOnce({ store: { dispatch: vi.fn() }, rootSagaTask });
+        const backend = dummyBackend();
+        const first = renderHook(() => useInitializeDashboardStore({ backend, workspace: "test-workspace" }));
+
+        first.unmount();
+
+        const replacement = { store: { dispatch: vi.fn() }, rootSagaTask: { cancel: vi.fn() } };
+        createStore.mockReturnValue(replacement);
+        const second = renderHook(() =>
+            useInitializeDashboardStore({ backend, workspace: "test-workspace" }),
+        );
+        finishInitialization();
+        await rootSagaTask.toPromise();
+
+        expect(publishInitialized).not.toHaveBeenCalled();
+        expect(rootSagaTask.isCancelled()).toBe(true);
+        expect(second.result.current).toBe(replacement);
+        expect(replacement.rootSagaTask.cancel).not.toHaveBeenCalled();
     });
 });

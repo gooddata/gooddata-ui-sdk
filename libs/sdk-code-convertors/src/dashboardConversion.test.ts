@@ -721,6 +721,33 @@ describe("dashboard conversion", () => {
                 expect(json.tabs).toHaveLength(2);
                 expect(json.sections).toBeUndefined();
             });
+
+            it('emits version "2" for declarative with tabs and root parameters but no root layout', () => {
+                const input = {
+                    type: "dashboard",
+                    id: "v2_root_parameters",
+                    version: "3",
+                    tabs: [
+                        { id: "tab_a", title: "Tab A", sections: [] },
+                        { id: "tab_b", title: "Tab B", sections: [] },
+                    ],
+                } as Dashboard;
+
+                const { dashboard, filterContext, tabFilterContexts } = yamlDashboardToDeclarative(
+                    emptyEntities,
+                    input,
+                );
+                (dashboard.content as any).parameters = [
+                    { ref: { identifier: { id: "top_n", type: "parameter" } }, parameterType: "NUMBER" },
+                ];
+                const { json } = declarativeDashboardToYaml(
+                    emptyFromEntities,
+                    dashboard,
+                    tabFilterContexts ?? (filterContext ? [filterContext] : []),
+                );
+
+                expect(json.version).toBe("2");
+            });
         });
 
         it("should keep an All time date filter bound to a data set", () => {
@@ -1176,6 +1203,203 @@ describe("dashboard conversion", () => {
                 mode: "hidden",
                 conditions: [{ condition: "GREATER_THAN", value: 100 }],
             });
+        });
+    });
+
+    describe("dashboard parameters round trip", () => {
+        const topN = {
+            ref: { identifier: { id: "top_n", type: "parameter" } },
+            parameterType: "NUMBER",
+        };
+        const region = {
+            ref: { identifier: { id: "region", type: "parameter" } },
+            parameterType: "STRING",
+            value: "Europe",
+            label: "Region",
+            mode: "readonly",
+        };
+        const twoTabs = [
+            { id: "t1", title: "One", sections: [] },
+            { id: "t2", title: "Two", sections: [] },
+        ] as Dashboard["tabs"];
+
+        function declarative(input: Dashboard) {
+            const { dashboard, filterContext, tabFilterContexts } = yamlDashboardToDeclarative(
+                emptyEntities,
+                input,
+            );
+            const filterContexts = [...(filterContext ? [filterContext] : []), ...(tabFilterContexts ?? [])];
+            return { dashboard, content: dashboard.content as any, filterContexts };
+        }
+
+        function roundTrip({ dashboard, filterContexts }: ReturnType<typeof declarative>) {
+            const { json } = declarativeDashboardToYaml(emptyFromEntities, dashboard, filterContexts);
+            const back = yamlDashboardToDeclarative(emptyEntities, json).dashboard.content as any;
+            return { json, back };
+        }
+
+        it("keeps parameters of an untitled single tab mirrored at the root (the shape the UI saves)", () => {
+            const input = declarative(makeDashboard({ sections: [] }));
+            input.content.tabs[0].parameters = [topN];
+            input.content.parameters = [topN];
+
+            const { json, back } = roundTrip(input);
+
+            expect(json.version).toBe("2");
+            expect(json.tabs).toBeUndefined();
+            expect(json.parameters).toEqual([{ id: "top_n", type: "NUMBER" }]);
+            expect(back.tabs[0].parameters).toEqual([topN]);
+            expect(back.parameters).toEqual([topN]);
+        });
+
+        it("keeps parameters of an untitled single tab in version 3 (the shape the assistant gets)", () => {
+            const input = declarative(makeDashboard({ version: "3", sections: [] }));
+            input.content.tabs[0].parameters = [topN];
+
+            const { json, back } = roundTrip(input);
+
+            expect(json.version).toBe("3");
+            expect(json.tabs).toBeUndefined();
+            expect(json.parameters).toEqual([{ id: "top_n", type: "NUMBER" }]);
+            expect(back.tabs[0].parameters).toEqual([topN]);
+            expect(back).not.toHaveProperty("parameters");
+        });
+
+        it("keeps parameters of a titled single tab", () => {
+            const input = declarative(makeDashboard({ sections: [] }));
+            input.content.tabs[0].title = "Main";
+            input.content.tabs[0].parameters = [topN];
+            input.content.parameters = [topN];
+
+            const { json, back } = roundTrip(input);
+
+            expect(json.tabs?.[0].parameters).toEqual([{ id: "top_n", type: "NUMBER" }]);
+            expect(back.tabs[0].parameters).toEqual([topN]);
+            expect(back.parameters).toEqual([topN]);
+        });
+
+        it.each(["2", "3"] as const)("keeps different parameters per tab in version %s", (version) => {
+            const input = declarative(makeDashboard({ version, sections: undefined, tabs: twoTabs }));
+            input.content.tabs[0].parameters = [topN];
+            input.content.tabs[1].parameters = [region];
+
+            const { json, back } = roundTrip(input);
+
+            expect(json.version).toBe(version);
+            expect(json.tabs?.[1].parameters).toEqual([
+                { id: "region", type: "STRING", value: "Europe", title: "Region", mode: "readonly" },
+            ]);
+            expect(back.tabs[0].parameters).toEqual([topN]);
+            expect(back.tabs[1].parameters).toEqual([region]);
+            expect(back.parameters).toEqual(version === "2" ? [topN] : undefined);
+        });
+
+        it("keeps legacy root-only parameters of a dashboard without tabs", () => {
+            const input = declarative(makeDashboard({ sections: [] }));
+            delete input.content.tabs;
+            input.content.parameters = [topN];
+
+            const { json, back } = roundTrip(input);
+
+            expect(json.parameters).toEqual([{ id: "top_n", type: "NUMBER" }]);
+            expect(back.tabs[0].parameters).toEqual([topN]);
+            expect(back.parameters).toEqual([topN]);
+        });
+
+        it("gives legacy root parameters to an untitled single tab without its own", () => {
+            const input = declarative(makeDashboard({ sections: [] }));
+            input.content.parameters = [topN];
+
+            const { json, back } = roundTrip(input);
+
+            expect(json.parameters).toEqual([{ id: "top_n", type: "NUMBER" }]);
+            expect(back.tabs[0].parameters).toEqual([topN]);
+        });
+
+        it("gives legacy root parameters to tabs that all lack their own", () => {
+            const input = declarative(makeDashboard({ sections: undefined, tabs: twoTabs }));
+            input.content.parameters = [topN];
+
+            const { back } = roundTrip(input);
+
+            expect(back.tabs[0].parameters).toEqual([topN]);
+            expect(back.tabs[1].parameters).toEqual([topN]);
+        });
+
+        it.each([{ tabParameters: undefined }, { tabParameters: [] }])(
+            "returns a tab with parameters $tabParameters without the key",
+            ({ tabParameters }) => {
+                const input = declarative(makeDashboard({ sections: undefined, tabs: twoTabs }));
+                input.content.tabs[0].parameters = [topN];
+                input.content.tabs[1].parameters = tabParameters;
+
+                const { json, back } = roundTrip(input);
+
+                expect(json.tabs?.[1]).not.toHaveProperty("parameters");
+                expect(back.tabs[1]).not.toHaveProperty("parameters");
+            },
+        );
+
+        it("does not give a tab without parameters the list mirrored at the root", () => {
+            const input = declarative(makeDashboard({ sections: undefined, tabs: twoTabs }));
+            input.content.tabs[0].parameters = [topN];
+            input.content.parameters = [topN];
+
+            const { json, back } = roundTrip(input);
+
+            expect(json.tabs?.[1]).not.toHaveProperty("parameters");
+            expect(back.tabs[1]).not.toHaveProperty("parameters");
+        });
+
+        it("keeps a zero value", () => {
+            const input = declarative(makeDashboard({ sections: [] }));
+            input.content.tabs[0].parameters = [{ ...topN, value: 0 }];
+
+            const { json, back } = roundTrip(input);
+
+            expect(json.parameters).toEqual([{ id: "top_n", type: "NUMBER", value: 0 }]);
+            expect(back.tabs[0].parameters).toEqual([{ ...topN, value: 0 }]);
+        });
+
+        it("reads an explicit active mode in YAML as no mode", () => {
+            const input = makeDashboard({
+                sections: [],
+                parameters: [{ id: "top_n", type: "NUMBER", mode: "active" }],
+            });
+
+            const content = yamlDashboardToDeclarative(emptyEntities, input).dashboard.content as any;
+
+            expect(content.tabs[0].parameters).toEqual([topN]);
+        });
+
+        it("keeps a hidden mode", () => {
+            const input = declarative(makeDashboard({ sections: [] }));
+            input.content.tabs[0].parameters = [{ ...topN, mode: "hidden" }];
+
+            const { json, back } = roundTrip(input);
+
+            expect(json.parameters).toEqual([{ id: "top_n", type: "NUMBER", mode: "hidden" }]);
+            expect(back.tabs[0].parameters).toEqual([{ ...topN, mode: "hidden" }]);
+        });
+
+        it("leaves an active mode out of the YAML and the declarative model", () => {
+            const input = declarative(makeDashboard({ sections: [] }));
+            input.content.tabs[0].parameters = [{ ...topN, mode: "active" }];
+
+            const { json, back } = roundTrip(input);
+
+            expect(json.parameters).toEqual([{ id: "top_n", type: "NUMBER" }]);
+            expect(back.tabs[0].parameters).toEqual([topN]);
+        });
+
+        it("rejects tabs together with root parameters", () => {
+            const input = makeDashboard({
+                sections: undefined,
+                tabs: twoTabs,
+                parameters: [{ id: "top_n", type: "NUMBER" }],
+            });
+
+            expect(() => yamlDashboardToDeclarative(emptyEntities, input)).toThrow(/tabs/);
         });
     });
 });

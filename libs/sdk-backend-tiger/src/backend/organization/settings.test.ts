@@ -74,4 +74,79 @@ describe("OrganizationSettingsService", () => {
             await expect(service[method]()).resolves.toBeUndefined();
         });
     });
+
+    describe("getEmbeddingOrigins", () => {
+        it("should return the origins set on the organization", async () => {
+            vi.mocked(api.EntitiesApi_GetAllEntitiesOrganizationSettings).mockResolvedValue(
+                settingsResponse([{ origins: ["https://a.example.com", "*"] }]),
+            );
+
+            await expect(service.getEmbeddingOrigins()).resolves.toEqual(["https://a.example.com", "*"]);
+            expect(api.EntitiesApi_GetAllEntitiesOrganizationSettings).toHaveBeenCalledWith({}, "", {
+                filter: "type==EMBEDDING_ORIGINS",
+            });
+        });
+
+        it("should return an empty list when the organization blocks all origins", async () => {
+            vi.mocked(api.EntitiesApi_GetAllEntitiesOrganizationSettings).mockResolvedValue(
+                settingsResponse([{ origins: [] }]),
+            );
+
+            await expect(service.getEmbeddingOrigins()).resolves.toEqual([]);
+        });
+
+        it("should return undefined when the organization has no setting", async () => {
+            vi.mocked(api.EntitiesApi_GetAllEntitiesOrganizationSettings).mockResolvedValue(
+                settingsResponse([]),
+            );
+
+            await expect(service.getEmbeddingOrigins()).resolves.toBeUndefined();
+        });
+    });
+
+    describe("setEmbeddingOrigins", () => {
+        it("should create the setting when the organization has none", async () => {
+            vi.mocked(api.EntitiesApi_GetAllEntitiesOrganizationSettings).mockResolvedValue(
+                settingsResponse([]),
+            );
+
+            await service.setEmbeddingOrigins(["https://a.example.com"]);
+
+            expect(api.EntitiesApi_CreateEntityOrganizationSettings).toHaveBeenCalledWith(
+                {},
+                "",
+                expect.objectContaining({
+                    jsonApiOrganizationSettingInDocument: {
+                        data: expect.objectContaining({
+                            attributes: {
+                                type: "EMBEDDING_ORIGINS",
+                                content: { origins: ["https://a.example.com"] },
+                            },
+                        }),
+                    },
+                }),
+            );
+        });
+
+        it("should update the existing setting", async () => {
+            vi.mocked(api.EntitiesApi_GetAllEntitiesOrganizationSettings).mockResolvedValue(
+                settingsResponse([{ origins: ["*"] }]),
+            );
+
+            await service.setEmbeddingOrigins([]);
+
+            expect(api.EntitiesApi_UpdateEntityOrganizationSettings).toHaveBeenCalledWith(
+                {},
+                "",
+                expect.objectContaining({
+                    id: "setting-0",
+                    jsonApiOrganizationSettingInDocument: {
+                        data: expect.objectContaining({
+                            attributes: { type: "EMBEDDING_ORIGINS", content: { origins: [] } },
+                        }),
+                    },
+                }),
+            );
+        });
+    });
 });

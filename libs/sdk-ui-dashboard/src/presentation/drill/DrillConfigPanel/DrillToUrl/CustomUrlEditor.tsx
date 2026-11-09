@@ -30,6 +30,7 @@ import {
     dashboardAttributeFilterToPlaceholder,
     displayFormPlaceholderRef,
     insightAttributeFilterToPlaceholder,
+    parameterIdentifierToPlaceholder,
 } from "@gooddata/sdk-model/internal";
 import {
     ConfirmDialogBase,
@@ -56,6 +57,7 @@ import {
     selectFilterContextAttributeFilterItems,
     selectFilterContextMeasureValueFilters,
 } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
+import { selectWidgetParameterValues } from "../../../../model/store/tabs/parameters/parametersSelectors.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/zIndex.js";
 import { useInvalidFilteringParametersIdentifiers } from "../../../widget/insight/configuration/DrillTargets/useInvalidFilteringParametersIdentifiers.js";
 import { type UrlDrillTarget, isDrillToCustomUrlConfig } from "../../types.js";
@@ -162,6 +164,7 @@ interface IUrlInputPanelProps {
     insightMeasureValueFilters?: IMeasureValueFilter[];
     enableInsightMeasureValueFilters: boolean;
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
+    dashboardParameterIdentifiers: string[];
     documentationLink?: string;
     intl: IntlShape;
 }
@@ -251,6 +254,21 @@ const buildValidInsightMvfFormattingRule = (measureIdentifiers: string[]) => {
     };
 };
 
+const buildValidParametersFormattingRule = (dashboardParameterIdentifiers: string[]) => {
+    if (dashboardParameterIdentifiers.length === 0) {
+        return undefined;
+    }
+
+    const validParameterPlaceholders = dashboardParameterIdentifiers
+        .map((identifier) => escapeRegExp(parameterIdentifierToPlaceholder(identifier)))
+        .join("|");
+
+    return {
+        regex: new RegExp(`^(?:${validParameterPlaceholders})`),
+        token: customTags.filter.toString(),
+    };
+};
+
 interface IFormattingRule {
     regex: RegExp;
     token: string;
@@ -281,12 +299,17 @@ const INVALID_INSIGHT_ATTRIBUTE_FILTER_RULE: IFormattingRule = {
     regex: /^\{attribute_filter_selection\(.*?\)\}/,
     token: customTags.invalidFilter.toString(),
 };
+const INVALID_PARAMETER_RULE: IFormattingRule = {
+    regex: /^\{parameter(?:\(.*?\))?\}/,
+    token: customTags.invalidFilter.toString(),
+};
 const DEFAULT_RULES: IFormattingRule[] = [
     INVALID_DISPLAY_FORMS_RULE,
     INVALID_DASHBOARD_ATTRIBUTE_FILTER_RULE,
     INVALID_DASHBOARD_MVF_RULE,
     INVALID_INSIGHT_MVF_RULE,
     INVALID_INSIGHT_ATTRIBUTE_FILTER_RULE,
+    INVALID_PARAMETER_RULE,
     IDENTIFIER_RULE,
     INVALID_IDENTIFIER_RULE,
 ];
@@ -297,6 +320,7 @@ const buildFormattingRules = (
     insightFilters: IAttributeFilter[],
     dashboardMeasureIdentifiers: string[],
     insightMeasureIdentifiers: string[],
+    dashboardParameterIdentifiers: string[],
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[],
 ): IFormattingRule[] => {
     const validDisplayFormsRule = buildValidDisplayFormsFormattingRule(attributeDisplayForms);
@@ -307,12 +331,14 @@ const buildFormattingRules = (
     );
     const validDashboardMvfRule = buildValidDashboardMvfFormattingRule(dashboardMeasureIdentifiers);
     const validInsightMvfRule = buildValidInsightMvfFormattingRule(insightMeasureIdentifiers);
+    const validParametersRule = buildValidParametersFormattingRule(dashboardParameterIdentifiers);
     return compact([
         validDisplayFormsRule,
         validDashboardFiltersRule,
         validDashboardMvfRule,
         validInsightFiltersRule,
         validInsightMvfRule,
+        validParametersRule,
         ...DEFAULT_RULES,
     ]);
 };
@@ -330,6 +356,7 @@ function UrlInputPanel({
     insightMeasureValueFilters,
     enableInsightMeasureValueFilters,
     attributeFilterConfigs,
+    dashboardParameterIdentifiers,
 }: IUrlInputPanelProps) {
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const catalogMeasuresMap = useDashboardSelector(selectAllCatalogMeasuresMap);
@@ -364,6 +391,7 @@ function UrlInputPanel({
                 insightFilters,
                 dashboardMeasureIdentifiers,
                 insightMeasureIdentifiers,
+                dashboardParameterIdentifiers,
                 attributeFilterConfigs,
             ),
         [
@@ -373,6 +401,7 @@ function UrlInputPanel({
             dashboardMeasureValueFilters,
             dashboardMeasureIdentifiers,
             insightMeasureIdentifiers,
+            dashboardParameterIdentifiers,
             attributeFilterConfigs,
         ],
     );
@@ -412,6 +441,7 @@ const URL_START_RULES = [
     /^\{attribute_filter_selection\(/,
     /^\{dash_attribute_filter_selection\(/,
     /^\{dash_mvf_condition\(/,
+    /^\{parameter\(/,
 ];
 const INSIGHT_MVF_URL_START_RULE = /^\{mvf_condition\(/;
 
@@ -471,6 +501,11 @@ function CustomUrlEditorDialog({
     const dashboardFilters = useSanitizedDashboardFilters();
     const dashboardMeasureValueFilters = useDashboardSelector(selectFilterContextMeasureValueFilters);
     const attributeFilterConfigs = useDashboardSelector(selectAttributeFilterConfigsOverrides);
+    const dashboardParameters = useDashboardSelector(selectWidgetParameterValues(widgetRef));
+    const dashboardParameterIdentifiers = useMemo(
+        () => dashboardParameters.map(({ identifier }) => identifier),
+        [dashboardParameters],
+    );
     const invalidFilteringParametersIdentifiers = useInvalidFilteringParametersIdentifiers(
         urlDrillTarget,
         insightFilters,
@@ -479,6 +514,7 @@ function CustomUrlEditorDialog({
         enableInsightMeasureValueFilters ? insightMeasureValueFilters : undefined,
         enableInsightMeasureValueFilters,
         attributeFilterConfigs,
+        dashboardParameterIdentifiers,
     );
 
     const invalidParameters = useMemo(() => {
@@ -537,6 +573,7 @@ function CustomUrlEditorDialog({
                 insightMeasureValueFilters={insightMeasureValueFilters}
                 enableInsightMeasureValueFilters={enableInsightMeasureValueFilters}
                 attributeFilterConfigs={attributeFilterConfigs}
+                dashboardParameterIdentifiers={dashboardParameterIdentifiers}
                 intl={intl}
             />
             <ParametersPanel
@@ -545,6 +582,7 @@ function CustomUrlEditorDialog({
                 dashboardMeasureValueFilters={dashboardMeasureValueFilters}
                 insightMeasureValueFilters={insightMeasureValueFilters}
                 attributeFilterConfigs={attributeFilterConfigs}
+                dashboardParameters={dashboardParameters}
                 attributeDisplayForms={attributeDisplayForms}
                 loadingAttributeDisplayForms={loadingAttributeDisplayForms}
                 enableClientIdParameter={enableClientIdParameter}

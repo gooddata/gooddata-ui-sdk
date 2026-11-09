@@ -7,6 +7,7 @@ import {
     type IAttributeDisplayFormMetadataObject,
     type IDashboardDefinition,
     type IGenAIDashboardContext,
+    type IGenAIDashboardLiveFilters,
     type IGenAIObjectReference,
     type IGenAIUserContext,
     type IGenAIUserContextRelativeDateFilter,
@@ -33,14 +34,16 @@ import { buildContext } from "./build.js";
  * @internal
  */
 export function buildDashboardContext(
-    dashboard: Omit<IGenAIDashboardContext, "definition">,
+    dashboard: Omit<IGenAIDashboardContext, "definition" | "liveFilters">,
     definition?: IDashboardDefinition,
+    liveFilters?: IGenAIDashboardLiveFilters,
 ): IGenAIUserContext {
     return buildContext({
         view: {
             dashboard: {
                 ...dashboard,
                 ...(definition ? { definition } : {}),
+                ...(liveFilters ? { liveFilters } : {}),
             },
         },
     });

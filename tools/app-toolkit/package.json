@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/app-toolkit",
-    "version": "11.68.0-alpha.5",
+    "version": "11.68.0-alpha.6",
     "description": "CLI with useful tools for creating and maintaining GoodData web applications.",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData",
@@ -36,7 +36,6 @@
         "format-write": "oxfmt .",
         "lint": "oxlint . --quiet && eslint src",
         "lint-fix": "oxlint . --quiet --fix && eslint src --fix",
-        "prepack": "cp -f ../../NOTICE ./NOTICE",
         "prepublishOnly": "npm run build",
         "test": "vitest watch",
         "test-once": "vitest run",

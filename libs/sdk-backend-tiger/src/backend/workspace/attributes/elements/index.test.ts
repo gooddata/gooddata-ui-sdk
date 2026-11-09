@@ -268,6 +268,25 @@ describe("TigerWorkspaceElementsQuery", () => {
         });
     });
 
+    describe("null values of a date attribute", () => {
+        it("have no formatted or normalized value, so consumers show the empty value placeholder", async () => {
+            vi.mocked(ActionsApi_ComputeLabelElementsPost).mockResolvedValueOnce({
+                data: {
+                    paging: { total: 1 },
+                    elements: [{ title: null, primaryTitle: null }],
+                    granularity: "DAY",
+                    format: { locale: "en-US", pattern: "dd.MM.yyyy" },
+                },
+            } as any);
+
+            const result = await factory.forDisplayForm(idRef("date.day", "displayForm")).query();
+
+            expect(result.items).toEqual([{ title: null, uri: null }]);
+            expect(result.items[0]).not.toHaveProperty("formattedTitle");
+            expect(result.items[0]).not.toHaveProperty("normalizedValue");
+        });
+    });
+
     describe("dependsOn type", () => {
         it("sends type of parent filters based on their refs", async () => {
             await factory

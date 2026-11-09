@@ -58,6 +58,7 @@ import {
     selectReferencedInsightParameterValuesForWidget,
     selectSmartPersistedTabsParameters,
     selectWidgetParameterContext,
+    selectWidgetParameterValues,
 } from "./parametersSelectors.js";
 import { type IDashboardParameterEntry } from "./parametersState.js";
 
@@ -1600,6 +1601,45 @@ describe("parameter selectors (per tab)", () => {
             });
             expect(selectReferencedInsightParameterValuesForWidget(widgetRef)(state)).toEqual([
                 { ref: topNRef, value: 42 },
+            ]);
+        });
+    });
+
+    describe("selectWidgetParameterValues", () => {
+        const sampleSizeWorkspace: IParameterMetadataObject = {
+            ...topNWorkspace,
+            id: "sampleSize",
+            uri: "/sampleSize",
+            ref: otherRef,
+            title: "Sample size",
+            definition: { type: "NUMBER", defaultValue: 100 },
+        };
+
+        it("lists every tab parameter with its title and chip, then insight, then default value", () => {
+            const state = makeFullState({
+                entries: [
+                    { parameter: { ...topNParameter, mode: "hidden", label: "Top" }, runtimeOverride: 25 },
+                    {
+                        parameter: { ref: otherRef, parameterType: "NUMBER", mode: "readonly" },
+                        runtimeOverride: undefined,
+                    },
+                    { parameter: scenarioParameter, runtimeOverride: undefined },
+                ],
+                workspaceParameters: [topNWorkspace, sampleSizeWorkspace, scenarioWorkspace],
+                insights: [
+                    makeInsightWithMetric(W1_INSIGHT_REF, idRef("m1", "measure"), [
+                        { ref: topNRef, value: 42 },
+                        { ref: otherRef, value: 7 },
+                    ]),
+                ],
+            });
+
+            expect(
+                selectWidgetParameterValues(W1_REF)(state).map(({ title, value }) => ({ title, value })),
+            ).toEqual([
+                { title: "Top", value: 25 },
+                { title: "Sample size", value: 7 },
+                { title: "Scenario", value: "Actual" },
             ]);
         });
     });

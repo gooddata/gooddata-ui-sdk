@@ -33,9 +33,11 @@
 
 import { _assignValue } from "./_assignValue.js";
 import { _baseGetTag } from "./_baseGetTag.js";
+import { _cloneArrayBuffer } from "./_cloneArrayBuffer.js";
+import { _cloneTypedArray } from "./_cloneTypedArray.js";
 import { _getAllKeys } from "./_getAllKeys.js";
+import { _initCloneObject } from "./_initCloneObject.js";
 import { _isIndex } from "./_isIndex.js";
-import { _isPrototype } from "./_isPrototype.js";
 import { _isObject } from "./isObject.js";
 import { _isTypedArray } from "./isTypedArray.js";
 
@@ -78,11 +80,6 @@ type _Stack = Map<object, unknown>;
 type _Constructor = new (...args: unknown[]) => unknown;
 type _Cloneable = { constructor: _Constructor };
 type _AnyRecord = Record<PropertyKey, unknown>;
-
-/** Node's `Buffer`, when present; typed structurally because this package has no Node typings. */
-const NodeBuffer = (
-    globalThis as { Buffer?: { isBuffer(value: unknown): boolean; from(value: Uint8Array): Uint8Array } }
-).Buffer;
 
 /**
  * The base implementation of `_cloneDeep` which tracks traversed objects.
@@ -195,20 +192,6 @@ function _initCloneArray(array: unknown[]): _AnyRecord {
 }
 
 /**
- * Initializes a plain-object clone with the same prototype. Prototype objects and objects without a
- * constructor function, such as null-prototype objects, clone into ordinary `Object` instances.
- */
-function _initCloneObject(object: object): _AnyRecord {
-    if (typeof (object as { constructor?: unknown }).constructor !== "function" || _isPrototype(object)) {
-        return {};
-    }
-
-    const proto: unknown = Object.getPrototypeOf(object);
-
-    return _isObject(proto) ? Object.create(proto) : {};
-}
-
-/**
  * Initializes a clone of a value by its `toStringTag`. Collections come back empty and are filled by
  * the caller; everything else is complete on return.
  */
@@ -251,32 +234,4 @@ function _initCloneByTag(object: object, tag: string): _AnyRecord {
     }
 
     return _cloneTypedArray(object as ArrayBufferView & ArrayLike<unknown>) as unknown as _AnyRecord;
-}
-
-function _cloneArrayBuffer(arrayBuffer: ArrayBufferLike): ArrayBufferLike {
-    const result = new (arrayBuffer as unknown as _Cloneable).constructor(
-        arrayBuffer.byteLength,
-    ) as ArrayBufferLike;
-
-    new Uint8Array(result).set(new Uint8Array(arrayBuffer));
-
-    return result;
-}
-
-/**
- * Clones a typed array of any class, keeping its view offset and length over a copy of the whole buffer.
- * A Node `Buffer` is copied through `Buffer.from`, since constructing one directly is deprecated.
- */
-function _cloneTypedArray(typedArray: ArrayBufferView & ArrayLike<unknown>): ArrayBufferView {
-    if (NodeBuffer?.isBuffer(typedArray)) {
-        return NodeBuffer.from(typedArray as Uint8Array);
-    }
-
-    const Ctor = (typedArray as unknown as _Cloneable).constructor;
-
-    return new Ctor(
-        _cloneArrayBuffer(typedArray.buffer),
-        typedArray.byteOffset,
-        typedArray.length,
-    ) as ArrayBufferView;
 }

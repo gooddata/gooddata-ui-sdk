@@ -162,7 +162,7 @@ export class LineChartBasedConfigurationPanel extends BaseChartConfigurationPane
                             <ContinuousLineControl
                                 properties={properties}
                                 checked={shouldContinuousLineControlDisabled ? false : continuousLineEnabled}
-                                disabled={controlsDisabled || isDataPointsControlDisabled}
+                                disabled={shouldContinuousLineControlDisabled}
                                 pushData={pushData}
                             />
                         </div>
