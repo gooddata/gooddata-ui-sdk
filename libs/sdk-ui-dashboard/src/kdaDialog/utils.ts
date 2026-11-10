@@ -1,5 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
+import { TZDate } from "@date-fns/tz";
 import { invariant } from "ts-invariant";
 
 import { ClientFormatterFacade, type ISeparators } from "@gooddata/number-formatter";
@@ -58,9 +59,11 @@ export function formatKeyDriverAnalysisDateRange(
     // instead of locale-based ones.
     const pattern = toIsoPattern(from.format?.pattern ?? "yyyy-MM-dd");
 
+    // The dates carry the backend wall-clock in UTC (see IKdaDataPoint.date), so they are formatted in UTC
+    // to show it unchanged in every browser timezone.
     return DateFilterHelpers.formatAbsoluteDateRange(
-        new Date(from.date),
-        new Date(to.date),
+        new TZDate(from.date, "UTC"),
+        new TZDate(to.date, "UTC"),
         pattern,
         splitter,
     );

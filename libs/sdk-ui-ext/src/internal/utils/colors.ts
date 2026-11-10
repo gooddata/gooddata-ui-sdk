@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, compact, set, uniqBy } from "lodash-es";
+import { compact, set, uniqBy } from "lodash-es";
 
 import {
     type IColor,
@@ -16,7 +16,7 @@ import {
 } from "@gooddata/sdk-model";
 import { type IColorAssignment, type IMappingHeader, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { ColorUtils, type ILineStyleMappingItem } from "@gooddata/sdk-ui-charts";
-import { _isEmpty, _isEqual } from "@gooddata/util";
+import { _cloneDeep, _isEmpty, _isEqual } from "@gooddata/util";
 
 import { type IColorConfiguration, type IColoredItem } from "../interfaces/Colors.js";
 import { type IVisualizationProperties } from "../interfaces/Visualization.js";
@@ -128,7 +128,7 @@ function mergeColorMappingToProperties(properties: IVisualizationProperties, id:
     const previousColorMapping = properties?.controls?.["colorMapping"] ?? [];
 
     const mergedMapping = compact(uniqBy([...colorMapping, ...previousColorMapping], "id"));
-    const newProperties = cloneDeep(properties);
+    const newProperties = _cloneDeep(properties);
     set(newProperties, "controls.colorMapping", mergedMapping);
 
     return newProperties;
@@ -156,7 +156,7 @@ export function removeColorMappingFromProperties(
     const updatedMapping = previousColorMapping.map((item) =>
         item.id === id ? ({ id, color: null } as unknown as IColorMappingItem) : item,
     );
-    const newProperties = cloneDeep(properties);
+    const newProperties = _cloneDeep(properties);
     set(newProperties, "controls.colorMapping", updatedMapping);
     return newProperties;
 }
@@ -170,7 +170,7 @@ export function getLineStyleProperties(
     const newEntry: ILineStyleMappingItem = { id, lineStyle, lineWidth };
     const previousMapping: ILineStyleMappingItem[] = properties?.controls?.["lineStyleMapping"] ?? [];
     const merged = compact(uniqBy([newEntry, ...previousMapping], "id"));
-    const newProperties = cloneDeep(properties);
+    const newProperties = _cloneDeep(properties);
     set(newProperties, "controls.lineStyleMapping", merged);
     return newProperties;
 }

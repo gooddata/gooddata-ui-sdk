@@ -1,7 +1,7 @@
-// (C) 2019-2025 GoodData Corporation
-import { cloneDeep } from "lodash-es";
+// (C) 2019-2026 GoodData Corporation
 
 import { BucketNames } from "@gooddata/sdk-ui";
+import { _cloneDeep } from "@gooddata/util";
 
 import { BUCKETS, METRIC } from "../../../constants/bucket.js";
 import { type IBucketItem, type IExtendedReferencePoint } from "../../../interfaces/Visualization.js";
@@ -64,7 +64,7 @@ export function setHeadlineRefPointBuckets(
     primaryMeasure?: IBucketItem,
     secondaryMeasure?: IBucketItem[],
 ): IExtendedReferencePoint {
-    const newReferencePoint: IExtendedReferencePoint = cloneDeep(extendedReferencePoint);
+    const newReferencePoint: IExtendedReferencePoint = _cloneDeep(extendedReferencePoint);
 
     newReferencePoint[BUCKETS] = [
         {

@@ -1,7 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { type PayloadAction } from "@reduxjs/toolkit";
-import { cloneDeep, compact, update } from "lodash-es";
+import { compact, update } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, select } from "redux-saga/effects";
 
@@ -37,7 +37,7 @@ import {
     isInsightWidget,
     isObjRef,
 } from "@gooddata/sdk-model";
-import { _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty } from "@gooddata/util";
 
 import {
     dashboardFilterContextDefinition,
@@ -583,7 +583,7 @@ function* sanitizeFilterContext(
         : [];
 
     const resolvedDataSetsIds = [...dataSets, ...loadedMissing].map((dataSet) => dataSet.id);
-    const updatedFilterContext = cloneDeep(filterContext);
+    const updatedFilterContext = _cloneDeep(filterContext);
     update(updatedFilterContext, "filters", (filters: FilterContextItem[]) =>
         filters.filter((filter) => {
             return keepOnlyFiltersWithValidRef(

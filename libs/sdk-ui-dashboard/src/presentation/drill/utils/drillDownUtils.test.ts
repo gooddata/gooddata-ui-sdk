@@ -1,9 +1,9 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { type ICrossFiltering, type IDrillToAttributeUrl } from "@gooddata/sdk-model";
+import { _cloneDeep } from "@gooddata/util";
 
 import { type IDrillDownDefinition } from "../../../types.js";
 
@@ -55,7 +55,7 @@ describe("filterDrillFromAttributeByPriority", () => {
     });
 
     it("should ignore implicit drill and return just configured drill that has priority", () => {
-        const drill = cloneDeep(drillToAttributeUrl);
+        const drill = _cloneDeep(drillToAttributeUrl);
         drill.target.hyperlinkDisplayForm = { uri: "different df than implicit" };
 
         const drillDefinitions = [drill, drillToAttributeUrl];
@@ -67,7 +67,7 @@ describe("filterDrillFromAttributeByPriority", () => {
     });
 
     it("should return configured drill that has priority for each origin (Multiple origins drill)", () => {
-        const drill = cloneDeep(drillToAttributeUrl);
+        const drill = _cloneDeep(drillToAttributeUrl);
         drill.target.hyperlinkDisplayForm = { uri: "different df than implicit" };
 
         const drillDefinitions = [drill, drillToAttributeUrl, drillDown];

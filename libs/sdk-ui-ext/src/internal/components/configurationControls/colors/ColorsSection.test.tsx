@@ -1,11 +1,11 @@
 // (C) 2019-2026 GoodData Corporation
 
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { cloneDeep } from "lodash-es";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IColor, type IMeasureDescriptor } from "@gooddata/sdk-model";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
+import { _cloneDeep } from "@gooddata/util";
 
 import { type IColorConfiguration } from "../../../interfaces/Colors.js";
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
@@ -66,7 +66,7 @@ const propsWithFalsyColor = (value: any): IColorsSectionProps => ({
 });
 
 function createComponent(customProps: Partial<IColorsSectionProps> = {}) {
-    const props: IColorsSectionProps = { ...cloneDeep(defaultProps), ...customProps };
+    const props: IColorsSectionProps = { ..._cloneDeep(defaultProps), ...customProps };
     return render(
         <InternalIntlWrapper>
             <ColorsSection {...props} />

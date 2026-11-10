@@ -62,13 +62,23 @@ export interface IAnthropicProviderConfig {
 }
 
 /**
+ * GoodData AI provider. Inference is served by GoodData, so it carries no configuration.
+ *
+ * @alpha
+ */
+export interface IGoodDataAiProviderConfig {
+    type: "gooddataAi";
+}
+
+/**
  * @alpha
  */
 export type LlmProviderConfig =
     | IOpenAIProviderConfig
     | IAzureFoundryProviderConfig
     | IAwsBedrockProviderConfig
-    | IAnthropicProviderConfig;
+    | IAnthropicProviderConfig
+    | IGoodDataAiProviderConfig;
 
 /**
  * @alpha

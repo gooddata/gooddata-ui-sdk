@@ -81,7 +81,7 @@ function updateDefinitionPeriod(
         }
         case "same_period_previous_year": {
             const currentDate = new Date(to.date);
-            currentDate.setFullYear(currentDate.getFullYear() - 1);
+            currentDate.setUTCFullYear(currentDate.getUTCFullYear() - 1);
             return {
                 ...definition,
                 type: "same_period_previous_year",
@@ -97,47 +97,49 @@ function updateDefinitionPeriod(
     }
 }
 
+// The dates carry the backend wall-clock in UTC (see IKdaDataPoint.date), so they are shifted in UTC: the
+// shift must not cross a daylight saving transition of the browser timezone.
 function updateDateBy(date: string, granularity: DateAttributeGranularity) {
     switch (granularity) {
         case "GDC.time.year": {
             const current = new Date(date);
-            current.setFullYear(current.getFullYear() - 1);
+            current.setUTCFullYear(current.getUTCFullYear() - 1);
             return current;
         }
         case "GDC.time.week_us":
         case "GDC.time.week": {
             const current = new Date(date);
-            current.setDate(current.getDate() - 7);
+            current.setUTCDate(current.getUTCDate() - 7);
             return current;
         }
         case "GDC.time.quarter": {
             const current = new Date(date);
-            current.setMonth(current.getMonth() - 3);
+            current.setUTCMonth(current.getUTCMonth() - 3);
             return current;
         }
         case "GDC.time.month": {
             const current = new Date(date);
-            current.setMonth(current.getMonth() - 1);
+            current.setUTCMonth(current.getUTCMonth() - 1);
             return current;
         }
         case "GDC.time.date": {
             const current = new Date(date);
-            current.setDate(current.getDate() - 1);
+            current.setUTCDate(current.getUTCDate() - 1);
             return current;
         }
         case "GDC.time.hour": {
             const current = new Date(date);
-            current.setHours(current.getHours() - 1);
+            current.setUTCHours(current.getUTCHours() - 1);
             return current;
         }
         case "GDC.time.minute": {
             const current = new Date(date);
-            current.setMinutes(current.getMinutes() - 1);
+            current.setUTCMinutes(current.getUTCMinutes() - 1);
             return current;
         }
         case "GDC.time.second": {
             const current = new Date(date);
-            current.setSeconds(current.getSeconds() - 1);
+            current.setUTCSeconds(current.getUTCSeconds() - 1);
             return current;
         }
         default:

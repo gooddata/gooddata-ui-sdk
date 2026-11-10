@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 
 import { type IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
@@ -14,7 +14,7 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { type IChartConfig } from "@gooddata/sdk-ui-charts";
-import { _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty } from "@gooddata/util";
 
 import { BUCKETS } from "../../../constants/bucket.js";
 import { MEKKO_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
@@ -128,8 +128,8 @@ export class PluggableMekko extends PluggableBaseChart {
     public override getExtendedReferencePoint(
         referencePoint: IReferencePoint,
     ): Promise<IExtendedReferencePoint> {
-        const clonedReferencePoint = cloneDeep(referencePoint);
-        const uiConfig = cloneDeep(DEFAULT_MEKKO_UICONFIG);
+        const clonedReferencePoint = _cloneDeep(referencePoint);
+        const uiConfig = _cloneDeep(DEFAULT_MEKKO_UICONFIG);
 
         let newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,

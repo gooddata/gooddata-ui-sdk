@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { format } from "date-fns";
+import { format, isSameDay } from "date-fns";
 import moment from "moment";
 
 import { sanitizeLocaleForMoment } from "@gooddata/util";
@@ -126,7 +126,8 @@ export const formatAbsoluteDateRange = (
     const toDate = convertPlatformDateStringToDate(adjustedTo) ?? undefined;
     const coversWholeDay = fromDate && toDate ? isTimeForWholeDay(fromDate, toDate) : false;
 
-    if (fromDate && toDate && moment(fromDate).isSame(toDate, "day")) {
+    // date-fns keeps the timezone context of the dates (e.g. a TZDate), unlike moment
+    if (fromDate && toDate && isSameDay(fromDate, toDate)) {
         if (isTimeEnabled && !coversWholeDay) {
             return `${format(fromDate, dateFormatWithoutTime)}, ${getTimeRange(fromDate, toDate, splitter, timeFormat)}`;
         } else {

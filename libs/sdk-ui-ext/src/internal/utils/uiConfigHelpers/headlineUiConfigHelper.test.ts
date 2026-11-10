@@ -1,6 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import {
@@ -12,6 +11,7 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { CalculateAs, DEFAULT_COMPARISON_PALETTE, type IChartConfig } from "@gooddata/sdk-ui-charts";
+import { _cloneDeep } from "@gooddata/util";
 
 import { type HeadlineControlProperties } from "../../interfaces/ControlProperties.js";
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
@@ -243,7 +243,7 @@ describe("headlineUiConfigHelper", () => {
         });
 
         it("should return a color palette with positive, negative, and equals colors when kpi.secondaryInfoColor is empty", () => {
-            const themeWithoutSecondaryInfoColor = cloneDeep(theme);
+            const themeWithoutSecondaryInfoColor = _cloneDeep(theme);
             delete themeWithoutSecondaryInfoColor.kpi!.secondaryInfoColor;
             expect(getComparisonColorPalette(themeWithoutSecondaryInfoColor)).toMatchSnapshot();
         });

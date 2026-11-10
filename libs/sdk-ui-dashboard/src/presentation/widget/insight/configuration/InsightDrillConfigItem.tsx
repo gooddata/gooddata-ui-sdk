@@ -3,7 +3,6 @@
 import { type ReactNode, useMemo } from "react";
 
 import cx from "classnames";
-import { cloneDeep } from "lodash-es";
 import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 
@@ -15,7 +14,7 @@ import {
     isAttributeDescriptor,
 } from "@gooddata/sdk-model";
 import { messages } from "@gooddata/sdk-ui";
-import { simplifyText } from "@gooddata/util";
+import { _cloneDeep, simplifyText } from "@gooddata/util";
 
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { selectCatalogDateDatasets } from "../../../../model/store/catalog/catalogSelectors.js";
@@ -53,7 +52,7 @@ function disableDrillDownIfMeasure(
     isMeasure: boolean,
     intl: IntlShape,
 ) {
-    const drillTargetTypes = cloneDeep(enabledDrillTargetTypeItems);
+    const drillTargetTypes = _cloneDeep(enabledDrillTargetTypeItems);
     if (isMeasure) {
         const drillDownIndex = drillTargetTypes.findIndex((item) => item.id === DRILL_TARGET_TYPE.DRILL_DOWN);
         if (drillDownIndex >= 0) {

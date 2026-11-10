@@ -3,10 +3,10 @@
 import { createElement } from "react";
 
 import { render, screen } from "@testing-library/react";
-import { cloneDeep } from "lodash-es";
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { Overlay as OverlayComponent } from "@gooddata/sdk-ui-kit";
+import { _cloneDeep } from "@gooddata/util";
 
 import type {
     ColorOverlay as ColorOverlayComponent,
@@ -53,7 +53,7 @@ afterAll(() => {
 });
 
 function createComponent(customProps: Partial<IColorOverlayProps> = {}) {
-    const props: IColorOverlayProps = { ...cloneDeep(defaultProps), ...customProps };
+    const props: IColorOverlayProps = { ..._cloneDeep(defaultProps), ...customProps };
     return render(<ColorOverlay {...props} />);
 }
 

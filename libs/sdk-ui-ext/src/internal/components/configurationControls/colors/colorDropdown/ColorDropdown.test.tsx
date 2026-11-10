@@ -3,10 +3,10 @@
 import { memo } from "react";
 
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { cloneDeep } from "lodash-es";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IColor } from "@gooddata/sdk-model";
+import { _cloneDeep } from "@gooddata/util";
 
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
 import { type IColoredItemContentProps } from "../coloredItemsList/ColoredItemContent.js";
@@ -44,7 +44,7 @@ const MockItem = memo(function MockItem({ isSelected, position }: IMockItemProps
 });
 
 function createComponent(customProps: Partial<IColorDropdownOwnProps> = {}) {
-    const props: IColorDropdownOwnProps = { ...cloneDeep(defaultProps), ...customProps };
+    const props: IColorDropdownOwnProps = { ..._cloneDeep(defaultProps), ...customProps };
 
     return render(
         <InternalIntlWrapper>

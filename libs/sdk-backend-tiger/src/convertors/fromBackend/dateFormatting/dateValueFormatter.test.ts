@@ -1,7 +1,7 @@
 // (C) 2020-2026 GoodData Corporation
 
 import { invariant } from "ts-invariant";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type DateAttributeGranularity } from "@gooddata/sdk-model";
 
@@ -69,6 +69,61 @@ describe("createDateValueFormatter", () => {
             expect(actual).toBe(expected);
         },
     );
+});
+
+// The browser timezone must not influence the values: the backend computed them in its own timezone.
+// Node applies a change of process.env.TZ immediately, so each timezone is stubbed per test.
+describe.each([
+    ["UTC", 0],
+    ["Europe/Prague", -60],
+    ["America/New_York", 300],
+])("createDateValueFormatter in the %s browser timezone", (browserTimeZone, timeZoneOffset) => {
+    beforeEach(() => {
+        vi.stubEnv("TZ", browserTimeZone);
+    });
+
+    it("should run in the browser timezone", () => {
+        // guards that the stubbed TZ takes effect, which is what makes the other tests meaningful
+        expect(new Date(2026, 0, 15).getTimezoneOffset()).toBe(timeZoneOffset);
+    });
+
+    const formatter = createDateValueFormatter(defaultDateFormatter);
+
+    type Scenario = [string, DateAttributeGranularity, string, string];
+    const scenarios: Scenario[] = [
+        // 2026-03-29 02:30 does not exist in Europe/Prague (spring-forward gap)
+        ["2026-03-29 02:30:00", "GDC.time.second", "dd.MM.yyyy HH:mm:ss", "29.03.2026 02:30:00"],
+        ["2026-03-29 02:30", "GDC.time.minute", "dd.MM.yyyy HH:mm", "29.03.2026 02:30"],
+        ["2026-03-29 02", "GDC.time.hour", "dd.MM.yyyy HH", "29.03.2026 02"],
+        // 2026-03-08 02:30 does not exist in America/New_York
+        ["2026-03-08 02:30:00", "GDC.time.second", "dd.MM.yyyy HH:mm:ss", "08.03.2026 02:30:00"],
+        // 2026-10-25 02:30 exists twice in Europe/Prague, 2026-11-01 01:30 twice in America/New_York
+        ["2026-10-25 02:30:00", "GDC.time.second", "dd.MM.yyyy HH:mm:ss", "25.10.2026 02:30:00"],
+        ["2026-11-01 01:30:00", "GDC.time.second", "dd.MM.yyyy HH:mm:ss", "01.11.2026 01:30:00"],
+        // the generic granularities are parsed in the context of 2020-01-01
+        ["9000", "GDC.time.second_in_day", "HH:mm:ss", "02:30:00"],
+        ["150", "GDC.time.minute_in_day", "HH:mm", "02:30"],
+        ["2", "GDC.time.hour_in_day", "HH", "02"],
+        ["2026-03-29", "GDC.time.date", "dd.MM.yyyy", "29.03.2026"],
+    ];
+
+    it.each(scenarios)("should format (%s, %s) by %s as %s", (value, granularity, pattern, expected) => {
+        expect(formatter(value, granularity, "en-US", pattern)).toBe(expected);
+        expect(formatter(value, granularity, "en-US-x-24h", pattern, "Europe/Prague")).toBe(expected);
+        expect(formatter(value, granularity, "de-DE", pattern, "America/New_York")).toBe(expected);
+    });
+
+    it("should render the backend timezone in a value falling into the browser timezone gap", () => {
+        expect(
+            formatter("2026-03-29 02:30", "GDC.time.minute", "en-US-x-24h", "dd.MM.yyyy HH:mm z", "UTC"),
+        ).toBe("29.03.2026 02:30 UTC");
+        expect(
+            formatter("2026-03-08 02:30", "GDC.time.minute", "en-US-x-24h", "HH:mm z", "Europe/Prague"),
+        ).toBe("02:30 GMT+1");
+        expect(
+            formatter("2026-01-15 10:00", "GDC.time.minute", "en-US-x-24h", "HH:mm z", "America/New_York"),
+        ).toBe("10:00 EST");
+    });
 });
 
 describe("guardDateValueFormatter", () => {

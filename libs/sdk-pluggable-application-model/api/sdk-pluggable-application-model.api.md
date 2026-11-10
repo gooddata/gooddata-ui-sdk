@@ -163,6 +163,7 @@ export type IAiAssistantDefinitionReceivedPayload = {
     readonly conversationId: string;
     readonly threadId?: string;
     readonly interactionId?: string;
+    readonly agentId?: string;
     readonly dashboard?: IDashboard;
     readonly insights?: IInsight[];
 } & Partial<IAiAssistantPublisherDocumentDefinition> & Partial<Pick<IAiAssistantPublisherDocumentDefinitionV2, "publisherDocumentV2">>;

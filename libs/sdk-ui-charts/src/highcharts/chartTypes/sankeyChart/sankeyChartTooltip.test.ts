@@ -1,10 +1,10 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
+import { _cloneDeep } from "@gooddata/util";
 
 import { recordedDataFacade } from "../../../testUtils/recordings.fixture.js";
 import { generateTooltipSankeyChartFn } from "../_chartOptions/chartTooltips.js";
@@ -42,7 +42,7 @@ describe("SankeyChart tooltip", () => {
                 .MeasureAttributeFromAndAttributeTo as unknown as ScenarioRecording,
         );
         const { measureGroup, viewByAttribute, viewByParentAttribute } = getMVSForViewByTwoAttributes(dv);
-        const measureItem = cloneDeep(measureGroup.items[0]);
+        const measureItem = _cloneDeep(measureGroup.items[0]);
         measureItem.measureHeaderItem.format = "#,##0.00%";
         const tooltipFn = generateTooltipSankeyChartFn(viewByAttribute, viewByParentAttribute, measureItem);
 
@@ -116,7 +116,7 @@ describe("SankeyChart tooltip", () => {
                 .MeasureAttributeFromAndAttributeTo as unknown as ScenarioRecording,
         );
         const { measureGroup, viewByAttribute, viewByParentAttribute } = getMVSForViewByTwoAttributes(dv);
-        const measureItem = cloneDeep(measureGroup.items[0]);
+        const measureItem = _cloneDeep(measureGroup.items[0]);
         measureItem.measureHeaderItem.format = "#,##0.00%";
         const tooltipFn = generateTooltipSankeyChartFn(viewByAttribute, viewByParentAttribute, measureItem);
 

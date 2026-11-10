@@ -3963,6 +3963,7 @@ export interface IFeatureFlags {
     enableAiContextSetup?: boolean;
     enableAIDataSetting?: boolean;
     enableAiLlmAnthropicProvider?: boolean;
+    enableAiLlmGooddataProvider?: boolean;
     enableAiOnData?: boolean;
     enableAlertOncePerInterval?: boolean;
     // @deprecated
@@ -4549,6 +4550,12 @@ export interface IGeoCollectionFileUploadResult {
 
 // @alpha
 export type IGeoJsonFeature = Feature<Geometry, GeoJsonProperties>;
+
+// @alpha
+export interface IGoodDataAiProviderConfig {
+    // (undocumented)
+    type: "gooddataAi";
+}
 
 // @public
 export interface IGranteeGranularity {
@@ -9582,7 +9589,7 @@ export type LlmModelsTestResults = {
 };
 
 // @alpha (undocumented)
-export type LlmProviderConfig = IOpenAIProviderConfig | IAzureFoundryProviderConfig | IAwsBedrockProviderConfig | IAnthropicProviderConfig;
+export type LlmProviderConfig = IOpenAIProviderConfig | IAzureFoundryProviderConfig | IAwsBedrockProviderConfig | IAnthropicProviderConfig | IGoodDataAiProviderConfig;
 
 // @alpha (undocumented)
 export type LlmProviderFamily = "OPENAI" | "ANTHROPIC" | "META" | "MISTRAL" | "AMAZON" | "GOOGLE" | "COHERE" | "UNKNOWN";

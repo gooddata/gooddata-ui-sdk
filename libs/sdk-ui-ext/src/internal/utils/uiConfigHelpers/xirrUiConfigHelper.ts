@@ -1,8 +1,10 @@
-// (C) 2019-2025 GoodData Corporation
-import { cloneDeep, set } from "lodash-es";
+// (C) 2019-2026 GoodData Corporation
+
+import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+import { _cloneDeep } from "@gooddata/util";
 
 import { BUCKETS } from "../../constants/bucket.js";
 import { DEFAULT_XIRR_UICONFIG } from "../../constants/uiConfig.js";
@@ -10,7 +12,7 @@ import { type ICustomError, type IReferencePoint, type IUiConfig } from "../../i
 import { getItemsCount, setBucketTitles } from "../bucketHelper.js";
 import { hasNoAttribute, hasNoMeasures } from "../bucketRules.js";
 
-export const getDefaultXirrUiConfig = (): IUiConfig => cloneDeep(DEFAULT_XIRR_UICONFIG);
+export const getDefaultXirrUiConfig = (): IUiConfig => _cloneDeep(DEFAULT_XIRR_UICONFIG);
 
 function getCustomError(
     { buckets }: Readonly<IReferencePoint>,

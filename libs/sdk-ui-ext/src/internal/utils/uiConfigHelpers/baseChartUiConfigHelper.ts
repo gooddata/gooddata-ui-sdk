@@ -1,9 +1,10 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { type BucketNameValues, BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+import { _cloneDeep } from "@gooddata/util";
 
 import { messages } from "../../../locales.js";
 import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket.js";
@@ -42,7 +43,7 @@ function setBaseChartBucketWarningMessages(
     intl?: IntlShape,
 ): IUiConfig | null | undefined {
     const buckets = referencePoint?.buckets ?? [];
-    const updatedUiConfig = cloneDeep(referencePoint?.uiConfig);
+    const updatedUiConfig = _cloneDeep(referencePoint?.uiConfig);
     const stackItems = getStackItems(buckets, [ATTRIBUTE, DATE]);
 
     if (!updatedUiConfig) {
@@ -80,7 +81,7 @@ export function setBaseChartUiConfig(
     intl: IntlShape,
     visualizationType: string,
 ): IExtendedReferencePoint {
-    const referencePointConfigured = cloneDeep(referencePoint);
+    const referencePointConfigured = _cloneDeep(referencePoint);
     const buckets = referencePointConfigured?.buckets ?? [];
     const measuresCanAddItems = hasNoMeasures(buckets) || hasNoStacksWithDate(buckets);
     const stackCanAddItems = !hasMoreThanOneMasterMeasure(buckets, BucketNames.MEASURES);
@@ -142,7 +143,7 @@ export function setBaseChartUiConfigRecommendations(
     visualizationType: string,
 ): IExtendedReferencePoint {
     if (visualizationType === VisualizationTypes.COLUMN) {
-        const newReferencePoint = cloneDeep(referencePoint);
+        const newReferencePoint = _cloneDeep(referencePoint);
         const buckets = newReferencePoint?.buckets;
         const filters = newReferencePoint?.filters;
 

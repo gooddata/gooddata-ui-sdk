@@ -2,7 +2,6 @@
 
 // @vitest-environment node
 
-import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import {
@@ -11,6 +10,7 @@ import {
     DashboardDateFilterConfigModeValues,
     dashboardAttributeFilterItemLocalIdentifier,
 } from "@gooddata/sdk-model";
+import { _cloneDeep } from "@gooddata/util";
 
 import { filterBarAttributeFilterIndexes } from "./filterBar.test.helpers.js";
 import { areAllFiltersHidden, getVisibilityIcon } from "./utils.js";
@@ -144,7 +144,7 @@ describe("utils", () => {
         });
 
         it("should return false when at least one attribute filter visible", () => {
-            const attributeFiltersModeMap = cloneDeep(effectedAttributeFiltersModeMap);
+            const attributeFiltersModeMap = _cloneDeep(effectedAttributeFiltersModeMap);
             attributeFiltersModeMap.set(
                 dashboardAttributeFilterItemLocalIdentifier(filterBarAttributeFilterIndexes[0].filter),
                 DashboardAttributeFilterConfigModeValues.ACTIVE,

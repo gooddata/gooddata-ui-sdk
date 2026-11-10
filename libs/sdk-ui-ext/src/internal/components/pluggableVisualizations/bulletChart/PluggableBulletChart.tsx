@@ -1,7 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
-
 import {
     type IInsight,
     type IInsightDefinition,
@@ -15,6 +13,7 @@ import {
     VisualizationTypes,
     getIntersectionPartAfter,
 } from "@gooddata/sdk-ui";
+import { _cloneDeep } from "@gooddata/util";
 
 import { BUCKETS, METRIC } from "../../../constants/bucket.js";
 import { BULLET_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
@@ -92,13 +91,13 @@ export class PluggableBulletChart extends PluggableBaseChart {
     }
 
     public override getUiConfig(): IUiConfig {
-        return cloneDeep(BULLET_CHART_CONFIG_MULTIPLE_DATES);
+        return _cloneDeep(BULLET_CHART_CONFIG_MULTIPLE_DATES);
     }
 
     public override getExtendedReferencePoint(
         referencePoint: IReferencePoint,
     ): Promise<IExtendedReferencePoint> {
-        const clonedReferencePoint = cloneDeep(referencePoint);
+        const clonedReferencePoint = _cloneDeep(referencePoint);
 
         let newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,

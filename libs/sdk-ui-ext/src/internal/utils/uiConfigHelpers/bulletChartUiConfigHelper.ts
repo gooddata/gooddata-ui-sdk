@@ -1,9 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { BucketNames } from "@gooddata/sdk-ui";
+import { _cloneDeep } from "@gooddata/util";
 
 import { messages } from "../../../locales.js";
 import { UICONFIG } from "../../constants/uiConfig.js";
@@ -24,7 +24,7 @@ export function getBulletChartUiConfig(
     intl: IntlShape,
     visualizationType: string,
 ): IExtendedReferencePoint {
-    const referencePointConfigured = cloneDeep(referencePoint);
+    const referencePointConfigured = _cloneDeep(referencePoint);
 
     referencePointConfigured[UICONFIG] = setBucketTitles(referencePointConfigured, visualizationType, intl)!;
 

@@ -1,7 +1,5 @@
 // (C) 2026 GoodData Corporation
 
-/* eslint-disable */
-
 /*!
  * Portions of this file are derived from Lodash.
  * https://github.com/lodash/lodash
@@ -33,24 +31,35 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import { _arrayAggregator } from "./_arrayAggregator.js";
-import { _baseAggregator } from "./_baseAggregator.js";
-import { _baseIteratee } from "./_baseIteratee.js";
-import { _isArray } from "./isArray.js";
+import { _isSymbol } from "./isSymbol.js";
 
 /**
- * Creates a function like `_.groupBy`.
+ * Converts `value` to a string. An empty string is returned for `null` and `undefined` values. The sign of
+ * `-0` is preserved, symbols are converted through their `toString`, and arrays are converted element by
+ * element and joined with commas.
  *
- * @private
- * @param {Function} setter The function to set accumulator values.
- * @param {Function} [initializer] The accumulator object initializer.
- * @returns {Function} Returns the new aggregator function.
+ * @param value - The value to convert.
+ * @returns Returns the converted string.
+ * @internal
  */
-export function _createAggregator(setter: any, initializer?: any): (collection: any, iteratee?: any) => any {
-    return function (collection: any, iteratee?: any) {
-        const func = _isArray(collection) ? _arrayAggregator : _baseAggregator,
-            accumulator = initializer ? initializer() : {};
+export function _toString(value: unknown): string {
+    return value == null ? "" : _baseToString(value);
+}
 
-        return func(collection, setter, _baseIteratee(iteratee), accumulator);
-    };
+function _baseToString(value: unknown): string {
+    if (typeof value === "string") {
+        return value;
+    }
+
+    if (Array.isArray(value)) {
+        return value.map(_baseToString).join(",");
+    }
+
+    if (_isSymbol(value)) {
+        return Symbol.prototype.toString.call(value);
+    }
+
+    const result = String(value);
+
+    return result === "0" && 1 / (value as number) === -Infinity ? "-0" : result;
 }

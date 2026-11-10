@@ -1,12 +1,12 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ChangeEvent, useCallback, useMemo } from "react";
 
-import { cloneDeep } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { type IPushData } from "@gooddata/sdk-ui";
 import { UiCheckbox } from "@gooddata/sdk-ui-kit";
+import { _cloneDeep } from "@gooddata/util";
 
 import { messages } from "../../../locales.js";
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
@@ -77,7 +77,7 @@ function TextWrappingCheckbox({
     // Update global wrapping setting and clear corresponding overrides
     const updateWrapping = useCallback(
         (event: ChangeEvent<HTMLInputElement>) => {
-            const clonedProperties = cloneDeep(properties) || {};
+            const clonedProperties = _cloneDeep(properties) || {};
             clonedProperties.controls = clonedProperties.controls || {};
 
             const currentTextWrapping = clonedProperties.controls["textWrapping"] || {};

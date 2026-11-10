@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
+import { _cloneDeep } from "@gooddata/util";
 
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type HighchartsOptions } from "../../lib/index.js";
@@ -42,7 +42,7 @@ const BAR_TEMPLATE: HighchartsOptions = {
 };
 
 export function getBarConfiguration(config: IChartConfig): HighchartsOptions {
-    const barConfiguration = cloneDeep(BAR_TEMPLATE);
+    const barConfiguration = _cloneDeep(BAR_TEMPLATE);
 
     if (config?.enableCompactSize && !config?.zoomInsight) {
         const reversed = true;

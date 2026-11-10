@@ -1,9 +1,10 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 
 import { type IInsightDefinition } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+import { _cloneDeep } from "@gooddata/util";
 
 import { BUCKETS, METRIC } from "../../../constants/bucket.js";
 import { BUBBLE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
@@ -71,8 +72,8 @@ export class PluggableBubbleChart extends PluggableBaseChart {
     public override getExtendedReferencePoint(
         referencePoint: IReferencePoint,
     ): Promise<IExtendedReferencePoint> {
-        const clonedReferencePoint = cloneDeep(referencePoint);
-        const uiConfig = cloneDeep(DEFAULT_BUBBLE_CHART_CONFIG);
+        const clonedReferencePoint = _cloneDeep(referencePoint);
+        const uiConfig = _cloneDeep(DEFAULT_BUBBLE_CHART_CONFIG);
 
         let newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,

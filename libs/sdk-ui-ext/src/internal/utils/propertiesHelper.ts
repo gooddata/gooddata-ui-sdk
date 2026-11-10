@@ -1,7 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
 // eslint-disable-next-line no-restricted-imports
-import { cloneDeep, get, has, set } from "lodash-es";
+import { get, has, set } from "lodash-es";
 
 import {
     type IConditionalFormatting,
@@ -25,7 +25,7 @@ import {
     type ITextWrapping,
     type PivotTableNextConditionalFormattingConfig,
 } from "@gooddata/sdk-ui-pivot/next";
-import { _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty } from "@gooddata/util";
 
 import { AXIS } from "../constants/axis.js";
 import { PROPERTY_CONTROLS } from "../constants/properties.js";
@@ -51,7 +51,7 @@ export function getSupportedPropertiesControls(
     visualizationControlsProperties: IVisualizationProperties["controls"],
     supportedPropertiesList: string[] | undefined,
 ): IVisualizationProperties {
-    const clonedControls = cloneDeep(visualizationControlsProperties);
+    const clonedControls = _cloneDeep(visualizationControlsProperties);
     if (supportedPropertiesList) {
         return supportedPropertiesList.reduce(
             (props: IVisualizationProperties, current: string) =>
@@ -74,7 +74,7 @@ export function setSecondaryMeasures(
         return referencePoint;
     }
 
-    const newReferencePoint = cloneDeep(referencePoint);
+    const newReferencePoint = _cloneDeep(referencePoint);
     const path = `${PROPERTY_CONTROLS}.${axisName}`;
     const secondaryAxisProperties = newReferencePoint?.properties?.controls?.[axisName];
     const buckets = newReferencePoint?.buckets ?? [];
@@ -444,7 +444,7 @@ export function getChartSupportedControls(
 ): IVisualizationProperties | undefined {
     return getDataPointsConfiguration(
         getHighchartsAxisNameConfiguration(
-            getLegendConfiguration(cloneDeep<IVisualizationProperties>(controlProperties ?? {}), insight),
+            getLegendConfiguration(_cloneDeep<IVisualizationProperties>(controlProperties ?? {}), insight),
         ),
     );
 }
@@ -456,7 +456,7 @@ export function getChartSupportedControlsDashboardsEnv(
     return getDataPointsConfiguration(
         getHighchartsAxisNameConfiguration(
             getLegendConfigurationDashboardsEnv(
-                cloneDeep<IVisualizationProperties>(controlProperties ?? {}),
+                _cloneDeep<IVisualizationProperties>(controlProperties ?? {}),
                 options,
             ),
         ),

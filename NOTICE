@@ -13,7 +13,7 @@ The following 3rd-party software packages may be used by or distributed with goo
 
 Date generated: 2026-11-9
 
-Revision ID: b94ec96752cd23227d6e910cf42cf45e295df2c9
+Revision ID: 5b57921d05683ba158cc18034c47687574b684ac
 
 ================================================================================
 ================================================================================
@@ -2293,7 +2293,7 @@ Package Title: @date-fns/tz (1.5.0)
 
 Package Locator: npm+@date-fns/tz$1.5.0
 
-Package Depth: Transitive
+Package Depth: Direct
 --------------------------------------------------------------------------------
 
 * Declared Licenses *

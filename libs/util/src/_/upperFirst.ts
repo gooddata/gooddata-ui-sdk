@@ -1,7 +1,5 @@
 // (C) 2026 GoodData Corporation
 
-/* eslint-disable */
-
 /*!
  * Portions of this file are derived from Lodash.
  * https://github.com/lodash/lodash
@@ -33,23 +31,20 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import { _baseEach } from "./_baseEach.js";
+import { _hasUnicode, _unicodeToArray } from "./_unicode.js";
+import { _toString } from "./toString.js";
 
 /**
- * Aggregates elements of `collection` on `accumulator` with keys transformed
- * by `iteratee` and values set by `setter`.
+ * Converts the first character of `string` to upper case. A surrogate pair, a character with combining
+ * marks or a joined emoji sequence counts as one character and is kept whole.
  *
- * @private
- * @param {Array|Object} collection The collection to iterate over.
- * @param {Function} setter The function to set `accumulator` values.
- * @param {Function} iteratee The iteratee to transform keys.
- * @param {Object} accumulator The initial aggregated object.
- * @returns {Function} Returns `accumulator`.
+ * @param string - The string to convert.
+ * @returns Returns the converted string.
+ * @internal
  */
-export function _baseAggregator(collection: any, setter: any, iteratee: any, accumulator: any): any {
-    _baseEach(collection, function (value: any, _key: any, collection: any) {
-        setter(accumulator, value, iteratee(value), collection);
-    });
+export function _upperFirst(string?: string): string {
+    const text = _toString(string);
+    const first = (_hasUnicode(text) ? _unicodeToArray(text)[0] : text.charAt(0)) ?? "";
 
-    return accumulator;
+    return first.toUpperCase() + text.slice(first.length);
 }

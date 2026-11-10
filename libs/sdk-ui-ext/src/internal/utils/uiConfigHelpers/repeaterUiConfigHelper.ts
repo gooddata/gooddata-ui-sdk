@@ -1,10 +1,11 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { areObjRefsEqual } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+import { _cloneDeep } from "@gooddata/util";
 
 import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket.js";
 import { DEFAULT_REPEATER_UI_CONFIG, UICONFIG } from "../../constants/uiConfig.js";
@@ -16,7 +17,7 @@ import {
 import { getBucketItems, getMainRowAttribute, setBucketTitles } from "../bucketHelper.js";
 import { hasNoAttribute, hasNoColumns } from "../bucketRules.js";
 
-export const getDefaultRepeaterUiConfig = (): IUiConfig => cloneDeep(DEFAULT_REPEATER_UI_CONFIG);
+export const getDefaultRepeaterUiConfig = (): IUiConfig => _cloneDeep(DEFAULT_REPEATER_UI_CONFIG);
 
 // If you need to edit these icons
 // reflect changes also in gdc-analytical-designer
@@ -29,7 +30,7 @@ export function setRepeaterUiConfig(
     referencePoint: IExtendedReferencePoint,
     intl: IntlShape,
 ): IExtendedReferencePoint {
-    const referencePointConfigured = cloneDeep(referencePoint);
+    const referencePointConfigured = _cloneDeep(referencePoint);
     const buckets = referencePointConfigured?.buckets ?? [];
 
     const attributeCanAddItems = hasNoAttribute(buckets);
@@ -65,7 +66,7 @@ export function setRepeaterUiConfig(
 export const configRepeaterBuckets = (
     extendedReferencePoint: IExtendedReferencePoint,
 ): IExtendedReferencePoint => {
-    const newExtendedReferencePoint = cloneDeep(extendedReferencePoint);
+    const newExtendedReferencePoint = _cloneDeep(extendedReferencePoint);
     const { attribute, columns, view } = getRepeaterBucketItems(newExtendedReferencePoint);
 
     set(newExtendedReferencePoint, BUCKETS, [
@@ -87,7 +88,7 @@ export const configRepeaterBuckets = (
 };
 
 const getRepeaterBucketItems = (extendedReferencePoint: IReferencePoint) => {
-    const newExtendedReferencePoint = cloneDeep(extendedReferencePoint);
+    const newExtendedReferencePoint = _cloneDeep(extendedReferencePoint);
     const buckets = newExtendedReferencePoint?.buckets ?? [];
     const rowAttribute = getMainRowAttribute(buckets);
     const columns = getBucketItems(buckets, BucketNames.COLUMNS);

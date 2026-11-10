@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { cloneDeep, omit, update } from "lodash-es";
+import { omit, update } from "lodash-es";
 
 import {
     type AnalyticalDashboardModelV2,
@@ -33,6 +33,7 @@ import {
     isVisualizationSwitcherWidget,
     isVisualizationSwitcherWidgetDefinition,
 } from "@gooddata/sdk-model";
+import { _cloneDeep } from "@gooddata/util";
 
 import { addFilterLocalIdentifier } from "../../utils/filterLocalidentifier.js";
 import { generateWidgetLocalIdentifier } from "../../utils/widgetLocalIdentifier.js";
@@ -92,7 +93,7 @@ function removeWidgetIdentifiersInLayout(
     });
 
     return widgetsPaths.reduce((newLayout, widgetPath) => {
-        const layoutCopy = cloneDeep(newLayout);
+        const layoutCopy = _cloneDeep(newLayout);
         update(layoutCopy, widgetPath, (widget) => removeIdentifiers(widget, useWidgetLocalIdentifiers));
         return layoutCopy;
     }, layout);

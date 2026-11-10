@@ -1,7 +1,9 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { format } from "date-fns";
-import { formatInTimeZone } from "date-fns-tz";
+import { TZDate, tz } from "@date-fns/tz";
+import { type Locale, format } from "date-fns";
+import { format as formatWithTimeZoneTokens } from "date-fns-tz";
+import { longFormatters } from "date-fns/format";
 import {
     cs,
     de,
@@ -126,22 +128,69 @@ const granularityPatternTransformations: {
     "GDC.time.week_in_year": replaceWeekAndYearTokensByIsoTokens,
 };
 
+const utc = tz("UTC");
+
+/**
+ * Matches the timezone tokens of a date-fns pattern (x, X, O, z) and the quoted sections they must not be
+ * matched in. Taken over from date-fns-tz, which renders these tokens.
+ */
+const timeZoneTokensRegExp = /([xXOz]+)|''|'(''|[^'])+('|$)/g;
+
+/**
+ * Tells whether the pattern contains timezone tokens outside of quoted literals, i.e. whether the formatter
+ * needs a timezone to render it.
+ */
+const hasTimeZoneTokens = (pattern: string): boolean =>
+    (pattern.match(timeZoneTokensRegExp) ?? []).some((match) => match[0] !== "'");
+
+/**
+ * Matches the localized tokens of a date-fns pattern (P, p and their combinations) and the quoted sections
+ * they must not be matched in. Taken over from date-fns, which does not export it.
+ */
+const localizedTokensRegExp = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g;
+
+/**
+ * Expands the localized tokens of a date-fns pattern (P, p, PPPPpppp...) into the patterns of the locale with
+ * the formatters date-fns uses when formatting. The expansion of the long time tokens (ppp, pppp) contains a
+ * timezone token, which the timezone rendering must see.
+ */
+const expandLocalizedTokens = (pattern: string, locale: Locale): string =>
+    (pattern.match(localizedTokensRegExp) ?? [])
+        .map((token) => {
+            const longFormatter = longFormatters[token[0] as keyof typeof longFormatters];
+            return longFormatter ? longFormatter(token, locale.formatLong) : token;
+        })
+        .join("");
+
+/**
+ * Removes the timezone tokens from the pattern, with the whitespace that separated them, for the cases when
+ * no timezone can be rendered: a value without a timezone or a timezone the browser does not know. Showing
+ * no timezone is preferred to showing a wrong one.
+ */
+const stripTimeZoneTokens = (pattern: string): string =>
+    pattern
+        .replace(timeZoneTokensRegExp, (match) => (match[0] === "'" ? match : ""))
+        .replace(/\s{2,}/g, " ")
+        .trim();
+
 /**
  * Date formatter capable of formatting dates by a specific formatting pattern. The tokens of the pattern
  * have to be supported by date-fns library. When no pattern is provided, formatter will use granularity
  * to find the default formatting pattern. Formatted date is also translated based on the provided locale.
  * Default locale is 'en-US' with corresponding default formatting patterns.
  *
- * Special case: For the en-US-x-24h locale with MINUTE or HOUR granularity, this function uses
- * formatInTimeZone from date-fns-tz to ensure proper timezone names (CET, EST, PST) instead of GMT offsets.
- * This is currently the only locale/granularity combination that supports timezone formatting.
- * Other locales and granularities continue to use the standard date-fns format function.
+ * @remarks
+ * The date is floating: its UTC fields are the wall-clock the backend computed in its timezone, so they are
+ * formatted as they are, independently of the browser timezone. The timezone is only needed to render
+ * the timezone tokens of the pattern (z, O, x, X); they show the timezone the backend computed the value in.
+ * Values in the repeated hour of a daylight saving transition are ambiguous there and may render the
+ * name of either offset.
  *
- * @param value - date to be formatted
+ * @param value - date to be formatted; its UTC fields are formatted
  * @param granularity - date attribute granularity for default patterns
  * @param pattern - pattern constructed from date-time tokens
  * @param locale - code of locale for dynamic values translation
- * @param timezone - timezone for proper timezone formatting (only used for en-US-x-24h locale with MINUTE/HOUR granularity)
+ * @param timezone - timezone the backend computed the value in, rendered by the timezone tokens of the pattern
  * @alpha
  */
 export const defaultDateFormatter = (
@@ -168,36 +217,50 @@ export const defaultDateFormatter = (
 
     const transformFormatPattern =
         granularityPatternTransformations[granularity] ?? (((v) => v) as PatternTransform);
-    const transformedFormatPattern = transformFormatPattern(formatPattern);
+    const transformedFormatPattern = expandLocalizedTokens(
+        transformFormatPattern(formatPattern),
+        convertedLocale,
+    );
+
+    const formatOptions = {
+        in: utc,
+        locale: convertedLocale,
+        useAdditionalDayOfYearTokens: true, // for day of year formatting
+        useAdditionalWeekYearTokens: true, // for week formatting
+        weekStartsOn: 0, // hardcoded to US value as backend returns US weeks
+        firstWeekContainsDate: 1, // hardocded to US value as backend returns US weeks - otherwise this could influence first and last week of year
+    } as const;
 
     try {
-        // Use formatInTimeZone for en-US-x-24h locale with specific granularities that need timezone support
-        // This is a special case - currently no other locales or granularities use timezones.
-        // The timezone parameter is only provided for SECOND, MINUTE and HOUR granularities from the backend.
-        if (
-            locale === "en-US-x-24h" &&
-            timezone &&
-            (granularity === "GDC.time.second" ||
-                granularity === "GDC.time.minute" ||
-                granularity === "GDC.time.hour")
-        ) {
-            return formatInTimeZone(value, timezone, transformedFormatPattern, {
-                locale: convertedLocale,
-                useAdditionalDayOfYearTokens: true, // for day of year formatting
-                useAdditionalWeekYearTokens: true, // for week formatting
-                weekStartsOn: 0, // hardcoded to US value as backend returns US weeks
-                firstWeekContainsDate: 1, // hardocded to US value as backend returns US weeks - otherwise this could influence first and last week of year
+        if (hasTimeZoneTokens(transformedFormatPattern)) {
+            // The timezone tokens need the instant the wall-clock denotes in the backend timezone. It is
+            // computed from the fields by TZDate, never from a browser-local Date, which could not represent
+            // a wall-clock falling into the daylight saving gap of the browser timezone.
+            const instant =
+                timezone &&
+                new TZDate(
+                    value.getUTCFullYear(),
+                    value.getUTCMonth(),
+                    value.getUTCDate(),
+                    value.getUTCHours(),
+                    value.getUTCMinutes(),
+                    value.getUTCSeconds(),
+                    value.getUTCMilliseconds(),
+                    timezone,
+                );
+            if (!instant || Number.isNaN(instant.getTime())) {
+                // Without a timezone (or with one the browser does not know, which makes the TZDate invalid)
+                // the tokens cannot be rendered; the value is shown without them rather than in a wrong zone.
+                return format(value, stripTimeZoneTokens(transformedFormatPattern), formatOptions);
+            }
+            return formatWithTimeZoneTokens(value, transformedFormatPattern, {
+                ...formatOptions,
+                timeZone: timezone,
+                originalDate: instant.getTime(),
             });
         }
 
-        // Use regular format for other locales and granularities
-        return format(value, transformedFormatPattern, {
-            locale: convertedLocale,
-            useAdditionalDayOfYearTokens: true, // for day of year formatting
-            useAdditionalWeekYearTokens: true, // for week formatting
-            weekStartsOn: 0, // hardcoded to US value as backend returns US weeks
-            firstWeekContainsDate: 1, // hardocded to US value as backend returns US weeks - otherwise this could influence first and last week of year
-        });
+        return format(value, transformedFormatPattern, formatOptions);
     } catch {
         throw new UnexpectedError(
             `Unable to format date by "${transformedFormatPattern}" formatting pattern.`,

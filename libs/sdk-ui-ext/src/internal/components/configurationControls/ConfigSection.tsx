@@ -3,8 +3,10 @@
 import { type ChangeEvent, type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 
 import cx from "classnames";
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 import { useIntl } from "react-intl";
+
+import { _cloneDeep } from "@gooddata/util";
 
 import { getTranslation } from "../../utils/translations.js";
 import { DisabledBubbleMessage } from "../DisabledBubbleMessage.js";
@@ -72,7 +74,7 @@ export function ConfigSection({
                 return;
             }
             if (valuePath && properties && pushData) {
-                const clonedProperties = cloneDeep(properties);
+                const clonedProperties = _cloneDeep(properties);
                 set(clonedProperties, `controls.${valuePath}`, event.target.checked);
 
                 pushData({ properties: clonedProperties });

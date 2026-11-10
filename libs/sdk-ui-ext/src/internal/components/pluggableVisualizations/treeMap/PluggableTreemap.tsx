@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, set, tail } from "lodash-es";
+import { set, tail } from "lodash-es";
 
 import {
     type IInsight,
@@ -9,7 +9,7 @@ import {
     insightBuckets,
 } from "@gooddata/sdk-model";
 import { BucketNames, type IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
-import { _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty } from "@gooddata/util";
 
 import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket.js";
 import { TREEMAP_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
@@ -141,7 +141,7 @@ export class PluggableTreemap extends PluggableBaseChart {
     public override getExtendedReferencePoint(
         referencePoint: IReferencePoint,
     ): Promise<IExtendedReferencePoint> {
-        const clonedReferencePoint = cloneDeep(referencePoint);
+        const clonedReferencePoint = _cloneDeep(referencePoint);
         let newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,
             uiConfig: this.getTreemapUIConfig(referencePoint),

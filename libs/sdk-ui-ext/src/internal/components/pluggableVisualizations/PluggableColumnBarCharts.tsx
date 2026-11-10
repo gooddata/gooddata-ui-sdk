@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 
 import {
     type IInsight,
@@ -16,7 +16,7 @@ import {
     type IDrillEventIntersectionElement,
     getIntersectionPartAfter,
 } from "@gooddata/sdk-ui";
-import { shiftArrayRight } from "@gooddata/util";
+import { _cloneDeep, shiftArrayRight } from "@gooddata/util";
 
 import { AXIS } from "../../constants/axis.js";
 import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket.js";
@@ -68,7 +68,7 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
     }
 
     public override getUiConfig(): IUiConfig {
-        return cloneDeep(COLUMN_BAR_CHART_UICONFIG_WITH_MULTIPLE_DATES);
+        return _cloneDeep(COLUMN_BAR_CHART_UICONFIG_WITH_MULTIPLE_DATES);
     }
 
     public override getExtendedReferencePoint(

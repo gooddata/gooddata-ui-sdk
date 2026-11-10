@@ -1,8 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
-
-import { _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty } from "@gooddata/util";
 
 import { type IDateDataset } from "../typings/datasets.js";
 
@@ -33,7 +31,7 @@ function getMostRelevantDateDatasetUri(dateDatasets: IDateDataset[]): string {
         return undefined;
     }
 
-    const sortedDateDatasets = cloneDeep(dateDatasets).sort(dateDatasetRelevanceComparator);
+    const sortedDateDatasets = _cloneDeep(dateDatasets).sort(dateDatasetRelevanceComparator);
     const firstDateDataset = sortedDateDatasets[0];
     return firstDateDataset.uri;
 }

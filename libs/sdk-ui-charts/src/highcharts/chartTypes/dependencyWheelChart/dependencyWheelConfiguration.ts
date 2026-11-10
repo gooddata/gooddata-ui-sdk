@@ -1,5 +1,6 @@
-// (C) 2023-2025 GoodData Corporation
-import { cloneDeep } from "lodash-es";
+// (C) 2023-2026 GoodData Corporation
+
+import { _cloneDeep } from "@gooddata/util";
 
 import { type HighchartsOptions } from "../../lib/index.js";
 import { getCommonResponsiveConfig } from "../_chartCreators/responsive.js";
@@ -38,7 +39,7 @@ const DEPENDENCY_WHEEL_TEMPLATE = {
 };
 
 export function getDependencyWheelConfiguration(): HighchartsOptions {
-    const configuration = cloneDeep(DEPENDENCY_WHEEL_TEMPLATE);
+    const configuration = _cloneDeep(DEPENDENCY_WHEEL_TEMPLATE);
 
     return {
         ...configuration,

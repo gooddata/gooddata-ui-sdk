@@ -1,8 +1,10 @@
-// (C) 2019-2025 GoodData Corporation
-import { cloneDeep, set } from "lodash-es";
+// (C) 2019-2026 GoodData Corporation
+
+import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { BucketNames } from "@gooddata/sdk-ui";
+import { _cloneDeep } from "@gooddata/util";
 
 import { BUCKETS } from "../../constants/bucket.js";
 import { UICONFIG } from "../../constants/uiConfig.js";
@@ -24,7 +26,7 @@ const fromIcon = "local:sankey/bucket-title-from.svg";
 const toIcon = "local:sankey/bucket-title-to.svg";
 
 const getBucketItems = (extendedReferencePoint: IReferencePoint) => {
-    const config = cloneDeep(extendedReferencePoint);
+    const config = _cloneDeep(extendedReferencePoint);
 
     const buckets = config?.buckets ?? [];
     const limitedBuckets = limitNumberOfMeasuresInBuckets(buckets, 1);
@@ -57,7 +59,7 @@ const getBucketItems = (extendedReferencePoint: IReferencePoint) => {
 };
 
 export const configBuckets = (extendedReferencePoint: IExtendedReferencePoint): IExtendedReferencePoint => {
-    const config = cloneDeep(extendedReferencePoint);
+    const config = _cloneDeep(extendedReferencePoint);
     const { measures, attributeFroms, attributeTos } = getBucketItems(config);
 
     set(config, BUCKETS, [
@@ -83,7 +85,7 @@ export const configSankeyUiConfig = (
     intl: IntlShape,
     visualizationType: string,
 ): IExtendedReferencePoint => {
-    const referencePointConfigured = cloneDeep(extendedReferencePoint);
+    const referencePointConfigured = _cloneDeep(extendedReferencePoint);
 
     set(
         referencePointConfigured,

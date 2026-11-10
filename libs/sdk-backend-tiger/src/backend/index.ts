@@ -133,18 +133,31 @@ export type TigerBackendConfig = {
     /**
      * Function used to format date values for a given granularity. It is given a parsed Date value and an appropriate granularity.
      * If not specified, a default date formatted will be used.
+     *
+     * @remarks
+     * The Date is floating: its UTC fields are the wall-clock the backend computed, in every browser timezone
+     * (see {@link DateFormatter}). Read its fields in UTC; formatting it through its instant (for example
+     * with `Intl.DateTimeFormat`) shifts the value by the browser timezone offset.
      */
     dateFormatter?: DateFormatter;
 
     /**
      * Function used to stringify date values for a given granularity. It is given a parsed Date value and an appropriate granularity.
      * If not specified, a default date stringifier will be used.
+     *
+     * @remarks
+     * The Date carries the value in its UTC fields, the same as the normalized value (see {@link DateNormalizer})
+     * it is created from.
      */
     dateStringifier?: DateStringifier;
 
     /**
      * Function used to normalize date (ISO) values for a given granularity. It is given a parsed Date value and an appropriate granularity.
      * If not specified, a default date normalizer will be used.
+     *
+     * @remarks
+     * The normalized value must carry the fields of the backend value in UTC (see {@link DateNormalizer});
+     * the key driver analysis dialog formats and shifts the normalized values in UTC.
      */
     dateNormalizer?: DateNormalizer;
 };

@@ -1,11 +1,10 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
 import { type SagaReturnType, call, put, select, takeEvery } from "redux-saga/effects";
 
 import { type IDrillableItemsCommandBody } from "@gooddata/sdk-embedding";
 import { DrillablePredicatesUtils } from "@gooddata/sdk-ui-ext/internal";
-import { _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty } from "@gooddata/util";
 
 import { conversionDone, type conversionInit } from "../actions/drillable_items_actions.js";
 import { ActionTypeKeys } from "../constants/actions.js";
@@ -21,7 +20,7 @@ export function* convertDrillableItems(action: ReturnType<typeof conversionInit>
 
     yield call(logDrillableItemsReceived, { state });
 
-    const postMessageData = cloneDeep(action.payload);
+    const postMessageData = _cloneDeep(action.payload);
     if (isDrillByUri(action.payload)) {
         console.error("Tiger does not support uris for drilling, please use identifiers instead.");
         if (postMessageData.composedFrom?.uris) {

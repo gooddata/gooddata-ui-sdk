@@ -55,6 +55,11 @@ export interface IKdaDialogProps {
 export interface IKdaDataPoint {
     /**
      * Date string in ISO format related to granularity
+     *
+     * @remarks
+     * The normalized value of the date attribute element: the wall-clock the backend computed in its
+     * timezone, carried as the UTC fields of the ISO string (e.g. "2026-03-29T02:30:00.000Z" for the value
+     * "2026-03-29 02:30:00"). Format it and shift it in UTC so the browser timezone does not change it.
      */
     date: string;
     /**

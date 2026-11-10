@@ -1,13 +1,12 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
-
 import {
     type IDashboardLayoutItem,
     type IDashboardLayoutSection,
     isDashboardLayout,
     isVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
+import { _cloneDeep } from "@gooddata/util";
 
 import { objRef } from "../../model/utils/objRef.js";
 
@@ -34,7 +33,7 @@ export function containerSwitcherSlideTransformer<TWidget>(
             for (let i = 0; i < totalIterations; i++) {
                 slides.push({
                     type: "IDashboardLayoutSection",
-                    items: [pickVisualisationFromSwitchersOnIndex<TWidget>(cloneDeep(item), i)],
+                    items: [pickVisualisationFromSwitchersOnIndex<TWidget>(_cloneDeep(item), i)],
                 });
             }
             return slides;

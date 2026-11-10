@@ -1002,6 +1002,10 @@ export const TigerFeatureDefinitions: {
         type: "BOOLEAN";
         defaultValue: boolean;
     };
+    readonly enableAiLlmGooddataProvider: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
     readonly enableDashboardSidebarResize: {
         type: "BOOLEAN";
         defaultValue: boolean;

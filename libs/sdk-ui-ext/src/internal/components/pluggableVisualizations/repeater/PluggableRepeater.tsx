@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { cloneDeep, compact, omit } from "lodash-es";
+import { compact, omit } from "lodash-es";
 
 import { type IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
@@ -26,6 +26,7 @@ import {
     constructRepeaterDimensions,
     updateConfigWithSettings,
 } from "@gooddata/sdk-ui-charts";
+import { _cloneDeep } from "@gooddata/util";
 
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 import { REPEATER_SUPPORTER_PROPERTIES_LIST } from "../../../constants/supportedProperties.js";
@@ -109,7 +110,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
     public getExtendedReferencePoint = async (
         referencePoint: IReferencePoint,
     ): Promise<IExtendedReferencePoint> => {
-        const referencePointCloned = cloneDeep(referencePoint);
+        const referencePointCloned = _cloneDeep(referencePoint);
         const uiConfig = getDefaultRepeaterUiConfig();
 
         let newReferencePoint: IExtendedReferencePoint = {
@@ -152,8 +153,8 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         currentReferencePoint: IReferencePoint,
         nextReferencePoint: IReferencePoint,
     ): IBucketItem[] | undefined {
-        const currentRefencePointClone = cloneDeep(currentReferencePoint);
-        const nextReferencePointClone = cloneDeep(nextReferencePoint);
+        const currentRefencePointClone = _cloneDeep(currentReferencePoint);
+        const nextReferencePointClone = _cloneDeep(nextReferencePoint);
 
         const currentBuckets = currentRefencePointClone?.buckets ?? [];
         const currentRowAttribute = getMainRowAttribute(currentBuckets);

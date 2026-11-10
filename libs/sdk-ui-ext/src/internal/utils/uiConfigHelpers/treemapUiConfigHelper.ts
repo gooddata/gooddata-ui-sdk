@@ -1,9 +1,10 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { BucketNames } from "@gooddata/sdk-ui";
+import { _cloneDeep } from "@gooddata/util";
 
 import { messages } from "../../../locales.js";
 import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket.js";
@@ -24,7 +25,7 @@ const treemapSegmentIcon = "local:treemap/bucket-title-segment.svg";
 
 function setTreemapBucketWarningMessages(referencePoint: IExtendedReferencePoint, intl?: IntlShape) {
     const buckets = referencePoint?.buckets || [];
-    const updatedUiConfig = cloneDeep(referencePoint?.uiConfig);
+    const updatedUiConfig = _cloneDeep(referencePoint?.uiConfig);
     const viewItems = getViewItems(buckets, [ATTRIBUTE, DATE]);
 
     if (!updatedUiConfig) {
@@ -68,7 +69,7 @@ export function setTreemapUiConfig(
     intl: IntlShape,
     visualizationType: string,
 ): IExtendedReferencePoint {
-    const referencePointConfigured = cloneDeep(referencePoint);
+    const referencePointConfigured = _cloneDeep(referencePoint);
     const buckets = referencePointConfigured?.buckets ?? [];
 
     const measuresCanAddItems = !hasOneCategory(buckets) || hasNoMeasures(buckets);

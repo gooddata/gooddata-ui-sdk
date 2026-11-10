@@ -1,6 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { type IExecutionFactory, type IPreparedExecution } from "@gooddata/sdk-backend-spi";
@@ -26,7 +25,7 @@ import {
     isForecastNotReceived,
     isGoodDataSdkError,
 } from "@gooddata/sdk-ui";
-import { _isEqual } from "@gooddata/util";
+import { _cloneDeep, _isEqual } from "@gooddata/util";
 
 import { type ISortConfig } from "../../interfaces/SortConfig.js";
 import {
@@ -335,7 +334,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
             return Promise.resolve(referencePoint);
         }
 
-        const newReferencePoint = cloneDeep<IReferencePoint>(referencePoint);
+        const newReferencePoint = _cloneDeep<IReferencePoint>(referencePoint);
         newReferencePoint.buckets = referencePoint.buckets.map((bucket) => {
             return {
                 ...bucket,

@@ -1,8 +1,10 @@
 // (C) 2026 GoodData Corporation
 
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
+import { _cloneDeep } from "@gooddata/util";
 
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
 
@@ -26,7 +28,7 @@ const defaultProps: ICustomTooltipSectionProps = {
 };
 
 function createComponent(customProps: Partial<ICustomTooltipSectionProps> = {}) {
-    const props: ICustomTooltipSectionProps = { ...cloneDeep(defaultProps), ...customProps };
+    const props: ICustomTooltipSectionProps = { ..._cloneDeep(defaultProps), ...customProps };
     return render(
         <InternalIntlWrapper>
             <CustomTooltipSection {...props} />
@@ -89,7 +91,7 @@ describe("CustomTooltipSection", () => {
     });
 
     it("enables the textarea and dropdown when the section is toggled on", () => {
-        const enabled = set(cloneDeep(expanded), "controls.customTooltip.enabled", true);
+        const enabled = set(_cloneDeep(expanded), "controls.customTooltip.enabled", true);
         createComponent({
             properties: enabled,
             propertiesMeta: expanded,
@@ -205,7 +207,7 @@ describe("CustomTooltipSection", () => {
 
         expect(screen.getByRole("textbox")).toHaveValue("original");
 
-        const updated = cloneDeep(initial);
+        const updated = _cloneDeep(initial);
         set(updated, "controls.customTooltip.content", "restored");
         rerender(
             <InternalIntlWrapper>
@@ -239,7 +241,7 @@ describe("CustomTooltipSection", () => {
         type(screen.getByRole("textbox"), "stale");
 
         // External undo/load lands before our debounce fires.
-        const undone = set(cloneDeep(initial), "controls.customTooltip.content", "undone");
+        const undone = set(_cloneDeep(initial), "controls.customTooltip.content", "undone");
         rerender(
             <InternalIntlWrapper>
                 <CustomTooltipSection

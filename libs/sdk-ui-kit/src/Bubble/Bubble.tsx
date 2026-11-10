@@ -11,8 +11,10 @@ import {
 } from "react";
 
 import cx from "classnames";
-import { cloneDeep, result } from "lodash-es";
+import { result } from "lodash-es";
 import isReactEqual from "react-fast-compare";
+
+import { _cloneDeep } from "@gooddata/util";
 
 import { ZoomAwareOverlay } from "../Overlay/ZoomAwareOverlay.js";
 import { type OverlayPositionType } from "../typings/overlay.js";
@@ -203,7 +205,7 @@ export const Bubble: NamedExoticComponent<IBubbleProps> = memo(
         );
 
         const initialAlignPoints = useMemo(
-            () => addOffsetToAlignPoints(cloneDeep(alignPointsProp)),
+            () => addOffsetToAlignPoints(_cloneDeep(alignPointsProp)),
             [addOffsetToAlignPoints, alignPointsProp],
         );
 

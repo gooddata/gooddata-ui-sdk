@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { cloneDeep, debounce } from "lodash-es";
+import { debounce } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {
@@ -17,6 +17,7 @@ import {
     VisualizationTypes,
     getVisualizationType,
 } from "@gooddata/sdk-ui";
+import { _cloneDeep } from "@gooddata/util";
 
 import { type DrilldownEventObject } from "../../lib/index.js";
 import { convertToChartType, isBulletChart, isComboChart, isHeatmap, isTreemap } from "../_util/common.js";
@@ -233,7 +234,7 @@ const tickLabelClickDebounce = debounce(
             return {
                 x: point.x,
                 y: point.y!,
-                intersection: cloneDeep(point.drillIntersection),
+                intersection: _cloneDeep(point.drillIntersection),
                 ...customProps,
             };
         });

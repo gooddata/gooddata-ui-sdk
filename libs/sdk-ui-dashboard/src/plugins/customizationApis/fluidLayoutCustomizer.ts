@@ -1,14 +1,12 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
-
 import {
     type IDashboardLayout,
     type IDashboardLayoutItem,
     type IDashboardLayoutSection,
     objRefToString,
 } from "@gooddata/sdk-model";
-import { _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty } from "@gooddata/util";
 
 import { DashboardLayoutBuilder } from "../../_staging/dashboard/flexibleLayout/builder/layout.js";
 import { type ExtendedDashboardWidget, type ICustomWidget } from "../../model/types/layoutTypes.js";
@@ -60,7 +58,7 @@ export class FluidLayoutCustomizer implements IFluidLayoutCustomizer {
 
         this.addItemOps.push({
             itemPath,
-            item: cloneDeep(item),
+            item: _cloneDeep(item),
         });
 
         return this;
@@ -99,7 +97,7 @@ export class FluidLayoutCustomizer implements IFluidLayoutCustomizer {
 
         this.addSectionOps.push({
             sectionPath,
-            section: cloneDeep(section),
+            section: _cloneDeep(section),
         });
         return this;
     }

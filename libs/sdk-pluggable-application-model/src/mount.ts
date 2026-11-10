@@ -665,6 +665,10 @@ export type IAiAssistantDefinitionReceivedPayload = {
      */
     readonly interactionId?: string;
     /**
+     * The AI Hub agent selected for the turn that drafted the object, when the backend names it.
+     */
+    readonly agentId?: string;
+    /**
      * Dashboard draft, populated when `definitionType` is `"dashboard"`.
      */
     readonly dashboard?: IDashboard;
@@ -702,7 +706,7 @@ export function isAiAssistantDefinitionReceivedChatEvent(
     if (event.name !== AiAssistantChatEventName.DEFINITION_RECEIVED) {
         return false;
     }
-    const { definitionType, itemId, conversationId, threadId, interactionId } = event.payload;
+    const { definitionType, itemId, conversationId, threadId, interactionId, agentId } = event.payload;
     return (
         (definitionType === "dashboard" ||
             definitionType === "visualization" ||
@@ -712,7 +716,8 @@ export function isAiAssistantDefinitionReceivedChatEvent(
         typeof itemId === "string" &&
         typeof conversationId === "string" &&
         (threadId === undefined || typeof threadId === "string") &&
-        (interactionId === undefined || typeof interactionId === "string")
+        (interactionId === undefined || typeof interactionId === "string") &&
+        (agentId === undefined || typeof agentId === "string")
     );
 }
 

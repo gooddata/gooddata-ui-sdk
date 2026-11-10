@@ -5,7 +5,10 @@
 ```ts
 
 // @internal
-export function _camelCase(string?: string): string;
+export const _camelCase: (string?: string) => string;
+
+// @internal
+export function _capitalize(string?: string): string;
 
 // @internal
 export function _cloneDeep<T>(value: T): T;
@@ -15,6 +18,9 @@ export function combineGuards<T extends ((x: unknown) => x is unknown)[]>(...gua
 
 // @internal
 export function _compact<T>(array: _List<T | _Falsey> | null | undefined): T[];
+
+// @internal (undocumented)
+export type _Comparator<T> = (a: T, b: T) => boolean;
 
 // @internal
 export type ConsoleFunction = (...data: any[]) => void;
@@ -64,6 +70,9 @@ export type _Dictionary<T> = {
     [index: string]: T;
 };
 
+// @internal
+export function _difference<T>(array: _List<T> | null | undefined, ...values: _List<T>[]): T[];
+
 // @internal (undocumented)
 export type EmptyObject = Record<never, never>;
 
@@ -76,10 +85,28 @@ export type _EmptyObject<T> = {
 export type _EmptyObjectOf<T> = _EmptyObject<T> extends T ? _EmptyObject<T> : never;
 
 // @internal
+export function _escape(string?: string): string;
+
+// @internal
 export function escapeRegExp(value: string): string;
 
 // @internal (undocumented)
 export type _Falsey = null | undefined | false | "" | 0 | 0n;
+
+// @internal (undocumented)
+export type _Function0<R> = () => R;
+
+// @internal (undocumented)
+export type _Function1<T1, R> = (t1: T1) => R;
+
+// @internal (undocumented)
+export type _Function2<T1, T2, R> = (t1: T1, t2: T2) => R;
+
+// @internal (undocumented)
+export type _Function3<T1, T2, T3, R> = (t1: T1, t2: T2, t3: T3) => R;
+
+// @internal (undocumented)
+export type _Function4<T1, T2, T3, T4, R> = (t1: T1, t2: T2, t3: T3, t4: T4) => R;
 
 // @internal
 export function _groupBy<T>(collection: _List<T> | null | undefined, iteratee?: _ValueIteratee<T>): _Dictionary<T[]>;
@@ -89,6 +116,16 @@ export function _groupBy<T extends object>(collection: T | null | undefined, ite
 
 // @internal (undocumented)
 export type GuardType<T> = T extends ((o: unknown) => o is infer U) ? U : never;
+
+// @internal
+export function _has<T, K extends _PropertyName>(object: T, path: K): object is T & {
+    [P in K]: P extends keyof T ? T[P] : Record<string, unknown> extends T ? T[keyof T] : unknown;
+} & {
+    [uniqueSymbol]: unknown;
+};
+
+// @internal (undocumented)
+export function _has<T>(object: T, path: _PropertyPath): boolean;
 
 // @internal
 export function hashCodeString(value: string): number;
@@ -122,8 +159,20 @@ export interface IShortenTextOptions {
     maxLength?: number;
 }
 
+// @internal
+export function _isPlainObject(value?: unknown): boolean;
+
 // @internal (undocumented)
 export type _IterateeShorthand<T> = _PropertyName | [_PropertyName, any] | _PartialShallow<T>;
+
+// @internal
+export const _kebabCase: (string?: string) => string;
+
+// @internal
+export function _keyBy<T>(collection: _List<T> | null | undefined, iteratee?: _ValueIterateeCustom<T, _PropertyName>): _Dictionary<T>;
+
+// @internal (undocumented)
+export function _keyBy<T extends object>(collection: T | null | undefined, iteratee?: _ValueIterateeCustom<T[keyof T], _PropertyName>): _Dictionary<T[keyof T]>;
 
 // @internal (undocumented)
 export type _List<T> = ArrayLike<T>;
@@ -225,6 +274,35 @@ export function _omitBy<T extends object>(object: T | null | undefined, predicat
 // @internal
 export function parseStringToArray(str: string): string[] | null;
 
+// @internal
+export type _Partial = {
+    <T1, T2, R>(func: _Function2<T1, T2, R>, plc1: _Placeholder, arg2: T2): _Function1<T1, R>;
+    <T1, T2, T3, R>(func: _Function3<T1, T2, T3, R>, plc1: _Placeholder, arg2: T2): _Function2<T1, T3, R>;
+    <T1, T2, T3, R>(func: _Function3<T1, T2, T3, R>, plc1: _Placeholder, plc2: _Placeholder, arg3: T3): _Function2<T1, T2, R>;
+    <T1, T2, T3, R>(func: _Function3<T1, T2, T3, R>, arg1: T1, plc2: _Placeholder, arg3: T3): _Function1<T2, R>;
+    <T1, T2, T3, R>(func: _Function3<T1, T2, T3, R>, plc1: _Placeholder, arg2: T2, arg3: T3): _Function1<T1, R>;
+    <T1, T2, T3, T4, R>(func: _Function4<T1, T2, T3, T4, R>, plc1: _Placeholder, arg2: T2): _Function3<T1, T3, T4, R>;
+    <T1, T2, T3, T4, R>(func: _Function4<T1, T2, T3, T4, R>, plc1: _Placeholder, plc2: _Placeholder, arg3: T3): _Function3<T1, T2, T4, R>;
+    <T1, T2, T3, T4, R>(func: _Function4<T1, T2, T3, T4, R>, arg1: T1, plc2: _Placeholder, arg3: T3): _Function2<T2, T4, R>;
+    <T1, T2, T3, T4, R>(func: _Function4<T1, T2, T3, T4, R>, plc1: _Placeholder, arg2: T2, arg3: T3): _Function2<T1, T4, R>;
+    <T1, T2, T3, T4, R>(func: _Function4<T1, T2, T3, T4, R>, plc1: _Placeholder, plc2: _Placeholder, plc3: _Placeholder, arg4: T4): _Function3<T1, T2, T3, R>;
+    <T1, T2, T3, T4, R>(func: _Function4<T1, T2, T3, T4, R>, arg1: T1, plc2: _Placeholder, plc3: _Placeholder, arg4: T4): _Function2<T2, T3, R>;
+    <T1, T2, T3, T4, R>(func: _Function4<T1, T2, T3, T4, R>, plc1: _Placeholder, arg2: T2, plc3: _Placeholder, arg4: T4): _Function2<T1, T3, R>;
+    <T1, T2, T3, T4, R>(func: _Function4<T1, T2, T3, T4, R>, arg1: T1, arg2: T2, plc3: _Placeholder, arg4: T4): _Function1<T3, R>;
+    <T1, T2, T3, T4, R>(func: _Function4<T1, T2, T3, T4, R>, plc1: _Placeholder, plc2: _Placeholder, arg3: T3, arg4: T4): _Function2<T1, T2, R>;
+    <T1, T2, T3, T4, R>(func: _Function4<T1, T2, T3, T4, R>, arg1: T1, plc2: _Placeholder, arg3: T3, arg4: T4): _Function1<T2, R>;
+    <T1, T2, T3, T4, R>(func: _Function4<T1, T2, T3, T4, R>, plc1: _Placeholder, arg2: T2, arg3: T3, arg4: T4): _Function1<T1, R>;
+    <TS extends any[], R>(func: (...ts: TS) => R): (...ts: TS) => R;
+    <TS extends any[], T1, R>(func: (t1: T1, ...ts: TS) => R, arg1: T1): (...ts: TS) => R;
+    <TS extends any[], T1, T2, R>(func: (t1: T1, t2: T2, ...ts: TS) => R, t1: T1, t2: T2): (...ts: TS) => R;
+    <TS extends any[], T1, T2, T3, R>(func: (t1: T1, t2: T2, t3: T3, ...ts: TS) => R, t1: T1, t2: T2, t3: T3): (...ts: TS) => R;
+    <TS extends any[], T1, T2, T3, T4, R>(func: (t1: T1, t2: T2, t3: T3, t4: T4, ...ts: TS) => R, t1: T1, t2: T2, t3: T3, t4: T4): (...ts: TS) => R;
+    placeholder: _Placeholder;
+};
+
+// @internal
+export const _partial: _Partial;
+
 // @internal (undocumented)
 export type _PartialObject<T> = Partial<T>;
 
@@ -247,6 +325,20 @@ export function _pick<T extends object, U extends keyof T>(object: T, ...props: 
 
 // @internal (undocumented)
 export function _pick<T>(object: T | null | undefined, ...props: _Many<_PropertyPath>[]): _PartialObject<T>;
+
+// @internal
+export function _pickBy<T>(object: _Dictionary<T> | null | undefined, predicate?: _ValueKeyIteratee<T>): _Dictionary<T>;
+
+// @internal (undocumented)
+export function _pickBy<T>(object: _NumericDictionary<T> | null | undefined, predicate?: _ValueKeyIteratee<T>): _NumericDictionary<T>;
+
+// @internal (undocumented)
+export function _pickBy<T extends object>(object: T | null | undefined, predicate?: _ValueKeyIteratee<T[keyof T]>): _PartialObject<T>;
+
+// @internal
+export type _Placeholder = {
+    readonly [placeholderBrand]: true;
+};
 
 // @internal (undocumented)
 export type _PropertyName = string | number | symbol;
@@ -323,13 +415,22 @@ export type _ThrottleSettingsLeading = (_ThrottleSettings & {
 }) | Omit<_ThrottleSettings, "leading">;
 
 // @internal
+export function _union<T>(...arrays: (_List<T> | null | undefined)[]): T[];
+
+// @internal
 export function _uniq<T>(array: _List<T> | null | undefined): T[];
 
 // @internal
 export function _uniqBy<T>(array: _List<T> | null | undefined, iteratee: _ValueIteratee<T>): T[];
 
 // @internal
+export function _uniqWith<T>(array: _List<T> | null | undefined, comparator?: _Comparator<T>): T[];
+
+// @internal
 export type _ValueIteratee<T> = ((value: T) => _NotVoid) | _IterateeShorthand<T>;
+
+// @internal (undocumented)
+export type _ValueIterateeCustom<T, TResult> = ((value: T) => TResult) | _IterateeShorthand<T>;
 
 // @internal
 export type _ValueIteratorTypeGuard<T, S extends T> = (value: T) => value is S;
@@ -342,5 +443,20 @@ export type WaitForFn = <T>(callback: () => T | Promise<T>, options?: {
     interval?: number;
     timeout?: number;
 }) => Promise<T>;
+
+// @internal
+export function _zip<T1, T2>(arrays1: _List<T1>, arrays2: _List<T2>): [T1 | undefined, T2 | undefined][];
+
+// @internal (undocumented)
+export function _zip<T1, T2, T3>(arrays1: _List<T1>, arrays2: _List<T2>, arrays3: _List<T3>): [T1 | undefined, T2 | undefined, T3 | undefined][];
+
+// @internal (undocumented)
+export function _zip<T1, T2, T3, T4>(arrays1: _List<T1>, arrays2: _List<T2>, arrays3: _List<T3>, arrays4: _List<T4>): [T1 | undefined, T2 | undefined, T3 | undefined, T4 | undefined][];
+
+// @internal (undocumented)
+export function _zip<T1, T2, T3, T4, T5>(arrays1: _List<T1>, arrays2: _List<T2>, arrays3: _List<T3>, arrays4: _List<T4>, arrays5: _List<T5>): [T1 | undefined, T2 | undefined, T3 | undefined, T4 | undefined, T5 | undefined][];
+
+// @internal (undocumented)
+export function _zip<T>(...arrays: (_List<T> | null | undefined)[]): (T | undefined)[][];
 
 ```

@@ -1,7 +1,5 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
-
 import {
     type IColorMappingItem,
     type IInsight,
@@ -14,7 +12,7 @@ import {
     measureLocalId,
 } from "@gooddata/sdk-model";
 import { type IColorMapping } from "@gooddata/sdk-ui-charts";
-import { _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty } from "@gooddata/util";
 
 import { type InsightConverter } from "../../../scenario.js";
 
@@ -72,7 +70,7 @@ export function replaceMappingPredicates(...valuesOrObjs: Array<string | IMeasur
         }
 
         const colorMappingItems = createColorMappingItems(defaultInsight, colorMapping, ids);
-        const newProperties = cloneDeep(properties);
+        const newProperties = _cloneDeep(properties);
 
         newProperties["controls"]["colorMapping"] = colorMappingItems;
 

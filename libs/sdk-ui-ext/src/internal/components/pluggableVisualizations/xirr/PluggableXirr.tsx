@@ -1,7 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
-
 import { type IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
     type IDimension,
@@ -14,6 +12,7 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames, type IPushData } from "@gooddata/sdk-ui";
 import { CoreXirr, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
+import { _cloneDeep } from "@gooddata/util";
 
 import {
     type IExtendedReferencePoint,
@@ -89,7 +88,7 @@ export class PluggableXirr extends AbstractPluggableVisualization {
     public getExtendedReferencePoint = async (
         referencePoint: Readonly<IReferencePoint>,
     ): Promise<IExtendedReferencePoint> => {
-        const referencePointCloned = cloneDeep(referencePoint);
+        const referencePointCloned = _cloneDeep(referencePoint);
         let newReferencePoint: IExtendedReferencePoint = {
             ...referencePointCloned,
             uiConfig: getDefaultXirrUiConfig(),

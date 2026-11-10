@@ -1,6 +1,5 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
 import { type IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
 
@@ -17,7 +16,7 @@ import {
     VisualizationTypes,
     isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
-import { _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty } from "@gooddata/util";
 
 import { type IHeadlineData, type IHeadlineDataItem } from "../interfaces/Headlines.js";
 
@@ -140,7 +139,7 @@ export function applyDrillableItems(
     dataView: IDataView,
 ): IHeadlineData {
     const dv = DataViewFacade.for(dataView);
-    const data = cloneDeep(headlineData);
+    const data = _cloneDeep(headlineData);
     const { primaryItem, secondaryItem } = data;
     const [primaryItemHeader, secondaryItemHeader] = dv.meta().measureDescriptors();
 

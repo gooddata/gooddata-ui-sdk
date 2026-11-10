@@ -9,10 +9,11 @@ import {
     render as testingLibraryRender,
 } from "@testing-library/react";
 import { type UserEvent, userEvent } from "@testing-library/user-event";
-import { cloneDeep, merge, omit } from "lodash-es";
+import { merge, omit } from "lodash-es";
 import { Provider } from "react-redux";
 
 import { dummyBackend } from "@gooddata/sdk-backend-base";
+import { _cloneDeep } from "@gooddata/util";
 
 import { type DashboardState, ReactDashboardContext } from "../../../index.js";
 import { createDashboardRootReducer, createDashboardStore } from "../../../model/store/dashboardStore.js";
@@ -36,7 +37,7 @@ export function render(jsx: ReactNode, options: ISetupOptions = {}): RenderResul
     const { state = {} } = options;
 
     const preloadedState = merge(
-        cloneDeep(configureStore({ reducer: createDashboardRootReducer() }).getState()),
+        _cloneDeep(configureStore({ reducer: createDashboardRootReducer() }).getState()),
         /**
          * Setting empty config and permissions is needed here because otherwise an invariant violation error
          * about attempting to access uninitialized state appears from the respective selectors in tests.

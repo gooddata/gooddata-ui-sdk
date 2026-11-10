@@ -3,11 +3,12 @@
 import { memo, useRef, useState } from "react";
 
 import cx from "classnames";
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { type IPushData } from "@gooddata/sdk-ui";
 import { Button } from "@gooddata/sdk-ui-kit";
+import { _cloneDeep } from "@gooddata/util";
 
 import { messages } from "../../../../locales.js";
 import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
@@ -39,7 +40,7 @@ export const AdvancedSection = memo(function AdvancedSection({
     const configurationValue = properties?.controls?.["chartConfigOverride"];
 
     const onChange = (value: string | undefined) => {
-        const clonedProperties = cloneDeep(properties);
+        const clonedProperties = _cloneDeep(properties);
         set(clonedProperties!, `controls.${valuePath}`, value);
 
         pushData?.({ properties: clonedProperties });

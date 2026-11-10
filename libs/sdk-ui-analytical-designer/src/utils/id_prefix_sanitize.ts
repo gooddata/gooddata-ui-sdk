@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { cloneDeep, update } from "lodash-es";
+import { update } from "lodash-es";
 
 import { getIdOrigin } from "@gooddata/sdk-backend-tiger";
 import {
@@ -17,6 +17,7 @@ import {
     isRemoveAttributeFilter,
     isRemoveDateFilter,
 } from "@gooddata/sdk-embedding";
+import { _cloneDeep } from "@gooddata/util";
 
 import { type ICustomRouteParams } from "../typings/location.js";
 
@@ -36,32 +37,32 @@ export function sanitizeSetFilterContext(
 ): IFilterContextContent["filters"] {
     return filters.map((filter) => {
         if (isAbsoluteDateFilter(filter)) {
-            const updatedFilter = cloneDeep(filter);
+            const updatedFilter = _cloneDeep(filter);
             update(updatedFilter, ["absoluteDateFilter", "dataSet"], sanitizeQualifier);
             return updatedFilter;
         }
         if (isRelativeDateFilter(filter)) {
-            const updatedFilter = cloneDeep(filter);
+            const updatedFilter = _cloneDeep(filter);
             update(updatedFilter, ["relativeDateFilter", "dataSet"], sanitizeQualifier);
             return updatedFilter;
         }
         if (isPositiveAttributeFilter(filter)) {
-            const updatedFilter = cloneDeep(filter);
+            const updatedFilter = _cloneDeep(filter);
             update(updatedFilter, ["positiveAttributeFilter", "displayForm"], sanitizeQualifier);
             return updatedFilter;
         }
         if (isNegativeAttributeFilter(filter)) {
-            const updatedFilter = cloneDeep(filter);
+            const updatedFilter = _cloneDeep(filter);
             update(updatedFilter, ["negativeAttributeFilter", "displayForm"], sanitizeQualifier);
             return updatedFilter;
         }
         if (isArbitraryAttributeFilterItem(filter)) {
-            const updatedFilter = cloneDeep(filter);
+            const updatedFilter = _cloneDeep(filter);
             update(updatedFilter, ["arbitraryAttributeFilter", "displayForm"], sanitizeQualifier);
             return updatedFilter;
         }
         if (isMatchAttributeFilterItem(filter)) {
-            const updatedFilter = cloneDeep(filter);
+            const updatedFilter = _cloneDeep(filter);
             update(updatedFilter, ["matchAttributeFilter", "displayForm"], sanitizeQualifier);
             return updatedFilter;
         }
@@ -74,12 +75,12 @@ export function sanitizeRemoveFilterContext(
 ): IRemoveFilterContextContent["filters"] {
     return filters.map((filter) => {
         if (isRemoveDateFilter(filter)) {
-            const updatedFilter = cloneDeep(filter);
+            const updatedFilter = _cloneDeep(filter);
             update(updatedFilter, ["dataSet"], sanitizeQualifier);
             return updatedFilter;
         }
         if (isRemoveAttributeFilter(filter)) {
-            const updatedFilter = cloneDeep(filter);
+            const updatedFilter = _cloneDeep(filter);
             update(updatedFilter, ["displayForm"], sanitizeQualifier);
             return updatedFilter;
         }

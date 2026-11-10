@@ -27,6 +27,8 @@ vi.mock("@gooddata/api-client-tiger/endpoints/entitiesObjects", () => ({
 vi.mock("@gooddata/api-client-tiger/endpoints/genAI", () => ({
     GenAiApi_TestLlmProvider: vi.fn(),
     GenAiApi_TestLlmProviderById: vi.fn(),
+    ActionsApi_ListLlmProviderModels: vi.fn(),
+    ActionsApi_ListLlmProviderModelsById: vi.fn(),
 }));
 
 describe("OrganizationLlmProvidersService", () => {
@@ -272,6 +274,52 @@ describe("OrganizationLlmProvidersService", () => {
             expect(result.success).toBe(false);
             expect(result.message).toBe("Error");
             expect(genAiApi.GenAiApi_TestLlmProvider).toHaveBeenCalled();
+        });
+
+        it("should send GoodData AI provider config when testing by definition", async () => {
+            vi.mocked(genAiApi.GenAiApi_TestLlmProvider).mockResolvedValue({
+                data: { providerReachable: true, modelResults: [] },
+            } as unknown as AxiosResponse);
+
+            await service.testLlmProvider({
+                id: "",
+                providerConfig: { type: "gooddataAi" },
+                models: [{ id: "gooddata-ai-lite", family: "UNKNOWN", isDefault: true }],
+            });
+
+            expect(genAiApi.GenAiApi_TestLlmProvider).toHaveBeenCalledWith(
+                expect.anything(),
+                expect.anything(),
+                {
+                    testLlmProviderDefinitionRequest: {
+                        providerConfig: { type: "GOODDATA_AI" },
+                        models: [{ id: "gooddata-ai-lite", family: "UNKNOWN" }],
+                    },
+                },
+            );
+        });
+    });
+
+    describe("listLlmProviderModels", () => {
+        it("should send GoodData AI provider config when listing models by definition", async () => {
+            vi.mocked(genAiApi.ActionsApi_ListLlmProviderModels).mockResolvedValue({
+                data: { success: true, models: [{ id: "gooddata-ai-lite", family: "UNKNOWN" }] },
+            } as unknown as AxiosResponse);
+
+            const result = await service.listLlmProviderModels({
+                providerConfig: { type: "gooddataAi" },
+            });
+
+            expect(result.models).toEqual([{ id: "gooddata-ai-lite", family: "UNKNOWN" }]);
+            expect(genAiApi.ActionsApi_ListLlmProviderModels).toHaveBeenCalledWith(
+                expect.anything(),
+                expect.anything(),
+                {
+                    listLlmProviderModelsRequest: {
+                        providerConfig: { type: "GOODDATA_AI" },
+                    },
+                },
+            );
         });
     });
 });

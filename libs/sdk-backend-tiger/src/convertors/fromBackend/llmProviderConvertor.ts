@@ -119,6 +119,8 @@ function convertLlmProviderConfigToBackend(
                     apiKey: config.apiKey,
                 },
             };
+        case "gooddataAi":
+            return { type: "GOODDATA_AI" };
     }
 }
 
@@ -156,6 +158,8 @@ function convertLlmProviderConfigFromBackend(
                 baseUrl: config.baseUrl ?? undefined,
                 apiKey: config.auth.apiKey ?? undefined,
             };
+        case "GOODDATA_AI":
+            return { type: "gooddataAi" };
         default:
             return undefined;
     }

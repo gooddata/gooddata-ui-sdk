@@ -1,5 +1,6 @@
-// (C) 2007-2023 GoodData Corporation
-import { cloneDeep } from "lodash-es";
+// (C) 2007-2026 GoodData Corporation
+
+import { _cloneDeep } from "@gooddata/util";
 
 const WIDTH_SPAN = 900;
 const WIDTH = 0.7;
@@ -46,5 +47,5 @@ const PYRAMID_TEMPLATE = {
 };
 
 export function getPyramidConfiguration(): typeof PYRAMID_TEMPLATE {
-    return cloneDeep(PYRAMID_TEMPLATE);
+    return _cloneDeep(PYRAMID_TEMPLATE);
 }

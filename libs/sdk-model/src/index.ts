@@ -1641,6 +1641,7 @@ export type {
     IAzureFoundryProviderConfig,
     IAwsBedrockProviderConfig,
     IAnthropicProviderConfig,
+    IGoodDataAiProviderConfig,
     LlmProviderFamily,
     LlmProviderPatch,
     LlmProviderTestResults,

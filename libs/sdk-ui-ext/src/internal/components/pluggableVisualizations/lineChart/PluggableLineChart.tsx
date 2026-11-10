@@ -1,10 +1,10 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 
 import { type IInsight, type IInsightDefinition, newAttributeSort } from "@gooddata/sdk-model";
 import { BucketNames, type IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
-import { _isEmpty, _isEqual } from "@gooddata/util";
+import { _cloneDeep, _isEmpty, _isEqual } from "@gooddata/util";
 
 import { AXIS, AXIS_NAME } from "../../../constants/axis.js";
 import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket.js";
@@ -96,13 +96,13 @@ export class PluggableLineChart extends PluggableBaseChart {
     }
 
     public override getUiConfig(): IUiConfig {
-        return cloneDeep(LINE_UICONFIG_WITH_MULTIPLE_DATES);
+        return _cloneDeep(LINE_UICONFIG_WITH_MULTIPLE_DATES);
     }
 
     public override getExtendedReferencePoint(
         referencePoint: IReferencePoint,
     ): Promise<IExtendedReferencePoint> {
-        const clonedReferencePoint = cloneDeep(referencePoint);
+        const clonedReferencePoint = _cloneDeep(referencePoint);
         let newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,
             uiConfig: this.getUiConfig(),

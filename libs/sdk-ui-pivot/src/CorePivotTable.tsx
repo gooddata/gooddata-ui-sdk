@@ -24,7 +24,6 @@ import {
 } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import cx from "classnames";
-import { cloneDeep } from "lodash-es";
 import { useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 import { v4 as uuidv4 } from "uuid";
@@ -39,7 +38,7 @@ import {
     newErrorMapping,
 } from "@gooddata/sdk-ui";
 import { ThemeContextProvider, useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { _isEqual } from "@gooddata/util";
+import { _cloneDeep, _isEqual } from "@gooddata/util";
 
 import { PivotTableError } from "./components/PivotTableError.js";
 import { PivotTableLoading } from "./components/PivotTableLoading.js";
@@ -277,7 +276,7 @@ export function CorePivotTableAgImpl(props: ICorePivotTableProps) {
 
         return {
             readyToRender: false,
-            columnTotals: cloneDeep(getTotalsForAttributeBucket(execution.definition)),
+            columnTotals: _cloneDeep(getTotalsForAttributeBucket(execution.definition)),
             rowTotals: getTotalsForColumnsBucket(execution.definition),
             desiredHeight: config!.maxHeight,
             resized: false,
@@ -1024,7 +1023,7 @@ export function CorePivotTableAgImpl(props: ICorePivotTableProps) {
             setState(
                 {
                     readyToRender: false,
-                    columnTotals: cloneDeep(getTotalsForAttributeBucket(execution.definition)),
+                    columnTotals: _cloneDeep(getTotalsForAttributeBucket(execution.definition)),
                     rowTotals: getTotalsForColumnsBucket(execution.definition),
                     error: undefined,
                     desiredHeight: propsRef.current.config!.maxHeight,

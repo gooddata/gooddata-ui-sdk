@@ -2,8 +2,10 @@
 
 import { type ChangeEvent, type ReactNode, useCallback } from "react";
 
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 import { useIntl } from "react-intl";
+
+import { _cloneDeep } from "@gooddata/util";
 
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { getTranslation } from "../../utils/translations.js";
@@ -45,7 +47,7 @@ export function CheckboxControl({
     const intl = useIntl();
     const onValueChanged = useCallback(
         (event: ChangeEvent<HTMLInputElement>) => {
-            const clonedProperties = cloneDeep(properties);
+            const clonedProperties = _cloneDeep(properties);
             const value = isValueInverted ? !event.target.checked : event.target.checked;
             // When the value matches the default, set to undefined so the property gets removed
             // during merge. This prevents the Save button from staying enabled when toggling

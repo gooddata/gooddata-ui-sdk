@@ -1,11 +1,12 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { type ISettings } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { type IGeoConfig } from "@gooddata/sdk-ui-geo";
+import { _cloneDeep } from "@gooddata/util";
 
 import { BUCKETS } from "../../constants/bucket.js";
 import { isGeoPushpinIconEnabled } from "../../constants/featureFlags.js";
@@ -39,7 +40,7 @@ export function setGeoPushpinUiConfig(
     visualizationType: string,
     featureFlags?: ISettings,
 ): IExtendedReferencePoint {
-    const referencePointConfigured = cloneDeep(referencePoint);
+    const referencePointConfigured = _cloneDeep(referencePoint);
     set(referencePointConfigured, UICONFIG, setBucketTitles(referencePoint, visualizationType, intl));
     set(
         referencePointConfigured,

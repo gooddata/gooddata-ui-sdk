@@ -82,6 +82,31 @@ describe("notifyDefinitionReceived", () => {
         expect(action.payload).not.toHaveProperty("publisherDocument");
     });
 
+    it("names the agent of the turn that drafted the document", () => {
+        // given
+        const item = {
+            ...itemWith({ type: "publisherDocumentV2", publisherDocument: publisherDocumentV2 }),
+            agentId: "custom-agent",
+        };
+
+        // when
+        const [action] = putActions(item);
+
+        // then
+        expect(action.payload["agentId"]).toBe("custom-agent");
+    });
+
+    it("names no agent for an item the backend did not name one for", () => {
+        // given
+        const item = itemWith({ type: "publisherDocumentV2", publisherDocument: publisherDocumentV2 });
+
+        // when
+        const [action] = putActions(item);
+
+        // then
+        expect(action.payload["agentId"]).toBeUndefined();
+    });
+
     it("raises nothing for a v2 part without a document", () => {
         expect(putActions(itemWith({ type: "publisherDocumentV2", publisherDocument: null }))).toEqual([]);
     });

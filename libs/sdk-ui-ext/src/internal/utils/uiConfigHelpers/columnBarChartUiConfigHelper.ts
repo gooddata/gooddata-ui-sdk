@@ -1,8 +1,10 @@
-// (C) 2019-2025 GoodData Corporation
-import { cloneDeep, set } from "lodash-es";
+// (C) 2019-2026 GoodData Corporation
+
+import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { BucketNames, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
+import { _cloneDeep } from "@gooddata/util";
 
 import { messages } from "../../../locales.js";
 import { BUCKETS } from "../../constants/bucket.js";
@@ -15,7 +17,7 @@ export function setColumnBarChartUiConfig(
     referencePoint: IExtendedReferencePoint,
     intl: IntlShape,
 ): IExtendedReferencePoint {
-    const referencePointConfigured = cloneDeep(referencePoint);
+    const referencePointConfigured = _cloneDeep(referencePoint);
 
     set(
         referencePointConfigured,

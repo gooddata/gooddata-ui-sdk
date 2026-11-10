@@ -1,0 +1,15 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-backend-tiger: Keep hour, minute and second date attribute values as the backend computed them around daylight saving transitions; `normalizedValue` now carries the value in UTC in every browser timezone; custom `dateFormatter` and `dateStringifier` implementations of `TigerBackendConfig` receive a Date carrying the value in its UTC fields, and custom `dateNormalizer` implementations must return an ISO string carrying it in UTC",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        },
+        {
+            "comment": "sdk-ui-dashboard: Show and shift the key driver analysis period in UTC so the browser timezone does not change it",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

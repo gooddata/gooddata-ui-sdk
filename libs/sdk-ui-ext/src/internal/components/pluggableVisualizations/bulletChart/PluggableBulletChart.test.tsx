@@ -1,12 +1,12 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { type IAttribute, type IInsight, type IInsightDefinition } from "@gooddata/sdk-model";
 import { type IDrillEventIntersectionElement, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
+import { _cloneDeep } from "@gooddata/util";
 
 import {
     type IBucketOfFun,
@@ -283,7 +283,7 @@ describe("PluggableBulletChart", () => {
         });
 
         it("should keep first Date item when items have different dimensions", async () => {
-            const mockRefPoint = cloneDeep(dateAttributeOnRowsAndColumnsReferencePoint);
+            const mockRefPoint = _cloneDeep(dateAttributeOnRowsAndColumnsReferencePoint);
             mockRefPoint.buckets[2].items[0].dateDatasetRef = {
                 uri: "closed",
             };

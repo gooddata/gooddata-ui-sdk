@@ -1,9 +1,8 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
-
 import { type IInsightDefinition } from "@gooddata/sdk-model";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
+import { _cloneDeep } from "@gooddata/util";
 
 import { SANKEY_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import { DEFAULT_SANKEY_UI_CONFIG } from "../../../constants/uiConfig.js";
@@ -62,10 +61,10 @@ export class PluggableSankeyChart extends PluggableBaseChart {
     public override getExtendedReferencePoint(
         referencePoint: IReferencePoint,
     ): Promise<IExtendedReferencePoint> {
-        const uiConfig = cloneDeep(DEFAULT_SANKEY_UI_CONFIG);
+        const uiConfig = _cloneDeep(DEFAULT_SANKEY_UI_CONFIG);
 
         let extendedReferencePoint: IExtendedReferencePoint = {
-            ...cloneDeep(referencePoint),
+            ..._cloneDeep(referencePoint),
             uiConfig,
         };
 

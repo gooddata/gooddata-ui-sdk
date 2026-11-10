@@ -2,12 +2,12 @@
 
 // @vitest-environment node
 
-import { cloneDeep } from "lodash-es";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { newDefForItems } from "@gooddata/sdk-model";
 import { type IDrillConfig, VisualizationTypes } from "@gooddata/sdk-ui";
+import { _cloneDeep } from "@gooddata/util";
 
 import { type DrilldownEventObject } from "../../lib/index.js";
 
@@ -232,7 +232,7 @@ describe("Drilldown Eventing", () => {
     it("should correctly handle z coordinate of point", () => {
         const drillConfig = { dataView, onDrill: () => true };
         const target = { dispatchEvent: vi.fn() };
-        const pointClickWitZEventData: any = cloneDeep(pointClickEventData);
+        const pointClickWitZEventData: any = _cloneDeep(pointClickEventData);
 
         pointClickWitZEventData.point["z"] = 12000;
 

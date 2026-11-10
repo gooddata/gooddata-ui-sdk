@@ -1,10 +1,11 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { type IBucket, newBucket, newInsightDefinition, newMeasure } from "@gooddata/sdk-model";
 import { BucketNames, OverTimeComparisonTypes, VisualizationTypes } from "@gooddata/sdk-ui";
+import { _cloneDeep } from "@gooddata/util";
 
 import { ATTRIBUTE, DATE, METRIC } from "../constants/bucket.js";
 import { DEFAULT_BASE_CHART_UICONFIG } from "../constants/uiConfig.js";
@@ -162,7 +163,7 @@ describe("sanitizeFilters", () => {
     });
 
     it("should keep attribute filters that are not auto-created even if the corresponding attribute is not in buckets", () => {
-        const newReferencePoint = cloneDeep(oneAttributeTwoFiltersReferencePoint);
+        const newReferencePoint = _cloneDeep(oneAttributeTwoFiltersReferencePoint);
         newReferencePoint.filters.items[1].autoCreated = false;
         const extendedReferencePoint: IExtendedReferencePoint = {
             ...newReferencePoint,
@@ -175,7 +176,7 @@ describe("sanitizeFilters", () => {
     });
 
     it("should keep just measure value filters based on measures that exist in extended reference point", () => {
-        const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
+        const newReferencePoint = _cloneDeep(measureValueFilterReferencePoint);
         newReferencePoint.buckets[0].items.splice(1);
         newReferencePoint.buckets[1].items = [];
         const extendedReferencePoint: IExtendedReferencePoint = {
@@ -189,11 +190,11 @@ describe("sanitizeFilters", () => {
     });
 
     it("should keep measure value filters without dimensionality when there are no attributes", () => {
-        const oldReferencePoint = cloneDeep(measureValueFilterReferencePoint);
+        const oldReferencePoint = _cloneDeep(measureValueFilterReferencePoint);
         // Remove attributes from old reference point
         oldReferencePoint.buckets[2].items = [];
 
-        const newReferencePoint = cloneDeep(oldReferencePoint);
+        const newReferencePoint = _cloneDeep(oldReferencePoint);
         const extendedReferencePoint: IExtendedReferencePoint = {
             ...newReferencePoint,
             uiConfig: DEFAULT_BASE_CHART_UICONFIG,
@@ -206,7 +207,7 @@ describe("sanitizeFilters", () => {
     });
 
     it("should handle reference point without filters", () => {
-        const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
+        const newReferencePoint = _cloneDeep(measureValueFilterReferencePoint);
         delete (newReferencePoint as { filters?: IFilters }).filters;
         const extendedReferencePoint: IExtendedReferencePoint = {
             ...newReferencePoint,
@@ -222,7 +223,7 @@ describe("sanitizeFilters", () => {
     });
 
     it("should keep measure value filter with valid dimensionality local identifiers", () => {
-        const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
+        const newReferencePoint = _cloneDeep(measureValueFilterReferencePoint);
         // Use filter with dimensionality pointing to valid attribute local identifiers
         newReferencePoint.filters.items = [
             {
@@ -241,8 +242,8 @@ describe("sanitizeFilters", () => {
     });
 
     it("should keep measure value filter and resolve dimensionality local identifiers to ObjRefs using old reference point when attribute is removed from buckets", () => {
-        const oldReferencePoint = cloneDeep(measureValueFilterReferencePoint);
-        const newReferencePoint = cloneDeep(oldReferencePoint);
+        const oldReferencePoint = _cloneDeep(measureValueFilterReferencePoint);
+        const newReferencePoint = _cloneDeep(oldReferencePoint);
 
         // Remove attributes from buckets (e.g., user removed view-by), but MVF still references them by localIdentifier.
         newReferencePoint.buckets[2].items = [];
@@ -267,8 +268,8 @@ describe("sanitizeFilters", () => {
     });
 
     it("should transform only missing dimensionality local identifiers to ObjRefs and keep existing local identifiers", () => {
-        const oldReferencePoint = cloneDeep(measureValueFilterReferencePoint);
-        const newReferencePoint = cloneDeep(oldReferencePoint);
+        const oldReferencePoint = _cloneDeep(measureValueFilterReferencePoint);
+        const newReferencePoint = _cloneDeep(oldReferencePoint);
 
         // Keep only a1 in current buckets; a2 is removed but MVF still references it.
         newReferencePoint.buckets[2].items = [attributeItems[0]];
@@ -294,7 +295,7 @@ describe("sanitizeFilters", () => {
 
     it("should migrate measure value filter dimensionality from local IDs to ObjRefs when attribute is removed from new reference point", () => {
         // Setup: Old reference point has attributes a1 and a2, filter uses local IDs
-        const oldReferencePoint = cloneDeep(measureValueFilterReferencePoint);
+        const oldReferencePoint = _cloneDeep(measureValueFilterReferencePoint);
         const filterWithLocalIds: IMeasureValueFilter = {
             measureLocalIdentifier: masterMeasureItems[0].localIdentifier,
             condition: {
@@ -307,7 +308,7 @@ describe("sanitizeFilters", () => {
         };
 
         // New reference point: attributes are removed
-        const newReferencePoint = cloneDeep(oldReferencePoint);
+        const newReferencePoint = _cloneDeep(oldReferencePoint);
         newReferencePoint.buckets[2].items = []; // Remove all attributes
         newReferencePoint.filters.items = [
             {
@@ -339,7 +340,7 @@ describe("sanitizeFilters", () => {
     });
 
     it("should remove measure value filter with invalid dimensionality local identifiers", () => {
-        const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
+        const newReferencePoint = _cloneDeep(measureValueFilterReferencePoint);
         // Use filter with dimensionality pointing to non-existent attribute local identifiers
         newReferencePoint.filters.items = [
             {
@@ -363,7 +364,7 @@ describe("sanitizeFilters", () => {
     });
 
     it("should keep measure value filter with dimensionality ObjRefs", () => {
-        const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
+        const newReferencePoint = _cloneDeep(measureValueFilterReferencePoint);
         newReferencePoint.filters.items = [
             {
                 localIdentifier: "fbv1",
@@ -381,7 +382,7 @@ describe("sanitizeFilters", () => {
     });
 
     it("should handle mixed dimensionality with valid local IDs and ObjRefs", () => {
-        const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
+        const newReferencePoint = _cloneDeep(measureValueFilterReferencePoint);
         newReferencePoint.filters.items = [
             {
                 localIdentifier: "fbv1",
@@ -399,7 +400,7 @@ describe("sanitizeFilters", () => {
     });
 
     it("should keep a ranking filter that references a catalog measure by ref even with no attributes", () => {
-        const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
+        const newReferencePoint = _cloneDeep(measureValueFilterReferencePoint);
         // No attributes and the ranked measure is not in the buckets - this is the improved ranking filter.
         newReferencePoint.buckets[2].items = [];
         const catalogRankingFilter: any = {
@@ -426,7 +427,7 @@ describe("sanitizeFilters", () => {
     });
 
     it("should remove a ranking filter referencing a catalog measure whose local 'out of' attribute is missing", () => {
-        const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
+        const newReferencePoint = _cloneDeep(measureValueFilterReferencePoint);
         const catalogRankingFilter: any = {
             measureRef: { identifier: "catalogMetric", type: "measure" },
             attributes: ["non_existent_attribute"],
@@ -450,7 +451,7 @@ describe("sanitizeFilters", () => {
     });
 
     it("should keep a legacy ranking filter referencing a bucket measure with no attributes in buckets", () => {
-        const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
+        const newReferencePoint = _cloneDeep(measureValueFilterReferencePoint);
         // No attributes in buckets, and the ranking filter references no "out of" attribute either.
         newReferencePoint.buckets[2].items = [];
         const legacyRankingFilter: any = {
@@ -476,7 +477,7 @@ describe("sanitizeFilters", () => {
     });
 
     it("should remove a legacy ranking filter whose bucket measure is missing", () => {
-        const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
+        const newReferencePoint = _cloneDeep(measureValueFilterReferencePoint);
         const legacyRankingFilter: any = {
             measure: "non_existent_measure",
             operator: "TOP",
@@ -499,7 +500,7 @@ describe("sanitizeFilters", () => {
     });
 
     it("should remove filter with mixed dimensionality when local ID is invalid", () => {
-        const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
+        const newReferencePoint = _cloneDeep(measureValueFilterReferencePoint);
         newReferencePoint.filters.items = [
             {
                 localIdentifier: "fbv1",
@@ -535,7 +536,7 @@ describe("Bucket title", () => {
     it("should set translated bucket titles for all buckets except filters when intl provided", () => {
         const visualizationType = VisualizationTypes.BAR;
         const intl = createInternalIntl(DEFAULT_LANGUAGE, messages);
-        const expectedUiconfig: IUiConfig = cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
+        const expectedUiconfig: IUiConfig = _cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
 
         set(expectedUiconfig, ["buckets", "measures", "title"], "Metrics");
         set(expectedUiconfig, ["buckets", "view", "title"], "View by");
@@ -552,7 +553,7 @@ describe("Bucket title", () => {
 
     it("should set untranslated bucket titles for all buckets except filters when intl not provided", () => {
         const visualizationType = VisualizationTypes.BAR;
-        const expectedUiconfig: IUiConfig = cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
+        const expectedUiconfig: IUiConfig = _cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
 
         set(expectedUiconfig, ["buckets", "measures", "title"], generateBucketTitleId("measures", "bar"));
         set(expectedUiconfig, ["buckets", "view", "title"], generateBucketTitleId("view", "bar"));
@@ -570,13 +571,13 @@ describe("Bucket title", () => {
     it("should not create bucket titles for disabled buckets", () => {
         const visualizationType = VisualizationTypes.PIE;
         const intl = createInternalIntl(DEFAULT_LANGUAGE, messages);
-        const expectedUiconfig: IUiConfig = cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
+        const expectedUiconfig: IUiConfig = _cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
 
         set(expectedUiconfig, ["buckets", "measures", "title"], "Metrics");
         set(expectedUiconfig, ["buckets", "view", "title"], "View by");
         set(expectedUiconfig, ["buckets", "stack", "enabled"], false);
 
-        const uiConfigWithDisabledBucket: IUiConfig = cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
+        const uiConfigWithDisabledBucket: IUiConfig = _cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
         set(uiConfigWithDisabledBucket, ["buckets", "stack", "enabled"], false);
 
         const referencePoint: IExtendedReferencePoint = {
@@ -591,7 +592,7 @@ describe("Bucket title", () => {
 
 describe("getAllAttributeItemsWithPreference", () => {
     it("should return all attributes with prefered first", () => {
-        const buckets = cloneDeep(wrongBucketsOrderReferencePoint).buckets;
+        const buckets = _cloneDeep(wrongBucketsOrderReferencePoint).buckets;
         expect(getAllAttributeItemsWithPreference(buckets, ["view", "stack"])).toEqual([
             {
                 localIdentifier: "a1",
@@ -617,7 +618,7 @@ describe("getAllAttributeItemsWithPreference", () => {
 
 describe("getAttributeItems", () => {
     it("should return all attributes", () => {
-        const buckets = cloneDeep(bucketsJustStackReferencePoint).buckets;
+        const buckets = _cloneDeep(bucketsJustStackReferencePoint).buckets;
         expect(getAttributeItems(buckets)).toEqual([
             {
                 localIdentifier: "a2",
@@ -634,7 +635,7 @@ describe("getAttributeItems", () => {
 
 describe("getBucketItemsWithExcludeByType", () => {
     it("should return all measures when exclude is empty", () => {
-        const buckets = cloneDeep(twoMeasureBucketsReferencePoint).buckets;
+        const buckets = _cloneDeep(twoMeasureBucketsReferencePoint).buckets;
         expect(getBucketItemsWithExcludeByType(buckets, [], ["metric"])).toEqual([
             {
                 localIdentifier: "m1",
@@ -672,7 +673,7 @@ describe("getBucketItemsWithExcludeByType", () => {
     });
 
     it("should return measures only from secondary measure bucket", () => {
-        const buckets = cloneDeep(twoMeasureBucketsReferencePoint).buckets;
+        const buckets = _cloneDeep(twoMeasureBucketsReferencePoint).buckets;
         expect(getBucketItemsWithExcludeByType(buckets, ["measures"], ["metric"])).toEqual([
             {
                 localIdentifier: "m3",
@@ -694,7 +695,7 @@ describe("getBucketItemsWithExcludeByType", () => {
     });
 
     it("should return no attributes because viewBy is excluded", () => {
-        const buckets = cloneDeep(twoMeasureBucketsReferencePoint).buckets;
+        const buckets = _cloneDeep(twoMeasureBucketsReferencePoint).buckets;
         expect(getBucketItemsWithExcludeByType(buckets, ["view"], ["attribute"])).toEqual([]);
     });
 });
@@ -1299,13 +1300,13 @@ describe("filterOutIncompatibleArithmeticMeasures", () => {
 
 describe("applyUiConfig", () => {
     it("should apply itemsLimit=0", () => {
-        const buckets = cloneDeep(multipleMetricsAndCategoriesReferencePoint).buckets;
+        const buckets = _cloneDeep(multipleMetricsAndCategoriesReferencePoint).buckets;
 
-        const uiConfig = cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
+        const uiConfig = _cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
         uiConfig.buckets[BucketNames.MEASURES].itemsLimit = 0;
         uiConfig.buckets[BucketNames.VIEW].itemsLimit = 0;
 
-        const expectedBuckets = cloneDeep(multipleMetricsAndCategoriesReferencePoint).buckets;
+        const expectedBuckets = _cloneDeep(multipleMetricsAndCategoriesReferencePoint).buckets;
         expectedBuckets[0].items = [];
         expectedBuckets[1].items = [];
 
@@ -1318,13 +1319,13 @@ describe("applyUiConfig", () => {
     });
 
     it("should apply itemsLimit=1", () => {
-        const buckets = cloneDeep(multipleMetricsAndCategoriesReferencePoint).buckets;
+        const buckets = _cloneDeep(multipleMetricsAndCategoriesReferencePoint).buckets;
 
-        const uiConfig = cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
+        const uiConfig = _cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
         uiConfig.buckets[BucketNames.MEASURES].itemsLimit = 1;
         uiConfig.buckets[BucketNames.VIEW].itemsLimit = 1;
 
-        const expectedBuckets = cloneDeep(multipleMetricsAndCategoriesReferencePoint).buckets;
+        const expectedBuckets = _cloneDeep(multipleMetricsAndCategoriesReferencePoint).buckets;
         expectedBuckets[0].items = expectedBuckets[0].items.slice(0, 1);
         expectedBuckets[1].items = expectedBuckets[1].items.slice(0, 1);
 
@@ -1337,13 +1338,13 @@ describe("applyUiConfig", () => {
     });
 
     it("should NOT count derived items to itemsLimit", () => {
-        const buckets = cloneDeep(measureWithDerivedAsFirstRefPoint).buckets;
+        const buckets = _cloneDeep(measureWithDerivedAsFirstRefPoint).buckets;
 
-        const uiConfig = cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
+        const uiConfig = _cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
         uiConfig.buckets[BucketNames.MEASURES].itemsLimit = 1;
         uiConfig.buckets[BucketNames.VIEW].itemsLimit = 1;
 
-        const expectedBuckets = cloneDeep(measureWithDerivedAsFirstRefPoint).buckets;
+        const expectedBuckets = _cloneDeep(measureWithDerivedAsFirstRefPoint).buckets;
 
         const referencePoint: IExtendedReferencePoint = {
             buckets,
@@ -1354,13 +1355,13 @@ describe("applyUiConfig", () => {
     });
 
     it("should handle undefined itemsLimit", () => {
-        const buckets = cloneDeep(multipleMetricsAndCategoriesReferencePoint).buckets;
+        const buckets = _cloneDeep(multipleMetricsAndCategoriesReferencePoint).buckets;
 
-        const uiConfig = cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
+        const uiConfig = _cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
         uiConfig.buckets[BucketNames.MEASURES].itemsLimit = undefined;
         uiConfig.buckets[BucketNames.VIEW].itemsLimit = undefined;
 
-        const expectedBuckets = cloneDeep(multipleMetricsAndCategoriesReferencePoint).buckets;
+        const expectedBuckets = _cloneDeep(multipleMetricsAndCategoriesReferencePoint).buckets;
 
         const referencePoint: IExtendedReferencePoint = {
             buckets,

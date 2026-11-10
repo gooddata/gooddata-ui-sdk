@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, compact, negate, set, uniqBy, without } from "lodash-es";
+import { compact, negate, set, uniqBy, without } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import {
@@ -28,7 +28,7 @@ import {
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
 import { isAreaChart, isBulletChart, isComboChart, isLineChart } from "@gooddata/sdk-ui-charts";
-import { _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty } from "@gooddata/util";
 
 import { subtitles, titles } from "../../locales.js";
 import { ATTRIBUTE, BUCKETS, DATE, METRIC, SHOW_ON_SECONDARY_AXIS } from "../constants/bucket.js";
@@ -567,7 +567,7 @@ export function setBucketTitles(
     intl?: IntlShape,
 ): IUiConfig | null | undefined {
     const buckets = referencePoint?.buckets;
-    const updatedUiConfig = cloneDeep(referencePoint?.uiConfig);
+    const updatedUiConfig = _cloneDeep(referencePoint?.uiConfig);
 
     if (!updatedUiConfig) {
         return updatedUiConfig;
@@ -883,7 +883,7 @@ function hasItemsAboveLimit(bucket: IBucketOfFun, itemsLimit: number): boolean {
 
 function applyItemsLimit(bucket: IBucketOfFun, itemsLimit: number | undefined): IBucketOfFun {
     if (itemsLimit !== undefined && hasItemsAboveLimit(bucket, itemsLimit)) {
-        const newBucket = cloneDeep(bucket);
+        const newBucket = _cloneDeep(bucket);
 
         newBucket.items = newBucket.items.slice(0, itemsLimit);
         return newBucket;
@@ -933,7 +933,7 @@ export function getFirstMasterWithDerived(measureItems: IBucketItem[]): IBucketI
 export function removeAllArithmeticMeasuresFromDerived(
     extendedReferencePoint: IExtendedReferencePoint,
 ): IExtendedReferencePoint {
-    const originalBuckets = cloneDeep(extendedReferencePoint.buckets);
+    const originalBuckets = _cloneDeep(extendedReferencePoint.buckets);
     extendedReferencePoint.buckets.forEach((bucket) => {
         bucket.items = filterOutArithmeticMeasuresFromDerived(bucket.items, originalBuckets);
     });
@@ -1331,7 +1331,7 @@ export const getMainRowAttribute = (buckets: IBucketOfFun[]): IBucketItem | unde
 };
 
 export const cloneBucketItem = (item: IBucketItem): IBucketItem => {
-    const clonedItem = cloneDeep(item);
+    const clonedItem = _cloneDeep(item);
     clonedItem.localIdentifier = clonedItem.localIdentifier + "_cloned";
     return clonedItem;
 };

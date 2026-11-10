@@ -1,7 +1,5 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
-
 import {
     type IBaseWidget,
     type IDashboardLayout,
@@ -17,7 +15,7 @@ import {
     isDashboardLayout,
     isWidget,
 } from "@gooddata/sdk-model";
-import { _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty } from "@gooddata/util";
 
 import { type ILayoutItemPath } from "../../types.js";
 
@@ -63,7 +61,7 @@ export function newCustomWidget<TExtra = void>(
     customType: string,
     extras?: TExtra & Partial<IFilterableWidget>,
 ): TExtra & ICustomWidget {
-    const extrasCopy = extras ? cloneDeep(extras) : {};
+    const extrasCopy = extras ? _cloneDeep(extras) : {};
 
     return {
         type: "customWidget",
@@ -205,7 +203,7 @@ export function newDashboardItem<T = ExtendedDashboardWidget>(
     return {
         type: "IDashboardLayoutItem",
         size,
-        widget: cloneDeep(widget),
+        widget: _cloneDeep(widget),
     };
 }
 
@@ -243,7 +241,7 @@ export function newDashboardSection<T extends ReadonlyArray<ExtendedDashboardIte
     ...items: T
 ): IDashboardLayoutSection<ExtendedDashboardItemTypes<T>> {
     const header = getOrCreateSectionHeader(titleOrHeader);
-    const itemsClone = cloneDeep(items) as any;
+    const itemsClone = _cloneDeep(items) as any;
 
     return {
         type: "IDashboardLayoutSection",

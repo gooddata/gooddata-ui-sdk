@@ -1,9 +1,10 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 
 import { type IInsightDefinition } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+import { _cloneDeep } from "@gooddata/util";
 
 import { BUCKETS } from "../../../constants/bucket.js";
 import { SCATTERPLOT_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
@@ -70,8 +71,8 @@ export class PluggableScatterPlot extends PluggableBaseChart {
     public override getExtendedReferencePoint(
         referencePoint: IReferencePoint,
     ): Promise<IExtendedReferencePoint> {
-        const clonedReferencePoint = cloneDeep(referencePoint);
-        const uiConfig = cloneDeep(DEFAULT_SCATTERPLOT_UICONFIG);
+        const clonedReferencePoint = _cloneDeep(referencePoint);
+        const uiConfig = _cloneDeep(DEFAULT_SCATTERPLOT_UICONFIG);
 
         let newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,

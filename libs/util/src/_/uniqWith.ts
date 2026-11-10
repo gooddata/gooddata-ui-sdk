@@ -1,7 +1,5 @@
 // (C) 2026 GoodData Corporation
 
-/* eslint-disable */
-
 /*!
  * Portions of this file are derived from Lodash.
  * https://github.com/lodash/lodash
@@ -33,24 +31,38 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-/**
- * A specialized version of `baseAggregator` for arrays.
- *
- * @private
- * @param {Array} [array] The array to iterate over.
- * @param {Function} setter The function to set `accumulator` values.
- * @param {Function} iteratee The iteratee to transform keys.
- * @param {Object} accumulator The initial aggregated object.
- * @returns {Function} Returns `accumulator`.
- */
-export function _arrayAggregator(array: any, setter: any, iteratee: any, accumulator: any): any {
-    let index = -1;
-    const length = array == null ? 0 : array.length;
+import { _baseUniq } from "./_baseUniq.js";
+import type { _Comparator, _List } from "./types.js";
 
-    while (++index < length) {
-        const value = array[index];
-        setter(accumulator, value, iteratee(value), array);
+/**
+ * This method is like `_uniq` except that it accepts `comparator` which is invoked to compare elements of
+ * `array`. The order of result values is determined by the order they occur in the array. The comparator
+ * is invoked with two arguments: (arrVal, othVal), the candidate first and then each kept element in order.
+ * Without a function comparator, elements are compared with SameValueZero.
+ *
+ * @param array - The array to inspect.
+ * @param comparator - The comparator invoked per element.
+ * @returns Returns the new duplicate free array.
+ * @internal
+ */
+export function _uniqWith<T>(array: _List<T> | null | undefined, comparator?: _Comparator<T>): T[] {
+    if (!array?.length) {
+        return [];
     }
 
-    return accumulator;
+    if (typeof comparator !== "function") {
+        return _baseUniq(array);
+    }
+
+    const result: T[] = [];
+
+    for (let index = 0; index < array.length; index++) {
+        const value = array[index] as T;
+
+        if (!result.some((kept) => comparator(value, kept))) {
+            result.push(value);
+        }
+    }
+
+    return result;
 }
