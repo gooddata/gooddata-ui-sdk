@@ -440,6 +440,7 @@ const messagesSlice = createSlice({
                 payload,
             }: PayloadAction<{
                 conversationId: string;
+                threadId?: string;
                 item?: IChatConversationItem;
                 content?: IChatConversationLocalContent | IChatConversationErrorContent;
                 assistantMessageId: string;
@@ -542,6 +543,7 @@ const messagesSlice = createSlice({
             }: PayloadAction<{
                 assistantMessageId: string;
                 conversationId: string;
+                threadId?: string;
                 cancelled?: boolean;
                 responseCompleted?: boolean;
             }>,

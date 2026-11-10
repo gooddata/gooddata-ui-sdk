@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { compact, uniqBy } from "lodash-es";
+import { uniqBy } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
@@ -19,6 +19,7 @@ import {
     objRefToString,
     serializeObjRef,
 } from "@gooddata/sdk-model";
+import { _compact } from "@gooddata/util";
 
 import { type CatalogDateAttributeWithDataset } from "../../_staging/catalog/dateAttributeWithDatasetMap.js";
 import {
@@ -147,8 +148,8 @@ function* lookupDatasetsUsedInAttributesAndFilters(
     };
 
     return {
-        usedInAttributes: compact(inAttributes.map(datasetLookup)),
-        usedInAttributeFilters: compact(inFilters.map(datasetLookup)),
+        usedInAttributes: _compact(inAttributes.map(datasetLookup)),
+        usedInAttributeFilters: _compact(inFilters.map(datasetLookup)),
     };
 }
 

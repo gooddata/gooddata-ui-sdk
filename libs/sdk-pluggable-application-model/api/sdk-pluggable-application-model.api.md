@@ -295,6 +295,8 @@ export interface IHostNavigationRequest {
 
 // @alpha
 export interface IHostUiModule {
+    allowedOrganizations?: string[];
+    buildTimestamp?: number;
     // (undocumented)
     mount: HostUiMount;
 }

@@ -1,7 +1,5 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { compact } from "lodash-es";
-
 import {
     type IAbsoluteDateFilter,
     type IAttributeFilterWithSelection,
@@ -24,6 +22,7 @@ import {
     isRelativeBoundedDateFilter,
     isRelativeDateFilter,
 } from "@gooddata/sdk-model";
+import { _compact } from "@gooddata/util";
 
 import {
     type AttributeElements,
@@ -238,5 +237,5 @@ export function convertMeasureFilter(filter: IMeasureFilter): FilterItem | null 
 }
 
 export function convertFilters(filters: IFilter[]): CompatibilityFilter[] {
-    return filters ? compact(filters.map(convertFilter)) : [];
+    return filters ? _compact(filters.map(convertFilter)) : [];
 }

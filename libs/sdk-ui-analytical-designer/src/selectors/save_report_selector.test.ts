@@ -22,6 +22,7 @@ import { withRouteQuery } from "../tests/route.test.helpers.js";
 import { getInitializedState } from "../tests/state.test.helpers.js";
 import { withData, withReport, withRoot } from "../tests/state_builder.test.helpers.js";
 import { visualizationClassMock } from "../tests/visualization_class.test.helpers.js";
+import { type IVisualizationObjectRelativeDateFilter } from "../typings/bear/bearTypes.js";
 import { type IReportContent } from "../typings/report.js";
 import { convertModelInsightToADRep } from "../utils/sdkModelToADRep/InsightConverter.js";
 
@@ -887,6 +888,66 @@ describe("Save selectors", () => {
 
         it("should delete condition property for measure value filters set to all", () => {
             expect(prepareForComparison(measureValueFilterReport)).toMatchSnapshot();
+        });
+
+        describe("date filters of a metric", () => {
+            type IMetricFilter = Omit<
+                IVisualizationObjectRelativeDateFilter["relativeDateFilter"],
+                "dataSet"
+            >;
+            const dataSet = idRef("date_dataset");
+            const withMetricFilter = (filter: IMetricFilter): IReportContent => ({
+                visualizationClass: { uri: LOCAL_TABLE },
+                buckets: [
+                    {
+                        localIdentifier: "measures",
+                        items: [
+                            {
+                                measure: {
+                                    localIdentifier: "m1",
+                                    definition: {
+                                        measureDefinition: {
+                                            item: { uri: "gd/md" },
+                                            filters: [{ relativeDateFilter: { dataSet, ...filter } }],
+                                        },
+                                    },
+                                },
+                            },
+                        ],
+                    },
+                ],
+                filters: [],
+            });
+            const compare = (stored: IMetricFilter, written: IMetricFilter) =>
+                expect(prepareForComparison(withMetricFilter(stored))).toEqual(
+                    prepareForComparison(withMetricFilter(written)),
+                );
+            const allTimeInclude: IMetricFilter = {
+                granularity: "ALL_TIME_GRANULARITY",
+                from: 0,
+                to: 0,
+                emptyValueHandling: "include",
+            };
+
+            it("should compare All time stored with the include default equal to the one AD writes", () => {
+                // AD writes All time without a mode bound-less, which the convertor warns about
+                const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+                compare(allTimeInclude, { granularity: "GDC.time.year" });
+                warn.mockRestore();
+            });
+
+            it("should compare a period stored with the include default equal to the one AD writes", () => {
+                const period = { granularity: "GDC.time.year", from: -30, to: 0 };
+                compare({ ...period, emptyValueHandling: "include" }, period);
+            });
+
+            it("should keep a changed empty values mode", () => {
+                expect(prepareForComparison(withMetricFilter(allTimeInclude))).not.toEqual(
+                    prepareForComparison(
+                        withMetricFilter({ ...allTimeInclude, emptyValueHandling: "exclude" }),
+                    ),
+                );
+            });
         });
     });
 

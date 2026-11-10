@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { compact, omitBy } from "lodash-es";
+import { omitBy } from "lodash-es";
 
 import {
     type IAttribute,
@@ -30,7 +30,7 @@ import {
     insightVisualizationUrl,
     isMeasure,
 } from "@gooddata/sdk-model";
-import { _isEmpty } from "@gooddata/util";
+import { _compact, _isEmpty } from "@gooddata/util";
 
 import {
     type BucketItem,
@@ -90,7 +90,7 @@ export const convertInsightContent = (
 
     const nonEmptyProperties = omitBy(properties, (value, key) => key !== "controls" && _isEmpty(value));
 
-    const filters = compact(
+    const filters = _compact(
         insightFilters(insight).map((filter) =>
             convertExtendedFilter(filter, autoGenerateFilterLocalIdentifier),
         ),

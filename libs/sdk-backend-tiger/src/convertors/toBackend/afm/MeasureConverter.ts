@@ -1,6 +1,5 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { compact } from "lodash-es";
 import { InvariantError } from "ts-invariant";
 
 import {
@@ -31,6 +30,7 @@ import {
     isPoPMeasureDefinition,
     isPreviousPeriodMeasureDefinition,
 } from "@gooddata/sdk-model";
+import { _compact } from "@gooddata/util";
 
 import {
     toAttributeQualifier,
@@ -111,7 +111,7 @@ function convertAggregation(
 
 function convertSimpleMeasureDefinition({ measureDefinition }: IMeasureDefinition): SimpleMeasureDefinition {
     const filters: FilterDefinitionForSimpleMeasure[] = measureDefinition.filters
-        ? (compact(
+        ? (_compact(
               measureDefinition.filters.map((filter) => convertFilter(filter)),
           ) as FilterDefinitionForSimpleMeasure[]) // measureDefinition.filters is IMeasureFilter, it contains only date and attribute filter, equally result contains this subset, it corresponds to type FilterDefinitionForSimpleMeasure
         : [];

@@ -1,7 +1,5 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { compact } from "lodash-es";
-
 import {
     type DateFilterOptionType,
     type IAbsoluteDateFilterPreset,
@@ -12,6 +10,7 @@ import {
     isLowerBound,
     isUpperBound,
 } from "@gooddata/sdk-model";
+import { _compact } from "@gooddata/util";
 
 import {
     type DateFilterOption,
@@ -188,10 +187,10 @@ export function matchDateFilterToDateFilterOption(
 export function flattenDateFilterOptions(dateFilterOptions: IDateFilterOptionsByType): DateFilterOption[] {
     // relativePreset is optional — guard it, or option sets without it (e.g. a static-only picker)
     // crash the whole matching path on Object.values(undefined).
-    const relativePresets = compact(Object.values(dateFilterOptions.relativePreset ?? {})).flat();
+    const relativePresets = _compact(Object.values(dateFilterOptions.relativePreset ?? {})).flat();
     // the order is significant here
     // the first visible filter is selected for new dashboards if none is specified in config
-    return compact([
+    return _compact([
         dateFilterOptions.allTime,
         dateFilterOptions.emptyValues,
         ...(dateFilterOptions.absolutePreset || []),

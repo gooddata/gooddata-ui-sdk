@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { compact, unionBy, uniqBy } from "lodash-es";
+import { unionBy, uniqBy } from "lodash-es";
 
 import {
     type IDashboardExportRawOptions,
@@ -47,7 +47,7 @@ import {
     newDefForItems,
     objRefToString,
 } from "@gooddata/sdk-model";
-import { randomString } from "@gooddata/util";
+import { _compact, randomString } from "@gooddata/util";
 
 import { backend } from "../backend.js";
 import { type Granularity } from "../models/granularity.js";
@@ -752,7 +752,7 @@ export async function getItemCacheItems(insight: IInsight, state: IAppState) {
         ),
     );
     const accumulator: ICatalogEntries = {};
-    const dateAttrs = compact(dateAttrMatches).reduce((acc, curr) => {
+    const dateAttrs = _compact(dateAttrMatches).reduce((acc, curr) => {
         acc[curr.attribute.id] = catalogDateAttributeToDateAttribute(curr);
         return acc;
     }, accumulator);

@@ -1,10 +1,9 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { compact } from "lodash-es";
-
 import { type IResultAttributeHeader } from "@gooddata/sdk-model";
 import { type DataViewFacade, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { type IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
+import { _compact } from "@gooddata/util";
 
 import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { type ISeriesItem, type ISeriesNodeItem } from "../../typings/unsafe.js";
@@ -27,7 +26,7 @@ const createNodeKeyGetter = (
     attributeHeaders: (IUnwrappedAttributeHeadersWithItems | undefined | null)[],
 ): NodeKeyGetter => {
     const itemsWithNumberFormat = new Set(
-        compact(attributeHeaders)
+        _compact(attributeHeaders)
             .filter((attribute) => attribute.numberFormat)
             .flatMap((attribute) => attribute.items),
     );
@@ -74,7 +73,7 @@ const buildData = (
     emptyHeaderTitle: string,
     getNodeKey: NodeKeyGetter,
 ) => {
-    const [from, to] = compact(attributeHeaders);
+    const [from, to] = _compact(attributeHeaders);
     const isExistingAttributeHeader = from || to;
 
     if (!isExistingAttributeHeader) {

@@ -1,0 +1,20 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-gen-ai: Dashboard links use persistent backend conversation IDs in their URLs so they reopen the originating conversation after reload. LinkHandlerEvent.conversationId remains the local conversation ID; dashboard and Publisher link events provide the backend ID separately in the new optional threadId field, also forwarded by web components. Publisher URLs continue to use the backend ID.",
+            "type": "none"
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-gen-ai: Preserve local conversation IDs and cached conversation data when chat refresh selects the latest conversation.",
+            "type": "none"
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-gen-ai: Preserve backend thread IDs in streaming and completion events when conversation metadata is refreshed.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

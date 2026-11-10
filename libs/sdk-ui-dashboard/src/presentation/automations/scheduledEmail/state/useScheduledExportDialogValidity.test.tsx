@@ -49,6 +49,8 @@ import {
     DATA_FIXTURE,
     DRAFT_FIXTURE,
     SCHEDULED_EMAIL_DIALOG_CONTEXT,
+    SENTINEL_INSIGHT,
+    SENTINEL_WIDGET,
 } from "../tests/scheduledEmail.test.helpers.js";
 
 import { ScheduledExportDataContextProvider } from "./ScheduledExportDataContext.js";
@@ -110,8 +112,24 @@ describe("useScheduledExportDialogValidity", () => {
             scheduledExportToEdit,
             notificationChannels: SCHEDULED_EMAIL_DIALOG_CONTEXT.notificationChannels,
             maxAutomationsRecipients: AUTOMATIONS_CONTEXT.maxAutomationsRecipients,
+            isWidgetInsightUnavailable: false,
         });
     });
+
+    it.each([
+        { widget: SENTINEL_WIDGET, insight: undefined, expected: true },
+        { widget: SENTINEL_WIDGET, insight: SENTINEL_INSIGHT, expected: false },
+        { widget: undefined, insight: undefined, expected: false },
+    ])(
+        "derives isWidgetInsightUnavailable=$expected from the dialog's widget and insight",
+        ({ widget, insight, expected }) => {
+            renderValidityHook({ widget, insight });
+
+            expect(mockUseScheduledEmailFormValidity).toHaveBeenCalledWith(
+                expect.objectContaining({ isWidgetInsightUnavailable: expected }),
+            );
+        },
+    );
 
     it("reads maxAutomationsRecipients from the automations context rather than a prop", () => {
         renderValidityHook({}, { maxAutomationsRecipients: 42 });

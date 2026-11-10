@@ -17,9 +17,10 @@ export type ApplicationScope = "workspace" | "organization";
 
 /**
  * `application` is a pluggable application with a route and a menu item. `headless` is a module without
- * UI that the host mounts once per page, for example a telemetry provider.
+ * UI that the host mounts once per page, for example a telemetry provider. `host-ui` replaces the
+ * default host chrome (header, navigation and layout), registered as `uiModule` of the registry.
  */
-export type ModuleKind = "application" | "headless";
+export type ModuleKind = "application" | "headless" | "host-ui";
 
 /**
  * Template subtree that the engine copies from `source` (a key of `templateSubtreeRoots`, or a
@@ -63,8 +64,8 @@ export interface IScaffoldAnswers {
     /** Default is `application`. */
     kind?: ModuleKind;
     /**
-     * A headless module has no scope. The engine does not ask for it, sets `organization`, and no
-     * headless template reads it.
+     * Headless and host UI modules have no scope. The engine does not ask for it, sets `organization`,
+     * and no template of these kinds reads it.
      */
     scope: ApplicationScope;
     /** Owner contact for the new app — required for every profile. Preferably an email. */

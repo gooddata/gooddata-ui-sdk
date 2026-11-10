@@ -1102,6 +1102,7 @@ export type LinkHandlerEvent = {
     itemUrl: string;
     preventDefault: () => void;
     conversationId?: string;
+    threadId?: string;
     section?: "ai";
     action: "copy" | "open";
     dashboard?: IDashboard;

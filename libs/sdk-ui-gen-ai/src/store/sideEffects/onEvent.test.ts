@@ -230,6 +230,7 @@ describe("clarification question events", () => {
                 content: clarificationMessage.content as IChatConversationLocalContent,
                 interactionId: clarificationMessage.id,
                 conversationId: "thread-id",
+                threadId: "thread-id",
             }),
         ).toPromise();
         await runSaga(
@@ -246,6 +247,7 @@ describe("clarification question events", () => {
             evaluateMessageCompleteAction({
                 assistantMessageId: clarificationMessage.localId,
                 conversationId: "thread-id",
+                threadId: "thread-id",
             }),
         ).toPromise();
 
@@ -308,6 +310,67 @@ describe("clarification question events", () => {
 });
 
 describe("assistant message events", () => {
+    describe.each(["skills", "clarification", "completion", "cancellation"] as const)(
+        "%s conversation identity",
+        (kind) => {
+            it.each(["origin-thread", undefined])(
+                "does not substitute a local ID when metadata is missing (threadId: %s)",
+                async (threadId) => {
+                    const dispatch = vi.fn<(event: ChatEvent) => void>();
+                    const message =
+                        kind === "skills"
+                            ? ({
+                                  ...clarificationMessage,
+                                  content: {
+                                      type: "skillsActivated",
+                                      skills: [{ name: "dashboard_builder", title: "Build dashboard" }],
+                                  },
+                              } as IChatConversationLocalItem)
+                            : clarificationMessage;
+                    const options = {
+                        context: { eventDispatcher: { dispatch } },
+                        getState: () => ({
+                            messages: [],
+                            threadId: "unrelated-thread",
+                            conversations: [{ id: "unrelated-thread", localId: "other-conversation" }],
+                            messagesByConversation: { "local-conversation": [message] },
+                        }),
+                    };
+                    const payload = {
+                        assistantMessageId: message.localId,
+                        conversationId: "local-conversation",
+                        threadId,
+                    };
+
+                    if (kind === "skills" || kind === "clarification") {
+                        await runSaga(
+                            options,
+                            onEvaluateMessageStreaming,
+                            evaluateMessageStreamingAction(payload),
+                        ).toPromise();
+                    } else {
+                        await runSaga(
+                            options,
+                            onEvaluateMessageComplete,
+                            evaluateMessageCompleteAction({ ...payload, cancelled: kind === "cancellation" }),
+                        ).toPromise();
+                    }
+
+                    expect(dispatch).toHaveBeenCalledExactlyOnceWith(
+                        expect.objectContaining({
+                            type:
+                                kind === "clarification"
+                                    ? "chatClarificationQuestions"
+                                    : "chatAssistantMessage",
+                            interactionId: message.id,
+                            threadId,
+                        }),
+                    );
+                },
+            );
+        },
+    );
+
     it.each(["dashboard_builder", "dashboard_editor"] as const)(
         "reports %s activation while the skill item is still streaming",
         async (name) => {
@@ -524,6 +587,7 @@ describe("assistant message events", () => {
             evaluateMessageCompleteAction({
                 assistantMessageId: skillActivatedMessage.localId,
                 conversationId: "thread-id",
+                threadId: "thread-id",
             }),
         ).toPromise();
 

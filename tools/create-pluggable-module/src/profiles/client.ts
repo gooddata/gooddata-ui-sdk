@@ -100,17 +100,13 @@ export const clientProfile: IScaffoldProfile = {
     },
 
     templateSubtrees: ["module", "harness"],
-    supportedKinds: ["application", "headless"],
+    supportedKinds: ["application", "headless", "host-ui"],
     templateSubtreesForKind(kind) {
-        return kind === "headless"
-            ? [
-                  { source: "headless-module", dest: "module" },
-                  { source: "headless-harness", dest: "harness" },
-              ]
-            : [
-                  { source: "module", dest: "module" },
-                  { source: "harness", dest: "harness" },
-              ];
+        const prefix = kind === "application" ? "" : `${kind}-`;
+        return [
+            { source: `${prefix}module`, dest: "module" },
+            { source: `${prefix}harness`, dest: "harness" },
+        ];
     },
 
     derive(answers: IScaffoldAnswers, repo: IRepoInfo): IDerivedValues {
@@ -132,6 +128,9 @@ export const clientProfile: IScaffoldProfile = {
         // Order matters: longer tokens (containing shorter ones as substring)
         // MUST come first. `gdc-app-template-module` before `gdc-app-template`.
         return [
+            ["gdc-host-ui-template-name-module", `${answers.appName}-module`],
+            ["gdc-host-ui-template-name-harness", `${answers.appName}-harness`],
+            ["gdc-host-ui-template-name", answers.appName],
             ["gdc-headless-template-name-module", `${answers.appName}-module`],
             ["gdc-headless-template-name-harness", `${answers.appName}-harness`],
             ["gdc-headless-template-name", answers.appName],
@@ -218,6 +217,8 @@ export const clientProfile: IScaffoldProfile = {
         const ok = runCommand(command, args, ctx.repoRoot);
         if (ctx.answers.kind === "headless") {
             printHeadlessNextSteps(ctx, command, args, ok);
+        } else if (ctx.answers.kind === "host-ui") {
+            printHostUiNextSteps(ctx, command, args, ok);
         } else {
             printClientNextSteps(ctx, command, args, ok);
         }
@@ -323,6 +324,46 @@ ${numbered}
     - ID:              ${answers.appName}
     - Federation name: ${derived.federationName}
     - Exposed module:  ./headlessModule
+    - Dev default:     https://localhost:${derived.moduleDevPort}/remoteEntry.js
+`);
+}
+
+function printHostUiNextSteps(
+    ctx: IProfileContext,
+    installCmd: string,
+    installArgs: readonly string[],
+    installOk: boolean,
+): void {
+    const { answers, derived, destRoot, repoRoot } = ctx;
+    const relativeDest = destRoot.startsWith(repoRoot)
+        ? destRoot.slice(repoRoot.length).replace(/^[\\/]/, "")
+        : destRoot;
+
+    const nextSteps: string[] = [];
+    if (!installOk) nextSteps.push(`${installCmd} ${installArgs.join(" ")}`);
+    nextSteps.push(`cd ${relativeDest}/harness`);
+    nextSteps.push("# Harness: the real host runtime with your UI module in place of the default chrome:");
+    nextSteps.push("cp .env.template .env   # and set BACKEND_URL and TIGER_API_TOKEN");
+    nextSteps.push("npm run dev");
+    nextSteps.push(`# Build for deployment (see ${relativeDest}/module/README.md for the registry entry):`);
+    nextSteps.push("cd ../module && cp .env.template .env && npm run dist");
+
+    const numbered = nextSteps.map((step, i) => `    ${i + 1}. ${step}`).join("\n");
+    const header = installOk
+        ? "Done! Your new host UI module has been scaffolded and dependencies installed."
+        : "Your new host UI module has been scaffolded, but the dependency install failed — re-run it before continuing.";
+
+    console.log(`
+  ${header}
+
+  Next steps:
+${numbered}
+
+  Summary:
+    - ID:              ${answers.appName}
+    - Federation name: ${derived.federationName}
+    - Exposed module:  ./hostUiModule
+    - Registry key:    uiModule
     - Dev default:     https://localhost:${derived.moduleDevPort}/remoteEntry.js
 `);
 }

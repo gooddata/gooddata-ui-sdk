@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { compact, omitBy, set, tail } from "lodash-es";
+import { omitBy, set, tail } from "lodash-es";
 
 import { type IBackendCapabilities, type IDataView, type IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
@@ -22,7 +22,7 @@ import {
     updateOutliersWithSettings,
 } from "@gooddata/sdk-ui-charts";
 import { buildTooltipExecutionFromConfig } from "@gooddata/sdk-ui-vis-commons";
-import { _cloneDeep, _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _compact, _isEmpty } from "@gooddata/util";
 
 import { messages } from "../../../../locales.js";
 import { BUCKETS } from "../../../constants/bucket.js";
@@ -409,7 +409,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         const { config = {}, customVisualizationConfig = {}, a11yTitle, a11yDescription } = options;
         const colorMapping: IColorMappingItem[] = supportedControls?.["colorMapping"];
 
-        const validColorMapping = compact(colorMapping).map((mapItem): IColorMapping => ({
+        const validColorMapping = _compact(colorMapping).map((mapItem): IColorMapping => ({
             predicate: ColorUtils.getColorMappingPredicate(mapItem.id),
             color: mapItem.color,
         }));

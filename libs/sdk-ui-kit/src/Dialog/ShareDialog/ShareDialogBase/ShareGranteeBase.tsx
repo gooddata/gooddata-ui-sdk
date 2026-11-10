@@ -2,8 +2,9 @@
 
 import { useMemo } from "react";
 
-import { compact } from "lodash-es";
 import { useIntl } from "react-intl";
+
+import { _compact } from "@gooddata/util";
 
 import { ConfirmDialogBase } from "../../ConfirmDialogBase.js";
 import { ContentDivider } from "../../ContentDivider.js";
@@ -56,7 +57,7 @@ export function ShareGranteeBase({
     const intl = useIntl();
 
     const granteeList = useMemo(() => {
-        return compact([owner, ...grantees]);
+        return _compact([owner, ...grantees]);
     }, [grantees, owner]);
 
     const isUsingTabs = window.location.hash.includes("/tab/");

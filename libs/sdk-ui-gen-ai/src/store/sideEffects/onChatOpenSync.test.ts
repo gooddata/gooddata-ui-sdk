@@ -1,10 +1,15 @@
 // (C) 2026 GoodData Corporation
 
-import { type PayloadAction } from "@reduxjs/toolkit";
-import { describe, expect, it } from "vitest";
+import { type PayloadAction, type UnknownAction, configureStore } from "@reduxjs/toolkit";
+import { runSaga } from "redux-saga";
+import { describe, expect, it, vi } from "vitest";
 
-import { type IChatConversationLocal } from "../../model.js";
+import { type IChatConversationItem } from "@gooddata/sdk-backend-spi";
+import { type IDashboard } from "@gooddata/sdk-model";
+
+import { type IChatConversationLocal, makeConversationItem } from "../../model.js";
 import { settingsSelector } from "../chatWindow/chatWindowSelectors.js";
+import { chatWindowSliceReducer, onDefinitionReceivedAction } from "../chatWindow/chatWindowSlice.js";
 import {
     asyncProcessSelector,
     conversationMessagesSelector,
@@ -12,6 +17,9 @@ import {
     loadedSelector,
 } from "../messages/messagesSelectors.js";
 import {
+    activateConversationAction,
+    loadConversationsSuccessAction,
+    messagesSliceReducer,
     setCurrentConversationAction,
     setMessagesAction,
     startNewConversationAction,
@@ -83,6 +91,144 @@ const conv = (id: string, localId = id): IChatConversationLocal =>
 const AGENTIC_SETTINGS = { enableAiAgenticConversations: true };
 
 describe("onChatOpenSync", () => {
+    it.each(["server-id", "temporary-id"])(
+        "keeps an explicitly activated conversation with local ID %s instead of the latest one",
+        async (localId) => {
+            const requested = conv("server-id", localId);
+            const latest = { ...conv("newer-conversation"), updatedAt: "2026-02-01T00:00:00.000Z" };
+            const store = configureStore({
+                reducer: { messages: messagesSliceReducer, chatWindow: chatWindowSliceReducer },
+            });
+            store.dispatch(loadConversationsSuccessAction({ conversations: [requested, latest] }));
+            store.dispatch(activateConversationAction({ conversationId: requested.id }));
+            store.dispatch(setMessagesAction({ items: [] }));
+            const loadHistory = vi.fn(async () => []);
+            const getConversationThread = vi.fn(() => ({ loadHistory }));
+            const query = {
+                withSize: () => query,
+                withPage: () => query,
+                query: async () => ({ items: [{ ...requested, localId: requested.id }, latest] }),
+            };
+            const backend = {
+                workspace: () => ({
+                    genAI: () => ({
+                        getChatConversations: () => ({
+                            getConversationItemsQuery: () => query,
+                            getConversationThread,
+                        }),
+                    }),
+                }),
+            };
+
+            await runSaga(
+                {
+                    context: { backend, workspace: "workspace-1" },
+                    dispatch: (action) => store.dispatch(action as UnknownAction),
+                    getState: store.getState,
+                },
+                onChatOpenSync,
+                { type: "open", payload: { isOpen: true } },
+            ).toPromise();
+
+            expect(getConversationThread).toHaveBeenCalledExactlyOnceWith(requested.id);
+            expect(loadHistory).toHaveBeenCalledOnce();
+            expect(store.getState().messages.currentConversation).toEqual(requested);
+        },
+    );
+
+    it("preserves the latest conversation's runtime local ID when current is absent from the fetched page", async () => {
+        const current = conv("current-conversation");
+        const latest = conv("T", "L");
+        const item: IChatConversationItem = {
+            id: "dashboard-item",
+            type: "item",
+            role: "assistant",
+            createdAt: 1,
+            responseId: "dashboard-response",
+            content: {
+                type: "multipart",
+                parts: [
+                    {
+                        type: "dashboard",
+                        dashboard: { identifier: "draft-dashboard" } as IDashboard,
+                        insights: null,
+                    },
+                ],
+            },
+        };
+        const store = configureStore({
+            reducer: { messages: messagesSliceReducer, chatWindow: chatWindowSliceReducer },
+        });
+        store.dispatch(loadConversationsSuccessAction({ conversations: [current, latest] }));
+        store.dispatch(setCurrentConversationAction({ conversation: latest }));
+        store.dispatch(setMessagesAction({ items: [makeConversationItem(item)] }));
+        store.dispatch(setCurrentConversationAction({ conversation: current }));
+        store.dispatch(setMessagesAction({ items: [] }));
+        const loadHistory = vi.fn(async () => [item]);
+        const getConversationThread = vi.fn(() => ({ loadHistory }));
+        const query = {
+            withSize: () => query,
+            withPage: () => query,
+            query: async () => ({ items: [{ ...latest, localId: latest.id }] }),
+        };
+        const backend = {
+            workspace: () => ({
+                genAI: () => ({
+                    getChatConversations: () => ({
+                        getConversationItemsQuery: () => query,
+                        getConversationThread,
+                    }),
+                }),
+            }),
+        };
+        const dispatch = vi.fn((action: UnknownAction) => store.dispatch(action));
+
+        await runSaga(
+            {
+                context: { backend, workspace: "workspace-1" },
+                dispatch,
+                getState: store.getState,
+            },
+            onChatOpenSync,
+            { type: "open", payload: { isOpen: true } },
+        ).toPromise();
+
+        const state = store.getState().messages;
+        expect(getConversationThread).toHaveBeenCalledExactlyOnceWith(latest.id);
+        expect(state.currentConversation).toEqual(latest);
+        expect(state.conversations).toEqual([latest]);
+        expect(state.conversationsData).not.toHaveProperty(latest.id);
+        const data = state.conversationsData[latest.localId];
+        expect(data.order).toHaveLength(1);
+        expect(data.items[data.order[0]]).toMatchObject({ id: item.id, responseId: item.responseId });
+        expect(dispatch).toHaveBeenCalledWith(
+            onDefinitionReceivedAction({
+                conversationId: latest.localId,
+                interactionId: item.responseId,
+                itemId: item.id,
+                definitionType: "dashboard",
+                dashboard: { identifier: "draft-dashboard" } as IDashboard,
+                insights: [],
+            }),
+        );
+    });
+
+    it("does not overwrite an explicit conversation selection made during the fetch", () => {
+        const current = conv("conv-a");
+        const puts = runOnChatOpenSync({
+            isOpen: true,
+            callResults: [current, [{ id: "old-item", localId: "old-item" }]],
+            selects: new Map<unknown, unknown[]>([
+                [loadedSelector, [true]],
+                [asyncProcessSelector, [undefined, undefined]],
+                [conversationSelector, [current, conv("requested-conversation")]],
+                [conversationMessagesSelector, [[]]],
+            ]),
+        });
+
+        expect(puts).toHaveLength(0);
+    });
+
     it("syncs to the latest conversation when nothing changed during the fetch", () => {
         const latest = conv("conv-c");
         const puts = runOnChatOpenSync({

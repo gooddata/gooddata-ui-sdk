@@ -3,9 +3,11 @@ Copyright (c) 2017-2026 GoodData Corporation
 This product includes a number of subcomponents with separate copyright notices and license terms below. Your use of these subcomponents is subject to the terms and conditions of the subcomponent's license. This GoodData project does not necessarily use all the open source software referred to below and may also only use portions of a given package. With respect to the open source software listed in this document, if you (i) have any questions, (ii) wish to receive source code for packages under licenses that require their source code to be made available (such as the GNU Lesser Public License), or (iii) discover any errors or omissions in the licensing information provided, please contact us at legal@gooddata.com. Please identify in source code requests: (i) the packages for which you are requesting corresponding source, (ii) the GoodData product (including any available version) with which the package was provided; and (iii) an email address (if available) or postal address at which GoodData may contact you.
 
 --------------------------------------------------------------------------------
-Attribution Notice for @gooddata/sdk-e2e-utils (11.68.0-alpha.7)
+Attribution Notice for @gooddata/sdk-e2e-utils (11.68.0-alpha.8)
 Package License: MIT
 Own License File: LICENSE
+Date generated: 2026-11-10
+Revision ID: dde1512be72244df8ad5c996c9bce5ff623b3b50
 
 This notice lists the components that @gooddata/sdk-e2e-utils depends on, directly or through other
 packages, with the license and copyright information reported for each of them.
@@ -245,7 +247,8 @@ Apache-2.0
 
 * Copyrights *
 Apache-2.0
-- Copyright (c)  Microsoft Corporation.
+- Copyright (c) Microsoft Corporation.
+- Copyright (c) 2017 Google Inc.
 
 * Package Info *
 
@@ -716,17 +719,183 @@ Creative Commons may be contacted at creativecommons.org.
 
 * Copyrights *
 MIT
-- Copyright (c)  Meta Platforms, Inc. and affiliates.
+- Copyright (c) Meta Platforms, Inc. and affiliates.
+- Copyright (c) Facebook, Inc. and its affiliates.
+- Copyright (c) 2014 present Sebastian McKenzie and other contributors
+- Copyright (c) Contributors to the Jest project.
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) 2016 Thomas Watson Steen
+- Copyright (c) 2011-2016 Heather Arthur <fayearthur@gmail.com>
+- Copyright (c) 2015 Dmitry Ivanov
+- Copyright (c) 2011-2022 Isaac Z. Schlueter, Ben Noordhuis, and Contributors
+- Copyright (c) 2014, 2015, 2016, 2017, 2018 Simon Lydell
+- Copyright (c) 2021-2024 Oleksii Raspopov, Kostiantyn Denysov, Anton Verinov
+- Copyright (c) 2017 present, Jon Schlinkert.
+- Copyright (c) 2016-2022 Isaac Z. Schlueter <i@izs.me>, James Talmage <james@talmage.io> (github.com/jamestalmage), and Contributors
+- Copyright (c) 2014 present, Facebook, Inc. (ONLY ./src/helpers/regenerator* files)
+- Copyright (c) 2012-2014 by various contributors (see AUTHORS)
+- Copyright (c) 2024 Justin Ridgewell <justin@ridgewell.name>
+- Copyright (c) 2019 Justin Ridgewell <jridgewell@google.com>
+- Copyright (c) 2014 Andrey Sitnik <andrey@sitnik.es> and other contributors
+- Copyright (c) and certain other rights. Our licenses are
+- Copyright (c) More considerations for licensors:
+- Copyright (c) then that use is not regulated by the license. Our
+- Copyright (c) and certain
+- Copyright (c) and Similar
+- Copyright (c) and Similar Rights held by the
+- Copyright (c) and Similar Rights means copyright and/or similar rights
+- Copyright (c) and/or similar rights
+- Copyright (c) and Similar Rights
+- Copyright (c) and Similar Rights that apply to Your use of the
+- Copyright (c) and Similar Rights.
+- Copyright (c) and
+- Copyright (c) 2013 Thorsten Lorenz.
+- Copyright (c) 2014-2017 TJ Holowaychuk <tj@vision-media.ca>
+- Copyright (c) 2018-2021 Josh Junon
+- Copyright (c) 2018 Kilian Valkhof
+- Copyright (c) 2018 Logan Smyth <loganfsmyth@gmail.com>
+- Copyright (c) Mathias Bynens <https://mathiasbynens.be/>
+- Copyright (c) 2012-2018 Aseem Kishore, and [others].
+- Copyright (c) Isaac Z. Schlueter and Contributors
+- Copyright (c) 2020 Vercel, Inc.
+- Copyright (c) 2017 Sergey Rubanov (https://github.com/chicoxyzzy)
+- Copyright (c) Julian Gruber <julian@juliangruber.com>
+- Copyright (c) Isaac Z. Schlueter <i@izs.me>
+- Copyright (c) 2016, 2018 Linus Unnebäck
+- Copyright (c) 2023 Robert Kieffer
+- Copyright (c) 2014 Evan Wallace
+- Copyright (c) 2009-2011 Mozilla Foundation and contributors
 BSD-3-Clause
-- Copyright (c)  Julian Gruber <julian@juliangruber.com>
+- Copyright (c) Julian Gruber <julian@juliangruber.com>
+- Copyright (c) Isaac Z. Schlueter <i@izs.me>
+- Copyright (c) 2016, 2018 Linus Unnebäck
+- Copyright (c) 2014-2017 TJ Holowaychuk <tj@vision-media.ca>
+- Copyright (c) 2018-2021 Josh Junon
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) 2012-2018 Aseem Kishore, and [others].
+- Copyright (c) 2023 Robert Kieffer
+- Copyright (c) 2020 Vercel, Inc.
+- Copyright (c) 2014 Evan Wallace
+- Copyright (c) 2009-2011 Mozilla Foundation and contributors
 blueoak-1.0.0
-- Copyright (c)  Julian Gruber <julian@juliangruber.com>
+- Copyright (c) Julian Gruber <julian@juliangruber.com>
+- Copyright (c) Isaac Z. Schlueter <i@izs.me>
+- Copyright (c) 2016, 2018 Linus Unnebäck
+- Copyright (c) 2014-2017 TJ Holowaychuk <tj@vision-media.ca>
+- Copyright (c) 2018-2021 Josh Junon
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) 2012-2018 Aseem Kishore, and [others].
+- Copyright (c) 2023 Robert Kieffer
+- Copyright (c) 2020 Vercel, Inc.
+- Copyright (c) 2014 Evan Wallace
+- Copyright (c) 2009-2011 Mozilla Foundation and contributors
 Apache-2.0
-- Copyright (c)  Microsoft Corporation.
+- Copyright (c) Microsoft Corporation.
+- Copyright (c) 2014 present Sebastian McKenzie and other contributors
+- Copyright (c) 2014 present, Facebook, Inc. (ONLY ./src/helpers/regenerator* files)
+- Copyright (c) 2012-2014 by various contributors (see AUTHORS)
+- Copyright (c) 2024 Justin Ridgewell <justin@ridgewell.name>
+- Copyright (c) 2019 Justin Ridgewell <jridgewell@google.com>
+- Copyright (c) 2014 Andrey Sitnik <andrey@sitnik.es> and other contributors
+- Copyright (c) and certain other rights. Our licenses are
+- Copyright (c) More considerations for licensors:
+- Copyright (c) then that use is not regulated by the license. Our
+- Copyright (c) and certain
+- Copyright (c) and Similar
+- Copyright (c) and Similar Rights held by the
+- Copyright (c) and Similar Rights means copyright and/or similar rights
+- Copyright (c) and/or similar rights
+- Copyright (c) and Similar Rights
+- Copyright (c) and Similar Rights that apply to Your use of the
+- Copyright (c) and Similar Rights.
+- Copyright (c) and
+- Copyright (c) 2013 Thorsten Lorenz.
+- Copyright (c) 2014-2017 TJ Holowaychuk <tj@vision-media.ca>
+- Copyright (c) 2018-2021 Josh Junon
+- Copyright (c) 2018 Kilian Valkhof
+- Copyright (c) 2018 Logan Smyth <loganfsmyth@gmail.com>
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) 2014, 2015, 2016, 2017, 2018 Simon Lydell
+- Copyright (c) Mathias Bynens <https://mathiasbynens.be/>
+- Copyright (c) 2012-2018 Aseem Kishore, and [others].
+- Copyright (c) Isaac Z. Schlueter and Contributors
+- Copyright (c) 2020 Vercel, Inc.
+- Copyright (c) 2017 Sergey Rubanov (https://github.com/chicoxyzzy)
+- Copyright (c) 2021-2024 Oleksii Raspopov, Kostiantyn Denysov, Anton Verinov
+- Copyright (c) 2017 Google Inc.
 ISC
 - Copyright (c) 2014 present Sebastian McKenzie and other contributors
+- Copyright (c) Meta Platforms, Inc. and affiliates.
+- Copyright (c) Contributors to the Jest project.
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) 2016 Thomas Watson Steen
+- Copyright (c) 2011-2016 Heather Arthur <fayearthur@gmail.com>
+- Copyright (c) 2015 Dmitry Ivanov
+- Copyright (c) 2011-2022 Isaac Z. Schlueter, Ben Noordhuis, and Contributors
+- Copyright (c) 2014, 2015, 2016, 2017, 2018 Simon Lydell
+- Copyright (c) 2021-2024 Oleksii Raspopov, Kostiantyn Denysov, Anton Verinov
+- Copyright (c) 2017 present, Jon Schlinkert.
+- Copyright (c) Facebook, Inc. and its affiliates.
+- Copyright (c) 2016-2022 Isaac Z. Schlueter <i@izs.me>, James Talmage <james@talmage.io> (github.com/jamestalmage), and Contributors
+- Copyright (c) 2014 present, Facebook, Inc. (ONLY ./src/helpers/regenerator* files)
+- Copyright (c) 2012-2014 by various contributors (see AUTHORS)
+- Copyright (c) 2024 Justin Ridgewell <justin@ridgewell.name>
+- Copyright (c) 2019 Justin Ridgewell <jridgewell@google.com>
+- Copyright (c) 2014 Andrey Sitnik <andrey@sitnik.es> and other contributors
+- Copyright (c) and certain other rights. Our licenses are
+- Copyright (c) More considerations for licensors:
+- Copyright (c) then that use is not regulated by the license. Our
+- Copyright (c) and certain
+- Copyright (c) and Similar
+- Copyright (c) and Similar Rights held by the
+- Copyright (c) and Similar Rights means copyright and/or similar rights
+- Copyright (c) and/or similar rights
+- Copyright (c) and Similar Rights
+- Copyright (c) and Similar Rights that apply to Your use of the
+- Copyright (c) and Similar Rights.
+- Copyright (c) and
+- Copyright (c) 2013 Thorsten Lorenz.
+- Copyright (c) 2014-2017 TJ Holowaychuk <tj@vision-media.ca>
+- Copyright (c) 2018-2021 Josh Junon
+- Copyright (c) 2018 Kilian Valkhof
+- Copyright (c) 2018 Logan Smyth <loganfsmyth@gmail.com>
+- Copyright (c) Mathias Bynens <https://mathiasbynens.be/>
+- Copyright (c) 2012-2018 Aseem Kishore, and [others].
+- Copyright (c) Isaac Z. Schlueter and Contributors
+- Copyright (c) 2020 Vercel, Inc.
+- Copyright (c) 2017 Sergey Rubanov (https://github.com/chicoxyzzy)
 CC-BY-4.0
 - Copyright (c) 2014 present Sebastian McKenzie and other contributors
+- Copyright (c) 2014 present, Facebook, Inc. (ONLY ./src/helpers/regenerator* files)
+- Copyright (c) 2012-2014 by various contributors (see AUTHORS)
+- Copyright (c) 2024 Justin Ridgewell <justin@ridgewell.name>
+- Copyright (c) 2019 Justin Ridgewell <jridgewell@google.com>
+- Copyright (c) 2014 Andrey Sitnik <andrey@sitnik.es> and other contributors
+- Copyright (c) and certain other rights. Our licenses are
+- Copyright (c) More considerations for licensors:
+- Copyright (c) then that use is not regulated by the license. Our
+- Copyright (c) and certain
+- Copyright (c) and Similar
+- Copyright (c) and Similar Rights held by the
+- Copyright (c) and Similar Rights means copyright and/or similar rights
+- Copyright (c) and/or similar rights
+- Copyright (c) and Similar Rights
+- Copyright (c) and Similar Rights that apply to Your use of the
+- Copyright (c) and Similar Rights.
+- Copyright (c) and
+- Copyright (c) 2013 Thorsten Lorenz.
+- Copyright (c) 2014-2017 TJ Holowaychuk <tj@vision-media.ca>
+- Copyright (c) 2018-2021 Josh Junon
+- Copyright (c) 2018 Kilian Valkhof
+- Copyright (c) 2018 Logan Smyth <loganfsmyth@gmail.com>
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) 2014, 2015, 2016, 2017, 2018 Simon Lydell
+- Copyright (c) Mathias Bynens <https://mathiasbynens.be/>
+- Copyright (c) 2012-2018 Aseem Kishore, and [others].
+- Copyright (c) Isaac Z. Schlueter and Contributors
+- Copyright (c) 2020 Vercel, Inc.
+- Copyright (c) 2017 Sergey Rubanov (https://github.com/chicoxyzzy)
+- Copyright (c) 2021-2024 Oleksii Raspopov, Kostiantyn Denysov, Anton Verinov
 
 * Package Info *
 
@@ -1139,18 +1308,366 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 * Copyrights *
 MIT
 - Copyright (c) 2019 Elan Shanker, Paul Miller (https://paulmillr.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+- Copyright (c) Paul Miller (https://paulmillr.com)
+- Copyright (c) 2014 present, Jon Schlinkert.
+- Copyright (c) 2012-2019 Paul Miller (https://paulmillr.com), Elan Shanker
+- Copyright (c) 2015, 2019 Elan Shanker
+- Copyright (c) 2019 Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com), Paul Miller (https://paulmillr.com)
+- Copyright (c) 2014-2016 Jon Schlinkert
+- Copyright (c) 2014-2017 Jon Schlinkert.
+- Copyright (c) 2014-2018 Jon Schlinkert.
+- Copyright (c) 2017 present, Jon Schlinkert.
+- Copyright (c) 2012-2019 Thorsten Lorenz, Paul Miller (https://paulmillr.com)
+- Copyright (c) 2015 present, Jon Schlinkert.
+- Copyright (c) 2022 present, Yusuke Wada and Hono contributors
+- Copyright (c) 2024 Anthropic, PBC
+- Copyright (c) 2022 Ze-Zheng Wu
+- Copyright (c) 2013 Nathan Rajlich <nathan@tootallnate.net>
+- Copyright (c) 2020 Evgeny Poberezkin
+- Copyright (c) 2015-2021 Evgeny Poberezkin
+- Copyright (c) 2015 present, Brian Woodward.
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) Julian Gruber <julian@juliangruber.com>
+- Copyright (c) Isaac Z. Schlueter <i@izs.me>
+- Copyright (c) 2013-2024 Brian J. Brennan
+- Copyright (c) 2016, 2018 Linus Unnebäck
+- Copyright (c) 2012-2014 TJ Holowaychuk <tj@vision-media.ca>
+- Copyright (c) 2015 Jed Watson <jed.watson@me.com>
+- Copyright (c) Marak Squires
+- Copyright (c) 2011 TJ Holowaychuk <tj@vision-media.ca>
+- Copyright (c) 2015 Douglas Christopher Wilson
+- Copyright (c) 2018 Made With MOXY Lda <hello@moxy.studio>
+- Copyright (c) 2014-2017 TJ Holowaychuk <tj@vision-media.ca>
+- Copyright (c) 2018-2021 Josh Junon
+- Copyright (c) 2009-2015 Kevin Decker <kpdecker@gmail.com>
+- Copyright (c) 2015 Scott Motte
+- Copyright (c) 2016 present, Jon Schlinkert.
+- Copyright (c) 2026 Espen Hovlandsdal <espen@hovlandsdal.com>
+- Copyright (c) EventSource GitHub organisation
+- Copyright (c) 2017 Evgeny Poberezkin
+- Copyright (c) 2011-2021 Gary Court until https://github.com/garycourt/uri-js/commit/a1acf730b4bba3f1097c9f52e7d9d3aba8cdcaae
+- Copyright (c) 2021 present The Fastify team <https://github.com/fastify/fastify#team>
+- Copyright (c) 2011-2022 Isaac Z. Schlueter, Ben Noordhuis, and Contributors
+- Copyright (c) Isaac Z. Schlueter and Contributors
+- Copyright (c) 2011 by Beau Gunderson
+- Copyright (c) 2014 Eugene Ware
+- Copyright (c) 2012-2018 Aseem Kishore, and [others].
+- Copyright (c) 2023 Robert Kieffer
+- Copyright (c) 2020 Vercel, Inc.
+- Copyright (c) 2014 Andrew Kelley
+- Copyright (c) 2019
+- Copyright (c) 2015 Luke Page & Original Contributors
+- Copyright (c) 2012 Kuba Niegowski
+- Copyright (c) 2017 TJ Holowaychuk <tj@vision-media.ca>
+- Copyright (c) 2016-2018 Rob Wu <rob@robwu.nl>
+- Copyright (c) 2011
+- Copyright (c) Kevin Mårtensson <kevinmartensson@gmail.com> (github.com/kevva)
+- Copyright (c) 2015-2023 Benjamin Coe, Isaac Z. Schlueter, and Contributors
+- Copyright (c) 2013-2017 Josh Glazebrook
+- Copyright (c) 2013 Josh Glazebrook
+- Copyright (c) 2014 Evan Wallace
+- Copyright (c) 2009-2011 Mozilla Foundation and contributors
+- Copyright (c) 2011 Einar Otto Stangvik <einaros@gmail.com>
+- Copyright (c) 2013 Arnout Kazemier and contributors
+- Copyright (c) 2016 Luigi Pinca and contributors
+- Copyright (c) Eemeli Aro <eemeli@gmail.com>
+- Copyright (c) 2014 Josh Wolfe
+- Copyright (c) 2020 Stefan Terdell
+- Copyright (c) 2025 Colin McDonnell
+- Copyright (c) 2010 Google Inc. All rights reserved.
+- Copyright (c) 2010-2014 Emscripten authors, see AUTHORS file.
+- Copyright (c) Joyent, Inc. and other Node contributors. All rights reserved.
+- Copyright (c) 2009-2010 Fathi Boudra <fabo@freedesktop.org>
+- Copyright (c) 2009-2016 Rex Dieter <rdieter@fedoraproject.org>
+- Copyright (c) 2006 Kevin Krammer <kevin.krammer@gmx.at>
+- Copyright (c) 2006 Jeremy White <jwhite@codeweavers.com>
 ISC
 - Copyright (c) 2019 Elan Shanker, Paul Miller (https://paulmillr.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+- Copyright (c) Paul Miller (https://paulmillr.com)
+- Copyright (c) 2014 present, Jon Schlinkert.
+- Copyright (c) 2012-2019 Paul Miller (https://paulmillr.com), Elan Shanker
+- Copyright (c) 2015, 2019 Elan Shanker
+- Copyright (c) 2019 Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com), Paul Miller (https://paulmillr.com)
+- Copyright (c) 2014-2016 Jon Schlinkert
+- Copyright (c) 2014-2017 Jon Schlinkert.
+- Copyright (c) 2014-2018 Jon Schlinkert.
+- Copyright (c) 2017 present, Jon Schlinkert.
+- Copyright (c) 2012-2019 Thorsten Lorenz, Paul Miller (https://paulmillr.com)
+- Copyright (c) 2015 present, Jon Schlinkert.
+- Copyright (c) 2022 present, Yusuke Wada and Hono contributors
+- Copyright (c) 2024 Anthropic, PBC
+- Copyright (c) 2022 Ze-Zheng Wu
+- Copyright (c) 2013 Nathan Rajlich <nathan@tootallnate.net>
+- Copyright (c) 2020 Evgeny Poberezkin
+- Copyright (c) 2015-2021 Evgeny Poberezkin
+- Copyright (c) 2015 present, Brian Woodward.
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) Julian Gruber <julian@juliangruber.com>
+- Copyright (c) Isaac Z. Schlueter <i@izs.me>
+- Copyright (c) 2013-2024 Brian J. Brennan
+- Copyright (c) 2016, 2018 Linus Unnebäck
+- Copyright (c) 2012-2014 TJ Holowaychuk <tj@vision-media.ca>
+- Copyright (c) 2015 Jed Watson <jed.watson@me.com>
+- Copyright (c) Marak Squires
+- Copyright (c) 2011 TJ Holowaychuk <tj@vision-media.ca>
+- Copyright (c) 2015 Douglas Christopher Wilson
+- Copyright (c) 2018 Made With MOXY Lda <hello@moxy.studio>
+- Copyright (c) 2014-2017 TJ Holowaychuk <tj@vision-media.ca>
+- Copyright (c) 2018-2021 Josh Junon
+- Copyright (c) 2009-2015 Kevin Decker <kpdecker@gmail.com>
+- Copyright (c) 2015 Scott Motte
+- Copyright (c) 2016 present, Jon Schlinkert.
+- Copyright (c) 2026 Espen Hovlandsdal <espen@hovlandsdal.com>
+- Copyright (c) EventSource GitHub organisation
+- Copyright (c) 2017 Evgeny Poberezkin
+- Copyright (c) 2011-2021 Gary Court until https://github.com/garycourt/uri-js/commit/a1acf730b4bba3f1097c9f52e7d9d3aba8cdcaae
+- Copyright (c) 2021 present The Fastify team <https://github.com/fastify/fastify#team>
+- Copyright (c) 2011-2022 Isaac Z. Schlueter, Ben Noordhuis, and Contributors
+- Copyright (c) Isaac Z. Schlueter and Contributors
+- Copyright (c) 2011 by Beau Gunderson
+- Copyright (c) 2014 Eugene Ware
+- Copyright (c) 2012-2018 Aseem Kishore, and [others].
+- Copyright (c) 2023 Robert Kieffer
+- Copyright (c) 2020 Vercel, Inc.
+- Copyright (c) 2014 Andrew Kelley
+- Copyright (c) 2019
+- Copyright (c) 2015 Luke Page & Original Contributors
+- Copyright (c) 2012 Kuba Niegowski
+- Copyright (c) 2017 TJ Holowaychuk <tj@vision-media.ca>
+- Copyright (c) 2016-2018 Rob Wu <rob@robwu.nl>
+- Copyright (c) 2011
+- Copyright (c) Kevin Mårtensson <kevinmartensson@gmail.com> (github.com/kevva)
+- Copyright (c) 2015-2023 Benjamin Coe, Isaac Z. Schlueter, and Contributors
+- Copyright (c) 2013-2017 Josh Glazebrook
+- Copyright (c) 2013 Josh Glazebrook
+- Copyright (c) 2014 Evan Wallace
+- Copyright (c) 2009-2011 Mozilla Foundation and contributors
+- Copyright (c) 2011 Einar Otto Stangvik <einaros@gmail.com>
+- Copyright (c) 2013 Arnout Kazemier and contributors
+- Copyright (c) 2016 Luigi Pinca and contributors
+- Copyright (c) Eemeli Aro <eemeli@gmail.com>
+- Copyright (c) 2014 Josh Wolfe
+- Copyright (c) 2020 Stefan Terdell
+- Copyright (c) 2025 Colin McDonnell
 Apache-2.0
 - Copyright (c) 2024 Google Inc.
+- Copyright (c) Mi
 BSD-2-Clause
 - Copyright (c) 2022 present, Yusuke Wada and Hono contributors
+- Copyright (c) 2024 Anthropic, PBC
+- Copyright (c) 2022 Ze-Zheng Wu
+- Copyright (c) 2013 Nathan Rajlich <nathan@tootallnate.net>
+- Copyright (c) 2020 Evgeny Poberezkin
+- Copyright (c) 2015-2021 Evgeny Poberezkin
+- Copyright (c) 2015 present, Brian Woodward.
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) 2019 Elan Shanker, Paul Miller (https://paulmillr.com)
+- Copyright (c) Julian Gruber <julian@juliangruber.com>
+- Copyright (c) Isaac Z. Schlueter <i@izs.me>
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+- Copyright (c) Paul Miller (https://paulmillr.com)
+- Copyright (c) 2014 present, Jon Schlinkert.
+- Copyright (c) 2013-2024 Brian J. Brennan
+- Copyright (c) 2016, 2018 Linus Unnebäck
+- Copyright (c) 2012-2014 TJ Holowaychuk <tj@vision-media.ca>
+- Copyright (c) 2015 Jed Watson <jed.watson@me.com>
+- Copyright (c) 2012-2019 Paul Miller (https://paulmillr.com), Elan Shanker
+- Copyright (c) Marak Squires
+- Copyright (c) 2011 TJ Holowaychuk <tj@vision-media.ca>
+- Copyright (c) 2015 Douglas Christopher Wilson
+- Copyright (c) 2018 Made With MOXY Lda <hello@moxy.studio>
+- Copyright (c) 2014-2017 TJ Holowaychuk <tj@vision-media.ca>
+- Copyright (c) 2018-2021 Josh Junon
+- Copyright (c) 2009-2015 Kevin Decker <kpdecker@gmail.com>
+- Copyright (c) 2015 Scott Motte
+- Copyright (c) 2016 present, Jon Schlinkert.
+- Copyright (c) 2026 Espen Hovlandsdal <espen@hovlandsdal.com>
+- Copyright (c) EventSource GitHub organisation
+- Copyright (c) 2017 Evgeny Poberezkin
+- Copyright (c) 2011-2021 Gary Court until https://github.com/garycourt/uri-js/commit/a1acf730b4bba3f1097c9f52e7d9d3aba8cdcaae
+- Copyright (c) 2021 present The Fastify team <https://github.com/fastify/fastify#team>
+- Copyright (c) 2015, 2019 Elan Shanker
+- Copyright (c) 2011-2022 Isaac Z. Schlueter, Ben Noordhuis, and Contributors
+- Copyright (c) Isaac Z. Schlueter and Contributors
+- Copyright (c) 2011 by Beau Gunderson
+- Copyright (c) 2019 Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com), Paul Miller (https://paulmillr.com)
+- Copyright (c) 2014-2016 Jon Schlinkert
+- Copyright (c) 2014-2017 Jon Schlinkert.
+- Copyright (c) 2014 Eugene Ware
+- Copyright (c) 2012-2018 Aseem Kishore, and [others].
+- Copyright (c) 2023 Robert Kieffer
+- Copyright (c) 2020 Vercel, Inc.
+- Copyright (c) 2014-2018 Jon Schlinkert.
+- Copyright (c) 2014 Andrew Kelley
+- Copyright (c) 2017 present, Jon Schlinkert.
+- Copyright (c) 2019
+- Copyright (c) 2015 Luke Page & Original Contributors
+- Copyright (c) 2012 Kuba Niegowski
+- Copyright (c) 2017 TJ Holowaychuk <tj@vision-media.ca>
+- Copyright (c) 2016-2018 Rob Wu <rob@robwu.nl>
+- Copyright (c) 2012-2019 Thorsten Lorenz, Paul Miller (https://paulmillr.com)
+- Copyright (c) 2011
+- Copyright (c) Kevin Mårtensson <kevinmartensson@gmail.com> (github.com/kevva)
+- Copyright (c) 2015-2023 Benjamin Coe, Isaac Z. Schlueter, and Contributors
+- Copyright (c) 2013-2017 Josh Glazebrook
+- Copyright (c) 2013 Josh Glazebrook
+- Copyright (c) 2014 Evan Wallace
+- Copyright (c) 2009-2011 Mozilla Foundation and contributors
+- Copyright (c) 2015 present, Jon Schlinkert.
+- Copyright (c) 2011 Einar Otto Stangvik <einaros@gmail.com>
+- Copyright (c) 2013 Arnout Kazemier and contributors
+- Copyright (c) 2016 Luigi Pinca and contributors
+- Copyright (c) Eemeli Aro <eemeli@gmail.com>
+- Copyright (c) 2014 Josh Wolfe
+- Copyright (c) 2020 Stefan Terdell
+- Copyright (c) 2025 Colin McDonnell
 BSD-3-Clause
 - Copyright (c) 2022 present, Yusuke Wada and Hono contributors
+- Copyright (c) 2024 Anthropic, PBC
+- Copyright (c) 2022 Ze-Zheng Wu
+- Copyright (c) 2013 Nathan Rajlich <nathan@tootallnate.net>
+- Copyright (c) 2020 Evgeny Poberezkin
+- Copyright (c) 2015-2021 Evgeny Poberezkin
+- Copyright (c) 2015 present, Brian Woodward.
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) 2019 Elan Shanker, Paul Miller (https://paulmillr.com)
+- Copyright (c) Julian Gruber <julian@juliangruber.com>
+- Copyright (c) Isaac Z. Schlueter <i@izs.me>
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+- Copyright (c) Paul Miller (https://paulmillr.com)
+- Copyright (c) 2014 present, Jon Schlinkert.
+- Copyright (c) 2013-2024 Brian J. Brennan
+- Copyright (c) 2016, 2018 Linus Unnebäck
+- Copyright (c) 2012-2014 TJ Holowaychuk <tj@vision-media.ca>
+- Copyright (c) 2015 Jed Watson <jed.watson@me.com>
+- Copyright (c) 2012-2019 Paul Miller (https://paulmillr.com), Elan Shanker
+- Copyright (c) Marak Squires
+- Copyright (c) 2011 TJ Holowaychuk <tj@vision-media.ca>
+- Copyright (c) 2015 Douglas Christopher Wilson
+- Copyright (c) 2018 Made With MOXY Lda <hello@moxy.studio>
+- Copyright (c) 2014-2017 TJ Holowaychuk <tj@vision-media.ca>
+- Copyright (c) 2018-2021 Josh Junon
+- Copyright (c) 2009-2015 Kevin Decker <kpdecker@gmail.com>
+- Copyright (c) 2015 Scott Motte
+- Copyright (c) 2016 present, Jon Schlinkert.
+- Copyright (c) 2026 Espen Hovlandsdal <espen@hovlandsdal.com>
+- Copyright (c) EventSource GitHub organisation
+- Copyright (c) 2017 Evgeny Poberezkin
+- Copyright (c) 2011-2021 Gary Court until https://github.com/garycourt/uri-js/commit/a1acf730b4bba3f1097c9f52e7d9d3aba8cdcaae
+- Copyright (c) 2021 present The Fastify team <https://github.com/fastify/fastify#team>
+- Copyright (c) 2015, 2019 Elan Shanker
+- Copyright (c) 2011-2022 Isaac Z. Schlueter, Ben Noordhuis, and Contributors
+- Copyright (c) Isaac Z. Schlueter and Contributors
+- Copyright (c) 2011 by Beau Gunderson
+- Copyright (c) 2019 Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com), Paul Miller (https://paulmillr.com)
+- Copyright (c) 2014-2016 Jon Schlinkert
+- Copyright (c) 2014-2017 Jon Schlinkert.
+- Copyright (c) 2014 Eugene Ware
+- Copyright (c) 2012-2018 Aseem Kishore, and [others].
+- Copyright (c) 2023 Robert Kieffer
+- Copyright (c) 2020 Vercel, Inc.
+- Copyright (c) 2014-2018 Jon Schlinkert.
+- Copyright (c) 2014 Andrew Kelley
+- Copyright (c) 2017 present, Jon Schlinkert.
+- Copyright (c) 2019
+- Copyright (c) 2015 Luke Page & Original Contributors
+- Copyright (c) 2012 Kuba Niegowski
+- Copyright (c) 2017 TJ Holowaychuk <tj@vision-media.ca>
+- Copyright (c) 2016-2018 Rob Wu <rob@robwu.nl>
+- Copyright (c) 2012-2019 Thorsten Lorenz, Paul Miller (https://paulmillr.com)
+- Copyright (c) 2011
+- Copyright (c) Kevin Mårtensson <kevinmartensson@gmail.com> (github.com/kevva)
+- Copyright (c) 2015-2023 Benjamin Coe, Isaac Z. Schlueter, and Contributors
+- Copyright (c) 2013-2017 Josh Glazebrook
+- Copyright (c) 2013 Josh Glazebrook
+- Copyright (c) 2014 Evan Wallace
+- Copyright (c) 2009-2011 Mozilla Foundation and contributors
+- Copyright (c) 2015 present, Jon Schlinkert.
+- Copyright (c) 2011 Einar Otto Stangvik <einaros@gmail.com>
+- Copyright (c) 2013 Arnout Kazemier and contributors
+- Copyright (c) 2016 Luigi Pinca and contributors
+- Copyright (c) Eemeli Aro <eemeli@gmail.com>
+- Copyright (c) 2014 Josh Wolfe
+- Copyright (c) 2020 Stefan Terdell
+- Copyright (c) 2025 Colin McDonnell
+- Copyright (c) 2010 Google Inc. All rights reserved.
+- Copyright (c) 2010-2014 Emscripten authors, see AUTHORS file.
+- Copyright (c) Joyent, Inc. and other Node contributors. All rights reserved.
 blueoak-1.0.0
 - Copyright (c) 2022 present, Yusuke Wada and Hono contributors
+- Copyright (c) 2024 Anthropic, PBC
+- Copyright (c) 2022 Ze-Zheng Wu
+- Copyright (c) 2013 Nathan Rajlich <nathan@tootallnate.net>
+- Copyright (c) 2020 Evgeny Poberezkin
+- Copyright (c) 2015-2021 Evgeny Poberezkin
+- Copyright (c) 2015 present, Brian Woodward.
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) 2019 Elan Shanker, Paul Miller (https://paulmillr.com)
+- Copyright (c) Julian Gruber <julian@juliangruber.com>
+- Copyright (c) Isaac Z. Schlueter <i@izs.me>
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+- Copyright (c) Paul Miller (https://paulmillr.com)
+- Copyright (c) 2014 present, Jon Schlinkert.
+- Copyright (c) 2013-2024 Brian J. Brennan
+- Copyright (c) 2016, 2018 Linus Unnebäck
+- Copyright (c) 2012-2014 TJ Holowaychuk <tj@vision-media.ca>
+- Copyright (c) 2015 Jed Watson <jed.watson@me.com>
+- Copyright (c) 2012-2019 Paul Miller (https://paulmillr.com), Elan Shanker
+- Copyright (c) Marak Squires
+- Copyright (c) 2011 TJ Holowaychuk <tj@vision-media.ca>
+- Copyright (c) 2015 Douglas Christopher Wilson
+- Copyright (c) 2018 Made With MOXY Lda <hello@moxy.studio>
+- Copyright (c) 2014-2017 TJ Holowaychuk <tj@vision-media.ca>
+- Copyright (c) 2018-2021 Josh Junon
+- Copyright (c) 2009-2015 Kevin Decker <kpdecker@gmail.com>
+- Copyright (c) 2015 Scott Motte
+- Copyright (c) 2016 present, Jon Schlinkert.
+- Copyright (c) 2026 Espen Hovlandsdal <espen@hovlandsdal.com>
+- Copyright (c) EventSource GitHub organisation
+- Copyright (c) 2017 Evgeny Poberezkin
+- Copyright (c) 2011-2021 Gary Court until https://github.com/garycourt/uri-js/commit/a1acf730b4bba3f1097c9f52e7d9d3aba8cdcaae
+- Copyright (c) 2021 present The Fastify team <https://github.com/fastify/fastify#team>
+- Copyright (c) 2015, 2019 Elan Shanker
+- Copyright (c) 2011-2022 Isaac Z. Schlueter, Ben Noordhuis, and Contributors
+- Copyright (c) Isaac Z. Schlueter and Contributors
+- Copyright (c) 2011 by Beau Gunderson
+- Copyright (c) 2019 Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com), Paul Miller (https://paulmillr.com)
+- Copyright (c) 2014-2016 Jon Schlinkert
+- Copyright (c) 2014-2017 Jon Schlinkert.
+- Copyright (c) 2014 Eugene Ware
+- Copyright (c) 2012-2018 Aseem Kishore, and [others].
+- Copyright (c) 2023 Robert Kieffer
+- Copyright (c) 2020 Vercel, Inc.
+- Copyright (c) 2014-2018 Jon Schlinkert.
+- Copyright (c) 2014 Andrew Kelley
+- Copyright (c) 2017 present, Jon Schlinkert.
+- Copyright (c) 2019
+- Copyright (c) 2015 Luke Page & Original Contributors
+- Copyright (c) 2012 Kuba Niegowski
+- Copyright (c) 2017 TJ Holowaychuk <tj@vision-media.ca>
+- Copyright (c) 2016-2018 Rob Wu <rob@robwu.nl>
+- Copyright (c) 2012-2019 Thorsten Lorenz, Paul Miller (https://paulmillr.com)
+- Copyright (c) 2011
+- Copyright (c) Kevin Mårtensson <kevinmartensson@gmail.com> (github.com/kevva)
+- Copyright (c) 2015-2023 Benjamin Coe, Isaac Z. Schlueter, and Contributors
+- Copyright (c) 2013-2017 Josh Glazebrook
+- Copyright (c) 2013 Josh Glazebrook
+- Copyright (c) 2014 Evan Wallace
+- Copyright (c) 2009-2011 Mozilla Foundation and contributors
+- Copyright (c) 2015 present, Jon Schlinkert.
+- Copyright (c) 2011 Einar Otto Stangvik <einaros@gmail.com>
+- Copyright (c) 2013 Arnout Kazemier and contributors
+- Copyright (c) 2016 Luigi Pinca and contributors
+- Copyright (c) Eemeli Aro <eemeli@gmail.com>
+- Copyright (c) 2014 Josh Wolfe
+- Copyright (c) 2020 Stefan Terdell
+- Copyright (c) 2025 Colin McDonnell
 NCSA
 - Copyright (c) 2010 Google Inc. All rights reserved.
+- Copyright (c) 2010-2014 Emscripten authors, see AUTHORS file.
+- Copyright (c) Joyent, Inc. and other Node contributors. All rights reserved.
 
 * Package Info *
 

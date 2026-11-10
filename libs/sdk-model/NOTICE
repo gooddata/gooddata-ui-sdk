@@ -3,9 +3,11 @@ Copyright (c) 2017-2026 GoodData Corporation
 This product includes a number of subcomponents with separate copyright notices and license terms below. Your use of these subcomponents is subject to the terms and conditions of the subcomponent's license. This GoodData project does not necessarily use all the open source software referred to below and may also only use portions of a given package. With respect to the open source software listed in this document, if you (i) have any questions, (ii) wish to receive source code for packages under licenses that require their source code to be made available (such as the GNU Lesser Public License), or (iii) discover any errors or omissions in the licensing information provided, please contact us at legal@gooddata.com. Please identify in source code requests: (i) the packages for which you are requesting corresponding source, (ii) the GoodData product (including any available version) with which the package was provided; and (iii) an email address (if available) or postal address at which GoodData may contact you.
 
 --------------------------------------------------------------------------------
-Attribution Notice for @gooddata/sdk-model (11.68.0-alpha.7)
+Attribution Notice for @gooddata/sdk-model (11.68.0-alpha.8)
 Package License: MIT
 Own License File: LICENSE
+Date generated: 2026-11-10
+Revision ID: dde1512be72244df8ad5c996c9bce5ff623b3b50
 
 This notice lists the components that @gooddata/sdk-model depends on, directly or through other
 packages, with the license and copyright information reported for each of them.
@@ -17,7 +19,7 @@ change those terms.
 Dependencies
 
 Local GoodData SDK components
-- @gooddata/util (11.68.0-alpha.7) [MIT] — Direct
+- @gooddata/util (11.68.0-alpha.8) [MIT] — Direct
 
 External components
 - @types/geojson (7946.0.16) [MIT] — Direct
@@ -56,7 +58,7 @@ Local GoodData SDK components
 ================================================================================
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/util (11.68.0-alpha.7)
+Package Title: @gooddata/util (11.68.0-alpha.8)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -111,7 +113,7 @@ MIT
 
 * Copyrights *
 MIT
-- Copyright (c)  Microsoft Corporation.
+- Copyright (c) Microsoft Corporation.
 
 --------------------------------------------------------------------------------
 Package Title: call-bind (1.0.9)
@@ -673,7 +675,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Jordan Harband and contributors
+- Copyright (c) Jordan Harband and contributors
 
 --------------------------------------------------------------------------------
 Package Title: is-obj (1.0.1)
@@ -889,7 +891,7 @@ terms above.
 
 * Copyrights *
 MIT
-- Copyright (c)  OpenJS Foundation and other contributors <https://openjsf.org/>
+- Copyright (c) OpenJS Foundation and other contributors <https://openjsf.org/>
 
 --------------------------------------------------------------------------------
 Package Title: math-intrinsics (1.1.0)
@@ -997,7 +999,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Jordan Harband and contributors
+- Copyright (c) Jordan Harband and contributors
 
 --------------------------------------------------------------------------------
 Package Title: spark-md5 (3.0.2)

@@ -1,7 +1,5 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { compact } from "lodash-es";
-
 import {
     type AttributeFilterItem,
     type INegativeAttributeFilter,
@@ -26,6 +24,7 @@ import {
     isMatchAttributeFilter,
     isNegativeAttributeFilter,
 } from "@gooddata/sdk-model";
+import { _compact } from "@gooddata/util";
 
 import { areFiltersWithSameElements, intersectFilters } from "./filterIntersection.js";
 import { toObjIdentifierQualifier } from "./objQualifiers.js";
@@ -159,7 +158,7 @@ function getAttributeFilterItemsFromAppliedFilters(
                 : attrFilterContext;
         });
 
-    return compact(processedFilters);
+    return _compact(processedFilters);
 }
 
 function getInsightAttrFilter(

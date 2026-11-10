@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
 import {
     type IAutomationMetadataObject,
@@ -19,6 +19,11 @@ import { isEmail } from "../utils/validate.js";
 
 import { type IScheduledExportDialogValidity } from "./types.js";
 
+const messages = defineMessages({
+    widgetError: { id: "dialogs.schedule.email.widgetError" },
+    visualizationUnavailable: { id: "dialogs.schedule.email.visualizationUnavailable" },
+});
+
 export interface IUseScheduledEmailFormValidityProps {
     editedAutomation: IAutomationMetadataObjectDefinition;
     originalAutomation: IAutomationMetadataObjectDefinition;
@@ -30,6 +35,7 @@ export interface IUseScheduledEmailFormValidityProps {
     isTitleValid: boolean;
     isSubjectValid: boolean;
     isOnMessageValid: boolean;
+    isWidgetInsightUnavailable: boolean;
 }
 
 export function useScheduledEmailFormValidity(
@@ -46,6 +52,7 @@ export function useScheduledEmailFormValidity(
         isTitleValid,
         isSubjectValid,
         isOnMessageValid,
+        isWidgetInsightUnavailable,
     } = props;
 
     const intl = useIntl();
@@ -58,8 +65,10 @@ export function useScheduledEmailFormValidity(
 
     const { isValid: isParentValid } = useScheduleValidation(originalAutomation);
     const validationErrorMessage = isParentValid
-        ? undefined
-        : intl.formatMessage({ id: "dialogs.schedule.email.widgetError" });
+        ? isWidgetInsightUnavailable
+            ? intl.formatMessage(messages.visualizationUnavailable)
+            : undefined
+        : intl.formatMessage(messages.widgetError);
 
     const hasAttachments = !!editedAutomation.exportDefinitions?.length;
     const hasRecipients = (editedAutomation.recipients?.length ?? 0) > 0;

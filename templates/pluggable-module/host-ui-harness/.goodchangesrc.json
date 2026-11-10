@@ -1,0 +1,11 @@
+{
+    "targets": [{}],
+    "ignores": [
+        "README.md",
+        "readme.txt",
+        ".oxlintrc.json",
+        "eslint.config.ts",
+        ".env.template",
+        ".gitignore"
+    ]
+}

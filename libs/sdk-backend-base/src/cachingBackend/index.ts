@@ -1,7 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
 import stringify from "json-stable-stringify";
-import { compact, partition } from "lodash-es";
+import { partition } from "lodash-es";
 import { LRUCache } from "lru-cache";
 import SparkMD5 from "spark-md5";
 import { invariant } from "ts-invariant";
@@ -111,6 +111,7 @@ import {
     serializeObjRef,
     uriRef,
 } from "@gooddata/sdk-model";
+import { _compact } from "@gooddata/util";
 
 import { DecoratedWorkspaceAttributesService } from "../decoratedBackend/attributes.js";
 import {
@@ -1097,7 +1098,7 @@ function refMatchesMdObject(ref: ObjRef, mdObject: IMetadataObject, type?: Objec
 }
 
 function firstDefined<T>(arr: T[]): T | undefined {
-    return compact(arr).at(0);
+    return _compact(arr).at(0);
 }
 
 function elementsCacheKey(
@@ -1597,7 +1598,7 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
         // Reconstruct the original ordering. Derive the output from what actually resolved (compact) rather
         // than from refsToLoad, so a concurrent caller sharing the in-flight promise of a ref the server
         // omitted does not trip the invariant below.
-        const candidates = compact([...loadedFromServer, ...alreadyInCache]);
+        const candidates = _compact([...loadedFromServer, ...alreadyInCache]);
 
         return outputRefs
             .map((ref) => candidates.find((item) => refMatchesMdObject(ref, item, "displayForm")))
@@ -1768,7 +1769,7 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
             : refs;
 
         // reconstruct the original ordering
-        const candidates = compact([...loadedFromServer, ...alreadyInCache]);
+        const candidates = _compact([...loadedFromServer, ...alreadyInCache]);
 
         return outputRefs
             .map((ref) => candidates.find((item) => refMatchesMdObject(ref, item, "attribute")))

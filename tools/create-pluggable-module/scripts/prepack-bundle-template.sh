@@ -2,8 +2,8 @@
 # (C) 2026 GoodData Corporation
 #
 # Runs just before `npm pack` collects files for the published tarball.
-# Bundles the template workspace projects (the application and headless module
-# and harness templates) into `dist/templates/<subtree>/`, with
+# Bundles the template workspace projects (the application, headless and host UI
+# module and harness templates) into `dist/templates/<subtree>/`, with
 # workspace-only paths rewritten to self-contained equivalents.
 #
 # Two transformations happen here:
@@ -21,11 +21,15 @@ MODULE_SRC="$(node -p "require('path').dirname(require.resolve('gdc-app-template
 HARNESS_SRC="$(node -p "require('path').dirname(require.resolve('gdc-app-template-name-harness/tsconfig.json', { paths: ['$PACKAGE_DIR'] }))")"
 HEADLESS_MODULE_SRC="$(node -p "require('path').dirname(require.resolve('gdc-headless-template-name-module/tsconfig.json', { paths: ['$PACKAGE_DIR'] }))")"
 HEADLESS_HARNESS_SRC="$(node -p "require('path').dirname(require.resolve('gdc-headless-template-name-harness/tsconfig.json', { paths: ['$PACKAGE_DIR'] }))")"
-SUBTREES="module harness headless-module headless-harness"
+HOST_UI_MODULE_SRC="$(node -p "require('path').dirname(require.resolve('gdc-host-ui-template-name-module/tsconfig.json', { paths: ['$PACKAGE_DIR'] }))")"
+HOST_UI_HARNESS_SRC="$(node -p "require('path').dirname(require.resolve('gdc-host-ui-template-name-harness/tsconfig.json', { paths: ['$PACKAGE_DIR'] }))")"
+SUBTREES="module harness headless-module headless-harness host-ui-module host-ui-harness"
 
 DEST="$PACKAGE_DIR/dist/templates"
 rm -rf "$DEST"
-mkdir -p "$DEST/module" "$DEST/harness" "$DEST/headless-module" "$DEST/headless-harness"
+for subtree in $SUBTREES; do
+    mkdir -p "$DEST/$subtree"
+done
 
 # -a preserves attrs (incl. executable bits on .sh files inside the templates).
 # Trailing slash + . copies the directory contents, not the directory itself.
@@ -33,6 +37,8 @@ cp -a "$MODULE_SRC/." "$DEST/module/"
 cp -a "$HARNESS_SRC/." "$DEST/harness/"
 cp -a "$HEADLESS_MODULE_SRC/." "$DEST/headless-module/"
 cp -a "$HEADLESS_HARNESS_SRC/." "$DEST/headless-harness/"
+cp -a "$HOST_UI_MODULE_SRC/." "$DEST/host-ui-module/"
+cp -a "$HOST_UI_HARNESS_SRC/." "$DEST/host-ui-harness/"
 
 # Drop workspace-only build artefacts that shouldn't ship in the tarball.
 for subtree in $SUBTREES; do
@@ -82,6 +88,8 @@ inline_tsconfig "module" "$MODULE_SRC"
 inline_tsconfig "harness" "$HARNESS_SRC"
 inline_tsconfig "headless-module" "$HEADLESS_MODULE_SRC"
 inline_tsconfig "headless-harness" "$HEADLESS_HARNESS_SRC"
+inline_tsconfig "host-ui-module" "$HOST_UI_MODULE_SRC"
+inline_tsconfig "host-ui-harness" "$HOST_UI_HARNESS_SRC"
 
 # Defense in depth: tsc --showConfig fills in a default `exclude` containing
 # `<outDir>` resolved to ABSOLUTE if the source tsconfig didn't declare one,

@@ -2,14 +2,14 @@
 
 import cx from "classnames";
 import { type OptionsLandmarkVerbosityValue, type Point } from "highcharts";
-import { compact, merge, partial, pickBy } from "lodash-es";
+import { merge, partial, pickBy } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { type ITheme, isMeasureFormatInPercent } from "@gooddata/sdk-model";
 import { type ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 import { buildTooltipLocalizedStrings, getLighterColor, isPatternObject } from "@gooddata/sdk-ui-vis-commons";
-import { _isEmpty } from "@gooddata/util";
+import { _compact, _isEmpty } from "@gooddata/util";
 
 import { type IAxisConfig, type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { getBlackLabelStyle } from "../../constants/label.js";
@@ -1402,7 +1402,7 @@ export function areAxisLabelsEnabled(
 
     const { type } = chartOptions;
     const categories = isHeatmap(type) ? data.categories : escapeCategories(data.categories);
-    const categoriesFlag = shouldCheckForEmptyCategories ? !_isEmpty(compact<unknown>(categories)) : true;
+    const categoriesFlag = shouldCheckForEmptyCategories ? !_isEmpty(_compact<unknown>(categories)) : true;
 
     const axisOptions = chartOptions?.[axisPropsName] as IAxisConfig;
     const visible = axisOptions?.visible ?? true;

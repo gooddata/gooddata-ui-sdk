@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { compact, set, uniqBy } from "lodash-es";
+import { set, uniqBy } from "lodash-es";
 
 import {
     type IColor,
@@ -16,7 +16,7 @@ import {
 } from "@gooddata/sdk-model";
 import { type IColorAssignment, type IMappingHeader, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { ColorUtils, type ILineStyleMappingItem } from "@gooddata/sdk-ui-charts";
-import { _cloneDeep, _isEmpty, _isEqual } from "@gooddata/util";
+import { _cloneDeep, _compact, _isEmpty, _isEqual } from "@gooddata/util";
 
 import { type IColorConfiguration, type IColoredItem } from "../interfaces/Colors.js";
 import { type IVisualizationProperties } from "../interfaces/Visualization.js";
@@ -127,7 +127,7 @@ function mergeColorMappingToProperties(properties: IVisualizationProperties, id:
 
     const previousColorMapping = properties?.controls?.["colorMapping"] ?? [];
 
-    const mergedMapping = compact(uniqBy([...colorMapping, ...previousColorMapping], "id"));
+    const mergedMapping = _compact(uniqBy([...colorMapping, ...previousColorMapping], "id"));
     const newProperties = _cloneDeep(properties);
     set(newProperties, "controls.colorMapping", mergedMapping);
 
@@ -169,7 +169,7 @@ export function getLineStyleProperties(
 ): IVisualizationProperties {
     const newEntry: ILineStyleMappingItem = { id, lineStyle, lineWidth };
     const previousMapping: ILineStyleMappingItem[] = properties?.controls?.["lineStyleMapping"] ?? [];
-    const merged = compact(uniqBy([newEntry, ...previousMapping], "id"));
+    const merged = _compact(uniqBy([newEntry, ...previousMapping], "id"));
     const newProperties = _cloneDeep(properties);
     set(newProperties, "controls.lineStyleMapping", merged);
     return newProperties;

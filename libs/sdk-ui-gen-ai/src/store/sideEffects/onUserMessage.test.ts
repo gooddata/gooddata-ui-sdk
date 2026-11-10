@@ -21,6 +21,7 @@ import { conversationMessagesByIdSelector } from "../messages/messagesSelectors.
 import {
     evaluateMessageCompleteAction,
     evaluateMessageStreamingAction,
+    loadConversationsSuccessAction,
     messagesSliceReducer,
     newMessageAction,
     setCurrentConversationAction,
@@ -279,6 +280,52 @@ describe("onUserMessage answering agent", () => {
             agentId: "agent-a",
         });
     });
+});
+
+describe("onUserMessage conversation identity", () => {
+    it.each(["completed", "error chunk", "failed", "cancelled"] as const)(
+        "preserves the originating IDs after metadata refresh when the response is %s",
+        async (outcome) => {
+            const run = setup();
+            const otherConversation = { ...conversation, id: "other-thread", localId: "other-local" };
+            run.store.dispatch(setCurrentConversationAction({ conversation: otherConversation }));
+            run.store.dispatch(loadConversationsSuccessAction({ conversations: [otherConversation] }));
+            expect(run.store.getState().messages.conversations).toEqual([otherConversation]);
+            expect(run.store.getState().messages.conversationsData[conversation.localId]).toBeDefined();
+
+            await run.send(
+                item({
+                    type: "skillsActivated",
+                    skills: [{ name: "dashboard_builder", title: "Build dashboard" }],
+                }),
+            );
+            await run.send(item({ type: "text", text: "Working" }, "interaction-2"));
+            if (outcome === "cancelled") {
+                run.task.cancel();
+                await run.task.toPromise();
+            } else if (outcome === "failed") {
+                await run.fail();
+            } else {
+                if (outcome === "error chunk") {
+                    await run.send({ type: "error", code: 500, message: "Failed" });
+                }
+                await run.finish();
+            }
+
+            const streaming = run.actions.filter(evaluateMessageStreamingAction.match);
+            const completions = run.actions.filter(evaluateMessageCompleteAction.match);
+            expect(streaming.length).toBeGreaterThanOrEqual(2);
+            expect(completions.length).toBeGreaterThanOrEqual(2);
+            for (const { payload } of [...streaming, ...completions]) {
+                expect(payload).toEqual(
+                    expect.objectContaining({
+                        conversationId: conversation.localId,
+                        threadId: conversation.id,
+                    }),
+                );
+            }
+        },
+    );
 });
 
 describe("onUserMessage reasoning titles", () => {

@@ -14,7 +14,11 @@ import {
 } from "@gooddata/sdk-pluggable-application-model";
 
 import { now } from "../debug.js";
-import { type AppSecurityFailure, validateRemoteModuleSecurity } from "../loader/appSecurityValidation.js";
+import {
+    type AppSecurityFailure,
+    describeSecurityFailure,
+    validateRemoteModuleSecurity,
+} from "../loader/appSecurityValidation.js";
 import { getAppLifecycleCallbacks, getHostTelemetryServices } from "../loader/pluggableApplicationsLoader.js";
 import {
     type IAppLifecycleCallbacks,
@@ -75,17 +79,6 @@ export function resolveTelemetryIdentityMode(item: HeadlessModuleRegistryItem): 
             `The host uses "hashed".`,
     );
     return "hashed";
-}
-
-function describeSecurityFailure(failure: AppSecurityFailure): string {
-    switch (failure.kind) {
-        case "organization-not-allowed":
-            return "the module build does not allow this organization";
-        case "build-expired":
-            return "the module build is older than the allowed freshness window";
-        case "metadata-missing":
-            return "the module build has no valid allowedOrganizations and buildTimestamp";
-    }
 }
 
 function errorMessage(error: unknown): string {

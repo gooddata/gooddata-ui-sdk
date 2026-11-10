@@ -3,9 +3,11 @@ Copyright (c) 2017-2026 GoodData Corporation
 This product includes a number of subcomponents with separate copyright notices and license terms below. Your use of these subcomponents is subject to the terms and conditions of the subcomponent's license. This GoodData project does not necessarily use all the open source software referred to below and may also only use portions of a given package. With respect to the open source software listed in this document, if you (i) have any questions, (ii) wish to receive source code for packages under licenses that require their source code to be made available (such as the GNU Lesser Public License), or (iii) discover any errors or omissions in the licensing information provided, please contact us at legal@gooddata.com. Please identify in source code requests: (i) the packages for which you are requesting corresponding source, (ii) the GoodData product (including any available version) with which the package was provided; and (iii) an email address (if available) or postal address at which GoodData may contact you.
 
 --------------------------------------------------------------------------------
-Attribution Notice for @gooddata/sdk-ui-theme-provider (11.68.0-alpha.7)
+Attribution Notice for @gooddata/sdk-ui-theme-provider (11.68.0-alpha.8)
 Package License: MIT
 Own License File: LICENSE
+Date generated: 2026-11-10
+Revision ID: dde1512be72244df8ad5c996c9bce5ff623b3b50
 
 This notice lists the components that @gooddata/sdk-ui-theme-provider depends on, directly or through other
 packages, with the license and copyright information reported for each of them.
@@ -17,11 +19,11 @@ change those terms.
 Dependencies
 
 Local GoodData SDK components
-- @gooddata/sdk-backend-spi (11.68.0-alpha.7) [MIT] — Direct
-- @gooddata/sdk-code-schemas (11.68.0-alpha.7) [MIT] — Transitive
-- @gooddata/sdk-model (11.68.0-alpha.7) [MIT] — Direct
-- @gooddata/sdk-ui (11.68.0-alpha.7) [MIT] — Direct
-- @gooddata/util (11.68.0-alpha.7) [MIT] — Direct
+- @gooddata/sdk-backend-spi (11.68.0-alpha.8) [MIT] — Direct
+- @gooddata/sdk-code-schemas (11.68.0-alpha.8) [MIT] — Transitive
+- @gooddata/sdk-model (11.68.0-alpha.8) [MIT] — Direct
+- @gooddata/sdk-ui (11.68.0-alpha.8) [MIT] — Direct
+- @gooddata/util (11.68.0-alpha.8) [MIT] — Direct
 
 External components
 - @babel/runtime (7.29.10) [MIT] — Transitive
@@ -95,7 +97,7 @@ Local GoodData SDK components
 ================================================================================
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-backend-spi (11.68.0-alpha.7)
+Package Title: @gooddata/sdk-backend-spi (11.68.0-alpha.8)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -113,7 +115,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-code-schemas (11.68.0-alpha.7)
+Package Title: @gooddata/sdk-code-schemas (11.68.0-alpha.8)
 Package Source: Local workspace
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -143,7 +145,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-model (11.68.0-alpha.7)
+Package Title: @gooddata/sdk-model (11.68.0-alpha.8)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -161,7 +163,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui (11.68.0-alpha.7)
+Package Title: @gooddata/sdk-ui (11.68.0-alpha.8)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -179,7 +181,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/util (11.68.0-alpha.7)
+Package Title: @gooddata/util (11.68.0-alpha.8)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -433,7 +435,7 @@ MIT
 
 * Copyrights *
 MIT
-- Copyright (c)  Microsoft Corporation.
+- Copyright (c) Microsoft Corporation.
 
 --------------------------------------------------------------------------------
 Package Title: @types/react (19.1.11)
@@ -469,7 +471,7 @@ MIT
 
 * Copyrights *
 MIT
-- Copyright (c)  Microsoft Corporation.
+- Copyright (c) Microsoft Corporation.
 
 --------------------------------------------------------------------------------
 Package Title: balanced-match (4.0.4)
@@ -507,7 +509,8 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Julian Gruber <julian@juliangruber.com>
+- Copyright (c) Julian Gruber <julian@juliangruber.com>
+- Copyright (c) Isaac Z. Schlueter <i@izs.me>
 
 --------------------------------------------------------------------------------
 Package Title: brace-expansion (5.0.12)
@@ -545,7 +548,8 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Julian Gruber <julian@juliangruber.com>
+- Copyright (c) Julian Gruber <julian@juliangruber.com>
+- Copyright (c) Isaac Z. Schlueter <i@izs.me>
 
 --------------------------------------------------------------------------------
 Package Title: call-bind (1.0.9)
@@ -688,7 +692,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: csstype (3.2.3)
@@ -1202,7 +1206,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Jordan Harband and contributors
+- Copyright (c) Jordan Harband and contributors
 
 --------------------------------------------------------------------------------
 Package Title: hoist-non-react-statics (3.3.2)
@@ -1540,7 +1544,7 @@ terms above.
 
 * Copyrights *
 MIT
-- Copyright (c)  OpenJS Foundation and other contributors <https://openjsf.org/>
+- Copyright (c) OpenJS Foundation and other contributors <https://openjsf.org/>
 
 --------------------------------------------------------------------------------
 Package Title: lru-cache (10.4.3)
@@ -2108,7 +2112,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Bogdan Chadkin <trysound@yandex.ru>
+- Copyright (c) Bogdan Chadkin <trysound@yandex.ru>
 
 --------------------------------------------------------------------------------
 Package Title: react (19.1.1)
@@ -2144,7 +2148,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Meta Platforms, Inc. and affiliates.
+- Copyright (c) Meta Platforms, Inc. and affiliates.
 
 --------------------------------------------------------------------------------
 Package Title: react-dom (19.1.1)
@@ -2180,7 +2184,8 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Meta Platforms, Inc. and affiliates.
+- Copyright (c) Meta Platforms, Inc. and affiliates.
+- Copyright (c) 2011 Gary Court
 
 --------------------------------------------------------------------------------
 Package Title: react-fast-compare (3.2.2)
@@ -2218,6 +2223,7 @@ SOFTWARE.
 * Copyrights *
 MIT
 - Copyright (c) 2018 Formidable Labs
+- Copyright (c) 2017 Evgeny Poberezkin
 
 --------------------------------------------------------------------------------
 Package Title: react-intl (10.1.25)
@@ -2295,7 +2301,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Facebook, Inc. and its affiliates.
+- Copyright (c) Facebook, Inc. and its affiliates.
 
 --------------------------------------------------------------------------------
 Package Title: scheduler (0.26.0)
@@ -2331,7 +2337,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Meta Platforms, Inc. and affiliates.
+- Copyright (c) Meta Platforms, Inc. and affiliates.
 
 --------------------------------------------------------------------------------
 Package Title: set-function-length (1.2.2)
@@ -2367,7 +2373,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Jordan Harband and contributors
+- Copyright (c) Jordan Harband and contributors
 
 --------------------------------------------------------------------------------
 Package Title: source-map-js (1.2.2)

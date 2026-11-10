@@ -1,10 +1,10 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { compact } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, select } from "redux-saga/effects";
 
 import { type ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import { _compact } from "@gooddata/util";
 
 import { invalidQueryArguments } from "../events/general.js";
 import { type IQueryConnectingAttributes } from "../queries/connectingAttributes.js";
@@ -80,7 +80,7 @@ function* queryService(
         mapDisplayFormsToAttributes,
         refs,
     );
-    const nonEmptyAttributesRef = compact(attributeRefs.map((refsEntry) => compact(refsEntry)));
+    const nonEmptyAttributesRef = _compact(attributeRefs.map((refsEntry) => _compact(refsEntry)));
 
     if (refs.length !== nonEmptyAttributesRef.length) {
         throw invalidQueryArguments(ctx, `Cannot find attributes for given displayForms`, correlationId);

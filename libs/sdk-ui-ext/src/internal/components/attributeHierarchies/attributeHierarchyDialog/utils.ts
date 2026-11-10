@@ -1,13 +1,12 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { compact } from "lodash-es";
-
 import {
     type ICatalogAttribute,
     type ICatalogDateDataset,
     type ObjRef,
     serializeObjRef,
 } from "@gooddata/sdk-model";
+import { _compact } from "@gooddata/util";
 
 import { CatalogAttributeDataType, type IAttributeData, type ICatalogAttributeData } from "./types.js";
 
@@ -48,7 +47,7 @@ export const convertToCatalogAttributeDataByRefs = (
     catalogAttributesMap: Map<string, ICatalogAttributeData>,
     refs: ObjRef[],
 ): ICatalogAttributeData[] => {
-    return compact(refs.map((ref) => findCatalogAttributeByRef(catalogAttributesMap, ref)));
+    return _compact(refs.map((ref) => findCatalogAttributeByRef(catalogAttributesMap, ref)));
 };
 
 export const appendEmptyAttribute = (attributes: IAttributeData[], baseRowIndex: number) => {

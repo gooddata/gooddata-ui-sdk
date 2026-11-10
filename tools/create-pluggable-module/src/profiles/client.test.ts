@@ -30,8 +30,15 @@ describe("clientProfile", () => {
         expect(clientProfile.templateSubtrees).toEqual(["module", "harness"]);
     });
 
+    it("maps the host UI kind to the host UI templates under the same destination names", () => {
+        expect(clientProfile.templateSubtreesForKind?.("host-ui")).toEqual([
+            { source: "host-ui-module", dest: "module" },
+            { source: "host-ui-harness", dest: "harness" },
+        ]);
+    });
+
     it("maps the headless kind to the headless templates under the same destination names", () => {
-        expect(clientProfile.supportedKinds).toEqual(["application", "headless"]);
+        expect(clientProfile.supportedKinds).toEqual(["application", "headless", "host-ui"]);
         expect(clientProfile.templateSubtreesForKind?.("headless")).toEqual([
             { source: "headless-module", dest: "module" },
             { source: "headless-harness", dest: "harness" },

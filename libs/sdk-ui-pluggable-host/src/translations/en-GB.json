@@ -40,6 +40,7 @@
     "languageDialog.select.searchLabel": "Search languages",
     "languageDialog.select.searchPlaceholder": "Search…",
     "languageDialog.select.noMatch": "No matching language.",
+    "languageDialog.saving": "Changing language…",
     "languageDialog.error": "We couldn't change the language. Try again.",
     "languageDialog.success": "Great! We changed the language!"
 }

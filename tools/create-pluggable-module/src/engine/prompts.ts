@@ -84,12 +84,15 @@ export function validateTextValue(value: string): string | null {
 // AFTER the profile has resolved the dest root (the client profile lets the user
 // override the destPath, so checking modules/<name> here would miss real collisions
 // and false-positive on overrides). See runProfile.ts.
-function validateAppName(name: string): string | null {
+const RESERVED_TEMPLATE_NAMES = ["gdc-app-template", "gdc-headless-template", "gdc-host-ui-template"];
+
+export function validateAppName(name: string): string | null {
     if (!APP_NAME_RE.test(name)) {
         return `App name must start with "gdc-" and contain only lowercase letters, digits, and hyphens.`;
     }
-    if (name.startsWith("gdc-app-template")) {
-        return `Names starting with "gdc-app-template" are reserved for the template itself. Choose a different name.`;
+    const reserved = RESERVED_TEMPLATE_NAMES.find((templateName) => name.includes(templateName));
+    if (reserved) {
+        return `Names containing "${reserved}" are reserved for the templates. Choose a different name.`;
     }
     return null;
 }
@@ -125,21 +128,27 @@ async function askScope(reader: LineReader): Promise<ApplicationScope> {
     }
 }
 
+const KIND_LABELS: Record<ModuleKind, string> = {
+    application: "application",
+    headless: "headless module without UI",
+    "host-ui": "host UI (custom header, navigation and layout)",
+};
+
+async function askKind(reader: LineReader, supportedKinds: readonly ModuleKind[]): Promise<ModuleKind> {
+    const options = supportedKinds.map((kind, i) => `${i + 1} = ${KIND_LABELS[kind]}`).join(", ");
+    const valid = supportedKinds.map((_, i) => `"${i + 1}"`).join(", ");
+    while (true) {
+        const choice = (await ask(reader, `  Module kind (${options}): `)).trim();
+        const kind = supportedKinds[Number(choice) - 1];
+        if (/^\d+$/.test(choice) && kind) return kind;
+        console.log(`  Error: Enter one of ${valid}.`);
+    }
+}
+
 /**
  * Drives the full prompt sequence: shared appName/title/scope, then the
  * profile's extraPrompts in order. Returns once every answer is collected.
  */
-async function askKind(reader: LineReader): Promise<ModuleKind> {
-    while (true) {
-        const choice = (
-            await ask(reader, "  Module kind (1 = application, 2 = headless module without UI): ")
-        ).trim();
-        if (choice === "1") return "application";
-        if (choice === "2") return "headless";
-        console.log('  Error: Enter "1" or "2".');
-    }
-}
-
 export async function runPrompts(
     extraPrompts: readonly IPromptDescriptor[],
     supportedKinds: readonly ModuleKind[] = ["application"],
@@ -156,8 +165,10 @@ export async function runPrompts(
         });
 
         const kind: ModuleKind =
-            supportedKinds.length > 1 ? await askKind(reader) : (supportedKinds[0] ?? "application");
-        const scope: ApplicationScope = kind === "headless" ? "organization" : await askScope(reader);
+            supportedKinds.length > 1
+                ? await askKind(reader, supportedKinds)
+                : (supportedKinds[0] ?? "application");
+        const scope: ApplicationScope = kind === "application" ? await askScope(reader) : "organization";
 
         const maintainer = await askUntilValid(
             reader,

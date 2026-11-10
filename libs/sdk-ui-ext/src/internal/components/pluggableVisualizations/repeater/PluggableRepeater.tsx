@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { compact, omit } from "lodash-es";
+import { omit } from "lodash-es";
 
 import { type IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
@@ -26,7 +26,7 @@ import {
     constructRepeaterDimensions,
     updateConfigWithSettings,
 } from "@gooddata/sdk-ui-charts";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _compact } from "@gooddata/util";
 
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 import { REPEATER_SUPPORTER_PROPERTIES_LIST } from "../../../constants/supportedProperties.js";
@@ -293,7 +293,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
     }
 
     private buildColorMapping(colorMapping?: IColorMappingItem[]): IColorMapping[] | undefined {
-        const validColorMapping = compact(colorMapping).map((mapItem): IColorMapping => ({
+        const validColorMapping = _compact(colorMapping).map((mapItem): IColorMapping => ({
             predicate: ColorUtils.getColorMappingPredicate(mapItem.id),
             color: mapItem.color,
         }));

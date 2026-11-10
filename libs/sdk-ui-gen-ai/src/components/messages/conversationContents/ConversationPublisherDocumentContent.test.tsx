@@ -103,6 +103,7 @@ function renderCard({
     isContextSetupEnabled = true,
     isPublisherV2Enabled,
     conversationId = "conv-1",
+    conversationLocalId = "local-conversation-1",
     message = MESSAGE,
     allowNativeLinks,
     openDocumentId,
@@ -120,6 +121,7 @@ function renderCard({
     isContextSetupEnabled?: boolean;
     isPublisherV2Enabled?: boolean;
     conversationId?: string | null;
+    conversationLocalId?: string;
     message?: IChatConversationLocalItem;
     allowNativeLinks?: boolean;
     openDocumentId?: string;
@@ -162,7 +164,11 @@ function renderCard({
     if (conversationId !== null) {
         store.dispatch(
             setCurrentConversationAction({
-                conversation: { ...createEmptyConversation(), id: conversationId },
+                conversation: {
+                    ...createEmptyConversation(),
+                    id: conversationId,
+                    localId: conversationLocalId,
+                },
             }),
         );
     }
@@ -245,6 +251,28 @@ describe("ConversationPublisherDocumentContent", () => {
             }),
         );
     });
+
+    it.each([false, true])(
+        "keeps local and backend IDs separate in delegated links (Publisher v2: %s)",
+        (isPublisherV2Enabled) => {
+            const { linkHandler } = renderCard({
+                isPublisherV2Enabled,
+                documentV2: isPublisherV2Enabled ? DOCUMENT_V2 : undefined,
+                conversationId: "backend-conversation",
+                conversationLocalId: "local-conversation",
+            });
+
+            fireEvent.click(openButton());
+
+            expect(linkHandler).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    conversationId: "local-conversation",
+                    threadId: "backend-conversation",
+                    itemUrl: "/workspace/ws-1/reports/new?conversation=backend-conversation&item=item-1",
+                }),
+            );
+        },
+    );
 
     it("opens a saved document as that document, with the chat's version", () => {
         const { linkHandler } = renderCard({ saved: "r/1" });
@@ -519,16 +547,23 @@ describe("ConversationPublisherDocumentContent", () => {
         expect(linkHandler).toHaveBeenCalledWith(expect.objectContaining({ newTab: true }));
     });
 
-    it("assigns the location instead of calling the link handler when native links are allowed", () => {
-        const location = { href: "" };
-        Object.defineProperty(window, "location", { configurable: true, value: location });
-        const { linkHandler } = renderCard({ allowNativeLinks: true });
+    it.each([false, true])(
+        "uses native links with the backend conversation ID (Publisher v2: %s)",
+        (isPublisherV2Enabled) => {
+            const location = { href: "" };
+            Object.defineProperty(window, "location", { configurable: true, value: location });
+            const { linkHandler } = renderCard({
+                allowNativeLinks: true,
+                isPublisherV2Enabled,
+                documentV2: isPublisherV2Enabled ? DOCUMENT_V2 : undefined,
+            });
 
-        fireEvent.click(openButton());
+            fireEvent.click(openButton());
 
-        expect(location.href).toBe("/workspace/ws-1/reports/new?conversation=conv-1&item=item-1");
-        expect(linkHandler).not.toHaveBeenCalled();
-    });
+            expect(location.href).toBe("/workspace/ws-1/reports/new?conversation=conv-1&item=item-1");
+            expect(linkHandler).not.toHaveBeenCalled();
+        },
+    );
 
     it.each([
         ["there is no conversation", { conversationId: null }],
@@ -576,9 +611,17 @@ describe("ConversationPublisherDocumentContent", () => {
         expect(view.container.textContent).toBe("");
     });
 
-    it("shows nothing in a preview conversation, which the publisher app cannot read", () => {
-        const { view } = renderCard({ isPreview: true });
+    it("shows the document in an agent preview, but cannot open it there", async () => {
+        const { linkHandler } = renderCard({ isPreview: true });
 
-        expect(view.container.textContent).toBe("");
+        expect(screen.getByText("Quarterly review")).toBeTruthy();
+        expect((openButton() as HTMLButtonElement).disabled).toBe(true);
+        fireEvent.click(openButton());
+        expect(linkHandler).not.toHaveBeenCalled();
+
+        fireEvent.mouseEnter(openButton().parentElement!);
+        expect(await screen.findByRole("tooltip")).toHaveTextContent(
+            "Documents can't be opened from the agent preview.",
+        );
     });
 });

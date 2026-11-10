@@ -63,8 +63,8 @@ export interface IRemoteModuleSecurityMetadata {
 }
 
 /**
- * Validates the build-time-baked security metadata of a loaded remote module (a pluggable app or a
- * headless module) against the current platform context.
+ * Validates the build-time-baked security metadata of a loaded remote module (a pluggable app, a
+ * headless module or a host UI module) against the current platform context.
  *
  * @remarks
  * Returns `undefined` when the module is not subject to these checks (i.e. it
@@ -109,6 +109,20 @@ export function validateRemoteModuleSecurity(
     }
 
     return undefined;
+}
+
+/**
+ * Describes a security failure for logs and lifecycle reports.
+ */
+export function describeSecurityFailure(failure: AppSecurityFailure): string {
+    switch (failure.kind) {
+        case "organization-not-allowed":
+            return "the module build does not allow this organization";
+        case "build-expired":
+            return "the module build is older than the allowed freshness window";
+        case "metadata-missing":
+            return "the module build has no valid allowedOrganizations and buildTimestamp";
+    }
 }
 
 /**

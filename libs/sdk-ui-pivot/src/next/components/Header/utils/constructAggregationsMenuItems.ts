@@ -1,6 +1,5 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { compact } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import {
@@ -10,6 +9,7 @@ import {
     type TotalType,
     newTotal,
 } from "@gooddata/sdk-model";
+import { _compact } from "@gooddata/util";
 
 import { messages } from "../../../../locales.js";
 import { DEFAULT_TOTAL_FUNCTIONS } from "../../../constants/internal.js";
@@ -71,7 +71,7 @@ const createOtherAttributeTotalItems = (
     isColumn: boolean,
     intl: IntlShape,
 ): IAggregationsSubMenuItem[] => {
-    return compact(
+    return _compact(
         attributes.map((attribute) => {
             // There may be multiple measures under the same attribute,
             // so we need to create multiple total definitions.
@@ -124,7 +124,7 @@ const constructAggregationsSubMenuItems = (
     isColumn: boolean,
     intl: IntlShape,
 ): IAggregationsSubMenuItem[] => {
-    return compact([
+    return _compact([
         createMainAttributeTotalItem(
             mainAttribute,
             totalType,

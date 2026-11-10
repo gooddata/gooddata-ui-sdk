@@ -40,6 +40,7 @@
     "languageDialog.select.searchLabel": "Cari bahasa",
     "languageDialog.select.searchPlaceholder": "Cari…",
     "languageDialog.select.noMatch": "Tidak ada bahasa yang cocok.",
+    "languageDialog.saving": "Mengubah bahasa…",
     "languageDialog.error": "Kami tidak dapat mengubah bahasa. Coba lagi.",
     "languageDialog.success": "Bagus! Kami telah mengubah bahasa!"
 }

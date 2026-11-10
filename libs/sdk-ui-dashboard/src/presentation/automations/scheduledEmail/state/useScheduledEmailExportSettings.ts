@@ -2,8 +2,6 @@
 
 import { type Dispatch, type SetStateAction, useCallback, useRef } from "react";
 
-import { invariant } from "ts-invariant";
-
 import {
     type DashboardAttachmentType,
     type FilterContextItem,
@@ -100,7 +98,7 @@ export function useScheduledEmailExportSettings({
         [setEditedAutomation],
     );
 
-    // Re-derived locally (not passed as a prop) so that `invariant(isWidget, ...)` below narrows
+    // Re-derived locally (not passed as a prop) so that the `isWidget` check below narrows
     // `widget`/`insight` via TS's aliased-condition control-flow analysis — this requires the boolean
     // to be declared from those exact variables in this same scope, same as in the parent.
     const isWidget = !!widget && !!insight;
@@ -160,7 +158,6 @@ export function useScheduledEmailExportSettings({
 
     const onWidgetAttachmentsChange = useCallback(
         (formats: WidgetAttachmentType[]): void => {
-            invariant(isWidget, "Widget or insight is missing in scheduling dialog context.");
             setEditedAutomation((s) => {
                 const currentExportDefinitions = s.exportDefinitions || [];
 
@@ -181,19 +178,21 @@ export function useScheduledEmailExportSettings({
                     formatsToKeep.includes(exportDefinition.requestPayload.format),
                 );
 
-                const newExportDefinitions = formatsToAdd.map((format) =>
-                    newWidgetExportDefinitionMetadataObjectDefinition({
-                        insight,
-                        widget,
-                        dashboardId: dashboardId!,
-                        format,
-                        widgetFilters: effectiveWidgetFilters,
-                        widgetFiltersWithInsight: effectiveWidgetFiltersWithInsight,
-                        dashboardFilters: effectiveDashboardFilters,
-                        defaultPdfPageSize,
-                        timezoneId: exportTimezoneId,
-                    }),
-                );
+                const newExportDefinitions = isWidget
+                    ? formatsToAdd.map((format) =>
+                          newWidgetExportDefinitionMetadataObjectDefinition({
+                              insight,
+                              widget,
+                              dashboardId: dashboardId!,
+                              format,
+                              widgetFilters: effectiveWidgetFilters,
+                              widgetFiltersWithInsight: effectiveWidgetFiltersWithInsight,
+                              dashboardFilters: effectiveDashboardFilters,
+                              defaultPdfPageSize,
+                              timezoneId: exportTimezoneId,
+                          }),
+                      )
+                    : [];
 
                 const updatedExportDefinitions = [...keptExportDefinitions, ...newExportDefinitions];
                 return withRebuiltExportDefinitions(

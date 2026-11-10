@@ -1,9 +1,9 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
-import { compact } from "lodash-es";
 import { call, put, select } from "redux-saga/effects";
 
 import { type IWidget, type ObjRef, isDrillToDashboard, isInsightWidget } from "@gooddata/sdk-model";
+import { _compact } from "@gooddata/util";
 
 import { selectAccessibleDashboardsMap } from "../../../store/accessibleDashboards/accessibleDashboardsSelectors.js";
 import { inaccessibleDashboardsActions } from "../../../store/inaccessibleDashboards/index.js";
@@ -18,7 +18,7 @@ export function* loadInaccessibleDashboards(ctx: DashboardContext, widgets: IWid
     const dashboardDrillTargets = widgets
         .filter(isInsightWidget)
         .flatMap(({ drills }) => drills.filter(isDrillToDashboard));
-    const dashboardDrillTargetRefs = compact(dashboardDrillTargets.map(({ target }) => target));
+    const dashboardDrillTargetRefs = _compact(dashboardDrillTargets.map(({ target }) => target));
     const unknownDashboardDrillTargetRefs = dashboardDrillTargetRefs.filter(
         (ref) => !accessibleDashboardsMap.get(ref),
     );

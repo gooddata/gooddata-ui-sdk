@@ -40,6 +40,7 @@
     "languageDialog.select.searchLabel": "搜索语言",
     "languageDialog.select.searchPlaceholder": "搜索…",
     "languageDialog.select.noMatch": "没有匹配的语言。",
+    "languageDialog.saving": "正在更改语言……",
     "languageDialog.error": "无法更改语言。请重试。",
     "languageDialog.success": "很好！我们已更改语言！"
 }

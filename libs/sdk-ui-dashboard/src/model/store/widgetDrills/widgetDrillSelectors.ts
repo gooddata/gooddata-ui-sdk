@@ -1,7 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
-import { compact } from "lodash-es";
 
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
@@ -40,6 +39,7 @@ import {
     type IHeaderPredicate,
 } from "@gooddata/sdk-ui";
 import { isInsightKeyDriverAnalysisEnabled } from "@gooddata/sdk-ui-ext";
+import { _compact } from "@gooddata/util";
 
 import { type ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import {
@@ -113,7 +113,7 @@ function drillDefinitionToPredicates(drill: DrillDefinition): IHeaderPredicate[]
     }
 
     // add drillable items for all three types of objRefs that the origin measure can be
-    return compact([
+    return _compact([
         isLocalIdRef(origin) && HeaderPredicates.localIdentifierMatch(origin.localIdentifier),
         isIdentifierRef(origin) && HeaderPredicates.identifierMatch(origin.identifier),
         isUriRef(origin) && HeaderPredicates.uriMatch(origin.uri),
@@ -241,7 +241,7 @@ function getDescendantsForDrillAttribute(
 ): HierarchyDescendant[] {
     const attributeRef = drill.attribute.attributeHeader.formOf.ref;
 
-    return compact(
+    return _compact(
         allCatalogAttributeHierarchies.map((hierarchy) =>
             findDescendantForAttribute(
                 hierarchy,
@@ -609,7 +609,7 @@ const selectCrossFilteringByWidgetRef: (
                     drillAttribute.attribute.attributeHeader.localIdentifier,
                 ),
             );
-            const measurePredicates = compact(
+            const measurePredicates = _compact(
                 availableDrillTargets?.availableDrillTargets?.measures?.map((drillMeasure) =>
                     HeaderPredicates.localIdentifierMatch(
                         drillMeasure.measure.measureHeaderItem.localIdentifier,
@@ -696,7 +696,7 @@ const selectKdaByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWit
                 }
 
                 // construct predicates for all available attributes and measures
-                const measurePredicates = compact(
+                const measurePredicates = _compact(
                     availableDrillTargets?.availableDrillTargets?.measures?.map((drillMeasure) => {
                         const isMetricDisabled = getMetricDisabled(
                             widgetInsight,
@@ -1031,7 +1031,7 @@ export const selectConfiguredAndImplicitDrillsByWidgetRef: (
             // disable drilling until all necessary items are loaded (catalog, dash list, ...)
             const drillActive = catalogIsLoaded && accessibleDashboardsLoaded;
             return drillActive
-                ? compact([
+                ? _compact([
                       ...configuredDrills,
                       ...implicitDrillDownDrills,
                       ...(isDrillToUrlDisabled ? [] : implicitDrillToUrlDrills),

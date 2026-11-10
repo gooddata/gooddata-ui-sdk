@@ -11,6 +11,12 @@ export const _camelCase: (string?: string) => string;
 export function _capitalize(string?: string): string;
 
 // @internal
+export function _clamp(number: number, lower: number, upper: number): number;
+
+// @internal (undocumented)
+export function _clamp(number: number, upper: number): number;
+
+// @internal
 export function _cloneDeep<T>(value: T): T;
 
 // @internal
@@ -72,6 +78,27 @@ export type _Dictionary<T> = {
 
 // @internal
 export function _difference<T>(array: _List<T> | null | undefined, ...values: _List<T>[]): T[];
+
+// @internal
+export function _differenceBy<T1, T2>(array: _List<T1> | null | undefined, values: _List<T2>, iteratee: _ValueIteratee<T1 | T2>): T1[];
+
+// @internal (undocumented)
+export function _differenceBy<T1, T2, T3>(array: _List<T1> | null | undefined, values1: _List<T2>, values2: _List<T3>, iteratee: _ValueIteratee<T1 | T2 | T3>): T1[];
+
+// @internal (undocumented)
+export function _differenceBy<T1, T2, T3, T4>(array: _List<T1> | null | undefined, values1: _List<T2>, values2: _List<T3>, values3: _List<T4>, iteratee: _ValueIteratee<T1 | T2 | T3 | T4>): T1[];
+
+// @internal (undocumented)
+export function _differenceBy<T1, T2, T3, T4, T5>(array: _List<T1> | null | undefined, values1: _List<T2>, values2: _List<T3>, values3: _List<T4>, values4: _List<T5>, iteratee: _ValueIteratee<T1 | T2 | T3 | T4 | T5>): T1[];
+
+// @internal (undocumented)
+export function _differenceBy<T1, T2, T3, T4, T5, T6>(array: _List<T1> | null | undefined, values1: _List<T2>, values2: _List<T3>, values3: _List<T4>, values4: _List<T5>, values5: _List<T6>, iteratee: _ValueIteratee<T1 | T2 | T3 | T4 | T5 | T6>): T1[];
+
+// @internal (undocumented)
+export function _differenceBy<T1, T2, T3, T4, T5, T6, T7>(array: _List<T1> | null | undefined, values1: _List<T2>, values2: _List<T3>, values3: _List<T4>, values4: _List<T5>, values5: _List<T6>, ...values: (_List<T7> | _ValueIteratee<T1 | T2 | T3 | T4 | T5 | T6 | T7>)[]): T1[];
+
+// @internal (undocumented)
+export function _differenceBy<T>(array: _List<T> | null | undefined, ...values: _List<T>[]): T[];
 
 // @internal (undocumented)
 export type EmptyObject = Record<never, never>;
@@ -425,6 +452,9 @@ export function _uniqBy<T>(array: _List<T> | null | undefined, iteratee: _ValueI
 
 // @internal
 export function _uniqWith<T>(array: _List<T> | null | undefined, comparator?: _Comparator<T>): T[];
+
+// @internal
+export function _update(object: object, path: _PropertyPath, updater: (value: any) => any): any;
 
 // @internal
 export type _ValueIteratee<T> = ((value: T) => _NotVoid) | _IterateeShorthand<T>;

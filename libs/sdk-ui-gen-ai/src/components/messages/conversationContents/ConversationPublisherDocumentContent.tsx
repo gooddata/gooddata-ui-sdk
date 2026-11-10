@@ -7,7 +7,7 @@ import { useIntl } from "react-intl";
 import { useSelector } from "react-redux";
 
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { UiButton, UiIcon } from "@gooddata/sdk-ui-kit";
+import { UiButton, UiIcon, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import type { IChatConversationLocalItem } from "../../../model.js";
 import {
@@ -35,11 +35,12 @@ export function ConversationPublisherDocumentContent({
     const intl = useIntl();
     const config = useConfig();
     const workspaceId = useWorkspaceStrict();
-    const conversationId = useSelector(conversationSelector)?.id;
+    const conversation = useSelector(conversationSelector);
+    const conversationId = conversation?.id;
     const settings = useSelector(settingsSelector);
     const isPreview = useSelector(isPreviewSelector);
 
-    if (!settings?.enableBusinessBriefingReportsApp || isPreview) {
+    if (!settings?.enableBusinessBriefingReportsApp) {
         return null;
     }
 
@@ -66,16 +67,18 @@ export function ConversationPublisherDocumentContent({
     const { saved, baseDocumentId } = part;
 
     // Opening a drafted document needs the create-document permission; without it the Open button is disabled.
-    const itemUrl = config.canCreateDocument
-        ? getPublisherDocumentItemUrl({
-              workspaceId,
-              saved,
-              baseDocumentId,
-              conversationId,
-              itemId: message.id,
-              format,
-          })
-        : undefined;
+    // The publisher app cannot read an agent preview's conversation, so the document cannot open from there.
+    const itemUrl =
+        config.canCreateDocument && !isPreview
+            ? getPublisherDocumentItemUrl({
+                  workspaceId,
+                  saved,
+                  baseDocumentId,
+                  conversationId,
+                  itemId: message.id,
+                  format,
+              })
+            : undefined;
     // The card only opens the version: a change to the document in the editor is applied there by the editor.
     const buttonLabel = intl.formatMessage({ id: "gd.gen-ai.publisherDocument.open" });
 
@@ -93,7 +96,8 @@ export function ConversationPublisherDocumentContent({
                   preventDefault: e.preventDefault.bind(e),
                   itemUrl,
                   action: "open",
-                  conversationId,
+                  conversationId: conversation?.localId,
+                  threadId: conversation?.id,
               });
           }
         : undefined;
@@ -132,11 +136,20 @@ export function ConversationPublisherDocumentContent({
                     </div>
                 </div>
                 <div className="gd-gen-ai-chat__conversation__item__content-publisherDocument-item-buttons">
-                    <UiButton
-                        label={buttonLabel}
-                        variant="secondary"
-                        isDisabled={!handleOpen}
-                        onClick={handleOpen}
+                    <UiTooltip
+                        disabled={!isPreview}
+                        triggerBy={["hover", "focus"]}
+                        arrowPlacement="bottom"
+                        optimalPlacement
+                        anchor={
+                            <UiButton
+                                label={buttonLabel}
+                                variant="secondary"
+                                isDisabled={!handleOpen}
+                                onClick={handleOpen}
+                            />
+                        }
+                        content={intl.formatMessage({ id: "gd.gen-ai.publisherDocument.previewOnly" })}
                     />
                 </div>
             </div>

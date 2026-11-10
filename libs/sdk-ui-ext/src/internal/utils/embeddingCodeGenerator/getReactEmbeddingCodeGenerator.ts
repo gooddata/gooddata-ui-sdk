@@ -1,9 +1,9 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { compact, groupBy, partition, sortBy, uniqBy } from "lodash-es";
+import { groupBy, partition, sortBy, uniqBy } from "lodash-es";
 
 import { type IInsightDefinition, factoryNotationFor } from "@gooddata/sdk-model";
-import { _isEmpty } from "@gooddata/util";
+import { _compact, _isEmpty } from "@gooddata/util";
 
 import { type IEmbeddingCodeConfig } from "../../interfaces/VisualizationDescriptor.js";
 
@@ -87,9 +87,9 @@ const renderImports = (imports: IImportInfo[]) =>
         .map(([pkg, imports]: [string, IImportInfo[]]) => {
             const [[defaultImport], namedImports] = partition(imports, (i) => i.importType === "default");
 
-            return compact([
+            return _compact([
                 "import",
-                compact([
+                _compact([
                     defaultImport?.name,
                     namedImports.length &&
                         `{ ${sortBy(
@@ -192,7 +192,7 @@ export function getReactEmbeddingCodeGenerator<TProps extends object>({
         const props = insightToProps(normalizedInsight, config?.context);
         const { importsUsed, propDeclarations, propUsages } = walkProps(props, additionalFactories, config);
 
-        const imports = compact([REACT_IMPORT_INFO, ...importsUsed, component]);
+        const imports = _compact([REACT_IMPORT_INFO, ...importsUsed, component]);
 
         const height = config?.height ?? DEFAULT_HEIGHT;
         const stringifiedHeight = typeof height === "string" ? `"${height}"` : height.toString();

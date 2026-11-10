@@ -34,6 +34,7 @@ import { setActiveAppAttribute } from "../lib/activeAppAttribute.js";
 import { activateAppStylesheets, deactivateAppStylesheets } from "../lib/stylesheetRegistry.js";
 import {
     type AppSecurityFailure,
+    describeSecurityFailure,
     getSecuredRemoteAppValidUntil,
     validateAppSecurity,
 } from "../loader/appSecurityValidation.js";
@@ -283,7 +284,7 @@ export function PluggableApplicationRenderer({
                         SECURITY_FAILURE_MESSAGES[securityFailure.kind],
                     );
                     console.error(
-                        `[host-runtime/renderer] Refusing to mount app "${app.id}": ${securityFailure.kind}.`,
+                        `[host-runtime/renderer] Refusing to mount app "${app.id}": ${describeSecurityFailure(securityFailure)}.`,
                         securityFailure,
                     );
                     lifecycle?.onLoadFailed?.(app.id, securityFailure.kind, {
@@ -411,7 +412,7 @@ export function PluggableApplicationRenderer({
         if (securityFailure) {
             const message = intlRef.current.formatMessage(SECURITY_FAILURE_MESSAGES[securityFailure.kind]);
             console.error(
-                `[host-runtime/renderer] Unmounting app "${mounted.app.id}" after context change: ${securityFailure.kind}.`,
+                `[host-runtime/renderer] Unmounting app "${mounted.app.id}" after context change: ${describeSecurityFailure(securityFailure)}.`,
                 securityFailure,
             );
             mountHandleRef.current = undefined;

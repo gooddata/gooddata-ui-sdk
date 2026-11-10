@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { compact, intersectionWith, uniq } from "lodash-es";
+import { intersectionWith, uniq } from "lodash-es";
 import { InvariantError } from "ts-invariant";
 
 import { type AfmValidObjectsQuery, type AfmValidObjectsQueryTypesEnum } from "@gooddata/api-client-tiger";
@@ -38,6 +38,7 @@ import {
     isRankingFilter,
     measureLocalId,
 } from "@gooddata/sdk-model";
+import { _compact } from "@gooddata/util";
 
 import { jsonApiIdToObjRef } from "../../../convertors/fromBackend/ObjRefConverter.js";
 import { convertAfmFilters } from "../../../convertors/toBackend/afm/AfmFiltersConverter.js";
@@ -195,7 +196,7 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
         const { filters: afmFilters, auxMeasures } = convertAfmFilters(measures, sanitizedFilters);
 
         const afmValidObjectsQuery: AfmValidObjectsQuery = {
-            types: compact(relevantRestrictingTypes.map(mapToTigerType)),
+            types: _compact(relevantRestrictingTypes.map(mapToTigerType)),
             afm: {
                 attributes: attributes.map(convertAttribute),
                 measures: measures.map(convertMeasure),

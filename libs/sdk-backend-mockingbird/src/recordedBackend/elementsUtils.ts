@@ -1,6 +1,6 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
-import { compact, intersectionBy } from "lodash-es";
+import { intersectionBy } from "lodash-es";
 
 import {
     type ElementsQueryOptionsElementsSpecification,
@@ -23,6 +23,7 @@ import {
     measureItem,
     objRefToString,
 } from "@gooddata/sdk-model";
+import { _compact } from "@gooddata/util";
 
 import { type AttributeElementsFiltering, type AttributeElementsFilteringPredicate } from "./types.js";
 
@@ -76,7 +77,7 @@ export const resolveLimitingItems =
         const dateFilterLimiters = dateFilters.map(
             dateFilterPredicateFactory(attributeElementsFiltering.dateFilters),
         );
-        const allLimiters = compact([...measureLimiters, ...attributeFilterLimiters, ...dateFilterLimiters]);
+        const allLimiters = _compact([...measureLimiters, ...attributeFilterLimiters, ...dateFilterLimiters]);
 
         // filter by all the limiters separately so that they can make use of the index
         // independently of each other

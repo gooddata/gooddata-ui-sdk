@@ -2,10 +2,10 @@
 
 import { type ReactNode } from "react";
 
-import { compact } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { UiIcon } from "@gooddata/sdk-ui-kit";
+import { _compact } from "@gooddata/util";
 
 import { type IExecutionResultEnvelope } from "../../../../model/store/executionResults/types.js";
 import { InsightAlerts } from "../../insight/configuration/InsightAlerts.js";
@@ -62,7 +62,7 @@ const getPresentationExportItems = (
         onClick: onExportPowerPointPresentation,
     };
 
-    return compact([isExportPngImageVisible && pngImageItem, pdfPresentationItem, pptxPresentationItem]);
+    return _compact([isExportPngImageVisible && pngImageItem, pdfPresentationItem, pptxPresentationItem]);
 };
 
 /**
@@ -172,7 +172,7 @@ const getDataExportGroupItems = (
         onClick: onExportRawCSV,
     };
 
-    return compact([xlsxItem, isExportPdfTabularVisible && pdfTabularItem, csvFormattedItem, csvRawItem]);
+    return _compact([xlsxItem, isExportPdfTabularVisible && pdfTabularItem, csvFormattedItem, csvRawItem]);
 };
 
 const getDataExportGroup = (
@@ -437,5 +437,5 @@ export function getDefaultInsightMenuItems(
         isAlertManagementVisible && availableMenuItems.alertsManagement,
     ];
 
-    return compact(menuItems);
+    return _compact(menuItems);
 }

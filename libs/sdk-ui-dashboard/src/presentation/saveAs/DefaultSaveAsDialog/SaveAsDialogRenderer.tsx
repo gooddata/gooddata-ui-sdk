@@ -2,10 +2,10 @@
 
 import { type FocusEvent, memo, useCallback, useState } from "react";
 
-import { compact } from "lodash-es";
 import { defineMessage, useIntl } from "react-intl";
 
 import { ConfirmDialog, Input, Message, Typography } from "@gooddata/sdk-ui-kit";
+import { _compact } from "@gooddata/util";
 
 import {
     DASHBOARD_TITLE_MAX_LENGTH,
@@ -86,7 +86,7 @@ export const SaveAsNewDashboardDialog = memo(function SaveAsNewDashboardDialog({
     }, [canCreateDashboard, dashboardTitle, isInEditMode, onSubmit]);
 
     const getNoteText = useCallback(() => {
-        const messageId = compact([isKpiWidgetEnabled && messages.saveAsNewAlertsMessage.id]).at(0);
+        const messageId = _compact([isKpiWidgetEnabled && messages.saveAsNewAlertsMessage.id]).at(0);
 
         return messageId ? intl.formatMessage({ id: messageId }) : "";
     }, [intl, isKpiWidgetEnabled]);

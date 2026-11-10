@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from "react";
 
 import stringify from "json-stable-stringify";
-import { compact } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { idRef, isDashboard, objRefToString } from "@gooddata/sdk-model";
@@ -15,6 +14,7 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { type DashboardConfig, type IDashboardBaseProps } from "@gooddata/sdk-ui-dashboard";
+import { _compact } from "@gooddata/util";
 
 import { DashboardLoader } from "./dashboardLoader.js";
 import { type DashboardLoadResult, type IDashboardLoader } from "./loader.js";
@@ -120,7 +120,7 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
             loader = DashboardLoader.staticOnly();
         }
 
-        const extraPluginsArr = Array.isArray(extraPlugins) ? extraPlugins : compact([extraPlugins]);
+        const extraPluginsArr = Array.isArray(extraPlugins) ? extraPlugins : _compact([extraPlugins]);
         initializeLoader(loader, baseProps, extraPluginsArr, clientWorkspace);
 
         // oxlint-disable-next-line eslint-js/no-console

@@ -2,10 +2,10 @@
 
 import { type ReactElement, type ReactNode, useCallback } from "react";
 
-import { compact } from "lodash-es";
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 
 import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
+import { _compact } from "@gooddata/util";
 
 import { deleteDashboard } from "../../model/commands/dashboard.js";
 import { useDashboardDispatch, useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
@@ -87,7 +87,7 @@ export function DefaultDeleteDialog({
     }
 
     // Names of the object types deleted along with the dashboard, woven into one sentence.
-    const objectTypes = compact([
+    const objectTypes = _compact([
         showAlertsMessage && intl.formatMessage(deleteMessages.alerts),
         showSchedulesMessage && intl.formatMessage(deleteMessages.schedules),
     ]);

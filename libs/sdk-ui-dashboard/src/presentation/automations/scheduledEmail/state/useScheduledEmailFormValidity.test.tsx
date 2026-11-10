@@ -140,6 +140,7 @@ const BASE_PROPS: IUseScheduledEmailFormValidityProps = {
     isTitleValid: true,
     isSubjectValid: true,
     isOnMessageValid: true,
+    isWidgetInsightUnavailable: false,
 };
 
 // ---------------------------------------------------------------------------
@@ -388,6 +389,14 @@ describe("useScheduledEmailFormValidity — validationErrorMessage / isParentVal
 
         expect(result.current.validationErrorMessage).toBe("dialogs.schedule.email.widgetError");
         expect(result.current.isParentValid).toBe(false);
+    });
+
+    it("returns visualizationUnavailable message without blocking submit when the widget's insight is unavailable", () => {
+        const { result } = renderValidityHook({ isWidgetInsightUnavailable: true });
+
+        expect(result.current.validationErrorMessage).toBe("dialogs.schedule.email.visualizationUnavailable");
+        expect(result.current.isParentValid).toBe(true);
+        expect(result.current.isSubmitDisabled).toBeFalsy();
     });
 });
 

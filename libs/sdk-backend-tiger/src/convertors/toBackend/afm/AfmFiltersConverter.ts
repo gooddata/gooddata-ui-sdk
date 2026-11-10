@@ -1,7 +1,5 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { compact } from "lodash-es";
-
 import { type FilterDefinition, type MeasureItem } from "@gooddata/api-client-tiger";
 import {
     type IFilter,
@@ -18,6 +16,7 @@ import {
     measureLocalId,
     modifySimpleMeasure,
 } from "@gooddata/sdk-model";
+import { _compact } from "@gooddata/util";
 
 import { convertFilter, newFilterWithApplyOnResult } from "./FilterConverter.js";
 import { convertMeasure } from "./MeasureConverter.js";
@@ -126,7 +125,7 @@ export function convertAfmFilters(
         }
     });
     return {
-        filters: compact(transformedFilters.map((f) => convertFilter(f, keepEmptyAttributeFilters))),
+        filters: _compact(transformedFilters.map((f) => convertFilter(f, keepEmptyAttributeFilters))),
         auxMeasures: Array.from(computeRatioMeasureNumerators.values()).map(convertMeasure),
     };
 }

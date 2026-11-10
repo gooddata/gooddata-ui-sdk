@@ -40,6 +40,7 @@
     "languageDialog.select.searchLabel": "Buscar idiomas",
     "languageDialog.select.searchPlaceholder": "Buscar…",
     "languageDialog.select.noMatch": "Ningún idioma coincide.",
+    "languageDialog.saving": "Cambiando idioma…",
     "languageDialog.error": "No pudimos cambiar el idioma. Inténtelo de nuevo.",
     "languageDialog.success": "¡Listo! ¡Cambiamos el idioma!"
 }

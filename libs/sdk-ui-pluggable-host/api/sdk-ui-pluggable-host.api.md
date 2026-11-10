@@ -9,6 +9,7 @@ import { ErrorInfo } from 'react';
 import { HeadlessModuleRegistryItem } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IHeadlessModule } from '@gooddata/sdk-pluggable-application-model';
+import { IHostUiModule } from '@gooddata/sdk-pluggable-application-model';
 import { IHostUiNotification } from '@gooddata/sdk-pluggable-application-model';
 import { ILocale } from '@gooddata/sdk-model';
 import { IPlatformContext } from '@gooddata/sdk-pluggable-application-model';
@@ -232,10 +233,19 @@ export function LanguageMobileSelect(input: ILanguageMobileSelectProps): JSX.Ele
 // @internal
 export const LANGUAGES: ILocale[];
 
+// @alpha
+export const LOCAL_HOST_UI_MODULE_ID = "local-host-ui";
+
 // @alpha (undocumented)
 export type LocalHeadlessModuleLoader = () => Promise<{
     default?: IHeadlessModule | unknown;
     headlessModule?: IHeadlessModule;
+}>;
+
+// @alpha (undocumented)
+export type LocalHostUiModuleLoader = () => Promise<{
+    default?: IHostUiModule | unknown;
+    hostUiModule?: IHostUiModule;
 }>;
 
 // @alpha (undocumented)
@@ -251,7 +261,7 @@ export function mapLegacyUrlToHost(location: ILegacyLocation): string | null;
 export type PluggableModuleFailurePhase = "load" | "security" | "mount" | "update" | "unmount";
 
 // @alpha
-export type PluggableModuleKind = "application" | "headless";
+export type PluggableModuleKind = "application" | "headless" | "host-ui";
 
 // @alpha
 export function registerAppLifecycleCallbacks(callbacks: IAppLifecycleCallbacks): void;
@@ -270,6 +280,9 @@ export function registerLocalHeadlessModuleLoaders(loaders: Record<string, Local
 
 // @alpha
 export function registerLocalHeadlessModules(modules: HeadlessModuleRegistryItem[]): void;
+
+// @alpha
+export function registerLocalHostUiModuleLoader(loader: LocalHostUiModuleLoader | undefined): void;
 
 // @alpha
 export function registerPlatformContextCallbacks(callbacks: ILoadPlatformContextCallbacks): void;

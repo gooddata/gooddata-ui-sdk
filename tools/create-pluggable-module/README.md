@@ -12,8 +12,8 @@ npm init @gooddata/pluggable-module
 
 - **App name** — must start with `gdc-` (e.g. `gdc-revenue-tracker`)
 - **Title** — the en-US display name shown in the host menu
-- **Module kind** — `application` (a pluggable app with a route and a menu item) or `headless` (a module without UI that the host mounts once per page, for example a telemetry provider)
-- **Scope** — `workspace` (per-workspace app) or `organization` (org-wide app). Not asked for a headless module.
+- **Module kind** — `application` (a pluggable app with a route and a menu item), `headless` (a module without UI that the host mounts once per page, for example a telemetry provider) or `host-ui` (a host UI module that replaces the default header, navigation and layout of the host)
+- **Scope** — `workspace` (per-workspace app) or `organization` (org-wide app). Asked only for an application.
 - **Destination path** _(optional)_ — defaults to `./modules/<app-name>/`
 
 The scaffolder detects your package manager from the repo's lockfile (`npm`, `yarn`, `pnpm`) and runs `install` once the files are in place. If a `rush.json` is found, it also registers the new packages in it so `rush update` picks them up.
@@ -25,6 +25,8 @@ modules/<app-name>/
 ├── module/      # The federated pluggable app — Module Federation remote, built with Vite.
 └── harness/     # Standalone host that imports the module directly for fast local dev.
 ```
+
+For a host UI module, `module/` exposes `./hostUiModule`, which you register as `uiModule` of the registry, and `harness/` runs the real host runtime against your backend with the module in place of the default chrome. `module/README.md` explains the mount contract, the build and the registry entry.
 
 For a headless module, `module/` exposes `./headlessModule` and `harness/` is a page without a backend that mounts the module and sends it sample telemetry. `module/README.md` explains the build, the deployment, the registry entry and the CSP hosts, and has provider recipes for Amplitude, Mixpanel, PostHog and Pendo.
 

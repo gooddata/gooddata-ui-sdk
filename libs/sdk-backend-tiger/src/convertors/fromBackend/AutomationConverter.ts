@@ -1,7 +1,5 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { compact } from "lodash-es";
-
 import {
     type AiAlertProposal,
     type AnomalyDetectionWrapper,
@@ -69,6 +67,7 @@ import {
     newAllTimeDashboardDateFilter,
     newRelativeDashboardDateFilter,
 } from "@gooddata/sdk-model";
+import { _compact } from "@gooddata/util";
 
 import { fixNumber } from "../../utils/fixNumber.js";
 
@@ -239,7 +238,7 @@ export function convertAutomation(
 
     const notificationChannel = relationships?.notificationChannel?.data?.id;
     const exportDefinitionsIds = relationships?.exportDefinitions?.data?.map((ed) => ed.id) ?? [];
-    const includedExportDefinitions = compact(
+    const includedExportDefinitions = _compact(
         exportDefinitionsIds.map((exportDefinitionId) =>
             included.find((i) => i.type === "exportDefinition" && i.id === exportDefinitionId),
         ),

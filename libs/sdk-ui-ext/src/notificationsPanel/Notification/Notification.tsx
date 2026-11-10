@@ -2,7 +2,6 @@
 
 import { Fragment, type KeyboardEvent, type ReactNode, useCallback } from "react";
 
-import { compact } from "lodash-es";
 import { FormattedDate, FormattedMessage, FormattedTime, defineMessages, useIntl } from "react-intl";
 
 import {
@@ -23,6 +22,7 @@ import {
     isActionKey,
     useToastMessage,
 } from "@gooddata/sdk-ui-kit";
+import { _compact } from "@gooddata/util";
 
 import { bem } from "../bem.js";
 import { Popup } from "../components/Popup.js";
@@ -52,7 +52,7 @@ function handleScheduleNotificationClick(
         addWarning(messages.notificationExpired);
         return;
     }
-    const downloadableExports = compact(exports.map(mapToDownloadableFile));
+    const downloadableExports = _compact(exports.map(mapToDownloadableFile));
     if (downloadableExports.length > 0) {
         void downloadFiles(downloadableExports);
     }
@@ -93,7 +93,7 @@ export function Notification({
     const isSliced = isAlertNotification && !!notification.details.data.alert.attribute;
     const hasTriggers = isAlertNotification && !!notification.details.data.alert.totalValueCount;
 
-    const exports = compact([
+    const exports = _compact([
         notification.details.data.visualExports,
         notification.details.data.tabularExports,
         notification.details.data.imageExports,
@@ -109,7 +109,7 @@ export function Notification({
 
     const { isError, errorTitle, errorMessage, traceId } = getNotificationErrorInfo(notification, exports);
 
-    const actions = compact([
+    const actions = _compact([
         hasFiltersOrParameters && isAlertNotification && <NotificationFiltersDetail items={filterItems} />,
         hasTriggers && isSliced && <NotificationTriggerDetail notification={notification} />,
         hasExports && <FileLink notification={notification} />,

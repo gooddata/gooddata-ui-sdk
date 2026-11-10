@@ -1,7 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
-import { compact, keyBy, sortBy } from "lodash-es";
+import { keyBy, sortBy } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { type IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
@@ -33,7 +33,7 @@ import {
     isObjRef,
     uriRef,
 } from "@gooddata/sdk-model";
-import { _isEmpty, _isEqual } from "@gooddata/util";
+import { _compact, _isEmpty, _isEqual } from "@gooddata/util";
 
 import { type ObjRefMap, newDisplayFormMap } from "../../../../_staging/metadata/objRefMap.js";
 import { createMemoizedSelector } from "../../_infra/selectors.js";
@@ -1072,7 +1072,7 @@ export const selectAttributeFilterDescendants: (localId: string) => DashboardSel
                     "Filter descendants cannot be computed as this backend supports circular dependencies in filters. Do not use this selector.",
                 );
 
-                const toCheck = compact([localId]);
+                const toCheck = _compact([localId]);
                 const result = new Set<string>();
 
                 while (toCheck.length) {

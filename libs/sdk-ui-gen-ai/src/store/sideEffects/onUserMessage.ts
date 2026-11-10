@@ -274,6 +274,7 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
                     evaluateMessageCompleteAction({
                         assistantMessageId: messageToComplete.localId,
                         conversationId: conversation?.localId ?? conversationState?.localId ?? "",
+                        threadId: conversation?.id || undefined,
                         cancelled: wasCanceled,
                         ...(responseCompleted && !wasCanceled ? { responseCompleted: true } : {}),
                     }),
@@ -480,6 +481,7 @@ function* evaluateUserConversationMessage(
                                 evaluateMessageCompleteAction({
                                     assistantMessageId: currentAssistantMessage.localId,
                                     conversationId: conversation.localId,
+                                    threadId: conversation.id || undefined,
                                 }),
                             );
                         }
@@ -508,6 +510,7 @@ function* evaluateUserConversationMessage(
                             content: localContent,
                             assistantMessageId: currentAssistantMessage.localId,
                             conversationId: conversation.localId,
+                            threadId: conversation.id || undefined,
                             interactionId: chunkInteractionId,
                             item: value,
                         }),
@@ -566,6 +569,7 @@ function* evaluateUserConversationMessage(
                                 evaluateMessageCompleteAction({
                                     assistantMessageId: currentAssistantMessage.localId,
                                     conversationId: conversation.localId,
+                                    threadId: conversation.id || undefined,
                                 }),
                             );
                         }
@@ -592,6 +596,7 @@ function* evaluateUserConversationMessage(
                             interactionId: chunkInteractionId,
                             content: value,
                             conversationId: conversation.localId,
+                            threadId: conversation.id || undefined,
                         }),
                     );
                 }

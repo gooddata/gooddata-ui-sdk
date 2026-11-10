@@ -1,9 +1,9 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { compact } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { type IRichTextWidget } from "@gooddata/sdk-model";
+import { _compact } from "@gooddata/util";
 
 import { eagerRemoveSectionItemByWidgetRef } from "../../../../model/commands/layout.js";
 import { type useDashboardDispatch } from "../../../../model/react/DashboardStoreProvider.js";
@@ -28,7 +28,7 @@ export function getDefaultRichTextEditMode(
     widget: IRichTextWidget,
     { intl, dispatch, enableRichTextWidgetFilterConfiguration = false }: RichTextMenuItemDependencies,
 ): IRichTextMenuItem[] {
-    return compact([
+    return _compact([
         enableRichTextWidgetFilterConfiguration && {
             type: "submenu",
             itemId: "ConfigurationPanelSubmenu",

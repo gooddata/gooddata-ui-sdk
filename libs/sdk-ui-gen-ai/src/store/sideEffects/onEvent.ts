@@ -328,7 +328,13 @@ export function* onNewMessage({ payload: message }: ReturnType<typeof newMessage
 }
 
 export function* onEvaluateMessageComplete({
-    payload: { assistantMessageId, cancelled, conversationId, responseCompleted },
+    payload: {
+        assistantMessageId,
+        cancelled,
+        conversationId,
+        threadId: originatingThreadId,
+        responseCompleted,
+    },
 }: ReturnType<typeof evaluateMessageCompleteAction>) {
     const message: MessageInfo | null = yield call(loadMessage, assistantMessageId, conversationId);
 
@@ -340,7 +346,7 @@ export function* onEvaluateMessageComplete({
     const conversation: IChatConversationLocal | undefined = conversationId
         ? yield select(conversationByIdOrLocalIdSelector, conversationId)
         : undefined;
-    const threadId: string | undefined = conversation?.id || conversationId;
+    const threadId: string | undefined = originatingThreadId || conversation?.id || undefined;
 
     eventDispatcher.dispatch({
         type: "chatAssistantMessage",
@@ -356,7 +362,7 @@ export function* onEvaluateMessageComplete({
 }
 
 export function* onEvaluateMessageStreaming({
-    payload: { assistantMessageId, conversationId },
+    payload: { assistantMessageId, conversationId, threadId: originatingThreadId },
 }: ReturnType<typeof evaluateMessageStreamingAction>) {
     const message: MessageInfo | null = yield call(loadMessage, assistantMessageId, conversationId);
 
@@ -368,7 +374,7 @@ export function* onEvaluateMessageStreaming({
     const conversation: IChatConversationLocal | undefined = conversationId
         ? yield select(conversationByIdOrLocalIdSelector, conversationId)
         : undefined;
-    const threadId: string | undefined = conversation?.id || conversationId;
+    const threadId: string | undefined = originatingThreadId || conversation?.id || undefined;
 
     if (message.skills?.length) {
         eventDispatcher.dispatch({
