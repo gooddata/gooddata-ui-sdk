@@ -27,6 +27,10 @@ const lastElementsRequest = () => {
     return calls[calls.length - 1][2].elementsRequest;
 };
 
+// Renders a parsed date as the ISO string of its fields: the parsed dates are floating, their UTC fields are
+// the fields of the backend value in every browser timezone.
+const isoDateFormatter = (value: Date) => new Date(value.getTime()).toISOString();
+
 describe("TigerWorkspaceElementsQuery", () => {
     // The service is imported dynamically from a fresh module registry so that it picks up the mock
     // above even when another (non-isolated) test file already imported it without it.
@@ -35,7 +39,7 @@ describe("TigerWorkspaceElementsQuery", () => {
     beforeAll(async () => {
         vi.resetModules();
         const { TigerWorkspaceElements } = await import("./index.js");
-        factory = new TigerWorkspaceElements(authCall, "workspace", (value) => value.toISOString());
+        factory = new TigerWorkspaceElements(authCall, "workspace", isoDateFormatter);
     });
 
     beforeEach(() => {
@@ -129,7 +133,7 @@ describe("TigerWorkspaceElementsQuery", () => {
                 },
             } as any);
         // the factory's date formatter renders the parsed date as an ISO string
-        const parsedDay = new Date(2026, 2, 15).toISOString();
+        const parsedDay = "2026-03-15T00:00:00.000Z";
 
         it("formats values of a DATE computed attribute without granularity as days", async () => {
             respond({ dataType: "DATE", format });
@@ -154,7 +158,7 @@ describe("TigerWorkspaceElementsQuery", () => {
                     format,
                     elements: [{ title: "2026-03-15 14:05:09", primaryTitle: "2026-03-15 14:05:09" }],
                 });
-                const parsedSecond = new Date(2026, 2, 15, 14, 5, 9).toISOString();
+                const parsedSecond = "2026-03-15T14:05:09.000Z";
 
                 const result = await factory.forDisplayForm(idRef("ca", "computedAttribute")).query();
 
@@ -219,15 +223,16 @@ describe("TigerWorkspaceElementsQuery", () => {
                     format: zonedFormat,
                     elements: [{ title: "2026-03-15 14:05:09", primaryTitle: "2026-03-15 14:05:09" }],
                 });
-                const dateFormatter = vi.fn((value: Date) => value.toISOString());
+                const dateFormatter = vi.fn(isoDateFormatter);
                 const Elements = factory.constructor as typeof TigerWorkspaceElementsClass;
 
                 const result = await new Elements(authCall, "workspace", dateFormatter)
                     .forDisplayForm(ref)
                     .query();
 
-                // the value is New York time, 4 hours behind UTC in daylight saving time
-                const parsed = "2026-03-15T18:05:09.000Z";
+                // the value stays the New York wall-clock the backend computed; the timezone is passed on
+                // to the formatter for the timezone tokens of the pattern
+                const parsed = "2026-03-15T14:05:09.000Z";
                 expect(dateFormatter).toHaveBeenCalledWith(
                     new Date(parsed),
                     "GDC.time.second",

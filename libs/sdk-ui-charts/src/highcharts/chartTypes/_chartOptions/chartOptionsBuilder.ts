@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { cloneDeep, without } from "lodash-es";
+import { without } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { type IDataView } from "@gooddata/sdk-backend-spi";
@@ -13,7 +13,7 @@ import {
     getMappingHeaderFormattedName,
 } from "@gooddata/sdk-ui";
 import { type IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
-import { _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty } from "@gooddata/util";
 
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { ViewByAttributesLimit } from "../../../interfaces/limits.js";
@@ -718,7 +718,7 @@ export function getChartOptions(
 
     if (isBubbleChart(type)) {
         const measures: (IMeasureDescriptor | null)[] = [];
-        const measureGroupCopy = cloneDeep(measureGroup);
+        const measureGroupCopy = _cloneDeep(measureGroup);
         const { xAxisProps, yAxisProps } = getChartProperties(config, type);
 
         if (dv.def().isBucketEmpty(BucketNames.MEASURES)) {

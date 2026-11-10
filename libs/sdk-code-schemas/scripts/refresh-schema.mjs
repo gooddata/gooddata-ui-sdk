@@ -6,13 +6,15 @@
 // Generates TypeScript types and compiled JSON schema from the AAC JSON Schema source files.
 // Inlines the $ref resolution logic that was previously in @gooddata/code-ast's mergeSchemas.
 
-import { readFileSync, writeFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { readFileSync, writeFileSync } from "fs";
+import { join, resolve } from "path";
 
 import { compile } from "json-schema-to-typescript";
-import { cloneDeep, mergeWith } from "lodash-es";
+import { mergeWith } from "lodash-es";
 import { format as oxfmt } from "oxfmt";
 import { readdirpPromise } from "readdirp";
+
+import { _cloneDeep } from "@gooddata/util";
 
 const mergable = ["required"];
 // Match sdk/.oxfmtrc.json settings so generated files pass format-check.
@@ -313,7 +315,7 @@ function narrowAllOf(schema) {
         [],
     );
     delete schema.allOf;
-    schema.oneOf = cloneDeep(oneOf);
+    schema.oneOf = _cloneDeep(oneOf);
 }
 
 function narrowOneOf(schema) {
@@ -328,11 +330,11 @@ function narrowOneOf(schema) {
         // Branches can opt into deep-merging their `properties` block with the parent's,
         // by setting `x-mergeProperties: true`. Default behavior is the historical
         // wholesale-replace (some schemas rely on that to express variant-narrower types).
-        const branch = cloneDeep(a);
+        const branch = _cloneDeep(a);
         const mergeProperties = branch["x-mergeProperties"] === true;
         delete branch["x-mergeProperties"];
 
-        return mergeWith(cloneDeep(schema), branch, function customizer(objValue, srcValue, key) {
+        return mergeWith(_cloneDeep(schema), branch, function customizer(objValue, srcValue, key) {
             if (Array.isArray(objValue) && mergable.includes(key)) {
                 return [...new Set([...objValue, ...srcValue])];
             }
@@ -347,7 +349,7 @@ function narrowOneOf(schema) {
 
 function narrowThen(schema) {
     if (schema.then) {
-        schema.oneOf = cloneDeep([schema.then, ...(schema.else ? [schema.else] : [])]);
+        schema.oneOf = _cloneDeep([schema.then, ...(schema.else ? [schema.else] : [])]);
         delete schema.else;
         delete schema.then;
     }

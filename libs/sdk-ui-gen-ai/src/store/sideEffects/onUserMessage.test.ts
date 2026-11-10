@@ -12,10 +12,10 @@ import {
     type IChatConversationItem,
     type IChatConversationThreadQuery,
 } from "@gooddata/sdk-backend-spi";
-import { type IUserWorkspaceSettings } from "@gooddata/sdk-model";
+import { type IPublisherDocumentDefinitionV2, type IUserWorkspaceSettings } from "@gooddata/sdk-model";
 
 import { type IChatConversationLocal, makeUserItem } from "../../model.js";
-import { chatWindowSliceReducer } from "../chatWindow/chatWindowSlice.js";
+import { chatWindowSliceReducer, onDefinitionReceivedAction } from "../chatWindow/chatWindowSlice.js";
 import { type EventDispatcher } from "../events.js";
 import { conversationMessagesByIdSelector } from "../messages/messagesSelectors.js";
 import {
@@ -96,6 +96,14 @@ const conversation: IChatConversationLocal = {
     title: "Conversation",
     createdAt: "2026-01-01T00:00:00Z",
     updatedAt: "2026-01-01T00:00:00Z",
+};
+
+const publisherDocumentV2: IPublisherDocumentDefinitionV2 = {
+    type: "document",
+    version: "2",
+    title: "Q2",
+    period: { type: "absolute", granularity: "GDC.time.date", from: "2026-04-01", to: "2026-06-30" },
+    content: { pages: [] },
 };
 
 type StreamChunk = IChatConversationItem | IChatConversationError | IChatConversationInteractionStep;
@@ -244,6 +252,32 @@ describe("onUserMessage answering agent", () => {
         expect(
             conversationMessagesByIdSelector(run.store.getState(), conversation.localId).at(-1)?.agentId,
         ).toBe("agent-a");
+    });
+
+    it("names the turn's agent on a drafted document whose chunk omits it", async () => {
+        // given
+        const run = setup();
+        await run.send({ ...reasoning("# Plan"), agentId: "agent-a" });
+
+        // when
+        await run.send(
+            item(
+                {
+                    type: "multipart",
+                    parts: [{ type: "publisherDocumentV2", publisherDocument: publisherDocumentV2 }],
+                },
+                "document-1",
+            ),
+        );
+        await run.finish();
+
+        // then
+        const definitions = run.actions.filter(onDefinitionReceivedAction.match);
+        expect(definitions).toHaveLength(1);
+        expect(definitions[0].payload).toMatchObject({
+            definitionType: "publisherDocumentV2",
+            agentId: "agent-a",
+        });
     });
 });
 

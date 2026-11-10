@@ -1,7 +1,5 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
-
 import {
     type IAnalyticalBackend,
     type IClusteringConfig,
@@ -35,6 +33,7 @@ import {
     type IResultHeader,
     defFingerprint,
 } from "@gooddata/sdk-model";
+import { _cloneDeep } from "@gooddata/util";
 
 import {
     DecoratedExecutionFactory,
@@ -255,17 +254,17 @@ class DenormalizedDataView implements IDataView {
         this.outliersResult = outliersResult;
         this.clusteringConfig = clusteringConfig;
         this.clusteringResult = clusteringResult;
-        this.context = cloneDeep(normalizedDataView.context);
+        this.context = _cloneDeep(normalizedDataView.context);
 
         this.definition = this.result.definition;
-        this.count = cloneDeep(this.normalizedDataView.count);
-        this.data = cloneDeep(this.normalizedDataView.data);
+        this.count = _cloneDeep(this.normalizedDataView.count);
+        this.data = _cloneDeep(this.normalizedDataView.data);
         this.headerItems = denormalizer.denormalizeHeaders(this.normalizedDataView.headerItems);
-        this.offset = cloneDeep(this.normalizedDataView.offset);
-        this.totalCount = cloneDeep(this.normalizedDataView.totalCount);
-        this.totals = cloneDeep(this.normalizedDataView.totals);
-        this.totalTotals = cloneDeep(this.normalizedDataView.totalTotals);
-        this.metadata = cloneDeep(this.normalizedDataView.metadata);
+        this.offset = _cloneDeep(this.normalizedDataView.offset);
+        this.totalCount = _cloneDeep(this.normalizedDataView.totalCount);
+        this.totals = _cloneDeep(this.normalizedDataView.totals);
+        this.totalTotals = _cloneDeep(this.normalizedDataView.totalTotals);
+        this.metadata = _cloneDeep(this.normalizedDataView.metadata);
 
         this._fingerprint = `${this.result.fingerprint()}/${this.offset.join(",")}-${this.count.join(",")}`;
     }

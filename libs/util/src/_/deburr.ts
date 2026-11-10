@@ -31,6 +31,8 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+import { _toString } from "./toString.js";
+
 /** Used to match Latin Unicode letters (excluding mathematical operators). */
 const RE_LATIN = /[\xc0-\xd6\xd8-\xf6\xf8-\xffĀ-ſ]/g;
 
@@ -242,7 +244,7 @@ const DEBURRED_LETTERS: Record<string, string> = {
  * @internal
  */
 export function _deburr(string?: string): string {
-    const text = string == null ? "" : String(string);
+    const text = _toString(string);
 
     return text.replace(RE_LATIN, (letter) => DEBURRED_LETTERS[letter] ?? letter).replace(RE_COMBO_MARK, "");
 }

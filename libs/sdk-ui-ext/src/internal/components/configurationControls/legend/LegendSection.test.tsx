@@ -2,8 +2,10 @@
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
+
+import { _cloneDeep } from "@gooddata/util";
 
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
 
@@ -18,7 +20,7 @@ const defaultProps: ILegendSection = {
 };
 
 function createComponent(customProps: Partial<ILegendSection> = {}) {
-    const props: ILegendSection = { ...cloneDeep(defaultProps), ...customProps };
+    const props: ILegendSection = { ..._cloneDeep(defaultProps), ...customProps };
     return render(
         <InternalIntlWrapper>
             <LegendSection {...props} />
@@ -27,7 +29,7 @@ function createComponent(customProps: Partial<ILegendSection> = {}) {
 }
 
 function createGeoComponent(customProps: Partial<IGeoLegendSectionProps> = {}) {
-    const props: IGeoLegendSectionProps = { ...cloneDeep(defaultProps), ...customProps };
+    const props: IGeoLegendSectionProps = { ..._cloneDeep(defaultProps), ...customProps };
     return render(
         <InternalIntlWrapper>
             <GeoLegendSection {...props} />

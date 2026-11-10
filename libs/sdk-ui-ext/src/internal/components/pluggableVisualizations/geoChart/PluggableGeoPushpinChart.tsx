@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { type IExecutionFactory } from "@gooddata/sdk-backend-spi";
@@ -32,7 +32,7 @@ import {
     type IGeoConfig,
     getGeoChartDimensions,
 } from "@gooddata/sdk-ui-geo";
-import { _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty } from "@gooddata/util";
 
 import { ATTRIBUTE, BUCKETS, METRIC } from "../../../constants/bucket.js";
 import { sanitizeGeoMapStyleOptions } from "../../../constants/geoMapStyle.js";
@@ -158,7 +158,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
     }
 
     public override getUiConfig(): IUiConfig {
-        return cloneDeep(GEO_PUSHPIN_CHART_UICONFIG);
+        return _cloneDeep(GEO_PUSHPIN_CHART_UICONFIG);
     }
 
     public override getExecution(
@@ -442,7 +442,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         if (!locationItem) {
             return referencePoint;
         }
-        const referencePointConfigured = cloneDeep(referencePoint);
+        const referencePointConfigured = _cloneDeep(referencePoint);
         const visualizationProperties = this.visualizationProperties || {};
         const { controls = {} } = visualizationProperties;
         const hasSizeMeasure = getItemsCount(buckets, BucketNames.SIZE) > 0;

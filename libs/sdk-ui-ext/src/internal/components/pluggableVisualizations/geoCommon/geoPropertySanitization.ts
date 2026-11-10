@@ -1,8 +1,9 @@
 // (C) 2026 GoodData Corporation
 
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 
 import { isConcreteViewportPreset } from "@gooddata/sdk-ui-geo/internal";
+import { _cloneDeep } from "@gooddata/util";
 
 import { type IExtendedReferencePoint } from "../../../interfaces/Visualization.js";
 
@@ -32,7 +33,7 @@ export function sanitizeGeoViewportProperties(
         if (!hasBounds && !hasCenter && !hasZoom) {
             return referencePoint;
         }
-        const updated = cloneDeep(referencePoint);
+        const updated = _cloneDeep(referencePoint);
         set(updated, "properties.controls.bounds", undefined);
         set(updated, "properties.controls.center", undefined);
         set(updated, "properties.controls.zoom", undefined);
@@ -41,7 +42,7 @@ export function sanitizeGeoViewportProperties(
 
     if (viewportArea === "custom" && hasBounds && (hasCenter || hasZoom)) {
         // Custom viewport with bounds — strip redundant center/zoom
-        const updated = cloneDeep(referencePoint);
+        const updated = _cloneDeep(referencePoint);
         set(updated, "properties.controls.center", undefined);
         set(updated, "properties.controls.zoom", undefined);
         return updated;

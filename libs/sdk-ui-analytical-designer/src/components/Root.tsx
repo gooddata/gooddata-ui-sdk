@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useLayoutEffect, useRef } from "react";
 
-import { cloneDeep } from "lodash-es";
 import { useDispatch, useSelector } from "react-redux";
 
 import { type ITheme } from "@gooddata/sdk-model";
@@ -13,6 +12,7 @@ import {
     ToastsCenterContextProvider,
 } from "@gooddata/sdk-ui-kit";
 import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
+import { _cloneDeep } from "@gooddata/util";
 
 import { useAppMode } from "../appMode/appMode.js";
 import { MainLoading, renderSlot, useAdSlots } from "../embedding/slots.js";
@@ -125,7 +125,7 @@ export function Root() {
 
 const defaultAnalyticalDesignerThemeModifier = (theme: ITheme): ITheme => {
     if (theme?.dashboards) {
-        const themeWithOutDashboard = cloneDeep(theme);
+        const themeWithOutDashboard = _cloneDeep(theme);
         // we do not want dashboard theme settings
         themeWithOutDashboard.dashboards = undefined;
 

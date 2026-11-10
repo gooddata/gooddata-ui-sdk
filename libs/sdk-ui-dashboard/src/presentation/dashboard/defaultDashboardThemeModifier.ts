@@ -1,9 +1,7 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
-
 import { type ITheme } from "@gooddata/sdk-model";
-import { _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty } from "@gooddata/util";
 
 /**
  * Default modifier applied to any theme passed to Dashboard component
@@ -11,7 +9,7 @@ import { _isEmpty } from "@gooddata/util";
  * @beta
  */
 export const defaultDashboardThemeModifier = (theme: ITheme): ITheme => {
-    const modifiedTheme = cloneDeep(theme);
+    const modifiedTheme = _cloneDeep(theme);
 
     if (theme?.dashboards?.content?.kpiWidget?.kpi) {
         // duplicate dashboard specific kpi customization to the generic kpi key

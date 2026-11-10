@@ -1,6 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
 
 import {
@@ -60,7 +59,7 @@ import {
     isInsightWidgetDefinition,
     isKpiWidgetDefinition,
 } from "@gooddata/sdk-model";
-import { _isEmpty, _isEqual } from "@gooddata/util";
+import { _cloneDeep, _isEmpty, _isEqual } from "@gooddata/util";
 
 import { type DashboardRecording, type RecordingIndex } from "./types.js";
 
@@ -253,7 +252,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
             return Promise.resolve(dashboard);
         }
 
-        let savedDashboard: Partial<IDashboard> = cloneDeep(updatedDashboard) as Partial<IDashboard>;
+        let savedDashboard: Partial<IDashboard> = _cloneDeep(updatedDashboard) as Partial<IDashboard>;
 
         if (!savedDashboard.ref) {
             const newId = uuidv4();

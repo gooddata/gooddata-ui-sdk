@@ -322,6 +322,8 @@ function* evaluateUserConversationMessage(
     let currentUserMessage: IChatConversationLocalItem | undefined = userMessage;
     let currentAssistantMessage: IChatConversationLocalItem = assistantMessage;
     let currentInteractionId: string | undefined = undefined;
+    // The turn's agent, kept for chunks that do not name it.
+    let turnAgentId: string | undefined = undefined;
     // Tool names by callId, so a toolResult's trace detail can name the tool that produced it.
     const toolNamesByCallId = new Map<string, string>();
 
@@ -497,6 +499,8 @@ function* evaluateUserConversationMessage(
                         currentInteractionId = chunkInteractionId;
                     }
 
+                    turnAgentId = value.agentId ?? turnAgentId;
+
                     // Dispatch streaming content to current message
                     const localContent = convertToLocalContent(value.content);
                     yield put(
@@ -533,6 +537,7 @@ function* evaluateUserConversationMessage(
                             ...currentAssistantMessage,
                             content: localContent,
                             id: chunkInteractionId,
+                            agentId: turnAgentId,
                         },
                         conversation.localId,
                     );

@@ -1,7 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
-
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import {
     type IInsightReferences,
@@ -40,7 +38,7 @@ import {
     visClassId,
     visClassUri,
 } from "@gooddata/sdk-model";
-import { _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty } from "@gooddata/util";
 
 import { type InsightRecording, type RecordedRefType, type RecordingIndex } from "./types.js";
 import { identifierToRecording } from "./utils.js";
@@ -69,7 +67,7 @@ export class RecordedInsights implements IWorkspaceInsightsService {
     public async createInsight(def: IInsightDefinition): Promise<IInsight> {
         const newId = `adHocInsight_${adHocInsightCounter++}`;
         const ref = this.createRef(newId, newId);
-        const newInsight = { insight: { identifier: newId, uri: newId, ref, ...cloneDeep(def.insight) } };
+        const newInsight = { insight: { identifier: newId, uri: newId, ref, ..._cloneDeep(def.insight) } };
         const recordingId = recId(newId);
 
         this.insights[recordingId] = { obj: newInsight };
@@ -126,7 +124,7 @@ export class RecordedInsights implements IWorkspaceInsightsService {
             throw new UnexpectedResponseError(`No insight with ID: ${id}`, 404, {});
         }
 
-        existingRecording.obj = cloneDeep(insight);
+        existingRecording.obj = _cloneDeep(insight);
 
         return Promise.resolve(existingRecording.obj);
     }
@@ -202,7 +200,7 @@ export class RecordedInsights implements IWorkspaceInsightsService {
     private createInsightWithRef(obj: IInsight): IInsight {
         return {
             insight: {
-                ...cloneDeep(obj.insight),
+                ..._cloneDeep(obj.insight),
                 ref: this.createRef(obj.insight.uri, obj.insight.identifier),
                 tags: insightTags(obj),
             },

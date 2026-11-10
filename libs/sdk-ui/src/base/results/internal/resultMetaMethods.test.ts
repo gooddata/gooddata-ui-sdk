@@ -2,7 +2,6 @@
 
 // @vitest-environment node
 
-import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { ReferenceData, ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -12,6 +11,7 @@ import {
     recordedDataView,
 } from "@gooddata/sdk-backend-mockingbird";
 import { type ISortItem, newAttributeLocator, newMeasureSort } from "@gooddata/sdk-model";
+import { _cloneDeep } from "@gooddata/util";
 
 import { DataViewFacade } from "../facade.js";
 
@@ -20,7 +20,7 @@ function dataViewWithModifiedSorts(
     dataViewId: string,
     sortItems: ISortItem[],
 ): DataViewFacade {
-    const scenarioCopy = cloneDeep(scenario);
+    const scenarioCopy = _cloneDeep(scenario);
     const dataView = recordedDataView(scenarioCopy, dataViewId);
 
     (dataView.definition as any).sortBy = sortItems;

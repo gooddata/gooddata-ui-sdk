@@ -2,10 +2,11 @@
 
 import { type ChangeEvent } from "react";
 
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { UiTooltip, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import { _cloneDeep } from "@gooddata/util";
 
 import { messages } from "../../../locales.js";
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
@@ -30,7 +31,7 @@ export function ContinuousLineControl({
     const tooltipId = useIdPrefixed("continuous-line-tooltip");
 
     const onValueChanged = (event: ChangeEvent<HTMLInputElement>) => {
-        const clonedProperties = cloneDeep(properties);
+        const clonedProperties = _cloneDeep(properties);
         set(clonedProperties!, `controls.${valuePath}`, event.target.checked);
 
         pushData?.({ properties: clonedProperties });

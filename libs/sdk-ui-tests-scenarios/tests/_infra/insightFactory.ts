@@ -1,7 +1,5 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
-
 import {
     type IAttribute,
     type IAttributeOrMeasure,
@@ -18,6 +16,7 @@ import {
 } from "@gooddata/sdk-model";
 import { type IGeoLayer } from "@gooddata/sdk-ui-geo";
 import { geoLayersToInsightLayers } from "@gooddata/sdk-ui-geo/internal";
+import { _cloneDeep } from "@gooddata/util";
 
 import { type ChartInteractions } from "./backendWithCapturing.js";
 import { chartConfigToVisProperties, geoChartConfigToVisProperties } from "./chartConfigToVisProps.js";
@@ -78,7 +77,7 @@ function createVisProperties(visClass: string, config: any) {
 }
 
 function removeVirtualMeasures(originalBuckets?: IBucket[]): IBucket[] {
-    const buckets: IBucket[] = cloneDeep(originalBuckets ?? []);
+    const buckets: IBucket[] = _cloneDeep(originalBuckets ?? []);
     buckets.forEach((bucket) => {
         bucket.items = bucket.items.filter((it) => !isVirtualArithmeticMeasure(it));
     });

@@ -1,8 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, set, without } from "lodash-es";
+import { set, without } from "lodash-es";
 
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+import { _cloneDeep } from "@gooddata/util";
 
 import { BUCKETS, METRIC } from "../../../constants/bucket.js";
 import { COMBO_CHART_UICONFIG_DEPRECATED } from "../../../constants/uiConfig.js";
@@ -40,10 +41,10 @@ export class PluggableComboChartDeprecated extends PluggableBaseChart {
     public override getExtendedReferencePoint(
         referencePoint: IReferencePoint,
     ): Promise<IExtendedReferencePoint> {
-        const clonedReferencePoint = cloneDeep(referencePoint);
+        const clonedReferencePoint = _cloneDeep(referencePoint);
         let newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,
-            uiConfig: cloneDeep(COMBO_CHART_UICONFIG_DEPRECATED),
+            uiConfig: _cloneDeep(COMBO_CHART_UICONFIG_DEPRECATED),
         };
 
         const buckets = clonedReferencePoint?.buckets ?? [];

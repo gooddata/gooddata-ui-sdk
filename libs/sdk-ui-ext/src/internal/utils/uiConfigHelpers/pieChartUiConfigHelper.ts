@@ -1,8 +1,10 @@
-// (C) 2019-2025 GoodData Corporation
-import { cloneDeep, set } from "lodash-es";
+// (C) 2019-2026 GoodData Corporation
+
+import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { BucketNames } from "@gooddata/sdk-ui";
+import { _cloneDeep } from "@gooddata/util";
 
 import { messages } from "../../../locales.js";
 import { BUCKETS } from "../../constants/bucket.js";
@@ -21,7 +23,7 @@ const pieViewIcon = "local:pie/bucket-title-view.svg";
 
 function setPieChartBucketWarningMessages(referencePoint: IExtendedReferencePoint, intl?: IntlShape) {
     const buckets = referencePoint?.buckets;
-    const updatedUiConfig = cloneDeep(referencePoint?.uiConfig);
+    const updatedUiConfig = _cloneDeep(referencePoint?.uiConfig);
 
     if (!updatedUiConfig) {
         return updatedUiConfig;
@@ -57,7 +59,7 @@ export function setPieChartUiConfig(
     intl: IntlShape,
     visualizationType: string,
 ): IExtendedReferencePoint {
-    const referencePointConfigured = cloneDeep(referencePoint);
+    const referencePointConfigured = _cloneDeep(referencePoint);
     const buckets = referencePointConfigured?.buckets ?? [];
 
     const measuresCanAddItems = !hasMoreThanOneCategory(buckets);

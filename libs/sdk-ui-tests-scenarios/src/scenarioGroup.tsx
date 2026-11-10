@@ -2,10 +2,11 @@
 
 import { type ComponentType } from "react";
 
-import { cloneDeep, intersection } from "lodash-es";
+import { intersection } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { type ISettings } from "@gooddata/sdk-model";
+import { _cloneDeep } from "@gooddata/util";
 
 import {
     type IScenario,
@@ -420,7 +421,7 @@ export function copyCustomizer<T extends VisProps>(
     baseProps: UnboundVisProps<T>,
     baseTags: ScenarioTag[],
 ): Array<CustomizedScenario<T>> {
-    return [[baseName, cloneDeep(baseProps), cloneDeep(baseTags)]];
+    return [[baseName, _cloneDeep(baseProps), _cloneDeep(baseTags)]];
 }
 
 /**
@@ -433,6 +434,6 @@ export function copyWithModifiedProps<T extends VisProps>(
     modify: (props: UnboundVisProps<T>) => UnboundVisProps<T>,
 ): ScenarioCustomizer<T> {
     return (baseName: string, baseProps: UnboundVisProps<T>, baseTags: ScenarioTag[]) => {
-        return [[baseName, modify(cloneDeep(baseProps)), cloneDeep(baseTags)]];
+        return [[baseName, modify(_cloneDeep(baseProps)), _cloneDeep(baseTags)]];
     };
 }

@@ -1,5 +1,6 @@
-// (C) 2023-2025 GoodData Corporation
-import { cloneDeep } from "lodash-es";
+// (C) 2023-2026 GoodData Corporation
+
+import { _cloneDeep } from "@gooddata/util";
 
 import { type HighchartsOptions } from "../../lib/index.js";
 import { getCommonResponsiveConfig } from "../_chartCreators/responsive.js";
@@ -35,7 +36,7 @@ const SANKEY_TEMPLATE = {
 };
 
 export function getSankeyConfiguration(): HighchartsOptions {
-    const configuration = cloneDeep(SANKEY_TEMPLATE);
+    const configuration = _cloneDeep(SANKEY_TEMPLATE);
 
     return {
         ...configuration,

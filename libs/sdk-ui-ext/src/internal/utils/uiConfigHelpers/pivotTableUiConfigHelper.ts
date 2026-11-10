@@ -1,10 +1,11 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { type ISettings } from "@gooddata/sdk-model";
 import { BucketNames, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
+import { _cloneDeep } from "@gooddata/util";
 
 import { messages } from "../../../locales.js";
 import { BUCKETS } from "../../constants/bucket.js";
@@ -43,7 +44,7 @@ const tableColumnsIcon = "local:table/bucket-title-columns.svg";
 
 function setPivotTableBucketWarningMessages(referencePoint: IExtendedReferencePoint, intl?: IntlShape) {
     const buckets = referencePoint?.buckets;
-    const updatedUiConfig = cloneDeep(referencePoint?.uiConfig);
+    const updatedUiConfig = _cloneDeep(referencePoint?.uiConfig);
 
     if (!updatedUiConfig) {
         return updatedUiConfig;

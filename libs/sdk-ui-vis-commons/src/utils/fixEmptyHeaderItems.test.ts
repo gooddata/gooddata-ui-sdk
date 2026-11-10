@@ -2,7 +2,6 @@
 
 // @vitest-environment node
 
-import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -11,6 +10,7 @@ import {
     type ScenarioRecording,
     recordedDataView,
 } from "@gooddata/sdk-backend-mockingbird";
+import { _cloneDeep } from "@gooddata/util";
 
 import { fixEmptyHeaderItems } from "./fixEmptyHeaderItems.js";
 
@@ -22,7 +22,7 @@ const TestInput = recordedDataView(
 
 describe("fixEmptyHeaderItems", () => {
     it("should replace empty values in all types of headerItems", () => {
-        const missingHeaders: any = cloneDeep(TestInput);
+        const missingHeaders: any = _cloneDeep(TestInput);
         missingHeaders.headerItems[0][0][0].attributeHeaderItem.name = "";
         missingHeaders.headerItems[1][2][0].measureHeaderItem.name = "";
         missingHeaders.headerItems[0][1][2].totalHeaderItem.name = "";

@@ -31,33 +31,19 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import { _hasUnicode, _unicodeToArray } from "./_unicode.js";
-import { _deburr } from "./deburr.js";
-import { _words } from "./words.js";
-
-/** Used to match apostrophes. */
-const RE_APOS = /['’]/g;
+import { _createCompounder } from "./_createCompounder.js";
+import { _upperFirst } from "./upperFirst.js";
 
 /**
- * Converts `string` to camel case: the string is deburred, split into words (on separators, case changes,
- * digits and Unicode boundaries, as lodash does), each word is lower-cased and every word but the first is
- * capitalised.
+ * Converts `string` to camel case: the words of the string, lower-cased, with every word but the first
+ * capitalised, joined together.
  *
  * @param string - The string to convert.
  * @returns Returns the camel cased string.
  * @internal
  */
-export function _camelCase(string?: string): string {
-    return _words(_deburr(string).replace(RE_APOS, "")).reduce((result, word, index) => {
-        const lower = word.toLowerCase();
+export const _camelCase: (string?: string) => string = _createCompounder((result, word, index) => {
+    const lower = word.toLowerCase();
 
-        return result + (index ? _upperFirst(lower) : lower);
-    }, "");
-}
-
-/** Upper-cases the first symbol of `string`, keeping a surrogate pair or joined emoji sequence whole. */
-function _upperFirst(string: string): string {
-    const first = (_hasUnicode(string) ? _unicodeToArray(string)[0] : string.charAt(0)) ?? "";
-
-    return first.toUpperCase() + string.slice(first.length);
-}
+    return result + (index ? _upperFirst(lower) : lower);
+});

@@ -1,7 +1,9 @@
-// (C) 2019-2025 GoodData Corporation
-import { cloneDeep, set } from "lodash-es";
+// (C) 2019-2026 GoodData Corporation
+
+import { set } from "lodash-es";
 
 import { BucketNames } from "@gooddata/sdk-ui";
+import { _cloneDeep } from "@gooddata/util";
 
 import { BUCKETS } from "../../constants/bucket.js";
 import { UICONFIG } from "../../constants/uiConfig.js";
@@ -17,7 +19,7 @@ const toIcon = "local:dependencyWheel/bucket-title-to.svg";
 export const configDependencyWheelUiConfig = (
     extendedReferencePoint: IExtendedReferencePoint,
 ): IExtendedReferencePoint => {
-    const referencePointConfigured = cloneDeep(extendedReferencePoint);
+    const referencePointConfigured = _cloneDeep(extendedReferencePoint);
 
     set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], measureIcon);
     set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE_FROM, "icon"], fromIcon);

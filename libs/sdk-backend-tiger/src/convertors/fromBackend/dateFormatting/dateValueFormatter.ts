@@ -16,7 +16,7 @@ export function createDateValueFormatter(dateFormatter: DateFormatter): DatePars
         if (value === null) {
             return "";
         }
-        const parsed = parseDateValue(value, granularity, timezone, locale);
+        const parsed = parseDateValue(value, granularity);
         // Some backend values cannot be represented as a Date and parse to an Invalid Date — e.g. the inclusive
         // upper bound / leap value of a generic granularity (second-of-minute 60, minute-of-day 1440,
         // second-of-day 86400). Show the raw value instead of letting date-fns throw so the result never fails.
@@ -68,11 +68,17 @@ export function guardDateValueFormatter(
 /**
  * Creates a function that takes a Date object, granularity, locale and timezone
  * and returns a formatted date string
+ *
+ * @remarks
+ * The UTC fields of the Date are serialized: a Date created from the normalized value of a date attribute
+ * element (see {@link createDateValueNormalizer}) serializes back to the backend value of the element in
+ * every browser timezone. The locale and the timezone do not take part in the serialization.
+ *
  * @public
  */
 export function createDateValueStringifier(): DateStringifier {
-    return (value, granularity, locale, timezone) => {
-        return serializeDateValue(value, granularity, timezone, locale);
+    return (value, granularity) => {
+        return serializeDateValue(value, granularity);
     };
 }
 

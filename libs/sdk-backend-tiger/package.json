@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-tiger",
-    "version": "11.68.0-alpha.6",
+    "version": "11.68.0-alpha.7",
     "description": "GoodData Backend SPI implementation for GoodData Cloud and GoodData.CN",
     "license": "MIT",
     "author": "GoodData",
@@ -52,6 +52,7 @@
         "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-backend-tiger\"' "
     },
     "dependencies": {
+        "@date-fns/tz": "1.5.0",
         "@gooddata/api-client-tiger": "workspace:*",
         "@gooddata/emailjs-mime-codec-new": "3.0.2",
         "@gooddata/sdk-backend-base": "workspace:*",

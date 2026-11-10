@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { cloneDeep, range, set } from "lodash-es";
+import { range, set } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -20,6 +20,7 @@ import {
     type IColorStrategy,
     getRgbString,
 } from "@gooddata/sdk-ui-vis-commons";
+import { _cloneDeep } from "@gooddata/util";
 
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import {
@@ -2540,7 +2541,7 @@ describe("chartOptionsBuilder", () => {
 
                 it("should generate valid tooltip for point without name using name of serie", () => {
                     const measures = [measureGroup.items[0], measureGroup.items[1], measureGroup.items[2]];
-                    const pointWithoutName = cloneDeep(point);
+                    const pointWithoutName = _cloneDeep(point);
                     pointWithoutName.name = undefined;
 
                     const tooltipFn = generateTooltipXYFn(measures, stackByAttribute);
@@ -2562,7 +2563,7 @@ describe("chartOptionsBuilder", () => {
                         type: "donut",
                     };
                     const measures = [measureGroup.items[0], measureGroup.items[1], measureGroup.items[2]];
-                    const pointWithoutName = cloneDeep(point);
+                    const pointWithoutName = _cloneDeep(point);
                     pointWithoutName.name = undefined;
 
                     const tooltipFn = generateTooltipXYFn(measures, stackByAttribute, chartConfig);
@@ -2608,7 +2609,7 @@ describe("chartOptionsBuilder", () => {
                 });
 
                 it("should respect measure format", () => {
-                    const pointWithFormat = cloneDeep(point);
+                    const pointWithFormat = _cloneDeep(point);
                     pointWithFormat.format = "abcd";
 
                     const tooltipFn = buildTooltipTreemapFactory(null, null, "empty value");
@@ -3709,7 +3710,7 @@ describe("chartOptionsBuilder", () => {
                 });
 
                 it("should return number values in tooltip when point is on secondary axis", () => {
-                    const newConfig = cloneDeep(config);
+                    const newConfig = _cloneDeep(config);
                     newConfig.stackMeasuresToPercent = true;
                     const dataSet = barChartWith3MetricsAndViewByAttribute;
                     const {

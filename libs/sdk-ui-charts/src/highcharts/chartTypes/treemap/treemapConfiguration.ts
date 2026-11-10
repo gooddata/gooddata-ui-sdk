@@ -1,6 +1,6 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
+import { _cloneDeep } from "@gooddata/util";
 
 const TREEMAP_TEMPLATE = {
     chart: {
@@ -50,5 +50,5 @@ const TREEMAP_TEMPLATE = {
 };
 
 export function getTreemapConfiguration(): typeof TREEMAP_TEMPLATE {
-    return cloneDeep(TREEMAP_TEMPLATE);
+    return _cloneDeep(TREEMAP_TEMPLATE);
 }

@@ -128,3 +128,38 @@ export type _ValueKeyIteratee<T> = ((value: T, key: string) => _NotVoid) | _Iter
 export type _NumericDictionary<T> = {
     [index: number]: T;
 };
+
+/**
+ * @internal
+ */
+export type _ValueIterateeCustom<T, TResult> = ((value: T) => TResult) | _IterateeShorthand<T>;
+
+/**
+ * @internal
+ */
+export type _Function0<R> = () => R;
+
+/**
+ * @internal
+ */
+export type _Function1<T1, R> = (t1: T1) => R;
+
+/**
+ * @internal
+ */
+export type _Function2<T1, T2, R> = (t1: T1, t2: T2) => R;
+
+/**
+ * @internal
+ */
+export type _Function3<T1, T2, T3, R> = (t1: T1, t2: T2, t3: T3) => R;
+
+/**
+ * @internal
+ */
+export type _Function4<T1, T2, T3, T4, R> = (t1: T1, t2: T2, t3: T3, t4: T4) => R;
+
+/**
+ * @internal
+ */
+export type _Comparator<T> = (a: T, b: T) => boolean;

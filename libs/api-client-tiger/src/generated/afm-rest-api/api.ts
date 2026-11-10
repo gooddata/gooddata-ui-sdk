@@ -1494,6 +1494,18 @@ export interface GetServiceStatusResponse {
 }
 
 /**
+ * Configuration for GoodData AI provider. Inference is served by GoodData; no credentials are needed.
+ */
+export interface GoodDataAiProviderConfig {
+    /**
+     * Provider type.
+     */
+    'type': GoodDataAiProviderConfigTypeEnum;
+}
+
+export type GoodDataAiProviderConfigTypeEnum = 'GOODDATA_AI';
+
+/**
  * Contains the information specific for a group of headers. These groups correlate to attributes and metric groups.
  */
 export interface HeaderGroup {
@@ -1763,7 +1775,7 @@ export type LlmModelFamilyEnum = 'OPENAI' | 'ANTHROPIC' | 'META' | 'MISTRAL' | '
  * @type LlmProviderConfig
  * Provider configuration overrides.
  */
-export type LlmProviderConfig = AnthropicProviderConfig | AwsBedrockProviderConfig | AzureFoundryProviderConfig | OpenAIProviderConfig;
+export type LlmProviderConfig = AnthropicProviderConfig | AwsBedrockProviderConfig | AzureFoundryProviderConfig | GoodDataAiProviderConfig | OpenAIProviderConfig;
 
 /**
  * Filter via label with given match type and literal value.

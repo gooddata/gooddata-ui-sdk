@@ -2,7 +2,7 @@
 
 import { type ReactElement, type ReactNode, useCallback, useMemo } from "react";
 
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { type IPushData } from "@gooddata/sdk-ui";
@@ -14,6 +14,7 @@ import {
 } from "@gooddata/sdk-ui-geo";
 import { PRESET_VIEWPORT_BOUNDS, isConcreteViewportPreset } from "@gooddata/sdk-ui-geo/internal";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+import { _cloneDeep } from "@gooddata/util";
 
 import { messages } from "../../../locales.js";
 import { pushpinViewportDropdownItems } from "../../constants/dropdowns.js";
@@ -82,7 +83,7 @@ export function GeoViewportControl(props: IGeoViewportControl): ReactElement {
 
     const handleViewportPushData = useCallback(
         (data: IPushData): void => {
-            const nextProperties = cloneDeep(data.properties ?? properties);
+            const nextProperties = _cloneDeep(data.properties ?? properties);
             if (!nextProperties) {
                 pushData?.(data);
                 return;

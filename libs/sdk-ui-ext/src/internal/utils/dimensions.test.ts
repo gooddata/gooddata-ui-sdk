@@ -1,6 +1,5 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -19,6 +18,7 @@ import {
     uriRef,
 } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+import { _cloneDeep } from "@gooddata/util";
 
 import {
     generateDimensions,
@@ -54,7 +54,7 @@ function getVisualizationBucket(newVis: IInsightDefinition, bucketName: string):
 }
 
 function addMeasure(visualization: IInsightDefinition, index: number): IInsightDefinition {
-    const newVis = cloneDeep(visualization);
+    const newVis = _cloneDeep(visualization);
     const measure = newMeasure(uriRef(`/gdc/md/myproject/obj/150${index}`), (m) =>
         m.localId(`m${index}`).title(`# Users Opened AD ${index}`),
     );
@@ -70,7 +70,7 @@ function addAttribute(
     index: number,
     bucketName: string,
 ): IInsightDefinition {
-    const newVis = cloneDeep(visualization);
+    const newVis = _cloneDeep(visualization);
     const attribute = newAttribute(uriRef(`/gdc/md/myproject/obj/400${index}`), (a) =>
         a.localId(`a${index}`),
     );
@@ -86,7 +86,7 @@ function addTotals(
     bucketName: string,
     newTotals: ITotal[],
 ): IInsightDefinition {
-    const newVis = cloneDeep(visualization);
+    const newVis = _cloneDeep(visualization);
 
     const bucket = getVisualizationBucket(newVis, bucketName);
 

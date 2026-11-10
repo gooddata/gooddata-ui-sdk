@@ -2,7 +2,9 @@
 
 import globalAxios, { type AxiosInstance, type CreateAxiosDefaults } from "axios";
 import { type AxiosCacheInstance, setupCache } from "axios-cache-interceptor";
-import { cloneDeep, merge } from "lodash-es";
+import { merge } from "lodash-es";
+
+import { _cloneDeep } from "@gooddata/util";
 
 import { LIB_NAME, LIB_VERSION } from "./__version.js";
 
@@ -93,7 +95,7 @@ export function newAxiosRequestConfig(
     baseUrl?: string,
     headers?: { [name: string]: string },
 ): CreateAxiosDefaults {
-    const config: CreateAxiosDefaults = cloneDeep(_CONFIG);
+    const config: CreateAxiosDefaults = _cloneDeep(_CONFIG);
 
     if (baseUrl) {
         config.baseURL = baseUrl;

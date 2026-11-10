@@ -6471,6 +6471,22 @@
                 },
                 "description": "Status of an AI Lake service"
             },
+            "GoodDataAiProviderConfig": {
+                "required": [
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Provider type.",
+                        "enum": [
+                            "GOODDATA_AI"
+                        ]
+                    }
+                },
+                "description": "Configuration for GoodData AI provider. Inference is served by GoodData; no credentials are needed."
+            },
             "HeaderGroup": {
                 "required": [
                     "headers"
@@ -7008,6 +7024,9 @@
                     },
                     {
                         "$ref": "#/components/schemas/AzureFoundryProviderConfig"
+                    },
+                    {
+                        "$ref": "#/components/schemas/GoodDataAiProviderConfig"
                     },
                     {
                         "$ref": "#/components/schemas/OpenAIProviderConfig"

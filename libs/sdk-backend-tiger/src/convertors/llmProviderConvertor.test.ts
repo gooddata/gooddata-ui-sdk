@@ -99,4 +99,34 @@ describe("llmProviderConvertor", () => {
             },
         });
     });
+
+    describe("GoodData AI provider config", () => {
+        it("should convert to backend without auth", () => {
+            const result = convertLlmProviderToBackend({
+                id: "gd",
+                name: "GoodData AI",
+                providerConfig: { type: "gooddataAi" },
+                models: [{ id: "gooddata-ai-lite", family: "UNKNOWN", isDefault: true }],
+            });
+
+            expect(result.attributes?.providerConfig).toEqual({ type: "GOODDATA_AI" });
+            expect(result.attributes?.defaultModelId).toBe("gooddata-ai-lite");
+        });
+
+        it("should convert from backend", () => {
+            const result = convertLlmProviderFromBackend({
+                id: "gd",
+                type: "llmProvider",
+                attributes: {
+                    name: "GoodData AI",
+                    providerConfig: { type: "GOODDATA_AI" },
+                    models: [{ id: "gooddata-ai-lite", family: "UNKNOWN" }],
+                    defaultModelId: "gooddata-ai-lite",
+                },
+            });
+
+            expect(result.providerConfig).toEqual({ type: "gooddataAi" });
+            expect(result.models).toEqual([{ id: "gooddata-ai-lite", family: "UNKNOWN", isDefault: true }]);
+        });
+    });
 });

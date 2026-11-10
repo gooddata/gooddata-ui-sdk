@@ -1,10 +1,11 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { type PushDataCallback } from "@gooddata/sdk-ui";
 import { Checkbox } from "@gooddata/sdk-ui-kit";
+import { _cloneDeep } from "@gooddata/util";
 
 import { comparisonMessages } from "../../../../../../locales.js";
 import { type IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
@@ -26,7 +27,7 @@ export function ColorCheckbox({ disabled, showDisabledMessage, properties, pushD
     const label = formatMessage(comparisonMessages["colorsConfigTitle"]);
 
     const handleChange = (value: boolean) => {
-        const clonedProperties = cloneDeep(properties);
+        const clonedProperties = _cloneDeep(properties);
         set(clonedProperties.controls!, COMPARISON_COLOR_CONFIG_DISABLED, !value);
 
         pushData({ properties: clonedProperties });

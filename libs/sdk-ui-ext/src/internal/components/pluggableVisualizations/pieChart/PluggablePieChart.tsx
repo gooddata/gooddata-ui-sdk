@@ -1,11 +1,11 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 
 import { type IInsightDefinition, newMeasureSort } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { type IChartConfig, TOP } from "@gooddata/sdk-ui-charts";
-import { _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty } from "@gooddata/util";
 
 import { BUCKETS } from "../../../constants/bucket.js";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
@@ -88,8 +88,8 @@ export class PluggablePieChart extends PluggableBaseChart {
     public override getExtendedReferencePoint(
         referencePoint: IReferencePoint,
     ): Promise<IExtendedReferencePoint> {
-        const clonedReferencePoint = cloneDeep(referencePoint);
-        const uiConfig = cloneDeep(DEFAULT_PIE_UICONFIG);
+        const clonedReferencePoint = _cloneDeep(referencePoint);
+        const uiConfig = _cloneDeep(DEFAULT_PIE_UICONFIG);
 
         let newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,
@@ -122,9 +122,9 @@ export class PluggablePieChart extends PluggableBaseChart {
             );
             const limitedMeasures = getMeasureItems(limitedBuckets);
             if (limitedMeasures.length > 1) {
-                set(newReferencePoint, UICONFIG, cloneDeep(PIE_UICONFIG_WITH_MULTIPLE_METRICS));
+                set(newReferencePoint, UICONFIG, _cloneDeep(PIE_UICONFIG_WITH_MULTIPLE_METRICS));
             } else {
-                set(newReferencePoint, UICONFIG, cloneDeep(PIE_UICONFIG_WITH_ONE_METRIC));
+                set(newReferencePoint, UICONFIG, _cloneDeep(PIE_UICONFIG_WITH_ONE_METRIC));
             }
 
             set(newReferencePoint, BUCKETS, [

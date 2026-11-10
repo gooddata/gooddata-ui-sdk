@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, set, tail } from "lodash-es";
+import { set, tail } from "lodash-es";
 
 import { type IInsight, type IInsightDefinition, newAttributeSort } from "@gooddata/sdk-model";
 import {
@@ -9,7 +9,7 @@ import {
     VisualizationTypes,
     isDrillIntersectionAttributeItem,
 } from "@gooddata/sdk-ui";
-import { _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty } from "@gooddata/util";
 
 import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket.js";
 import { HEATMAP_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
@@ -85,8 +85,8 @@ export class PluggableHeatmap extends PluggableBaseChart {
     public override getExtendedReferencePoint(
         referencePoint: IReferencePoint,
     ): Promise<IExtendedReferencePoint> {
-        const clonedReferencePoint = cloneDeep(referencePoint);
-        const uiConfig = cloneDeep(DEFAULT_HEATMAP_UICONFIG);
+        const clonedReferencePoint = _cloneDeep(referencePoint);
+        const uiConfig = _cloneDeep(DEFAULT_HEATMAP_UICONFIG);
 
         let newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,

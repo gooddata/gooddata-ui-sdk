@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 
 import {
     type IAnalyticalBackend,
@@ -31,7 +31,7 @@ import {
     insightLayerToGeoLayer,
     insightLayersToGeoLayers,
 } from "@gooddata/sdk-ui-geo/internal";
-import { _isEqual } from "@gooddata/util";
+import { _cloneDeep, _isEqual } from "@gooddata/util";
 
 import { BUCKETS } from "../../../constants/bucket.js";
 import {
@@ -164,7 +164,7 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         // The generic sanitizeFilters() (in PluggableBaseChart) does not know about additional layers and can
         // incorrectly drop MVFs that are meant for non-root layers. We keep the original filter bucket intact
         // and rely on per-layer execution sanitization instead.
-        const originalFilters = cloneDeep(referencePoint.filters);
+        const originalFilters = _cloneDeep(referencePoint.filters);
 
         return super
             .getExtendedReferencePoint(referencePoint)
@@ -202,7 +202,7 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
     }
 
     public override getUiConfig(): IUiConfig {
-        const config = cloneDeep(GEO_PUSHPIN_CHART_UICONFIG);
+        const config = _cloneDeep(GEO_PUSHPIN_CHART_UICONFIG);
         if (!isGeoPushpinIconEnabled(this.featureFlags)) {
             delete config.buckets[BucketNames.MEASURES];
         }
@@ -260,7 +260,7 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
             return referencePoint;
         }
 
-        const referencePointConfigured = cloneDeep(referencePoint);
+        const referencePointConfigured = _cloneDeep(referencePoint);
         const controls = referencePointConfigured.properties?.controls ?? {};
         const locationProperties = getLocationProperties(locationItem);
 
@@ -693,7 +693,7 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         referencePoint: IExtendedReferencePoint,
     ): IExtendedReferencePoint {
         return set(
-            cloneDeep(referencePoint),
+            _cloneDeep(referencePoint),
             "properties",
             getGeoVisualizationPropertiesWithFallback(
                 this.visualizationProperties ?? {},
@@ -731,7 +731,7 @@ function sanitizeGeoPointProperties(referencePoint: IExtendedReferencePoint): IE
     const shapeType = controls["points"]?.shapeType ?? "circle";
 
     if (shapeType !== "oneIcon" && controls["points"]?.icon !== undefined) {
-        const updated = cloneDeep(referencePoint);
+        const updated = _cloneDeep(referencePoint);
         set(updated, "properties.controls.points.icon", undefined);
         return updated;
     }
@@ -761,7 +761,7 @@ function disableClusteringInVisualizationPropertiesWhenNotEditable(
         return visualizationProperties;
     }
 
-    return set(cloneDeep(visualizationProperties), "controls.points.groupNearbyPoints", false);
+    return set(_cloneDeep(visualizationProperties), "controls.points.groupNearbyPoints", false);
 }
 
 function getPushpinShapeType(referencePoint: Pick<IReferencePoint, "properties">): GeoChartShapeType {
@@ -770,7 +770,7 @@ function getPushpinShapeType(referencePoint: Pick<IReferencePoint, "properties">
 
 function resetIconByValueShapeType(referencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
     if (getPushpinShapeType(referencePoint) === "iconByValue") {
-        return set(cloneDeep(referencePoint), "properties.controls.points.shapeType", "circle");
+        return set(_cloneDeep(referencePoint), "properties.controls.points.shapeType", "circle");
     }
     return referencePoint;
 }
@@ -780,7 +780,7 @@ function resetIconByValueInVisualizationProperties(
     hasGeoIconLabel: boolean,
 ): IVisualizationProperties {
     if (properties?.controls?.["points"]?.shapeType === "iconByValue" && !hasGeoIconLabel) {
-        return set(cloneDeep(properties), "controls.points.shapeType", "circle");
+        return set(_cloneDeep(properties), "controls.points.shapeType", "circle");
     }
     return properties;
 }

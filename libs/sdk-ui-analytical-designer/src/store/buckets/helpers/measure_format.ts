@@ -1,8 +1,7 @@
 // (C) 2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
-
 import { type IExtendedReferencePoint } from "@gooddata/sdk-ui-ext/internal";
+import { _cloneDeep } from "@gooddata/util";
 
 import { getDefaultArithmeticMeasureFormat, getDefaultMeasureFormat } from "../../../models/bucket_item.js";
 
@@ -95,7 +94,7 @@ export function sanitizeReferencePointFormats(
         ? previousExtendedReferencePoint.buckets.flatMap((bucket) => bucket.items ?? [])
         : [];
 
-    const result: IExtendedReferencePoint = cloneDeep(extendedReferencePoint);
+    const result: IExtendedReferencePoint = _cloneDeep(extendedReferencePoint);
 
     result.buckets = extendedReferencePoint.buckets.map((bucket) => {
         return {

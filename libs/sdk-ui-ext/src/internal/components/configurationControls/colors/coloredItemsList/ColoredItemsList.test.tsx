@@ -2,8 +2,9 @@
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
+
+import { _cloneDeep } from "@gooddata/util";
 
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
 import { colorPalette } from "../tests/testColorHelper.test.helpers.js";
@@ -19,7 +20,7 @@ const defaultProps: IColoredItemsListProps = {
 };
 
 function createComponent(customProps: Partial<IColoredItemsListProps> = {}) {
-    const props: IColoredItemsListProps = { ...cloneDeep(defaultProps), ...customProps };
+    const props: IColoredItemsListProps = { ..._cloneDeep(defaultProps), ...customProps };
     return render(
         <InternalIntlWrapper>
             <ColoredItemsList {...props} />

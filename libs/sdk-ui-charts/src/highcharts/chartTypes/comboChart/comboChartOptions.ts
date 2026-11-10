@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { cloneDeep, set, unset } from "lodash-es";
+import { set, unset } from "lodash-es";
 
 import {
     type IAttributeOrMeasure,
@@ -11,6 +11,7 @@ import {
     measureLocalId,
 } from "@gooddata/sdk-model";
 import { BucketNames, type DataViewFacade, VisualizationTypes } from "@gooddata/sdk-ui";
+import { _cloneDeep } from "@gooddata/util";
 
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type StackingType } from "../../constants/stacking.js";
@@ -54,7 +55,7 @@ export function getComboChartSeries(
     series: ISeriesItem[],
     dv: DataViewFacade,
 ): ISeriesItem[] {
-    const updatedSeries = cloneDeep(series);
+    const updatedSeries = _cloneDeep(series);
     const measureBuckets: Record<string, number[]> = {};
     const types = [config.primaryChartType, config.secondaryChartType];
     const measureGroupIdentifiers = measureGroup.items.map(

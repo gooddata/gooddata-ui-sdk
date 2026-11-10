@@ -1,16 +1,15 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
-
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { type IAttribute, type IMeasure, isAttribute, modifyMeasure } from "@gooddata/sdk-model";
 import { type ChartInlineVisualizationType, type IRepeaterProps, Repeater } from "@gooddata/sdk-ui-charts";
+import { _cloneDeep } from "@gooddata/util";
 
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 const cloneBucketItem = (item: IAttribute | IMeasure): IAttribute | IMeasure => {
-    const clonedItem = cloneDeep(item);
+    const clonedItem = _cloneDeep(item);
 
     if (isAttribute(clonedItem)) {
         clonedItem.attribute.localIdentifier = clonedItem.attribute.localIdentifier + "_cloned";

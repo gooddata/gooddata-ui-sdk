@@ -1,5 +1,6 @@
-// (C) 2007-2023 GoodData Corporation
-import { cloneDeep } from "lodash-es";
+// (C) 2007-2026 GoodData Corporation
+
+import { _cloneDeep } from "@gooddata/util";
 
 const WIDTH_SPAN = 900;
 const WIDTH = 0.8;
@@ -54,5 +55,5 @@ const FUNNEL_TEMPLATE = {
 };
 
 export function getFunnelConfiguration(): typeof FUNNEL_TEMPLATE {
-    return cloneDeep(FUNNEL_TEMPLATE);
+    return _cloneDeep(FUNNEL_TEMPLATE);
 }

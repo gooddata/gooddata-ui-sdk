@@ -1,10 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
 import SparkMD5 from "spark-md5";
 import { InvariantError, invariant } from "ts-invariant";
 
-import { _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty } from "@gooddata/util";
 
 import { idRef } from "../../objRef/factory.js";
 import { type Identifier, type ObjRef, isObjRef, objRefToString } from "../../objRef/index.js";
@@ -214,7 +213,7 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
      * @param measure - envelope of measure being modified
      */
     protected initializeFromExisting(measure: MeasureEnvelope): void {
-        this.measure = cloneDeep(measure);
+        this.measure = _cloneDeep(measure);
         this.measure.localIdentifier = measure.localIdentifier;
         this.customLocalId = true;
     }
@@ -298,7 +297,7 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
 
         if (isMeasure(measureOrRef)) {
             this.initializeFromExisting(measureOrRef.measure);
-            this.measureDefinition = cloneDeep(measureOrRef.measure.definition.measureDefinition);
+            this.measureDefinition = _cloneDeep(measureOrRef.measure.definition.measureDefinition);
         } else {
             this.measureDefinition = {
                 item: measureOrRef,
@@ -453,7 +452,7 @@ export class InlineMeasureBuilder extends MeasureBuilderBase<IInlineMeasureDefin
 
         if (isInlineMeasure(measureInput)) {
             this.initializeFromExisting(measureInput.measure);
-            this.inlineMeasureDefinition = cloneDeep(measureInput.measure.definition.inlineDefinition);
+            this.inlineMeasureDefinition = _cloneDeep(measureInput.measure.definition.inlineDefinition);
         } else {
             this.inlineMeasureDefinition = {
                 maql: measureInput,
@@ -517,7 +516,7 @@ export class ArithmeticMeasureBuilder extends MeasureBuilderBase<IArithmeticMeas
 
         if (isArithmeticMeasure(input)) {
             this.initializeFromExisting(input.measure);
-            this.arithmeticMeasure = cloneDeep(input.measure.definition.arithmeticMeasure);
+            this.arithmeticMeasure = _cloneDeep(input.measure.definition.arithmeticMeasure);
         } else {
             const measureIdentifiers: Identifier[] = input.measuresOrIds.map(measureLocalId);
 
@@ -622,7 +621,7 @@ export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition>
 
         if (isPoPMeasure(input)) {
             this.initializeFromExisting(input.measure);
-            this.popMeasureDefinition = cloneDeep(input.measure.definition.popMeasureDefinition);
+            this.popMeasureDefinition = _cloneDeep(input.measure.definition.popMeasureDefinition);
         } else {
             const measureIdentifier = measureLocalId(input.measureOrLocalId);
             const popAttribute = isObjRef(input.popAttrIdOrRef)
@@ -704,7 +703,7 @@ export class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPe
 
         if (isPreviousPeriodMeasure(input)) {
             this.initializeFromExisting(input.measure);
-            this.previousPeriodMeasure = cloneDeep(input.measure.definition.previousPeriodMeasure);
+            this.previousPeriodMeasure = _cloneDeep(input.measure.definition.previousPeriodMeasure);
         } else {
             this.previousPeriodMeasure = {
                 measureIdentifier: measureLocalId(input.measureIdOrLocalId),

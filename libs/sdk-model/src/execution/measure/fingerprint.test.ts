@@ -1,7 +1,8 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
+
+import { _cloneDeep } from "@gooddata/util";
 
 import { Account, Velocity, Won } from "../../../__mocks__/model.js";
 import { newPositiveAttributeFilter } from "../../index.js";
@@ -20,19 +21,19 @@ describe("measureFingerprint", () => {
          * where machines work (create/save/load) with raw measure definitions.
          */
 
-        const WonRatioFalse = cloneDeep(Won);
+        const WonRatioFalse = _cloneDeep(Won);
         WonRatioFalse.measure.definition.measureDefinition.computeRatio = false;
 
-        const WonRatioUndefined = cloneDeep(Won);
+        const WonRatioUndefined = _cloneDeep(Won);
         delete WonRatioUndefined.measure.definition.measureDefinition.computeRatio;
 
-        const VelocityAggUndefined = cloneDeep(Velocity.Sum);
+        const VelocityAggUndefined = _cloneDeep(Velocity.Sum);
         delete VelocityAggUndefined.measure.definition.measureDefinition.aggregation;
 
-        const WonFiltersUndefined = cloneDeep(Won);
+        const WonFiltersUndefined = _cloneDeep(Won);
         delete WonFiltersUndefined.measure.definition.measureDefinition.filters;
 
-        const WonFiltersEmpty = cloneDeep(Won);
+        const WonFiltersEmpty = _cloneDeep(Won);
         WonFiltersEmpty.measure.definition.measureDefinition.filters = [];
 
         const SameFpScenarios: Array<[string, IMeasure, IMeasure]> = [

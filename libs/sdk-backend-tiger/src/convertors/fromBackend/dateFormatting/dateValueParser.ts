@@ -1,7 +1,7 @@
 // (C) 2020-2026 GoodData Corporation
 
+import { tz } from "@date-fns/tz";
 import { format, parse } from "date-fns";
-import { fromZonedTime } from "date-fns-tz";
 
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import { type DateAttributeGranularity } from "@gooddata/sdk-model";
@@ -77,22 +77,37 @@ const granularityParsePatterns: { [granularity in DateAttributeGranularity]?: st
 };
 
 /**
+ * Date attribute values are wall-clock values the backend has already computed in its timezone (the
+ * workspace setting or the timezone of the request). They are parsed and serialized in UTC, which has no
+ * daylight saving transitions, so every value round-trips with its fields unchanged in every browser
+ * timezone. The resulting Date is "floating": its UTC fields are the fields of the value.
+ */
+const utc = tz("UTC");
+
+// parse date in the context of 366 days (2020 = leap year) and 31 days (0 = January)
+const referenceDate = new Date(Date.UTC(2020, 0));
+
+const dateFnsOptions = {
+    in: utc,
+    useAdditionalDayOfYearTokens: true, // for day of year parsing
+    useAdditionalWeekYearTokens: true, // for week parsing
+    weekStartsOn: 0, // hardcoded to US value as backend returns US weeks
+    firstWeekContainsDate: 1, // hardocded to US value as backend returns US weeks - otherwise this could influence first and last week of year
+} as const;
+
+/**
  * Parses a string representation of a date of a given granularity to a Date object.
- * For the en-US-x-24h locale, the parsed date is converted to UTC using fromZonedTime
- * to prevent double timezone conversion when formatting with formatInTimeZone.
+ *
+ * @remarks
+ * The value is a wall-clock already computed by the backend in its timezone, so it is parsed as a floating
+ * date: the fields of the value become the UTC fields of the returned Date, whatever the browser timezone is.
+ * Format the Date in UTC (or rely on the returned `TZDate` carrying UTC) to get the fields back.
  *
  * @param value - value to parse.
  * @param granularity - granularity to assume when parsing the value.
- * @param timezone - optional timezone information for time-based granularities.
- * @param locale - optional locale information to determine if UTC conversion is needed.
  * @internal
  */
-export const parseDateValue = (
-    value: string,
-    granularity: DateAttributeGranularity,
-    timezone?: string,
-    locale?: string,
-): Date => {
+export const parseDateValue = (value: string, granularity: DateAttributeGranularity): Date => {
     const parsePattern = granularityParsePatterns[granularity];
     if (!parsePattern) {
         throw new UnexpectedError(`No date parser for the "${granularity}" granularity available.`);
@@ -101,89 +116,25 @@ export const parseDateValue = (
     const valueTransform =
         granularityParseValueTransformations[granularity] ?? (((v) => v) as ValueTransform);
 
-    // parse date in the context of 366 days (2020 = leap year) and 31 days (0 = January)
-    const referenceDate = new Date(2020, 0);
-    const parsedDate = parse(valueTransform(value), parsePattern, referenceDate, {
-        useAdditionalDayOfYearTokens: true, // for day of year parsing
-        useAdditionalWeekYearTokens: true, // for week parsing
-        weekStartsOn: 0, // hardcoded to US value as backend returns US weeks
-        firstWeekContainsDate: 1, // hardocded to US value as backend returns US weeks - otherwise this could influence first and last week of year
-    });
-
-    // For en-US-x-24h locale, convert the parsed date to UTC using fromZonedTime
-    // This prevents double timezone conversion when formatting with formatInTimeZone
-    // The backend sends timezone-adjusted values, so we use fromZonedTime to get the equivalent UTC time
-    // Only apply UTC conversion to MINUTE and HOUR granularities (same as defaultDateFormatter)
-    if (
-        locale === "en-US-x-24h" &&
-        timezone &&
-        (granularity === "GDC.time.second" ||
-            granularity === "GDC.time.minute" ||
-            granularity === "GDC.time.hour")
-    ) {
-        try {
-            // Use fromZonedTime to convert the date from the specified timezone to UTC
-            // This follows the exact pattern: parse string -> Date object -> convert to UTC using timezone
-            return fromZonedTime(parsedDate, timezone);
-        } catch {
-            // If timezone conversion fails, fall back to the parsed date
-            // This ensures backward compatibility
-            return parsedDate;
-        }
-    }
-
-    return parsedDate;
+    return parse(valueTransform(value), parsePattern, referenceDate, dateFnsOptions);
 };
 
 /**
  * Serializes a Date object to a string representation based on the specified granularity.
- * For the en-US-x-24h locale, the parsed date is converted to UTC using fromZonedTime
- * to prevent double timezone conversion when formatting with formatInTimeZone.
+ *
+ * @remarks
+ * The inverse of {@link parseDateValue}: the UTC fields of the Date are serialized, so a Date parsed from a
+ * backend value serializes back to that value in every browser timezone.
  *
  * @param value - Date object to serialize.
  * @param granularity - granularity to assume when serializing the value.
- * @param timezone - optional timezone information for time-based granularities.
- * @param locale - optional locale information to determine if UTC conversion is needed.
  * @internal
  */
-export const serializeDateValue = (
-    value: Date,
-    granularity: DateAttributeGranularity,
-    timezone?: string,
-    locale?: string,
-): string => {
+export const serializeDateValue = (value: Date, granularity: DateAttributeGranularity): string => {
     const parsePattern = granularityParsePatterns[granularity];
     if (!parsePattern) {
         throw new UnexpectedError(`No date parser for the "${granularity}" granularity available.`);
     }
 
-    let date = value;
-    // For en-US-x-24h locale, convert the parsed date to UTC using fromZonedTime
-    // This prevents double timezone conversion when formatting with formatInTimeZone
-    // The backend sends timezone-adjusted values, so we use fromZonedTime to get the equivalent UTC time
-    // Only apply UTC conversion to MINUTE and HOUR granularities (same as defaultDateFormatter)
-    if (
-        locale === "en-US-x-24h" &&
-        timezone &&
-        (granularity === "GDC.time.second" ||
-            granularity === "GDC.time.minute" ||
-            granularity === "GDC.time.hour")
-    ) {
-        try {
-            // Use fromZonedTime to convert the date from the specified timezone to UTC
-            // This follows the exact pattern: parse string -> Date object -> convert to UTC using timezone
-            date = fromZonedTime(date, timezone);
-        } catch {
-            // If timezone conversion fails, fall back to the date
-            // This ensures backward compatibility
-            date = value;
-        }
-    }
-
-    return format(date, parsePattern, {
-        useAdditionalDayOfYearTokens: true, // for day of year parsing
-        useAdditionalWeekYearTokens: true, // for week parsing
-        weekStartsOn: 0, // hardcoded to US value as backend returns US weeks
-        firstWeekContainsDate: 1, // hardocded to US value as backend returns US weeks - otherwise this could influence first and last week of year
-    });
+    return format(value, parsePattern, dateFnsOptions);
 };

@@ -1,7 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
-
 import { type IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
     type IInsightDefinition,
@@ -21,6 +19,7 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { CoreHeadline, createHeadlineProvider } from "@gooddata/sdk-ui-charts";
+import { _cloneDeep } from "@gooddata/util";
 
 import { METRIC } from "../../../constants/bucket.js";
 import {
@@ -115,7 +114,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
     public getExtendedReferencePoint(
         referencePoint: Readonly<IReferencePoint>,
     ): Promise<IExtendedReferencePoint> {
-        const referencePointCloned = cloneDeep(referencePoint);
+        const referencePointCloned = _cloneDeep(referencePoint);
         let newReferencePoint: IExtendedReferencePoint = {
             ...referencePointCloned,
             uiConfig: getDefaultHeadlineUiConfig(),

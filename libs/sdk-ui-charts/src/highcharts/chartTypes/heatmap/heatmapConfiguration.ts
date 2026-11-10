@@ -1,6 +1,6 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
+import { _cloneDeep } from "@gooddata/util";
 
 const HEATMAP_TEMPLATE = {
     chart: {
@@ -61,5 +61,5 @@ const HEATMAP_TEMPLATE = {
 };
 
 export function getHeatmapConfiguration(): typeof HEATMAP_TEMPLATE {
-    return cloneDeep(HEATMAP_TEMPLATE);
+    return _cloneDeep(HEATMAP_TEMPLATE);
 }

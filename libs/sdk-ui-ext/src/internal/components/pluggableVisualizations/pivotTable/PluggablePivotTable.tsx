@@ -3,7 +3,6 @@
 import { type CSSProperties } from "react";
 
 import { defaultImport } from "default-import";
-import { cloneDeep } from "lodash-es";
 import Measure from "react-measure";
 
 import { type IBackendCapabilities, type IExecutionFactory } from "@gooddata/sdk-backend-spi";
@@ -34,7 +33,7 @@ import {
     type MeasureGroupDimension,
     pivotTableMenuForCapabilities,
 } from "@gooddata/sdk-ui-pivot";
-import { _isEmpty, _isEqual } from "@gooddata/util";
+import { _cloneDeep, _isEmpty, _isEqual } from "@gooddata/util";
 
 import { ATTRIBUTE, DATE, METRIC } from "../../../constants/bucket.js";
 import { ANALYTICAL_ENVIRONMENT, DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
@@ -190,7 +189,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         referencePoint: IReferencePoint,
         previousReferencePoint?: IReferencePoint,
     ): Promise<IExtendedReferencePoint> {
-        const clonedReferencePoint = cloneDeep(referencePoint);
+        const clonedReferencePoint = _cloneDeep(referencePoint);
         const newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,
             uiConfig: getPivotTableDefaultUiConfig(),

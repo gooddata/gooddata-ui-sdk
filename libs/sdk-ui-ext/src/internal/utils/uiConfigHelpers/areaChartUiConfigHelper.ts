@@ -1,9 +1,10 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { BucketNames } from "@gooddata/sdk-ui";
+import { _cloneDeep } from "@gooddata/util";
 
 import { messages } from "../../../locales.js";
 import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket.js";
@@ -83,7 +84,7 @@ export function setAreaChartUiConfig(
     intl: IntlShape,
     visualizationType: string,
 ): IExtendedReferencePoint {
-    const referencePointConfigured = cloneDeep(referencePoint);
+    const referencePointConfigured = _cloneDeep(referencePoint);
     const buckets = referencePointConfigured?.buckets ?? [];
     const categoriesCount = getItemsCount(buckets, BucketNames.VIEW);
 

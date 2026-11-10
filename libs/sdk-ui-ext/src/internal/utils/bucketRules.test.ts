@@ -1,9 +1,10 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { BucketNames } from "@gooddata/sdk-ui";
+import { _cloneDeep } from "@gooddata/util";
 
 import { type IBucketItem, type IBucketOfFun, type IFilters } from "../interfaces/Visualization.js";
 import {
@@ -83,7 +84,7 @@ describe("isShowInPercentAllowed", () => {
     });
 
     it("should return false if ranking filter is present", () => {
-        const editedReferencePoint = cloneDeep(metricWithViewByDateAndDateFilterReferencePoint);
+        const editedReferencePoint = _cloneDeep(metricWithViewByDateAndDateFilterReferencePoint);
         set(editedReferencePoint, ["filters", "items", 1], rankingFilterBucketItem);
 
         expect(
@@ -104,7 +105,7 @@ describe("overTimeComparisonRecommendationEnabled", () => {
     });
 
     it("should return false if buckets rules doesn't met", () => {
-        const editedReferencePoint = cloneDeep(overTimeComparisonRecommendationRefPoint);
+        const editedReferencePoint = _cloneDeep(overTimeComparisonRecommendationRefPoint);
         const newMetric: IBucketItem = {
             localIdentifier: "m2",
             type: "metric",
@@ -119,7 +120,7 @@ describe("overTimeComparisonRecommendationEnabled", () => {
     });
 
     it("should return true if insight is sliced by weeks and week filters are enabled", () => {
-        const editedReferencePoint = cloneDeep(overTimeComparisonRecommendationRefPoint);
+        const editedReferencePoint = _cloneDeep(overTimeComparisonRecommendationRefPoint);
         set(editedReferencePoint, ["buckets", 1, "items", 0], sliceByWeekBucketItem);
 
         expect(overTimeComparisonRecommendationEnabled(editedReferencePoint)).toBeTruthy();
@@ -136,7 +137,7 @@ describe("comparisonAndTrendingRecommendationEnabled", () => {
     });
 
     it("should return false if buckets rules doesn't met", () => {
-        const editedReferencePoint = cloneDeep(comparisonAndTrendingRecommendationReferencePoint);
+        const editedReferencePoint = _cloneDeep(comparisonAndTrendingRecommendationReferencePoint);
 
         const newCategory: IBucketItem = {
             localIdentifier: "v1",
@@ -162,7 +163,7 @@ describe("percentRecommendationEnabled", () => {
     });
 
     it("should return false if buckets rules doesn't met", () => {
-        const editedReferencePoint = cloneDeep(percentRecommendationReferencePoint);
+        const editedReferencePoint = _cloneDeep(percentRecommendationReferencePoint);
 
         const newStack: IBucketItem = {
             localIdentifier: "s1",
@@ -179,7 +180,7 @@ describe("percentRecommendationEnabled", () => {
     });
 
     it("should return false if ranking filter exists", () => {
-        const editedReferencePoint = cloneDeep(percentRecommendationReferencePoint);
+        const editedReferencePoint = _cloneDeep(percentRecommendationReferencePoint);
         set(editedReferencePoint, ["filters", "items", 0], rankingFilterBucketItem);
 
         expect(
@@ -194,7 +195,7 @@ describe("previousPeriodRecommendationEnabled", () => {
     });
 
     it("should return false if buckets rules doesn't met", () => {
-        const editedReferencePoint = cloneDeep(percentRecommendationReferencePoint);
+        const editedReferencePoint = _cloneDeep(percentRecommendationReferencePoint);
 
         const newMetric: IBucketItem = {
             localIdentifier: "m2",

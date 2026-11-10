@@ -1,9 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
+import { _cloneDeep } from "@gooddata/util";
 
 import { DATE, GRANULARITY } from "../constants/bucket.js";
 import { DEFAULT_BASE_CHART_UICONFIG, DEFAULT_TABLE_UICONFIG } from "../constants/uiConfig.js";
@@ -39,11 +39,11 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
             buckets: [
                 {
                     localIdentifier: "measures",
-                    items: cloneDeep(masterMeasureItems.slice(0, numberOfMeasures)),
+                    items: _cloneDeep(masterMeasureItems.slice(0, numberOfMeasures)),
                 },
                 {
                     localIdentifier: "attribute",
-                    items: [cloneDeep(dateItem)],
+                    items: [_cloneDeep(dateItem)],
                 },
             ],
             filters: {
@@ -55,7 +55,7 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
     }
 
     function getOverTimeComparisonReferencePoint(dateFilter: IFiltersBucketItem): IExtendedReferencePoint {
-        const uiConfig = cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
+        const uiConfig = _cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
         uiConfig.buckets["secondary_measures"] = uiConfig.buckets["measures"];
 
         return {
@@ -100,7 +100,7 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
             referencePoint.buckets[0].items.forEach((item) => (item.showInPercent = true));
 
             const newReferencePoint: IExtendedReferencePoint = configurePercent(
-                cloneDeep(referencePoint),
+                _cloneDeep(referencePoint),
                 false,
             );
 
@@ -111,11 +111,11 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
             const referencePoint = getSingleMeasureNoFilterReferencePoint(1);
 
             const newReferencePoint: IExtendedReferencePoint = configurePercent(
-                cloneDeep(referencePoint),
+                _cloneDeep(referencePoint),
                 false,
             );
 
-            const expectedUiConfig = cloneDeep(DEFAULT_TABLE_UICONFIG);
+            const expectedUiConfig = _cloneDeep(DEFAULT_TABLE_UICONFIG);
             expectedUiConfig.buckets["measures"].isShowInPercentEnabled = true;
             expect(newReferencePoint.uiConfig).toEqual(expectedUiConfig);
         });
@@ -125,11 +125,11 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
             referencePoint.uiConfig!.buckets["measures"].isShowInPercentEnabled = true;
 
             const newReferencePoint: IExtendedReferencePoint = configurePercent(
-                cloneDeep(referencePoint),
+                _cloneDeep(referencePoint),
                 true,
             );
 
-            const expectedUiConfig = cloneDeep(DEFAULT_TABLE_UICONFIG);
+            const expectedUiConfig = _cloneDeep(DEFAULT_TABLE_UICONFIG);
             expectedUiConfig.buckets["measures"].isShowInPercentEnabled = false;
             expect(newReferencePoint.uiConfig).toEqual(expectedUiConfig);
         });
@@ -139,7 +139,7 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
             referencePoint.buckets[0].items[0].showInPercent = true;
 
             const newReferencePoint: IExtendedReferencePoint = configurePercent(
-                cloneDeep(referencePoint),
+                _cloneDeep(referencePoint),
                 true,
             );
 
@@ -163,7 +163,7 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
         };
 
         it("should keep all derived measures if over time comparison is available due to non-all-time date filter", () => {
-            const uiConfig = cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
+            const uiConfig = _cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
 
             const referencePoint: IExtendedReferencePoint = {
                 buckets: [
@@ -191,7 +191,7 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
                     supportedOverTimeComparisonTypes: [OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR],
                 },
             };
-            const newReferencePoint = configureOverTimeComparison(cloneDeep(referencePoint));
+            const newReferencePoint = configureOverTimeComparison(_cloneDeep(referencePoint));
 
             expect(newReferencePoint.buckets).toMatchObject(referencePoint.buckets);
         });
@@ -227,7 +227,7 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
                 },
             };
 
-            const newReferencePoint = configureOverTimeComparison(cloneDeep(referencePoint));
+            const newReferencePoint = configureOverTimeComparison(_cloneDeep(referencePoint));
 
             expect(newReferencePoint.buckets[0].items).toEqual([
                 masterMeasureItems[0],
@@ -268,7 +268,7 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
                 },
             };
 
-            const newReferencePoint = configureOverTimeComparison(cloneDeep(referencePoint));
+            const newReferencePoint = configureOverTimeComparison(_cloneDeep(referencePoint));
 
             expect(newReferencePoint.buckets[0].items).toEqual([
                 masterMeasureItems[0],
@@ -317,7 +317,7 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
                 },
             };
 
-            const newReferencePoint = configureOverTimeComparison(cloneDeep(referencePoint));
+            const newReferencePoint = configureOverTimeComparison(_cloneDeep(referencePoint));
 
             expect(newReferencePoint.buckets[0].items).toEqual([
                 masterMeasureItems[0],
@@ -334,9 +334,9 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
         it("should remove all derived measures when compare type is undefined", () => {
             const referencePoint = getOverTimeComparisonReferencePoint(dateFilterBucketItem);
 
-            const newReferencePoint = configureOverTimeComparison(cloneDeep(referencePoint));
+            const newReferencePoint = configureOverTimeComparison(_cloneDeep(referencePoint));
 
-            const expectedReferencePoint = cloneDeep(referencePoint);
+            const expectedReferencePoint = _cloneDeep(referencePoint);
             expectedReferencePoint.buckets[0].items = masterMeasureItems
                 .slice(0, 2)
                 .concat(arithmeticMeasureItems.slice(0, 2));
@@ -352,9 +352,9 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
             };
             const referencePoint = getOverTimeComparisonReferencePoint(dateFilterBucketItem);
 
-            const newReferencePoint = configureOverTimeComparison(cloneDeep(referencePoint));
+            const newReferencePoint = configureOverTimeComparison(_cloneDeep(referencePoint));
 
-            const expectedReferencePoint = cloneDeep(referencePoint);
+            const expectedReferencePoint = _cloneDeep(referencePoint);
             expectedReferencePoint.buckets[0].items = masterMeasureItems
                 .slice(0, 2)
                 .concat(arithmeticMeasureItems.slice(0, 2));
@@ -366,7 +366,7 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
         it("should keep all derived measures when compare type is SP", () => {
             const referencePoint = getOverTimeComparisonReferencePoint(dateFilterWithSamePeriodPreviousYear);
 
-            const newReferencePoint = configureOverTimeComparison(cloneDeep(referencePoint));
+            const newReferencePoint = configureOverTimeComparison(_cloneDeep(referencePoint));
 
             expect(newReferencePoint.buckets).toMatchObject(referencePoint.buckets);
         });
@@ -377,9 +377,9 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
                 OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR,
             ];
 
-            const newReferencePoint = configureOverTimeComparison(cloneDeep(referencePoint));
+            const newReferencePoint = configureOverTimeComparison(_cloneDeep(referencePoint));
 
-            const expectedReferencePoint = cloneDeep(referencePoint);
+            const expectedReferencePoint = _cloneDeep(referencePoint);
             expectedReferencePoint.buckets[0].items = [
                 masterMeasureItems[0],
                 masterMeasureItems[1],
@@ -404,9 +404,9 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
             const referencePoint = getOverTimeComparisonReferencePoint(dateFilterWithSamePeriodPreviousYear);
             referencePoint.uiConfig!.supportedOverTimeComparisonTypes = [];
 
-            const newReferencePoint = configureOverTimeComparison(cloneDeep(referencePoint));
+            const newReferencePoint = configureOverTimeComparison(_cloneDeep(referencePoint));
 
-            const expectedReferencePoint = cloneDeep(referencePoint);
+            const expectedReferencePoint = _cloneDeep(referencePoint);
             expectedReferencePoint.buckets[0].items = [
                 masterMeasureItems[0],
                 masterMeasureItems[1],
@@ -422,9 +422,9 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
             const referencePoint = getOverTimeComparisonReferencePoint(dateFilterWithSamePeriodPreviousYear);
             referencePoint.uiConfig!.supportedOverTimeComparisonTypes = [OverTimeComparisonTypes.NOTHING];
 
-            const newReferencePoint = configureOverTimeComparison(cloneDeep(referencePoint));
+            const newReferencePoint = configureOverTimeComparison(_cloneDeep(referencePoint));
 
-            const expectedReferencePoint = cloneDeep(referencePoint);
+            const expectedReferencePoint = _cloneDeep(referencePoint);
             expectedReferencePoint.buckets[0].items = [
                 masterMeasureItems[0],
                 masterMeasureItems[1],
@@ -446,8 +446,8 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
                 },
             };
             const referencePoint = getOverTimeComparisonReferencePoint(dateFilterWithDifferentDateDataset);
-            const expectedReferencePoint = cloneDeep(referencePoint);
-            const newReferencePoint = configureOverTimeComparison(cloneDeep(referencePoint));
+            const expectedReferencePoint = _cloneDeep(referencePoint);
+            const newReferencePoint = configureOverTimeComparison(_cloneDeep(referencePoint));
             expectedReferencePoint.buckets[0].items = [
                 masterMeasureItems[0],
                 masterMeasureItems[1],

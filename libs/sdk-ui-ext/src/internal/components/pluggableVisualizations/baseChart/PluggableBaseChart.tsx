@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, compact, omitBy, set, tail } from "lodash-es";
+import { compact, omitBy, set, tail } from "lodash-es";
 
 import { type IBackendCapabilities, type IDataView, type IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
@@ -22,7 +22,7 @@ import {
     updateOutliersWithSettings,
 } from "@gooddata/sdk-ui-charts";
 import { buildTooltipExecutionFromConfig } from "@gooddata/sdk-ui-vis-commons";
-import { _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty } from "@gooddata/util";
 
 import { messages } from "../../../../locales.js";
 import { BUCKETS } from "../../../constants/bucket.js";
@@ -117,11 +117,11 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     }
 
     public getUiConfig(): IUiConfig {
-        return cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
+        return _cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
     }
 
     public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
-        const clonedReferencePoint = cloneDeep(referencePoint);
+        const clonedReferencePoint = _cloneDeep(referencePoint);
         const uiConfig = this.getUiConfig();
         let newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,

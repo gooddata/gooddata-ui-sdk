@@ -1,7 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
 import invariant from "invariant";
-import { cloneDeep, negate, omit, pick, pickBy } from "lodash-es";
+import { negate, omit, pick, pickBy } from "lodash-es";
 
 import {
     type AllTimeGranularity,
@@ -26,7 +26,7 @@ import {
     fillMissingFormat,
 } from "@gooddata/sdk-ui";
 import { Axis } from "@gooddata/sdk-ui-ext/internal";
-import { _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty } from "@gooddata/util";
 
 import { ATTRIBUTE, COMPUTED_ATTRIBUTE, DATE, GEO_ATTRIBUTE, METRIC } from "../constants/bucket.js";
 import { ALL_TIME } from "../constants/presets.js";
@@ -2010,7 +2010,7 @@ export function omitIrrelevantPropertiesForAvailability(
 ): IVisualizationObjectContentForAvailability {
     // pickRelevantFromReportMDObj narrows the object part-way through, so the steps are spelled out
     // rather than folded over one accumulator type
-    const withoutTotals = omitTotalsFromReportMDObj(cloneDeep(mdObject));
+    const withoutTotals = omitTotalsFromReportMDObj(_cloneDeep(mdObject));
     const withoutAlias = omitAliasFromReportMDObj(withoutTotals);
     const withoutArithmeticMeasures = omitArithmeticMeasuresMDObj(withoutAlias);
 

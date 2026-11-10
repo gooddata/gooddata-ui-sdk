@@ -2190,6 +2190,14 @@ export interface AfmGetQualityIssuesResponse {
 }
 
 // @public
+export interface AfmGoodDataAiProviderConfig {
+    'type': AfmGoodDataAiProviderConfigTypeEnum;
+}
+
+// @public (undocumented)
+export type AfmGoodDataAiProviderConfigTypeEnum = 'GOODDATA_AI';
+
+// @public
 export type AfmIdentifier = AfmLocalIdentifier | AfmObjectIdentifier;
 
 // @public
@@ -27095,6 +27103,14 @@ export interface GeoJsonGeometry {
 export type GetQualityIssuesResponseStatusEnum = 'RUNNING' | 'SYNCING' | 'COMPLETED' | 'FAILED' | 'CANCELLED' | 'NOT_FOUND' | 'DISABLED';
 
 // @public
+export interface GoodDataAiProviderConfig {
+    'type': GoodDataAiProviderConfigTypeEnum;
+}
+
+// @public (undocumented)
+export type GoodDataAiProviderConfigTypeEnum = 'GOODDATA_AI';
+
+// @public
 export interface GrainIdentifier {
     'id': string;
     'type': GrainIdentifierTypeEnum;
@@ -34923,7 +34939,7 @@ export interface JsonApiLlmProviderInAttributesModelsInner {
 export type JsonApiLlmProviderInAttributesModelsInnerFamilyEnum = 'OPENAI' | 'ANTHROPIC' | 'META' | 'MISTRAL' | 'AMAZON' | 'GOOGLE' | 'COHERE' | 'UNKNOWN';
 
 // @public
-export type JsonApiLlmProviderInAttributesProviderConfig = AnthropicProviderConfig | AwsBedrockProviderConfig | AzureFoundryProviderConfig | OpenAIProviderConfig;
+export type JsonApiLlmProviderInAttributesProviderConfig = AnthropicProviderConfig | AwsBedrockProviderConfig | AzureFoundryProviderConfig | GoodDataAiProviderConfig | OpenAIProviderConfig;
 
 // @public (undocumented)
 export interface JsonApiLlmProviderInDocument {
@@ -34963,7 +34979,7 @@ export interface JsonApiLlmProviderOutAttributesModelsInner {
 export type JsonApiLlmProviderOutAttributesModelsInnerFamilyEnum = 'OPENAI' | 'ANTHROPIC' | 'META' | 'MISTRAL' | 'AMAZON' | 'GOOGLE' | 'COHERE' | 'UNKNOWN';
 
 // @public
-export type JsonApiLlmProviderOutAttributesProviderConfig = AnthropicProviderConfig | AwsBedrockProviderConfig | AzureFoundryProviderConfig | OpenAIProviderConfig;
+export type JsonApiLlmProviderOutAttributesProviderConfig = AnthropicProviderConfig | AwsBedrockProviderConfig | AzureFoundryProviderConfig | GoodDataAiProviderConfig | OpenAIProviderConfig;
 
 // @public (undocumented)
 export interface JsonApiLlmProviderOutDocument {
@@ -35034,7 +35050,7 @@ export interface JsonApiLlmProviderPatchAttributesModelsInner {
 export type JsonApiLlmProviderPatchAttributesModelsInnerFamilyEnum = 'OPENAI' | 'ANTHROPIC' | 'META' | 'MISTRAL' | 'AMAZON' | 'GOOGLE' | 'COHERE' | 'UNKNOWN';
 
 // @public
-export type JsonApiLlmProviderPatchAttributesProviderConfig = AnthropicProviderConfig | AwsBedrockProviderConfig | AzureFoundryProviderConfig | OpenAIProviderConfig;
+export type JsonApiLlmProviderPatchAttributesProviderConfig = AnthropicProviderConfig | AwsBedrockProviderConfig | AzureFoundryProviderConfig | GoodDataAiProviderConfig | OpenAIProviderConfig;
 
 // @public (undocumented)
 export interface JsonApiLlmProviderPatchDocument {
@@ -42622,7 +42638,7 @@ export interface LlmModel {
 export type LlmModelFamilyEnum = 'OPENAI' | 'ANTHROPIC' | 'META' | 'MISTRAL' | 'AMAZON' | 'GOOGLE' | 'COHERE' | 'UNKNOWN';
 
 // @public
-export type LlmProviderConfig = AfmAnthropicProviderConfig | AfmAwsBedrockProviderConfig | AfmAzureFoundryProviderConfig | AfmOpenAIProviderConfig;
+export type LlmProviderConfig = AfmAnthropicProviderConfig | AfmAwsBedrockProviderConfig | AfmAzureFoundryProviderConfig | AfmGoodDataAiProviderConfig | AfmOpenAIProviderConfig;
 
 // @public
 export class LlmProviderControllerApi extends MetadataBaseApi implements LlmProviderControllerApiInterface {

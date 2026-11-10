@@ -1,7 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
-import { cloneDeep } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { type IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
@@ -44,6 +43,7 @@ import {
     isIdentifierRef,
     newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
+import { _cloneDeep } from "@gooddata/util";
 
 import { isDisplayFormMetadataReferencedBy } from "../../../utils/attributeFilterMatching.js";
 import {
@@ -2010,10 +2010,10 @@ const adoptAppliedFiltersAsOriginal: FilterContextReducer<PayloadAction<IWritten
         // without an initial value, e.g. a cross-filtering one, stays out of the initial values
         const adopted = definition.filters.flatMap((filter): FilterContextItem[] => {
             if (isWrittenFilter(filter, written)) {
-                return [cloneDeep(filter)];
+                return [_cloneDeep(filter)];
             }
             const original = originalOf.get(filter);
-            return original ? [cloneDeep(original)] : [];
+            return original ? [_cloneDeep(original)] : [];
         });
         // an unwritten initial value without an applied filter, e.g. a common date filter set to all time
         for (const original of originals) {
@@ -2021,9 +2021,9 @@ const adoptAppliedFiltersAsOriginal: FilterContextReducer<PayloadAction<IWritten
                 continue;
             }
             if (isDashboardCommonDateFilter(original)) {
-                adopted.unshift(cloneDeep(original));
+                adopted.unshift(_cloneDeep(original));
             } else {
-                adopted.push(cloneDeep(original));
+                adopted.push(_cloneDeep(original));
             }
         }
         tab.filterContext.originalFilterContextDefinition = {

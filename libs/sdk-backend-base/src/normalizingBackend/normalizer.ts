@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { cloneDeep, cloneDeepWith, keyBy } from "lodash-es";
+import { cloneDeepWith, keyBy } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {
@@ -47,6 +47,7 @@ import {
     modifyAttribute,
     modifyMeasure,
 } from "@gooddata/sdk-model";
+import { _cloneDeep } from "@gooddata/util";
 
 /**
  * @beta
@@ -271,7 +272,7 @@ export class Normalizer {
         public readonly original: IExecutionDefinition,
         protected readonly options: INormalizerOptions = {},
     ) {
-        const copy = cloneDeep(this.original);
+        const copy = _cloneDeep(this.original);
 
         // throw away noop filters
         const filters = copy.filters.filter((f) => {

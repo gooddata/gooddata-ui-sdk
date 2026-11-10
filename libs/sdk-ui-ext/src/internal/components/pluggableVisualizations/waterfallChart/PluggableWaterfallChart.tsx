@@ -1,10 +1,10 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 
 import { type IInsightDefinition, newMeasureSort } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { _isEmpty, _isEqual } from "@gooddata/util";
+import { _cloneDeep, _isEmpty, _isEqual } from "@gooddata/util";
 
 import { BUCKETS } from "../../../constants/bucket.js";
 import { WATERFALL_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
@@ -115,13 +115,13 @@ export class PluggableWaterfallChart extends PluggableBaseChart {
     }
 
     public override getUiConfig(): IUiConfig {
-        return cloneDeep(DEFAULT_WATERFALL_UICONFIG);
+        return _cloneDeep(DEFAULT_WATERFALL_UICONFIG);
     }
 
     public override getExtendedReferencePoint(
         referencePoint: IReferencePoint,
     ): Promise<IExtendedReferencePoint> {
-        const clonedReferencePoint = cloneDeep(referencePoint);
+        const clonedReferencePoint = _cloneDeep(referencePoint);
         let newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,
             uiConfig: this.getUiConfig(),
@@ -149,9 +149,9 @@ export class PluggableWaterfallChart extends PluggableBaseChart {
             const limitedBuckets = limitNumberOfMeasuresInBuckets(buckets, MAX_METRICS_COUNT, true);
             const limitedMeasures = getMeasureItems(limitedBuckets);
             if (limitedMeasures.length > 1) {
-                set(newReferencePoint, UICONFIG, cloneDeep(WATERFALL_UICONFIG_WITH_MULTIPLE_METRICS));
+                set(newReferencePoint, UICONFIG, _cloneDeep(WATERFALL_UICONFIG_WITH_MULTIPLE_METRICS));
             } else {
-                set(newReferencePoint, UICONFIG, cloneDeep(WATERFALL_UICONFIG_WITH_ONE_METRIC));
+                set(newReferencePoint, UICONFIG, _cloneDeep(WATERFALL_UICONFIG_WITH_ONE_METRIC));
             }
 
             set(newReferencePoint, BUCKETS, [

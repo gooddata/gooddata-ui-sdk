@@ -1,10 +1,11 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, merge } from "lodash-es";
+import { merge } from "lodash-es";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { OverTimeComparisonTypes, VisualizationTypes } from "@gooddata/sdk-ui";
+import { _cloneDeep } from "@gooddata/util";
 
 import { AXIS } from "../../../constants/axis.js";
 import { COMBO_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
@@ -356,7 +357,7 @@ describe("PluggableComboChart", () => {
             "should update supported properties list when axis is %s and chart type is column/line/area",
             (axis: string, refPoint: IReferencePoint) => {
                 const comboChart = createComponent(defaultProps);
-                const clonedReferencePoint = cloneDeep(refPoint);
+                const clonedReferencePoint = _cloneDeep(refPoint);
                 const refPoints: Array<Promise<IExtendedReferencePoint>> = COLUMN_AREA_LINE.map(
                     (chartType: string) => {
                         clonedReferencePoint.buckets.forEach(

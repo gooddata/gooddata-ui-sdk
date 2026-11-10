@@ -1,7 +1,5 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
-
 import {
     type IAnalyticalBackend,
     type IBackendCapabilities,
@@ -45,7 +43,7 @@ import {
     type PivotTableNextConfig,
     type PivotTableNextConfigWithConditionalFormatting,
 } from "@gooddata/sdk-ui-pivot/next";
-import { _isEmpty, _isEqual } from "@gooddata/util";
+import { _cloneDeep, _isEmpty, _isEqual } from "@gooddata/util";
 
 import { METRIC } from "../../../constants/bucket.js";
 import { ANALYTICAL_ENVIRONMENT, DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
@@ -206,7 +204,7 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
         referencePoint: IReferencePoint,
         previousReferencePoint?: IReferencePoint,
     ): Promise<IExtendedReferencePoint> {
-        const clonedReferencePoint = cloneDeep(referencePoint);
+        const clonedReferencePoint = _cloneDeep(referencePoint);
         const newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,
             uiConfig: getPivotTableNextDefaultUiConfig(),

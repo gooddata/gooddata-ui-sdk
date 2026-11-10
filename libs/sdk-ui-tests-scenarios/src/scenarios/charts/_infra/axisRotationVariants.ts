@@ -1,8 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
-
 import { type IBucketChartProps, type IChartConfig } from "@gooddata/sdk-ui-charts";
+import { _cloneDeep } from "@gooddata/util";
 
 import { type UnboundVisProps } from "../../../scenario.js";
 import { type CustomizedScenario } from "../../../scenarioGroup.js";
@@ -10,7 +9,7 @@ import { type CustomizedScenario } from "../../../scenarioGroup.js";
 const ConfigVariants: Array<[string]> = [["90"], ["-90"], ["60"], ["-60"]];
 
 function updateAxisSettings(rotation: string, config: IChartConfig = {}): IChartConfig {
-    const copy = cloneDeep(config);
+    const copy = _cloneDeep(config);
 
     if (copy.xaxis) {
         copy.xaxis.rotation = rotation;

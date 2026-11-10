@@ -1,11 +1,11 @@
 // (C) 2007-2026 GoodData Corporation
 
 // @vitest-environment node
-import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { type ISortItem } from "@gooddata/sdk-model";
 import { type IVisualizationProperties } from "@gooddata/sdk-ui-ext/internal";
+import { _cloneDeep } from "@gooddata/util";
 
 import { type IVisualizationPropertiesControls } from "../typings/properties.js";
 
@@ -113,9 +113,9 @@ describe("visualization properties utils", () => {
                 controls: { legend: { position: "top" } },
             };
 
-            expect(areSameVisualizationProperties(cloneDeep(properties), properties)).toBe(true);
+            expect(areSameVisualizationProperties(_cloneDeep(properties), properties)).toBe(true);
             expect(
-                areSameVisualizationProperties(cloneDeep(properties), {
+                areSameVisualizationProperties(_cloneDeep(properties), {
                     ...properties,
                     controls: { legend: { position: "bottom" } },
                 }),

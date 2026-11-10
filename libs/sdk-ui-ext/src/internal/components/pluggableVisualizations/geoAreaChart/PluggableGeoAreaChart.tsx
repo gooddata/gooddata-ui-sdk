@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 
 import {
     type IAnalyticalBackend,
@@ -25,6 +25,7 @@ import {
     insightLayerToGeoLayer,
     insightLayersToGeoLayers,
 } from "@gooddata/sdk-ui-geo/internal";
+import { _cloneDeep } from "@gooddata/util";
 
 import { BUCKETS } from "../../../constants/bucket.js";
 import { isGeoChartsViewportConfigEnabled } from "../../../constants/featureFlags.js";
@@ -122,7 +123,7 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
         // The generic sanitizeFilters() (in PluggableBaseChart) does not know about additional layers and can
         // incorrectly drop MVFs that are meant for non-root layers (e.g., pushpin layer MVFs).
         // We keep the original filter bucket intact here and rely on per-layer execution sanitization instead.
-        const originalFilters = cloneDeep(referencePoint.filters);
+        const originalFilters = _cloneDeep(referencePoint.filters);
 
         return super
             .getExtendedReferencePoint(referencePoint)
@@ -144,7 +145,7 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
     }
 
     public override getUiConfig(): IUiConfig {
-        return cloneDeep(GEO_AREA_CHART_UICONFIG);
+        return _cloneDeep(GEO_AREA_CHART_UICONFIG);
     }
 
     protected override getSupportedPropertiesList(): string[] {

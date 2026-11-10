@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
+import { _cloneDeep } from "@gooddata/util";
 
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type HighchartsOptions } from "../../lib/index.js";
@@ -50,7 +50,7 @@ const BULLET_TEMPLATE = {
 };
 
 export function getBulletConfiguration(config: IChartConfig): HighchartsOptions {
-    const bulletConfiguration = cloneDeep(BULLET_TEMPLATE);
+    const bulletConfiguration = _cloneDeep(BULLET_TEMPLATE);
 
     if (config?.enableCompactSize && !config?.zoomInsight) {
         const reversed = true;

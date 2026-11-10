@@ -64,6 +64,7 @@ const lodashEsBans: Record<string, string> = {
     // @gooddata/util
     isEmpty: "_isEmpty from @gooddata/util",
     isEqual: "_isEqual from @gooddata/util",
+    cloneDeep: "_cloneDeep from @gooddata/util",
 };
 
 const lodashEsPatterns = Object.entries(lodashEsBans).map(([importNames, alternative]) => ({

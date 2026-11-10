@@ -1,11 +1,11 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { type IDrillableItem } from "@gooddata/sdk-ui";
 import { CalculateAs, CoreHeadline, type ICoreChartProps } from "@gooddata/sdk-ui-charts";
+import { _cloneDeep } from "@gooddata/util";
 
 import {
     type IBucketOfFun,
@@ -264,7 +264,7 @@ describe("PluggableHeadline", () => {
         describe("known buckets", () => {
             it("should keep first bucket empty when primary measures bucket is empty and the second is not", async () => {
                 const headline = createComponent();
-                const referencePoint = cloneDeep(emptyReferencePoint);
+                const referencePoint = _cloneDeep(emptyReferencePoint);
                 referencePoint.buckets = [
                     {
                         localIdentifier: "measures",

@@ -3,7 +3,6 @@
 import { type ReactElement, type ReactNode, StrictMode, useEffect, useState } from "react";
 
 import { type RenderResult, act, render } from "@testing-library/react";
-import { cloneDeep } from "lodash-es";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -11,7 +10,7 @@ import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type ITheme } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
-import { suppressConsole } from "@gooddata/util";
+import { _cloneDeep, suppressConsole } from "@gooddata/util";
 
 import { clearCssProperties } from "../cssProperties.js";
 
@@ -104,7 +103,7 @@ describe("ThemeProvider", () => {
     it("should use theme modifier if provided after load", async () => {
         const themeModifier: ThemeModifier = (theme: ITheme): ITheme => {
             if (theme?.button?.dropShadow === false) {
-                const modifiedTheme = cloneDeep(theme);
+                const modifiedTheme = _cloneDeep(theme);
                 modifiedTheme.button = {
                     borderRadius: "15px",
                 };

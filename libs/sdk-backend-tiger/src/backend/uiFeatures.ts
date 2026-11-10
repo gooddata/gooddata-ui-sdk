@@ -117,6 +117,7 @@ export const TigerFeatureDefinitions = {
     enableGenAiInteractionIntelligence: booleanFeature(false),
     enableGenAiInteractionIntelligence_timeline: booleanFeature(false),
     enableAiLlmAnthropicProvider: booleanFeature(false),
+    enableAiLlmGooddataProvider: booleanFeature(false),
     enableDashboardSidebarResize: booleanFeature(true),
     enableCollapsibleLeftSidebar: booleanFeature(true),
     enableLineChartStyling: booleanFeature(true),

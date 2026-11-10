@@ -41112,6 +41112,22 @@
                     }
                 }
             },
+            "GoodDataAiProviderConfig": {
+                "required": [
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Provider type.",
+                        "enum": [
+                            "GOODDATA_AI"
+                        ]
+                    }
+                },
+                "description": "Configuration for GoodData AI provider. Inference is served by GoodData; no credentials are needed."
+            },
             "GrainIdentifier": {
                 "maxLength": 255,
                 "required": [
@@ -53958,6 +53974,9 @@
                                 "nullable": true,
                                 "oneOf": [
                                     {
+                                        "$ref": "#/components/schemas/GoodDataAiProviderConfig"
+                                    },
+                                    {
                                         "$ref": "#/components/schemas/OpenAIProviderConfig"
                                     },
                                     {
@@ -54067,6 +54086,9 @@
                                 "description": "Provider-specific configuration including authentication.",
                                 "nullable": true,
                                 "oneOf": [
+                                    {
+                                        "$ref": "#/components/schemas/GoodDataAiProviderConfig"
+                                    },
                                     {
                                         "$ref": "#/components/schemas/OpenAIProviderConfig"
                                     },
@@ -54217,6 +54239,9 @@
                                 "description": "Provider-specific configuration including authentication.",
                                 "nullable": true,
                                 "oneOf": [
+                                    {
+                                        "$ref": "#/components/schemas/GoodDataAiProviderConfig"
+                                    },
                                     {
                                         "$ref": "#/components/schemas/OpenAIProviderConfig"
                                     },

@@ -1,11 +1,12 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import cx from "classnames";
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { type PushDataCallback } from "@gooddata/sdk-ui";
 import { Button } from "@gooddata/sdk-ui-kit";
+import { _cloneDeep } from "@gooddata/util";
 
 import { messages } from "../../../../../../locales.js";
 import { type IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
@@ -30,7 +31,7 @@ export function ColorResetButton({ disabled, properties, pushData }: IColorReset
     const isDefaultColors = isComparisonDefaultColors(properties?.controls?.comparison?.colorConfig);
 
     const resetColors = () => {
-        const clonedProperties = cloneDeep(properties);
+        const clonedProperties = _cloneDeep(properties);
 
         set(clonedProperties.controls!, COMPARISON_COLOR_CONFIG_POSITIVE, undefined);
         set(clonedProperties.controls!, COMPARISON_COLOR_CONFIG_NEGATIVE, undefined);

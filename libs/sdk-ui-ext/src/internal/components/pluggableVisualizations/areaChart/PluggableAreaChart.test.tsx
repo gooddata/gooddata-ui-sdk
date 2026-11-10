@@ -1,6 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
@@ -14,6 +13,7 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames, type IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 import { type IAreaChartProps } from "@gooddata/sdk-ui-charts";
+import { _cloneDeep } from "@gooddata/util";
 
 import {
     type IBucketOfFun,
@@ -425,7 +425,7 @@ describe("PluggableAreaChart", () => {
 
         it("should keep two date attributes in view by bucket when coming from pivot table with date buckets with different date dimensions", async () => {
             const areaChart = createComponent(defaultProps);
-            const mockRefPoint = cloneDeep(dateAttributesOnRowsReferencePoint);
+            const mockRefPoint = _cloneDeep(dateAttributesOnRowsReferencePoint);
             const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",

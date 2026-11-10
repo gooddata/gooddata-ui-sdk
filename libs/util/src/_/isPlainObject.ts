@@ -48,7 +48,7 @@ const OBJECT_CTOR_STRING = Function.prototype.toString.call(Object);
  * @returns Returns `true` if `value` is a plain object, else `false`.
  * @internal
  */
-export function _isPlainObject(value: unknown): boolean {
+export function _isPlainObject(value?: unknown): boolean {
     if (!_isObjectLike(value) || _baseGetTag(value) !== OBJECT_TAG) {
         return false;
     }

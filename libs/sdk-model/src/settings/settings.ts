@@ -1183,6 +1183,11 @@ export interface IFeatureFlags {
     enableAiLlmAnthropicProvider?: boolean;
 
     /**
+     * Enable GoodData AI provider in LLM configuration.
+     */
+    enableAiLlmGooddataProvider?: boolean;
+
+    /**
      * Enables Resizable Dashboard sidebar in edit mode.
      */
     enableDashboardSidebarResize?: boolean;

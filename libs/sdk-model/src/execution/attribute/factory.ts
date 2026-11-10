@@ -1,9 +1,8 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
 import SparkMD5 from "spark-md5";
 
-import { _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty } from "@gooddata/util";
 
 import { idRef } from "../../objRef/factory.js";
 import { type Identifier, type ObjRef, isObjRef, objRefToString } from "../../objRef/index.js";
@@ -33,7 +32,7 @@ export class AttributeBuilder {
      */
     constructor(input: AttributeBuilderInput) {
         if (isAttribute(input)) {
-            this.attribute = cloneDeep(input.attribute);
+            this.attribute = _cloneDeep(input.attribute);
             this.customLocalId = true;
         } else {
             const displayForm: ObjRef = isObjRef(input) ? input : idRef(input, "displayForm");

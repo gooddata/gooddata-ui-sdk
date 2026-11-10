@@ -2,7 +2,6 @@
 
 // @vitest-environment node
 
-import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -10,6 +9,7 @@ import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { type IColorPalette } from "@gooddata/sdk-model";
 import { type DataViewFacade } from "@gooddata/sdk-ui";
 import { type ChartFillType } from "@gooddata/sdk-ui-vis-commons";
+import { _cloneDeep } from "@gooddata/util";
 
 import { recordedDataFacade } from "../../../testUtils/recordings.fixture.js";
 
@@ -81,7 +81,7 @@ describe("getBulletChartSeries", () => {
         );
 
         it("should set hidden classname to target series and its y value to 0 if execution value is null", () => {
-            const HackedUpNullValue = cloneDeep(
+            const HackedUpNullValue = _cloneDeep(
                 ReferenceRecordings.Scenarios.BulletChart
                     .PrimaryAndTargetMeasures as unknown as ScenarioRecording,
             );

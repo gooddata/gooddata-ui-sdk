@@ -1,9 +1,11 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { memo, useEffect } from "react";
 
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 import { useIntl } from "react-intl";
+
+import { _cloneDeep } from "@gooddata/util";
 
 import { messages } from "../../../../locales.js";
 import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
@@ -42,7 +44,7 @@ export const TotalSection = memo(function TotalSection({
 
     useEffect(() => {
         if (isTotalEnabled && !totalColumnName) {
-            const cloneProperties = cloneDeep(properties);
+            const cloneProperties = _cloneDeep(properties);
             set(cloneProperties, "controls.total.name", defaultTotalColumnName);
             pushData({ properties: cloneProperties });
         }

@@ -1,9 +1,11 @@
-// (C) 2019-2025 GoodData Corporation
-import { cloneDeep, set } from "lodash-es";
+// (C) 2019-2026 GoodData Corporation
+
+import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { BucketNames, type ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 import { isLineChart } from "@gooddata/sdk-ui-charts";
+import { _cloneDeep } from "@gooddata/util";
 
 import { messages } from "../../../locales.js";
 import { BUCKETS } from "../../constants/bucket.js";
@@ -63,7 +65,7 @@ export function setComboChartUiConfig(
     intl: IntlShape,
     visualizationType: ChartType,
 ): IExtendedReferencePoint {
-    const referencePointConfigured = cloneDeep(referencePoint);
+    const referencePointConfigured = _cloneDeep(referencePoint);
     const measureBuckets = getBucketsByNames(referencePointConfigured?.buckets, [
         BucketNames.MEASURES,
         BucketNames.SECONDARY_MEASURES,

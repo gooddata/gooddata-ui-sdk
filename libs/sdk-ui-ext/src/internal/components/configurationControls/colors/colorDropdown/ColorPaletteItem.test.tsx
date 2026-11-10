@@ -2,8 +2,9 @@
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { cloneDeep } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
+
+import { _cloneDeep } from "@gooddata/util";
 
 import { ColorPaletteItem, type IColorPaletteItemProps } from "./ColorPaletteItem.js";
 
@@ -21,7 +22,7 @@ const defaultProps: IColorPaletteItemProps = {
 };
 
 function createComponent(customProps: Partial<IColorPaletteItemProps> = {}) {
-    const props: IColorPaletteItemProps = { ...cloneDeep(defaultProps), ...customProps };
+    const props: IColorPaletteItemProps = { ..._cloneDeep(defaultProps), ...customProps };
     return render(<ColorPaletteItem {...props} />);
 }
 

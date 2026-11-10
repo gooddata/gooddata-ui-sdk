@@ -3,10 +3,10 @@
 // @vitest-environment node
 
 import { produce } from "immer";
-import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { DashboardDateFilterConfigModeValues, type IDashboardDateFilterConfig } from "@gooddata/sdk-model";
+import { _cloneDeep } from "@gooddata/util";
 
 import { tabsActions } from "../index.js";
 import { type ITabsState, tabsInitialState } from "../tabsState.js";
@@ -26,7 +26,7 @@ describe("dateFilterConfigReducers", () => {
                     title: "Tab 1",
                     dateFilterConfig: dateFilterConfig
                         ? {
-                              dateFilterConfig: cloneDeep(dateFilterConfig),
+                              dateFilterConfig: _cloneDeep(dateFilterConfig),
                               effectiveDateFilterConfig: undefined,
                               isUsingDashboardOverrides: undefined,
                               dateFilterConfigValidationWarnings: undefined,

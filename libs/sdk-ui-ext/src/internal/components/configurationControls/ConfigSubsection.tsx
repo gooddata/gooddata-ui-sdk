@@ -1,9 +1,11 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ChangeEvent, type ReactNode } from "react";
 
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 import { useIntl } from "react-intl";
+
+import { _cloneDeep } from "@gooddata/util";
 
 import { type AxisType } from "../../interfaces/AxisType.js";
 import { getTranslation } from "../../utils/translations.js";
@@ -43,7 +45,7 @@ export function ConfigSubsection({
     const intl = useIntl();
     const toggleValue = (event: ChangeEvent<HTMLInputElement>) => {
         if (valuePath && properties && pushData) {
-            const clonedProperties = cloneDeep(properties);
+            const clonedProperties = _cloneDeep(properties);
             set(clonedProperties, `controls.${valuePath}`, event.target.checked);
 
             pushData({ properties: clonedProperties });

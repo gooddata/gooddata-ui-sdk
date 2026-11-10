@@ -4354,6 +4354,18 @@ export interface GeoCollectionIdentifier {
 export type GeoCollectionIdentifierKindEnum = 'STATIC' | 'CUSTOM';
 
 /**
+ * Configuration for GoodData AI provider. Inference is served by GoodData; no credentials are needed.
+ */
+export interface GoodDataAiProviderConfig {
+    /**
+     * Provider type.
+     */
+    'type': GoodDataAiProviderConfigTypeEnum;
+}
+
+export type GoodDataAiProviderConfigTypeEnum = 'GOODDATA_AI';
+
+/**
  * A grain identifier.
  */
 export interface GrainIdentifier {
@@ -11205,7 +11217,7 @@ export type JsonApiLlmProviderInAttributesModelsInnerFamilyEnum = 'OPENAI' | 'AN
  * @type JsonApiLlmProviderInAttributesProviderConfig
  * Provider-specific configuration including authentication.
  */
-export type JsonApiLlmProviderInAttributesProviderConfig = AnthropicProviderConfig | AwsBedrockProviderConfig | AzureFoundryProviderConfig | OpenAIProviderConfig;
+export type JsonApiLlmProviderInAttributesProviderConfig = AnthropicProviderConfig | AwsBedrockProviderConfig | AzureFoundryProviderConfig | GoodDataAiProviderConfig | OpenAIProviderConfig;
 
 export interface JsonApiLlmProviderInDocument {
     'data': JsonApiLlmProviderIn;
@@ -11265,7 +11277,7 @@ export type JsonApiLlmProviderOutAttributesModelsInnerFamilyEnum = 'OPENAI' | 'A
  * @type JsonApiLlmProviderOutAttributesProviderConfig
  * Provider-specific configuration including authentication.
  */
-export type JsonApiLlmProviderOutAttributesProviderConfig = AnthropicProviderConfig | AwsBedrockProviderConfig | AzureFoundryProviderConfig | OpenAIProviderConfig;
+export type JsonApiLlmProviderOutAttributesProviderConfig = AnthropicProviderConfig | AwsBedrockProviderConfig | AzureFoundryProviderConfig | GoodDataAiProviderConfig | OpenAIProviderConfig;
 
 export interface JsonApiLlmProviderOutDocument {
     'data': JsonApiLlmProviderOut;
@@ -11354,7 +11366,7 @@ export type JsonApiLlmProviderPatchAttributesModelsInnerFamilyEnum = 'OPENAI' | 
  * @type JsonApiLlmProviderPatchAttributesProviderConfig
  * Provider-specific configuration including authentication.
  */
-export type JsonApiLlmProviderPatchAttributesProviderConfig = AnthropicProviderConfig | AwsBedrockProviderConfig | AzureFoundryProviderConfig | OpenAIProviderConfig;
+export type JsonApiLlmProviderPatchAttributesProviderConfig = AnthropicProviderConfig | AwsBedrockProviderConfig | AzureFoundryProviderConfig | GoodDataAiProviderConfig | OpenAIProviderConfig;
 
 export interface JsonApiLlmProviderPatchDocument {
     'data': JsonApiLlmProviderPatch;

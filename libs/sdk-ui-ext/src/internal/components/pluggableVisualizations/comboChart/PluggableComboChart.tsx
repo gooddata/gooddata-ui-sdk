@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 
 import {
     type IInsightDefinition,
@@ -11,7 +11,7 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { type IChartConfig, isAreaChart, isLineChart } from "@gooddata/sdk-ui-charts";
-import { _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty } from "@gooddata/util";
 
 import { AXIS, AXIS_NAME } from "../../../constants/axis.js";
 import { BUCKETS, METRIC } from "../../../constants/bucket.js";
@@ -113,7 +113,7 @@ export class PluggableComboChart extends PluggableBaseChart {
     }
 
     public override getUiConfig(): IUiConfig {
-        const config = cloneDeep({
+        const config = _cloneDeep({
             ...COMBO_CHART_UICONFIG,
             optionalStacking: {
                 supported: true,
@@ -127,7 +127,7 @@ export class PluggableComboChart extends PluggableBaseChart {
     public override getExtendedReferencePoint(
         referencePoint: IReferencePoint,
     ): Promise<IExtendedReferencePoint> {
-        const clonedReferencePoint = cloneDeep(referencePoint);
+        const clonedReferencePoint = _cloneDeep(referencePoint);
         const properties = this.configureChartTypes(clonedReferencePoint);
         this.primaryChartType = properties?.controls?.["primaryChartType"] ?? VisualizationTypes.COLUMN;
         this.secondaryChartType = properties?.controls?.["secondaryChartType"] ?? VisualizationTypes.COLUMN;

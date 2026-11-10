@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import {
@@ -28,6 +28,7 @@ import {
     updateConfigWithSettings,
 } from "@gooddata/sdk-ui-charts";
 import { parseRGBString } from "@gooddata/sdk-ui-vis-commons";
+import { _cloneDeep } from "@gooddata/util";
 
 import { messages } from "../../../locales.js";
 import { BUCKETS } from "../../constants/bucket.js";
@@ -51,7 +52,7 @@ const headlineMeasuresIcon = "local:headline/bucket-title-measures.svg";
 const headlineSecondaryMeasuresIcon = "local:headline/bucket-title-secondary-measures.svg";
 
 export function getDefaultHeadlineUiConfig(): IUiConfig {
-    const uiConfig = cloneDeep(DEFAULT_HEADLINE_UICONFIG);
+    const uiConfig = _cloneDeep(DEFAULT_HEADLINE_UICONFIG);
     set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "itemsLimit"], 2);
     return uiConfig;
 }

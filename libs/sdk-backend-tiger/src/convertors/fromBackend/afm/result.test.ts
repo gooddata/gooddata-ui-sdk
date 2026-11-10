@@ -259,7 +259,7 @@ describe("getTransformDimensionHeaders for computed attributes", () => {
         const [computedAttributeItem] = headerItems({ format: dateFormat, dataType: "DATE" }, ["2026-03-15"]);
 
         expect(computedAttributeItem?.formattedName).toBe("15.03.2026");
-        expect(computedAttributeItem?.normalizedValue).toBe(new Date(2026, 2, 15).toISOString());
+        expect(computedAttributeItem?.normalizedValue).toBe("2026-03-15T00:00:00.000Z");
         expect(computedAttributeItem?.normalizedValue).toBe(dateAttributeItem?.normalizedValue);
     });
 
@@ -320,7 +320,8 @@ describe("null values of a date attribute", () => {
                     uri: "2024-01",
                     name: "2024-01",
                     formattedName: "Jan 2024",
-                    normalizedValue: new Date(2024, 0, 1).toISOString(),
+                    // the backend value as a floating date: its fields in UTC, whatever the browser timezone
+                    normalizedValue: "2024-01-01T00:00:00.000Z",
                 },
             },
         ]);

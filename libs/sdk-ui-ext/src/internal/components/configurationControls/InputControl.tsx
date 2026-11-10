@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type ChangeEvent,
@@ -10,10 +10,11 @@ import {
 } from "react";
 
 import cx from "classnames";
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { type IAlignPoint } from "@gooddata/sdk-ui-kit";
+import { _cloneDeep } from "@gooddata/util";
 
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { getTranslation } from "../../utils/translations.js";
@@ -145,7 +146,7 @@ export function InputControl({
     const emitData = () => {
         const modifiedData = modifyDataForSending(value);
 
-        const clonedProperties = cloneDeep(properties);
+        const clonedProperties = _cloneDeep(properties);
         set(clonedProperties!, `controls.${valuePath}`, modifiedData);
 
         setValue(modifiedData);

@@ -1,6 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { cloneDeep } from "lodash-es";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
@@ -14,6 +13,7 @@ import {
     type VisualizationEnvironment,
 } from "@gooddata/sdk-ui";
 import { type ColumnWidthItem, CorePivotTable, type ICorePivotTableProps } from "@gooddata/sdk-ui-pivot";
+import { _cloneDeep } from "@gooddata/util";
 
 import {
     type IBucketItem,
@@ -468,11 +468,11 @@ describe("PluggablePivotTable", () => {
             const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
-                    items: cloneDeep(tableTotalsReferencePoint.buckets[0].items),
+                    items: _cloneDeep(tableTotalsReferencePoint.buckets[0].items),
                 },
                 {
                     localIdentifier: "attribute",
-                    items: cloneDeep(tableTotalsReferencePoint.buckets[1].items),
+                    items: _cloneDeep(tableTotalsReferencePoint.buckets[1].items),
                     totals: [
                         {
                             measureIdentifier: "m1",
@@ -558,11 +558,11 @@ describe("PluggablePivotTable", () => {
             const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
-                    items: cloneDeep(tableGrandAndSubtotalsReferencePoint.buckets[0].items),
+                    items: _cloneDeep(tableGrandAndSubtotalsReferencePoint.buckets[0].items),
                 },
                 {
                     localIdentifier: "attribute",
-                    items: cloneDeep(tableGrandAndSubtotalsReferencePoint.buckets[1].items),
+                    items: _cloneDeep(tableGrandAndSubtotalsReferencePoint.buckets[1].items),
                     totals: [
                         {
                             measureIdentifier: "m1",

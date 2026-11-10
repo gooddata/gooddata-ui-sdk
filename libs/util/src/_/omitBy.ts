@@ -32,10 +32,8 @@
  */
 
 import { _baseIteratee } from "./_baseIteratee.js";
-import { _getAllKeysIn } from "./_getAllKeysIn.js";
+import { _basePickBy } from "./_basePickBy.js";
 import type { _Dictionary, _NumericDictionary, _PartialObject, _ValueKeyIteratee } from "./types.js";
-
-type _AnyRecord = Record<PropertyKey, unknown>;
 
 /**
  * The opposite of `pickBy`; this method creates an object composed of the own and inherited enumerable
@@ -66,23 +64,7 @@ export function _omitBy<T extends object>(
     predicate: _ValueKeyIteratee<T[keyof T]>,
 ): _PartialObject<T>;
 export function _omitBy(object: unknown, predicate?: unknown): object {
-    const result: _AnyRecord = {};
-
-    if (object == null) {
-        return result;
-    }
-
-    const source = Object(object) as _AnyRecord;
     const matches = _baseIteratee(predicate) as (value: unknown, key: string | symbol) => unknown;
 
-    for (const key of _getAllKeysIn(source)) {
-        const value = source[key];
-
-        // keys that would change the prototype of the result are never written, as in lodash
-        if (!matches(value, key) && key !== "__proto__" && key !== "constructor" && key !== "prototype") {
-            result[key] = value;
-        }
-    }
-
-    return result;
+    return _basePickBy(object, (value, key) => !matches(value, key));
 }

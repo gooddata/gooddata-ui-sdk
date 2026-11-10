@@ -2,7 +2,7 @@
 
 import { type ComponentType, memo, useCallback, useId, useState } from "react";
 
-import { cloneDeep, set } from "lodash-es";
+import { set } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import {
@@ -13,6 +13,7 @@ import {
     type ISingleSelectListItemProps,
     SingleSelectListItem,
 } from "@gooddata/sdk-ui-kit";
+import { _cloneDeep } from "@gooddata/util";
 
 import { type IDropdownItem } from "../../interfaces/Dropdown.js";
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
@@ -83,7 +84,7 @@ export const DropdownControl = memo(function DropdownControl({
     const onSelect = (selectedItem: IDropdownItem) => {
         // we must not change the properties at any cost, so deep clone for now.
         // ideally we should use st. like immer with copy on write to not clone everything all the time
-        const clonedProperties = cloneDeep(properties);
+        const clonedProperties = _cloneDeep(properties);
         set(clonedProperties!, `controls.${valuePath}`, selectedItem.value);
 
         pushData?.({ properties: clonedProperties });
