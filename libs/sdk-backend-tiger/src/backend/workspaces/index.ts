@@ -1,7 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { compact } from "lodash-es";
-
 import {
     ActionsUtilities,
     type EntitiesApiGetAllEntitiesWorkspacesRequest,
@@ -23,6 +21,7 @@ import {
     type IWorkspacesQueryOptions,
     type IWorkspacesQueryResult,
 } from "@gooddata/sdk-backend-spi";
+import { _compact } from "@gooddata/util";
 
 import {
     type DateFormatter,
@@ -230,7 +229,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
     ): IAnalyticalWorkspace[] => descriptors.map(this.descriptorToAnalyticalWorkspace);
 
     private constructFilter(): string | undefined {
-        const filterParam = compact([
+        const filterParam = _compact([
             this.filter.description && `description==${this.filter.description}`,
             this.filter.earlyAccess && `earlyAccessValues=containsic=${this.filter.earlyAccess}`,
             this.filter.prefix && `prefix==${this.filter.prefix}`,
@@ -244,7 +243,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
     }
 
     private constructMetaInclude(totalCount?: number): WorkspaceMetaInclude | undefined {
-        const metaIncludeParam: WorkspaceMetaInclude = compact([
+        const metaIncludeParam: WorkspaceMetaInclude = _compact([
             totalCount === undefined && "page",
             this.options.includeChildWorkspacesCount && "hierarchy",
         ]);

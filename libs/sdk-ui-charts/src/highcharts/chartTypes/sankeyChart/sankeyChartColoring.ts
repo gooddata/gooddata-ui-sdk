@@ -1,6 +1,6 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
-import { compact, uniqBy } from "lodash-es";
+import { uniqBy } from "lodash-es";
 
 import { type IColor, type IColorPalette } from "@gooddata/sdk-model";
 import { type DataViewFacade } from "@gooddata/sdk-ui";
@@ -11,6 +11,7 @@ import {
     getColorFromMapping,
     isValidMappedColor,
 } from "@gooddata/sdk-ui-vis-commons";
+import { _compact } from "@gooddata/util";
 
 export class SankeyChartColorStrategy extends ColorStrategy {
     protected createColorAssignment(
@@ -20,7 +21,7 @@ export class SankeyChartColorStrategy extends ColorStrategy {
         toAttribute: any,
         dv: DataViewFacade,
     ): ICreateColorAssignmentReturnValue {
-        const attributeItems = compact([...(fromAttribute?.items ?? []), ...(toAttribute?.items ?? [])]);
+        const attributeItems = _compact([...(fromAttribute?.items ?? []), ...(toAttribute?.items ?? [])]);
         const uniqAttributeItems = uniqBy(attributeItems, "attributeHeaderItem.uri");
 
         const colorAssignment = uniqAttributeItems.map((headerItem, index) => {

@@ -1,7 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { compact, groupBy } from "lodash-es";
+import { groupBy } from "lodash-es";
 import { invariant } from "ts-invariant";
+
+import { _compact } from "@gooddata/util";
 
 import { objRefToString } from "../../objRef/index.js";
 
@@ -86,7 +88,7 @@ export function mergeFilters(
 ): IFilter[] {
     invariant(originalFilters, "original filters must be specified");
 
-    const filtersToMerge = compact(addedFilters ?? []);
+    const filtersToMerge = _compact(addedFilters ?? []);
 
     if (!filtersToMerge.length) {
         return originalFilters;

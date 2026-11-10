@@ -15,6 +15,7 @@ export {
     registerLocalHeadlessModuleLoaders,
     type LocalHeadlessModuleLoader,
 } from "./headless/localHeadlessLoader.js";
+export { registerLocalHostUiModuleLoader, type LocalHostUiModuleLoader } from "./ui/localHostUiLoader.js";
 export {
     registerAppLifecycleCallbacks,
     registerHostTelemetryServices,
@@ -34,6 +35,7 @@ export {
     type IPluggableModuleLifecycleInfo,
     type PluggableModuleFailurePhase,
     type PluggableModuleKind,
+    LOCAL_HOST_UI_MODULE_ID,
 } from "./types/lifecycle.js";
 export {
     type IHeadlessTelemetryProviderRegistration,

@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { compact, omit } from "lodash-es";
+import { omit } from "lodash-es";
 
 import {
     type DateAttributeGranularity,
@@ -22,7 +22,7 @@ import {
     isComputedAttributeRef,
     uriRef,
 } from "@gooddata/sdk-model";
-import { _isEmpty } from "@gooddata/util";
+import { _compact, _isEmpty } from "@gooddata/util";
 
 import {
     type BucketItem,
@@ -262,7 +262,7 @@ const convertMeasureDefinition = (
     return {
         measureDefinition: {
             ...definition.measureDefinition,
-            filters: filters ? compact(filters.map(convertMeasureFilter)) : [],
+            filters: filters ? _compact(filters.map(convertMeasureFilter)) : [],
         },
     };
 };
@@ -362,7 +362,7 @@ export const convertVisualization = (
     return {
         insight: {
             buckets: content.buckets.map(convertBucket),
-            filters: content.filters ? compact(content.filters.map(convertFilter)) : [],
+            filters: content.filters ? _compact(content.filters.map(convertFilter)) : [],
             ...(attributeFilterConfigs ? { attributeFilterConfigs: attributeFilterConfigs } : {}),
             ...(content.layers ? { layers: content.layers } : {}),
             ...(content.parameters ? { parameters: content.parameters } : {}),

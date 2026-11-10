@@ -1,9 +1,10 @@
-// (C) 2021 GoodData Corporation
-import { compact } from "lodash-es";
+// (C) 2021-2026 GoodData Corporation
+
+import { _compact } from "@gooddata/util";
 
 export function getTitleWithBreadcrumbs(insightTitle: string, breadcrumbs: string[]): string {
     const separator = "\u203A";
     const paddedSeparator = ` ${separator} `;
 
-    return compact([insightTitle, ...breadcrumbs]).join(paddedSeparator);
+    return _compact([insightTitle, ...breadcrumbs]).join(paddedSeparator);
 }

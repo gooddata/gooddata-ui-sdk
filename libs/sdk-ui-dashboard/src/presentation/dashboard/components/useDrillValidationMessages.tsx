@@ -2,11 +2,11 @@
 
 import { type ReactNode, useCallback, useMemo } from "react";
 
-import { compact } from "lodash-es";
 import { defineMessages, useIntl } from "react-intl";
 
 import { isWidget, widgetTitle } from "@gooddata/sdk-model";
 import { type IMessage } from "@gooddata/sdk-ui-kit";
+import { _compact } from "@gooddata/util";
 
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
@@ -53,17 +53,17 @@ export function useDrillValidationMessages() {
             return [];
         }
 
-        const invalidDrillWidgets = compact(
+        const invalidDrillWidgets = _compact(
             invalidDrillWidgetRefs.map((ref) => allWidgets.get(ref)).filter(isWidget),
         );
-        const sanitizedDrillWidgets = compact(
+        const sanitizedDrillWidgets = _compact(
             sanitizedDrillWidgetRefs.map((ref) => allWidgets.get(ref)).filter(isWidget),
         );
-        const invalidUrlDrillWidgets = compact(
+        const invalidUrlDrillWidgets = _compact(
             invalidUrlDrillWidgetRefs.map((ref) => allWidgets.get(ref)).filter(isWidget),
         );
 
-        return compact<IMessage>([
+        return _compact<IMessage>([
             invalidDrillWidgets.length > 0 &&
                 ({
                     id: DRILL_MESSAGE_ID,

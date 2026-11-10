@@ -40,6 +40,7 @@
     "languageDialog.select.searchLabel": "Etsi kieliä",
     "languageDialog.select.searchPlaceholder": "Hae…",
     "languageDialog.select.noMatch": "Vastaavaa kieltä ei löytynyt.",
+    "languageDialog.saving": "Vaihdetaan kieltä…",
     "languageDialog.error": "Kielen vaihtaminen epäonnistui. Yritä uudelleen.",
     "languageDialog.success": "Hienoa! Vaihdoimme kielen!"
 }

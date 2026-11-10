@@ -951,6 +951,10 @@
         "text": "Error: Schedule can't be sent — the source widget was deleted. Delete the schedule or contact your administrator.",
         "crowdinContext": "Error message shown when alert configuration references a deleted widget"
     },
+    "dialogs.schedule.email.visualizationUnavailable": {
+        "text": "Error: You can't add attachments because this visualization was deleted or you don't have access to it.",
+        "crowdinContext": "Error message in the scheduled export dialog when the visualization the schedule exports was deleted or the user has no access to it, so new attachment formats can't be added to it"
+    },
     "dialogs.schedule.email.destinationWarning": {
         "text": "The selected destination only supports sending the export to yourself.",
         "crowdinContext": "Warning shown when selected export destination restricts recipients to the current user only"

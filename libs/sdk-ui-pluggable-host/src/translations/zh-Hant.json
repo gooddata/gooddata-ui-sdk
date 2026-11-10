@@ -40,6 +40,7 @@
     "languageDialog.select.searchLabel": "搜尋語言",
     "languageDialog.select.searchPlaceholder": "搜尋…",
     "languageDialog.select.noMatch": "沒有相符的語言。",
+    "languageDialog.saving": "正在變更語言……",
     "languageDialog.error": "我們無法變更語言。請再試一次。",
     "languageDialog.success": "太好了！我們已變更語言！"
 }

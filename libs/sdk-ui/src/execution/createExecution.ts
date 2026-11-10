@@ -1,6 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { compact } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { type IAnalyticalBackend, type IPreparedExecution } from "@gooddata/sdk-backend-spi";
@@ -17,7 +16,7 @@ import {
     newDimension,
     newTwoDimensional,
 } from "@gooddata/sdk-model";
-import { _isEmpty } from "@gooddata/util";
+import { _compact, _isEmpty } from "@gooddata/util";
 
 /**
  * @internal
@@ -84,7 +83,7 @@ export type CreateExecutionOptions = {
 function seriesOnlyDim(seriesBy: IAttributeOrMeasure[]): IDimension[] {
     return [
         newDimension(
-            compact([
+            _compact([
                 ...seriesBy.filter(isAttribute),
                 // only include MeasureGroupIdentifier if there are some measures, otherwise the execution will always fail on the backend
                 seriesBy.some(isMeasure) && MeasureGroupIdentifier,
@@ -107,7 +106,7 @@ function seriesAndSlicesDim(
 ): IDimension[] {
     return newTwoDimensional(
         [...slices, ...totals],
-        compact([
+        _compact([
             ...seriesBy.filter(isAttribute),
             // only include MeasureGroupIdentifier if there are some measures, otherwise the execution will always fail on the backend
             seriesBy.some(isMeasure) && MeasureGroupIdentifier,

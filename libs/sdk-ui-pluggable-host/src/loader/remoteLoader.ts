@@ -159,16 +159,11 @@ interface ILoadedHostUiRemoteModule {
     hostUiModule?: IHostUiModule;
 }
 
-function asHostUiModule(
-    remote: IRemotePluggableApplicationModule,
-    loaded: ILoadedHostUiRemoteModule,
-): IHostUiModule {
-    const mod = loaded.hostUiModule ?? loaded.default;
+export function asHostUiModule(source: string, loaded: ILoadedHostUiRemoteModule | undefined): IHostUiModule {
+    const mod = loaded?.hostUiModule ?? loaded?.default;
 
     if (!mod || typeof mod.mount !== "function") {
-        throw new Error(
-            `[host-runtime/remote-loader] Remote UI module "${remote.scope}/${remote.module}" does not export a valid IHostUiModule.`,
-        );
+        throw new Error(`[host-runtime/remote-loader] ${source} does not export a valid IHostUiModule.`);
     }
 
     return mod;
@@ -178,7 +173,7 @@ export async function loadRemoteHostUiModule(
     remote: IRemotePluggableApplicationModule,
 ): Promise<IHostUiModule> {
     const loaded = await loadRemoteModule<ILoadedHostUiRemoteModule>(remote);
-    return asHostUiModule(remote, loaded);
+    return asHostUiModule(`Remote UI module "${remote.scope}/${remote.module}"`, loaded);
 }
 
 // ---------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { compact, uniqWith } from "lodash-es";
+import { uniqWith } from "lodash-es";
 
 import {
     type IAttributeDisplayFormMetadataObject,
@@ -9,7 +9,7 @@ import {
     isDrillToLegacyDashboard,
 } from "@gooddata/sdk-model";
 import { type IDrillEvent, isDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
-import { _isEqual } from "@gooddata/util";
+import { _compact, _isEqual } from "@gooddata/util";
 
 import {
     getDrillOriginLocalIdentifier,
@@ -93,7 +93,7 @@ export function filterDrillFromAttributeByPriority(
     // configured once has higher priority
     const uniqueDrillDefinitions = uniqWith(drillDefinitions, _isEqual);
 
-    const drillOriginsWithoutImplicitDrills = compact(
+    const drillOriginsWithoutImplicitDrills = _compact(
         uniqueDrillDefinitions.map((drill) => {
             if (!isDrillToLegacyDashboard(drill) && isDrillConfigured(drill, configuredDrills)) {
                 return getDrillOriginLocalIdentifier(drill);

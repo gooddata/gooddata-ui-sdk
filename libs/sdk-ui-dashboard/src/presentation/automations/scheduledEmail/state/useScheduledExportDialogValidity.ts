@@ -20,7 +20,7 @@ import { useScheduledEmailFormValidity } from "./useScheduledEmailFormValidity.j
  */
 export function useScheduledExportDialogValidity(): IScheduledExportDialogValidity {
     const { maxAutomationsRecipients } = useAutomationsContext();
-    const { scheduledExportToEdit, notificationChannels } = useScheduledEmailDialogContext();
+    const { scheduledExportToEdit, notificationChannels, widget, insight } = useScheduledEmailDialogContext();
     const {
         editedAutomation,
         originalAutomation,
@@ -42,5 +42,6 @@ export function useScheduledExportDialogValidity(): IScheduledExportDialogValidi
         isTitleValid,
         isSubjectValid,
         isOnMessageValid,
+        isWidgetInsightUnavailable: !!widget && !insight,
     });
 }

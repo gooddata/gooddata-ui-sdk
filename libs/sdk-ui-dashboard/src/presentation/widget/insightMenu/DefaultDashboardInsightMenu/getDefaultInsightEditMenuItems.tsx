@@ -1,10 +1,10 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { compact } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { type IInsightWidget } from "@gooddata/sdk-model";
 import { IconInteraction } from "@gooddata/sdk-ui-kit";
+import { _compact } from "@gooddata/util";
 
 import { eagerRemoveSectionItemByWidgetRef } from "../../../../model/commands/layout.js";
 import { userInteractionTriggered } from "../../../../model/events/userInteraction.js";
@@ -41,7 +41,7 @@ export function getDefaultInsightEditMenuItems(
         useWidgetDeleteDialog = false,
     }: InsightMenuItemDependencies,
 ): IInsightMenuItem[] {
-    return compact([
+    return _compact([
         includeConfigurations && {
             type: "submenu",
             itemId: "ConfigurationPanelSubmenu",

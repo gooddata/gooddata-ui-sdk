@@ -1126,6 +1126,1474 @@ export default defineConfig({
 }
 `;
 
+exports[`snapshot: client profile end-to-end scaffold > produces a deterministic host UI scaffold (client profile, fresh non-rush dir) 1`] = `
+{
+  "harness/.env.template": "BACKEND_URL=
+TIGER_API_TOKEN=
+",
+  "harness/.gitignore": "node_modules
+dist
+.vite
+rush-logs
+.rush
+.idea
+.vscode
+.DS_Store
+.env
+*.tgz
+",
+  "harness/.goodchangesrc.json": "{
+    "targets": [{}],
+    "ignores": [
+        "README.md",
+        "readme.txt",
+        ".oxlintrc.json",
+        "eslint.config.ts",
+        ".env.template",
+        ".gitignore"
+    ]
+}
+",
+  "harness/.oxlintrc.json": "{
+    "$schema": "./node_modules/oxlint/configuration_schema.json",
+    "extends": ["node_modules/@gooddata/oxlint-config/dist/react.json"],
+    "options": {
+        "typeAware": true
+    },
+    "ignorePatterns": ["typings.d.ts", "dist/**", "esm/**"],
+    "rules": {
+        "import/no-unassigned-import": "warn"
+    },
+    "overrides": [
+        {
+            "files": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
+            "rules": {
+                "@typescript-eslint/no-explicit-any": "warn",
+                "@typescript-eslint/no-unsafe-argument": "warn",
+                "@typescript-eslint/no-unsafe-assignment": "warn",
+                "@typescript-eslint/no-unsafe-call": "warn",
+                "@typescript-eslint/no-unsafe-member-access": "warn",
+                "@typescript-eslint/no-unsafe-return": "warn",
+                "@typescript-eslint/restrict-template-expressions": "warn"
+            }
+        }
+    ]
+}
+",
+  "harness/README.md": "# gdc-snap-host-ui-harness
+
+Standalone development harness for **gdc-snap-host-ui-module**.
+
+## What this does
+
+The harness runs the real host runtime (\`@gooddata/sdk-ui-pluggable-host\`) against your backend and replaces the default header, navigation and layout with the host UI module from \`../module\`. It provides:
+
+- A Vite dev server with backend API proxying
+- The host UI module registered with \`registerLocalHostUiModuleLoader\`, so changes to the module source reload at once
+- Two sample applications (one organization-scoped, one workspace-scoped) next to the applications from your organization's registry
+- HTTPS support via local certificates (optional)
+
+## Development
+
+\`\`\`bash
+# Copy environment template and fill in your backend and API token
+cp .env.template .env
+
+# Start dev server
+npm run dev
+\`\`\`
+
+The server starts at \`https://localhost:<port>\`.
+
+## Configuration
+
+| Variable          | Default       | Description                            |
+| ----------------- | ------------- | -------------------------------------- |
+| \`BACKEND_URL\`     | _(required)_  | GoodData backend to proxy API calls to |
+| \`TIGER_API_TOKEN\` | _(required)_  | API token for authentication           |
+| \`PORT\`            | 8450 | Dev server port                        |
+",
+  "harness/config/rush-project.json": "{
+    "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush-project.schema.json",
+    "incrementalBuildIgnoredGlobs": [],
+    "operationSettings": [
+        {
+            "operationName": "_phase:build",
+            "outputFolderNames": ["dist"]
+        },
+        {
+            "operationName": "_phase:validate",
+            "outputFolderNames": []
+        },
+        {
+            "operationName": "_phase:test",
+            "outputFolderNames": []
+        },
+        {
+            "operationName": "_phase:pack-build",
+            "outputFolderNames": [],
+            "disableBuildCacheForOperation": true
+        },
+        {
+            "operationName": "_phase:publish-test-docker-images",
+            "outputFolderNames": [],
+            "disableBuildCacheForOperation": true
+        }
+    ]
+}
+",
+  "harness/eslint.config.ts": "// (C) 2026 GoodData Corporation
+
+export { default } from "@gooddata/eslint-config/v10/oxlint/react";
+",
+  "harness/index.html": "<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Snapshot Host UI — Harness</title>
+    </head>
+    <body>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <div id="root"></div>
+        <script type="module" src="/src/app.tsx"></script>
+    </body>
+</html>
+",
+  "harness/package.json": "{
+    "name": "gdc-snap-host-ui-harness",
+    "version": "<VERSION>",
+    "private": true,
+    "description": "Standalone harness for gdc-snap-host-ui module",
+    "license": "UNLICENSED",
+    "author": "team@gooddata.com",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gdc-ui/",
+        "directory": "modules/gdc-snap-host-ui/harness"
+    },
+    "type": "module",
+    "exports": {
+        "./tsconfig.json": "./tsconfig.json"
+    },
+    "scripts": {
+        "build": "rm -rf dist && npm-run-all -p dist build-check",
+        "build-check": "tsc",
+        "clean": "rm -rf dist *.tgz *.log tsconfig.tsbuildinfo",
+        "dev": "vite --force",
+        "dist": "vite build",
+        "format-check": "oxfmt --check .",
+        "format-write": "oxfmt .",
+        "lint": "oxlint . --quiet && eslint .",
+        "lint-fix": "oxlint . --quiet --fix && eslint . --fix",
+        "validate": "npm run lint && npm run format-check"
+    },
+    "dependencies": {
+        "@gooddata/sdk-model": "<VERSION>",
+        "@gooddata/sdk-pluggable-application-model": "<VERSION>",
+        "@gooddata/sdk-ui-kit": "<VERSION>",
+        "@gooddata/sdk-ui-pluggable-host": "<VERSION>",
+        "gdc-snap-host-ui-module": "<VERSION>",
+        "react": "<VERSION>",
+        "react-dom": "<VERSION>",
+        "react-intl": "<VERSION>",
+        "react-router": "<VERSION>"
+    },
+    "devDependencies": {
+        "@gooddata/eslint-config": "<VERSION>",
+        "@gooddata/oxlint-config": "<VERSION>",
+        "@types/node": "<VERSION>",
+        "@types/react": "<VERSION>",
+        "@types/react-dom": "<VERSION>",
+        "@typescript-eslint/eslint-plugin": "<VERSION>",
+        "@typescript-eslint/parser": "<VERSION>",
+        "@vitejs/plugin-react": "<VERSION>",
+        "eslint": "<VERSION>",
+        "eslint-plugin-headers": "<VERSION>",
+        "eslint-plugin-jsdoc": "<VERSION>",
+        "eslint-plugin-no-barrel-files": "<VERSION>",
+        "eslint-plugin-sonarjs": "<VERSION>",
+        "eslint-plugin-tsdoc": "<VERSION>",
+        "jiti": "<VERSION>",
+        "npm-run-all": "<VERSION>",
+        "oxfmt": "<VERSION>",
+        "oxlint": "<VERSION>",
+        "oxlint-plugin-eslint": "<VERSION>",
+        "oxlint-tsgolint": "<VERSION>",
+        "rolldown": "<VERSION>",
+        "sass": "<VERSION>",
+        "typescript": "<VERSION>",
+        "vite": "<VERSION>"
+    }
+}
+",
+  "harness/src/app.tsx": "// (C) 2026 GoodData Corporation
+
+import "@gooddata/sdk-ui-kit/styles/css/main.css";
+import "@gooddata/sdk-ui-kit/styles/css/indigoFont.css";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router";
+
+import { type ILocalPluggableApplicationsRegistryV1 } from "@gooddata/sdk-model";
+import { type IPluggableApp } from "@gooddata/sdk-pluggable-application-model";
+import {
+    Root,
+    registerLocalApplicationLoaders,
+    registerLocalApplications,
+    registerLocalHostUiModuleLoader,
+} from "@gooddata/sdk-ui-pluggable-host";
+
+// The host renders this module in place of its default header, navigation and layout.
+registerLocalHostUiModuleLoader(() => import("gdc-snap-host-ui-module"));
+
+// Sample applications give the navigation something to show. The organization's registry adds its
+// own applications on top of these.
+function createSampleApp(title: string): IPluggableApp {
+    return {
+        mount({ container, ctx }) {
+            const render = (workspaceId: string | undefined) => {
+                container.textContent = workspaceId ? \`\${title} — workspace \${workspaceId}\` : title;
+            };
+            render(ctx.currentWorkspaceId);
+            return {
+                unmount() {
+                    container.textContent = "";
+                },
+                updateContext(nextCtx) {
+                    render(nextCtx.currentWorkspaceId);
+                },
+            };
+        },
+    };
+}
+
+const localApplications: ILocalPluggableApplicationsRegistryV1 = {
+    apiVersion: "1.0",
+    applications: [
+        {
+            apiVersion: "1.0",
+            id: "harness-organization-app",
+            applicationScope: "organization",
+            menuOrder: 1,
+            title: "Sample organization app",
+            local: { routeBase: "/sample" },
+        },
+        {
+            apiVersion: "1.0",
+            id: "harness-workspace-app",
+            applicationScope: "workspace",
+            menuOrder: 2,
+            title: "Sample workspace app",
+            local: { routeBase: "/sample" },
+        },
+    ],
+};
+
+registerLocalApplications(localApplications);
+registerLocalApplicationLoaders({
+    "harness-organization-app": () =>
+        Promise.resolve({ pluggableApp: createSampleApp("Sample organization app") }),
+    "harness-workspace-app": () => Promise.resolve({ pluggableApp: createSampleApp("Sample workspace app") }),
+});
+
+const rootElement = document.getElementById("root");
+
+if (!rootElement) {
+    throw new Error("Missing #root element in HTML document.");
+}
+
+createRoot(rootElement).render(
+    <BrowserRouter>
+        <Root />
+    </BrowserRouter>,
+);
+",
+  "harness/src/typings.d.ts": "// (C) 2026 GoodData Corporation
+
+declare const PRODUCTION: boolean;
+declare const TIGER_API_TOKEN: string | undefined;
+
+declare module "*.css";
+declare module "*.scss";
+",
+  "harness/tsconfig.json": "{
+    "compilerOptions": {
+        "strict": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitOverride": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "exactOptionalPropertyTypes": false,
+        "useUnknownInCatchVariables": true,
+        "noUncheckedIndexedAccess": false,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "noImplicitReturns": true,
+        "alwaysStrict": true,
+        "forceConsistentCasingInFileNames": true,
+
+        "lib": ["ES2022", "dom", "dom.iterable"],
+        "target": "ES2022",
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+
+        "jsx": "react-jsx",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "noEmit": true,
+
+        "allowJs": true,
+        "outDir": "dist",
+        "resolveJsonModule": true,
+        "typeRoots": ["node_modules/@types", "typings.d.ts"],
+        "paths": {
+            "react": ["./node_modules/@types/react"]
+        }
+    },
+    "include": ["src", "./*"],
+    "exclude": ["**/node_modules", "**/esm", "**/temp", "**/dist"]
+}
+",
+  "harness/vite.config.ts": "// (C) 2026 GoodData Corporation
+
+import { readFileSync } from "fs";
+import type { ClientRequest } from "http";
+import { join, resolve } from "path";
+
+import react from "@vitejs/plugin-react";
+import { type ServerOptions, type UserConfig, defaultClientConditions, defineConfig, loadEnv } from "vite";
+
+// Strip \`origin\` (Tiger backend rejects cross-origin) and force identity
+// encoding (so the vite proxy can read the response without decompressing).
+function applyProxyRequestHeaders(proxyReq: ClientRequest): void {
+    proxyReq.removeHeader("origin");
+    proxyReq.setHeader("accept-encoding", "identity");
+}
+
+const certDir = join(process.env["HOME"] || process.env["USERPROFILE"] || "", ".gooddata", "certs");
+let httpsConfig: ServerOptions["https"] | undefined;
+
+try {
+    httpsConfig = {
+        ca: readFileSync(join(certDir, "rootCA.pem")),
+        key: readFileSync(join(certDir, "localhost-key.pem")),
+        cert: readFileSync(join(certDir, "localhost-cert.pem")),
+    };
+    // oxlint-disable-next-line @typescript-eslint/no-unused-vars
+} catch (e) {
+    // oxlint-disable-next-line eslint-js/no-console
+    console.info(\`No certificates found in \${certDir}, skipping HTTPS configuration\`);
+    httpsConfig = undefined;
+}
+
+export default defineConfig(({ mode }): UserConfig => {
+    const env = loadEnv(mode, process.cwd(), "");
+    const isProduction = mode === "production";
+    // NOTE: @gooddata/create-pluggable-module's computeDevPort() regex-matches
+    // this line shape (\`env["PORT"] || "NNNN"\`) when scanning existing harnesses
+    // to pick a port for the next scaffolded app. If you refactor it, update
+    // sdk/tools/create-pluggable-module/src/engine/derived.ts to match.
+    const port = parseInt(env["PORT"] || "8450");
+    const backend = env["BACKEND_URL"];
+    if (!isProduction && !backend) {
+        throw new Error(
+            "BACKEND_URL is required for the dev server. Copy .env.template to .env and set BACKEND_URL " +
+                "to the URL of your GoodData Cloud instance (e.g. https://yourorg.gooddata.com).",
+        );
+    }
+
+    return {
+        root: ".",
+        base: "/",
+        publicDir: false,
+        define: {
+            TIGER_API_TOKEN: isProduction ? undefined : JSON.stringify(env["TIGER_API_TOKEN"]),
+            PRODUCTION: JSON.stringify(isProduction),
+            "process.env": JSON.stringify({}),
+            REACT_APP_API_TOKEN: isProduction ? undefined : JSON.stringify(env["TIGER_API_TOKEN"]),
+            REACT_APP_IN_AIO: JSON.stringify(false),
+            // The harness bundles the module source, which reads these build-time values.
+            __BUILD_TIMESTAMP__: JSON.stringify(Date.now()),
+            __ALLOWED_ORGANIZATIONS__: "[]",
+        },
+        plugins: [react()],
+        resolve: {
+            // resolve.conditions REPLACES Vite's defaults rather than extending them
+            // (Vite 8's mergeWithDefaultsRecursively assigns arrays directly), so we must
+            // spread defaultClientConditions to keep "browser" / "module" / dev-prod
+            // resolution. Without "browser", packages like react-textarea-autosize fall
+            // through to their node-targeted default export (a stub that ignores
+            // minRows/maxRows).
+            // \`source\` is added only in dev so production builds use the published
+            // artifacts of workspace deps, not their TS source.
+            conditions: [...defaultClientConditions, ...(isProduction ? [] : ["source"])],
+            dedupe: ["react", "react-dom"],
+        },
+        server: {
+            port,
+            https: httpsConfig,
+            proxy: {
+                "/api": {
+                    changeOrigin: true,
+                    cookieDomainRewrite: "localhost",
+                    secure: false,
+                    target: backend,
+                    headers: {
+                        host: backend,
+                        "X-Requested-With": "XMLHttpRequest",
+                    },
+                    configure: (proxy) => {
+                        proxy.on("proxyReq", applyProxyRequestHeaders);
+                    },
+                },
+            },
+            fs: {
+                allow: ["../../../"],
+            },
+        },
+        build: {
+            outDir: "dist",
+            sourcemap: !isProduction,
+            target: "es2022",
+            chunkSizeWarningLimit: 15000,
+            rolldownOptions: {
+                input: resolve(import.meta.dirname, "index.html"),
+                checks: {
+                    pluginTimings: false,
+                },
+            },
+        },
+        // quietDeps silences Sass deprecation warnings raised inside stylesheets reached through
+        // importers (e.g. ag-grid-community's global-builtin usage pulled in via sdk-ui-pivot).
+        // The root stylesheet still warns.
+        css: {
+            preprocessorOptions: {
+                scss: {
+                    quietDeps: true,
+                },
+            },
+        },
+    };
+});
+",
+  "module/.env.template": "# Comma-separated organization IDs that may load this build from the GoodData plugins bucket.
+# The build bakes the list into the module. The host refuses to mount the module in other organizations,
+# and also refuses builds older than 30 days.
+ALLOWED_ORGANIZATIONS=
+",
+  "module/.gitignore": "node_modules
+esm
+dist
+*.tgz
+rush-logs
+.rush
+.idea
+.vscode
+.DS_Store
+.env
+.__mf__temp
+",
+  "module/.goodchangesrc.json": "{
+    "type": "app",
+    "targets": [
+        {
+            "targetName": "gdc-snap-host-ui-module-unit-tests",
+            "changeDirs": [
+                {
+                    "glob": "**/*",
+                    "type": "fine-grained",
+                    "filter": "**/*.test.ts*"
+                }
+            ]
+        }
+    ],
+    "ignores": ["README.md", ".oxlintrc.json", "eslint.config.ts", ".env.template", ".gitignore"]
+}
+",
+  "module/.oxlintrc.json": "{
+    "$schema": "./node_modules/oxlint/configuration_schema.json",
+    "extends": ["node_modules/@gooddata/oxlint-config/dist/react-vitest.json"],
+    "options": {
+        "typeAware": true
+    },
+    "ignorePatterns": ["typings.d.ts", "dist/**", "esm/**"],
+    "rules": {
+        "import/no-unassigned-import": "warn"
+    },
+    "overrides": [
+        {
+            "files": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
+            "rules": {
+                "@typescript-eslint/no-explicit-any": "warn",
+                "@typescript-eslint/no-unsafe-argument": "warn",
+                "@typescript-eslint/no-unsafe-assignment": "warn",
+                "@typescript-eslint/no-unsafe-call": "warn",
+                "@typescript-eslint/no-unsafe-member-access": "warn",
+                "@typescript-eslint/no-unsafe-return": "warn",
+                "@typescript-eslint/restrict-template-expressions": "warn"
+            }
+        }
+    ]
+}
+",
+  "module/README.md": "# gdc-snap-host-ui-module
+
+Host UI module for **Snapshot Host UI**.
+
+A host UI module replaces the default GoodData application chrome: the header, the navigation and the page layout. The host still owns the router, the platform context, the AI assistant chat and the loading of pluggable applications. The host loads the module with Module Federation, calls \`mount\` once and pushes every change into the returned handle.
+
+## Structure
+
+- \`src/hostUiModule.tsx\`: the exported \`hostUiModule\` (\`mount\`, \`allowedOrganizations\`, \`buildTimestamp\`). \`mount\` renders the chrome into the host container and returns the handle that the host updates.
+- \`src/HostUi.tsx\`: the starter chrome: organization name, one menu item per application, help links of the active application, AI assistant button, new-version notice and the application slot.
+- \`src/HostUi.css\`: the starter styles. All class names start with \`gdc-snap-host-ui\`.
+- \`vite.config.ts\`: builds \`remoteEntry.js\` and exposes \`./hostUiModule\`.
+- \`../harness\`: runs the real host runtime against your backend with this module in place of the default chrome.
+
+## The contract
+
+\`mount(options)\` receives:
+
+| Option                  | Use                                                                                                     |
+| ----------------------- | ------------------------------------------------------------------------------------------------------- |
+| \`container\`             | The element to render the chrome into.                                                                  |
+| \`ctx\`                   | The platform context: user, organization, current workspace, settings, preferred locale.                |
+| \`resolvedApplications\`  | The applications that the user can open. Build the navigation from them.                                |
+| \`pathname\`              | The current path. Use it to mark the active menu item.                                                  |
+| \`navigate\`, \`replace\`   | Ask the host to navigate. Do not change \`window.location\` or the history yourself.                      |
+| \`onChatToggleRequested\` | Ask the host to open or close its AI assistant.                                                         |
+| \`onAskAiAssistant\`      | Ask the host to open its AI assistant with a question.                                                  |
+| \`onError\`               | Report an error from the chrome. The chrome renders in its own React root, outside the host's boundary. |
+
+The handle must return the application container from \`getAppContainer()\` immediately after \`mount\` returns. The host renders the active application into that element. The optional handle methods (\`updateContext\`, \`updateApplications\`, \`updatePathname\`, \`updateHeader\`, \`updateDocumentTitle\`, \`updateChatState\`, \`openPricingDialog\`, \`notify\`) receive the changes after mount. Use \`getPluggableApplicationHref\` and \`getPluggableApplicationLocalizedTitle\` from \`@gooddata/sdk-model\` to build the menu.
+
+The host mounts the module in every mode. In the embedded (iframe) mode and in the export mode (\`ctx.embeddingMode === "iframe"\` or \`ctx.isExportMode\`), render only the application container, as the starter does.
+
+## Develop
+
+\`\`\`bash
+cd ../harness
+cp .env.template .env      # set BACKEND_URL and TIGER_API_TOKEN
+npm run dev
+\`\`\`
+
+The harness imports the module source directly, so a change shows at once.
+
+## Build and deploy
+
+The host loads remote modules only from the same hostname as the host, or from the GoodData plugins bucket (\`demo-dashboard-plugins.gooddata.com\`). For the plugins bucket, the build must allow your organization and must be younger than 30 days.
+
+\`\`\`bash
+cp .env.template .env      # set ALLOWED_ORGANIZATIONS=<your organization id>
+npm run dist               # writes dist/
+\`\`\`
+
+Upload the contents of \`dist/\` to one folder, for example \`<your-prefix>/gdc-snap-host-ui/\`. Rebuild and upload again at least every 30 days. After 30 days, or in an organization that the build does not allow, the host uses its default chrome. The host checks again when the platform context changes.
+
+## Register
+
+Set \`uiModule\` in the \`REGISTERED_PLUGGABLE_APPLICATIONS\` organization setting. Keep the existing \`applications\`, \`headlessModules\` and other keys of the setting. The host does not use \`routeBase\` for a UI module, but the registry requires it.
+
+\`\`\`json
+{
+    "apiVersion": "1.0",
+    "uiModule": {
+        "url": "https://demo-dashboard-plugins.gooddata.com/<your-prefix>/gdc-snap-host-ui/remoteEntry.js",
+        "scope": "gdc_snap_host_ui",
+        "module": "./hostUiModule",
+        "routeBase": "/"
+    }
+}
+\`\`\`
+
+To create the setting with the API, save the JSON above as \`registry.json\` and wrap it in the organization setting payload (use \`PATCH /api/v1/entities/organizationSettings/{id}\` when the setting already exists):
+
+\`\`\`bash
+jq '{data: {type: "organizationSetting", id: "registeredPluggableApplications", attributes: {type: "REGISTERED_PLUGGABLE_APPLICATIONS", content: .}}}' registry.json > setting.json
+curl -X POST "$GOODDATA_HOST/api/v1/entities/organizationSettings" \\
+  -H "Authorization: Bearer $GOODDATA_API_TOKEN" \\
+  -H "Content-Type: application/vnd.gooddata.api+json" \\
+  -d @setting.json
+\`\`\`
+
+When the module fails to load, the host logs the error and uses its default chrome. To go back to the default chrome, remove \`uiModule\` from the setting.
+",
+  "module/config/rush-project.json": "{
+    "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush-project.schema.json",
+    "incrementalBuildIgnoredGlobs": [],
+    "operationSettings": [
+        {
+            "operationName": "_phase:build",
+            "outputFolderNames": ["dist"]
+        },
+        {
+            "operationName": "_phase:validate",
+            "outputFolderNames": []
+        },
+        {
+            "operationName": "_phase:test",
+            "outputFolderNames": [],
+            "weight": 4
+        },
+        {
+            "operationName": "_phase:pack-build",
+            "outputFolderNames": [],
+            "disableBuildCacheForOperation": true
+        },
+        {
+            "operationName": "_phase:publish-docker-images",
+            "outputFolderNames": [],
+            "disableBuildCacheForOperation": true
+        }
+    ]
+}
+",
+  "module/eslint.config.ts": "// (C) 2026 GoodData Corporation
+
+export { default } from "@gooddata/eslint-config/v10/oxlint/react-vitest";
+",
+  "module/package.json": "{
+    "name": "gdc-snap-host-ui-module",
+    "version": "<VERSION>",
+    "private": true,
+    "description": "Snapshot Host UI host UI module",
+    "license": "UNLICENSED",
+    "author": "team@gooddata.com",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gdc-ui/",
+        "directory": "modules/gdc-snap-host-ui/module"
+    },
+    "type": "module",
+    "sideEffects": [
+        "*.css"
+    ],
+    "types": "./src/index.ts",
+    "exports": {
+        ".": {
+            "types": "./src/index.ts",
+            "source": "./src/index.ts",
+            "default": "./src/index.ts"
+        },
+        "./tsconfig.json": "./tsconfig.json"
+    },
+    "scripts": {
+        "build": "npm-run-all -p build-check dist",
+        "build-check": "tsc",
+        "clean": "rm -rf esm dist *.tgz *.log tsconfig.tsbuildinfo",
+        "dev": "vite build && npm-run-all --parallel dev:build dev:serve",
+        "dev:build": "vite build --watch",
+        "dev:serve": "vite preview",
+        "dist": "vite build",
+        "format-check": "oxfmt --check .",
+        "format-write": "oxfmt .",
+        "lint": "oxlint . --quiet && eslint .",
+        "lint-fix": "oxlint . --quiet --fix && eslint . --fix",
+        "test-once": "vitest run",
+        "validate": "npm run lint && npm run format-check"
+    },
+    "dependencies": {
+        "@gooddata/sdk-model": "<VERSION>",
+        "@gooddata/sdk-pluggable-application-model": "<VERSION>"
+    },
+    "devDependencies": {
+        "@gooddata/eslint-config": "<VERSION>",
+        "@gooddata/oxlint-config": "<VERSION>",
+        "@module-federation/vite": "<VERSION>",
+        "@testing-library/dom": "<VERSION>",
+        "@testing-library/react": "<VERSION>",
+        "@types/node": "<VERSION>",
+        "@types/react": "<VERSION>",
+        "@types/react-dom": "<VERSION>",
+        "@typescript-eslint/eslint-plugin": "<VERSION>",
+        "@typescript-eslint/parser": "<VERSION>",
+        "@vitejs/plugin-react": "<VERSION>",
+        "eslint": "<VERSION>",
+        "eslint-plugin-headers": "<VERSION>",
+        "eslint-plugin-jsdoc": "<VERSION>",
+        "eslint-plugin-no-barrel-files": "<VERSION>",
+        "eslint-plugin-no-only-tests": "<VERSION>",
+        "eslint-plugin-sonarjs": "<VERSION>",
+        "eslint-plugin-tsdoc": "<VERSION>",
+        "happy-dom": "<VERSION>",
+        "jiti": "<VERSION>",
+        "npm-run-all": "<VERSION>",
+        "oxfmt": "<VERSION>",
+        "oxlint": "<VERSION>",
+        "oxlint-plugin-eslint": "<VERSION>",
+        "oxlint-tsgolint": "<VERSION>",
+        "react": "<VERSION>",
+        "react-dom": "<VERSION>",
+        "rolldown": "<VERSION>",
+        "typescript": "<VERSION>",
+        "vite": "<VERSION>",
+        "vitest": "<VERSION>"
+    }
+}
+",
+  "module/src/HostUi.css": ".gdc-snap-host-ui {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    font-family: system-ui, sans-serif;
+}
+
+.gdc-snap-host-ui__header {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 16px;
+    height: 48px;
+    padding: 0 16px;
+    background: var(--gdc-snap-host-ui-header-background, #000);
+    color: var(--gdc-snap-host-ui-header-color, #fff);
+}
+
+.gdc-snap-host-ui__brand {
+    font-weight: 700;
+}
+
+.gdc-snap-host-ui__nav {
+    display: flex;
+    flex: 1 1 auto;
+    gap: 4px;
+    overflow-x: auto;
+}
+
+.gdc-snap-host-ui__link {
+    padding: 6px 10px;
+    border-radius: 4px;
+    color: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.gdc-snap-host-ui__link:hover {
+    background: rgb(255 255 255 / 16%);
+}
+
+.gdc-snap-host-ui__link--active {
+    box-shadow: inset 0 -3px 0 var(--gdc-snap-host-ui-header-active, #14b2e2);
+}
+
+.gdc-snap-host-ui__button {
+    padding: 4px 10px;
+    border: 1px solid currentcolor;
+    border-radius: 4px;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+}
+
+.gdc-snap-host-ui__button[aria-pressed="true"] {
+    border-color: var(--gdc-snap-host-ui-header-active, #14b2e2);
+}
+
+.gdc-snap-host-ui__notification {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    background: var(--gd-palette-complementary-2, #ebeff4);
+    color: var(--gd-palette-complementary-9, #000);
+}
+
+.gdc-snap-host-ui__main {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto;
+}
+
+.gdc-snap-host-ui__app {
+    height: 100%;
+}
+",
+  "module/src/HostUi.tsx": "// (C) 2026 GoodData Corporation
+
+import {
+    type CSSProperties,
+    Component,
+    type MouseEvent,
+    type ReactNode,
+    useEffect,
+    useLayoutEffect,
+    useRef,
+} from "react";
+
+import {
+    type PluggableApplicationRegistryItem,
+    getPluggableApplicationHref,
+    getPluggableApplicationLocalizedTitle,
+    isExternalPluggableApplicationRegistryItem,
+} from "@gooddata/sdk-model";
+import {
+    type IAppHeaderOptions,
+    type IHostUiNotification,
+    type IPlatformContext,
+} from "@gooddata/sdk-pluggable-application-model";
+
+const BLOCK = "gdc-snap-host-ui";
+
+export interface IHostUiState {
+    ctx: IPlatformContext;
+    applications: PluggableApplicationRegistryItem[];
+    pathname: string;
+    header: IAppHeaderOptions | undefined;
+    pageTitle: string | undefined;
+    chat: { showChatItem: boolean; isOpen: boolean };
+    notification: IHostUiNotification | undefined;
+}
+
+export interface IHostUiProps {
+    state: IHostUiState;
+    appContainer: HTMLElement;
+    navigate: (url: string) => void;
+    onChatToggle?: () => void;
+    onError?: (error: string, context: string) => void;
+}
+
+interface INavigationItem {
+    id: string;
+    title: string;
+    href: string;
+    isExternal: boolean;
+    isActive: boolean;
+}
+
+const EMBEDDED_PREFIX = "/embedded";
+
+export function getNavigationItems(
+    applications: PluggableApplicationRegistryItem[],
+    ctx: IPlatformContext,
+    embeddedOrPlainPathname: string,
+): INavigationItem[] {
+    // Iframe routes repeat the regular routes under /embedded, and application hrefs never carry it.
+    const pathname = embeddedOrPlainPathname.startsWith(\`\${EMBEDDED_PREFIX}/\`)
+        ? embeddedOrPlainPathname.slice(EMBEDDED_PREFIX.length)
+        : embeddedOrPlainPathname;
+    return [...applications]
+        .filter((app) => app.applicationScope !== "workspace" || ctx.currentWorkspaceId !== undefined)
+        .sort((a, b) => a.menuOrder - b.menuOrder)
+        .map((app) => {
+            const href = getPluggableApplicationHref(app, ctx.currentWorkspaceId);
+            const isExternal = isExternalPluggableApplicationRegistryItem(app);
+            return {
+                id: app.id,
+                title: getPluggableApplicationLocalizedTitle(app, ctx.preferredLocale),
+                href,
+                isExternal,
+                isActive: !isExternal && (pathname === href || pathname.startsWith(\`\${href}/\`)),
+            };
+        });
+}
+
+// The header colors of the organization theme, the same ones the default host header uses.
+function getHeaderThemeStyle(ctx: IPlatformContext): CSSProperties {
+    const header = ctx.theme?.header;
+    return {
+        ...(header?.backgroundColor ? { [\`--\${BLOCK}-header-background\`]: header.backgroundColor } : {}),
+        ...(header?.color ? { [\`--\${BLOCK}-header-color\`]: header.color } : {}),
+        ...(header?.activeColor ? { [\`--\${BLOCK}-header-active\`]: header.activeColor } : {}),
+    } as CSSProperties;
+}
+
+export function HostUi({ state, appContainer, navigate, onChatToggle, onError }: IHostUiProps) {
+    const { ctx, applications, pathname, header, pageTitle, chat, notification } = state;
+    const items = getNavigationItems(applications, ctx, pathname);
+    const brand = ctx.organization?.title ?? ctx.organization?.id ?? "Snapshot Host UI";
+    const documentTitle = pageTitle ?? items.find((item) => item.isActive)?.title;
+    const isHeaderHidden = ctx.embeddingMode === "iframe" || ctx.isExportMode === true;
+
+    useEffect(() => {
+        // Exports print the document title, so it carries no brand there, as in the default host header.
+        if (ctx.isExportMode) {
+            document.title = documentTitle ?? "";
+            return;
+        }
+        document.title = documentTitle ? \`\${documentTitle} - \${brand}\` : brand;
+    }, [documentTitle, brand, ctx.isExportMode]);
+
+    return (
+        <div className={BLOCK} style={getHeaderThemeStyle(ctx)}>
+            {isHeaderHidden ? null : (
+                // The pathname key resets a failed header when the user moves to another page.
+                <HostUiErrorBoundary key={pathname} onError={onError}>
+                    <HostHeader
+                        brand={brand}
+                        items={items}
+                        login={ctx.user.login}
+                        header={header}
+                        chat={chat}
+                        notification={notification}
+                        navigate={navigate}
+                        onChatToggle={onChatToggle}
+                    />
+                </HostUiErrorBoundary>
+            )}
+            <AppSlot appContainer={appContainer} />
+        </div>
+    );
+}
+
+interface IHostHeaderProps {
+    brand: string;
+    items: INavigationItem[];
+    login: string;
+    header: IAppHeaderOptions | undefined;
+    chat: IHostUiState["chat"];
+    notification: IHostUiNotification | undefined;
+    navigate: (url: string) => void;
+    onChatToggle?: () => void;
+}
+
+function HostHeader({
+    brand,
+    items,
+    login,
+    header,
+    chat,
+    notification,
+    navigate,
+    onChatToggle,
+}: IHostHeaderProps) {
+    const onLinkClick = (event: MouseEvent<HTMLAnchorElement>, item: INavigationItem) => {
+        if (item.isExternal || event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) {
+            return;
+        }
+        event.preventDefault();
+        navigate(item.href);
+    };
+
+    return (
+        <>
+            <header className={\`\${BLOCK}__header\`}>
+                <span className={\`\${BLOCK}__brand\`}>{brand}</span>
+                <nav className={\`\${BLOCK}__nav\`}>
+                    {items.map((item) => (
+                        <a
+                            key={item.id}
+                            href={item.href}
+                            className={
+                                item.isActive ? \`\${BLOCK}__link \${BLOCK}__link--active\` : \`\${BLOCK}__link\`
+                            }
+                            aria-current={item.isActive ? "page" : undefined}
+                            onClick={(event) => onLinkClick(event, item)}
+                        >
+                            {item.title}
+                        </a>
+                    ))}
+                </nav>
+                {header?.helpMenuItems?.map((helpItem) =>
+                    helpItem.href ? (
+                        <a
+                            key={helpItem.key}
+                            href={helpItem.href}
+                            target={helpItem.target ?? "_blank"}
+                            rel="noopener noreferrer"
+                            className={\`\${BLOCK}__link\`}
+                        >
+                            {helpItem.label ?? helpItem.key}
+                        </a>
+                    ) : null,
+                )}
+                {chat.showChatItem ? (
+                    <button
+                        type="button"
+                        className={\`\${BLOCK}__button\`}
+                        aria-pressed={chat.isOpen}
+                        onClick={onChatToggle}
+                    >
+                        AI assistant
+                    </button>
+                ) : null}
+                <span className={\`\${BLOCK}__user\`}>{login}</span>
+            </header>
+            {notification?.type === "newDeploymentAvailable" ? (
+                <div className={\`\${BLOCK}__notification\`} role="status">
+                    A new version is available.
+                    <button
+                        type="button"
+                        className={\`\${BLOCK}__button\`}
+                        onClick={() => window.location.reload()}
+                    >
+                        Reload
+                    </button>
+                </div>
+            ) : null}
+        </>
+    );
+}
+
+function AppSlot({ appContainer }: { appContainer: HTMLElement }) {
+    const slotRef = useRef<HTMLDivElement>(null);
+
+    useLayoutEffect(() => {
+        slotRef.current?.appendChild(appContainer);
+    }, [appContainer]);
+
+    return <main ref={slotRef} className={\`\${BLOCK}__main\`} />;
+}
+
+interface IHostUiErrorBoundaryProps {
+    onError?: (error: string, context: string) => void;
+    children: ReactNode;
+}
+
+// The host UI renders in its own React root, so the host error boundary does not see its errors.
+class HostUiErrorBoundary extends Component<IHostUiErrorBoundaryProps, { hasError: boolean }> {
+    override state = { hasError: false };
+
+    static getDerivedStateFromError() {
+        return { hasError: true };
+    }
+
+    override componentDidCatch(error: Error) {
+        this.props.onError?.(error.message, "gdc-snap-host-ui");
+    }
+
+    override render() {
+        return this.state.hasError ? (
+            <p role="alert">The application header failed to load.</p>
+        ) : (
+            this.props.children
+        );
+    }
+}
+",
+  "module/src/hostUiModule.test.tsx": "// (C) 2026 GoodData Corporation
+
+import { act } from "react";
+
+import { afterEach, describe, expect, it, vi } from "vitest";
+
+import { type PluggableApplicationRegistryItem } from "@gooddata/sdk-model";
+import {
+    type IHostUiMountHandle,
+    type IHostUiMountOptions,
+    type IPlatformContext,
+} from "@gooddata/sdk-pluggable-application-model";
+
+import { getNavigationItems } from "./HostUi.js";
+import { hostUiModule } from "./hostUiModule.js";
+
+// React warns when act() runs outside a test environment that declares it.
+(globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
+
+const ctx = {
+    user: { login: "user@example.com" },
+    organization: { id: "org-1", title: "Example organization" },
+    currentWorkspaceId: "ws-1",
+} as IPlatformContext;
+
+const applications: PluggableApplicationRegistryItem[] = [
+    {
+        apiVersion: "1.0",
+        id: "workspace-app",
+        applicationScope: "workspace",
+        menuOrder: 2,
+        title: "Workspace app",
+        local: { routeBase: "/workspace-app" },
+    },
+    {
+        apiVersion: "1.0",
+        id: "organization-app",
+        applicationScope: "organization",
+        menuOrder: 1,
+        title: "Organization app",
+        local: { routeBase: "/organization-app" },
+    },
+];
+
+let container: HTMLElement;
+let handle: IHostUiMountHandle | undefined;
+
+function mount(overrides: Partial<IHostUiMountOptions> = {}) {
+    container = document.createElement("div");
+    document.body.appendChild(container);
+    act(() => {
+        handle = hostUiModule.mount({
+            container,
+            ctx,
+            resolvedApplications: applications,
+            pathname: "/organization/organization-app",
+            navigate: vi.fn(),
+            replace: vi.fn(),
+            ...overrides,
+        });
+    });
+    return handle!;
+}
+
+describe("hostUiModule", () => {
+    afterEach(() => {
+        act(() => handle?.unmount());
+        handle = undefined;
+        container.remove();
+    });
+
+    it("returns the app container synchronously and places it in the layout", () => {
+        const mounted = mount();
+
+        expect(container.contains(mounted.getAppContainer())).toBe(true);
+    });
+
+    it("navigates through the host on a menu click", () => {
+        const navigate = vi.fn();
+        mount({ navigate });
+
+        act(() => {
+            container.querySelector<HTMLAnchorElement>('a[href="/workspace/ws-1/workspace-app"]')!.click();
+        });
+
+        expect(navigate).toHaveBeenCalledWith("/workspace/ws-1/workspace-app");
+    });
+
+    it("moves the active item when the host pushes a new pathname", () => {
+        const mounted = mount();
+
+        act(() => mounted.updatePathname?.("/workspace/ws-1/workspace-app/detail"));
+
+        expect(container.querySelector('[aria-current="page"]')?.textContent).toBe("Workspace app");
+    });
+
+    it("keeps the application container when the header fails to render", () => {
+        vi.spyOn(console, "error").mockImplementation(() => {});
+        const onError = vi.fn();
+        const mounted = mount({ onError });
+        const brokenItem = {
+            key: "broken",
+            href: "https://example.com",
+            get label(): string {
+                throw new Error("broken label");
+            },
+        };
+
+        act(() => mounted.updateHeader?.({ helpMenuItems: [brokenItem] }));
+
+        expect(container.querySelector("header")).toBeNull();
+        expect(container.querySelector('[role="alert"]')).not.toBeNull();
+        expect(container.contains(mounted.getAppContainer())).toBe(true);
+        expect(onError).toHaveBeenCalledWith("broken label", "gdc-snap-host-ui");
+
+        act(() => {
+            mounted.updateHeader?.(undefined);
+            mounted.updatePathname?.("/workspace/ws-1/workspace-app");
+        });
+
+        expect(container.querySelector("header")).not.toBeNull();
+    });
+
+    it("renders only the application container in the export mode", () => {
+        const mounted = mount({ ctx: { ...ctx, isExportMode: true } });
+
+        expect(document.title).toBe("Organization app");
+        act(() => mounted.notify?.({ type: "newDeploymentAvailable", commitHash: "abc" }));
+
+        expect(container.querySelector("header")).toBeNull();
+        expect(container.querySelector('[role="status"]')).toBeNull();
+        expect(container.contains(mounted.getAppContainer())).toBe(true);
+    });
+});
+
+describe("hostUiModule theme", () => {
+    it("applies the header colors of the organization theme", () => {
+        const themed = document.createElement("div");
+        let themedHandle: IHostUiMountHandle | undefined;
+        act(() => {
+            themedHandle = hostUiModule.mount({
+                container: themed,
+                ctx: { ...ctx, theme: { header: { backgroundColor: "#123456" } } },
+                resolvedApplications: [],
+                pathname: "/",
+                navigate: vi.fn(),
+                replace: vi.fn(),
+            });
+        });
+
+        const root = themed.firstElementChild as HTMLElement;
+        expect(root.style.getPropertyValue("--gdc-snap-host-ui-header-background")).toBe("#123456");
+        act(() => themedHandle?.unmount());
+    });
+});
+
+describe("hostUiModule metadata", () => {
+    it("carries the build metadata that the host checks for a secured remote", () => {
+        expect(hostUiModule.allowedOrganizations).toEqual([]);
+        expect(hostUiModule.buildTimestamp).toBe(0);
+    });
+});
+
+describe("getNavigationItems", () => {
+    it("sorts by menu order and hides workspace apps outside a workspace", () => {
+        const items = getNavigationItems(applications, { ...ctx, currentWorkspaceId: undefined }, "/");
+
+        expect(items.map((item) => item.id)).toEqual(["organization-app"]);
+    });
+
+    it("marks the active application on an embedded route", () => {
+        const items = getNavigationItems(applications, ctx, "/embedded/workspace/ws-1/workspace-app");
+
+        expect(items.find((item) => item.isActive)?.id).toBe("workspace-app");
+    });
+});
+",
+  "module/src/hostUiModule.tsx": "// (C) 2026 GoodData Corporation
+
+import { type Root, createRoot } from "react-dom/client";
+
+import {
+    type IHostUiModule,
+    type IHostUiMountHandle,
+    type IHostUiMountOptions,
+} from "@gooddata/sdk-pluggable-application-model";
+
+import { HostUi, type IHostUiState } from "./HostUi.js";
+import "./HostUi.css";
+
+// vite.config.ts and vitest.config.ts define both values at build time.
+declare const __BUILD_TIMESTAMP__: number;
+declare const __ALLOWED_ORGANIZATIONS__: string[];
+
+function mountHostUi({
+    container,
+    ctx,
+    resolvedApplications,
+    pathname,
+    navigate,
+    onChatToggleRequested,
+    onError,
+}: IHostUiMountOptions): IHostUiMountHandle {
+    // The host calls getAppContainer() immediately after mount() returns, before React commits.
+    // Create the element here and let HostUi move it into its layout.
+    const appContainer = document.createElement("div");
+    appContainer.className = "gdc-snap-host-ui__app";
+
+    let root: Root | undefined = createRoot(container);
+    let state: IHostUiState = {
+        ctx,
+        applications: resolvedApplications,
+        pathname,
+        header: undefined,
+        pageTitle: undefined,
+        chat: { showChatItem: false, isOpen: false },
+        notification: undefined,
+    };
+
+    const render = () => {
+        root?.render(
+            <HostUi
+                state={state}
+                appContainer={appContainer}
+                navigate={navigate}
+                onChatToggle={onChatToggleRequested}
+                onError={onError}
+            />,
+        );
+    };
+
+    const update = (patch: Partial<IHostUiState>) => {
+        state = { ...state, ...patch };
+        render();
+    };
+
+    render();
+
+    return {
+        unmount() {
+            root?.unmount();
+            root = undefined;
+        },
+        updateContext: (nextCtx) => update({ ctx: nextCtx }),
+        updateApplications: (applications) => update({ applications }),
+        updatePathname: (nextPathname) => update({ pathname: nextPathname }),
+        updateHeader: (header) => update({ header }),
+        updateDocumentTitle: (pageTitle) => update({ pageTitle }),
+        updateChatState: (chat) => update({ chat }),
+        notify: (notification) => update({ notification }),
+        getAppContainer: () => appContainer,
+    };
+}
+
+export const hostUiModule: IHostUiModule = {
+    allowedOrganizations: __ALLOWED_ORGANIZATIONS__,
+    buildTimestamp: __BUILD_TIMESTAMP__,
+    mount: mountHostUi,
+};
+",
+  "module/src/index.ts": "// (C) 2026 GoodData Corporation
+
+// oxlint-disable no-barrel-files/no-barrel-files
+export { hostUiModule } from "./hostUiModule.js";
+",
+  "module/src/typings.d.ts": "// (C) 2026 GoodData Corporation
+
+declare module "*.css";
+",
+  "module/tsconfig.json": "{
+    "compilerOptions": {
+        "strict": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitOverride": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "exactOptionalPropertyTypes": false,
+        "useUnknownInCatchVariables": true,
+        "noUncheckedIndexedAccess": false,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "noImplicitReturns": true,
+        "alwaysStrict": true,
+        "forceConsistentCasingInFileNames": true,
+
+        "lib": ["ES2022", "dom", "dom.iterable"],
+        "target": "ES2022",
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "importHelpers": true,
+        "incremental": false,
+        "resolveJsonModule": true,
+        "declaration": true,
+
+        "jsx": "react-jsx",
+        "allowJs": true,
+
+        "noEmit": true,
+        "outDir": "dist"
+    },
+    "exclude": ["**/node_modules", "**/esm", "**/temp", "**/dist"]
+}
+",
+  "module/vite.config.ts": "// (C) 2026 GoodData Corporation
+
+//
+// Builds the Module Federation artifacts (remoteEntry.js + hostUiModule chunks) that the host loads
+// in place of its default header, navigation and layout. With \`base: "./"\` the same dist/ works from
+// any path, for example from S3: https://<bucket>/<prefix>/gdc-snap-host-ui/remoteEntry.js
+//
+// Build:      \`vite build\` → dist/
+// Local dev:  \`vite build --watch\` and \`vite preview\` (see the \`dev\` script). Day-to-day development
+//             is faster in the sibling harness/, which imports the module source directly.
+//
+import { readFileSync } from "fs";
+import { join, resolve } from "path";
+
+import { federation } from "@module-federation/vite";
+import react from "@vitejs/plugin-react";
+import { type ServerOptions, type UserConfig, defaultClientConditions, defineConfig, loadEnv } from "vite";
+
+const certDir = join(process.env["HOME"] || process.env["USERPROFILE"] || "", ".gooddata", "certs");
+let httpsConfig: ServerOptions["https"] | undefined;
+
+try {
+    httpsConfig = {
+        ca: readFileSync(join(certDir, "rootCA.pem")),
+        key: readFileSync(join(certDir, "localhost-key.pem")),
+        cert: readFileSync(join(certDir, "localhost-cert.pem")),
+    };
+    // oxlint-disable-next-line @typescript-eslint/no-unused-vars
+} catch (e) {
+    // oxlint-disable-next-line eslint-js/no-console
+    console.info(\`No certificates found in \${certDir}, skipping HTTPS configuration\`);
+    httpsConfig = undefined;
+}
+
+function parseAllowedOrganizations(value: string | undefined): string[] {
+    return (value ?? "")
+        .split(",")
+        .map((organizationId) => organizationId.trim())
+        .filter((organizationId) => organizationId.length > 0);
+}
+
+export default defineConfig(({ mode, command }): UserConfig => {
+    const env = loadEnv(mode, process.cwd(), "");
+    const port = parseInt(env["PORT"] || "8550");
+    const isDev = command === "serve";
+
+    return {
+        root: ".",
+        base: "./",
+        publicDir: false,
+        resolve: {
+            // resolve.conditions replaces Vite's defaults, so keep them and add \`source\` in dev only.
+            conditions: [...defaultClientConditions, ...(isDev ? ["source"] : [])],
+            dedupe: ["react", "react-dom"],
+        },
+        define: {
+            "process.env": JSON.stringify({}),
+            __BUILD_TIMESTAMP__: JSON.stringify(Date.now()),
+            __ALLOWED_ORGANIZATIONS__: JSON.stringify(
+                parseAllowedOrganizations(env["ALLOWED_ORGANIZATIONS"]),
+            ),
+        },
+        preview: {
+            port,
+            https: httpsConfig,
+            cors: true,
+        },
+        build: {
+            outDir: "dist",
+            sourcemap: mode !== "production",
+            target: "es2022",
+            rolldownOptions: {
+                input: resolve(import.meta.dirname, "src/hostUiModule.tsx"),
+                output: {
+                    entryFileNames: "static/js/[name].[hash].js",
+                    chunkFileNames: "static/js/[name].[hash].chunk.js",
+                    assetFileNames: "static/[hash][extname]",
+                },
+                checks: {
+                    pluginTimings: false,
+                },
+            },
+        },
+        plugins: [
+            federation({
+                name: "gdc_snap_host_ui",
+                filename: "remoteEntry.js",
+                manifest: true,
+                publicPath: "auto",
+                dts: false,
+                exposes: {
+                    "./hostUiModule": "./src/hostUiModule.tsx",
+                },
+                // The module bundles its own React. The host mounts it into its own container.
+                shared: [],
+                moduleParseIdleTimeout: 60,
+            }),
+            react(),
+        ],
+    };
+});
+",
+  "module/vitest.config.ts": "// (C) 2026 GoodData Corporation
+
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+    define: {
+        __BUILD_TIMESTAMP__: "0",
+        __ALLOWED_ORGANIZATIONS__: "[]",
+    },
+    test: {
+        environment: "happy-dom",
+        reporters: ["default"],
+        include: ["src/**/*.test.{ts,tsx}"],
+        isolate: false,
+        restoreMocks: true,
+        unstubEnvs: true,
+        unstubGlobals: true,
+    },
+});
+",
+}
+`;
+
 exports[`snapshot: client profile end-to-end scaffold > produces a deterministic scaffold (client profile, fresh non-rush dir) 1`] = `
 {
   "harness/.env.template": "BACKEND_URL=

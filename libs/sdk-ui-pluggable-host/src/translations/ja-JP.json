@@ -40,6 +40,7 @@
     "languageDialog.select.searchLabel": "言語を検索",
     "languageDialog.select.searchPlaceholder": "検索…",
     "languageDialog.select.noMatch": "一致する言語がありません。",
+    "languageDialog.saving": "言語を変更しています…",
     "languageDialog.error": "言語を変更できませんでした。もう一度お試しください。",
     "languageDialog.success": "完了しました。言語を変更しました！"
 }

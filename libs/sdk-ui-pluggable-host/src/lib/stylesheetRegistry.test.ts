@@ -8,6 +8,7 @@ import {
     registerAppStylesheetScope,
     reserveHostStylesheetScope,
     resetStylesheetRegistry,
+    retireHostStylesheetScope,
 } from "./stylesheetRegistry.js";
 
 // Everything this file puts into <head> is torn down after each test: `isolate` is off, so the
@@ -123,6 +124,57 @@ describe("stylesheetRegistry", () => {
         deactivateAppStylesheets("home-ui");
 
         expect(sharedLink.disabled).toBeFalsy();
+        expect(consoleWarn).toHaveBeenCalledOnce();
+    });
+
+    it("disables the present and later links of a retired host UI module", async () => {
+        reserveHostStylesheetScope("/organization/remotes/host-ui/mf-manifest.json");
+        const presentLink = appendLink("/organization/remotes/host-ui/static/host.css");
+        const otherLink = appendLink("/organization/remotes/gdc-home-ui/static/abc.css");
+
+        retireHostStylesheetScope("/organization/remotes/host-ui/mf-manifest.json");
+        const laterLink = appendLink("/organization/remotes/host-ui/static/late.css");
+        await flushObserver();
+
+        expect(presentLink.disabled).toBe(true);
+        expect(laterLink.disabled).toBe(true);
+        expect(otherLink.disabled).toBeFalsy();
+    });
+
+    it("keeps the stylesheets of an app served from a directory below a retired host UI module", async () => {
+        reserveHostStylesheetScope("/acme/remoteEntry.js");
+        registerAppStylesheetScope("sales", "/acme/sales/remoteEntry.js");
+        const presentAppLink = appendLink("/acme/sales/static/app.css");
+        const hostLink = appendLink("/acme/static/host.css");
+
+        retireHostStylesheetScope("/acme/remoteEntry.js");
+        const laterAppLink = appendLink("/acme/sales/static/late.css");
+        await flushObserver();
+
+        expect(hostLink.disabled).toBe(true);
+        expect(presentAppLink.disabled).toBeFalsy();
+        expect(laterAppLink.disabled).toBeFalsy();
+    });
+
+    it("keeps the stylesheets of an app that shares its remote directory with a retired host UI module", async () => {
+        vi.spyOn(console, "warn").mockImplementation(() => {});
+        reserveHostStylesheetScope("/organization/remotes/shared/remoteEntry.js");
+        retireHostStylesheetScope("/organization/remotes/shared/remoteEntry.js");
+
+        registerAppStylesheetScope("sales", "/organization/remotes/shared/remoteEntry.js");
+        const appLink = appendLink("/organization/remotes/shared/static/app.css");
+        await flushObserver();
+
+        expect(appLink.disabled).toBeFalsy();
+    });
+
+    it("keeps the host stylesheets when the retired host UI module is at the origin root", () => {
+        const consoleWarn = vi.spyOn(console, "warn").mockImplementation(() => {});
+        const hostLink = appendLink("/static/host.css");
+
+        retireHostStylesheetScope("/remoteEntry.js");
+
+        expect(hostLink.disabled).toBeFalsy();
         expect(consoleWarn).toHaveBeenCalledOnce();
     });
 

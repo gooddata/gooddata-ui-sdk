@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { compact, partition, uniqBy } from "lodash-es";
+import { partition, uniqBy } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, all, call, put, select } from "redux-saga/effects";
 
@@ -40,6 +40,7 @@ import {
     serializeObjRef,
     updateAttributeElementsItems,
 } from "@gooddata/sdk-model";
+import { _compact } from "@gooddata/util";
 
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
 import { type ChangeFilterContextSelection } from "../../commands/filters.js";
@@ -376,7 +377,7 @@ export function* changeFilterContextSelectionHandler(
         }
         return isDashboardMeasureValueFilter(entry) && isDashboardMeasureValueFilter(target);
     };
-    const normalizedFilters: FilterContextItem[] = compact(
+    const normalizedFilters: FilterContextItem[] = _compact(
         filters.map((filter): FilterContextItem | undefined => {
             if (
                 isDashboardAttributeFilterItem(filter) ||
@@ -564,7 +565,7 @@ function* getDashboardFilterByAttributeMatching(
     const resolvedAttribute: SagaReturnType<typeof resolveAttributeMetadata> = yield call(
         resolveAttributeMetadata,
         ctx,
-        compact([filterDF?.attribute]),
+        _compact([filterDF?.attribute]),
     );
     const attribute = filterDF?.attribute && resolvedAttribute.resolved.get(filterDF?.attribute);
 

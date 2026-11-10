@@ -11,7 +11,9 @@
  * Modified by `binh.nguyen@gooddata.com` to support min/max configuration
  */
 
-import { compact, partial, sum, zip } from "lodash-es";
+import { partial, sum, zip } from "lodash-es";
+
+import { _compact } from "@gooddata/util";
 
 import { type StackingType } from "../../constants/stacking.js";
 import { type HighchartsOptions, type SeriesOptionsType } from "../../lib/index.js";
@@ -284,7 +286,7 @@ function getStackedDataMinMax(yData: number[][]): IMinMax {
  */
 export function convertNumberToPercent(yData: number[][]): number[][] {
     return yData.map((columns: number[]) => {
-        const columnsWithoutNull = compact(columns); // remove null values
+        const columnsWithoutNull = _compact(columns); // remove null values
         const total = sum(columnsWithoutNull.map((num: number) => Math.abs(num)));
         return columnsWithoutNull.map((num: number) => (num / total) * 100);
     });

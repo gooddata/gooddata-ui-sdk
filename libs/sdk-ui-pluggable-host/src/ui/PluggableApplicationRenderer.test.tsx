@@ -51,7 +51,9 @@ vi.mock("../loader/pluggableApplicationsLoader.js", () => ({
     getHostTelemetryServices: () => undefined,
 }));
 
-vi.mock("../loader/appSecurityValidation.js", () => ({
+vi.mock("../loader/appSecurityValidation.js", async (importOriginal) => ({
+    describeSecurityFailure: (await importOriginal<typeof import("../loader/appSecurityValidation.js")>())
+        .describeSecurityFailure,
     validateAppSecurity: mocks.validateAppSecurity,
     getSecuredRemoteAppValidUntil: mocks.getSecuredRemoteAppValidUntil,
 }));

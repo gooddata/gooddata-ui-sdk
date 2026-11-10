@@ -1,5 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
-import { compact } from "lodash-es";
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type IBucket,
@@ -14,6 +13,7 @@ import {
     newTwoDimensional,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
+import { _compact } from "@gooddata/util";
 
 function isStackedChart(buckets: IBucket[], stackBucketName: string) {
     const stackBucket = bucketsFind(buckets, stackBucketName);
@@ -32,7 +32,7 @@ function stackedDimensions(
     const stackBucket = bucketsFind(buckets, stackBucketName);
     const stackByAttribute = stackBucket && bucketAttribute(stackBucket);
 
-    return newTwoDimensional(compact([stackByAttribute]), [...viewByAttributes, MeasureGroupIdentifier]);
+    return newTwoDimensional(_compact([stackByAttribute]), [...viewByAttributes, MeasureGroupIdentifier]);
 }
 
 export function defaultDimensions(def: IExecutionDefinition): IDimension[] {
@@ -70,7 +70,7 @@ export function heatmapDimensions(def: IExecutionDefinition): IDimension[] {
     const stackBucket = bucketsFind(def.buckets, BucketNames.STACK);
     const stackByAttribute = stackBucket ? bucketAttributes(stackBucket) : [];
 
-    return newTwoDimensional(viewByAttributes, compact([...stackByAttribute, MeasureGroupIdentifier]));
+    return newTwoDimensional(viewByAttributes, _compact([...stackByAttribute, MeasureGroupIdentifier]));
 }
 
 export function treemapDimensions(def: IExecutionDefinition): IDimension[] {
@@ -90,7 +90,7 @@ export function sankeyDimensions(def: IExecutionDefinition): IDimension[] {
 
     return newTwoDimensional(
         [MeasureGroupIdentifier],
-        compact([...attributeFromByAttributes, ...attributeToByAttributes]),
+        _compact([...attributeFromByAttributes, ...attributeToByAttributes]),
     );
 }
 

@@ -1,9 +1,11 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { type Action, type Reducer, combineReducers } from "@reduxjs/toolkit";
-import { compact, keyBy } from "lodash-es";
+import { keyBy } from "lodash-es";
 import { type Saga, type SagaIterator } from "redux-saga";
 import { actionChannel, call, spawn, take } from "redux-saga/effects";
+
+import { _compact } from "@gooddata/util";
 
 import {
     internalQueryErrorOccurred,
@@ -180,7 +182,7 @@ export function createQueryProcessingModule(
 ): IQueryProcessingModule {
     const servicesByType = keyBy(queryServices, (service) => service.name);
     const queryToReducers = Object.fromEntries(
-        compact(
+        _compact(
             queryServices.map((service) => {
                 if (!service.cache) {
                     return null;

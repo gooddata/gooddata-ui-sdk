@@ -3,10 +3,11 @@
 import { Fragment, type ReactNode, useMemo, useState } from "react";
 
 import cx from "classnames";
-import { compact, sortBy } from "lodash-es";
+import { sortBy } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { Typography, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
+import { _compact } from "@gooddata/util";
 
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectSupportsRichTextWidgets } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
@@ -76,7 +77,7 @@ export function CreationPanel(props: ICreationPanelProps) {
         const isInsightEditorItem =
             creating?.CreatePanelListItemComponent === InsightEditorCreatePanelItem ||
             creating?.CreatingPlaceholderComponent === InsightEditorPlaceholder;
-        const items = compact([
+        const items = _compact([
             (!isInsightEditorItem || canCreateInsightInEditor) && InsightWidgetComponentSet.creating,
             AttributeFilterComponentSet.creating,
             DashboardLayoutWidgetComponentSet.creating,

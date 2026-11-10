@@ -1,7 +1,5 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { compact } from "lodash-es";
-
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
     type DateFilterGranularity,
@@ -46,6 +44,7 @@ import {
     newAllTimeDashboardDateFilter,
     newRelativeDashboardDateFilter,
 } from "@gooddata/sdk-model";
+import { _compact } from "@gooddata/util";
 
 import { type ExtendedDashboardWidget } from "../../../../model/types/layoutTypes.js";
 import { removeIgnoredWidgetFilters } from "../../../../model/utils/widgetFilters.js";
@@ -106,7 +105,7 @@ export const getVisibleFiltersByFilters = (
             return targetFilter;
         });
 
-    return compact(filters);
+    return _compact(filters);
 };
 
 /**

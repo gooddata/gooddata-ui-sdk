@@ -46,9 +46,13 @@ export type LinkHandlerEvent = {
      */
     preventDefault: () => void;
     /**
-     * Identifier of the conversation associated with the link, when available.
+     * Local conversation ID, which remains stable when a new conversation receives its backend thread ID.
      */
     conversationId?: string;
+    /**
+     * Persistent backend conversation ID associated with the link, when available.
+     */
+    threadId?: string;
     /**
      * Settings section to open. Provided for links to AI settings.
      *  - ai - Requested open ai section in settings

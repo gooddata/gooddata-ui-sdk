@@ -1,7 +1,5 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { compact } from "lodash-es";
-
 import { type IAnalyticalBackend, type IBackendCapabilities } from "@gooddata/sdk-backend-spi";
 import {
     type AttributeFilterItem,
@@ -19,6 +17,7 @@ import {
     type ObjRef,
     catalogComputedAttributeAsCatalogAttribute,
 } from "@gooddata/sdk-model";
+import { _compact } from "@gooddata/util";
 
 import { isComputedAttributesUnavailableError } from "../../../_staging/catalog/computedAttributes.js";
 
@@ -63,7 +62,7 @@ export function buildInsightEditorFilterContext(
 
     const dateFilters = capabilities.supportsMultipleDateFilters
         ? getDateFilterItems(appliedFilters, insight)
-        : compact([getWidgetDateFilterItem(widget, input.dateFilter)]);
+        : _compact([getWidgetDateFilterItem(widget, input.dateFilter)]);
 
     return [...dateFilters, ...attributeFilters, ...measureValueFilters];
 }

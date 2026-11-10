@@ -3,7 +3,7 @@
 import { type KeyboardEvent, type UIEvent, useCallback, useEffect, useMemo, useRef } from "react";
 
 import stringify from "json-stable-stringify";
-import { compact, groupBy, uniqBy } from "lodash-es";
+import { groupBy, uniqBy } from "lodash-es";
 import { type IntlShape, useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 
@@ -30,6 +30,7 @@ import {
 } from "@gooddata/sdk-model";
 import { type IDrillEvent, UnexpectedSdkError } from "@gooddata/sdk-ui";
 import { type IAlignPoint, Overlay, UiFocusManager, UiMenu } from "@gooddata/sdk-ui-kit";
+import { _compact } from "@gooddata/util";
 
 import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils.js";
 import { type ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
@@ -492,7 +493,7 @@ export const createDrillSelectItems = ({
         }
 
         if (isCrossFiltering(drillDefinition)) {
-            const title = compact(
+            const title = _compact(
                 drillEvent.drillContext.intersection?.map((item) =>
                     isAttributeDescriptor(item.header) && !item.header.attributeHeader.granularity
                         ? item.header.attributeHeader.name

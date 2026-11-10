@@ -39,7 +39,12 @@ import { HostIntlProvider } from "../ui/HostIntlProvider.js";
 
 import "./HostUiContainer.scss";
 import { PluggableApplicationRenderer } from "../ui/PluggableApplicationRenderer.js";
-import { resolveHostUiModule } from "../ui/resolveHostUiModule.js";
+import {
+    type IResolvedHostUiModule,
+    rejectHostUiModuleOnContextChange,
+    rejectHostUiModuleOnMountFailure,
+    resolveHostUiModule,
+} from "../ui/resolveHostUiModule.js";
 
 import { HostErrorBoundary } from "./HostErrorBoundary.js";
 import { runGuardedNavigation } from "./navigationGuard.js";
@@ -69,6 +74,12 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate, onError }
     const handleRef = useRef<IHostUiMountHandle>(undefined);
     const appRootRef = useRef<ReactRoot>(undefined);
     const [hostReady, setHostReady] = useState(false);
+    const resolvedHostUiRef = useRef<IResolvedHostUiModule>(undefined);
+    // Set when a remote UI module fails the secured-remote checks after mount. The mount effect then
+    // replaces it with the default host UI, the same way the host unmounts a rejected application.
+    const [useDefaultHostUi, setUseDefaultHostUi] = useState(false);
+    // A rejected module is replaced by a second mount. The page still mounted its host UI only once.
+    const hostUiMountReportedRef = useRef(false);
     const latestMountStateRef = useAutoupdateRef({ ctx, apps, pathname });
     useHeadlessModules(ctx);
     const onErrorRef = useAutoupdateRef(onError);
@@ -244,29 +255,55 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate, onError }
         let mounted = true;
         const mountStart = now();
 
-        void resolveHostUiModule(latestMountStateRef.current.ctx).then((hostUiModule) => {
+        void resolveHostUiModule(latestMountStateRef.current.ctx, useDefaultHostUi).then((resolved) => {
             if (!mounted) {
                 return;
             }
 
             const latestState = latestMountStateRef.current;
-            const handle = hostUiModule.mount({
-                container,
-                ctx: latestState.ctx,
-                resolvedApplications: latestState.apps,
-                pathname: latestState.pathname,
-                navigate: navigationMountRef.current.navigate,
-                replace: navigationMountRef.current.replace,
-                onChatToggleRequested: navigationMountRef.current.onChatToggleRequested,
-                onAskAiAssistant: navigationMountRef.current.onAskAiAssistant,
-                onError: reportError,
-            });
+            // The context can change while the module loads, and the module was checked against the old one.
+            if (rejectHostUiModuleOnContextChange(resolved, latestState.ctx, "rejected")) {
+                setUseDefaultHostUi(true);
+                return;
+            }
+            let handle: IHostUiMountHandle | undefined;
+            let appContainer: HTMLElement;
+            try {
+                handle = resolved.hostUiModule.mount({
+                    container,
+                    ctx: latestState.ctx,
+                    resolvedApplications: latestState.apps,
+                    pathname: latestState.pathname,
+                    navigate: navigationMountRef.current.navigate,
+                    replace: navigationMountRef.current.replace,
+                    onChatToggleRequested: navigationMountRef.current.onChatToggleRequested,
+                    onAskAiAssistant: navigationMountRef.current.onAskAiAssistant,
+                    onError: reportError,
+                });
+                appContainer = handle.getAppContainer();
+            } catch (error) {
+                if (!rejectHostUiModuleOnMountFailure(resolved, error)) {
+                    throw error;
+                }
+                try {
+                    handle?.unmount();
+                } catch (unmountError) {
+                    console.error("[host-runtime/host-ui] UI module unmount threw.", unmountError);
+                }
+                container.replaceChildren();
+                setUseDefaultHostUi(true);
+                return;
+            }
 
+            resolvedHostUiRef.current = resolved;
             handleRef.current = handle;
-            appRootRef.current = createRoot(handle.getAppContainer());
+            appRootRef.current = createRoot(appContainer);
             setHostReady(true);
 
-            getAppLifecycleCallbacks()?.onHostUiMounted?.(now() - mountStart);
+            if (!hostUiMountReportedRef.current) {
+                hostUiMountReportedRef.current = true;
+                getAppLifecycleCallbacks()?.onHostUiMounted?.(now() - mountStart);
+            }
 
             // Replay the latest values in case they changed while the async host UI module was resolving.
             handle.updateContext?.(latestState.ctx);
@@ -285,6 +322,7 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate, onError }
             appRootRef.current = undefined;
             const handle = handleRef.current;
             handleRef.current = undefined;
+            resolvedHostUiRef.current = undefined;
             // This cleanup runs synchronously inside the commit of the root that renders this
             // component, and unmount() is synchronous — doing it here re-enters React mid-render.
             queueMicrotask(() => {
@@ -292,12 +330,18 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate, onError }
                 handle?.unmount();
             });
         };
-        // Mount only once; updates are pushed via handle
-    }, [latestMountStateRef, navigationMountRef, reportError]);
+        // Mount once, and again only to replace a rejected remote UI module; updates are pushed via handle
+    }, [latestMountStateRef, navigationMountRef, reportError, useDefaultHostUi]);
 
     // Push updates when context, apps, or pathname change after initial mount
     useEffect(() => {
         if (!hostReady) {
+            return;
+        }
+        const resolved = resolvedHostUiRef.current;
+        if (resolved && rejectHostUiModuleOnContextChange(resolved, ctx, "unmounted")) {
+            setHostReady(false);
+            setUseDefaultHostUi(true);
             return;
         }
         handleRef.current?.updateContext?.(ctx);

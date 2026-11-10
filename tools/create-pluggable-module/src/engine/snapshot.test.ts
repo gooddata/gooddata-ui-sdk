@@ -23,6 +23,8 @@ const WORKSPACE_TEMPLATE_ROOTS = {
     harness: dirname(requireFromHere.resolve("gdc-app-template-name-harness/tsconfig.json")),
     "headless-module": dirname(requireFromHere.resolve("gdc-headless-template-name-module/tsconfig.json")),
     "headless-harness": dirname(requireFromHere.resolve("gdc-headless-template-name-harness/tsconfig.json")),
+    "host-ui-module": dirname(requireFromHere.resolve("gdc-host-ui-template-name-module/tsconfig.json")),
+    "host-ui-harness": dirname(requireFromHere.resolve("gdc-host-ui-template-name-harness/tsconfig.json")),
 };
 
 /**
@@ -143,6 +145,38 @@ describe("snapshot: client profile end-to-end scaffold", () => {
         const tree = treeToMap(join(testRoot, "modules", "gdc-snap-headless"));
         expect(Object.keys(tree).some((path) => path.includes("template-name"))).toBe(false);
         expect(JSON.stringify(tree)).not.toMatch(/gdc-headless-template-name|\{applicationTemplate/);
+        expect(tree).toMatchSnapshot();
+    });
+
+    it("produces a deterministic host UI scaffold (client profile, fresh non-rush dir)", async () => {
+        const profileForSnapshot = {
+            ...clientProfile,
+            preferWorkspaceTemplate: true,
+            templateSubtreeRoots: WORKSPACE_TEMPLATE_ROOTS,
+            postCopy: async () => {},
+        };
+
+        await runProfileWithAnswers(
+            profileForSnapshot,
+            {
+                appName: "gdc-snap-host-ui",
+                title: "Snapshot Host UI",
+                kind: "host-ui",
+                scope: "organization",
+                maintainer: "team@gooddata.com",
+            },
+            {
+                repo: {
+                    repoRoot: testRoot,
+                    packageManager: "npm",
+                },
+                steps: [],
+            },
+        );
+
+        const tree = treeToMap(join(testRoot, "modules", "gdc-snap-host-ui"));
+        expect(Object.keys(tree).some((path) => path.includes("template-name"))).toBe(false);
+        expect(JSON.stringify(tree)).not.toMatch(/gdc-host-ui-template-name|\{applicationTemplate/);
         expect(tree).toMatchSnapshot();
     });
 });

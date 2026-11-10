@@ -1,10 +1,10 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { compact, range } from "lodash-es";
+import { range } from "lodash-es";
 
 import { type IMeasureDescriptor, type IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { BucketNames, type DataViewFacade } from "@gooddata/sdk-ui";
-import { _isEmpty } from "@gooddata/util";
+import { _compact, _isEmpty } from "@gooddata/util";
 
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
@@ -185,7 +185,7 @@ function getDualAxesYAxes(
         measuresInSecondAxis,
     );
 
-    return compact([firstAxis, secondAxis]);
+    return _compact([firstAxis, secondAxis]);
 }
 
 // Control (threshold) measures style the regular measures (e.g. dashed line segments) instead of being

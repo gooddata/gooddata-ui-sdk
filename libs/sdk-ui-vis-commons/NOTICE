@@ -3,9 +3,11 @@ Copyright (c) 2017-2026 GoodData Corporation
 This product includes a number of subcomponents with separate copyright notices and license terms below. Your use of these subcomponents is subject to the terms and conditions of the subcomponent's license. This GoodData project does not necessarily use all the open source software referred to below and may also only use portions of a given package. With respect to the open source software listed in this document, if you (i) have any questions, (ii) wish to receive source code for packages under licenses that require their source code to be made available (such as the GNU Lesser Public License), or (iii) discover any errors or omissions in the licensing information provided, please contact us at legal@gooddata.com. Please identify in source code requests: (i) the packages for which you are requesting corresponding source, (ii) the GoodData product (including any available version) with which the package was provided; and (iii) an email address (if available) or postal address at which GoodData may contact you.
 
 --------------------------------------------------------------------------------
-Attribution Notice for @gooddata/sdk-ui-vis-commons (11.68.0-alpha.7)
+Attribution Notice for @gooddata/sdk-ui-vis-commons (11.68.0-alpha.8)
 Package License: MIT
 Own License File: LICENSE
+Date generated: 2026-11-10
+Revision ID: dde1512be72244df8ad5c996c9bce5ff623b3b50
 
 This notice lists the components that @gooddata/sdk-ui-vis-commons depends on, directly or through other
 packages, with the license and copyright information reported for each of them.
@@ -17,13 +19,13 @@ change those terms.
 Dependencies
 
 Local GoodData SDK components
-- @gooddata/sdk-backend-spi (11.68.0-alpha.7) [MIT] — Direct
-- @gooddata/sdk-code-schemas (11.68.0-alpha.7) [MIT] — Transitive
-- @gooddata/sdk-model (11.68.0-alpha.7) [MIT] — Direct
-- @gooddata/sdk-ui (11.68.0-alpha.7) [MIT] — Direct
-- @gooddata/sdk-ui-kit (11.68.0-alpha.7) [MIT] — Direct
-- @gooddata/sdk-ui-theme-provider (11.68.0-alpha.7) [MIT] — Direct
-- @gooddata/util (11.68.0-alpha.7) [MIT] — Direct
+- @gooddata/sdk-backend-spi (11.68.0-alpha.8) [MIT] — Direct
+- @gooddata/sdk-code-schemas (11.68.0-alpha.8) [MIT] — Transitive
+- @gooddata/sdk-model (11.68.0-alpha.8) [MIT] — Direct
+- @gooddata/sdk-ui (11.68.0-alpha.8) [MIT] — Direct
+- @gooddata/sdk-ui-kit (11.68.0-alpha.8) [MIT] — Direct
+- @gooddata/sdk-ui-theme-provider (11.68.0-alpha.8) [MIT] — Direct
+- @gooddata/util (11.68.0-alpha.8) [MIT] — Direct
 
 External components
 - @aaronhayes/react-use-hubspot-form (2.1.2) [MIT] — Transitive
@@ -296,7 +298,7 @@ Local GoodData SDK components
 ================================================================================
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-backend-spi (11.68.0-alpha.7)
+Package Title: @gooddata/sdk-backend-spi (11.68.0-alpha.8)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -314,7 +316,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-code-schemas (11.68.0-alpha.7)
+Package Title: @gooddata/sdk-code-schemas (11.68.0-alpha.8)
 Package Source: Local workspace
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -344,7 +346,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-model (11.68.0-alpha.7)
+Package Title: @gooddata/sdk-model (11.68.0-alpha.8)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -362,7 +364,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui (11.68.0-alpha.7)
+Package Title: @gooddata/sdk-ui (11.68.0-alpha.8)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -380,7 +382,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui-kit (11.68.0-alpha.7)
+Package Title: @gooddata/sdk-ui-kit (11.68.0-alpha.8)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -398,7 +400,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui-theme-provider (11.68.0-alpha.7)
+Package Title: @gooddata/sdk-ui-theme-provider (11.68.0-alpha.8)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -416,7 +418,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/util (11.68.0-alpha.7)
+Package Title: @gooddata/util (11.68.0-alpha.8)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -1223,7 +1225,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Emotion team and other contributors
+- Copyright (c) Emotion team and other contributors
 
 --------------------------------------------------------------------------------
 Package Title: @emotion/cache (11.14.0)
@@ -1259,7 +1261,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Emotion team and other contributors
+- Copyright (c) Emotion team and other contributors
 
 --------------------------------------------------------------------------------
 Package Title: @emotion/hash (0.9.2)
@@ -1295,7 +1297,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Emotion team and other contributors
+- Copyright (c) Emotion team and other contributors
 
 --------------------------------------------------------------------------------
 Package Title: @emotion/memoize (0.9.0)
@@ -1331,7 +1333,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Emotion team and other contributors
+- Copyright (c) Emotion team and other contributors
 
 --------------------------------------------------------------------------------
 Package Title: @emotion/react (11.14.0)
@@ -1367,7 +1369,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Emotion team and other contributors
+- Copyright (c) Emotion team and other contributors
 
 --------------------------------------------------------------------------------
 Package Title: @emotion/serialize (1.3.3)
@@ -1403,7 +1405,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Emotion team and other contributors
+- Copyright (c) Emotion team and other contributors
 
 --------------------------------------------------------------------------------
 Package Title: @emotion/sheet (1.4.0)
@@ -1439,7 +1441,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Emotion team and other contributors
+- Copyright (c) Emotion team and other contributors
 
 --------------------------------------------------------------------------------
 Package Title: @emotion/unitless (0.10.0)
@@ -1475,7 +1477,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Emotion team and other contributors
+- Copyright (c) Emotion team and other contributors
 
 --------------------------------------------------------------------------------
 Package Title: @emotion/use-insertion-effect-with-fallbacks (1.2.0)
@@ -1511,7 +1513,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Emotion team and other contributors
+- Copyright (c) Emotion team and other contributors
 
 --------------------------------------------------------------------------------
 Package Title: @emotion/utils (1.4.2)
@@ -1547,7 +1549,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Emotion team and other contributors
+- Copyright (c) Emotion team and other contributors
 
 --------------------------------------------------------------------------------
 Package Title: @emotion/weak-memoize (0.4.0)
@@ -1583,7 +1585,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Emotion team and other contributors
+- Copyright (c) Emotion team and other contributors
 
 --------------------------------------------------------------------------------
 Package Title: @floating-ui/core (1.8.0)
@@ -2415,7 +2417,7 @@ MIT
 
 * Copyrights *
 MIT
-- Copyright (c)  Microsoft Corporation.
+- Copyright (c) Microsoft Corporation.
 
 --------------------------------------------------------------------------------
 Package Title: @types/estree (1.0.9)
@@ -2451,7 +2453,7 @@ MIT
 
 * Copyrights *
 MIT
-- Copyright (c)  Microsoft Corporation.
+- Copyright (c) Microsoft Corporation.
 
 --------------------------------------------------------------------------------
 Package Title: @types/estree-jsx (1.0.5)
@@ -2487,7 +2489,7 @@ MIT
 
 * Copyrights *
 MIT
-- Copyright (c)  Microsoft Corporation.
+- Copyright (c) Microsoft Corporation.
 
 --------------------------------------------------------------------------------
 Package Title: @types/geojson (7946.0.16)
@@ -2523,7 +2525,7 @@ MIT
 
 * Copyrights *
 MIT
-- Copyright (c)  Microsoft Corporation.
+- Copyright (c) Microsoft Corporation.
 
 --------------------------------------------------------------------------------
 Package Title: @types/hast (3.0.5)
@@ -2559,7 +2561,7 @@ MIT
 
 * Copyrights *
 MIT
-- Copyright (c)  Microsoft Corporation.
+- Copyright (c) Microsoft Corporation.
 
 --------------------------------------------------------------------------------
 Package Title: @types/mdast (4.0.4)
@@ -2595,7 +2597,7 @@ MIT
 
 * Copyrights *
 MIT
-- Copyright (c)  Microsoft Corporation.
+- Copyright (c) Microsoft Corporation.
 
 --------------------------------------------------------------------------------
 Package Title: @types/ms (2.1.0)
@@ -2631,7 +2633,7 @@ MIT
 
 * Copyrights *
 MIT
-- Copyright (c)  Microsoft Corporation.
+- Copyright (c) Microsoft Corporation.
 
 --------------------------------------------------------------------------------
 Package Title: @types/parse-json (4.0.2)
@@ -2667,7 +2669,7 @@ MIT
 
 * Copyrights *
 MIT
-- Copyright (c)  Microsoft Corporation.
+- Copyright (c) Microsoft Corporation.
 
 --------------------------------------------------------------------------------
 Package Title: @types/react (19.1.11)
@@ -2703,7 +2705,7 @@ MIT
 
 * Copyrights *
 MIT
-- Copyright (c)  Microsoft Corporation.
+- Copyright (c) Microsoft Corporation.
 
 --------------------------------------------------------------------------------
 Package Title: @types/react-transition-group (4.4.12)
@@ -2739,7 +2741,7 @@ MIT
 
 * Copyrights *
 MIT
-- Copyright (c)  Microsoft Corporation.
+- Copyright (c) Microsoft Corporation.
 
 --------------------------------------------------------------------------------
 Package Title: @types/unist (2.0.11)
@@ -2775,7 +2777,7 @@ MIT
 
 * Copyrights *
 MIT
-- Copyright (c)  Microsoft Corporation.
+- Copyright (c) Microsoft Corporation.
 
 --------------------------------------------------------------------------------
 Package Title: @types/unist (3.0.3)
@@ -2811,7 +2813,7 @@ MIT
 
 * Copyrights *
 MIT
-- Copyright (c)  Microsoft Corporation.
+- Copyright (c) Microsoft Corporation.
 
 --------------------------------------------------------------------------------
 Package Title: @ungap/structured-clone (1.4.0)
@@ -2949,7 +2951,8 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Julian Gruber <julian@juliangruber.com>
+- Copyright (c) Julian Gruber <julian@juliangruber.com>
+- Copyright (c) Isaac Z. Schlueter <i@izs.me>
 
 --------------------------------------------------------------------------------
 Package Title: brace-expansion (5.0.12)
@@ -2987,7 +2990,8 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Julian Gruber <julian@juliangruber.com>
+- Copyright (c) Julian Gruber <julian@juliangruber.com>
+- Copyright (c) Isaac Z. Schlueter <i@izs.me>
 
 --------------------------------------------------------------------------------
 Package Title: call-bind (1.0.9)
@@ -3130,7 +3134,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: ccount (2.0.1)
@@ -3200,7 +3204,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: character-entities (2.0.2)
@@ -3797,7 +3801,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 * Copyrights *
 MIT
-- Copyright (c)  Bjørge Næss
+- Copyright (c) Bjørge Næss
 
 --------------------------------------------------------------------------------
 Package Title: debug (4.4.3)
@@ -3832,6 +3836,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 * Copyrights *
 MIT
 - Copyright (c) 2014-2017 TJ Holowaychuk <tj@vision-media.ca>
+- Copyright (c) 2018-2021 Josh Junon
+- Copyright (c) 2014-2017 TJ Holowaychuk &lt;tj@vision-media.ca&gt;
 
 --------------------------------------------------------------------------------
 Package Title: decode-named-character-reference (1.3.0)
@@ -3866,7 +3872,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: default-import (1.1.5)
@@ -3973,7 +3979,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Luke Edwards <luke.edwards05@gmail.com> (lukeed.com)
+- Copyright (c) Luke Edwards <luke.edwards05@gmail.com> (lukeed.com)
 
 --------------------------------------------------------------------------------
 Package Title: devlop (1.1.0)
@@ -4259,7 +4265,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: estree-util-is-identifier-name (3.0.0)
@@ -4689,7 +4695,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Jordan Harband and contributors
+- Copyright (c) Jordan Harband and contributors
 
 --------------------------------------------------------------------------------
 Package Title: hast-util-to-jsx-runtime (2.3.6)
@@ -4724,7 +4730,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: hast-util-whitespace (3.0.0)
@@ -4838,7 +4844,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer
+- Copyright (c) Titus Wormer
 
 --------------------------------------------------------------------------------
 Package Title: http-status-codes (2.1.4)
@@ -4945,7 +4951,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: inline-style-parser (0.2.7)
@@ -5294,7 +5300,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: is-regexp (1.0.0)
@@ -5416,7 +5422,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Mathias Bynens <https://mathiasbynens.be/>
+- Copyright (c) Mathias Bynens <https://mathiasbynens.be/>
 
 --------------------------------------------------------------------------------
 Package Title: json-parse-even-better-errors (2.3.1)
@@ -5457,6 +5463,7 @@ distributed under the terms of the MIT license above.
 * Copyrights *
 MIT
 - Copyright (c) 2017 Kat Marchán
+- Copyright (c) npm, Inc.
 
 --------------------------------------------------------------------------------
 Package Title: json-stable-stringify (1.3.0)
@@ -5626,7 +5633,7 @@ terms above.
 
 * Copyrights *
 MIT
-- Copyright (c)  OpenJS Foundation and other contributors <https://openjsf.org/>
+- Copyright (c) OpenJS Foundation and other contributors <https://openjsf.org/>
 
 --------------------------------------------------------------------------------
 Package Title: longest-streak (3.1.0)
@@ -5926,7 +5933,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: mdast-util-mdx-expression (2.0.1)
@@ -6067,6 +6074,7 @@ SOFTWARE.
 * Copyrights *
 MIT
 - Copyright (c) 2017 Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) 2017 Victor Felder <victor@draft.li>
 
 --------------------------------------------------------------------------------
 Package Title: mdast-util-to-hast (13.2.1)
@@ -6136,7 +6144,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: mdast-util-to-string (4.0.0)
@@ -6242,7 +6250,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: micromark-core-commonmark (2.0.4)
@@ -6277,7 +6285,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: micromark-factory-destination (2.0.1)
@@ -6312,7 +6320,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: micromark-factory-label (2.0.1)
@@ -6347,7 +6355,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: micromark-factory-space (2.1.0)
@@ -6382,7 +6390,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: micromark-factory-title (2.0.1)
@@ -6417,7 +6425,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: micromark-factory-whitespace (2.0.1)
@@ -6452,7 +6460,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: micromark-util-character (2.1.1)
@@ -6487,7 +6495,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: micromark-util-chunked (2.0.1)
@@ -6522,7 +6530,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: micromark-util-classify-character (2.0.1)
@@ -6557,7 +6565,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: micromark-util-combine-extensions (2.0.1)
@@ -6592,7 +6600,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: micromark-util-decode-numeric-character-reference (2.0.2)
@@ -6627,7 +6635,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: micromark-util-decode-string (2.0.1)
@@ -6662,7 +6670,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: micromark-util-edit-map (1.0.0)
@@ -6697,7 +6705,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: micromark-util-encode (2.0.1)
@@ -6732,7 +6740,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: micromark-util-html-tag-name (2.0.1)
@@ -6767,7 +6775,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: micromark-util-normalize-identifier (2.0.1)
@@ -6802,7 +6810,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: micromark-util-resolve-all (2.0.1)
@@ -6837,7 +6845,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: micromark-util-sanitize-uri (2.0.1)
@@ -6872,7 +6880,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: micromark-util-subtokenize (2.1.0)
@@ -6907,7 +6915,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: micromark-util-symbol (2.0.1)
@@ -6942,7 +6950,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: micromark-util-types (2.0.3)
@@ -6977,7 +6985,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: minimatch (11.0.4)
@@ -7071,7 +7079,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  OpenJS Foundation and other contributors
+- Copyright (c) OpenJS Foundation and other contributors
 
 --------------------------------------------------------------------------------
 Package Title: ms (2.1.3)
@@ -7176,7 +7184,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: object-keys (1.1.1)
@@ -7247,7 +7255,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: parse-entities (4.0.2)
@@ -7282,7 +7290,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <mailto:tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <mailto:tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: parse-json (5.2.0)
@@ -7327,7 +7335,7 @@ THE SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: path-parse (1.0.7)
@@ -7464,7 +7472,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: picocolors (1.1.1)
@@ -7702,7 +7710,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Bogdan Chadkin <trysound@yandex.ru>
+- Copyright (c) Bogdan Chadkin <trysound@yandex.ru>
 
 --------------------------------------------------------------------------------
 Package Title: prop-types (15.7.2)
@@ -7775,6 +7783,7 @@ SOFTWARE.
 * Copyrights *
 MIT
 - Copyright (c) 2013 present, Facebook, Inc.
+- Copyright (c) Facebook, Inc. and its affiliates.
 
 --------------------------------------------------------------------------------
 Package Title: property-information (7.2.0)
@@ -7869,7 +7878,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Meta Platforms, Inc. and affiliates.
+- Copyright (c) Meta Platforms, Inc. and affiliates.
 
 --------------------------------------------------------------------------------
 Package Title: react-content-loader (7.1.2)
@@ -7923,7 +7932,7 @@ THE SOFTWARE.
 
 * Copyrights *
 Apache-2.0
-- Copyright (c)  Microsoft Corporation. All rights reserved.
+- Copyright (c) Microsoft Corporation. All rights reserved.
 MIT
 - Copyright (c) 2015 Julian Ćwirko <julian.io>
 
@@ -7997,7 +8006,8 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Meta Platforms, Inc. and affiliates.
+- Copyright (c) Meta Platforms, Inc. and affiliates.
+- Copyright (c) 2011 Gary Court
 
 --------------------------------------------------------------------------------
 Package Title: react-fast-compare (3.2.2)
@@ -8035,6 +8045,7 @@ SOFTWARE.
 * Copyrights *
 MIT
 - Copyright (c) 2018 Formidable Labs
+- Copyright (c) 2017 Evgeny Poberezkin
 
 --------------------------------------------------------------------------------
 Package Title: react-intl (10.1.25)
@@ -8112,7 +8123,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Facebook, Inc. and its affiliates.
+- Copyright (c) Facebook, Inc. and its affiliates.
 
 --------------------------------------------------------------------------------
 Package Title: react-loading-skeleton (3.5.0)
@@ -8169,7 +8180,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Espen Hovlandsdal
+- Copyright (c) Espen Hovlandsdal
 
 --------------------------------------------------------------------------------
 Package Title: react-measure (2.5.2)
@@ -8488,7 +8499,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: resize-observer-polyfill (1.5.1)
@@ -8638,7 +8649,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Meta Platforms, Inc. and affiliates.
+- Copyright (c) Meta Platforms, Inc. and affiliates.
 
 --------------------------------------------------------------------------------
 Package Title: set-function-length (1.2.2)
@@ -8674,7 +8685,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Jordan Harband and contributors
+- Copyright (c) Jordan Harband and contributors
 
 --------------------------------------------------------------------------------
 Package Title: shallow-equal (3.1.0)
@@ -9160,7 +9171,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Brian Grinstead, http://briangrinstead.com
+- Copyright (c) Brian Grinstead, http://briangrinstead.com
 
 --------------------------------------------------------------------------------
 Package Title: toggle-selection (1.0.6)
@@ -9633,7 +9644,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Mateusz Burzyński
+- Copyright (c) Mateusz Burzyński
 
 --------------------------------------------------------------------------------
 Package Title: use-latest (1.3.0)
@@ -9669,7 +9680,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Andarist
+- Copyright (c) Andarist
 
 --------------------------------------------------------------------------------
 Package Title: uuid (11.1.1)
@@ -9767,6 +9778,8 @@ SOFTWARE.
 * Copyrights *
 MIT
 - Copyright (c) 2013 James Halliday
+- Copyright (c) Joyent, Inc. and other Node contributors.
+- Copyright (c) 2015 Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: vfile-message (4.0.3)
@@ -9801,7 +9814,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Titus Wormer <tituswormer@gmail.com>
+- Copyright (c) Titus Wormer <tituswormer@gmail.com>
 
 --------------------------------------------------------------------------------
 Package Title: w3c-keyname (2.2.8)

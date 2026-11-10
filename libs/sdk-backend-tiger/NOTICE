@@ -3,9 +3,11 @@ Copyright (c) 2017-2026 GoodData Corporation
 This product includes a number of subcomponents with separate copyright notices and license terms below. Your use of these subcomponents is subject to the terms and conditions of the subcomponent's license. This GoodData project does not necessarily use all the open source software referred to below and may also only use portions of a given package. With respect to the open source software listed in this document, if you (i) have any questions, (ii) wish to receive source code for packages under licenses that require their source code to be made available (such as the GNU Lesser Public License), or (iii) discover any errors or omissions in the licensing information provided, please contact us at legal@gooddata.com. Please identify in source code requests: (i) the packages for which you are requesting corresponding source, (ii) the GoodData product (including any available version) with which the package was provided; and (iii) an email address (if available) or postal address at which GoodData may contact you.
 
 --------------------------------------------------------------------------------
-Attribution Notice for @gooddata/sdk-backend-tiger (11.68.0-alpha.7)
+Attribution Notice for @gooddata/sdk-backend-tiger (11.68.0-alpha.8)
 Package License: MIT
 Own License File: LICENSE
+Date generated: 2026-11-10
+Revision ID: dde1512be72244df8ad5c996c9bce5ff623b3b50
 
 This notice lists the components that @gooddata/sdk-backend-tiger depends on, directly or through other
 packages, with the license and copyright information reported for each of them.
@@ -17,13 +19,13 @@ change those terms.
 Dependencies
 
 Local GoodData SDK components
-- @gooddata/api-client-tiger (11.68.0-alpha.7) [MIT] — Direct
-- @gooddata/sdk-backend-base (11.68.0-alpha.7) [MIT] — Direct
-- @gooddata/sdk-backend-spi (11.68.0-alpha.7) [MIT] — Direct
-- @gooddata/sdk-code-convertors (11.68.0-alpha.7) [MIT] — Direct
-- @gooddata/sdk-code-schemas (11.68.0-alpha.7) [MIT] — Transitive
-- @gooddata/sdk-model (11.68.0-alpha.7) [MIT] — Direct
-- @gooddata/util (11.68.0-alpha.7) [MIT] — Direct
+- @gooddata/api-client-tiger (11.68.0-alpha.8) [MIT] — Direct
+- @gooddata/sdk-backend-base (11.68.0-alpha.8) [MIT] — Direct
+- @gooddata/sdk-backend-spi (11.68.0-alpha.8) [MIT] — Direct
+- @gooddata/sdk-code-convertors (11.68.0-alpha.8) [MIT] — Direct
+- @gooddata/sdk-code-schemas (11.68.0-alpha.8) [MIT] — Transitive
+- @gooddata/sdk-model (11.68.0-alpha.8) [MIT] — Direct
+- @gooddata/util (11.68.0-alpha.8) [MIT] — Direct
 
 External components
 - @braintree/sanitize-url (6.0.4) [MIT] — Transitive
@@ -97,7 +99,7 @@ Local GoodData SDK components
 ================================================================================
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/api-client-tiger (11.68.0-alpha.7)
+Package Title: @gooddata/api-client-tiger (11.68.0-alpha.8)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -115,7 +117,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-backend-base (11.68.0-alpha.7)
+Package Title: @gooddata/sdk-backend-base (11.68.0-alpha.8)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -133,7 +135,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-backend-spi (11.68.0-alpha.7)
+Package Title: @gooddata/sdk-backend-spi (11.68.0-alpha.8)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -151,7 +153,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-code-convertors (11.68.0-alpha.7)
+Package Title: @gooddata/sdk-code-convertors (11.68.0-alpha.8)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -169,7 +171,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-code-schemas (11.68.0-alpha.7)
+Package Title: @gooddata/sdk-code-schemas (11.68.0-alpha.8)
 Package Source: Local workspace
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -199,7 +201,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-model (11.68.0-alpha.7)
+Package Title: @gooddata/sdk-model (11.68.0-alpha.8)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -217,7 +219,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/util (11.68.0-alpha.7)
+Package Title: @gooddata/util (11.68.0-alpha.8)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -366,7 +368,7 @@ MIT
 
 * Copyrights *
 MIT
-- Copyright (c)  Microsoft Corporation.
+- Copyright (c) Microsoft Corporation.
 
 --------------------------------------------------------------------------------
 Package Title: agent-base (6.0.2)
@@ -779,6 +781,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 * Copyrights *
 MIT
 - Copyright (c) 2014-2017 TJ Holowaychuk <tj@vision-media.ca>
+- Copyright (c) 2018-2021 Josh Junon
+- Copyright (c) 2014-2017 TJ Holowaychuk &lt;tj@vision-media.ca&gt;
 
 --------------------------------------------------------------------------------
 Package Title: define-data-property (1.1.4)
@@ -1395,6 +1399,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 * Copyrights *
 MIT
 - Copyright (c) 2013, 2014, 2020 Joachim Wester
+- Copyright (c) 2017 Evgeny Poberezkin
 
 --------------------------------------------------------------------------------
 Package Title: follow-redirects (1.16.2)
@@ -1772,7 +1777,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Jordan Harband and contributors
+- Copyright (c) Jordan Harband and contributors
 
 --------------------------------------------------------------------------------
 Package Title: http-vary (1.0.3)
@@ -2059,7 +2064,7 @@ terms above.
 
 * Copyrights *
 MIT
-- Copyright (c)  OpenJS Foundation and other contributors <https://openjsf.org/>
+- Copyright (c) OpenJS Foundation and other contributors <https://openjsf.org/>
 
 --------------------------------------------------------------------------------
 Package Title: lru-cache (11.1.0)
@@ -2192,6 +2197,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 * Copyrights *
 MIT
 - Copyright (c) 2014 Jonathan Ong <me@jongleberry.com>
+- Copyright (c) 2015 Douglas Christopher Wilson <doug@somethingdoug.com>
 
 --------------------------------------------------------------------------------
 Package Title: ms (2.1.3)
@@ -2400,7 +2406,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Jordan Harband and contributors
+- Copyright (c) Jordan Harband and contributors
 
 --------------------------------------------------------------------------------
 Package Title: spark-md5 (3.0.2)
@@ -2699,7 +2705,7 @@ For more information, please refer to <http://unlicense.org/>
 
 * Copyrights *
 Unlicense
-- Copyright (c)  interest in the
+- Copyright (c) interest in the
 
 --------------------------------------------------------------------------------
 Package Title: try (1.0.3)

@@ -1,7 +1,5 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { compact } from "lodash-es";
-
 import {
     type BucketPredicate,
     type IAttribute,
@@ -21,6 +19,7 @@ import {
     type MeasureGroupDimension,
     getPivotTableDimensions as getPivotTableDimensionsShared,
 } from "@gooddata/sdk-ui-pivot";
+import { _compact } from "@gooddata/util";
 
 import { getMeasureGroupDimensionFromProperties } from "./propertiesHelper.js";
 
@@ -79,8 +78,8 @@ function getAreaDimensions(insight: IInsightDefinition): IDimension[] {
     const sliceAttribute = stackByAttributes[0] ?? viewByAttributes[1];
 
     return sliceAttribute
-        ? newTwoDimensional([sliceAttribute], compact([seriesAttribute, MeasureGroupIdentifier]))
-        : newTwoDimensional([MeasureGroupIdentifier], compact([seriesAttribute]));
+        ? newTwoDimensional([sliceAttribute], _compact([seriesAttribute, MeasureGroupIdentifier]))
+        : newTwoDimensional([MeasureGroupIdentifier], _compact([seriesAttribute]));
 }
 
 function getLineDimensions(insight: IInsightDefinition): IDimension[] {
@@ -126,7 +125,7 @@ function getSankeyDimensions(insight: IInsightDefinition): IDimension[] {
     const fromAttributes = safeBucketAttributes(insight, BucketNames.ATTRIBUTE_FROM);
     const toAttributes = safeBucketAttributes(insight, BucketNames.ATTRIBUTE_TO);
 
-    return newTwoDimensional([MeasureGroupIdentifier], compact([...fromAttributes, ...toAttributes]));
+    return newTwoDimensional([MeasureGroupIdentifier], _compact([...fromAttributes, ...toAttributes]));
 }
 
 /**

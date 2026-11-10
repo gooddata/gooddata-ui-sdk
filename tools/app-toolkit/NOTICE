@@ -3,9 +3,11 @@ Copyright (c) 2017-2026 GoodData Corporation
 This product includes a number of subcomponents with separate copyright notices and license terms below. Your use of these subcomponents is subject to the terms and conditions of the subcomponent's license. This GoodData project does not necessarily use all the open source software referred to below and may also only use portions of a given package. With respect to the open source software listed in this document, if you (i) have any questions, (ii) wish to receive source code for packages under licenses that require their source code to be made available (such as the GNU Lesser Public License), or (iii) discover any errors or omissions in the licensing information provided, please contact us at legal@gooddata.com. Please identify in source code requests: (i) the packages for which you are requesting corresponding source, (ii) the GoodData product (including any available version) with which the package was provided; and (iii) an email address (if available) or postal address at which GoodData may contact you.
 
 --------------------------------------------------------------------------------
-Attribution Notice for @gooddata/app-toolkit (11.68.0-alpha.7)
+Attribution Notice for @gooddata/app-toolkit (11.68.0-alpha.8)
 Package License: LicenseRef-LICENSE
 Own License File: LICENSE
+Date generated: 2026-11-10
+Revision ID: dde1512be72244df8ad5c996c9bce5ff623b3b50
 
 This notice lists the components that @gooddata/app-toolkit depends on, directly or through other
 packages, with the license and copyright information reported for each of them.
@@ -197,7 +199,7 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 * Copyrights *
 ISC
-- Copyright (c)  Isaac Z. Schlueter and Contributors
+- Copyright (c) Isaac Z. Schlueter and Contributors
 
 --------------------------------------------------------------------------------
 Package Title: @types/node (24.12.0)
@@ -264,7 +266,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: ansi-regex (5.0.1)
@@ -299,7 +301,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: ansi-styles (4.3.0)
@@ -334,7 +336,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: base64-js (1.5.1)
@@ -434,7 +436,7 @@ THE SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Feross Aboukhadijeh, and other contributors.
+- Copyright (c) Feross Aboukhadijeh, and other contributors.
 
 --------------------------------------------------------------------------------
 Package Title: chalk (4.1.2)
@@ -469,7 +471,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: chalk (5.3.0)
@@ -504,7 +506,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: chardet (2.2.0)
@@ -599,7 +601,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: cli-spinners (2.9.2)
@@ -634,7 +636,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: cli-width (4.1.0)
@@ -696,6 +698,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 * Copyrights *
 MIT
 - Copyright (c) 2011-2015 Paul Vorbach <paul@vorba.ch>
+- Copyright (c) 2011-2015 Paul Vorbach](http://paul.vorba.ch/) and
 
 --------------------------------------------------------------------------------
 Package Title: color-convert (2.0.1)
@@ -864,6 +867,7 @@ THE SOFTWARE.
 * Copyrights *
 MIT
 - Copyright (c) 2022 Sindre Sorhus
+- Copyright (c) 2015 Elijah Insua
 
 --------------------------------------------------------------------------------
 Package Title: emoji-regex (8.0.0)
@@ -898,7 +902,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Mathias Bynens <https://mathiasbynens.be/>
+- Copyright (c) Mathias Bynens <https://mathiasbynens.be/>
 
 --------------------------------------------------------------------------------
 Package Title: fs-extra (10.1.0)
@@ -929,6 +933,7 @@ OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHE
 * Copyrights *
 MIT
 - Copyright (c) 2011-2017 JP Richardson
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: graceful-fs (4.2.11)
@@ -989,7 +994,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: iconv-lite (0.7.3)
@@ -1148,7 +1153,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: is-interactive (1.0.0)
@@ -1183,7 +1188,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: is-unicode-supported (0.1.0)
@@ -1218,7 +1223,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: isexe (2.0.0)
@@ -1363,7 +1368,7 @@ terms above.
 
 * Copyrights *
 MIT
-- Copyright (c)  OpenJS Foundation and other contributors <https://openjsf.org/>
+- Copyright (c) OpenJS Foundation and other contributors <https://openjsf.org/>
 
 --------------------------------------------------------------------------------
 Package Title: log-symbols (4.1.0)
@@ -1398,7 +1403,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: mimic-fn (2.1.0)
@@ -1433,7 +1438,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: minipass (7.1.3)
@@ -1501,6 +1506,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 * Copyrights *
 MIT
 - Copyright (c) 2017-2023 Isaac Z. Schlueter and Contributors
+- Copyright (c) 2017-2023 Node.js contributors. All rights reserved.
+- Copyright (c) 2017-2023 Joyent, Inc. and other Node contributors. All rights reserved.
 
 --------------------------------------------------------------------------------
 Package Title: mute-stream (1.0.0)
@@ -1561,7 +1568,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: ora (5.4.1)
@@ -1596,7 +1603,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: path-key (3.1.1)
@@ -1631,7 +1638,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: readable-stream (3.6.2)
@@ -1693,7 +1700,9 @@ IN THE SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Node.js contributors. All rights reserved.
+- Copyright (c) Node.js contributors. All rights reserved.
+- Copyright (c) Joyent, Inc. and other Node contributors.
+- Copyright (c) Joyent, Inc. and other Node contributors. All rights reserved.
 
 --------------------------------------------------------------------------------
 Package Title: restore-cursor (3.1.0)
@@ -1728,7 +1737,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: run-async (3.0.0)
@@ -1765,6 +1774,7 @@ SOFTWARE.
 * Copyrights *
 MIT
 - Copyright (c) 2014 Simon Boudrias
+- Copyright (c) 2014 Simon Boudrias (twitter: @vaxilart)
 
 --------------------------------------------------------------------------------
 Package Title: rxjs (7.8.2)
@@ -1857,7 +1867,7 @@ THE SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Feross Aboukhadijeh
+- Copyright (c) Feross Aboukhadijeh
 
 --------------------------------------------------------------------------------
 Package Title: safer-buffer (2.1.2)
@@ -1928,7 +1938,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Kevin Mårtensson <kevinmartensson@gmail.com> (github.com/kevva)
+- Copyright (c) Kevin Mårtensson <kevinmartensson@gmail.com> (github.com/kevva)
 
 --------------------------------------------------------------------------------
 Package Title: shebang-regex (3.0.0)
@@ -1963,7 +1973,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: signal-exit (3.0.7)
@@ -2025,7 +2035,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: string_decoder (1.3.0)
@@ -2087,7 +2097,9 @@ IN THE SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Node.js contributors. All rights reserved.
+- Copyright (c) Node.js contributors. All rights reserved.
+- Copyright (c) Joyent, Inc. and other Node contributors.
+- Copyright (c) Joyent, Inc. and other Node contributors. All rights reserved.
 
 --------------------------------------------------------------------------------
 Package Title: strip-ansi (6.0.1)
@@ -2122,7 +2134,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: supports-color (7.2.0)
@@ -2157,7 +2169,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: tar (7.5.22)
@@ -2235,7 +2247,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (https:/sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https:/sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: undici-types (7.16.0)
@@ -2271,7 +2283,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Matteo Collina and Undici contributors
+- Copyright (c) Matteo Collina and Undici contributors
 
 --------------------------------------------------------------------------------
 Package Title: universalify (2.0.1)
@@ -2461,7 +2473,7 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
 
 --------------------------------------------------------------------------------
 Package Title: yallist (5.0.0)
@@ -2522,4 +2534,4 @@ SOFTWARE.
 
 * Copyrights *
 MIT
-- Copyright (c)  Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+- Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)

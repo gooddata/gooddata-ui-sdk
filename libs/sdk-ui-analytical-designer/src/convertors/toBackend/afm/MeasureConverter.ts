@@ -1,7 +1,5 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { compact } from "lodash-es";
-
 import {
     type IArithmeticMeasureDefinition,
     type IMeasure,
@@ -15,6 +13,7 @@ import {
     isPoPMeasureDefinition,
     isPreviousPeriodMeasureDefinition,
 } from "@gooddata/sdk-model";
+import { _compact } from "@gooddata/util";
 
 import {
     type MeasureAggregation as BearMeasureAggregation,
@@ -76,7 +75,7 @@ function convertMeasureDefinition(definition: IMeasureDefinitionType): MeasureDe
 
 function convertSimpleMeasureDefinition({ measureDefinition }: IMeasureDefinition): ISimpleMeasureDefinition {
     const filters: FilterItem[] = measureDefinition.filters
-        ? compact(measureDefinition.filters.map(convertMeasureFilter))
+        ? _compact(measureDefinition.filters.map(convertMeasureFilter))
         : [];
     const filtersProp = filters.length ? { filters } : {};
 

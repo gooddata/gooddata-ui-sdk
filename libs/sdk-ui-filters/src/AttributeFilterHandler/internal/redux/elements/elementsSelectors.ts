@@ -1,7 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
-import { compact } from "lodash-es";
 
 import { type IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
@@ -16,6 +15,7 @@ import {
     type SortDirection,
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
+import { _compact } from "@gooddata/util";
 
 import { type AsyncOperationStatus, type AttributeElementKey } from "../../../types/common.js";
 import { type ILoadElementsOptions } from "../../../types/elementsLoader.js";
@@ -39,7 +39,7 @@ export const getElementsByKeys = (
     keys: AttributeElementKey[],
     elementsMap: Record<string, IAttributeElement>,
 ) => {
-    return compact(keys.map((key) => elementsMap[toCacheKey(key)]));
+    return _compact(keys.map((key) => elementsMap[toCacheKey(key)]));
 };
 
 /**

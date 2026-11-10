@@ -603,6 +603,10 @@
         "text": "{count, plural, one {# page} other {# pages}}",
         "crowdinContext": "Second line of the document card in the chat when the document has no readable period: only how many pages it has."
     },
+    "gd.gen-ai.publisherDocument.previewOnly": {
+        "text": "Documents can't be opened from the agent preview. Save the agent and open them from the AI Assistant.",
+        "crowdinContext": "Tooltip on the disabled Open button of the document card in the agent preview chat in AI Hub, where the document the agent created cannot be opened."
+    },
     "gd.gen-ai.publisherDocument.unavailable": {
         "text": "The document is unavailable.",
         "crowdinContext": "Shown in place of the document card in the chat when the document the assistant created can no longer be loaded."

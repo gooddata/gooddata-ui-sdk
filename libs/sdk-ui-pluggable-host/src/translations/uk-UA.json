@@ -40,6 +40,7 @@
     "languageDialog.select.searchLabel": "Пошук мов",
     "languageDialog.select.searchPlaceholder": "Пошук…",
     "languageDialog.select.noMatch": "Відповідної мови не знайдено.",
+    "languageDialog.saving": "Змінюємо мову…",
     "languageDialog.error": "Не вдалося змінити мову. Спробуйте ще раз.",
     "languageDialog.success": "Чудово! Мову змінено!"
 }

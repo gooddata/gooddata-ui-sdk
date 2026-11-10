@@ -49,7 +49,7 @@ export function ConversationDashboardContent(props: ConversationDashboardContent
                     workspaceId,
                     dashboard.identifier,
                     dashboardStatus,
-                    conversation?.localId,
+                    conversation?.id,
                 );
             } else {
                 config.linkHandler?.({
@@ -62,13 +62,14 @@ export function ConversationDashboardContent(props: ConversationDashboardContent
                         workspaceId,
                         dashboard.identifier,
                         dashboardStatus,
-                        conversation?.localId,
+                        conversation?.id,
                     ),
                     dashboard,
                     insights: insights ?? [],
                     dashboardStatus,
                     action: "open",
                     conversationId: conversation?.localId,
+                    threadId: conversation?.id,
                 });
             }
         };

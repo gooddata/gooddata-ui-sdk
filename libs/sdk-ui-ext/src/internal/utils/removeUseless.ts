@@ -1,8 +1,6 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { compact } from "lodash-es";
-
-import { _isEmpty } from "@gooddata/util";
+import { _compact, _isEmpty } from "@gooddata/util";
 
 function isUseless(obj: unknown): boolean {
     return obj === null || obj === undefined || (typeof obj === "object" && _isEmpty(obj));
@@ -19,7 +17,7 @@ export function removeUseless(obj: any): any {
     let res = obj;
 
     if (Array.isArray(obj)) {
-        res = compact(obj.map(removeUseless));
+        res = _compact(obj.map(removeUseless));
     } else if (obj !== null && typeof obj === "object") {
         res = Object.fromEntries(
             Object.entries(obj)

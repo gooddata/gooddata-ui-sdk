@@ -1,9 +1,10 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
-import { capitalize, compact } from "lodash-es";
+import { capitalize } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { type WeekStart } from "@gooddata/sdk-model";
+import { _compact } from "@gooddata/util";
 
 import { RECURRENCE_TYPES } from "../constants.js";
 import { messages } from "../locales.js";
@@ -240,7 +241,7 @@ export const isCronExpressionValid = (
     expression: string | undefined,
     allowHourlyRecurrence: boolean,
 ): boolean => {
-    const invalidExpressions = compact([
+    const invalidExpressions = _compact([
         /^\* (\S+) (\S+) (\S+) (\S+) (\S+)$/, // every second
         /^(\S+) \* (\S+) (\S+) (\S+) (\S+)$/, // every minute
         allowHourlyRecurrence ? undefined : /^(\S+) (\S+) \* (\S+) (\S+) (\S+)$/, // every hour

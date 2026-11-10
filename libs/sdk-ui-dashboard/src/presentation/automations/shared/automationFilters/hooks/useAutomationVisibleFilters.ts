@@ -2,9 +2,8 @@
 
 import { useMemo } from "react";
 
-import { compact } from "lodash-es";
-
 import { type FilterContextItem, type IAutomationVisibleFilter } from "@gooddata/sdk-model";
+import { _compact } from "@gooddata/util";
 
 import { useFiltersByTabNamings, useFiltersNamings } from "../../hooks/useFiltersNamings.js";
 
@@ -20,7 +19,7 @@ export const useAutomationVisibleFilters = (
     const filterNamings = useFiltersNamings(availableFilters);
 
     return useMemo(() => {
-        return compact(filterNamings).map((filter) => {
+        return _compact(filterNamings).map((filter) => {
             return {
                 title: filter.title,
                 localIdentifier: filter.id,
@@ -38,7 +37,7 @@ export const useAutomationVisibleFiltersByTab = (
     return useMemo(() => {
         const result: Record<string, IAutomationVisibleFilter[]> = {};
         return Object.entries(filterNamings).reduce((acc, [tabId, namings]) => {
-            acc[tabId] = compact(namings).map((naming) => ({
+            acc[tabId] = _compact(namings).map((naming) => ({
                 title: naming.title,
                 localIdentifier: naming.id,
                 isAllTimeDateFilter: false,

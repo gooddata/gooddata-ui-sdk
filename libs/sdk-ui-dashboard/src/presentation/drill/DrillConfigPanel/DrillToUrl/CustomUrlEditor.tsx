@@ -4,7 +4,7 @@ import { type ReactElement, useCallback, useMemo, useState } from "react";
 
 import { HighlightStyle, StreamLanguage, type StringStream, syntaxHighlighting } from "@codemirror/language";
 import { Tag } from "@lezer/highlight";
-import { compact, escapeRegExp, uniqBy } from "lodash-es";
+import { escapeRegExp, uniqBy } from "lodash-es";
 import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
 
 import {
@@ -41,6 +41,7 @@ import {
     OverlayControllerProvider,
     useMediaQuery,
 } from "@gooddata/sdk-ui-kit";
+import { _compact } from "@gooddata/util";
 
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import {
@@ -332,7 +333,7 @@ const buildFormattingRules = (
     const validDashboardMvfRule = buildValidDashboardMvfFormattingRule(dashboardMeasureIdentifiers);
     const validInsightMvfRule = buildValidInsightMvfFormattingRule(insightMeasureIdentifiers);
     const validParametersRule = buildValidParametersFormattingRule(dashboardParameterIdentifiers);
-    return compact([
+    return _compact([
         validDisplayFormsRule,
         validDashboardFiltersRule,
         validDashboardMvfRule,

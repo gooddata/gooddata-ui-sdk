@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { compact, omit } from "lodash-es";
+import { omit } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, all, call, put, select } from "redux-saga/effects";
@@ -39,6 +39,7 @@ import {
 } from "@gooddata/sdk-model";
 import { convertError } from "@gooddata/sdk-ui";
 import { isAutomationRestricted } from "@gooddata/sdk-ui-ext";
+import { _compact } from "@gooddata/util";
 
 import {
     getAutomationAlertParameters,
@@ -233,7 +234,7 @@ export function* initializeAutomationsHandler(
                           )
                         : targetAlertFilters;
                 const keepDateFilterDataSets = !!ctx.backend.capabilities.supportsMultipleDateFilters;
-                const filtersToSetAsFilterContextItems = compact(
+                const filtersToSetAsFilterContextItems = _compact(
                     filtersToSet.map((filter) =>
                         dashboardFilterToFilterContextItem(filter, keepDateFilterDataSets),
                     ),
@@ -279,7 +280,7 @@ export function* initializeAutomationsHandler(
 
                         const tabVisibleFilters = extractVisibleFiltersForTab(targetAutomation, tabId);
 
-                        const compactedTabFilters = compact(tabFilters);
+                        const compactedTabFilters = _compact(tabFilters);
                         const filtersToSet = compactedTabFilters.filter((filter) => {
                             if (tabVisibleFilters) {
                                 return tabVisibleFilters.some(
@@ -503,17 +504,17 @@ function extractExportDefinitionFilters(
         // Check if per-tab filters are provided and use the active tab's filters
         if (content.content.filtersByTab && activeTabLocalIdentifier) {
             const tabFilters = content.content.filtersByTab[activeTabLocalIdentifier];
-            return tabFilters ? compact(tabFilters) : undefined;
+            return tabFilters ? _compact(tabFilters) : undefined;
         }
 
         // The filters in dashboard case may be undefined or an array depending
         // on whether they should override filter context or use live filter context.
-        return content.content.filters ? compact(content.content.filters) : undefined;
+        return content.content.filters ? _compact(content.content.filters) : undefined;
     }
     if (isExportDefinitionVisualizationObjectRequestPayload(content)) {
         // There can either be execution filters or filter context items,
         // so we need to make sure we convert them to filter context items.
-        return compact(
+        return _compact(
             (content.content.filters ?? []).map((filter): FilterContextItem | undefined => {
                 if (isFilterContextItem(filter)) {
                     return filter;

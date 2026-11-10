@@ -40,6 +40,7 @@
     "languageDialog.select.searchLabel": "Tìm kiếm ngôn ngữ",
     "languageDialog.select.searchPlaceholder": "Tìm kiếm…",
     "languageDialog.select.noMatch": "Không có ngôn ngữ khớp.",
+    "languageDialog.saving": "Đang thay đổi ngôn ngữ…",
     "languageDialog.error": "Chúng tôi không thể thay đổi ngôn ngữ. Hãy thử lại.",
     "languageDialog.success": "Tuyệt vời! Chúng tôi đã thay đổi ngôn ngữ!"
 }

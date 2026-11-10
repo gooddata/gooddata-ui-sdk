@@ -21,6 +21,10 @@ type LinkLoadState = "awaiting-load" | "loaded";
 
 const scopePrefixes = new Map<string, Set<string>>();
 const reservedHostPrefixes = new Set<string>();
+const retiredHostPrefixes = new Set<string>();
+// Host UI directories that an app's remote also uses. Their links cannot be told apart by URL, so
+// retiring the host UI never disables them.
+const sharedHostPrefixes = new Set<string>();
 const deactivatedApps = new Set<string>();
 let linkLoadStates = new WeakMap<HTMLLinkElement, LinkLoadState>();
 let retiredLinks = new WeakSet<HTMLLinkElement>();
@@ -110,6 +114,20 @@ function setLinkDisabled(link: HTMLLinkElement, disabled: boolean): void {
     );
 }
 
+function isRetiredHostLink(link: HTMLLinkElement): boolean {
+    for (const prefix of retiredHostPrefixes) {
+        if (!sharedHostPrefixes.has(prefix) && link.href.startsWith(prefix)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function retireLink(link: HTMLLinkElement): void {
+    retiredLinks.add(link);
+    setLinkDisabled(link, true);
+}
+
 function forEachOwnedLink(appId: string, callback: (link: HTMLLinkElement) => void): void {
     const prefixes = scopePrefixes.get(appId);
     if (!prefixes?.size) {
@@ -129,6 +147,10 @@ function handleHeadMutations(mutations: MutationRecord[]): void {
                 return;
             }
             const owner = findOwnerOfHref(node.href);
+            if (!owner && isRetiredHostLink(node)) {
+                retireLink(node);
+                return;
+            }
             if (owner && deactivatedApps.has(owner)) {
                 setLinkDisabled(node, true);
             }
@@ -177,6 +199,9 @@ export function registerAppStylesheetScope(appId: string, remoteEntryUrl: string
         return;
     }
     if (coversReservedHostScope(prefix)) {
+        if (reservedHostPrefixes.has(prefix)) {
+            sharedHostPrefixes.add(prefix);
+        }
         console.warn(
             `[host-runtime/stylesheet-registry] Not tracking stylesheets of app "${appId}": its remote URL "${remoteEntryUrl}" covers the host UI module's directory, whose CSS must stay applied.`,
         );
@@ -213,6 +238,35 @@ export function reserveHostStylesheetScope(remoteEntryUrl: string): void {
 }
 
 /**
+ * Disables the stylesheets of a host UI module that the host does not use, for example one that
+ * failed the secured-remote checks. Also disables links that the module injects later. A link that a
+ * registered app scope owns stays with that app, so an app served from a directory below the module
+ * keeps its CSS. A directory that an app's remote shares with the module is never retired.
+ */
+export function retireHostStylesheetScope(remoteEntryUrl: string): void {
+    if (typeof document === "undefined") {
+        return;
+    }
+    const prefix = deriveScopePrefix(remoteEntryUrl);
+    if (!prefix) {
+        return;
+    }
+    if (prefix === `${new URL(document.baseURI).origin}/`) {
+        console.warn(
+            `[host-runtime/stylesheet-registry] Not retiring stylesheets of the UI module "${remoteEntryUrl}": it resolves to the host page origin root, where its CSS cannot be told apart from the host's own.`,
+        );
+        return;
+    }
+    retiredHostPrefixes.add(prefix);
+    document.head.querySelectorAll("link").forEach((link) => {
+        if (isAppStylesheetLink(link) && !findOwnerOfHref(link.href) && isRetiredHostLink(link)) {
+            retireLink(link);
+        }
+    });
+    ensureObserver();
+}
+
+/**
  * Re-enables all stylesheets attributed to the app. Safe to call before any of the
  * app's CSS exists and repeatedly.
  */
@@ -242,6 +296,8 @@ export function deactivateAppStylesheets(appId: string): void {
 export function resetStylesheetRegistry(): void {
     scopePrefixes.clear();
     reservedHostPrefixes.clear();
+    retiredHostPrefixes.clear();
+    sharedHostPrefixes.clear();
     deactivatedApps.clear();
     linkLoadStates = new WeakMap();
     retiredLinks = new WeakSet();

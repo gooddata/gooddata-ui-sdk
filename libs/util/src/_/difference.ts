@@ -31,8 +31,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import { _isArrayLike } from "./isArrayLike.js";
-import { _isObjectLike } from "./isObjectLike.js";
+import { _baseDifference } from "./_baseDifference.js";
 import type { _List } from "./types.js";
 
 /**
@@ -47,32 +46,5 @@ import type { _List } from "./types.js";
  * @internal
  */
 export function _difference<T>(array: _List<T> | null | undefined, ...values: _List<T>[]): T[] {
-    if (!_isObjectLike(array) || !_isArrayLike(array)) {
-        return [];
-    }
-
-    const excluded = new Set<unknown>();
-
-    for (const list of values) {
-        if (!_isObjectLike(list) || !_isArrayLike(list)) {
-            continue;
-        }
-
-        for (let index = 0; index < list.length; index++) {
-            excluded.add(list[index]);
-        }
-    }
-
-    const result: T[] = [];
-
-    for (let index = 0; index < array.length; index++) {
-        const value = array[index] as T;
-
-        if (!excluded.has(value)) {
-            // lodash normalises `-0` to `+0` in the result
-            result.push((value as unknown) === 0 ? (0 as unknown as T) : value);
-        }
-    }
-
-    return result;
+    return _baseDifference(array, values);
 }

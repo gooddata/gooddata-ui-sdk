@@ -1,6 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { compact } from "lodash-es";
 import { type Task } from "redux-saga";
 import {
     type SagaReturnType,
@@ -30,7 +29,7 @@ import {
     isStringParameterDefinition,
     newInsightDefinition,
 } from "@gooddata/sdk-model";
-import { _isEqual } from "@gooddata/util";
+import { _compact, _isEqual } from "@gooddata/util";
 
 import { refreshSessionId } from "../../actions/app_context_actions.js";
 import { updateItemCache } from "../../actions/data_actions.js";
@@ -262,7 +261,7 @@ export function* loadCatalog(refreshAvailability = false) {
     yield put(setLoadingGroups(true));
     try {
         yield all(
-            compact([
+            _compact([
                 call(loadCatalogItemsAndGroups),
                 call(loadDateDatasetsWithAllDates),
                 call(loadParameters),

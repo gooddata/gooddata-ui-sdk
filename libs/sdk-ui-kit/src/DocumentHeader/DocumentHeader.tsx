@@ -1,8 +1,8 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { useEffect } from "react";
 
-import { compact } from "lodash-es";
+import { _compact } from "@gooddata/util";
 
 /**
  * @internal
@@ -15,7 +15,7 @@ export interface IDocumentHeaderProps {
 }
 
 function getEffectiveTitle(pageTitle: string, brandTitle: string): string {
-    return compact([pageTitle, brandTitle]).join(" - ");
+    return _compact([pageTitle, brandTitle]).join(" - ");
 }
 
 /**

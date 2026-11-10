@@ -314,10 +314,22 @@ describe("useScheduledEmailExportSettings — onWidgetAttachmentsChange", () => 
         expect(returned).toBe(sentinel);
     });
 
-    it("throws (invariant) when widget or insight is missing", () => {
-        const { result } = renderExportSettingsHook({ widget: undefined, insight: undefined });
+    it("removes deselected formats but adds none when the widget's insight is unavailable", () => {
+        withRebuiltExportDefinitionsSpy.mockReturnValue(makeAutomation());
+        const existingCsv = makeWidgetExportDefinition("CSV");
+        const existingXlsx = makeWidgetExportDefinition("XLSX");
 
-        expect(() => result.current.onWidgetAttachmentsChange(["PNG"])).toThrow();
+        const { result, setEditedAutomation } = renderExportSettingsHook({ widget, insight: undefined });
+
+        result.current.onWidgetAttachmentsChange(["CSV", "PNG"]);
+        const updater = setEditedAutomation.mock.calls[0][0] as (
+            s: IAutomationMetadataObjectDefinition,
+        ) => IAutomationMetadataObjectDefinition;
+        const stateBefore = makeAutomation({ exportDefinitions: [existingCsv, existingXlsx] });
+        updater(stateBefore);
+
+        expect(newWidgetExportDefinitionMetadataObjectDefinitionSpy).not.toHaveBeenCalled();
+        expect(withRebuiltExportDefinitionsSpy).toHaveBeenCalledWith(stateBefore, [existingCsv], undefined);
     });
 });
 

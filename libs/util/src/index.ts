@@ -40,6 +40,7 @@ export {
 // local functions from lodash-es
 export { _camelCase } from "./_/camelCase.js";
 export { _capitalize } from "./_/capitalize.js";
+export { _clamp } from "./_/clamp.js";
 export { _cloneDeep } from "./_/cloneDeep.js";
 export { type _Falsey, _compact } from "./_/compact.js";
 export {
@@ -50,6 +51,7 @@ export {
     _debounce,
 } from "./_/debounce.js";
 export { _difference } from "./_/difference.js";
+export { _differenceBy } from "./_/differenceBy.js";
 export { _escape } from "./_/escape.js";
 export { _groupBy } from "./_/groupBy.js";
 export { _has } from "./_/has.js";
@@ -80,6 +82,7 @@ export { _union } from "./_/union.js";
 export { _uniq } from "./_/uniq.js";
 export { _uniqBy } from "./_/uniqBy.js";
 export { _uniqWith } from "./_/uniqWith.js";
+export { _update } from "./_/update.js";
 export { _zip } from "./_/zip.js";
 export type {
     _Comparator,

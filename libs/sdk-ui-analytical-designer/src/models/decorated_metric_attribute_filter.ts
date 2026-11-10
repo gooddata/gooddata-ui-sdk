@@ -1,10 +1,11 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { compact, union } from "lodash-es";
+import { union } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { type IAttributeFilterConfigs, type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { type TextFilterOperator, getTextFilterStateParts } from "@gooddata/sdk-ui-filters";
+import { _compact } from "@gooddata/util";
 
 import { type IBucketsMetaState } from "../store/buckets/buckets_meta_state.js";
 import {
@@ -133,7 +134,9 @@ function getSelectionSample(
     const prefix = getInvertedPrefix(intl, selection.isInverted);
     const sample =
         prefix +
-        compact(maxListedValues ? sampleItems.slice(0, maxListedValues) : sampleItems).join(SAMPLE_DELIMITER);
+        _compact(maxListedValues ? sampleItems.slice(0, maxListedValues) : sampleItems).join(
+            SAMPLE_DELIMITER,
+        );
     if (sample.length > maxChars) {
         return shortenText(sample, { maxLength: maxChars - 2 });
     }

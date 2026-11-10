@@ -40,6 +40,7 @@
     "languageDialog.select.searchLabel": "Dil ara",
     "languageDialog.select.searchPlaceholder": "Ara…",
     "languageDialog.select.noMatch": "Eşleşen dil yok.",
+    "languageDialog.saving": "Dil değiştiriliyor…",
     "languageDialog.error": "Dili değiştiremedik. Tekrar deneyin.",
     "languageDialog.success": "Harika! Dili değiştirdik!"
 }

@@ -1,8 +1,7 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { compact } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { type IDashboard, type ObjRef, idRef } from "@gooddata/sdk-model";
@@ -17,6 +16,7 @@ import {
     selectWidgetsOverlay,
     uiActions,
 } from "@gooddata/sdk-ui-dashboard";
+import { _compact } from "@gooddata/util";
 
 import { type DashboardLoadingMode, type IDashboardLoadOptions, type IEmbeddedPlugin } from "./types.js";
 import { type DashboardLoadStatus, useDashboardLoader } from "./useDashboardLoader.js";
@@ -47,7 +47,7 @@ export function useDashboardLoaderWithPluginManipulation(options: IDashboardLoad
     const [widgetsOverlay, setWidgetsOverlay] = useState(options.config?.widgetsOverlay);
     const [loadingMode, setLoadingMode] = useState<DashboardLoadingMode>(options.loadingMode ?? "adaptive");
     const [currentExtraPlugins, setCurrentExtraPlugins] = useState<IEmbeddedPlugin[]>(() =>
-        Array.isArray(options.extraPlugins) ? options.extraPlugins : compact([options.extraPlugins]),
+        Array.isArray(options.extraPlugins) ? options.extraPlugins : _compact([options.extraPlugins]),
     );
 
     const augmentedConfig = useMemo<DashboardConfig>(

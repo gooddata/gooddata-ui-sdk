@@ -1,10 +1,10 @@
 // (C) 2026 GoodData Corporation
 
-import { compact } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { select } from "redux-saga/effects";
 
 import { type ObjRef, isComputedAttributeRef, objRefToString } from "@gooddata/sdk-model";
+import { _compact } from "@gooddata/util";
 
 import { selectEnableComputedAttributes } from "../../../../store/config/configSelectors.js";
 
@@ -22,7 +22,7 @@ import { selectEnableComputedAttributes } from "../../../../store/config/configS
 export function* findDisabledComputedAttributeRef(
     refs: ReadonlyArray<ObjRef | undefined>,
 ): SagaIterator<ObjRef | undefined> {
-    const computedAttributeRef = compact(refs).find(isComputedAttributeRef);
+    const computedAttributeRef = _compact(refs).find(isComputedAttributeRef);
     if (!computedAttributeRef) {
         return undefined;
     }

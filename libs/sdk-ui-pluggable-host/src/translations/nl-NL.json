@@ -40,6 +40,7 @@
     "languageDialog.select.searchLabel": "Talen zoeken",
     "languageDialog.select.searchPlaceholder": "Bezig met zoeken…",
     "languageDialog.select.noMatch": "Geen overeenkomende taal.",
+    "languageDialog.saving": "Taal wordt gewijzigd…",
     "languageDialog.error": "We konden de taal niet wijzigen. Probeer het opnieuw.",
     "languageDialog.success": "Prima! We hebben de taal gewijzigd!"
 }

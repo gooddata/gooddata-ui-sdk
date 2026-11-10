@@ -2,7 +2,7 @@
 
 import { type ReactElement } from "react";
 
-import { compact, omit } from "lodash-es";
+import { omit } from "lodash-es";
 
 import {
     type IAttribute,
@@ -28,6 +28,7 @@ import {
     withContexts,
 } from "@gooddata/sdk-ui";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+import { _compact } from "@gooddata/util";
 
 import { CoreGeoChart } from "./core/CoreGeoChart.js";
 import {
@@ -68,7 +69,10 @@ export function getGeoChartDimensions(def: IExecutionDefinition): IDimension[] {
     const measures = bucketsMeasures(buckets);
     const attributes = bucketsAttributes(buckets);
 
-    return compact([measures.length > 0 && newDimension([MeasureGroupIdentifier]), newDimension(attributes)]);
+    return _compact([
+        measures.length > 0 && newDimension([MeasureGroupIdentifier]),
+        newDimension(attributes),
+    ]);
 }
 
 /**

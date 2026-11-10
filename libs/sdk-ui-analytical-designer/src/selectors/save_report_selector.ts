@@ -89,6 +89,18 @@ function convertToBooleans(
     }, item);
 }
 
+const MEASURE_FILTERS_PATH = ["measure", "definition", "measureDefinition", "filters"];
+
+// the date filters of a metric have the same stored shapes as the insight date filters; a metric has no
+// legacy "" attribute filter (its reader does not fold one), so no date datasets are passed
+function normalizeMeasureDateFilters(item: IVisualizationObjectBucketItem): IVisualizationObjectBucketItem {
+    const filters = getAtPath(item, MEASURE_FILTERS_PATH);
+    if (!Array.isArray(filters)) {
+        return item;
+    }
+    return setAtPath(item, MEASURE_FILTERS_PATH, normalizeEmptyDateValuesFilters(filters, undefined));
+}
+
 function deleteTitle(item: IVisualizationObjectBucketItem): IVisualizationObjectBucketItem {
     if (!has(item, "measure")) {
         return item;
@@ -241,7 +253,9 @@ export function prepareForComparison(
             .map((bucket) => ({
                 ...bucket,
                 items: (bucket.items ?? []).map((item) =>
-                    deleteTitle(convertToBooleans(item, BUCKET_ITEM_BOOLEAN_PATHS)),
+                    deleteTitle(
+                        normalizeMeasureDateFilters(convertToBooleans(item, BUCKET_ITEM_BOOLEAN_PATHS)),
+                    ),
                 ),
             }))
             .filter((bucket) => (bucket.items?.length ?? 0) > 0),

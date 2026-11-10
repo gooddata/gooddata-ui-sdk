@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { compact, negate, set, uniqBy, without } from "lodash-es";
+import { negate, set, uniqBy, without } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import {
@@ -28,7 +28,7 @@ import {
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
 import { isAreaChart, isBulletChart, isComboChart, isLineChart } from "@gooddata/sdk-ui-charts";
-import { _cloneDeep, _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _compact, _isEmpty } from "@gooddata/util";
 
 import { subtitles, titles } from "../../locales.js";
 import { ATTRIBUTE, BUCKETS, DATE, METRIC, SHOW_ON_SECONDARY_AXIS } from "../constants/bucket.js";
@@ -503,7 +503,7 @@ export function getDateFilter(filtersBucket: IFilters): IDateFilter | null {
         const filters = filterItem.filters ?? [];
         return filters.find(isDateFilter);
     });
-    const dateFilters = compact(dateFiltersInclEmpty);
+    const dateFilters = _compact(dateFiltersInclEmpty);
     return dateFilters.length ? dateFilters[0] : null;
 }
 

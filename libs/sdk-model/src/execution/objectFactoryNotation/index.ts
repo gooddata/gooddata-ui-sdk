@@ -1,7 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { compact, dropRightWhile } from "lodash-es";
+import { dropRightWhile } from "lodash-es";
 import stringifyObject from "stringify-object";
+
+import { _compact } from "@gooddata/util";
 
 import { type ObjRefInScope, isIdentifierRef, isUriRef } from "../../objRef/index.js";
 import { type IAttribute, isAttribute } from "../attribute/index.js";
@@ -189,7 +191,7 @@ const convertMeasureSortItem: Converter<IMeasureSortItem> = ({ measureSortItem }
     const measureLocator = locators.find((l) => isMeasureLocator(l)) as IMeasureLocatorItem;
     const attributeLocators = locators.filter((l) => !isMeasureLocator(l)) as IAttributeLocatorItem[];
 
-    const params = compact([
+    const params = _compact([
         `"${measureLocator.measureLocatorItem.measureIdentifier}"`,
         `"${measureSortItem.direction}"`,
         attributeLocators?.length > 0 && stringify(attributeLocators),
@@ -254,14 +256,14 @@ const convertRelativeDateFilter: Converter<IRelativeDateFilter> = ({ relativeDat
 const convertPositiveAttributeFilter: Converter<IPositiveAttributeFilter> = ({
     positiveAttributeFilter: { displayForm, in: inValues },
 }) => {
-    const restArgs = compact([inValues]).map(stringify);
+    const restArgs = _compact([inValues]).map(stringify);
     return `newPositiveAttributeFilter(${[stringifyObjRef(displayForm), ...restArgs].join(ARRAY_JOINER)})`;
 };
 
 const convertNegativeAttributeFilter: Converter<INegativeAttributeFilter> = ({
     negativeAttributeFilter: { displayForm, notIn },
 }) => {
-    const restArgs = compact([notIn]).map(stringify);
+    const restArgs = _compact([notIn]).map(stringify);
     return `newNegativeAttributeFilter(${[stringifyObjRef(displayForm), ...restArgs].join(ARRAY_JOINER)})`;
 };
 
@@ -280,7 +282,7 @@ const convertMeasureValueFilter: Converter<IMeasureValueFilter> = ({
         const treatNullAsValueString = hasTreatNullValueAs
             ? `treatNullValuesAs: ${condition.comparison.treatNullValuesAs}`
             : undefined;
-        const optionsParts = compact([
+        const optionsParts = _compact([
             `operator: "${condition.comparison.operator}"`,
             `value: ${condition.comparison.value}`,
             treatNullAsValueString,
@@ -292,7 +294,7 @@ const convertMeasureValueFilter: Converter<IMeasureValueFilter> = ({
         const treatNullAsValueString = hasTreatNullValueAs
             ? `treatNullValuesAs: ${condition.range.treatNullValuesAs}`
             : undefined;
-        const optionsParts = compact([
+        const optionsParts = _compact([
             `operator: "${condition.range.operator}"`,
             `from: ${condition.range.from}`,
             `to: ${condition.range.to}`,
@@ -323,7 +325,7 @@ const convertRankingFilter: Converter<IRankingFilter> = ({
 };
 
 const convertTotal: Converter<ITotal> = ({ attributeIdentifier, measureIdentifier, type, alias }) => {
-    const args = compact([type, measureIdentifier, attributeIdentifier, alias]).map(stringify);
+    const args = _compact([type, measureIdentifier, attributeIdentifier, alias]).map(stringify);
     return `newTotal(${args.join(ARRAY_JOINER)})`;
 };
 

@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { compact, keyBy } from "lodash-es";
+import { keyBy } from "lodash-es";
 import { InvariantError, invariant } from "ts-invariant";
 
 import {
@@ -17,6 +17,7 @@ import {
     isKpiWidget,
     serializeObjRef,
 } from "@gooddata/sdk-model";
+import { _compact } from "@gooddata/util";
 
 import { validateDashboardLayoutWidgetSize } from "../../presentation/flexibleLayout/DefaultDashboardLayoutRenderer/utils/sizing.js";
 import { type MeasurableWidgetContent } from "../layout/sizing.js";
@@ -119,7 +120,7 @@ export function dashboardLayoutSanitize<T = IDashboardWidget>(
         serializeObjRef(insightRef(insight)),
     );
     const sanitizedSections = layout.sections.map((section) => {
-        const sanitizedItems = compact(
+        const sanitizedItems = _compact(
             section.items.map((item) => dashboardLayoutItemSanitize(item, insightsById, settings)),
         );
 

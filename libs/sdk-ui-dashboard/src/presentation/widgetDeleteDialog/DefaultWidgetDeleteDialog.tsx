@@ -2,10 +2,10 @@
 
 import { type ReactElement, useCallback } from "react";
 
-import { compact } from "lodash-es";
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 
 import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
+import { _compact } from "@gooddata/util";
 
 import { eagerRemoveSectionItemByWidgetRef } from "../../model/commands/layout.js";
 import { useDashboardDispatch, useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
@@ -104,7 +104,7 @@ export function DefaultWidgetDeleteDialog({
     }
 
     const widgetTitle = widget.title;
-    const messages = compact([
+    const messages = _compact([
         showAlertsMessage && deleteMessages.alerts,
         showSchedulesMessage && deleteMessages.schedules,
     ]);

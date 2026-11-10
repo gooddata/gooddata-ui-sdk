@@ -259,4 +259,20 @@ export type HostUiMount = (options: IHostUiMountOptions) => IHostUiMountHandle;
  */
 export interface IHostUiModule {
     mount: HostUiMount;
+    /**
+     * Organization IDs allowed to load this module.
+     *
+     * @remarks
+     * The shell enforces the same rules as for {@link IPluggableApp.allowedOrganizations}. A rejected
+     * module is replaced by the default host UI.
+     */
+    allowedOrganizations?: string[];
+    /**
+     * Unix milliseconds timestamp captured at build time.
+     *
+     * @remarks
+     * The shell enforces the same rules as for {@link IPluggableApp.buildTimestamp}. A rejected
+     * module is replaced by the default host UI.
+     */
+    buildTimestamp?: number;
 }

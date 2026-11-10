@@ -2,10 +2,10 @@
 
 import { useMemo } from "react";
 
-import { compact } from "lodash-es";
 import { defineMessages, useIntl } from "react-intl";
 
 import { type IUiMenuItem, type IconType, UiIcon } from "@gooddata/sdk-ui-kit";
+import { _compact } from "@gooddata/util";
 
 import { type DashboardDrillDefinition } from "../../../types.js";
 import { DrillType, type IDrillSelectItem, isRestrictedDrillSelectItem } from "../DrillSelect/types.js";
@@ -31,7 +31,7 @@ function getMenuItemStringTitle(item: IDrillSelectItem): string {
     if (isRestrictedDrillSelectItem(item)) {
         return item.name;
     }
-    return compact([item.name, item.attributeValue ? `(${item.attributeValue})` : null]).join(" ");
+    return _compact([item.name, item.attributeValue ? `(${item.attributeValue})` : null]).join(" ");
 }
 
 export interface IDrillSelectDropdownMenuItemData {

@@ -163,6 +163,13 @@ describe("ScheduledEmailDialogShell", () => {
         ).toBeTruthy();
     });
 
+    it("shows the visualization-unavailable error when editing a widget schedule whose insight is not loaded", () => {
+        const { baseElement } = renderShell(undefined, { ...EDIT_MODE_CONTEXT, widget: SENTINEL_WIDGET });
+        expect(baseElement.querySelector(ERROR_MESSAGE_SELECTOR)).toHaveTextContent(
+            "Error: You can't add attachments because this visualization was deleted or you don't have access to it.",
+        );
+    });
+
     it("shows the per-tab info message only for a dashboard export on a tabbed dashboard", () => {
         // each variant is asserted against document.body (render()'s default baseElement), so the
         // previous variant's tree must be unmounted first or its markup leaks into the next check

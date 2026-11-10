@@ -1,7 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { compact } from "lodash-es";
-
 import { newAttributeMetadataObject } from "@gooddata/sdk-backend-base";
 import {
     type IAttributeWithReferences,
@@ -23,6 +21,7 @@ import {
     isUriRef,
     objRefToString,
 } from "@gooddata/sdk-model";
+import { _compact } from "@gooddata/util";
 
 import { RecordedElementQueryFactory } from "./elements.js";
 import { type RecordedBackendConfig, type RecordingIndex } from "./types.js";
@@ -116,7 +115,7 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
             return this.getAttributeDisplayForm(ref).catch((_) => undefined);
         };
 
-        return compact(await Promise.all(refs.map(loader)));
+        return _compact(await Promise.all(refs.map(loader)));
     };
 
     public getAttributes = async (refs: ObjRef[]): Promise<IAttributeMetadataObject[]> => {
@@ -125,7 +124,7 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
             return this.getAttribute(ref).catch((_) => undefined);
         };
 
-        return compact(await Promise.all(refs.map(loader)));
+        return _compact(await Promise.all(refs.map(loader)));
     };
 
     public getAttributeDatasetMeta(_: ObjRef): Promise<IMetadataObject> {

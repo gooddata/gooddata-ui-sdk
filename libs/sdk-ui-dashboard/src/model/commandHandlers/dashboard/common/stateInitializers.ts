@@ -1,7 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { type PayloadAction } from "@reduxjs/toolkit";
-import { compact, update } from "lodash-es";
+import { update } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, select } from "redux-saga/effects";
 
@@ -37,7 +37,7 @@ import {
     isInsightWidget,
     isObjRef,
 } from "@gooddata/sdk-model";
-import { _cloneDeep, _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _compact, _isEmpty } from "@gooddata/util";
 
 import {
     dashboardFilterContextDefinition,
@@ -870,7 +870,7 @@ export function* actionsToInitializeExistingDashboard(
         });
     }
 
-    return compact([
+    return _compact([
         tabsAction,
         metaActions.setMeta({
             dashboard: persistedDashboard ?? dashboard,

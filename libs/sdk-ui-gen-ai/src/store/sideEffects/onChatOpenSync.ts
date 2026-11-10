@@ -19,6 +19,7 @@ import {
     asyncProcessSelector,
     conversationMessagesSelector,
     conversationSelector,
+    conversationsSelector,
     loadedSelector,
 } from "../messages/messagesSelectors.js";
 import {
@@ -124,10 +125,11 @@ export function* onChatOpenSync({ payload: { isOpen } }: PayloadAction<{ isOpen:
         // sampled state before that clear ran, so it saw the previous (persisted) conversation and
         // let us through. Switching now would hijack the fresh conversation and the seeded prompt
         // would never be shown (LX-2577). Re-sampling the same conditions after the await catches it:
-        // a not-yet-persisted draft (no id) or an in-flight clear/evaluate means "leave it alone".
+        // a changed selection, not-yet-persisted draft (no id), or in-flight clear/evaluate means "leave it alone".
         const currentNow: IChatConversationLocal | undefined = yield select(conversationSelector);
         const asyncProcessNow: ReturnType<typeof asyncProcessSelector> = yield select(asyncProcessSelector);
         if (
+            currentNow?.localId !== current?.localId ||
             (currentNow && !currentNow.id) ||
             asyncProcessNow === "evaluating" ||
             asyncProcessNow === "clearing"
@@ -189,12 +191,18 @@ function* fetchLatestConversation(current: IChatConversationLocal | undefined): 
     // Refresh the stored list so the history panel reflects the latest state too.
     yield put(loadConversationsSuccessAction({ conversations }));
 
-    const active = conversations.find((c) => c.localId === current?.localId);
-    const latest = conversations
+    // Load fresh conversation from the updated list
+    const storedConversations: IChatConversationLocal[] = (yield select(conversationsSelector)) ?? [];
+
+    // Find active conversation from already stored conversations
+    const active = storedConversations.find((c) => c.id === current?.id);
+    if (active) {
+        return active;
+    }
+
+    return storedConversations
         .slice()
         .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())[0];
-
-    return active ?? latest;
 }
 
 /**

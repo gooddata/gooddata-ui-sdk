@@ -1,6 +1,5 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { compact } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
@@ -32,7 +31,7 @@ import {
     measureFilters,
     newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
-import { _isEmpty, _isEqual } from "@gooddata/util";
+import { _compact, _isEmpty, _isEqual } from "@gooddata/util";
 
 import { type IDashboardFilter } from "../../../types.js";
 import { type IDrillToDashboard } from "../../commands/drill.js";
@@ -182,7 +181,7 @@ export function* drillToDashboardHandler(
     const mergedFilters = mergeDashboardAndSourceFilters(dashboardFilters, includedSourceFilters);
 
     // Order matters: intersection > common date > merged dashboard+source.
-    const resultingFilters = compact([...intersectionFilters, commonDateFilter, ...mergedFilters]);
+    const resultingFilters = _compact([...intersectionFilters, commonDateFilter, ...mergedFilters]);
 
     // Read before the tab switch: overrides are tab-scoped, so reading after would pick up the target tab.
     const parameters: ReturnType<typeof selectActiveTabDrillParameters> = yield select(

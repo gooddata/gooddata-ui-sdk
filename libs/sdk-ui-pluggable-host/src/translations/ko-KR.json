@@ -40,6 +40,7 @@
     "languageDialog.select.searchLabel": "언어 검색",
     "languageDialog.select.searchPlaceholder": "검색…",
     "languageDialog.select.noMatch": "일치하는 언어가 없습니다.",
+    "languageDialog.saving": "언어 변경 중…",
     "languageDialog.error": "언어를 변경하지 못했습니다. 다시 시도해 주세요.",
     "languageDialog.success": "좋습니다! 언어가 변경되었습니다!"
 }

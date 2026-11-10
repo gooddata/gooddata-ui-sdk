@@ -1,6 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
-
-import { compact } from "lodash-es";
+// (C) 2023-2026 GoodData Corporation
 
 import {
     type JsonApiAttributeHierarchyOut,
@@ -9,6 +7,7 @@ import {
     type ObjectLinks,
 } from "@gooddata/api-client-tiger";
 import { type ICatalogAttributeHierarchy, type ObjectType, idRef } from "@gooddata/sdk-model";
+import { _compact } from "@gooddata/util";
 
 export function convertAttributeHierarchy({
     id,
@@ -54,7 +53,7 @@ function convertToCatalogAttributeHierarchy(
             ref: idRef(id, type),
             title: attributes?.title ?? "",
             description: attributes?.description ?? "",
-            attributes: compact(convertedAttributes),
+            attributes: _compact(convertedAttributes),
             production: true,
             deprecated: false,
             unlisted: false,
