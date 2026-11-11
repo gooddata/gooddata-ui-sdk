@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { pick, sortBy } from "lodash-es";
+import { pick } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { type ITheme } from "@gooddata/sdk-model";
@@ -12,7 +12,7 @@ import {
     type ItemBorderRadiusPredicate,
     type LegendOptionsItemType,
 } from "@gooddata/sdk-ui-vis-commons";
-import { _set, _uniqBy } from "@gooddata/util";
+import { _set, _sortBy, _uniqBy } from "@gooddata/util";
 
 import { supportedDualAxesChartTypes } from "../chartTypes/_chartOptions/chartCapabilities.js";
 import {
@@ -168,7 +168,7 @@ export function getLegendItems(
     }
 
     if (isScatterPlot(type)) {
-        const uniqueItems = sortBy(
+        const uniqueItems = _sortBy(
             _uniqBy(chartOptions.data?.series?.[0]?.data, (it: ISeriesItem) => it.legendIndex),
             (it) => it.legendIndex,
         );

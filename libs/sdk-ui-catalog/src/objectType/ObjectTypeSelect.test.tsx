@@ -32,6 +32,7 @@ describe("ObjectTypeSelect", () => {
             analyticalDashboard: 0,
             parameter: 0,
             computedAttribute: 0,
+            document: 0,
         },
     };
 
@@ -46,12 +47,13 @@ describe("ObjectTypeSelect", () => {
             dataSet: 6,
             // Counted under the attribute button: a computed attribute has none of its own.
             computedAttribute: 2,
+            document: 8,
         };
         render(
             <ObjectTypeSelect
                 {...commonProps}
                 counter={counter}
-                enabledObjectTypes={[...commonProps.enabledObjectTypes, "parameter"]}
+                enabledObjectTypes={[...commonProps.enabledObjectTypes, "parameter", "document"]}
             />,
             { wrapper },
         );
@@ -63,6 +65,13 @@ describe("ObjectTypeSelect", () => {
         expect(screen.getByRole("button", { name: "Fact: 4" })).toBeInTheDocument();
         expect(screen.getByRole("button", { name: "Attribute: 7" })).toBeInTheDocument();
         expect(screen.getByRole("button", { name: "Date dataset: 6" })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Document: 8" })).toBeInTheDocument();
+    });
+
+    it("has no document button when documents are not enabled", () => {
+        render(<ObjectTypeSelect {...commonProps} />, { wrapper });
+
+        expect(screen.queryByTestId(`${objectType}/document`)).not.toBeInTheDocument();
     });
 
     it("has no button of its own for computed attributes", () => {

@@ -7,6 +7,19 @@ import { type IInsight, idRef, newAttribute, newBucket, newMeasure } from "@good
 import { convertToLocalMultipartContent } from "./toLocalContent.js";
 
 describe("convertToLocalMultipartContent", () => {
+    it("keeps the unsupported chart type of a visualization part without a body", () => {
+        const [part] = convertToLocalMultipartContent([
+            { type: "visualization", visualization: null, unsupportedChartType: "combo_chart" },
+        ]);
+
+        expect(part).toEqual({
+            type: "visualization",
+            visualization: null,
+            unsupportedChartType: "combo_chart",
+            reporting: true,
+        });
+    });
+
     it("adds the repeater row attribute to the columns", () => {
         const rowAttribute = newAttribute("product", (a) => a.localId("product"));
         const visualization: IInsight = {

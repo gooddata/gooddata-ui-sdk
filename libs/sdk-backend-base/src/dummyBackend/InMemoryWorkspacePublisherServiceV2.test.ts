@@ -108,3 +108,63 @@ describe("InMemoryWorkspacePublisherServiceV2", () => {
         ).rejects.toBeInstanceOf(PublisherContentNotSupportedError);
     });
 });
+
+describe("InMemoryWorkspacePublisherServiceV2 documents query", () => {
+    async function serviceWithDocuments() {
+        const service = new InMemoryWorkspacePublisherServiceV2();
+        await service.createDocument({
+            ...publisherDocument,
+            ref: idRef("north", "document"),
+            tags: ["sales"],
+        });
+        await service.createDocument({
+            ...publisherDocument,
+            ref: idRef("south", "document"),
+            title: "Southwind",
+        });
+        return service;
+    }
+
+    it("lists document summaries without content", async () => {
+        const service = await serviceWithDocuments();
+
+        const page = await service.getDocumentsQuery().query();
+
+        expect(page.totalCount).toBe(2);
+        expect(page.items.map((item) => item.ref)).toEqual([
+            idRef("north", "document"),
+            idRef("south", "document"),
+        ]);
+        expect(page.items[0]).not.toHaveProperty("content");
+    });
+
+    it.each<
+        [
+            string,
+            Parameters<ReturnType<InMemoryWorkspacePublisherServiceV2["getDocumentsQuery"]>["withFilter"]>[0],
+            string[],
+        ]
+    >([
+        ["id", { id: ["south"] }, ["Southwind"]],
+        ["excluded id", { excludeId: ["south"] }, ["Northwind"]],
+        ["tag", { tags: ["sales"] }, ["Northwind"]],
+        ["title search", { search: "SOUTH" }, ["Southwind"]],
+        ["hidden", { isHidden: true }, []],
+        ["certified", { certification: true }, []],
+    ])("filters by %s", async (_, filter, titles) => {
+        const service = await serviceWithDocuments();
+
+        const page = await service.getDocumentsQuery().withFilter(filter).query();
+
+        expect(page.items.map((item) => item.title)).toEqual(titles);
+    });
+
+    it("pages through the documents", async () => {
+        const service = await serviceWithDocuments();
+
+        const page = await service.getDocumentsQuery().withSize(1).withPage(1).query();
+
+        expect(page.items.map((item) => item.title)).toEqual(["Southwind"]);
+        expect(page.totalCount).toBe(2);
+    });
+});

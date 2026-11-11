@@ -1,9 +1,9 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { merge, partial } from "lodash-es";
+import { partial } from "lodash-es";
 
 import { type IDrillConfig } from "@gooddata/sdk-ui";
-import { _set } from "@gooddata/util";
+import { _merge, _set } from "@gooddata/util";
 
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type StackingType } from "../../constants/stacking.js";
@@ -376,7 +376,7 @@ export function getOptionalStackingConfiguration({
     const { type } = chartOptions;
     // supportedStackingAttributesChartTypes not include empty string so cast undefined to empty string is ok
     return (supportedStackingAttributesChartTypes as string[]).includes(type ?? "")
-        ? merge(
+        ? _merge(
               {},
               drillConfig ? setDrillConfigToXAxis(drillConfig) : {},
               getParentAttributeConfiguration(chartOptions, config, chartConfig),

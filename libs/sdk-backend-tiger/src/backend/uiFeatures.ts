@@ -124,6 +124,7 @@ export const TigerFeatureDefinitions = {
     enableAbsoluteDateFilterGranularity: booleanFeature(false),
     enableComputedAttributes: booleanFeature(false),
     enableBusinessBriefingReportsApp: booleanFeature(false),
+    enableCatalogDocuments: booleanFeature(false),
     enableReportsSubsections: booleanFeature(false),
     enablePublisherV2: booleanFeature(false),
     enableGenAiReportTakeaways: booleanFeature(false),

@@ -16,6 +16,7 @@ const objectTypeMessages: Record<ObjectType, MessageDescriptor> = defineMessages
     [ObjectTypes.ATTRIBUTE]: { id: "analyticsCatalog.objectType.attribute.name" },
     [ObjectTypes.FACT]: { id: "analyticsCatalog.objectType.fact.name" },
     [ObjectTypes.DATASET]: { id: "analyticsCatalog.objectType.dateDataset.name" },
+    [ObjectTypes.DOCUMENT]: { id: "analyticsCatalog.objectType.document.name" },
 });
 
 const visualizationTypeMessages: Record<VisualizationType, MessageDescriptor> = defineMessages({

@@ -6,6 +6,7 @@ import type {
     ICatalogItemComputedAttribute,
     ICatalogItemDashboard,
     ICatalogItemDataSet,
+    ICatalogItemDocument,
     ICatalogItemFact,
     ICatalogItemHidable,
     ICatalogItemInsight,
@@ -73,6 +74,13 @@ export function isCatalogItemFact(item: ICatalogItem | undefined | null): item i
  */
 export function isCatalogItemDataSet(item: ICatalogItem | undefined | null): item is ICatalogItemDataSet {
     return item?.type === "dataSet";
+}
+
+/**
+ * @internal
+ */
+export function isCatalogItemDocument(item: ICatalogItem | undefined | null): item is ICatalogItemDocument {
+    return item?.type === "document";
 }
 
 /**

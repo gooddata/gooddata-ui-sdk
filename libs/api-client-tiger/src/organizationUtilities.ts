@@ -1,9 +1,8 @@
 // (C) 2019-2026 GoodData Corporation
 
 import { type AxiosInstance, type AxiosPromise, type AxiosRequestConfig } from "axios";
-import { merge } from "lodash-es";
 
-import { _uniqBy } from "@gooddata/util";
+import { _merge, _uniqBy } from "@gooddata/util";
 
 import { type ITigerClientBase } from "./client.js";
 import {
@@ -112,7 +111,7 @@ export class OrganizationUtilities {
                 client.axios,
                 "",
                 { ...params, page: nextPage, size: pageSize },
-                merge({}, options),
+                _merge({}, options),
             );
 
             results.push(result.data);

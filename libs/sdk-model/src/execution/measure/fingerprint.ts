@@ -1,7 +1,8 @@
 // (C) 2019-2026 GoodData Corporation
 
 import stringify from "json-stable-stringify";
-import { merge } from "lodash-es";
+
+import { _merge } from "@gooddata/util";
 
 import { isFilterRelevantForFingerprinting } from "../filter/fingerprint.js";
 import { type IMeasureFilter } from "../filter/index.js";
@@ -26,7 +27,7 @@ function simpleMeasureFingerprint(measure: IMeasure<IMeasureDefinition>): string
         computeRatio: false,
     };
 
-    const measureDefinitionWithDefaults = merge(
+    const measureDefinitionWithDefaults = _merge(
         measureDefinitionDefaults,
         measureDefinitionWithSanitizedFilters,
     );

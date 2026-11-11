@@ -2,14 +2,14 @@
 
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "fs";
 
-import { keyBy, sortBy } from "lodash-es";
+import { keyBy } from "lodash-es";
 import { format } from "oxfmt";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { type RecordingIndex } from "@gooddata/sdk-backend-mockingbird";
 import { type IInsight, insightId, insightVisualizationUrl } from "@gooddata/sdk-model";
 import { type ScenarioGroup, allScenarios } from "@gooddata/sdk-ui-tests-scenarios";
-import { _groupBy } from "@gooddata/util";
+import { _groupBy, _sortBy } from "@gooddata/util";
 
 import { type INeobackstopScenarioConfig, type IStoryParameters, type State } from "./backstopScenario.js";
 import { generateExportName, generateImports, header } from "./generateStories.js";
@@ -71,7 +71,7 @@ const Insights = [...getAvailableInsights(ReferenceRecordings.Recordings)];
 
 const InsightById = keyBy(Insights, insightId);
 
-const ScenarioGroupsByVis = sortBy(
+const ScenarioGroupsByVis = _sortBy(
     Object.values(_groupBy<ScenarioGroup<any>>(allScenarios, (g) => g.vis)),
     (groups) => groups[0].vis,
 );
@@ -81,7 +81,7 @@ for (const [groupsIndex, groups] of ScenarioGroupsByVis.entries()) {
      * Sort groups; the order in which stories for the group are created is important as that is the order
      * in which the groups appear in storybook.
      */
-    const sortedGroups = sortBy(groups, (g) => g.groupNames.join("/"));
+    const sortedGroups = _sortBy(groups, (g) => g.groupNames.join("/"));
 
     for (const [groupIndex, group] of sortedGroups.entries()) {
         // because we have duplicate group names, and duplicate scenario names within those duplicate group names

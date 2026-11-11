@@ -68,7 +68,7 @@ export type AsCodeValidationContext = {
 };
 
 // @public
-export type CatalogCreateObjectType = Extract<ObjectType, "analyticalDashboard" | "insight" | "measure" | "parameter" | "computedAttribute">;
+export type CatalogCreateObjectType = Extract<ObjectType, "analyticalDashboard" | "document" | "insight" | "measure" | "parameter" | "computedAttribute">;
 
 // @public (undocumented)
 export type EditHandlerEvent = OpenHandlerEvent;
@@ -156,7 +156,7 @@ export interface ICatalogDetailProps extends ICatalogDetailContentProps {
 }
 
 // @public
-export type ICatalogItem = ICatalogItemDashboard | ICatalogItemInsight | ICatalogItemMeasure | ICatalogItemParameter | ICatalogItemComputedAttribute | ICatalogItemAttribute | ICatalogItemFact | ICatalogItemDataSet;
+export type ICatalogItem = ICatalogItemDashboard | ICatalogItemInsight | ICatalogItemMeasure | ICatalogItemParameter | ICatalogItemComputedAttribute | ICatalogItemAttribute | ICatalogItemFact | ICatalogItemDataSet | ICatalogItemDocument;
 
 // @public
 export interface ICatalogItemAttribute extends ICatalogItemBase {
@@ -217,6 +217,12 @@ export interface ICatalogItemDataSet extends ICatalogItemBase {
     dataSet: IDataSetMetadataObject;
     // (undocumented)
     type: "dataSet";
+}
+
+// @public
+export interface ICatalogItemDocument extends ICatalogItemBase {
+    // (undocumented)
+    type: "document";
 }
 
 // @public
@@ -288,6 +294,9 @@ export function isCatalogItemDashboard(item: ICatalogItem | undefined | null): i
 export function isCatalogItemDataSet(item: ICatalogItem | undefined | null): item is ICatalogItemDataSet;
 
 // @internal (undocumented)
+export function isCatalogItemDocument(item: ICatalogItem | undefined | null): item is ICatalogItemDocument;
+
+// @internal (undocumented)
 export function isCatalogItemFact(item: ICatalogItem | undefined | null): item is ICatalogItemFact;
 
 // @internal (undocumented)
@@ -300,7 +309,7 @@ export function isCatalogItemMeasure(item: ICatalogItem | undefined | null): ite
 export function isCatalogItemParameter(item: ICatalogItem | undefined | null): item is ICatalogItemParameter;
 
 // @public
-export type ObjectType = Extract<ObjectType_2, "analyticalDashboard" | "insight" | "measure" | "parameter" | "computedAttribute" | "fact" | "attribute" | "dataSet">;
+export type ObjectType = Extract<ObjectType_2, "analyticalDashboard" | "insight" | "measure" | "parameter" | "computedAttribute" | "fact" | "attribute" | "dataSet" | "document">;
 
 // @public (undocumented)
 export type OpenHandlerEvent = {

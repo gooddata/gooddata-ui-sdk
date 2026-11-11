@@ -35,6 +35,12 @@ function makeQueryOptions(overrides: Partial<ICatalogItemQueryOptions> = {}): IC
     };
 }
 
+const DOCUMENT_FLAGS: IFeatureFlags = {
+    enableBusinessBriefingReportsApp: true,
+    enablePublisherV2: true,
+    enableCatalogDocuments: true,
+};
+
 function makeRow(type: ObjectType, extra: Partial<ICatalogEndpoint> = {}): ICatalogEndpoint {
     return { type, query: noopQuery, ...extra };
 }
@@ -65,6 +71,100 @@ describe("useCatalogEndpoints", () => {
         );
 
         expect(result.current.map((e) => e.type)).toContain(ObjectTypes.PARAMETER);
+    });
+
+    it.each<[string, IFeatureFlags]>([
+        ["all flags off", {}],
+        ["the Reports app off", { ...DOCUMENT_FLAGS, enableBusinessBriefingReportsApp: false }],
+        ["Publisher v2 off", { ...DOCUMENT_FLAGS, enablePublisherV2: false }],
+        ["catalog documents off", { ...DOCUMENT_FLAGS, enableCatalogDocuments: false }],
+    ])("excludes the documents endpoint with %s", (_, flags) => {
+        const { result } = renderHook(() => useCatalogEndpoints([], makeQueryOptions(), flags));
+
+        expect(result.current.map((e) => e.type)).not.toContain(ObjectTypes.DOCUMENT);
+    });
+
+    it("includes the documents endpoint when the Reports app, Publisher v2 and catalog documents flags are on", () => {
+        const { result } = renderHook(() =>
+            useCatalogEndpoints([ObjectTypes.DOCUMENT], makeQueryOptions(), DOCUMENT_FLAGS),
+        );
+
+        expect(result.current.map((e) => e.type)).toEqual([ObjectTypes.DOCUMENT]);
+    });
+
+    it("suppresses the documents endpoint when certification filter is on", () => {
+        const { result } = renderHook(() =>
+            useCatalogEndpoints([], makeQueryOptions({ certification: true }), DOCUMENT_FLAGS),
+        );
+
+        expect(result.current.map((e) => e.type)).not.toContain(ObjectTypes.DOCUMENT);
+    });
+
+    it("suppresses the documents endpoint under the quality filter for objects with issues", () => {
+        const { result } = renderHook(() =>
+            useCatalogEndpoints(
+                [],
+                makeQueryOptions({ qualityIds: { values: ["q1"], isInverted: false } }),
+                DOCUMENT_FLAGS,
+            ),
+        );
+
+        const types = result.current.map((e) => e.type);
+        expect(types).not.toContain(ObjectTypes.DOCUMENT);
+        expect(types).toContain(ObjectTypes.DASHBOARD);
+    });
+
+    it("queries documents without the quality ids under the quality filter for objects without issues", async () => {
+        const stub = createCatalogBackendStub();
+        const options = makeQueryOptions({
+            backend: stub.backend,
+            qualityIds: { values: ["q1"], isInverted: true },
+        });
+        const { result } = renderHook(() =>
+            useCatalogEndpoints([ObjectTypes.DASHBOARD, ObjectTypes.DOCUMENT], options, DOCUMENT_FLAGS),
+        );
+
+        await Promise.all(result.current.map((endpoint) => endpoint.query()));
+
+        expect(stub.builders[ObjectTypes.DOCUMENT].withFilter).toHaveBeenCalledWith(
+            expect.objectContaining({ excludeId: undefined }),
+        );
+        expect(stub.builders[ObjectTypes.DASHBOARD].withFilter).toHaveBeenCalledWith(
+            expect.objectContaining({ excludeId: ["q1"] }),
+        );
+    });
+
+    it("keeps a user without the create grant to their own native documents", async () => {
+        const stub = createCatalogBackendStub();
+        const options = makeQueryOptions({ backend: stub.backend });
+        const { result } = renderHook(() =>
+            useCatalogEndpoints([ObjectTypes.DOCUMENT], options, DOCUMENT_FLAGS, "me"),
+        );
+
+        await result.current[0].query();
+
+        expect(stub.builders[ObjectTypes.DOCUMENT].withOrigin).toHaveBeenCalledWith("NATIVE");
+        expect(stub.builders[ObjectTypes.DOCUMENT].withFilter).toHaveBeenCalledWith(
+            expect.objectContaining({ createdBy: ["me"], excludeCreatedBy: undefined }),
+        );
+    });
+
+    it.each<[string, Partial<ICatalogItemQueryOptions>]>([
+        ["only someone else's documents are asked for", { createdBy: ["other"] }],
+        ["the user's own documents are left out", { excludeCreatedBy: ["me"] }],
+        ["only inherited documents are asked for", { origin: "PARENTS" }],
+    ])("returns no documents to a user without the create grant when %s", async (_, overrides) => {
+        const stub = createCatalogBackendStub();
+        const options = makeQueryOptions({ backend: stub.backend, ...overrides });
+        const { result } = renderHook(() =>
+            useCatalogEndpoints([ObjectTypes.DOCUMENT], options, DOCUMENT_FLAGS, "me"),
+        );
+
+        const page = await result.current[0].query();
+
+        expect(page).toMatchObject({ items: [], totalCount: 0 });
+        expect(await page.next()).toMatchObject({ items: [] });
+        expect(stub.queries[ObjectTypes.DOCUMENT]).not.toHaveBeenCalled();
     });
 
     it("with a types subset, returns only the selected endpoints in default order", () => {
@@ -288,14 +388,70 @@ describe("selectCatalogEndpoints", () => {
         });
     });
 
-    it("binds opts to each row.query closure", async () => {
+    describe("quality rule", () => {
+        const rows = [makeRow(ObjectTypes.DASHBOARD), makeRow(ObjectTypes.DOCUMENT)];
+
+        async function queriedOptions(opts: ICatalogItemQueryOptions) {
+            const queries = rows.map((row) => ({
+                ...row,
+                query: vi.fn<ICatalogEndpoint["query"]>(noopQuery),
+            }));
+            const feed = selectCatalogEndpoints([], opts, flagsOff, queries);
+            await Promise.all(feed.map((entry) => entry.query()));
+            return Object.fromEntries(
+                queries
+                    .filter((row) => row.query.mock.calls.length > 0)
+                    .map((row) => [row.type, row.query.mock.calls[0][0]]),
+            );
+        }
+
+        it("merges the ids with issues into id, next to the explicit ids", async () => {
+            const options = await queriedOptions(
+                makeQueryOptions({ id: ["a"], qualityIds: { values: ["q1", "q2"], isInverted: false } }),
+            );
+
+            expect(options[ObjectTypes.DASHBOARD].id).toEqual(["q1", "q2", "a"]);
+            expect(options[ObjectTypes.DASHBOARD].excludeId).toBeUndefined();
+        });
+
+        it("drops the types outside the quality report under the filter for objects with issues", async () => {
+            const options = await queriedOptions(
+                makeQueryOptions({ qualityIds: { values: ["q1"], isInverted: false } }),
+            );
+
+            expect(Object.keys(options)).toEqual([ObjectTypes.DASHBOARD]);
+        });
+
+        it("queries nothing when no object has issues", () => {
+            const feed = selectCatalogEndpoints(
+                [],
+                makeQueryOptions({ qualityIds: { values: [], isInverted: false } }),
+                flagsOff,
+                rows,
+            );
+
+            expect(feed).toEqual([]);
+        });
+
+        it("excludes the ids with issues only from the types in the quality report", async () => {
+            const options = await queriedOptions(
+                makeQueryOptions({ id: ["a"], qualityIds: { values: ["q1"], isInverted: true } }),
+            );
+
+            expect(options[ObjectTypes.DASHBOARD]).toMatchObject({ id: ["a"], excludeId: ["q1"] });
+            expect(options[ObjectTypes.DOCUMENT].id).toEqual(["a"]);
+            expect(options[ObjectTypes.DOCUMENT].excludeId).toBeUndefined();
+        });
+    });
+
+    it("binds opts and the user context to each row.query closure", async () => {
         const dashboardQuery = vi.fn(noopQuery);
         const endpoints: ICatalogEndpoint[] = [makeRow(ObjectTypes.DASHBOARD, { query: dashboardQuery })];
         const opts = makeQueryOptions({ search: "hello" });
 
-        const feed = selectCatalogEndpoints([], opts, flagsOff, endpoints);
+        const feed = selectCatalogEndpoints([], opts, flagsOff, endpoints, { documentOwner: "me" });
         await feed[0].query();
-        expect(dashboardQuery).toHaveBeenCalledWith(opts);
+        expect(dashboardQuery).toHaveBeenCalledWith(opts, { documentOwner: "me" });
     });
 });
 
@@ -305,33 +461,16 @@ function wrapper({ children }: PropsWithChildren) {
 }
 
 describe("useCatalogQueryOptions", () => {
-    it("merges non-inverted quality ids with feedOptions.id into queryOptions.id", () => {
+    it("keeps the quality ids apart from feedOptions.id", () => {
+        const qualityIds = { values: ["q1", "q2"], isInverted: false };
         const { result } = renderHook(
-            () =>
-                useCatalogQueryOptions(
-                    { ...baseFeedOptions, id: ["a"] },
-                    makeFilterInputs({ qualityIds: { values: ["q1", "q2"], isInverted: false } }),
-                ),
-            { wrapper },
-        );
-
-        expect(result.current.id).toEqual(expect.arrayContaining(["q1", "q2", "a"]));
-        expect(result.current.id).toHaveLength(3);
-        expect(result.current.excludeId).toBeUndefined();
-    });
-
-    it("populates excludeId from inverted quality ids and keeps feedOptions.id as id", () => {
-        const { result } = renderHook(
-            () =>
-                useCatalogQueryOptions(
-                    { ...baseFeedOptions, id: ["a"] },
-                    makeFilterInputs({ qualityIds: { values: ["q1"], isInverted: true } }),
-                ),
+            () => useCatalogQueryOptions({ ...baseFeedOptions, id: ["a"] }, makeFilterInputs({ qualityIds })),
             { wrapper },
         );
 
         expect(result.current.id).toEqual(["a"]);
-        expect(result.current.excludeId).toEqual(["q1"]);
+        expect(result.current.qualityIds).toBe(qualityIds);
+        expect(result.current.excludeId).toBeUndefined();
     });
 
     it("maps non-inverted createdBy to createdBy and leaves excludeCreatedBy undefined", () => {

@@ -57,6 +57,8 @@ function convertGenAiTypeToObjectType(type: GenAIObjectType): ObjectType {
             return "measure";
         case "visualization":
             return "insight";
+        case "document":
+            return "document";
         default:
             assertNever(type);
             throw new Error(`Unknown type: ${type}`);

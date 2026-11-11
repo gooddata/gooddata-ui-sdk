@@ -1219,6 +1219,14 @@ export interface IFeatureFlags {
     enableBusinessBriefingReportsApp?: boolean;
 
     /**
+     * Enable Reports documents in the Analytics Catalog and its search.
+     *
+     * @remarks
+     * Needs enableBusinessBriefingReportsApp too. Disabled by default.
+     */
+    enableCatalogDocuments?: boolean;
+
+    /**
      * Enable the templates and page layouts screens of the Business Briefing reports application.
      */
     enableReportsSubsections?: boolean;

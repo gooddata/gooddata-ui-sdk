@@ -24,6 +24,7 @@ import { ExportApi_CreateDocumentExport } from "@gooddata/api-client-tiger/endpo
 import {
     type IExportResult,
     type IPublisherDocumentExportPdfOptions,
+    type IPublisherDocumentsQueryV2,
     type IWorkspacePublisherServiceV2,
     type PublisherDocumentListItemV2,
     isPublisherContentNotSupportedError,
@@ -52,6 +53,8 @@ import {
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { objRefToIdentifier } from "../../utils/api.js";
 import { handleExportResultPolling } from "../../utils/exportPolling.js";
+
+import { PublisherDocumentsQueryV2 } from "./publisherDocumentsQueryV2.js";
 
 const auditInclude = ["createdBy" as const, "modifiedBy" as const];
 
@@ -254,6 +257,10 @@ export class TigerWorkspacePublisherServiceV2 implements IWorkspacePublisherServ
                 ),
             ),
         );
+    };
+
+    public getDocumentsQuery = (): IPublisherDocumentsQueryV2 => {
+        return new PublisherDocumentsQueryV2(this.authCall, this.workspace);
     };
 
     public getDocument = async (ref: ObjRef): Promise<IPublisherDocumentV2> => {

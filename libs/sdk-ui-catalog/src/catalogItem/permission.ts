@@ -15,6 +15,7 @@ import {
     isCatalogItemAttribute,
     isCatalogItemComputedAttribute,
     isCatalogItemDashboard,
+    isCatalogItemDocument,
     isCatalogItemFact,
     isCatalogItemInsight,
     isCatalogItemMeasure,
@@ -33,6 +34,11 @@ export function canEditCatalogItem(
 
     // If the item is locked, the user cannot update it at all.
     if (item.isLocked) {
+        return false;
+    }
+
+    // Documents are edited in the Reports app only.
+    if (isCatalogItemDocument(item)) {
         return false;
     }
 

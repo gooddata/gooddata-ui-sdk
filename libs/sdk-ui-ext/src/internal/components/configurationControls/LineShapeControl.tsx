@@ -2,12 +2,11 @@
 
 import { useId } from "react";
 
-import { merge } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { type LineShape } from "@gooddata/sdk-ui-charts";
 import { type IconType, UiButtonSegmentedControl, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _merge } from "@gooddata/util";
 
 import { messages } from "../../../locales.js";
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
@@ -64,7 +63,7 @@ export function LineShapeControl({ disabled, properties, pushData }: ILineShapeC
                                                     }
 
                                                     pushData({
-                                                        properties: merge(_cloneDeep(properties), {
+                                                        properties: _merge(_cloneDeep(properties), {
                                                             controls: { lineShape: value },
                                                         }),
                                                     });

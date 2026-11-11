@@ -223,6 +223,66 @@ describe("CreateObjectButton", () => {
         });
     });
 
+    describe("create document", () => {
+        const documentSettings = {
+            enableBusinessBriefingReportsApp: true,
+            enablePublisherV2: true,
+            enableCatalogDocuments: true,
+        } as Partial<IUserWorkspaceSettings>;
+        const documentWrapper =
+            (permissions: Partial<IWorkspacePermissions>, settings: Partial<IUserWorkspaceSettings>) =>
+            ({ children }: PropsWithChildren) =>
+                wrapper({ children, permissions: permissions as IWorkspacePermissions, settings });
+
+        it("lists Document right after Dashboard and redirects to Reports", () => {
+            const onCreateObject = vi.fn();
+            render(<CreateObjectButton onCreateObject={onCreateObject} />, {
+                wrapper: documentWrapper(
+                    { canCreateDocument: true, canCreateVisualization: true },
+                    documentSettings,
+                ),
+            });
+
+            fireEvent.click(screen.getByText("Create"));
+
+            const follows = (a: string, b: string) =>
+                screen.getByText(a).compareDocumentPosition(screen.getByText(b)) &
+                Node.DOCUMENT_POSITION_FOLLOWING;
+            expect(follows("Dashboard", "Document")).toBeTruthy();
+            expect(follows("Document", "Visualization")).toBeTruthy();
+
+            fireEvent.click(screen.getByText("Document"));
+            expect(onCreateObject).toHaveBeenCalledWith("document");
+        });
+
+        it.each<[string, Partial<IWorkspacePermissions>, Partial<IUserWorkspaceSettings>]>([
+            ["the user may not create documents", { canCreateDocument: false }, documentSettings],
+            [
+                "catalog documents are off",
+                { canCreateDocument: true },
+                { ...documentSettings, enableCatalogDocuments: false },
+            ],
+            [
+                "the Reports app is off",
+                { canCreateDocument: true },
+                { ...documentSettings, enableBusinessBriefingReportsApp: false },
+            ],
+            [
+                "Publisher v2 is off",
+                { canCreateDocument: true },
+                { ...documentSettings, enablePublisherV2: false },
+            ],
+        ])("hides the Document item when %s", (_, permissions, settings) => {
+            render(<CreateObjectButton onCreateObject={vi.fn()} />, {
+                wrapper: documentWrapper(permissions, settings),
+            });
+
+            fireEvent.click(screen.getByText("Create"));
+
+            expect(screen.queryByText("Document")).not.toBeInTheDocument();
+        });
+    });
+
     describe("create metric permission", () => {
         // The flag-and-permission rule is tested in sdk-model's canCreateMetric; these two cover
         // the wiring of both menu paths.

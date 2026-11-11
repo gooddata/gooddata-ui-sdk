@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { createEvent, fireEvent, render, screen } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 import type { IUiComboboxOption } from "./types.js";
@@ -390,5 +391,23 @@ describe("UiCombobox", () => {
 
         expect(container.querySelector(".gd-ui-kit-text-input__field--error")).toBeInTheDocument();
         expect(screen.getByRole("combobox")).toHaveAttribute("aria-invalid", "true");
+    });
+
+    it("moves Tab from the input to the next control on the page, past its open popup", async () => {
+        const user = userEvent.setup();
+        render(
+            <>
+                <TestCombobox options={options} />
+                <button type="button">Next</button>
+            </>,
+        );
+        const input: HTMLInputElement = screen.getByRole("combobox");
+        await user.click(input);
+        await user.keyboard("{ArrowDown}");
+        expect(screen.getByRole("listbox")).toBeInTheDocument();
+
+        await user.tab();
+
+        expect(screen.getByRole("button", { name: "Next" })).toHaveFocus();
     });
 });

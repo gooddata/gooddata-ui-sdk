@@ -84,7 +84,9 @@ export function ConversationMultipartContent({
                         />
                     ) : (
                         <div key={index} className="gd-gen-ai-chat__conversation__item__content--error">
-                            {intl.formatMessage({ id: "gd.gen-ai.visualization.unavailable" })}
+                            {part.unsupportedChartType
+                                ? intl.formatMessage({ id: "gd.gen-ai.visualization.unsupported" })
+                                : intl.formatMessage({ id: "gd.gen-ai.visualization.unavailable" })}
                         </div>
                     );
                 }

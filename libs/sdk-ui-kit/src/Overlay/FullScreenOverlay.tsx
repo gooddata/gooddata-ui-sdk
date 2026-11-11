@@ -1,8 +1,8 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type CSSProperties } from "react";
 
-import { merge } from "lodash-es";
+import { _merge } from "@gooddata/util";
 
 import { Overlay } from "./Overlay.js";
 import { type IOverlayProps, type IOverlayState } from "./typings.js";
@@ -15,7 +15,7 @@ export class FullScreenOverlay extends Overlay<IOverlayState> {
     constructor(props: IOverlayProps<any>) {
         super(props);
 
-        this.state = merge(this.state, {
+        this.state = _merge(this.state, {
             position: {},
             overflow: "auto",
             scrollTop: 0,

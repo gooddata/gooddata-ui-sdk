@@ -1,9 +1,7 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { sortBy } from "lodash-es";
-
 import { type IInsightDefinition, factoryNotationFor } from "@gooddata/sdk-model";
-import { _compact, _groupBy, _isEmpty, _partition, _uniqBy } from "@gooddata/util";
+import { _compact, _groupBy, _isEmpty, _partition, _sortBy, _uniqBy } from "@gooddata/util";
 
 import { type IEmbeddingCodeConfig } from "../../interfaces/VisualizationDescriptor.js";
 
@@ -92,7 +90,7 @@ const renderImports = (imports: IImportInfo[]) =>
                 _compact([
                     defaultImport?.name,
                     namedImports.length &&
-                        `{ ${sortBy(
+                        `{ ${_sortBy(
                             namedImports.map((i) => i.name),
                             (i) => i.toLowerCase(), // sort by lower case, otherwise "Z" would be before "a"
                         ).join(", ")} }`,

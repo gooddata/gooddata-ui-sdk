@@ -2,10 +2,10 @@
 
 import { useMemo, useState } from "react";
 
-import { sortBy } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { Dropdown, DropdownList } from "@gooddata/sdk-ui-kit";
+import { _sortBy } from "@gooddata/util";
 
 import { dashboardMatch } from "../drill/utils/dashboardPredicate.js";
 
@@ -55,7 +55,7 @@ export function DashboardList({ selected, dashboards, onSelect }: IDashboardList
             );
         }
 
-        return sortBy(items, (dashboard) => dashboard.title.toLowerCase());
+        return _sortBy(items, (dashboard) => dashboard.title.toLowerCase());
     }, [dashboards, searchString, selectedDashboard]);
 
     const searchPlaceholder = intl.formatMessage({

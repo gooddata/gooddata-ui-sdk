@@ -6,8 +6,10 @@ import { simplifyText } from "@gooddata/util";
 
 import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { accessibilityConfigToAttributes } from "../../typings/utilities.js";
+import { type IconType } from "../@types/icon.js";
 import { bem } from "../@utils/bem.js";
 import { type IUiDropdownButtonRenderProps } from "../UiDropdown/types.js";
+import { UiIcon } from "../UiIcon/UiIcon.js";
 import { UiToolbarChevron } from "../UiToolbar/UiToolbarChevron.js";
 import { UiToolbarItemTooltip } from "../UiToolbar/UiToolbarItemTooltip.js";
 import { useToolbarItemRole } from "../UiToolbarButton/useToolbarItemRole.js";
@@ -21,11 +23,19 @@ export interface IUiToolbarSelectProps {
      */
     label: string;
     /**
+     * Drawn before the label, for example what kind of thing the selection is.
+     */
+    icon?: IconType;
+    /**
      * "fixed" is 240px wide and truncates the label so the toolbar does not move as the selection
      * changes.
      * @defaultValue "hug"
      */
     width?: "hug" | "fixed";
+    /**
+     * Caps the width in pixels; a longer label is truncated and its full text is the title.
+     */
+    maxWidth?: number;
     /**
      * Nothing is chosen yet; the label reads as prompt text.
      * @defaultValue false
@@ -64,7 +74,9 @@ const { b, e } = bem("gd-ui-kit-toolbar-select");
 export const UiToolbarSelect = forwardRef<HTMLButtonElement, IUiToolbarSelectProps>(function UiToolbarSelect(
     {
         label,
+        icon,
         width = "hug",
+        maxWidth,
         isPlaceholder = false,
         isOpen = false,
         isDisabled,
@@ -81,6 +93,7 @@ export const UiToolbarSelect = forwardRef<HTMLButtonElement, IUiToolbarSelectPro
 ) {
     const { buttonProps } = useToolbarItemRole({ isDisabled, onClick, onKeyDown });
     const testId = dataTestId ?? simplifyText(label);
+    const isTruncatable = width === "fixed" || maxWidth !== undefined;
 
     const button = (
         <button
@@ -88,8 +101,9 @@ export const UiToolbarSelect = forwardRef<HTMLButtonElement, IUiToolbarSelectPro
             id={id}
             type="button"
             className={b({ width, isPlaceholder, isActive: isOpen })}
+            style={maxWidth === undefined ? undefined : { maxWidth }}
             {...accessibilityConfigToAttributes(accessibilityConfig)}
-            title={width === "fixed" && tooltip === undefined ? label : undefined}
+            title={isTruncatable && tooltip === undefined ? label : undefined}
             data-id={dataId}
             data-testid={testId}
             aria-haspopup={accessibilityConfig?.ariaHaspopup ?? "listbox"}
@@ -97,6 +111,11 @@ export const UiToolbarSelect = forwardRef<HTMLButtonElement, IUiToolbarSelectPro
             {...buttonProps}
             {...ariaAttributes}
         >
+            {icon === undefined ? null : (
+                <span className={e("icon")} data-testid={`icon-${icon}`}>
+                    <UiIcon type={icon} size={20} layout="block" />
+                </span>
+            )}
             <span className={e("label")}>{label}</span>
             <UiToolbarChevron isOpen={isOpen} />
         </button>

@@ -1,6 +1,8 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { mapValues, merge } from "lodash-es";
+import { mapValues } from "lodash-es";
+
+import { _merge } from "@gooddata/util";
 
 import { type IRegion } from "../typings/domUtilities.js";
 import {
@@ -98,7 +100,7 @@ function getRegionOffset(region: IRegion, ratio: IOffset, direction: number = 1)
 }
 
 function getAlignPointOffset(alignPointOffset: IOffset | undefined) {
-    return merge({}, DEFAULT_OFFSET_VALUES, alignPointOffset);
+    return _merge({}, DEFAULT_OFFSET_VALUES, alignPointOffset);
 }
 
 function addOffset(position: IOffset, offset: IOffset) {
@@ -149,7 +151,7 @@ function getGlobalPosition(
  * using its left-top coordinates
  */
 function moveRegionToPosition(region: IRegion, anchorPoint: IOffset) {
-    return merge({}, region, {
+    return _merge({}, region, {
         left: anchorPoint.x,
         top: anchorPoint.y,
         width: region.width,
@@ -237,7 +239,7 @@ export function getOptimalAlignmentForRegion({
             };
 
             mostVisibleAlignment = {
-                alignment: merge(mapValues(coordinates, Math.floor), {
+                alignment: _merge(mapValues(coordinates, Math.floor), {
                     align: alignPoints[i].align,
                 }),
                 visiblePart,

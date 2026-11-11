@@ -7,13 +7,14 @@ import { useCancelablePromise } from "@gooddata/sdk-ui";
 import { useSemanticSearch } from "@gooddata/sdk-ui-semantic-search";
 
 import { type AsyncStatus } from "../async/types.js";
+import { useDocumentOwner } from "../document/scope.js";
 import { mapGenAIObjectType } from "../objectType/mapping.js";
 import type { ObjectType } from "../objectType/types.js";
 import { useFeatureFlags } from "../permission/PermissionsContext.js";
 
 import { convertEntityToCatalogItem } from "./converter.js";
 import { type ICatalogItem, type ICatalogItemSemanticSearchOptions } from "./types.js";
-import { useCatalogEndpoints } from "./useCatalogEndpoints.js";
+import { useCatalogEndpoints, useEnabledObjectTypes } from "./useCatalogEndpoints.js";
 
 export function useCatalogItemSemanticSearch({
     queryOptions,
@@ -23,11 +24,17 @@ export function useCatalogItemSemanticSearch({
     search,
 }: ICatalogItemSemanticSearchOptions) {
     const flags = useFeatureFlags();
+    const enabledTypes = useEnabledObjectTypes();
 
-    const objectTypes = useMemo(() => convertTypesToGenAiTypes(types), [types]);
+    const objectTypes = useMemo(() => convertTypesToGenAiTypes(types, enabledTypes), [types, enabledTypes]);
     const isSemanticSearchEnabled = Boolean(flags?.enableCatalogSmartSearchResults);
     const isSemanticSearchPossible =
-        isSemanticSearchEnabled && objectTypes.length && search && !queryOptions.id;
+        isSemanticSearchEnabled &&
+        objectTypes.length &&
+        search &&
+        !queryOptions.id &&
+        // search results replace the ids, so they cannot narrow to the objects with quality issues
+        !(queryOptions.qualityIds && !queryOptions.qualityIds.isInverted);
     const { searchStatus, searchResults } = useSemanticSearch({
         searchTerm: isSemanticSearchPossible ? search : "",
         backend: queryOptions.backend,
@@ -42,7 +49,8 @@ export function useCatalogItemSemanticSearch({
             search: undefined,
         };
     }, [queryOptions, searchResults]);
-    const endpoints = useCatalogEndpoints(types, updateQueryOptions, flags);
+    const documentOwner = useDocumentOwner();
+    const endpoints = useCatalogEndpoints(types, updateQueryOptions, flags, documentOwner);
 
     const { status: promiseStatus, result: promiseItems } = useCancelablePromise(
         {
@@ -89,14 +97,18 @@ export function useCatalogItemSemanticSearch({
     };
 }
 
-function convertTypesToGenAiTypes(types: ObjectType[]): GenAIObjectType[] {
+function convertTypesToGenAiTypes(types: ObjectType[], enabledTypes: ObjectType[]): GenAIObjectType[] {
+    const documents: GenAIObjectType[] = enabledTypes.includes("document") ? ["document"] : [];
     if (!types.length) {
-        return ["fact", "attribute", "dashboard", "metric", "visualization", "dataset", "date"];
+        return ["fact", "attribute", "dashboard", "metric", "visualization", "dataset", "date", ...documents];
     }
     return types
         .map((a) => {
             // Neither type is indexed for semantic search.
             if (a === "parameter" || a === "computedAttribute") {
+                return null;
+            }
+            if (a === "document" && !documents.length) {
                 return null;
             }
             return mapGenAIObjectType(a);

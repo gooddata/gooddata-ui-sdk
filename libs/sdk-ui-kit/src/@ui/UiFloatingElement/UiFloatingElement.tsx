@@ -145,7 +145,9 @@ export function UiFloatingElement({
     }
 
     return (
-        <FloatingPortal>
+        // Its focus guards need a FloatingFocusManager, which this portal never has. Left on, it takes every
+        // control inside out of the tab order once focus leaves, so a nested dropdown can't refocus its trigger.
+        <FloatingPortal preserveTabOrder={false}>
             <ConditionalScopedThemeProvider>
                 <div
                     ref={setFloatingWithAnchorRegistry}

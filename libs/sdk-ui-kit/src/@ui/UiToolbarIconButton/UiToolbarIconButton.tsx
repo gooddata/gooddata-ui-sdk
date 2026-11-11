@@ -27,9 +27,13 @@ export interface IUiToolbarIconButtonProps extends IUiToolbarItemBaseProps {
      */
     icon: IconType | ReactNode;
     /**
-     * Accessible name. It is also the tooltip text.
+     * Accessible name. It is also the tooltip text, unless `tooltip` says otherwise.
      */
     label: string;
+    /**
+     * Shown on hover and focus in place of the label, for example why the button is disabled.
+     */
+    tooltip?: ReactNode;
     /**
      * "medium" is 28x28 with a 20px icon. "small" is 14x14 with a 14px icon and is meant for the
      * side controls of {@link UiToolbarStepper}.
@@ -61,6 +65,7 @@ export const UiToolbarIconButton = forwardRef<HTMLButtonElement, IUiToolbarIconB
             isDisabled,
             isActive = false,
             hideTooltip = false,
+            tooltip,
             onClick,
             onKeyDown,
             id,
@@ -106,7 +111,7 @@ export const UiToolbarIconButton = forwardRef<HTMLButtonElement, IUiToolbarIconB
         }
 
         return (
-            <UiToolbarItemTooltip content={label} isDisabled={isActive}>
+            <UiToolbarItemTooltip content={tooltip ?? label} isDisabled={isActive}>
                 {button}
             </UiToolbarItemTooltip>
         );

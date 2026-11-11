@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react";
 
-import { sortBy } from "lodash-es";
 import { FormattedMessage, type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 
 import { type ObjRef } from "@gooddata/sdk-model";
 import { useCancelablePromise } from "@gooddata/sdk-ui";
 import { ConfirmDialog as ConfirmDialogComponent } from "@gooddata/sdk-ui-kit";
+import { _sortBy } from "@gooddata/util";
 
 import { deleteReport } from "../actions/delete_actions.js";
 import { hideDialog } from "../actions/dialogs_actions.js";
@@ -61,7 +61,7 @@ const useReferencingObjects = (projectId: string, insightRef: ObjRef, isActive: 
 
                 return {
                     dashboards: getInsightUsageOnDashboards(analyticalDashboards || [], userDashboards),
-                    documents: sortBy(documents ?? [], (document) => document.title.trim().toLowerCase()),
+                    documents: _sortBy(documents ?? [], (document) => document.title.trim().toLowerCase()),
                 };
             },
         },

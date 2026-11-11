@@ -53,6 +53,7 @@ export type {
     ICatalogItemAttribute,
     ICatalogItemFact,
     ICatalogItemDataSet,
+    ICatalogItemDocument,
     ICatalogItemDashboard,
     VisualizationType,
 } from "./catalogItem/types.js";
@@ -61,6 +62,7 @@ export {
     isCatalogItemComputedAttribute,
     isCatalogItemDashboard,
     isCatalogItemDataSet,
+    isCatalogItemDocument,
     isCatalogItemFact,
     isCatalogItemInsight,
     isCatalogItemMeasure,

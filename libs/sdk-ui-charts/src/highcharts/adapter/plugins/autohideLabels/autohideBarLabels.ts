@@ -1,8 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { sortBy } from "lodash-es";
-
 import { VisualizationTypes } from "@gooddata/sdk-ui";
+import { _sortBy } from "@gooddata/util";
 
 import {
     areLabelsStacked,
@@ -85,7 +84,7 @@ const toggleNonStackedChartLabels = (
 ) => {
     // for intersection detection keep only points visible within axis range
     const visiblePoints = getPointsVisibleInAxisRange(points, zoomableAxis);
-    const sortedPoints = sortBy(visiblePoints, (a, b) => {
+    const sortedPoints = _sortBy(visiblePoints, (a, b) => {
         const firstLabelAttr = getDataLabelAttributes(a);
         const nextLabelAttr = getDataLabelAttributes(b);
         return firstLabelAttr.y - nextLabelAttr.y;

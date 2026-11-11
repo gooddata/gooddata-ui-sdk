@@ -21,21 +21,23 @@ const widths = propCombination("width", ["hug", "fixed"]);
 const placeholder = propCombination("isPlaceholder", [true], { label: "Choose a font" });
 const open = propCombination("isOpen", [true]);
 const disabled = propCombination("isDisabled", [true]);
+const withIcon = propCombination("icon", ["picture"]);
 const truncated = longLabel("width", ["hug", "fixed"]);
+const capped = longLabel("maxWidth", [240]);
 
 function UiToolbarSelectTest({ showCode }: { showCode?: boolean }) {
     return (
         <ToolbarStoryFrame>
             <ComponentTable
                 columnsBy={widths}
-                rowsBy={[propCombination("isOpen", [false]), placeholder, open, disabled]}
+                rowsBy={[propCombination("isOpen", [false]), withIcon, placeholder, open, disabled]}
                 Component={UiToolbarSelect}
                 codeSnippet={showCode ? "UiToolbarSelect" : undefined}
                 align="flex-start"
                 cellWidth={300}
             />
             <ComponentTable
-                rowsBy={[truncated]}
+                rowsBy={[truncated, capped]}
                 Component={UiToolbarSelect}
                 codeSnippet={showCode ? "UiToolbarSelect" : undefined}
                 align="flex-start"

@@ -55,4 +55,9 @@ describe("ObjectTypeIcon", () => {
         render(<TestObjectTypeIcon type="dataSet" />, { wrapper });
         expect(screen.getByRole("img", { name: "Date dataset" })).toBeVisible();
     });
+
+    it("renders document icon with accessible label", () => {
+        render(<TestObjectTypeIcon type="document" />, { wrapper });
+        expect(screen.getByRole("img", { name: "Document" })).toBeVisible();
+    });
 });

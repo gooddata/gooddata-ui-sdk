@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type { IAnalyticsCatalogTrendingObject } from "@gooddata/sdk-backend-spi";
+import type { IAnalyticsCatalogTrendingObject, IPublisherDocumentSummaryV2 } from "@gooddata/sdk-backend-spi";
 import {
     type GenAIObjectType,
     type IAttributeMetadataObject,
@@ -19,6 +19,7 @@ import {
     isDashboard,
     isDataSetMetadataObject,
     isFactMetadataObject,
+    isIdentifierRef,
     isInsight,
     isListedDashboard,
     isMeasureMetadataObject,
@@ -34,6 +35,7 @@ import type {
     ICatalogItemComputedAttribute,
     ICatalogItemDashboard,
     ICatalogItemDataSet,
+    ICatalogItemDocument,
     ICatalogItemFact,
     ICatalogItemInsight,
     ICatalogItemMeasure,
@@ -51,8 +53,12 @@ export function convertEntityToCatalogItem(
         | IFactMetadataObject
         | IAttributeMetadataObject
         | IDataSetMetadataObject
+        | IPublisherDocumentSummaryV2
         | undefined,
 ): ICatalogItem {
+    if (isDocumentSummary(entity)) {
+        return convertDocumentToCatalogItem(entity);
+    }
     if (isInsight(entity)) {
         return convertInsightToCatalogItem(entity);
     }
@@ -239,6 +245,29 @@ export function convertDataSetToCatalogItem(dataSet: IDataSetMetadataObject): IC
         isEditable: true,
         dataSet: dataSet,
     };
+}
+
+export function convertDocumentToCatalogItem(document: IPublisherDocumentSummaryV2): ICatalogItemDocument {
+    const updatedAt = document.updated || document.created;
+
+    return {
+        identifier: isIdentifierRef(document.ref) ? document.ref.identifier : document.ref.uri,
+        type: "document",
+        title: document.title,
+        description: document.description ?? "",
+        tags: document.tags ?? [],
+        createdBy: getDisplayName(document.createdBy),
+        createdAt: document.created ? parseBackendDate(document.created) : null,
+        updatedBy: getDisplayName(document.updatedBy),
+        updatedAt: updatedAt ? parseBackendDate(updatedAt) : null,
+        isLocked: document.isLocked ?? false,
+        isEditable: false,
+    };
+}
+
+function isDocumentSummary(entity: unknown): entity is IPublisherDocumentSummaryV2 {
+    const ref = (entity as Partial<IPublisherDocumentSummaryV2> | undefined)?.ref;
+    return isIdentifierRef(ref) && ref.type === "document";
 }
 
 export function getDisplayName(user?: IUser | null): string {

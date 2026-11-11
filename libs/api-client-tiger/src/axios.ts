@@ -2,9 +2,8 @@
 
 import globalAxios, { type AxiosInstance, type CreateAxiosDefaults } from "axios";
 import { type AxiosCacheInstance, setupCache } from "axios-cache-interceptor";
-import { merge } from "lodash-es";
 
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _merge } from "@gooddata/util";
 
 import { LIB_NAME, LIB_VERSION } from "./__version.js";
 
@@ -108,7 +107,7 @@ export function newAxiosRequestConfig(
     }
 
     if (headers) {
-        config.headers = merge(config.headers, headers);
+        config.headers = _merge(config.headers, headers);
     }
 
     return config;

@@ -140,6 +140,7 @@ import { IPreparedExecutionOptions } from '@gooddata/sdk-backend-spi';
 import { IPublisherDocumentDefinitionV1 } from '@gooddata/sdk-model';
 import { IPublisherDocumentDefinitionV2 } from '@gooddata/sdk-model';
 import { IPublisherDocumentExportPdfOptions } from '@gooddata/sdk-backend-spi';
+import { IPublisherDocumentsQueryV2 } from '@gooddata/sdk-backend-spi';
 import { IPublisherDocumentTemplateDefinitionV1 } from '@gooddata/sdk-model';
 import { IPublisherDocumentTemplateDefinitionV2 } from '@gooddata/sdk-model';
 import { IPublisherDocumentTemplateV1 } from '@gooddata/sdk-model';
@@ -938,6 +939,8 @@ export abstract class DecoratedWorkspacePublisherServiceV2 implements IWorkspace
     // (undocumented)
     getDocuments(): Promise<PublisherDocumentListItemV2[]>;
     // (undocumented)
+    getDocumentsQuery(): IPublisherDocumentsQueryV2;
+    // (undocumented)
     getDocumentTemplate(ref: ObjRef): Promise<IPublisherDocumentTemplateV2>;
     // (undocumented)
     getDocumentTemplates(): Promise<IPublisherDocumentTemplateV2[]>;
@@ -1335,6 +1338,8 @@ export class InMemoryWorkspacePublisherServiceV2 implements IWorkspacePublisherS
     getDocument(ref: ObjRef): Promise<IPublisherDocumentV2>;
     // (undocumented)
     getDocuments(): Promise<PublisherDocumentListItemV2[]>;
+    // (undocumented)
+    getDocumentsQuery(): IPublisherDocumentsQueryV2;
     // (undocumented)
     getDocumentTemplate(ref: ObjRef): Promise<IPublisherDocumentTemplateV2>;
     // (undocumented)

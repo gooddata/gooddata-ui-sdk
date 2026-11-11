@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type { IAnalyticalWorkspace } from "@gooddata/sdk-backend-spi";
+import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     convertError,
     isNotFound,
@@ -24,6 +24,7 @@ import {
     isCatalogItemLoaded,
     isCatalogItemWithPermissions,
 } from "../../catalogItem/guards.js";
+import { getDocumentCatalogItem } from "../../catalogItem/query.js";
 import { type ICatalogItem, type ICatalogItemRef } from "../../catalogItem/types.js";
 import { type ObjectType } from "../../objectType/types.js";
 import { useFeatureFlag } from "../../permission/PermissionsContext.js";
@@ -66,12 +67,10 @@ export function useCatalogItemLoad({ objectDefinition, objectId, objectType }: I
                 // A 404 must reach CatalogDetailStatus as a NotFoundSdkError so isNotFound() shows
                 // the not-found page; convertError maps it. Other errors are rethrown untouched so
                 // their original status/message survives in the generic error description.
-                return loadObjectDefinition(backend.workspace(workspace), id, type, loadPermissions).catch(
-                    (e) => {
-                        const converted = convertError(e);
-                        throw isNotFound(converted) ? converted : e;
-                    },
-                );
+                return loadObjectDefinition(backend, workspace, id, type, loadPermissions).catch((e) => {
+                    const converted = convertError(e);
+                    throw isNotFound(converted) ? converted : e;
+                });
             },
         },
         [backend, workspace, id, type, filled, loadPermissions],
@@ -126,11 +125,13 @@ function awaitsLabels(item: ICatalogItem): boolean {
 }
 
 async function loadObjectDefinition(
-    workspace: IAnalyticalWorkspace,
+    backend: IAnalyticalBackend,
+    workspaceId: string,
     id: string,
     type: ObjectType,
     loadPermissions: boolean,
 ): Promise<ICatalogItem> {
+    const workspace = backend.workspace(workspaceId);
     switch (type) {
         case "attribute":
             return workspace
@@ -232,6 +233,8 @@ async function loadObjectDefinition(
                     },
                 )
                 .then(convertFactToCatalogItem);
+        case "document":
+            return getDocumentCatalogItem(backend, workspaceId, id);
         default:
             throw new Error("Unsupported object type");
     }

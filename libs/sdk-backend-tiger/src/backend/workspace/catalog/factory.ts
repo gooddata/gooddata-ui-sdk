@@ -1,7 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { sortBy } from "lodash-es";
-
 import { MetadataUtilities, ValidateRelationsHeader } from "@gooddata/api-client-tiger";
 import {
     EntitiesApi_GetAllEntitiesComputedAttributes,
@@ -29,7 +27,7 @@ import {
     isCatalogFact,
     isCatalogMeasure,
 } from "@gooddata/sdk-model";
-import { _uniqBy } from "@gooddata/util";
+import { _sortBy, _uniqBy } from "@gooddata/util";
 
 import {
     convertComputedAttributeToCatalogItem,
@@ -131,7 +129,7 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
 
         const loadersResults = await Promise.all(promises);
 
-        const catalogItems: CatalogItem[] = sortBy(loadersResults.flat(), (item) =>
+        const catalogItems: CatalogItem[] = _sortBy(loadersResults.flat(), (item) =>
             this.getCatalogItemSortingKey(item)?.toUpperCase(),
         );
 

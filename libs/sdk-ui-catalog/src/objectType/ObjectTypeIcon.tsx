@@ -52,6 +52,9 @@ export function ObjectTypeIcon({
             {type === "analyticalDashboard" ? (
                 <UiIcon type="dashboard" accessibilityConfig={{ ariaLabel: label }} {...sizes} />
             ) : null}
+            {type === "document" ? (
+                <UiIcon type="filePptx" accessibilityConfig={{ ariaLabel: label }} {...sizes} />
+            ) : null}
             {type === "dataSet" ? (
                 <UiIcon type="date" accessibilityConfig={{ ariaLabel: label }} {...sizes} />
             ) : null}

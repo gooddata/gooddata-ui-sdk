@@ -1,9 +1,8 @@
 // (C) 2019-2026 GoodData Corporation
 
 import { type AxiosInstance, type AxiosPromise, type GenericAbortSignal } from "axios";
-import { merge } from "lodash-es";
 
-import { _uniq, _uniqBy } from "@gooddata/util";
+import { _merge, _uniq, _uniqBy } from "@gooddata/util";
 
 import { type ITigerClientBase } from "./client.js";
 import {
@@ -41,7 +40,7 @@ const DefaultOptions = {
 const MaxParallelPageRequests = 4;
 
 function createOptionsForPage(page: number, options: MetadataGetEntitiesOptions): MetadataGetEntitiesOptions {
-    return merge({}, DefaultOptions, options, { params: { page } });
+    return _merge({}, DefaultOptions, options, { params: { page } });
 }
 
 // keeps whatever meta the caller asked for (e.g. permissions) next to the page count

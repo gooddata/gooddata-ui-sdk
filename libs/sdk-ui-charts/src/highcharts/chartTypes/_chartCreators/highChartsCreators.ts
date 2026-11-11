@@ -1,9 +1,9 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { merge } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { type VisType, VisualizationTypes } from "@gooddata/sdk-ui";
+import { _merge } from "@gooddata/util";
 
 import { type IChartLimits } from "../../../interfaces/chartConfig.js";
 import { type HighchartsOptions } from "../../lib/index.js";
@@ -82,7 +82,7 @@ export function getHighchartsOptions({
 
     const definition = drillConfig.dataView.definition;
 
-    return merge(
+    return _merge(
         {},
         getCommonConfiguration(chartOptions, drillConfig, theme, chartConfig, intl),
         getConfigurationByType.call(null, chartConfig, definition, theme),

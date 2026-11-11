@@ -63,4 +63,46 @@ describe("UiToolbarSelect", () => {
         expect(trigger).toHaveAttribute("aria-haspopup", "menu");
         expect(trigger).toHaveAttribute("aria-controls", "menu-id");
     });
+
+    it("draws nothing but the label and the chevron without an icon", () => {
+        render(<UiToolbarSelect label="Inter" />);
+
+        const button = screen.getByRole("button", { name: "Inter" });
+        expect(Array.from(button.children).map((child) => child.className)).toEqual([
+            "gd-ui-kit-toolbar-select__label",
+            "gd-ui-kit-toolbar-chevron",
+        ]);
+    });
+
+    it("draws its icon before the label", () => {
+        render(<UiToolbarSelect label="Heading 1" icon="heading1" />);
+
+        const button = screen.getByRole("button", { name: "Heading 1" });
+        expect(button.firstElementChild).toBe(screen.getByTestId("icon-heading1"));
+        expect(button).toHaveAccessibleName("Heading 1");
+    });
+
+    it("sets no inline style for the fixed width", () => {
+        render(<UiToolbarSelect label="Inter" width="fixed" />);
+
+        expect(screen.getByRole("button", { name: "Inter" })).not.toHaveAttribute("style");
+    });
+
+    it("caps a hugging width and exposes the full label through title", () => {
+        render(<UiToolbarSelect label="A very long user generated name" maxWidth={240} />);
+
+        const button = screen.getByRole("button", { name: "A very long user generated name" });
+        expect(button).toHaveClass("gd-ui-kit-toolbar-select--width-hug");
+        expect(button).toHaveStyle({ maxWidth: "240px" });
+        expect(button.style.width).toBe("");
+        expect(button).toHaveAttribute("title", "A very long user generated name");
+    });
+
+    it("sets no inline style and no title for a hugging width without a cap", () => {
+        render(<UiToolbarSelect label="Inter" />);
+
+        const button = screen.getByRole("button", { name: "Inter" });
+        expect(button).not.toHaveAttribute("style");
+        expect(button).not.toHaveAttribute("title");
+    });
 });

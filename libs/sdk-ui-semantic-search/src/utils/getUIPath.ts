@@ -13,7 +13,8 @@ export type UIPathObjectTypes =
     | "date"
     | "fact"
     | "attribute"
-    | "label";
+    | "label"
+    | "document";
 
 export type UIPathOptions = {
     useHostedMetricEditor?: boolean;
@@ -56,6 +57,8 @@ export const getUIPath = (
                 return `/workspace/${workspaceId}/modeler`;
             }
             return `/modeler/#/${workspaceId}`;
+        case "document":
+            return `/workspace/${workspaceId}/reports/document/${encodeURIComponent(objectId)}`;
         default:
             return exhaustiveCheck(objectType);
     }

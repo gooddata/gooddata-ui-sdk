@@ -1,8 +1,7 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { sortBy } from "lodash-es";
-
 import { type IListedDashboard, type IMetadataObject } from "@gooddata/sdk-model";
+import { _sortBy } from "@gooddata/util";
 
 import {
     type IInsightUsageInDocumentItem,
@@ -11,7 +10,7 @@ import {
 } from "./insight_usage_state.js";
 
 export const sortDashboards = (dashboards: IInsightUsageOnDashboardItem[], sourceDashboardId: string) =>
-    sortBy(dashboards, (dashboardMeta: IInsightUsageOnDashboardItem) => {
+    _sortBy(dashboards, (dashboardMeta: IInsightUsageOnDashboardItem) => {
         // source dashboard should be placed on the top
         if (dashboardMeta.id === sourceDashboardId) {
             return "";
@@ -23,7 +22,7 @@ const isUserDashboard = (userDashboards: IListedDashboard[], { id }: IInsightUsa
     userDashboards.some((dashboard) => dashboard.identifier === id);
 
 const sortDashboardsByName = (dashboards: IInsightUsageOnDashboardItem[]) =>
-    sortBy(dashboards, (item) => item.title.trim().toLowerCase());
+    _sortBy(dashboards, (item) => item.title.trim().toLowerCase());
 
 export const getInsightUsageOnDashboards = (
     referencedDashboards: IMetadataObject[],
@@ -48,7 +47,7 @@ export const getInsightUsageOnDashboards = (
 export const getInsightUsageInDocuments = (
     referencedDocuments: IMetadataObject[],
 ): IInsightUsageInDocumentItem[] =>
-    sortBy(
+    _sortBy(
         referencedDocuments.map(({ id, title }) => ({ id, title })),
         (item) => item.title.trim().toLowerCase(),
     );

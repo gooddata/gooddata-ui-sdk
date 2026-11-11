@@ -3,6 +3,7 @@
 import {
     type IExportResult,
     type IPublisherDocumentExportPdfOptions,
+    type IPublisherDocumentsQueryV2,
     type IWorkspacePublisherServiceV2,
     NotSupported,
     type PublisherDocumentListItemV2,
@@ -18,6 +19,7 @@ import {
     type ObjRef,
 } from "@gooddata/sdk-model";
 
+import { InMemoryPublisherDocumentsQueryV2 } from "./InMemoryPublisherDocumentsQueryV2.js";
 import { InMemoryPublisherStore } from "./inMemoryPublisherStore.js";
 
 function withoutIsDefault<T extends IPublisherPageTemplateDefinitionV2>(
@@ -106,6 +108,10 @@ export class InMemoryWorkspacePublisherServiceV2 implements IWorkspacePublisherS
 
     public async getDocuments(): Promise<PublisherDocumentListItemV2[]> {
         return this.documents.list().map((document) => ({ supported: true, document }));
+    }
+
+    public getDocumentsQuery(): IPublisherDocumentsQueryV2 {
+        return new InMemoryPublisherDocumentsQueryV2(() => this.documents.list());
     }
 
     public async getDocument(ref: ObjRef): Promise<IPublisherDocumentV2> {

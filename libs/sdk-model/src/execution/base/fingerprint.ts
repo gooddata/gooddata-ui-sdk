@@ -1,7 +1,8 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import stringify from "json-stable-stringify";
-import { merge } from "lodash-es";
+
+import { _merge } from "@gooddata/util";
 
 import { type IDimension } from "./dimension.js";
 
@@ -18,7 +19,7 @@ export function dimensionFingerprint(dim: IDimension): string {
         totals: [],
     };
 
-    const withDefaultTotals: IDimension = merge(dimDefaults, dim);
+    const withDefaultTotals: IDimension = _merge(dimDefaults, dim);
 
     return stringify(withDefaultTotals) || "undefined";
 }

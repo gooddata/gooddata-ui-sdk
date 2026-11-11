@@ -6,8 +6,14 @@ import { renderHook, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { type IInsight, idRef, newInsightDefinition } from "@gooddata/sdk-model";
-import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
+import {
+    type IInsight,
+    type IUser,
+    type IWorkspacePermissions,
+    idRef,
+    newInsightDefinition,
+} from "@gooddata/sdk-model";
+import { BackendProvider, WorkspaceProvider, isNotFound } from "@gooddata/sdk-ui";
 
 import { createLabel } from "../../catalogItem/testFixtures.js";
 import type { ICatalogItemAttribute, ICatalogItemInsight } from "../../catalogItem/types.js";
@@ -168,5 +174,121 @@ describe("useCatalogItemLoad – visualization permissions", () => {
             expect(result.current.status).toBe("success");
         });
         expect(getInsight).not.toHaveBeenCalled();
+    });
+});
+
+function createDocumentWrapper(
+    items: unknown[],
+    access: { user?: IUser; permissions?: Partial<IWorkspacePermissions> | Error } = {},
+) {
+    const documentsQuery = {
+        withPage: vi.fn(() => documentsQuery),
+        withSize: vi.fn(() => documentsQuery),
+        withSorting: vi.fn(() => documentsQuery),
+        withOrigin: vi.fn(() => documentsQuery),
+        withFilter: vi.fn(() => documentsQuery),
+        query: vi.fn().mockResolvedValue({ items, offset: 0, limit: 1, totalCount: items.length }),
+    };
+    const { user = { login: "me" } as IUser, permissions = { canCreateDocument: true } } = access;
+    const backend = {
+        currentUser: () => ({ getUser: () => Promise.resolve(user) }),
+        workspace: () => ({
+            publisherV2: () => ({ getDocumentsQuery: () => documentsQuery }),
+            permissions: () => ({
+                getPermissionsForCurrentUser: () =>
+                    permissions instanceof Error ? Promise.reject(permissions) : Promise.resolve(permissions),
+            }),
+        }),
+    } as unknown as IAnalyticalBackend;
+    // the catalog's own permissions are still loading; the document lookup does not wait for them
+    const permissionsState = { status: "loading" } as PermissionsState;
+
+    function wrapper({ children }: PropsWithChildren) {
+        return createElement(
+            BackendProvider,
+            { backend },
+            createElement(
+                WorkspaceProvider,
+                { workspace: "test-workspace" },
+                createElement(PermissionsProvider, { permissionsState }, children),
+            ),
+        );
+    }
+    return { wrapper, documentsQuery };
+}
+
+describe("useCatalogItemLoad – document", () => {
+    it("loads a document by its id as a read-only item", async () => {
+        const { wrapper, documentsQuery } = createDocumentWrapper([
+            { ref: idRef("doc.id", "document"), title: "Monthly report", version: "2" },
+        ]);
+
+        const { result } = renderHook(
+            () => useCatalogItemLoad({ objectId: "doc.id", objectType: "document" }),
+            { wrapper },
+        );
+
+        await waitFor(() => {
+            expect(result.current.status).toBe("success");
+        });
+        expect(documentsQuery.withOrigin).toHaveBeenCalledWith("ALL");
+        expect(documentsQuery.withFilter).toHaveBeenCalledWith(
+            expect.objectContaining({ id: ["doc.id"], createdBy: undefined }),
+        );
+        expect(result.current.item).toMatchObject({
+            identifier: "doc.id",
+            type: "document",
+            title: "Monthly report",
+            isEditable: false,
+        });
+    });
+
+    it("looks only among their own native documents for a user without the create grant", async () => {
+        const { wrapper, documentsQuery } = createDocumentWrapper([], {
+            permissions: { canCreateDocument: false },
+        });
+
+        const { result } = renderHook(
+            () => useCatalogItemLoad({ objectId: "doc.id", objectType: "document" }),
+            { wrapper },
+        );
+
+        await waitFor(() => {
+            expect(result.current.status).toBe("error");
+        });
+        expect(documentsQuery.withOrigin).toHaveBeenCalledWith("NATIVE");
+        expect(documentsQuery.withFilter).toHaveBeenCalledWith(
+            expect.objectContaining({ id: ["doc.id"], createdBy: ["me"] }),
+        );
+        expect(isNotFound(result.current.error)).toBe(true);
+    });
+
+    it("reports the permissions error instead of looking a document up", async () => {
+        const permissionsError = new Error("permissions failed");
+        const { wrapper, documentsQuery } = createDocumentWrapper([], { permissions: permissionsError });
+
+        const { result } = renderHook(
+            () => useCatalogItemLoad({ objectId: "doc.id", objectType: "document" }),
+            { wrapper },
+        );
+
+        await waitFor(() => {
+            expect(result.current).toMatchObject({ status: "error", error: permissionsError });
+        });
+        expect(documentsQuery.query).not.toHaveBeenCalled();
+    });
+
+    it("reports a document that is not found", async () => {
+        const { wrapper } = createDocumentWrapper([]);
+
+        const { result } = renderHook(
+            () => useCatalogItemLoad({ objectId: "missing", objectType: "document" }),
+            { wrapper },
+        );
+
+        await waitFor(() => {
+            expect(result.current.status).toBe("error");
+        });
+        expect(isNotFound(result.current.error)).toBe(true);
     });
 });

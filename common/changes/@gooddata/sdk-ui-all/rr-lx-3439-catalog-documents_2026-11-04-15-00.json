@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-model, sdk-backend-tiger, sdk-ui-semantic-search: Add the enableCatalogDocuments feature flag and the document type to GenAIObjectType. sdk-backend-spi, sdk-backend-tiger: paged documents query. sdk-backend-base, sdk-backend-mockingbird: implement it in the dummy, decorated and recorded backends. sdk-ui-catalog: Document type in the Analytics Catalog list, search and Create menu.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

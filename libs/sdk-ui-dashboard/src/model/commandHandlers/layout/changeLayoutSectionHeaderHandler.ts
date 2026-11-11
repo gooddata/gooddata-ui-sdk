@@ -1,10 +1,10 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { merge } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
 import { type IDashboardLayoutSectionHeader } from "@gooddata/sdk-model";
+import { _merge } from "@gooddata/util";
 
 import { findSection, serializeLayoutSectionPath } from "../../../_staging/layout/coordinates.js";
 import { type ChangeLayoutSectionHeader } from "../../commands/layout.js";
@@ -52,7 +52,7 @@ export function* changeLayoutSectionHeaderHandler(
     const existingHeader: IDashboardLayoutSectionHeader = isLegacyCommand
         ? (layout.sections[index].header ?? {})
         : (findSection(layout, index).header ?? {});
-    const newHeader = mergeHeaders ? merge({}, existingHeader, header) : header;
+    const newHeader = mergeHeaders ? _merge({}, existingHeader, header) : header;
     const sanitizedHeader = sanitizeHeader(newHeader);
     const sectionPath = isLegacyCommand ? { parent: undefined, sectionIndex: index } : index;
 

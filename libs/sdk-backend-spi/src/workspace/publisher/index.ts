@@ -16,8 +16,11 @@ import {
     type IPublisherPageTemplateV1,
     type IPublisherPageTemplateV2,
     type ObjRef,
+    type ObjectOrigin,
 } from "@gooddata/sdk-model";
 
+import type { IFilterBaseOptions } from "../../common/filtering.js";
+import type { IPagedResource } from "../../common/paging.js";
 import { type PublisherContentNotSupportedError } from "../../errors/index.js";
 import { type IExportResult } from "../execution/index.js";
 
@@ -180,6 +183,68 @@ export type PublisherDocumentListItemV2 =
     | { supported: false; summary: IPublisherDocumentSummaryV2; error: PublisherContentNotSupportedError };
 
 /**
+ * Query for one page of documents at a time. It reads no content, so it lists every document whatever its
+ * content is.
+ *
+ * @alpha
+ */
+export interface IPublisherDocumentsQueryV2 {
+    /**
+     * Sets number of documents to return per page.
+     * Default size: 50
+     *
+     * @param size - desired max number of documents per page must be a positive number
+     */
+    withSize(size: number): IPublisherDocumentsQueryV2;
+
+    /**
+     * Sets starting page for the query.
+     *
+     * @param page - zero indexed, must be non-negative
+     */
+    withPage(page: number): IPublisherDocumentsQueryV2;
+
+    /**
+     * Sets filter for the query.
+     *
+     * @remarks
+     * Documents can be neither hidden nor certified: asking for hidden or certified documents returns
+     * none, and asking for visible or uncertified ones does not narrow the result.
+     *
+     * @param filter - filter to apply
+     */
+    withFilter(filter: IFilterBaseOptions): IPublisherDocumentsQueryV2;
+
+    /**
+     * Sets sorting for the query.
+     *
+     * @param sort - sorting criteria in the format: property,(asc|desc)
+     */
+    withSorting(sort: string[]): IPublisherDocumentsQueryV2;
+
+    /**
+     * Sets origin for the query.
+     *
+     * @param origin - origin to apply
+     */
+    withOrigin(origin: ObjectOrigin | (string & {})): IPublisherDocumentsQueryV2;
+
+    /**
+     * Starts the query.
+     *
+     * @returns promise of first page of the results
+     */
+    query(): Promise<IPublisherDocumentsQueryResultV2>;
+}
+
+/**
+ * Queried documents are returned in a paged representation.
+ *
+ * @alpha
+ */
+export type IPublisherDocumentsQueryResultV2 = IPagedResource<IPublisherDocumentSummaryV2>;
+
+/**
  * Service for managing Publisher page templates, document templates and documents in content version 2.
  *
  * @remarks
@@ -220,6 +285,11 @@ export interface IWorkspacePublisherServiceV2 {
     deleteDocumentTemplate(ref: ObjRef): Promise<void>;
 
     getDocuments(): Promise<PublisherDocumentListItemV2[]>;
+
+    /**
+     * Creates a query for documents, a page at a time, with the user who created and last modified each.
+     */
+    getDocumentsQuery(): IPublisherDocumentsQueryV2;
 
     getDocument(ref: ObjRef): Promise<IPublisherDocumentV2>;
 

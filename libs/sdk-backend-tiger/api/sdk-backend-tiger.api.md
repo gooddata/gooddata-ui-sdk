@@ -1030,6 +1030,10 @@ export const TigerFeatureDefinitions: {
         type: "BOOLEAN";
         defaultValue: boolean;
     };
+    readonly enableCatalogDocuments: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
     readonly enableReportsSubsections: {
         type: "BOOLEAN";
         defaultValue: boolean;

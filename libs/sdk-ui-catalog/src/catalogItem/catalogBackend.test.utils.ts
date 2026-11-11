@@ -94,6 +94,7 @@ const ENTITY_FACTORIES: Record<ObjectType, (id: string) => unknown> = {
     [ObjectTypes.ATTRIBUTE]: (id) => metadataEntity(id, "attribute"),
     [ObjectTypes.FACT]: (id) => metadataEntity(id, "fact"),
     [ObjectTypes.DATASET]: (id) => metadataEntity(id, "dataSet"),
+    [ObjectTypes.DOCUMENT]: (id) => ({ ref: idRef(id, "document"), title: id, version: "2" }),
 };
 
 function metadataEntity(id: string, type: ObjectType) {
@@ -156,6 +157,7 @@ const QUERY_SERVICES = {
     [ObjectTypes.ATTRIBUTE]: ["attributes", "getAttributesQuery"],
     [ObjectTypes.FACT]: ["facts", "getFactsQuery"],
     [ObjectTypes.DATASET]: ["datasets", "getDatasetsQuery"],
+    [ObjectTypes.DOCUMENT]: ["publisherV2", "getDocumentsQuery"],
 } as const satisfies Record<ObjectType, readonly [string, string]>;
 
 /** The shape `useSemanticSearch` reads off its query result. */

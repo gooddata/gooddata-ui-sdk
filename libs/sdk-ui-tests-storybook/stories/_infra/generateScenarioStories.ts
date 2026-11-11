@@ -2,11 +2,10 @@
 
 import { mkdirSync, rmSync, writeFileSync } from "fs";
 
-import { sortBy } from "lodash-es";
 import { format } from "oxfmt";
 
 import { type ScenarioGroup, allScenarios } from "@gooddata/sdk-ui-tests-scenarios";
-import { _groupBy } from "@gooddata/util";
+import { _groupBy, _sortBy } from "@gooddata/util";
 
 import { type INeobackstopScenarioConfig, State } from "./backstopScenario.js";
 import { generateExportName, generateImports, header } from "./generateStories.js";
@@ -44,7 +43,7 @@ for (const [groupsIndex, groups] of ScenarioGroupsByVis.entries()) {
      * Sort groups; the order in which stories for the group are created is important as that is the order
      * in which the groups appear in storybook.
      */
-    const sortedGroups = sortBy(groups, (g) => g.groupNames.join("/"));
+    const sortedGroups = _sortBy(groups, (g) => g.groupNames.join("/"));
 
     // for some reason, multiple groups can have identical groupNames, which caused a bug where the files overwrite each other
     // the simplest way to deal with this, will be to group them by groupNames, using lodash, same as above
