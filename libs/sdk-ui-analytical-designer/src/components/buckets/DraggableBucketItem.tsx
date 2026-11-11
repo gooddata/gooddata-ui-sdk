@@ -3,7 +3,8 @@
 import { type Ref, useMemo } from "react";
 
 import { useDrag } from "@evil-internetmann/react-dnd";
-import { omit } from "lodash-es";
+
+import { _omit } from "@gooddata/util";
 
 import { BUCKET_ITEM } from "../../constants/drag_item_types.js";
 import { getType } from "../../models/bucket_item.js";
@@ -75,7 +76,7 @@ export function DraggableBucketItem(props: DraggableBucketItemProps) {
         [bucketItem, bucket, index, onStartBucketItemDrag, onEndBucketItemDrag, collapsedItem],
     );
 
-    const pureProps = omit(props, ["bucket"]);
+    const pureProps = _omit(props, ["bucket"]);
     const localIdentifier = bucket.localIdentifier;
 
     return (

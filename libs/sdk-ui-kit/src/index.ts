@@ -1363,6 +1363,10 @@ export {
 } from "./@ui/UiSearchableSelect/UiSearchableSelect.js";
 export { UiSearchableSelectDivider } from "./@ui/UiSearchableSelect/UiSearchableSelectDivider.js";
 export {
+    UiSearchableSelectFooter,
+    type IUiSearchableSelectFooterProps,
+} from "./@ui/UiSearchableSelect/UiSearchableSelectFooter.js";
+export {
     UiSearchableSelectItem,
     type IUiSearchableSelectItemProps,
 } from "./@ui/UiSearchableSelect/UiSearchableSelectItem.js";

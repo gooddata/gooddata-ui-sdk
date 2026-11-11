@@ -1,9 +1,9 @@
 // (C) 2007-2026 GoodData Corporation
 
 import { createAction } from "@reduxjs/toolkit";
-import { omit } from "lodash-es";
 
 import { type AdOpenInsightCommandData, type IPostMessageContextPayload } from "@gooddata/sdk-embedding";
+import { _omit } from "@gooddata/util";
 
 import { type ICustomRouteParams } from "../../typings/location.js";
 import {
@@ -36,7 +36,7 @@ export const openInsightRequested = createAction(
          */
         const { insightId, reportId } = data;
         const customRouteParams = {
-            ...omit(data, "insightId"),
+            ..._omit(data, "insightId"),
             reportId: insightId || reportId,
         };
 

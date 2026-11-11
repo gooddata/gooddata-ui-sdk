@@ -31,6 +31,8 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+import { _toNumber } from "./toNumber.js";
+
 /**
  * Converts `value` to a finite number: `NaN` and anything that does not convert become `0`, infinities
  * become the largest finite number of their sign, and the sign of `-0` is kept.
@@ -44,8 +46,7 @@ export function _toFinite(value: unknown): number {
         return value === 0 ? value : 0;
     }
 
-    // a symbol cannot be converted; lodash maps it to NaN, which becomes 0 below
-    const number = typeof value === "symbol" ? NaN : Number(value);
+    const number = _toNumber(value);
 
     if (number === Infinity || number === -Infinity) {
         return Math.sign(number) * Number.MAX_VALUE;

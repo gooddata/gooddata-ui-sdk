@@ -1,10 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { BUCKETS } from "../../constants/bucket.js";
 import { DEFAULT_XIRR_UICONFIG } from "../../constants/uiConfig.js";
@@ -46,8 +45,8 @@ export const getXirrUiConfig = (referencePoint: IReferencePoint, intl: IntlShape
     const canAddMeasures = hasNoMeasures(buckets);
     const canAddAttribute = hasNoAttribute(buckets);
 
-    set(uiConfig, [BUCKETS, BucketNames.MEASURES, "canAddItems"], canAddMeasures);
-    set(uiConfig, [BUCKETS, BucketNames.ATTRIBUTE, "canAddItems"], canAddAttribute);
+    _set(uiConfig, [BUCKETS, BucketNames.MEASURES, "canAddItems"], canAddMeasures);
+    _set(uiConfig, [BUCKETS, BucketNames.ATTRIBUTE, "canAddItems"], canAddAttribute);
 
     uiConfig.customError = getCustomError(referencePoint, intl.formatMessage);
 

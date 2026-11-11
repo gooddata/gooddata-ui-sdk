@@ -1,9 +1,9 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
-import { memoize } from "lodash-es";
 
 import { type ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import { _memoize } from "@gooddata/util";
 
 import { type ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
@@ -32,7 +32,7 @@ export const selectDrillTargets: DashboardSelector<ObjRefMap<IDrillTargets>> = c
  * @alpha
  */
 export const selectDrillTargetsByWidgetRef: (ref: ObjRef) => DashboardSelector<IDrillTargets | undefined> =
-    memoize((ref: ObjRef) => {
+    _memoize((ref: ObjRef) => {
         return createSelector(selectDrillTargets, (drillTargets) => {
             return drillTargets.get(ref);
         });

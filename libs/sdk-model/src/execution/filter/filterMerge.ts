@@ -1,9 +1,8 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { groupBy } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { _compact } from "@gooddata/util";
+import { _compact, _groupBy } from "@gooddata/util";
 
 import { objRefToString } from "../../objRef/index.js";
 
@@ -122,7 +121,7 @@ function mergeDateFilters(
     commonDateFilterId?: string,
 ): IDateFilter[] {
     const allFilters = [...originalFilters, ...addedFilters];
-    const grouped = groupBy(allFilters, (f) => objRefToString(filterObjRef(f)));
+    const grouped = _groupBy(allFilters, (f) => objRefToString(filterObjRef(f)));
     const mergedFilters: IDateFilter[] = [];
 
     Object.values(grouped).forEach((filtersForDimension) => {
@@ -159,7 +158,7 @@ function mergeMeasureValueFilters(
     addedFilters: IMeasureValueFilter[],
 ): IMeasureValueFilter[] {
     const allFilters = [...originalFilters, ...addedFilters];
-    const grouped = groupBy(allFilters, (f) => objRefToString(f.measureValueFilter.measure));
+    const grouped = _groupBy(allFilters, (f) => objRefToString(f.measureValueFilter.measure));
 
     return Object.values(grouped).map((filters) => filters.at(-1)!);
 }

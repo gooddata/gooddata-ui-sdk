@@ -32,6 +32,7 @@ describe("InsightUsageOnDashboards", () => {
             inaccessibleDashboardsCount: 0,
             allDashboardsCount: 3,
         },
+        insightUsedInDocuments: [],
     };
 
     function renderComponent(customProps: Partial<InsightUsageOnDashboardsProps> = {}) {
@@ -54,6 +55,37 @@ describe("InsightUsageOnDashboards", () => {
     it("should render the dashboard items", () => {
         const { container } = renderComponent();
         expect(container.querySelectorAll(".s-insight-usage-dashboard-item")).toHaveLength(3);
-        expect(container.querySelector("summary").textContent).toEqual("View usage (3 dashboards)");
+        expect(
+            Array.from(container.querySelectorAll("summary")).map((summary) => summary.textContent),
+        ).toEqual(["Dashboards (3)"]);
+    });
+
+    it("should render the document items after the dashboards", () => {
+        const { container } = renderComponent({
+            insightUsedInDocuments: [{ id: "doc1", title: "Board pack" }],
+        });
+        expect(container.querySelectorAll(".s-insight-usage-dashboard-item")).toHaveLength(3);
+        expect(container.querySelector(".s-insight-usage-document-item").textContent).toEqual("Board pack");
+        expect(
+            Array.from(container.querySelectorAll("summary")).map((summary) => summary.textContent),
+        ).toEqual(["Dashboards (3)", "Reports (1)"]);
+    });
+
+    it("should show only the documents section when no dashboard uses the visualization", () => {
+        const { container } = renderComponent({
+            insightUsedOnDashboards: {
+                accessibleDashboards: [],
+                allDashboards: [],
+                inaccessibleDashboardsCount: 0,
+                allDashboardsCount: 0,
+            },
+            insightUsedInDocuments: [
+                { id: "doc1", title: "Board pack" },
+                { id: "doc2", title: "Weekly review" },
+            ],
+        });
+        expect(
+            Array.from(container.querySelectorAll("summary")).map((summary) => summary.textContent),
+        ).toEqual(["Reports (2)"]);
     });
 });

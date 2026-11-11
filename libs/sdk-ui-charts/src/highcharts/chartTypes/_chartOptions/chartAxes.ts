@@ -1,10 +1,8 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { range } from "lodash-es";
-
 import { type IMeasureDescriptor, type IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { BucketNames, type DataViewFacade } from "@gooddata/sdk-ui";
-import { _compact, _isEmpty } from "@gooddata/util";
+import { _compact, _isEmpty, _range } from "@gooddata/util";
 
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
@@ -142,7 +140,7 @@ function getMekkoYAxes(
         {
             label: config.yLabel || (heightItem?.name ?? ""),
             format: config.yFormat || heightItem?.format,
-            seriesIndices: range(measureGroup.items.length),
+            seriesIndices: _range(measureGroup.items.length),
         },
     ];
 }
@@ -232,7 +230,7 @@ function getDefaultYAxes(
             // Keep the first measure's metadata (e.g. format) and only override the title text.
             ...firstMeasureGroupItem,
             label: getDefaultYAxisLabel(config, measureGroup, measureGroupItems),
-            seriesIndices: range(measureGroupItems.length),
+            seriesIndices: _range(measureGroupItems.length),
         },
     ];
 }

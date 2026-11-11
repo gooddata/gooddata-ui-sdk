@@ -1,12 +1,13 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { difference, partition } from "lodash-es";
+import { difference } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
 import { areObjRefsEqual, isUriRef, serializeObjRef } from "@gooddata/sdk-model";
+import { _partition } from "@gooddata/util";
 
 import { type IRemoveDateFilters } from "../../../commands/filters.js";
 import { dateFilterRemoved } from "../../../events/filters.js";
@@ -33,7 +34,7 @@ export function* removeDateFiltersHandler(
         selectFilterContextAttributeFilters,
     );
 
-    const [removedFilters, _survivingFilters] = partition(allDateFiltersWithDimension, (item) =>
+    const [removedFilters, _survivingFilters] = _partition(allDateFiltersWithDimension, (item) =>
         dataSets.some((ds) => areObjRefsEqual(ds, item.dateFilter.dataSet)),
     );
 

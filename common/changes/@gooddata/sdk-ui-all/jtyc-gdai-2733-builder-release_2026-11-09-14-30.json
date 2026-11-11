@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-gen-ai: A finished builder edit turn releases the dashboard lock unless a clarifying questions form is still open. An answer that offers a chart or asks a question in text no longer keeps the dashboard waiting.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

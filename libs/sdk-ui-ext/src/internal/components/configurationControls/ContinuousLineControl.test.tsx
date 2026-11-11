@@ -2,8 +2,9 @@
 
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { set } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
+
+import { _set } from "@gooddata/util";
 
 import { InternalIntlWrapper } from "../../utils/internalIntlProvider.js";
 
@@ -60,7 +61,7 @@ describe("ContinuousLineControl", () => {
         });
 
         await userEvent.click(screen.getByRole("checkbox"));
-        expect(pushData).toBeCalledWith({ properties: set({}, `controls.continuousLine.enabled`, true) });
+        expect(pushData).toBeCalledWith({ properties: _set({}, `controls.continuousLine.enabled`, true) });
     });
 
     it("should display the tooltip when hovering the label", async () => {

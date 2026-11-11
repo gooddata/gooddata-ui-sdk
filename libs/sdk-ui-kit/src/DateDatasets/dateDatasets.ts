@@ -1,7 +1,9 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { groupBy, takeWhile } from "lodash-es";
+import { takeWhile } from "lodash-es";
 import { defineMessage } from "react-intl";
+
+import { _groupBy } from "@gooddata/util";
 
 import { type IDateDataset, type IDateDatasetHeader } from "./typings.js";
 
@@ -13,7 +15,7 @@ export const isDateDatasetHeader = (obj: unknown): obj is IDateDatasetHeader => 
 };
 
 function hasSameRelevance<T extends IDateDataset>(dateDatasets: ReadonlyArray<T | IDateDatasetHeader>) {
-    const relevanceCount = Object.keys(groupBy(dateDatasets, "relevance")).length;
+    const relevanceCount = Object.keys(_groupBy(dateDatasets, "relevance")).length;
     return relevanceCount === 1;
 }
 

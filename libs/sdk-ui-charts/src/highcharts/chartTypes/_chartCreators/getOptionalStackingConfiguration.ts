@@ -1,8 +1,9 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { merge, partial, set } from "lodash-es";
+import { merge, partial } from "lodash-es";
 
 import { type IDrillConfig } from "@gooddata/sdk-ui";
+import { _set } from "@gooddata/util";
 
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type StackingType } from "../../constants/stacking.js";
@@ -262,17 +263,17 @@ export function getParentAttributeConfiguration(
     const parentAttributeOptions = {};
 
     // only apply font-weight to parent label
-    set(parentAttributeOptions, "style", {
+    _set(parentAttributeOptions, "style", {
         fontWeight: "bold",
     });
 
     if (isInvertedChartType(type, chartConfig?.orientation?.position)) {
         // distance more 5px for two groups of attributes for bar chart
-        set(parentAttributeOptions, "x", -5);
+        _set(parentAttributeOptions, "x", -5);
     }
 
     // 'groupedOptions' is custom property in 'grouped-categories' plugin
-    set(xAxisItem, "labels.groupedOptions", [parentAttributeOptions]);
+    _set(xAxisItem, "labels.groupedOptions", [parentAttributeOptions]);
 
     return { xAxis: [xAxisItem] };
 }
@@ -347,11 +348,11 @@ export function convertMinMaxFromPercentToNumber(
         const newAxis = {};
 
         if (!(min === null || min === undefined) && typeof min === "number") {
-            set(newAxis, "min", min * 100);
+            _set(newAxis, "min", min * 100);
         }
 
         if (!(max === null || max === undefined) && typeof max === "number") {
-            set(newAxis, "max", max * 100);
+            _set(newAxis, "max", max * 100);
         }
 
         const numberOfAxes = axes.length;

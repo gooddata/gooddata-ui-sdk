@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-import { debounce } from "lodash-es";
+import { _debounce } from "@gooddata/util";
 
 /**
  * Hook that will call callback when browser window gets resized
@@ -12,7 +12,7 @@ import { debounce } from "lodash-es";
 export const useWindowResize = (callback: () => void, debounceTime = 0) => {
     const debouncedCallback = useRef(null);
     useEffect(() => {
-        debouncedCallback.current = debounceTime > 0 ? debounce(callback, debounceTime) : callback;
+        debouncedCallback.current = debounceTime > 0 ? _debounce(callback, debounceTime) : callback;
 
         window.addEventListener("resize", debouncedCallback.current);
 

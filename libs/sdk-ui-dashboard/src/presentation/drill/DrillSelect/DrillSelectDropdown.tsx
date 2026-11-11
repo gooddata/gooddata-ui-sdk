@@ -3,7 +3,6 @@
 import { type KeyboardEvent, type UIEvent, useCallback, useEffect, useMemo, useRef } from "react";
 
 import stringify from "json-stable-stringify";
-import { groupBy, uniqBy } from "lodash-es";
 import { type IntlShape, useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 
@@ -30,7 +29,7 @@ import {
 } from "@gooddata/sdk-model";
 import { type IDrillEvent, UnexpectedSdkError } from "@gooddata/sdk-ui";
 import { type IAlignPoint, Overlay, UiFocusManager, UiMenu } from "@gooddata/sdk-ui-kit";
-import { _compact } from "@gooddata/util";
+import { _compact, _groupBy, _uniqBy } from "@gooddata/util";
 
 import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils.js";
 import { type ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
@@ -179,7 +178,7 @@ export function DrillSelectDropdown({
         ],
     );
 
-    const grouped = groupBy(drillSelectItems, (item) => {
+    const grouped = _groupBy(drillSelectItems, (item) => {
         switch (item.type) {
             case DrillType.DRILL_DOWN:
                 return "drillDown";
@@ -546,7 +545,7 @@ export const createDrillSelectItems = ({
 function deduplicateDrillIntoUrlItems(
     drillDefinitions: DashboardDrillDefinition[],
 ): DashboardDrillDefinition[] {
-    return uniqBy(drillDefinitions, (drillDefinition) => {
+    return _uniqBy(drillDefinitions, (drillDefinition) => {
         if (!isDrillToAttributeUrl(drillDefinition)) {
             return drillDefinition;
         }

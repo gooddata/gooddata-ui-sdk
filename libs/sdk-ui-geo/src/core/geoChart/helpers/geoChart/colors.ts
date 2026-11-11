@@ -1,7 +1,7 @@
-// (C) 2019-2025 GoodData Corporation
-import { range } from "lodash-es";
+// (C) 2019-2026 GoodData Corporation
 
 import { type IRgbColorValue } from "@gooddata/sdk-model";
+import { _range } from "@gooddata/util";
 
 function formatColor(red: number, green: number, blue: number, opacity: number = 1): string {
     if (opacity === 1) {
@@ -28,7 +28,7 @@ function getCalculatedColors(
     steps: number[],
     opacity: number = 1,
 ): string[] {
-    return range(1, count).map((index: number): string =>
+    return _range(1, count).map((index: number): string =>
         formatColor(
             getCalculatedChannel(channels[0], index, steps[0]),
             getCalculatedChannel(channels[1], index, steps[1]),

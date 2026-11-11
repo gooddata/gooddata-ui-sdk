@@ -102,6 +102,17 @@
         white-space: nowrap;
     }
 
+    &__item-secondary {
+        font-weight: normal;
+        color: var(--gd-palette-complementary-6);
+    }
+
+    &__item--isSelected &__item-secondary,
+    &__item--isFocused &__item-secondary {
+        color: inherit;
+        opacity: 0.7;
+    }
+
     // wrapper around the question mark icon to center it vertically
     &__item-explanation {
         display: flex;

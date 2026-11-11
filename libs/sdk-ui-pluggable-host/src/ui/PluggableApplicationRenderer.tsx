@@ -44,6 +44,11 @@ import {
     loadPluggableApplication,
 } from "../loader/pluggableApplicationsLoader.js";
 import { getApplicationHref } from "../loader/routing.js";
+import {
+    type IApplicationMessagingAttachment,
+    type ModuleMessageBroker,
+} from "../messaging/ModuleMessageBroker.js";
+import { createMountMailbox } from "../messaging/mountMailbox.js";
 import { BackendPlatformContextProvider } from "../platformContext/useLoadPlatformContext.js";
 import { type IPluggableModuleLifecycleInfo, type PluggableModuleFailurePhase } from "../types/lifecycle.js";
 
@@ -121,6 +126,11 @@ export interface IPluggableApplicationRendererProps {
     onDocumentTitleChange?: (appId: string, pageTitle: string | undefined) => void;
     /** Open the host UI's pricing dialog, requested by the active app. */
     onOpenPricingDialog?: () => void;
+    /**
+     * Returns the module message broker of the page. The renderer attaches each mount attempt to it,
+     * so the app can exchange module messages with headless modules.
+     */
+    getModuleMessageBroker?: (ctx: IPlatformContext) => ModuleMessageBroker | undefined;
 }
 
 export function PluggableApplicationRenderer({
@@ -138,6 +148,7 @@ export function PluggableApplicationRenderer({
     onHeaderChange,
     onDocumentTitleChange,
     onOpenPricingDialog,
+    getModuleMessageBroker,
 }: IPluggableApplicationRendererProps) {
     const intl = useIntl();
     const intlRef = useAutoupdateRef(intl);
@@ -149,6 +160,8 @@ export function PluggableApplicationRenderer({
     const onAiAssistantContextRef = useAutoupdateRef(onAiAssistantContext);
     const onAiAssistantAppEventRef = useAutoupdateRef(onAiAssistantAppEvent);
     const onOpenPricingDialogRef = useAutoupdateRef(onOpenPricingDialog);
+    const getModuleMessageBrokerRef = useAutoupdateRef(getModuleMessageBroker);
+    const messagingAttachmentRef = useRef<IApplicationMessagingAttachment | undefined>(undefined);
     const containerRef = useRef<HTMLDivElement>(null);
     const mountHandleRef = useRef<IPluggableApplicationMountHandle | undefined>(undefined);
     // The app/module pair currently mounted. Held so the context-change effect can
@@ -234,21 +247,31 @@ export function PluggableApplicationRenderer({
 
         // Keep opaque chat events with this mount attempt, not the renderer instance: a workspace
         // switch can remount the app without replacing the renderer.
-        let pendingAiEvents: IAiAssistantChatEvent[] | undefined = [];
+        const aiEvents = createMountMailbox<IAiAssistantChatEvent>({
+            onDeliveryError: (error) =>
+                console.error(
+                    `[host-runtime/renderer] Failed to deliver AI assistant event to app "${app.id}".`,
+                    error,
+                ),
+        });
         const aiEventReceive = (event: IAiAssistantChatEvent) => {
             if (cancelled || aiEventReceiveRef?.current !== aiEventReceive) {
                 return;
             }
-            if (pendingAiEvents) {
-                pendingAiEvents.push(event);
-                return;
-            }
-            mountHandleRef.current?.onAiAssistantEventReceive?.(event);
+            aiEvents.push(event);
         };
-        const clearAiEventReceive = () => {
-            pendingAiEvents = undefined;
+        const messagingAttachment = getModuleMessageBrokerRef
+            .current?.(ctxRef.current)
+            ?.attachApplication(app.id);
+        messagingAttachmentRef.current = messagingAttachment;
+        const releaseMountChannels = () => {
+            aiEvents.close();
             if (aiEventReceiveRef?.current === aiEventReceive) {
                 aiEventReceiveRef.current = undefined;
+            }
+            messagingAttachment?.detach();
+            if (messagingAttachmentRef.current === messagingAttachment) {
+                messagingAttachmentRef.current = undefined;
             }
         };
         if (aiEventReceiveRef) {
@@ -279,7 +302,7 @@ export function PluggableApplicationRenderer({
 
                 const securityFailure = validateAppSecurity(app, loadedApp, ctxRef.current);
                 if (securityFailure) {
-                    clearAiEventReceive();
+                    releaseMountChannels();
                     const message = intlRef.current.formatMessage(
                         SECURITY_FAILURE_MESSAGES[securityFailure.kind],
                     );
@@ -318,6 +341,7 @@ export function PluggableApplicationRenderer({
                     onTelemetryEvent,
                     onHeaderChange: (header: IAppHeaderOptions) =>
                         onHeaderChangeRef.current?.(app.id, header),
+                    ...(messagingAttachment ? { moduleMessaging: messagingAttachment.messaging } : {}),
                 });
 
                 mountedAppRef.current = { app, loadedApp };
@@ -325,21 +349,8 @@ export function PluggableApplicationRenderer({
                     navigationRequestRef.current = navigationRequest;
                 }
 
-                // Continue queueing during replay so reentrant deliveries cannot overtake older events.
-                while (pendingAiEvents?.length && !cancelled) {
-                    const event = pendingAiEvents.shift();
-                    if (event) {
-                        try {
-                            mountHandleRef.current?.onAiAssistantEventReceive?.(event);
-                        } catch (error) {
-                            console.error(
-                                `[host-runtime/renderer] Failed to replay AI assistant event for app "${app.id}".`,
-                                error,
-                            );
-                        }
-                    }
-                }
-                pendingAiEvents = undefined;
+                aiEvents.open((event) => mountHandleRef.current?.onAiAssistantEventReceive?.(event));
+                messagingAttachment?.ready(mountHandleRef.current);
 
                 lifecycle?.onMountCompleted?.(app.id, now() - mountStart, APPLICATION);
                 lifecycle?.onRendered?.(app.id, now() - totalStart);
@@ -349,7 +360,7 @@ export function PluggableApplicationRenderer({
                 if (cancelled) {
                     return;
                 }
-                clearAiEventReceive();
+                releaseMountChannels();
                 // An application shown as failed must not veto navigation — its dialog would render
                 // into a hidden container.
                 if (navigationRequestRef?.current === navigationRequest) {
@@ -368,7 +379,7 @@ export function PluggableApplicationRenderer({
 
         return () => {
             cancelled = true;
-            clearAiEventReceive();
+            releaseMountChannels();
             // Only ever clear this mount's own registration, never a newer mount's.
             if (navigationRequestRef?.current === navigationRequest) {
                 navigationRequestRef.current = undefined;
@@ -420,6 +431,8 @@ export function PluggableApplicationRenderer({
             if (navigationRequestRef) {
                 navigationRequestRef.current = undefined;
             }
+            messagingAttachmentRef.current?.detach();
+            messagingAttachmentRef.current = undefined;
             deactivateAppStylesheets(mounted.app.id);
             handle.unmount();
             lifecycle?.onUnmounted?.(mounted.app.id, APPLICATION);

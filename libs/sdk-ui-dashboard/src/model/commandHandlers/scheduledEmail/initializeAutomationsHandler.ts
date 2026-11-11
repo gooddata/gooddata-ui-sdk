@@ -1,6 +1,5 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { omit } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, all, call, put, select } from "redux-saga/effects";
@@ -39,7 +38,7 @@ import {
 } from "@gooddata/sdk-model";
 import { convertError } from "@gooddata/sdk-ui";
 import { isAutomationRestricted } from "@gooddata/sdk-ui-ext";
-import { _compact } from "@gooddata/util";
+import { _compact, _omit } from "@gooddata/util";
 
 import {
     getAutomationAlertParameters,
@@ -558,7 +557,7 @@ function sanitizeDateFilters(filters: FilterContextItem[], commonDateFilterLocal
                 return {
                     ...filter,
                     dateFilter: {
-                        ...omit(filter.dateFilter, "dataSet"),
+                        ..._omit(filter.dateFilter, "dataSet"),
                     },
                 };
             }
@@ -615,9 +614,9 @@ function getDashboardFiltersOnly(
     return withoutInsightDateFilters.map((f) => {
         if (f === foundCommonFilter) {
             if (isRelativeDateFilter(f)) {
-                return omit(f, "relativeDateFilter.dataSet");
+                return _omit(f, "relativeDateFilter.dataSet");
             } else if (isAbsoluteDateFilter(f)) {
-                return omit(f, "absoluteDateFilter.dataSet");
+                return _omit(f, "absoluteDateFilter.dataSet");
             }
         }
         return f;

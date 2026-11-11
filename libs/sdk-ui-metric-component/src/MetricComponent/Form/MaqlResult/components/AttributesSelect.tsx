@@ -3,13 +3,12 @@
 import { type ReactElement, type ReactNode, useCallback, useMemo, useState } from "react";
 
 import classNames from "classnames";
-import { debounce } from "lodash-es";
 import { defineMessages, useIntl } from "react-intl";
 
 import { type ICatalogAttribute } from "@gooddata/sdk-model";
 import { LoadingComponent } from "@gooddata/sdk-ui";
 import { Button, Dropdown, DropdownList, type IDropdownButtonRenderProps } from "@gooddata/sdk-ui-kit";
-import { _isEqual } from "@gooddata/util";
+import { _debounce, _isEqual } from "@gooddata/util";
 
 import { useProp } from "../../../../shared/hooks/useProp.js";
 import { type DefaultTheme, makeStyles } from "../../../../shared/theme/index.js";
@@ -209,7 +208,7 @@ function useSearch(attributes: ICatalogAttribute[]) {
 
     // oxlint-disable-next-line react-hooks/exhaustive-deps
     const onSearch = useCallback(
-        debounce((query: string) => {
+        _debounce((query: string) => {
             setSearch(query);
         }, 250),
         [],

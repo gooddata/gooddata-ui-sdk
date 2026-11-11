@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { unionBy, uniqBy } from "lodash-es";
+import { unionBy } from "lodash-es";
 
 import {
     type IDashboardExportRawOptions,
@@ -47,7 +47,7 @@ import {
     newDefForItems,
     objRefToString,
 } from "@gooddata/sdk-model";
-import { _compact, randomString } from "@gooddata/util";
+import { _compact, _uniqBy, randomString } from "@gooddata/util";
 
 import { backend } from "../backend.js";
 import { type Granularity } from "../models/granularity.js";
@@ -804,7 +804,7 @@ export async function loadValidElementsData(
         .query();
 
     const { items, totalCount } = result;
-    const selectedElements = uniqBy(items, (item) => item.uri);
+    const selectedElements = _uniqBy(items, (item) => item.uri);
 
     return {
         items: selectedElements,

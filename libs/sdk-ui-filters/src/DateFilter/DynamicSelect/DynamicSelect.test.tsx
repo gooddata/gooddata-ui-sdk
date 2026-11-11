@@ -1,11 +1,11 @@
 // (C) 2019-2026 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
-import { range } from "lodash-es";
 import { createIntl, createIntlCache } from "react-intl";
 import { describe, expect, it, vi } from "vitest";
 
 import { type DateFilterGranularity } from "@gooddata/sdk-model";
+import { _range } from "@gooddata/util";
 
 import { type IMessageTranslator } from "../utils/Translations/Translators.js";
 
@@ -226,7 +226,7 @@ describe("DynamicSelect", () => {
                 365,
                 DAY,
                 [
-                    ...range(-365, -1).map((offset) => ({
+                    ..._range(-365, -1).map((offset) => ({
                         type: "option",
                         value: offset,
                         label: `${-offset} days ago`,
@@ -236,7 +236,7 @@ describe("DynamicSelect", () => {
                     { type: "option", value: 0, label: "today" },
                     { type: "separator" },
                     { type: "option", value: 1, label: "tomorrow" },
-                    ...range(2, 366).map((offset) => ({
+                    ..._range(2, 366).map((offset) => ({
                         type: "option",
                         value: offset,
                         label: `${offset} days ahead`,
@@ -247,7 +247,7 @@ describe("DynamicSelect", () => {
                 104,
                 WEEK_US,
                 [
-                    ...range(-104, -1).map((offset) => ({
+                    ..._range(-104, -1).map((offset) => ({
                         type: "option",
                         value: offset,
                         label: `${-offset} weeks ago`,
@@ -257,7 +257,7 @@ describe("DynamicSelect", () => {
                     { type: "option", value: 0, label: "this week" },
                     { type: "separator" },
                     { type: "option", value: 1, label: "next week" },
-                    ...range(2, 105).map((offset) => ({
+                    ..._range(2, 105).map((offset) => ({
                         type: "option",
                         value: offset,
                         label: `${offset} weeks ahead`,
@@ -268,7 +268,7 @@ describe("DynamicSelect", () => {
                 60,
                 MONTH,
                 [
-                    ...range(-60, -1).map((offset) => ({
+                    ..._range(-60, -1).map((offset) => ({
                         type: "option",
                         value: offset,
                         label: `${-offset} months ago`,
@@ -278,7 +278,7 @@ describe("DynamicSelect", () => {
                     { type: "option", value: 0, label: "this month" },
                     { type: "separator" },
                     { type: "option", value: 1, label: "next month" },
-                    ...range(2, 61).map((offset) => ({
+                    ..._range(2, 61).map((offset) => ({
                         type: "option",
                         value: offset,
                         label: `${offset} months ahead`,
@@ -289,7 +289,7 @@ describe("DynamicSelect", () => {
                 20,
                 QUARTER,
                 [
-                    ...range(-20, -1).map((offset) => ({
+                    ..._range(-20, -1).map((offset) => ({
                         type: "option",
                         value: offset,
                         label: `${-offset} quarters ago`,
@@ -299,7 +299,7 @@ describe("DynamicSelect", () => {
                     { type: "option", value: 0, label: "this quarter" },
                     { type: "separator" },
                     { type: "option", value: 1, label: "next quarter" },
-                    ...range(2, 21).map((offset) => ({
+                    ..._range(2, 21).map((offset) => ({
                         type: "option",
                         value: offset,
                         label: `${offset} quarters ahead`,
@@ -310,7 +310,7 @@ describe("DynamicSelect", () => {
                 20,
                 YEAR,
                 [
-                    ...range(-20, -1).map((offset) => ({
+                    ..._range(-20, -1).map((offset) => ({
                         type: "option",
                         value: offset,
                         label: `${-offset} years ago`,
@@ -320,7 +320,7 @@ describe("DynamicSelect", () => {
                     { type: "option", value: 0, label: "this year" },
                     { type: "separator" },
                     { type: "option", value: 1, label: "next year" },
-                    ...range(2, 21).map((offset) => ({
+                    ..._range(2, 21).map((offset) => ({
                         type: "option",
                         value: offset,
                         label: `${offset} years ahead`,

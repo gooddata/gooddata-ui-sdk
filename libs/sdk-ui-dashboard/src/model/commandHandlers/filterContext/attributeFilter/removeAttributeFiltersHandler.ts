@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { difference, partition } from "lodash-es";
+import { difference } from "lodash-es";
 import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
@@ -12,6 +12,7 @@ import {
     dashboardAttributeFilterItemLocalIdentifier,
     isInsightWidget,
 } from "@gooddata/sdk-model";
+import { _partition } from "@gooddata/util";
 
 import { type IRemoveAttributeFilters } from "../../../commands/filters.js";
 import { attributeFilterRemoved } from "../../../events/filters.js";
@@ -34,7 +35,7 @@ export function* removeAttributeFiltersHandler(
         selectFilterContextAttributeFilterItems,
     );
 
-    const [removedFilters, survivingFilters] = partition(allFilters, (item) =>
+    const [removedFilters, survivingFilters] = _partition(allFilters, (item) =>
         filterLocalIds.includes(dashboardAttributeFilterItemLocalIdentifier(item)!),
     );
 

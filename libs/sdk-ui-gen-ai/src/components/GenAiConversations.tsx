@@ -3,7 +3,6 @@
 import { useCallback } from "react";
 
 import cx from "classnames";
-import noop from "lodash-es/noop.js";
 import { useDispatch, useSelector } from "react-redux";
 
 import { BackendProvider, WorkspaceProvider, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
@@ -108,7 +107,7 @@ export function GenAIConversations(props: GenAIConversationsProps) {
 }
 
 function GenAIConversationsContent(props: GenAIConversationsProps) {
-    const { catalogItems, className, onConversationSelect = noop, slots } = props;
+    const { catalogItems, className, onConversationSelect = () => {}, slots } = props;
     const dispatch = useDispatch();
     const settings = useSelector(settingsSelector);
     const { loading } = usePermissions();

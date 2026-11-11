@@ -1,10 +1,10 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { isPlainObject, omit } from "lodash-es";
+import { isPlainObject } from "lodash-es";
 
 import { type IVisualizationProperties } from "@gooddata/sdk-ui-ext/internal";
 import { type ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
-import { _isEmpty, _isEqual } from "@gooddata/util";
+import { _isEmpty, _isEqual, _omit } from "@gooddata/util";
 
 import { type IVisualizationPropertiesControls } from "../../typings/properties.js";
 
@@ -239,7 +239,7 @@ export function sanitizeInitializedProperties(
 ): IVisualizationProperties | null {
     const controls = properties?.controls;
     const supportedPropertiesBase =
-        isPlainObject(controls) && _isEmpty(controls) ? omit(properties, "controls") : properties;
+        isPlainObject(controls) && _isEmpty(controls) ? _omit(properties, "controls") : properties;
     return isPlainObject(supportedPropertiesBase) && _isEmpty(supportedPropertiesBase)
         ? null
         : supportedPropertiesBase;

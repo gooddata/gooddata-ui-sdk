@@ -7,7 +7,6 @@ import {
     NoViableAltException,
     type Token,
 } from "antlr4ng";
-import { groupBy } from "lodash-es";
 import { Diagnostic, DiagnosticSeverity, Range } from "vscode-languageserver";
 
 import {
@@ -21,6 +20,7 @@ import {
 } from "@gooddata/maql-antlr4ts";
 import { isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
 import { areObjRefsEqual, serializeObjRef } from "@gooddata/sdk-model";
+import { _groupBy } from "@gooddata/util";
 
 import { ErrorCodes, diagnosticsSource } from "./constants.js";
 import { getInvalidDateElementPattern } from "./dateElementFormat.js";
@@ -207,7 +207,7 @@ async function validateLabelElements(
         return [];
     }
     const foundPairs = labelElementsFinder(metric);
-    const stringsGrouped = groupBy(foundPairs, (pair) => serializeObjRef(pair[0].ref));
+    const stringsGrouped = _groupBy(foundPairs, (pair) => serializeObjRef(pair[0].ref));
     return Promise.all(
         Object.entries(stringsGrouped).map(async ([_ref, pairs]) => {
             const label: IMaqlObject = pairs[0][0]; // all the labels from 'pairs' have the same ref (identity)

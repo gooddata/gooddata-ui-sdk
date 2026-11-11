@@ -1,6 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
-
-import { omit } from "lodash-es";
+// (C) 2020-2026 GoodData Corporation
 
 import { type IAttributeDescriptor, type IColor, type IColorPalette } from "@gooddata/sdk-model";
 import { type DataViewFacade, type IColorAssignment } from "@gooddata/sdk-ui";
@@ -13,6 +11,7 @@ import {
     getColorFromMapping,
     isValidMappedColor,
 } from "@gooddata/sdk-ui-vis-commons";
+import { _omit } from "@gooddata/util";
 
 import { type IGeoData } from "../../../GeoChart.js";
 import { type IGeoAttributesInDimension, findGeoAttributesInDimension } from "../helpers/geoChart/data.js";
@@ -94,7 +93,7 @@ export function getColorStrategy(
         geoData,
     );
     const locationAttributeHeader: IAttributeDescriptor = {
-        attributeHeader: omit(locationAttribute, "items"),
+        attributeHeader: _omit(locationAttribute, "items"),
     };
 
     return new GeoChartColorStrategy(

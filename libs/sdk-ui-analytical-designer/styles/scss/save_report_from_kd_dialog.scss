@@ -19,6 +19,10 @@
         border-bottom: solid 1px variables.$adi-bucket-border-color;
         margin-top: 15px;
 
+        .gd-collapsible-section + .gd-collapsible-section {
+            padding-top: 0;
+        }
+
         .gd-collapsible-content {
             height: auto;
             max-height: 140px;
@@ -33,6 +37,10 @@
 
             > ul > li {
                 margin-bottom: 10px;
+            }
+
+            > ul > li:last-child {
+                margin-bottom: 0;
             }
 
             > ul > li span {

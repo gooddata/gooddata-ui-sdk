@@ -24,6 +24,7 @@ import {
 } from "@gooddata/sdk-pluggable-application-model";
 
 import { type AppSecurityFailure } from "../loader/appSecurityValidation.js";
+import { ModuleMessageBroker } from "../messaging/ModuleMessageBroker.js";
 import { type IAppLifecycleCallbacks } from "../types/lifecycle.js";
 
 const mocks = vi.hoisted(() => ({
@@ -136,7 +137,9 @@ function renderer(options: {
     onAiAssistantAppEvent?: ComponentProps<typeof PluggableApplicationRenderer>["onAiAssistantAppEvent"];
     onOpenPricingDialog?: () => void;
     aiEventReceiveRef?: ComponentProps<typeof PluggableApplicationRenderer>["aiEventReceiveRef"];
+    broker?: ModuleMessageBroker;
 }): ReactElement {
+    const { broker } = options;
     return (
         <HostIntlProvider locale="en-US">
             <PluggableApplicationRenderer
@@ -149,6 +152,7 @@ function renderer(options: {
                 onAiAssistantAppEvent={options.onAiAssistantAppEvent}
                 onOpenPricingDialog={options.onOpenPricingDialog}
                 aiEventReceiveRef={options.aiEventReceiveRef}
+                getModuleMessageBroker={broker ? () => broker : undefined}
             />
         </HostIntlProvider>
     );
@@ -393,11 +397,11 @@ describe("PluggableApplicationRenderer", () => {
             ]);
             expect(consoleError.mock.calls).toEqual([
                 [
-                    `[host-runtime/renderer] Failed to replay AI assistant event for app "${app.id}".`,
+                    `[host-runtime/renderer] Failed to deliver AI assistant event to app "${app.id}".`,
                     firstError,
                 ],
                 [
-                    `[host-runtime/renderer] Failed to replay AI assistant event for app "${app.id}".`,
+                    `[host-runtime/renderer] Failed to deliver AI assistant event to app "${app.id}".`,
                     secondError,
                 ],
             ]);
@@ -750,6 +754,78 @@ describe("PluggableApplicationRenderer", () => {
 
             expect(mocks.deactivateAppStylesheets).toHaveBeenCalledWith(app.id);
             expect(consoleError).toHaveBeenCalledOnce();
+        });
+    });
+
+    describe("module messaging", () => {
+        const CHANNEL = "gdc.exportQueue.v1";
+        let broker: ModuleMessageBroker;
+        let post: (type: string) => string;
+
+        beforeEach(() => {
+            broker = new ModuleMessageBroker();
+            const port = broker.connectHeadlessModule("queue");
+            port.registerChannel(CHANNEL, () => ({ jobs: [] }));
+            post = (type) => port.postToActiveApplication({ channel: CHANNEL, type });
+            broker.markSettled();
+        });
+
+        it("gives the app module messaging and delivers posts queued during startup after mount", async () => {
+            const onModuleMessage = vi.fn();
+            let reply: Promise<unknown> | undefined;
+            mocks.loadPluggableApplication.mockResolvedValue({
+                mount: (options) => {
+                    reply = options.moduleMessaging?.request({ channel: CHANNEL, type: "jobs.list" });
+                    expect(post("during-mount")).toBe("queued");
+                    return { unmount: vi.fn(), onModuleMessage, acceptedChannels: [CHANNEL] };
+                },
+            });
+            render(renderer({ pathname: WS1_PATHNAME, ctx: context(), navigationRequestRef, broker }));
+            expect(post("before-mount")).toBe("queued");
+
+            await flushMount();
+
+            await expect(reply).resolves.toEqual({ jobs: [] });
+            expect(onModuleMessage.mock.calls.map(([message]) => message.type)).toEqual([
+                "before-mount",
+                "during-mount",
+            ]);
+        });
+
+        it("detaches the mount attempt on unmount", async () => {
+            mocks.loadPluggableApplication.mockResolvedValue({
+                mount: () => ({ unmount: vi.fn(), onModuleMessage: vi.fn() }),
+            });
+            const { unmount } = render(
+                renderer({ pathname: WS1_PATHNAME, ctx: context(), navigationRequestRef, broker }),
+            );
+            await flushMount();
+            expect(post("live")).toBe("delivered");
+
+            unmount();
+
+            expect(post("after-unmount")).toBe("no-receiver");
+        });
+
+        it("detaches the mount attempt when the load fails", async () => {
+            vi.spyOn(console, "error").mockImplementation(() => undefined);
+            mocks.loadPluggableApplication.mockRejectedValue(new Error("load failed"));
+            render(renderer({ pathname: WS1_PATHNAME, ctx: context(), navigationRequestRef, broker }));
+            expect(post("queued")).toBe("queued");
+
+            await flushMount();
+
+            expect(post("after-failure")).toBe("no-receiver");
+        });
+
+        it("does not pass module messaging without a broker", async () => {
+            const mount = vi.fn((_options: Parameters<IPluggableApp["mount"]>[0]) => ({ unmount: vi.fn() }));
+            mocks.loadPluggableApplication.mockResolvedValue({ mount });
+            render(renderer({ pathname: WS1_PATHNAME, ctx: context(), navigationRequestRef }));
+
+            await flushMount();
+
+            expect(mount.mock.calls[0][0].moduleMessaging).toBeUndefined();
         });
     });
 });

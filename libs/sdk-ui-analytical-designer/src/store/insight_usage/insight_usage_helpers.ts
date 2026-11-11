@@ -4,7 +4,11 @@ import { sortBy } from "lodash-es";
 
 import { type IListedDashboard, type IMetadataObject } from "@gooddata/sdk-model";
 
-import { type IInsightUsageOnDashboard, type IInsightUsageOnDashboardItem } from "./insight_usage_state.js";
+import {
+    type IInsightUsageInDocumentItem,
+    type IInsightUsageOnDashboard,
+    type IInsightUsageOnDashboardItem,
+} from "./insight_usage_state.js";
 
 export const sortDashboards = (dashboards: IInsightUsageOnDashboardItem[], sourceDashboardId: string) =>
     sortBy(dashboards, (dashboardMeta: IInsightUsageOnDashboardItem) => {
@@ -40,6 +44,14 @@ export const getInsightUsageOnDashboards = (
         allDashboardsCount,
     };
 };
+
+export const getInsightUsageInDocuments = (
+    referencedDocuments: IMetadataObject[],
+): IInsightUsageInDocumentItem[] =>
+    sortBy(
+        referencedDocuments.map(({ id, title }) => ({ id, title })),
+        (item) => item.title.trim().toLowerCase(),
+    );
 
 export const EMPTY_INSIGHT_USAGE_ON_DASHBOARDS: IInsightUsageOnDashboard = {
     accessibleDashboards: [],

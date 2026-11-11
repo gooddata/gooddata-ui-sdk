@@ -1,7 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set } from "lodash-es";
-
 import {
     type IInsight,
     type IInsightDefinition,
@@ -11,7 +9,7 @@ import {
     newAttributeSort,
 } from "@gooddata/sdk-model";
 import { BucketNames, type IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
-import { _cloneDeep, _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty, _set } from "@gooddata/util";
 
 import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket.js";
 import {
@@ -183,7 +181,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
     protected override configureBuckets(extendedReferencePoint: IExtendedReferencePoint): void {
         const { measures, views, stacks } = this.getBucketItemsWithMultipleDates(extendedReferencePoint);
 
-        set(extendedReferencePoint, BUCKETS, [
+        _set(extendedReferencePoint, BUCKETS, [
             {
                 localIdentifier: BucketNames.MEASURES,
                 items: measures,

@@ -1,10 +1,10 @@
 // (C) 2007-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
-import { omit } from "lodash-es";
 
 import { isNoDataError } from "@gooddata/sdk-backend-spi";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
+import { _omit } from "@gooddata/util";
 
 import { type IScenario, type VisProps } from "../../src/index.js";
 
@@ -90,10 +90,10 @@ async function _mountChartAndCapture<T extends VisProps>(
 
     if (!customErrorHandler) {
         // make sure error handler injected by this fun is not included in the captured props
-        interactions.effectiveProps = omit(interactions.effectiveProps, "onError");
+        interactions.effectiveProps = _omit(interactions.effectiveProps, "onError");
         // when no extractor is in play both fields describe the same props, so reuse the cleaned object
         interactions.componentProps = effectivePropsExtractor
-            ? omit(interactions.componentProps, "onError")
+            ? _omit(interactions.componentProps, "onError")
             : interactions.effectiveProps;
     }
 

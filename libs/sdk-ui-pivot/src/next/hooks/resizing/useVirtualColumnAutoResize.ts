@@ -3,9 +3,9 @@
 import { type RefObject, useCallback, useRef } from "react";
 
 import { type GridApi, type VirtualColumnsChangedEvent } from "ag-grid-enterprise";
-import { debounce } from "lodash-es";
 
 import { usePrevious } from "@gooddata/sdk-ui";
+import { _debounce } from "@gooddata/util";
 
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { getColumnsPendingAutoResize } from "../../features/resizing/getColumnsPendingAutoResize.js";
@@ -42,7 +42,7 @@ export function useVirtualColumnAutoResize(
     }
 
     const debouncedAutoSize = useRef(
-        debounce((api: GridApi<AgGridRowData>, columns: AgGridColumn[]) => {
+        _debounce((api: GridApi<AgGridRowData>, columns: AgGridColumn[]) => {
             if (columns.length > 0) {
                 // Only auto-size columns that haven't been processed yet, help with lagging a bit
                 // Also skip columns that have a width set as it may be fixed by column config

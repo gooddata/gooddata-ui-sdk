@@ -2,7 +2,6 @@
 
 import { type MutableRefObject, useCallback, useMemo, useRef, useState } from "react";
 
-import { partition } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import {
@@ -15,6 +14,7 @@ import {
     type IDashboardMeasureValueFilterConfig,
     type ObjRef,
 } from "@gooddata/sdk-model";
+import { _partition } from "@gooddata/util";
 
 import type { IAutomationFiltersTab } from "../../../../model/store/filtering/types.js";
 import { useAutomationsContext } from "../../contexts/AutomationsContext.js";
@@ -64,7 +64,7 @@ function computeVisibleFilters(
         context.isCommonDateFilterHidden,
         context.disableDateFilters,
     );
-    const [restrictedFilters, visibleFilters] = partition(nonHiddenFilters, context.isFilterRestricted);
+    const [restrictedFilters, visibleFilters] = _partition(nonHiddenFilters, context.isFilterRestricted);
 
     return { visibleFilters, restrictedFilters };
 }

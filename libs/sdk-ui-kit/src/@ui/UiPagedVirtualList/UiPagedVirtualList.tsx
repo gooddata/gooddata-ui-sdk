@@ -43,6 +43,7 @@ export interface IUiPagedVirtualListProps<T> {
     itemHeight: number;
     itemsGap: number;
     containerPadding?: number;
+    listPadding?: number;
     itemPadding: number;
     skeletonItemsCount: number;
     hasNextPage?: boolean;
@@ -309,6 +310,7 @@ function useVirtualList<T>({
     itemHeightGetter,
     itemsGap,
     containerPadding = 0,
+    listPadding = 0,
     skeletonItemsCount,
     hasNextPage,
     loadNextPage,
@@ -368,14 +370,14 @@ function useVirtualList<T>({
             return 0;
         }
 
-        let totalHeight = itemsGap;
+        let totalHeight = itemsGap + 2 * listPadding;
 
         for (let index = 0; index < renderItemsCount; index += 1) {
             totalHeight += getItemSizeWithGap(index);
         }
 
         return totalHeight;
-    }, [getItemSizeWithGap, itemsGap, renderItemsCount]);
+    }, [getItemSizeWithGap, itemsGap, listPadding, renderItemsCount]);
 
     const height = Math.min(maxHeight, realHeight) + containerPadding;
 
@@ -401,6 +403,10 @@ function useVirtualList<T>({
         count: renderItemsCount,
         getScrollElement: () => scrollContainerRef.current,
         estimateSize: (index) => getItemSizeWithGap(index),
+        paddingStart: listPadding,
+        paddingEnd: listPadding,
+        scrollPaddingStart: listPadding,
+        scrollPaddingEnd: listPadding,
         observeElementRect,
         overscan: 5,
         rangeExtractor,

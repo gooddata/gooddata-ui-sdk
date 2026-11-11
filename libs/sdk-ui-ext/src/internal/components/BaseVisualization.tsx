@@ -2,7 +2,6 @@
 
 import { forwardRef, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState } from "react";
 
-import { omit } from "lodash-es";
 import { type Root, createRoot } from "react-dom/client";
 import { v4 as uuidv4 } from "uuid";
 
@@ -32,7 +31,7 @@ import {
     type VisualizationEnvironment,
 } from "@gooddata/sdk-ui";
 import { OverlayZIndexContext, useContainingOverlayZIndex } from "@gooddata/sdk-ui-kit";
-import { _isEmpty, _isEqual } from "@gooddata/util";
+import { _isEmpty, _isEqual, _omit } from "@gooddata/util";
 
 import { type ISortConfig } from "../interfaces/SortConfig.js";
 import {
@@ -120,8 +119,8 @@ function bucketReferencePointHasChanged(
     nextReferencePoint: IReferencePoint,
 ) {
     return !_isEqual(
-        omit(currentReferencePoint, ["properties", "availableSorts"]),
-        omit(nextReferencePoint, ["properties", "availableSorts"]),
+        _omit(currentReferencePoint, ["properties", "availableSorts"]),
+        _omit(nextReferencePoint, ["properties", "availableSorts"]),
     );
 }
 

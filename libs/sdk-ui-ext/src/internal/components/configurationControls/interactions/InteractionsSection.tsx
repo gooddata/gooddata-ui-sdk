@@ -24,7 +24,6 @@ export interface IInteractionsSectionProps {
     supportsAlertConfiguration?: boolean;
     supportsDrillDownConfiguration?: boolean;
     supportsScheduledExportsConfiguration?: boolean;
-    supportsKeyDriveAnalysis?: boolean;
     showImplicitDrillToUrl?: boolean;
     enableDrillToUrlByDefault?: boolean;
 }
@@ -51,7 +50,6 @@ export const InteractionsSection = memo(function InteractionsSection({
     supportsAlertConfiguration,
     supportsDrillDownConfiguration,
     supportsScheduledExportsConfiguration,
-    supportsKeyDriveAnalysis,
     showImplicitDrillToUrl,
     enableDrillToUrlByDefault,
 }: IInteractionsSectionProps) {
@@ -101,7 +99,7 @@ export const InteractionsSection = memo(function InteractionsSection({
                     <QuestionMarkTooltip tooltipText={messages["interactionsScheduledExportsTooltip"].id!} />
                 </div>
             ) : null}
-            {supportsKeyDriveAnalysis && metrics && metrics.length > 0 ? (
+            {metrics && metrics.length > 0 ? (
                 <>
                     <div className="gd-interactions-section__control-with-tooltip">
                         <CheckboxControl

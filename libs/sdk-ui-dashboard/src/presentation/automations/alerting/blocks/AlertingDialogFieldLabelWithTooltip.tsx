@@ -18,23 +18,27 @@ export function AlertingDialogFieldLabelWithTooltip({
 }) {
     const intl = useIntl();
     return (
-        <div className="gd-dashboard-alerting-dialog-form-field__content-container-tooltip">
+        <span className="gd-dashboard-alerting-dialog-form-field__content-container-tooltip">
             <FormattedMessage {...label} />
-            <UiTooltip
-                anchor={
-                    <UiIconButton
-                        icon="question"
-                        variant="tertiary"
-                        size="xxsmall"
-                        accessibilityConfig={{ ariaLabel: intl.formatMessage(label) }}
-                    />
-                }
-                content={<FormattedMessage {...tooltip} />}
-                arrowPlacement="left"
-                optimalPlacement
-                offset={10}
-                triggerBy={["hover", "click"]}
-            />
-        </div>
+            <span className="gd-dashboard-alerting-dialog-form-field__label-tooltip-icon">
+                <UiTooltip
+                    component="span"
+                    inlineAnchor
+                    anchor={
+                        <UiIconButton
+                            icon="question"
+                            variant="tertiary"
+                            size="xxsmall"
+                            accessibilityConfig={{ ariaLabel: intl.formatMessage(label) }}
+                        />
+                    }
+                    content={<FormattedMessage {...tooltip} />}
+                    arrowPlacement="left"
+                    optimalPlacement
+                    offset={10}
+                    triggerBy={["hover", "click"]}
+                />
+            </span>
+        </span>
     );
 }

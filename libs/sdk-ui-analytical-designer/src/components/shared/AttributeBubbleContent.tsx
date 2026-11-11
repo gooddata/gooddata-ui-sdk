@@ -15,16 +15,18 @@ export function TooltipAttrElements({
     const intl = useIntl();
 
     const remainingElementsCount = attrElementsTotalCount - attrElements.length;
-    // the values of a numeric computed attribute are displayed formatted, like the filter displays them
+    // the values are displayed formatted, like the filter displays them: date values come formatted,
+    // the values of a numeric computed attribute are formatted by their number format; raw otherwise
     const formatter = createNumberFormatter(separators);
-    const displayTitle = (title: string) =>
-        attrElementsNumberFormat ? formatAttributeValue(title, attrElementsNumberFormat, formatter) : title;
+    const displayTitle = ({ title, formattedTitle }: { title: string; formattedTitle?: string }) =>
+        formattedTitle ||
+        (attrElementsNumberFormat ? formatAttributeValue(title, attrElementsNumberFormat, formatter) : title);
 
     return (
         <>
             {attrElements.map((element, idx) => (
                 <span key={idx} className="s-attribute-element">
-                    {displayTitle(element.title) || `(${intl.formatMessage({ id: "empty_value" })})`}
+                    {displayTitle(element) || `(${intl.formatMessage({ id: "empty_value" })})`}
                     <br />
                 </span>
             ))}

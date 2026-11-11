@@ -2,7 +2,6 @@
 
 // @vitest-environment node
 
-import { range } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd, ReferenceMdExt, ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -10,6 +9,7 @@ import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { type IColorPalette, type IMeasure, type ITheme } from "@gooddata/sdk-model";
 import { type DataViewFacade, HeaderPredicates } from "@gooddata/sdk-ui";
 import { type IColorMapping, type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import { _range } from "@gooddata/util";
 
 import { recordedDataFacade } from "../../../testUtils/recordings.fixture.js";
 import { ColorFactory } from "../_chartOptions/colorFactory.js";
@@ -74,7 +74,7 @@ describe("BulletChartColorStrategy", () => {
                     dv,
                 });
 
-                range(expectedColors.length).map((itemIndex) => {
+                _range(expectedColors.length).map((itemIndex) => {
                     expect(colorStrategy.getColorByIndex(itemIndex)).toEqual(expectedColors[itemIndex]);
                 });
             },
@@ -101,7 +101,7 @@ describe("BulletChartColorStrategy", () => {
 
             const expectedColors = ["rgb(20,178,226)", "rgb(138,217,241)", "rgb(56,56,56)"];
 
-            range(expectedColors.length).map((itemIndex) => {
+            _range(expectedColors.length).map((itemIndex) => {
                 expect(colorStrategy.getColorByIndex(itemIndex)).toEqual(expectedColors[itemIndex]);
             });
         });
@@ -136,7 +136,7 @@ describe("BulletChartColorStrategy", () => {
         ])("should map colors", (colorMapping: IColorMapping[], expectedColors: string[]) => {
             const colorStrategy = getBulletColorStrategy({ dv: AllMeasures, colorMapping });
 
-            range(expectedColors.length).map((itemIndex) => {
+            _range(expectedColors.length).map((itemIndex) => {
                 expect(colorStrategy.getColorByIndex(itemIndex)).toEqual(expectedColors[itemIndex]);
             });
         });

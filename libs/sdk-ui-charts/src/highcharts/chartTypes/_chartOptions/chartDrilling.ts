@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { omit, without } from "lodash-es";
+import { without } from "lodash-es";
 
 import { type IAttributeDescriptor, type IResultAttributeHeader } from "@gooddata/sdk-model";
 import {
@@ -11,6 +11,7 @@ import {
     getDrillIntersection,
     isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
+import { _omit } from "@gooddata/util";
 
 import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { type IPointData, type ISeriesDataItem } from "../../typings/unsafe.js";
@@ -41,7 +42,7 @@ function getViewBy(
             ...unwrap(viewByHeader),
             attribute: viewByAttribute,
         };
-        viewByAttributeDescriptor = { attributeHeader: omit(viewByAttribute, "items") };
+        viewByAttributeDescriptor = { attributeHeader: _omit(viewByAttribute, "items") };
     }
 
     return {
@@ -65,7 +66,7 @@ function getStackBy(
             ...unwrap(stackByHeader),
             attribute: stackByAttribute,
         };
-        stackByAttributeDescriptor = { attributeHeader: omit(stackByAttribute, "items") };
+        stackByAttributeDescriptor = { attributeHeader: _omit(stackByAttribute, "items") };
     }
 
     return {

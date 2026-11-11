@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { omitBy, set, tail } from "lodash-es";
+import { omitBy, tail } from "lodash-es";
 
 import { type IBackendCapabilities, type IDataView, type IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
@@ -22,7 +22,7 @@ import {
     updateOutliersWithSettings,
 } from "@gooddata/sdk-ui-charts";
 import { buildTooltipExecutionFromConfig } from "@gooddata/sdk-ui-vis-commons";
-import { _cloneDeep, _compact, _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _compact, _isEmpty, _set } from "@gooddata/util";
 
 import { messages } from "../../../../locales.js";
 import { BUCKETS } from "../../../constants/bucket.js";
@@ -183,7 +183,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         const categoriesCount =
             extendedReferencePoint?.uiConfig?.buckets?.[BucketNames.VIEW]?.itemsLimit ?? MAX_CATEGORIES_COUNT;
 
-        set(extendedReferencePoint, BUCKETS, [
+        _set(extendedReferencePoint, BUCKETS, [
             {
                 localIdentifier: BucketNames.MEASURES,
                 items: getFilteredMeasuresForStackedCharts(buckets),

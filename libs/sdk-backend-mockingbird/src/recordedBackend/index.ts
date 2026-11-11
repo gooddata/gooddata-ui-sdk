@@ -25,6 +25,7 @@ import {
     type ILlmProvidersQueryResult,
     type IOrganization,
     type IOrganizationLlmProvidersService,
+    type IOrganizationLocalizationService,
     type IOrganizationNotificationChannelService,
     type IOrganizationNotificationService,
     type IOrganizationPermissionService,
@@ -1084,7 +1085,7 @@ function recordedDataSourcesService(): IDataSourcesService {
     };
 }
 
-function recordedLocalizationService(): IWorkspaceLocalizationService {
+function recordedLocalizationService(): IOrganizationLocalizationService & IWorkspaceLocalizationService {
     return {
         getUsage: () =>
             Promise.resolve({
@@ -1094,7 +1095,7 @@ function recordedLocalizationService(): IWorkspaceLocalizationService {
         getUsageWorkspaces: () => Promise.resolve({ workspaces: [], totalCount: 0 }),
         getUsageUsers: () => Promise.resolve({ users: [], totalCount: 0 }),
         getStatistics: () => Promise.resolve({ metadata: { locales: [] }, data: { locales: [] } }),
-        getTranslationUsage: () => Promise.resolve({ values: [] }),
+        getIssues: () => Promise.resolve({ issues: [] }),
         getStatisticsWorkspaces: () => Promise.resolve({ workspaces: [], totalCount: 0 }),
         getMissingTranslations: () => Promise.resolve([]),
     };

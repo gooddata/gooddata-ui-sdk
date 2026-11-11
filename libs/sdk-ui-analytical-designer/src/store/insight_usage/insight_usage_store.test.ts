@@ -9,7 +9,11 @@ import { createAnalyticalDashboard, createListedDashboard } from "../../tests/co
 import { getInitializedState } from "../../tests/state.test.helpers.js";
 
 import { EMPTY_INSIGHT_USAGE_ON_DASHBOARDS } from "./insight_usage_helpers.js";
-import { getInsightUsageOnDashboardsSelector, getInsightUsageState } from "./insight_usage_selectors.js";
+import {
+    getInsightUsageInDocumentsSelector,
+    getInsightUsageOnDashboardsSelector,
+    getInsightUsageState,
+} from "./insight_usage_selectors.js";
 import { insightUsageInitialState } from "./insight_usage_state.js";
 
 const REFERENCED = [createAnalyticalDashboard("Sale", "Bee", 123)];
@@ -35,7 +39,23 @@ describe("insightUsage store", () => {
         expect(getInsightUsageState(state)).toEqual({
             referencedDashboards: REFERENCED,
             allUserDashboards: USER_DASHBOARDS,
+            referencedDocuments: [],
         });
+    });
+
+    it("serves the referencing documents sorted by title", () => {
+        const state = combinedRootReducer(
+            getInitializedState(),
+            updateInsightUsageOnDashboards(REFERENCED, USER_DASHBOARDS, [
+                createAnalyticalDashboard("zeta report", "doc2", 2),
+                createAnalyticalDashboard("Alpha report", "doc1", 1),
+            ]),
+        );
+
+        expect(getInsightUsageInDocumentsSelector(state)).toEqual([
+            { id: "doc1", title: "Alpha report" },
+            { id: "doc2", title: "zeta report" },
+        ]);
     });
 
     it("resets to null, which the derived selector reads as the empty usage", () => {

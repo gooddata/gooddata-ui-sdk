@@ -1,9 +1,9 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { range } from "lodash-es";
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { uriRef } from "@gooddata/sdk-model";
+import { _range } from "@gooddata/util";
 
 import { ATTRIBUTE, DATE, METRIC } from "../constants/bucket.js";
 import { type IBucketsMetaState } from "../store/buckets/buckets_meta_state.js";
@@ -79,7 +79,7 @@ describe("Decorated Bucket Item", () => {
     }
 
     beforeEach(() => {
-        elements = range(1, 50).map((idx) => ({ uri: `/${idx}`, title: `element ${idx}` }));
+        elements = _range(1, 50).map((idx) => ({ uri: `/${idx}`, title: `element ${idx}` }));
     });
 
     describe("basic tests", () => {

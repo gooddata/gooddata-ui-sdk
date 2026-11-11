@@ -1,10 +1,9 @@
 // (C) 2026 GoodData Corporation
 
-import { omit } from "lodash-es";
-
 import { type ISortItem, type ObjRef, areObjRefsEqual, isObjRef } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { type IExtendedReferencePoint } from "@gooddata/sdk-ui-ext/internal";
+import { _omit } from "@gooddata/util";
 
 import { findMasterMeasure, isDate } from "../../models/bucket_item.js";
 import { type IRawBucket, type IRawBucketItem, type IRawBuckets } from "../../typings/buckets.js";
@@ -117,7 +116,7 @@ function normalizeGeoDisplayForm(
     let normalized = item;
     const displayFormRef = toObjRef(item.displayForm);
     if (displayFormRef && areObjRefsEqual(displayFormRef, geoDisplayFormRef)) {
-        normalized = omit(normalized, "displayForm");
+        normalized = _omit(normalized, "displayForm");
     }
 
     if (resetDfRef && defaultDfRef) {
@@ -170,7 +169,7 @@ function restoreGeoDisplayForm(
     if (alreadyRestored && item.displayForm === undefined) {
         return item;
     }
-    return omit({ ...item, dfRef: geoDisplayFormRef }, "displayForm");
+    return _omit({ ...item, dfRef: geoDisplayFormRef }, "displayForm");
 }
 
 /**

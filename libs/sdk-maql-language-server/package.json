@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-maql-language-server",
-    "version": "11.68.0-alpha.8",
+    "version": "11.68.0-alpha.9",
     "license": "MIT",
     "author": {
         "name": "Stellar",
@@ -46,6 +46,7 @@
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-backend-tiger": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
+        "@gooddata/util": "workspace:*",
         "antlr4-c3": "3.4.4",
         "antlr4ng": "3.0.16",
         "lodash-es": "^4.17.23",

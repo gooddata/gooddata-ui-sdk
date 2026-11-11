@@ -1,6 +1,5 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { uniqBy } from "lodash-es";
 import { type BatchAction, batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, all, call, put, select, spawn } from "redux-saga/effects";
@@ -30,6 +29,7 @@ import {
     objRefToString,
     serializeObjRef,
 } from "@gooddata/sdk-model";
+import { _uniqBy } from "@gooddata/util";
 
 import {
     createDisplayFormMap,
@@ -207,7 +207,7 @@ async function loadInsightsForPersistedDashboard(
         });
     }
 
-    const uniqueRefs = uniqBy(referencedInsights, serializeObjRef);
+    const uniqueRefs = _uniqBy(referencedInsights, serializeObjRef);
 
     return Promise.all(uniqueRefs.map((ref) => backend.workspace(workspace).insights().getInsight(ref)));
 }

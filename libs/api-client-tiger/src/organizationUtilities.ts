@@ -1,7 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
 import { type AxiosInstance, type AxiosPromise, type AxiosRequestConfig } from "axios";
-import { merge, uniqBy } from "lodash-es";
+import { merge } from "lodash-es";
+
+import { _uniqBy } from "@gooddata/util";
 
 import { type ITigerClientBase } from "./client.js";
 import {
@@ -138,7 +140,7 @@ export class OrganizationUtilities {
     public static mergeEntitiesResults<T extends OrganizationGetEntitiesResult>(pages: T[]): T {
         return {
             data: pages.flatMap((page: any) => page.data) as any,
-            included: uniqBy(
+            included: _uniqBy(
                 pages.flatMap((page): any =>
                     OrganizationUtilities.supportsIncluded(page) ? (page.included ?? []) : [],
                 ),

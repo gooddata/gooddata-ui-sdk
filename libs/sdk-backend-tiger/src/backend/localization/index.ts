@@ -1,12 +1,14 @@
 // (C) 2026 GoodData Corporation
 
-import { ActionsUtilities } from "@gooddata/api-client-tiger";
 import {
+    ActionsApi_OrganizationLocalizationIssueWorkspaces,
+    ActionsApi_OrganizationLocalizationIssues,
     ActionsApi_OrganizationLocalizationStatistics,
     ActionsApi_OrganizationLocalizationUsage,
     ActionsApi_OrganizationLocalizationUsageUsers,
     ActionsApi_OrganizationLocalizationUsageWorkspaces,
     ActionsApi_RetrieveTranslations,
+    ActionsApi_WorkspaceLocalizationIssues,
     ActionsApi_WorkspaceLocalizationStatistics,
     ActionsApi_WorkspaceLocalizationUsage,
     ActionsApi_WorkspaceLocalizationUsageUsers,
@@ -16,37 +18,31 @@ import {
     EntitiesApi_GetEntityWorkspaces,
 } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import {
+    type ILocalizationIssues,
     type ILocalizationMissingObject,
     type ILocalizationPageQuery,
     type ILocalizationStatistics,
-    type ILocalizationStatisticsWorkspace,
     type ILocalizationStatisticsWorkspacesPage,
-    type ILocalizationTranslationUsage,
     type ILocalizationUsage,
     type ILocalizationUsageListQuery,
     type ILocalizationUsageUsersPage,
     type ILocalizationUsageWorkspacesPage,
     type IOrganizationLocalizationService,
     type IWorkspaceLocalizationService,
+    type LocalizationIssueType,
+    type LocalizationTranslationState,
 } from "@gooddata/sdk-backend-spi";
 
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { buildListClause } from "../common/filtering.js";
 
-import {
-    type IUsageScope,
-    effectiveSettings,
-    ownSettings,
-    statisticsPage,
-    translatedLocalesOf,
-    translationUsage,
-    usageUsers,
-    usageWorkspaces,
-} from "./aggregate.js";
-import { type IFixtureWorkspace, acmePeople, acmeStatisticsWorkspaces, acmeWorkspaces } from "./fixture.js";
+import { statisticsPage } from "./aggregate.js";
 import {
     type IWorkspaceLocalizationDescriptor,
+    convertLocalizationIssueWorkspaces,
+    convertLocalizationIssues,
     convertLocalizationStatistics,
+    convertLocalizationStatisticsWorkspaces,
     convertLocalizationUsage,
     convertLocalizationUsageUsers,
     convertLocalizationUsageWorkspaces,
@@ -56,100 +52,15 @@ import {
 } from "./fromBackend.js";
 import { missingTranslationsFromXliff } from "./xliff.js";
 
-// The usage summaries, the workspaces and users lists, the statistics summaries and the missing translations call the backend. The other methods and the translation lists return the Acme fixture with the real
-// workspace names and ids of the organization. Fixture workspaces take the real ones in name order.
+const ISSUE_TYPE_OF_TRANSLATION: Record<LocalizationTranslationState, LocalizationIssueType> = {
+    available: "METADATA_LANGUAGE_MISMATCH",
+    variant: "METADATA_MISSING_TRANSLATION",
+    missing: "METADATA_MISSING_TRANSLATION",
+};
 
-interface IFixtureData {
-    workspaces: IFixtureWorkspace[];
-    people: ReturnType<typeof acmePeople>;
-    statistics: ILocalizationStatisticsWorkspace[];
-}
+export class TigerOrganizationLocalizationService implements IOrganizationLocalizationService {
+    constructor(private readonly authCall: TigerAuthenticatedCallGuard) {}
 
-async function loadRealWorkspaces(authCall: TigerAuthenticatedCallGuard) {
-    return ActionsUtilities.loadAllPages(({ page, size }) =>
-        authCall((client) =>
-            EntitiesApi_GetAllEntitiesWorkspaces(client.axios, client.basePath, {
-                page,
-                size,
-                sort: ["name"],
-            }),
-        ).then((result) =>
-            result.data.data.map((item) => ({ id: item.id, name: item.attributes?.name ?? item.id })),
-        ),
-    );
-}
-
-async function loadFixtureData(authCall: TigerAuthenticatedCallGuard): Promise<IFixtureData> {
-    const fixture = acmeWorkspaces();
-    const real = await loadRealWorkspaces(authCall);
-    const idMap = new Map(fixture.map((workspace, index) => [workspace.id, real[index]]));
-    const mapId = (id: string) => idMap.get(id)?.id ?? id;
-
-    const workspaces = fixture.map((workspace): IFixtureWorkspace => ({
-        ...workspace,
-        id: mapId(workspace.id),
-        name: idMap.get(workspace.id)?.name ?? workspace.name,
-        parentId: workspace.parentId ? mapId(workspace.parentId) : null,
-        settings: {
-            ...workspace.settings,
-            LOCALE: workspace.settings.LOCALE.originId
-                ? { ...workspace.settings.LOCALE, originId: mapId(workspace.settings.LOCALE.originId) }
-                : workspace.settings.LOCALE,
-        },
-    }));
-    const statistics = acmeStatisticsWorkspaces().map((row) => ({
-        ...row,
-        id: mapId(row.id),
-        name: idMap.get(row.id)?.name ?? row.name,
-        parentId: row.parentId ? mapId(row.parentId) : null,
-    }));
-
-    return {
-        workspaces,
-        people: acmePeople(workspaces.map((workspace) => workspace.id)),
-        statistics,
-    };
-}
-
-// A real workspace beyond the fixture size gets the organization defaults and nobody with access.
-function unmappedWorkspace(id: string): IFixtureWorkspace {
-    return {
-        id,
-        name: id,
-        parentId: null,
-        childrenCount: 0,
-        settings: {
-            LOCALE: { content: { value: "en-US" }, source: "ORGANIZATION" },
-            METADATA_LOCALE: { content: { value: "en-US" }, source: "DEFAULT" },
-            DATA_LOCALE: { content: { value: null }, source: "DEFAULT" },
-        },
-    };
-}
-
-abstract class FixtureLocalizationService {
-    private data: Promise<IFixtureData> | undefined;
-
-    constructor(protected readonly authCall: TigerAuthenticatedCallGuard) {}
-
-    protected fixtureData(): Promise<IFixtureData> {
-        this.data ??= loadFixtureData(this.authCall);
-        return this.data;
-    }
-
-    protected async organizationScope(): Promise<IUsageScope> {
-        const { workspaces, people, statistics } = await this.fixtureData();
-        return {
-            workspaces,
-            people: people.map((person) => ({ ...person, settings: ownSettings(person) })),
-            translatedLocales: translatedLocalesOf(workspaces, statistics),
-        };
-    }
-}
-
-export class TigerOrganizationLocalizationService
-    extends FixtureLocalizationService
-    implements IOrganizationLocalizationService
-{
     public async getUsage(): Promise<ILocalizationUsage> {
         return this.authCall((client) =>
             ActionsApi_OrganizationLocalizationUsage(client.axios, client.basePath),
@@ -160,7 +71,7 @@ export class TigerOrganizationLocalizationService
         query: ILocalizationUsageListQuery = {},
     ): Promise<ILocalizationUsageWorkspacesPage> {
         if (query.translation) {
-            return usageWorkspaces(await this.organizationScope(), query);
+            return this.getIssueWorkspaces(query, query.translation);
         }
         return this.authCall((client) =>
             ActionsApi_OrganizationLocalizationUsageWorkspaces(client.axios, client.basePath, query),
@@ -171,7 +82,7 @@ export class TigerOrganizationLocalizationService
         query: ILocalizationUsageListQuery = {},
     ): Promise<ILocalizationUsageUsersPage> {
         if (query.translation) {
-            return usageUsers(await this.organizationScope(), query);
+            return { users: [], totalCount: 0 };
         }
         return this.authCall((client) =>
             ActionsApi_OrganizationLocalizationUsageUsers(client.axios, client.basePath, query),
@@ -184,58 +95,37 @@ export class TigerOrganizationLocalizationService
         ).then((result) => convertLocalizationStatistics(result.data));
     }
 
-    public async getTranslationUsage(): Promise<ILocalizationTranslationUsage> {
-        return translationUsage(await this.organizationScope());
+    public async getIssues(): Promise<ILocalizationIssues> {
+        return this.authCall((client) =>
+            ActionsApi_OrganizationLocalizationIssues(client.axios, client.basePath),
+        ).then((result) => convertLocalizationIssues(result.data));
     }
 
-    public async getStatisticsWorkspaces(
-        query: ILocalizationPageQuery = {},
-    ): Promise<ILocalizationStatisticsWorkspacesPage> {
-        return statisticsPage((await this.fixtureData()).statistics, query);
+    private async getIssueWorkspaces(
+        query: ILocalizationUsageListQuery,
+        translation: LocalizationTranslationState,
+    ): Promise<ILocalizationUsageWorkspacesPage> {
+        if (!query.value) {
+            return { workspaces: [], totalCount: 0 };
+        }
+        const { value: locale, name, page, size } = query;
+        return this.authCall((client) =>
+            ActionsApi_OrganizationLocalizationIssueWorkspaces(client.axios, client.basePath, {
+                type: ISSUE_TYPE_OF_TRANSLATION[translation],
+                locale,
+                name,
+                page,
+                size,
+            }),
+        ).then((result) => convertLocalizationIssueWorkspaces(result.data));
     }
 }
 
-export class TigerWorkspaceLocalizationService
-    extends FixtureLocalizationService
-    implements IWorkspaceLocalizationService
-{
+export class TigerWorkspaceLocalizationService implements IWorkspaceLocalizationService {
     constructor(
-        authCall: TigerAuthenticatedCallGuard,
+        private readonly authCall: TigerAuthenticatedCallGuard,
         private readonly workspaceId: string,
-    ) {
-        super(authCall);
-    }
-
-    private async scope(): Promise<IUsageScope> {
-        const { workspaces, people, statistics } = await this.fixtureData();
-        const workspace =
-            workspaces.find((candidate) => candidate.id === this.workspaceId) ??
-            unmappedWorkspace(this.workspaceId);
-        return {
-            workspaces: [workspace],
-            workspaceNames: new Map(workspaces.map((candidate) => [candidate.id, candidate.name])),
-            people: people
-                .filter((person) => person.workspaceIds.includes(workspace.id))
-                .map((person) => ({
-                    ...person,
-                    workspaceIds: [workspace.id],
-                    settings: effectiveSettings(person, workspace),
-                })),
-            translatedLocales: translatedLocalesOf(workspaces, statistics),
-        };
-    }
-
-    private async statisticsRows(): Promise<ILocalizationStatisticsWorkspace[]> {
-        const { workspaces, statistics } = await this.fixtureData();
-        const lineage = new Set<string>();
-        let current = workspaces.find((workspace) => workspace.id === this.workspaceId);
-        while (current) {
-            lineage.add(current.id);
-            const parentId = current.parentId;
-            current = parentId ? workspaces.find((workspace) => workspace.id === parentId) : undefined;
-        }
-        return statistics.filter((row) => lineage.has(row.id));
-    }
+    ) {}
 
     private loadUsage() {
         return this.authCall((client) =>
@@ -283,19 +173,19 @@ export class TigerWorkspaceLocalizationService
     public async getUsageWorkspaces(
         query: ILocalizationUsageListQuery = {},
     ): Promise<ILocalizationUsageWorkspacesPage> {
-        if (query.translation) {
-            return usageWorkspaces(await this.scope(), query);
-        }
         const [usage, workspace] = await Promise.all([this.loadUsage(), this.loadWorkspace()]);
         const originNames = await this.loadWorkspaceNames(originIdsOf(usage));
-        return convertWorkspaceLocalizationUsageWorkspaces(usage, workspace, query, originNames);
+        const listQuery = query.translation
+            ? { name: query.name, page: query.page, size: query.size }
+            : query;
+        return convertWorkspaceLocalizationUsageWorkspaces(usage, workspace, listQuery, originNames);
     }
 
     public async getUsageUsers(
         query: ILocalizationUsageListQuery = {},
     ): Promise<ILocalizationUsageUsersPage> {
         if (query.translation) {
-            return usageUsers(await this.scope(), query);
+            return { users: [], totalCount: 0 };
         }
         return this.authCall((client) =>
             ActionsApi_WorkspaceLocalizationUsageUsers(client.axios, client.basePath, {
@@ -313,14 +203,24 @@ export class TigerWorkspaceLocalizationService
         ).then((result) => convertLocalizationStatistics(result.data));
     }
 
-    public async getTranslationUsage(): Promise<ILocalizationTranslationUsage> {
-        return translationUsage(await this.scope());
+    public async getIssues(): Promise<ILocalizationIssues> {
+        return this.authCall((client) =>
+            ActionsApi_WorkspaceLocalizationIssues(client.axios, client.basePath, {
+                workspaceId: this.workspaceId,
+            }),
+        ).then((result) => convertLocalizationIssues(result.data));
     }
 
     public async getStatisticsWorkspaces(
         query: ILocalizationPageQuery = {},
     ): Promise<ILocalizationStatisticsWorkspacesPage> {
-        return statisticsPage(await this.statisticsRows(), query);
+        const rows = await this.authCall((client) =>
+            ActionsApi_WorkspaceLocalizationStatistics(client.axios, client.basePath, {
+                workspaceId: this.workspaceId,
+                includeCoverage: true,
+            }),
+        ).then((result) => convertLocalizationStatisticsWorkspaces(result.data));
+        return statisticsPage(rows, query);
     }
 
     public async getMissingTranslations(locale: string): Promise<ILocalizationMissingObject[]> {

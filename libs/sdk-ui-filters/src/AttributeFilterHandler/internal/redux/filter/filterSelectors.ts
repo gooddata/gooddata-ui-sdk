@@ -1,9 +1,10 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 // in current version of @reduxjs/toolkit esm export are not defined
 // we need direct import from esm module otherwise import ar not node compatible
 // https://github.com/reduxjs/redux-toolkit/issues/1960
 import { createSelector } from "@reduxjs/toolkit";
-import { difference, union, uniq } from "lodash-es";
+import { difference, union } from "lodash-es";
 
 import {
     type IAttributeElements,
@@ -14,6 +15,7 @@ import {
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
+import { _uniq } from "@gooddata/util";
 
 import { selectState } from "../common/selectors.js";
 import { type FilterSelector } from "../common/types.js";
@@ -130,7 +132,7 @@ export const selectAttributeFilterElementsToDisplayWithHiddenElementsResolved: F
             const selectedTitles = elements
                 .filter((element) => updatedSelection.find((selectionItem) => selectionItem === element.uri))
                 .map((element) => element.title);
-            const uniqueTitles = uniq(selectedTitles);
+            const uniqueTitles = _uniq(selectedTitles);
             return elementsForm === "uris"
                 ? { uris: uniqueTitles as string[] }
                 : { values: uniqueTitles as string[] };

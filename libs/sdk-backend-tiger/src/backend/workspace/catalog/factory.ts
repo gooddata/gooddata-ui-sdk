@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { sortBy, uniqBy } from "lodash-es";
+import { sortBy } from "lodash-es";
 
 import { MetadataUtilities, ValidateRelationsHeader } from "@gooddata/api-client-tiger";
 import {
@@ -29,6 +29,7 @@ import {
     isCatalogFact,
     isCatalogMeasure,
 } from "@gooddata/sdk-model";
+import { _uniqBy } from "@gooddata/util";
 
 import {
     convertComputedAttributeToCatalogItem,
@@ -269,6 +270,6 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
                 tag: tag,
             }));
         });
-        return uniqBy(allTags, (tag) => tag.title);
+        return _uniqBy(allTags, (tag) => tag.title);
     }
 }

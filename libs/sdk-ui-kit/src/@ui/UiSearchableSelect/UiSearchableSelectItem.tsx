@@ -13,6 +13,11 @@ export interface IUiSearchableSelectItemProps {
      */
     lang?: string;
     /**
+     * Text shown muted after the title in the list, and after it on the button, e.g. the code of a language.
+     * It is not matched by the default search, so use the select's `filter` to match it.
+     */
+    secondaryTitle?: string;
+    /**
      * The option's title, shown in the list and the button and matched by the search.
      */
     children: string;
@@ -30,11 +35,11 @@ export function UiSearchableSelectItem(_props: IUiSearchableSelectItemProps) {
 
 export function getUiSearchableSelectItemDescriptor(
     node: ReactNode,
-): { id: string; stringTitle: string; lang?: string } | undefined {
+): { id: string; stringTitle: string; secondaryTitle?: string; lang?: string } | undefined {
     if (!isValidElement<IUiSearchableSelectItemProps>(node) || node.type !== UiSearchableSelectItem) {
         return undefined;
     }
 
-    const { id, lang, children } = node.props;
-    return { id, lang, stringTitle: children };
+    const { id, lang, secondaryTitle, children } = node.props;
+    return { id, lang, secondaryTitle, stringTitle: children };
 }

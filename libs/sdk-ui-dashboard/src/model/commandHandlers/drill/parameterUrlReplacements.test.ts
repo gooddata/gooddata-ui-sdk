@@ -121,6 +121,16 @@ describe("parameter placeholders of a custom URL drill", () => {
         );
     });
 
+    it("rejects a drill whose parameter starts the URL with a script scheme", async () => {
+        Tester.dispatch(
+            tabsActions.setParameterRuntimeValues({
+                values: [{ ref: regionRef, value: "javascript:alert(document.domain)//" }],
+            }),
+        );
+
+        await expectDrillToFail("{parameter(region)}/?n={parameter(topN)}");
+    });
+
     it("resolves the insight value when the chip has no value", async () => {
         clearTopNChipValue();
         setInsightTopNValue(7);

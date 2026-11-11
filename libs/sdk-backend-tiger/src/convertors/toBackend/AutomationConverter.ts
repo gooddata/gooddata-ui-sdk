@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { omit, omitBy } from "lodash-es";
+import { omitBy } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
 
 import {
@@ -22,7 +22,7 @@ import {
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";
-import { _isEmpty } from "@gooddata/util";
+import { _isEmpty, _omit } from "@gooddata/util";
 
 import { fixNumber } from "../../utils/fixNumber.js";
 
@@ -270,13 +270,13 @@ export const convertAlert = (alert: IAutomationAlert): JsonApiAutomationInAttrib
         execution: {
             filters: convertedFilters,
             measures: execution.measures.map((measure) => {
-                return omit(convertMeasure(measure), "alias", "format", "title");
+                return _omit(convertMeasure(measure), "alias", "format", "title");
             }),
             auxMeasures: execution.auxMeasures?.map((measure) => {
-                return omit(convertMeasure(measure), "alias", "format", "title");
+                return _omit(convertMeasure(measure), "alias", "format", "title");
             }),
             attributes: execution.attributes?.map((attribute, i) => {
-                return omit(convertAttribute(attribute, i), "alias");
+                return _omit(convertAttribute(attribute, i), "alias");
             }),
             ...(execution.parameters?.length
                 ? { parameters: convertParameterValues(execution.parameters) }

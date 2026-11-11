@@ -1,10 +1,8 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { set } from "lodash-es";
-
 import { type IInsightDefinition, newMeasureSort } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { _cloneDeep, _isEmpty, _isEqual } from "@gooddata/util";
+import { _cloneDeep, _isEmpty, _isEqual, _set } from "@gooddata/util";
 
 import { BUCKETS } from "../../../constants/bucket.js";
 import { WATERFALL_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
@@ -135,7 +133,7 @@ export class PluggableWaterfallChart extends PluggableBaseChart {
         if (attributes.length) {
             const limitedBuckets = limitNumberOfMeasuresInBuckets(buckets, 1);
             const limitedMeasures = getMeasureItems(limitedBuckets);
-            set(newReferencePoint, BUCKETS, [
+            _set(newReferencePoint, BUCKETS, [
                 {
                     localIdentifier: BucketNames.MEASURES,
                     items: limitedMeasures,
@@ -149,12 +147,12 @@ export class PluggableWaterfallChart extends PluggableBaseChart {
             const limitedBuckets = limitNumberOfMeasuresInBuckets(buckets, MAX_METRICS_COUNT, true);
             const limitedMeasures = getMeasureItems(limitedBuckets);
             if (limitedMeasures.length > 1) {
-                set(newReferencePoint, UICONFIG, _cloneDeep(WATERFALL_UICONFIG_WITH_MULTIPLE_METRICS));
+                _set(newReferencePoint, UICONFIG, _cloneDeep(WATERFALL_UICONFIG_WITH_MULTIPLE_METRICS));
             } else {
-                set(newReferencePoint, UICONFIG, _cloneDeep(WATERFALL_UICONFIG_WITH_ONE_METRIC));
+                _set(newReferencePoint, UICONFIG, _cloneDeep(WATERFALL_UICONFIG_WITH_ONE_METRIC));
             }
 
-            set(newReferencePoint, BUCKETS, [
+            _set(newReferencePoint, BUCKETS, [
                 {
                     localIdentifier: BucketNames.MEASURES,
                     items: limitedMeasures,
@@ -277,14 +275,14 @@ export class PluggableWaterfallChart extends PluggableBaseChart {
 
         if (measureItems.length <= 1 && existingTotalMeasures.length > 0) {
             // In case one view item, we need to reset the total measures is empty
-            set(referencePoint, "properties.controls.total.measures", []);
+            _set(referencePoint, "properties.controls.total.measures", []);
         }
 
         if (viewItems.length > 0 || _isEqual(listTotalMeasures, existingTotalMeasures)) {
             return referencePoint;
         }
 
-        set(referencePoint, "properties.controls.total.measures", listTotalMeasures);
+        _set(referencePoint, "properties.controls.total.measures", listTotalMeasures);
         return referencePoint;
     }
 }

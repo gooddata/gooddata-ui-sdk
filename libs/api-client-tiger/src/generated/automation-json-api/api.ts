@@ -1676,9 +1676,9 @@ export interface AutomationRelative {
 export type AutomationRelativeOperatorEnum = 'INCREASES_BY' | 'DECREASES_BY' | 'CHANGES_BY';
 
 export interface AutomationRelativeBoundedDateFilter {
-    'from'?: number;
+    'from'?: number | null;
     'granularity': AutomationRelativeBoundedDateFilterGranularityEnum;
-    'to'?: number;
+    'to'?: number | null;
 }
 
 export type AutomationRelativeBoundedDateFilterGranularityEnum = 'ALL_TIME_GRANULARITY' | 'GDC.time.year' | 'GDC.time.week_us' | 'GDC.time.week_in_year' | 'GDC.time.week_in_quarter' | 'GDC.time.week' | 'GDC.time.euweek_in_year' | 'GDC.time.euweek_in_quarter' | 'GDC.time.quarter' | 'GDC.time.quarter_in_year' | 'GDC.time.month' | 'GDC.time.month_in_quarter' | 'GDC.time.month_in_year' | 'GDC.time.day_in_year' | 'GDC.time.day_in_quarter' | 'GDC.time.day_in_month' | 'GDC.time.day_in_week' | 'GDC.time.day_in_euweek' | 'GDC.time.date' | 'GDC.time.hour' | 'GDC.time.hour_in_day' | 'GDC.time.minute' | 'GDC.time.minute_in_hour' | 'GDC.time.minute_in_day' | 'GDC.time.second' | 'GDC.time.second_in_minute' | 'GDC.time.second_in_day' | 'GDC.time.fiscal_week' | 'GDC.time.fiscal_month' | 'GDC.time.fiscal_quarter' | 'GDC.time.fiscal_semester' | 'GDC.time.fiscal_year' | 'GDC.time.fiscal_day_in_fiscal_week' | 'GDC.time.fiscal_day_in_fiscal_month' | 'GDC.time.fiscal_day_in_fiscal_quarter' | 'GDC.time.fiscal_day_in_fiscal_semester' | 'GDC.time.fiscal_day_in_fiscal_year' | 'GDC.time.fiscal_week_in_fiscal_month' | 'GDC.time.fiscal_week_in_fiscal_quarter' | 'GDC.time.fiscal_week_in_fiscal_semester' | 'GDC.time.fiscal_week_in_fiscal_year' | 'GDC.time.fiscal_month_in_fiscal_quarter' | 'GDC.time.fiscal_month_in_fiscal_semester' | 'GDC.time.fiscal_month_in_fiscal_year' | 'GDC.time.fiscal_quarter_in_fiscal_semester' | 'GDC.time.fiscal_quarter_in_fiscal_year' | 'GDC.time.fiscal_semester_in_fiscal_year';

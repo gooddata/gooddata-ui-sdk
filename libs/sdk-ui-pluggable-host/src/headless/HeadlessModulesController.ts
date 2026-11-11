@@ -14,12 +14,17 @@ import {
 } from "@gooddata/sdk-pluggable-application-model";
 
 import { now } from "../debug.js";
+import { isThenable } from "../lib/isThenable.js";
 import {
     type AppSecurityFailure,
     describeSecurityFailure,
     validateRemoteModuleSecurity,
 } from "../loader/appSecurityValidation.js";
 import { getAppLifecycleCallbacks, getHostTelemetryServices } from "../loader/pluggableApplicationsLoader.js";
+import {
+    type IHeadlessModuleMessagingPort,
+    type ModuleMessageBroker,
+} from "../messaging/ModuleMessageBroker.js";
 import {
     type IAppLifecycleCallbacks,
     type IPluggableModuleLifecycleInfo,
@@ -38,6 +43,7 @@ export interface IHeadlessModulesControllerDependencies {
     now: () => number;
     clock: () => number;
     canReplayPageStart: () => boolean;
+    broker?: ModuleMessageBroker;
 }
 
 const defaultDependencies: IHeadlessModulesControllerDependencies = {
@@ -59,6 +65,7 @@ interface IMountedHeadlessModule {
     headlessModule: IHeadlessModule;
     handle: IHeadlessModuleMountHandle;
     registration: IModuleRegistrationState;
+    messaging?: IHeadlessModuleMessagingPort;
 }
 
 const HEADLESS: IPluggableModuleLifecycleInfo = { kind: "headless" };
@@ -83,14 +90,6 @@ export function resolveTelemetryIdentityMode(item: HeadlessModuleRegistryItem): 
 
 function errorMessage(error: unknown): string {
     return error instanceof Error ? error.message : String(error);
-}
-
-function isThenable(value: unknown): value is PromiseLike<unknown> {
-    return (
-        typeof value === "object" &&
-        value !== null &&
-        typeof (value as { then?: unknown }).then === "function"
-    );
 }
 
 /**
@@ -142,6 +141,7 @@ export class HeadlessModulesController {
         this.mounted.delete(moduleId);
         mounted.registration.active = false;
         this.unregisterAll(mounted.registration.unregisters);
+        mounted.messaging?.close();
         this.isolate(moduleId, "unmount", "unmount", () => mounted.handle.unmount());
         this.deps.getLifecycle()?.onUnmounted?.(moduleId, HEADLESS);
     }
@@ -199,6 +199,7 @@ export class HeadlessModulesController {
 
         const registration: IModuleRegistrationState = { active: true, unregisters: new Set() };
         const identity = resolveTelemetryIdentityMode(item);
+        const messaging = this.deps.broker?.connectHeadlessModule(item.id);
         try {
             const handle = headlessModule.mount({
                 id: item.id,
@@ -206,6 +207,13 @@ export class HeadlessModulesController {
                 config: item.config ?? {},
                 registerTelemetryProvider: (provider) =>
                     this.registerProvider(item.id, identity, provider, registration),
+                ...(messaging
+                    ? {
+                          registerChannel: messaging.registerChannel,
+                          postToActiveApplication: messaging.postToActiveApplication,
+                          moduleMessaging: messaging.moduleMessaging,
+                      }
+                    : {}),
             });
             if (typeof handle?.unmount !== "function") {
                 throw new Error("mount did not return a handle with unmount()");
@@ -215,10 +223,17 @@ export class HeadlessModulesController {
                 headlessModule,
                 handle,
                 registration,
+                messaging,
             });
+            if (messaging && typeof handle.onActiveApplicationChanged === "function") {
+                messaging.setActiveApplicationListener((application) =>
+                    handle.onActiveApplicationChanged?.(application),
+                );
+            }
         } catch (error) {
             registration.active = false;
             this.unregisterAll(registration.unregisters);
+            messaging?.close();
             this.reportFailure(item.id, "mount", `mount threw: ${errorMessage(error)}`);
             return;
         }

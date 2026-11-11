@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { differenceWith, partition } from "lodash-es";
+import { differenceWith } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import {
@@ -12,7 +12,7 @@ import {
     objRefToString,
     uriRef,
 } from "@gooddata/sdk-model";
-import { simplifyText } from "@gooddata/util";
+import { _partition, simplifyText } from "@gooddata/util";
 
 import { type CurrentUserPermissions } from "../types.js";
 
@@ -143,7 +143,7 @@ export const sortGranteeList = (grantees: GranteeItem[], intl: IntlShape): Grant
         (g) => !(isGranteeGroupAll(g) || isGranteeRules(g)),
     );
 
-    const [groups, users] = partition(
+    const [groups, users] = _partition(
         granteesWithNoAllGroup,
         (grantee) => isGranteeGroup(grantee) || isGranularGranteeGroup(grantee),
     );

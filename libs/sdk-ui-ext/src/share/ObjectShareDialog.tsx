@@ -105,7 +105,7 @@ export interface IObjectShareDialogProps {
 
 /**
  * Connected share dialog. Renders the main share modal, the add-grantee
- * sub-dialog and the general-access confirm dialog, all driven by one
+ * sub-dialog and the confirm dialogs, all driven by one
  * controller. Each underlying dialog manages its own open state, so they can
  * be safely co-mounted; focus, backdrop and portal lifecycles are owned by
  * `UiModalDialog` inside the kit.
@@ -154,7 +154,7 @@ function ObjectShareDialogSession({
         isShareViewOpen,
         isAddGranteeOpen,
         isGeneralAccessConfirmOpen,
-        isSelfRestrictConfirmOpen,
+        rowConfirm,
         isMutable,
         isLoading,
         workspaceDisabledLevels,
@@ -169,8 +169,8 @@ function ObjectShareDialogSession({
         onClose: closeDialog,
         onRowPermissionChange,
         onRowRemove,
-        onSelfRestrictCancel,
-        onSelfRestrictConfirm,
+        onRowConfirmCancel,
+        onRowConfirm,
     } = useObjectShareDialog({
         target,
         onClose,
@@ -385,16 +385,18 @@ function ObjectShareDialogSession({
                 }}
             />
 
-            <UiConfirmDialog
-                isOpen={isSelfRestrictConfirmOpen}
-                title={intl.formatMessage(objectShareMessages.selfRestrictTitle)}
-                description={intl.formatMessage(objectShareMessages.selfRestrictWarning)}
-                confirmLabel={intl.formatMessage(objectShareMessages.confirmButton)}
-                confirmVariant="primary"
-                onCancel={onSelfRestrictCancel}
-                onClose={onSelfRestrictCancel}
-                onConfirm={onSelfRestrictConfirm}
-            />
+            {rowConfirm ? (
+                <UiConfirmDialog
+                    isOpen
+                    title={rowConfirm.title}
+                    description={rowConfirm.description}
+                    confirmLabel={intl.formatMessage(objectShareMessages.confirmButton)}
+                    confirmVariant="primary"
+                    onCancel={onRowConfirmCancel}
+                    onClose={onRowConfirmCancel}
+                    onConfirm={onRowConfirm}
+                />
+            ) : null}
         </>
     );
 }

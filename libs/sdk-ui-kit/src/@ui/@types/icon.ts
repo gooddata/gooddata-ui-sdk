@@ -144,6 +144,8 @@ export type IconType =
     | "list"
     | "drillTo"
     | "hierarchy"
+    | "lineage"
+    | "report"
     | "history"
     | "history2"
     | "thumbsUp"

@@ -6,11 +6,11 @@
  * tests that are duplicated in the new file so we can get rid of this horrid file some time in (hopefully)
  * not so distant future.
  */
-import { omit } from "lodash-es";
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { uriRef } from "@gooddata/sdk-model";
 import { BucketNames, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
+import { _omit } from "@gooddata/util";
 
 import { ATTRIBUTE, GEO_ATTRIBUTE, MEASURES, STACK, VIEW } from "../constants/bucket.js";
 import { DEFAULT_DECIMAL_FORMAT, DEFAULT_PERCENTAGE_FORMAT } from "../constants/formats.js";
@@ -77,7 +77,7 @@ const visualizationAttributeOf = (item: unknown) =>
     (item as { visualizationAttribute?: { displayForm?: { uri?: string } } })?.visualizationAttribute;
 
 function omitFiltersLocalIdentifier(filters: ReadonlyArray<IFilter>) {
-    return filters.map((item) => omit(item, "localIdentifier"));
+    return filters.map((item) => _omit(item, "localIdentifier"));
 }
 
 describe("Buckets to metadata object conversion", () => {

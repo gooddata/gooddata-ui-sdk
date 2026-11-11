@@ -79,6 +79,9 @@ export function aiAssistantPublisherDocumentSaved(payload: IAiAssistantPublisher
 export function closeAiAssistantRequested(): ICloseAiAssistantRequestedEvent;
 
 // @alpha
+export function createModuleMessagingError(code: ModuleMessagingErrorCode, channel: string, message?: string): IModuleMessagingError;
+
+// @alpha
 export const DefaultApplicationId: {
     HOME_UI: string;
     DASHBOARDS: string;
@@ -99,6 +102,12 @@ export type HeadlessModuleMount = (options: IHeadlessModuleMountOptions) => IHea
 
 // @alpha
 export type HostUiMount = (options: IHostUiMountOptions) => IHostUiMountHandle;
+
+// @alpha
+export interface IActiveApplicationInfo {
+    readonly acceptedChannels?: readonly string[];
+    readonly id: string;
+}
 
 // @alpha
 export interface IAiAssistantAppEvent {
@@ -273,6 +282,7 @@ export interface IHeadlessModule {
 
 // @alpha
 export interface IHeadlessModuleMountHandle {
+    onActiveApplicationChanged?(application: IActiveApplicationInfo | undefined): void;
     unmount(): void;
     updateContext?(ctx: IPlatformContext): void;
 }
@@ -284,6 +294,9 @@ export interface IHeadlessModuleMountOptions {
     ctx: IPlatformContext;
     // (undocumented)
     id: string;
+    moduleMessaging?: IModuleMessaging;
+    postToActiveApplication?(message: IModuleMessage): ModulePostResult;
+    registerChannel?(channel: string, handler: ModuleChannelHandler): () => void;
     registerTelemetryProvider(provider: ITelemetryProvider): () => void;
 }
 
@@ -345,6 +358,51 @@ export interface IJwtAuthCredentials {
 }
 
 export { ILocale }
+
+// @alpha
+export interface IModuleChannelHandlerContext {
+    readonly expectsReply: boolean;
+    // (undocumented)
+    readonly sender: IModuleMessageSender;
+    readonly signal: AbortSignal;
+}
+
+// @alpha
+export interface IModuleMessage {
+    readonly channel: string;
+    readonly payload?: unknown;
+    readonly type: string;
+}
+
+// @alpha
+export interface IModuleMessageSender {
+    readonly id: string;
+    // (undocumented)
+    readonly kind: "application" | "headless";
+}
+
+// @alpha
+export interface IModuleMessaging {
+    hasChannel(channel: string): Promise<boolean>;
+    notify(message: IModuleMessage): void;
+    request(message: IModuleMessage, options?: IModuleRequestOptions): Promise<unknown>;
+}
+
+// @alpha
+export interface IModuleMessagingError extends Error {
+    // (undocumented)
+    readonly channel: string;
+    // (undocumented)
+    readonly code: ModuleMessagingErrorCode;
+    // (undocumented)
+    readonly name: "ModuleMessagingError";
+}
+
+// @alpha
+export interface IModuleRequestOptions {
+    signal?: AbortSignal;
+    timeoutMs?: number;
+}
 
 // @alpha
 export interface INewDeploymentAvailableHostUiNotification {
@@ -458,6 +516,7 @@ export interface IPluggableAppEvent {
 
 // @alpha
 export interface IPluggableApplicationMountHandle {
+    acceptedChannels?: readonly string[];
     onAiAssistantEventReceive?: (event: IAiAssistantChatEvent) => void;
     onAiAssistantLinkClicked?: (link: {
         type?: string;
@@ -466,6 +525,7 @@ export interface IPluggableApplicationMountHandle {
         newTab?: boolean;
     }) => boolean;
     onHostNavigationRequested?: (request: IHostNavigationRequest) => boolean;
+    onModuleMessage?: (message: IModuleMessage, sender: IModuleMessageSender) => void;
     setAiAssistantOpen?: (open: boolean) => void;
     unmount(): void;
     updateContext?: (ctx: IPlatformContext) => void;
@@ -477,6 +537,7 @@ export interface IPluggableApplicationMountOptions {
     container: HTMLElement;
     ctx: IPlatformContext;
     id: string;
+    moduleMessaging?: IModuleMessaging;
     onEvent?: (e: IPluggableAppEvent) => void;
     onHeaderChange?: (header: IAppHeaderOptions) => void;
     onTelemetryEvent?: IPluggableAppTelemetryCallbacks;
@@ -549,7 +610,16 @@ export function isAiAssistantPublisherDocumentSavedAppEvent(event: IAiAssistantA
 export function isCloseAiAssistantRequestedEvent(obj: unknown): obj is ICloseAiAssistantRequestedEvent;
 
 // @alpha
+export function isConventionalModuleChannelName(channel: string): boolean;
+
+// @alpha
 export function isDocumentTitleChangedEvent(obj: unknown): obj is IDocumentTitleChangedEvent;
+
+// @alpha
+export function isModuleMessage(obj: unknown): obj is IModuleMessage;
+
+// @alpha
+export function isModuleMessagingError(obj: unknown): obj is IModuleMessagingError;
 
 // @alpha
 export function isOpenAiAssistantRequestedEvent(obj: unknown): obj is IOpenAiAssistantRequestedEvent;
@@ -629,6 +699,15 @@ export const LIB_NAME: string;
 
 // @alpha (undocumented)
 export const LIB_VERSION: string;
+
+// @alpha
+export type ModuleChannelHandler = (message: IModuleMessage, context: IModuleChannelHandlerContext) => unknown;
+
+// @alpha
+export type ModuleMessagingErrorCode = "channel-not-found" | "timeout" | "aborted" | "recipient-unmounted" | "handler-failed" | "invalid-message";
+
+// @alpha
+export type ModulePostResult = "delivered" | "queued" | "no-receiver" | "rejected";
 
 // @alpha
 export function openAiAssistantRequested(payload?: {

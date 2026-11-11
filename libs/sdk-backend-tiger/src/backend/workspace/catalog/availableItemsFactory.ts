@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { intersectionWith, uniq } from "lodash-es";
+import { intersectionWith } from "lodash-es";
 import { InvariantError } from "ts-invariant";
 
 import { type AfmValidObjectsQuery, type AfmValidObjectsQueryTypesEnum } from "@gooddata/api-client-tiger";
@@ -38,7 +38,7 @@ import {
     isRankingFilter,
     measureLocalId,
 } from "@gooddata/sdk-model";
-import { _compact } from "@gooddata/util";
+import { _compact, _uniq } from "@gooddata/util";
 
 import { jsonApiIdToObjRef } from "../../../convertors/fromBackend/ObjRefConverter.js";
 import { convertAfmFilters } from "../../../convertors/toBackend/afm/AfmFiltersConverter.js";
@@ -78,7 +78,7 @@ const mapToTigerRestrictingType = (type: CatalogItemType): CatalogItemType => {
 };
 
 const getRestrictingTypes = (requested: CatalogItemType[]): CatalogItemType[] => {
-    return uniq(requested.map(mapToTigerRestrictingType));
+    return _uniq(requested.map(mapToTigerRestrictingType));
 };
 
 const catalogItemRefs = (item: CatalogItem): ObjRef[] => {

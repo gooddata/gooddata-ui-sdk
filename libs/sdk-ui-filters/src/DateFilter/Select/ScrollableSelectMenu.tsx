@@ -4,7 +4,8 @@ import { type CSSProperties, useCallback, useLayoutEffect, useRef } from "react"
 
 import cx from "classnames";
 import { type ControllerStateAndHelpers } from "downshift";
-import { range } from "lodash-es";
+
+import { _range } from "@gooddata/util";
 
 import { SelectHeading } from "./SelectHeading.js";
 import { SelectOption } from "./SelectOption.js";
@@ -214,7 +215,7 @@ export function ScrollableSelectMenu<V extends object>({
     });
 
     const middleItemIndex = getMedianIndex(getSelectableItems(items));
-    const visibleIndexes = range(
+    const visibleIndexes = _range(
         Math.max(middleItemIndex - visibleItemsRange, 0),
         Math.min(middleItemIndex + visibleItemsRange + 1, items.length),
     );

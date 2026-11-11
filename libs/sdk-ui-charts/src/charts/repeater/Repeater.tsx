@@ -2,8 +2,6 @@
 
 import { type ReactElement } from "react";
 
-import { omit } from "lodash-es";
-
 import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
     type IAttribute,
@@ -21,6 +19,7 @@ import {
     useResolveValuesWithPlaceholders,
     withContexts,
 } from "@gooddata/sdk-ui";
+import { _omit } from "@gooddata/util";
 
 import { type IBucketChartProps, type ICoreChartProps } from "../../interfaces/chartProps.js";
 
@@ -112,7 +111,7 @@ export function toCoreRepeaterProps(props: IRepeaterProps): ICoreChartProps {
         props.config?.inlineVisualizations,
     );
 
-    const newProps: IRepeaterNonBucketProps = omit<IRepeaterProps, keyof IIrrelevantRepeaterProps>(props, [
+    const newProps: IRepeaterNonBucketProps = _omit<IRepeaterProps, keyof IIrrelevantRepeaterProps>(props, [
         "attribute",
         "columns",
         "viewBy",

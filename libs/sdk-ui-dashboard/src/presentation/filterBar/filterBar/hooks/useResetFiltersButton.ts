@@ -2,7 +2,7 @@
 
 import { useCallback, useMemo } from "react";
 
-import { difference, partition } from "lodash-es";
+import { difference } from "lodash-es";
 
 import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {
@@ -18,7 +18,7 @@ import {
     newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
-import { _isEqual } from "@gooddata/util";
+import { _isEqual, _partition } from "@gooddata/util";
 
 import { messages } from "../../../../locales.js";
 import {
@@ -275,7 +275,7 @@ export const useResetFiltersButton = (): {
         // keep user-modified filters; only the cross-filter cleanup branch runs below.
         if (willResetFilterContext && userFilterResetAllowed) {
             // Normalize filters to include "All time" date filter
-            const [[commonDateFilter], otherFilters] = partition(
+            const [[commonDateFilter], otherFilters] = _partition(
                 originalFilters,
                 isDashboardCommonDateFilter,
             ) as [IDashboardDateFilter[], FilterContextItem[]];

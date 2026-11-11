@@ -1,5 +1,6 @@
-// (C) 2024 GoodData Corporation
-import { groupBy } from "lodash-es";
+// (C) 2024-2026 GoodData Corporation
+
+import { _groupBy } from "@gooddata/util";
 
 /**
  * Group collection by unique key.
@@ -9,7 +10,7 @@ export function groupByUnique<T, K extends string>(
     collection: T[],
     getUniqueKey: (item: T) => K,
 ): Record<K, T> {
-    const grouped = groupBy(collection, getUniqueKey);
+    const grouped = _groupBy(collection, getUniqueKey);
     const result: Record<K, T> = {} as Record<K, T>;
 
     for (const [key, values] of Object.entries(grouped)) {

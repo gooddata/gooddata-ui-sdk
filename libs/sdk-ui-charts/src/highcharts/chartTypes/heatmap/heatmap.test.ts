@@ -2,7 +2,6 @@
 
 // @vitest-environment node
 
-import { range } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -10,6 +9,7 @@ import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { type IColorPalette, type ITheme } from "@gooddata/sdk-model";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { type IColorMapping, type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import { _range } from "@gooddata/util";
 
 import { recordedDataFacade } from "../../../testUtils/recordings.fixture.js";
 import { ColorFactory } from "../_chartOptions/colorFactory.js";
@@ -38,7 +38,7 @@ describe("HeatmapColorStrategy", () => {
         );
 
         expect(colorStrategy).toBeInstanceOf(HeatmapColorStrategy);
-        range(7).map((colorIndex: number) =>
+        _range(7).map((colorIndex: number) =>
             expect(colorStrategy.getColorByIndex(colorIndex)).toEqual(HEATMAP_BLUE_COLOR_PALETTE[colorIndex]),
         );
     });
@@ -74,7 +74,7 @@ describe("HeatmapColorStrategy", () => {
             );
 
             expect(colorStrategy).toBeInstanceOf(HeatmapColorStrategy);
-            const colors: string[] = range(7).map((index: number) => colorStrategy.getColorByIndex(index));
+            const colors: string[] = _range(7).map((index: number) => colorStrategy.getColorByIndex(index));
             expect(colors).toEqual(expectedColors);
         },
     );
@@ -120,7 +120,7 @@ describe("HeatmapColorStrategy", () => {
             );
 
             expect(colorStrategy).toBeInstanceOf(HeatmapColorStrategy);
-            const colors: string[] = range(7).map((index: number) => colorStrategy.getColorByIndex(index));
+            const colors: string[] = _range(7).map((index: number) => colorStrategy.getColorByIndex(index));
             expect(colors).toEqual(expectedColors);
         },
     );
@@ -162,7 +162,7 @@ describe("HeatmapColorStrategy", () => {
         );
 
         expect(colorStrategy).toBeInstanceOf(HeatmapColorStrategy);
-        const colors: string[] = range(7).map((index: number) => colorStrategy.getColorByIndex(index));
+        const colors: string[] = _range(7).map((index: number) => colorStrategy.getColorByIndex(index));
         expect(colors).toEqual(expectedColors);
     });
 
@@ -208,7 +208,7 @@ describe("HeatmapColorStrategy", () => {
         );
 
         expect(colorStrategy).toBeInstanceOf(HeatmapColorStrategy);
-        const colors: string[] = range(7).map((index: number) => colorStrategy.getColorByIndex(index));
+        const colors: string[] = _range(7).map((index: number) => colorStrategy.getColorByIndex(index));
         expect(colors).toEqual(expectedColors);
     });
 
@@ -358,7 +358,7 @@ describe("HeatmapColorStrategy", () => {
                 );
 
                 expect(colorStrategy).toBeInstanceOf(HeatmapColorStrategy);
-                const colors: string[] = range(7).map((index: number) =>
+                const colors: string[] = _range(7).map((index: number) =>
                     colorStrategy.getColorByIndex(index),
                 );
                 expect(colors).toEqual(expectedColors);

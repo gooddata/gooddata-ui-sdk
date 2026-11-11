@@ -99,6 +99,14 @@
         margin-left: auto;
     }
 
+    &__footer {
+        padding: var(--gd-spacing-10px);
+        border-top: 1px solid var(--gd-palette-complementary-3);
+        font-size: 12px;
+        line-height: 16px;
+        color: var(--gd-palette-complementary-6);
+    }
+
     &__body {
         padding: 4px 0;
 
@@ -130,6 +138,11 @@
             .gd-ui-kit-searchable-select__no-items {
                 font-size: 14px;
                 padding: 8px 0;
+            }
+
+            .gd-ui-kit-searchable-select__footer {
+                margin: auto calc(-1 * var(--gd-spacing-15px)) 0;
+                padding: var(--gd-spacing-10px) var(--gd-spacing-15px);
             }
         }
     }

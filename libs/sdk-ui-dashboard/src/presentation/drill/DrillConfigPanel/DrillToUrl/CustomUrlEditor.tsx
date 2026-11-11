@@ -4,7 +4,7 @@ import { type ReactElement, useCallback, useMemo, useState } from "react";
 
 import { HighlightStyle, StreamLanguage, type StringStream, syntaxHighlighting } from "@codemirror/language";
 import { Tag } from "@lezer/highlight";
-import { escapeRegExp, uniqBy } from "lodash-es";
+import { escapeRegExp } from "lodash-es";
 import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
 
 import {
@@ -41,7 +41,7 @@ import {
     OverlayControllerProvider,
     useMediaQuery,
 } from "@gooddata/sdk-ui-kit";
-import { _compact } from "@gooddata/util";
+import { _compact, _uniqBy } from "@gooddata/util";
 
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import {
@@ -640,7 +640,7 @@ function useSanitizedInsightFilters(widgetRef: ObjRef) {
             return undefined;
         }
         // Date filters are currently not supported, so filter them out
-        return uniqBy(
+        return _uniqBy(
             insightDefinitionFilters(insight)
                 .filter(isAttributeFilter)
                 .map(sanitizeAttributeFilter)

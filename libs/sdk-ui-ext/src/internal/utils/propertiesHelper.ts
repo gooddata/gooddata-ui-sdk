@@ -1,7 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
 // eslint-disable-next-line no-restricted-imports
-import { get, has, set } from "lodash-es";
+import { get, has } from "lodash-es";
 
 import {
     type IConditionalFormatting,
@@ -25,7 +25,7 @@ import {
     type ITextWrapping,
     type PivotTableNextConditionalFormattingConfig,
 } from "@gooddata/sdk-ui-pivot/next";
-import { _cloneDeep, _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty, _set } from "@gooddata/util";
 
 import { AXIS } from "../constants/axis.js";
 import { PROPERTY_CONTROLS } from "../constants/properties.js";
@@ -55,7 +55,7 @@ export function getSupportedPropertiesControls(
     if (supportedPropertiesList) {
         return supportedPropertiesList.reduce(
             (props: IVisualizationProperties, current: string) =>
-                has(clonedControls, current) ? set(props, current, get(clonedControls, current)) : props,
+                has(clonedControls, current) ? _set(props, current, get(clonedControls, current)) : props,
             {},
         );
     }
@@ -95,8 +95,8 @@ export function setSecondaryMeasures(
             [allMeasures.length]: AXIS.SECONDARY,
         }[secondaryMeasures.length] || AXIS.DUAL;
 
-    set(newReferencePoint, path, secondaryAxis);
-    set(newReferencePoint, UICONFIG_AXIS, axis);
+    _set(newReferencePoint, path, secondaryAxis);
+    _set(newReferencePoint, UICONFIG_AXIS, axis);
 
     return newReferencePoint;
 }
@@ -421,7 +421,7 @@ export function getLegendConfiguration(
     insight: IInsightDefinition,
 ): IVisualizationProperties {
     const legendPosition = getLegendPosition(controlProperties, insight);
-    set(controlProperties, "legend.position", legendPosition);
+    _set(controlProperties, "legend.position", legendPosition);
 
     return controlProperties;
 }
@@ -431,9 +431,9 @@ export function getLegendConfigurationDashboardsEnv(
     options: IVisProps,
 ): IVisualizationProperties {
     const legendPosition = getLegendPositionDashboardsEnv(controlProperties, options);
-    set(controlProperties, "legend.position", legendPosition);
+    _set(controlProperties, "legend.position", legendPosition);
 
-    set(controlProperties, "legend.responsive", "autoPositionWithPopup");
+    _set(controlProperties, "legend.responsive", "autoPositionWithPopup");
 
     return controlProperties;
 }

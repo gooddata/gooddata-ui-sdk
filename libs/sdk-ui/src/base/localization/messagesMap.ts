@@ -1,8 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { memoize } from "lodash-es";
-
-import { removeMetadata } from "@gooddata/util";
+import { _memoize, removeMetadata } from "@gooddata/util";
 
 /**
  * @internal
@@ -57,7 +55,7 @@ export const resolveMessagesInternal = async (locale: string): Promise<ITranslat
 /**
  * @internal
  */
-export const resolveMessages: (locale: string) => Promise<ITranslations> = memoize(resolveMessagesInternal);
+export const resolveMessages: (locale: string) => Promise<ITranslations> = _memoize(resolveMessagesInternal);
 
 /**
  * @internal

@@ -1,7 +1,5 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { omit } from "lodash-es";
-
 import {
     type IFilter as IFilterModel,
     type IListedDashboard,
@@ -20,6 +18,7 @@ import {
     uriRef,
 } from "@gooddata/sdk-model";
 import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
+import { _omit } from "@gooddata/util";
 
 import { setDateDatasetsMeta } from "../actions/data_actions.js";
 import { ATTRIBUTE, DATE } from "../constants/bucket.js";
@@ -1864,7 +1863,10 @@ export const decoratedActivityDateDatasetRef = DecoratedDateDataset.createDecora
 export const decoratedClosedDateDataset = DecoratedDateDataset.createDecorated(closedDateDataset);
 export const decoratedClosedDateDatasetRef = DecoratedDateDataset.createDecorated(closedDateDatasetRef);
 
-export const decoratedClosedDateDatasetRefWithoutRelevance = omit(decoratedClosedDateDatasetRef, "relevance");
+export const decoratedClosedDateDatasetRefWithoutRelevance = _omit(
+    decoratedClosedDateDatasetRef,
+    "relevance",
+);
 
 export function setupAppStateWithDateDatasets(state: IAppState) {
     return withData(state, {

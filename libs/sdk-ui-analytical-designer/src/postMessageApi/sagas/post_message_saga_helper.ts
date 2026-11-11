@@ -1,6 +1,5 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { omit } from "lodash-es";
 import moment from "moment";
 
 import { type AdCommandData } from "@gooddata/sdk-embedding";
@@ -9,6 +8,7 @@ import {
     type ITransformedDateFilterItem,
     filterConverters,
 } from "@gooddata/sdk-embedding/internal";
+import { _omit } from "@gooddata/util";
 
 import { ALL_TIME } from "../../constants/presets.js";
 import { GRANULARITY, type Granularity } from "../../models/granularity.js";
@@ -45,9 +45,9 @@ export const getSupportedGranularities = (
         // otherwise an embedder could set a second filter that the UI then rejects and resets.
         return isSecondsSupported
             ? SUPPORTED_DATE_GRANULARITY
-            : omit(SUPPORTED_DATE_GRANULARITY, ["GDC.time.second"]);
+            : _omit(SUPPORTED_DATE_GRANULARITY, ["GDC.time.second"]);
     }
-    return omit(SUPPORTED_DATE_GRANULARITY, ["GDC.time.second", "GDC.time.minute", "GDC.time.hour"]);
+    return _omit(SUPPORTED_DATE_GRANULARITY, ["GDC.time.second", "GDC.time.minute", "GDC.time.hour"]);
 };
 
 export function getPostMessageContextId(postMessageContextContent?: IPostMessageContextContent): string {

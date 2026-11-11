@@ -1,6 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { memoize } from "lodash-es";
 import type { IntlShape } from "react-intl";
 
 import {
@@ -8,7 +7,7 @@ import {
     type ITranslations,
     resolveMessages as sdkUiresolveMessages,
 } from "@gooddata/sdk-ui";
-import { removeMetadata } from "@gooddata/util";
+import { _memoize, removeMetadata } from "@gooddata/util";
 
 import type { IDropdownItem } from "../interfaces/Dropdown.js";
 
@@ -103,7 +102,7 @@ const resolveMessagesInternal = async (locale: string): Promise<ITranslations> =
  *
  * @internal
  */
-export const resolveMessages: (locale: string) => Promise<ITranslations> = memoize(resolveMessagesInternal);
+export const resolveMessages: (locale: string) => Promise<ITranslations> = _memoize(resolveMessagesInternal);
 
 export const DEFAULT_MESSAGES = {
     [DEFAULT_LANGUAGE]: {

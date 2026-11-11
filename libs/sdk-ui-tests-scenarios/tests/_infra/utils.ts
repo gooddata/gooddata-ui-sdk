@@ -1,10 +1,9 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { omit } from "lodash-es";
-
 import { type ICoreChartProps } from "@gooddata/sdk-ui-charts";
 import { type IGeoChartInnerProps } from "@gooddata/sdk-ui-geo";
 import { type ICorePivotTableProps } from "@gooddata/sdk-ui-pivot";
+import { _omit } from "@gooddata/util";
 
 const InsignificantCoreChartProps: Array<keyof ICoreChartProps> = ["execution", "onError"];
 const InsignificantCorePivotProps: Array<keyof ICorePivotTableProps> = ["execution", "onError"];
@@ -26,7 +25,7 @@ export function cleanupCoreChartProps(props?: any): any {
         return;
     }
 
-    return omit(props, InsignificantCoreChartProps);
+    return _omit(props, InsignificantCoreChartProps);
 }
 
 /**
@@ -40,7 +39,7 @@ export function cleanupCorePivotTableProps(props?: any): any {
         return;
     }
 
-    return omit(props, InsignificantCorePivotProps);
+    return _omit(props, InsignificantCorePivotProps);
 }
 
 export function cleanupGeoChartProps(props?: any): any {
@@ -48,5 +47,5 @@ export function cleanupGeoChartProps(props?: any): any {
         return;
     }
 
-    return omit(props, InsignificantCoreGeoProps);
+    return _omit(props, InsignificantCoreGeoProps);
 }

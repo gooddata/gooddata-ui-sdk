@@ -1,7 +1,5 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { partition } from "lodash-es";
-
 import {
     type ColumnLocator,
     type IAbsoluteColumnWidth,
@@ -20,6 +18,7 @@ import {
     isTotalColumnLocator,
     isWeakMeasureColumnWidthItem,
 } from "@gooddata/sdk-ui-pivot";
+import { _partition } from "@gooddata/util";
 
 import { type IAdditionalFactoryDefinition } from "../../../utils/embeddingCodeGenerator/types.js";
 
@@ -36,7 +35,7 @@ export function factoryNotationForAttributeColumnWidthItem(obj: IAttributeColumn
 export function factoryNotationForMeasureColumnWidthItem(obj: IMeasureColumnWidthItem): string {
     const { locators, width } = obj.measureColumnWidthItem;
 
-    const [measureLocators, attributeLocators] = partition<ColumnLocator, IMeasureColumnLocator>(
+    const [measureLocators, attributeLocators] = _partition<ColumnLocator, IMeasureColumnLocator>(
         locators,
         isMeasureColumnLocator,
     );

@@ -19,6 +19,8 @@ export const insightUsageInitialState: IInsightUsageState = null;
 export interface IInsightUsage {
     allUserDashboards: IListedDashboard[];
     referencedDashboards: IMetadataObject[];
+    /** Publisher documents that show the insight. */
+    referencedDocuments: IMetadataObject[];
 }
 
 /**
@@ -34,6 +36,11 @@ export interface IInsightUsageOnDashboard {
 }
 
 export interface IInsightUsageOnDashboardItem {
+    title: string;
+    id: string;
+}
+
+export interface IInsightUsageInDocumentItem {
     title: string;
     id: string;
 }

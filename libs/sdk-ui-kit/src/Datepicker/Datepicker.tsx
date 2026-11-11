@@ -42,13 +42,13 @@ import {
     vi,
     zhCN,
 } from "date-fns/locale";
-import { debounce } from "lodash-es";
 import { type ClassNames, type DayEventHandler, DayPicker, type DayPickerProps } from "react-day-picker";
 import { useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 
 import { type WeekStart } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
+import { _debounce } from "@gooddata/util";
 
 import { DEFAULT_DATE_FORMAT } from "../constants/platform.js";
 import { type IAccessibilityConfigBase } from "../typings/accessibility.js";
@@ -244,7 +244,7 @@ function WrappedDatePickerCore({
         alignDatePickerRef.current = alignDatePicker;
     }, [alignDatePicker]);
 
-    const resizeHandler = useMemo(() => debounce(() => alignDatePickerRef.current(), 100), []);
+    const resizeHandler = useMemo(() => _debounce(() => alignDatePickerRef.current(), 100), []);
 
     useEffect(() => {
         window.addEventListener("resize", resizeHandler);

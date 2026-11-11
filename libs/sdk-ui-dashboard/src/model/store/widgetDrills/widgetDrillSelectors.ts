@@ -73,7 +73,6 @@ import {
     selectDisableDefaultDrills,
     selectEnableDashboardPartialRendering,
     selectEnableDrillToUrlByDefault,
-    selectEnableKda,
     selectEnableSecondGranularities,
     selectIsDisabledCrossFiltering,
     selectIsDisabledKda,
@@ -633,7 +632,6 @@ const selectKdaByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWit
     createMemoizedSelector((ref: ObjRef) =>
         createSelector(
             selectCanUseAiAssistant,
-            selectEnableKda,
             selectEnableSecondGranularities,
             selectDrillTargetsByWidgetRef(ref),
             selectDisableDashboardKda,
@@ -643,7 +641,6 @@ const selectKdaByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWit
             selectInsightByWidgetRef(ref),
             (
                 canUseAiAssistant,
-                isKdaEnabled,
                 enableSecondGranularities,
                 availableDrillTargets,
                 disableKda,
@@ -653,7 +650,6 @@ const selectKdaByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWit
                 widgetInsight,
             ) => {
                 if (
-                    !isKdaEnabled ||
                     !canUseAiAssistant ||
                     disableKda ||
                     disableKdaByConfig ||
@@ -863,7 +859,6 @@ export const selectConfiguredDrillsByWidgetRef: (
         selectDisableDashboardCrossFiltering,
         selectIsDisabledCrossFiltering,
         selectCanUseAiAssistant,
-        selectEnableKda,
         selectDisableDashboardKda,
         selectIsDisabledKda,
         (
@@ -873,7 +868,6 @@ export const selectConfiguredDrillsByWidgetRef: (
             disableCrossFiltering,
             disableCrossFilteringByConfig,
             canUseAiAssistant,
-            enableKda,
             disableKda,
             disableKdaByConfig,
         ) => {
@@ -895,7 +889,7 @@ export const selectConfiguredDrillsByWidgetRef: (
                 } else if (drillType === "crossFiltering") {
                     return !disableCrossFiltering && !disableCrossFilteringByConfig;
                 } else if (drillType === "keyDriveAnalysis") {
-                    return enableKda && canUseAiAssistant && !disableKda && !disableKdaByConfig;
+                    return canUseAiAssistant && !disableKda && !disableKdaByConfig;
                 } else {
                     const unhandledType: never = drillType;
                     throw new UnexpectedError(`Unhandled widget drill type: ${unhandledType}`);

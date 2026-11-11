@@ -15,6 +15,8 @@ import {
 
 import { type DeclarativePublisherEntityKindV2 } from "./declarativePublisherTypesV2.js";
 
+type AuditKey = "createdAt" | "createdBy" | "modifiedAt" | "modifiedBy";
+
 const declarativeKeys: Record<DeclarativePublisherEntityKindV2, ReadonlySet<string>> = {
     document: keySet({
         id: true,
@@ -36,7 +38,7 @@ const declarativeKeys: Record<DeclarativePublisherEntityKindV2, ReadonlySet<stri
         tags: true,
         version: true,
         content: true,
-    } satisfies Record<keyof DeclarativePublisherDocumentTemplate, true>),
+    } satisfies Record<keyof Omit<DeclarativePublisherDocumentTemplate, AuditKey>, true>),
     pageTemplate: keySet({
         ...({
             id: true,
@@ -45,7 +47,7 @@ const declarativeKeys: Record<DeclarativePublisherEntityKindV2, ReadonlySet<stri
             tags: true,
             version: true,
             content: true,
-        } satisfies Record<keyof DeclarativePublisherDocumentPageTemplate, true>),
+        } satisfies Record<keyof Omit<DeclarativePublisherDocumentPageTemplate, AuditKey>, true>),
         // Marks a default page template, stored under a reserved `default.` id.
         isDefault: true,
     }),

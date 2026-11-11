@@ -54,6 +54,7 @@ describe("insight usage on dashboards", () => {
                     createAnalyticalDashboard("Sale", "Bee", 123),
                     createAnalyticalDashboard("Revenue", "id3", 124),
                 ],
+                referencedDocuments: [],
             };
             const result = getInsightUsageOnDashboardsSelector.resultFunc(insightUsage, "id3");
             expect(result).toMatchSnapshot();

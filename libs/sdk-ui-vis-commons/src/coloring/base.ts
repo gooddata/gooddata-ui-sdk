@@ -1,7 +1,5 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { uniqBy } from "lodash-es";
-
 import {
     type IColor,
     type IColorPalette,
@@ -12,6 +10,7 @@ import {
     isColorFromPalette,
 } from "@gooddata/sdk-model";
 import { type DataViewFacade, type IColorAssignment } from "@gooddata/sdk-ui";
+import { _uniqBy } from "@gooddata/util";
 
 import { getColorByGuid, getColorFromMapping, getRgbStringFromRGB, guidEquals } from "./color.js";
 import { type IColorMapping } from "./types.js";
@@ -159,7 +158,7 @@ export function getAttributeColorAssignment(
     dv: DataViewFacade,
 ): IColorAssignment[] {
     let currentColorPaletteIndex = 0;
-    const uniqItems: IResultAttributeHeader[] = uniqBy<IResultAttributeHeader>(
+    const uniqItems: IResultAttributeHeader[] = _uniqBy<IResultAttributeHeader>(
         attribute.items,
         "attributeHeaderItem.uri",
     );

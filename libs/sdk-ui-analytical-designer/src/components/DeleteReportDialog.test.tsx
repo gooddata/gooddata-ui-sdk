@@ -63,29 +63,30 @@ describe("DeleteReportDialog", () => {
         vi.restoreAllMocks();
     });
 
-    it("blocks the delete of a visualization only a document uses, and links the document", async () => {
+    it("blocks the delete of a visualization only a report uses, and links the report", async () => {
         useBackend({
             analyticalDashboards: [],
             documents: [metadataObject("document", "q3/pack", "Q3 board pack")],
         });
         renderDialog();
 
-        const message = await screen.findByText(/used in some documents\. To delete/);
+        const message = await screen.findByText(/used in some reports\. To delete/);
         expect(message.textContent).not.toContain("dashboards");
         expect(isDeleteDisabled()).toBe(true);
-        expect(screen.getByText(/The visualization is used in/).textContent).toContain("1 document");
+        expect(screen.getByText(/The visualization is used in/).textContent).toContain("1 report");
 
-        const toggle = document.querySelector(".s-delete-report-dialog-usage-documents-more button")!;
+        const toggle = document.querySelector(".s-delete-report-dialog-usage-more button")!;
         expect(toggle.textContent).toBe("Show more");
         expect(toggle.getAttribute("aria-expanded")).toBe("false");
         fireEvent.click(toggle);
         expect(toggle.getAttribute("aria-expanded")).toBe("true");
+        expect(document.querySelector("h4.gd-delete-report-dialog-usage-group-heading")).toBeNull();
 
         const link = screen.getByText("Q3 board pack").closest("a")!;
         expect(link.getAttribute("href")).toMatch(/\/reports\/document\/q3%2Fpack$/);
     });
 
-    it("names both dashboards and documents when both use the visualization", async () => {
+    it("groups dashboards and reports in one message when both use the visualization", async () => {
         useBackend(
             {
                 analyticalDashboards: [metadataObject("analyticalDashboard", "board", "Board")],
@@ -95,10 +96,19 @@ describe("DeleteReportDialog", () => {
         );
         renderDialog();
 
-        expect(await screen.findByText(/used in some documents or dashboards/)).toBeTruthy();
-        expect(screen.getByText(/used on/).textContent).toContain("1 dashboard");
-        expect(screen.getByText(/The visualization is used in/).textContent).toContain("1 document");
+        expect(await screen.findByText(/used in dashboards and reports/)).toBeTruthy();
+        expect(screen.getByText(/The visualization is used in/).textContent).toContain("2 places");
+        expect(document.querySelectorAll(".s-delete-report-dialog-usage-more")).toHaveLength(1);
         expect(isDeleteDisabled()).toBe(true);
+
+        fireEvent.click(document.querySelector(".s-delete-report-dialog-usage-more button")!);
+        const headings = document.querySelectorAll("h4.gd-delete-report-dialog-usage-group-heading");
+        expect(Array.from(headings, (heading) => heading.textContent)).toEqual([
+            "Dashboards (1)",
+            "Reports (1)",
+        ]);
+        expect(screen.getByText("Board")).toBeTruthy();
+        expect(screen.getByText("Q3 board pack")).toBeTruthy();
     });
 
     it("keeps the dashboard message when only dashboards use the visualization", async () => {
@@ -115,7 +125,7 @@ describe("DeleteReportDialog", () => {
         renderDialog();
 
         expect(
-            await screen.findByText("The visualization is not used on any dashboard or in any document."),
+            await screen.findByText("The visualization is not used on any dashboard or in any report."),
         ).toBeTruthy();
         expect(isDeleteDisabled()).toBe(false);
     });

@@ -1,10 +1,9 @@
 // (C) 2026 GoodData Corporation
 
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { set } from "lodash-es";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
 
@@ -36,7 +35,7 @@ function createComponent(customProps: Partial<ICustomTooltipSectionProps> = {}) 
     );
 }
 
-const expanded = set({}, "custom_tooltip_section.collapsed", false);
+const expanded = _set({}, "custom_tooltip_section.collapsed", false);
 
 /**
  * Moves the (fake) clock forward and lets React commit whatever settled meanwhile — the fired
@@ -91,7 +90,7 @@ describe("CustomTooltipSection", () => {
     });
 
     it("enables the textarea and dropdown when the section is toggled on", () => {
-        const enabled = set(_cloneDeep(expanded), "controls.customTooltip.enabled", true);
+        const enabled = _set(_cloneDeep(expanded), "controls.customTooltip.enabled", true);
         createComponent({
             properties: enabled,
             propertiesMeta: expanded,
@@ -101,7 +100,7 @@ describe("CustomTooltipSection", () => {
     });
 
     it("disables the textarea when toggled on but controlsDisabled is true", () => {
-        const enabled = set({}, "controls.customTooltip.enabled", true);
+        const enabled = _set({}, "controls.customTooltip.enabled", true);
         createComponent({
             controlsDisabled: true,
             properties: enabled,
@@ -112,7 +111,7 @@ describe("CustomTooltipSection", () => {
 
     it("calls pushData with updated content once the debounce settles", async () => {
         const pushDataSpy = vi.fn();
-        const enabled = set({}, "controls.customTooltip.enabled", true);
+        const enabled = _set({}, "controls.customTooltip.enabled", true);
         createComponent({
             properties: enabled,
             propertiesMeta: expanded,
@@ -137,7 +136,7 @@ describe("CustomTooltipSection", () => {
 
     it("collapses rapid typing into a single trailing pushData call", async () => {
         const pushDataSpy = vi.fn();
-        const enabled = set({}, "controls.customTooltip.enabled", true);
+        const enabled = _set({}, "controls.customTooltip.enabled", true);
         createComponent({
             properties: enabled,
             propertiesMeta: expanded,
@@ -165,7 +164,7 @@ describe("CustomTooltipSection", () => {
 
     it("flushes pending content immediately on blur instead of waiting for the debounce", async () => {
         const pushDataSpy = vi.fn();
-        const enabled = set({}, "controls.customTooltip.enabled", true);
+        const enabled = _set({}, "controls.customTooltip.enabled", true);
         createComponent({
             properties: enabled,
             propertiesMeta: expanded,
@@ -191,8 +190,8 @@ describe("CustomTooltipSection", () => {
 
     it("syncs the textarea when content changes externally (e.g., undo or viz switch)", async () => {
         const pushDataSpy = vi.fn();
-        const initial = set({}, "controls.customTooltip.enabled", true);
-        set(initial, "controls.customTooltip.content", "original");
+        const initial = _set({}, "controls.customTooltip.enabled", true);
+        _set(initial, "controls.customTooltip.content", "original");
 
         const { rerender } = render(
             <InternalIntlWrapper>
@@ -208,7 +207,7 @@ describe("CustomTooltipSection", () => {
         expect(screen.getByRole("textbox")).toHaveValue("original");
 
         const updated = _cloneDeep(initial);
-        set(updated, "controls.customTooltip.content", "restored");
+        _set(updated, "controls.customTooltip.content", "restored");
         rerender(
             <InternalIntlWrapper>
                 <CustomTooltipSection
@@ -225,7 +224,7 @@ describe("CustomTooltipSection", () => {
 
     it("cancels a pending push when content changes externally before the debounce settles", async () => {
         const pushDataSpy = vi.fn();
-        const initial = set({}, "controls.customTooltip.enabled", true);
+        const initial = _set({}, "controls.customTooltip.enabled", true);
 
         const { rerender } = render(
             <InternalIntlWrapper>
@@ -241,7 +240,7 @@ describe("CustomTooltipSection", () => {
         type(screen.getByRole("textbox"), "stale");
 
         // External undo/load lands before our debounce fires.
-        const undone = set(_cloneDeep(initial), "controls.customTooltip.content", "undone");
+        const undone = _set(_cloneDeep(initial), "controls.customTooltip.content", "undone");
         rerender(
             <InternalIntlWrapper>
                 <CustomTooltipSection

@@ -2,11 +2,11 @@
 
 import { useCallback, useState } from "react";
 
-import { debounce } from "lodash-es";
 import { useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 
 import { InputPure } from "@gooddata/sdk-ui-kit";
+import { _debounce } from "@gooddata/util";
 
 import { visualizationPropertiesChanged } from "../../actions/properties_actions.js";
 import { VisualizationPropertiesSelectors } from "../../selectors/visualization_properties_selector.js";
@@ -31,7 +31,7 @@ export function AttributeBucketItemHyperlinkConfiguration({
 
     // oxlint-disable-next-line react-hooks/exhaustive-deps
     const debouncedPropertiesChange = useCallback(
-        debounce((...args: Parameters<typeof visualizationPropertiesChanged>) => {
+        _debounce((...args: Parameters<typeof visualizationPropertiesChanged>) => {
             dispatch(visualizationPropertiesChanged(...args));
         }, 500),
         [dispatch],

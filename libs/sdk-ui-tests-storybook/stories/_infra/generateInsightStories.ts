@@ -2,13 +2,14 @@
 
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "fs";
 
-import { groupBy, keyBy, sortBy } from "lodash-es";
+import { keyBy, sortBy } from "lodash-es";
 import { format } from "oxfmt";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { type RecordingIndex } from "@gooddata/sdk-backend-mockingbird";
 import { type IInsight, insightId, insightVisualizationUrl } from "@gooddata/sdk-model";
 import { type ScenarioGroup, allScenarios } from "@gooddata/sdk-ui-tests-scenarios";
+import { _groupBy } from "@gooddata/util";
 
 import { type INeobackstopScenarioConfig, type IStoryParameters, type State } from "./backstopScenario.js";
 import { generateExportName, generateImports, header } from "./generateStories.js";
@@ -71,7 +72,7 @@ const Insights = [...getAvailableInsights(ReferenceRecordings.Recordings)];
 const InsightById = keyBy(Insights, insightId);
 
 const ScenarioGroupsByVis = sortBy(
-    Object.values(groupBy<ScenarioGroup<any>>(allScenarios, (g) => g.vis)),
+    Object.values(_groupBy<ScenarioGroup<any>>(allScenarios, (g) => g.vis)),
     (groups) => groups[0].vis,
 );
 

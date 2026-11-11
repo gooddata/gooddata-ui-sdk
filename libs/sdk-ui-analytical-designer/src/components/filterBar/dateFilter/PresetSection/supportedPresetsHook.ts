@@ -2,8 +2,6 @@
 
 import { useEffect, useMemo } from "react";
 
-import { omit } from "lodash-es";
-
 import {
     type DateFilterGranularity,
     type IRelativeDateFilterPreset,
@@ -15,6 +13,7 @@ import {
     type DateFilterRelativeOptionGroup,
     isUiRelativeDateFilterForm,
 } from "@gooddata/sdk-ui-filters";
+import { _omit } from "@gooddata/util";
 
 import { type IDecoratedDateDataset } from "../../../../models/decorated_date_dataset.js";
 import { type IDateDatasetRefWithGranularities } from "../../../../typings/datasets.js";
@@ -64,7 +63,7 @@ export const useSupportedDateFilterPresets = (
             .filter((granularity) => !missingGranularities.includes(granularity));
 
         return {
-            supportedDateFilterPresets: omit(allRelativeDateFilterPresets, missingGranularities),
+            supportedDateFilterPresets: _omit(allRelativeDateFilterPresets, missingGranularities),
             supportedChronologicalGranularities,
         };
     }, [

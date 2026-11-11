@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { hideDialog } from "../actions/dialogs_actions.js";
@@ -8,8 +8,14 @@ import { reportTitleChange } from "../actions/report_actions.js";
 import { saveReportCheck } from "../actions/save_actions.js";
 import { getSourceDashboardId, isAllowedDashboardLinks } from "../selectors/route_selector.js";
 import { saveReportFromKDDialogSelector } from "../selectors/save_report_from_kd_dialog_selector.js";
-import { analyticalDashboardUriFactorySelector } from "../selectors/uri_selector.js";
-import { type IInsightUsageOnDashboard } from "../store/insight_usage/insight_usage_state.js";
+import {
+    analyticalDashboardUriFactorySelector,
+    documentUriFactorySelector,
+} from "../selectors/uri_selector.js";
+import {
+    type IInsightUsageInDocumentItem,
+    type IInsightUsageOnDashboard,
+} from "../store/insight_usage/insight_usage_state.js";
 import { createAnalyticalDashboard } from "../tests/constants.test.helpers.js";
 import { withIntl } from "../utils/with_intl.js";
 
@@ -48,6 +54,7 @@ const EMPTY_INSIGHT_USAGE: IInsightUsageOnDashboard = {
 describe("Test SaveReportFromKDDialog", () => {
     interface ISelectorValues {
         insightUsedOnDashboards?: IInsightUsageOnDashboard;
+        insightUsedInDocuments?: IInsightUsageInDocumentItem[];
         openSaveReportFromKD?: boolean;
         editingReportTitle?: string;
         isSaveAsNewReportOnly?: boolean;
@@ -56,6 +63,7 @@ describe("Test SaveReportFromKDDialog", () => {
 
     function renderComponent({
         insightUsedOnDashboards = EMPTY_INSIGHT_USAGE,
+        insightUsedInDocuments = [],
         openSaveReportFromKD = true,
         editingReportTitle = "Insight Title",
         isSaveAsNewReportOnly = false,
@@ -65,6 +73,7 @@ describe("Test SaveReportFromKDDialog", () => {
             if (selector === saveReportFromKDDialogSelector) {
                 return {
                     insightUsedOnDashboards,
+                    insightUsedInDocuments,
                     openSaveReportFromKD,
                     editingReportTitle,
                     isSaveAsNewReportOnly,
@@ -80,6 +89,9 @@ describe("Test SaveReportFromKDDialog", () => {
             }
             if (selector === analyticalDashboardUriFactorySelector) {
                 return (id: string) => `/dashboard/${id}`;
+            }
+            if (selector === documentUriFactorySelector) {
+                return (id: string) => `/document/${id}`;
             }
             return undefined;
         });
@@ -246,6 +258,39 @@ describe("Test SaveReportFromKDDialog", () => {
             expect(document.querySelectorAll(".s-insight-usage-dashboard-item")).toHaveLength(1);
             expect(document.querySelector(".s-kd-save-dialog-usage-inaccessible").textContent).toEqual(
                 "and 2 more not shared with you.",
+            );
+        });
+    });
+    describe("insight usage in documents", () => {
+        const dashboards: IInsightUsageOnDashboard = {
+            accessibleDashboards: [createAnalyticalDashboard("Sale", "Bee", 1)],
+            allDashboards: [createAnalyticalDashboard("Sale", "Bee", 1)],
+            inaccessibleDashboardsCount: 0,
+            allDashboardsCount: 1,
+        };
+
+        it("should keep the dashboards wording when no document uses the visualization", () => {
+            renderComponent({ insightUsedOnDashboards: dashboards });
+
+            expect(
+                screen.getByText("Visualization is being used on multiple dashboards"),
+            ).toBeInTheDocument();
+            expect(screen.getByText("Save visualization on all dashboards")).toBeInTheDocument();
+        });
+
+        it("should mention documents and list them when a document uses the visualization", () => {
+            renderComponent({
+                insightUsedOnDashboards: dashboards,
+                insightUsedInDocuments: [{ id: "doc1", title: "Board pack" }],
+            });
+
+            expect(screen.getByText("Visualization is used in other places")).toBeInTheDocument();
+            expect(screen.getByText("Save visualization everywhere it is used")).toBeInTheDocument();
+            expect(
+                Array.from(document.querySelectorAll(".s-view-usage summary")).map((s) => s.textContent),
+            ).toEqual(["Dashboards (1)", "Reports (1)"]);
+            expect(document.querySelector(".s-insight-usage-document-item").textContent).toEqual(
+                "Board pack",
             );
         });
     });

@@ -1,10 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { BucketNames } from "@gooddata/sdk-ui";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { BUCKETS } from "../../constants/bucket.js";
 import { UICONFIG } from "../../constants/uiConfig.js";
@@ -26,16 +25,16 @@ export function setScatterPlotUiConfig(
 ): IExtendedReferencePoint {
     let referencePointConfigured = _cloneDeep(referencePoint);
 
-    set(referencePointConfigured, UICONFIG, setBucketTitles(referencePoint, visualizationType, intl));
+    _set(referencePointConfigured, UICONFIG, setBucketTitles(referencePoint, visualizationType, intl));
 
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], scatterMeasuresXIcon);
-    set(
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], scatterMeasuresXIcon);
+    _set(
         referencePointConfigured,
         [UICONFIG, BUCKETS, BucketNames.SECONDARY_MEASURES, "icon"],
         scatterMeasuresYIcon,
     );
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE, "icon"], scatterViewIcon);
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.SEGMENT, "icon"], scatterSegmentIcon);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE, "icon"], scatterViewIcon);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.SEGMENT, "icon"], scatterSegmentIcon);
 
     referencePointConfigured = disableClusteringIfSegmentationIsActive(referencePointConfigured);
 

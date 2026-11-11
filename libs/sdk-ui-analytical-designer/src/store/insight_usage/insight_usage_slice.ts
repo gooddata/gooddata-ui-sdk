@@ -17,6 +17,7 @@ const insightUsageSlice = createSlice({
             .addCase(updateInsightUsageOnDashboards, (_state, action): IInsightUsageState => ({
                 referencedDashboards: action.payload.usages,
                 allUserDashboards: action.payload.dashboards,
+                referencedDocuments: action.payload.documents,
             }))
             // null rather than an absent key; every reader treats the two the same
             .addCase(resetInsightUsageOnDashboards, (): IInsightUsageState => insightUsageInitialState)

@@ -26,6 +26,7 @@ import { initialState } from "../../reducers/initial_state.js";
 import { getOrganizationId } from "../../selectors/bootstrap_selector.js";
 import { isReportChanging } from "../../selectors/confirm_unsaved_changes_dialog_selector.js";
 import {
+    isEmbeddingOriginValidationEnabled,
     isEmbeddingWriteCommandsEnabled,
     isEnableTimezoneChange,
 } from "../../selectors/feature_flag_selector.js";
@@ -105,6 +106,7 @@ describe("command received saga", () => {
         async (commandType, envelope) => {
             const saga: RunResult = await expectSaga(watchCommandReceived)
                 .provide([
+                    [select(isEmbeddingOriginValidationEnabled), true],
                     [select(getOrganizationId), "default"],
                     [call(validateHostDomain, "default", "origin"), true],
                     [select(isEmbeddingWriteCommandsEnabled), false],
@@ -134,6 +136,7 @@ describe("command received saga", () => {
         return expectSaga(watchCommandReceived)
             .withState(withRoot(initialState, { featureFlags }))
             .provide([
+                [select(isEmbeddingOriginValidationEnabled), true],
                 [select(getOrganizationId), "default"],
                 [call(validateHostDomain, "default", "origin"), true],
             ])
@@ -200,6 +203,7 @@ describe("command received saga", () => {
     it.each(handledCommands)("should handle %s command", async (_commandType, envelope, expected) => {
         const saga: RunResult = await expectSaga(watchCommandReceived)
             .provide([
+                [select(isEmbeddingOriginValidationEnabled), true],
                 [select(getOrganizationId), "default"],
                 [call(validateHostDomain, "default", "origin"), true],
                 [select(isEmbeddingWriteCommandsEnabled), true],
@@ -224,6 +228,7 @@ describe("command received saga", () => {
         it("should put an action when insight is modified and AD is not explored from KD", async () => {
             const saga: RunResult = await expectSaga(watchCommandReceived)
                 .provide([
+                    [select(isEmbeddingOriginValidationEnabled), true],
                     [select(getOrganizationId), "default"],
                     [call(validateHostDomain, "default", "origin"), true],
                     [select(isEmbeddingWriteCommandsEnabled), true],
@@ -242,6 +247,7 @@ describe("command received saga", () => {
         it("should put an action when the metric editor has unsaved changes even though AD is explored from KD", async () => {
             const saga: RunResult = await expectSaga(watchCommandReceived)
                 .provide([
+                    [select(isEmbeddingOriginValidationEnabled), true],
                     [select(getOrganizationId), "default"],
                     [call(validateHostDomain, "default", "origin"), true],
                     [select(isEmbeddingWriteCommandsEnabled), true],
@@ -263,6 +269,7 @@ describe("command received saga", () => {
         it("should not put an action when insight is modified but AD is explored from KD", async () => {
             const saga: RunResult = await expectSaga(watchCommandReceived)
                 .provide([
+                    [select(isEmbeddingOriginValidationEnabled), true],
                     [select(getOrganizationId), "default"],
                     [call(validateHostDomain, "default", "origin"), true],
                     [select(isEmbeddingWriteCommandsEnabled), true],
@@ -281,6 +288,7 @@ describe("command received saga", () => {
         it("should not put an action when insight in not modified", async () => {
             const saga: RunResult = await expectSaga(watchCommandReceived)
                 .provide([
+                    [select(isEmbeddingOriginValidationEnabled), true],
                     [select(getOrganizationId), "default"],
                     [call(validateHostDomain, "default", "origin"), true],
                     [select(isEmbeddingWriteCommandsEnabled), true],
@@ -311,6 +319,7 @@ describe("command received saga", () => {
             };
             const saga: RunResult = await expectSaga(watchCommandReceived)
                 .provide([
+                    [select(isEmbeddingOriginValidationEnabled), true],
                     [select(getOrganizationId), "default"],
                     [call(validateHostDomain, "default", "origin"), true],
                     [select(isEmbeddingWriteCommandsEnabled), true],
@@ -335,6 +344,7 @@ describe("command received saga", () => {
             };
             const saga: RunResult = await expectSaga(watchCommandReceived)
                 .provide([
+                    [select(isEmbeddingOriginValidationEnabled), true],
                     [select(getOrganizationId), "default"],
                     [call(validateHostDomain, "default", "origin"), true],
                     [select(isEmbeddingWriteCommandsEnabled), true],
@@ -359,6 +369,7 @@ describe("command received saga", () => {
             };
             const saga: RunResult = await expectSaga(watchCommandReceived)
                 .provide([
+                    [select(isEmbeddingOriginValidationEnabled), true],
                     [select(getOrganizationId), "default"],
                     [call(validateHostDomain, "default", "origin"), true],
                     [select(isEmbeddingWriteCommandsEnabled), true],
@@ -383,6 +394,7 @@ describe("command received saga", () => {
             };
             const saga: RunResult = await expectSaga(watchCommandReceived)
                 .provide([
+                    [select(isEmbeddingOriginValidationEnabled), true],
                     [select(getOrganizationId), "default"],
                     [call(validateHostDomain, "default", "origin"), true],
                     [select(isEmbeddingWriteCommandsEnabled), true],
@@ -414,6 +426,7 @@ describe("command received saga", () => {
             };
             const saga: RunResult = await expectSaga(watchCommandReceived)
                 .provide([
+                    [select(isEmbeddingOriginValidationEnabled), true],
                     [select(getOrganizationId), "default"],
                     [call(validateHostDomain, "default", "origin"), true],
                     [select(isEmbeddingWriteCommandsEnabled), true],
@@ -445,6 +458,7 @@ describe("command received saga", () => {
             };
             const saga: RunResult = await expectSaga(watchCommandReceived)
                 .provide([
+                    [select(isEmbeddingOriginValidationEnabled), true],
                     [select(getOrganizationId), "default"],
                     [call(validateHostDomain, "default", "origin"), true],
                     [select(isEmbeddingWriteCommandsEnabled), true],
@@ -476,9 +490,40 @@ describe("command received saga", () => {
             },
         };
 
+        it("should not validate the origin when origin validation is disabled", async () => {
+            const saga: RunResult = await expectSaga(watchCommandReceived)
+                .provide([
+                    [select(isEmbeddingOriginValidationEnabled), false],
+                    [select(getOrganizationId), "default"],
+                    [call(validateHostDomain, "default", "origin"), false],
+                    [select(isEmbeddingWriteCommandsEnabled), true],
+                ])
+                .dispatch(commandReceived(command, "origin"))
+                .silentRun();
+
+            expect(saga.effects.call ?? []).not.toContainEqual(call(validateHostDomain, "default", "origin"));
+            expect(saga.effects.put).toEqual([put(saveInsightRequested(command))]);
+        });
+
+        it("should validate the origin when origin validation is enabled", async () => {
+            const saga: RunResult = await expectSaga(watchCommandReceived)
+                .provide([
+                    [select(isEmbeddingOriginValidationEnabled), true],
+                    [select(getOrganizationId), "default"],
+                    [call(validateHostDomain, "default", "origin"), true],
+                    [select(isEmbeddingWriteCommandsEnabled), true],
+                ])
+                .dispatch(commandReceived(command, "origin"))
+                .silentRun();
+
+            expect(saga.effects.call).toContainEqual(call(validateHostDomain, "default", "origin"));
+            expect(saga.effects.put).toEqual([put(saveInsightRequested(command))]);
+        });
+
         it("should put action when origin was not verified", async () => {
             const saga: RunResult = await expectSaga(watchCommandReceived)
                 .provide([
+                    [select(isEmbeddingOriginValidationEnabled), true],
                     [select(getOrganizationId), "default"],
                     [call(validateHostDomain, "default", "origin"), false],
                 ])
@@ -491,6 +536,7 @@ describe("command received saga", () => {
         it("should put action when origin validation throws", async () => {
             const saga: RunResult = await expectSaga(watchCommandReceived)
                 .provide([
+                    [select(isEmbeddingOriginValidationEnabled), true],
                     [select(getOrganizationId), "default"],
                     [call(validateHostDomain, "default", "origin"), throwError(new Error("backend error"))],
                 ])

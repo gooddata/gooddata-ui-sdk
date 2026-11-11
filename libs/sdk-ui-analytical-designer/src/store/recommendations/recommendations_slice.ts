@@ -1,8 +1,9 @@
 // (C) 2026 GoodData Corporation
 
 import { createSlice } from "@reduxjs/toolkit";
-import { uniq } from "lodash-es";
 import { type Reducer } from "redux";
+
+import { _uniq } from "@gooddata/util";
 
 import { storeDismissRecommendations } from "./recommendations_actions.js";
 import {
@@ -20,7 +21,7 @@ const recommendationsSlice = createSlice({
         // the persistence lives in recommendations_sagas.ts —
         // reducers stay side-effect free.
         builder.addCase(storeDismissRecommendations, (state, action) =>
-            uniq([...state, action.payload.visClass]),
+            _uniq([...state, action.payload.visClass]),
         );
     },
 });

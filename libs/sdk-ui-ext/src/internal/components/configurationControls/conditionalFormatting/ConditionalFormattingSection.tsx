@@ -3,7 +3,6 @@
 import { useState } from "react";
 
 import cx from "classnames";
-import { set } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -15,7 +14,7 @@ import {
 } from "@gooddata/sdk-model";
 import { Button, UiIconButton } from "@gooddata/sdk-ui-kit";
 import { type IConditionalFormatting, type IConditionalFormattingRule } from "@gooddata/sdk-ui-pivot/next";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { conditionalFormattingMessages } from "../../../../locales.js";
 import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
@@ -332,7 +331,7 @@ export function ConditionalFormattingSection({
             prunedSuppressedTargets,
         );
         const cloned = _cloneDeep(properties ?? {});
-        set(cloned, "controls.conditionalFormatting", next);
+        _set(cloned, "controls.conditionalFormatting", next);
         pushData?.({ properties: cloned });
     };
 

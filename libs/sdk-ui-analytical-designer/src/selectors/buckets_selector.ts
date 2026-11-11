@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { isPlainObject, omit } from "lodash-es";
+import { isPlainObject } from "lodash-es";
 import { createSelector, createStructuredSelector } from "reselect";
 
 import {
@@ -11,7 +11,7 @@ import {
     type IVisualizationClass,
     type ObjRef,
 } from "@gooddata/sdk-model";
-import { _isEmpty } from "@gooddata/util";
+import { _isEmpty, _omit } from "@gooddata/util";
 
 import { COMPUTED_ATTRIBUTE, FACT, METRIC } from "../constants/bucket.js";
 import { LOCAL_CHOROPLETH, LOCAL_PUSHPIN } from "../constants/visualization_types.js";
@@ -339,7 +339,7 @@ function constructVisualizationMDObj(
     const controls = currentVisualizationProperties?.controls;
     const sanitized =
         isPlainObject(controls) && _isEmpty(controls)
-            ? omit(currentVisualizationProperties, "controls")
+            ? _omit(currentVisualizationProperties, "controls")
             : currentVisualizationProperties;
 
     // A COPY, deliberately: assigning `sortItems` onto the stored properties would write THROUGH

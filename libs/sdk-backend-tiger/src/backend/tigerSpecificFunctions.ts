@@ -2,7 +2,6 @@
 
 import { type AxiosRequestConfig } from "axios";
 import { backOff } from "exponential-backoff";
-import { uniq } from "lodash-es";
 
 import {
     type ActionsApiProcessInvitationRequest,
@@ -144,7 +143,7 @@ import {
     isUnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 import { type IUser } from "@gooddata/sdk-model";
-import { _isEmpty } from "@gooddata/util";
+import { _isEmpty, _uniq } from "@gooddata/util";
 
 import { getApiProblemDetail, getDataSourceErrorMessage } from "../utils/apiProblemDetail.js";
 import { convertApiError } from "../utils/errorHandling.js";
@@ -891,7 +890,7 @@ export const buildTigerSpecificFunctions = (
     updateOrganizationAllowedOrigins: async (organizationId: string, updatedOrigins: string[]) => {
         const sanitizeOrigins = (origins: Array<string>) => {
             const arr = origins || [];
-            return uniq(arr.map((s) => s.toLowerCase())).sort();
+            return _uniq(arr.map((s) => s.toLowerCase())).sort();
         };
         try {
             return await authApiCall(async (sdk) => {

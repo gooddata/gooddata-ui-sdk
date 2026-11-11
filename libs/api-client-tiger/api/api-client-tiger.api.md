@@ -131,6 +131,8 @@ export class ActionsApi extends MetadataBaseApi implements ActionsApiInterface {
     manageVisualizationPermissions(requestParameters: ActionsApiManageVisualizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageWorkspacePermissions(requestParameters: ActionsApiManageWorkspacePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     metricPermissions(requestParameters: ActionsApiMetricPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<MetricPermissions>;
+    organizationLocalizationIssues(options?: AxiosRequestConfig): AxiosPromise<LocalizationIssues>;
+    organizationLocalizationIssueWorkspaces(requestParameters: ActionsApiOrganizationLocalizationIssueWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationIssueWorkspaces>;
     organizationLocalizationStatistics(options?: AxiosRequestConfig): AxiosPromise<LocalizationStatistics>;
     organizationLocalizationUsage(options?: AxiosRequestConfig): AxiosPromise<LocalizationUsage>;
     organizationLocalizationUsageUsers(requestParameters?: ActionsApiOrganizationLocalizationUsageUsersRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationUsageUsers>;
@@ -163,6 +165,7 @@ export class ActionsApi extends MetadataBaseApi implements ActionsApiInterface {
     unsubscribeWorkspaceAutomations(requestParameters: ActionsApiUnsubscribeWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     validateEmbeddingOrigin(requestParameters: ActionsApiValidateEmbeddingOriginRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateEmbeddingOriginResponse>;
     visualizationPermissions(requestParameters: ActionsApiVisualizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<VisualizationPermissions>;
+    workspaceLocalizationIssues(requestParameters: ActionsApiWorkspaceLocalizationIssuesRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationIssues>;
     workspaceLocalizationStatistics(requestParameters: ActionsApiWorkspaceLocalizationStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationStatistics>;
     workspaceLocalizationUsage(requestParameters: ActionsApiWorkspaceLocalizationUsageRequest, options?: AxiosRequestConfig): AxiosPromise<WorkspaceLocalizationUsage>;
     workspaceLocalizationUsageUsers(requestParameters: ActionsApiWorkspaceLocalizationUsageUsersRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationUsageUsers>;
@@ -796,6 +799,8 @@ export interface ActionsApiInterface {
     manageVisualizationPermissions(requestParameters: ActionsApiManageVisualizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageWorkspacePermissions(requestParameters: ActionsApiManageWorkspacePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     metricPermissions(requestParameters: ActionsApiMetricPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<MetricPermissions>;
+    organizationLocalizationIssues(options?: AxiosRequestConfig): AxiosPromise<LocalizationIssues>;
+    organizationLocalizationIssueWorkspaces(requestParameters: ActionsApiOrganizationLocalizationIssueWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationIssueWorkspaces>;
     organizationLocalizationStatistics(options?: AxiosRequestConfig): AxiosPromise<LocalizationStatistics>;
     organizationLocalizationUsage(options?: AxiosRequestConfig): AxiosPromise<LocalizationUsage>;
     organizationLocalizationUsageUsers(requestParameters: ActionsApiOrganizationLocalizationUsageUsersRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationUsageUsers>;
@@ -828,6 +833,7 @@ export interface ActionsApiInterface {
     unsubscribeWorkspaceAutomations(requestParameters: ActionsApiUnsubscribeWorkspaceAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     validateEmbeddingOrigin(requestParameters: ActionsApiValidateEmbeddingOriginRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateEmbeddingOriginResponse>;
     visualizationPermissions(requestParameters: ActionsApiVisualizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<VisualizationPermissions>;
+    workspaceLocalizationIssues(requestParameters: ActionsApiWorkspaceLocalizationIssuesRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationIssues>;
     workspaceLocalizationStatistics(requestParameters: ActionsApiWorkspaceLocalizationStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationStatistics>;
     workspaceLocalizationUsage(requestParameters: ActionsApiWorkspaceLocalizationUsageRequest, options?: AxiosRequestConfig): AxiosPromise<WorkspaceLocalizationUsage>;
     workspaceLocalizationUsageUsers(requestParameters: ActionsApiWorkspaceLocalizationUsageUsersRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationUsageUsers>;
@@ -969,6 +975,15 @@ export { ActionsApiMemoryCreatedByUsersRequest as GenAiApiMemoryCreatedByUsersRe
 export interface ActionsApiMetricPermissionsRequest {
     readonly metricId: string;
     readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiOrganizationLocalizationIssueWorkspacesRequest {
+    readonly locale: string;
+    readonly name?: string;
+    readonly page?: number;
+    readonly size?: number;
+    readonly type: 'METADATA_MISSING_TRANSLATION' | 'METADATA_LANGUAGE_MISMATCH' | 'METADATA_UNUSED_TRANSLATION';
 }
 
 // @public
@@ -1265,6 +1280,11 @@ export { ActionsApiValidateLLMEndpointByIdRequest as GenAiApiValidateLLMEndpoint
 // @public
 export interface ActionsApiVisualizationPermissionsRequest {
     readonly visualizationObjectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiWorkspaceLocalizationIssuesRequest {
     readonly workspaceId: string;
 }
 
@@ -3194,223 +3214,10 @@ export type AiAggregation = typeof AiAggregation[keyof typeof AiAggregation];
 // @public (undocumented)
 export const AiAggregation1: {
     readonly SUM: 'SUM';
-    readonly COUNT: 'COUNT';
-    readonly APPROXIMATE_COUNT: 'APPROXIMATE_COUNT';
-    readonly AVG: 'AVG';
-    readonly MIN: 'MIN';
-    readonly MAX: 'MAX';
-    readonly MEDIAN: 'MEDIAN';
-    readonly RUNSUM: 'RUNSUM';
-    readonly SUM2: 'SUM';
-    readonly COUNT2: 'COUNT';
-    readonly APPROXIMATE_COUNT2: 'APPROXIMATE_COUNT';
-    readonly AVG2: 'AVG';
-    readonly MIN2: 'MIN';
-    readonly MAX2: 'MAX';
-    readonly MEDIAN2: 'MEDIAN';
-    readonly RUNSUM2: 'RUNSUM';
 };
 
 // @public (undocumented)
 export type AiAggregation1 = typeof AiAggregation1[keyof typeof AiAggregation1];
-
-// @public (undocumented)
-export const AiAggregation10: {
-    readonly SUM: 'SUM';
-    readonly COUNT: 'COUNT';
-    readonly APPROXIMATE_COUNT: 'APPROXIMATE_COUNT';
-    readonly AVG: 'AVG';
-    readonly MIN: 'MIN';
-    readonly MAX: 'MAX';
-    readonly MEDIAN: 'MEDIAN';
-    readonly RUNSUM: 'RUNSUM';
-};
-
-// @public (undocumented)
-export type AiAggregation10 = typeof AiAggregation10[keyof typeof AiAggregation10];
-
-// @public (undocumented)
-export const AiAggregation11: {
-    readonly SUM: 'SUM';
-    readonly COUNT: 'COUNT';
-    readonly APPROXIMATE_COUNT: 'APPROXIMATE_COUNT';
-    readonly AVG: 'AVG';
-    readonly MIN: 'MIN';
-    readonly MAX: 'MAX';
-    readonly MEDIAN: 'MEDIAN';
-    readonly RUNSUM: 'RUNSUM';
-    readonly SUM2: 'SUM';
-    readonly COUNT2: 'COUNT';
-    readonly APPROXIMATE_COUNT2: 'APPROXIMATE_COUNT';
-    readonly AVG2: 'AVG';
-    readonly MIN2: 'MIN';
-    readonly MAX2: 'MAX';
-    readonly MEDIAN2: 'MEDIAN';
-    readonly RUNSUM2: 'RUNSUM';
-};
-
-// @public (undocumented)
-export type AiAggregation11 = typeof AiAggregation11[keyof typeof AiAggregation11];
-
-// @public (undocumented)
-export const AiAggregation12: {
-    readonly SUM: 'SUM';
-    readonly COUNT: 'COUNT';
-    readonly APPROXIMATE_COUNT: 'APPROXIMATE_COUNT';
-    readonly AVG: 'AVG';
-    readonly MIN: 'MIN';
-    readonly MAX: 'MAX';
-    readonly MEDIAN: 'MEDIAN';
-    readonly RUNSUM: 'RUNSUM';
-};
-
-// @public (undocumented)
-export type AiAggregation12 = typeof AiAggregation12[keyof typeof AiAggregation12];
-
-// @public (undocumented)
-export const AiAggregation13: {
-    readonly SUM: 'SUM';
-    readonly COUNT: 'COUNT';
-    readonly APPROXIMATE_COUNT: 'APPROXIMATE_COUNT';
-    readonly AVG: 'AVG';
-    readonly MIN: 'MIN';
-    readonly MAX: 'MAX';
-    readonly MEDIAN: 'MEDIAN';
-    readonly RUNSUM: 'RUNSUM';
-    readonly SUM2: 'SUM';
-    readonly COUNT2: 'COUNT';
-    readonly APPROXIMATE_COUNT2: 'APPROXIMATE_COUNT';
-    readonly AVG2: 'AVG';
-    readonly MIN2: 'MIN';
-    readonly MAX2: 'MAX';
-    readonly MEDIAN2: 'MEDIAN';
-    readonly RUNSUM2: 'RUNSUM';
-};
-
-// @public (undocumented)
-export type AiAggregation13 = typeof AiAggregation13[keyof typeof AiAggregation13];
-
-// @public (undocumented)
-export const AiAggregation14: {
-    readonly SUM: 'SUM';
-};
-
-// @public (undocumented)
-export type AiAggregation14 = typeof AiAggregation14[keyof typeof AiAggregation14];
-
-// @public (undocumented)
-export const AiAggregation2: {
-    readonly SUM: 'SUM';
-    readonly COUNT: 'COUNT';
-    readonly APPROXIMATE_COUNT: 'APPROXIMATE_COUNT';
-    readonly AVG: 'AVG';
-    readonly MIN: 'MIN';
-    readonly MAX: 'MAX';
-    readonly MEDIAN: 'MEDIAN';
-    readonly RUNSUM: 'RUNSUM';
-};
-
-// @public (undocumented)
-export type AiAggregation2 = typeof AiAggregation2[keyof typeof AiAggregation2];
-
-// @public (undocumented)
-export const AiAggregation3: {
-    readonly SUM: 'SUM';
-    readonly COUNT: 'COUNT';
-    readonly APPROXIMATE_COUNT: 'APPROXIMATE_COUNT';
-    readonly AVG: 'AVG';
-    readonly MIN: 'MIN';
-    readonly MAX: 'MAX';
-    readonly MEDIAN: 'MEDIAN';
-    readonly RUNSUM: 'RUNSUM';
-    readonly SUM2: 'SUM';
-    readonly COUNT2: 'COUNT';
-    readonly APPROXIMATE_COUNT2: 'APPROXIMATE_COUNT';
-    readonly AVG2: 'AVG';
-    readonly MIN2: 'MIN';
-    readonly MAX2: 'MAX';
-    readonly MEDIAN2: 'MEDIAN';
-    readonly RUNSUM2: 'RUNSUM';
-};
-
-// @public (undocumented)
-export type AiAggregation3 = typeof AiAggregation3[keyof typeof AiAggregation3];
-
-// @public (undocumented)
-export const AiAggregation6: {
-    readonly SUM: 'SUM';
-    readonly COUNT: 'COUNT';
-    readonly APPROXIMATE_COUNT: 'APPROXIMATE_COUNT';
-    readonly AVG: 'AVG';
-    readonly MIN: 'MIN';
-    readonly MAX: 'MAX';
-    readonly MEDIAN: 'MEDIAN';
-    readonly RUNSUM: 'RUNSUM';
-};
-
-// @public (undocumented)
-export type AiAggregation6 = typeof AiAggregation6[keyof typeof AiAggregation6];
-
-// @public (undocumented)
-export const AiAggregation7: {
-    readonly SUM: 'SUM';
-    readonly COUNT: 'COUNT';
-    readonly APPROXIMATE_COUNT: 'APPROXIMATE_COUNT';
-    readonly AVG: 'AVG';
-    readonly MIN: 'MIN';
-    readonly MAX: 'MAX';
-    readonly MEDIAN: 'MEDIAN';
-    readonly RUNSUM: 'RUNSUM';
-    readonly SUM2: 'SUM';
-    readonly COUNT2: 'COUNT';
-    readonly APPROXIMATE_COUNT2: 'APPROXIMATE_COUNT';
-    readonly AVG2: 'AVG';
-    readonly MIN2: 'MIN';
-    readonly MAX2: 'MAX';
-    readonly MEDIAN2: 'MEDIAN';
-    readonly RUNSUM2: 'RUNSUM';
-};
-
-// @public (undocumented)
-export type AiAggregation7 = typeof AiAggregation7[keyof typeof AiAggregation7];
-
-// @public (undocumented)
-export const AiAggregation8: {
-    readonly SUM: 'SUM';
-    readonly COUNT: 'COUNT';
-    readonly APPROXIMATE_COUNT: 'APPROXIMATE_COUNT';
-    readonly AVG: 'AVG';
-    readonly MIN: 'MIN';
-    readonly MAX: 'MAX';
-    readonly MEDIAN: 'MEDIAN';
-    readonly RUNSUM: 'RUNSUM';
-};
-
-// @public (undocumented)
-export type AiAggregation8 = typeof AiAggregation8[keyof typeof AiAggregation8];
-
-// @public (undocumented)
-export const AiAggregation9: {
-    readonly SUM: 'SUM';
-    readonly COUNT: 'COUNT';
-    readonly APPROXIMATE_COUNT: 'APPROXIMATE_COUNT';
-    readonly AVG: 'AVG';
-    readonly MIN: 'MIN';
-    readonly MAX: 'MAX';
-    readonly MEDIAN: 'MEDIAN';
-    readonly RUNSUM: 'RUNSUM';
-    readonly SUM2: 'SUM';
-    readonly COUNT2: 'COUNT';
-    readonly APPROXIMATE_COUNT2: 'APPROXIMATE_COUNT';
-    readonly AVG2: 'AVG';
-    readonly MIN2: 'MIN';
-    readonly MAX2: 'MAX';
-    readonly MEDIAN2: 'MEDIAN';
-    readonly RUNSUM2: 'RUNSUM';
-};
-
-// @public (undocumented)
-export type AiAggregation9 = typeof AiAggregation9[keyof typeof AiAggregation9];
 
 // @public (undocumented)
 export interface AiAlertDatasetIdentifier {
@@ -3821,7 +3628,7 @@ export interface AiChartFill {
         [key: string]: AiPatternNameMapping;
     } | null;
     // (undocumented)
-    'type'?: AiType67 | null;
+    'type'?: AiType55 | null;
 }
 
 // @public (undocumented)
@@ -4135,7 +3942,7 @@ export interface AiCondition9 {
     // (undocumented)
     'id': string;
     // (undocumented)
-    'operator': AiOperator14;
+    'operator': AiOperator1;
     // (undocumented)
     'value'?: AiValue1 | null;
 }
@@ -4346,6 +4153,22 @@ export interface AiConfig {
     'xaxis_name_visible'?: boolean | null;
     // (undocumented)
     'xaxis_rotation'?: string | null;
+    // (undocumented)
+    'xaxis_secondary_format'?: string | null;
+    // (undocumented)
+    'xaxis_secondary_labels'?: boolean | null;
+    // (undocumented)
+    'xaxis_secondary_max'?: number | null;
+    // (undocumented)
+    'xaxis_secondary_min'?: number | null;
+    // (undocumented)
+    'xaxis_secondary_name_position'?: string | null;
+    // (undocumented)
+    'xaxis_secondary_name_visible'?: boolean | null;
+    // (undocumented)
+    'xaxis_secondary_rotation'?: string | null;
+    // (undocumented)
+    'xaxis_secondary_visible'?: boolean | null;
     // (undocumented)
     'xaxis_visible'?: boolean | null;
     // (undocumented)
@@ -4776,7 +4599,7 @@ export interface AiDashboardInput {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type': AiType68;
+    'type': AiType56;
     // (undocumented)
     'user_filters_reset'?: boolean | null;
     // (undocumented)
@@ -4845,7 +4668,7 @@ export interface AiDashboardOutput {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type': AiType68;
+    'type': AiType56;
     // (undocumented)
     'user_filters_reset'?: boolean | null;
     // (undocumented)
@@ -5662,7 +5485,7 @@ export interface AiLayerItem {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type': AiType64;
+    'type': AiType52;
     // (undocumented)
     'view_by'?: Array<string>;
 }
@@ -5702,7 +5525,7 @@ export interface AiLayerItemBase {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type'?: AiType64 | null;
+    'type'?: AiType52 | null;
     // (undocumented)
     'view_by'?: Array<string> | null;
 }
@@ -5888,10 +5711,6 @@ export interface AiMeasureValueRangeInner {
     'operator': AiRangeMeasureValueOperator;
     // (undocumented)
     'to': number;
-}
-
-// @public
-export interface AiMetricIdentifier {
 }
 
 // @public
@@ -6172,81 +5991,6 @@ export type AiOperator = typeof AiOperator[keyof typeof AiOperator];
 
 // @public (undocumented)
 export const AiOperator1: {
-    readonly SUM: 'SUM';
-    readonly DIFFERENCE: 'DIFFERENCE';
-    readonly MULTIPLICATION: 'MULTIPLICATION';
-    readonly RATIO: 'RATIO';
-    readonly CHANGE: 'CHANGE';
-    readonly SUM2: 'SUM';
-    readonly DIFFERENCE2: 'DIFFERENCE';
-    readonly MULTIPLICATION2: 'MULTIPLICATION';
-    readonly RATIO2: 'RATIO';
-    readonly CHANGE2: 'CHANGE';
-};
-
-// @public (undocumented)
-export type AiOperator1 = typeof AiOperator1[keyof typeof AiOperator1];
-
-// @public (undocumented)
-export const AiOperator10: {
-    readonly SUM: 'SUM';
-    readonly DIFFERENCE: 'DIFFERENCE';
-    readonly MULTIPLICATION: 'MULTIPLICATION';
-    readonly RATIO: 'RATIO';
-    readonly CHANGE: 'CHANGE';
-};
-
-// @public (undocumented)
-export type AiOperator10 = typeof AiOperator10[keyof typeof AiOperator10];
-
-// @public (undocumented)
-export const AiOperator11: {
-    readonly SUM: 'SUM';
-    readonly DIFFERENCE: 'DIFFERENCE';
-    readonly MULTIPLICATION: 'MULTIPLICATION';
-    readonly RATIO: 'RATIO';
-    readonly CHANGE: 'CHANGE';
-    readonly SUM2: 'SUM';
-    readonly DIFFERENCE2: 'DIFFERENCE';
-    readonly MULTIPLICATION2: 'MULTIPLICATION';
-    readonly RATIO2: 'RATIO';
-    readonly CHANGE2: 'CHANGE';
-};
-
-// @public (undocumented)
-export type AiOperator11 = typeof AiOperator11[keyof typeof AiOperator11];
-
-// @public (undocumented)
-export const AiOperator12: {
-    readonly SUM: 'SUM';
-    readonly DIFFERENCE: 'DIFFERENCE';
-    readonly MULTIPLICATION: 'MULTIPLICATION';
-    readonly RATIO: 'RATIO';
-    readonly CHANGE: 'CHANGE';
-};
-
-// @public (undocumented)
-export type AiOperator12 = typeof AiOperator12[keyof typeof AiOperator12];
-
-// @public (undocumented)
-export const AiOperator13: {
-    readonly SUM: 'SUM';
-    readonly DIFFERENCE: 'DIFFERENCE';
-    readonly MULTIPLICATION: 'MULTIPLICATION';
-    readonly RATIO: 'RATIO';
-    readonly CHANGE: 'CHANGE';
-    readonly SUM2: 'SUM';
-    readonly DIFFERENCE2: 'DIFFERENCE';
-    readonly MULTIPLICATION2: 'MULTIPLICATION';
-    readonly RATIO2: 'RATIO';
-    readonly CHANGE2: 'CHANGE';
-};
-
-// @public (undocumented)
-export type AiOperator13 = typeof AiOperator13[keyof typeof AiOperator13];
-
-// @public (undocumented)
-export const AiOperator14: {
     readonly ALL: 'all';
     readonly EQUAL_TO: 'equal_to';
     readonly NOT_EQUAL_TO: 'not_equal_to';
@@ -6267,94 +6011,7 @@ export const AiOperator14: {
 };
 
 // @public (undocumented)
-export type AiOperator14 = typeof AiOperator14[keyof typeof AiOperator14];
-
-// @public (undocumented)
-export const AiOperator2: {
-    readonly SUM: 'SUM';
-    readonly DIFFERENCE: 'DIFFERENCE';
-    readonly MULTIPLICATION: 'MULTIPLICATION';
-    readonly RATIO: 'RATIO';
-    readonly CHANGE: 'CHANGE';
-};
-
-// @public (undocumented)
-export type AiOperator2 = typeof AiOperator2[keyof typeof AiOperator2];
-
-// @public (undocumented)
-export const AiOperator3: {
-    readonly SUM: 'SUM';
-    readonly DIFFERENCE: 'DIFFERENCE';
-    readonly MULTIPLICATION: 'MULTIPLICATION';
-    readonly RATIO: 'RATIO';
-    readonly CHANGE: 'CHANGE';
-    readonly SUM2: 'SUM';
-    readonly DIFFERENCE2: 'DIFFERENCE';
-    readonly MULTIPLICATION2: 'MULTIPLICATION';
-    readonly RATIO2: 'RATIO';
-    readonly CHANGE2: 'CHANGE';
-};
-
-// @public (undocumented)
-export type AiOperator3 = typeof AiOperator3[keyof typeof AiOperator3];
-
-// @public (undocumented)
-export const AiOperator4: {
-    readonly SUM: 'SUM';
-    readonly DIFFERENCE: 'DIFFERENCE';
-    readonly MULTIPLICATION: 'MULTIPLICATION';
-    readonly RATIO: 'RATIO';
-    readonly CHANGE: 'CHANGE';
-};
-
-// @public (undocumented)
-export type AiOperator4 = typeof AiOperator4[keyof typeof AiOperator4];
-
-// @public (undocumented)
-export const AiOperator5: {
-    readonly SUM: 'SUM';
-    readonly DIFFERENCE: 'DIFFERENCE';
-    readonly MULTIPLICATION: 'MULTIPLICATION';
-    readonly RATIO: 'RATIO';
-    readonly CHANGE: 'CHANGE';
-    readonly SUM2: 'SUM';
-    readonly DIFFERENCE2: 'DIFFERENCE';
-    readonly MULTIPLICATION2: 'MULTIPLICATION';
-    readonly RATIO2: 'RATIO';
-    readonly CHANGE2: 'CHANGE';
-};
-
-// @public (undocumented)
-export type AiOperator5 = typeof AiOperator5[keyof typeof AiOperator5];
-
-// @public (undocumented)
-export const AiOperator6: {
-    readonly SUM: 'SUM';
-    readonly DIFFERENCE: 'DIFFERENCE';
-    readonly MULTIPLICATION: 'MULTIPLICATION';
-    readonly RATIO: 'RATIO';
-    readonly CHANGE: 'CHANGE';
-};
-
-// @public (undocumented)
-export type AiOperator6 = typeof AiOperator6[keyof typeof AiOperator6];
-
-// @public (undocumented)
-export const AiOperator7: {
-    readonly SUM: 'SUM';
-    readonly DIFFERENCE: 'DIFFERENCE';
-    readonly MULTIPLICATION: 'MULTIPLICATION';
-    readonly RATIO: 'RATIO';
-    readonly CHANGE: 'CHANGE';
-    readonly SUM2: 'SUM';
-    readonly DIFFERENCE2: 'DIFFERENCE';
-    readonly MULTIPLICATION2: 'MULTIPLICATION';
-    readonly RATIO2: 'RATIO';
-    readonly CHANGE2: 'CHANGE';
-};
-
-// @public (undocumented)
-export type AiOperator7 = typeof AiOperator7[keyof typeof AiOperator7];
+export type AiOperator1 = typeof AiOperator1[keyof typeof AiOperator1];
 
 // @public
 export interface AiParameters {
@@ -6506,6 +6163,8 @@ export interface AiPublisherDocumentPart {
     // (undocumented)
     'page_count'?: number | null;
     // (undocumented)
+    'patch'?: AiDocumentPatch | null;
+    // (undocumented)
     'refines_ref'?: string | null;
     'reworks_open_document'?: boolean;
     // (undocumented)
@@ -6544,12 +6203,12 @@ export interface AiQueryAttributeFilter {
 // @public (undocumented)
 export interface AiQueryAttributeSort {
     // (undocumented)
-    'aggregation'?: AiAggregation14 | null;
+    'aggregation'?: AiAggregation1 | null;
     // (undocumented)
     'by': AiBy1;
     'direction': AiDirection;
     // (undocumented)
-    'type': AiType58;
+    'type': AiType46;
 }
 
 // @public (undocumented)
@@ -6601,271 +6260,92 @@ export interface AiQueryDateFilter2 {
 
 // @public (undocumented)
 export interface AiQueryField {
-    // (undocumented)
-    'aggregation': AiAggregation13;
+    'aggregation': AiAggregation;
     // (undocumented)
     'compute_ratio'?: boolean;
-    // (undocumented)
     'date_filter': string;
     // (undocumented)
     'filter_by'?: object;
-    // (undocumented)
     'maql': string;
-    // (undocumented)
-    'operator': AiOperator13;
+    'operator': AiOperator;
     // (undocumented)
     'period'?: number;
     // (undocumented)
     'show_all_values'?: boolean;
     // (undocumented)
     'title'?: string;
-    // (undocumented)
-    'type': AiType57;
-    // (undocumented)
-    'using': AiUsing11 | null;
+    'type': AiType45;
+    'using': string;
 }
 
 // @public (undocumented)
 export interface AiQueryField1 {
     // (undocumented)
-    'aggregation'?: AiAggregation | null;
-    // (undocumented)
-    'date_filter'?: string | null;
-    // (undocumented)
-    'maql'?: string | null;
-    // (undocumented)
-    'operator'?: AiOperator | null;
-    // (undocumented)
     'show_all_values'?: boolean | null;
     // (undocumented)
     'title'?: string;
-    // (undocumented)
-    'type'?: AiType44 | null;
     // (undocumented)
     'using': AiUsing6;
 }
 
 // @public (undocumented)
-export interface AiQueryField10 {
-    // (undocumented)
-    'aggregation'?: AiAggregation9 | null;
-    // (undocumented)
-    'date_filter'?: string | null;
-    // (undocumented)
-    'maql'?: string | null;
-    // (undocumented)
-    'operator'?: AiOperator7 | null;
-    // (undocumented)
-    'type'?: AiType53 | null;
-    // (undocumented)
-    'using'?: AiUsing7 | null;
-}
-
-// @public (undocumented)
-export interface AiQueryField11 {
-    // (undocumented)
-    'aggregation'?: AiAggregation10 | null;
-    'date_filter': string;
-    // (undocumented)
-    'maql'?: string | null;
-    // (undocumented)
-    'operator'?: AiOperator10 | null;
-    // (undocumented)
-    'title'?: string;
-    'type': AiType54;
-    // (undocumented)
-    'using': AiUsing8;
-}
-
-// @public (undocumented)
-export interface AiQueryField12 {
-    // (undocumented)
-    'aggregation'?: AiAggregation11 | null;
-    // (undocumented)
-    'date_filter'?: string | null;
-    // (undocumented)
-    'maql'?: string | null;
-    // (undocumented)
-    'operator'?: AiOperator11 | null;
-    // (undocumented)
-    'type'?: AiType55 | null;
-    // (undocumented)
-    'using'?: AiUsing9 | null;
-}
-
-// @public (undocumented)
-export interface AiQueryField13 {
-    // (undocumented)
-    'aggregation'?: AiAggregation12 | null;
-    'date_filter': string;
-    // (undocumented)
-    'maql'?: string | null;
-    // (undocumented)
-    'operator'?: AiOperator12 | null;
-    // (undocumented)
-    'period'?: number | null;
-    // (undocumented)
-    'title'?: string;
-    'type': AiType56;
-    // (undocumented)
-    'using': AiUsing10;
-}
-
-// @public (undocumented)
-export interface AiQueryField14 {
-    // (undocumented)
-    'aggregation'?: AiAggregation13 | null;
-    // (undocumented)
-    'date_filter'?: string | null;
-    // (undocumented)
-    'maql'?: string | null;
-    // (undocumented)
-    'operator'?: AiOperator13 | null;
-    // (undocumented)
-    'type'?: AiType57 | null;
-    // (undocumented)
-    'using'?: AiUsing11 | null;
-}
-
-// @public (undocumented)
 export interface AiQueryField2 {
     // (undocumented)
-    'aggregation'?: AiAggregation1 | null;
+    'compute_ratio'?: boolean | null;
     // (undocumented)
-    'date_filter'?: string | null;
+    'filter_by'?: object;
     // (undocumented)
-    'maql'?: string | null;
-    // (undocumented)
-    'operator'?: AiOperator1 | null;
-    // (undocumented)
-    'type'?: AiType45 | null;
-    // (undocumented)
-    'using'?: AiUsing12 | null;
+    'title'?: string;
+    'using': string;
 }
 
 // @public (undocumented)
 export interface AiQueryField3 {
-    // (undocumented)
-    'aggregation'?: AiAggregation2 | null;
+    'aggregation': AiAggregation;
     // (undocumented)
     'compute_ratio'?: boolean | null;
     // (undocumented)
-    'date_filter'?: string | null;
-    // (undocumented)
     'filter_by'?: object;
-    // (undocumented)
-    'maql'?: string | null;
-    // (undocumented)
-    'operator'?: AiOperator2 | null;
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type'?: AiType46 | null;
-    // (undocumented)
-    'using': AiMetricIdentifier;
+    'using': AiUsing7;
 }
 
 // @public (undocumented)
 export interface AiQueryField4 {
+    'maql': string;
     // (undocumented)
-    'aggregation'?: AiAggregation3 | null;
-    // (undocumented)
-    'date_filter'?: string | null;
-    // (undocumented)
-    'maql'?: string | null;
-    // (undocumented)
-    'operator'?: AiOperator3 | null;
-    // (undocumented)
-    'type'?: AiType47 | null;
-    // (undocumented)
-    'using'?: AiUsing13 | null;
+    'title'?: string;
 }
 
 // @public (undocumented)
 export interface AiQueryField5 {
-    'aggregation': AiAggregation3;
-    // (undocumented)
-    'compute_ratio'?: boolean | null;
-    // (undocumented)
-    'date_filter'?: string | null;
-    // (undocumented)
-    'filter_by'?: object;
-    // (undocumented)
-    'maql'?: string | null;
-    // (undocumented)
-    'operator'?: AiOperator4 | null;
+    'operator': AiOperator;
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type'?: AiType48 | null;
-    // (undocumented)
-    'using': AiUsing14;
+    'using': Array<string>;
 }
 
 // @public (undocumented)
 export interface AiQueryField6 {
+    'date_filter': string;
     // (undocumented)
-    'aggregation'?: AiAggregation3 | null;
-    // (undocumented)
-    'date_filter'?: string | null;
-    // (undocumented)
-    'maql'?: string | null;
-    // (undocumented)
-    'operator'?: AiOperator5 | null;
-    // (undocumented)
-    'type'?: AiType49 | null;
-    // (undocumented)
-    'using'?: AiUsing15 | null;
+    'title'?: string;
+    'type': AiType44;
+    'using': string;
 }
 
 // @public (undocumented)
 export interface AiQueryField7 {
+    'date_filter': string;
     // (undocumented)
-    'aggregation'?: AiAggregation6 | null;
-    // (undocumented)
-    'date_filter'?: string | null;
-    'maql': string;
-    // (undocumented)
-    'operator'?: AiOperator6 | null;
+    'period'?: number | null;
     // (undocumented)
     'title'?: string;
-    // (undocumented)
-    'type'?: AiType50 | null;
-    // (undocumented)
-    'using'?: AiUsing16 | null;
-}
-
-// @public (undocumented)
-export interface AiQueryField8 {
-    // (undocumented)
-    'aggregation'?: AiAggregation7 | null;
-    // (undocumented)
-    'date_filter'?: string | null;
-    // (undocumented)
-    'maql'?: string | null;
-    // (undocumented)
-    'operator'?: AiOperator7 | null;
-    // (undocumented)
-    'type'?: AiType51 | null;
-    // (undocumented)
-    'using'?: AiUsing17 | null;
-}
-
-// @public (undocumented)
-export interface AiQueryField9 {
-    // (undocumented)
-    'aggregation'?: AiAggregation8 | null;
-    // (undocumented)
-    'date_filter'?: string | null;
-    // (undocumented)
-    'maql'?: string | null;
-    'operator': AiOperator7;
-    // (undocumented)
-    'title'?: string;
-    // (undocumented)
-    'type'?: AiType52 | null;
-    // (undocumented)
-    'using': Array<string>;
+    'type': AiType45;
+    'using': string;
 }
 
 // @public (undocumented)
@@ -6898,7 +6378,7 @@ export interface AiQueryFilter {
     // (undocumented)
     'type': AiType18;
     // (undocumented)
-    'using': AiUsing23;
+    'using': AiUsing13;
     'value': number;
     // (undocumented)
     'values': Array<string>;
@@ -6912,7 +6392,7 @@ export interface AiQueryMetricSort {
     // (undocumented)
     'metrics': Array<AiQueryMetricSortMetricsInner>;
     // (undocumented)
-    'type': AiType59;
+    'type': AiType47;
 }
 
 // @public (undocumented)
@@ -6939,7 +6419,7 @@ export interface AiQueryMetricValueFilter {
     // (undocumented)
     'type': AiType14;
     // (undocumented)
-    'using': AiUsing21;
+    'using': AiUsing11;
     'value': number;
 }
 
@@ -6954,7 +6434,7 @@ export interface AiQueryMetricValueFilter1 {
     // (undocumented)
     'type': AiType14;
     // (undocumented)
-    'using': AiUsing18;
+    'using': AiUsing8;
 }
 
 // @public (undocumented)
@@ -6971,7 +6451,7 @@ export interface AiQueryMetricValueFilter2 {
     // (undocumented)
     'type': AiType14;
     // (undocumented)
-    'using': AiUsing19;
+    'using': AiUsing9;
     'value': number;
 }
 
@@ -6991,7 +6471,7 @@ export interface AiQueryMetricValueFilter3 {
     // (undocumented)
     'type': AiType14;
     // (undocumented)
-    'using': AiUsing20;
+    'using': AiUsing10;
 }
 
 // @public (undocumented)
@@ -7007,7 +6487,7 @@ export interface AiQueryMetricValueFilter4 {
     // (undocumented)
     'type': AiType14;
     // (undocumented)
-    'using': AiUsing21;
+    'using': AiUsing11;
 }
 
 // @public (undocumented)
@@ -7026,7 +6506,7 @@ export interface AiQueryRankingFilter {
     // (undocumented)
     'type': AiType18;
     // (undocumented)
-    'using': AiUsing23;
+    'using': AiUsing13;
 }
 
 // @public (undocumented)
@@ -7041,7 +6521,7 @@ export interface AiQueryRankingFilter1 {
     // (undocumented)
     'type': AiType18;
     // (undocumented)
-    'using': AiUsing22;
+    'using': AiUsing12;
 }
 
 // @public (undocumented)
@@ -7056,20 +6536,20 @@ export interface AiQueryRankingFilter2 {
     // (undocumented)
     'type': AiType18;
     // (undocumented)
-    'using': AiUsing23;
+    'using': AiUsing13;
 }
 
 // @public (undocumented)
 export interface AiQuerySort {
     // (undocumented)
-    'aggregation'?: AiAggregation14;
+    'aggregation'?: AiAggregation1;
     // (undocumented)
     'by': AiBy1;
     'direction': AiDirection;
     // (undocumented)
     'metrics': Array<AiQueryMetricSortMetricsInner>;
     // (undocumented)
-    'type': AiType59;
+    'type': AiType47;
 }
 
 // @public (undocumented)
@@ -7083,7 +6563,7 @@ export interface AiQueryTextFilter {
     // (undocumented)
     'type': AiType12;
     // (undocumented)
-    'using': AiUsing25;
+    'using': AiUsing15;
     // (undocumented)
     'value': string;
     // (undocumented)
@@ -7101,7 +6581,7 @@ export interface AiQueryTextFilter1 {
     // (undocumented)
     'type': AiType12;
     // (undocumented)
-    'using': AiUsing24;
+    'using': AiUsing14;
     // (undocumented)
     'values': Array<string | null>;
 }
@@ -7117,7 +6597,7 @@ export interface AiQueryTextFilter2 {
     // (undocumented)
     'type': AiType12;
     // (undocumented)
-    'using': AiUsing25;
+    'using': AiUsing15;
     // (undocumented)
     'value': string;
 }
@@ -7428,10 +6908,10 @@ export interface AiSearchAllowedRelationshipType {
 }
 
 // @public (undocumented)
-export type AiSearchAllowedRelationshipTypeSourceTypeEnum = 'attribute' | 'metric' | 'fact' | 'label' | 'date' | 'dataset' | 'visualization' | 'dashboard';
+export type AiSearchAllowedRelationshipTypeSourceTypeEnum = 'attribute' | 'metric' | 'fact' | 'label' | 'date' | 'dataset' | 'visualization' | 'dashboard' | 'document';
 
 // @public (undocumented)
-export type AiSearchAllowedRelationshipTypeTargetTypeEnum = 'attribute' | 'metric' | 'fact' | 'label' | 'date' | 'dataset' | 'visualization' | 'dashboard';
+export type AiSearchAllowedRelationshipTypeTargetTypeEnum = 'attribute' | 'metric' | 'fact' | 'label' | 'date' | 'dataset' | 'visualization' | 'dashboard' | 'document';
 
 // @public
 export class AISearchDataAi extends AiBaseAPI implements AISearchDataAiInterface {
@@ -7540,7 +7020,7 @@ export { AiSearchRequest }
 export { AiSearchRequest as SearchRequest }
 
 // @public (undocumented)
-type AiSearchRequestObjectTypesEnum = 'attribute' | 'metric' | 'fact' | 'label' | 'date' | 'dataset' | 'visualization' | 'dashboard';
+type AiSearchRequestObjectTypesEnum = 'attribute' | 'metric' | 'fact' | 'label' | 'date' | 'dataset' | 'visualization' | 'dashboard' | 'document';
 export { AiSearchRequestObjectTypesEnum }
 export { AiSearchRequestObjectTypesEnum as SearchRequestObjectTypesEnum }
 
@@ -8149,7 +7629,7 @@ export interface AiTotalItem {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type': AiType63;
+    'type': AiType51;
     'using': string;
 }
 
@@ -8160,46 +7640,6 @@ export const AiType1: {
 
 // @public (undocumented)
 export type AiType1 = typeof AiType1[keyof typeof AiType1];
-
-// @public (undocumented)
-export const AiType100: {
-    readonly COMBO_CHART: 'combo_chart';
-};
-
-// @public (undocumented)
-export type AiType100 = typeof AiType100[keyof typeof AiType100];
-
-// @public (undocumented)
-export const AiType101: {
-    readonly GEO_CHART: 'geo_chart';
-};
-
-// @public (undocumented)
-export type AiType101 = typeof AiType101[keyof typeof AiType101];
-
-// @public (undocumented)
-export const AiType102: {
-    readonly GEO_AREA_CHART: 'geo_area_chart';
-};
-
-// @public (undocumented)
-export type AiType102 = typeof AiType102[keyof typeof AiType102];
-
-// @public (undocumented)
-export const AiType103: {
-    readonly REPEATER_CHART: 'repeater_chart';
-};
-
-// @public (undocumented)
-export type AiType103 = typeof AiType103[keyof typeof AiType103];
-
-// @public (undocumented)
-export const AiType104: {
-    readonly RADAR_CHART: 'radar_chart';
-};
-
-// @public (undocumented)
-export type AiType104 = typeof AiType104[keyof typeof AiType104];
 
 // @public (undocumented)
 export const AiType11: {
@@ -8247,7 +7687,6 @@ export type AiType3 = typeof AiType3[keyof typeof AiType3];
 // @public (undocumented)
 export const AiType44: {
     readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
-    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
 };
 
 // @public (undocumented)
@@ -8255,10 +7694,7 @@ export type AiType44 = typeof AiType44[keyof typeof AiType44];
 
 // @public (undocumented)
 export const AiType45: {
-    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
     readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
-    readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
-    readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
 };
 
 // @public (undocumented)
@@ -8266,8 +7702,7 @@ export type AiType45 = typeof AiType45[keyof typeof AiType45];
 
 // @public (undocumented)
 export const AiType46: {
-    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
-    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
+    readonly ATTRIBUTE_SORT: 'attribute_sort';
 };
 
 // @public (undocumented)
@@ -8275,34 +7710,11 @@ export type AiType46 = typeof AiType46[keyof typeof AiType46];
 
 // @public (undocumented)
 export const AiType47: {
-    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
-    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
-    readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
-    readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
+    readonly METRIC_SORT: 'metric_sort';
 };
 
 // @public (undocumented)
 export type AiType47 = typeof AiType47[keyof typeof AiType47];
-
-// @public (undocumented)
-export const AiType48: {
-    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
-    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
-};
-
-// @public (undocumented)
-export type AiType48 = typeof AiType48[keyof typeof AiType48];
-
-// @public (undocumented)
-export const AiType49: {
-    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
-    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
-    readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
-    readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
-};
-
-// @public (undocumented)
-export type AiType49 = typeof AiType49[keyof typeof AiType49];
 
 // @public (undocumented)
 export const AiType5: {
@@ -8313,105 +7725,7 @@ export const AiType5: {
 export type AiType5 = typeof AiType5[keyof typeof AiType5];
 
 // @public (undocumented)
-export const AiType50: {
-    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
-    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
-};
-
-// @public (undocumented)
-export type AiType50 = typeof AiType50[keyof typeof AiType50];
-
-// @public (undocumented)
 export const AiType51: {
-    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
-    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
-    readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
-    readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
-};
-
-// @public (undocumented)
-export type AiType51 = typeof AiType51[keyof typeof AiType51];
-
-// @public (undocumented)
-export const AiType52: {
-    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
-    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
-};
-
-// @public (undocumented)
-export type AiType52 = typeof AiType52[keyof typeof AiType52];
-
-// @public (undocumented)
-export const AiType53: {
-    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
-    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
-    readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
-    readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
-};
-
-// @public (undocumented)
-export type AiType53 = typeof AiType53[keyof typeof AiType53];
-
-// @public (undocumented)
-export const AiType54: {
-    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
-    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
-    readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
-};
-
-// @public (undocumented)
-export type AiType54 = typeof AiType54[keyof typeof AiType54];
-
-// @public (undocumented)
-export const AiType55: {
-    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
-    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
-    readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
-    readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
-};
-
-// @public (undocumented)
-export type AiType55 = typeof AiType55[keyof typeof AiType55];
-
-// @public (undocumented)
-export const AiType56: {
-    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
-    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
-    readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
-};
-
-// @public (undocumented)
-export type AiType56 = typeof AiType56[keyof typeof AiType56];
-
-// @public (undocumented)
-export const AiType57: {
-    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
-    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
-    readonly PREVIOUS_YEAR2: 'PREVIOUS_YEAR';
-    readonly PREVIOUS_PERIOD2: 'PREVIOUS_PERIOD';
-};
-
-// @public (undocumented)
-export type AiType57 = typeof AiType57[keyof typeof AiType57];
-
-// @public (undocumented)
-export const AiType58: {
-    readonly ATTRIBUTE_SORT: 'attribute_sort';
-};
-
-// @public (undocumented)
-export type AiType58 = typeof AiType58[keyof typeof AiType58];
-
-// @public (undocumented)
-export const AiType59: {
-    readonly METRIC_SORT: 'metric_sort';
-};
-
-// @public (undocumented)
-export type AiType59 = typeof AiType59[keyof typeof AiType59];
-
-// @public (undocumented)
-export const AiType63: {
     readonly SUM: 'SUM';
     readonly AVG: 'AVG';
     readonly MAX: 'MAX';
@@ -8421,34 +7735,34 @@ export const AiType63: {
 };
 
 // @public (undocumented)
-export type AiType63 = typeof AiType63[keyof typeof AiType63];
+export type AiType51 = typeof AiType51[keyof typeof AiType51];
 
 // @public (undocumented)
-export const AiType64: {
+export const AiType52: {
     readonly PUSHPIN: 'pushpin';
     readonly AREA: 'area';
 };
 
 // @public (undocumented)
-export type AiType64 = typeof AiType64[keyof typeof AiType64];
+export type AiType52 = typeof AiType52[keyof typeof AiType52];
 
 // @public (undocumented)
-export const AiType67: {
+export const AiType55: {
     readonly SOLID: 'solid';
     readonly PATTERN: 'pattern';
     readonly OUTLINE: 'outline';
 };
 
 // @public (undocumented)
-export type AiType67 = typeof AiType67[keyof typeof AiType67];
+export type AiType55 = typeof AiType55[keyof typeof AiType55];
 
 // @public (undocumented)
-export const AiType68: {
+export const AiType56: {
     readonly DASHBOARD: 'dashboard';
 };
 
 // @public (undocumented)
-export type AiType68 = typeof AiType68[keyof typeof AiType68];
+export type AiType56 = typeof AiType56[keyof typeof AiType56];
 
 // @public (undocumented)
 export const AiType7: {
@@ -8459,6 +7773,86 @@ export const AiType7: {
 export type AiType7 = typeof AiType7[keyof typeof AiType7];
 
 // @public (undocumented)
+export const AiType70: {
+    readonly TABLE: 'table';
+};
+
+// @public (undocumented)
+export type AiType70 = typeof AiType70[keyof typeof AiType70];
+
+// @public (undocumented)
+export const AiType71: {
+    readonly BAR_CHART: 'bar_chart';
+};
+
+// @public (undocumented)
+export type AiType71 = typeof AiType71[keyof typeof AiType71];
+
+// @public (undocumented)
+export const AiType72: {
+    readonly COLUMN_CHART: 'column_chart';
+};
+
+// @public (undocumented)
+export type AiType72 = typeof AiType72[keyof typeof AiType72];
+
+// @public (undocumented)
+export const AiType73: {
+    readonly LINE_CHART: 'line_chart';
+};
+
+// @public (undocumented)
+export type AiType73 = typeof AiType73[keyof typeof AiType73];
+
+// @public (undocumented)
+export const AiType74: {
+    readonly AREA_CHART: 'area_chart';
+};
+
+// @public (undocumented)
+export type AiType74 = typeof AiType74[keyof typeof AiType74];
+
+// @public (undocumented)
+export const AiType75: {
+    readonly SCATTER_CHART: 'scatter_chart';
+};
+
+// @public (undocumented)
+export type AiType75 = typeof AiType75[keyof typeof AiType75];
+
+// @public (undocumented)
+export const AiType76: {
+    readonly BUBBLE_CHART: 'bubble_chart';
+};
+
+// @public (undocumented)
+export type AiType76 = typeof AiType76[keyof typeof AiType76];
+
+// @public (undocumented)
+export const AiType77: {
+    readonly PIE_CHART: 'pie_chart';
+};
+
+// @public (undocumented)
+export type AiType77 = typeof AiType77[keyof typeof AiType77];
+
+// @public (undocumented)
+export const AiType78: {
+    readonly DONUT_CHART: 'donut_chart';
+};
+
+// @public (undocumented)
+export type AiType78 = typeof AiType78[keyof typeof AiType78];
+
+// @public (undocumented)
+export const AiType79: {
+    readonly TREEMAP_CHART: 'treemap_chart';
+};
+
+// @public (undocumented)
+export type AiType79 = typeof AiType79[keyof typeof AiType79];
+
+// @public (undocumented)
 export const AiType8: {
     readonly FILTER_GROUP: 'filter_group';
 };
@@ -8467,8 +7861,24 @@ export const AiType8: {
 export type AiType8 = typeof AiType8[keyof typeof AiType8];
 
 // @public (undocumented)
+export const AiType80: {
+    readonly PYRAMID_CHART: 'pyramid_chart';
+};
+
+// @public (undocumented)
+export type AiType80 = typeof AiType80[keyof typeof AiType80];
+
+// @public (undocumented)
+export const AiType81: {
+    readonly FUNNEL_CHART: 'funnel_chart';
+};
+
+// @public (undocumented)
+export type AiType81 = typeof AiType81[keyof typeof AiType81];
+
+// @public (undocumented)
 export const AiType82: {
-    readonly TABLE: 'table';
+    readonly HEATMAP_CHART: 'heatmap_chart';
 };
 
 // @public (undocumented)
@@ -8476,7 +7886,7 @@ export type AiType82 = typeof AiType82[keyof typeof AiType82];
 
 // @public (undocumented)
 export const AiType83: {
-    readonly BAR_CHART: 'bar_chart';
+    readonly BULLET_CHART: 'bullet_chart';
 };
 
 // @public (undocumented)
@@ -8484,7 +7894,7 @@ export type AiType83 = typeof AiType83[keyof typeof AiType83];
 
 // @public (undocumented)
 export const AiType84: {
-    readonly COLUMN_CHART: 'column_chart';
+    readonly WATERFALL_CHART: 'waterfall_chart';
 };
 
 // @public (undocumented)
@@ -8492,7 +7902,7 @@ export type AiType84 = typeof AiType84[keyof typeof AiType84];
 
 // @public (undocumented)
 export const AiType85: {
-    readonly LINE_CHART: 'line_chart';
+    readonly DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart';
 };
 
 // @public (undocumented)
@@ -8500,7 +7910,7 @@ export type AiType85 = typeof AiType85[keyof typeof AiType85];
 
 // @public (undocumented)
 export const AiType86: {
-    readonly AREA_CHART: 'area_chart';
+    readonly SANKEY_CHART: 'sankey_chart';
 };
 
 // @public (undocumented)
@@ -8508,7 +7918,7 @@ export type AiType86 = typeof AiType86[keyof typeof AiType86];
 
 // @public (undocumented)
 export const AiType87: {
-    readonly SCATTER_CHART: 'scatter_chart';
+    readonly HEADLINE_CHART: 'headline_chart';
 };
 
 // @public (undocumented)
@@ -8516,7 +7926,7 @@ export type AiType87 = typeof AiType87[keyof typeof AiType87];
 
 // @public (undocumented)
 export const AiType88: {
-    readonly BUBBLE_CHART: 'bubble_chart';
+    readonly COMBO_CHART: 'combo_chart';
 };
 
 // @public (undocumented)
@@ -8524,7 +7934,7 @@ export type AiType88 = typeof AiType88[keyof typeof AiType88];
 
 // @public (undocumented)
 export const AiType89: {
-    readonly PIE_CHART: 'pie_chart';
+    readonly GEO_CHART: 'geo_chart';
 };
 
 // @public (undocumented)
@@ -8540,7 +7950,7 @@ export type AiType9 = typeof AiType9[keyof typeof AiType9];
 
 // @public (undocumented)
 export const AiType90: {
-    readonly DONUT_CHART: 'donut_chart';
+    readonly GEO_AREA_CHART: 'geo_area_chart';
 };
 
 // @public (undocumented)
@@ -8548,7 +7958,7 @@ export type AiType90 = typeof AiType90[keyof typeof AiType90];
 
 // @public (undocumented)
 export const AiType91: {
-    readonly TREEMAP_CHART: 'treemap_chart';
+    readonly REPEATER_CHART: 'repeater_chart';
 };
 
 // @public (undocumented)
@@ -8556,67 +7966,11 @@ export type AiType91 = typeof AiType91[keyof typeof AiType91];
 
 // @public (undocumented)
 export const AiType92: {
-    readonly PYRAMID_CHART: 'pyramid_chart';
+    readonly RADAR_CHART: 'radar_chart';
 };
 
 // @public (undocumented)
 export type AiType92 = typeof AiType92[keyof typeof AiType92];
-
-// @public (undocumented)
-export const AiType93: {
-    readonly FUNNEL_CHART: 'funnel_chart';
-};
-
-// @public (undocumented)
-export type AiType93 = typeof AiType93[keyof typeof AiType93];
-
-// @public (undocumented)
-export const AiType94: {
-    readonly HEATMAP_CHART: 'heatmap_chart';
-};
-
-// @public (undocumented)
-export type AiType94 = typeof AiType94[keyof typeof AiType94];
-
-// @public (undocumented)
-export const AiType95: {
-    readonly BULLET_CHART: 'bullet_chart';
-};
-
-// @public (undocumented)
-export type AiType95 = typeof AiType95[keyof typeof AiType95];
-
-// @public (undocumented)
-export const AiType96: {
-    readonly WATERFALL_CHART: 'waterfall_chart';
-};
-
-// @public (undocumented)
-export type AiType96 = typeof AiType96[keyof typeof AiType96];
-
-// @public (undocumented)
-export const AiType97: {
-    readonly DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart';
-};
-
-// @public (undocumented)
-export type AiType97 = typeof AiType97[keyof typeof AiType97];
-
-// @public (undocumented)
-export const AiType98: {
-    readonly SANKEY_CHART: 'sankey_chart';
-};
-
-// @public (undocumented)
-export type AiType98 = typeof AiType98[keyof typeof AiType98];
-
-// @public (undocumented)
-export const AiType99: {
-    readonly HEADLINE_CHART: 'headline_chart';
-};
-
-// @public (undocumented)
-export type AiType99 = typeof AiType99[keyof typeof AiType99];
 
 // @public
 export interface AiUploadDocumentResponse {
@@ -8654,6 +8008,8 @@ export interface AiUserContextDashboard {
     'id': string;
     // (undocumented)
     'title'?: string | null;
+    // (undocumented)
+    'viewFilters'?: Array<AiUserContextViewFilter> | null;
     // (undocumented)
     'widgets'?: Array<AiUserContextWidgetDescriptor>;
 }
@@ -8761,6 +8117,14 @@ export interface AiUserContextView {
     'report'?: AiUserContextReport | null;
 }
 
+// @public
+export interface AiUserContextViewFilter {
+    'filter': object;
+    'key': string;
+    // (undocumented)
+    'tabId'?: string | null;
+}
+
 // @public (undocumented)
 export interface AiUserContextVisualizationSwitcherWidgetDescriptor {
     // (undocumented)
@@ -8831,15 +8195,15 @@ export interface AiUsing1 {
 export interface AiUsing10 {
 }
 
-// @public (undocumented)
+// @public
 export interface AiUsing11 {
 }
 
-// @public (undocumented)
+// @public
 export interface AiUsing12 {
 }
 
-// @public (undocumented)
+// @public
 export interface AiUsing13 {
 }
 
@@ -8847,52 +8211,12 @@ export interface AiUsing13 {
 export interface AiUsing14 {
 }
 
-// @public (undocumented)
+// @public
 export interface AiUsing15 {
-}
-
-// @public (undocumented)
-export interface AiUsing16 {
-}
-
-// @public (undocumented)
-export interface AiUsing17 {
-}
-
-// @public
-export interface AiUsing18 {
-}
-
-// @public
-export interface AiUsing19 {
 }
 
 // @public
 export interface AiUsing2 {
-}
-
-// @public
-export interface AiUsing20 {
-}
-
-// @public
-export interface AiUsing21 {
-}
-
-// @public
-export interface AiUsing22 {
-}
-
-// @public
-export interface AiUsing23 {
-}
-
-// @public
-export interface AiUsing24 {
-}
-
-// @public
-export interface AiUsing25 {
 }
 
 // @public
@@ -8911,7 +8235,7 @@ export interface AiUsing5 {
 export interface AiUsing6 {
 }
 
-// @public (undocumented)
+// @public
 export interface AiUsing7 {
 }
 
@@ -8919,7 +8243,7 @@ export interface AiUsing7 {
 export interface AiUsing8 {
 }
 
-// @public (undocumented)
+// @public
 export interface AiUsing9 {
 }
 
@@ -9037,7 +8361,7 @@ export interface AiVisualisation {
     'to'?: AiBucketItem;
     // (undocumented)
     'trend_by'?: Array<AiBucketItem>;
-    'type': AiType104;
+    'type': AiType92;
     // (undocumented)
     'view_by'?: Array<AiBucketItem>;
 }
@@ -9067,7 +8391,7 @@ export interface AiVisualisation1 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType82;
+    'type': AiType70;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9093,7 +8417,7 @@ export interface AiVisualisation10 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType91;
+    'type': AiType79;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9119,7 +8443,7 @@ export interface AiVisualisation11 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType92;
+    'type': AiType80;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9145,7 +8469,7 @@ export interface AiVisualisation12 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType93;
+    'type': AiType81;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9175,7 +8499,7 @@ export interface AiVisualisation13 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType94;
+    'type': AiType82;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9201,7 +8525,7 @@ export interface AiVisualisation14 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType95;
+    'type': AiType83;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9227,7 +8551,7 @@ export interface AiVisualisation15 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType96;
+    'type': AiType84;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9257,7 +8581,7 @@ export interface AiVisualisation16 {
     'title'?: string;
     // (undocumented)
     'to'?: AiBucketItem | null;
-    'type': AiType97;
+    'type': AiType85;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9287,7 +8611,7 @@ export interface AiVisualisation17 {
     'title'?: string;
     // (undocumented)
     'to'?: AiBucketItem | null;
-    'type': AiType98;
+    'type': AiType86;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9313,7 +8637,7 @@ export interface AiVisualisation18 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType99;
+    'type': AiType87;
     // (undocumented)
     'view_by'?: Array<any> | null;
 }
@@ -9339,7 +8663,7 @@ export interface AiVisualisation19 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType100;
+    'type': AiType88;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9367,7 +8691,7 @@ export interface AiVisualisation2 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType83;
+    'type': AiType71;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9395,7 +8719,7 @@ export interface AiVisualisation20 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType101;
+    'type': AiType89;
     // (undocumented)
     'view_by'?: Array<string> | null;
 }
@@ -9423,7 +8747,7 @@ export interface AiVisualisation21 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType102;
+    'type': AiType90;
     // (undocumented)
     'view_by'?: Array<string> | null;
 }
@@ -9453,7 +8777,7 @@ export interface AiVisualisation22 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType103;
+    'type': AiType91;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9479,7 +8803,7 @@ export interface AiVisualisation23 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType104;
+    'type': AiType92;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9507,7 +8831,7 @@ export interface AiVisualisation3 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType84;
+    'type': AiType72;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9535,7 +8859,7 @@ export interface AiVisualisation4 {
     'title'?: string;
     // (undocumented)
     'trend_by'?: Array<AiBucketItem> | null;
-    'type': AiType85;
+    'type': AiType73;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9563,7 +8887,7 @@ export interface AiVisualisation5 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType86;
+    'type': AiType74;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9591,7 +8915,7 @@ export interface AiVisualisation6 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType87;
+    'type': AiType75;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9619,7 +8943,7 @@ export interface AiVisualisation7 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType88;
+    'type': AiType76;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9645,7 +8969,7 @@ export interface AiVisualisation8 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType89;
+    'type': AiType77;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -9671,7 +8995,7 @@ export interface AiVisualisation9 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType90;
+    'type': AiType78;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -13335,11 +12659,11 @@ export interface AutomationRelative {
 // @public (undocumented)
 export interface AutomationRelativeBoundedDateFilter {
     // (undocumented)
-    'from'?: number;
+    'from'?: number | null;
     // (undocumented)
     'granularity': AutomationRelativeBoundedDateFilterGranularityEnum;
     // (undocumented)
-    'to'?: number;
+    'to'?: number | null;
 }
 
 // @public (undocumented)
@@ -18036,8 +17360,14 @@ export interface DeclarativePublisherDocument {
 export interface DeclarativePublisherDocumentPageTemplate {
     // (undocumented)
     'content': PublisherDocumentPageTemplateContent;
+    'createdAt'?: string | null;
+    // (undocumented)
+    'createdBy'?: DeclarativeUserIdentifier;
     'description'?: string;
     'id': string;
+    'modifiedAt'?: string | null;
+    // (undocumented)
+    'modifiedBy'?: DeclarativeUserIdentifier;
     // (undocumented)
     'tags'?: Array<string>;
     'title': string;
@@ -18048,8 +17378,14 @@ export interface DeclarativePublisherDocumentPageTemplate {
 export interface DeclarativePublisherDocumentTemplate {
     // (undocumented)
     'content': PublisherDocumentContent;
+    'createdAt'?: string | null;
+    // (undocumented)
+    'createdBy'?: DeclarativeUserIdentifier;
     'description'?: string;
     'id': string;
+    'modifiedAt'?: string | null;
+    // (undocumented)
+    'modifiedBy'?: DeclarativeUserIdentifier;
     // (undocumented)
     'tags'?: Array<string>;
     'title': string;
@@ -18148,7 +17484,7 @@ export interface DeclarativeSetting {
 }
 
 // @public (undocumented)
-export type DeclarativeSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE' | 'EMBEDDING_ORIGINS';
+export type DeclarativeSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_AI_TRACE_OBFUSCATION' | 'ENABLE_AI_PERSISTENCE_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE' | 'EMBEDDING_ORIGINS' | 'AI_LAKE_CREDENTIAL_VENDING';
 
 // @public (undocumented)
 export interface DeclarativeSingleWorkspacePermission {
@@ -25448,11 +24784,11 @@ export type ExportRawExportRequestFormatEnum = 'ARROW_FILE' | 'ARROW_STREAM' | '
 // @public (undocumented)
 export interface ExportRelativeBoundedDateFilter {
     // (undocumented)
-    'from'?: number;
+    'from'?: number | null;
     // (undocumented)
     'granularity': ExportRelativeBoundedDateFilterGranularityEnum;
     // (undocumented)
-    'to'?: number;
+    'to'?: number | null;
 }
 
 // @public (undocumented)
@@ -36161,7 +35497,7 @@ export interface JsonApiOrganizationSettingInAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiOrganizationSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE' | 'EMBEDDING_ORIGINS';
+export type JsonApiOrganizationSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_AI_TRACE_OBFUSCATION' | 'ENABLE_AI_PERSISTENCE_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE' | 'EMBEDDING_ORIGINS' | 'AI_LAKE_CREDENTIAL_VENDING';
 
 // @public (undocumented)
 export interface JsonApiOrganizationSettingInDocument {
@@ -36188,7 +35524,7 @@ export interface JsonApiOrganizationSettingOutAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiOrganizationSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE' | 'EMBEDDING_ORIGINS';
+export type JsonApiOrganizationSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_AI_TRACE_OBFUSCATION' | 'ENABLE_AI_PERSISTENCE_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE' | 'EMBEDDING_ORIGINS' | 'AI_LAKE_CREDENTIAL_VENDING';
 
 // @public (undocumented)
 export interface JsonApiOrganizationSettingOutDocument {
@@ -36246,7 +35582,7 @@ export interface JsonApiOrganizationSettingPatchAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiOrganizationSettingPatchAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE' | 'EMBEDDING_ORIGINS';
+export type JsonApiOrganizationSettingPatchAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_AI_TRACE_OBFUSCATION' | 'ENABLE_AI_PERSISTENCE_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE' | 'EMBEDDING_ORIGINS' | 'AI_LAKE_CREDENTIAL_VENDING';
 
 // @public (undocumented)
 export interface JsonApiOrganizationSettingPatchDocument {
@@ -39064,7 +38400,7 @@ export interface JsonApiUserSettingInAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiUserSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE';
+export type JsonApiUserSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_AI_TRACE_OBFUSCATION' | 'ENABLE_AI_PERSISTENCE_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE';
 
 // @public (undocumented)
 export interface JsonApiUserSettingInDocument {
@@ -39091,7 +38427,7 @@ export interface JsonApiUserSettingOutAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiUserSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE';
+export type JsonApiUserSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_AI_TRACE_OBFUSCATION' | 'ENABLE_AI_PERSISTENCE_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE';
 
 // @public (undocumented)
 export interface JsonApiUserSettingOutDocument {
@@ -40726,7 +40062,7 @@ export interface JsonApiWorkspaceSettingInAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiWorkspaceSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE';
+export type JsonApiWorkspaceSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_AI_TRACE_OBFUSCATION' | 'ENABLE_AI_PERSISTENCE_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE';
 
 // @public (undocumented)
 export interface JsonApiWorkspaceSettingInDocument {
@@ -40755,7 +40091,7 @@ export interface JsonApiWorkspaceSettingOutAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiWorkspaceSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE';
+export type JsonApiWorkspaceSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_AI_TRACE_OBFUSCATION' | 'ENABLE_AI_PERSISTENCE_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE';
 
 // @public (undocumented)
 export interface JsonApiWorkspaceSettingOutDocument {
@@ -40830,7 +40166,7 @@ export interface JsonApiWorkspaceSettingPatchAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiWorkspaceSettingPatchAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE';
+export type JsonApiWorkspaceSettingPatchAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_AI_TRACE_OBFUSCATION' | 'ENABLE_AI_PERSISTENCE_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE';
 
 // @public (undocumented)
 export interface JsonApiWorkspaceSettingPatchDocument {
@@ -40857,7 +40193,7 @@ export interface JsonApiWorkspaceSettingPostOptionalIdAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiWorkspaceSettingPostOptionalIdAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE';
+export type JsonApiWorkspaceSettingPostOptionalIdAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_AI_TRACE_OBFUSCATION' | 'ENABLE_AI_PERSISTENCE_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE';
 
 // @public (undocumented)
 export interface JsonApiWorkspaceSettingPostOptionalIdDocument {
@@ -42880,6 +42216,40 @@ export interface LocalizationDefaults {
 
 // @public (undocumented)
 export type LocalizationDefaultSourceEnum = 'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT';
+
+// @public
+export interface LocalizationIssue {
+    'locale': string;
+    'type': LocalizationIssueTypeEnum;
+    'workspaces'?: number;
+}
+
+// @public (undocumented)
+export interface LocalizationIssues {
+    'issues': Array<LocalizationIssue>;
+}
+
+// @public (undocumented)
+export type LocalizationIssueTypeEnum = 'METADATA_MISSING_TRANSLATION' | 'METADATA_LANGUAGE_MISMATCH' | 'METADATA_UNUSED_TRANSLATION';
+
+// @public (undocumented)
+export interface LocalizationIssueWorkspace {
+    // (undocumented)
+    'bySetting': LocalizationResolvedValues;
+    'childrenCount': number;
+    // (undocumented)
+    'id': string;
+    // (undocumented)
+    'name': string;
+    'parentId'?: string | null;
+}
+
+// @public (undocumented)
+export interface LocalizationIssueWorkspaces {
+    'totalCount': number;
+    // (undocumented)
+    'workspaces': Array<LocalizationIssueWorkspace>;
+}
 
 // @public
 export interface LocalizationMetadataStatistics {
@@ -47643,11 +47013,11 @@ export interface Relative {
 // @public (undocumented)
 export interface RelativeBoundedDateFilter {
     // (undocumented)
-    'from'?: number;
+    'from'?: number | null;
     // (undocumented)
     'granularity': RelativeBoundedDateFilterGranularityEnum;
     // (undocumented)
-    'to'?: number;
+    'to'?: number | null;
 }
 
 // @public (undocumented)
@@ -47859,7 +47229,7 @@ export interface ResolvedSetting {
 }
 
 // @public (undocumented)
-export type ResolvedSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE';
+export type ResolvedSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'DEFAULT_EXPORT_TEMPLATE' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'CONVERSATION_RETENTION_DAYS' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'ENABLE_AI_DATA_OBFUSCATION' | 'ENABLE_AI_TRACE_OBFUSCATION' | 'ENABLE_AI_PERSISTENCE_OBFUSCATION' | 'ENABLE_PARTIAL_DATA_RESULTS' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS' | 'HLL_TYPE' | 'ENABLE_TIMEZONE_CHANGE' | 'AUTHORIZATION_SERVER_REDIRECT_POLICY' | 'DEFAULT_VISUALIZATION_VISIBILITY' | 'DEFAULT_METRIC_VISIBILITY' | 'GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE' | 'QUERY_ENGINE' | 'AI_LAKE_CREDENTIAL_VENDING';
 
 // @public
 export interface ResolveSettingsRequest {

@@ -1,6 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import {
@@ -28,7 +27,7 @@ import {
     updateConfigWithSettings,
 } from "@gooddata/sdk-ui-charts";
 import { parseRGBString } from "@gooddata/sdk-ui-vis-commons";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { messages } from "../../../locales.js";
 import { BUCKETS } from "../../constants/bucket.js";
@@ -53,7 +52,7 @@ const headlineSecondaryMeasuresIcon = "local:headline/bucket-title-secondary-mea
 
 export function getDefaultHeadlineUiConfig(): IUiConfig {
     const uiConfig = _cloneDeep(DEFAULT_HEADLINE_UICONFIG);
-    set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "itemsLimit"], 2);
+    _set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "itemsLimit"], 2);
     return uiConfig;
 }
 
@@ -73,11 +72,11 @@ export function getHeadlineUiConfig(referencePoint: IReferencePoint, intl: IntlS
         intl,
     )!;
 
-    set(uiConfig, [BUCKETS, BucketNames.MEASURES, "canAddItems"], viewCanAddPrimaryItems);
-    set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "canAddItems"], viewCanAddSecondaryItems);
+    _set(uiConfig, [BUCKETS, BucketNames.MEASURES, "canAddItems"], viewCanAddPrimaryItems);
+    _set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "canAddItems"], viewCanAddSecondaryItems);
 
-    set(uiConfig, [BUCKETS, BucketNames.MEASURES, "icon"], headlineMeasuresIcon);
-    set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "icon"], headlineSecondaryMeasuresIcon);
+    _set(uiConfig, [BUCKETS, BucketNames.MEASURES, "icon"], headlineMeasuresIcon);
+    _set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "icon"], headlineSecondaryMeasuresIcon);
 
     const primaryMeasuresCount = getItemsCount(buckets, BucketNames.MEASURES);
     const secondaryMeasuresCount = getItemsCount(buckets, BucketNames.SECONDARY_MEASURES);
@@ -89,13 +88,13 @@ export function getHeadlineUiConfig(referencePoint: IReferencePoint, intl: IntlS
         };
     }
 
-    set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "canAddItems"], true);
-    set(
+    _set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "canAddItems"], true);
+    _set(
         uiConfig,
         [BUCKETS, BucketNames.SECONDARY_MEASURES, "itemsLimit"],
         noDerivedMeasurePresent(buckets) ? 2 : 1,
     );
-    set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "allowsReordering"], true);
+    _set(uiConfig, [BUCKETS, BucketNames.SECONDARY_MEASURES, "allowsReordering"], true);
 
     return uiConfig;
 }

@@ -3,7 +3,6 @@
 import { type MutableRefObject, useCallback, useEffect, useMemo, useState } from "react";
 
 import cx from "classnames";
-import { debounce } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import {
@@ -21,6 +20,7 @@ import {
     UiIcon,
     useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
+import { _debounce } from "@gooddata/util";
 
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { selectSupportsMultipleDateFilters } from "../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
@@ -194,7 +194,7 @@ export function AttributesDropdown({
 
     // oxlint-disable-next-line react-hooks/exhaustive-deps
     const onSearch = useCallback(
-        debounce((query: string) => {
+        _debounce((query: string) => {
             setSearchQuery(query);
         }, 250),
         [],

@@ -1,9 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set, without } from "lodash-es";
+import { without } from "lodash-es";
 
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { BUCKETS, METRIC } from "../../../constants/bucket.js";
 import { COMBO_CHART_UICONFIG_DEPRECATED } from "../../../constants/uiConfig.js";
@@ -74,7 +74,7 @@ export class PluggableComboChartDeprecated extends PluggableBaseChart {
             secondaryMeasures = without(allMeasures, ...measures);
         }
 
-        set(newReferencePoint, BUCKETS, [
+        _set(newReferencePoint, BUCKETS, [
             {
                 localIdentifier: BucketNames.MEASURES,
                 items: measures,

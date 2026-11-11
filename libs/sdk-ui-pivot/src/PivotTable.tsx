@@ -1,6 +1,5 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { omit } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { type IBackendCapabilities, type IPreparedExecution } from "@gooddata/sdk-backend-spi";
@@ -29,6 +28,7 @@ import {
     useResolveValuesWithPlaceholders,
     withContexts,
 } from "@gooddata/sdk-ui";
+import { _omit } from "@gooddata/util";
 
 import { CorePivotTableAgImpl } from "./CorePivotTable.js";
 import { AVAILABLE_TOTALS } from "./impl/base/constants.js";
@@ -130,7 +130,7 @@ function RenderPivotTable(props: IPivotTableProps) {
         "Workspace was not provided for PivotTable. Either pass it as a prop or use WorkspaceContext.",
     );
 
-    const newProps: IPivotTableNonBucketProps = omit<IPivotTableProps, keyof IPivotTableBucketProps>(props, [
+    const newProps: IPivotTableNonBucketProps = _omit<IPivotTableProps, keyof IPivotTableBucketProps>(props, [
         "measures",
         "rows",
         "columns",
@@ -143,7 +143,7 @@ function RenderPivotTable(props: IPivotTableProps) {
         ...validateConfig(props),
         menu: pivotTableMenuForCapabilities(backend.capabilities, config?.menu),
     };
-    const corePivotProps: Partial<ICorePivotTableProps> = omit(newProps, ["backend", "workspace"]);
+    const corePivotProps: Partial<ICorePivotTableProps> = _omit(newProps, ["backend", "workspace"]);
     const execution = prepareExecution(props);
 
     return (

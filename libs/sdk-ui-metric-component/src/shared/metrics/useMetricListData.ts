@@ -2,11 +2,10 @@
 
 import { useEffect, useState } from "react";
 
-import { debounce } from "lodash-es";
-
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type IMeasureMetadataObject } from "@gooddata/sdk-model";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { _debounce } from "@gooddata/util";
 
 import { useEvents } from "../eventing/useEvents.js";
 
@@ -91,7 +90,7 @@ export const useMetricListData = ({
     const [search, setSearch] = useState<string>("");
 
     const { workspaceMetricDataEvent } = useEvents(events);
-    const debouncedTrackWorkspace = debounce(workspaceMetricDataEvent, 500);
+    const debouncedTrackWorkspace = _debounce(workspaceMetricDataEvent, 500);
 
     const workspaceId = useWorkspaceStrict();
     const backend = useBackendStrict();

@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-kit: Add an optional `secondaryTitle` to `UiSearchableSelectItem`, shown muted after the title in the list and on the button, and a `UiSearchableSelectFooter` for a note under the list",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

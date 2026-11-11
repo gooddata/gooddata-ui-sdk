@@ -36,6 +36,7 @@ import { _castPath } from "./_castPath.js";
 import { _isIndex } from "./_isIndex.js";
 import { _toKey } from "./_toKey.js";
 import { _isObject } from "./isObject.js";
+import type { _SetWithCustomizer } from "./types.js";
 
 /**
  * The base implementation of `set`.
@@ -43,10 +44,16 @@ import { _isObject } from "./isObject.js";
  * @param object - The object to modify.
  * @param path - The path of the property to set.
  * @param value - The value to set.
+ * @param customizer - The function to customize the containers created along the path.
  * @returns Returns `object`.
  * @internal
  */
-export function _baseSet(object: unknown, path: unknown, value: unknown): unknown {
+export function _baseSet(
+    object: unknown,
+    path: unknown,
+    value: unknown,
+    customizer?: _SetWithCustomizer<unknown>,
+): unknown {
     if (!_isObject(object)) {
         return object;
     }
@@ -67,8 +74,14 @@ export function _baseSet(object: unknown, path: unknown, value: unknown): unknow
         if (index !== lastIndex) {
             const objValue = nested[key];
 
-            // keep an existing container, otherwise create an array for an index segment and an object otherwise
-            newValue = _isObject(objValue) ? objValue : _isIndex(keys[index + 1]) ? [] : {};
+            // a customizer may supply the container; otherwise keep an existing one, or create an array for
+            // an index segment and an object otherwise; symbol keys are passed as they are, although the
+            // lodash typing only names string keys
+            newValue = customizer?.(objValue, key as string, nested);
+
+            if (newValue === undefined) {
+                newValue = _isObject(objValue) ? objValue : _isIndex(keys[index + 1]) ? [] : {};
+            }
         }
 
         _assignValue(nested, key, newValue);

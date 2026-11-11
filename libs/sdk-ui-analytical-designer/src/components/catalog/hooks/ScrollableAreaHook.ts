@@ -2,13 +2,12 @@
 
 import { useRef } from "react";
 
-import { debounce } from "lodash-es";
-
 import { GOODSTRAP_SCROLLED_EVENT } from "@gooddata/sdk-ui-kit";
+import { _debounce } from "@gooddata/util";
 
 export const useScrollableArea = () => {
     const scrollableRef = useRef(null);
-    const onScroll: () => void = debounce(
+    const onScroll: () => void = _debounce(
         () => {
             if (scrollableRef.current !== null) {
                 scrollableRef.current.dispatchEvent(

@@ -1,10 +1,8 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { range } from "lodash-es";
-
 import { type IRgbColorValue, isAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-model";
 import { type IColorLegendItem, type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
-import { _isEmpty } from "@gooddata/util";
+import { _isEmpty, _range } from "@gooddata/util";
 
 import { type IPushpinColor } from "../../../types/geoData/pushpin.js";
 import { isFiniteNumber } from "../../../utils/guards.js";
@@ -56,7 +54,7 @@ function getCalculatedChannel(channel: number, index: number, step: number): num
  * Generates an array of gradient colors
  */
 function getCalculatedColors(count: number, channels: number[], steps: number[], opacity = 1): string[] {
-    return range(1, count).map((index: number): string =>
+    return _range(1, count).map((index: number): string =>
         formatColor(
             getCalculatedChannel(channels[0], index, steps[0]),
             getCalculatedChannel(channels[1], index, steps[1]),
@@ -287,7 +285,7 @@ export function generateLegendColorData(colorSeries: number[], colorString: stri
         return [];
     }
 
-    return range(0, DEFAULT_PUSHPIN_COLOR_SCALE).map((index: number): IColorLegendItem => {
+    return _range(0, DEFAULT_PUSHPIN_COLOR_SCALE).map((index: number): IColorLegendItem => {
         const from = min + offset * index;
         const isLastItem = index === DEFAULT_PUSHPIN_COLOR_SCALE - 1;
         const to = isLastItem ? max : from + offset;

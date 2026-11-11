@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { debounce } from "lodash-es";
+import { _debounce } from "@gooddata/util";
 
 import { useAgGridApi } from "../../context/AgGridApiContext.js";
 import { useCurrentDataView } from "../../context/CurrentDataViewContext.js";
@@ -70,7 +70,7 @@ export function useInitialAutoResizeVisibility(options?: IUseInitialAutoResizeVi
             return;
         }
 
-        const setIsReadyForPaint = debounce(() => {
+        const setIsReadyForPaint = _debounce(() => {
             markReady();
         }, debounceTime);
 

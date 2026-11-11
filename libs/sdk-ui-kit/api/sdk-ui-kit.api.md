@@ -1935,7 +1935,7 @@ export function IconTrash(input: IIconProps): JSX.Element;
 export function IconTreeMap(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "infoCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "globe" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderSmall" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "levelUp" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "building" | "printer" | "picture" | "visualization" | "columnGroup" | "visualizationStack" | "richText" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "ldmKey" | "ldmLabel" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "alignLeft" | "alignCenter" | "alignRight" | "alignTop" | "alignMiddle" | "alignBottom" | "bold" | "italic" | "imageContain" | "imageCover" | "imageFill" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin" | "speechBubble" | "pieChart" | "timezone" | "sidePanelCollapse" | "sidePanel" | "sidePanelExpand" | "lineStyle" | "lineStyleSolid" | "lineStyleDashed" | "lineStyleDotted" | "lineWidth1" | "lineWidth2" | "lineWidth3" | "lineWidth4" | "linear" | "spline" | "stepped";
+export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "infoCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "globe" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderSmall" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "levelUp" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "building" | "printer" | "picture" | "visualization" | "columnGroup" | "visualizationStack" | "richText" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "ldmKey" | "ldmLabel" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "alignLeft" | "alignCenter" | "alignRight" | "alignTop" | "alignMiddle" | "alignBottom" | "bold" | "italic" | "imageContain" | "imageCover" | "imageFill" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "lineage" | "report" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin" | "speechBubble" | "pieChart" | "timezone" | "sidePanelCollapse" | "sidePanel" | "sidePanelExpand" | "lineStyle" | "lineStyleSolid" | "lineStyleDashed" | "lineStyleDotted" | "lineWidth1" | "lineWidth2" | "lineWidth3" | "lineWidth4" | "linear" | "spline" | "stepped";
 
 // @internal (undocumented)
 export function IconUndo(input: IIconProps): JSX.Element;
@@ -2520,6 +2520,8 @@ export interface IDropdownListProps<T> {
     itemsCount?: number;
     // (undocumented)
     itemTitleGetter?: (item: T) => string;
+    // (undocumented)
+    listPadding?: number;
     // (undocumented)
     loadNextPage?: () => void;
     // (undocumented)
@@ -7304,6 +7306,7 @@ export interface IUiListboxInteractiveItem<T> {
     // (undocumented)
     isDisabled?: boolean;
     lang?: string;
+    secondaryTitle?: string;
     // (undocumented)
     stringTitle: string;
     tooltip?: string;
@@ -7774,6 +7777,8 @@ export interface IUiPagedVirtualListProps<T> {
     // (undocumented)
     listboxProps?: Record<string, any>;
     // (undocumented)
+    listPadding?: number;
+    // (undocumented)
     loadNextPage?: () => void;
     // (undocumented)
     maxHeight: number;
@@ -8082,11 +8087,18 @@ export interface IUiReturnFocusOnUnmountOptions {
 }
 
 // @internal (undocumented)
+export interface IUiSearchableSelectFooterProps {
+    // (undocumented)
+    children: ReactNode;
+}
+
+// @internal (undocumented)
 export interface IUiSearchableSelectItemProps {
     children: string;
     // (undocumented)
     id: string;
     lang?: string;
+    secondaryTitle?: string;
 }
 
 // @internal (undocumented)
@@ -10150,6 +10162,9 @@ export function UiSearchableSelect<T>(input: IUiSearchableSelectProps<T>): JSX.E
 
 // @internal
 export function UiSearchableSelectDivider(): null;
+
+// @internal (undocumented)
+export function UiSearchableSelectFooter(input: IUiSearchableSelectFooterProps): JSX.Element;
 
 // @internal
 export function UiSearchableSelectItem(_props: IUiSearchableSelectItemProps): null;

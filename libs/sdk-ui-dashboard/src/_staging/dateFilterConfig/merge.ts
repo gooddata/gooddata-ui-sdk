@@ -1,7 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
 import stringify from "json-stable-stringify";
-import { uniqBy } from "lodash-es";
 
 import {
     DEFAULT_ABSOLUTE_DATE_FILTER_GRANULARITIES,
@@ -10,6 +9,7 @@ import {
     type IDateFilterConfig,
     type IRelativeDateFilterPreset,
 } from "@gooddata/sdk-model";
+import { _uniqBy } from "@gooddata/util";
 
 import { sanitizeDateFilterOption } from "./sanitization.js";
 
@@ -28,7 +28,7 @@ const mergePresets = <T extends IAbsoluteDateFilterPreset | IRelativeDateFilterP
 ): T[] => {
     const merged = [...(projectPresets || []), ...(dashboardPresets || [])].map(sanitizeDateFilterOption);
 
-    return uniqBy(merged, stringify);
+    return _uniqBy(merged, stringify);
 };
 
 const addPresets: DashboardConfigMerger = (dashboardConfig) => (projectConfig) => {

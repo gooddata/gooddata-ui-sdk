@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { omit } from "lodash-es";
 import { type Root as ReactRoot, createRoot } from "react-dom/client";
 import { type NavigateFunction } from "react-router";
 
@@ -22,10 +21,10 @@ import {
 import { resolveLocale, useAutoupdateRef } from "@gooddata/sdk-ui";
 import { GenAIAssistantMode } from "@gooddata/sdk-ui-gen-ai";
 import { type ISequencedAppEvent } from "@gooddata/sdk-ui-gen-ai/internal";
-import { _isEqual } from "@gooddata/util";
+import { _isEqual, _omit } from "@gooddata/util";
 
 import { now } from "../debug.js";
-import { useHeadlessModules } from "../headless/useHeadlessModules.js";
+import { getModuleMessageBroker, useHeadlessModules } from "../headless/useHeadlessModules.js";
 import { setActiveHostHandle } from "../lib/hostNotifications.js";
 import { getAppLifecycleCallbacks } from "../loader/pluggableApplicationsLoader.js";
 import { getActiveInternalApplication } from "../loader/routing.js";
@@ -101,7 +100,7 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate, onError }
     useEffect(() => {
         const prev = prevAppContextRef.current;
         prevAppContextRef.current = ctx;
-        const epochFields = (c: IPlatformContext) => omit(c, ["auth", "colorPalette"]);
+        const epochFields = (c: IPlatformContext) => _omit(c, ["auth", "colorPalette"]);
         if (prev !== ctx && !_isEqual(epochFields(prev), epochFields(ctx))) {
             setAppContextEpoch((epoch) => epoch + 1);
         }
@@ -439,6 +438,7 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate, onError }
                             onHeaderChange={onHeaderChange}
                             onDocumentTitleChange={onDocumentTitleChange}
                             onOpenPricingDialog={openPricingDialog}
+                            getModuleMessageBroker={getModuleMessageBroker}
                         />
                     </HostIntlProvider>
                 </HostErrorBoundary>,

@@ -107,6 +107,23 @@ export {
 } from "./headless.js";
 
 export {
+    type IActiveApplicationInfo,
+    type IModuleChannelHandlerContext,
+    type IModuleMessage,
+    type IModuleMessageSender,
+    type IModuleMessaging,
+    type IModuleMessagingError,
+    type IModuleRequestOptions,
+    type ModuleChannelHandler,
+    type ModuleMessagingErrorCode,
+    type ModulePostResult,
+    createModuleMessagingError,
+    isConventionalModuleChannelName,
+    isModuleMessage,
+    isModuleMessagingError,
+} from "./moduleMessaging.js";
+
+export {
     type IHostUiModule,
     type IHostUiMountHandle,
     type IHostUiMountOptions,

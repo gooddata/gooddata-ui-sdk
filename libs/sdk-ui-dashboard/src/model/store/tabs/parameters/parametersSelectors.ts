@@ -1,7 +1,6 @@
 // (C) 2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
-import { uniq } from "lodash-es";
 
 import {
     type IDashboardExportParameter,
@@ -19,7 +18,7 @@ import {
     isWidget,
     objRefToString,
 } from "@gooddata/sdk-model";
-import { _isEqual } from "@gooddata/util";
+import { _isEqual, _uniq } from "@gooddata/util";
 
 import { createMemoizedSelector } from "../../_infra/selectors.js";
 import {
@@ -748,7 +747,7 @@ export const selectExportEffectiveParameters: (
                     return EMPTY_EXPORT_PARAMETERS_BY_TAB;
                 }
                 const scopedTabs = widgetIds?.length
-                    ? uniq(
+                    ? _uniq(
                           widgetContexts
                               .filter((ctx) => widgetIds.includes(ctx.widget.identifier))
                               .map((ctx) => ctx.tab),

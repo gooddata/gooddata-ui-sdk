@@ -1,7 +1,7 @@
-// (C) 2007-2025 GoodData Corporation
-import { range } from "lodash-es";
+// (C) 2007-2026 GoodData Corporation
 
 import { type IBucket, type IExecutionDefinition } from "@gooddata/sdk-model";
+import { _range } from "@gooddata/util";
 
 /*
  * Interface between mock-handling tool and other tools is for now a set of file names that the other
@@ -116,7 +116,7 @@ export function requestPages(
     size: [number, number],
     pages: number,
 ): RequestedWindow[] {
-    return range(0, pages).map((page) => {
+    return _range(0, pages).map((page) => {
         return {
             offset: [start[0] + size[0] * page, start[1]],
             size,

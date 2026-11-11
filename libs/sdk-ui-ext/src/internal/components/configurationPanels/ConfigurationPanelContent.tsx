@@ -168,7 +168,6 @@ export abstract class ConfigurationPanelContent<
         } = this.props;
 
         const showImplicitDrillToUrl = isInsightSupportedForImplicitDrillToUrl(insight);
-        const supportsKeyDriveAnalysis = featureFlags?.enableChangeAnalysis;
         const insightSupportsScheduledExports = isInsightSupportedForScheduledExports(insight);
         const insightSupportsAlerts = isInsightSupportedForAlerts(insight);
         const supportsAlertsConfiguration = insightSupportsAlerts;
@@ -190,7 +189,6 @@ export abstract class ConfigurationPanelContent<
                 supportsScheduledExportsConfiguration={!!supportsScheduledExportsConfiguration}
                 InteractionsDetailRenderer={configurationPanelRenderers?.InteractionsDetailRenderer}
                 showImplicitDrillToUrl={showImplicitDrillToUrl}
-                supportsKeyDriveAnalysis={supportsKeyDriveAnalysis}
                 // enableDrillToUrlByDefault is actually not a feature flag, but setting
                 // for some reason the property is called featureFlags, but contains both feature flags and settings
                 enableDrillToUrlByDefault={featureFlags?.enableDrillToUrlByDefault}

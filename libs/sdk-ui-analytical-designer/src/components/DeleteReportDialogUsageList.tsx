@@ -18,6 +18,9 @@ const messages = defineMessages({
     notUsed: { id: "dialogs.deleteReportConfirmation.usage.notUsed" },
     dashboardsUsage: { id: "dialogs.deleteReportConfirmation.usage" },
     documentsUsage: { id: "dialogs.deleteReportConfirmation.usage.documents" },
+    dashboardsAndDocumentsUsage: { id: "dialogs.deleteReportConfirmation.usage.dashboardsAndDocuments" },
+    dashboardsGroup: { id: "dialogs.deleteReportConfirmation.usage.group.dashboards" },
+    documentsGroup: { id: "dialogs.deleteReportConfirmation.usage.group.documents" },
     showMore: { id: "dialogs.deleteReportConfirmation.usage.showMore" },
     showLess: { id: "dialogs.deleteReportConfirmation.usage.showLess" },
     inaccessibleDashboards: { id: "dialogs.deleteReportConfirmation.usage.inaccessibleDashboards" },
@@ -37,13 +40,12 @@ interface IDeleteReportDialogUsageListProps {
     documentUriFactory: DocumentUriFactory;
 }
 
-interface IUsageSectionProps {
+interface IUsageMessageProps {
     header: ReactNode;
-    toggleClassName: string;
     children: ReactNode;
 }
 
-function UsageSection({ header, toggleClassName, children }: IUsageSectionProps) {
+function UsageMessage({ header, children }: IUsageMessageProps) {
     const intl = useIntl();
     const [showUsageList, setShowUsageList] = useState(false);
 
@@ -51,7 +53,7 @@ function UsageSection({ header, toggleClassName, children }: IUsageSectionProps)
         <Message type="warning">
             <div className="gd-delete-report-dialog-usage-list-header">
                 {header}
-                <span className={`gd-delete-report-dialog-usage-more ${toggleClassName}`}>
+                <span className="gd-delete-report-dialog-usage-more s-delete-report-dialog-usage-more">
                     <UiButton
                         variant="link"
                         label={intl.formatMessage(showUsageList ? messages.showLess : messages.showMore)}
@@ -67,6 +69,21 @@ function UsageSection({ header, toggleClassName, children }: IUsageSectionProps)
     );
 }
 
+interface IUsageGroupProps {
+    title: ReactNode;
+    className: string;
+    children: ReactNode;
+}
+
+function UsageGroup({ title, className, children }: IUsageGroupProps) {
+    return (
+        <div className={`gd-delete-report-dialog-usage-group ${className}`}>
+            <h4 className="gd-delete-report-dialog-usage-group-heading">{title}</h4>
+            {children}
+        </div>
+    );
+}
+
 interface IReferencedDashboardsListProps {
     isEmbedded: boolean;
     referencingDashboards: IInsightUsageOnDashboard;
@@ -78,19 +95,34 @@ function ReferencedDashboardsList({
     isEmbedded,
     analyticalDashboardUriFactory,
 }: IReferencedDashboardsListProps) {
-    const { accessibleDashboards } = referencingDashboards;
+    const { accessibleDashboards, inaccessibleDashboardsCount } = referencingDashboards;
+
+    const renderListOfAccessible = accessibleDashboards.length > 0;
+    const renderInaccessibleOnly = accessibleDashboards.length === 0 && inaccessibleDashboardsCount > 0;
+    const renderAlsoInaccessible = accessibleDashboards.length > 0 && inaccessibleDashboardsCount > 0;
+
     return (
-        <ul className="gd-delete-report-dialog-usage-list">
-            {accessibleDashboards.map(({ id, title }) => (
-                <DeleteReportDialogUsageListItem
-                    key={id}
-                    id={id}
-                    title={title}
-                    isEmbedded={isEmbedded}
-                    uriFactory={analyticalDashboardUriFactory}
-                />
-            ))}
-        </ul>
+        <>
+            {renderListOfAccessible ? (
+                <ul className="gd-delete-report-dialog-usage-list">
+                    {accessibleDashboards.map(({ id, title }) => (
+                        <DeleteReportDialogUsageListItem
+                            key={id}
+                            id={id}
+                            title={title}
+                            isEmbedded={isEmbedded}
+                            uriFactory={analyticalDashboardUriFactory}
+                        />
+                    ))}
+                </ul>
+            ) : null}
+            {renderAlsoInaccessible ? (
+                <InaccessibleDashboardsMessage count={inaccessibleDashboardsCount} />
+            ) : null}
+            {renderInaccessibleOnly ? (
+                <OnlyInaccessibleDashboardsMessage count={inaccessibleDashboardsCount} />
+            ) : null}
+        </>
     );
 }
 
@@ -113,77 +145,29 @@ function OnlyInaccessibleDashboardsMessage({ count }: { count: number }) {
     );
 }
 
-function ReferencedDashboards({
-    referencingDashboards,
-    isEmbedded,
-    analyticalDashboardUriFactory,
-}: IReferencedDashboardsListProps) {
-    const { allDashboardsCount, accessibleDashboards, inaccessibleDashboardsCount } = referencingDashboards;
-
-    const renderListOfAccessible = accessibleDashboards.length > 0;
-    const renderInaccessibleOnly = accessibleDashboards.length === 0 && inaccessibleDashboardsCount > 0;
-    const renderAlsoInaccessible = accessibleDashboards.length > 0 && inaccessibleDashboardsCount > 0;
-
-    return (
-        <UsageSection
-            header={
-                <FormattedMessage
-                    {...messages.dashboardsUsage}
-                    values={{ dashboardsCount: allDashboardsCount, strong }}
-                />
-            }
-            toggleClassName="s-delete-report-dialog-usage-more"
-        >
-            {renderListOfAccessible ? (
-                <ReferencedDashboardsList
-                    isEmbedded={isEmbedded}
-                    referencingDashboards={referencingDashboards}
-                    analyticalDashboardUriFactory={analyticalDashboardUriFactory}
-                />
-            ) : null}
-            {renderAlsoInaccessible ? (
-                <InaccessibleDashboardsMessage count={inaccessibleDashboardsCount} />
-            ) : null}
-            {renderInaccessibleOnly ? (
-                <OnlyInaccessibleDashboardsMessage count={inaccessibleDashboardsCount} />
-            ) : null}
-        </UsageSection>
-    );
-}
-
-interface IReferencedDocumentsProps {
+interface IReferencedDocumentsListProps {
     isEmbedded: boolean;
     referencingDocuments: ReferencingDocument[];
     documentUriFactory: DocumentUriFactory;
 }
 
-function ReferencedDocuments({
+function ReferencedDocumentsList({
     isEmbedded,
     referencingDocuments,
     documentUriFactory,
-}: IReferencedDocumentsProps) {
+}: IReferencedDocumentsListProps) {
     return (
-        <UsageSection
-            header={
-                <FormattedMessage
-                    {...messages.documentsUsage}
-                    values={{ documentsCount: referencingDocuments.length, strong }}
+        <ul className="gd-delete-report-dialog-usage-list">
+            {referencingDocuments.map(({ id, title }) => (
+                <DeleteReportDialogUsageListItem
+                    key={id}
+                    id={id}
+                    title={title}
+                    isEmbedded={isEmbedded}
+                    uriFactory={documentUriFactory}
                 />
-            }
-            toggleClassName="s-delete-report-dialog-usage-documents-more"
-        >
-            <ul className="gd-delete-report-dialog-usage-list">
-                {referencingDocuments.map(({ id, title }) => (
-                    <DeleteReportDialogUsageListItem
-                        key={id}
-                        id={id}
-                        title={title}
-                        isEmbedded={isEmbedded}
-                        uriFactory={documentUriFactory}
-                    />
-                ))}
-            </ul>
-        </UsageSection>
+            ))}
+        </ul>
     );
 }
 
@@ -206,32 +190,91 @@ export function DeleteReportDialogUsageList({
         );
     }
 
-    const isReferencedOnSomeDashboard = referencingDashboards.allDashboardsCount > 0;
-    const isReferencedInSomeDocument = referencingDocuments.length > 0;
+    const dashboardsCount = referencingDashboards.allDashboardsCount;
+    const documentsCount = referencingDocuments.length;
+
+    const dashboardsList = (
+        <ReferencedDashboardsList
+            isEmbedded={isEmbedded}
+            referencingDashboards={referencingDashboards}
+            analyticalDashboardUriFactory={analyticalDashboardUriFactory}
+        />
+    );
+    const documentsList = (
+        <ReferencedDocumentsList
+            isEmbedded={isEmbedded}
+            referencingDocuments={referencingDocuments}
+            documentUriFactory={documentUriFactory}
+        />
+    );
 
     return (
         <div className="gd-delete-report-dialog-usage s-delete-report-dialog-usage">
-            {isReferencedOnSomeDashboard ? (
-                <ReferencedDashboards
-                    isEmbedded={isEmbedded}
-                    referencingDashboards={referencingDashboards}
-                    analyticalDashboardUriFactory={analyticalDashboardUriFactory}
-                />
-            ) : null}
-            {isReferencedInSomeDocument ? (
-                <ReferencedDocuments
-                    isEmbedded={isEmbedded}
-                    referencingDocuments={referencingDocuments}
-                    documentUriFactory={documentUriFactory}
-                />
-            ) : null}
-            {isReferencedOnSomeDashboard || isReferencedInSomeDocument ? null : (
-                <Message type="progress">
-                    <div className="gd-delete-report-dialog-no-usage">
-                        <FormattedMessage {...messages.notUsed} />
-                    </div>
-                </Message>
-            )}
+            {renderUsage(dashboardsCount, documentsCount, dashboardsList, documentsList)}
         </div>
+    );
+}
+
+function renderUsage(
+    dashboardsCount: number,
+    documentsCount: number,
+    dashboardsList: ReactNode,
+    documentsList: ReactNode,
+): ReactNode {
+    if (dashboardsCount > 0 && documentsCount > 0) {
+        return (
+            <UsageMessage
+                header={
+                    <FormattedMessage
+                        {...messages.dashboardsAndDocumentsUsage}
+                        values={{ count: dashboardsCount + documentsCount, strong }}
+                    />
+                }
+            >
+                <UsageGroup
+                    className="s-delete-report-dialog-usage-dashboards"
+                    title={
+                        <FormattedMessage {...messages.dashboardsGroup} values={{ count: dashboardsCount }} />
+                    }
+                >
+                    {dashboardsList}
+                </UsageGroup>
+                <UsageGroup
+                    className="s-delete-report-dialog-usage-documents"
+                    title={
+                        <FormattedMessage {...messages.documentsGroup} values={{ count: documentsCount }} />
+                    }
+                >
+                    {documentsList}
+                </UsageGroup>
+            </UsageMessage>
+        );
+    }
+    if (dashboardsCount > 0) {
+        return (
+            <UsageMessage
+                header={
+                    <FormattedMessage {...messages.dashboardsUsage} values={{ dashboardsCount, strong }} />
+                }
+            >
+                {dashboardsList}
+            </UsageMessage>
+        );
+    }
+    if (documentsCount > 0) {
+        return (
+            <UsageMessage
+                header={<FormattedMessage {...messages.documentsUsage} values={{ documentsCount, strong }} />}
+            >
+                {documentsList}
+            </UsageMessage>
+        );
+    }
+    return (
+        <Message type="progress">
+            <div className="gd-delete-report-dialog-no-usage">
+                <FormattedMessage {...messages.notUsed} />
+            </div>
+        </Message>
     );
 }

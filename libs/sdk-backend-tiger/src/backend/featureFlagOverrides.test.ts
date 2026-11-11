@@ -151,7 +151,6 @@ describe("resolveFeatureFlagOverrides", () => {
         const rules: FeatureFlagOverrideRule[] = [
             { flag: "enableRadarChart", value: true, organizationId: "other" },
             { flag: "enableMekkoChart", value: true, organizationId: "org", workspaceId: "other" },
-            { flag: "enableChangeAnalysis", value: true, userId: "other" },
             { flag: "aiChatSearchLimit", value: 5, userId: "user" },
         ];
 

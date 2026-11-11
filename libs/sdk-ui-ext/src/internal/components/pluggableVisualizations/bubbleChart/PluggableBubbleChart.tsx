@@ -1,10 +1,8 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set } from "lodash-es";
-
 import { type IInsightDefinition } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { BUCKETS, METRIC } from "../../../constants/bucket.js";
 import { BUBBLE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
@@ -127,7 +125,7 @@ export class PluggableBubbleChart extends PluggableBaseChart {
                       .filter((measure) => ![...measures, ...secondaryMeasures].includes(measure))
                       .slice(0, 1);
 
-        set(newReferencePoint, BUCKETS, [
+        _set(newReferencePoint, BUCKETS, [
             {
                 localIdentifier: BucketNames.MEASURES,
                 items: measures,

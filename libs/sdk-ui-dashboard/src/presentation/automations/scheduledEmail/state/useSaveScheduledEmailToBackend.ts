@@ -2,7 +2,6 @@
 
 import { useCallback, useRef, useState } from "react";
 
-import { omit } from "lodash-es";
 import { type IntlShape, useIntl } from "react-intl";
 
 import {
@@ -16,6 +15,7 @@ import {
     isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
+import { _omit } from "@gooddata/util";
 
 import { useScheduledEmailDialogContext } from "../../contexts/ScheduledEmailDialogContext.js";
 
@@ -137,7 +137,7 @@ function sanitizeAutomation(
     // We want to omit the cronDescription as it is a variable created on backend that cannot
     // be overriden and BE has hard time handling it with each PUT
     if (automation.schedule) {
-        automation.schedule = omit(automation.schedule, ["cronDescription"]);
+        automation.schedule = _omit(automation.schedule, ["cronDescription"]);
     }
 
     /**

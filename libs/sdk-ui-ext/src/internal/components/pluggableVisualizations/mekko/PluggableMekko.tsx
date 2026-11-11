@@ -1,7 +1,5 @@
 // (C) 2026 GoodData Corporation
 
-import { set } from "lodash-es";
-
 import { type IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
     type IInsightDefinition,
@@ -14,7 +12,7 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { type IChartConfig } from "@gooddata/sdk-ui-charts";
-import { _cloneDeep, _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty, _set } from "@gooddata/util";
 
 import { BUCKETS } from "../../../constants/bucket.js";
 import { MEKKO_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
@@ -47,15 +45,15 @@ function configurePercentStacking(referencePoint: IExtendedReferencePoint): IExt
     const hasHeight = !_isEmpty(getBucketItems(buckets, BucketNames.SECONDARY_MEASURES));
     const hasStack = !_isEmpty(getBucketItems(buckets, BucketNames.STACK));
 
-    set(
+    _set(
         referencePoint,
         ["uiConfig", "optionalStacking", "stackToPercentVisible"],
         hasStack && (hasWidth || hasHeight),
     );
 
     if (hasWidth && !hasHeight && hasStack) {
-        set(referencePoint, ["uiConfig", "optionalStacking", "disabled"], true);
-        set(referencePoint, ["uiConfig", "optionalStacking", "stackMeasuresToPercent"], true);
+        _set(referencePoint, ["uiConfig", "optionalStacking", "disabled"], true);
+        _set(referencePoint, ["uiConfig", "optionalStacking", "stackMeasuresToPercent"], true);
     }
 
     return referencePoint;

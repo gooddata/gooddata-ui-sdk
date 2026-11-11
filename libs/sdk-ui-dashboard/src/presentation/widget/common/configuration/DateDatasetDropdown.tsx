@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
-import { debounce } from "lodash-es";
 import { FormattedMessage, type MessageDescriptor, defineMessage, defineMessages, useIntl } from "react-intl";
 
 import { type ICatalogDateDataset, type ObjRef, objRefToString } from "@gooddata/sdk-model";
@@ -18,6 +17,7 @@ import {
     ScrollableItem,
     isDateDatasetHeader,
 } from "@gooddata/sdk-ui-kit";
+import { _debounce } from "@gooddata/util";
 
 import {
     getDateConfigurationDropdownHeight,
@@ -217,7 +217,7 @@ export function DateDatasetDropdown(props: IDateDatasetDropdownProps) {
     }, [sortedItems, intl, recalculateDimensions]);
 
     useEffect(() => {
-        const debouncedRecalculate = debounce(recalculateDimensions, EVENT_DEBOUNCE_MILLISECONDS);
+        const debouncedRecalculate = _debounce(recalculateDimensions, EVENT_DEBOUNCE_MILLISECONDS);
         window.addEventListener("resize", debouncedRecalculate);
         window.addEventListener("scroll", debouncedRecalculate, true);
 

@@ -1,10 +1,9 @@
 // (C) 2026 GoodData Corporation
 
-import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { BucketNames } from "@gooddata/sdk-ui";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { messages } from "../../../locales.js";
 import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket.js";
@@ -47,7 +46,7 @@ function setRadarChartBucketWarningMessages(referencePoint: IExtendedReferencePo
             }
 
             if (warningMessage) {
-                set(updatedUiConfig, [BUCKETS, localIdentifier, "warningMessage"], warningMessage);
+                _set(updatedUiConfig, [BUCKETS, localIdentifier, "warningMessage"], warningMessage);
             }
         }
     });
@@ -67,28 +66,28 @@ export function setRadarChartUiConfig(
     const segmentCanAddItems =
         hasSomeSegmentByItems(buckets) || hasNoMeasures(buckets) || hasOneMeasure(buckets);
 
-    set(referencePointConfigured, UICONFIG, setBucketTitles(referencePoint, visualizationType, intl));
-    set(
+    _set(referencePointConfigured, UICONFIG, setBucketTitles(referencePoint, visualizationType, intl));
+    _set(
         referencePointConfigured,
         [UICONFIG, BUCKETS, BucketNames.MEASURES, "canAddItems"],
         measuresCanAddItems,
     );
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.TREND, "canAddItems"], true);
-    set(
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.TREND, "canAddItems"], true);
+    _set(
         referencePointConfigured,
         [UICONFIG, BUCKETS, BucketNames.SEGMENT, "canAddItems"],
         segmentCanAddItems,
     );
-    set(
+    _set(
         referencePointConfigured,
         UICONFIG,
         setRadarChartBucketWarningMessages(referencePointConfigured, intl),
     );
-    set(referencePointConfigured, [UICONFIG, OPEN_AS_REPORT, SUPPORTED], false);
+    _set(referencePointConfigured, [UICONFIG, OPEN_AS_REPORT, SUPPORTED], false);
 
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], radarMeasuresIcon);
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.TREND, "icon"], radarTrendIcon);
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.SEGMENT, "icon"], radarSegmentIcon);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], radarMeasuresIcon);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.TREND, "icon"], radarTrendIcon);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.SEGMENT, "icon"], radarSegmentIcon);
 
     return referencePointConfigured;
 }

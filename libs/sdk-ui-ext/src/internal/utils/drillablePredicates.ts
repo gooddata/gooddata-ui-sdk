@@ -1,13 +1,12 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { uniq, uniqBy } from "lodash-es";
-
 import {
     type IDrillableItemsCommandBody,
     type IObjIdentifierQualifier,
     type ISimpleDrillableItemsCommandBody,
 } from "@gooddata/sdk-embedding";
 import { HeaderPredicates, type IHeaderPredicate } from "@gooddata/sdk-ui";
+import { _uniq, _uniqBy } from "@gooddata/util";
 
 type DrillableIdentifier = NonNullable<ISimpleDrillableItemsCommandBody["identifiers"]>[number];
 
@@ -20,7 +19,7 @@ const toQualifier = (identifier: DrillableIdentifier): IObjIdentifierQualifier =
  */
 const uniqueQualifiers = (identifiers: DrillableIdentifier[] | undefined): IObjIdentifierQualifier[] =>
     Array.isArray(identifiers)
-        ? uniqBy(identifiers.map(toQualifier), ({ identifier, type }) => `${type ?? ""}.${identifier}`)
+        ? _uniqBy(identifiers.map(toQualifier), ({ identifier, type }) => `${type ?? ""}.${identifier}`)
         : [];
 
 /**
@@ -39,11 +38,11 @@ export function convertPostMessageToDrillablePredicates({
     identifiers,
     composedFrom,
 }: IDrillableItemsCommandBody): IHeaderPredicate[] {
-    const simpleUris = Array.isArray(uris) ? uniq(uris) : [];
+    const simpleUris = Array.isArray(uris) ? _uniq(uris) : [];
     const simpleIdentifiers = uniqueQualifiers(identifiers);
 
     const composedFromUris =
-        composedFrom?.uris && Array.isArray(composedFrom.uris) ? uniq(composedFrom.uris) : [];
+        composedFrom?.uris && Array.isArray(composedFrom.uris) ? _uniq(composedFrom.uris) : [];
 
     const composedFromIdentifiers = uniqueQualifiers(composedFrom?.identifiers);
 

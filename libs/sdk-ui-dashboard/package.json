@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-dashboard",
-    "version": "11.68.0-alpha.8",
+    "version": "11.68.0-alpha.9",
     "description": "GoodData SDK - Dashboard Component",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
@@ -61,6 +61,7 @@
         "validate-theming": "npm run scss && node scripts/validateCss.js"
     },
     "dependencies": {
+        "@braintree/sanitize-url": "^6.0.0",
         "@codemirror/language": "6.12.1",
         "@date-fns/tz": "1.5.0",
         "@evil-internetmann/react-dnd": "16.2.1",

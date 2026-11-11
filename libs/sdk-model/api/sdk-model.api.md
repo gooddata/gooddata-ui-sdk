@@ -3981,7 +3981,6 @@ export interface IFeatureFlags {
     enableCatalogSmartSearchResults?: boolean;
     enableCatalogTrendingObjects?: boolean;
     enableCertification?: boolean;
-    enableChangeAnalysis?: boolean;
     enableCollapsibleLeftSidebar?: boolean;
     enableColumnLevelPermissions?: boolean;
     enableComputedAttributes?: boolean;

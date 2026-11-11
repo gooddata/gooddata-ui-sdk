@@ -1,9 +1,12 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/_variables" as button-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins" as mixins;
 
 $input-height: 28px;
+$label-tooltip-icon-gap: 5px;
+// xxsmall UiIconButton plus the gap before it
+$label-tooltip-icon-space: 14px + $label-tooltip-icon-gap;
 
 .gd-recipients-container.gd-input-component--invalid {
     .gd-recipients__control {
@@ -357,10 +360,18 @@ $input-height: 28px;
         min-width: 200px;
     }
 
+    // Inline flow keeps the help icon right after the last word when a long label wraps.
     &__content-container-tooltip {
-        display: flex;
-        align-items: center;
-        gap: 5px;
+        display: block;
+        padding-right: $label-tooltip-icon-space;
+    }
+
+    &__label-tooltip-icon {
+        display: inline-flex;
+        vertical-align: text-top;
+        margin-left: $label-tooltip-icon-gap;
+        // Zero net width, so the icon never wraps alone; it is drawn into the padding reserved above.
+        margin-right: -$label-tooltip-icon-space;
     }
 }
 

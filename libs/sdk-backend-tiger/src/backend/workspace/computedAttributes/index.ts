@@ -1,7 +1,5 @@
 // (C) 2026 GoodData Corporation
 
-import { uniqBy } from "lodash-es";
-
 import {
     type JsonApiUserDataFilterOutWithLinks,
     type JsonApiWorkspaceDataFilterOutWithLinks,
@@ -39,6 +37,7 @@ import {
     insightId,
     isIdentifierRef,
 } from "@gooddata/sdk-model";
+import { _uniqBy } from "@gooddata/util";
 
 import { convertComputedAttributeFromBackend } from "../../../convertors/fromBackend/ComputedAttributeConverter.js";
 import { visualizationObjectsItemToInsight } from "../../../convertors/fromBackend/InsightConverter.js";
@@ -280,7 +279,7 @@ export class TigerWorkspaceComputedAttributes implements IWorkspaceComputedAttri
             })
                 .then(MetadataUtilities.mergeEntitiesResults)
                 .then((dashboards) =>
-                    uniqBy(
+                    _uniqBy(
                         dashboards.data.map((dashboard) => convertAnalyticalDashboardWithLinks(dashboard)),
                         (dashboard) => dashboard.id,
                     ),

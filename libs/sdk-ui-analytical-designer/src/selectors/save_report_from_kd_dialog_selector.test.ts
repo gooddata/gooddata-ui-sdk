@@ -36,8 +36,15 @@ describe("save_report_from_kd_dialog_selector", () => {
     it("should allow creating a copy only with the right to create visualizations", () => {
         const [withCreate, withoutCreate] = [true, false].map(
             (canCreate) =>
-                saveReportFromKDDialogSelector.resultFunc(undefined, true, "title", false, false, canCreate)
-                    .canCreateCopy,
+                saveReportFromKDDialogSelector.resultFunc(
+                    undefined,
+                    true,
+                    "title",
+                    false,
+                    false,
+                    canCreate,
+                    [],
+                ).canCreateCopy,
         );
         expect(withCreate).toBe(true);
         expect(withoutCreate).toBe(false);

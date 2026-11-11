@@ -1,9 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set } from "lodash-es";
-
 import { BucketNames } from "@gooddata/sdk-ui";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { BUCKETS } from "../../constants/bucket.js";
 import { UICONFIG, disabledOpenAsReportConfig } from "../../constants/uiConfig.js";
@@ -20,8 +18,8 @@ export function setDonutChartUiConfig(referencePoint: IExtendedReferencePoint): 
 
     Object.assign(referencePointConfigured[UICONFIG]!, disabledOpenAsReportConfig);
 
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], donutMeasuresIcon);
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "icon"], donutViewIcon);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], donutMeasuresIcon);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "icon"], donutViewIcon);
 
     return referencePointConfigured;
 }

@@ -1,9 +1,9 @@
 // (C) 2026 GoodData Corporation
 
-import { uniq, uniqWith } from "lodash-es";
+import { uniqWith } from "lodash-es";
 
 import { type ITotal, type TotalType } from "@gooddata/sdk-model";
-import { _isEqual } from "@gooddata/util";
+import { _isEqual, _uniq } from "@gooddata/util";
 
 /**
  * When a measure is dropped into a bucket, it inherits every total that is currently enabled for
@@ -56,7 +56,7 @@ function isTotalEnabledForAllMeasures(
 ): boolean {
     const matchingTotals = totals.filter((total: ITotal) => isMatchingTotal(total, testedTotal));
     const measuresWithMatchingTotal = matchingTotals.map((total: ITotal) => total.measureIdentifier);
-    const distinctMeasuresWithMatchingTotal = uniq(measuresWithMatchingTotal);
+    const distinctMeasuresWithMatchingTotal = _uniq(measuresWithMatchingTotal);
 
     return (
         filterValidMeasures(distinctMeasuresWithMatchingTotal, previousMeasureLocalIdentifiers).length ===

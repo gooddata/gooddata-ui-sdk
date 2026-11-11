@@ -2,13 +2,13 @@
 
 // @vitest-environment node
 
-import { range } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { type IColorMapping, type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import { _range } from "@gooddata/util";
 
 import { recordedDataFacade } from "../../../testUtils/recordings.fixture.js";
 import { ColorFactory } from "../_chartOptions/colorFactory.js";
@@ -53,7 +53,7 @@ describe("ScatterPlotColorStrategy", () => {
 
         expect(colorStrategy).toBeInstanceOf(ScatterPlotColorStrategy);
         expect(colorStrategy.getColorAssignment().length).toEqual(1);
-        range(1).map((itemIndex) => {
+        _range(1).map((itemIndex) => {
             expect(colorStrategy.getColorByIndex(itemIndex)).toEqual(expectedColor);
         });
     });
@@ -80,7 +80,7 @@ describe("ScatterPlotColorStrategy", () => {
 
         expect(colorStrategy).toBeInstanceOf(ScatterPlotColorStrategy);
         expect(colorStrategy.getColorAssignment().length).toEqual(20);
-        range(20).map((itemIndex) => {
+        _range(20).map((itemIndex) => {
             expect(colorStrategy.getColorByIndex(itemIndex)).toMatchSnapshot();
         });
     });

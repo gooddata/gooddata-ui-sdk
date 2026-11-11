@@ -9,6 +9,7 @@ import { matchesSearchQuery } from "../@utils/matchesSearchQuery.js";
 import { type IUiDropdownButtonRenderProps } from "../UiDropdown/types.js";
 import { UiDropdown } from "../UiDropdown/UiDropdown.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
+import { getUiListboxItemFullTitle } from "../UiListbox/itemTitle.js";
 import { type IUiListboxInteractiveItem, type IUiListboxItem } from "../UiListbox/types.js";
 import { getNextFocusableItemId } from "../UiListbox/UiListbox.js";
 import { UiDialogHeader } from "../UiModalDialog/UiDialogHeader.js";
@@ -17,6 +18,7 @@ import { UiModalDialog } from "../UiModalDialog/UiModalDialog.js";
 import { e } from "./searchableSelectBem.js";
 import { UiSearchableSelectContext } from "./UiSearchableSelectContext.js";
 import { UiSearchableSelectDivider } from "./UiSearchableSelectDivider.js";
+import { hasUiSearchableSelectFooter } from "./UiSearchableSelectFooter.js";
 import { getUiSearchableSelectItemDescriptor } from "./UiSearchableSelectItem.js";
 import { findUiSearchableSelectListRenderItem } from "./UiSearchableSelectList.js";
 
@@ -85,6 +87,7 @@ export function UiSearchableSelect<T>({
     const buttonId = useId();
     const valueId = useId();
     const listboxId = useId();
+    const footerId = useId();
     const [query, setQuery] = useState("");
 
     const renderItem = findUiSearchableSelectListRenderItem(children);
@@ -167,7 +170,7 @@ export function UiSearchableSelect<T>({
             aria-labelledby={`${valueId} ${accessibilityConfig.ariaLabelledBy ?? buttonId}`}
         >
             <span id={valueId} className={e("button-title")}>
-                {selectedItem?.stringTitle ?? placeholder}
+                {selectedItem ? getUiListboxItemFullTitle(selectedItem) : placeholder}
             </span>
             <div className={e("button-icon")}>
                 <UiIcon type={isOpen ? "navigateUp" : "navigateDown"} size={14} disableAnimation />
@@ -196,6 +199,7 @@ export function UiSearchableSelect<T>({
                 shouldCloseOnSelect,
                 searchInputRef,
                 isFullscreen,
+                footerId: hasUiSearchableSelectFooter(children) ? footerId : undefined,
             }}
         >
             <div className={e("body", { isFullscreen })} {...bodyAttributes}>

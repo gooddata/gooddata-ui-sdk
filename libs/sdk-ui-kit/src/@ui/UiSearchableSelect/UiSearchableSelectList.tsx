@@ -4,6 +4,7 @@ import { Fragment, type ReactNode, isValidElement } from "react";
 
 import { defineMessages, useIntl } from "react-intl";
 
+import { getUiListboxItemFullTitle } from "../UiListbox/itemTitle.js";
 import { type IUiListboxInteractiveItem } from "../UiListbox/types.js";
 import { UiListbox } from "../UiListbox/UiListbox.js";
 import { UiSearchResultsAnnouncement } from "../UiSearchResultsAnnouncement/UiSearchResultsAnnouncement.js";
@@ -56,7 +57,7 @@ export function UiSearchableSelectList<T>({ noItemsText }: IUiSearchableSelectLi
         <>
             <UiSearchResultsAnnouncement
                 totalResults={query ? options.length : undefined}
-                resultValues={options.map((option) => option.stringTitle)}
+                resultValues={options.map(getUiListboxItemFullTitle)}
                 noResultsText={noItemsMessage}
             />
 

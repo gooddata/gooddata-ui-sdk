@@ -4,7 +4,7 @@
 
 import { type MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
 
-import { debounce, difference, differenceBy } from "lodash-es";
+import { difference, differenceBy } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { type IAnalyticalBackend, type IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
@@ -35,7 +35,7 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError, UnexpectedSdkError } from "@gooddata/sdk-ui";
-import { _isEmpty, _isEqual } from "@gooddata/util";
+import { _debounce, _isEmpty, _isEqual } from "@gooddata/util";
 
 import { type IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler/types/attributeFilterHandler.js";
 import { type OnApplyCallbackType, type OnChangeCallbackType } from "../types.js";
@@ -873,7 +873,7 @@ function useCallbacks(
     // Rule is not working with debounce
     // oxlint-disable-next-line react-hooks/exhaustive-deps
     const onSearch = useCallback(
-        debounce((search: string) => {
+        _debounce((search: string) => {
             if (handler.getSearch() !== search) {
                 handler.setSearch(search);
                 handler.loadInitialElementsPage(SEARCH_CORRELATION);

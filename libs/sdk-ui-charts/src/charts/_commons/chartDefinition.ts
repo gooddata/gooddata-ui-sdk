@@ -1,10 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { omit } from "lodash-es";
-
 import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { type IBucket } from "@gooddata/sdk-model";
 import { type ITooltipExecution, buildTooltipExecutionFromConfig } from "@gooddata/sdk-ui-vis-commons";
+import { _omit } from "@gooddata/util";
 
 import { type IChartConfig } from "../../interfaces/chartConfig.js";
 import { type IBucketChartProps, type ICoreChartProps } from "../../interfaces/chartProps.js";
@@ -63,7 +62,7 @@ export const getCoreChartProps =
 
         const buckets = chart.bucketsFactory(propsToUse);
         const execution = chart.executionFactory(propsToUse, buckets);
-        const nonBucketProps = omit(propsToUse, chart.bucketPropsKeys);
+        const nonBucketProps = _omit(propsToUse, chart.bucketPropsKeys);
         const propOverrides = chart.propOverridesFactory
             ? chart.propOverridesFactory(propsToUse, buckets)
             : {};
@@ -82,7 +81,7 @@ export const getCoreChartProps =
             execution,
         );
 
-        return omit({ ...coreChartProps, tooltipExecution }, NON_CORE_PROPS);
+        return _omit({ ...coreChartProps, tooltipExecution }, NON_CORE_PROPS);
     };
 
 /**

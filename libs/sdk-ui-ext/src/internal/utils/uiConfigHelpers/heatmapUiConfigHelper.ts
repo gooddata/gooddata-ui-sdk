@@ -1,10 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { BucketNames } from "@gooddata/sdk-ui";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { BUCKETS } from "../../constants/bucket.js";
 import { UICONFIG } from "../../constants/uiConfig.js";
@@ -25,11 +24,11 @@ export function setHeatmapUiConfig(
 ): IExtendedReferencePoint {
     const referencePointConfigured = _cloneDeep(referencePoint);
 
-    set(referencePointConfigured, [UICONFIG], setBucketTitles(referencePoint, visualizationType, intl));
+    _set(referencePointConfigured, [UICONFIG], setBucketTitles(referencePoint, visualizationType, intl));
 
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], heatmapMeasuresIcon);
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "icon"], heatmapViewIcon);
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.STACK, "icon"], heatmapStackIcon);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], heatmapMeasuresIcon);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "icon"], heatmapViewIcon);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.STACK, "icon"], heatmapStackIcon);
 
     return referencePointConfigured;
 }

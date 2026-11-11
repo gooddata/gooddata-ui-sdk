@@ -369,6 +369,7 @@ describe("Open report sagas", () => {
                 const duration = 25;
                 const state: IAppState = buildInitialState();
                 const analyticalDashboards = [createAnalyticalDashboard("Sales", "Bee", 123)];
+                const documents = [createAnalyticalDashboard("Board pack", "doc1", 456)];
 
                 const saga: RunResult = await expectSaga(fetchReport, projectId, reportId)
                     .provide([
@@ -382,7 +383,10 @@ describe("Open report sagas", () => {
                         [select(enableAnalyticalDesignerCatalogSideload), false],
                         [call(getStartTime), startTime],
                         [call(getInsight, projectId, reportId, false), { insight: dummyInsight }],
-                        [call(getObjectsReferencing, projectId, dummyInsight), analyticalDashboards],
+                        [
+                            call(getObjectsReferencing, projectId, dummyInsight),
+                            { dashboards: analyticalDashboards, documents },
+                        ],
                         [call(getItemCacheItems, dummyInsight, state), loadedItems],
                         [
                             call(restoreInsightParameterFilters, dummyInsight),
@@ -413,7 +417,7 @@ describe("Open report sagas", () => {
 
                 expect(saga.effects.put).toEqual([
                     put(openReportStarted(projectId, reportId)),
-                    put(updateInsightUsageOnDashboards(analyticalDashboards, publicDashboards)),
+                    put(updateInsightUsageOnDashboards(analyticalDashboards, publicDashboards, documents)),
                     put(storeAppliedChartSort(dummySorts)),
                     put(
                         openReportFinished(
@@ -433,6 +437,7 @@ describe("Open report sagas", () => {
             const duration = 25;
             const state: IAppState = buildInitialState();
             const analyticalDashboards = [createAnalyticalDashboard("Sales", "Bee", 123)];
+            const documents = [createAnalyticalDashboard("Board pack", "doc1", 456)];
             const catalogItems: Array<ICatalogFact | ICatalogMeasure | ICatalogAttribute> = [];
 
             const saga: RunResult = await expectSaga(fetchReport, projectId, reportId)
@@ -448,7 +453,10 @@ describe("Open report sagas", () => {
                     [call(getStartTime), startTime],
                     [call(getInsight, projectId, reportId, true), { insight: dummyInsight, catalogItems }],
                     [call(updateCatalogWithExtras, { catalogItems }), {}],
-                    [call(getObjectsReferencing, projectId, dummyInsight), analyticalDashboards],
+                    [
+                        call(getObjectsReferencing, projectId, dummyInsight),
+                        { dashboards: analyticalDashboards, documents },
+                    ],
                     [call(getItemCacheItems, dummyInsight, state), loadedItems],
                     [call(restoreInsightParameterFilters, dummyInsight), { filters: [], warnings: [] }],
                     [call(getDuration, startTime), duration],
@@ -471,7 +479,7 @@ describe("Open report sagas", () => {
 
             expect(saga.effects.put).toEqual([
                 put(openReportStarted(projectId, reportId)),
-                put(updateInsightUsageOnDashboards(analyticalDashboards, publicDashboards)),
+                put(updateInsightUsageOnDashboards(analyticalDashboards, publicDashboards, documents)),
                 put(storeAppliedChartSort(dummySorts)),
                 put(
                     openReportFinished(
@@ -502,7 +510,10 @@ describe("Open report sagas", () => {
                     [select(enableAnalyticalDesignerCatalogSideload), false],
                     [call(getStartTime), 10],
                     [call(getInsight, projectId, reportId, false), { insight: orphanedDateFilterInsight }],
-                    [call(getObjectsReferencing, projectId, orphanedDateFilterInsight), []],
+                    [
+                        call(getObjectsReferencing, projectId, orphanedDateFilterInsight),
+                        { dashboards: [], documents: [] },
+                    ],
                     [call(selectOpenReportFailureReset), stubFailureReset],
                 ])
                 .run();

@@ -1,9 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { range } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { type IPagedResource } from "@gooddata/sdk-backend-spi";
+import { _range } from "@gooddata/util";
 
 /**
  * This implementation of {@link @gooddata/sdk-backend-spi#IPagedResource} pages over a list of items
@@ -177,7 +177,7 @@ export class ServerPaging<T> implements IPagedResource<T> {
     public all = async (): Promise<T[]> => {
         const results: T[] = [];
         const maxRequests = 6;
-        const allPagesToLoad = range(0, this.totalCount / this.limit);
+        const allPagesToLoad = _range(0, this.totalCount / this.limit);
 
         // if the paged resource is already at the 0 offset, use it directly to save a duplicate request
         if (this.offset === 0) {

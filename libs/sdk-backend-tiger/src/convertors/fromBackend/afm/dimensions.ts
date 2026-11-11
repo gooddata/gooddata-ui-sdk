@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { groupBy, keyBy, mapValues, uniqBy } from "lodash-es";
+import { keyBy, mapValues } from "lodash-es";
 
 import { type RestApiIdentifier, type ResultDimension, isAttributeHeader } from "@gooddata/api-client-tiger";
 import {
@@ -17,6 +17,7 @@ import {
     measureItem,
     measureLocalId,
 } from "@gooddata/sdk-model";
+import { _groupBy, _uniqBy } from "@gooddata/util";
 
 import { attributeNumberFormat } from "../attributeNumberFormat.js";
 import { convertLabelType } from "../LabelTypeConverter.js";
@@ -130,9 +131,11 @@ function transformDimension(
  */
 function getAttrTotals(def: IExecutionDefinition): AttrTotals {
     const attrTotals: AttrTotals[] = def.dimensions.map((dim) => {
-        const totalsByAttrId = groupBy(dim.totals ?? [], (total) => total.attributeIdentifier);
+        const totalsByAttrId = _groupBy(dim.totals ?? [], (total) => total.attributeIdentifier);
         return mapValues(totalsByAttrId, (totals) =>
-            uniqBy(totals, (total) => total.type).map((total) => ({ totalHeaderItem: { name: total.type } })),
+            _uniqBy(totals, (total) => total.type).map((total) => ({
+                totalHeaderItem: { name: total.type },
+            })),
         );
     });
     return Object.assign({}, ...attrTotals);

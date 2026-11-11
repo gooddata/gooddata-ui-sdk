@@ -1,12 +1,11 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { omit } from "lodash-es";
 import { defineMessages } from "react-intl";
 import { call, put, select, take, takeEvery } from "redux-saga/effects";
 
 import { type IWorkspaceCatalog } from "@gooddata/sdk-backend-spi";
 import { isCatalogMeasure } from "@gooddata/sdk-model";
-import { _isEmpty, _isEqual } from "@gooddata/util";
+import { _isEmpty, _isEqual, _omit } from "@gooddata/util";
 
 import { removeBucketItemsByLocalIds } from "../../actions/buckets_actions.js";
 import { createLeaveAnywayButtonClickedAction } from "../../actions/confirm_unsaved_changes_actions.js";
@@ -138,7 +137,7 @@ function* handleMetricSave(action: IMetricEditorMetricSaveAction) {
     const metricIdChanged = !_isEmpty(oldMetricId) && metric.id !== oldMetricId;
     yield call(logCreateOrEditMetric, { state, mode });
 
-    if (!_isEqual(omit(metric, ["uri"]), omit(info.previousMetric, ["uri"]))) {
+    if (!_isEqual(_omit(metric, ["uri"]), _omit(info.previousMetric, ["uri"]))) {
         yield put(
             addMessage({
                 type: "success",

@@ -1,7 +1,8 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import cx from "classnames";
-import { range } from "lodash-es";
+
+import { _range } from "@gooddata/util";
 
 /**
  * @internal
@@ -18,7 +19,7 @@ const DOT_COUNT = 3; // the same as $loading-dots-count in loadingDots.scsss
 export function LoadingDots({ className }: ILoadingDotsProps) {
     return (
         <div className={cx("gd-loading-dots", className)}>
-            {range(1, DOT_COUNT + 1).map((index) => (
+            {_range(1, DOT_COUNT + 1).map((index) => (
                 <div key={index} className={`gd-loading-dots-${index}`} />
             ))}
         </div>

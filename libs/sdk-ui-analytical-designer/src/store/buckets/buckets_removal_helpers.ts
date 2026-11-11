@@ -1,8 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { uniq } from "lodash-es";
-
 import { type ObjRef } from "@gooddata/sdk-model";
+import { _uniq } from "@gooddata/util";
 
 import { isArithmeticMeasure, isDerived, isMeasure } from "../../models/bucket_item.js";
 import { type IRawBucketItem, type IRawBuckets } from "../../typings/buckets.js";
@@ -135,7 +134,7 @@ export function getAllDependantBucketItems(buckets: IRawBuckets, localIdentifier
         bucketItem,
     ) as IRawBucketItem[];
 
-    return uniq(
+    return _uniq(
         [...derivedBucketItems, ...referencingArithmeticMeasures].flatMap((dependant: IRawBucketItem) => [
             dependant.localIdentifier,
             ...getAllDependantBucketItems(buckets, dependant.localIdentifier),
@@ -437,7 +436,7 @@ function findFiltersToRemove(
         getAllDependantFilters(filterBar, buckets, bucketsMeta, localIdentifier, improvedRankingFilter),
     );
 
-    return uniq([...invalidFiltersWithMissingDependency, ...invalidFiltersFromNoLongerSlicedInsight]);
+    return _uniq([...invalidFiltersWithMissingDependency, ...invalidFiltersFromNoLongerSlicedInsight]);
 }
 
 // --- telling the user what disappeared -------------------------------------------------------------
@@ -493,7 +492,7 @@ export function removeBucketItemsWithDependencies(
     const invalidArithmeticMeasuresToRemove = localIdentifiers.flatMap((localIdentifier) =>
         findInvalidArithmeticMeasuresForRemoval(buckets, localIdentifier),
     );
-    const bucketItemsToRemove = uniq([
+    const bucketItemsToRemove = _uniq([
         ...localIdentifiers,
         ...dependantBucketItemsToRemove,
         ...invalidArithmeticMeasuresToRemove,

@@ -4,11 +4,38 @@
 
 ```ts
 
+// @internal (undocumented)
+export type _ArrayIterator<T, TResult> = (value: T, index: number, collection: T[]) => TResult;
+
+// @internal
+export function _assignIn<TObject, TSource>(object: TObject, source: TSource): TObject & TSource;
+
+// @internal (undocumented)
+export function _assignIn<TObject, TSource1, TSource2>(object: TObject, source1: TSource1, source2: TSource2): TObject & TSource1 & TSource2;
+
+// @internal (undocumented)
+export function _assignIn<TObject, TSource1, TSource2, TSource3>(object: TObject, source1: TSource1, source2: TSource2, source3: TSource3): TObject & TSource1 & TSource2 & TSource3;
+
+// @internal (undocumented)
+export function _assignIn<TObject, TSource1, TSource2, TSource3, TSource4>(object: TObject, source1: TSource1, source2: TSource2, source3: TSource3, source4: TSource4): TObject & TSource1 & TSource2 & TSource3 & TSource4;
+
+// @internal (undocumented)
+export function _assignIn<TObject>(object: TObject): TObject;
+
+// @internal (undocumented)
+export function _assignIn<TResult>(object: any, ...otherArgs: any[]): TResult;
+
+// @internal
+export function _bindAll<T>(object: T, ...methodNames: _Many<string>[]): T;
+
 // @internal
 export const _camelCase: (string?: string) => string;
 
 // @internal
 export function _capitalize(string?: string): string;
+
+// @internal
+export function _chunk<T>(array: _List<T> | null | undefined, size?: number, guard?: unknown): T[][];
 
 // @internal
 export function _clamp(number: number, lower: number, upper: number): number;
@@ -17,7 +44,19 @@ export function _clamp(number: number, lower: number, upper: number): number;
 export function _clamp(number: number, upper: number): number;
 
 // @internal
+export function _clone<T>(value: T): T;
+
+// @internal
 export function _cloneDeep<T>(value: T): T;
+
+// @internal
+export function _cloneDeepWith<T>(value: T, customizer: _CloneDeepWithCustomizer<T>): any;
+
+// @internal (undocumented)
+export function _cloneDeepWith<T>(value: T): T;
+
+// @internal
+export type _CloneDeepWithCustomizer<TObject> = (value: any, key: number | string | undefined, object: TObject | undefined, stack: any) => any;
 
 // @internal
 export function combineGuards<T extends ((x: unknown) => x is unknown)[]>(...guards: T): (x: unknown) => x is GuardType<T[number]>;
@@ -28,11 +67,17 @@ export function _compact<T>(array: _List<T | _Falsey> | null | undefined): T[];
 // @internal (undocumented)
 export type _Comparator<T> = (a: T, b: T) => boolean;
 
+// @internal (undocumented)
+export type _Comparator2<T1, T2> = (a: T1, b: T2) => boolean;
+
 // @internal
 export type ConsoleFunction = (...data: any[]) => void;
 
 // @internal
 export type ConsoleType = "error" | "warn" | "log" | "debug" | "info";
+
+// @internal
+export function _constant<T>(value: T): () => T;
 
 // @internal
 export function createTightWaitFor(waitFor: WaitForFn, interval?: number): <T>(callback: () => T | Promise<T>) => Promise<T>;
@@ -69,6 +114,27 @@ export type _DebounceSettingsLeading = _DebounceSettings & {
 };
 
 // @internal
+export function _deburr(string?: string): string;
+
+// @internal
+export function _defaults<TObject, TSource>(object: TObject, source: TSource): NonNullable<TSource & TObject>;
+
+// @internal (undocumented)
+export function _defaults<TObject, TSource1, TSource2>(object: TObject, source1: TSource1, source2: TSource2): NonNullable<TSource2 & TSource1 & TObject>;
+
+// @internal (undocumented)
+export function _defaults<TObject, TSource1, TSource2, TSource3>(object: TObject, source1: TSource1, source2: TSource2, source3: TSource3): NonNullable<TSource3 & TSource2 & TSource1 & TObject>;
+
+// @internal (undocumented)
+export function _defaults<TObject, TSource1, TSource2, TSource3, TSource4>(object: TObject, source1: TSource1, source2: TSource2, source3: TSource3, source4: TSource4): NonNullable<TSource4 & TSource3 & TSource2 & TSource1 & TObject>;
+
+// @internal (undocumented)
+export function _defaults<TObject>(object: TObject): NonNullable<TObject>;
+
+// @internal (undocumented)
+export function _defaults(object: any, ...sources: any[]): any;
+
+// @internal
 export function delay(timeout?: number): Promise<void>;
 
 // @internal (undocumented)
@@ -100,6 +166,21 @@ export function _differenceBy<T1, T2, T3, T4, T5, T6, T7>(array: _List<T1> | nul
 // @internal (undocumented)
 export function _differenceBy<T>(array: _List<T> | null | undefined, ...values: _List<T>[]): T[];
 
+// @internal
+export function _differenceWith<T1, T2>(array: _List<T1> | null | undefined, values: _List<T2>, comparator: _Comparator2<T1, T2>): T1[];
+
+// @internal (undocumented)
+export function _differenceWith<T1, T2, T3>(array: _List<T1> | null | undefined, values1: _List<T2>, values2: _List<T3>, comparator: _Comparator2<T1, T2 | T3>): T1[];
+
+// @internal (undocumented)
+export function _differenceWith<T1, T2, T3, T4>(array: _List<T1> | null | undefined, values1: _List<T2>, values2: _List<T3>, ...values: (_List<T4> | _Comparator2<T1, T2 | T3 | T4>)[]): T1[];
+
+// @internal (undocumented)
+export function _differenceWith<T>(array: _List<T> | null | undefined, ...values: _List<T>[]): T[];
+
+// @internal
+export function _dropRightWhile<T>(array: _List<T> | null | undefined, predicate?: _ListIteratee<T>): T[];
+
 // @internal (undocumented)
 export type EmptyObject = Record<never, never>;
 
@@ -117,8 +198,17 @@ export function _escape(string?: string): string;
 // @internal
 export function escapeRegExp(value: string): string;
 
+// @internal
+export function _escapeRegExp(string?: string): string;
+
 // @internal (undocumented)
 export type _Falsey = null | undefined | false | "" | 0 | 0n;
+
+// @internal
+export function _findKey<T>(object: T | null | undefined, predicate?: _ObjectIteratee<T>): string | undefined;
+
+// @internal
+export function _findLastIndex<T>(array: _List<T> | null | undefined, predicate?: _ListIterateeCustom<T, boolean>, fromIndex?: number): number;
 
 // @internal (undocumented)
 export type _Function0<R> = () => R;
@@ -134,6 +224,54 @@ export type _Function3<T1, T2, T3, R> = (t1: T1, t2: T2, t3: T3) => R;
 
 // @internal (undocumented)
 export type _Function4<T1, T2, T3, T4, R> = (t1: T1, t2: T2, t3: T3, t4: T4) => R;
+
+// @internal
+export function _get<TObject extends object, TKey extends keyof TObject>(object: TObject, path: TKey | [TKey]): TObject[TKey];
+
+// @internal (undocumented)
+export function _get<TObject extends object, TKey extends keyof TObject>(object: TObject | null | undefined, path: TKey | [TKey]): TObject[TKey] | undefined;
+
+// @internal (undocumented)
+export function _get<TObject extends object, TKey extends keyof TObject, TDefault>(object: TObject | null | undefined, path: TKey | [TKey], defaultValue: TDefault): Exclude<TObject[TKey], undefined> | TDefault;
+
+// @internal (undocumented)
+export function _get<TObject extends object, TKey1 extends keyof TObject, TKey2 extends keyof TObject[TKey1]>(object: TObject, path: [TKey1, TKey2]): TObject[TKey1][TKey2];
+
+// @internal (undocumented)
+export function _get<TObject extends object, TKey1 extends keyof TObject, TKey2 extends keyof NonNullable<TObject[TKey1]>>(object: TObject | null | undefined, path: [TKey1, TKey2]): NonNullable<TObject[TKey1]>[TKey2] | undefined;
+
+// @internal (undocumented)
+export function _get<TObject extends object, TKey1 extends keyof TObject, TKey2 extends keyof NonNullable<TObject[TKey1]>, TDefault>(object: TObject | null | undefined, path: [TKey1, TKey2], defaultValue: TDefault): Exclude<NonNullable<TObject[TKey1]>[TKey2], undefined> | TDefault;
+
+// @internal (undocumented)
+export function _get<TObject extends object, TKey1 extends keyof TObject, TKey2 extends keyof TObject[TKey1], TKey3 extends keyof TObject[TKey1][TKey2]>(object: TObject, path: [TKey1, TKey2, TKey3]): TObject[TKey1][TKey2][TKey3];
+
+// @internal (undocumented)
+export function _get<TObject extends object, TKey1 extends keyof TObject, TKey2 extends keyof NonNullable<TObject[TKey1]>, TKey3 extends keyof NonNullable<NonNullable<TObject[TKey1]>[TKey2]>>(object: TObject | null | undefined, path: [TKey1, TKey2, TKey3]): NonNullable<NonNullable<TObject[TKey1]>[TKey2]>[TKey3] | undefined;
+
+// @internal (undocumented)
+export function _get<TObject extends object, TKey1 extends keyof TObject, TKey2 extends keyof NonNullable<TObject[TKey1]>, TKey3 extends keyof NonNullable<NonNullable<TObject[TKey1]>[TKey2]>, TDefault>(object: TObject | null | undefined, path: [TKey1, TKey2, TKey3], defaultValue: TDefault): Exclude<NonNullable<NonNullable<TObject[TKey1]>[TKey2]>[TKey3], undefined> | TDefault;
+
+// @internal (undocumented)
+export function _get<TObject extends object, TKey1 extends keyof TObject, TKey2 extends keyof TObject[TKey1], TKey3 extends keyof TObject[TKey1][TKey2], TKey4 extends keyof TObject[TKey1][TKey2][TKey3]>(object: TObject, path: [TKey1, TKey2, TKey3, TKey4]): TObject[TKey1][TKey2][TKey3][TKey4];
+
+// @internal (undocumented)
+export function _get<T>(object: _NumericDictionary<T>, path: number): T;
+
+// @internal (undocumented)
+export function _get<T>(object: _NumericDictionary<T> | null | undefined, path: number): T | undefined;
+
+// @internal (undocumented)
+export function _get<T, TDefault>(object: _NumericDictionary<T> | null | undefined, path: number, defaultValue: TDefault): T | TDefault;
+
+// @internal (undocumented)
+export function _get<TDefault>(object: null | undefined, path: _PropertyPath, defaultValue: TDefault): TDefault;
+
+// @internal (undocumented)
+export function _get(object: null | undefined, path: _PropertyPath): undefined;
+
+// @internal (undocumented)
+export function _get(object: any, path: _PropertyPath, defaultValue?: any): any;
 
 // @internal
 export function _groupBy<T>(collection: _List<T> | null | undefined, iteratee?: _ValueIteratee<T>): _Dictionary<T[]>;
@@ -158,6 +296,45 @@ export function _has<T>(object: T, path: _PropertyPath): boolean;
 export function hashCodeString(value: string): number;
 
 // @internal
+export function _initial<T>(array: _List<T> | null | undefined): T[];
+
+// @internal
+export function _inRange(number: number, start: number, end?: number): boolean;
+
+// @internal
+export function _intersection<T>(...arrays: (_List<T> | null | undefined)[]): T[];
+
+// @internal
+export function _intersectionBy<T1, T2>(array: _List<T1> | null, values: _List<T2>, iteratee: _ValueIteratee<T1 | T2>): T1[];
+
+// @internal (undocumented)
+export function _intersectionBy<T1, T2, T3>(array: _List<T1> | null, values1: _List<T2>, values2: _List<T3>, iteratee: _ValueIteratee<T1 | T2 | T3>): T1[];
+
+// @internal (undocumented)
+export function _intersectionBy<T1, T2, T3, T4>(array: _List<T1> | null | undefined, values1: _List<T2>, values2: _List<T3>, ...values: (_List<T4> | _ValueIteratee<T1 | T2 | T3 | T4>)[]): T1[];
+
+// @internal (undocumented)
+export function _intersectionBy<T>(array?: _List<T> | null, ...values: _List<T>[]): T[];
+
+// @internal (undocumented)
+export function _intersectionBy<T>(...values: (_List<T> | _ValueIteratee<T>)[]): T[];
+
+// @internal
+export function _intersectionWith<T1, T2>(array: _List<T1> | null | undefined, values: _List<T2>, comparator: _Comparator2<T1, T1 | T2>): T1[];
+
+// @internal (undocumented)
+export function _intersectionWith<T1, T2, T3>(array: _List<T1> | null | undefined, values1: _List<T2>, values2: _List<T3>, comparator: _Comparator2<T1, T1 | T2 | T3>): T1[];
+
+// @internal (undocumented)
+export function _intersectionWith<T1, T2, T3, T4>(array: _List<T1> | null | undefined, values1: _List<T2>, values2: _List<T3>, ...values: (_List<T4> | _Comparator2<T1, T1 | T2 | T3 | T4>)[]): T1[];
+
+// @internal (undocumented)
+export function _intersectionWith<T>(array?: _List<T> | null, ...values: (_List<T> | _Comparator<T>)[]): T[];
+
+// @internal
+export function _invert(object: object): _Dictionary<string>;
+
+// @internal
 export function _isEmpty<T extends {
     __trapAny: any;
 }>(value?: T): boolean;
@@ -179,6 +356,9 @@ export function _isEmpty(value?: any): boolean;
 
 // @internal
 export function _isEqual(value: unknown, other: unknown): boolean;
+
+// @internal
+export function _isError(value: unknown): value is Error;
 
 // @internal (undocumented)
 export interface IShortenTextOptions {
@@ -208,6 +388,9 @@ export type _List<T> = ArrayLike<T>;
 export type _ListIteratee<T> = _ListIterator<T, _NotVoid> | _IterateeShorthand<T>;
 
 // @internal (undocumented)
+export type _ListIterateeCustom<T, TResult> = _ListIterator<T, TResult> | _IterateeShorthand<T>;
+
+// @internal (undocumented)
 export type _ListIterator<T, TResult> = (value: T, index: number, collection: _List<T>) => TResult;
 
 // @internal (undocumented)
@@ -226,6 +409,48 @@ export type _MapCache = {
 export type _MapCacheConstructor = new () => _MapCache;
 
 // @internal
+export function _mapValues<TResult>(obj: string | null | undefined, callback: _StringIterator<TResult>): _NumericDictionary<TResult>;
+
+// @internal (undocumented)
+export function _mapValues<T, TResult>(array: T[], callback: _ArrayIterator<T, TResult>): _NumericDictionary<TResult>;
+
+// @internal (undocumented)
+export function _mapValues<T extends object, TResult>(obj: T | null | undefined, callback: _ObjectIterator<T, TResult>): {
+    [P in keyof T]: TResult;
+};
+
+// @internal (undocumented)
+export function _mapValues<T>(obj: _Dictionary<T> | _NumericDictionary<T> | null | undefined, iteratee: object): _Dictionary<boolean>;
+
+// @internal (undocumented)
+export function _mapValues<T extends object>(obj: T | null | undefined, iteratee: object): {
+    [P in keyof T]: boolean;
+};
+
+// @internal (undocumented)
+export function _mapValues<T, TKey extends keyof T>(obj: _Dictionary<T> | _NumericDictionary<T> | null | undefined, iteratee: TKey): _Dictionary<T[TKey]>;
+
+// @internal (undocumented)
+export function _mapValues<T>(obj: _Dictionary<T> | _NumericDictionary<T> | null | undefined, iteratee: string): _Dictionary<any>;
+
+// @internal (undocumented)
+export function _mapValues<T extends object>(obj: T | null | undefined, iteratee: string): {
+    [P in keyof T]: any;
+};
+
+// @internal (undocumented)
+export function _mapValues(obj: string | null | undefined): _NumericDictionary<string>;
+
+// @internal (undocumented)
+export function _mapValues<T>(obj: _Dictionary<T> | _NumericDictionary<T> | null | undefined): _Dictionary<T>;
+
+// @internal (undocumented)
+export function _mapValues<T extends object>(obj: T): T;
+
+// @internal (undocumented)
+export function _mapValues<T extends object>(obj: T | null | undefined): _PartialObject<T>;
+
+// @internal
 export type Matcher = {
     type: "regex";
     value: RegExp;
@@ -236,6 +461,12 @@ export type Matcher = {
 
 // @internal
 export type MatcherFunction = (console: Record<ConsoleType, ConsoleFunction>, type: ConsoleType, message: string) => boolean;
+
+// @internal
+export function _max<T>(array: readonly [T, ...T[]]): T;
+
+// @internal (undocumented)
+export function _max<T>(array: _List<T> | null | undefined): T | undefined;
 
 // @internal
 export type _Memoize = {
@@ -251,6 +482,12 @@ export type _MemoizedFunction = {
     cache: _MapCache;
 };
 
+// @internal (undocumented)
+export type _MemoListIterator<T, TResult, TList> = (prev: TResult, curr: T, index: number, list: TList) => TResult;
+
+// @internal (undocumented)
+export type _MemoObjectIterator<T, TResult, TList> = (prev: TResult, curr: T, key: string, list: TList) => TResult;
+
 // @internal
 export function _merge<TObject, TSource>(object: TObject, source: TSource): TObject & TSource;
 
@@ -265,6 +502,33 @@ export function _merge<TObject, TSource1, TSource2, TSource3, TSource4>(object: 
 
 // @internal (undocumented)
 export function _merge(object: any, ...otherArgs: any[]): any;
+
+// @internal
+export function _mergeWith<TObject, TSource>(object: TObject, source: TSource, customizer: _MergeWithCustomizer): TObject & TSource;
+
+// @internal (undocumented)
+export function _mergeWith<TObject, TSource1, TSource2>(object: TObject, source1: TSource1, source2: TSource2, customizer: _MergeWithCustomizer): TObject & TSource1 & TSource2;
+
+// @internal (undocumented)
+export function _mergeWith<TObject, TSource1, TSource2, TSource3>(object: TObject, source1: TSource1, source2: TSource2, source3: TSource3, customizer: _MergeWithCustomizer): TObject & TSource1 & TSource2 & TSource3;
+
+// @internal (undocumented)
+export function _mergeWith<TObject, TSource1, TSource2, TSource3, TSource4>(object: TObject, source1: TSource1, source2: TSource2, source3: TSource3, source4: TSource4, customizer: _MergeWithCustomizer): TObject & TSource1 & TSource2 & TSource3 & TSource4;
+
+// @internal (undocumented)
+export function _mergeWith(object: any, ...otherArgs: any[]): any;
+
+// @internal
+export type _MergeWithCustomizer = (value: any, srcValue: any, key: string, object: any, source: any, stack: any) => any;
+
+// @internal
+export function _min<T>(array: readonly [T, ...T[]]): T;
+
+// @internal (undocumented)
+export function _min<T>(array: _List<T> | null | undefined): T | undefined;
+
+// @internal
+export function _negate<T extends unknown[]>(predicate: (...args: T) => boolean): (...args: T) => boolean;
 
 // @internal (undocumented)
 export type _NotVoid = unknown;
@@ -383,6 +647,24 @@ export function _range(start: number, end?: number, step?: number): number[];
 export function _range(end: number, index: string | number, guard: object): number[];
 
 // @internal
+export function _reduce<T, TResult>(collection: T[] | null | undefined, iteratee: _MemoListIterator<T, TResult, T[]>, accumulator: TResult): TResult;
+
+// @internal (undocumented)
+export function _reduce<T, TResult>(collection: _List<T> | null | undefined, iteratee: _MemoListIterator<T, TResult, _List<T>>, accumulator: TResult): TResult;
+
+// @internal (undocumented)
+export function _reduce<T extends object, TResult>(collection: T | null | undefined, iteratee: _MemoObjectIterator<T[keyof T], TResult, T>, accumulator: TResult): TResult;
+
+// @internal (undocumented)
+export function _reduce<T>(collection: T[] | null | undefined, iteratee: _MemoListIterator<T, T, T[]>): T | undefined;
+
+// @internal (undocumented)
+export function _reduce<T>(collection: _List<T> | null | undefined, iteratee: _MemoListIterator<T, T, _List<T>>): T | undefined;
+
+// @internal (undocumented)
+export function _reduce<T extends object>(collection: T | null | undefined, iteratee: _MemoObjectIterator<T[keyof T], T[keyof T], T>): T[keyof T] | undefined;
+
+// @internal
 export function removeMetadata(translationsWithMetadata: Record<string, any>): Record<string, string>;
 
 // @internal
@@ -393,6 +675,9 @@ export function _set<T extends object>(object: T, path: _PropertyPath, value: un
 
 // @internal (undocumented)
 export function _set<TResult>(object: object, path: _PropertyPath, value: unknown): TResult;
+
+// @internal
+export type _SetWithCustomizer<T> = (nsValue: any, key: string, nsObject: T) => any;
 
 // @internal (undocumented)
 export function shallowEqualObjects(objA: Record<string, any>, objB: Record<string, any>): boolean;
@@ -418,11 +703,23 @@ export type SpecificMatcherFunction = (message: string) => boolean;
 // @internal
 export function strictBarrel<T extends object>(packageName: string, exports: T): T;
 
+// @internal (undocumented)
+export type _StringIterator<TResult> = (char: string, index: number, string: string) => TResult;
+
+// @internal
+export function _sumBy<T>(array: _List<T> | null | undefined, iteratee?: ((value: T) => number) | string): number;
+
 // @internal
 export function suppressConsole<T>(fn: () => T | Promise<T>, type?: ConsoleType | ConsoleType[], matchers?: Matcher[] | SpecificMatcherFunction): T | Promise<T>;
 
 // @internal
 export function suppressConsole<T>(fn: () => T | Promise<T>, matcherFn: MatcherFunction): T | Promise<T>;
+
+// @internal
+export function _tail<T extends unknown[]>(array: readonly [unknown, ...T]): T;
+
+// @internal (undocumented)
+export function _tail<T>(array?: _List<T> | null): T[];
 
 // @internal
 export function _throttle<T extends (...args: any) => any>(func: T, wait?: number, options?: _ThrottleSettingsLeading): _DebouncedFuncLeading<T>;
@@ -442,7 +739,34 @@ export type _ThrottleSettingsLeading = (_ThrottleSettings & {
 }) | Omit<_ThrottleSettings, "leading">;
 
 // @internal
+export function _times<TResult>(n: number, iteratee: (index: number) => TResult): TResult[];
+
+// @internal (undocumented)
+export function _times(n: number): number[];
+
+// @internal
+export function _unescape(string?: string): string;
+
+// @internal
 export function _union<T>(...arrays: (_List<T> | null | undefined)[]): T[];
+
+// @internal
+export function _unionBy<T>(arrays: _List<T> | null | undefined, iteratee?: _ValueIteratee<T>): T[];
+
+// @internal (undocumented)
+export function _unionBy<T>(arrays1: _List<T> | null | undefined, arrays2: _List<T> | null | undefined, iteratee?: _ValueIteratee<T>): T[];
+
+// @internal (undocumented)
+export function _unionBy<T>(arrays1: _List<T> | null | undefined, arrays2: _List<T> | null | undefined, arrays3: _List<T> | null | undefined, iteratee?: _ValueIteratee<T>): T[];
+
+// @internal (undocumented)
+export function _unionBy<T>(arrays1: _List<T> | null | undefined, arrays2: _List<T> | null | undefined, arrays3: _List<T> | null | undefined, arrays4: _List<T> | null | undefined, iteratee?: _ValueIteratee<T>): T[];
+
+// @internal (undocumented)
+export function _unionBy<T>(arrays1: _List<T> | null | undefined, arrays2: _List<T> | null | undefined, arrays3: _List<T> | null | undefined, arrays4: _List<T> | null | undefined, arrays5: _List<T> | null | undefined, ...iteratee: (_ValueIteratee<T> | _List<T> | null | undefined)[]): T[];
+
+// @internal (undocumented)
+export function _unionBy<T>(...values: (_ValueIteratee<T> | _List<T> | null | undefined)[]): T[];
 
 // @internal
 export function _uniq<T>(array: _List<T> | null | undefined): T[];
@@ -455,6 +779,12 @@ export function _uniqWith<T>(array: _List<T> | null | undefined, comparator?: _C
 
 // @internal
 export function _update(object: object, path: _PropertyPath, updater: (value: any) => any): any;
+
+// @internal
+export function _updateWith<T extends object>(object: T, path: _PropertyPath, updater: (oldValue: any) => any, customizer?: _SetWithCustomizer<T>): T;
+
+// @internal (undocumented)
+export function _updateWith<T extends object, TResult>(object: T, path: _PropertyPath, updater: (oldValue: any) => any, customizer?: _SetWithCustomizer<T>): TResult;
 
 // @internal
 export type _ValueIteratee<T> = ((value: T) => _NotVoid) | _IterateeShorthand<T>;
@@ -473,6 +803,9 @@ export type WaitForFn = <T>(callback: () => T | Promise<T>, options?: {
     interval?: number;
     timeout?: number;
 }) => Promise<T>;
+
+// @internal
+export function _without<T>(array: _List<T> | null | undefined, ...values: T[]): T[];
 
 // @internal
 export function _zip<T1, T2>(arrays1: _List<T1>, arrays2: _List<T2>): [T1 | undefined, T2 | undefined][];

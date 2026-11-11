@@ -2517,7 +2517,7 @@
     },
     "objectShare.confirm.button": {
         "text": "Confirm",
-        "crowdinContext": "Primary action label in the general-access confirm dialog."
+        "crowdinContext": "Primary action label in the share dialog's confirm dialogs: changing general access, lowering your own permission, and removing access."
     },
     "objectShare.selfRestrict.title": {
         "text": "Restrict your access?",
@@ -2526,6 +2526,34 @@
     "objectShare.selfRestrict.warning": {
         "text": "You can't set higher permissions for yourself.",
         "crowdinContext": "Warning that lowering your own permission is one-way. Shown both as the body of the self-restrict confirm dialog and as the tooltip on permission options that are disabled because they are higher than the user's current level — the copy is identical in both places by design."
+    },
+    "objectShare.removeAccess.title": {
+        "text": "Remove access?",
+        "crowdinContext": "Title of the confirm dialog shown when the user chooses Remove access on another user's or group's row in the share dialog."
+    },
+    "objectShare.removeAccess.self.title": {
+        "text": "Remove your access?",
+        "crowdinContext": "Title of the confirm dialog shown when the user chooses Remove access on their own row in the share dialog."
+    },
+    "objectShare.removeAccess.loseAccess": {
+        "text": "{name} will lose access to this object.",
+        "crowdinContext": "Body of the confirm dialog shown before removing a user's or group's access in the share dialog, when nothing else gives them access. {name} is the user's full name, or their email or user ID when the name is unknown, or the group's name."
+    },
+    "objectShare.removeAccess.inheritedStays": {
+        "text": "This removes the individual grant. Access inherited from the parent workspace stays active.",
+        "crowdinContext": "Body of the confirm dialog shown before removing a user's or group's access in the share dialog, when a parent workspace also gives them access. Only the permission granted in this workspace is removed."
+    },
+    "objectShare.removeAccess.workspaceStays": {
+        "text": "This removes the individual grant. Access for all workspace members stays active.",
+        "crowdinContext": "Body of the confirm dialog shown before removing a user's or group's access in the share dialog, when general access is set to all workspace members, so they keep access as workspace members. 'All workspace members' is the name of the general access option."
+    },
+    "objectShare.removeAccess.selfLoseAccess": {
+        "text": "You will lose access to this object. You cannot find it again unless someone shares it with you.",
+        "crowdinContext": "Body of the confirm dialog shown when the user removes their own access in the share dialog and nothing else gives them access to the object."
+    },
+    "objectShare.removeAccess.selfLoseEditAccess": {
+        "text": "You will lose access to this object. You cannot find it again unless someone shares it with you. You cannot edit or delete this object.",
+        "crowdinContext": "Body of the confirm dialog shown when the user removes their own edit access in the share dialog and nothing else gives them access to the object."
     },
     "objectShare.workspaceLevel.inherited": {
         "text": "This permission is granted from a parent workspace and cannot be lowered here.",

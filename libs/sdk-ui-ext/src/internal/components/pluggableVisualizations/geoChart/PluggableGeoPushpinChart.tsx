@@ -1,6 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { type IExecutionFactory } from "@gooddata/sdk-backend-spi";
@@ -32,7 +31,7 @@ import {
     type IGeoConfig,
     getGeoChartDimensions,
 } from "@gooddata/sdk-ui-geo";
-import { _cloneDeep, _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty, _set } from "@gooddata/util";
 
 import { ATTRIBUTE, BUCKETS, METRIC } from "../../../constants/bucket.js";
 import { sanitizeGeoMapStyleOptions } from "../../../constants/geoMapStyle.js";
@@ -212,7 +211,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
                 : allMeasures.filter((measure: IBucketItem): boolean => !sizeMeasures.includes(measure))
         ).slice(0, this.getPreferredBucketItemLimit(BucketNames.COLOR));
 
-        set(newExtendedReferencePoint, BUCKETS, [
+        _set(newExtendedReferencePoint, BUCKETS, [
             {
                 localIdentifier: BucketNames.LOCATION,
                 items: this.getLocationItems(buckets),
@@ -289,7 +288,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         const legendProp = legend ? { legend } : {};
         const { isInEditMode, isExportMode } = config;
         if (this.environment === DASHBOARDS_ENVIRONMENT) {
-            set(supportedControls, "legend.responsive", "autoPositionWithPopup");
+            _set(supportedControls, "legend.responsive", "autoPositionWithPopup");
         }
         const viewportProp = {
             viewport: {
@@ -453,7 +452,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             hasLocationAttribute && !hasColorMeasure && !hasSizeMeasure && !hasSegmentAttribute;
         const locationProperties = this.getLocationProperties(locationItem);
 
-        set(referencePointConfigured, "properties", {
+        _set(referencePointConfigured, "properties", {
             controls: {
                 points: {
                     groupNearbyPoints,
@@ -464,7 +463,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         });
 
         if (this.references) {
-            set(referencePointConfigured, "references", this.references);
+            _set(referencePointConfigured, "references", this.references);
         }
         return referencePointConfigured;
     }

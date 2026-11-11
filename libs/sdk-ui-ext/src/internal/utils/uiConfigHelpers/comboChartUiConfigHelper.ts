@@ -1,11 +1,10 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { BucketNames, type ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 import { isLineChart } from "@gooddata/sdk-ui-charts";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { messages } from "../../../locales.js";
 import { BUCKETS } from "../../constants/bucket.js";
@@ -57,7 +56,7 @@ const VIEW_BY_ICONS = {
 
 function setCanStackInPercent(uiConfig: IUiConfig, secondaryChartType: string, isDualAxis: boolean) {
     const canStackInPercent = !(isDualAxis === false && isLineChart(secondaryChartType));
-    set(uiConfig, "optionalStacking.canStackInPercent", canStackInPercent);
+    _set(uiConfig, "optionalStacking.canStackInPercent", canStackInPercent);
 }
 
 export function setComboChartUiConfig(
@@ -85,12 +84,12 @@ export function setComboChartUiConfig(
         const localIdentifier = bucket?.localIdentifier ?? "";
         const subtitle = getTranslation(messages[type].id, intl);
 
-        set(updatedUiConfig, [BUCKETS, localIdentifier, "subtitle"], subtitle);
-        set(updatedUiConfig, [BUCKETS, localIdentifier, "icon"], MEASURE_BUCKET_ICONS[type]);
+        _set(updatedUiConfig, [BUCKETS, localIdentifier, "subtitle"], subtitle);
+        _set(updatedUiConfig, [BUCKETS, localIdentifier, "icon"], MEASURE_BUCKET_ICONS[type]);
     });
 
-    set(updatedUiConfig, [BUCKETS, BucketNames.VIEW, "icon"], VIEW_BY_ICONS[chartTypes.join("-")]);
-    set(referencePointConfigured, UICONFIG, updatedUiConfig);
+    _set(updatedUiConfig, [BUCKETS, BucketNames.VIEW, "icon"], VIEW_BY_ICONS[chartTypes.join("-")]);
+    _set(referencePointConfigured, UICONFIG, updatedUiConfig);
 
     return referencePointConfigured;
 }

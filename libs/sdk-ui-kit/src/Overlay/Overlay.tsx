@@ -10,13 +10,13 @@ import {
 } from "react";
 
 import cx from "classnames";
-import { bindAll, debounce, pick } from "lodash-es";
+import { bindAll, pick } from "lodash-es";
 import { flushSync } from "react-dom";
 import isReactEqual from "react-fast-compare";
 import { Portal } from "react-portal";
 import { v4 as uuid } from "uuid";
 
-import { _isEqual } from "@gooddata/util";
+import { _debounce, _isEqual } from "@gooddata/util";
 
 import { isClickInsideOwnSubtree } from "../@ui/hooks/useCloseOnOutsideClick.js";
 import { type Alignment, type OverlayPositionType, type SameAsTargetPosition } from "../typings/overlay.js";
@@ -123,7 +123,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
     private readonly id: string;
     private overlayRef = createRef<HTMLDivElement>();
     private containerRef = createRef<HTMLSpanElement>();
-    private resizeHandler = debounce(() => {
+    private resizeHandler = _debounce(() => {
         this.realign();
     }, 100);
     private portalNode: HTMLDivElement | null = null;

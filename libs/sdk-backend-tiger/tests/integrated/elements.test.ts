@@ -1,6 +1,5 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { omit } from "lodash-es";
 import { beforeAll, describe, expect, it } from "vitest";
 
 import {
@@ -9,6 +8,7 @@ import {
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
+import { _omit } from "@gooddata/util";
 
 import { testBackend, testWorkspace } from "./backend.js";
 import { Account, AccountId, Product } from "./full.test.helpers.js";
@@ -31,7 +31,7 @@ describe("tiger elements", () => {
                 .withLimit(20)
                 .query();
 
-            expect(omit(result, "cacheId")).toMatchSnapshot();
+            expect(_omit(result, "cacheId")).toMatchSnapshot();
         });
     });
 
@@ -113,7 +113,7 @@ describe("tiger elements", () => {
                 .withLimit(2)
                 .query();
             const page = await result.goTo(3);
-            expect(omit(page, "items", "cacheId")).toMatchSnapshot();
+            expect(_omit(page, "items", "cacheId")).toMatchSnapshot();
         });
 
         it("should return empty result for out-of-range page in initial request", async () => {
@@ -126,7 +126,7 @@ describe("tiger elements", () => {
                 .withOffset(5000)
                 .query();
 
-            expect(omit(result, "cacheId")).toMatchSnapshot();
+            expect(_omit(result, "cacheId")).toMatchSnapshot();
         });
 
         it("should return empty result for out-of-range page with goTo", async () => {
@@ -139,7 +139,7 @@ describe("tiger elements", () => {
                 .query();
 
             const page = await result.goTo(100);
-            expect(omit(page, "cacheId")).toMatchSnapshot();
+            expect(_omit(page, "cacheId")).toMatchSnapshot();
         });
 
         it("should return empty result for out-of-range page with next", async () => {
@@ -153,7 +153,7 @@ describe("tiger elements", () => {
                 .query();
 
             const page = await result.next();
-            expect(omit(page, "cacheId")).toMatchSnapshot();
+            expect(_omit(page, "cacheId")).toMatchSnapshot();
         });
     });
 });

@@ -1,7 +1,5 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { set } from "lodash-es";
-
 import {
     type IAnalyticalBackend,
     type IExecutionFactory,
@@ -25,7 +23,7 @@ import {
     insightLayerToGeoLayer,
     insightLayersToGeoLayers,
 } from "@gooddata/sdk-ui-geo/internal";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { BUCKETS } from "../../../constants/bucket.js";
 import { isGeoChartsViewportConfigEnabled } from "../../../constants/featureFlags.js";
@@ -173,7 +171,7 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
             uiConfig,
         );
 
-        set(sanitized, BUCKETS, configuredBuckets);
+        _set(sanitized, BUCKETS, configuredBuckets);
         return sanitized;
     }
 

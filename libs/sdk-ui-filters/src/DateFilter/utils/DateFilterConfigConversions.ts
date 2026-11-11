@@ -1,7 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
 import { endOfDay, format, startOfDay, subMonths } from "date-fns";
-import { groupBy, max, min } from "lodash-es";
+import { max, min } from "lodash-es";
 
 import {
     type IAbsoluteDateFilterForm,
@@ -12,6 +12,7 @@ import {
     type IRelativeDateFilterForm,
     type IRelativeDateFilterPreset,
 } from "@gooddata/sdk-model";
+import { _groupBy } from "@gooddata/util";
 
 import {
     type AbsoluteDateFilterOption,
@@ -125,7 +126,7 @@ function convertRelativePresets(
 ): DateFilterRelativeOptionGroup | undefined {
     return (
         filters &&
-        groupBy(
+        _groupBy(
             filters.map((preset): IRelativeDateFilterPreset =>
                 sanitizeDateFilterOption({
                     ...preset,

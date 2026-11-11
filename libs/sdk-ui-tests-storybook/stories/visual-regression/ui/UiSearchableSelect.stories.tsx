@@ -11,6 +11,7 @@ import {
     type IUiSearchableSelectProps,
     UiSearchableSelect,
     UiSearchableSelectDivider,
+    UiSearchableSelectFooter,
     UiSearchableSelectItem,
     UiSearchableSelectList,
     UiSearchableSelectSearch,
@@ -156,6 +157,33 @@ export function WithDivider() {
 }
 WithDivider.parameters = { kind: "with divider", screenshot: openedScreenshot } satisfies IStoryParameters;
 
+export function WithFooter() {
+    const items = [
+        { id: "de-DE", title: "German", code: "de-DE" },
+        { id: "fr-FR", title: "French", code: "fr-FR" },
+        { id: "pt-PT", title: "Portuguese", code: "pt-PT" },
+    ];
+
+    return (
+        <div style={wrapperStyle}>
+            <UiSearchableSelect {...requiredProps} items={items} defaultOpen value="fr-FR">
+                <UiSearchableSelectSearch />
+                <UiSearchableSelectList<(typeof items)[number]>>
+                    {({ id, title, code }) => (
+                        <UiSearchableSelectItem id={id} secondaryTitle={code}>
+                            {title}
+                        </UiSearchableSelectItem>
+                    )}
+                </UiSearchableSelectList>
+                <UiSearchableSelectFooter>
+                    Only languages GoodData supports are listed.
+                </UiSearchableSelectFooter>
+            </UiSearchableSelect>
+        </div>
+    );
+}
+WithFooter.parameters = { kind: "with footer", screenshot: openedScreenshot } satisfies IStoryParameters;
+
 export function NoItems() {
     return (
         <div style={wrapperStyle}>
@@ -202,3 +230,7 @@ MobileThemed.globals = Mobile.globals;
 export const MobileNoItems = () => <NoItems />;
 MobileNoItems.parameters = { ...Mobile.parameters, kind: "mobile no items" } satisfies IStoryParameters;
 MobileNoItems.globals = Mobile.globals;
+
+export const MobileWithFooter = () => <WithFooter />;
+MobileWithFooter.parameters = { ...Mobile.parameters, kind: "mobile with footer" } satisfies IStoryParameters;
+MobileWithFooter.globals = Mobile.globals;

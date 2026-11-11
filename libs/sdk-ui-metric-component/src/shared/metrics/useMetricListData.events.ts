@@ -1,9 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { groupBy } from "lodash-es";
-
 import { type IMeasureMetadataObject } from "@gooddata/sdk-model";
-import { _isEqual } from "@gooddata/util";
+import { _groupBy, _isEqual } from "@gooddata/util";
 
 import { type IEvent } from "../eventing/EventContext.js";
 import { EventCategories, Events } from "../eventing/events.js";
@@ -14,7 +12,7 @@ export type WorkspaceMetricStats = {
 };
 
 function getSameItemNumber<T>(collection: T[], iteratee: (i: T) => string | number) {
-    const groups = groupBy(collection, iteratee);
+    const groups = _groupBy(collection, iteratee);
     return Object.values(groups).filter((group: unknown[]) => group.length > 1).length;
 }
 

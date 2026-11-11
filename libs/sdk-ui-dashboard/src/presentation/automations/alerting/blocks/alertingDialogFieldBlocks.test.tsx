@@ -331,6 +331,16 @@ describe("alerting dialog field blocks", () => {
         expect(view.container.querySelector(TRIGGER_INTERVAL_SELECTOR)).not.toBeNull();
     });
 
+    it("render the interval label text and its help icon as phrasing content of the label", () => {
+        const view = renderShell({ children: <ConditionProbe /> });
+
+        fireEvent.click(view.getByTestId("set-once-per-interval"));
+
+        const label = view.getByRole("button", { name: "Trigger interval" }).closest("label");
+        expect(label).toHaveTextContent(/^Trigger interval$/);
+        expect(label?.querySelector("div")).toBeNull();
+    });
+
     it("render nothing while the dialog context is loading, without throwing", () => {
         let view: ReturnType<typeof renderShell> | undefined;
 

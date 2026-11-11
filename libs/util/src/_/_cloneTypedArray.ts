@@ -52,12 +52,16 @@ const NodeBuffer = (
  * @returns Returns the cloned typed array.
  * @internal
  */
-export function _cloneTypedArray(typedArray: ArrayBufferView & ArrayLike<unknown>): ArrayBufferView {
+export function _cloneTypedArray(
+    typedArray: ArrayBufferView & ArrayLike<unknown>,
+    deep: boolean = true,
+): ArrayBufferView {
     if (NodeBuffer?.isBuffer(typedArray)) {
         return NodeBuffer.from(typedArray as Uint8Array);
     }
 
     const Ctor = (typedArray as unknown as { constructor: _TypedArrayConstructor }).constructor;
+    const buffer = deep ? _cloneArrayBuffer(typedArray.buffer) : typedArray.buffer;
 
-    return new Ctor(_cloneArrayBuffer(typedArray.buffer), typedArray.byteOffset, typedArray.length);
+    return new Ctor(buffer, typedArray.byteOffset, typedArray.length);
 }

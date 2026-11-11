@@ -11,6 +11,7 @@ import { MOBILE_VIEWPORT } from "../../../test/viewport.js";
 import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 
 import { type IUiSearchableSelectProps, UiSearchableSelect } from "./UiSearchableSelect.js";
+import { UiSearchableSelectFooter } from "./UiSearchableSelectFooter.js";
 import { UiSearchableSelectItem } from "./UiSearchableSelectItem.js";
 import { UiSearchableSelectList } from "./UiSearchableSelectList.js";
 import { UiSearchableSelectSearch } from "./UiSearchableSelectSearch.js";
@@ -392,6 +393,37 @@ describe("UiSearchableSelect", async () => {
         expect(screen.getByRole("status")).toHaveTextContent("2 results: Apple, Pineapple");
     });
 
+    it("should announce the secondary title of the search results after their titles", async () => {
+        vi.useFakeTimers({ shouldAdvanceTime: true, advanceTimeDelta: 1 });
+        const items = [
+            { id: "pt-PT", name: "Portuguese", code: "pt-PT" },
+            { id: "pt-BR", name: "Portuguese", code: "pt-BR" },
+            { id: "de-DE", name: "German", code: "de-DE" },
+        ];
+        const { user } = render(
+            <UiSearchableSelect
+                {...requiredProps}
+                items={items}
+                filter={(item, query) => item.code.toLowerCase().includes(query.toLowerCase())}
+            >
+                <UiSearchableSelectSearch />
+                <UiSearchableSelectList<(typeof items)[number]>>
+                    {({ id, name, code }) => (
+                        <UiSearchableSelectItem id={id} secondaryTitle={code}>
+                            {name}
+                        </UiSearchableSelectItem>
+                    )}
+                </UiSearchableSelectList>
+            </UiSearchableSelect>,
+        );
+
+        await user.click(screen.getByRole("button"));
+        await user.type(screen.getByRole("combobox", { name: "Search items" }), "pt-");
+        await act(() => vi.advanceTimersByTimeAsync(1000));
+
+        expect(screen.getByRole("status")).toHaveTextContent("2 results: Portuguese pt-PT, Portuguese pt-BR");
+    });
+
     it("should announce the no items text when no items match the search query", async () => {
         vi.useFakeTimers({ shouldAdvanceTime: true, advanceTimeDelta: 1 });
         const items = [{ name: "Item #1" }];
@@ -574,6 +606,38 @@ describe("UiSearchableSelect", async () => {
         expect(screen.getByRole("option", { name: "Item #1" })).toHaveAttribute("lang", "de");
     });
 
+    it("should show the secondary title of an item after its title, in the list and on the button", async () => {
+        const items = [{ id: "de-DE", name: "German", code: "de-DE" }];
+        const { user } = render(
+            <UiSearchableSelect {...requiredProps} items={items} value="de-DE">
+                <UiSearchableSelectSearch />
+                <UiSearchableSelectList<(typeof items)[number]>>
+                    {({ id, name, code }) => (
+                        <UiSearchableSelectItem id={id} secondaryTitle={code}>
+                            {name}
+                        </UiSearchableSelectItem>
+                    )}
+                </UiSearchableSelectList>
+            </UiSearchableSelect>,
+        );
+
+        expect(screen.getByRole("button")).toHaveTextContent("German de-DE");
+
+        await user.click(screen.getByRole("button"));
+
+        expect(screen.getByRole("option", { name: "German de-DE" })).toBeInTheDocument();
+        expect(screen.getByText("de-DE", { selector: ".gd-ui-kit-listbox__item-secondary" })).toBeVisible();
+    });
+
+    it("should not show a secondary title when the item has none", async () => {
+        const { user } = render(<UiSearchableSelect {...requiredProps} />);
+
+        await user.click(screen.getByRole("button"));
+
+        expect(screen.getByRole("option", { name: "Option #1" })).toBeInTheDocument();
+        expect(document.querySelector(".gd-ui-kit-listbox__item-secondary")).toBeNull();
+    });
+
     it("should show all items before searching, also with a custom filter", async () => {
         const items = [
             { id: "id-1", name: "Item #1", code: "one" },
@@ -615,6 +679,83 @@ describe("UiSearchableSelect", async () => {
 
         expect(onChange.mock.calls).toEqual([["Option #1"]]);
         expect(onKeyDown).not.toHaveBeenCalledWith("Enter");
+    });
+
+    it("should show the footer under the list, inside the body of the popup", async () => {
+        const { user } = render(
+            <UiSearchableSelect {...requiredProps}>
+                {requiredProps.children}
+                <UiSearchableSelectFooter>Footer text</UiSearchableSelectFooter>
+            </UiSearchableSelect>,
+        );
+
+        await user.click(screen.getByRole("button"));
+
+        const footer = screen.getByText("Footer text");
+        expect(footer).toHaveClass("gd-ui-kit-searchable-select__footer");
+        expect(footer.parentElement).toHaveClass("gd-ui-kit-searchable-select__body");
+        expect(
+            screen.getByRole("listbox").compareDocumentPosition(footer) & Node.DOCUMENT_POSITION_FOLLOWING,
+        ).toBeTruthy();
+    });
+
+    it("should show the footer inside the body of the mobile full screen view", async () => {
+        window.happyDOM.setViewport(MOBILE_VIEWPORT);
+        const { user } = render(
+            <UiSearchableSelect {...requiredProps}>
+                {requiredProps.children}
+                <UiSearchableSelectFooter>Footer text</UiSearchableSelectFooter>
+            </UiSearchableSelect>,
+        );
+
+        await user.click(screen.getByRole("button"));
+
+        expect(screen.getByText("Footer text").parentElement).toHaveClass(
+            "gd-ui-kit-searchable-select__body--isFullscreen",
+        );
+    });
+
+    it("should describe the search by the footer", async () => {
+        const { user } = render(
+            <UiSearchableSelect {...requiredProps}>
+                {requiredProps.children}
+                <UiSearchableSelectFooter>Footer text</UiSearchableSelectFooter>
+            </UiSearchableSelect>,
+        );
+
+        await user.click(screen.getByRole("button"));
+
+        expect(screen.getByRole("combobox", { name: "Search items" })).toHaveAccessibleDescription(
+            "Footer text",
+        );
+    });
+
+    it("should describe the search by the footer when the footer is in a fragment, after the own description", async () => {
+        const { user } = render(
+            <UiSearchableSelect {...requiredProps}>
+                <UiSearchableSelectSearch accessibilityConfig={{ ariaDescribedBy: "own-description" }} />
+                <>
+                    <UiSearchableSelectFooter>Footer text</UiSearchableSelectFooter>
+                </>
+            </UiSearchableSelect>,
+        );
+
+        await user.click(screen.getByRole("button"));
+
+        expect(screen.getByRole("combobox")).toHaveAttribute(
+            "aria-describedby",
+            expect.stringMatching(/^own-description .+/),
+        );
+    });
+
+    it("should not describe the search without a footer", async () => {
+        const { user } = render(<UiSearchableSelect {...requiredProps} />);
+
+        await user.click(screen.getByRole("button"));
+
+        expect(screen.getByRole("combobox", { name: "Search items" })).not.toHaveAttribute(
+            "aria-describedby",
+        );
     });
 
     it("should support mobile full screen view", async () => {

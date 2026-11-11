@@ -1,12 +1,11 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { type ISettings } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { type IGeoConfig } from "@gooddata/sdk-ui-geo";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { BUCKETS } from "../../constants/bucket.js";
 import { isGeoPushpinIconEnabled } from "../../constants/featureFlags.js";
@@ -41,52 +40,52 @@ export function setGeoPushpinUiConfig(
     featureFlags?: ISettings,
 ): IExtendedReferencePoint {
     const referencePointConfigured = _cloneDeep(referencePoint);
-    set(referencePointConfigured, UICONFIG, setBucketTitles(referencePoint, visualizationType, intl));
-    set(
+    _set(referencePointConfigured, UICONFIG, setBucketTitles(referencePoint, visualizationType, intl));
+    _set(
         referencePointConfigured,
         [UICONFIG, BUCKETS, BucketNames.LOCATION, "icon"],
         geoPushPinBucketLocationIcon,
     );
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.SIZE, "icon"], geoPushPinBucketSizeIcon);
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.COLOR, "icon"], geoPushPinBucketColorIcon);
-    set(
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.SIZE, "icon"], geoPushPinBucketSizeIcon);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.COLOR, "icon"], geoPushPinBucketColorIcon);
+    _set(
         referencePointConfigured,
         [UICONFIG, BUCKETS, BucketNames.SEGMENT, "icon"],
         geoPushPinBucketSegmentIcon,
     );
-    set(
+    _set(
         referencePointConfigured,
         [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"],
         geoPushPinBucketMetricIcon,
     );
     // overide base config
-    set(referencePointConfigured, [UICONFIG, OPEN_AS_REPORT, SUPPORTED], false);
+    _set(referencePointConfigured, [UICONFIG, OPEN_AS_REPORT, SUPPORTED], false);
 
     const iconEnabled = isGeoPushpinIconEnabled(featureFlags);
     const shapeType = referencePointConfigured.properties?.controls?.["points"]?.shapeType ?? "circle";
     const sizeColorBucketsEditable = arePushpinSizeColorBucketsEditable(shapeType);
 
-    set(
+    _set(
         referencePointConfigured,
         [UICONFIG, BUCKETS, BucketNames.LOCATION, "canAddItems"],
         canAddItemsToBucket(referencePointConfigured, BucketNames.LOCATION),
     );
-    set(
+    _set(
         referencePointConfigured,
         [UICONFIG, BUCKETS, BucketNames.SIZE, "canAddItems"],
         canAddItemsToBucket(referencePointConfigured, BucketNames.SIZE) && sizeColorBucketsEditable,
     );
-    set(
+    _set(
         referencePointConfigured,
         [UICONFIG, BUCKETS, BucketNames.COLOR, "canAddItems"],
         canAddItemsToBucket(referencePointConfigured, BucketNames.COLOR) && sizeColorBucketsEditable,
     );
-    set(
+    _set(
         referencePointConfigured,
         [UICONFIG, BUCKETS, BucketNames.SEGMENT, "canAddItems"],
         canAddItemsToBucket(referencePointConfigured, BucketNames.SEGMENT) && sizeColorBucketsEditable,
     );
-    set(
+    _set(
         referencePointConfigured,
         [UICONFIG, BUCKETS, BucketNames.MEASURES, "canAddItems"],
         canAddItemsToBucket(referencePointConfigured, BucketNames.MEASURES),
@@ -108,7 +107,7 @@ export function setGeoPushpinUiConfig(
     }
 
     // only apply related bucket uiConfig
-    set(referencePointConfigured, [UICONFIG, BUCKETS], filteredBuckets);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS], filteredBuckets);
 
     return referencePointConfigured;
 }

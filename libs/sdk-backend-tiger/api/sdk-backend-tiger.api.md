@@ -614,10 +614,6 @@ export const TigerFeatureDefinitions: {
         type: "BOOLEAN";
         defaultValue: boolean;
     };
-    readonly enableChangeAnalysis: {
-        type: "BOOLEAN";
-        defaultValue: boolean;
-    };
     readonly enableRankingWithMvf: {
         type: "BOOLEAN";
         defaultValue: boolean;

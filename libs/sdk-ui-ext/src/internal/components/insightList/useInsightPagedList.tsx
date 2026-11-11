@@ -2,12 +2,10 @@
 
 import { useCallback, useMemo, useRef, useState } from "react";
 
-import { debounce } from "lodash-es";
-
 import { type IAnalyticalBackend, type IFilterBaseOptions } from "@gooddata/sdk-backend-spi";
 import { type IInsight } from "@gooddata/sdk-model";
 import { type ITab } from "@gooddata/sdk-ui-kit";
-import { _isEmpty } from "@gooddata/util";
+import { _debounce, _isEmpty } from "@gooddata/util";
 
 const ITEMS_PER_PAGE = 50;
 
@@ -321,7 +319,7 @@ export function useInsightPagedList({
 
     // oxlint-disable-next-line react-hooks/exhaustive-deps
     const onSearch = useCallback(
-        debounce((searchString: string) => {
+        _debounce((searchString: string) => {
             setCurrentPage(0);
             setSearch(searchString);
             void fetchItems({ page: 0, search: searchString, tabId: selectedTabId, resetItems: true });

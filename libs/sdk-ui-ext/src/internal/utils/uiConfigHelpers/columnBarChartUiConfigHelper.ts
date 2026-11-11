@@ -1,10 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { BucketNames, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { messages } from "../../../locales.js";
 import { BUCKETS } from "../../constants/bucket.js";
@@ -19,7 +18,7 @@ export function setColumnBarChartUiConfig(
 ): IExtendedReferencePoint {
     const referencePointConfigured = _cloneDeep(referencePoint);
 
-    set(
+    _set(
         referencePointConfigured,
         [UICONFIG, SUPPORTED_COMPARISON_TYPES],
         [OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR, OverTimeComparisonTypes.PREVIOUS_PERIOD],
@@ -31,8 +30,8 @@ export function setColumnBarChartUiConfig(
     if (measures.length > 1) {
         const warningMessage = getTranslation(messages["measureStack"].id, intl);
 
-        set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.STACK, "canAddItems"], false);
-        set(
+        _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.STACK, "canAddItems"], false);
+        _set(
             referencePointConfigured,
             [UICONFIG, BUCKETS, BucketNames.STACK, "warningMessage"],
             warningMessage,

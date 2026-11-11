@@ -1,10 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { BucketNames } from "@gooddata/sdk-ui";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { BUCKETS } from "../../constants/bucket.js";
 import { UICONFIG } from "../../constants/uiConfig.js";
@@ -62,7 +61,7 @@ export const configBuckets = (extendedReferencePoint: IExtendedReferencePoint): 
     const config = _cloneDeep(extendedReferencePoint);
     const { measures, attributeFroms, attributeTos } = getBucketItems(config);
 
-    set(config, BUCKETS, [
+    _set(config, BUCKETS, [
         {
             localIdentifier: BucketNames.MEASURES,
             items: measures,
@@ -87,15 +86,15 @@ export const configSankeyUiConfig = (
 ): IExtendedReferencePoint => {
     const referencePointConfigured = _cloneDeep(extendedReferencePoint);
 
-    set(
+    _set(
         referencePointConfigured,
         [UICONFIG],
         setBucketTitles(referencePointConfigured, visualizationType, intl),
     );
 
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], measureIcon);
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE_FROM, "icon"], fromIcon);
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE_TO, "icon"], toIcon);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], measureIcon);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE_FROM, "icon"], fromIcon);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE_TO, "icon"], toIcon);
 
     return referencePointConfigured;
 };

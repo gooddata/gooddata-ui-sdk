@@ -4,13 +4,16 @@ import { useEffect } from "react";
 
 import { type IPlatformContext } from "@gooddata/sdk-pluggable-application-model";
 
+import { ModuleMessageBroker } from "../messaging/ModuleMessageBroker.js";
+
 import { HeadlessModulesController } from "./HeadlessModulesController.js";
 import { getHeadlessModules } from "./headlessModulesRegistry.js";
 
-// One controller per page and principal. The host components that call the hook unmount on redirects
-// and error pages, and a remount must not mount the modules again. A different user or organization
-// has its own registry and identity, so it gets a new controller.
+// One controller and one message broker per page and principal. The host components that call the
+// hook unmount on redirects and error pages, and a remount must not mount the modules again. A
+// different user or organization has its own registry and identity, so it gets new ones.
 let pageController: HeadlessModulesController | undefined;
+let pageBroker: ModuleMessageBroker | undefined;
 let pagePrincipal: string | undefined;
 let principalChanged = false;
 
@@ -18,21 +21,37 @@ function principalOf(ctx: IPlatformContext): string {
     return JSON.stringify([ctx.organization?.id, ctx.user.login]);
 }
 
-function ensureController(ctx: IPlatformContext): void {
+function ensurePage(ctx: IPlatformContext): ModuleMessageBroker {
     const principal = principalOf(ctx);
-    if (principal === pagePrincipal) {
-        return;
+    if (principal === pagePrincipal && pageBroker) {
+        return pageBroker;
     }
     principalChanged = principalChanged || pagePrincipal !== undefined;
     pageController?.dispose();
+    pageBroker?.dispose();
     pageController = undefined;
     pagePrincipal = principal;
+    const broker = new ModuleMessageBroker();
+    pageBroker = broker;
     const modules = getHeadlessModules(ctx);
     if (modules.length === 0) {
-        return;
+        broker.markSettled();
+        return broker;
     }
-    pageController = new HeadlessModulesController(ctx, { canReplayPageStart: () => !principalChanged });
-    void pageController.start(modules);
+    pageController = new HeadlessModulesController(ctx, {
+        canReplayPageStart: () => !principalChanged,
+        broker,
+    });
+    void pageController.start(modules).finally(() => broker.markSettled());
+    return broker;
+}
+
+/**
+ * Returns the module message broker of the page for the principal of the context. Mounts the headless
+ * modules of that principal when they are not mounted yet.
+ */
+export function getModuleMessageBroker(ctx: IPlatformContext): ModuleMessageBroker {
+    return ensurePage(ctx);
 }
 
 /**
@@ -40,7 +59,9 @@ function ensureController(ctx: IPlatformContext): void {
  */
 export function resetHeadlessModulesForTesting(): void {
     pageController?.dispose();
+    pageBroker?.dispose();
     pageController = undefined;
+    pageBroker = undefined;
     pagePrincipal = undefined;
     principalChanged = false;
 }
@@ -51,7 +72,7 @@ export function resetHeadlessModulesForTesting(): void {
  */
 export function useHeadlessModules(ctx: IPlatformContext): void {
     useEffect(() => {
-        ensureController(ctx);
+        ensurePage(ctx);
         pageController?.updateContext(ctx);
     }, [ctx]);
 }

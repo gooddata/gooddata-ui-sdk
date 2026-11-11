@@ -1,11 +1,10 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { type ISettings } from "@gooddata/sdk-model";
 import { BucketNames, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { messages } from "../../../locales.js";
 import { BUCKETS } from "../../constants/bucket.js";
@@ -81,7 +80,7 @@ function setPivotTableNextBucketWarningMessages(referencePoint: IExtendedReferen
 
             if (warningMessageId) {
                 const warningMessage = getTranslation(warningMessageId, intl, warningMessageValues);
-                set(updatedUiConfig, [BUCKETS, localIdentifier, "warningMessage"], warningMessage);
+                _set(updatedUiConfig, [BUCKETS, localIdentifier, "warningMessage"], warningMessage);
             }
         }
     });
@@ -105,14 +104,14 @@ export function setPivotTableNextUiConfig(
 ): void {
     const buckets = referencePoint?.buckets ?? [];
 
-    set(referencePoint, UICONFIG, setBucketTitles(referencePoint, visualizationType, intl));
+    _set(referencePoint, UICONFIG, setBucketTitles(referencePoint, visualizationType, intl));
 
     const messageId =
         referencePoint.properties?.controls?.["measureGroupDimension"] === "rows"
             ? messages["inRows"].id
             : messages["inColumns"].id;
     const subtitle = getTranslation(messageId, intl);
-    set(referencePoint, [UICONFIG, BUCKETS, BucketNames.MEASURES, "subtitle"], subtitle);
+    _set(referencePoint, [UICONFIG, BUCKETS, BucketNames.MEASURES, "subtitle"], subtitle);
 
     const canMeasuresAddItems = canIncreasedTableMeasuresAddMoreItems(buckets);
     const canAttributesAddItems = canIncreasedTableAttributesAddMoreItems(buckets);
@@ -120,26 +119,26 @@ export function setPivotTableNextUiConfig(
 
     const columnsEmpty = hasNoColumns(buckets);
 
-    set(referencePoint, [UICONFIG, BUCKETS, BucketNames.MEASURES, "canAddItems"], canMeasuresAddItems);
-    set(referencePoint, [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE, "canAddItems"], canAttributesAddItems);
-    set(referencePoint, [UICONFIG, BUCKETS, BucketNames.COLUMNS, "canAddItems"], columnsCanAddItems);
+    _set(referencePoint, [UICONFIG, BUCKETS, BucketNames.MEASURES, "canAddItems"], canMeasuresAddItems);
+    _set(referencePoint, [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE, "canAddItems"], canAttributesAddItems);
+    _set(referencePoint, [UICONFIG, BUCKETS, BucketNames.COLUMNS, "canAddItems"], columnsCanAddItems);
 
-    set(
+    _set(
         referencePoint,
         [UICONFIG, BUCKETS, BucketNames.MEASURES, "itemsLimit"],
         columnsEmpty ? INCREASE_MAX_TABLE_MEASURE_ITEMS_LIMIT : MAX_METRICS_COUNT,
     );
-    set(
+    _set(
         referencePoint,
         [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE, "itemsLimit"],
         columnsEmpty ? INCREASE_MAX_TABLE_ATTRIBUTES_ITEMS_LIMIT : MAX_TABLE_CATEGORIES_COUNT,
     );
 
-    set(referencePoint, UICONFIG, setPivotTableNextBucketWarningMessages(referencePoint, intl));
+    _set(referencePoint, UICONFIG, setPivotTableNextBucketWarningMessages(referencePoint, intl));
 
-    set(referencePoint, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], tableMeasuresIcon);
-    set(referencePoint, [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE, "icon"], tableRowsIcon);
-    set(referencePoint, [UICONFIG, BUCKETS, BucketNames.COLUMNS, "icon"], tableColumnsIcon);
+    _set(referencePoint, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], tableMeasuresIcon);
+    _set(referencePoint, [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE, "icon"], tableRowsIcon);
+    _set(referencePoint, [UICONFIG, BUCKETS, BucketNames.COLUMNS, "icon"], tableColumnsIcon);
 }
 
 export function getPivotTableNextDefaultUiConfig(): IUiConfig {

@@ -1,12 +1,12 @@
 // (C) 2026 GoodData Corporation
 
 import { type Action, createAction } from "@reduxjs/toolkit";
-import { uniqBy } from "lodash-es";
 import { type BatchAction, batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
 import { call, put, select, takeEvery } from "redux-saga/effects";
 
 import { type IInsight, type IdentifierRef, serializeObjRef } from "@gooddata/sdk-model";
+import { _uniqBy } from "@gooddata/util";
 
 import {
     selectCatalogParameterDependencies,
@@ -79,7 +79,7 @@ function* updateParameterDependencies(
         const key = serializeObjRef(root);
         return !(key in known) && !(key in requested);
     });
-    const roots = uniqBy([...refreshRoots, ...unknownRoots], serializeObjRef);
+    const roots = _uniqBy([...refreshRoots, ...unknownRoots], serializeObjRef);
     yield call(loadAndMergeParameterDependencies, ctx, generation, roots);
 }
 

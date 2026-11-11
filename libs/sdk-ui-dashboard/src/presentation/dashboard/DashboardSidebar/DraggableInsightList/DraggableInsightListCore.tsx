@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 
-import cx from "classnames";
-
 import {
     type IInsight,
     type ObjRef,
@@ -59,7 +57,7 @@ export function DraggableInsightListCore({
                 disabled={disabled}
                 includePermissions={shouldLoadInsightPermissionsForDelete(settings, permissions)}
                 excludeRefs={deletedRefs}
-                renderItem={({ item: insight, width, isFirst, isLast }) => {
+                renderItem={({ item: insight, width }) => {
                     if (!insight) {
                         return <InsightListItem isLoading />;
                     }
@@ -68,11 +66,6 @@ export function DraggableInsightListCore({
                     }
 
                     const visualizationType = insightVisualizationType(insight) as VisType;
-
-                    const classNames = cx("gd-visualizations-list-item-wrap", {
-                        "is-first": isFirst,
-                        "is-last": isLast,
-                    });
 
                     const description = insightSummary(insight)?.trim();
 
@@ -90,7 +83,7 @@ export function DraggableInsightListCore({
                             showDescriptionPanel
                             type={visualizationType}
                             width={width}
-                            className={classNames}
+                            className="gd-visualizations-list-item-wrap"
                             updated={insightUpdated(insight) ?? insightCreated(insight)}
                             isLocked={insightIsLocked(insight)}
                             insight={insight}

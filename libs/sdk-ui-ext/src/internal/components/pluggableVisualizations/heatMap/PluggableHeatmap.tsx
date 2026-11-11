@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set, tail } from "lodash-es";
+import { tail } from "lodash-es";
 
 import { type IInsight, type IInsightDefinition, newAttributeSort } from "@gooddata/sdk-model";
 import {
@@ -9,7 +9,7 @@ import {
     VisualizationTypes,
     isDrillIntersectionAttributeItem,
 } from "@gooddata/sdk-ui";
-import { _cloneDeep, _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty, _set } from "@gooddata/util";
 
 import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket.js";
 import { HEATMAP_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
@@ -116,7 +116,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
         });
         const columnItems = rowItems.length > 1 ? tail(rowItems) : stackItems;
 
-        set(newReferencePoint, BUCKETS, [
+        _set(newReferencePoint, BUCKETS, [
             {
                 localIdentifier: BucketNames.MEASURES,
                 items: measures,

@@ -2,14 +2,13 @@
 
 import { useCallback, useRef, useState } from "react";
 
-import { debounce } from "lodash-es";
-
 import {
     type IAnalyticalBackend,
     type IAnalyticalWorkspace,
     type IWorkspaceDescriptor,
     type IWorkspacesQueryResult,
 } from "@gooddata/sdk-backend-spi";
+import { _debounce } from "@gooddata/util";
 
 const ITEMS_PER_PAGE = 50;
 
@@ -181,7 +180,7 @@ export function usePagedWorkspaces<TResolve extends boolean = true>({
 
     // oxlint-disable-next-line react-hooks/exhaustive-deps
     const onSearch = useCallback(
-        debounce((searchString: string) => {
+        _debounce((searchString: string) => {
             setCurrentPage(0);
             setSearch(searchString);
             void fetchItems({ page: 0, search: searchString, resetItems: true });

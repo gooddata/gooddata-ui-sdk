@@ -2,10 +2,9 @@
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { set } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
 
@@ -44,8 +43,8 @@ describe("LegendSection render", () => {
     });
 
     it("when controlsDisabled true than LegendPositionControl should render disabled", () => {
-        const notCollapsed = set({}, "legend_section.collapsed", false);
-        const legendToggledOn = set({}, "controls.legend.enabled", true);
+        const notCollapsed = _set({}, "legend_section.collapsed", false);
+        const legendToggledOn = _set({}, "controls.legend.enabled", true);
 
         createComponent({
             controlsDisabled: true,
@@ -62,8 +61,8 @@ describe("LegendSection render", () => {
         "When controlsDisabled is false and properties.controls.legend.enabled is false " +
             "than LegendPositionControl should be disabled",
         () => {
-            const legendToggledOn = set({}, "controls.legend.enabled", false);
-            const notCollapsed = set({}, "legend_section.collapsed", false);
+            const legendToggledOn = _set({}, "controls.legend.enabled", false);
+            const notCollapsed = _set({}, "legend_section.collapsed", false);
 
             createComponent({
                 controlsDisabled: false,
@@ -81,8 +80,8 @@ describe("LegendSection render", () => {
         "When controlsDisabled is false and properties.controls.legend.enabled is true " +
             "than LegendPositionControl should be enabled",
         () => {
-            const legendToggledOn = set({}, "controls.legend.enabled", true);
-            const notCollapsed = set({}, "legend_section.collapsed", false);
+            const legendToggledOn = _set({}, "controls.legend.enabled", true);
+            const notCollapsed = _set({}, "legend_section.collapsed", false);
 
             createComponent({
                 controlsDisabled: false,
@@ -97,7 +96,7 @@ describe("LegendSection render", () => {
     );
 
     it("When legend is not visible in meta and is enabled in properties, legend should be disabled", () => {
-        const legendToggledOn = set({}, "controls.legend.enabled", true);
+        const legendToggledOn = _set({}, "controls.legend.enabled", true);
         const propertiesMeta = {
             legend_enabled: false,
             legend_section: { collapsed: false },
@@ -119,8 +118,8 @@ describe("GeoLegendSection render", () => {
     it("renders corner-based geo legend positions and normalizes legacy selection", async () => {
         createGeoComponent({
             controlsDisabled: false,
-            properties: set(set({}, "controls.legend.enabled", true), "controls.legend.position", "top"),
-            propertiesMeta: set({}, "legend_section.collapsed", false),
+            properties: _set(_set({}, "controls.legend.enabled", true), "controls.legend.position", "top"),
+            propertiesMeta: _set({}, "legend_section.collapsed", false),
         });
 
         expect(screen.getByText("top right")).toBeInTheDocument();
@@ -140,8 +139,8 @@ describe("GeoLegendSection render", () => {
 
         createGeoComponent({
             controlsDisabled: false,
-            properties: set(set({}, "controls.legend.enabled", true), "controls.legend.position", "auto"),
-            propertiesMeta: set({}, "legend_section.collapsed", false),
+            properties: _set(_set({}, "controls.legend.enabled", true), "controls.legend.position", "auto"),
+            propertiesMeta: _set({}, "legend_section.collapsed", false),
             pushData: pushDataSpy,
         });
 

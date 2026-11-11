@@ -132,8 +132,13 @@ export interface ILocalizationUsageListQuery extends ILocalizationPageQuery {
      */
     name?: string;
     /**
-     * Lists the workspaces and people behind one count of {@link ILocalizationTranslationUsage}.
-     * Use it together with `value` and `setting`.
+     * Lists the workspaces behind one localization issue of the language in `value`.
+     * `available` selects `METADATA_LANGUAGE_MISMATCH`, and `missing` and `variant` select `METADATA_MISSING_TRANSLATION`.
+     * The people behind an issue are not reported, so a people list with this filter is empty.
+     *
+     * @remarks
+     * For a workspace, the list holds that workspace alone and does not check the issue.
+     * Ask only for a language that `getIssues()` reported for the workspace.
      */
     translation?: LocalizationTranslationState;
 }
@@ -215,58 +220,62 @@ export interface ILocalizationUsageUsersPage {
 export type LocalizationTranslatedSettingType = "METADATA_LOCALE" | "DATA_LOCALE";
 
 /**
- * Whether the workspaces and people behind a count have a translation to a language.
+ * Which localization issue to list the workspaces behind.
  *
  * @remarks
- * `missing`: they use the language for the setting, but their workspace has no translation to it.
- * For `LOCALE`, they use a language other than English for the interface and their workspace has no metadata translation to it.
- * `available`: they use the language for the interface but not for the setting, and their workspace has a translation to it.
- * `variant`: they use the language for the setting, their workspace has no translation to it,
- * but it has a translation to another code of the same language.
- * A person counts over the workspaces they can open.
+ * `missing`: the metadata language has no translation under its code, or the display language has none.
+ * `available`: the display language has a translation, but the metadata language is not set to it.
+ * `variant`: like `missing`, and a translation to another code of the same language exists.
+ * The backend reports `missing` and `variant` as one issue, so their lists hold the same workspaces.
  *
  * @alpha
  */
 export type LocalizationTranslationState = "missing" | "available" | "variant";
 
 /**
- * Workspaces and people behind one translation state.
- *
- * @alpha
- */
-export interface ILocalizationTranslationCount {
-    workspaces: number;
-    users: number;
-}
-
-/**
- * Translation states of one language.
+ * Kind of a localization issue.
  *
  * @remarks
- * A setting or a state is absent when nobody is behind it. `LOCALE` reports `missing` only.
+ * `METADATA_MISSING_TRANSLATION`: the metadata language has no translation under exactly its code. When the
+ * metadata language is the default, the display language is checked instead.
+ * `METADATA_LANGUAGE_MISMATCH`: the display language has a translation, but the metadata language is not set to it.
+ * `METADATA_UNUSED_TRANSLATION`: a workspace owns a translation that nobody uses.
+ * The backend may add types, so handle an unknown type by ignoring it.
  *
  * @alpha
  */
-export interface ILocalizationTranslationValueUsage {
-    content: ILocalizationValueContent;
-    bySetting: Partial<
-        Record<
-            LocalizationSettingType,
-            Partial<Record<LocalizationTranslationState, ILocalizationTranslationCount>>
-        >
-    >;
+export type LocalizationIssueType =
+    | "METADATA_MISSING_TRANSLATION"
+    | "METADATA_LANGUAGE_MISMATCH"
+    | "METADATA_UNUSED_TRANSLATION";
+
+/**
+ * One localization issue in one language.
+ *
+ * @alpha
+ */
+export interface ILocalizationIssue {
+    type: LocalizationIssueType;
+    /**
+     * The problem language.
+     */
+    locale: string;
+    /**
+     * Number of workspaces with the issue. Present only for the organization; a workspace reports its own issues.
+     */
+    workspaces?: number;
 }
 
 /**
- * Where languages are used without a translation, or have a translation nobody uses.
+ * Localization issues of the organization or of one workspace.
+ *
+ * @remarks
+ * Sorted by type in the order of {@link LocalizationIssueType}, then by language. Empty when nothing is wrong.
  *
  * @alpha
  */
-export interface ILocalizationTranslationUsage {
-    /**
-     * One entry per language that has a non-zero count.
-     */
-    values: ILocalizationTranslationValueUsage[];
+export interface ILocalizationIssues {
+    issues: ILocalizationIssue[];
 }
 
 /**
@@ -401,14 +410,9 @@ export interface IOrganizationLocalizationService {
     getStatistics(): Promise<ILocalizationStatistics>;
 
     /**
-     * Count the workspaces and people that miss a translation, or do not use an available one.
+     * List the localization issues of the organization, with the number of workspaces behind each.
      */
-    getTranslationUsage(): Promise<ILocalizationTranslationUsage>;
-
-    /**
-     * List translation coverage per workspace.
-     */
-    getStatisticsWorkspaces(query?: ILocalizationPageQuery): Promise<ILocalizationStatisticsWorkspacesPage>;
+    getIssues(): Promise<ILocalizationIssues>;
 }
 
 /**
@@ -441,9 +445,9 @@ export interface IWorkspaceLocalizationService {
     getStatistics(): Promise<ILocalizationStatistics>;
 
     /**
-     * Count the workspace and the people with access to it that miss a translation, or do not use an available one.
+     * List the localization issues of the workspace.
      */
-    getTranslationUsage(): Promise<ILocalizationTranslationUsage>;
+    getIssues(): Promise<ILocalizationIssues>;
 
     /**
      * List translation coverage of the workspace and its ancestors.

@@ -9,9 +9,11 @@ import { type IAppState } from "../types.js";
 
 import {
     EMPTY_INSIGHT_USAGE_ON_DASHBOARDS,
+    getInsightUsageInDocuments,
     getInsightUsageOnDashboards,
     sortDashboards,
 } from "./insight_usage_helpers.js";
+import { type IInsightUsageInDocumentItem } from "./insight_usage_state.js";
 
 /** The domain's single input selector. */
 export const getInsightUsageState = (state: IAppState) => state.data.insightUsagesOnDashboards;
@@ -38,4 +40,11 @@ export const getInsightUsageOnDashboardsSelector = createSelector(
             ),
         };
     },
+);
+
+const NO_DOCUMENTS: IInsightUsageInDocumentItem[] = [];
+
+/** The Publisher documents that show the insight, sorted by title. */
+export const getInsightUsageInDocumentsSelector = createSelector(getInsightUsageState, (usage) =>
+    usage ? getInsightUsageInDocuments(usage.referencedDocuments) : NO_DOCUMENTS,
 );

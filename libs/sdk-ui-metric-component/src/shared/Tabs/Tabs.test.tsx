@@ -1,10 +1,9 @@
 // (C) 2007-2026 GoodData Corporation
 
 import { act, fireEvent, render, renderHook, waitFor } from "@testing-library/react";
-import { omit } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
-import { suppressConsole } from "@gooddata/util";
+import { _omit, suppressConsole } from "@gooddata/util";
 
 import { useTabs } from "./hooks/useTabs.js";
 import { type ITab, TabSpace, TabState } from "./Tab.js";
@@ -357,7 +356,7 @@ describe("Tabs", () => {
                 }),
             );
 
-            const resultTabsProps = omit(result.current.tabsProps, ["onTabActivate", "onTabClose"]);
+            const resultTabsProps = _omit(result.current.tabsProps, ["onTabActivate", "onTabClose"]);
             expect(resultTabsProps).toEqual({
                 tabs,
                 active: 1,

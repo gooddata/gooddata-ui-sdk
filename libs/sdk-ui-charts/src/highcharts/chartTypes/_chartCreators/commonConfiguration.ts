@@ -1,12 +1,12 @@
 // (C) 2007-2026 GoodData Corporation
 
 import Highcharts from "highcharts/esm/highcharts.js";
-import { invoke, set } from "lodash-es";
+import { invoke } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { type ITheme } from "@gooddata/sdk-model";
 import { type ChartType, type IDrillConfig } from "@gooddata/sdk-ui";
-import { _isEmpty } from "@gooddata/util";
+import { _isEmpty, _set } from "@gooddata/util";
 
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import {
@@ -574,7 +574,7 @@ function getThemedConfiguration(
 }
 
 function registerDrilldownHandler(configuration: any, chartOptions: any, drillConfig: IDrillConfig) {
-    set(
+    _set(
         configuration,
         "chart.events.drilldown",
         function chartDrilldownHandler(this: any, event: DrilldownEventObject) {
@@ -600,7 +600,7 @@ export function handleChartLoad(chartType: ChartType) {
 
 function registerRenderHandler(configuration: any, chartOptions: any) {
     if (isOneOfTypes(chartOptions.type, supportedDualAxesChartTypes)) {
-        set(configuration, "chart.events.render", handleChartLoad(chartOptions.type));
+        _set(configuration, "chart.events.render", handleChartLoad(chartOptions.type));
     }
     return configuration;
 }

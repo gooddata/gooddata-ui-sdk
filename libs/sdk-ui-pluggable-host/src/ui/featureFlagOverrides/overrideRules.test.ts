@@ -38,10 +38,9 @@ describe("countChangedRules", () => {
         const draft: FeatureFlagOverrideRule[] = [
             { flag: "aiChatSearchLimit", value: 2 },
             { flag: "enableMekkoChart", value: true, organizationId: "org" },
-            { flag: "enableChangeAnalysis", value: true },
         ];
 
-        expect(countChangedRules(stored, draft)).toBe(3);
+        expect(countChangedRules(stored, draft)).toBe(2);
         expect(countChangedRules(stored, stored)).toBe(0);
     });
 

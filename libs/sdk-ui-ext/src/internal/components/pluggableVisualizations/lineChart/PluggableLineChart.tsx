@@ -1,10 +1,8 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set } from "lodash-es";
-
 import { type IInsight, type IInsightDefinition, newAttributeSort } from "@gooddata/sdk-model";
 import { BucketNames, type IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
-import { _cloneDeep, _isEmpty, _isEqual } from "@gooddata/util";
+import { _cloneDeep, _isEmpty, _isEqual, _set } from "@gooddata/util";
 
 import { AXIS, AXIS_NAME } from "../../../constants/axis.js";
 import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket.js";
@@ -239,7 +237,7 @@ export class PluggableLineChart extends PluggableBaseChart {
             attributes = getAttributeItemsWithoutStacks(buckets, [ATTRIBUTE, DATE]).slice(0, 1);
         }
 
-        set(newReferencePoint, BUCKETS, [
+        _set(newReferencePoint, BUCKETS, [
             {
                 localIdentifier: BucketNames.MEASURES,
                 items: this.getBucketMeasures(newReferencePoint.buckets),
@@ -323,12 +321,12 @@ export class PluggableLineChart extends PluggableBaseChart {
 
         if (measureItems.length <= 1 && existingThresholdMeasures.length > 0) {
             // In case there's just one measure item, we need to reset the threshold measures
-            set(referencePoint, "properties.controls.thresholdMeasures", []);
+            _set(referencePoint, "properties.controls.thresholdMeasures", []);
         }
         if (_isEqual(listThresholdMeasures, existingThresholdMeasures)) {
             return referencePoint;
         }
-        set(referencePoint, "properties.controls.thresholdMeasures", listThresholdMeasures);
+        _set(referencePoint, "properties.controls.thresholdMeasures", listThresholdMeasures);
         return referencePoint;
     }
 

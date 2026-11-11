@@ -1,10 +1,10 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { has, omit, sortBy } from "lodash-es";
+import { has, sortBy } from "lodash-es";
 import { createSelector } from "reselect";
 
 import { type IInsightDefinition, type VisualizationProperties } from "@gooddata/sdk-model";
-import { _isEqual } from "@gooddata/util";
+import { _isEqual, _omit } from "@gooddata/util";
 
 import { CHOROPLETH, LOCAL_CHOROPLETH, LOCAL_PUSHPIN, PUSHPIN } from "../constants/visualization_types.js";
 import { BackendToBearConvertors } from "../convertors/index.js";
@@ -13,7 +13,10 @@ import { DateDatasetsService } from "../services/date_datasets_service.js";
 import { getVisualizationObjectForSave } from "../services/report_service.js";
 import { getVisualizationClassTypeFromState } from "../services/visualization_class_service.js";
 import { getInsightSummary, getInsightTitle } from "../store/insight/insight_selectors.js";
-import { getInsightUsageOnDashboardsSelector } from "../store/insight_usage/insight_usage_selectors.js";
+import {
+    getInsightUsageInDocumentsSelector,
+    getInsightUsageOnDashboardsSelector,
+} from "../store/insight_usage/insight_usage_selectors.js";
 import { getLastSavedObject, isReportSaving, isReportSavingAsNew } from "../store/report/report_selectors.js";
 import { type IAppState } from "../store/types.js";
 import {
@@ -106,13 +109,13 @@ function deleteTitle(item: IVisualizationObjectBucketItem): IVisualizationObject
         return item;
     }
     const measureItem = item as IVisualizationObjectMeasure;
-    return { ...measureItem, measure: omit(measureItem.measure, ["title"]) };
+    return { ...measureItem, measure: _omit(measureItem.measure, ["title"]) };
 }
 
 function deleteCondition(
     filter: IVisualizationObjectMeasureValueFilter,
 ): IVisualizationObjectMeasureValueFilter {
-    return { ...filter, measureValueFilter: omit(filter.measureValueFilter, ["condition", "conditions"]) };
+    return { ...filter, measureValueFilter: _omit(filter.measureValueFilter, ["condition", "conditions"]) };
 }
 
 function reorderBuckets(reportContent: IComparableReportContent): IComparableReportContent {
@@ -167,12 +170,12 @@ function stripLocalIdsInFilters(reportContent: IComparableReportContent): ICompa
             filter.positiveAttributeFilter
                 ? {
                       ...filter,
-                      positiveAttributeFilter: omit(filter.positiveAttributeFilter, ["localIdentifier"]),
+                      positiveAttributeFilter: _omit(filter.positiveAttributeFilter, ["localIdentifier"]),
                   }
                 : filter.negativeAttributeFilter
                   ? {
                         ...filter,
-                        negativeAttributeFilter: omit(filter.negativeAttributeFilter, ["localIdentifier"]),
+                        negativeAttributeFilter: _omit(filter.negativeAttributeFilter, ["localIdentifier"]),
                     }
                   : filter,
         ) as VisualizationObjectExtendedFilter[],
@@ -229,7 +232,7 @@ export function prepareForComparison(
                 ? {
                       ...properties,
                       ...(isRecord(properties["controls"])
-                          ? { controls: omit(properties["controls"], ["tooltipText"]) }
+                          ? { controls: _omit(properties["controls"], ["tooltipText"]) }
                           : {}),
                   }
                 : properties,
@@ -355,18 +358,21 @@ export const showDisabledSaveButtonTooltip = (state: IAppState): boolean => !!ge
 export const isSaveAsNewDisabledSelector = (state: IAppState): boolean =>
     !reportCanBeSaved(state) || savingInProgressSelector(state);
 
-export const isUsedOnOtherThanSourceDashboard = createSelector(
+export const isUsedOutsideSourceDashboard = createSelector(
     getInsightUsageOnDashboardsSelector,
+    getInsightUsageInDocumentsSelector,
     getSourceDashboardId,
-    (usages, sourceDashboardId) => {
-        return usages.allDashboards.filter((usage) => usage.id != sourceDashboardId).length > 0;
+    (usages, documents, sourceDashboardId) => {
+        const isUsedOnOtherDashboard =
+            usages.allDashboards.filter((usage) => usage.id != sourceDashboardId).length > 0;
+        return isUsedOnOtherDashboard || documents.length > 0;
     },
 );
 
 export const saveReportSelector = createSelector(
     isSavingSelector,
     isSaveDisabledSelector,
-    isUsedOnOtherThanSourceDashboard,
+    isUsedOutsideSourceDashboard,
     isEditFromKD,
     showDisabledSaveButtonTooltip,
     (isSaving, isDisabled, usedOnOther, editingFromKD, showDisabledTooltip) => ({

@@ -14,7 +14,7 @@ import {
 
 import cx from "classnames";
 import * as jsYaml from "js-yaml";
-import { partial, set, throttle } from "lodash-es";
+import { partial, throttle } from "lodash-es";
 import { type ContentRect, type Rect } from "react-measure";
 import { v4 } from "uuid";
 
@@ -29,7 +29,7 @@ import {
     type PositionType,
     getLegendDetails,
 } from "@gooddata/sdk-ui-vis-commons";
-import { _isEqual } from "@gooddata/util";
+import { _isEqual, _set } from "@gooddata/util";
 
 import { type IChartConfig } from "../../interfaces/chartConfig.js";
 import { type OnLegendReady } from "../../interfaces/chartProps.js";
@@ -186,7 +186,9 @@ export const HighChartsRenderer = memo(function HighChartsRenderer({
         if (item.anomaly) {
             return;
         }
-        setLegendItemsEnabled((prev) => set<boolean[]>([...prev], item.legendIndex, !prev[item.legendIndex]));
+        setLegendItemsEnabled((prev) =>
+            _set<boolean[]>([...prev], item.legendIndex, !prev[item.legendIndex]),
+        );
     }, []);
 
     const getItems = useCallback(

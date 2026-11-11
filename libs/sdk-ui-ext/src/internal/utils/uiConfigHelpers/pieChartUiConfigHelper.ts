@@ -1,10 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { BucketNames } from "@gooddata/sdk-ui";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { messages } from "../../../locales.js";
 import { BUCKETS } from "../../constants/bucket.js";
@@ -46,7 +45,7 @@ function setPieChartBucketWarningMessages(referencePoint: IExtendedReferencePoin
 
             if (warningMessageId) {
                 const warningMessage = getTranslation(warningMessageId, intl);
-                set(updatedUiConfig, [BUCKETS, localIdentifier, "warningMessage"], warningMessage);
+                _set(updatedUiConfig, [BUCKETS, localIdentifier, "warningMessage"], warningMessage);
             }
         }
     });
@@ -65,22 +64,26 @@ export function setPieChartUiConfig(
     const measuresCanAddItems = !hasMoreThanOneCategory(buckets);
     const viewCanAddItems = !hasMoreThanOneMasterMeasure(buckets, BucketNames.MEASURES);
 
-    set(referencePointConfigured, UICONFIG, setBucketTitles(referencePoint, visualizationType, intl));
-    set(
+    _set(referencePointConfigured, UICONFIG, setBucketTitles(referencePoint, visualizationType, intl));
+    _set(
         referencePointConfigured,
         [UICONFIG, BUCKETS, BucketNames.MEASURES, "canAddItems"],
         measuresCanAddItems,
     );
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "canAddItems"], viewCanAddItems);
-    set(referencePointConfigured, UICONFIG, setPieChartBucketWarningMessages(referencePointConfigured, intl));
-    set(
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "canAddItems"], viewCanAddItems);
+    _set(
+        referencePointConfigured,
+        UICONFIG,
+        setPieChartBucketWarningMessages(referencePointConfigured, intl),
+    );
+    _set(
         referencePointConfigured,
         [UICONFIG, OPEN_AS_REPORT, SUPPORTED],
         !hasColorMapping(referencePoint.properties),
     );
 
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], pieMeasuresIcon);
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "icon"], pieViewIcon);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], pieMeasuresIcon);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "icon"], pieViewIcon);
 
     return referencePointConfigured;
 }

@@ -1,10 +1,13 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { fireEvent, render, screen } from "@testing-library/react";
-import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { fireEvent, render, screen, within } from "@testing-library/react";
+import { afterAll, describe, expect, it, vi } from "vitest";
 
-import { type AnalyticalDashboardUriFactory } from "../selectors/uri_selector.js";
-import { type IInsightUsageOnDashboard } from "../store/insight_usage/insight_usage_state.js";
+import { type AnalyticalDashboardUriFactory, type DocumentUriFactory } from "../selectors/uri_selector.js";
+import {
+    type IInsightUsageInDocumentItem,
+    type IInsightUsageOnDashboard,
+} from "../store/insight_usage/insight_usage_state.js";
 import { createAnalyticalDashboard } from "../tests/constants.test.helpers.js";
 import { withIntl } from "../utils/with_intl.js";
 import { withRedux } from "../utils/with_redux.js";
@@ -19,16 +22,20 @@ vi.hoisted(() => {
 // mocked to return the values under test
 const {
     mockGetInsightUsageOnDashboardsSelector,
+    mockGetInsightUsageInDocumentsSelector,
     mockGetIsEmbedded,
     mockGetSourceDashboardId,
     mockIsAllowedDashboardLinks,
     mockAnalyticalDashboardUriFactorySelector,
+    mockDocumentUriFactorySelector,
 } = vi.hoisted(() => ({
     mockGetInsightUsageOnDashboardsSelector: vi.fn(),
+    mockGetInsightUsageInDocumentsSelector: vi.fn(),
     mockGetIsEmbedded: vi.fn(),
     mockGetSourceDashboardId: vi.fn(),
     mockIsAllowedDashboardLinks: vi.fn(),
     mockAnalyticalDashboardUriFactorySelector: vi.fn(),
+    mockDocumentUriFactorySelector: vi.fn(),
 }));
 
 vi.mock("../store/insight_usage/insight_usage_selectors.js", async () => {
@@ -38,6 +45,7 @@ vi.mock("../store/insight_usage/insight_usage_selectors.js", async () => {
     return {
         ...actual,
         getInsightUsageOnDashboardsSelector: mockGetInsightUsageOnDashboardsSelector,
+        getInsightUsageInDocumentsSelector: mockGetInsightUsageInDocumentsSelector,
     };
 });
 
@@ -63,6 +71,7 @@ vi.mock("../selectors/uri_selector.js", async () => {
     return {
         ...actual,
         analyticalDashboardUriFactorySelector: mockAnalyticalDashboardUriFactorySelector,
+        documentUriFactorySelector: mockDocumentUriFactorySelector,
     };
 });
 
@@ -93,7 +102,16 @@ interface IInsightUsageOnDashboardsStateValues {
     sourceDashboardIdentifier?: string;
     isAllowedDashboardLinks: boolean;
     analyticalDashboardUriFactory: AnalyticalDashboardUriFactory;
+    documents: IInsightUsageInDocumentItem[];
+    documentUriFactory: DocumentUriFactory;
 }
+
+const NO_DASHBOARDS: IInsightUsageOnDashboard = {
+    accessibleDashboards: [],
+    allDashboards: [],
+    inaccessibleDashboardsCount: 0,
+    allDashboardsCount: 0,
+};
 
 describe("InsightUsageOnDashboards", () => {
     function renderComponent(userValues: Partial<IInsightUsageOnDashboardsStateValues>) {
@@ -107,6 +125,8 @@ describe("InsightUsageOnDashboards", () => {
             isEmbedded: false,
             isAllowedDashboardLinks: true,
             analyticalDashboardUriFactory: (id: string) => `/${id}`,
+            documents: [],
+            documentUriFactory: (id: string) => `/document/${id}`,
             ...userValues,
         };
         mockGetInsightUsageOnDashboardsSelector.mockReturnValue(values.insightUsageOnDashboard);
@@ -114,6 +134,8 @@ describe("InsightUsageOnDashboards", () => {
         mockGetSourceDashboardId.mockReturnValue(values.sourceDashboardIdentifier);
         mockIsAllowedDashboardLinks.mockReturnValue(values.isAllowedDashboardLinks);
         mockAnalyticalDashboardUriFactorySelector.mockReturnValue(values.analyticalDashboardUriFactory);
+        mockGetInsightUsageInDocumentsSelector.mockReturnValue(values.documents);
+        mockDocumentUriFactorySelector.mockReturnValue(values.documentUriFactory);
 
         const Wrapped = withRedux(withIntl(InsightUsageOnDashboards));
 
@@ -161,7 +183,7 @@ describe("InsightUsageOnDashboards", () => {
         expect(button).toHaveAttribute("aria-expanded", "true");
         const dialog = screen.getByRole("dialog", { hidden: true });
         const labelId = dialog.getAttribute("aria-labelledby") ?? "";
-        expect(document.getElementById(labelId)).toHaveTextContent("visualization used on");
+        expect(document.getElementById(labelId)).toHaveTextContent("Used in");
     });
 
     it("should render dashboard item with suffix 'Editing now' in embedded mode", () => {
@@ -187,7 +209,7 @@ describe("InsightUsageOnDashboards", () => {
         ).toEqual("Editing now");
     });
 
-    it("should display link icon when hover on dashboard item", () => {
+    it("should link to other dashboards but not to the dashboard being edited", () => {
         const { container } = renderComponent({
             sourceDashboardIdentifier: "Bee",
             insightUsageOnDashboard: buildInsightUsageOnDashboards([
@@ -195,13 +217,10 @@ describe("InsightUsageOnDashboards", () => {
                 { name: "Sale1", identifier: "Bee1", id: 2 },
             ]),
         });
-        const insightUsageOnDashboardsButton = container.querySelector(
-            '[data-testid="s-insight-usages-of-dashboards-link"]',
-        );
-        fireEvent.click(insightUsageOnDashboardsButton);
-        const lastItem = document.querySelector(".s-usages-overlay-body .external-icon-link");
+        fireEvent.click(container.querySelector('[data-testid="s-insight-usages-of-dashboards-link"]'));
 
-        expect(lastItem.querySelectorAll(".gd-dashboard-link-hover-icon")).toHaveLength(1);
+        const links = Array.from(document.querySelectorAll<HTMLAnchorElement>(".s-usage-item a"));
+        expect(links.map((link) => link.textContent)).toEqual(["Sale1"]);
     });
 
     it("should render expected dialog content when insight is used only on one dashboard that is not accessible", () => {
@@ -286,53 +305,105 @@ describe("InsightUsageOnDashboards", () => {
         );
     });
 
-    describe("goToDashboard", () => {
-        beforeEach(() => {
-            window.open = vi.fn();
+    describe("dashboard links", () => {
+        it("should link the dashboard to a new tab outside embedded mode", () => {
+            const { container } = renderComponent({
+                insightUsageOnDashboard: buildInsightUsageOnDashboards([
+                    { name: "Sale1", identifier: "Bee1", id: 2 },
+                ]),
+            });
+            fireEvent.click(container.querySelector('[data-testid="s-insight-usages-of-dashboards-link"]'));
+            const link = document.querySelector<HTMLAnchorElement>(".s-usage-item a");
+
+            expect(link.href).toEqual("http://localhost:3000/Bee1");
+            expect(link.target).toEqual("_blank");
         });
 
-        afterEach(() => {
-            vi.clearAllMocks();
-        });
-
-        it.each([
-            ["portal mode without", false],
-            ["embedded mode with", true],
-        ])(
-            "should go to dashboard when user click on dashboard link in %s allowed dashboard links",
-            (_s: string, isAllowedDashboardLinks: boolean) => {
-                const { container } = renderComponent({
-                    insightUsageOnDashboard: buildInsightUsageOnDashboards([
-                        { name: "Sale1", identifier: "Bee1", id: 2 },
-                    ]),
-                    isAllowedDashboardLinks,
-                });
-                const insightUsageOnDashboardsButton = container.querySelector(
-                    '[data-testid="s-insight-usages-of-dashboards-link"]',
-                );
-                fireEvent.click(insightUsageOnDashboardsButton);
-                const lastItem = document.querySelector(".s-usages-overlay-body .external-icon-link");
-                fireEvent.click(lastItem);
-
-                expect(window.open).toBeCalledWith("http://localhost:3000/Bee1", "_blank");
-            },
-        );
-
-        it("should not go to dashboard when user click on dashboard link in embedded mode", () => {
+        it("should not link the dashboard in embedded mode", () => {
             const { container } = renderComponent({
                 isEmbedded: true,
                 insightUsageOnDashboard: buildInsightUsageOnDashboards([
                     { name: "Sale1", identifier: "Bee1", id: 2 },
                 ]),
             });
-            const insightUsageOnDashboardsButton = container.querySelector(
-                '[data-testid="s-insight-usages-of-dashboards-link"]',
-            );
-            fireEvent.click(insightUsageOnDashboardsButton);
-            const lastItem = document.querySelector(".s-usages-overlay-body .s-usage-item");
-            fireEvent.click(lastItem);
+            fireEvent.click(container.querySelector('[data-testid="s-insight-usages-of-dashboards-link"]'));
 
-            expect(window.open).not.toHaveBeenCalled();
+            expect(document.querySelector(".s-usage-item").textContent).toEqual("Sale1");
+            expect(document.querySelector(".s-usage-item a")).toBeNull();
+        });
+    });
+
+    describe("documents", () => {
+        const documents: IInsightUsageInDocumentItem[] = [
+            { id: "doc1", title: "Board pack" },
+            { id: "doc2", title: "Weekly review" },
+        ];
+
+        it("should count and describe documents when no dashboard uses the visualization", () => {
+            renderComponent({ insightUsageOnDashboard: NO_DASHBOARDS, documents });
+
+            const button = screen.getByRole("button", { name: "Used in 2 reports" });
+            expect(button).toHaveTextContent("2");
+        });
+
+        it("should combine the dashboard and document counts", () => {
+            renderComponent({
+                insightUsageOnDashboard: buildInsightUsageOnDashboards([
+                    { name: "Sale", identifier: "Bee", id: 1 },
+                ]),
+                documents,
+            });
+
+            const button = screen.getByRole("button", { name: "Used in 1 dashboard and 2 reports" });
+            expect(button).toHaveTextContent("3");
+        });
+
+        it("should list dashboards and documents in separate groups", () => {
+            renderComponent({
+                insightUsageOnDashboard: buildInsightUsageOnDashboards([
+                    { name: "Sale", identifier: "Bee", id: 1 },
+                ]),
+                documents,
+            });
+            fireEvent.click(screen.getByRole("button", { name: "Used in 1 dashboard and 2 reports" }));
+
+            const overlay = within(document.querySelector<HTMLElement>(".s-usages-overlay-body"));
+            expect(overlay.getByText("Dashboards (1)").closest("button")).toBeInTheDocument();
+            expect(overlay.getByText("Reports (2)").closest("button")).toBeInTheDocument();
+            expect(document.querySelectorAll(".s-usage-item")).toHaveLength(1);
+            expect(
+                Array.from(document.querySelectorAll(".s-usage-document-item")).map(
+                    (item) => item.textContent,
+                ),
+            ).toEqual(["Board pack", "Weekly review"]);
+        });
+
+        it("should collapse a group", () => {
+            renderComponent({ insightUsageOnDashboard: NO_DASHBOARDS, documents });
+            fireEvent.click(screen.getByRole("button", { name: "Used in 2 reports" }));
+            const overlay = within(document.querySelector<HTMLElement>(".s-usages-overlay-body"));
+            const groupToggle = overlay.getByText("Reports (2)").closest("button");
+
+            fireEvent.click(groupToggle);
+
+            expect(groupToggle).toHaveAttribute("aria-expanded", "false");
+            expect(document.querySelectorAll(".s-usage-document-item")).toHaveLength(0);
+        });
+
+        it("should link the report to a new tab", () => {
+            renderComponent({ insightUsageOnDashboard: NO_DASHBOARDS, documents });
+            fireEvent.click(screen.getByRole("button", { name: "Used in 2 reports" }));
+            const link = document.querySelector<HTMLAnchorElement>(".s-usage-document-item a");
+
+            expect(link.href).toEqual("http://localhost:3000/document/doc1");
+            expect(link.target).toEqual("_blank");
+        });
+
+        it("should not link the report in embedded mode", () => {
+            renderComponent({ insightUsageOnDashboard: NO_DASHBOARDS, documents, isEmbedded: true });
+            fireEvent.click(screen.getByRole("button", { name: "Used in 2 reports" }));
+
+            expect(document.querySelector(".s-usage-document-item a")).toBeNull();
         });
     });
 });

@@ -1,7 +1,5 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { uniqBy } from "lodash-es";
-
 import {
     type IAttributeWithReferences,
     type IUnavailableDashboardReference,
@@ -12,6 +10,7 @@ import {
     isDashboardAttributeFilter,
     objRefToString,
 } from "@gooddata/sdk-model";
+import { _uniqBy } from "@gooddata/util";
 
 import { isDashboardObjectRestricted } from "../../../store/filtering/restrictedFilterUtils.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
@@ -59,5 +58,5 @@ export function attributeFilterDisplayFormRefs(
     );
 
     // Remove duplicates by comparing ObjRef string representations
-    return uniqBy(allRefs, objRefToString);
+    return _uniqBy(allRefs, objRefToString);
 }

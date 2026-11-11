@@ -1,9 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set } from "lodash-es";
-
 import { type OverTimeComparisonType, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
-import { _cloneDeep, _isEmpty, _isEqual } from "@gooddata/util";
+import { _cloneDeep, _isEmpty, _isEqual, _set } from "@gooddata/util";
 
 import { METRIC, SHOW_IN_PERCENT } from "../constants/bucket.js";
 import {
@@ -78,7 +76,7 @@ export function configureOverTimeComparison(
 }
 
 function removeShowInPercent(measure: IBucketItem) {
-    return set(measure, SHOW_IN_PERCENT, null);
+    return _set(measure, SHOW_IN_PERCENT, null);
 }
 
 export function configurePercent(

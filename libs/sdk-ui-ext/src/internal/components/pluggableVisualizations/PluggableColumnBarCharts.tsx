@@ -1,7 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set } from "lodash-es";
-
 import {
     type IInsight,
     type IInsightDefinition,
@@ -16,7 +14,7 @@ import {
     type IDrillEventIntersectionElement,
     getIntersectionPartAfter,
 } from "@gooddata/sdk-ui";
-import { _cloneDeep, shiftArrayRight } from "@gooddata/util";
+import { _cloneDeep, _set, shiftArrayRight } from "@gooddata/util";
 
 import { AXIS } from "../../constants/axis.js";
 import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket.js";
@@ -154,7 +152,7 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
     private configureBucketsWithMultipleDates(extendedReferencePoint: IExtendedReferencePoint): void {
         const { measures, views, stacks } = this.getMeasuresViewStackBucketItems(extendedReferencePoint);
 
-        set(extendedReferencePoint, BUCKETS, [
+        _set(extendedReferencePoint, BUCKETS, [
             {
                 localIdentifier: BucketNames.MEASURES,
                 items: measures,

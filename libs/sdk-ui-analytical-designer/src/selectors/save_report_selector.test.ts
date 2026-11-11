@@ -30,7 +30,7 @@ import { getInsightForSaveViaMd, getInsightWithBucketsViaMd } from "./insight_se
 import {
     hasUnsavedChangesSelector,
     isSavedReportCurrentReport,
-    isUsedOnOtherThanSourceDashboard,
+    isUsedOutsideSourceDashboard,
     prepareForComparison,
     saveAsNewReportSelector,
     saveReportSelector,
@@ -588,7 +588,7 @@ const asSaved = (state: IAppState): IAppState =>
     });
 
 describe("Save selectors", () => {
-    describe("isUsedOnOtherThanSourceDashboard", () => {
+    describe("isUsedOutsideSourceDashboard", () => {
         // the result function only reads `allDashboards`, so the cases carry just that
         it.each<[boolean, string, Pick<IInsightUsageOnDashboard, "allDashboards">]>([
             [false, "dashboardId1", { allDashboards: [] }],
@@ -609,13 +609,26 @@ describe("Save selectors", () => {
             "should return %s when source dashboard id is %s and usages are %s",
             (expectedResult, sourceDashboardId, usages) => {
                 expect(
-                    isUsedOnOtherThanSourceDashboard.resultFunc(
+                    isUsedOutsideSourceDashboard.resultFunc(
                         usages as IInsightUsageOnDashboard,
+                        [],
                         sourceDashboardId,
                     ),
                 ).toBe(expectedResult);
             },
         );
+
+        it("should return true when only the source dashboard and a document use the visualization", () => {
+            expect(
+                isUsedOutsideSourceDashboard.resultFunc(
+                    {
+                        allDashboards: [{ title: "dashboard 1", id: "dashboardId1" }],
+                    } as IInsightUsageOnDashboard,
+                    [{ title: "Board pack", id: "doc1" }],
+                    "dashboardId1",
+                ),
+            ).toBe(true);
+        });
     });
 
     describe("saveReportSelector", () => {

@@ -1,9 +1,10 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { omit } from "lodash-es";
 import { type SagaIterator, type Task } from "redux-saga";
 import { actionChannel, all, call, cancel, delay, join, put, race, spawn, take } from "redux-saga/effects";
 import { v4 as uuidv4 } from "uuid";
+
+import { _omit } from "@gooddata/util";
 
 import { newDashboardEventPredicate } from "../../events/index.js";
 import { renderRequested, renderResolvedWithDetails } from "../../events/render.js";
@@ -63,7 +64,7 @@ export function newRenderingWorker(renderingWorkerConfig: Partial<IRenderingWork
             yield put(executedActions.setDashboardExecutionDone());
 
             // Notify that the dashboard is fully rendered.
-            yield put(renderResolvedWithDetails(ctx, omit(config, "correlationIdGenerator"), correlationId));
+            yield put(renderResolvedWithDetails(ctx, _omit(config, "correlationIdGenerator"), correlationId));
         } catch (err) {
             console.error("Rendering worker failed", err);
         }

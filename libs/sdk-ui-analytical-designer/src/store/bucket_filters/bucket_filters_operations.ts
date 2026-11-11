@@ -1,11 +1,9 @@
 // (C) 2026 GoodData Corporation
 
-import { omit } from "lodash-es";
-
 import { type DisplayFormRefType } from "@gooddata/sdk-embedding/internal";
 import { type ObjRef, areObjRefsEqual, idRef } from "@gooddata/sdk-model";
 import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
-import { _isEqual } from "@gooddata/util";
+import { _isEqual, _omit } from "@gooddata/util";
 
 import { COMPUTED_ATTRIBUTE } from "../../constants/bucket.js";
 import { DATE_DATASET_ATTRIBUTE } from "../../models/date_item.js";
@@ -1194,7 +1192,7 @@ export function applyMetricDateFilterChange(
             ? updateEveryFilter(filters, (filter) =>
                   filter === edited
                       ? {
-                            ...omit(filter, "emptyDateValuesFilter"),
+                            ..._omit(filter, "emptyDateValuesFilter"),
                             interval,
                             dimension: dateDatasetIdentifier,
                             ...emptyDateValuesFilterProp,

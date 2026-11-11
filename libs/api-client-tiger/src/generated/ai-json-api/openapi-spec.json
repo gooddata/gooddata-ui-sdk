@@ -2896,211 +2896,9 @@
             "Aggregation1": {
                 "type": "string",
                 "enum": [
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
-                    "RUNSUM",
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
-                    "RUNSUM"
-                ],
-                "title": "Aggregation1"
-            },
-            "Aggregation10": {
-                "type": "string",
-                "enum": [
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
-                    "RUNSUM"
-                ],
-                "title": "Aggregation10"
-            },
-            "Aggregation11": {
-                "type": "string",
-                "enum": [
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
-                    "RUNSUM",
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
-                    "RUNSUM"
-                ],
-                "title": "Aggregation11"
-            },
-            "Aggregation12": {
-                "type": "string",
-                "enum": [
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
-                    "RUNSUM"
-                ],
-                "title": "Aggregation12"
-            },
-            "Aggregation13": {
-                "type": "string",
-                "enum": [
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
-                    "RUNSUM",
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
-                    "RUNSUM"
-                ],
-                "title": "Aggregation13"
-            },
-            "Aggregation14": {
-                "type": "string",
-                "enum": [
                     "SUM"
                 ],
-                "title": "Aggregation14"
-            },
-            "Aggregation2": {
-                "type": "string",
-                "enum": [
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
-                    "RUNSUM"
-                ],
-                "title": "Aggregation2"
-            },
-            "Aggregation3": {
-                "type": "string",
-                "enum": [
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
-                    "RUNSUM",
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
-                    "RUNSUM"
-                ],
-                "title": "Aggregation3"
-            },
-            "Aggregation6": {
-                "type": "string",
-                "enum": [
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
-                    "RUNSUM"
-                ],
-                "title": "Aggregation6"
-            },
-            "Aggregation7": {
-                "type": "string",
-                "enum": [
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
-                    "RUNSUM",
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
-                    "RUNSUM"
-                ],
-                "title": "Aggregation7"
-            },
-            "Aggregation8": {
-                "type": "string",
-                "enum": [
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
-                    "RUNSUM"
-                ],
-                "title": "Aggregation8"
-            },
-            "Aggregation9": {
-                "type": "string",
-                "enum": [
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
-                    "RUNSUM",
-                    "SUM",
-                    "COUNT",
-                    "APPROXIMATE_COUNT",
-                    "AVG",
-                    "MIN",
-                    "MAX",
-                    "MEDIAN",
-                    "RUNSUM"
-                ],
-                "title": "Aggregation9"
+                "title": "Aggregation1"
             },
             "AlertDatasetIdentifier": {
                 "properties": {
@@ -3983,7 +3781,7 @@
                                 "type": "null"
                             }
                         ],
-                        "description": "Axis to use for this bucket. Only applicable for \"combo\" charts."
+                        "description": "Axis to use for this bucket. Only applicable for \"combo\", \"line\", \"column\" and \"bar\" charts. The secondary axis is on the right, or on the top for \"bar\" charts."
                     },
                     "display_as": {
                         "anyOf": [
@@ -4214,7 +4012,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type67"
+                                "$ref": "#/components/schemas/Type55"
                             },
                             {
                                 "type": "null"
@@ -4943,7 +4741,7 @@
                         "title": "Id"
                     },
                     "operator": {
-                        "$ref": "#/components/schemas/Operator14"
+                        "$ref": "#/components/schemas/Operator1"
                     },
                     "value": {
                         "anyOf": [
@@ -6052,6 +5850,94 @@
                         ],
                         "title": "Xaxis Rotation"
                     },
+                    "xaxis_secondary_format": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Xaxis Secondary Format"
+                    },
+                    "xaxis_secondary_labels": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Xaxis Secondary Labels"
+                    },
+                    "xaxis_secondary_max": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Xaxis Secondary Max"
+                    },
+                    "xaxis_secondary_min": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Xaxis Secondary Min"
+                    },
+                    "xaxis_secondary_name_position": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Xaxis Secondary Name Position"
+                    },
+                    "xaxis_secondary_name_visible": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Xaxis Secondary Name Visible"
+                    },
+                    "xaxis_secondary_rotation": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Xaxis Secondary Rotation"
+                    },
+                    "xaxis_secondary_visible": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Xaxis Secondary Visible"
+                    },
                     "xaxis_visible": {
                         "anyOf": [
                             {
@@ -7091,7 +6977,7 @@
                             }
                         ],
                         "title": "Persistent Filters Across Tabs",
-                        "description": "Whether persistent filters across tabs are enabled for this dashboard. Defaults to true."
+                        "description": "Whether persistent filters across tabs are enabled for this dashboard. When omitted, the setting is off."
                     },
                     "plugins": {
                         "anyOf": [
@@ -7179,7 +7065,7 @@
                         "description": "An optional human readable title for the dashboard. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type68"
+                        "$ref": "#/components/schemas/Type56"
                     },
                     "user_filters_reset": {
                         "anyOf": [
@@ -7308,7 +7194,7 @@
                             }
                         ],
                         "title": "Persistent Filters Across Tabs",
-                        "description": "Whether persistent filters across tabs are enabled for this dashboard. Defaults to true."
+                        "description": "Whether persistent filters across tabs are enabled for this dashboard. When omitted, the setting is off."
                     },
                     "plugins": {
                         "anyOf": [
@@ -7396,7 +7282,7 @@
                         "description": "An optional human readable title for the dashboard. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type68"
+                        "$ref": "#/components/schemas/Type56"
                     },
                     "user_filters_reset": {
                         "anyOf": [
@@ -8871,7 +8757,7 @@
                         },
                         "type": "array",
                         "title": "Operations",
-                        "description": "RFC 6902 operations turning the document the client sent with the message into `report`. A `test` operation guards each one that overwrites, moves or removes a page or field. A failing `test` means the client copy differs from the one sent. In that case, use `report`."
+                        "description": "RFC 6902 operations turning the document the client sent with the message into the document the part carries (`report` or `document`). A `test` operation guards each one that overwrites, moves or removes a page, section or field. A failing `test` means the client copy differs from the one sent. In that case, use the document the part carries."
                     }
                 },
                 "additionalProperties": false,
@@ -9947,7 +9833,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type64"
+                                "$ref": "#/components/schemas/Type52"
                             },
                             {
                                 "type": "null"
@@ -10940,76 +10826,6 @@
             "Operator1": {
                 "type": "string",
                 "enum": [
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
-                    "CHANGE",
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
-                    "CHANGE"
-                ],
-                "title": "Operator1"
-            },
-            "Operator10": {
-                "type": "string",
-                "enum": [
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
-                    "CHANGE"
-                ],
-                "title": "Operator10"
-            },
-            "Operator11": {
-                "type": "string",
-                "enum": [
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
-                    "CHANGE",
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
-                    "CHANGE"
-                ],
-                "title": "Operator11"
-            },
-            "Operator12": {
-                "type": "string",
-                "enum": [
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
-                    "CHANGE"
-                ],
-                "title": "Operator12"
-            },
-            "Operator13": {
-                "type": "string",
-                "enum": [
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
-                    "CHANGE",
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
-                    "CHANGE"
-                ],
-                "title": "Operator13"
-            },
-            "Operator14": {
-                "type": "string",
-                "enum": [
                     "all",
                     "equal_to",
                     "not_equal_to",
@@ -11028,88 +10844,7 @@
                     "is_empty",
                     "is_not_empty"
                 ],
-                "title": "Operator14"
-            },
-            "Operator2": {
-                "type": "string",
-                "enum": [
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
-                    "CHANGE"
-                ],
-                "title": "Operator2"
-            },
-            "Operator3": {
-                "type": "string",
-                "enum": [
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
-                    "CHANGE",
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
-                    "CHANGE"
-                ],
-                "title": "Operator3"
-            },
-            "Operator4": {
-                "type": "string",
-                "enum": [
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
-                    "CHANGE"
-                ],
-                "title": "Operator4"
-            },
-            "Operator5": {
-                "type": "string",
-                "enum": [
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
-                    "CHANGE",
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
-                    "CHANGE"
-                ],
-                "title": "Operator5"
-            },
-            "Operator6": {
-                "type": "string",
-                "enum": [
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
-                    "CHANGE"
-                ],
-                "title": "Operator6"
-            },
-            "Operator7": {
-                "type": "string",
-                "enum": [
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
-                    "CHANGE",
-                    "SUM",
-                    "DIFFERENCE",
-                    "MULTIPLICATION",
-                    "RATIO",
-                    "CHANGE"
-                ],
-                "title": "Operator7"
+                "title": "Operator1"
             },
             "Parents": {
                 "properties": {
@@ -11532,6 +11267,17 @@
                         "title": "Page Count",
                         "description": "Number of visible pages in the draft, for the answer card."
                     },
+                    "patch": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/DocumentPatch"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "This rework as operations against the AaC v2 document the client sent in `view.document`. It is null unless this version reworks the saved document open in the editor and could be written as a patch. `document` is the result either way."
+                    },
                     "refines_ref": {
                         "anyOf": [
                             {
@@ -11669,7 +11415,7 @@
                     "aggregation": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Aggregation14"
+                                "$ref": "#/components/schemas/Aggregation1"
                             },
                             {
                                 "type": "null"
@@ -11700,7 +11446,7 @@
                         "description": "Sort direction."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type58"
+                        "$ref": "#/components/schemas/Type46"
                     }
                 },
                 "additionalProperties": false,
@@ -11909,79 +11655,12 @@
                     },
                     {
                         "$ref": "#/components/schemas/QueryField7"
-                    },
-                    {
-                        "$ref": "#/components/schemas/QueryField8"
-                    },
-                    {
-                        "$ref": "#/components/schemas/QueryField9"
-                    },
-                    {
-                        "$ref": "#/components/schemas/QueryField10"
-                    },
-                    {
-                        "$ref": "#/components/schemas/QueryField11"
-                    },
-                    {
-                        "$ref": "#/components/schemas/QueryField12"
-                    },
-                    {
-                        "$ref": "#/components/schemas/QueryField13"
-                    },
-                    {
-                        "$ref": "#/components/schemas/QueryField14"
                     }
                 ],
                 "title": "Field"
             },
             "QueryField1": {
                 "properties": {
-                    "aggregation": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Aggregation"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Aggregation function to use for this field."
-                    },
-                    "date_filter": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Date Filter",
-                        "description": "Date filter to use for this field."
-                    },
-                    "maql": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Maql",
-                        "description": "Define MAQL syntax for metric."
-                    },
-                    "operator": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Operator"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Arithmetic operator to use for this field."
-                    },
                     "show_all_values": {
                         "anyOf": [
                             {
@@ -12005,28 +11684,8 @@
                         ],
                         "description": "A field title."
                     },
-                    "type": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Type44"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Type of relative period metric related to another metric in list."
-                    },
                     "using": {
                         "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "items": {
-                                    "type": "string"
-                                },
-                                "type": "array"
-                            },
                             {
                                 "type": "string",
                                 "pattern": "^attribute/(?!\\.)[.A-Za-z0-9_-]{1,255}$"
@@ -12055,125 +11714,151 @@
                 ],
                 "title": "QueryField1"
             },
-            "QueryField10": {
+            "QueryField2": {
+                "properties": {
+                    "compute_ratio": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Compute Ratio",
+                        "description": "Compute ratio for this metric."
+                    },
+                    "filter_by": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/QueryFilters"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "A list of filters in this query."
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Title"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "A field title."
+                    },
+                    "using": {
+                        "$ref": "#/components/schemas/MetricIdentifier",
+                        "description": "Metric identifier to use for this field."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "using"
+                ],
+                "title": "QueryField2"
+            },
+            "QueryField3": {
                 "properties": {
                     "aggregation": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Aggregation9"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
+                        "$ref": "#/components/schemas/Aggregation",
                         "description": "Aggregation function to use for this field."
                     },
-                    "date_filter": {
+                    "compute_ratio": {
                         "anyOf": [
                             {
-                                "type": "string"
+                                "type": "boolean"
                             },
                             {
                                 "type": "null"
                             }
                         ],
-                        "title": "Date Filter",
-                        "description": "Date filter to use for this field."
+                        "title": "Compute Ratio",
+                        "description": "Compute ratio for this metric."
                     },
-                    "maql": {
+                    "filter_by": {
                         "anyOf": [
                             {
-                                "type": "string"
+                                "$ref": "#/components/schemas/QueryFilters"
                             },
                             {
                                 "type": "null"
                             }
                         ],
-                        "title": "Maql",
-                        "description": "Define MAQL syntax for metric."
+                        "description": "A list of filters in this query."
                     },
-                    "operator": {
+                    "title": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Operator7"
+                                "$ref": "#/components/schemas/Title"
                             },
                             {
                                 "type": "null"
                             }
                         ],
-                        "description": "Arithmetic operator to use for this field."
-                    },
-                    "type": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Type53"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Type of relative period metric related to another metric in list."
+                        "description": "A field title."
                     },
                     "using": {
                         "anyOf": [
                             {
-                                "type": "string"
+                                "type": "string",
+                                "pattern": "^attribute/(?!\\.)[.A-Za-z0-9_-]{1,255}$"
                             },
                             {
-                                "items": {
-                                    "type": "string"
-                                },
-                                "type": "array"
+                                "type": "string",
+                                "pattern": "^fact/(?!\\.)[.A-Za-z0-9_-]{1,255}$"
                             },
                             {
-                                "type": "null"
+                                "type": "string",
+                                "pattern": "^label/(?!\\.)[.A-Za-z0-9_-]{1,255}$"
                             }
                         ],
-                        "title": "Using"
+                        "title": "Using",
+                        "description": "Attribute identifier to use for this field."
                     }
                 },
+                "additionalProperties": false,
                 "type": "object",
-                "title": "QueryField10"
+                "required": [
+                    "aggregation",
+                    "using"
+                ],
+                "title": "QueryField3"
             },
-            "QueryField11": {
+            "QueryField4": {
                 "properties": {
-                    "aggregation": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Aggregation10"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Aggregation function to use for this field."
-                    },
-                    "date_filter": {
-                        "type": "string",
-                        "title": "Date Filter",
-                        "description": "Date filter to use for this field."
-                    },
                     "maql": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
+                        "type": "string",
                         "title": "Maql",
                         "description": "Define MAQL syntax for metric."
                     },
-                    "operator": {
+                    "title": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Operator10"
+                                "$ref": "#/components/schemas/Title"
                             },
                             {
                                 "type": "null"
                             }
                         ],
+                        "description": "A field title."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "maql"
+                ],
+                "title": "QueryField4"
+            },
+            "QueryField5": {
+                "properties": {
+                    "operator": {
+                        "$ref": "#/components/schemas/Operator",
                         "description": "Arithmetic operator to use for this field."
                     },
                     "title": {
@@ -12187,22 +11872,48 @@
                         ],
                         "description": "A field title."
                     },
+                    "using": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "maxItems": 2,
+                        "minItems": 2,
+                        "title": "Using"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "operator",
+                    "using"
+                ],
+                "title": "QueryField5"
+            },
+            "QueryField6": {
+                "properties": {
+                    "date_filter": {
+                        "type": "string",
+                        "title": "Date Filter",
+                        "description": "Date filter to use for this field."
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Title"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "A field title."
+                    },
                     "type": {
-                        "$ref": "#/components/schemas/Type54",
+                        "$ref": "#/components/schemas/Type44",
                         "description": "Type of relative period metric related to another metric in list."
                     },
                     "using": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "items": {
-                                    "type": "string"
-                                },
-                                "type": "array"
-                            }
-                        ],
+                        "type": "string",
                         "title": "Using",
                         "description": "Identifier to use for this field."
                     }
@@ -12210,132 +11921,18 @@
                 "additionalProperties": false,
                 "type": "object",
                 "required": [
-                    "using",
                     "type",
+                    "using",
                     "date_filter"
                 ],
-                "title": "QueryField11"
+                "title": "QueryField6"
             },
-            "QueryField12": {
+            "QueryField7": {
                 "properties": {
-                    "aggregation": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Aggregation11"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Aggregation function to use for this field."
-                    },
-                    "date_filter": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Date Filter",
-                        "description": "Date filter to use for this field."
-                    },
-                    "maql": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Maql",
-                        "description": "Define MAQL syntax for metric."
-                    },
-                    "operator": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Operator11"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Arithmetic operator to use for this field."
-                    },
-                    "type": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Type55"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Type of relative period metric related to another metric in list."
-                    },
-                    "using": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "items": {
-                                    "type": "string"
-                                },
-                                "type": "array"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Using"
-                    }
-                },
-                "type": "object",
-                "title": "QueryField12"
-            },
-            "QueryField13": {
-                "properties": {
-                    "aggregation": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Aggregation12"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Aggregation function to use for this field."
-                    },
                     "date_filter": {
                         "type": "string",
                         "title": "Date Filter",
                         "description": "Date filter to use for this field."
-                    },
-                    "maql": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Maql",
-                        "description": "Define MAQL syntax for metric."
-                    },
-                    "operator": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Operator12"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Arithmetic operator to use for this field."
                     },
                     "period": {
                         "anyOf": [
@@ -12362,21 +11959,11 @@
                         "description": "A field title."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type56",
+                        "$ref": "#/components/schemas/Type45",
                         "description": "Type of relative period metric related to another metric in list."
                     },
                     "using": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "items": {
-                                    "type": "string"
-                                },
-                                "type": "array"
-                            }
-                        ],
+                        "type": "string",
                         "title": "Using",
                         "description": "Identifier to use for this field."
                     }
@@ -12384,815 +11971,11 @@
                 "additionalProperties": false,
                 "type": "object",
                 "required": [
-                    "using",
                     "type",
+                    "using",
                     "date_filter"
                 ],
-                "title": "QueryField13"
-            },
-            "QueryField14": {
-                "properties": {
-                    "aggregation": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Aggregation13"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Aggregation function to use for this field."
-                    },
-                    "date_filter": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Date Filter",
-                        "description": "Date filter to use for this field."
-                    },
-                    "maql": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Maql",
-                        "description": "Define MAQL syntax for metric."
-                    },
-                    "operator": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Operator13"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Arithmetic operator to use for this field."
-                    },
-                    "type": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Type57"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Type of relative period metric related to another metric in list."
-                    },
-                    "using": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "items": {
-                                    "type": "string"
-                                },
-                                "type": "array"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Using"
-                    }
-                },
-                "type": "object",
-                "title": "QueryField14"
-            },
-            "QueryField2": {
-                "properties": {
-                    "aggregation": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Aggregation1"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Aggregation function to use for this field."
-                    },
-                    "date_filter": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Date Filter",
-                        "description": "Date filter to use for this field."
-                    },
-                    "maql": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Maql",
-                        "description": "Define MAQL syntax for metric."
-                    },
-                    "operator": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Operator1"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Arithmetic operator to use for this field."
-                    },
-                    "type": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Type45"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Type of relative period metric related to another metric in list."
-                    },
-                    "using": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "items": {
-                                    "type": "string"
-                                },
-                                "type": "array"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Using"
-                    }
-                },
-                "type": "object",
-                "title": "QueryField2"
-            },
-            "QueryField3": {
-                "properties": {
-                    "aggregation": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Aggregation2"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Aggregation function to use for this field."
-                    },
-                    "compute_ratio": {
-                        "anyOf": [
-                            {
-                                "type": "boolean"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Compute Ratio",
-                        "description": "Compute ratio for this metric."
-                    },
-                    "date_filter": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Date Filter",
-                        "description": "Date filter to use for this field."
-                    },
-                    "filter_by": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/QueryFilters"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "A list of filters in this query."
-                    },
-                    "maql": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Maql",
-                        "description": "Define MAQL syntax for metric."
-                    },
-                    "operator": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Operator2"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Arithmetic operator to use for this field."
-                    },
-                    "title": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Title"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "A field title."
-                    },
-                    "type": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Type46"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Type of relative period metric related to another metric in list."
-                    },
-                    "using": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Using1"
-                            },
-                            {
-                                "$ref": "#/components/schemas/Using2"
-                            }
-                        ],
-                        "title": "Metric Identifier",
-                        "description": "Metric identifier to use for this field."
-                    }
-                },
-                "additionalProperties": false,
-                "type": "object",
-                "required": [
-                    "using"
-                ],
-                "title": "QueryField3"
-            },
-            "QueryField4": {
-                "properties": {
-                    "aggregation": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Aggregation3"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Aggregation function to use for this field."
-                    },
-                    "date_filter": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Date Filter",
-                        "description": "Date filter to use for this field."
-                    },
-                    "maql": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Maql",
-                        "description": "Define MAQL syntax for metric."
-                    },
-                    "operator": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Operator3"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Arithmetic operator to use for this field."
-                    },
-                    "type": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Type47"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Type of relative period metric related to another metric in list."
-                    },
-                    "using": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "items": {
-                                    "type": "string"
-                                },
-                                "type": "array"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Using"
-                    }
-                },
-                "type": "object",
-                "title": "QueryField4"
-            },
-            "QueryField5": {
-                "properties": {
-                    "aggregation": {
-                        "$ref": "#/components/schemas/Aggregation3",
-                        "description": "Aggregation function to use for this field."
-                    },
-                    "compute_ratio": {
-                        "anyOf": [
-                            {
-                                "type": "boolean"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Compute Ratio",
-                        "description": "Compute ratio for this metric."
-                    },
-                    "date_filter": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Date Filter",
-                        "description": "Date filter to use for this field."
-                    },
-                    "filter_by": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/QueryFilters"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "A list of filters in this query."
-                    },
-                    "maql": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Maql",
-                        "description": "Define MAQL syntax for metric."
-                    },
-                    "operator": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Operator4"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Arithmetic operator to use for this field."
-                    },
-                    "title": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Title"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "A field title."
-                    },
-                    "type": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Type48"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Type of relative period metric related to another metric in list."
-                    },
-                    "using": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "items": {
-                                    "type": "string"
-                                },
-                                "type": "array"
-                            },
-                            {
-                                "type": "string",
-                                "pattern": "^attribute/(?!\\.)[.A-Za-z0-9_-]{1,255}$"
-                            },
-                            {
-                                "type": "string",
-                                "pattern": "^fact/(?!\\.)[.A-Za-z0-9_-]{1,255}$"
-                            },
-                            {
-                                "type": "string",
-                                "pattern": "^label/(?!\\.)[.A-Za-z0-9_-]{1,255}$"
-                            }
-                        ],
-                        "title": "Using",
-                        "description": "Attribute identifier to use for this field."
-                    }
-                },
-                "additionalProperties": false,
-                "type": "object",
-                "required": [
-                    "aggregation",
-                    "using"
-                ],
-                "title": "QueryField5"
-            },
-            "QueryField6": {
-                "properties": {
-                    "aggregation": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Aggregation3"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Aggregation function to use for this field."
-                    },
-                    "date_filter": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Date Filter",
-                        "description": "Date filter to use for this field."
-                    },
-                    "maql": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Maql",
-                        "description": "Define MAQL syntax for metric."
-                    },
-                    "operator": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Operator5"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Arithmetic operator to use for this field."
-                    },
-                    "type": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Type49"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Type of relative period metric related to another metric in list."
-                    },
-                    "using": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "items": {
-                                    "type": "string"
-                                },
-                                "type": "array"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Using"
-                    }
-                },
-                "type": "object",
-                "title": "QueryField6"
-            },
-            "QueryField7": {
-                "properties": {
-                    "aggregation": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Aggregation6"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Aggregation function to use for this field."
-                    },
-                    "date_filter": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Date Filter",
-                        "description": "Date filter to use for this field."
-                    },
-                    "maql": {
-                        "type": "string",
-                        "title": "Maql",
-                        "description": "Define MAQL syntax for metric."
-                    },
-                    "operator": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Operator6"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Arithmetic operator to use for this field."
-                    },
-                    "title": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Title"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "A field title."
-                    },
-                    "type": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Type50"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Type of relative period metric related to another metric in list."
-                    },
-                    "using": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "items": {
-                                    "type": "string"
-                                },
-                                "type": "array"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Using"
-                    }
-                },
-                "additionalProperties": false,
-                "type": "object",
-                "required": [
-                    "maql"
-                ],
                 "title": "QueryField7"
-            },
-            "QueryField8": {
-                "properties": {
-                    "aggregation": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Aggregation7"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Aggregation function to use for this field."
-                    },
-                    "date_filter": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Date Filter",
-                        "description": "Date filter to use for this field."
-                    },
-                    "maql": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Maql",
-                        "description": "Define MAQL syntax for metric."
-                    },
-                    "operator": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Operator7"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Arithmetic operator to use for this field."
-                    },
-                    "type": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Type51"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Type of relative period metric related to another metric in list."
-                    },
-                    "using": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "items": {
-                                    "type": "string"
-                                },
-                                "type": "array"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Using"
-                    }
-                },
-                "type": "object",
-                "title": "QueryField8"
-            },
-            "QueryField9": {
-                "properties": {
-                    "aggregation": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Aggregation8"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Aggregation function to use for this field."
-                    },
-                    "date_filter": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Date Filter",
-                        "description": "Date filter to use for this field."
-                    },
-                    "maql": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Maql",
-                        "description": "Define MAQL syntax for metric."
-                    },
-                    "operator": {
-                        "$ref": "#/components/schemas/Operator7",
-                        "description": "Arithmetic operator to use for this field."
-                    },
-                    "title": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Title"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "A field title."
-                    },
-                    "type": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/components/schemas/Type52"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "description": "Type of relative period metric related to another metric in list."
-                    },
-                    "using": {
-                        "items": {
-                            "type": "string"
-                        },
-                        "type": "array",
-                        "maxItems": 2,
-                        "minItems": 2,
-                        "title": "Using"
-                    }
-                },
-                "additionalProperties": false,
-                "type": "object",
-                "required": [
-                    "using",
-                    "operator"
-                ],
-                "title": "QueryField9"
             },
             "QueryFields": {
                 "patternProperties": {
@@ -13254,7 +12037,7 @@
                         "title": "Metrics"
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type59"
+                        "$ref": "#/components/schemas/Type47"
                     }
                 },
                 "additionalProperties": false,
@@ -14639,7 +13422,8 @@
                             "date",
                             "dataset",
                             "visualization",
-                            "dashboard"
+                            "dashboard",
+                            "document"
                         ],
                         "title": "Sourcetype",
                         "description": "Source object type (e.g., 'dashboard', 'visualization', 'metric')."
@@ -14654,7 +13438,8 @@
                             "date",
                             "dataset",
                             "visualization",
-                            "dashboard"
+                            "dashboard",
+                            "document"
                         ],
                         "title": "Targettype",
                         "description": "Target object type (e.g., 'visualization', 'metric', 'attribute')."
@@ -15057,7 +13842,8 @@
                                 "date",
                                 "dataset",
                                 "visualization",
-                                "dashboard"
+                                "dashboard",
+                                "document"
                             ]
                         },
                         "type": "array",
@@ -17183,7 +15969,7 @@
                         "description": "A total title."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type63"
+                        "$ref": "#/components/schemas/Type51"
                     },
                     "using": {
                         "type": "string",
@@ -17205,41 +15991,6 @@
                     "date_filter"
                 ],
                 "title": "Type1"
-            },
-            "Type100": {
-                "type": "string",
-                "enum": [
-                    "combo_chart"
-                ],
-                "title": "Type100"
-            },
-            "Type101": {
-                "type": "string",
-                "enum": [
-                    "geo_chart"
-                ],
-                "title": "Type101"
-            },
-            "Type102": {
-                "type": "string",
-                "enum": [
-                    "geo_area_chart"
-                ],
-                "title": "Type102"
-            },
-            "Type103": {
-                "type": "string",
-                "enum": [
-                    "repeater_chart"
-                ],
-                "title": "Type103"
-            },
-            "Type104": {
-                "type": "string",
-                "enum": [
-                    "radar_chart"
-                ],
-                "title": "Type104"
             },
             "Type11": {
                 "type": "string",
@@ -17282,17 +16033,13 @@
             "Type44": {
                 "type": "string",
                 "enum": [
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD"
+                    "PREVIOUS_YEAR"
                 ],
                 "title": "Type44"
             },
             "Type45": {
                 "type": "string",
                 "enum": [
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD",
-                    "PREVIOUS_YEAR",
                     "PREVIOUS_PERIOD"
                 ],
                 "title": "Type45"
@@ -17300,38 +16047,16 @@
             "Type46": {
                 "type": "string",
                 "enum": [
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD"
+                    "attribute_sort"
                 ],
                 "title": "Type46"
             },
             "Type47": {
                 "type": "string",
                 "enum": [
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD",
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD"
+                    "metric_sort"
                 ],
                 "title": "Type47"
-            },
-            "Type48": {
-                "type": "string",
-                "enum": [
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD"
-                ],
-                "title": "Type48"
-            },
-            "Type49": {
-                "type": "string",
-                "enum": [
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD",
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD"
-                ],
-                "title": "Type49"
             },
             "Type5": {
                 "type": "string",
@@ -17340,95 +16065,7 @@
                 ],
                 "title": "Type5"
             },
-            "Type50": {
-                "type": "string",
-                "enum": [
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD"
-                ],
-                "title": "Type50"
-            },
             "Type51": {
-                "type": "string",
-                "enum": [
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD",
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD"
-                ],
-                "title": "Type51"
-            },
-            "Type52": {
-                "type": "string",
-                "enum": [
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD"
-                ],
-                "title": "Type52"
-            },
-            "Type53": {
-                "type": "string",
-                "enum": [
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD",
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD"
-                ],
-                "title": "Type53"
-            },
-            "Type54": {
-                "type": "string",
-                "enum": [
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD",
-                    "PREVIOUS_YEAR"
-                ],
-                "title": "Type54"
-            },
-            "Type55": {
-                "type": "string",
-                "enum": [
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD",
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD"
-                ],
-                "title": "Type55"
-            },
-            "Type56": {
-                "type": "string",
-                "enum": [
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD",
-                    "PREVIOUS_PERIOD"
-                ],
-                "title": "Type56"
-            },
-            "Type57": {
-                "type": "string",
-                "enum": [
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD",
-                    "PREVIOUS_YEAR",
-                    "PREVIOUS_PERIOD"
-                ],
-                "title": "Type57"
-            },
-            "Type58": {
-                "type": "string",
-                "enum": [
-                    "attribute_sort"
-                ],
-                "title": "Type58"
-            },
-            "Type59": {
-                "type": "string",
-                "enum": [
-                    "metric_sort"
-                ],
-                "title": "Type59"
-            },
-            "Type63": {
                 "type": "string",
                 "enum": [
                     "SUM",
@@ -17438,31 +16075,31 @@
                     "MED",
                     "NAT"
                 ],
-                "title": "Type63"
+                "title": "Type51"
             },
-            "Type64": {
+            "Type52": {
                 "type": "string",
                 "enum": [
                     "pushpin",
                     "area"
                 ],
-                "title": "Type64"
+                "title": "Type52"
             },
-            "Type67": {
+            "Type55": {
                 "type": "string",
                 "enum": [
                     "solid",
                     "pattern",
                     "outline"
                 ],
-                "title": "Type67"
+                "title": "Type55"
             },
-            "Type68": {
+            "Type56": {
                 "type": "string",
                 "enum": [
                     "dashboard"
                 ],
-                "title": "Type68"
+                "title": "Type56"
             },
             "Type7": {
                 "type": "string",
@@ -17471,6 +16108,76 @@
                 ],
                 "title": "Type7"
             },
+            "Type70": {
+                "type": "string",
+                "enum": [
+                    "table"
+                ],
+                "title": "Type70"
+            },
+            "Type71": {
+                "type": "string",
+                "enum": [
+                    "bar_chart"
+                ],
+                "title": "Type71"
+            },
+            "Type72": {
+                "type": "string",
+                "enum": [
+                    "column_chart"
+                ],
+                "title": "Type72"
+            },
+            "Type73": {
+                "type": "string",
+                "enum": [
+                    "line_chart"
+                ],
+                "title": "Type73"
+            },
+            "Type74": {
+                "type": "string",
+                "enum": [
+                    "area_chart"
+                ],
+                "title": "Type74"
+            },
+            "Type75": {
+                "type": "string",
+                "enum": [
+                    "scatter_chart"
+                ],
+                "title": "Type75"
+            },
+            "Type76": {
+                "type": "string",
+                "enum": [
+                    "bubble_chart"
+                ],
+                "title": "Type76"
+            },
+            "Type77": {
+                "type": "string",
+                "enum": [
+                    "pie_chart"
+                ],
+                "title": "Type77"
+            },
+            "Type78": {
+                "type": "string",
+                "enum": [
+                    "donut_chart"
+                ],
+                "title": "Type78"
+            },
+            "Type79": {
+                "type": "string",
+                "enum": [
+                    "treemap_chart"
+                ],
+                "title": "Type79"
+            },
             "Type8": {
                 "type": "string",
                 "enum": [
@@ -17478,59 +16185,73 @@
                 ],
                 "title": "Type8"
             },
+            "Type80": {
+                "type": "string",
+                "enum": [
+                    "pyramid_chart"
+                ],
+                "title": "Type80"
+            },
+            "Type81": {
+                "type": "string",
+                "enum": [
+                    "funnel_chart"
+                ],
+                "title": "Type81"
+            },
             "Type82": {
                 "type": "string",
                 "enum": [
-                    "table"
+                    "heatmap_chart"
                 ],
                 "title": "Type82"
             },
             "Type83": {
                 "type": "string",
                 "enum": [
-                    "bar_chart"
+                    "bullet_chart"
                 ],
                 "title": "Type83"
             },
             "Type84": {
                 "type": "string",
                 "enum": [
-                    "column_chart"
+                    "waterfall_chart"
                 ],
                 "title": "Type84"
             },
             "Type85": {
                 "type": "string",
                 "enum": [
-                    "line_chart"
+                    "dependency_wheel_chart"
                 ],
                 "title": "Type85"
             },
             "Type86": {
                 "type": "string",
                 "enum": [
-                    "area_chart"
+                    "sankey_chart"
                 ],
                 "title": "Type86"
             },
             "Type87": {
                 "type": "string",
                 "enum": [
-                    "scatter_chart"
+                    "headline_chart"
                 ],
                 "title": "Type87"
             },
             "Type88": {
                 "type": "string",
                 "enum": [
-                    "bubble_chart"
+                    "combo_chart"
                 ],
                 "title": "Type88"
             },
             "Type89": {
                 "type": "string",
                 "enum": [
-                    "pie_chart"
+                    "geo_chart"
                 ],
                 "title": "Type89"
             },
@@ -17544,72 +16265,23 @@
             "Type90": {
                 "type": "string",
                 "enum": [
-                    "donut_chart"
+                    "geo_area_chart"
                 ],
                 "title": "Type90"
             },
             "Type91": {
                 "type": "string",
                 "enum": [
-                    "treemap_chart"
+                    "repeater_chart"
                 ],
                 "title": "Type91"
             },
             "Type92": {
                 "type": "string",
                 "enum": [
-                    "pyramid_chart"
+                    "radar_chart"
                 ],
                 "title": "Type92"
-            },
-            "Type93": {
-                "type": "string",
-                "enum": [
-                    "funnel_chart"
-                ],
-                "title": "Type93"
-            },
-            "Type94": {
-                "type": "string",
-                "enum": [
-                    "heatmap_chart"
-                ],
-                "title": "Type94"
-            },
-            "Type95": {
-                "type": "string",
-                "enum": [
-                    "bullet_chart"
-                ],
-                "title": "Type95"
-            },
-            "Type96": {
-                "type": "string",
-                "enum": [
-                    "waterfall_chart"
-                ],
-                "title": "Type96"
-            },
-            "Type97": {
-                "type": "string",
-                "enum": [
-                    "dependency_wheel_chart"
-                ],
-                "title": "Type97"
-            },
-            "Type98": {
-                "type": "string",
-                "enum": [
-                    "sankey_chart"
-                ],
-                "title": "Type98"
-            },
-            "Type99": {
-                "type": "string",
-                "enum": [
-                    "headline_chart"
-                ],
-                "title": "Type99"
             },
             "UploadDocumentResponse": {
                 "properties": {
@@ -17708,7 +16380,7 @@
                                 "type": "null"
                             }
                         ],
-                        "description": "The dashboard currently open in the client, as an Analytics as Code (AAC) document. Dashboard model version 2 and version 3 are both accepted; in AAC they differ only in the `version` field, and either keeps its layout in `tabs`. This document is what the assistant edits: it returns the change as an RFC 6902 JSON Patch against exactly this shape, so send the copy the client is holding, including any unsaved edits. Widget order inside a section is what a patch targets, since widget ids are not guaranteed. It also grounds answers about per-widget configuration the widget descriptors do not carry, such as which dashboard filters a widget ignores. Optional."
+                        "description": "The dashboard currently open in the client, as an Analytics as Code (AAC) document. Dashboard model version 2 and version 3 are both accepted; in AAC they differ only in the `version` field, and either keeps its layout in `tabs`. The assistant edits this document. It returns the change as an RFC 6902 JSON Patch against exactly this shape. In edit mode send the copy the client is holding, including any unsaved edits. Outside edit mode send the saved filters, and list the ones the user changed on screen in `viewFilters`. Widget order inside a section is what a patch targets, since widget ids are not guaranteed. It also grounds answers about per-widget configuration the widget descriptors do not carry, such as which dashboard filters a widget ignores. Optional."
                     },
                     "filters": {
                         "anyOf": [
@@ -17738,6 +16410,21 @@
                             }
                         ],
                         "title": "Title"
+                    },
+                    "viewFilters": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/UserContextViewFilter"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Viewfilters",
+                        "description": "Filters whose value on the user's screen differs from the saved ones in `definition`. Examples are a changed filter value or a cross-filter. The assistant keeps the saved filters in a proposal and offers to apply these. Omit the field when nothing differs, and in edit mode. Optional."
                     },
                     "widgets": {
                         "items": {
@@ -18121,6 +16808,40 @@
                 "type": "object",
                 "title": "UserContextView"
             },
+            "UserContextViewFilter": {
+                "properties": {
+                    "filter": {
+                        "additionalProperties": true,
+                        "type": "object",
+                        "title": "Filter",
+                        "description": "The filter as the user sees it, in the AAC filter shape `definition` uses."
+                    },
+                    "key": {
+                        "type": "string",
+                        "title": "Key",
+                        "description": "The filter's key in that tab's `filters`. A key the saved document lacks is a filter only on screen, such as a cross-filter."
+                    },
+                    "tabId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tabid",
+                        "description": "Id of the tab in `definition.tabs`, or null for a document without tabs."
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "key",
+                    "filter"
+                ],
+                "title": "UserContextViewFilter",
+                "description": "A dashboard filter whose value on the user's screen differs from the saved dashboard."
+            },
             "UserContextVisualizationSwitcherWidgetDescriptor": {
                 "properties": {
                     "activeVisualizationId": {
@@ -18278,20 +16999,6 @@
                 "additionalProperties": false,
                 "type": "object",
                 "title": "Using"
-            },
-            "Using1": {
-                "type": "string",
-                "pattern": "^metric/(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                "title": "Metric Identifier",
-                "description": "Identifier to use for this field."
-            },
-            "Using2": {
-                "items": {
-                    "type": "string"
-                },
-                "type": "array",
-                "title": "Metric Identifier",
-                "description": "List of identifiers to use for this field."
             },
             "ValidationError": {
                 "properties": {
@@ -18644,7 +17351,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type82",
+                        "$ref": "#/components/schemas/Type70",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -18782,7 +17489,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type91",
+                        "$ref": "#/components/schemas/Type79",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -18918,7 +17625,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type92",
+                        "$ref": "#/components/schemas/Type80",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -19054,7 +17761,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type93",
+                        "$ref": "#/components/schemas/Type81",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -19222,7 +17929,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type94",
+                        "$ref": "#/components/schemas/Type82",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -19365,7 +18072,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type95",
+                        "$ref": "#/components/schemas/Type83",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -19501,7 +18208,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type96",
+                        "$ref": "#/components/schemas/Type84",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -19659,7 +18366,7 @@
                         "description": "A to attribute in this visualisation."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type97",
+                        "$ref": "#/components/schemas/Type85",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -19824,7 +18531,7 @@
                         "description": "A to attribute in this visualisation."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type98",
+                        "$ref": "#/components/schemas/Type86",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -19967,7 +18674,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type99",
+                        "$ref": "#/components/schemas/Type87",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -20101,7 +18808,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type100",
+                        "$ref": "#/components/schemas/Type88",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -20254,7 +18961,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type83",
+                        "$ref": "#/components/schemas/Type71",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -20414,7 +19121,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type101",
+                        "$ref": "#/components/schemas/Type89",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -20567,7 +19274,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type102",
+                        "$ref": "#/components/schemas/Type90",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -20735,7 +19442,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type103",
+                        "$ref": "#/components/schemas/Type91",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -20873,7 +19580,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type104",
+                        "$ref": "#/components/schemas/Type92",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -21026,7 +19733,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type84",
+                        "$ref": "#/components/schemas/Type72",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -21179,7 +19886,7 @@
                         "description": "A list of trend by attributes in this visualisation."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type85",
+                        "$ref": "#/components/schemas/Type73",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -21332,7 +20039,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type86",
+                        "$ref": "#/components/schemas/Type74",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -21492,7 +20199,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type87",
+                        "$ref": "#/components/schemas/Type75",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -21652,7 +20359,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type88",
+                        "$ref": "#/components/schemas/Type76",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -21788,7 +20495,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type89",
+                        "$ref": "#/components/schemas/Type77",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -21924,7 +20631,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type90",
+                        "$ref": "#/components/schemas/Type78",
                         "description": "Type of visualisation."
                     },
                     "view_by": {

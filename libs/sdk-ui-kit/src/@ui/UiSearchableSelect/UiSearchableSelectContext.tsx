@@ -31,6 +31,8 @@ interface IUiSearchableSelectContext {
     searchInputRef: RefObject<HTMLInputElement | null>;
     /** Whether the select is shown full screen (on mobile), where the list fills the screen. */
     isFullscreen: boolean;
+    /** The id of the footer, set only when the select has one, so the search can be described by it. */
+    footerId?: string;
 }
 
 export const UiSearchableSelectContext = createContext<IUiSearchableSelectContext | null>(null);
