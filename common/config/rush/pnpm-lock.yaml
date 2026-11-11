@@ -8321,6 +8321,9 @@ importers:
 
   ../../tools/app-toolkit:
     dependencies:
+      '@gooddata/util':
+        specifier: workspace:*
+        version: link:../../libs/util
       chalk:
         specifier: 5.3.0
         version: 5.3.0
@@ -8355,9 +8358,6 @@ importers:
       '@gooddata/oxlint-config':
         specifier: workspace:*
         version: link:../oxlint-config
-      '@gooddata/util':
-        specifier: workspace:*
-        version: link:../../libs/util
       '@types/cross-spawn':
         specifier: 6.0.6
         version: 6.0.6
