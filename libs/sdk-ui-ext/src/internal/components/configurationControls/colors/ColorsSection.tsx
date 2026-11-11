@@ -3,13 +3,12 @@
 import { type ReactNode } from "react";
 
 import cx from "classnames";
-import { set } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { type IColor } from "@gooddata/sdk-model";
 import { type ChartFillType, type LineStyle } from "@gooddata/sdk-ui-charts";
 import { Button } from "@gooddata/sdk-ui-kit";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { messages } from "../../../../locales.js";
 import { fillDropdownItems } from "../../../constants/dropdowns.js";
@@ -130,9 +129,9 @@ export function ColorsSection({
         if (isDefaultColorMapping()) {
             return;
         }
-        let updatedProperties = set(_cloneDeep(properties!), "controls.colorMapping", undefined);
+        let updatedProperties = _set(_cloneDeep(properties!), "controls.colorMapping", undefined);
         if (supportsLineStyles) {
-            updatedProperties = set(updatedProperties, "controls.lineStyleMapping", undefined);
+            updatedProperties = _set(updatedProperties, "controls.lineStyleMapping", undefined);
         }
         pushData?.({ messageId: COLOR_MAPPING_CHANGED, properties: updatedProperties, references: {} });
     };

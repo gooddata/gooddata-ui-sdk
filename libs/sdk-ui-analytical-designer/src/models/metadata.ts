@@ -1,7 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
 import invariant from "invariant";
-import { negate, omit, pick, pickBy } from "lodash-es";
+import { negate, pick, pickBy } from "lodash-es";
 
 import {
     type AllTimeGranularity,
@@ -26,7 +26,7 @@ import {
     fillMissingFormat,
 } from "@gooddata/sdk-ui";
 import { Axis } from "@gooddata/sdk-ui-ext/internal";
-import { _cloneDeep, _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty, _omit } from "@gooddata/util";
 
 import { ATTRIBUTE, COMPUTED_ATTRIBUTE, DATE, GEO_ATTRIBUTE, METRIC } from "../constants/bucket.js";
 import { ALL_TIME } from "../constants/presets.js";
@@ -1629,7 +1629,10 @@ export function normalizeEmptyDateValuesFilters(
 
             if (isVisualizationObjectAbsoluteDateFilter(filter)) {
                 return {
-                    absoluteDateFilter: { ...omit(filter.absoluteDateFilter, "emptyValueHandling"), ...mode },
+                    absoluteDateFilter: {
+                        ..._omit(filter.absoluteDateFilter, "emptyValueHandling"),
+                        ...mode,
+                    },
                 };
             }
             const { granularity, from, to } = filter.relativeDateFilter;
@@ -1648,7 +1651,7 @@ export function normalizeEmptyDateValuesFilters(
                 };
             }
             return {
-                relativeDateFilter: { ...omit(filter.relativeDateFilter, "emptyValueHandling"), ...mode },
+                relativeDateFilter: { ..._omit(filter.relativeDateFilter, "emptyValueHandling"), ...mode },
             };
         });
 }
@@ -2024,7 +2027,7 @@ export function pickRelevantFromReportMDObj(
 }
 
 const omitMeasureFormat = (bucketItem: IVisualizationObjectMeasure): IVisualizationObjectMeasure =>
-    omit(bucketItem, ["measure.format"]) as IVisualizationObjectMeasure;
+    _omit(bucketItem, ["measure.format"]) as IVisualizationObjectMeasure;
 
 function omitMeasureFormatFromReportMDObj(
     metadataObject: IVisualizationObjectContentForAvailability,
@@ -2041,7 +2044,7 @@ function omitMeasureFormatFromReportMDObj(
 }
 
 function removeTotalsFromBucket(bucket: IVisualizationObjectBucket): IVisualizationObjectBucket {
-    return omit(bucket, ["totals"]) as IVisualizationObjectBucket;
+    return _omit(bucket, ["totals"]) as IVisualizationObjectBucket;
 }
 
 export function omitTotalsFromReportMDObj(

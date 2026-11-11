@@ -2,8 +2,9 @@
 
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { set } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
+
+import { _set } from "@gooddata/util";
 
 import { InternalIntlWrapper } from "../../utils/internalIntlProvider.js";
 
@@ -63,7 +64,7 @@ describe("DistinctPointShapesControl", () => {
 
         await userEvent.click(screen.getByRole("checkbox"));
         expect(pushData).toBeCalledWith({
-            properties: set({}, `controls.distinctPointShapes.enabled`, true),
+            properties: _set({}, `controls.distinctPointShapes.enabled`, true),
         });
     });
 

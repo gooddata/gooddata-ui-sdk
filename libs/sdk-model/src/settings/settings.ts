@@ -612,11 +612,6 @@ export interface IFeatureFlags {
     enableEmbedButtonInAD?: boolean;
 
     /**
-     * Enable change analysis
-     */
-    enableChangeAnalysis?: boolean;
-
-    /**
      * Enable ranking filter to be used together with measure value filters (MVF).
      *
      * @remarks

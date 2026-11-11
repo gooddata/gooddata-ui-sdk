@@ -1,7 +1,5 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { uniq } from "lodash-es";
-
 import {
     type INegativeAttributeFilter as IEmbedNegativeAttributeFilter,
     type IPositiveAttributeFilter as IEmbedPositiveAttributeFilter,
@@ -23,6 +21,7 @@ import {
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
+import { _uniq } from "@gooddata/util";
 
 // The embedding API types the element lists as strings. The null element (an empty value) passes
 // through as it is.
@@ -124,7 +123,7 @@ export function intersectFilters(
                 return {
                     negativeAttributeFilter: {
                         displayForm: attrFilterContext.negativeAttributeFilter.displayForm,
-                        notIn: uniq(
+                        notIn: _uniq(
                             elementIds(attributeElements).concat(
                                 attrFilterContext.negativeAttributeFilter.notIn,
                             ),
@@ -153,7 +152,7 @@ export function intersectFilters(
             return {
                 negativeAttributeFilter: {
                     displayForm: attrFilterContext.negativeAttributeFilter.displayForm,
-                    notIn: uniq(
+                    notIn: _uniq(
                         elementIds(attributeElements).concat(attrFilterContext.negativeAttributeFilter.notIn),
                     ),
                 },

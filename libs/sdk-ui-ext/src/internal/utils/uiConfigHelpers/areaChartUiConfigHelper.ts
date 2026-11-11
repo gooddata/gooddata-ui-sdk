@@ -1,10 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { BucketNames } from "@gooddata/sdk-ui";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { messages } from "../../../locales.js";
 import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket.js";
@@ -75,7 +74,7 @@ function setAreaChartBucketWarningMessages(
             return uiConfig;
         }
 
-        return set(uiConfig, [BUCKETS, localIdentifier, "warningMessage"], warningMessage);
+        return _set(uiConfig, [BUCKETS, localIdentifier, "warningMessage"], warningMessage);
     }, updatedUiConfig);
 }
 
@@ -107,19 +106,19 @@ export function setAreaChartUiConfig(
         [BucketNames.STACK]: getWarningMessageForStackByBucket(intl, categoriesCount),
     };
 
-    set(referencePointConfigured, UICONFIG, setBucketTitles(referencePoint, visualizationType, intl));
-    set(
+    _set(referencePointConfigured, UICONFIG, setBucketTitles(referencePoint, visualizationType, intl));
+    _set(
         referencePointConfigured,
         [UICONFIG, BUCKETS, BucketNames.MEASURES, "canAddItems"],
         canAddMeasuresItems,
     );
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "canAddItems"], canAddViewItems);
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.STACK, "canAddItems"], canAddStackItems);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "canAddItems"], canAddViewItems);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.STACK, "canAddItems"], canAddStackItems);
     setAreaChartBucketWarningMessages(referencePointConfigured, messageConfig);
 
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], areaMeasuresIcon);
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "icon"], areaViewIcon);
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.STACK, "icon"], areaStackIcon);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], areaMeasuresIcon);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "icon"], areaViewIcon);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.STACK, "icon"], areaStackIcon);
 
     return referencePointConfigured;
 }

@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
 $dialog-width: 420px;
@@ -51,6 +51,26 @@ $max-list-height: 120px;
         margin-bottom: 2px;
         margin-top: 6px;
         padding-inline-start: 25px;
+    }
+
+    .gd-delete-report-dialog-usage-group {
+        padding: 5px 0 8px;
+
+        & + .gd-delete-report-dialog-usage-group {
+            padding-top: 0;
+        }
+
+        .gd-delete-report-dialog-usage-list {
+            margin: 2px 0 0;
+        }
+    }
+
+    .gd-delete-report-dialog-usage-group-heading {
+        margin: 0;
+        font-size: 13px;
+        font-weight: bold;
+        line-height: 18px;
+        color: inherit;
     }
 
     .gd-delete-report-dialog-usage-inaccessible {

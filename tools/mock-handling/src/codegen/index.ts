@@ -3,7 +3,7 @@
 import { writeFileSync } from "fs";
 import { join } from "path";
 
-import { groupBy } from "lodash-es";
+import { _groupBy } from "@gooddata/util";
 
 import { type CatalogRecording } from "../recordings/catalog.js";
 import { type CollectionItemsRecording } from "../recordings/collectionItems.js";
@@ -192,7 +192,7 @@ type IndexGeneratorInput = {
 };
 
 function createGeneratorInput(recordings: IRecording[]): IndexGeneratorInput {
-    const categorized = groupBy(recordings, (rec) => rec.getRecordingType());
+    const categorized = _groupBy(recordings, (rec) => rec.getRecordingType());
 
     return {
         executions: () => {

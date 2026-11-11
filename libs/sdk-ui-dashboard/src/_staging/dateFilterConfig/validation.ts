@@ -1,7 +1,5 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { groupBy } from "lodash-es";
-
 import {
     type DateFilterGranularity,
     type IDateFilterConfig,
@@ -10,12 +8,12 @@ import {
     type ISettings,
     getDateFilterGranularities,
 } from "@gooddata/sdk-model";
-import { _isEmpty } from "@gooddata/util";
+import { _groupBy, _isEmpty } from "@gooddata/util";
 
 import { defaultDateFilterConfig } from "./defaultConfig.js";
 
 function getDuplicateIdentifiers(options: IDateFilterOption[]): string[] {
-    const groups = groupBy(options, (filter: IDateFilterOption) => filter.localIdentifier);
+    const groups = _groupBy(options, (filter: IDateFilterOption) => filter.localIdentifier);
     const duplicates = Object.keys(groups).filter((localIdentifier) => groups[localIdentifier].length > 1);
 
     if (duplicates.length) {

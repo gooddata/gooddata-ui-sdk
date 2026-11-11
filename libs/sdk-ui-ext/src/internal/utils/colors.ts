@@ -1,7 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set, uniqBy } from "lodash-es";
-
 import {
     type IColor,
     type IColorMappingItem,
@@ -16,7 +14,7 @@ import {
 } from "@gooddata/sdk-model";
 import { type IColorAssignment, type IMappingHeader, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { ColorUtils, type ILineStyleMappingItem } from "@gooddata/sdk-ui-charts";
-import { _cloneDeep, _compact, _isEmpty, _isEqual } from "@gooddata/util";
+import { _cloneDeep, _compact, _isEmpty, _isEqual, _set, _uniqBy } from "@gooddata/util";
 
 import { type IColorConfiguration, type IColoredItem } from "../interfaces/Colors.js";
 import { type IVisualizationProperties } from "../interfaces/Visualization.js";
@@ -127,9 +125,9 @@ function mergeColorMappingToProperties(properties: IVisualizationProperties, id:
 
     const previousColorMapping = properties?.controls?.["colorMapping"] ?? [];
 
-    const mergedMapping = _compact(uniqBy([...colorMapping, ...previousColorMapping], "id"));
+    const mergedMapping = _compact(_uniqBy([...colorMapping, ...previousColorMapping], "id"));
     const newProperties = _cloneDeep(properties);
-    set(newProperties, "controls.colorMapping", mergedMapping);
+    _set(newProperties, "controls.colorMapping", mergedMapping);
 
     return newProperties;
 }
@@ -157,7 +155,7 @@ export function removeColorMappingFromProperties(
         item.id === id ? ({ id, color: null } as unknown as IColorMappingItem) : item,
     );
     const newProperties = _cloneDeep(properties);
-    set(newProperties, "controls.colorMapping", updatedMapping);
+    _set(newProperties, "controls.colorMapping", updatedMapping);
     return newProperties;
 }
 
@@ -169,9 +167,9 @@ export function getLineStyleProperties(
 ): IVisualizationProperties {
     const newEntry: ILineStyleMappingItem = { id, lineStyle, lineWidth };
     const previousMapping: ILineStyleMappingItem[] = properties?.controls?.["lineStyleMapping"] ?? [];
-    const merged = _compact(uniqBy([newEntry, ...previousMapping], "id"));
+    const merged = _compact(_uniqBy([newEntry, ...previousMapping], "id"));
     const newProperties = _cloneDeep(properties);
-    set(newProperties, "controls.lineStyleMapping", merged);
+    _set(newProperties, "controls.lineStyleMapping", merged);
     return newProperties;
 }
 

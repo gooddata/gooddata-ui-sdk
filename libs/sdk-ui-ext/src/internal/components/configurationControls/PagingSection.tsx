@@ -2,11 +2,10 @@
 
 import { useCallback, useMemo } from "react";
 
-import { set } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { type IPushData } from "@gooddata/sdk-ui";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { messages } from "../../../locales.js";
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
@@ -53,14 +52,14 @@ export function PagingSection({
                 const clonedProperties = _cloneDeep(data.properties);
 
                 if (!clonedProperties?.controls?.["pageSize"]) {
-                    set(clonedProperties!, "controls.pageSize", DEFAULT_PAGE_SIZE);
+                    _set(clonedProperties!, "controls.pageSize", DEFAULT_PAGE_SIZE);
                 }
 
                 pushData?.({ ...data, properties: clonedProperties });
             } else if (newPaginationEnabled === false) {
                 // When disabling pagination, also reset pageSize
                 const clonedProperties = _cloneDeep(data.properties);
-                set(clonedProperties!, "controls.pageSize", undefined);
+                _set(clonedProperties!, "controls.pageSize", undefined);
 
                 pushData?.({ ...data, properties: clonedProperties });
             } else {

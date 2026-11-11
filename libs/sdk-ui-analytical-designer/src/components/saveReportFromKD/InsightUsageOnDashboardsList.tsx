@@ -3,11 +3,13 @@
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {
+    type IInsightUsageInDocumentItem,
     type IInsightUsageOnDashboard,
     type IInsightUsageOnDashboardItem,
 } from "../../store/insight_usage/insight_usage_state.js";
 
 import { DashboardItem } from "./DashboardItem.js";
+import { DocumentItem } from "./DocumentItem.js";
 
 function InaccessibleDashboardsMessage({ count }: { count: number }) {
     return (
@@ -33,9 +35,13 @@ function OnlyInaccessibleDashboardsMessage({ count }: { count: number }) {
 
 export type InsightUsageOnDashboardsProps = {
     insightUsedOnDashboards: IInsightUsageOnDashboard;
+    insightUsedInDocuments: IInsightUsageInDocumentItem[];
 };
 
-export function Component({ insightUsedOnDashboards }: InsightUsageOnDashboardsProps) {
+export function Component({
+    insightUsedOnDashboards,
+    insightUsedInDocuments,
+}: InsightUsageOnDashboardsProps) {
     const intl = useIntl();
 
     const { accessibleDashboards, inaccessibleDashboardsCount, allDashboardsCount } = insightUsedOnDashboards;
@@ -46,29 +52,48 @@ export function Component({ insightUsedOnDashboards }: InsightUsageOnDashboardsP
 
     return (
         <div className="view-usage-wrapper s-view-usage">
-            <details className="gd-collapsible-section">
-                <summary>
-                    {intl.formatMessage(
-                        { id: "dialogs.saveReportFromKD.viewUsageDashboard" },
-                        { dashboardCount: allDashboardsCount },
-                    )}
-                </summary>
-                <div className="gd-collapsible-content gd-state-text">
-                    {renderListOfAccessible ? (
+            {allDashboardsCount > 0 ? (
+                <details className="gd-collapsible-section s-view-usage-dashboards">
+                    <summary>
+                        {intl.formatMessage(
+                            { id: "dialogs.saveReportFromKD.usage.dashboards" },
+                            { count: allDashboardsCount },
+                        )}
+                    </summary>
+                    <div className="gd-collapsible-content gd-state-text">
+                        {renderListOfAccessible ? (
+                            <ul>
+                                {accessibleDashboards.map((dash: IInsightUsageOnDashboardItem) => (
+                                    <DashboardItem key={dash.id} dashboard={dash} />
+                                ))}
+                            </ul>
+                        ) : null}
+                        {renderAlsoInaccessible ? (
+                            <InaccessibleDashboardsMessage count={inaccessibleDashboardsCount} />
+                        ) : null}
+                        {renderInaccessibleOnly ? (
+                            <OnlyInaccessibleDashboardsMessage count={inaccessibleDashboardsCount} />
+                        ) : null}
+                    </div>
+                </details>
+            ) : null}
+            {insightUsedInDocuments.length > 0 ? (
+                <details className="gd-collapsible-section s-view-usage-documents">
+                    <summary>
+                        {intl.formatMessage(
+                            { id: "dialogs.saveReportFromKD.usage.documents" },
+                            { count: insightUsedInDocuments.length },
+                        )}
+                    </summary>
+                    <div className="gd-collapsible-content gd-state-text">
                         <ul>
-                            {accessibleDashboards.map((dash: IInsightUsageOnDashboardItem) => (
-                                <DashboardItem key={dash.id} dashboard={dash} />
+                            {insightUsedInDocuments.map((item) => (
+                                <DocumentItem key={item.id} item={item} />
                             ))}
                         </ul>
-                    ) : null}
-                    {renderAlsoInaccessible ? (
-                        <InaccessibleDashboardsMessage count={inaccessibleDashboardsCount} />
-                    ) : null}
-                    {renderInaccessibleOnly ? (
-                        <OnlyInaccessibleDashboardsMessage count={inaccessibleDashboardsCount} />
-                    ) : null}
-                </div>
-            </details>
+                    </div>
+                </details>
+            ) : null}
         </div>
     );
 }

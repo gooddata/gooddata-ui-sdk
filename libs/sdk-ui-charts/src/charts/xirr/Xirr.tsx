@@ -2,8 +2,6 @@
 
 import { type ReactElement } from "react";
 
-import { omit } from "lodash-es";
-
 import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
     type IAttribute,
@@ -24,6 +22,7 @@ import {
     useResolveValuesWithPlaceholders,
     withContexts,
 } from "@gooddata/sdk-ui";
+import { _omit } from "@gooddata/util";
 
 import { type IBucketChartProps, type ICoreChartProps } from "../../interfaces/chartProps.js";
 
@@ -108,7 +107,7 @@ export function toCoreXirrProps(props: IXirrProps): ICoreChartProps {
         newBucket(BucketNames.ATTRIBUTE, props.attribute as IAttribute),
     ];
 
-    const newProps: IXirrNonBucketProps = omit<IXirrProps, keyof IIrrelevantXirrProps>(props, [
+    const newProps: IXirrNonBucketProps = _omit<IXirrProps, keyof IIrrelevantXirrProps>(props, [
         "measure",
         "attribute",
         "filters",

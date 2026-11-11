@@ -2,10 +2,9 @@
 
 import { type ChangeEvent, type ReactNode } from "react";
 
-import { set } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { type AxisType } from "../../interfaces/AxisType.js";
 import { getTranslation } from "../../utils/translations.js";
@@ -46,7 +45,7 @@ export function ConfigSubsection({
     const toggleValue = (event: ChangeEvent<HTMLInputElement>) => {
         if (valuePath && properties && pushData) {
             const clonedProperties = _cloneDeep(properties);
-            set(clonedProperties, `controls.${valuePath}`, event.target.checked);
+            _set(clonedProperties, `controls.${valuePath}`, event.target.checked);
 
             pushData({ properties: clonedProperties });
         }

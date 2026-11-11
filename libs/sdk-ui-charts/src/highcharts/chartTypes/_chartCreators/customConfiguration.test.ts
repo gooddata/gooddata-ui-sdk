@@ -1,10 +1,10 @@
 // (C) 2007-2026 GoodData Corporation
 
 import { type PlotBarDataLabelsOptions, type PlotBubbleDataLabelsOptions } from "highcharts";
-import { omit, set } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";
+import { _omit, _set } from "@gooddata/util";
 
 import { type IChartConfig, type IDataLabelsConfig } from "../../../interfaces/chartConfig.js";
 import {
@@ -364,7 +364,7 @@ describe("getCustomizedConfiguration", () => {
 
             assertArray(result.xAxis);
             expect(result.xAxis[0].minRange).toBeUndefined();
-            expect(omit(result.chart, "events")).toEqual({});
+            expect(_omit(result.chart, "events")).toEqual({});
         });
 
         it("should set chart and X axis configurations with the minRange = 2 when the zooming is enabled and the categories are larger than 2", () => {
@@ -766,16 +766,16 @@ describe("getCustomizedConfiguration", () => {
                 yAxisMin: number,
                 yAxisMax: number,
             ) {
-                set(obj, "series.xAxis.min", xAxisMin);
-                set(obj, "series.xAxis.max", xAxisMax);
-                set(obj, "series.yAxis.min", yAxisMin);
-                set(obj, "series.yAxis.max", yAxisMax);
+                _set(obj, "series.xAxis.min", xAxisMin);
+                _set(obj, "series.xAxis.max", xAxisMax);
+                _set(obj, "series.yAxis.min", yAxisMin);
+                _set(obj, "series.yAxis.max", yAxisMax);
             }
 
             function setPoint(obj: any, x: number, y: number, z: number) {
-                set(obj, "x", x);
-                set(obj, "y", y);
-                set(obj, "point.z", z);
+                _set(obj, "x", x);
+                _set(obj, "y", y);
+                _set(obj, "point.z", z);
             }
 
             it("should draw label when bubble is inside chart area", () => {

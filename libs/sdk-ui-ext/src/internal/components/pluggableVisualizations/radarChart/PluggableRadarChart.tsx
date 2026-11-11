@@ -1,10 +1,8 @@
 // (C) 2026 GoodData Corporation
 
-import { set } from "lodash-es";
-
 import { type IInsight, type IInsightDefinition, newAttributeSort } from "@gooddata/sdk-model";
 import { BucketNames, type IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket.js";
 import { RADAR_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
@@ -219,7 +217,7 @@ export class PluggableRadarChart extends PluggableBaseChart {
             attributes = getAttributeItemsWithoutStacks(buckets, [ATTRIBUTE, DATE]).slice(0, 1);
         }
 
-        set(newReferencePoint, BUCKETS, [
+        _set(newReferencePoint, BUCKETS, [
             {
                 localIdentifier: BucketNames.MEASURES,
                 items: this.getBucketMeasures(newReferencePoint.buckets),

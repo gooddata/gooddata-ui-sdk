@@ -30093,6 +30093,126 @@
                 }
             }
         },
+        "/api/v1/actions/organization/localization/issues": {
+            "get": {
+                "tags": [
+                    "Localization",
+                    "actions"
+                ],
+                "summary": "(BETA) Localization issues of the organization.",
+                "description": "(BETA) Counts the workspaces with each localization issue. The rules are the same as in the workspace localization issues.",
+                "operationId": "organizationLocalizationIssues",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LocalizationIssues"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/organization/localization/issues/workspaces": {
+            "get": {
+                "tags": [
+                    "Localization",
+                    "actions"
+                ],
+                "summary": "(BETA) Workspaces with a localization issue.",
+                "description": "(BETA) Lists the workspaces behind one entry of the organization localization issues, sorted by name.",
+                "operationId": "organizationLocalizationIssueWorkspaces",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "The type of the issue.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "The kind of localization issue. The prefix names the area of the problem. METADATA_MISSING_TRANSLATION - the metadata language has no translation under exactly its code. When the metadata language is the default, the display language is checked instead. METADATA_LANGUAGE_MISMATCH - the display language has a translation, but the metadata language is not set to it. METADATA_UNUSED_TRANSLATION - the workspace owns a translation that nobody uses. No workspace in its subtree gets that language. No user has it as their own language. System accounts and the bootstrap user are not counted, as in the usage endpoints. New types may be added.",
+                            "enum": [
+                                "METADATA_MISSING_TRANSLATION",
+                                "METADATA_LANGUAGE_MISMATCH",
+                                "METADATA_UNUSED_TRANSLATION"
+                            ]
+                        },
+                        "example": "METADATA_MISSING_TRANSLATION"
+                    },
+                    {
+                        "name": "locale",
+                        "in": "query",
+                        "description": "The language of the issue.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "de-DE"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Filter by workspace name. Note that the filter is case insensitive.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "berg"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Zero-based page index (0..N)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 0
+                        },
+                        "example": 0
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "The size of the page to be returned.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 20
+                        },
+                        "example": 20
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LocalizationIssueWorkspaces"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
         "/api/v1/actions/organization/localization/statistics": {
             "get": {
                 "tags": [
@@ -30313,6 +30433,45 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/LocalizationStatistics"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/localization/issues": {
+            "get": {
+                "tags": [
+                    "Localization",
+                    "actions"
+                ],
+                "summary": "(BETA) Localization issues of the workspace.",
+                "description": "(BETA) Checks the display and metadata language of the workspace against the metadata translations of the workspace and its parents. It also reports translations the workspace owns that nobody uses.",
+                "operationId": "workspaceLocalizationIssues",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LocalizationIssues"
                                 }
                             }
                         }
@@ -38726,6 +38885,16 @@
                     "content": {
                         "$ref": "#/components/schemas/PublisherDocumentPageTemplateContent"
                     },
+                    "createdAt": {
+                        "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}",
+                        "type": "string",
+                        "description": "Time of the entity creation.",
+                        "nullable": true,
+                        "example": "2023-07-20 12:30"
+                    },
+                    "createdBy": {
+                        "$ref": "#/components/schemas/DeclarativeUserIdentifier"
+                    },
                     "description": {
                         "maxLength": 10000,
                         "type": "string",
@@ -38736,6 +38905,16 @@
                         "type": "string",
                         "description": "Page template ID.",
                         "example": "brand-cover"
+                    },
+                    "modifiedAt": {
+                        "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}",
+                        "type": "string",
+                        "description": "Time of the last entity modification.",
+                        "nullable": true,
+                        "example": "2023-07-20 12:30"
+                    },
+                    "modifiedBy": {
+                        "$ref": "#/components/schemas/DeclarativeUserIdentifier"
                     },
                     "tags": {
                         "uniqueItems": true,
@@ -38770,6 +38949,16 @@
                     "content": {
                         "$ref": "#/components/schemas/PublisherDocumentContent"
                     },
+                    "createdAt": {
+                        "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}",
+                        "type": "string",
+                        "description": "Time of the entity creation.",
+                        "nullable": true,
+                        "example": "2023-07-20 12:30"
+                    },
+                    "createdBy": {
+                        "$ref": "#/components/schemas/DeclarativeUserIdentifier"
+                    },
                     "description": {
                         "maxLength": 10000,
                         "type": "string",
@@ -38780,6 +38969,16 @@
                         "type": "string",
                         "description": "Document template ID.",
                         "example": "brand-review"
+                    },
+                    "modifiedAt": {
+                        "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}",
+                        "type": "string",
+                        "description": "Time of the last entity modification.",
+                        "nullable": true,
+                        "example": "2023-07-20 12:30"
+                    },
+                    "modifiedBy": {
+                        "$ref": "#/components/schemas/DeclarativeUserIdentifier"
                     },
                     "tags": {
                         "uniqueItems": true,
@@ -39168,6 +39367,8 @@
                             "METRIC_FORMAT_OVERRIDE",
                             "ENABLE_AI_ON_DATA",
                             "ENABLE_AI_DATA_OBFUSCATION",
+                            "ENABLE_AI_TRACE_OBFUSCATION",
+                            "ENABLE_AI_PERSISTENCE_OBFUSCATION",
                             "ENABLE_PARTIAL_DATA_RESULTS",
                             "API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE",
                             "ENABLE_NULL_JOINS",
@@ -39182,7 +39383,8 @@
                             "DEFAULT_METRIC_VISIBILITY",
                             "GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE",
                             "QUERY_ENGINE",
-                            "EMBEDDING_ORIGINS"
+                            "EMBEDDING_ORIGINS",
+                            "AI_LAKE_CREDENTIAL_VENDING"
                         ]
                     }
                 },
@@ -53974,9 +54176,6 @@
                                 "nullable": true,
                                 "oneOf": [
                                     {
-                                        "$ref": "#/components/schemas/GoodDataAiProviderConfig"
-                                    },
-                                    {
                                         "$ref": "#/components/schemas/OpenAIProviderConfig"
                                     },
                                     {
@@ -53987,6 +54186,9 @@
                                     },
                                     {
                                         "$ref": "#/components/schemas/AnthropicProviderConfig"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/GoodDataAiProviderConfig"
                                     }
                                 ]
                             }
@@ -54087,9 +54289,6 @@
                                 "nullable": true,
                                 "oneOf": [
                                     {
-                                        "$ref": "#/components/schemas/GoodDataAiProviderConfig"
-                                    },
-                                    {
                                         "$ref": "#/components/schemas/OpenAIProviderConfig"
                                     },
                                     {
@@ -54100,6 +54299,9 @@
                                     },
                                     {
                                         "$ref": "#/components/schemas/AnthropicProviderConfig"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/GoodDataAiProviderConfig"
                                     }
                                 ]
                             }
@@ -54240,9 +54442,6 @@
                                 "nullable": true,
                                 "oneOf": [
                                     {
-                                        "$ref": "#/components/schemas/GoodDataAiProviderConfig"
-                                    },
-                                    {
                                         "$ref": "#/components/schemas/OpenAIProviderConfig"
                                     },
                                     {
@@ -54253,6 +54452,9 @@
                                     },
                                     {
                                         "$ref": "#/components/schemas/AnthropicProviderConfig"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/GoodDataAiProviderConfig"
                                     }
                                 ]
                             }
@@ -56908,6 +57110,8 @@
                                     "METRIC_FORMAT_OVERRIDE",
                                     "ENABLE_AI_ON_DATA",
                                     "ENABLE_AI_DATA_OBFUSCATION",
+                                    "ENABLE_AI_TRACE_OBFUSCATION",
+                                    "ENABLE_AI_PERSISTENCE_OBFUSCATION",
                                     "ENABLE_PARTIAL_DATA_RESULTS",
                                     "API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE",
                                     "ENABLE_NULL_JOINS",
@@ -56922,7 +57126,8 @@
                                     "DEFAULT_METRIC_VISIBILITY",
                                     "GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE",
                                     "QUERY_ENGINE",
-                                    "EMBEDDING_ORIGINS"
+                                    "EMBEDDING_ORIGINS",
+                                    "AI_LAKE_CREDENTIAL_VENDING"
                                 ]
                             }
                         }
@@ -57020,6 +57225,8 @@
                                     "METRIC_FORMAT_OVERRIDE",
                                     "ENABLE_AI_ON_DATA",
                                     "ENABLE_AI_DATA_OBFUSCATION",
+                                    "ENABLE_AI_TRACE_OBFUSCATION",
+                                    "ENABLE_AI_PERSISTENCE_OBFUSCATION",
                                     "ENABLE_PARTIAL_DATA_RESULTS",
                                     "API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE",
                                     "ENABLE_NULL_JOINS",
@@ -57034,7 +57241,8 @@
                                     "DEFAULT_METRIC_VISIBILITY",
                                     "GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE",
                                     "QUERY_ENGINE",
-                                    "EMBEDDING_ORIGINS"
+                                    "EMBEDDING_ORIGINS",
+                                    "AI_LAKE_CREDENTIAL_VENDING"
                                 ]
                             }
                         }
@@ -57172,6 +57380,8 @@
                                     "METRIC_FORMAT_OVERRIDE",
                                     "ENABLE_AI_ON_DATA",
                                     "ENABLE_AI_DATA_OBFUSCATION",
+                                    "ENABLE_AI_TRACE_OBFUSCATION",
+                                    "ENABLE_AI_PERSISTENCE_OBFUSCATION",
                                     "ENABLE_PARTIAL_DATA_RESULTS",
                                     "API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE",
                                     "ENABLE_NULL_JOINS",
@@ -57186,7 +57396,8 @@
                                     "DEFAULT_METRIC_VISIBILITY",
                                     "GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE",
                                     "QUERY_ENGINE",
-                                    "EMBEDDING_ORIGINS"
+                                    "EMBEDDING_ORIGINS",
+                                    "AI_LAKE_CREDENTIAL_VENDING"
                                 ]
                             }
                         }
@@ -66481,6 +66692,8 @@
                                     "METRIC_FORMAT_OVERRIDE",
                                     "ENABLE_AI_ON_DATA",
                                     "ENABLE_AI_DATA_OBFUSCATION",
+                                    "ENABLE_AI_TRACE_OBFUSCATION",
+                                    "ENABLE_AI_PERSISTENCE_OBFUSCATION",
                                     "ENABLE_PARTIAL_DATA_RESULTS",
                                     "API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE",
                                     "ENABLE_NULL_JOINS",
@@ -66591,6 +66804,8 @@
                                     "METRIC_FORMAT_OVERRIDE",
                                     "ENABLE_AI_ON_DATA",
                                     "ENABLE_AI_DATA_OBFUSCATION",
+                                    "ENABLE_AI_TRACE_OBFUSCATION",
+                                    "ENABLE_AI_PERSISTENCE_OBFUSCATION",
                                     "ENABLE_PARTIAL_DATA_RESULTS",
                                     "API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE",
                                     "ENABLE_NULL_JOINS",
@@ -69833,6 +70048,8 @@
                                     "METRIC_FORMAT_OVERRIDE",
                                     "ENABLE_AI_ON_DATA",
                                     "ENABLE_AI_DATA_OBFUSCATION",
+                                    "ENABLE_AI_TRACE_OBFUSCATION",
+                                    "ENABLE_AI_PERSISTENCE_OBFUSCATION",
                                     "ENABLE_PARTIAL_DATA_RESULTS",
                                     "API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE",
                                     "ENABLE_NULL_JOINS",
@@ -69943,6 +70160,8 @@
                                     "METRIC_FORMAT_OVERRIDE",
                                     "ENABLE_AI_ON_DATA",
                                     "ENABLE_AI_DATA_OBFUSCATION",
+                                    "ENABLE_AI_TRACE_OBFUSCATION",
+                                    "ENABLE_AI_PERSISTENCE_OBFUSCATION",
                                     "ENABLE_PARTIAL_DATA_RESULTS",
                                     "API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE",
                                     "ENABLE_NULL_JOINS",
@@ -70119,6 +70338,8 @@
                                     "METRIC_FORMAT_OVERRIDE",
                                     "ENABLE_AI_ON_DATA",
                                     "ENABLE_AI_DATA_OBFUSCATION",
+                                    "ENABLE_AI_TRACE_OBFUSCATION",
+                                    "ENABLE_AI_PERSISTENCE_OBFUSCATION",
                                     "ENABLE_PARTIAL_DATA_RESULTS",
                                     "API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE",
                                     "ENABLE_NULL_JOINS",
@@ -70228,6 +70449,8 @@
                                     "METRIC_FORMAT_OVERRIDE",
                                     "ENABLE_AI_ON_DATA",
                                     "ENABLE_AI_DATA_OBFUSCATION",
+                                    "ENABLE_AI_TRACE_OBFUSCATION",
+                                    "ENABLE_AI_PERSISTENCE_OBFUSCATION",
                                     "ENABLE_PARTIAL_DATA_RESULTS",
                                     "API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE",
                                     "ENABLE_NULL_JOINS",
@@ -70803,6 +71026,100 @@
                     },
                     "METADATA_LOCALE": {
                         "$ref": "#/components/schemas/LocalizationDefault"
+                    }
+                }
+            },
+            "LocalizationIssue": {
+                "required": [
+                    "locale",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "locale": {
+                        "type": "string",
+                        "description": "The problem language.",
+                        "example": "fr-FR"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "The kind of localization issue. The prefix names the area of the problem. METADATA_MISSING_TRANSLATION - the metadata language has no translation under exactly its code. When the metadata language is the default, the display language is checked instead. METADATA_LANGUAGE_MISMATCH - the display language has a translation, but the metadata language is not set to it. METADATA_UNUSED_TRANSLATION - the workspace owns a translation that nobody uses. No workspace in its subtree gets that language. No user has it as their own language. System accounts and the bootstrap user are not counted, as in the usage endpoints. New types may be added.",
+                        "enum": [
+                            "METADATA_MISSING_TRANSLATION",
+                            "METADATA_LANGUAGE_MISMATCH",
+                            "METADATA_UNUSED_TRANSLATION"
+                        ]
+                    },
+                    "workspaces": {
+                        "type": "integer",
+                        "description": "Organization issues only. The number of workspaces with this issue.",
+                        "format": "int32"
+                    }
+                },
+                "description": "One localization issue in one language."
+            },
+            "LocalizationIssueWorkspace": {
+                "required": [
+                    "bySetting",
+                    "childrenCount",
+                    "id",
+                    "name"
+                ],
+                "type": "object",
+                "properties": {
+                    "bySetting": {
+                        "$ref": "#/components/schemas/LocalizationResolvedValues"
+                    },
+                    "childrenCount": {
+                        "type": "integer",
+                        "description": "Number of direct child workspaces.",
+                        "format": "int32"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "parentId": {
+                        "type": "string",
+                        "description": "The parent workspace, or null for a root workspace.",
+                        "nullable": true
+                    }
+                }
+            },
+            "LocalizationIssueWorkspaces": {
+                "required": [
+                    "totalCount",
+                    "workspaces"
+                ],
+                "type": "object",
+                "properties": {
+                    "totalCount": {
+                        "type": "integer",
+                        "description": "The total number of workspaces with this issue that match the name filter.",
+                        "format": "int32"
+                    },
+                    "workspaces": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/LocalizationIssueWorkspace"
+                        }
+                    }
+                }
+            },
+            "LocalizationIssues": {
+                "required": [
+                    "issues"
+                ],
+                "type": "object",
+                "properties": {
+                    "issues": {
+                        "type": "array",
+                        "description": "Sorted by type in the order of the enum, then by locale. Empty when nothing is wrong.",
+                        "items": {
+                            "$ref": "#/components/schemas/LocalizationIssue"
+                        }
                     }
                 }
             },
@@ -76465,7 +76782,8 @@
                 "properties": {
                     "from": {
                         "type": "integer",
-                        "format": "int32"
+                        "format": "int32",
+                        "nullable": true
                     },
                     "granularity": {
                         "type": "string",
@@ -76521,7 +76839,8 @@
                     },
                     "to": {
                         "type": "integer",
-                        "format": "int32"
+                        "format": "int32",
+                        "nullable": true
                     }
                 }
             },
@@ -76784,6 +77103,8 @@
                             "METRIC_FORMAT_OVERRIDE",
                             "ENABLE_AI_ON_DATA",
                             "ENABLE_AI_DATA_OBFUSCATION",
+                            "ENABLE_AI_TRACE_OBFUSCATION",
+                            "ENABLE_AI_PERSISTENCE_OBFUSCATION",
                             "ENABLE_PARTIAL_DATA_RESULTS",
                             "API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE",
                             "ENABLE_NULL_JOINS",
@@ -76797,7 +77118,8 @@
                             "DEFAULT_VISUALIZATION_VISIBILITY",
                             "DEFAULT_METRIC_VISIBILITY",
                             "GRANT_MANAGE_VISUALIZATIONS_WITH_ANALYZE",
-                            "QUERY_ENGINE"
+                            "QUERY_ENGINE",
+                            "AI_LAKE_CREDENTIAL_VENDING"
                         ]
                     }
                 },

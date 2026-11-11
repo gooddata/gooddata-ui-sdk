@@ -10,13 +10,13 @@ import {
     useState,
 } from "react";
 
-import { memoize } from "lodash-es";
+import { _memoize } from "@gooddata/util";
 
 import { type IInputPureHandle, type IInputPureProps, InputPure } from "./InputPure.js";
 import { DEFAULT_SEPARATORS, formatNumberWithSeparators } from "./numberFormat.js";
 import { type Separators } from "./typings.js";
 
-const getDanglingDecimalPointRegExp = memoize((decimal) => new RegExp(`\\${decimal}$`));
+const getDanglingDecimalPointRegExp = _memoize((decimal) => new RegExp(`\\${decimal}$`));
 
 // A half-typed exponent ("1e", "1e+") stays valid so it can be entered one character at a time.
 const buildValidationRegExp = ({ thousand, decimal }: Separators) =>

@@ -1,6 +1,5 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { partition, uniq, uniqBy } from "lodash-es";
 import moment from "moment";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, all, call, put, race, select, take, takeEvery } from "redux-saga/effects";
@@ -38,6 +37,7 @@ import {
     uriRef,
 } from "@gooddata/sdk-model";
 import { type OverTimeComparisonType } from "@gooddata/sdk-ui";
+import { _partition, _uniq, _uniqBy } from "@gooddata/util";
 
 import { updateItemCache } from "../../actions/data_actions.js";
 import { MAX_ATTRIBUTE_FILTERS_COUNT } from "../../constants/catalog_filters.js";
@@ -298,7 +298,7 @@ export function* validateExternalRankingFilter(
 
     const areAttributeLocalIdentifiersDuplicates =
         attributeLocalIdentifiers &&
-        uniq(attributeLocalIdentifiers).length !== attributeLocalIdentifiers.length;
+        _uniq(attributeLocalIdentifiers).length !== attributeLocalIdentifiers.length;
     if (areAttributeLocalIdentifiersDuplicates) {
         throw new Error(ERROR_DUPLICATED_RANKING_FILTER_ATTRIBUTES);
     }
@@ -907,7 +907,7 @@ export function* getValidExternalAttributeFilters(externalFilters: ITransformedA
     }
 
     // a computed attribute has no labels, so it cannot go through the display form lookup below
-    const [computedAttributeRefs, labelRefs] = partition(externalObjRefs, (ref: ObjRef) =>
+    const [computedAttributeRefs, labelRefs] = _partition(externalObjRefs, (ref: ObjRef) =>
         isComputedAttributeRef(ref),
     );
     const validatedComputedAttributeFilters: SagaReturnType<typeof validateExternalComputedAttributeFilters> =
@@ -1490,7 +1490,7 @@ export function* validateRemoveAttributeFilters(externalAttFilters: IRemoveAttri
         { identifiers: [], uris: [] },
     );
 
-    if (uniq(uris).length !== uris.length) {
+    if (_uniq(uris).length !== uris.length) {
         throw new Error(ERROR_DUPLICATED_ATTRIBUTE_FILTER_URIS);
     }
 
@@ -1501,7 +1501,7 @@ export function* validateRemoveAttributeFilters(externalAttFilters: IRemoveAttri
 
     // a label and a computed attribute sharing the identifier are two different filters
     if (
-        uniqBy(identifiers, ({ identifier, dfType }) => `${dfType}.${identifier}`).length !==
+        _uniqBy(identifiers, ({ identifier, dfType }) => `${dfType}.${identifier}`).length !==
         identifiers.length
     ) {
         throw new Error(ERROR_DUPLICATED_ATTRIBUTE_FILTER_IDENTIFIERS);
@@ -1510,7 +1510,7 @@ export function* validateRemoveAttributeFilters(externalAttFilters: IRemoveAttri
     // validate external attribute filters uris; computed attributes have no labels and resolve through
     // their own service
     const appState: IAppState = yield select();
-    const [computedAttributeIdentifiers, labelIdentifiers] = partition(
+    const [computedAttributeIdentifiers, labelIdentifiers] = _partition(
         identifiers,
         ({ dfType }) => dfType === "computedAttribute",
     );

@@ -2,8 +2,6 @@
 
 import { useCallback, useMemo, useState } from "react";
 
-import { partition } from "lodash-es";
-
 import {
     type DashboardAttributeFilterItem,
     type FilterContextItem,
@@ -20,6 +18,7 @@ import {
     isDashboardDateFilterWithDimension,
     isDashboardMeasureValueFilter,
 } from "@gooddata/sdk-model";
+import { _partition } from "@gooddata/util";
 
 import {
     addAttributeFilter as addAttributeFilterAction,
@@ -189,13 +188,13 @@ export function useFiltersWithAddedPlaceholder(
     const dateDatasetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
 
     const commonWorkingDateFilter = workingFilters?.find(isDashboardCommonDateFilter);
-    const [draggableFilters, nonDraggableFilters] = partition(filters, isNotDashboardCommonDateFilter);
+    const [draggableFilters, nonDraggableFilters] = _partition(filters, isNotDashboardCommonDateFilter);
     // nonDraggableFilters may contain new filter types (arbitrary, match) alongside the common date filter.
     // Use a cast since TypeScript cannot narrow FilterContextItem exclusions through .find().
     const commonDateFilter = nonDraggableFilters.find((f) =>
         isDashboardCommonDateFilter(f),
     ) as unknown as IDashboardDateFilter;
-    const [dateFiltersWithDimensions, attributeFilters] = partition(
+    const [dateFiltersWithDimensions, attributeFilters] = _partition(
         draggableFilters,
         isDashboardDateFilterWithDimension,
     );

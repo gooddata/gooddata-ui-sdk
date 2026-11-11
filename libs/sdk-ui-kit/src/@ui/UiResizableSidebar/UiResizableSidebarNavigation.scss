@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+@use "sass:math";
+
 @use "../../../styles/scss/variables";
 @use "../../../styles/scss/mixins";
 
@@ -9,6 +11,7 @@ $item-padding: 12px;
 $icon-size: 18px;
 $item-gap: 10px;
 $action-required-size: 8px;
+$chevron-size: 14px;
 $flyover-width: 230px;
 
 .gd-ui-kit-resizable-sidebar-navigation {
@@ -174,6 +177,7 @@ $flyover-width: 230px;
         flex: 0 0 auto;
         width: $action-required-size;
         height: $action-required-size;
+        margin-right: math.div($chevron-size - $action-required-size, 2);
         border-radius: 50%;
         background-color: variables.$gd-palette-primary-base;
 
@@ -182,6 +186,12 @@ $flyover-width: 230px;
             position: absolute;
             top: 8px;
             right: 10px;
+            margin-right: 0;
+        }
+
+        // A flyover item has no chevron above its dot, so the dot keeps its place.
+        #{$root}__item--flyover & {
+            margin-right: 0;
         }
     }
 

@@ -2,10 +2,9 @@
 
 import { type ChangeEvent, type ReactNode, useCallback } from "react";
 
-import { set } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { getTranslation } from "../../utils/translations.js";
@@ -53,7 +52,7 @@ export function CheckboxControl({
             // during merge. This prevents the Save button from staying enabled when toggling
             // back to the default state.
             const valueToSet = value === defaultValue ? undefined : value;
-            set(clonedProperties!, `controls.${valuePath}`, valueToSet);
+            _set(clonedProperties!, `controls.${valuePath}`, valueToSet);
             pushData?.({ properties: clonedProperties });
         },
         [properties, isValueInverted, pushData, valuePath, defaultValue],

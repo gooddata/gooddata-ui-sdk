@@ -1,7 +1,6 @@
 // (C) 2022-2026 GoodData Corporation
 
 import { renderHook } from "@testing-library/react";
-import { omit } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import {
@@ -10,6 +9,7 @@ import {
     idRef,
 } from "@gooddata/sdk-model";
 import { type DateFilterOption } from "@gooddata/sdk-ui-filters";
+import { _omit } from "@gooddata/util";
 
 import { type IDecoratedDateDataset } from "../../../../models/decorated_date_dataset.js";
 import {
@@ -174,7 +174,7 @@ describe("supportedPresetHook", () => {
 
         it("should call reset callback with default preset when selected preset is not supported", () => {
             const resetCallback = vi.fn();
-            const dateFilterPresets = omit(RELATIVE_DATE_FILTER_PRESETS, "GDC.time.year");
+            const dateFilterPresets = _omit(RELATIVE_DATE_FILTER_PRESETS, "GDC.time.year");
             renderHook(() =>
                 useResetPresetWhenUnsupportedOneIsSelected(thisYearFilter, dateFilterPresets, resetCallback),
             );

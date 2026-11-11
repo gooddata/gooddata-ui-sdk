@@ -2,12 +2,11 @@
 
 import { type ChangeEvent, useEffect, useId, useRef, useState } from "react";
 
-import { set } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useDebounce } from "@gooddata/sdk-ui";
 import { UiIcon, UiLink } from "@gooddata/sdk-ui-kit";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { messages } from "../../../../locales.js";
 import { customTooltipPlacementDropdownItems } from "../../../constants/dropdowns.js";
@@ -58,7 +57,7 @@ export function CustomTooltipSection({
     const pushContent = (newContent: string) => {
         lastPushedContentRef.current = newContent;
         const clonedProperties = _cloneDeep(properties);
-        set(clonedProperties, "controls.customTooltip.content", newContent);
+        _set(clonedProperties, "controls.customTooltip.content", newContent);
         pushData({ properties: clonedProperties });
     };
 

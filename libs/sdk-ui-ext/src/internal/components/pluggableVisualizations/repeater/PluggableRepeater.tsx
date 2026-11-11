@@ -1,7 +1,5 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { omit } from "lodash-es";
-
 import { type IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
     type IAttribute,
@@ -26,7 +24,7 @@ import {
     constructRepeaterDimensions,
     updateConfigWithSettings,
 } from "@gooddata/sdk-ui-charts";
-import { _cloneDeep, _compact } from "@gooddata/util";
+import { _cloneDeep, _compact, _omit } from "@gooddata/util";
 
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 import { REPEATER_SUPPORTER_PROPERTIES_LIST } from "../../../constants/supportedProperties.js";
@@ -390,7 +388,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
                     permissions={this.permissions}
-                    configurationPanelRenderers={omit(
+                    configurationPanelRenderers={_omit(
                         options.custom?.configurationPanelRenderers,
                         "InteractionsDetailRenderer",
                     )}

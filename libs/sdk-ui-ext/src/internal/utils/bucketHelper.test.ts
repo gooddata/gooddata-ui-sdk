@@ -1,11 +1,10 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { type IBucket, newBucket, newInsightDefinition, newMeasure } from "@gooddata/sdk-model";
 import { BucketNames, OverTimeComparisonTypes, VisualizationTypes } from "@gooddata/sdk-ui";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { ATTRIBUTE, DATE, METRIC } from "../constants/bucket.js";
 import { DEFAULT_BASE_CHART_UICONFIG } from "../constants/uiConfig.js";
@@ -538,9 +537,9 @@ describe("Bucket title", () => {
         const intl = createInternalIntl(DEFAULT_LANGUAGE, messages);
         const expectedUiconfig: IUiConfig = _cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
 
-        set(expectedUiconfig, ["buckets", "measures", "title"], "Metrics");
-        set(expectedUiconfig, ["buckets", "view", "title"], "View by");
-        set(expectedUiconfig, ["buckets", "stack", "title"], "Stack by");
+        _set(expectedUiconfig, ["buckets", "measures", "title"], "Metrics");
+        _set(expectedUiconfig, ["buckets", "view", "title"], "View by");
+        _set(expectedUiconfig, ["buckets", "stack", "title"], "Stack by");
 
         const referencePoint: IExtendedReferencePoint = {
             buckets: emptyReferencePoint.buckets,
@@ -555,9 +554,9 @@ describe("Bucket title", () => {
         const visualizationType = VisualizationTypes.BAR;
         const expectedUiconfig: IUiConfig = _cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
 
-        set(expectedUiconfig, ["buckets", "measures", "title"], generateBucketTitleId("measures", "bar"));
-        set(expectedUiconfig, ["buckets", "view", "title"], generateBucketTitleId("view", "bar"));
-        set(expectedUiconfig, ["buckets", "stack", "title"], generateBucketTitleId("stack", "bar"));
+        _set(expectedUiconfig, ["buckets", "measures", "title"], generateBucketTitleId("measures", "bar"));
+        _set(expectedUiconfig, ["buckets", "view", "title"], generateBucketTitleId("view", "bar"));
+        _set(expectedUiconfig, ["buckets", "stack", "title"], generateBucketTitleId("stack", "bar"));
 
         const referencePoint: IExtendedReferencePoint = {
             buckets: emptyReferencePoint.buckets,
@@ -573,12 +572,12 @@ describe("Bucket title", () => {
         const intl = createInternalIntl(DEFAULT_LANGUAGE, messages);
         const expectedUiconfig: IUiConfig = _cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
 
-        set(expectedUiconfig, ["buckets", "measures", "title"], "Metrics");
-        set(expectedUiconfig, ["buckets", "view", "title"], "View by");
-        set(expectedUiconfig, ["buckets", "stack", "enabled"], false);
+        _set(expectedUiconfig, ["buckets", "measures", "title"], "Metrics");
+        _set(expectedUiconfig, ["buckets", "view", "title"], "View by");
+        _set(expectedUiconfig, ["buckets", "stack", "enabled"], false);
 
         const uiConfigWithDisabledBucket: IUiConfig = _cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
-        set(uiConfigWithDisabledBucket, ["buckets", "stack", "enabled"], false);
+        _set(uiConfigWithDisabledBucket, ["buckets", "stack", "enabled"], false);
 
         const referencePoint: IExtendedReferencePoint = {
             buckets: emptyReferencePoint.buckets,

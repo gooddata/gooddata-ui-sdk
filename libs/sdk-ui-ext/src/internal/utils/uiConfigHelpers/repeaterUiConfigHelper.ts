@@ -1,11 +1,10 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { areObjRefsEqual } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket.js";
 import { DEFAULT_REPEATER_UI_CONFIG, UICONFIG } from "../../constants/uiConfig.js";
@@ -38,27 +37,27 @@ export function setRepeaterUiConfig(
     const columnsCanAddItems = !attributeCanAddItems || !emptyColumns;
     const viewCanAddItems = true; // !attributeCanAddItems || !emptyColumns;
 
-    set(
+    _set(
         referencePointConfigured,
         UICONFIG,
         setBucketTitles(referencePoint, VisualizationTypes.REPEATER, intl),
     );
-    set(
+    _set(
         referencePointConfigured,
         [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE, "canAddItems"],
         attributeCanAddItems,
     );
-    set(
+    _set(
         referencePointConfigured,
         [UICONFIG, BUCKETS, BucketNames.COLUMNS, "canAddItems"],
         columnsCanAddItems,
     );
 
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "canAddItems"], viewCanAddItems);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "canAddItems"], viewCanAddItems);
 
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE, "icon"], repeaterRowsIcon);
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.COLUMNS, "icon"], repeaterColumnsIcon);
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "icon"], repeaterViewIcon);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE, "icon"], repeaterRowsIcon);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.COLUMNS, "icon"], repeaterColumnsIcon);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "icon"], repeaterViewIcon);
 
     return referencePointConfigured;
 }
@@ -69,7 +68,7 @@ export const configRepeaterBuckets = (
     const newExtendedReferencePoint = _cloneDeep(extendedReferencePoint);
     const { attribute, columns, view } = getRepeaterBucketItems(newExtendedReferencePoint);
 
-    set(newExtendedReferencePoint, BUCKETS, [
+    _set(newExtendedReferencePoint, BUCKETS, [
         {
             localIdentifier: BucketNames.ATTRIBUTE,
             items: attribute,

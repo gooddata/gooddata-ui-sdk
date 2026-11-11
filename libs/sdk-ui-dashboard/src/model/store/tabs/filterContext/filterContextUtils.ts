@@ -1,7 +1,5 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { partition } from "lodash-es";
-
 import {
     type FilterContextItem,
     type IAttributeDisplayFormMetadataObject,
@@ -23,6 +21,7 @@ import {
     isNoopAllTimeDashboardDateFilter,
     objRefToString,
 } from "@gooddata/sdk-model";
+import { _partition } from "@gooddata/util";
 
 import { generateFilterLocalIdentifier } from "../../_infra/generators.js";
 
@@ -220,7 +219,7 @@ export function initializeFilterContextDefinition(
     // (when DateFilter is set to all time it's missing in filterContextDefinition and originalFilterContextDefinition)
     // We have to keep order of rest of array (attributeFilters and date filters with dimension)
     // it represents order of filters in filter bar
-    const [commonDateFilter, otherFilters] = partition(filtersWithLocalId, isDashboardCommonDateFilter);
+    const [commonDateFilter, otherFilters] = _partition(filtersWithLocalId, isDashboardCommonDateFilter);
     const filters = [...commonDateFilter, ...otherFilters];
 
     return {

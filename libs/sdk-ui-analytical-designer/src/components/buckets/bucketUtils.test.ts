@@ -1,15 +1,16 @@
 // (C) 2023-2026 GoodData Corporation
 
 // @vitest-environment node
-import { range } from "lodash-es";
 import { describe, expect, it } from "vitest";
+
+import { _range } from "@gooddata/util";
 
 import { getVisualizationPickerRowLength } from "./bucketUtils.js";
 
 describe("bucketUtils", () => {
     describe("calculateRowLength", () => {
         it("counts number of visualizations in one row", () => {
-            const numbersOfVisualizationClasses = range(16);
+            const numbersOfVisualizationClasses = _range(16);
             const rowLengths = [4, 4, 4, 4, 4, 5, 4, 4, 4, 5, 5, 4, 4, 5, 5, 5];
 
             /* rules when deciding between 4 and 5 visualization types on a row:

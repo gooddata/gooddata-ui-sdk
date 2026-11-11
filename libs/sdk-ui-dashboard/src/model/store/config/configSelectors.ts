@@ -507,15 +507,6 @@ export const selectEnableUnavailableItemsVisibility: DashboardSelector<boolean> 
 );
 
 /**
- * Returns whether kda is enabled
- *
- * @internal
- */
-export const selectEnableKda: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
-    return state.settings?.enableChangeAnalysis ?? false;
-});
-
-/**
  * Returns whether attribute filter displays duplicated values when filter uses secondary label value.
  *
  * @internal

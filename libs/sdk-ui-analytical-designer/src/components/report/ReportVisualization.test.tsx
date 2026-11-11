@@ -1,7 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
-import { omit, pick, set } from "lodash-es";
+import { pick } from "lodash-es";
 import { Provider } from "react-redux";
 import { type UnknownAction, legacy_createStore as createStore } from "redux";
 import { describe, expect, it, vi } from "vitest";
@@ -32,6 +32,7 @@ import {
     type ISortConfig,
     InvalidBucketsSdkError,
 } from "@gooddata/sdk-ui-ext/internal";
+import { _omit, _set } from "@gooddata/util";
 
 import { exportResultReady } from "../../actions/export_report_actions.js";
 import {
@@ -142,7 +143,7 @@ const renderComponent = (
         visualizationProperties: {},
         locale: "en-US",
         visualizationClass: dummyTableVisualizationClass,
-        ...omit(customProps, OWN_PROP_KEYS),
+        ..._omit(customProps, OWN_PROP_KEYS),
     };
 
     const props: IReportVisualizationProps = {
@@ -443,7 +444,7 @@ describe("ReportVisualization", () => {
     });
 
     it("should hand the visualization a COPY of the stored properties meta", () => {
-        // sdk-ui-ext's controlsHelper does `set(propertiesMeta, "undoApplied", false)` on the prop
+        // sdk-ui-ext's controlsHelper does `_set(propertiesMeta, "undoApplied", false)` on the prop
         // before pushing it back, and the stored value is frozen by immer — passing it straight
         // through would throw.
         const storedMeta = Object.freeze({ undoApplied: true });
@@ -460,7 +461,7 @@ describe("ReportVisualization", () => {
 
         expect(received).toEqual({ undoApplied: true });
         expect(received).not.toBe(storedMeta);
-        expect(() => set(received, "undoApplied", false)).not.toThrow();
+        expect(() => _set(received, "undoApplied", false)).not.toThrow();
         expect(storedMeta.undoApplied).toBe(true);
     });
 });

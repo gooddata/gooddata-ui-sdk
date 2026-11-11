@@ -3,7 +3,10 @@
 import { describe, expect, it } from "vitest";
 
 import {
+    convertLocalizationIssueWorkspaces,
+    convertLocalizationIssues,
     convertLocalizationStatistics,
+    convertLocalizationStatisticsWorkspaces,
     convertLocalizationUsage,
     convertLocalizationUsageUsers,
     convertLocalizationUsageWorkspaces,
@@ -267,5 +270,159 @@ describe("convertWorkspaceLocalizationUsageWorkspaces", () => {
                 source: "WORKSPACE",
             }),
         ).toEqual({ totalCount: 0, workspaces: [] });
+    });
+});
+
+describe("convertLocalizationIssues", () => {
+    it("keeps the type and the language of each issue", () => {
+        expect(
+            convertLocalizationIssues({
+                issues: [
+                    { type: "METADATA_MISSING_TRANSLATION", locale: "de-AT" },
+                    { type: "METADATA_LANGUAGE_MISMATCH", locale: "de-DE" },
+                ],
+            }),
+        ).toEqual({
+            issues: [
+                { type: "METADATA_MISSING_TRANSLATION", locale: "de-AT" },
+                { type: "METADATA_LANGUAGE_MISMATCH", locale: "de-DE" },
+            ],
+        });
+    });
+
+    it("converts no issues to an empty list", () => {
+        expect(convertLocalizationIssues({ issues: [] })).toEqual({ issues: [] });
+    });
+
+    it("keeps the number of workspaces when the backend sends it", () => {
+        expect(
+            convertLocalizationIssues({
+                issues: [
+                    { type: "METADATA_MISSING_TRANSLATION", locale: "de-AT", workspaces: 3 },
+                    { type: "METADATA_LANGUAGE_MISMATCH", locale: "de-DE" },
+                ],
+            }),
+        ).toEqual({
+            issues: [
+                { type: "METADATA_MISSING_TRANSLATION", locale: "de-AT", workspaces: 3 },
+                { type: "METADATA_LANGUAGE_MISMATCH", locale: "de-DE" },
+            ],
+        });
+    });
+});
+
+describe("convertLocalizationIssueWorkspaces", () => {
+    it("takes the strongest source of the settings and defaults parentId to null", () => {
+        const page = convertLocalizationIssueWorkspaces({
+            totalCount: 2,
+            workspaces: [
+                {
+                    id: "bergmann",
+                    name: "Bergmann GmbH",
+                    childrenCount: 1,
+                    parentId: "retail",
+                    bySetting: {
+                        LOCALE: { content: { value: "de-DE" }, source: "PARENT", originId: "retail" },
+                        METADATA_LOCALE: { content: { value: "de-AT" }, source: "WORKSPACE", originId: null },
+                        DATA_LOCALE: { content: { value: null }, source: "DEFAULT" },
+                    },
+                },
+                {
+                    id: "retail",
+                    name: "Retail",
+                    childrenCount: 0,
+                    bySetting: {
+                        LOCALE: { content: { value: "en-US" }, source: "ORGANIZATION" },
+                        METADATA_LOCALE: { content: { value: "en-US" }, source: "DEFAULT" },
+                        DATA_LOCALE: { content: { value: null }, source: "DEFAULT" },
+                    },
+                },
+            ],
+        });
+
+        expect(page.totalCount).toBe(2);
+        expect(page.workspaces).toEqual([
+            {
+                id: "bergmann",
+                name: "Bergmann GmbH",
+                parentId: "retail",
+                childrenCount: 1,
+                source: "WORKSPACE",
+                bySetting: {
+                    LOCALE: { content: { value: "de-DE" }, source: "PARENT", originId: "retail" },
+                    METADATA_LOCALE: { content: { value: "de-AT" }, source: "WORKSPACE" },
+                    DATA_LOCALE: { content: { value: null }, source: "DEFAULT" },
+                },
+            },
+            {
+                id: "retail",
+                name: "Retail",
+                parentId: null,
+                childrenCount: 0,
+                source: "ORGANIZATION",
+                bySetting: {
+                    LOCALE: { content: { value: "en-US" }, source: "ORGANIZATION" },
+                    METADATA_LOCALE: { content: { value: "en-US" }, source: "DEFAULT" },
+                    DATA_LOCALE: { content: { value: null }, source: "DEFAULT" },
+                },
+            },
+        ]);
+    });
+});
+
+describe("convertLocalizationStatisticsWorkspaces", () => {
+    const statistics = (workspaces?: Array<{ id: string; name: string; parentId?: string | null }>) => ({
+        data: { locales: [] },
+        metadata: {
+            locales: [{ locale: "de-DE" }],
+            ...(workspaces
+                ? {
+                      workspaces: workspaces.map((workspace) => ({
+                          ...workspace,
+                          total: 1000,
+                          locales: [{ locale: "de-DE", translated: 640 }],
+                      })),
+                  }
+                : {}),
+        },
+    });
+
+    it("converts the texts of each workspace and keeps the order of the backend", () => {
+        expect(
+            convertLocalizationStatisticsWorkspaces(
+                statistics([
+                    { id: "retail", name: "Retail", parentId: null },
+                    { id: "retail-bergmann", name: "Bergmann", parentId: "retail" },
+                ]),
+            ),
+        ).toEqual([
+            {
+                id: "retail",
+                name: "Retail",
+                parentId: null,
+                sourceLanguage: null,
+                metadata: { total: 1000, locales: [{ locale: "de-DE", translated: 640 }] },
+                data: { total: 0, locales: [] },
+            },
+            {
+                id: "retail-bergmann",
+                name: "Bergmann",
+                parentId: "retail",
+                sourceLanguage: null,
+                metadata: { total: 1000, locales: [{ locale: "de-DE", translated: 640 }] },
+                data: { total: 0, locales: [] },
+            },
+        ]);
+    });
+
+    it("treats a missing parent as a root workspace", () => {
+        expect(
+            convertLocalizationStatisticsWorkspaces(statistics([{ id: "retail", name: "Retail" }]))[0]
+                .parentId,
+        ).toBeNull();
+    });
+
+    it("returns nothing when the backend sent no counts", () => {
+        expect(convertLocalizationStatisticsWorkspaces(statistics())).toEqual([]);
     });
 });

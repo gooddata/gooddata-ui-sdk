@@ -1,10 +1,8 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set } from "lodash-es";
-
 import { type IInsightDefinition } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { BUCKETS } from "../../../constants/bucket.js";
 import { SCATTERPLOT_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
@@ -135,7 +133,7 @@ function disableClusteringForMissingViewBy(referencePoint: IExtendedReferencePoi
     const viewByBucket = findBucket(referencePoint.buckets, BucketNames.ATTRIBUTE);
     const hasViewByItems = (viewByBucket?.items?.length ?? 0) > 0;
     if (!hasViewByItems) {
-        updatedReferencePoint = set(referencePoint, "properties.controls.clustering.enabled", false);
+        updatedReferencePoint = _set(referencePoint, "properties.controls.clustering.enabled", false);
     }
     return updatedReferencePoint;
 }
@@ -150,7 +148,7 @@ function disableClusteringIfFewerThanTwoMeasures(
     const secondaryMeasuresBucketItemsCount = secondaryMeasuresBucket?.items?.length ?? 0;
     const hasXAndYMeasures = measuresBucketItemsCount === 1 && secondaryMeasuresBucketItemsCount === 1;
     if (!hasXAndYMeasures) {
-        updatedReferencePoint = set(referencePoint, "properties.controls.clustering.enabled", false);
+        updatedReferencePoint = _set(referencePoint, "properties.controls.clustering.enabled", false);
     }
     return updatedReferencePoint;
 }

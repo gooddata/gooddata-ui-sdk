@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set, tail } from "lodash-es";
+import { tail } from "lodash-es";
 
 import {
     type IInsight,
@@ -9,7 +9,7 @@ import {
     insightBuckets,
 } from "@gooddata/sdk-model";
 import { BucketNames, type IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
-import { _cloneDeep, _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty, _set } from "@gooddata/util";
 
 import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket.js";
 import { TREEMAP_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
@@ -114,7 +114,7 @@ export class PluggableTreemap extends PluggableBaseChart {
     protected override configureBuckets(newReferencePoint: IExtendedReferencePoint): void {
         const { measures, view, stacks } = this.getBucketItemsWithMultipleDates(newReferencePoint);
 
-        set(newReferencePoint, BUCKETS, [
+        _set(newReferencePoint, BUCKETS, [
             {
                 localIdentifier: BucketNames.MEASURES,
                 items: measures,
@@ -162,7 +162,7 @@ export class PluggableTreemap extends PluggableBaseChart {
 
         // set chart fill to solid if treemap is stacked
         if (!hasNoStacksWithDate(newReferencePoint.buckets)) {
-            newReferencePoint = set(newReferencePoint, "properties.controls.chartFill", { type: "solid" });
+            newReferencePoint = _set(newReferencePoint, "properties.controls.chartFill", { type: "solid" });
         }
 
         newReferencePoint = removeSort(newReferencePoint);

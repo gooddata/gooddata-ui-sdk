@@ -1,7 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
 import { type AxiosInstance, type AxiosPromise, type GenericAbortSignal } from "axios";
-import { merge, uniq, uniqBy } from "lodash-es";
+import { merge } from "lodash-es";
+
+import { _uniq, _uniqBy } from "@gooddata/util";
 
 import { type ITigerClientBase } from "./client.js";
 import {
@@ -45,7 +47,7 @@ function createOptionsForPage(page: number, options: MetadataGetEntitiesOptions)
 // keeps whatever meta the caller asked for (e.g. permissions) next to the page count
 function withPageMeta<P extends MetadataGetEntitiesParams>(params: P): P {
     const { metaInclude = [] } = params as { metaInclude?: string[] };
-    return { ...params, metaInclude: uniq([...metaInclude, "page"]) };
+    return { ...params, metaInclude: _uniq([...metaInclude, "page"]) };
 }
 
 // requests the pages following `loadedPages` one by one until the backend returns a page that is not full
@@ -327,7 +329,7 @@ export class MetadataUtilities {
     public static mergeEntitiesResults<T extends MetadataGetEntitiesResult>(pages: T[]): T {
         return {
             data: pages.flatMap((page: any) => page.data) as any,
-            included: uniqBy(
+            included: _uniqBy(
                 // we need the as any because the JsonApiDashboardPluginOutList does not have the "included" property
                 pages.flatMap((page: any) => page.included ?? []),
                 (item: any) => `${item.id}_${item.type}`,

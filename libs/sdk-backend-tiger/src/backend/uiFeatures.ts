@@ -20,7 +20,6 @@ export const TigerFeatureDefinitions = {
     enableAccessibleChartTooltip: booleanFeature(false),
     enableRadarChart: booleanFeature(false),
     enableMekkoChart: booleanFeature(false),
-    enableChangeAnalysis: booleanFeature(false),
     enableRankingWithMvf: booleanFeature(false),
     enableRankingStrictLimit: booleanFeature(true),
     enableImprovedRankingFilter: booleanFeature(true),

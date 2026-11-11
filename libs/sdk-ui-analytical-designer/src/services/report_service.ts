@@ -1,9 +1,9 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { has, uniq, uniqWith } from "lodash-es";
+import { has, uniqWith } from "lodash-es";
 
 import { type ObjRef, isUriRef, objRefToString } from "@gooddata/sdk-model";
-import { _isEqual } from "@gooddata/util";
+import { _isEqual, _uniq } from "@gooddata/util";
 
 import { currentReportMDObject } from "../selectors/buckets_selector.js";
 import { getInsightForSaveViaMd } from "../selectors/insight_selectors.js";
@@ -75,7 +75,7 @@ const joinFilterConfigurations = (
             ...acc,
             [dfUri]: {
                 ...config,
-                elementUris: uniq([...config.elementUris, ...elementUris]),
+                elementUris: _uniq([...config.elementUris, ...elementUris]),
             },
         };
     }, accumulator);

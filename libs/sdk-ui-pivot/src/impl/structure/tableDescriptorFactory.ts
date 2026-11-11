@@ -1,6 +1,5 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { range } from "lodash-es";
 import { type IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
 
@@ -12,6 +11,7 @@ import {
     isResultTotalHeader,
 } from "@gooddata/sdk-model";
 import { type DataViewFacade, getTotalInfo } from "@gooddata/sdk-ui";
+import { _range } from "@gooddata/util";
 
 import { type IPivotTableConfig } from "../../publicTypes.js";
 import { getDataViewSeriesDescriptors } from "../utils.js";
@@ -101,7 +101,7 @@ function groupColumns(
     // initialize grouping levels where code will keep pushing the new/updated groups. it is
     // the pkToGroup is here for quicker lookups. the groups list is there because the result
     // must be list of groups in order which they were created.
-    const columnGroupLevels: ColumnGroupLevel[] = range(levels).map((_) => ({
+    const columnGroupLevels: ColumnGroupLevel[] = _range(levels).map((_) => ({
         pkToGroup: {},
         groups: [],
     }));

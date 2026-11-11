@@ -1,8 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { range } from "lodash-es";
-
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _range } from "@gooddata/util";
 
 import { type HighchartsResponsiveOptions, type XAxisOptions, type YAxisOptions } from "../../lib/index.js";
 
@@ -36,7 +34,7 @@ const yAxisTitleDisabledOption: YAxisOptions = {
 };
 
 function forMultipleAxes<T>(count: number, options: T): Array<T> {
-    return range(count).map(() => _cloneDeep(options));
+    return _range(count).map(() => _cloneDeep(options));
 }
 
 const getResponsiveConfigOptions = (

@@ -2,7 +2,7 @@
 
 import { type ReactNode } from "react";
 
-import { omit } from "lodash-es";
+import { _omit } from "@gooddata/util";
 
 import { UnsupportedProperties } from "../configurationControls/UnsupportedProperties.js";
 
@@ -11,7 +11,7 @@ import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 export class UnsupportedConfigurationPanel extends ConfigurationPanelContent {
     public override componentDidMount(): void {
         this.props.pushData?.({
-            properties: omit(this.props.properties, "controls"),
+            properties: _omit(this.props.properties, "controls"),
             references: null,
             ignoreUndoRedo: true,
         });

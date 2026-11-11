@@ -1,6 +1,5 @@
 // (C) 2026 GoodData Corporation
 
-import { groupBy } from "lodash-es";
 import { Diagnostic, DiagnosticSeverity, type Range } from "vscode-languageserver";
 
 import {
@@ -13,6 +12,7 @@ import {
     type StringLiteralNode,
 } from "@gooddata/maql-antlr4ts";
 import { isStringParameterDefinition } from "@gooddata/sdk-model";
+import { _groupBy } from "@gooddata/util";
 
 import { ErrorCodes, diagnosticsSource } from "./constants.js";
 import { type LdmObjects } from "./metadata/model.js";
@@ -38,7 +38,7 @@ function validateCase(caseNode: CaseNode, metric: MaqlMetric, ldmObjects: LdmObj
     const { pairs, otherUse } = collectParameterUsage(caseNode);
     const anchor = keywordRange(caseNode, metric);
     const diagnostics: Diagnostic[] = [];
-    for (const [parameterId, parameterPairs] of Object.entries(groupBy(pairs, (pair) => pair.parameterId))) {
+    for (const [parameterId, parameterPairs] of Object.entries(_groupBy(pairs, (pair) => pair.parameterId))) {
         const allowedValues = allowedValuesOf(parameterId, ldmObjects);
         if (!allowedValues) {
             continue;

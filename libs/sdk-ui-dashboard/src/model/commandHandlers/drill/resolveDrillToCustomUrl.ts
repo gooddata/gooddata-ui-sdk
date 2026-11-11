@@ -1,7 +1,7 @@
 // (C) 2020-2026 GoodData Corporation
 
 import stringify from "json-stable-stringify";
-import { escapeRegExp, groupBy } from "lodash-es";
+import { escapeRegExp } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { type CallEffect, type SagaReturnType, all, call, select } from "redux-saga/effects";
 
@@ -62,6 +62,7 @@ import {
     type IDrillEventIntersectionElement,
     isDrillIntersectionAttributeItem,
 } from "@gooddata/sdk-ui";
+import { _groupBy } from "@gooddata/util";
 
 import { type IDrillToCustomUrl } from "../../commands/drill.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
@@ -255,7 +256,7 @@ export function* splitDFToLoadingAndMapping(
         yield select(selectCatalogDateAttributes);
     const dateAttributeRefs = dateAttributes.map((da) => da.attribute.ref);
 
-    const { true: displayFormsWithKnownValues = [], false: displayFormForValueLoad = [] } = groupBy(
+    const { true: displayFormsWithKnownValues = [], false: displayFormForValueLoad = [] } = _groupBy(
         attributesDisplayForms,
         (df) => isInRefList(dateAttributeRefs, df.attribute),
     );
@@ -754,7 +755,7 @@ const applyReplacements = (url: string, replacements: IDrillToUrlPlaceholderRepl
     if (replacements.length === 0) {
         return url;
     }
-    const pending = groupBy(replacements, ({ toBeReplaced }) => toBeReplaced);
+    const pending = _groupBy(replacements, ({ toBeReplaced }) => toBeReplaced);
     const pattern = new RegExp(Object.keys(pending).map(escapeRegExp).join("|"), "g");
     return url.replace(pattern, (placeholder) => {
         const queue = pending[placeholder];

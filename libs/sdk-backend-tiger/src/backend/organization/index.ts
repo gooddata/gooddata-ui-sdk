@@ -164,7 +164,7 @@ export class TigerOrganization implements IOrganization {
     }
 
     public securitySettings(): ISecuritySettingsService {
-        return new SecuritySettingsService(this.organizationId);
+        return new SecuritySettingsService(this.organizationId, this.authCall);
     }
 
     public styling(): IOrganizationStylingService {

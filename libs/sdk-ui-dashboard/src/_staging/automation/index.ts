@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { omit, pick } from "lodash-es";
+import { pick } from "lodash-es";
 
 import {
     type FilterContextItem,
@@ -26,7 +26,7 @@ import {
     isFilter,
     isFilterContextItem,
 } from "@gooddata/sdk-model";
-import { _isEqual } from "@gooddata/util";
+import { _isEqual, _omit } from "@gooddata/util";
 
 export const isDashboardAutomation = (
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
@@ -336,8 +336,8 @@ export const areAutomationsEqual = (
     originalAutomation: IAutomationMetadataObjectDefinition,
     updatedAutomation: IAutomationMetadataObjectDefinition,
 ) => {
-    const automationWithoutExportDefinitions = omit(updatedAutomation, "exportDefinitions");
-    const origAutomationWithoutExportDefinitions = omit(originalAutomation, "exportDefinitions");
+    const automationWithoutExportDefinitions = _omit(updatedAutomation, "exportDefinitions");
+    const origAutomationWithoutExportDefinitions = _omit(originalAutomation, "exportDefinitions");
 
     // We only want to compare requestPayload and title of exportDefinitions, rest may be omitted as it is just arbitrary
     // metadata that is not relevant for the comparison and causes false positive results when comparing new and old def.

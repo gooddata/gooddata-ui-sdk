@@ -2,7 +2,6 @@
 
 import { type MouseEvent, useEffect, useState } from "react";
 
-import noop from "lodash-es/noop.js";
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
 
 import { type IExecutionResultLimitBreak } from "@gooddata/sdk-model";
@@ -55,7 +54,7 @@ export function InsightWidgetWarningPartialResult({
             {isOpen && isLoading === false ? (
                 <DialogBase
                     className={className}
-                    onMouseUp={noop}
+                    onMouseUp={() => {}}
                     submitOnEnterKey={false}
                     isModal={false}
                     autofocusOnOpen={false}

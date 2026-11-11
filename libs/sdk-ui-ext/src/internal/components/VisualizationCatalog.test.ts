@@ -1,12 +1,11 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { omit } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedInsights } from "@gooddata/sdk-backend-mockingbird";
 import { type IInsight, insightTitle, newInsightDefinition } from "@gooddata/sdk-model";
-import { type Matcher, suppressConsole } from "@gooddata/util";
+import { type Matcher, _omit, suppressConsole } from "@gooddata/util";
 
 import { BarChartDescriptor } from "./pluggableVisualizations/barChart/BarChartDescriptor.js";
 import { CatalogViaTypeToClassMap, FullVisualizationCatalog } from "./VisualizationCatalog.js";
@@ -129,7 +128,7 @@ describe("getEmbeddingCode functionality", () => {
     const codeByDefinition = new Map<string, string | undefined>();
 
     const getEmbeddingCode = (insight: IInsight): string | undefined => {
-        const definitionKey = JSON.stringify(omit(insight.insight, insightIdentityFields));
+        const definitionKey = JSON.stringify(_omit(insight.insight, insightIdentityFields));
 
         if (!codeByDefinition.has(definitionKey)) {
             const descriptor = FullVisualizationCatalog.forInsight(insight);

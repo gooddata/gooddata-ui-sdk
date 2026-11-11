@@ -1,12 +1,11 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { set } from "lodash-es";
 import { type MessageDescriptor, useIntl } from "react-intl";
 
 import { type IColor, type IColorPalette } from "@gooddata/sdk-model";
 import { type PushDataCallback } from "@gooddata/sdk-ui";
 import { type ComparisonColorType, getComparisonRgbColor } from "@gooddata/sdk-ui-charts";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { type IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
 import { type IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
@@ -47,7 +46,7 @@ export function ColorItem({
 
     const handleColorSelected = (color: IColor) => {
         const clonedProperties = _cloneDeep(properties);
-        set(clonedProperties.controls!, valuePath, color);
+        _set(clonedProperties.controls!, valuePath, color);
 
         pushData({ properties: clonedProperties });
     };

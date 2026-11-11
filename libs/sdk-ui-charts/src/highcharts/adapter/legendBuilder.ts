@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { pick, set, sortBy, uniqBy } from "lodash-es";
+import { pick, sortBy } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { type ITheme } from "@gooddata/sdk-model";
@@ -12,6 +12,7 @@ import {
     type ItemBorderRadiusPredicate,
     type LegendOptionsItemType,
 } from "@gooddata/sdk-ui-vis-commons";
+import { _set, _uniqBy } from "@gooddata/util";
 
 import { supportedDualAxesChartTypes } from "../chartTypes/_chartOptions/chartCapabilities.js";
 import {
@@ -168,7 +169,7 @@ export function getLegendItems(
 
     if (isScatterPlot(type)) {
         const uniqueItems = sortBy(
-            uniqBy(chartOptions.data?.series?.[0]?.data, (it: ISeriesItem) => it.legendIndex),
+            _uniqBy(chartOptions.data?.series?.[0]?.data, (it: ISeriesItem) => it.legendIndex),
             (it) => it.legendIndex,
         );
         return uniqueItems.map((it: ISeriesItem): ISeriesItemMetric => {
@@ -263,11 +264,11 @@ export function buildLegendOptions(
 
     if (legendConfig.position === "auto" || !legendConfig.position) {
         if (isOneOfTypes(chartOptions.type, rightLegendCharts)) {
-            set(defaultLegendConfigByType, "position", "right");
+            _set(defaultLegendConfigByType, "position", "right");
         }
 
         if (isOneOfTypes(chartOptions.type, defaultTopLegendCharts) && !chartOptions.hasStackByAttribute) {
-            set(defaultLegendConfigByType, "position", "top");
+            _set(defaultLegendConfigByType, "position", "top");
         }
     }
 
@@ -275,11 +276,11 @@ export function buildLegendOptions(
         (legendConfig.enabled === undefined || legendConfig.enabled === null) &&
         isOneOfTypes(chartOptions.type, defaultHideLegendCharts)
     ) {
-        set(defaultLegendConfigByType, "enabled", false);
+        _set(defaultLegendConfigByType, "enabled", false);
     }
 
     if (shouldUseResponsiveLegend(chartOptions.type as ChartType, legendConfig.position)) {
-        set(defaultLegendConfigByType, "responsive", "autoPositionWithPopup");
+        _set(defaultLegendConfigByType, "responsive", "autoPositionWithPopup");
     }
 
     const baseConfig = {

@@ -12,6 +12,7 @@ import {
 } from "@gooddata/sdk-pluggable-application-model";
 
 import { BUILD_FRESHNESS_WINDOW_MS } from "../loader/appSecurityValidation.js";
+import { ModuleMessageBroker } from "../messaging/ModuleMessageBroker.js";
 import { type IAppLifecycleCallbacks } from "../types/lifecycle.js";
 
 import {
@@ -44,7 +45,11 @@ function securedItem(id: string): HeadlessModuleRegistryItem {
     return { apiVersion: "1.0", id, remote: { url: SECURED_URL, scope: id, module: "./headlessModule" } };
 }
 
-function setup(modules: Record<string, IHeadlessModule | Error>, lifecycle: IAppLifecycleCallbacks = {}) {
+function setup(
+    modules: Record<string, IHeadlessModule | Error>,
+    lifecycle: IAppLifecycleCallbacks = {},
+    broker?: ModuleMessageBroker,
+) {
     const disconnect = vi.fn();
     const registerTelemetryProvider = vi.fn(() => disconnect);
     const clock = { now: NOW };
@@ -69,6 +74,7 @@ function setup(modules: Record<string, IHeadlessModule | Error>, lifecycle: IApp
         now: () => 0,
         clock: () => clock.now,
         canReplayPageStart: () => true,
+        broker,
     };
     return {
         controller: new HeadlessModulesController(ctx, deps),
@@ -376,6 +382,108 @@ describe("HeadlessModulesController", () => {
         await started;
 
         expect(mount).not.toHaveBeenCalled();
+    });
+});
+
+describe("HeadlessModulesController module messaging", () => {
+    const CHANNEL = "gdc.exportQueue.v1";
+
+    afterEach(() => {
+        vi.restoreAllMocks();
+    });
+
+    it("gives each module a messaging port and routes requests between modules", async () => {
+        const broker = new ModuleMessageBroker();
+        let reply: Promise<unknown> | undefined;
+        const { controller } = setup(
+            {
+                caller: {
+                    mount: ({ moduleMessaging }: IHeadlessModuleMountOptions) => {
+                        reply = moduleMessaging?.request({ channel: CHANNEL, type: "jobs.list" });
+                        return { unmount: vi.fn() };
+                    },
+                },
+                owner: {
+                    mount: ({ registerChannel }: IHeadlessModuleMountOptions) => {
+                        registerChannel?.(CHANNEL, () => ({ jobs: [] }));
+                        return { unmount: vi.fn() };
+                    },
+                },
+            },
+            {},
+            broker,
+        );
+
+        await controller.start([localItem("caller"), localItem("owner")]);
+        broker.markSettled();
+
+        await expect(reply).resolves.toEqual({ jobs: [] });
+    });
+
+    it("fails the mount of a second module that registers a taken channel", async () => {
+        vi.spyOn(console, "error").mockImplementation(() => {});
+        const broker = new ModuleMessageBroker();
+        const register = ({ registerChannel }: IHeadlessModuleMountOptions) => {
+            registerChannel?.(CHANNEL, () => "ok");
+            return { unmount: vi.fn() };
+        };
+        const { controller, callbacks } = setup(
+            { first: { mount: register }, second: { mount: register } },
+            {},
+            broker,
+        );
+
+        await controller.start([localItem("first"), localItem("second")]);
+
+        expect(callbacks.onMountCompleted).toHaveBeenCalledWith("first", 0, HEADLESS);
+        expect(callbacks.onLoadFailed).toHaveBeenCalledWith(
+            "second",
+            expect.stringContaining("already owned"),
+            {
+                kind: "headless",
+                phase: "mount",
+            },
+        );
+    });
+
+    it("forwards active application changes and removes the channels on dispose", async () => {
+        const broker = new ModuleMessageBroker();
+        broker.markSettled();
+        const onActiveApplicationChanged = vi.fn();
+        const { controller } = setup(
+            {
+                queue: {
+                    mount: ({ registerChannel }: IHeadlessModuleMountOptions) => {
+                        registerChannel?.(CHANNEL, () => "ok");
+                        return { unmount: vi.fn(), onActiveApplicationChanged };
+                    },
+                },
+            },
+            {},
+            broker,
+        );
+        await controller.start([localItem("queue")]);
+        const app = broker.attachApplication("dashboards");
+
+        app.ready({});
+        controller.dispose();
+
+        expect(onActiveApplicationChanged).toHaveBeenCalledWith({
+            id: "dashboards",
+            acceptedChannels: undefined,
+        });
+        await expect(app.messaging.hasChannel(CHANNEL)).resolves.toBe(false);
+    });
+
+    it("mounts without messaging members when the host has no broker", async () => {
+        const mount = vi.fn((_options: IHeadlessModuleMountOptions) => ({ unmount: vi.fn() }));
+        const { controller } = setup({ plain: { mount } });
+
+        await controller.start([localItem("plain")]);
+
+        const options = mount.mock.calls[0][0];
+        expect(options.registerChannel).toBeUndefined();
+        expect(options.moduleMessaging).toBeUndefined();
     });
 });
 

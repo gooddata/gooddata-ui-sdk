@@ -1,7 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
-import { partition } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {
@@ -27,7 +26,7 @@ import {
     isVisualizationSwitcherWidget,
     objRefToString,
 } from "@gooddata/sdk-model";
-import { _isEmpty } from "@gooddata/util";
+import { _isEmpty, _partition } from "@gooddata/util";
 
 import { type ObjRefMap, newMapForObjectWithIdentity } from "../../../../_staging/metadata/objRefMap.js";
 import { type IDashboardFilter, type ILayoutCoordinates, type ILayoutItemPath } from "../../../../types.js";
@@ -461,7 +460,7 @@ function calculateWidgetFilters(
           })
         : [...filtersWithoutCrossFilteringFilters];
 
-    const [commonDateFilters, otherFilters] = partition(
+    const [commonDateFilters, otherFilters] = _partition(
         filtersWithoutAllCrossFiltering,
         isDashboardCommonDateFilter,
     );

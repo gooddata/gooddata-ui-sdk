@@ -43,6 +43,17 @@ describe("AttributeBubbleContent", () => {
         expect(Array.from(tags).map((tag) => tag.textContent)).toEqual(["1 234,5", "abc"]);
     });
 
+    it("renders the formatted value of an element in favour of its raw title", () => {
+        const { container } = renderComponent({
+            attrElements: [
+                { title: "2026-08-24 00:00", formattedTitle: "24.08.2026" },
+                { title: "2026-08-25 00:00" },
+            ],
+        });
+        const tags = container.querySelectorAll(".s-attribute-element");
+        expect(Array.from(tags).map((tag) => tag.textContent)).toEqual(["24.08.2026", "2026-08-25 00:00"]);
+    });
+
     it("renders dataset if provided", () => {
         const { container } = renderComponent({ attrElements, dataset: { title: "Dataset" } });
         const dataset = container.querySelector(".s-dataset-name");

@@ -1,8 +1,8 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import * as path from "path";
 
-import { groupBy } from "lodash-es";
+import { _groupBy } from "@gooddata/util";
 
 import { type TakenNamesSet, createUniqueVariableName } from "../base/variableNaming.js";
 import { type InsightRecording } from "../recordings/insights.js";
@@ -35,7 +35,7 @@ function generateInsightsConst(recordings: InsightRecording[]): string {
         .filter((rec) => rec.hasVisAndScenarioInfo())
         .map((rec) => [rec.getVisName(), rec.getScenarioName(), rec]);
 
-    const entriesByVis = Object.entries(groupBy(recsWithVisAndScenario, ([visName]) => visName));
+    const entriesByVis = Object.entries(_groupBy(recsWithVisAndScenario, ([visName]) => visName));
     const entryRows = entriesByVis
         .map(([vis, visScenarios]) => `${vis}: ${generateScenarioForVis(visScenarios)}`)
         .join(",");

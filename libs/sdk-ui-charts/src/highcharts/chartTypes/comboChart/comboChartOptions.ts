@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { set, unset } from "lodash-es";
+import { unset } from "lodash-es";
 
 import {
     type IAttributeOrMeasure,
@@ -11,7 +11,7 @@ import {
     measureLocalId,
 } from "@gooddata/sdk-model";
 import { BucketNames, type DataViewFacade, VisualizationTypes } from "@gooddata/sdk-ui";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type StackingType } from "../../constants/stacking.js";
@@ -75,8 +75,8 @@ export function getComboChartSeries(
                 ? types[index]!
                 : DEFAULT_COMBO_CHART_TYPES[index];
 
-            set(updatedSeries, [measureIndex, "type"], chartType);
-            set(updatedSeries, [measureIndex, "zIndex"], CHART_ORDER[chartType]);
+            _set(updatedSeries, [measureIndex, "type"], chartType);
+            _set(updatedSeries, [measureIndex, "zIndex"], CHART_ORDER[chartType]);
         });
     });
 
@@ -93,12 +93,12 @@ export function getComboChartSeries(
         if (isLineChart(series.type)) {
             // For pattern/outline fills, base color is stored in borderColor; fallback to string color if present
             if (baseColor) {
-                set(updatedSeries, [index, "color"], baseColor);
+                _set(updatedSeries, [index, "color"], baseColor);
             }
         } else if (isAreaChart(series.type) && !isSolidFill(config.chartFill)) {
-            set(updatedSeries, [index, "color"], baseColor);
-            set(updatedSeries, [index, "fillColor"], color);
-            set(updatedSeries, [index, "borderColor"], baseColor);
+            _set(updatedSeries, [index, "color"], baseColor);
+            _set(updatedSeries, [index, "fillColor"], color);
+            _set(updatedSeries, [index, "borderColor"], baseColor);
         }
     });
 

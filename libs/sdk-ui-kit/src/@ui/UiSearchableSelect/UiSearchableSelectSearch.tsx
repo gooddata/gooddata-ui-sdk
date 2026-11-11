@@ -48,6 +48,7 @@ export function UiSearchableSelectSearch({
         shouldCloseOnSelect,
         searchInputRef,
         isFullscreen,
+        footerId,
     } = useUiSearchableSelectContext();
 
     // while typing, the search points at the highlight only a moment after the last key, like in React Aria,
@@ -112,6 +113,9 @@ export function UiSearchableSelectSearch({
                 accessibilityConfig={{
                     ariaLabel: intl.formatMessage(messages.searchAriaLabel),
                     ...accessibilityConfig,
+                    ariaDescribedBy:
+                        [accessibilityConfig.ariaDescribedBy, footerId].filter(Boolean).join(" ") ||
+                        undefined,
                     role: "combobox",
                     ariaExpanded: true,
                     ariaControls: listboxId,

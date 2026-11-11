@@ -1,6 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import {
@@ -11,6 +10,7 @@ import {
     insightProperties,
 } from "@gooddata/sdk-model";
 import { BucketNames, type IPushData } from "@gooddata/sdk-ui";
+import { _set } from "@gooddata/util";
 
 import { messages } from "../../locales.js";
 import { type IMinMaxControlProps, type IMinMaxControlState } from "../interfaces/MinMaxControl.js";
@@ -60,7 +60,7 @@ export function maxInputValidateAndPushData(
     const maxIsMinus = maxValue === "-";
 
     const { propertiesMeta, pushData } = props;
-    set(propertiesMeta, "undoApplied", false);
+    _set(propertiesMeta, "undoApplied", false);
 
     // dash, non-numeric or min/max mismatch: set error
     if (isInvalidOrMinMaxError(maxValue, minNumberValue, maxNumberValue)) {
@@ -84,7 +84,7 @@ export function maxInputValidateAndPushData(
     // valid, set new value
     const { properties } = props;
     if (properties) {
-        set(properties, `controls.${basePath}.max`, maxValue);
+        _set(properties, `controls.${basePath}.max`, maxValue);
     }
 
     // if incorrect value was set previously but now validation passed, set incorrect value as correct value
@@ -94,7 +94,7 @@ export function maxInputValidateAndPushData(
         });
     } else {
         if (properties) {
-            set(properties, `controls.${basePath}.min`, incorrectMinValue);
+            _set(properties, `controls.${basePath}.min`, incorrectMinValue);
         }
         setState(defaultState);
     }
@@ -122,7 +122,7 @@ export function minInputValidateAndPushData(
     const minIsDash = minValue === "-";
 
     const { propertiesMeta, pushData } = props;
-    set(propertiesMeta, "undoApplied", false);
+    _set(propertiesMeta, "undoApplied", false);
 
     // dash, non-numeric or min/max mismatch: set error
     if (isInvalidOrMinMaxError(minValue, minNumberValue, maxNumberValue)) {
@@ -147,7 +147,7 @@ export function minInputValidateAndPushData(
     const { properties } = props;
 
     if (properties) {
-        set(properties, `controls.${basePath}.min`, minValue);
+        _set(properties, `controls.${basePath}.min`, minValue);
     }
 
     // if incorrect value was set previously but now validation passed, set incorrect value as correct value
@@ -157,7 +157,7 @@ export function minInputValidateAndPushData(
         });
     } else {
         if (properties) {
-            set(properties, `controls.${basePath}.max`, incorrectMaxValue);
+            _set(properties, `controls.${basePath}.max`, incorrectMaxValue);
         }
         setState(defaultState);
     }

@@ -1,8 +1,9 @@
 // (C) 2020-2026 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
-import { range } from "lodash-es";
 import { describe, expect, it } from "vitest";
+
+import { _range } from "@gooddata/util";
 
 import { ColorLegend, type IColorLegendProps } from "./ColorLegend.js";
 
@@ -20,7 +21,7 @@ describe("ColorLegend", () => {
     });
 
     it("should render color legend", () => {
-        const data = range(0, 6).map((itemId) => ({
+        const data = _range(0, 6).map((itemId) => ({
             color: "color" + itemId,
             range: {
                 from: itemId,

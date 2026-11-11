@@ -1,6 +1,8 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
-import { difference, groupBy, intersection, uniq } from "lodash-es";
+import { difference, intersection } from "lodash-es";
+
+import { _groupBy, _uniq } from "@gooddata/util";
 
 import {
     CheckMeasureSuffix,
@@ -85,7 +87,7 @@ function getGroupedRules(rules: ToolkitConfigFile["rules"], extracted: Record<st
         }),
     );
 
-    const groups = groupBy(allExtractedMessages, getIdentifierByPatternFilter(translationDefinition));
+    const groups = _groupBy(allExtractedMessages, getIdentifierByPatternFilter(translationDefinition));
     const ignoredRules = translationDefinition.filter((def) => def.ignore);
     const validateRules = translationDefinition.filter((def) => !def.ignore);
 
@@ -149,8 +151,8 @@ function getFilteredKeys(
         };
     });
 
-    const ignoredKeys = uniq(keys.flatMap(({ ignored }) => ignored));
-    const usedKeys = uniq(keys.flatMap(({ used }) => used));
+    const ignoredKeys = _uniq(keys.flatMap(({ ignored }) => ignored));
+    const usedKeys = _uniq(keys.flatMap(({ used }) => used));
 
     return {
         usedKeys: filterTranslationFile || ignore ? usedKeys.filter(messageFilter) : usedKeys,

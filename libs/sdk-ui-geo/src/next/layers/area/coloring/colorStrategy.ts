@@ -1,6 +1,4 @@
-// (C) 2025 GoodData Corporation
-
-import { omit } from "lodash-es";
+// (C) 2025-2026 GoodData Corporation
 
 import { type IAttributeDescriptor, type IColor, type IColorPalette } from "@gooddata/sdk-model";
 import { type DataViewFacade, type IColorAssignment } from "@gooddata/sdk-ui";
@@ -13,6 +11,7 @@ import {
     getColorFromMapping,
     isValidMappedColor,
 } from "@gooddata/sdk-ui-vis-commons";
+import { _omit } from "@gooddata/util";
 
 import { type IAreaGeoData } from "../../../types/geoData/area.js";
 import { type IAreaAttributesInDimension, findAreaAttributesInDimension } from "../data/transformation.js";
@@ -134,7 +133,7 @@ export function getAreaColorStrategy(
     );
 
     const areaAttributeHeader: IAttributeDescriptor = {
-        attributeHeader: omit(areaAttribute, "items"),
+        attributeHeader: _omit(areaAttribute, "items"),
     };
 
     return new AreaColorStrategy(colorPalette, colorMapping, areaAttributeHeader, segmentByAttribute, dv);

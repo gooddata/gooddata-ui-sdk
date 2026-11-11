@@ -9,6 +9,7 @@ import {
     type IPublisherDocumentDefinitionV2,
 } from "@gooddata/sdk-model";
 
+import { type IModuleMessage, type IModuleMessageSender, type IModuleMessaging } from "./moduleMessaging.js";
 import { type IPlatformContext } from "./platformContext.js";
 
 /**
@@ -1169,6 +1170,15 @@ export interface IPluggableApplicationMountOptions {
      * The host falls back to its own defaults for any fields not present.
      */
     onHeaderChange?: (header: IAppHeaderOptions) => void;
+
+    /**
+     * Sends module messages to channels that headless modules own.
+     *
+     * @remarks
+     * `undefined` on a shell without module messaging. Treat it, and a missing channel, as a feature
+     * that is not available. The shell aborts the pending requests when this mount ends.
+     */
+    moduleMessaging?: IModuleMessaging;
 }
 
 /**
@@ -1279,6 +1289,25 @@ export interface IPluggableApplicationMountHandle {
      * {@link IAiAssistantEventSentEvent}.
      */
     onAiAssistantEventReceive?: (event: IAiAssistantChatEvent) => void;
+
+    /**
+     * Receives a module message that a headless module posted to the active application.
+     *
+     * @remarks
+     * Dispatch on `message.channel`, then on `message.type`, and ignore unknown values: the module can
+     * be newer than the application. Validate `payload` with the guards of the channel contract.
+     */
+    onModuleMessage?: (message: IModuleMessage, sender: IModuleMessageSender) => void;
+
+    /**
+     * Channels the application accepts in `onModuleMessage`, most preferred first.
+     *
+     * @remarks
+     * The shell delivers only these channels, and gives the list to headless modules so that they post
+     * the version the application understands. When it is not set, the application accepts every
+     * channel. The shell reads it once, after `mount` returns.
+     */
+    acceptedChannels?: readonly string[];
 }
 
 /**

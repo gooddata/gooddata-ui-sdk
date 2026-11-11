@@ -20,7 +20,10 @@ import { drillPerformed } from "../postMessageApi/outgoing/drill_events.js";
 import { adPostEvent } from "../postMessageApi/outgoing/post_event_helper.js";
 import { validateHostDomain, watchCommandReceived } from "../postMessageApi/sagas/command_received_saga.js";
 import { getOrganizationId } from "../selectors/bootstrap_selector.js";
-import { isEmbeddingWriteCommandsEnabled } from "../selectors/feature_flag_selector.js";
+import {
+    isEmbeddingOriginValidationEnabled,
+    isEmbeddingWriteCommandsEnabled,
+} from "../selectors/feature_flag_selector.js";
 
 import { HOST_ADAPTER_ORIGIN, installHostAdapter } from "./hostBridge.js";
 
@@ -127,6 +130,7 @@ describe("host adapter", () => {
         it("should reject the sentinel origin when no adapter is installed", async () => {
             const saga: RunResult = await expectSaga(watchCommandReceived)
                 .provide([
+                    [select(isEmbeddingOriginValidationEnabled), true],
                     [select(getOrganizationId), "default"],
                     [call(validateHostDomain, "default", HOST_ADAPTER_ORIGIN), false],
                 ])

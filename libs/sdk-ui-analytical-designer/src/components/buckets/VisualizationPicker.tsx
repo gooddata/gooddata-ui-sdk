@@ -3,12 +3,11 @@
 import { type ReactElement, memo } from "react";
 
 import classNames from "classnames";
-import { range } from "lodash-es";
 import { defineMessages, useIntl } from "react-intl";
 
 import { type IVisualizationClass } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
-import { _isEqual } from "@gooddata/util";
+import { _isEqual, _range } from "@gooddata/util";
 
 const visualizationTypeMessages = defineMessages({
     table: { id: "table" },
@@ -142,7 +141,7 @@ export const VisualizationPicker = memo(function VisualizationPicker({
 
         if (visCount % rowLength) {
             const isFake = true;
-            range(rowLength - (visCount % rowLength)).forEach((key) =>
+            _range(rowLength - (visCount % rowLength)).forEach((key) =>
                 fakeButtons.push(<span key={key} className={getClasses(isFake)} />),
             );
         }

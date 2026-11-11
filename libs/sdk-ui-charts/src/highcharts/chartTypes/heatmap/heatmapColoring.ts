@@ -1,6 +1,5 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { range } from "lodash-es";
 import { darken, mix, saturate } from "polished";
 
 import { type IColorPalette, type IRgbColorValue, isColorFromPalette, isRgbColor } from "@gooddata/sdk-model";
@@ -16,7 +15,7 @@ import {
     isCustomPalette,
     normalizeColorToRGB,
 } from "@gooddata/sdk-ui-vis-commons";
-import { _isEqual } from "@gooddata/util";
+import { _isEqual, _range } from "@gooddata/util";
 
 import {
     DEFAULT_HEATMAP_BLUE_BASE_COLOR,
@@ -112,7 +111,7 @@ export class HeatmapColorStrategy extends ColorStrategy {
 
     private generatePalette(colorA: string, colorB: string, steps: number): string[] {
         const extendedSteps = steps + 1;
-        const generatedPaletteIncludingBg = range(extendedSteps).map((step) =>
+        const generatedPaletteIncludingBg = _range(extendedSteps).map((step) =>
             normalizeColorToRGB(mix((1 / (extendedSteps - 1)) * step, colorA, colorB)),
         );
 

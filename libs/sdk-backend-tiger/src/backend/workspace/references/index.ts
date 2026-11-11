@@ -1,7 +1,5 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { uniqBy } from "lodash-es";
-
 import {
     ActionsApi_GetDependentEntitiesGraph,
     ActionsApi_GetDependentEntitiesGraphFromEntryPoints,
@@ -16,6 +14,7 @@ import {
     type IReferencesService,
 } from "@gooddata/sdk-backend-spi";
 import { type IdentifierRef, type ObjectType, serializeObjRef } from "@gooddata/sdk-model";
+import { _uniqBy } from "@gooddata/util";
 
 import { type TigerAuthenticatedCallGuard, type TigerObjectType } from "../../../types/index.js";
 import { objectTypeToTigerIdType, tigerIdTypeToObjectType } from "../../../types/refTypeMapping.js";
@@ -137,8 +136,8 @@ function createGraph(
 
 function mergeGraphs(a: IReferencesResult, b: IReferencesResult): IReferencesResult {
     return {
-        nodes: uniqBy([...a.nodes, ...b.nodes], serializeObjRef),
-        edges: uniqBy(
+        nodes: _uniqBy([...a.nodes, ...b.nodes], serializeObjRef),
+        edges: _uniqBy(
             [...a.edges, ...b.edges],
             (edge) => `${serializeObjRef(edge.from)}|${serializeObjRef(edge.to)}`,
         ),

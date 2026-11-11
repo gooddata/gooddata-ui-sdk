@@ -1,7 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
 import cx from "classnames";
-import noop from "lodash-es/noop.js";
 import { useIntl } from "react-intl";
 
 import { type IDataView } from "@gooddata/sdk-backend-spi";
@@ -38,10 +37,10 @@ export function KdaKeyDriverChart({ config, dataView, displayForm }: IKdaKeyDriv
                     dataView={dataView}
                     drillableItems={displayForm ? [displayForm] : []}
                     onDrill={onDrillCallback}
-                    onLegendReady={noop}
-                    afterRender={noop}
-                    onDataTooLarge={noop}
-                    onNegativeValues={noop}
+                    onLegendReady={() => {}}
+                    afterRender={() => {}}
+                    onDataTooLarge={() => {}}
+                    onNegativeValues={() => {}}
                     theme={theme}
                 />
             ) : (

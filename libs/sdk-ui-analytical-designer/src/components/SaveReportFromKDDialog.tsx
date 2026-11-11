@@ -25,6 +25,7 @@ export function SaveReportFromKDDialog() {
 
     const {
         insightUsedOnDashboards,
+        insightUsedInDocuments,
         openSaveReportFromKD,
         editingReportTitle,
         isSaveAsNewReportOnly,
@@ -76,6 +77,8 @@ export function SaveReportFromKDDialog() {
         return null;
     }
 
+    const isUsedInDocuments = insightUsedInDocuments.length > 0;
+
     const isUpdateMode = () => state.saveOption === DIALOG_UPDATE_MODE;
 
     const isSaveAsNewMode = () => state.saveOption === DIALOG_CREATE_MODE;
@@ -114,7 +117,11 @@ export function SaveReportFromKDDialog() {
             onCancel={onHideDialog}
             onSubmit={handleSaveReportFromKDDialogSubmit}
             className="save-report-dialog s-save-report-from-kd-dialog"
-            headline={intl.formatMessage({ id: "dialogs.saveReportFromKD.headline" })}
+            headline={intl.formatMessage(
+                isUsedInDocuments
+                    ? defineMessage({ id: "dialogs.saveReportFromKD.headline.documents" })
+                    : defineMessage({ id: "dialogs.saveReportFromKD.headline" }),
+            )}
             cancelButtonText={intl.formatMessage({
                 id: "dialogs.savingUntitledReportConfirmation.cancel",
             })}
@@ -135,7 +142,13 @@ export function SaveReportFromKDDialog() {
                             disabled={isSaveAsNewReportOnly}
                         />
                         <span className="input-label-text">
-                            {intl.formatMessage({ id: "dialogs.saveReportFromKD.radio.saveOnAllDashboard" })}
+                            {intl.formatMessage(
+                                isUsedInDocuments
+                                    ? defineMessage({ id: "dialogs.saveReportFromKD.radio.saveEverywhere" })
+                                    : defineMessage({
+                                          id: "dialogs.saveReportFromKD.radio.saveOnAllDashboard",
+                                      }),
+                            )}
                         </span>
                     </label>
                     {isSaveAsNewReportOnly ? (
@@ -178,8 +191,11 @@ export function SaveReportFromKDDialog() {
                     />
                 </div>
             )}
-            {insightUsedOnDashboards && insightUsedOnDashboards.allDashboardsCount > 0 ? (
-                <InsightUsageOnDashboardsList insightUsedOnDashboards={insightUsedOnDashboards} />
+            {insightUsedOnDashboards.allDashboardsCount > 0 || isUsedInDocuments ? (
+                <InsightUsageOnDashboardsList
+                    insightUsedOnDashboards={insightUsedOnDashboards}
+                    insightUsedInDocuments={insightUsedInDocuments}
+                />
             ) : null}
         </ConfirmDialog>
     );

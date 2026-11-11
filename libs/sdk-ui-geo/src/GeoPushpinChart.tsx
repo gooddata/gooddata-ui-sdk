@@ -2,8 +2,6 @@
 
 import { type ReactElement } from "react";
 
-import { omit } from "lodash-es";
-
 import {
     type IAttribute,
     type IAttributeOrMeasure,
@@ -28,7 +26,7 @@ import {
     withContexts,
 } from "@gooddata/sdk-ui";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { _compact } from "@gooddata/util";
+import { _compact, _omit } from "@gooddata/util";
 
 import { CoreGeoChart } from "./core/CoreGeoChart.js";
 import {
@@ -103,7 +101,7 @@ function GeoPushpinChartInner(props: GeoPushpinChartPropsUnion): ReactElement {
     const theme = useTheme();
 
     const buckets = getBuckets(props);
-    const newProps = omit(props, getNonCoreProps(props));
+    const newProps = _omit(props, getNonCoreProps(props));
 
     const execution = backend!
         .withTelemetry("GeoPushpinChart", props)

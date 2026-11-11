@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { negate, set, uniqBy, without } from "lodash-es";
+import { negate, without } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import {
@@ -28,7 +28,7 @@ import {
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
 import { isAreaChart, isBulletChart, isComboChart, isLineChart } from "@gooddata/sdk-ui-charts";
-import { _cloneDeep, _compact, _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _compact, _isEmpty, _set, _uniqBy } from "@gooddata/util";
 
 import { subtitles, titles } from "../../locales.js";
 import { ATTRIBUTE, BUCKETS, DATE, METRIC, SHOW_ON_SECONDARY_AXIS } from "../constants/bucket.js";
@@ -583,12 +583,12 @@ export function setBucketTitles(
         if (bucketSupportsSubtitle(visualizationType, localIdentifier)) {
             const subtitleId = generateBucketSubtitleId(localIdentifier, visualizationType);
             const subtitle = getTranslation(subtitleId, intl);
-            set(updatedUiConfig, [BUCKETS, localIdentifier, "subtitle"], subtitle);
+            _set(updatedUiConfig, [BUCKETS, localIdentifier, "subtitle"], subtitle);
         }
 
         const titleId = generateBucketTitleId(localIdentifier, visualizationType);
         const title = getTranslation(titleId, intl);
-        set(updatedUiConfig, [BUCKETS, localIdentifier, "title"], title);
+        _set(updatedUiConfig, [BUCKETS, localIdentifier, "title"], title);
     });
 
     return updatedUiConfig;
@@ -714,7 +714,7 @@ export function getTotalsFromBucket(buckets: IBucketOfFun[], bucketName: string)
 
 function getUniqueAttributes(buckets: IBucketOfFun[]): IBucketItem[] {
     const attributes = getAllItemsByType(buckets, [ATTRIBUTE, DATE]);
-    return uniqBy(attributes, (attribute) => attribute?.attribute);
+    return _uniqBy(attributes, (attribute) => attribute?.attribute);
 }
 
 export function getMeasuresFromMdObject(insight: IInsightDefinition | undefined): IMeasure[] {
@@ -904,7 +904,7 @@ export function applyUiConfig(referencePoint: IExtendedReferencePoint): IExtende
     const newBuckets: IBucketOfFun[] = buckets.map((bucket: IBucketOfFun) =>
         applyUiConfigOnBucket(bucket, uiConfig?.[bucket.localIdentifier]),
     );
-    set(referencePoint, "buckets", newBuckets);
+    _set(referencePoint, "buckets", newBuckets);
     return referencePoint;
 }
 
@@ -1152,7 +1152,7 @@ function getMeasureDependencies(measure: IBucketItem, allMeasures: IBucketItem[]
         indirectDependencies.push(...dependenciesOfDependency);
     });
 
-    return uniqBy(
+    return _uniqBy(
         [...directDependencies, ...indirectDependencies],
         (dependency) => dependency.localIdentifier,
     );

@@ -36,6 +36,7 @@ export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { ch
         disabled,
         customIcon,
         withoutApply = false,
+        separators,
         overlayPositionType,
         alignPoints,
         menuConfig,
@@ -125,6 +126,7 @@ export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { ch
                         enableImmediateAttributeFilterDisplayAsLabelMigration
                     }
                     withoutApply={withoutApply}
+                    separators={separators}
                     overlayPositionType={overlayPositionType}
                     alignPoints={alignPoints}
                     menuConfig={menuConfig}

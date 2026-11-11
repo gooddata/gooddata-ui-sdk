@@ -1,6 +1,7 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { type SagaReturnType, call, put, select, takeEvery } from "redux-saga/effects";
+import { type Channel } from "redux-saga";
+import { type SagaReturnType, actionChannel, call, put, select, take } from "redux-saga/effects";
 
 import {
     type AdSetTimezoneCommandData,
@@ -31,6 +32,7 @@ import { backend } from "../../backend.js";
 import { HOST_ADAPTER_ORIGIN, getHostAdapter } from "../../embedding/hostBridge.js";
 import { getOrganizationId } from "../../selectors/bootstrap_selector.js";
 import {
+    isEmbeddingOriginValidationEnabled,
     isEmbeddingWriteCommandsEnabled,
     isEnableTimezoneChange,
 } from "../../selectors/feature_flag_selector.js";
@@ -60,6 +62,13 @@ export async function validateHostDomain(organizationId: string, url: string): P
 }
 
 function* isCommandOriginValid(origin: string) {
+    const isValidationEnabled: ReturnType<typeof isEmbeddingOriginValidationEnabled> = yield select(
+        isEmbeddingOriginValidationEnabled,
+    );
+    // Without the flag, no backend call: every origin is valid, as before the validation existed.
+    if (!isValidationEnabled) {
+        return true;
+    }
     try {
         const organizationId: ReturnType<typeof getOrganizationId> = yield select(getOrganizationId);
         const result: SagaReturnType<typeof validateHostDomain> = yield call(
@@ -123,6 +132,10 @@ export function* handleReceivedCommand({
         ? true
         : yield call(isCommandOriginValid, commandOrigin);
     if (!isValidOrigin) {
+        // oxlint-disable-next-line eslint-js/no-console
+        console.warn(
+            `Denied the "${commandType}" command from the origin "${commandOrigin}". The origin is not in the embedding origins of the organization, or the check failed.`,
+        );
         yield put(hostVerificationFailed(contextId));
         return;
     }
@@ -175,5 +188,15 @@ export function* handleReceivedCommand({
 }
 
 export function* watchCommandReceived() {
-    yield takeEvery(PostEventActionTypeKeys.COMMAND_RECEIVED, handleReceivedCommand);
+    // The channel keeps the commands that arrive while a command is handled, for example while its
+    // origin check waits for the backend. The commands then run one by one in the order they arrived.
+    const commandChannel: Channel<ICommandReceivedAction> = yield actionChannel(
+        PostEventActionTypeKeys.COMMAND_RECEIVED,
+    );
+
+    while (true) {
+        const commandReceivedAction: ICommandReceivedAction = yield take(commandChannel);
+
+        yield call(handleReceivedCommand, commandReceivedAction);
+    }
 }

@@ -1,9 +1,9 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { groupBy, partition, sortBy, uniqBy } from "lodash-es";
+import { sortBy } from "lodash-es";
 
 import { type IInsightDefinition, factoryNotationFor } from "@gooddata/sdk-model";
-import { _compact, _isEmpty } from "@gooddata/util";
+import { _compact, _groupBy, _isEmpty, _partition, _uniqBy } from "@gooddata/util";
 
 import { type IEmbeddingCodeConfig } from "../../interfaces/VisualizationDescriptor.js";
 
@@ -83,9 +83,9 @@ function indent(str: string, tabs: number): string {
 }
 
 const renderImports = (imports: IImportInfo[]) =>
-    Object.entries(groupBy(imports, (i: IImportInfo) => i.package))
+    Object.entries(_groupBy(imports, (i: IImportInfo) => i.package))
         .map(([pkg, imports]: [string, IImportInfo[]]) => {
-            const [[defaultImport], namedImports] = partition(imports, (i) => i.importType === "default");
+            const [[defaultImport], namedImports] = _partition(imports, (i) => i.importType === "default");
 
             return _compact([
                 "import",
@@ -162,7 +162,7 @@ function walkProps<TProps>(
     importsUsed.push(...detectedFactories);
 
     return {
-        importsUsed: uniqBy(importsUsed, (i) => `${i.package}#${i.name}`),
+        importsUsed: _uniqBy(importsUsed, (i) => `${i.package}#${i.name}`),
         propDeclarations,
         propUsages,
     };

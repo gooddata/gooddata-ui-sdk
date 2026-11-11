@@ -2,10 +2,9 @@
 
 import { type ReactElement, useCallback, useEffect, useRef } from "react";
 
-import { set } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { messages } from "../../../locales.js";
 import { pushpinShapeTypeDropdownItems } from "../../constants/dropdowns.js";
@@ -73,7 +72,7 @@ export function PushpinShapeControl(props: IPushpinShapeControlProps): ReactElem
             const nextShape = data.properties?.controls?.["points"]?.shapeType;
             if (nextShape !== "oneIcon" && data.properties?.controls?.["points"]?.icon !== undefined) {
                 const sanitized = _cloneDeep(data.properties!);
-                set(sanitized, "controls.points.icon", undefined);
+                _set(sanitized, "controls.points.icon", undefined);
                 pushData({ ...data, properties: sanitized });
                 return;
             }
@@ -99,7 +98,7 @@ export function PushpinShapeControl(props: IPushpinShapeControlProps): ReactElem
         lastAutoSelectedIcon.current = firstSpriteIcon;
 
         const clonedProperties = _cloneDeep(properties);
-        set(clonedProperties, "controls.points.icon", firstSpriteIcon);
+        _set(clonedProperties, "controls.points.icon", firstSpriteIcon);
         pushData({ properties: clonedProperties });
     }, [shapeType, icon, spriteIcons, properties, pushData]);
 

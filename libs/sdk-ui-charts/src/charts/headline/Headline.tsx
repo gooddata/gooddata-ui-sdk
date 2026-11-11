@@ -2,7 +2,6 @@
 
 import { type ReactElement } from "react";
 
-import { omit } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
@@ -15,6 +14,7 @@ import {
     useResolveValuesWithPlaceholders,
     withContexts,
 } from "@gooddata/sdk-ui";
+import { _omit } from "@gooddata/util";
 
 import { type IBucketChartProps, type ICoreChartProps } from "../../interfaces/chartProps.js";
 
@@ -111,7 +111,7 @@ export function toCoreHeadlineProps(props: IHeadlineProps): CoreHeadlineProps {
         newBucket(BucketNames.SECONDARY_MEASURES, ...secondaryMeasures),
     ];
 
-    const newProps: IHeadlineNonBucketProps = omit<IHeadlineProps, keyof IIrrelevantHeadlineProps>(props, [
+    const newProps: IHeadlineNonBucketProps = _omit<IHeadlineProps, keyof IIrrelevantHeadlineProps>(props, [
         "primaryMeasure",
         "secondaryMeasure",
         "filters",

@@ -1,10 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { BucketNames } from "@gooddata/sdk-ui";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { messages } from "../../../locales.js";
 import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket.js";
@@ -56,7 +55,7 @@ function setLineChartBucketWarningMessages(referencePoint: IExtendedReferencePoi
             }
 
             if (warningMessage) {
-                set(updatedUiConfig, [BUCKETS, localIdentifier, "warningMessage"], warningMessage);
+                _set(updatedUiConfig, [BUCKETS, localIdentifier, "warningMessage"], warningMessage);
             }
         }
     });
@@ -78,32 +77,32 @@ export function setLineChartUiConfig(
         hasNoMeasures(buckets) ||
         hasOneMeasureOrAlsoLineStyleControlMeasure(buckets);
 
-    set(referencePointConfigured, UICONFIG, setBucketTitles(referencePoint, visualizationType, intl));
-    set(
+    _set(referencePointConfigured, UICONFIG, setBucketTitles(referencePoint, visualizationType, intl));
+    _set(
         referencePointConfigured,
         [UICONFIG, BUCKETS, BucketNames.MEASURES, "canAddItems"],
         measuresCanAddItems,
     );
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.TREND, "canAddItems"], true);
-    set(
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.TREND, "canAddItems"], true);
+    _set(
         referencePointConfigured,
         [UICONFIG, BUCKETS, BucketNames.SEGMENT, "canAddItems"],
         segmentCanAddItems,
     );
-    set(
+    _set(
         referencePointConfigured,
         UICONFIG,
         setLineChartBucketWarningMessages(referencePointConfigured, intl),
     );
-    set(
+    _set(
         referencePointConfigured,
         [UICONFIG, OPEN_AS_REPORT, SUPPORTED],
         !hasColorMapping(referencePoint.properties),
     );
 
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], lineMeasuresIcon);
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.TREND, "icon"], lineTrendIcon);
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.SEGMENT, "icon"], lineSegmentIcon);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], lineMeasuresIcon);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.TREND, "icon"], lineTrendIcon);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.SEGMENT, "icon"], lineSegmentIcon);
 
     return referencePointConfigured;
 }

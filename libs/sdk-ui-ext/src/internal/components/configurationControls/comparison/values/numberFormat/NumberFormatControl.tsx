@@ -2,12 +2,11 @@
 
 import { useMemo } from "react";
 
-import { set } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { type ISeparators, type PushDataCallback } from "@gooddata/sdk-ui";
 import { MeasureNumberFormat } from "@gooddata/sdk-ui-kit";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { type IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
 import { type IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
@@ -41,7 +40,7 @@ export function NumberFormatControl({
 
     const selectFormat = (format: string | null) => {
         const clonedProperties = _cloneDeep(properties);
-        set(clonedProperties.controls!, valuePath, format);
+        _set(clonedProperties.controls!, valuePath, format);
 
         pushData({ properties: clonedProperties });
     };

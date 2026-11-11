@@ -98,8 +98,11 @@ can replace the built-in `CopilotBuildType` without changing the lifecycle algor
 Switching conversations clears foreground reasoning, not outstanding workflow ownership.
 Activated creation requests continue to contribute progress across chats; edit and builder
 scopes also include their matching background requests. Unanswered clarification questions keep
-waiting across conversation switches, as do creation/builder workflows awaiting a general follow-up
-reply. Ordinary completed edits without pending questions still release their lock.
+waiting across conversation switches, as do creation workflows awaiting a general follow-up reply.
+A finished edit turn, including one in the builder, releases its lock unless a clarification form is
+still open; an answer that offers a chart or asks a question in text does not keep it. A follow-up
+from the conversation that filled the builder shows building while its answer streams, even without
+a new skill activation.
 Replying resumes the same workflow; failure, cancellation, target reset, or definition
 application acknowledgement releases it. In-progress applications stay building until acknowledgement.
 Clarifications can be answered through the form or by typing in chat. A clarification event with
@@ -108,6 +111,27 @@ The originating conversation owns its loader: ordinary messages, reasoning, comp
 another chat cannot replace its progress or release its lock. Ownership transfers only when another
 conversation activates a configured skill for the same workflow and target. Superseded responses cannot
 reclaim ownership or restore an old wait after the new workflow finishes; other targets remain independent.
+
+### When a workflow holds its lock
+
+`getStatus(scope)` reports `generating`, `building` or `waiting` while a workflow holds the lock for
+that scope, and `idle` otherwise. Hosts usually lock the editor for any status other than `idle`.
+
+A user message never releases the lock. A reply to a waiting workflow, typed or through the form,
+always moves it to `generating` or `building`; the assistant's answer decides what follows.
+
+| Situation                                                      | Status                  | What follows                                                                 |
+| -------------------------------------------------------------- | ----------------------- | ---------------------------------------------------------------------------- |
+| Creation started with `startGeneration`, before any definition | `generating`/`building` | definition application acknowledgement, `cancelGeneration`, failure          |
+| Creation answered with a question, before any definition       | `waiting`               | the reply streams as `generating`/`building`; the assistant's answer decides |
+| A turn of the owning workflow is streaming                     | `building`              | the assistant's answer decides                                               |
+| The assistant's answer holds a clarification form              | `waiting`               | the reply streams as `building`; the assistant's next answer decides         |
+| A definition is being applied                                  | `building`              | `definitionApplied` or `definitionApplicationInterrupted`                    |
+| An edit answer that offers a chart or asks in text             | `idle`                  | (not held; a reply starts a new request)                                     |
+| Any other finished edit answer                                 | `idle`                  | (not held)                                                                   |
+
+Only `startGeneration` marks a workflow as creation. A dashboard created by a plain chat message is
+an edit request, so it does not wait between its first answer and its first definition.
 
 ## Composing overlay (alpha)
 

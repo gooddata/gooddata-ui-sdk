@@ -1,7 +1,5 @@
 // (C) 2026 GoodData Corporation
 
-import { memoize } from "lodash-es";
-
 import {
     DEFAULT_LANGUAGE,
     DEFAULT_MESSAGES as DEFAULT_MESSAGES_SDK_UI,
@@ -10,7 +8,7 @@ import {
     resolveLocale,
     resolveMessages as resolveMessagesSdkUi,
 } from "@gooddata/sdk-ui";
-import { removeMetadata } from "@gooddata/util";
+import { _memoize, removeMetadata } from "@gooddata/util";
 
 import enUS from "../../translations/en-US.json" with { type: "json" };
 
@@ -90,4 +88,4 @@ async function resolveMessagesInternal(locale: string): Promise<ITranslations> {
  * Resolves translation messages for the given locale.
  * Memoized to cache promises and prevent duplicate async imports.
  */
-export const resolveMessages: (locale: string) => Promise<ITranslations> = memoize(resolveMessagesInternal);
+export const resolveMessages: (locale: string) => Promise<ITranslations> = _memoize(resolveMessagesInternal);

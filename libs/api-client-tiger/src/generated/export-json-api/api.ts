@@ -1341,9 +1341,9 @@ export interface ExportRawExportRequest {
 export type ExportRawExportRequestFormatEnum = 'ARROW_FILE' | 'ARROW_STREAM' | 'CSV';
 
 export interface ExportRelativeBoundedDateFilter {
-    'from'?: number;
+    'from'?: number | null;
     'granularity': ExportRelativeBoundedDateFilterGranularityEnum;
-    'to'?: number;
+    'to'?: number | null;
 }
 
 export type ExportRelativeBoundedDateFilterGranularityEnum = 'ALL_TIME_GRANULARITY' | 'GDC.time.year' | 'GDC.time.week_us' | 'GDC.time.week_in_year' | 'GDC.time.week_in_quarter' | 'GDC.time.week' | 'GDC.time.euweek_in_year' | 'GDC.time.euweek_in_quarter' | 'GDC.time.quarter' | 'GDC.time.quarter_in_year' | 'GDC.time.month' | 'GDC.time.month_in_quarter' | 'GDC.time.month_in_year' | 'GDC.time.day_in_year' | 'GDC.time.day_in_quarter' | 'GDC.time.day_in_month' | 'GDC.time.day_in_week' | 'GDC.time.day_in_euweek' | 'GDC.time.date' | 'GDC.time.hour' | 'GDC.time.hour_in_day' | 'GDC.time.minute' | 'GDC.time.minute_in_hour' | 'GDC.time.minute_in_day' | 'GDC.time.second' | 'GDC.time.second_in_minute' | 'GDC.time.second_in_day' | 'GDC.time.fiscal_week' | 'GDC.time.fiscal_month' | 'GDC.time.fiscal_quarter' | 'GDC.time.fiscal_semester' | 'GDC.time.fiscal_year' | 'GDC.time.fiscal_day_in_fiscal_week' | 'GDC.time.fiscal_day_in_fiscal_month' | 'GDC.time.fiscal_day_in_fiscal_quarter' | 'GDC.time.fiscal_day_in_fiscal_semester' | 'GDC.time.fiscal_day_in_fiscal_year' | 'GDC.time.fiscal_week_in_fiscal_month' | 'GDC.time.fiscal_week_in_fiscal_quarter' | 'GDC.time.fiscal_week_in_fiscal_semester' | 'GDC.time.fiscal_week_in_fiscal_year' | 'GDC.time.fiscal_month_in_fiscal_quarter' | 'GDC.time.fiscal_month_in_fiscal_semester' | 'GDC.time.fiscal_month_in_fiscal_year' | 'GDC.time.fiscal_quarter_in_fiscal_semester' | 'GDC.time.fiscal_quarter_in_fiscal_year' | 'GDC.time.fiscal_semester_in_fiscal_year';
@@ -1894,8 +1894,8 @@ export async function ActionsExportAxiosParamCreator_CreatePdfExport(
 
 // ActionsExport FP - ActionsExportAxiosParamCreator
 /**
- * Note: This API is an experimental and is going to change. Please, use it accordingly.An raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
- * @summary (EXPERIMENTAL) Create raw export request
+ * A raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+ * @summary Create raw export request
  * @param {string} workspaceId 
  * @param {ExportRawExportRequest} exportRawExportRequest 
  * @param {*} [options] Override http request option.
@@ -2446,8 +2446,8 @@ export async function ActionsExportAxiosParamCreator_GetMetadata(
 
 // ActionsExport FP - ActionsExportAxiosParamCreator
 /**
- * Note: This API is an experimental and is going to change. Please, use it accordingly.After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
- * @summary (EXPERIMENTAL) Retrieve exported files
+ * After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+ * @summary Retrieve exported files
  * @param {string} workspaceId 
  * @param {string} exportId 
  * @param {*} [options] Override http request option.
@@ -2845,8 +2845,8 @@ export async function ActionsExport_CreatePdfExport(
 
 // ActionsExport Api FP
 /**
- * Note: This API is an experimental and is going to change. Please, use it accordingly.An raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
- * @summary (EXPERIMENTAL) Create raw export request
+ * A raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+ * @summary Create raw export request
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ActionsExportCreateRawExportRequest} requestParameters Request parameters.
@@ -3105,8 +3105,8 @@ export async function ActionsExport_GetMetadata(
 
 // ActionsExport Api FP
 /**
- * Note: This API is an experimental and is going to change. Please, use it accordingly.After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
- * @summary (EXPERIMENTAL) Retrieve exported files
+ * After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+ * @summary Retrieve exported files
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ActionsExportGetRawExportRequest} requestParameters Request parameters.
@@ -3306,8 +3306,8 @@ export interface ActionsExportInterface {
     createPdfExport(requestParameters: ActionsExportCreatePdfExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
 
     /**
-     * Note: This API is an experimental and is going to change. Please, use it accordingly.An raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
-     * @summary (EXPERIMENTAL) Create raw export request
+     * A raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+     * @summary Create raw export request
      * @param {ActionsExportCreateRawExportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3407,8 +3407,8 @@ export interface ActionsExportInterface {
     getMetadata(requestParameters: ActionsExportGetMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
-     * Note: This API is an experimental and is going to change. Please, use it accordingly.After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
-     * @summary (EXPERIMENTAL) Retrieve exported files
+     * After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+     * @summary Retrieve exported files
      * @param {ActionsExportGetRawExportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3988,8 +3988,8 @@ export class ActionsExport extends BaseAPI implements ActionsExportInterface {
     }
 
     /**
-     * Note: This API is an experimental and is going to change. Please, use it accordingly.An raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
-     * @summary (EXPERIMENTAL) Create raw export request
+     * A raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+     * @summary Create raw export request
      * @param {ActionsExportCreateRawExportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4109,8 +4109,8 @@ export class ActionsExport extends BaseAPI implements ActionsExportInterface {
     }
 
     /**
-     * Note: This API is an experimental and is going to change. Please, use it accordingly.After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
-     * @summary (EXPERIMENTAL) Retrieve exported files
+     * After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+     * @summary Retrieve exported files
      * @param {ActionsExportGetRawExportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4583,8 +4583,8 @@ export class ImageExportExport extends BaseAPI implements ImageExportExportInter
 
 // RawExportExport FP - RawExportExportAxiosParamCreator
 /**
- * Note: This API is an experimental and is going to change. Please, use it accordingly.An raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
- * @summary (EXPERIMENTAL) Create raw export request
+ * A raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+ * @summary Create raw export request
  * @param {string} workspaceId 
  * @param {ExportRawExportRequest} exportRawExportRequest 
  * @param {*} [options] Override http request option.
@@ -4645,8 +4645,8 @@ export async function RawExportExportAxiosParamCreator_CreateRawExport(
 
 // RawExportExport FP - RawExportExportAxiosParamCreator
 /**
- * Note: This API is an experimental and is going to change. Please, use it accordingly.After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
- * @summary (EXPERIMENTAL) Retrieve exported files
+ * After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+ * @summary Retrieve exported files
  * @param {string} workspaceId 
  * @param {string} exportId 
  * @param {*} [options] Override http request option.
@@ -4695,8 +4695,8 @@ export async function RawExportExportAxiosParamCreator_GetRawExport(
 
 // RawExportExport Api FP
 /**
- * Note: This API is an experimental and is going to change. Please, use it accordingly.An raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
- * @summary (EXPERIMENTAL) Create raw export request
+ * A raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+ * @summary Create raw export request
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {RawExportExportCreateRawExportRequest} requestParameters Request parameters.
@@ -4721,8 +4721,8 @@ export async function RawExportExport_CreateRawExport(
 
 // RawExportExport Api FP
 /**
- * Note: This API is an experimental and is going to change. Please, use it accordingly.After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
- * @summary (EXPERIMENTAL) Retrieve exported files
+ * After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+ * @summary Retrieve exported files
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {RawExportExportGetRawExportRequest} requestParameters Request parameters.
@@ -4752,8 +4752,8 @@ export async function RawExportExport_GetRawExport(
  */
 export interface RawExportExportInterface {
     /**
-     * Note: This API is an experimental and is going to change. Please, use it accordingly.An raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
-     * @summary (EXPERIMENTAL) Create raw export request
+     * A raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+     * @summary Create raw export request
      * @param {RawExportExportCreateRawExportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4762,8 +4762,8 @@ export interface RawExportExportInterface {
     createRawExport(requestParameters: RawExportExportCreateRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
 
     /**
-     * Note: This API is an experimental and is going to change. Please, use it accordingly.After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
-     * @summary (EXPERIMENTAL) Retrieve exported files
+     * After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+     * @summary Retrieve exported files
      * @param {RawExportExportGetRawExportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4823,8 +4823,8 @@ export interface RawExportExportGetRawExportRequest {
  */
 export class RawExportExport extends BaseAPI implements RawExportExportInterface {
     /**
-     * Note: This API is an experimental and is going to change. Please, use it accordingly.An raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
-     * @summary (EXPERIMENTAL) Create raw export request
+     * A raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+     * @summary Create raw export request
      * @param {RawExportExportCreateRawExportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4835,8 +4835,8 @@ export class RawExportExport extends BaseAPI implements RawExportExportInterface
     }
 
     /**
-     * Note: This API is an experimental and is going to change. Please, use it accordingly.After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
-     * @summary (EXPERIMENTAL) Retrieve exported files
+     * After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+     * @summary Retrieve exported files
      * @param {RawExportExportGetRawExportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

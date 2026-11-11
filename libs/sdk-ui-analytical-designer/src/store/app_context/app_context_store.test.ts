@@ -323,6 +323,7 @@ describe("app context reducers", () => {
                 insightUsagesOnDashboards: {
                     referencedDashboards: [createAnalyticalDashboard("name", "identifier", 123)],
                     allUserDashboards: [],
+                    referencedDocuments: [],
                 },
             });
 

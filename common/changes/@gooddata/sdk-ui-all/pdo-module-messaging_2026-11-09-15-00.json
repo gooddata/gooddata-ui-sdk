@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-pluggable-application-model, sdk-ui-pluggable-host: Add module messaging between pluggable applications and headless modules (`moduleMessaging`, `registerChannel`, `postToActiveApplication`, `onModuleMessage`)",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

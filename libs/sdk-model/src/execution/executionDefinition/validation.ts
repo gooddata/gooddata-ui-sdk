@@ -1,7 +1,8 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { groupBy } from "lodash-es";
 import { invariant } from "ts-invariant";
+
+import { _groupBy } from "@gooddata/util";
 
 import { attributeLocalId, isAttribute } from "../attribute/index.js";
 import { measureLocalId } from "../measure/index.js";
@@ -16,7 +17,7 @@ import { type IExecutionDefinition } from "./index.js";
 export function defValidate(definition: IExecutionDefinition): void {
     const itemsWithLocalId = [...definition.attributes, ...definition.measures];
 
-    const groups = groupBy(itemsWithLocalId, (item) =>
+    const groups = _groupBy(itemsWithLocalId, (item) =>
         isAttribute(item) ? attributeLocalId(item) : measureLocalId(item),
     );
 

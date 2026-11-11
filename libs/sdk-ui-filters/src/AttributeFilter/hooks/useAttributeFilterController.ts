@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import noop from "lodash-es/noop.js";
 import { invariant } from "ts-invariant";
 
 import {
@@ -216,7 +215,7 @@ export const useAttributeFilterController = (
     const effectiveOnError = isTextSelectionType ? undefined : onError;
     const effectiveOnInitLoadingChanged = isTextSelectionType ? undefined : onInitLoadingChanged;
 
-    const filterDetailRequestHandler = useFilterDetailRequestHandler(backend, workspace);
+    const filterDetailRequestHandler = useFilterDetailRequestHandler(backend, workspace, separators);
 
     const limitingAttributeFilters = useResolveParentFiltersInput(
         parentFilters,
@@ -657,7 +656,7 @@ export const useAttributeFilterController = (
             onReset: onResetTextMode,
             filterDetailRequestHandler,
             setDisplayForm,
-            resetForModeSwitch: textFilterController.resetForModeSwitch ?? noop,
+            resetForModeSwitch: textFilterController.resetForModeSwitch ?? (() => {}),
             onSelectionTypeChange:
                 availableInternalSelectionTypes.length > 1 ? onSelectionTypeChangeForControllers : undefined,
             currentSelectionType: selectionType,
@@ -679,13 +678,13 @@ export const useAttributeFilterController = (
             searchString: elementsFilterController.searchString,
             isFilteredByParentFilters: false,
             parentFilterAttributes: [],
-            onLoadNextElementsPage: noop,
+            onLoadNextElementsPage: () => {},
             // Expose onSearch in text mode for autocomplete lazy loading
             onSearch: elementsFilterController.onSearch,
-            onSelect: noop,
-            onOpen: noop,
-            onShowFilteredElements: noop,
-            onClearIrrelevantSelection: noop,
+            onSelect: () => {},
+            onOpen: () => {},
+            onShowFilteredElements: () => {},
+            onClearIrrelevantSelection: () => {},
         };
     }
 

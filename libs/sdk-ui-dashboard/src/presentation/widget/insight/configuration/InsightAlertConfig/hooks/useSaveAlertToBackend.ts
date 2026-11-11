@@ -2,14 +2,13 @@
 
 import { useCallback } from "react";
 
-import { omit } from "lodash-es";
-
 import {
     type IAutomationMetadataObject,
     type IAutomationMetadataObjectDefinition,
     type IFilter,
     isAllValuesAttributeFilter,
 } from "@gooddata/sdk-model";
+import { _omit } from "@gooddata/util";
 
 import { useCreateAlert } from "./useCreateAlert.js";
 import { useUpdateAlert } from "./useUpdateAlert.js";
@@ -99,7 +98,7 @@ function sanitizeAutomation(automationToSave: IAutomationMetadataObject): IAutom
     // cronDescription is a variable created on backend that cannot be overridden and BE has hard time
     // handling it with each PUT
     if (automation.schedule) {
-        automation.schedule = omit(automation.schedule, ["cronDescription"]);
+        automation.schedule = _omit(automation.schedule, ["cronDescription"]);
     }
 
     if (automation.alert?.execution?.filters) {

@@ -1,6 +1,5 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { debounce } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {
@@ -17,7 +16,7 @@ import {
     VisualizationTypes,
     getVisualizationType,
 } from "@gooddata/sdk-ui";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _debounce } from "@gooddata/util";
 
 import { type DrilldownEventObject } from "../../lib/index.js";
 import { convertToChartType, isBulletChart, isComboChart, isHeatmap, isTreemap } from "../_util/common.js";
@@ -158,7 +157,7 @@ function composeDrillContextPoint(
     };
 }
 
-const chartClickDebounced = debounce(
+const chartClickDebounced = _debounce(
     (
         drillConfig: IDrillConfig,
         event: DrilldownEventObject,
@@ -217,7 +216,7 @@ export function chartClick(
     chartClickDebounced(drillConfig, event, target, chartId, chartType);
 }
 
-const tickLabelClickDebounce = debounce(
+const tickLabelClickDebounce = _debounce(
     (
         drillConfig: IDrillConfig,
         points: IHighchartsPointObject[],

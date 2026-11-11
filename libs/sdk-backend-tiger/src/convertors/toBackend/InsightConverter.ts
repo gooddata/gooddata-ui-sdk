@@ -1,7 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { omit } from "lodash-es";
-
 import {
     type ITigerAttributeFilterConfigs,
     type ITigerBucket,
@@ -23,6 +21,7 @@ import {
     insightLayers,
     insightParameters,
 } from "@gooddata/sdk-model";
+import { _omit } from "@gooddata/util";
 
 import {
     type IStoredFilterConversionOptions,
@@ -36,7 +35,7 @@ import { cloneWithSanitizedIdsTyped } from "./IdSanitization.js";
 const insightFilterConversionOptions: IStoredFilterConversionOptions = { dropAbsoluteDateGranularity: true };
 
 function removeIdentifiers(insight: IInsight): IInsightDefinition {
-    const insightData = omit(insight.insight, ["ref", "uri", "identifier"]);
+    const insightData = _omit(insight.insight, ["ref", "uri", "identifier"]);
 
     return {
         ...insight,
@@ -49,7 +48,7 @@ function removeVisualizationPropertiesSortItems(insight: IInsight): IInsightDefi
         ...insight,
         insight: {
             ...insight.insight,
-            properties: omit(insight.insight.properties, ["sortItems"]),
+            properties: _omit(insight.insight.properties, ["sortItems"]),
         },
     };
 }

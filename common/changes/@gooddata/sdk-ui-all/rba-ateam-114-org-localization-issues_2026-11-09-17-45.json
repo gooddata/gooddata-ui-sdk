@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-backend-spi, sdk-backend-tiger, api-client-tiger: Read the localization issues of the organization and the workspaces behind them from the backend. `IOrganizationLocalizationService` no longer has `getTranslationUsage` and `getStatisticsWorkspaces`.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

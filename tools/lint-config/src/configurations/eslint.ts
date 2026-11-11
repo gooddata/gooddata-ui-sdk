@@ -66,6 +66,15 @@ const lodashEsBans: Record<string, string> = {
     isEqual: "_isEqual from @gooddata/util",
     cloneDeep: "_cloneDeep from @gooddata/util",
     compact: "_compact from @gooddata/util",
+    set: "_set from @gooddata/util",
+    omit: "_omit from @gooddata/util",
+    uniqBy: "_uniqBy from @gooddata/util",
+    debounce: "_debounce from @gooddata/util",
+    range: "_range from @gooddata/util",
+    groupBy: "_groupBy from @gooddata/util",
+    partition: "_partition from @gooddata/util",
+    memoize: "_memoize from @gooddata/util",
+    uniq: "_uniq from @gooddata/util",
 };
 
 const lodashEsPatterns = Object.entries(lodashEsBans).map(([importNames, alternative]) => ({

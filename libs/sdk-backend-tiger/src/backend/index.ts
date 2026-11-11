@@ -1,7 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
 import axios, { type AxiosInstance, type AxiosResponse } from "axios";
-import { inRange, isError, omit } from "lodash-es";
+import { inRange, isError } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { type ITigerClientBase, newAxios, tigerClientBaseFactory } from "@gooddata/api-client-tiger";
@@ -33,7 +33,7 @@ import {
     isContractExpired,
     isNotAuthenticated,
 } from "@gooddata/sdk-backend-spi";
-import { _isEmpty } from "@gooddata/util";
+import { _isEmpty, _omit } from "@gooddata/util";
 
 import { LIB_NAME, LIB_VERSION } from "../__version.js";
 import { createDateValueStringifier } from "../convertors/fromBackend/dateFormatting/dateValueFormatter.js";
@@ -477,7 +477,7 @@ function interceptBackendErrorsToConsole(client: AxiosInstance): AxiosInstance {
             // into console for easier diagnostics.
             else if (inRange(response.status, 400, 600) && typeof response.data === "object") {
                 // Title is redundant (Bad Request)
-                const details = omit(response.data, ["title"]);
+                const details = _omit(response.data, ["title"]);
                 console.error("Tiger backend threw an error:", details);
             }
 

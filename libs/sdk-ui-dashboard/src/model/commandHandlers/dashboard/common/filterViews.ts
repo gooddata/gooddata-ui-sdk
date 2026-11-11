@@ -1,7 +1,5 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { omit } from "lodash-es";
-
 import {
     type IAttributeWithReferences,
     type IUnavailableDashboardReference,
@@ -41,7 +39,7 @@ import {
     isFilterContext,
     isSingleSelectionFilter,
 } from "@gooddata/sdk-model";
-import { _isEqual } from "@gooddata/util";
+import { _isEqual, _omit } from "@gooddata/util";
 
 import { type RenderMode } from "../../../../types.js";
 import { filterLocalIdentifiers } from "../../../store/filtering/dashboardFilterSelectors.js";
@@ -128,8 +126,8 @@ const hasSameAttributeFilterConfiguration = (
     filterB?: IDashboardAttributeFilter,
 ) => {
     return _isEqual(
-        omit(filterA, OMITTED_ATTRIBUTE_FILTER_PATHS),
-        omit(filterB, OMITTED_ATTRIBUTE_FILTER_PATHS),
+        _omit(filterA, OMITTED_ATTRIBUTE_FILTER_PATHS),
+        _omit(filterB, OMITTED_ATTRIBUTE_FILTER_PATHS),
     );
 };
 
@@ -759,7 +757,7 @@ function mirrorTabSelection(
         ? targetCommonDate
             ? applyMirroredFilterValue(sourceCommonDate, targetCommonDate)
             : {
-                  dateFilter: omit(sourceCommonDate.dateFilter, ["localIdentifier"]),
+                  dateFilter: _omit(sourceCommonDate.dateFilter, ["localIdentifier"]),
               }
         : undefined;
 
@@ -826,7 +824,7 @@ function applyFilterViewParameterValues(
             return parameter;
         }
         if (filterViewParameter.value === undefined) {
-            return omit(parameter, ["value"]);
+            return _omit(parameter, ["value"]);
         }
         return { ...parameter, value: filterViewParameter.value };
     });

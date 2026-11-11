@@ -1,8 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
 import { renderHook } from "@testing-library/react";
-import { range } from "lodash-es";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
+import { _range } from "@gooddata/util";
 
 import { useWindowResize } from "./WindowResizeHook.js";
 
@@ -33,7 +34,7 @@ describe("useWindowResize", () => {
         const callback = vi.fn();
         renderHook(() => useWindowResize(callback, 10));
 
-        range(5).forEach(() => window.dispatchEvent(new Event("resize")));
+        _range(5).forEach(() => window.dispatchEvent(new Event("resize")));
 
         vi.runAllTimers();
 

@@ -4,8 +4,9 @@ import { useCallback, useMemo, useRef, useState } from "react";
 
 import { type DropTargetMonitor, useDrop } from "@evil-internetmann/react-dnd";
 import classnames from "classnames";
-import { omit } from "lodash-es";
 import { useDispatch } from "react-redux";
+
+import { _omit } from "@gooddata/util";
 
 import { dropCatalogItem, reorderBucketItem } from "../../actions/dnd_actions.js";
 import { CATALOG } from "../../constants/bucket.js";
@@ -186,7 +187,7 @@ export function BucketReorderableItem(props: IBucketReorderableItemProps) {
     };
 
     const childProps = {
-        ...omit(props, ["itemIsAllowedToReorder", "itemIsAllowedToReplace", "isWithinLimit"]),
+        ..._omit(props, ["itemIsAllowedToReorder", "itemIsAllowedToReplace", "isWithinLimit"]),
         onCatalogItemDropped,
         reorderBucketItem: onReorderBucketItem,
         onStartBucketItemDrag,

@@ -1,7 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
 import { type PayloadAction } from "@reduxjs/toolkit";
-import noop from "lodash-es/noop.js";
 import { getContext, select } from "redux-saga/effects";
 
 import { type IChatConversationLocal } from "../../model.js";
@@ -38,7 +37,7 @@ export function* onVisualizationSuccessSave({
                 type: "visualization",
                 workspaceId: workspace,
                 newTab: true,
-                preventDefault: noop,
+                preventDefault: () => {},
                 itemUrl: getVisualizationHref(workspace, payload.savedVisualizationId, visualizationStatus),
                 visualizationStatus,
                 action: "open",

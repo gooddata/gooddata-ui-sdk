@@ -32,8 +32,7 @@
  */
 
 import { _baseUniq } from "./_baseUniq.js";
-import { _isArrayLike } from "./isArrayLike.js";
-import { _isObjectLike } from "./isObjectLike.js";
+import { _flattenArrayLikeObjects } from "./_flattenArrayLikeObjects.js";
 import type { _List } from "./types.js";
 
 /**
@@ -45,18 +44,5 @@ import type { _List } from "./types.js";
  * @internal
  */
 export function _union<T>(...arrays: (_List<T> | null | undefined)[]): T[] {
-    const values: T[] = [];
-
-    for (const array of arrays) {
-        if (!_isObjectLike(array) || !_isArrayLike(array)) {
-            continue;
-        }
-
-        // visited by index, so holes become `undefined` entries
-        for (let index = 0; index < array.length; index++) {
-            values.push(array[index] as T);
-        }
-    }
-
-    return _baseUniq(values);
+    return _baseUniq(_flattenArrayLikeObjects<T>(arrays));
 }

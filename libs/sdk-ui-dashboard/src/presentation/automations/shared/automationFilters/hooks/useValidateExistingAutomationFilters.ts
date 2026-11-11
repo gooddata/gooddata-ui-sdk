@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { differenceBy, omit } from "lodash-es";
+import { differenceBy } from "lodash-es";
 
 import {
     type DashboardAttributeFilterSelectionType,
@@ -34,6 +34,7 @@ import {
     isRelativeDateFilter,
     isSingleSelectionFilter,
 } from "@gooddata/sdk-model";
+import { _omit } from "@gooddata/util";
 
 import {
     decodeParameterWireValue,
@@ -58,8 +59,8 @@ function sanitizeCommonDateFilter(filter: IDashboardFilter, commonDateFilterId?:
     // Sanitize common date filters by removing date dataSet
     if (isDateFilter(filter) && filterLocalIdentifier(filter) === commonDateFilterId) {
         return isRelativeDateFilter(filter)
-            ? (omit(filter, "relativeDateFilter.dataSet") as IRelativeDateFilter)
-            : (omit(filter, "absoluteDateFilter.dataSet") as IAbsoluteDateFilter);
+            ? (_omit(filter, "relativeDateFilter.dataSet") as IRelativeDateFilter)
+            : (_omit(filter, "absoluteDateFilter.dataSet") as IAbsoluteDateFilter);
     }
     return filter;
 }

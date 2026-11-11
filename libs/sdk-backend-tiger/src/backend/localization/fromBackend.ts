@@ -4,6 +4,8 @@ import {
     type LocalizationContent,
     type LocalizationCount,
     type LocalizationDefault,
+    type LocalizationIssueWorkspaces,
+    type LocalizationIssues,
     type LocalizationResolvedValue,
     type LocalizationSettingUsage,
     type LocalizationStatistics,
@@ -17,21 +19,25 @@ import {
 } from "@gooddata/api-client-tiger";
 import {
     type ILocalizationDefault,
+    type ILocalizationIssues,
     type ILocalizationResolvedValue,
     type ILocalizationSettingUsage,
     type ILocalizationStatistics,
+    type ILocalizationStatisticsWorkspace,
     type ILocalizationTranslatedLocale,
     type ILocalizationUsage,
     type ILocalizationUsageCount,
     type ILocalizationUsageListQuery,
     type ILocalizationUsageUsersPage,
+    type ILocalizationUsageWorkspace,
     type ILocalizationUsageWorkspacesPage,
     type ILocalizationValueContent,
     type ILocalizationValueUsage,
     type LocalizationSettingType,
+    type LocalizationUsageSource,
 } from "@gooddata/sdk-backend-spi";
 
-import { matches, matchesName, page } from "./aggregate.js";
+import { matches, matchesName, page, strongest } from "./aggregate.js";
 
 const SETTINGS: LocalizationSettingType[] = ["LOCALE", "METADATA_LOCALE", "DATA_LOCALE"];
 
@@ -151,6 +157,55 @@ export function convertLocalizationStatistics(statistics: LocalizationStatistics
     return {
         metadata: { locales: statistics.metadata.locales.map(convertTranslatedLocale) },
         data: { locales: statistics.data.locales.map(convertTranslatedLocale) },
+    };
+}
+
+export function convertLocalizationStatisticsWorkspaces(
+    statistics: LocalizationStatistics,
+): ILocalizationStatisticsWorkspace[] {
+    return (statistics.metadata.workspaces ?? []).map((workspace) => ({
+        id: workspace.id,
+        name: workspace.name,
+        parentId: workspace.parentId ?? null,
+        sourceLanguage: null,
+        metadata: {
+            total: workspace.total,
+            locales: workspace.locales.map(({ locale, translated }) => ({ locale, translated })),
+        },
+        data: { total: 0, locales: [] },
+    }));
+}
+
+export function convertLocalizationIssues(issues: LocalizationIssues): ILocalizationIssues {
+    return {
+        issues: issues.issues.map(({ type, locale, workspaces }) => ({
+            type,
+            locale,
+            ...(workspaces === undefined ? {} : { workspaces }),
+        })),
+    };
+}
+
+function strongestSource(bySetting: ILocalizationUsageWorkspace["bySetting"]): LocalizationUsageSource {
+    return strongest(SETTINGS.flatMap((setting) => bySetting[setting]?.source ?? []));
+}
+
+export function convertLocalizationIssueWorkspaces(
+    page: LocalizationIssueWorkspaces,
+): ILocalizationUsageWorkspacesPage {
+    return {
+        totalCount: page.totalCount,
+        workspaces: page.workspaces.map((workspace) => {
+            const bySetting = convertBySetting(workspace.bySetting, convertResolvedValue);
+            return {
+                id: workspace.id,
+                name: workspace.name,
+                parentId: workspace.parentId ?? null,
+                childrenCount: workspace.childrenCount,
+                source: strongestSource(bySetting),
+                bySetting,
+            };
+        }),
     };
 }
 

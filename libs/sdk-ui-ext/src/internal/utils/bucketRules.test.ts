@@ -1,10 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { BucketNames } from "@gooddata/sdk-ui";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { type IBucketItem, type IBucketOfFun, type IFilters } from "../interfaces/Visualization.js";
 import {
@@ -85,7 +84,7 @@ describe("isShowInPercentAllowed", () => {
 
     it("should return false if ranking filter is present", () => {
         const editedReferencePoint = _cloneDeep(metricWithViewByDateAndDateFilterReferencePoint);
-        set(editedReferencePoint, ["filters", "items", 1], rankingFilterBucketItem);
+        _set(editedReferencePoint, ["filters", "items", 1], rankingFilterBucketItem);
 
         expect(
             isShowInPercentAllowed(
@@ -114,14 +113,14 @@ describe("overTimeComparisonRecommendationEnabled", () => {
             showInPercent: null as unknown as undefined,
         };
 
-        set(editedReferencePoint, ["buckets", 0, "items", 1], newMetric);
+        _set(editedReferencePoint, ["buckets", 0, "items", 1], newMetric);
 
         expect(overTimeComparisonRecommendationEnabled(editedReferencePoint)).toBeFalsy();
     });
 
     it("should return true if insight is sliced by weeks and week filters are enabled", () => {
         const editedReferencePoint = _cloneDeep(overTimeComparisonRecommendationRefPoint);
-        set(editedReferencePoint, ["buckets", 1, "items", 0], sliceByWeekBucketItem);
+        _set(editedReferencePoint, ["buckets", 1, "items", 0], sliceByWeekBucketItem);
 
         expect(overTimeComparisonRecommendationEnabled(editedReferencePoint)).toBeTruthy();
     });
@@ -146,7 +145,7 @@ describe("comparisonAndTrendingRecommendationEnabled", () => {
             attribute: "attr.owner.department",
         };
 
-        set(editedReferencePoint, ["buckets", 1, "items", 0], newCategory);
+        _set(editedReferencePoint, ["buckets", 1, "items", 0], newCategory);
 
         expect(comparisonAndTrendingRecommendationEnabled(editedReferencePoint.buckets)).toBeFalsy();
     });
@@ -172,7 +171,7 @@ describe("percentRecommendationEnabled", () => {
             attribute: "attr.owner.department",
         };
 
-        set(editedReferencePoint, ["buckets", 2, "items", 0], newStack);
+        _set(editedReferencePoint, ["buckets", 2, "items", 0], newStack);
 
         expect(
             percentRecommendationEnabled(editedReferencePoint.buckets, editedReferencePoint.filters),
@@ -181,7 +180,7 @@ describe("percentRecommendationEnabled", () => {
 
     it("should return false if ranking filter exists", () => {
         const editedReferencePoint = _cloneDeep(percentRecommendationReferencePoint);
-        set(editedReferencePoint, ["filters", "items", 0], rankingFilterBucketItem);
+        _set(editedReferencePoint, ["filters", "items", 0], rankingFilterBucketItem);
 
         expect(
             percentRecommendationEnabled(editedReferencePoint.buckets, editedReferencePoint.filters),
@@ -204,7 +203,7 @@ describe("previousPeriodRecommendationEnabled", () => {
             attribute: "attr.owner.department",
         };
 
-        set(editedReferencePoint, ["buckets", 0, "items", 1], newMetric);
+        _set(editedReferencePoint, ["buckets", 0, "items", 1], newMetric);
 
         expect(previousPeriodRecommendationEnabled(editedReferencePoint.buckets)).toBeFalsy();
     });

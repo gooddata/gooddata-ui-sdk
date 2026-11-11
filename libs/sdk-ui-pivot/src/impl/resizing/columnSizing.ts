@@ -1,11 +1,11 @@
 // (C) 2007-2026 GoodData Corporation
 
 import { type ColDef, type Column, type GridApi } from "ag-grid-community";
-import { chunk, omit, omitBy } from "lodash-es";
+import { chunk, omitBy } from "lodash-es";
 import { InvariantError, invariant } from "ts-invariant";
 
 import { type IExecutionResult } from "@gooddata/sdk-backend-spi";
-import { _isEmpty } from "@gooddata/util";
+import { _isEmpty, _omit } from "@gooddata/util";
 
 import {
     type ColumnWidth,
@@ -169,7 +169,7 @@ export class ResizedColumnsStore {
             if (isMeasureColumn(col)) {
                 const colId = agColId(col);
                 if (this.manuallyResizedColumns[colId]) {
-                    this.manuallyResizedColumns = omit(this.manuallyResizedColumns, colId);
+                    this.manuallyResizedColumns = _omit(this.manuallyResizedColumns, colId);
                 }
                 col.getColDef().suppressSizeToFit = true;
             }
@@ -216,7 +216,7 @@ export class ResizedColumnsStore {
         const weakColumnWidth = this.getMatchedWeakMeasuresColumnWidth(col);
 
         if (weakColumnWidth) {
-            this.weakMeasuresColumnWidths = omit(
+            this.weakMeasuresColumnWidths = _omit(
                 this.weakMeasuresColumnWidths,
                 weakColumnWidth.measureColumnWidthItem.locator.measureLocatorItem.measureIdentifier,
             );
@@ -246,7 +246,7 @@ export class ResizedColumnsStore {
         const item = this.manuallyResizedColumns[col.id];
 
         if (item) {
-            this.manuallyResizedColumns = omit(this.manuallyResizedColumns, col.id);
+            this.manuallyResizedColumns = _omit(this.manuallyResizedColumns, col.id);
 
             if (!this.isAllMeasureColumWidthUsed() || !isMeasureColumn(column)) {
                 column.getColDef().suppressSizeToFit = false;

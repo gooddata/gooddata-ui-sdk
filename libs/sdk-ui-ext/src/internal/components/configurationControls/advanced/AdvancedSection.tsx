@@ -3,12 +3,11 @@
 import { memo, useRef, useState } from "react";
 
 import cx from "classnames";
-import { set } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { type IPushData } from "@gooddata/sdk-ui";
 import { Button } from "@gooddata/sdk-ui-kit";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { messages } from "../../../../locales.js";
 import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
@@ -41,7 +40,7 @@ export const AdvancedSection = memo(function AdvancedSection({
 
     const onChange = (value: string | undefined) => {
         const clonedProperties = _cloneDeep(properties);
-        set(clonedProperties!, `controls.${valuePath}`, value);
+        _set(clonedProperties!, `controls.${valuePath}`, value);
 
         pushData?.({ properties: clonedProperties });
         setShowDialog(false);

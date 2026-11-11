@@ -1,11 +1,9 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { omit } from "lodash-es";
-
 import { attributeDisplayFormRef, isUriRef } from "@gooddata/sdk-model";
 import { type IAxisConfig, type IChartConfig } from "@gooddata/sdk-ui-charts";
 import { type IGeoConfig } from "@gooddata/sdk-ui-geo";
-import { _isEmpty } from "@gooddata/util";
+import { _isEmpty, _omit } from "@gooddata/util";
 
 const ConfigNotApplicableInInsight: Array<keyof IChartConfig | keyof IGeoConfig> = [
     "colorPalette",
@@ -54,14 +52,14 @@ function chartConfigToControls(chartConfig: IChartConfig): any {
  * @param chartConfig - may be undefined
  */
 export function chartConfigToVisProperties(chartConfig: IChartConfig = {}): any {
-    const cleanedConfig = omit(chartConfig, ConfigNotApplicableInInsight);
+    const cleanedConfig = _omit(chartConfig, ConfigNotApplicableInInsight);
     const controls = chartConfigToControls(cleanedConfig);
 
     return { controls };
 }
 
 export function geoChartConfigToVisProperties(chartConfig: IGeoConfig): any {
-    const cleanedConfig = omit(chartConfig, ConfigNotApplicableInInsight);
+    const cleanedConfig = _omit(chartConfig, ConfigNotApplicableInInsight);
     const controls = geoChartConfigToControls(cleanedConfig);
 
     return { controls };

@@ -1,8 +1,9 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
-import { set } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
+
+import { _set } from "@gooddata/util";
 
 import { comparisonMessages } from "../../../../../../locales.js";
 import { type IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
@@ -73,7 +74,7 @@ describe("NumberFormatControl", () => {
                 enabled: true,
             },
         });
-        set(expectedProperties.controls!, DEFAULT_PROPS.valuePath, TEST_DECIMAL_FORMAT_PRESET.format);
+        _set(expectedProperties.controls!, DEFAULT_PROPS.valuePath, TEST_DECIMAL_FORMAT_PRESET.format);
 
         expect(mockPushData).toHaveBeenCalledWith(
             expect.objectContaining({

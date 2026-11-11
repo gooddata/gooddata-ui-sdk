@@ -1,6 +1,8 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import stringify from "json-stable-stringify";
-import { memoize } from "lodash-es";
+
+import { _memoize } from "@gooddata/util";
 
 /**
  * Memoizes selector factory by its arguments.
@@ -14,4 +16,4 @@ import { memoize } from "lodash-es";
  */
 export const createMemoizedSelector = <TSelectorFactory extends (...args: any[]) => any>(
     selector: TSelectorFactory,
-): TSelectorFactory => memoize(selector, (...args) => stringify(args, { space: 0 }));
+): TSelectorFactory => _memoize(selector, (...args) => stringify(args, { space: 0 }));

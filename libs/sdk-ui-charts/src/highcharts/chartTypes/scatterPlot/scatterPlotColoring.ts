@@ -1,8 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
 // import { PointsChartColorStrategy } from "../_chartColoring/pointsChart.js";
-import { uniq } from "lodash-es";
-
 import {
     type IColor,
     type IColorDescriptor,
@@ -17,6 +15,7 @@ import {
     getColorFromMapping,
     isValidMappedColor,
 } from "@gooddata/sdk-ui-vis-commons";
+import { _uniq } from "@gooddata/util";
 
 import { MeasureColorStrategy } from "../_chartColoring/measure.js";
 
@@ -36,7 +35,7 @@ export class ScatterPlotColorStrategy extends MeasureColorStrategy {
         let colorAssignment: IColorAssignment[];
         if (isClustering && isClusteringLoaded) {
             // oxlint-disable-next-line @typescript-eslint/require-array-sort-compare
-            const uniqueClusters = uniq(dv.dataView.clusteringResult.clusters).sort();
+            const uniqueClusters = _uniq(dv.dataView.clusteringResult.clusters).sort();
             colorAssignment = uniqueClusters.map(
                 (clusterIndex, currentColorPaletteIndex): IColorAssignment => {
                     const clusterHeaderItem: IColorDescriptor = {

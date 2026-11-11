@@ -231,9 +231,8 @@ function canContinueRequest<TBuild extends string>(
     );
 }
 
-/** Successful creation, clarification, and builder responses retain ownership while awaiting a reply. */
+/** Only creation and open clarification forms retain ownership after a response finishes. */
 function waitsForReplyAfterResponse<TBuild extends string>(
-    state: ICopilotSnapshot<TBuild>,
     request: ICopilotRequest<TBuild>,
     event: ChatEvent,
 ): boolean {
@@ -243,12 +242,7 @@ function waitsForReplyAfterResponse<TBuild extends string>(
     if (request.type === undefined) {
         return request.generation !== undefined;
     }
-    return Boolean(
-        request.awaitingClarification ||
-        request.intent === "create" ||
-        (state.context.builderTarget?.type === request.type &&
-            (request.objectId === undefined || state.context.builderTarget.objectId === request.objectId)),
-    );
+    return Boolean(request.awaitingClarification || request.intent === "create");
 }
 
 function transitionRequests<TBuild extends string>(
@@ -294,7 +288,7 @@ function transitionRequests<TBuild extends string>(
     }
     const updated = transitionPendingRequest(state, pending, event, registration);
     if (finishedResponse(event)) {
-        const waitingForReply = waitsForReplyAfterResponse(state, updated, event);
+        const waitingForReply = waitsForReplyAfterResponse(updated, event);
         return updated.applicationIds.length || waitingForReply
             ? requests.map((request, i) => (i === index ? { ...updated, responseFinished: true } : request))
             : requests.filter((_, i) => i !== index);
@@ -401,6 +395,9 @@ function transitionAssistant<TBuild extends string>(
         (generation || interaction.build)
     ) {
         interaction = { ...interaction, waitingForUserInput: true };
+    }
+    if (event.responseCompleted && interaction.build?.intent === "edit") {
+        interaction = { ...interaction, build: undefined, waitingForUserInput: false };
     }
     return { interaction, generation };
 }
@@ -561,10 +558,29 @@ function eventRegistration<TBuild extends string>(
     const canActivate = pending
         ? !pending.superseded
         : event.threadId === state.interaction.threadId && requestedGeneration(state) !== undefined;
-    return canActivate
-        ? configuration.registrations.find((entry) =>
-              event.skills?.some((skill) => entry.skills.includes(skill.name)),
-          )
+    if (!canActivate) {
+        return undefined;
+    }
+    return (
+        configuration.registrations.find((entry) =>
+            event.skills?.some((skill) => entry.skills.includes(skill.name)),
+        ) ?? builderRegistration(state, pending, configuration)
+    );
+}
+
+/** A follow-up from the conversation that filled the builder keeps that workflow without a new skill item. */
+function builderRegistration<TBuild extends string>(
+    state: ICopilotSnapshot<TBuild>,
+    pending: ICopilotRequest<TBuild> | undefined,
+    configuration: ICopilotConfiguration<TBuild>,
+): ICopilotRegistration<TBuild> | undefined {
+    const target = state.context.builderTarget;
+    if (!target || !pending || pending.type !== undefined) {
+        return undefined;
+    }
+    const source = state.sources.find((entry) => sameTarget(entry.target, target))?.source;
+    return source?.conversationId === pending.conversationId
+        ? configuration.registrations.find((entry) => entry.type === target.type)
         : undefined;
 }
 
@@ -596,12 +612,18 @@ function transitionEvent<TBuild extends string>(
         return state;
     }
     const registration = eventRegistration(state, event, pending, configuration);
+    const skillRegistration =
+        registration &&
+        event.type === "chatAssistantMessage" &&
+        event.skills?.some((skill) => registration.skills.includes(skill.name))
+            ? registration
+            : undefined;
     const requests = transferWorkflow(
         state,
         event,
         transitionRequests(state, event, index, registration),
         pending,
-        registration,
+        skillRegistration,
     );
     const supersededForeground = hasNewlySupersededForeground(state, requests);
     const foregroundState = transitionForegroundEvent(

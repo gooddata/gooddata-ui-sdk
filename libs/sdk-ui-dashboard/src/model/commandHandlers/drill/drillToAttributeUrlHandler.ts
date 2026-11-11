@@ -13,6 +13,7 @@ import {
 import { selectWidgetDrills } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 
+import { assertSafeDrillUrl } from "./assertSafeDrillUrl.js";
 import { getDrillToUrlFiltersWithResolvedValues } from "./getDrillToUrlFilters.js";
 import { resolveDrillToAttributeUrl } from "./resolveDrillToAttributeUrl.js";
 import { validateDrillAccess } from "./validateDrillAccess.js";
@@ -38,6 +39,7 @@ export function* drillToAttributeUrlHandler(
         call(resolveDrillToAttributeUrl, cmd.payload.drillDefinition, cmd.payload.drillEvent, ctx),
         call(getDrillToUrlFiltersWithResolvedValues, ctx, cmd.payload.drillEvent.widgetRef!),
     ]);
+    assertSafeDrillUrl(ctx, cmd, resolvedUrl);
 
     const { widgetRef } = cmd.payload.drillEvent;
     const widgetConfiguredDrills = yield select(selectWidgetDrills(widgetRef));
@@ -46,7 +48,7 @@ export function* drillToAttributeUrlHandler(
 
     return drillToAttributeUrlResolved(
         ctx,
-        resolvedUrl!,
+        resolvedUrl,
         cmd.payload.drillDefinition,
         cmd.payload.drillEvent,
         filtersInfo,

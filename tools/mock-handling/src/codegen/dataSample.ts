@@ -1,7 +1,10 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import * as path from "path";
 
-import { groupBy, has } from "lodash-es";
+import { has } from "lodash-es";
+
+import { _groupBy } from "@gooddata/util";
 
 import { type TakenNamesSet, createUniqueVariableName } from "../base/variableNaming.js";
 import { type DisplayFormRecording } from "../recordings/displayForms.js";
@@ -66,7 +69,7 @@ export function generateDataSampleConst(recordings: DisplayFormRecording[]): str
         rec,
     ]);
 
-    const entriesDataSample = Object.entries(groupBy(recsWithDataSample, ([title]) => title)).sort(
+    const entriesDataSample = Object.entries(_groupBy(recsWithDataSample, ([title]) => title)).sort(
         comparatorDataSample,
     );
     const dataSampleRows = entriesDataSample

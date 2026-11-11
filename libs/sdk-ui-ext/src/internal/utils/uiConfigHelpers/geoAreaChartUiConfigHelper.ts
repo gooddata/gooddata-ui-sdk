@@ -1,9 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+import { _set } from "@gooddata/util";
 
 import { BUCKETS } from "../../constants/bucket.js";
 import { type IExtendedReferencePoint, type IUiConfig } from "../../interfaces/Visualization.js";
@@ -18,7 +18,7 @@ function setBucketIcon(uiConfig: IUiConfig | null | undefined, bucketName: strin
         return;
     }
 
-    set(uiConfig, [BUCKETS, bucketName, "icon"], icon);
+    _set(uiConfig, [BUCKETS, bucketName, "icon"], icon);
 }
 
 /**

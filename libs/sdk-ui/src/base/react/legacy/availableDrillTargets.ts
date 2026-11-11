@@ -1,8 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { uniqBy } from "lodash-es";
-
 import { type IAttributeDescriptor, type IMeasureDescriptor } from "@gooddata/sdk-model";
+import { _uniqBy } from "@gooddata/util";
 
 import { type DataViewFacade } from "../../results/facade.js";
 import {
@@ -48,7 +47,7 @@ function getAvailableDrillAttributes(dv: DataViewFacade): IAvailableDrillTargetA
 export function getAvailableDrillTargets(dv: DataViewFacade): IAvailableDrillTargets {
     const meta = dv.meta();
 
-    const attributes = uniqBy(
+    const attributes = _uniqBy(
         meta.attributeDescriptors(),
         (attributeDescriptor: IAttributeDescriptor) => attributeDescriptor.attributeHeader.formOf.identifier,
     );
@@ -85,7 +84,7 @@ export function getMultiLayerDrillTargets(
     const primaryTargets = getAvailableDrillTargets(primaryDataView);
     const primaryMeasures = primaryTargets.measures ?? [];
     // Deduplicate primary attributes first (same attribute can appear in multiple buckets e.g. tooltip text)
-    const primaryAttributes = uniqBy(
+    const primaryAttributes = _uniqBy(
         primaryTargets.attributes ?? [],
         (a) => a.attribute.attributeHeader.formOf.identifier,
     );

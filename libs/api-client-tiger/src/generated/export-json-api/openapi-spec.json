@@ -188,8 +188,8 @@
                     "Raw export",
                     "actions"
                 ],
-                "summary": "(EXPERIMENTAL) Create raw export request",
-                "description": "Note: This API is an experimental and is going to change. Please, use it accordingly.An raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.",
+                "summary": "Create raw export request",
+                "description": "A raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.",
                 "operationId": "createRawExport",
                 "parameters": [
                     {
@@ -789,8 +789,8 @@
                     "Raw export",
                     "actions"
                 ],
-                "summary": "(EXPERIMENTAL) Retrieve exported files",
-                "description": "Note: This API is an experimental and is going to change. Please, use it accordingly.After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn't ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.",
+                "summary": "Retrieve exported files",
+                "description": "After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn't ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.",
                 "operationId": "getRawExport",
                 "parameters": [
                     {
@@ -4255,7 +4255,8 @@
                 "properties": {
                     "from": {
                         "type": "integer",
-                        "format": "int32"
+                        "format": "int32",
+                        "nullable": true
                     },
                     "granularity": {
                         "type": "string",
@@ -4311,7 +4312,8 @@
                     },
                     "to": {
                         "type": "integer",
-                        "format": "int32"
+                        "format": "int32",
+                        "nullable": true
                     }
                 }
             },

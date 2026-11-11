@@ -2,10 +2,9 @@
 
 import { memo, useEffect } from "react";
 
-import { set } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { messages } from "../../../../locales.js";
 import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
@@ -45,7 +44,7 @@ export const TotalSection = memo(function TotalSection({
     useEffect(() => {
         if (isTotalEnabled && !totalColumnName) {
             const cloneProperties = _cloneDeep(properties);
-            set(cloneProperties, "controls.total.name", defaultTotalColumnName);
+            _set(cloneProperties, "controls.total.name", defaultTotalColumnName);
             pushData({ properties: cloneProperties });
         }
     }, [isTotalEnabled, totalColumnName, defaultTotalColumnName, properties, pushData]);

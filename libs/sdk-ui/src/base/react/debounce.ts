@@ -2,7 +2,9 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import { type DebouncedFunc, debounce } from "lodash-es";
+import { type DebouncedFunc } from "lodash-es";
+
+import { _debounce } from "@gooddata/util";
 
 /**
  * The output of the useDebouncedState hook.
@@ -136,7 +138,7 @@ export function useDebounce<T extends (...args: Parameters<T>) => void>(
     }, [callback]);
 
     const debouncedCallback = useMemo(() => {
-        return debounce((...args: Parameters<T>) => ref.current?.(...args), delay);
+        return _debounce((...args: Parameters<T>) => ref.current?.(...args), delay);
     }, [delay]);
 
     useEffect(() => {

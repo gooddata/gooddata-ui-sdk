@@ -1,12 +1,13 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { range } from "lodash-es";
 import { describe, expect, it } from "vitest";
+
+import { _range } from "@gooddata/util";
 
 import { InMemoryPaging } from "./paging.js";
 
 describe("InMemoryPaging", () => {
-    const Items = range(125);
+    const Items = _range(125);
 
     it("should return all items in single huge page", () => {
         const pager = new InMemoryPaging<number>(Items, 200, 0);
@@ -43,7 +44,7 @@ describe("InMemoryPaging", () => {
     it("should provide correct window of items", () => {
         const pager = new InMemoryPaging<number>(Items, 99, 11);
 
-        expect(pager.items).toEqual(range(11, 11 + 99));
+        expect(pager.items).toEqual(_range(11, 11 + 99));
     });
 
     it("should return empty page if offset is too far", () => {

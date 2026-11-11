@@ -1,13 +1,11 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { memoize } from "lodash-es";
-
 import type { ITranslations } from "@gooddata/sdk-ui";
 import {
     DEFAULT_MESSAGES as DEFAULT_MESSAGES_SDK_UI_EXT,
     resolveMessages as resolveMessagesSdkUiExt,
 } from "@gooddata/sdk-ui-ext/internal";
-import { removeMetadata } from "@gooddata/util";
+import { _memoize, removeMetadata } from "@gooddata/util";
 
 /**
  * @internal
@@ -76,7 +74,7 @@ const resolveMessagesInternal = async (locale: string): Promise<ITranslations> =
  *
  * @internal
  */
-export const resolveMessages: (locale: string) => Promise<ITranslations> = memoize(resolveMessagesInternal);
+export const resolveMessages: (locale: string) => Promise<ITranslations> = _memoize(resolveMessagesInternal);
 
 /**
  * @internal

@@ -89,6 +89,10 @@ export interface IOrganizedCatalogTooltipDetailsFact {
 export interface IOrganizedCatalogTooltipDetailsAttribute {
     attrElements?: ReadonlyArray<{
         title: string;
+        /**
+         * Formatted value, e.g. of a date; displayed in favour of the raw title.
+         */
+        formattedTitle?: string;
     }>;
     attrElementsTotalCount?: number;
     /**

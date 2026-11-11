@@ -1,7 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
 import { fireEvent, render, waitFor } from "@testing-library/react";
-import { range } from "lodash-es";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
@@ -9,6 +8,7 @@ import {
     type ICatalogAttribute,
     uriRef,
 } from "@gooddata/sdk-model";
+import { _range } from "@gooddata/util";
 
 import { addMessage } from "../../../actions/messages_actions.js";
 import { MEASURES } from "../../../constants/bucket.js";
@@ -426,7 +426,7 @@ describe("MeasureFilters", () => {
             // 19 attribute filters already: one more fits
             const nearlyFull = newDecoratedBucketItem({
                 ...measureItem,
-                filters: range(19).map((i) => ({
+                filters: _range(19).map((i) => ({
                     ...createFilter(`foo${i}`),
                     attribute: { dfRef: uriRef(`foo${i}.df`), identifier: `foo${i}`, type: "attribute" },
                 })),
@@ -473,7 +473,9 @@ describe("MeasureFilters", () => {
         });
 
         it("disables the attribute values once the metric has the maximum of attribute filters", () => {
-            const { container } = renderWith(createBucketItem(range(20).map((i) => createFilter(`foo${i}`))));
+            const { container } = renderWith(
+                createBucketItem(_range(20).map((i) => createFilter(`foo${i}`))),
+            );
 
             openMenu(container);
 
@@ -539,7 +541,7 @@ describe("MeasureFilters", () => {
         ];
 
         function getTestCaseFilters(testCase: { numOfAttrFilters: number; hasDateFilter: boolean }) {
-            const filters: IDecoratedMetricFilters = range(testCase.numOfAttrFilters).map((_val, index) => {
+            const filters: IDecoratedMetricFilters = _range(testCase.numOfAttrFilters).map((_val, index) => {
                 return createFilter("foo" + index);
             });
             if (testCase.hasDateFilter) {

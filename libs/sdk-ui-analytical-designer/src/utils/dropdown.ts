@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { debounce } from "lodash-es";
+import { _debounce } from "@gooddata/util";
 
 export const DROPDOWN_MIN_HEIGHT = 170;
 export const DROPDOWN_MAX_HEIGHT = 400;
@@ -97,7 +97,7 @@ export interface IEventSubscription {
 /** Calls `func` with the last window event of a burst, each event type debounced on its own. */
 export function subscribeEvents(func: EventHandler, events = ["scroll", "resize"]): IEventSubscription[] {
     return events.map((event) => {
-        const listener = debounce(func, EVENT_DEBOUNCE_MILLISECONDS);
+        const listener = _debounce(func, EVENT_DEBOUNCE_MILLISECONDS);
         window.addEventListener(event, listener);
 
         return {

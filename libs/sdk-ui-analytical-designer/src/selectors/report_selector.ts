@@ -16,7 +16,10 @@ import { getAppSessionId } from "../store/app_context/app_context_selectors.js";
 import { getExecutionState } from "../store/execution/execution_selectors.js";
 import { areSomeFiltersSetUp, getFirstDateFilter } from "../store/filter_bar/filter_bar_selector.js";
 import { getInsightSummary, getInsightTags, getInsightTitle } from "../store/insight/insight_selectors.js";
-import { getInsightUsageOnDashboardsSelector } from "../store/insight_usage/insight_usage_selectors.js";
+import {
+    getInsightUsageInDocumentsSelector,
+    getInsightUsageOnDashboardsSelector,
+} from "../store/insight_usage/insight_usage_selectors.js";
 import {
     getLastSavedObject,
     getReportLoadingError as getReportLoadingErrorState,
@@ -81,7 +84,8 @@ export const lastSavedReportSelector = (state: IAppState) => getLastSavedObject(
 
 export const isEnabledInsightUsageOnDashboards = (state: IAppState): boolean => {
     const usages = getInsightUsageOnDashboardsSelector(state);
-    const hasUsages = usages && !!usages.allDashboardsCount;
+    const documents = getInsightUsageInDocumentsSelector(state);
+    const hasUsages = (usages && !!usages.allDashboardsCount) || documents.length > 0;
 
     return !isReportOpening(state) && hasUsages;
 };

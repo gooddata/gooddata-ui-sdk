@@ -1,6 +1,5 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { uniqBy } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
@@ -19,7 +18,7 @@ import {
     objRefToString,
     serializeObjRef,
 } from "@gooddata/sdk-model";
-import { _compact } from "@gooddata/util";
+import { _compact, _uniqBy } from "@gooddata/util";
 
 import { type CatalogDateAttributeWithDataset } from "../../_staging/catalog/dateAttributeWithDatasetMap.js";
 import {
@@ -229,7 +228,7 @@ function* queryService(
     const mostImportantFromInsight: ICatalogDateDataset =
         usedInDateFilters[0] ?? usedInAttributes[0] ?? usedInAttributeFilters[0];
 
-    const allAvailableDateDatasets = uniqBy(
+    const allAvailableDateDatasets = _uniqBy(
         [...dateDatasets, ...usedInDateFilters, ...usedInAttributes, ...usedInAttributeFilters].filter(
             isCatalogDateDataset,
         ),

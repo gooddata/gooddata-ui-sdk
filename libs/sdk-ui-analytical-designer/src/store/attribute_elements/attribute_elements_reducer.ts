@@ -1,9 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { clone, range } from "lodash-es";
+import { clone } from "lodash-es";
 
 import { areObjRefsEqual } from "@gooddata/sdk-model";
-import { _isEqual } from "@gooddata/util";
+import { _isEqual, _range } from "@gooddata/util";
 
 import { isInsightContentResetEvent } from "../app_context/application_reset_events.js";
 
@@ -56,7 +56,7 @@ function attributeElementsUpdate(
 
 function markLoadingElements(elements: IAttributeElements, start: number, end: number) {
     const newElements = clone(elements);
-    range(start, end).forEach((index) => {
+    _range(start, end).forEach((index) => {
         if (newElements[index] === undefined) {
             newElements[index] = null;
         }
@@ -75,7 +75,7 @@ function attributeElementsUpdated(
 
     if (_isEqual(currentQuery, newQuery)) {
         const newItems = clone(state.items);
-        range(start, start + items.length).forEach((idx) => {
+        _range(start, start + items.length).forEach((idx) => {
             newItems[idx] = items[idx - start];
         });
         newItems.splice(total);

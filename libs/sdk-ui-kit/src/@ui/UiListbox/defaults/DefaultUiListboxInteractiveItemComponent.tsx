@@ -5,6 +5,7 @@ import { type ReactNode } from "react";
 import { useIsTextTruncated } from "../../hooks/useIsTextTruncated.js";
 import { UiIcon } from "../../UiIcon/UiIcon.js";
 import { UiTooltip } from "../../UiTooltip/UiTooltip.js";
+import { getUiListboxItemFullTitle } from "../itemTitle.js";
 import { e } from "../listboxBem.js";
 import { type IUiListboxInteractiveItemProps } from "../types.js";
 
@@ -21,10 +22,17 @@ export function DefaultUiListboxInteractiveItemComponent<T>({
     isCompact,
     onSelect,
 }: IUiListboxInteractiveItemProps<T>): ReactNode {
-    const title = useIsTextTruncated(item.stringTitle);
+    const fullTitle = getUiListboxItemFullTitle(item);
+    const title = useIsTextTruncated(fullTitle);
     const titleElement = (
         <span ref={title.ref} className={e("item-title")}>
             {item.stringTitle}
+            {item.secondaryTitle ? (
+                <>
+                    {" "}
+                    <span className={e("item-secondary")}>{item.secondaryTitle}</span>
+                </>
+            ) : null}
         </span>
     );
 
@@ -42,7 +50,7 @@ export function DefaultUiListboxInteractiveItemComponent<T>({
             {title.isTruncated ? (
                 <UiTooltip
                     anchor={titleElement}
-                    content={item.stringTitle}
+                    content={fullTitle}
                     triggerBy={["hover"]}
                     accessibilityHidden
                     arrowPlacement="left"

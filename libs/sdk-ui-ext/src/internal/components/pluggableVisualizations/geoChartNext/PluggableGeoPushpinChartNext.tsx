@@ -1,7 +1,5 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { set } from "lodash-es";
-
 import {
     type IAnalyticalBackend,
     type IExecutionFactory,
@@ -31,7 +29,7 @@ import {
     insightLayerToGeoLayer,
     insightLayersToGeoLayers,
 } from "@gooddata/sdk-ui-geo/internal";
-import { _cloneDeep, _isEqual } from "@gooddata/util";
+import { _cloneDeep, _isEqual, _set } from "@gooddata/util";
 
 import { BUCKETS } from "../../../constants/bucket.js";
 import {
@@ -244,7 +242,7 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
             uiConfig,
         );
 
-        set(sanitized, BUCKETS, configuredBuckets);
+        _set(sanitized, BUCKETS, configuredBuckets);
         return sanitized;
     }
 
@@ -267,7 +265,7 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         // Don't add groupNearbyPoints if it wasn't already in the properties.
         // This prevents marking the insight as "dirty" when just opening it.
         // The rendering code handles the default value (true when clustering is allowed).
-        set(referencePointConfigured, "properties", {
+        _set(referencePointConfigured, "properties", {
             controls: {
                 ...controls,
                 ...locationProperties,
@@ -275,7 +273,7 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         });
 
         if (this.references) {
-            set(referencePointConfigured, "references", this.references);
+            _set(referencePointConfigured, "references", this.references);
         }
         return referencePointConfigured;
     }
@@ -692,7 +690,7 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
     private getResolvedReferencePointWithFallback(
         referencePoint: IExtendedReferencePoint,
     ): IExtendedReferencePoint {
-        return set(
+        return _set(
             _cloneDeep(referencePoint),
             "properties",
             getGeoVisualizationPropertiesWithFallback(
@@ -732,7 +730,7 @@ function sanitizeGeoPointProperties(referencePoint: IExtendedReferencePoint): IE
 
     if (shapeType !== "oneIcon" && controls["points"]?.icon !== undefined) {
         const updated = _cloneDeep(referencePoint);
-        set(updated, "properties.controls.points.icon", undefined);
+        _set(updated, "properties.controls.points.icon", undefined);
         return updated;
     }
 
@@ -745,7 +743,7 @@ function disableClusteringIfNotEditable(referencePoint: IExtendedReferencePoint)
     const clusteringEnabled = referencePoint.properties?.controls?.["points"]?.groupNearbyPoints === true;
 
     if (clusteringEnabled && !isPushpinClusteringEditableForBuckets(referencePoint.buckets, shapeType)) {
-        updatedReferencePoint = set(referencePoint, "properties.controls.points.groupNearbyPoints", false);
+        updatedReferencePoint = _set(referencePoint, "properties.controls.points.groupNearbyPoints", false);
     }
 
     return updatedReferencePoint;
@@ -761,7 +759,7 @@ function disableClusteringInVisualizationPropertiesWhenNotEditable(
         return visualizationProperties;
     }
 
-    return set(_cloneDeep(visualizationProperties), "controls.points.groupNearbyPoints", false);
+    return _set(_cloneDeep(visualizationProperties), "controls.points.groupNearbyPoints", false);
 }
 
 function getPushpinShapeType(referencePoint: Pick<IReferencePoint, "properties">): GeoChartShapeType {
@@ -770,7 +768,7 @@ function getPushpinShapeType(referencePoint: Pick<IReferencePoint, "properties">
 
 function resetIconByValueShapeType(referencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
     if (getPushpinShapeType(referencePoint) === "iconByValue") {
-        return set(_cloneDeep(referencePoint), "properties.controls.points.shapeType", "circle");
+        return _set(_cloneDeep(referencePoint), "properties.controls.points.shapeType", "circle");
     }
     return referencePoint;
 }
@@ -780,7 +778,7 @@ function resetIconByValueInVisualizationProperties(
     hasGeoIconLabel: boolean,
 ): IVisualizationProperties {
     if (properties?.controls?.["points"]?.shapeType === "iconByValue" && !hasGeoIconLabel) {
-        return set(_cloneDeep(properties), "controls.points.shapeType", "circle");
+        return _set(_cloneDeep(properties), "controls.points.shapeType", "circle");
     }
     return properties;
 }

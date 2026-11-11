@@ -1,7 +1,5 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { omit } from "lodash-es";
-
 import {
     type DateFilterGranularity,
     type IRelativeDateFilterPreset,
@@ -9,6 +7,7 @@ import {
     isUpperBound,
 } from "@gooddata/sdk-model";
 import { type DateFilterRelativeOptionGroup } from "@gooddata/sdk-ui-filters";
+import { _omit } from "@gooddata/util";
 
 import { type IDateFilterConfig } from "../../../store/filter_bar/filter_bar_types.js";
 
@@ -421,7 +420,7 @@ export const findSupportedRelativePresets = (supportsTime: boolean): DateFilterR
     if (!supportsTime) {
         omittedGranularities.push("GDC.time.minute", "GDC.time.hour");
     }
-    return omit(getRelativeDateFilterPresets(), omittedGranularities);
+    return _omit(getRelativeDateFilterPresets(), omittedGranularities);
 };
 
 export const findRelativePresetByValue = (value: IDateFilterConfig) => {

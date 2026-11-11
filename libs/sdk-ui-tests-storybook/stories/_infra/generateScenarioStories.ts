@@ -2,10 +2,11 @@
 
 import { mkdirSync, rmSync, writeFileSync } from "fs";
 
-import { groupBy, sortBy } from "lodash-es";
+import { sortBy } from "lodash-es";
 import { format } from "oxfmt";
 
 import { type ScenarioGroup, allScenarios } from "@gooddata/sdk-ui-tests-scenarios";
+import { _groupBy } from "@gooddata/util";
 
 import { type INeobackstopScenarioConfig, State } from "./backstopScenario.js";
 import { generateExportName, generateImports, header } from "./generateStories.js";
@@ -14,7 +15,7 @@ import { replaceStateInJson } from "./stateReplacer.js";
 // delete any pre-existing stories
 rmSync("./stories/visual-regression/visualizations/scenarioStories", { recursive: true, force: true });
 
-const ScenarioGroupsByVis = Object.values(groupBy<ScenarioGroup<any>>(allScenarios, (g) => g.vis));
+const ScenarioGroupsByVis = Object.values(_groupBy<ScenarioGroup<any>>(allScenarios, (g) => g.vis));
 const DefaultWrapperStyle = { width: 800, height: 400 };
 
 // this part validates that a developer has not unknowingly created scenarios with the same name in any 1 scenario group
@@ -49,7 +50,7 @@ for (const [groupsIndex, groups] of ScenarioGroupsByVis.entries()) {
     // the simplest way to deal with this, will be to group them by groupNames, using lodash, same as above
     // then we iterate over that, and create one file per groupedSortedGroups
     const groupedSortedGroups = Object.values(
-        groupBy<ScenarioGroup<any>>(sortedGroups, (g) => g.groupNames.join("/")),
+        _groupBy<ScenarioGroup<any>>(sortedGroups, (g) => g.groupNames.join("/")),
     );
 
     for (const [groupedGroupIndex, groupedGroup] of groupedSortedGroups.entries()) {

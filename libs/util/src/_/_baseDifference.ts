@@ -36,14 +36,17 @@ import { _isObjectLike } from "./isObjectLike.js";
 import type { _List } from "./types.js";
 
 /**
- * The base implementation of `_difference` and `_differenceBy`: creates an array of the `array` values whose
- * criteria are not among the criteria of the `values` lists, compared with SameValueZero. The order and
- * references of result values are determined by the first array, with `-0` normalised to `0`. Only array-like
+ * The base implementation of `_difference`, `_differenceBy` and `_differenceWith`: creates an array of the
+ * `array` values whose criteria are not among the criteria of the `values` lists, compared with
+ * SameValueZero, or with `comparator` when one is given. The order and references of result values are
+ * determined by the first array, with `-0` normalised to `0` unless a comparator is used. Only array-like
  * objects are inspected: any other `array` yields an empty array and any other entry of `values` is skipped.
  *
  * @param array - The array to inspect.
  * @param values - The lists of values to exclude.
  * @param iteratee - The iteratee invoked per element to produce its criterion. Defaults to identity.
+ * @param comparator - The comparator invoked per element with (arrayValue, otherValue); a truthy result
+ *  excludes the element.
  * @returns Returns the new array of filtered values.
  * @internal
  */
@@ -51,12 +54,13 @@ export function _baseDifference<T>(
     array: _List<T> | null | undefined,
     values: unknown[],
     iteratee: (value: unknown) => unknown = (value) => value,
+    comparator?: (arrayValue: unknown, otherValue: unknown) => boolean,
 ): T[] {
     if (!_isObjectLike(array) || !_isArrayLike(array)) {
         return [];
     }
 
-    const excluded = new Set<unknown>();
+    const excluded: unknown[] = [];
 
     for (const list of values) {
         if (!_isObjectLike(list) || !_isArrayLike(list)) {
@@ -64,16 +68,23 @@ export function _baseDifference<T>(
         }
 
         for (let index = 0; index < list.length; index++) {
-            excluded.add(iteratee((list as ArrayLike<unknown>)[index]));
+            excluded.push(iteratee((list as ArrayLike<unknown>)[index]));
         }
     }
 
+    const excludedSet = new Set(excluded);
     const result: T[] = [];
 
     for (let index = 0; index < array.length; index++) {
         const value = array[index] as T;
+        const computed = iteratee(value);
 
-        if (!excluded.has(iteratee(value))) {
+        if (comparator) {
+            // lodash keeps `-0` as it is when a comparator is used
+            if (!excluded.some((other) => comparator(computed, other))) {
+                result.push(value);
+            }
+        } else if (!excludedSet.has(computed)) {
             // lodash normalises `-0` to `+0` in the result
             result.push((value as unknown) === 0 ? (0 as unknown as T) : value);
         }

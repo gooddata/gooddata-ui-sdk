@@ -1,10 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { BucketNames } from "@gooddata/sdk-ui";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { BUCKETS } from "../../constants/bucket.js";
 import { UICONFIG } from "../../constants/uiConfig.js";
@@ -26,16 +25,20 @@ export function setBubbleChartUiConfig(
 ): IExtendedReferencePoint {
     const referencePointConfigured = _cloneDeep(referencePoint);
 
-    set(referencePointConfigured, UICONFIG, setBucketTitles(referencePoint, visualizationType, intl));
+    _set(referencePointConfigured, UICONFIG, setBucketTitles(referencePoint, visualizationType, intl));
 
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], bubbleMeasuresXIcon);
-    set(
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], bubbleMeasuresXIcon);
+    _set(
         referencePointConfigured,
         [UICONFIG, BUCKETS, BucketNames.SECONDARY_MEASURES, "icon"],
         bubbleMeasuresYIcon,
     );
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.TERTIARY_MEASURES, "icon"], bubbleSizeIcon);
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "icon"], bubbleViewByIcon);
+    _set(
+        referencePointConfigured,
+        [UICONFIG, BUCKETS, BucketNames.TERTIARY_MEASURES, "icon"],
+        bubbleSizeIcon,
+    );
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "icon"], bubbleViewByIcon);
 
     return referencePointConfigured;
 }

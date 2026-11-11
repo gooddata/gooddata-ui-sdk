@@ -1,8 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { range } from "lodash-es";
-
 import { type DateFilterGranularity } from "@gooddata/sdk-model";
+import { _range } from "@gooddata/util";
 
 import { messages } from "../../locales.js";
 import { granularityIntlCodes } from "../constants/i18n.js";
@@ -144,8 +143,8 @@ const getDefaultOptions = (
     intl: IMessageTranslator,
 ): DynamicSelectItem[] => {
     const optionRange = granularityOffsetLimits[granularity];
-    const negativeOptions = getOptionsForOffsets(range(-optionRange, 0), granularity, intl);
-    const positiveOptions = getOptionsForOffsets(range(1, optionRange + 1), granularity, intl);
+    const negativeOptions = getOptionsForOffsets(_range(-optionRange, 0), granularity, intl);
+    const positiveOptions = getOptionsForOffsets(_range(1, optionRange + 1), granularity, intl);
 
     return [
         ...negativeOptions,

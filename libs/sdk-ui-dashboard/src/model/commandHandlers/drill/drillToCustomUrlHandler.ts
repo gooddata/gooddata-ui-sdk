@@ -11,6 +11,7 @@ import {
 } from "../../events/drill.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 
+import { assertSafeDrillUrl } from "./assertSafeDrillUrl.js";
 import { getDrillToUrlFiltersWithResolvedValues } from "./getDrillToUrlFilters.js";
 import { resolveDrillToCustomUrl } from "./resolveDrillToCustomUrl.js";
 import { validateDrillAccess } from "./validateDrillAccess.js";
@@ -43,6 +44,7 @@ export function* drillToCustomUrlHandler(
         ),
         call(getDrillToUrlFiltersWithResolvedValues, ctx, cmd.payload.drillEvent.widgetRef!),
     ]);
+    assertSafeDrillUrl(ctx, cmd, resolvedUrl);
 
     return drillToCustomUrlResolved(
         ctx,

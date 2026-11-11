@@ -1396,6 +1396,29 @@ describe("withCaching", () => {
             expect(second).not.toBe(first);
         });
 
+        it("does not cache a rejected URL validation", async () => {
+            const isUrlValid = vi
+                .fn<(url: string, context: string) => Promise<boolean>>()
+                .mockRejectedValueOnce(new Error("network error"))
+                .mockResolvedValueOnce(false);
+            const realBackend = decoratedBackend(defaultBackend, {
+                securitySettings: (original) => ({
+                    scope: original.scope,
+                    isUrlValid,
+                    isDashboardPluginUrlValid: (url, workspace) =>
+                        original.isDashboardPluginUrlValid(url, workspace),
+                }),
+            });
+            const backend = withCachingForTests(realBackend);
+            const securitySettings = () => backend.organization(ORGANIZATION_ID).securitySettings();
+
+            await expect(securitySettings().isUrlValid(URL, "UI_EVENT")).rejects.toThrow("network error");
+            await expect(securitySettings().isUrlValid(URL, "UI_EVENT")).resolves.toBe(false);
+            await expect(securitySettings().isUrlValid(URL, "UI_EVENT")).resolves.toBe(false);
+
+            expect(isUrlValid).toHaveBeenCalledTimes(2);
+        });
+
         it("resets security settings cache", () => {
             let cacheControl: CacheControl | undefined;
 

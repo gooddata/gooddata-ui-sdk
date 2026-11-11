@@ -1,6 +1,5 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { range, set } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -20,7 +19,7 @@ import {
     type IColorStrategy,
     getRgbString,
 } from "@gooddata/sdk-ui-vis-commons";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _range, _set } from "@gooddata/util";
 
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import {
@@ -253,7 +252,7 @@ describe("chartOptionsBuilder", () => {
                     `of ${DEFAULT_CATEGORIES_LIMIT}`,
                 () => {
                     const chartOptions = generateChartOptions(barChartWith3MetricsAndViewByAttribute);
-                    chartOptions.data!.categories = range(DEFAULT_CATEGORIES_LIMIT + 1).map((category) => [
+                    chartOptions.data!.categories = _range(DEFAULT_CATEGORIES_LIMIT + 1).map((category) => [
                         category.toString(),
                     ]);
 
@@ -285,7 +284,7 @@ describe("chartOptionsBuilder", () => {
                     const chartOptions = generateChartOptions(pieChartWithMetricsOnly, {
                         type: "pie",
                     });
-                    chartOptions.data!.categories = range(PIE_CHART_LIMIT + 1).map((category) => [
+                    chartOptions.data!.categories = _range(PIE_CHART_LIMIT + 1).map((category) => [
                         category.toString(),
                     ]);
                     const validationResult = validateData(undefined, chartOptions);
@@ -307,7 +306,7 @@ describe("chartOptionsBuilder", () => {
                     stacking: false,
                 });
 
-                sankeyChartOptions.data!.series![0].nodes = range(SANKEY_CHART_NODE_LIMIT + 1).map(
+                sankeyChartOptions.data!.series![0].nodes = _range(SANKEY_CHART_NODE_LIMIT + 1).map(
                     (index) => ({
                         id: index,
                     }),
@@ -2253,7 +2252,7 @@ describe("chartOptionsBuilder", () => {
                         );
 
                         const testData = { ...pointData };
-                        set(testData, ["series", "yAxis", "opposite"], isSecondAxis);
+                        _set(testData, ["series", "yAxis", "opposite"], isSecondAxis);
 
                         const tooltip = tooltipFn(testData, DEFAULT_TOOLTIP_CONTENT_WIDTH, 49.0111);
                         expect(getValues(tooltip!)).toEqual([
@@ -2443,7 +2442,7 @@ describe("chartOptionsBuilder", () => {
                         );
 
                         const testData = { ...pointData };
-                        set(testData, ["series", "yAxis", "opposite"], isSecondAxis);
+                        _set(testData, ["series", "yAxis", "opposite"], isSecondAxis);
 
                         const tooltip = tooltipFn(testData, DEFAULT_TOOLTIP_CONTENT_WIDTH, 49.0111);
                         expect(getValues(tooltip!)).toEqual([

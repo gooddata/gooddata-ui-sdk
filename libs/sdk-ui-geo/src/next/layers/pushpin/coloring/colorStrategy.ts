@@ -1,7 +1,5 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { omit } from "lodash-es";
-
 import { type IAttributeDescriptor, type IColor, type IColorPalette } from "@gooddata/sdk-model";
 import { type DataViewFacade, type IColorAssignment } from "@gooddata/sdk-ui";
 import {
@@ -13,6 +11,7 @@ import {
     getColorFromMapping,
     isValidMappedColor,
 } from "@gooddata/sdk-ui-vis-commons";
+import { _omit } from "@gooddata/util";
 
 import { type IPushpinGeoData } from "../../../types/geoData/pushpin.js";
 import {
@@ -135,7 +134,7 @@ export function getPushpinColorStrategy(
         findPushpinAttributesInDimension(dv, geoData);
 
     const locationAttributeHeader: IAttributeDescriptor = {
-        attributeHeader: omit(locationAttribute, "items"),
+        attributeHeader: _omit(locationAttribute, "items"),
     };
 
     return new PushpinColorStrategy(

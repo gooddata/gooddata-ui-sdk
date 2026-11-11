@@ -1,13 +1,12 @@
 // (C) 2026 GoodData Corporation
 
-import { omit } from "lodash-es";
-
 import {
     type IAutomationMetadataObject,
     type IAutomationMetadataObjectDefinition,
     type IFilter,
     isAllValuesAttributeFilter,
 } from "@gooddata/sdk-model";
+import { _omit } from "@gooddata/util";
 
 /**
  * Normalizes an automation before it is persisted. Drops the backend-derived
@@ -30,7 +29,7 @@ export function sanitizeAutomationForSave(
     let sanitized = { ...automation };
 
     if (sanitized.schedule) {
-        sanitized.schedule = omit(sanitized.schedule, ["cronDescription"]);
+        sanitized.schedule = _omit(sanitized.schedule, ["cronDescription"]);
     }
 
     if (sanitized.alert?.execution?.filters) {

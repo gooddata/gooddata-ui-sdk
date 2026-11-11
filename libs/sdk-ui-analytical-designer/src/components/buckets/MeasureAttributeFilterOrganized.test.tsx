@@ -1,7 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
 import { fireEvent, render, waitFor } from "@testing-library/react";
-import { range } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
 import {
@@ -10,6 +9,7 @@ import {
     idRef,
     uriRef,
 } from "@gooddata/sdk-model";
+import { _range } from "@gooddata/util";
 
 import { MEASURES } from "../../constants/bucket.js";
 import { type IDecoratedAttributeElement } from "../../models/decorated_attribute_elements.js";
@@ -140,7 +140,7 @@ describe("MeasureAttributeFilterOrganized", () => {
 
     function mockCatalogItems(length: number): CatalogItem[] {
         const titles: string[] = ["customer", "product", "between", "duct tape", "a duck", "order", "state"];
-        return range(0, length).map((order: number): CatalogItem => {
+        return _range(0, length).map((order: number): CatalogItem => {
             const defaultDisplayForm: IAttributeDisplayFormMetadataObject = {
                 type: "displayForm",
                 ref: {

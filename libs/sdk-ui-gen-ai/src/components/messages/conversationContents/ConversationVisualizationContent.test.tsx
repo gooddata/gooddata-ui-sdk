@@ -147,7 +147,6 @@ describe("ConversationVisualizationContent - Key Driver Analysis enablement", ()
             />,
             {
                 isKeyDriverAnalysisMounted: false,
-                settings: { enableChangeAnalysis: true } as IUserWorkspaceSettings,
             },
         );
 
@@ -164,29 +163,11 @@ describe("ConversationVisualizationContent - Key Driver Analysis enablement", ()
             />,
             {
                 isKeyDriverAnalysisMounted: true,
-                settings: { enableChangeAnalysis: true } as IUserWorkspaceSettings,
             },
         );
 
         const vis = screen.getByTestId("mock-conversation-vis");
         expect(vis.getAttribute("data-enable-change-analysis")).toBe("true");
-    });
-
-    it("should disable change analysis when setting is disabled even if KeyDriverAnalysis is mounted", () => {
-        renderWithStore(
-            <ConversationVisualizationContent
-                message={mockMessage}
-                part={mockPart}
-                visualization={mockVisualization}
-            />,
-            {
-                isKeyDriverAnalysisMounted: true,
-                settings: { enableChangeAnalysis: false } as IUserWorkspaceSettings,
-            },
-        );
-
-        const vis = screen.getByTestId("mock-conversation-vis");
-        expect(vis.getAttribute("data-enable-change-analysis")).toBe("false");
     });
 
     it("should disable change analysis when enableKeyDriverAnalysis customization prop is false", () => {
@@ -199,7 +180,6 @@ describe("ConversationVisualizationContent - Key Driver Analysis enablement", ()
             />,
             {
                 isKeyDriverAnalysisMounted: true,
-                settings: { enableChangeAnalysis: true } as IUserWorkspaceSettings,
             },
         );
 
@@ -217,7 +197,6 @@ describe("ConversationVisualizationContent - Key Driver Analysis enablement", ()
             />,
             {
                 isKeyDriverAnalysisMounted: true,
-                settings: { enableChangeAnalysis: false } as IUserWorkspaceSettings,
             },
         );
 

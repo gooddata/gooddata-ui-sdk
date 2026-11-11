@@ -1,7 +1,5 @@
 // (C) 2026 GoodData Corporation
 
-import { uniqBy } from "lodash-es";
-
 import { walkLayout } from "@gooddata/sdk-backend-spi";
 import {
     type IDashboard,
@@ -14,6 +12,7 @@ import {
     serializeObjRef,
 } from "@gooddata/sdk-model";
 import { collectReferences } from "@gooddata/sdk-ui-kit";
+import { _uniqBy } from "@gooddata/util";
 
 import { insightWidgetDescription } from "../../../_staging/insight/insightWidgetDescription.js";
 import { newInsightMap } from "../../../_staging/metadata/objRefMap.js";
@@ -63,7 +62,7 @@ export function collectDashboardParameterRoots(
         ...(dashboard?.filterContext?.filters ?? []),
     ];
     roots.push(...collectFilterParameterRoots(filters));
-    return uniqBy(roots, serializeObjRef);
+    return _uniqBy(roots, serializeObjRef);
 }
 
 /**
@@ -78,5 +77,5 @@ export function collectTextReferenceRoots(content: string): IdentifierRef[] {
         .filter(({ type }) => type === "measure" || type === "computedAttribute")
         .map(({ ref }) => ref)
         .filter(isIdentifierRef);
-    return uniqBy(roots, serializeObjRef);
+    return _uniqBy(roots, serializeObjRef);
 }

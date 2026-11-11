@@ -1,6 +1,5 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { partition, uniqBy } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, all, call, put, select } from "redux-saga/effects";
 
@@ -40,7 +39,7 @@ import {
     serializeObjRef,
     updateAttributeElementsItems,
 } from "@gooddata/sdk-model";
-import { _compact } from "@gooddata/util";
+import { _compact, _partition, _uniqBy } from "@gooddata/util";
 
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
 import { type ChangeFilterContextSelection } from "../../commands/filters.js";
@@ -426,7 +425,7 @@ export function* changeFilterContextSelectionHandler(
     );
 
     // Deduplicate text filters by localIdentifier (last occurrence wins, matching batch behavior)
-    const textAttributeFilters = uniqBy(
+    const textAttributeFilters = _uniqBy(
         textAttributeFiltersRaw
             .filter((f) => dashboardAttributeFilterItemLocalIdentifier(f))
             .slice()
@@ -441,12 +440,12 @@ export function* changeFilterContextSelectionHandler(
 
     // Measure value filters use whole-condition replacement keyed by localIdentifier; deduplicate
     // by localIdentifier (last occurrence wins, mirroring text attribute filter handling).
-    const measureValueFilters = uniqBy(
+    const measureValueFilters = _uniqBy(
         normalizedFilters.filter(isDashboardMeasureValueFilter).slice().reverse(),
         (f) => dashboardMeasureValueFilterLocalIdentifier(f),
     ).reverse();
 
-    const uniqueFilters = uniqBy(supportedFilters, (filter) => {
+    const uniqueFilters = _uniqBy(supportedFilters, (filter) => {
         if (matchByLocalIdentifier && isDashboardAttributeFilter(filter)) {
             const localIdentifier = dashboardAttributeFilterItemLocalIdentifier(filter);
             if (localIdentifier) {
@@ -471,9 +470,9 @@ export function* changeFilterContextSelectionHandler(
             : identification + secondaryIdentification;
     });
 
-    const [dateFilters, attributeFilters] = partition(uniqueFilters, isDashboardDateFilter);
+    const [dateFilters, attributeFilters] = _partition(uniqueFilters, isDashboardDateFilter);
 
-    const [[commonDateFilter], dateFiltersWithDimension] = partition(
+    const [[commonDateFilter], dateFiltersWithDimension] = _partition(
         dateFilters,
         isDashboardCommonDateFilter,
     );

@@ -1,9 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { intersection, uniqBy } from "lodash-es";
+import { intersection } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { _isEmpty } from "@gooddata/util";
+import { _isEmpty, _uniqBy } from "@gooddata/util";
 
 import { type AccessGranularPermission } from "../accessControl/index.js";
 import { type IAuditable, type IObjectCertification } from "../base/metadata.js";
@@ -1173,14 +1173,14 @@ export function insightDisplayFormUsage<T extends IInsightDefinition>(insight: T
     invariant(insight, "insight must be specified");
 
     return {
-        inAttributes: uniqBy(insightAttributes(insight).map(attributeDisplayFormRef), serializeObjRef),
-        inFilters: uniqBy(
+        inAttributes: _uniqBy(insightAttributes(insight).map(attributeDisplayFormRef), serializeObjRef),
+        inFilters: _uniqBy(
             insightFilters(insight)
                 .filter(isAttributeFilter)
                 .map((attributeFilter) => filterObjRef(attributeFilter)),
             serializeObjRef,
         ),
-        inMeasureFilters: uniqBy(
+        inMeasureFilters: _uniqBy(
             insightMeasures(insight).flatMap((measure) => {
                 const filters = measureFilters(measure) ?? [];
 

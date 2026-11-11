@@ -1,7 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { omit } from "lodash-es";
-
 import {
     type DateAttributeGranularity,
     type IArbitraryAttributeFilter,
@@ -22,7 +20,7 @@ import {
     isComputedAttributeRef,
     uriRef,
 } from "@gooddata/sdk-model";
-import { _compact, _isEmpty } from "@gooddata/util";
+import { _compact, _isEmpty, _omit } from "@gooddata/util";
 
 import {
     type BucketItem,
@@ -338,7 +336,7 @@ const resolveReferences = (mdObject: IVisualizationObject): IVisualizationObject
     return {
         ...mdObject,
         content: {
-            ...(omit(mdObject.content, "references") as IVisualizationObjectContent),
+            ...(_omit(mdObject.content, "references") as IVisualizationObjectContent),
             properties: serializeProperties(convertedProperties),
             ...referencesProp,
         },

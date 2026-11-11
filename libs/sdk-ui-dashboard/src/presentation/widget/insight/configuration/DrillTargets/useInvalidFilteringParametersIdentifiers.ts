@@ -2,8 +2,6 @@
 
 import { useMemo } from "react";
 
-import { uniq } from "lodash-es";
-
 import {
     type IAttributeFilter,
     type IDashboardAttributeFilterConfig,
@@ -20,6 +18,7 @@ import {
     getUnknownParameterIdentifiers,
     placeholderIdentifierText,
 } from "@gooddata/sdk-model/internal";
+import { _uniq } from "@gooddata/util";
 
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import {
@@ -128,7 +127,7 @@ export function useInvalidFilteringParametersIdentifiers(
                 dashboardParameterIdentifiers,
             );
 
-            return uniq([
+            return _uniq([
                 ...invalidDashboardParameters,
                 ...invalidInsightParameters,
                 ...invalidDashboardMvfParameters,

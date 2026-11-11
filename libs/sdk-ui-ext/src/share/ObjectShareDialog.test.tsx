@@ -26,6 +26,7 @@ import type {
     IObjectShareControllerState,
     IObjectShareDraft,
 } from "./objectShareController.types.js";
+import type { RowConfirmKind } from "./removeAccessConfirm.js";
 
 // The dialog owns its controller (one open = one session), so tests inject a stub
 // by mocking the controller hook: `renderDialog` assigns the stub per test.
@@ -68,6 +69,7 @@ const captured = vi.hoisted(() => ({
     emptyMessages: [] as Array<string | undefined>,
     confirms: [] as Array<{
         title: string;
+        description: string | undefined;
         isOpen: boolean | undefined;
         onConfirm: () => void;
         onCancel: () => void;
@@ -117,6 +119,8 @@ vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
         UiConfirmDialog: (props: IUiConfirmDialogProps) => {
             captured.confirms.push({
                 title: props.title,
+                description:
+                    typeof props.description === "string" ? props.description : textOf(props.description),
                 isOpen: props.isOpen,
                 onConfirm: props.onConfirm,
                 onCancel: props.onCancel,
@@ -230,7 +234,7 @@ function renderDialog(
     captured.notes.length = 0;
     captured.emptyMessages.length = 0;
     injected.controller = controller;
-    return render(
+    const view = () => (
         <IntlProvider locale="en-US" messages={MESSAGES}>
             <BackendProvider backend={dummyBackendEmptyData()}>
                 <WorkspaceProvider workspace="ws">
@@ -244,11 +248,30 @@ function renderDialog(
                     />
                 </WorkspaceProvider>
             </BackendProvider>
-        </IntlProvider>,
+        </IntlProvider>
     );
+    const result = render(view());
+    return {
+        ...result,
+        rerenderWith: (next: IObjectShareController) => {
+            injected.controller = next;
+            result.rerender(view());
+        },
+    };
 }
 
-const lastSelfConfirm = () => captured.confirms.filter((c) => c.title === SELF_RESTRICT_TITLE).at(-1);
+// The row confirm renders last, and only while open.
+const openRowConfirm = () => {
+    const last = captured.confirms.at(-1);
+    return last?.isOpen ? last : undefined;
+};
+const rowConfirm = () => {
+    const confirm = openRowConfirm();
+    if (!confirm) {
+        throw new Error("No row confirm is open");
+    }
+    return confirm;
+};
 
 describe("ObjectShareDialog session lifecycle", () => {
     it("mounts no session while closed — the controller does not exist", () => {
@@ -605,21 +628,24 @@ describe("ObjectShareDialog self row", () => {
             selfManagedGranteeId: SELF_GRANTEE.id,
         });
         renderDialog(controller);
-        expect(lastSelfConfirm()?.isOpen).toBe(false);
+        expect(openRowConfirm()).toBeUndefined();
 
         const controls = captured.controls.at(-1)!;
         act(() => {
             controls.onPermissionChange!("VIEW");
         });
 
-        expect(lastSelfConfirm()?.isOpen).toBe(true);
+        expect(openRowConfirm()).toMatchObject({
+            title: SELF_RESTRICT_TITLE,
+            description: SELF_RESTRICT_WARNING,
+        });
         expect(controller.actions.changePermissionLevel).not.toHaveBeenCalled();
 
         act(() => {
-            lastSelfConfirm()!.onConfirm();
+            rowConfirm().onConfirm();
         });
         expect(controller.actions.changePermissionLevel).toHaveBeenCalledWith("user:self", "VIEW");
-        expect(lastSelfConfirm()?.isOpen).toBe(false);
+        expect(openRowConfirm()).toBeUndefined();
     });
 
     it("raises the signed-in user's own level without the restriction confirm", () => {
@@ -636,7 +662,7 @@ describe("ObjectShareDialog self row", () => {
             captured.controls.at(-1)!.onPermissionChange!("EDIT");
         });
 
-        expect(lastSelfConfirm()?.isOpen).toBe(false);
+        expect(openRowConfirm()).toBeUndefined();
         expect(controller.actions.changePermissionLevel).toHaveBeenCalledWith("user:self", "EDIT");
     });
 
@@ -664,7 +690,7 @@ describe("ObjectShareDialog self row", () => {
             act(() => {
                 controls.onPermissionChange!(level);
             });
-            expect(lastSelfConfirm()?.isOpen).toBe(false);
+            expect(openRowConfirm()).toBeUndefined();
         }
         expect(controller.actions.changePermissionLevel).not.toHaveBeenCalled();
     });
@@ -688,9 +714,9 @@ describe("ObjectShareDialog self row", () => {
         act(() => {
             captured.controls.at(-1)!.onPermissionChange!("VIEW");
         });
-        expect(lastSelfConfirm()?.isOpen).toBe(true);
+        expect(openRowConfirm()?.title).toBe(SELF_RESTRICT_TITLE);
         act(() => {
-            lastSelfConfirm()!.onConfirm();
+            rowConfirm().onConfirm();
         });
         expect(controller.actions.changePermissionLevel).toHaveBeenCalledWith("user:self", "VIEW");
     });
@@ -707,56 +733,158 @@ describe("ObjectShareDialog self row", () => {
             controls.onPermissionChange!("VIEW");
         });
         act(() => {
-            lastSelfConfirm()!.onCancel();
+            rowConfirm().onCancel();
         });
 
-        expect(lastSelfConfirm()?.isOpen).toBe(false);
+        expect(openRowConfirm()).toBeUndefined();
         expect(controller.actions.changePermissionLevel).not.toHaveBeenCalled();
     });
+});
 
-    it("routes removing the signed-in user's own sole access through the same confirm", () => {
+describe("ObjectShareDialog remove access", () => {
+    const OTHER_ROW = { ...OTHER_GRANTEE, directLevel: "VIEW" as const };
+    const SELF_ROW = { ...SELF_GRANTEE, directLevel: "VIEW" as const };
+
+    // Skips the workspace row, which has no remove.
+    const removeRow = () => {
+        const controls = captured.controls.filter((c) => c.onRemoveAccess).at(-1);
+        expect(controls?.isRemoveDisabled).toBe(false);
+        act(() => {
+            controls?.onRemoveAccess?.();
+        });
+    };
+
+    it("confirms removing another grantee before writing, naming who loses access", () => {
+        const controller = makeController({ grantees: [OTHER_ROW] });
+        renderDialog(controller);
+
+        removeRow();
+
+        expect(openRowConfirm()).toMatchObject({
+            title: "Remove access?",
+            description: "Jane Good will lose access to this object.",
+        });
+        expect(controller.actions.removeGrantee).not.toHaveBeenCalled();
+        act(() => {
+            rowConfirm().onConfirm();
+        });
+        expect(controller.actions.removeGrantee).toHaveBeenCalledWith("user:u1");
+        expect(openRowConfirm()).toBeUndefined();
+    });
+
+    it("keeps the grantee when the confirm is cancelled", () => {
+        const controller = makeController({ grantees: [OTHER_ROW] });
+        renderDialog(controller);
+
+        removeRow();
+        act(() => {
+            rowConfirm().onCancel();
+        });
+
+        expect(openRowConfirm()).toBeUndefined();
+        expect(controller.actions.removeGrantee).not.toHaveBeenCalled();
+    });
+
+    // Which row gets which kind is covered in removeAccessConfirm.test.ts; this checks each kind's copy.
+    it.each([
+        {
+            kind: "inheritedStays",
+            state: { grantees: [{ ...OTHER_ROW, inheritedLevel: "VIEW" }] },
+            title: "Remove access?",
+            description:
+                "This removes the individual grant. Access inherited from the parent workspace stays active.",
+        },
+        {
+            kind: "workspaceStays",
+            state: { grantees: [OTHER_ROW], generalAccess: "WORKSPACE" },
+            title: "Remove access?",
+            description: "This removes the individual grant. Access for all workspace members stays active.",
+        },
+        {
+            kind: "selfLoseAccess",
+            state: { grantees: [SELF_ROW], selfManagedGranteeId: SELF_ROW.id },
+            title: "Remove your access?",
+            description:
+                "You will lose access to this object. You cannot find it again unless someone shares it with you.",
+        },
+        {
+            kind: "selfLoseEditAccess",
+            state: {
+                grantees: [{ ...SELF_ROW, level: "EDIT", directLevel: "EDIT" }],
+                selfManagedGranteeId: SELF_ROW.id,
+            },
+            title: "Remove your access?",
+            description:
+                "You will lose access to this object. You cannot find it again unless someone shares it with you. You cannot edit or delete this object.",
+        },
+        {
+            kind: "selfRestrict",
+            state: {
+                grantees: [{ ...SELF_ROW, level: "EDIT", directLevel: "EDIT", inheritedLevel: "VIEW" }],
+                selfManagedGranteeId: SELF_ROW.id,
+            },
+            title: SELF_RESTRICT_TITLE,
+            description: SELF_RESTRICT_WARNING,
+        },
+    ] satisfies Array<{
+        kind: RowConfirmKind;
+        state: Partial<IObjectShareControllerState>;
+        title: string;
+        description: string;
+    }>)("words the $kind confirm", ({ state, title, description }) => {
+        renderDialog(makeController(state));
+
+        removeRow();
+
+        expect(openRowConfirm()).toMatchObject({ title, description });
+    });
+
+    it("keeps the open confirm worded as staged when the caller's access facts arrive", () => {
+        // Remove was clicked before the workspace permissions said the caller is a manager.
+        const { rerenderWith } = renderDialog(
+            makeController({ grantees: [SELF_ROW], selfManagedGranteeId: SELF_ROW.id }),
+        );
+
+        removeRow();
+        const manager = makeController({
+            grantees: [SELF_ROW],
+            selfManagedGranteeId: undefined,
+            roleAccess: "workspaceManager",
+        });
+        rerenderWith(manager);
+
+        expect(openRowConfirm()?.title).toBe("Remove your access?");
+        act(() => {
+            rowConfirm().onConfirm();
+        });
+        expect(manager.actions.removeGrantee).toHaveBeenCalledWith("user:self");
+    });
+
+    it("removes a workspace manager's own row at once, the role keeps their access", () => {
         const controller = makeController({
-            grantees: [SELF_GRANTEE],
-            selfManagedGranteeId: SELF_GRANTEE.id,
+            grantees: [SELF_ROW],
+            selfManagedGranteeId: undefined,
+            roleAccess: "workspaceManager",
         });
         renderDialog(controller);
 
-        const controls = captured.controls.at(-1)!;
-        act(() => {
-            controls.onRemoveAccess!();
-        });
-        expect(lastSelfConfirm()?.isOpen).toBe(true);
+        removeRow();
 
-        act(() => {
-            lastSelfConfirm()!.onConfirm();
-        });
+        expect(openRowConfirm()).toBeUndefined();
         expect(controller.actions.removeGrantee).toHaveBeenCalledWith("user:self");
     });
 
-    it("skips the confirm for a self-removal an inherited floor makes a no-restriction", () => {
-        // Own grant VIEW under an inherited EDIT: the revoke removes the local grant
-        // but the effective level stays EDIT — "Restrict your access?" would promise
-        // a restriction that never happens (the rule the level picks above follow).
-        // The removal itself still runs: the local grant is real and revocable.
-        const controller = makeController({
-            grantees: [
-                {
-                    ...SELF_GRANTEE,
-                    level: "EDIT" as const,
-                    directLevel: "VIEW" as const,
-                    inheritedLevel: "EDIT" as const,
-                },
-            ],
-            selfManagedGranteeId: SELF_GRANTEE.id,
-        });
-        renderDialog(controller);
+    it("removes a draft row at once, nobody holds that access yet", () => {
+        const controller = makeController(
+            { grantees: [OTHER_ROW] },
+            { granteeEdits: {}, ruleEdit: undefined },
+        );
+        renderDialog(controller, undefined, { target: undefined, draft: true, onDraftChange: noop });
 
-        act(() => {
-            captured.controls.at(-1)!.onRemoveAccess!();
-        });
+        removeRow();
 
-        expect(lastSelfConfirm()?.isOpen).toBe(false);
-        expect(controller.actions.removeGrantee).toHaveBeenCalledWith("user:self");
+        expect(openRowConfirm()).toBeUndefined();
+        expect(controller.actions.removeGrantee).toHaveBeenCalledWith("user:u1");
     });
 });
 

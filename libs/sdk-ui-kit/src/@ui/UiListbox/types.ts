@@ -35,6 +35,10 @@ export interface IUiListboxInteractiveItem<T> {
     isDisabled?: boolean;
     data: T;
     /**
+     * Text shown muted after the title, e.g. the code of a language.
+     */
+    secondaryTitle?: string;
+    /**
      * Explanation shown in a tooltip next to the title. Also read by screen readers.
      */
     tooltip?: string;

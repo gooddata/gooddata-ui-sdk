@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { omit, update } from "lodash-es";
+import { update } from "lodash-es";
 
 import {
     type AnalyticalDashboardModelV2,
@@ -33,7 +33,7 @@ import {
     isVisualizationSwitcherWidget,
     isVisualizationSwitcherWidgetDefinition,
 } from "@gooddata/sdk-model";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _omit } from "@gooddata/util";
 
 import { addFilterLocalIdentifier } from "../../utils/filterLocalidentifier.js";
 import { generateWidgetLocalIdentifier } from "../../utils/widgetLocalIdentifier.js";
@@ -76,7 +76,7 @@ function removeIdentifiers(widget: IDashboardWidget, useWidgetLocalIdentifiers?:
     }
 
     // omit removes mandatory props, but we do not have type for such stripped widget
-    return omit(updatedWidget, ["ref", "uri", "identifier"]) as IDashboardWidget;
+    return _omit(updatedWidget, ["ref", "uri", "identifier"]) as IDashboardWidget;
 }
 
 function removeWidgetIdentifiersInLayout(

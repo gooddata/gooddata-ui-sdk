@@ -1,10 +1,10 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { inRange, range } from "lodash-es";
+import { inRange } from "lodash-es";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { type ITheme } from "@gooddata/sdk-model";
-import { _isEqual } from "@gooddata/util";
+import { _isEqual, _range } from "@gooddata/util";
 
 import { parseRGBString } from "../coloring/color.js";
 
@@ -526,7 +526,7 @@ function getColorLegendLabels(
     const max = series.at(-1)?.range?.to ?? 0;
     const diff = max - min;
 
-    return range(series.length + 1).map((index) => {
+    return _range(series.length + 1).map((index) => {
         let value: number;
 
         if (index === 0) {

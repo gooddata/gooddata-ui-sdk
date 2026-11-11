@@ -23,6 +23,8 @@ export const objectShareMessages = defineMessages({
      * the copy must stay identical in both places by design.
      */
     selfRestrictWarning: { id: "objectShare.selfRestrict.warning" },
+    removeAccessTitle: { id: "objectShare.removeAccess.title" },
+    removeAccessSelfTitle: { id: "objectShare.removeAccess.self.title" },
     /**
      * Disabled-option tooltip on the workspace rule's permission menu for levels
      * below an inherited workspace-wide grant, which they could never lower.
@@ -55,6 +57,19 @@ export const objectShareMessages = defineMessages({
     toastError: { id: "objectShare.toast.error" },
     toastLabelScopePartial: { id: "objectShare.toast.labelScopePartial" },
     loadError: { id: "objectShare.loadError" },
+});
+
+/**
+ * Remove-access confirm bodies by kind; `selfRestrict` reuses the self-restriction warning.
+ *
+ * @internal
+ */
+export const objectShareRemoveAccessMessages = defineMessages({
+    loseAccess: { id: "objectShare.removeAccess.loseAccess" },
+    inheritedStays: { id: "objectShare.removeAccess.inheritedStays" },
+    workspaceStays: { id: "objectShare.removeAccess.workspaceStays" },
+    selfLoseAccess: { id: "objectShare.removeAccess.selfLoseAccess" },
+    selfLoseEditAccess: { id: "objectShare.removeAccess.selfLoseEditAccess" },
 });
 
 /**

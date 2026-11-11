@@ -1,9 +1,8 @@
 // (C) 2026 GoodData Corporation
 
-import { omit } from "lodash-es";
-
 import { resolveLocale } from "@gooddata/sdk-ui";
 import type { ChatEvent, GenAIAssistantProps, LinkHandlerEvent } from "@gooddata/sdk-ui-gen-ai";
+import { _omit } from "@gooddata/util";
 
 import { type CustomElementAdapter, EVENT_BUILDER, EVENT_HANDLER } from "../common/CustomElementAdapter.js";
 import { stringToObjectTypes } from "../common/typeGuards/stringToObjectTypes.js";
@@ -65,7 +64,7 @@ export function getProperties<T>(
     // Emit custom DOM event when link is clicked
     extraProps.onLinkClick = (e): string | undefined => {
         const type = "linkClick";
-        const detail = omit(e, ["preventDefault"]) as IGenAIAssistantLinkClick;
+        const detail = _omit(e, ["preventDefault"]) as IGenAIAssistantLinkClick;
 
         let link: string | undefined = detail.itemUrl;
 

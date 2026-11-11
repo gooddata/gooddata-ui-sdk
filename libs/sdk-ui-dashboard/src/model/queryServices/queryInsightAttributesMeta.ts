@@ -1,6 +1,5 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { uniqBy } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
@@ -20,6 +19,7 @@ import {
     objRefToString,
     serializeObjRef,
 } from "@gooddata/sdk-model";
+import { _uniqBy } from "@gooddata/util";
 
 import {
     loadComputedAttributesByRefs,
@@ -150,8 +150,8 @@ async function createInsightAttributesMeta(
 
     return {
         usage,
-        attributes: uniqBy([...attributesFromCatalog, ...loadedAttributes], (a) => serializeObjRef(a.ref)),
-        displayForms: uniqBy([...displayFormsFromCatalog, ...loadedDisplayForms], (df) =>
+        attributes: _uniqBy([...attributesFromCatalog, ...loadedAttributes], (a) => serializeObjRef(a.ref)),
+        displayForms: _uniqBy([...displayFormsFromCatalog, ...loadedDisplayForms], (df) =>
             serializeObjRef(df.ref),
         ),
     };

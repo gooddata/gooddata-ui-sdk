@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { omit, without } from "lodash-es";
+import { without } from "lodash-es";
 
 import {
     type IAttributeDescriptor,
@@ -17,6 +17,7 @@ import {
     getDrillIntersection,
     isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
+import { _omit } from "@gooddata/util";
 
 import { type IGeoData, type IGeoDrillEvent } from "../../../../GeoChart.js";
 
@@ -86,7 +87,7 @@ function getAttributeHeader(
 } {
     if (attribute) {
         return {
-            attributeHeader: { attributeHeader: omit(attribute, "items") },
+            attributeHeader: { attributeHeader: _omit(attribute, "items") },
             attributeHeaderItem: attribute.items[dataIndex] as IResultAttributeHeader,
         };
     }

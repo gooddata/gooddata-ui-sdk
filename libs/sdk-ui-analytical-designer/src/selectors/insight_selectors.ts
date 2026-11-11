@@ -2,7 +2,6 @@
 
 // TODO replace by backend agnostic logic - this is just a quick win type of solution
 import invariant from "invariant";
-import { omit } from "lodash-es";
 import { createSelector } from "reselect";
 
 import { type IRawExportCustomOverride, type IRawExportCustomOverrides } from "@gooddata/sdk-backend-spi";
@@ -29,6 +28,7 @@ import {
     VisualizationTypes,
     normalizeGeoInsightForRawExport as normalizeGeoInsightForRawExportBase,
 } from "@gooddata/sdk-ui";
+import { _omit } from "@gooddata/util";
 
 import { BackendToBearConvertors } from "../convertors/index.js";
 import { getVisualizationClass as getVisualizationClassRaw } from "../services/visualization_class_service.js";
@@ -89,7 +89,7 @@ const getInsightProperties = createSelector(
         // For visualizations that support custom sort, use appliedSort
         if (applySort) {
             return {
-                ...omit(properties, ["sortItems"]),
+                ..._omit(properties, ["sortItems"]),
                 sortItems: appliedSort,
             };
         }
@@ -105,7 +105,7 @@ const getInsightProperties = createSelector(
                   : undefined;
 
         return {
-            ...omit(properties, ["sortItems"]),
+            ..._omit(properties, ["sortItems"]),
             ...(sortItems ? { sortItems } : {}),
         };
     },

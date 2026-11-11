@@ -1,7 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
 import stringify from "json-stable-stringify";
-import { partition } from "lodash-es";
 import { LRUCache } from "lru-cache";
 import SparkMD5 from "spark-md5";
 import { invariant } from "ts-invariant";
@@ -111,7 +110,7 @@ import {
     serializeObjRef,
     uriRef,
 } from "@gooddata/sdk-model";
-import { _compact } from "@gooddata/util";
+import { _compact, _partition } from "@gooddata/util";
 
 import { DecoratedWorkspaceAttributesService } from "../decoratedBackend/attributes.js";
 import {
@@ -1527,7 +1526,7 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
             };
         });
 
-        const [withCacheHits, withoutCacheHits] = partition(
+        const [withCacheHits, withoutCacheHits] = _partition(
             refsWithCacheResults,
             ({ cacheHit }) => !!cacheHit,
         );
@@ -1701,7 +1700,7 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
             };
         });
 
-        const [withCacheHits, withoutCacheHits] = partition(
+        const [withCacheHits, withoutCacheHits] = _partition(
             refsWithCacheResults,
             ({ cacheHit }) => !!cacheHit,
         );

@@ -46,5 +46,5 @@ import { _baseClone } from "./_baseClone.js";
  * @internal
  */
 export function _cloneDeep<T>(value: T): T {
-    return _baseClone(value) as T;
+    return _baseClone(value, true) as T;
 }

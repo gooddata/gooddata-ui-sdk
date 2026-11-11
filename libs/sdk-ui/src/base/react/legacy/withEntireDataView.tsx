@@ -2,7 +2,6 @@
 
 import { type ComponentClass, type ComponentType, useCallback, useEffect, useRef, useState } from "react";
 
-import { omit } from "lodash-es";
 import { type IntlShape, useIntl } from "react-intl";
 
 import {
@@ -16,7 +15,7 @@ import {
     isUnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 import { defFingerprint } from "@gooddata/sdk-model";
-import { _isEqual } from "@gooddata/util";
+import { _isEqual, _omit } from "@gooddata/util";
 
 import { convertError } from "../../errors/errorHandling.js";
 import {
@@ -543,7 +542,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
         });
 
         const stripWorkspace = (allProps: T): T => {
-            return omit(allProps, ["workspace"]) as any;
+            return _omit(allProps, ["workspace"]) as any;
         };
 
         const { isLoading, error, dataView, seType } = state;

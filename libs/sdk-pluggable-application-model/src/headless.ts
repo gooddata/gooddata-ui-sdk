@@ -1,5 +1,12 @@
 // (C) 2026 GoodData Corporation
 
+import {
+    type IActiveApplicationInfo,
+    type IModuleMessage,
+    type IModuleMessaging,
+    type ModuleChannelHandler,
+    type ModulePostResult,
+} from "./moduleMessaging.js";
 import { type IPlatformContext } from "./platformContext.js";
 
 /**
@@ -98,6 +105,31 @@ export interface IHeadlessModuleMountOptions {
      * loads, so the module can register the provider after an asynchronous initialization.
      */
     registerTelemetryProvider(provider: ITelemetryProvider): () => void;
+    /**
+     * Registers the handler of a module message channel. Returns a function that removes the channel.
+     *
+     * @remarks
+     * Register synchronously in `mount`. The shell treats a channel that is not registered when all
+     * headless modules mounted as missing, and callers read that as a feature that is not available.
+     * Throws when another module owns the channel. `undefined` on a shell without module messaging.
+     */
+    registerChannel?(channel: string, handler: ModuleChannelHandler): () => void;
+    /**
+     * Posts a module message to the active application.
+     *
+     * @remarks
+     * `message.channel` must be a channel this module registered. `undefined` on a shell without module
+     * messaging.
+     */
+    postToActiveApplication?(message: IModuleMessage): ModulePostResult;
+    /**
+     * Sends module messages to channels of other headless modules.
+     *
+     * @remarks
+     * A request to a channel of this module fails with `invalid-message`. The shell aborts the pending
+     * requests when the module unmounts. `undefined` on a shell without module messaging.
+     */
+    moduleMessaging?: IModuleMessaging;
 }
 
 /**
@@ -115,6 +147,15 @@ export interface IHeadlessModuleMountHandle {
      * opens another workspace.
      */
     updateContext?(ctx: IPlatformContext): void;
+    /**
+     * The shell calls it when an application is ready to receive module messages, and with `undefined`
+     * when that application unmounts.
+     *
+     * @remarks
+     * Push the current state to a newly mounted application from here. The shell keeps no messages for
+     * late receivers.
+     */
+    onActiveApplicationChanged?(application: IActiveApplicationInfo | undefined): void;
 }
 
 /**

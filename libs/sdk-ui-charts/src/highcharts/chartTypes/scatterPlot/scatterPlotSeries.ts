@@ -1,7 +1,5 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { debounce } from "lodash-es";
-
 import { type IColorDescriptor, type IResultAttributeHeader } from "@gooddata/sdk-model";
 import {
     BucketNames,
@@ -10,6 +8,7 @@ import {
     getMappingHeaderFormattedName,
 } from "@gooddata/sdk-ui";
 import { type IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
+import { _debounce } from "@gooddata/util";
 
 import { type IPointData, type ISeriesItemConfig } from "../../typings/unsafe.js";
 import { parseValue } from "../_util/common.js";
@@ -30,7 +29,7 @@ function _decreaseOpacityOfOtherSegmentsOnMouseOver(this: IPointData) {
     });
 }
 
-const decreaseOpacityOfOtherSegmentsOnMouseOver = debounce(_decreaseOpacityOfOtherSegmentsOnMouseOver, 50);
+const decreaseOpacityOfOtherSegmentsOnMouseOver = _debounce(_decreaseOpacityOfOtherSegmentsOnMouseOver, 50);
 
 function _resetOpacityOfOtherSegmentsOnMouseOut(this: IPointData) {
     const segmentName = this?.["segmentName"];
@@ -41,7 +40,7 @@ function _resetOpacityOfOtherSegmentsOnMouseOut(this: IPointData) {
     });
 }
 
-const resetOpacityOfOtherSegmentsOnMouseOut = debounce(_resetOpacityOfOtherSegmentsOnMouseOut, 50);
+const resetOpacityOfOtherSegmentsOnMouseOut = _debounce(_resetOpacityOfOtherSegmentsOnMouseOut, 50);
 
 function _decreaseOpacityOfOtherClustersOnMouseOver(this: IPointData) {
     const clusterName = this?.["clusterName"];
@@ -52,7 +51,7 @@ function _decreaseOpacityOfOtherClustersOnMouseOver(this: IPointData) {
     });
 }
 
-const decreaseOpacityOfOtherClustersOnMouseOver = debounce(_decreaseOpacityOfOtherClustersOnMouseOver, 50);
+const decreaseOpacityOfOtherClustersOnMouseOver = _debounce(_decreaseOpacityOfOtherClustersOnMouseOver, 50);
 
 function _resetOpacityOfOtherClustersOnMouseOut(this: IPointData) {
     const clusterName = this?.["clusterName"];
@@ -63,7 +62,7 @@ function _resetOpacityOfOtherClustersOnMouseOut(this: IPointData) {
     });
 }
 
-const resetOpacityOfOtherClustersOnMouseOut = debounce(_resetOpacityOfOtherClustersOnMouseOut, 50);
+const resetOpacityOfOtherClustersOnMouseOut = _debounce(_resetOpacityOfOtherClustersOnMouseOut, 50);
 
 export function getScatterPlotSeries(
     dv: DataViewFacade,

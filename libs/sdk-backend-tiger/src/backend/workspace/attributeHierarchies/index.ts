@@ -1,6 +1,5 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { uniqBy } from "lodash-es";
 import { v4 as uuid } from "uuid";
 
 import { type AfmObjectIdentifierAttribute } from "@gooddata/api-client-tiger";
@@ -19,6 +18,7 @@ import {
     objRefToString,
     serializeObjRef,
 } from "@gooddata/sdk-model";
+import { _uniqBy } from "@gooddata/util";
 
 import { convertAttributeHierarchyWithoutLinks } from "../../../convertors/fromBackend/HierarchyConverter.js";
 import { toObjRef } from "../../../convertors/fromBackend/ObjRefConverter.js";
@@ -112,7 +112,7 @@ export class TigerAttributeHierarchiesService implements IAttributeHierarchiesSe
             return validAttributes.map(toObjRef);
         });
 
-        return Promise.resolve(uniqBy(result, serializeObjRef));
+        return Promise.resolve(_uniqBy(result, serializeObjRef));
     };
 
     public getDateHierarchyTemplates(): Promise<IDateHierarchyTemplate[]> {

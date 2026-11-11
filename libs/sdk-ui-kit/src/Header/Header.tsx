@@ -4,11 +4,11 @@ import { type MouseEvent, type ReactElement, useCallback, useEffect, useMemo, us
 
 import cx from "classnames";
 import { differenceInCalendarDays, differenceInMonths, format } from "date-fns";
-import { debounce } from "lodash-es";
 import { FormattedMessage, defineMessage, defineMessages, useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+import { _debounce } from "@gooddata/util";
 
 import { Icon } from "../Icon/Icon.js";
 import { Overlay } from "../Overlay/Overlay.js";
@@ -174,7 +174,7 @@ export function AppHeader({
         }
     }, [state.childrenWidth, state.responsiveMode]);
 
-    const resizeHandler = useMemo(() => debounce(() => measure(), 100), [measure]);
+    const resizeHandler = useMemo(() => _debounce(() => measure(), 100), [measure]);
 
     useEffect(() => {
         measure();

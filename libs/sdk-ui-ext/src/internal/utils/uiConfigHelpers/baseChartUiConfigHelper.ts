@@ -1,10 +1,9 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { type BucketNameValues, BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { messages } from "../../../locales.js";
 import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket.js";
@@ -68,7 +67,7 @@ function setBaseChartBucketWarningMessages(
             }
 
             if (warningMessage) {
-                set(updatedUiConfig, [BUCKETS, localIdentifier, "warningMessage"], warningMessage);
+                _set(updatedUiConfig, [BUCKETS, localIdentifier, "warningMessage"], warningMessage);
             }
         }
     });
@@ -86,15 +85,15 @@ export function setBaseChartUiConfig(
     const measuresCanAddItems = hasNoMeasures(buckets) || hasNoStacksWithDate(buckets);
     const stackCanAddItems = !hasMoreThanOneMasterMeasure(buckets, BucketNames.MEASURES);
 
-    set(referencePointConfigured, [UICONFIG], setBucketTitles(referencePoint, visualizationType, intl));
-    set(
+    _set(referencePointConfigured, [UICONFIG], setBucketTitles(referencePoint, visualizationType, intl));
+    _set(
         referencePointConfigured,
         [UICONFIG, BUCKETS, BucketNames.MEASURES, "canAddItems"],
         measuresCanAddItems,
     );
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "canAddItems"], true);
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.STACK, "canAddItems"], stackCanAddItems);
-    set(
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "canAddItems"], true);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.STACK, "canAddItems"], stackCanAddItems);
+    _set(
         referencePointConfigured,
         [UICONFIG, OPEN_AS_REPORT, SUPPORTED],
         !hasColorMapping(referencePointConfigured.properties),
@@ -113,23 +112,23 @@ export function setBaseChartUiConfig(
         },
     };
 
-    set(
+    _set(
         referencePointConfigured,
         [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"],
         iconsMap[visualizationType]?.[BucketNames.MEASURES],
     );
-    set(
+    _set(
         referencePointConfigured,
         [UICONFIG, BUCKETS, BucketNames.VIEW, "icon"],
         iconsMap[visualizationType]?.[BucketNames.VIEW],
     );
-    set(
+    _set(
         referencePointConfigured,
         [UICONFIG, BUCKETS, BucketNames.STACK, "icon"],
         iconsMap[visualizationType]?.[BucketNames.STACK],
     );
 
-    set(
+    _set(
         referencePointConfigured,
         UICONFIG,
         setBaseChartBucketWarningMessages(referencePointConfigured, intl),
@@ -152,11 +151,11 @@ export function setBaseChartUiConfigRecommendations(
         const overTimeComparison = overTimeComparisonRecommendationEnabled(newReferencePoint);
         const previousPeriod = previousPeriodRecommendationEnabled(buckets);
 
-        set(newReferencePoint, [UICONFIG, RECOMMENDATIONS, "percent"], percentEnabled);
-        set(newReferencePoint, [UICONFIG, RECOMMENDATIONS, "comparison"], comparisonAndTrending);
-        set(newReferencePoint, [UICONFIG, RECOMMENDATIONS, "trending"], comparisonAndTrending);
-        set(newReferencePoint, [UICONFIG, RECOMMENDATIONS, "overTimeComparison"], overTimeComparison);
-        set(newReferencePoint, [UICONFIG, RECOMMENDATIONS, "previousPeriod"], previousPeriod);
+        _set(newReferencePoint, [UICONFIG, RECOMMENDATIONS, "percent"], percentEnabled);
+        _set(newReferencePoint, [UICONFIG, RECOMMENDATIONS, "comparison"], comparisonAndTrending);
+        _set(newReferencePoint, [UICONFIG, RECOMMENDATIONS, "trending"], comparisonAndTrending);
+        _set(newReferencePoint, [UICONFIG, RECOMMENDATIONS, "overTimeComparison"], overTimeComparison);
+        _set(newReferencePoint, [UICONFIG, RECOMMENDATIONS, "previousPeriod"], previousPeriod);
 
         return newReferencePoint;
     }

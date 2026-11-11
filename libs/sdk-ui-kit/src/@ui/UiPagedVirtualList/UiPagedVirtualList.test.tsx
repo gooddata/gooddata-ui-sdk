@@ -63,6 +63,28 @@ describe("UiPagedVirtualList", () => {
         },
     );
 
+    it("adds the list padding above the first item and below the last item", () => {
+        render(
+            <UiPagedVirtualList
+                maxHeight={500}
+                items={items}
+                itemHeight={20}
+                itemsGap={0}
+                itemPadding={0}
+                listPadding={10}
+                skeletonItemsCount={0}
+                representAs="list"
+            >
+                {(item) => <span>{item}</span>}
+            </UiPagedVirtualList>,
+        );
+        const list = screen.getByRole("list");
+
+        expect(list.parentElement).toHaveStyle({ height: "80px" });
+        expect(list).toHaveStyle({ height: "80px" });
+        expect(screen.getAllByRole("listitem")[0]).toHaveStyle({ transform: "translateY(10px)" });
+    });
+
     it("points aria-activedescendant at the keyboard-active option and moves it with the arrows", () => {
         render(<Listbox />);
 

@@ -1,5 +1,6 @@
-// (C) 2024-2025 GoodData Corporation
-import { set } from "lodash-es";
+// (C) 2024-2026 GoodData Corporation
+
+import { _set } from "@gooddata/util";
 
 import { allThemeCssVariables } from "../allThemeCssVariables.js";
 
@@ -14,7 +15,7 @@ export function generateDefaultTypeScriptThemeContent() {
         if (v.type === "theme" && !v.isNotTypedByTheme) {
             const value = v.defaultThemeValue ?? v.defaultValue;
             if (value !== null) {
-                set(theme, v.themePath, value);
+                _set(theme, v.themePath, value);
             }
         }
     });

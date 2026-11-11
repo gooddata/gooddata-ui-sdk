@@ -1,6 +1,5 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { partition } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, select } from "redux-saga/effects";
 
@@ -19,7 +18,7 @@ import {
     dashboardAttributeFilterItemLocalIdentifier,
     objRefToString,
 } from "@gooddata/sdk-model";
-import { _isEmpty } from "@gooddata/util";
+import { _isEmpty, _partition } from "@gooddata/util";
 
 import { newInsight } from "../../../../_staging/insight/insightBuilder.js";
 import { newCatalogDateDatasetMap } from "../../../../_staging/metadata/objRefMap.js";
@@ -290,7 +289,7 @@ export function* validateDateFiltersToIgnore(
     const allAvailableDateDatasetsMap: ReturnType<typeof selectAllCatalogDateDatasetsMap> = yield select(
         selectAllCatalogDateDatasetsMap,
     );
-    const [resolved, missing] = partition(toIgnore, (ref) => allAvailableDateDatasetsMap.has(ref));
+    const [resolved, missing] = _partition(toIgnore, (ref) => allAvailableDateDatasetsMap.has(ref));
 
     if (!_isEmpty(missing)) {
         throw invalidArgumentsProvided(

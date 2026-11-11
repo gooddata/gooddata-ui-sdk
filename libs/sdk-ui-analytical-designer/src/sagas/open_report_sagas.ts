@@ -1,6 +1,5 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { partition } from "lodash-es";
 import { defineMessages } from "react-intl";
 import { type SagaReturnType, all, call, delay, put, select, take, takeEvery } from "redux-saga/effects";
 import { v4 as uuid } from "uuid";
@@ -21,6 +20,7 @@ import {
     objRefToString,
     uriRef,
 } from "@gooddata/sdk-model";
+import { _partition } from "@gooddata/util";
 
 import { changeDataset, updateInsightUsageOnDashboards, updateItemCache } from "../actions/data_actions.js";
 import { addMessage, hideMessage, showWarningMessage } from "../actions/messages_actions.js";
@@ -172,9 +172,12 @@ export function* getObjectsReferencing(projectId: string, insight: IInsight) {
             [loader, loader.getInsightReferencingObjects],
             uriRef(strippedUri),
         );
-        return references.analyticalDashboards || [];
+        return {
+            dashboards: references.analyticalDashboards ?? [],
+            documents: references.documents ?? [],
+        };
     } catch {
-        return [];
+        return { dashboards: [], documents: [] };
     }
 }
 
@@ -191,7 +194,7 @@ export function* ensureDominantDatasetSelected(datasetsFromInsight: IMetadataObj
         return;
     }
 
-    const [productionDatasets, nonProductionDatasets] = partition(
+    const [productionDatasets, nonProductionDatasets] = _partition(
         datasetsFromInsight,
         (dataset) => dataset.production,
     );
@@ -417,7 +420,7 @@ export function* fetchReport(projectId: string, reportId: string) {
             return;
         }
 
-        const [insightReferencing]: [IMetadataObject[], void] = yield all([
+        const [insightReferencing]: [SagaReturnType<typeof getObjectsReferencing>, void] = yield all([
             call(getObjectsReferencing, projectId, insight),
             catalogItems
                 ? call(updateCatalogWithExtras, {
@@ -430,7 +433,13 @@ export function* fetchReport(projectId: string, reportId: string) {
 
         const userDashboards: SagaReturnType<typeof fetchDashboards> = yield call(fetchDashboards, projectId);
 
-        yield put(updateInsightUsageOnDashboards(insightReferencing, userDashboards));
+        yield put(
+            updateInsightUsageOnDashboards(
+                insightReferencing.dashboards,
+                userDashboards,
+                insightReferencing.documents,
+            ),
+        );
         yield put(storeAppliedChartSort(insightSorts(insight)));
 
         const state: IAppState = yield select();

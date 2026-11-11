@@ -9,11 +9,11 @@ import {
     render as testingLibraryRender,
 } from "@testing-library/react";
 import { type UserEvent, userEvent } from "@testing-library/user-event";
-import { merge, omit } from "lodash-es";
+import { merge } from "lodash-es";
 import { Provider } from "react-redux";
 
 import { dummyBackend } from "@gooddata/sdk-backend-base";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _omit } from "@gooddata/util";
 
 import { type DashboardState, ReactDashboardContext } from "../../../index.js";
 import { createDashboardRootReducer, createDashboardStore } from "../../../model/store/dashboardStore.js";
@@ -60,7 +60,7 @@ export function render(jsx: ReactNode, options: ISetupOptions = {}): RenderResul
             <Provider store={store} context={ReactDashboardContext}>
                 <IntlWrapper>{jsx}</IntlWrapper>
             </Provider>,
-            omit(options, "state"),
+            _omit(options, "state"),
         ),
     };
 }

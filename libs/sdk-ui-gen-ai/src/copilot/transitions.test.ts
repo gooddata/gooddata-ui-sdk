@@ -71,12 +71,13 @@ const questions = (
     questions: [],
     responses,
 });
-const completed = (threadId = "thread"): ChatAssistantMessageEvent => ({
+const completed = (threadId = "thread", useCase = "GENERAL"): ChatAssistantMessageEvent => ({
     type: "chatAssistantMessage",
     threadId,
-    useCase: "GENERAL",
+    useCase,
     responseCompleted: true,
 });
+const offeredChart = (threadId = "thread") => completed(threadId, "CREATE_VISUALIZATION");
 const event = (value: ChatEvent): CopilotInput<Build> => ({ kind: "event", event: value });
 const transition = (state: ICopilotSnapshot<Build>, input: CopilotInput<Build>) =>
     transitionCopilot(state, input, configuration);
@@ -392,7 +393,7 @@ describe("pure copilot lifecycle", () => {
             if (workflow === "builder") {
                 state = transition(state, { kind: "context", context: { ...target, builderTarget: target } });
             }
-            if (waiting === "clarification") {
+            if (waiting === "clarification" || workflow === "builder") {
                 state = transition(state, event(questions()));
             }
             state = transition(state, event(completed()));
@@ -559,11 +560,25 @@ describe("pure copilot lifecycle", () => {
         expect(selectCopilotStatus(state, { ...target, isBuilder: true })).toBe("building");
         expect(selectCopilotStatus(state, target)).toBe("idle");
         expect(selectCopilotGenerationPending(state, Build.Board)).toBe(false);
+        state = transition(state, event(questions()));
         state = transition(state, event(completed()));
         expect(selectCopilotStatus(state, { ...target, isBuilder: true })).toBe("waiting");
         expect(selectCopilotStatus(state, target)).toBe("idle");
         state = transition(state, { kind: "cancelGeneration", type: Build.Board });
         expect(selectCopilotStatus(state, { ...target, isBuilder: true })).toBe("idle");
+    });
+
+    it("releases a builder follow-up whose answer offers nothing to place", () => {
+        let state = transition(transition(initial(), event(user())), event(skill()));
+        state = transition(state, { kind: "context", context: { ...target, builderTarget: target } });
+        state = transition(state, event(questions()));
+        state = transition(state, event(completed()));
+        expect(selectCopilotStatus(state, scope)).toBe("waiting");
+        state = transition(state, event(user()));
+        state = transition(state, event(completed()));
+        expect(selectCopilotStatus(state, scope)).toBe("idle");
+        expect(state.requests).toEqual([]);
+        expect(state.interaction.build).toBeUndefined();
     });
 
     it("preserves original intent but transfers ownership when another chat activates editing", () => {
@@ -578,9 +593,120 @@ describe("pure copilot lifecycle", () => {
         state = transition(state, event(completed()));
         expect(selectCopilotStatus(state, target)).toBe("idle");
         expect(selectCopilotStatus(state, scope)).toBe("building");
+        state = transition(state, event(questions("other")));
         state = transition(state, event(completed("other")));
-        expect(selectCopilotStatus(state, { ...target, isEditing: true })).toBe("idle");
+        expect(selectCopilotStatus(state, { ...target, isEditing: true })).toBe("waiting");
         expect(selectCopilotStatus(state, scope)).toBe("waiting");
+        expect(selectCopilotReplyThreadId(state, scope)).toBe("other");
+        expect(state.requests).toEqual([
+            expect.objectContaining({ threadId: "other", intent: "edit", awaitingClarification: true }),
+        ]);
+    });
+
+    describe("a builder edit turn from the chat that filled the builder", () => {
+        const built = () =>
+            transition(
+                applying(
+                    transition(initial(), {
+                        kind: "context",
+                        context: { ...target, isEditing: true, builderTarget: target },
+                    }),
+                ),
+                { kind: "applicationApplied", id: "application", target },
+            );
+        const answer = (threadId = "thread"): ChatAssistantMessageEvent => ({
+            type: "chatAssistantMessage",
+            threadId,
+            useCase: "GENERAL",
+        });
+        const turn = (
+            state: ICopilotSnapshot<Build>,
+            newSkill: boolean,
+            threadId = "thread",
+            local = "local",
+        ) =>
+            transition(
+                transition(state, event(user(threadId, local))),
+                event(newSkill ? skill(threadId) : answer(threadId)),
+            );
+        const questionnaire = (state: ICopilotSnapshot<Build>, threadId = "thread") =>
+            transition(transition(state, event(questions(threadId))), event(completed(threadId)));
+
+        it.each([true, false])(
+            "releases the builder when the answer offers a chart (new skill item: %s)",
+            (newSkill) => {
+                const state = transition(turn(built(), newSkill), event(offeredChart()));
+                expect(selectCopilotStatus(state, scope)).toBe("idle");
+                expect(state.requests).toEqual([]);
+                expect(state.interaction.build).toBeUndefined();
+            },
+        );
+
+        it.each([true, false])(
+            "releases the builder when the answer asks a question in text (new skill item: %s)",
+            (newSkill) => {
+                const state = transition(turn(built(), newSkill), event(completed()));
+                expect(selectCopilotStatus(state, scope)).toBe("idle");
+                expect(state.requests).toEqual([]);
+                expect(state.interaction.build).toBeUndefined();
+            },
+        );
+
+        it.each([true, false])(
+            "keeps the builder waiting while a questionnaire is open (new skill item: %s)",
+            (newSkill) => {
+                const state = questionnaire(turn(built(), newSkill));
+                expect(selectCopilotStatus(state, scope)).toBe("waiting");
+                expect(selectCopilotReplyThreadId(state, scope)).toBe("thread");
+            },
+        );
+
+        it("shows building while the reply to a questionnaire streams", () => {
+            let state = questionnaire(turn(built(), false));
+            state = transition(
+                state,
+                event({
+                    type: "chatUserAnswers",
+                    threadId: "thread",
+                    conversationId: "local",
+                    interactionId: "question",
+                    answers: [],
+                }),
+            );
+            state = transition(state, event(answer()));
+            expect(selectCopilotStatus(state, scope)).toBe("building");
+        });
+
+        it("shows building while a yes to an offered chart streams and places it", () => {
+            let state = transition(turn(built(), true), event(offeredChart()));
+            state = turn(state, false);
+            expect(selectCopilotStatus(state, scope)).toBe("building");
+            state = applying(state, "placement");
+            expect(selectCopilotStatus(state, scope)).toBe("building");
+            state = transition(state, { kind: "applicationApplied", id: "placement", target });
+            state = transition(state, event(completed()));
+            expect(selectCopilotStatus(state, scope)).toBe("idle");
+        });
+
+        it("leaves the builder idle when another chat offered a chart and this chat gets a plain answer", () => {
+            let state = turn(built(), true, "other", "other-local");
+            state = transition(state, event(offeredChart("other")));
+            expect(selectCopilotStatus(state, scope)).toBe("idle");
+            state = transition(turn(state, false), event(completed()));
+            expect(selectCopilotStatus(state, scope)).toBe("idle");
+            expect(state.requests).toEqual([]);
+        });
+
+        it("keeps another chat's open questionnaire when this chat gets a plain answer", () => {
+            let state = questionnaire(turn(built(), true, "other", "other-local"), "other");
+            expect(selectCopilotStatus(state, scope)).toBe("waiting");
+            state = transition(turn(state, false), event(completed()));
+            expect(selectCopilotStatus(state, scope)).toBe("waiting");
+            expect(selectCopilotReplyThreadId(state, scope)).toBe("other");
+            expect(state.requests).toHaveLength(1);
+            expect(state.requests[0]).toMatchObject({ threadId: "other", awaitingClarification: true });
+            expect(state.requests[0].superseded).not.toBe(true);
+        });
     });
 
     it.each([
@@ -1231,5 +1357,88 @@ describe("pure copilot lifecycle", () => {
         expect(state.interaction.pendingClarificationIds).toEqual([]);
         expect(transition(state, event({ type: "chatOpened" }))).toBe(state);
         expect(transition(state, { kind: "context", context: { ...target, isEditing: true } })).toBe(state);
+    });
+
+    describe("a reply to a waiting workflow", () => {
+        const fresh = () =>
+            transition(createCopilotState<Build>(), {
+                kind: "context",
+                context: { type: Build.Board, isEditing: true },
+            });
+        const creating = () =>
+            transition(transition(fresh(), { kind: "startGeneration", type: Build.Board }), event(user()));
+        const inBuilder = () =>
+            transition(
+                applying(
+                    transition(initial(), {
+                        kind: "context",
+                        context: { ...target, isEditing: true, builderTarget: target },
+                    }),
+                ),
+                { kind: "applicationApplied", id: "application", target },
+            );
+        const plainAnswer: ChatAssistantMessageEvent = {
+            type: "chatAssistantMessage",
+            threadId: "thread",
+            useCase: "GENERAL",
+        };
+        const form = (state: ICopilotSnapshot<Build>) =>
+            transition(transition(state, event(questions())), event(completed()));
+        const typed = [event(questions("thread", null)), event(user())];
+        const answered = [
+            event({
+                type: "chatUserAnswers",
+                threadId: "thread",
+                conversationId: "local",
+                interactionId: "question",
+                answers: [],
+            }),
+        ];
+        const creationScope = { type: Build.Board, isEditing: true };
+
+        it.each([
+            [
+                "a creation question before any skill item",
+                () => transition(creating(), event(completed())),
+                [event(user())],
+                creationScope,
+                "generating",
+            ],
+            [
+                "a creation question after a skill item",
+                () => transition(transition(creating(), event(skill())), event(completed())),
+                [event(user())],
+                creationScope,
+                "building",
+            ],
+            [
+                "a creation form answered by typing",
+                () => form(transition(creating(), event(skill()))),
+                typed,
+                creationScope,
+                "building",
+            ],
+            [
+                "a builder form without a skill item, answered by typing",
+                () => form(transition(transition(inBuilder(), event(user())), event(plainAnswer))),
+                typed,
+                scope,
+                "building",
+            ],
+            [
+                "a builder form without a skill item, answered through the form",
+                () => form(transition(transition(inBuilder(), event(user())), event(plainAnswer))),
+                answered,
+                scope,
+                "building",
+            ],
+        ] as const)("keeps the lock for %s", (_, waiting, reply, replyScope, expected) => {
+            let state = waiting();
+            expect(selectCopilotStatus(state, replyScope)).toBe("waiting");
+            for (const input of reply) {
+                state = transition(state, input);
+            }
+            expect(selectCopilotStatus(state, replyScope)).toBe(expected);
+        });
     });
 });

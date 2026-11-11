@@ -1,7 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set } from "lodash-es";
-
 import {
     type IInsightDefinition,
     bucketsIsEmpty,
@@ -11,7 +9,7 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { type IChartConfig, isAreaChart, isLineChart } from "@gooddata/sdk-ui-charts";
-import { _cloneDeep, _isEmpty } from "@gooddata/util";
+import { _cloneDeep, _isEmpty, _set } from "@gooddata/util";
 
 import { AXIS, AXIS_NAME } from "../../../constants/axis.js";
 import { BUCKETS, METRIC } from "../../../constants/bucket.js";
@@ -216,14 +214,14 @@ export class PluggableComboChart extends PluggableBaseChart {
 
         const isDualAxisEnabled = isDualAxisOrSomeSecondaryAxisMeasure(extReferencePoint, secondaryMeasures);
 
-        set(extReferencePoint, PROPERTY_CONTROLS_DUAL_AXIS, isDualAxisEnabled);
+        _set(extReferencePoint, PROPERTY_CONTROLS_DUAL_AXIS, isDualAxisEnabled);
 
         const primaryChartType =
             extReferencePoint?.properties?.controls?.["primaryChartType"] ?? VisualizationTypes.COLUMN;
         const secondaryChartType =
             extReferencePoint?.properties?.controls?.["secondaryChartType"] ?? VisualizationTypes.LINE;
 
-        set(extReferencePoint, BUCKETS, [
+        _set(extReferencePoint, BUCKETS, [
             {
                 localIdentifier: BucketNames.MEASURES,
                 items: setMeasuresShowOnSecondaryAxis(measures, false),

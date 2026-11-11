@@ -4,7 +4,10 @@ import { createSelector } from "reselect";
 
 import { getDialogsState } from "../store/dialogs/dialogs_selectors.js";
 import { getInsightTitle } from "../store/insight/insight_selectors.js";
-import { getInsightUsageOnDashboardsSelector } from "../store/insight_usage/insight_usage_selectors.js";
+import {
+    getInsightUsageInDocumentsSelector,
+    getInsightUsageOnDashboardsSelector,
+} from "../store/insight_usage/insight_usage_selectors.js";
 import { type IAppState } from "../store/types.js";
 
 import { canCreateNewVisualization, canManageProject } from "./permissions_selector.js";
@@ -41,6 +44,7 @@ export const saveReportFromKDDialogSelector = createSelector(
     isReportLockedSelector,
     canManageProject,
     canCreateNewVisualization,
+    getInsightUsageInDocumentsSelector,
 
     (
         insightUsedOnDashboards,
@@ -49,8 +53,10 @@ export const saveReportFromKDDialogSelector = createSelector(
         isReportLocked,
         canManageProject,
         canCreateCopy,
+        insightUsedInDocuments,
     ) => ({
         insightUsedOnDashboards,
+        insightUsedInDocuments,
         openSaveReportFromKD,
         editingReportTitle,
         canCreateCopy,

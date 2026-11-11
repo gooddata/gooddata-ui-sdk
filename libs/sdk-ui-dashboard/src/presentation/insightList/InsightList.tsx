@@ -53,6 +53,7 @@ import { InsightListNoData } from "./InsightListNoData.js";
 import { type IInsightListProps, type InsightListRow } from "./types.js";
 
 const ITEM_HEIGHT = 40;
+const LIST_PADDING = 10;
 const LIST_WIDTH = 229;
 
 interface IInsightListItem {
@@ -227,18 +228,6 @@ export function InsightList({
         prevInsightListLastUpdateRequestedRef.current = insightListLastUpdateRequested;
     }, [insightListLastUpdateRequested, refreshItems]);
 
-    const itemHeightGetter = (index: number) => {
-        // Modify item heights for first/last item so that their hover states don't overlap.
-
-        // Also @see styles and keep this value in sync with what's in css styles
-        // for is-first and is-last in visualization items in the list
-        const firstLastItemMargin = 10;
-
-        const isFirstOrLast = totalInsightsCount ? index === 0 || index === totalInsightsCount - 1 : false;
-
-        return isFirstOrLast ? ITEM_HEIGHT + firstLastItemMargin : ITEM_HEIGHT;
-    };
-
     const eventDispatch = useDashboardEventDispatch();
     const dispatch = useDashboardDispatch();
     const isInsightEditingEnabled = useDashboardSelector(selectEnableInsightEditing);
@@ -283,7 +272,7 @@ export function InsightList({
             selectedTabId={selectedTabId}
             onTabSelect={onTabSelect}
             itemHeight={ITEM_HEIGHT}
-            itemHeightGetter={itemHeightGetter}
+            listPadding={LIST_PADDING}
             items={insights}
             itemsCount={totalItems}
             body={() => {

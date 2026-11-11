@@ -1,9 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { set } from "lodash-es";
-
 import { BucketNames } from "@gooddata/sdk-ui";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { BUCKETS } from "../../constants/bucket.js";
 import { UICONFIG, disabledOpenAsReportConfig } from "../../constants/uiConfig.js";
@@ -21,11 +19,15 @@ export function setFunnelChartUiConfig(referencePoint: IExtendedReferencePoint):
 
     Object.assign(referencePointConfigured[UICONFIG]!, disabledOpenAsReportConfig);
 
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], funnelMeasuresIcon);
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "icon"], funnelViewIcon);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], funnelMeasuresIcon);
+    _set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.VIEW, "icon"], funnelViewIcon);
 
     // always disabled for funnel
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.MEASURES, "isShowInPercentVisible"], false);
+    _set(
+        referencePointConfigured,
+        [UICONFIG, BUCKETS, BucketNames.MEASURES, "isShowInPercentVisible"],
+        false,
+    );
     configurePercent(referencePointConfigured, true);
 
     return referencePointConfigured;

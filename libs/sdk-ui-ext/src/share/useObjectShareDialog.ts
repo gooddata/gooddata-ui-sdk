@@ -2,15 +2,16 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-import { useIntl } from "react-intl";
+import { type MessageDescriptor, useIntl } from "react-intl";
 
 import type { IObjectPermissionsObject } from "@gooddata/sdk-backend-spi";
 import type { GeneralAccessValue } from "@gooddata/sdk-ui-kit";
 
-import { objectShareMessages } from "./messages.js";
+import { objectShareMessages, objectShareRemoveAccessMessages } from "./messages.js";
 import {
     ALL_LEVELS,
     changesEffectiveLevel,
+    granteeDisplayPair,
     levelsAbove,
     levelsBelow,
     removalChangesEffectiveLevel,
@@ -22,17 +23,47 @@ import type {
     IObjectShareGrantee,
     ObjectSharePermissionLevel,
 } from "./objectShareController.types.js";
+import { type RowConfirmKind, removeAccessConfirmKind } from "./removeAccessConfirm.js";
 import type { IObjectAccessSummary, IObjectShareLabel } from "./types.js";
 import { useObjectShareController } from "./useObjectShareController.js";
 
 /**
- * A staged self-restriction: the level (or removal) the signed-in user picked for
- * their own sole grant, held until the "Restrict your access?" confirm.
+ * A row change held until its confirm: a lower level the signed-in user picked for their
+ * own sole grant, or a removal ("none"). The kind is fixed when staged, so the open confirm
+ * can't change.
  */
-interface IPendingSelfChange {
-    granteeId: string;
+interface IPendingRowChange {
+    grantee: IObjectShareGrantee;
     level: ObjectSharePermissionLevel | "none";
+    kind: RowConfirmKind;
 }
+
+const ROW_CONFIRM_COPY = {
+    loseAccess: {
+        title: objectShareMessages.removeAccessTitle,
+        description: objectShareRemoveAccessMessages.loseAccess,
+    },
+    inheritedStays: {
+        title: objectShareMessages.removeAccessTitle,
+        description: objectShareRemoveAccessMessages.inheritedStays,
+    },
+    workspaceStays: {
+        title: objectShareMessages.removeAccessTitle,
+        description: objectShareRemoveAccessMessages.workspaceStays,
+    },
+    selfLoseAccess: {
+        title: objectShareMessages.removeAccessSelfTitle,
+        description: objectShareRemoveAccessMessages.selfLoseAccess,
+    },
+    selfLoseEditAccess: {
+        title: objectShareMessages.removeAccessSelfTitle,
+        description: objectShareRemoveAccessMessages.selfLoseEditAccess,
+    },
+    selfRestrict: {
+        title: objectShareMessages.selfRestrictTitle,
+        description: objectShareMessages.selfRestrictWarning,
+    },
+} satisfies Record<RowConfirmKind, { title: MessageDescriptor; description: MessageDescriptor }>;
 
 /**
  * Level picks an inherited grant already covers, which the controller refuses as
@@ -46,7 +77,7 @@ function inheritedCoveredLevels(grantee: IObjectShareGrantee): ObjectSharePermis
 
 /**
  * The presentational state {@link ObjectShareDialog} renders from. All logic —
- * controller ownership, the self-restriction confirm flow, open/close and the
+ * controller ownership, the row confirm flow, open/close and the
  * mutation gating — lives here; the component maps this to JSX and holds no logic
  * of its own.
  *
@@ -64,8 +95,8 @@ export interface IObjectShareDialogViewModel {
     isAddGranteeOpen: boolean;
     /** Whether the general-access RESTRICTED↔WORKSPACE confirm is visible. */
     isGeneralAccessConfirmOpen: boolean;
-    /** Whether the "Restrict your access?" self-restriction confirm is visible. */
-    isSelfRestrictConfirmOpen: boolean;
+    /** Title and body of the confirm a staged row change waits on, or undefined when none is. */
+    rowConfirm: { title: string; description: string } | undefined;
 
     /**
      * Whether access-changing controls may be used. False until the list has loaded
@@ -110,19 +141,19 @@ export interface IObjectShareDialogViewModel {
     /** Whether this row's controls must stay disabled (see `granteeControlsLocked`). */
     isRowControlsLocked: (grantee: IObjectShareGrantee) => boolean;
 
-    /** Close the whole dialog, handing the draft over and discarding any staged self-restriction. */
+    /** Close the whole dialog, handing the draft over and discarding any staged row change. */
     onClose: () => void;
     /**
      * Handle a grantee row's permission change. The signed-in user's own sole grant is
-     * staged for the self-restriction confirm; every other row commits immediately.
+     * staged for the "Restrict your access?" row confirm; every other row commits immediately.
      */
     onRowPermissionChange: (grantee: IObjectShareGrantee, level: ObjectSharePermissionLevel) => void;
-    /** Handle a grantee row's remove. Same self-restriction routing as {@link onRowPermissionChange}. */
+    /** Handle a grantee row's remove: staged for the row confirm, except in a draft. */
     onRowRemove: (grantee: IObjectShareGrantee) => void;
-    /** Dismiss the self-restriction confirm, leaving the user's own access unchanged. */
-    onSelfRestrictCancel: () => void;
-    /** Apply the staged self-restriction — lower the user's own level, or remove their grant. */
-    onSelfRestrictConfirm: () => void;
+    /** Dismiss the row confirm, leaving the grantee's access unchanged. */
+    onRowConfirmCancel: () => void;
+    /** Apply the staged row change: lower the user's own level, or remove the grantee. */
+    onRowConfirm: () => void;
 }
 
 /**
@@ -155,7 +186,7 @@ interface IUseObjectShareDialogParams {
 
 /**
  * Owns everything {@link ObjectShareDialog} needs to render for one dialog session:
- * the controller, the self-restriction confirm flow, the mutation-gating flags, and
+ * the controller, the row confirm flow, the mutation-gating flags, and
  * the outward summary synchronization. Returns a flat view model the component
  * renders — no JSX and no rendering logic here.
  *
@@ -187,7 +218,7 @@ export function useObjectShareDialog({
         initialDraftGeneralAccess,
     });
 
-    const [pendingSelfChange, setPendingSelfChange] = useState<IPendingSelfChange | undefined>(undefined);
+    const [pendingRowChange, setPendingRowChange] = useState<IPendingRowChange | undefined>(undefined);
 
     // Synchronize the displayed access summary out to the consumer — the legitimate
     // effect kind (notifying an external system of a change). `state.summary` is
@@ -224,7 +255,7 @@ export function useObjectShareDialog({
                 // the controller then refuses — the user would confirm a restriction that
                 // never happens. Same predicate the controller applies.
                 if (changesEffectiveLevel(grantee, level)) {
-                    setPendingSelfChange({ granteeId: grantee.id, level });
+                    setPendingRowChange({ grantee, level, kind: "selfRestrict" });
                 }
                 return;
             }
@@ -233,35 +264,35 @@ export function useObjectShareDialog({
         [state.selfManagedGranteeId, actions],
     );
 
-    const onRowRemove = useCallback(
-        (grantee: IObjectShareGrantee) => {
-            // Stage the confirm only when the removal can lower the level the user
-            // effectively holds — under an inherited floor the revoke removes the local
-            // grant but restricts nothing, so the "Restrict your access?" warning would
-            // promise a restriction that never happens. Same policy as the picks above.
-            if (state.selfManagedGranteeId === grantee.id && removalChangesEffectiveLevel(grantee)) {
-                setPendingSelfChange({ granteeId: grantee.id, level: "none" });
-                return;
-            }
-            void actions.removeGrantee(grantee.id);
-        },
-        [state.selfManagedGranteeId, actions],
-    );
-
-    const onSelfRestrictConfirm = useCallback(() => {
-        if (!pendingSelfChange) {
+    const onRowRemove = (grantee: IObjectShareGrantee) => {
+        // A draft row is only staged, so removing it takes no one's access away.
+        const kind = draft ? undefined : removeAccessConfirmKind(grantee, state);
+        if (kind) {
+            setPendingRowChange({ grantee, level: "none", kind });
             return;
         }
-        const { granteeId, level } = pendingSelfChange;
-        setPendingSelfChange(undefined);
-        if (level === "none") {
-            void actions.removeGrantee(granteeId);
-        } else {
-            void actions.changePermissionLevel(granteeId, level);
-        }
-    }, [pendingSelfChange, actions]);
+        void actions.removeGrantee(grantee.id);
+    };
 
-    const onSelfRestrictCancel = useCallback(() => setPendingSelfChange(undefined), []);
+    const onRowConfirm = () => {
+        if (!pendingRowChange) {
+            return;
+        }
+        const { grantee, level } = pendingRowChange;
+        setPendingRowChange(undefined);
+        if (level === "none") {
+            void actions.removeGrantee(grantee.id);
+        } else {
+            void actions.changePermissionLevel(grantee.id, level);
+        }
+    };
+
+    const rowConfirm = pendingRowChange && {
+        title: intl.formatMessage(ROW_CONFIRM_COPY[pendingRowChange.kind].title),
+        description: intl.formatMessage(ROW_CONFIRM_COPY[pendingRowChange.kind].description, {
+            name: granteeDisplayPair(pendingRowChange.grantee).name,
+        }),
+    };
 
     const inheritedCoveredTooltip = intl.formatMessage(objectShareMessages.granteeLevelInheritedCovered);
 
@@ -372,7 +403,7 @@ export function useObjectShareDialog({
         isShareViewOpen: state.subview === "main",
         isAddGranteeOpen: state.subview === "addGrantee",
         isGeneralAccessConfirmOpen: !!state.pendingGeneralAccess,
-        isSelfRestrictConfirmOpen: pendingSelfChange !== undefined,
+        rowConfirm,
         isMutable,
         isLoading,
         workspaceDisabledLevels: state.workspaceDisabledLevels,
@@ -387,7 +418,7 @@ export function useObjectShareDialog({
         onClose: closeDialog,
         onRowPermissionChange,
         onRowRemove,
-        onSelfRestrictCancel,
-        onSelfRestrictConfirm,
+        onRowConfirmCancel: () => setPendingRowChange(undefined),
+        onRowConfirm,
     };
 }

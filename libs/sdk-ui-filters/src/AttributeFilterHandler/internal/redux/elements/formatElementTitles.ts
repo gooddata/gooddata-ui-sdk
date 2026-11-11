@@ -53,3 +53,26 @@ export function formatElementTitlesMap(
         ? elements
         : Object.fromEntries(formatted);
 }
+
+/**
+ * Gives a list of elements a formatted title according to the number format of their values.
+ *
+ * @remarks
+ * Returns the very same list when nothing gets formatted.
+ *
+ * @internal
+ */
+export function formatElementTitles(
+    elements: IAttributeElement[],
+    numberFormat: string | undefined,
+    separators: ISeparators | undefined,
+): IAttributeElement[] {
+    if (!numberFormat) {
+        return elements;
+    }
+
+    const formatter = createNumberFormatter(separators);
+    const formatted = elements.map((element) => formatElementTitle(element, numberFormat, formatter));
+
+    return formatted.every((element, index) => element === elements[index]) ? elements : formatted;
+}

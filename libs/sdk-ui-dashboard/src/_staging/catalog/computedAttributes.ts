@@ -1,7 +1,5 @@
 // (C) 2026 GoodData Corporation
 
-import { partition } from "lodash-es";
-
 import { type IAnalyticalBackend, isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
 import {
     type ICatalogAttribute,
@@ -11,6 +9,7 @@ import {
     catalogComputedAttributeAsCatalogAttribute,
     isComputedAttributeRef,
 } from "@gooddata/sdk-model";
+import { _partition } from "@gooddata/util";
 
 /**
  * Merges plain and computed catalog attributes into one alphabetical list.
@@ -65,7 +64,7 @@ export function partitionComputedAttributeRefs(refs: ObjRef[]): {
     computedAttributeRefs: ObjRef[];
     otherRefs: ObjRef[];
 } {
-    const [computedAttributeRefs, otherRefs] = partition(refs, isComputedAttributeRef);
+    const [computedAttributeRefs, otherRefs] = _partition(refs, isComputedAttributeRef);
 
     return { computedAttributeRefs, otherRefs };
 }

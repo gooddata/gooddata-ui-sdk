@@ -1,11 +1,11 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { omit } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, select } from "redux-saga/effects";
 
 import { type CancelableOptions } from "@gooddata/sdk-backend-spi";
 import { type ObjRef } from "@gooddata/sdk-model";
+import { _omit } from "@gooddata/util";
 
 import { type ILoadElementsOptions, type ILoadElementsResult } from "../../../types/elementsLoader.js";
 import { type PromiseFnReturnType, getAttributeFilterContext } from "../common/sagas.js";
@@ -80,7 +80,7 @@ export function* elementsSaga(
     return {
         elements: elementsQueryResult.items,
         totalCount: elementsQueryResult.totalCount,
-        options: omit(allOptions, "signal"),
+        options: _omit(allOptions, "signal"),
         cacheId: elementsQueryResult.cacheId,
         ...(elementsQueryResult.numberFormat === undefined
             ? {}

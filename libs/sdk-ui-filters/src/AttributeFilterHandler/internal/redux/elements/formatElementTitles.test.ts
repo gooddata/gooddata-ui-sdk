@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import { type IAttributeElement } from "@gooddata/sdk-model";
 
-import { formatElementTitlesMap } from "./formatElementTitles.js";
+import { formatElementTitles, formatElementTitlesMap } from "./formatElementTitles.js";
 
 const elements: IAttributeElement[] = [
     { title: "1234.5", uri: "1234.5" },
@@ -38,5 +38,24 @@ describe("formatElementTitlesMap", () => {
 
         const nothingToFormat = { Gold: elements[1], "20260101": elements[4] };
         expect(formatElementTitlesMap(nothingToFormat, "#,#.##", undefined)).toBe(nothingToFormat);
+    });
+});
+
+describe("formatElementTitles", () => {
+    it("formats numeric element titles and leaves the others as they are", () => {
+        const formatted = formatElementTitles(elements, "#,##0.0", separators);
+
+        expect(formatted.map((element) => element.formattedTitle)).toEqual([
+            "1 234,5",
+            undefined,
+            undefined,
+            undefined,
+            "Jan 2026",
+        ]);
+        expect(formatted[0].title).toBe("1234.5");
+    });
+
+    it("returns the same list when there is no number format", () => {
+        expect(formatElementTitles(elements, undefined, separators)).toBe(elements);
     });
 });

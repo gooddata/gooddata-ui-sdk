@@ -1,7 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { uniqBy } from "lodash-es";
-
 import {
     type EntitiesApiGetAllEntitiesAttributesRequest,
     type ITigerClientBase,
@@ -22,6 +20,7 @@ import {
     type ICatalogDateDataset,
     type IUnavailableReference,
 } from "@gooddata/sdk-model";
+import { _uniqBy } from "@gooddata/util";
 
 import {
     convertAttribute,
@@ -95,7 +94,7 @@ export function collectRestrictedObjects(pages: JsonApiAttributeOutList[]): Rest
     if (!pages.some((page) => page.meta?.restricted)) {
         return undefined;
     }
-    return uniqBy(
+    return _uniqBy(
         pages.flatMap((page) => page.meta?.restricted ?? []),
         ({ id, type }) => `${type}/${id}`,
     );

@@ -505,9 +505,9 @@ export type {
     ILocalizationMissingObject,
     LocalizationTranslatedSettingType,
     LocalizationTranslationState,
-    ILocalizationTranslationCount,
-    ILocalizationTranslationValueUsage,
-    ILocalizationTranslationUsage,
+    LocalizationIssueType,
+    ILocalizationIssue,
+    ILocalizationIssues,
     IOrganizationLocalizationService,
     IWorkspaceLocalizationService,
 } from "./localization/index.js";

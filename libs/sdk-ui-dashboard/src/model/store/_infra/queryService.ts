@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import {
     type CaseReducer,
     type CaseReducerActions,
@@ -12,10 +13,12 @@ import {
     createSelector,
     createSlice,
 } from "@reduxjs/toolkit";
-import { capitalize, memoize } from "lodash-es";
+import { capitalize } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
+
+import { _memoize } from "@gooddata/util";
 
 import { type DashboardQueryType, type IDashboardQuery } from "../../queries/base.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
@@ -198,7 +201,7 @@ function createQueryCacheSlice<TQuery extends IDashboardQuery, TResult>(
         );
     };
 
-    const selectQueryResult = memoize(
+    const selectQueryResult = _memoize(
         (query: TQuery) => {
             const id = selectId(query);
 

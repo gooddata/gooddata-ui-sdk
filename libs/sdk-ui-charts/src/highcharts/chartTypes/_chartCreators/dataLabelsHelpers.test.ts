@@ -2,10 +2,10 @@
 
 // @vitest-environment node
 
-import { set } from "lodash-es";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";
+import { _set } from "@gooddata/util";
 
 import { whiteDataLabelTypes } from "../../constants/label.js";
 import { type StackingType } from "../../constants/stacking.js";
@@ -211,14 +211,14 @@ describe("dataLabelsHelpers", () => {
 
         it("should show data label in second axis", () => {
             point.y = 15;
-            point = set(point, "series.yAxis.options.opposite", true);
+            point = _set(point, "series.yAxis.options.opposite", true);
             showDataLabelInAxisRange(point, point.y, axisRangeForAxes, true);
             expect(point.dataLabel.hide).not.toHaveBeenCalled();
         });
 
         it("should hide data label in second axis", () => {
             point.y = 30;
-            point = set(point, "series.yAxis.options.opposite", true);
+            point = _set(point, "series.yAxis.options.opposite", true);
             showDataLabelInAxisRange(point, point.y, axisRangeForAxes, true);
             expect(point.dataLabel.hide).toHaveBeenCalled();
         });
@@ -286,14 +286,14 @@ describe("dataLabelsHelpers", () => {
         it("should show data label in second axis", () => {
             point.y = 15;
             point.stackY = 15;
-            point = set(point, "series.yAxis.options.opposite", true);
+            point = _set(point, "series.yAxis.options.opposite", true);
             showStackLabelInAxisRange(point, axisRangeForAxes, true);
             expect(point.dataLabel.hide).not.toHaveBeenCalled();
         });
 
         it("should hide data label in second axis outside range", () => {
             point.y = 30;
-            point = set(point, "series.yAxis.options.opposite", true);
+            point = _set(point, "series.yAxis.options.opposite", true);
             showStackLabelInAxisRange(point, axisRangeForAxes, true);
             expect(point.dataLabel.hide).toHaveBeenCalled();
         });

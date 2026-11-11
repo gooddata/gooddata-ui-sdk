@@ -2149,6 +2149,20 @@ export interface ILocalizationDefault {
 }
 
 // @alpha
+export interface ILocalizationIssue {
+    locale: string;
+    // (undocumented)
+    type: LocalizationIssueType;
+    workspaces?: number;
+}
+
+// @alpha
+export interface ILocalizationIssues {
+    // (undocumented)
+    issues: ILocalizationIssue[];
+}
+
+// @alpha
 export interface ILocalizationMissingObject {
     id: string;
     missing: ILocalizationMissingText[];
@@ -2231,14 +2245,6 @@ export interface ILocalizationTranslatedLocale {
 }
 
 // @alpha
-export interface ILocalizationTranslationCount {
-    // (undocumented)
-    users: number;
-    // (undocumented)
-    workspaces: number;
-}
-
-// @alpha
 export interface ILocalizationTranslationCoverage {
     // (undocumented)
     locales: Array<ILocalizationTranslatedLocale & {
@@ -2246,19 +2252,6 @@ export interface ILocalizationTranslationCoverage {
     }>;
     // (undocumented)
     total: number;
-}
-
-// @alpha
-export interface ILocalizationTranslationUsage {
-    values: ILocalizationTranslationValueUsage[];
-}
-
-// @alpha
-export interface ILocalizationTranslationValueUsage {
-    // (undocumented)
-    bySetting: Partial<Record<LocalizationSettingType, Partial<Record<LocalizationTranslationState, ILocalizationTranslationCount>>>>;
-    // (undocumented)
-    content: ILocalizationValueContent;
 }
 
 // @alpha
@@ -2658,9 +2651,8 @@ export interface IOrganizationLlmProvidersService {
 
 // @alpha
 export interface IOrganizationLocalizationService {
+    getIssues(): Promise<ILocalizationIssues>;
     getStatistics(): Promise<ILocalizationStatistics>;
-    getStatisticsWorkspaces(query?: ILocalizationPageQuery): Promise<ILocalizationStatisticsWorkspacesPage>;
-    getTranslationUsage(): Promise<ILocalizationTranslationUsage>;
     getUsage(): Promise<ILocalizationUsage>;
     getUsageUsers(query?: ILocalizationUsageListQuery): Promise<ILocalizationUsageUsersPage>;
     getUsageWorkspaces(query?: ILocalizationUsageListQuery): Promise<ILocalizationUsageWorkspacesPage>;
@@ -3655,10 +3647,10 @@ export interface IWorkspaceKeyDriverAnalysisService {
 
 // @alpha
 export interface IWorkspaceLocalizationService {
+    getIssues(): Promise<ILocalizationIssues>;
     getMissingTranslations(locale: string): Promise<ILocalizationMissingObject[]>;
     getStatistics(): Promise<ILocalizationStatistics>;
     getStatisticsWorkspaces(query?: ILocalizationPageQuery): Promise<ILocalizationStatisticsWorkspacesPage>;
-    getTranslationUsage(): Promise<ILocalizationTranslationUsage>;
     getUsage(): Promise<ILocalizationUsage>;
     getUsageUsers(query?: ILocalizationUsageListQuery): Promise<ILocalizationUsageUsersPage>;
     getUsageWorkspaces(query?: ILocalizationUsageListQuery): Promise<ILocalizationUsageWorkspacesPage>;
@@ -3938,6 +3930,9 @@ export function layoutWidgetsWithPaths<TWidget extends IDashboardWidget>(layout:
 export class LimitReached extends AnalyticalBackendError {
     constructor(message: string, cause?: Error);
 }
+
+// @alpha
+export type LocalizationIssueType = "METADATA_MISSING_TRANSLATION" | "METADATA_LANGUAGE_MISMATCH" | "METADATA_UNUSED_TRANSLATION";
 
 // @alpha
 export type LocalizationSettingType = "LOCALE" | "METADATA_LOCALE" | "DATA_LOCALE";

@@ -1,6 +1,5 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { partition } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {
@@ -17,6 +16,7 @@ import {
     isDashboardDateFilter,
     isDashboardDateFilterReference,
 } from "@gooddata/sdk-model";
+import { _partition } from "@gooddata/util";
 
 import { type ObjRefMap } from "../../_staging/metadata/objRefMap.js";
 import { type IBrokenAlertFilterBasicInfo } from "../types/alertTypes.js";
@@ -48,7 +48,7 @@ export function getBrokenAlertFiltersBasicInfo(
     }
 
     const result: IBrokenAlertFilterBasicInfo[] = [];
-    const [alertDateFilters, alertNonDateFilters] = partition(alertFilters, isDashboardDateFilter);
+    const [alertDateFilters, alertNonDateFilters] = _partition(alertFilters, isDashboardDateFilter);
     const alertAttributeFilters = alertNonDateFilters.filter(isDashboardAttributeFilter);
 
     // attribute filters

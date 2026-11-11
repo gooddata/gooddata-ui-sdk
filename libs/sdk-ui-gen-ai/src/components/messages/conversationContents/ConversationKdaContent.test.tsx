@@ -7,7 +7,7 @@ import { IntlProvider } from "react-intl";
 import { Provider } from "react-redux";
 import { describe, expect, it, vi } from "vitest";
 
-import type { IChatKdaDefinition, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import type { IChatKdaDefinition } from "@gooddata/sdk-backend-spi";
 import { newAttribute, newMeasure } from "@gooddata/sdk-model";
 
 import {
@@ -43,11 +43,7 @@ const messages = {
     "gd.gen-ai.changeAnalysis.explain_the_change": "Explain the change",
 };
 
-function renderComponent(
-    isKeyDriverAnalysisMounted: boolean,
-    enableKeyDriverAnalysis?: boolean,
-    enableChangeAnalysis = true,
-) {
+function renderComponent(isKeyDriverAnalysisMounted: boolean, enableKeyDriverAnalysis?: boolean) {
     const store = configureStore({
         reducer: {
             [chatWindowSliceName]: chatWindowSliceReducer,
@@ -57,7 +53,6 @@ function renderComponent(
             [chatWindowSliceName]: {
                 ...getInitialChatWindowState(),
                 isKeyDriverAnalysisMounted,
-                settings: { enableChangeAnalysis } as IUserWorkspaceSettings,
             },
         },
     });
@@ -78,12 +73,6 @@ describe("ConversationKdaContent", () => {
         expect(screen.queryByText("Explain the change")).not.toBeInTheDocument();
     });
 
-    it("should render when Key Driver Analysis is mounted", () => {
-        renderComponent(true);
-
-        expect(screen.getByText("Explain the change")).toBeInTheDocument();
-    });
-
     it("should not render when enableKeyDriverAnalysis is false", () => {
         renderComponent(true, false);
 
@@ -91,7 +80,7 @@ describe("ConversationKdaContent", () => {
     });
 
     it("should render when enableKeyDriverAnalysis is true and the workspace setting is disabled", () => {
-        renderComponent(true, true, false);
+        renderComponent(true, true);
 
         expect(screen.getByText("Explain the change")).toBeInTheDocument();
     });

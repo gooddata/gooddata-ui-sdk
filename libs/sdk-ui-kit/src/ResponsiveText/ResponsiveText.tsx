@@ -2,7 +2,7 @@
 
 import { type ReactNode, useCallback, useLayoutEffect, useRef, useState } from "react";
 
-import { debounce } from "lodash-es";
+import { _debounce } from "@gooddata/util";
 
 /**
  * @internal
@@ -71,7 +71,7 @@ export function ResponsiveText({
     }, [includeHeightCheck]);
 
     useLayoutEffect(() => {
-        const handleWindowResize = debounce(() => {
+        const handleWindowResize = _debounce(() => {
             // reset font size so that we can read the default fontSize in adjustFontSize later
             setFontSize(null);
         }, windowResizeRefreshDelay);

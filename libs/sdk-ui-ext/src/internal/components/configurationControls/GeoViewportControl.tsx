@@ -2,7 +2,6 @@
 
 import { type ReactElement, type ReactNode, useCallback, useMemo } from "react";
 
-import { set } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { type IPushData } from "@gooddata/sdk-ui";
@@ -14,7 +13,7 @@ import {
 } from "@gooddata/sdk-ui-geo";
 import { PRESET_VIEWPORT_BOUNDS, isConcreteViewportPreset } from "@gooddata/sdk-ui-geo/internal";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _set } from "@gooddata/util";
 
 import { messages } from "../../../locales.js";
 import { pushpinViewportDropdownItems } from "../../constants/dropdowns.js";
@@ -100,9 +99,9 @@ export function GeoViewportControl(props: IGeoViewportControl): ReactElement {
 
                 if (presetBounds) {
                     // Switching from a preset to "custom": use preset bounds, clear center/zoom
-                    set(nextProperties, "controls.bounds", presetBounds);
-                    set(nextProperties, "controls.center", undefined);
-                    set(nextProperties, "controls.zoom", undefined);
+                    _set(nextProperties, "controls.bounds", presetBounds);
+                    _set(nextProperties, "controls.center", undefined);
+                    _set(nextProperties, "controls.zoom", undefined);
 
                     pushData?.({
                         ...data,
@@ -115,19 +114,19 @@ export function GeoViewportControl(props: IGeoViewportControl): ReactElement {
                     // Switching to "custom" with no preset: use current map bounds if available,
                     // otherwise fall back to center/zoom
                     if (currentMapView.bounds) {
-                        set(nextProperties, "controls.bounds", currentMapView.bounds);
-                        set(nextProperties, "controls.center", undefined);
-                        set(nextProperties, "controls.zoom", undefined);
+                        _set(nextProperties, "controls.bounds", currentMapView.bounds);
+                        _set(nextProperties, "controls.center", undefined);
+                        _set(nextProperties, "controls.zoom", undefined);
                     } else {
-                        set(nextProperties, "controls.center", currentMapView.center);
-                        set(nextProperties, "controls.zoom", currentMapView.zoom);
-                        set(nextProperties, "controls.bounds", undefined);
+                        _set(nextProperties, "controls.center", currentMapView.center);
+                        _set(nextProperties, "controls.zoom", currentMapView.zoom);
+                        _set(nextProperties, "controls.bounds", undefined);
                     }
                 }
             } else {
-                set(nextProperties, "controls.center", undefined);
-                set(nextProperties, "controls.zoom", undefined);
-                set(nextProperties, "controls.bounds", undefined);
+                _set(nextProperties, "controls.center", undefined);
+                _set(nextProperties, "controls.zoom", undefined);
+                _set(nextProperties, "controls.bounds", undefined);
             }
 
             pushData?.({

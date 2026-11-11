@@ -2,7 +2,7 @@
 
 import * as path from "path";
 
-import { groupBy } from "lodash-es";
+import { _groupBy } from "@gooddata/util";
 
 import { createUniqueVariableName } from "../base/variableNaming.js";
 import { type ExecutionRecording } from "../recordings/execution.js";
@@ -46,7 +46,7 @@ function generateScenariosConst(recordings: ExecutionRecording[]): string {
         rec.scenarios.map<VisScenarioRecording>((s, idx) => [s.vis, s.scenario, rec, idx]),
     );
 
-    const entriesByVis = Object.entries(groupBy(recsWithVisAndScenario, ([visName]) => visName));
+    const entriesByVis = Object.entries(_groupBy(recsWithVisAndScenario, ([visName]) => visName));
 
     const visEntries = entriesByVis.map(([vis, visScenarios]) => {
         const visConstName = `scenarios_${createUniqueVariableName(vis, {})}`;

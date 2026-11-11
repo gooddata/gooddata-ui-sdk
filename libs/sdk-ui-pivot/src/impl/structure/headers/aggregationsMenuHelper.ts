@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { intersection, sortBy, uniq } from "lodash-es";
+import { intersection, sortBy } from "lodash-es";
 
 import {
     type IAttributeDescriptor,
@@ -8,7 +8,7 @@ import {
     type TotalType,
     attributeDescriptorLocalId,
 } from "@gooddata/sdk-model";
-import { _isEqual } from "@gooddata/util";
+import { _isEqual, _uniq } from "@gooddata/util";
 
 import { AVAILABLE_TOTALS } from "../../base/constants.js";
 import { type IMenuAggregationClickConfig } from "../../privateTypes.js";
@@ -31,7 +31,7 @@ function getAttributeIntersection(totals: ITotal[], type: TotalType, measureLoca
 
 function getUniqueMeasures(totals: ITotal[], type: TotalType) {
     const totalsOfType = totals.filter((total) => total.type === type);
-    return uniq(totalsOfType.map((total) => total.measureIdentifier));
+    return _uniq(totalsOfType.map((total) => total.measureIdentifier));
 }
 
 function areMeasuresSame(measureLocalIdentifiers1: string[], measureLocalIdentifiers2: string[]) {

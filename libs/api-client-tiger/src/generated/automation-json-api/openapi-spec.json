@@ -4125,7 +4125,8 @@
                 "properties": {
                     "from": {
                         "type": "integer",
-                        "format": "int32"
+                        "format": "int32",
+                        "nullable": true
                     },
                     "granularity": {
                         "type": "string",
@@ -4181,7 +4182,8 @@
                     },
                     "to": {
                         "type": "integer",
-                        "format": "int32"
+                        "format": "int32",
+                        "nullable": true
                     }
                 }
             },

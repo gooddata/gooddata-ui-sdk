@@ -1,0 +1,50 @@
+// (C) 2026 GoodData Corporation
+
+/*!
+ * Portions of this file are derived from Lodash.
+ * https://github.com/lodash/lodash
+ *
+ * Copyright OpenJS Foundation and other contributors <https://openjsf.org/>
+ *
+ * Based on Underscore.js, copyright Jeremy Ashkenas,
+ * DocumentCloud and Investigative Reporters & Editors <http://underscorejs.org/>
+ *
+ * Modifications Copyright (c) 2026 GoodData Corporation
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+import { _toFinite } from "./toFinite.js";
+
+/**
+ * Converts `value` to an integer, truncating towards zero after the lodash numeric coercion of `_toFinite`:
+ * `NaN` and unconvertible values become `0` and infinities become the largest finite integer of their
+ * sign.
+ *
+ * @param value - The value to convert.
+ * @returns Returns the converted integer.
+ * @internal
+ */
+export function _toInteger(value: unknown): number {
+    const result = _toFinite(value);
+    const remainder = result % 1;
+
+    return remainder ? result - remainder : result;
+}

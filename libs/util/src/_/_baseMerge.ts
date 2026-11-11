@@ -42,6 +42,7 @@ import { _isObjectLike } from "./isObjectLike.js";
 import { _isPlainObject } from "./isPlainObject.js";
 import { _isTypedArray } from "./isTypedArray.js";
 import { _keysIn } from "./keysIn.js";
+import type { _MergeWithCustomizer } from "./types.js";
 
 type _AnyRecord = Record<PropertyKey, unknown>;
 
@@ -49,15 +50,23 @@ type _AnyRecord = Record<PropertyKey, unknown>;
 type _Stack = Map<unknown, unknown>;
 
 /**
- * The base implementation of `_merge` for a single source: merges the own and inherited enumerable string
- * keyed properties of `source` into `object`.
+ * The base implementation of `_merge` and `_mergeWith` for a single source: merges the own and inherited
+ * enumerable string keyed properties of `source` into `object`. When a `customizer` is given it is invoked
+ * per property with (objValue, srcValue, key, object, source, stack), and a result other than `undefined`
+ * is used as the merged value instead of the default merge.
  *
  * @param object - The destination object.
  * @param source - The source object.
  * @param stack - Tracks traversed source values and their merged counterparts.
+ * @param customizer - The function to customize assigned values.
  * @internal
  */
-export function _baseMerge(object: _AnyRecord, source: _AnyRecord, stack: _Stack): void {
+export function _baseMerge(
+    object: _AnyRecord,
+    source: _AnyRecord,
+    stack: _Stack,
+    customizer?: _MergeWithCustomizer,
+): void {
     if (object === source) {
         return;
     }
@@ -66,24 +75,43 @@ export function _baseMerge(object: _AnyRecord, source: _AnyRecord, stack: _Stack
         const srcValue = source[key];
 
         if (_isObject(srcValue)) {
-            _mergeDeep(object, source, key, stack);
-        } else {
-            _assignMergeValue(object, key, srcValue);
+            _mergeDeep(object, source, key, stack, customizer);
+
+            continue;
         }
+
+        const customized = customizer?.(_safeGet(object, key), srcValue, key, object, source, stack);
+
+        _assignMergeValue(object, key, customized === undefined ? srcValue : customized);
     }
 }
 
 /**
- * Merges the object value at `key`: arrays and plain objects are merged recursively into the destination
- * value, typed arrays are copied, and any other object is assigned by reference.
+ * Merges the object value at `key`: a `customizer` result other than `undefined` is assigned as is; otherwise
+ * arrays and plain objects are merged recursively into the destination value, typed arrays are copied, and
+ * any other object is assigned by reference.
  */
-function _mergeDeep(object: _AnyRecord, source: _AnyRecord, key: string, stack: _Stack): void {
+function _mergeDeep(
+    object: _AnyRecord,
+    source: _AnyRecord,
+    key: string,
+    stack: _Stack,
+    customizer: _MergeWithCustomizer | undefined,
+): void {
     const objValue = _safeGet(object, key);
     const srcValue = _safeGet(source, key);
     const stacked = stack.get(srcValue);
 
     if (stacked) {
         _assignMergeValue(object, key, stacked);
+
+        return;
+    }
+
+    const customized = customizer?.(objValue, srcValue, key, object, source, stack);
+
+    if (customized !== undefined) {
+        _assignMergeValue(object, key, customized);
 
         return;
     }
@@ -120,7 +148,7 @@ function _mergeDeep(object: _AnyRecord, source: _AnyRecord, key: string, stack: 
 
     if (isCommon) {
         stack.set(srcValue, newValue);
-        _baseMerge(newValue as _AnyRecord, srcValue as _AnyRecord, stack);
+        _baseMerge(newValue as _AnyRecord, srcValue as _AnyRecord, stack, customizer);
         stack.delete(srcValue);
     }
 

@@ -40,6 +40,7 @@ import { _initCloneObject } from "./_initCloneObject.js";
 import { _isIndex } from "./_isIndex.js";
 import { _isObject } from "./isObject.js";
 import { _isTypedArray } from "./isTypedArray.js";
+import type { _CloneDeepWithCustomizer } from "./types.js";
 
 /** `Object#toString` result references. */
 const ARGS_TAG = "[object Arguments]";
@@ -48,7 +49,6 @@ const BOOL_TAG = "[object Boolean]";
 const DATA_VIEW_TAG = "[object DataView]";
 const DATE_TAG = "[object Date]";
 const FUNC_TAG = "[object Function]";
-const GEN_TAG = "[object GeneratorFunction]";
 const MAP_TAG = "[object Map]";
 const NUMBER_TAG = "[object Number]";
 const OBJECT_TAG = "[object Object]";
@@ -77,43 +77,85 @@ const RE_FLAGS = /\w*$/;
 /** Tracks each traversed object and its clone, so cycles and shared references are reproduced. */
 type _Stack = Map<object, unknown>;
 
+/** The key and container of a nested value, handed to the customizer. */
+type _Parent = { key: unknown; object: object };
+
 type _Constructor = new (...args: unknown[]) => unknown;
 type _Cloneable = { constructor: _Constructor };
 type _AnyRecord = Record<PropertyKey, unknown>;
 
 /**
- * The base implementation of `_cloneDeep` which tracks traversed objects.
+ * The base implementation of `_clone`, `_cloneDeep` and `_cloneDeepWith` which tracks traversed objects. A
+ * shallow clone copies array elements and own enumerable keys by reference and shares the buffer of typed
+ * arrays and data views; `Map` and `Set` entries are still shallow-cloned one level, as in lodash. A
+ * `customizer` is invoked for every value before it is cloned, with the value alone at the top level and
+ * with (value, key, object, stack) below; a result other than `undefined` is used as is.
  *
  * @param value - The value to clone.
+ * @param deep - Whether to recursively clone nested values.
+ * @param customizer - The function to customize cloning.
  * @param stack - Tracks traversed objects and their clone counterparts.
- * @param nested - Whether `value` sits inside another value being cloned; uncloneable nested values are
- *  kept by reference while an uncloneable top-level value becomes an empty object.
+ * @param parent - The key and container of `value` when it sits inside another value being cloned;
+ *  uncloneable nested values are kept by reference while an uncloneable top-level value becomes an empty
+ *  object.
  * @returns Returns the cloned value.
  * @internal
  */
-export function _baseClone(value: unknown, stack: _Stack = new Map(), nested = false): unknown {
+export function _baseClone(
+    value: unknown,
+    deep: boolean,
+    customizer?: _CloneDeepWithCustomizer<unknown>,
+    stack: _Stack = new Map(),
+    parent?: _Parent,
+): unknown {
+    if (customizer) {
+        // symbol keys are passed as they are, although the lodash typing only names string and number keys;
+        // the top-level call passes the value alone, which the lodash typing does not express
+        const customized = parent
+            ? customizer(value, parent.key as number | string, parent.object, stack)
+            : (customizer as (value: unknown) => unknown)(value);
+
+        if (customized !== undefined) {
+            return customized;
+        }
+    }
+
     if (!_isObject(value)) {
         return value;
     }
 
+    const nested = parent !== undefined;
+
     const isArr = Array.isArray(value);
+    const source = value as _AnyRecord;
     let result: _AnyRecord;
 
     if (isArr) {
         result = _initCloneArray(value);
+
+        if (!deep) {
+            // holes become explicit `undefined` entries, extra properties are not copied
+            for (let index = 0; index < value.length; index++) {
+                result[index] = source[index];
+            }
+
+            return result;
+        }
     } else {
         const tag = _baseGetTag(value);
 
-        if (tag === OBJECT_TAG || tag === ARGS_TAG) {
-            result = _initCloneObject(value);
-        } else if (tag === FUNC_TAG || tag === GEN_TAG) {
-            if (nested) {
-                return value;
-            }
+        if (tag === OBJECT_TAG || tag === ARGS_TAG || (tag === FUNC_TAG && !nested)) {
+            result = tag === FUNC_TAG ? {} : _initCloneObject(value);
 
-            result = {};
+            if (!deep) {
+                for (const key of _getAllKeys(value)) {
+                    _assignValue(result, key, source[key]);
+                }
+
+                return result;
+            }
         } else if (_isTypedArray(value) || CLONEABLE_TAGS.has(tag)) {
-            result = _initCloneByTag(value, tag);
+            result = _initCloneByTag(value, tag, deep);
         } else {
             return nested ? value : {};
         }
@@ -131,27 +173,33 @@ export function _baseClone(value: unknown, stack: _Stack = new Map(), nested = f
         const target = result as unknown as Set<unknown>;
 
         value.forEach((subValue) => {
-            target.add(_baseClone(subValue, stack, true));
+            target.add(_baseClone(subValue, deep, customizer, stack, { key: subValue, object: value }));
         });
     } else if (value instanceof Map) {
         const target = result as unknown as Map<unknown, unknown>;
 
         // keys are kept by reference, only values are cloned
         value.forEach((subValue, key) => {
-            target.set(key, _baseClone(subValue, stack, true));
+            target.set(key, _baseClone(subValue, deep, customizer, stack, { key, object: value }));
         });
     }
-
-    const source = value as _AnyRecord;
 
     if (isArr) {
         // holes are visited too and become explicit `undefined` entries in the clone
         for (let index = 0; index < value.length; index++) {
-            _assignValue(result, index, _baseClone(source[index], stack, true));
+            const cloned = _baseClone(source[index], deep, customizer, stack, {
+                key: index,
+                object: value,
+            });
+
+            _assignValue(result, index, cloned);
         }
     } else {
-        for (const key of _ownKeys(value)) {
-            _assignValue(result, key, _baseClone(source[key], stack, true));
+        // with a customizer the index keys of a typed array are visited too, so elements can be customized
+        for (const key of customizer ? _getAllKeys(value) : _ownKeys(value)) {
+            const cloned = _baseClone(source[key], deep, customizer, stack, { key, object: value });
+
+            _assignValue(result, key, cloned);
         }
     }
 
@@ -193,9 +241,10 @@ function _initCloneArray(array: unknown[]): _AnyRecord {
 
 /**
  * Initializes a clone of a value by its `toStringTag`. Collections come back empty and are filled by
- * the caller; everything else is complete on return.
+ * the caller; everything else is complete on return. A shallow clone of a typed array or data view shares
+ * the buffer of the original, an array buffer is always copied.
  */
-function _initCloneByTag(object: object, tag: string): _AnyRecord {
+function _initCloneByTag(object: object, tag: string, deep: boolean): _AnyRecord {
     const Ctor = (object as _Cloneable).constructor;
 
     switch (tag) {
@@ -209,7 +258,9 @@ function _initCloneByTag(object: object, tag: string): _AnyRecord {
         case DATA_VIEW_TAG: {
             const view = object as DataView;
 
-            return new Ctor(_cloneArrayBuffer(view.buffer), view.byteOffset, view.byteLength) as _AnyRecord;
+            const buffer = deep ? _cloneArrayBuffer(view.buffer) : view.buffer;
+
+            return new Ctor(buffer, view.byteOffset, view.byteLength) as _AnyRecord;
         }
 
         case MAP_TAG:
@@ -233,5 +284,5 @@ function _initCloneByTag(object: object, tag: string): _AnyRecord {
             return Object((object as unknown as symbol).valueOf()) as _AnyRecord;
     }
 
-    return _cloneTypedArray(object as ArrayBufferView & ArrayLike<unknown>) as unknown as _AnyRecord;
+    return _cloneTypedArray(object as ArrayBufferView & ArrayLike<unknown>, deep) as unknown as _AnyRecord;
 }
