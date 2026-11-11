@@ -161,6 +161,16 @@ export function convertPublisherDocumentV2(
     };
 }
 
+export function convertPublisherDocumentSummaryV2(
+    entity: JsonApiPublisherDocumentOut | JsonApiPublisherDocumentOutWithLinks,
+    included: JsonApiPublisherDocumentOutIncludes[] = [],
+): IPublisherDocumentSummaryV2 {
+    return {
+        ...entityMetadata(entity, included),
+        version: entity.attributes.version,
+    };
+}
+
 export function convertPublisherDocumentListItemV2(
     entity: JsonApiPublisherDocumentOut | JsonApiPublisherDocumentOutWithLinks,
     included: JsonApiPublisherDocumentOutIncludes[] = [],
@@ -169,11 +179,11 @@ export function convertPublisherDocumentListItemV2(
     if (result.valid) {
         return { supported: true, document: result.value };
     }
-    const summary: IPublisherDocumentSummaryV2 = {
-        ...entityMetadata(entity, included),
-        version: entity.attributes.version,
+    return {
+        supported: false,
+        summary: convertPublisherDocumentSummaryV2(entity, included),
+        error: notSupported(entity, result.issues),
     };
-    return { supported: false, summary, error: notSupported(entity, result.issues) };
 }
 
 export function convertPublisherDocumentTemplateV2(

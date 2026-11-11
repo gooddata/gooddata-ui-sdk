@@ -2,6 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
+import type { IPublisherDocumentSummaryV2 } from "@gooddata/sdk-backend-spi";
 import {
     type IAttributeMetadataObject,
     type IComputedAttributeMetadataObject,
@@ -16,6 +17,8 @@ import {
 import {
     convertAttributeToCatalogItem,
     convertComputedAttributeToCatalogItem,
+    convertDocumentToCatalogItem,
+    convertEntityToCatalogItem,
     convertInsightToCatalogItem,
     convertMeasureToCatalogItem,
     convertParameterToCatalogItem,
@@ -149,6 +152,70 @@ describe("convertParameterToCatalogItem", () => {
         expect(catalogItem.updatedBy).toBe("John Smith");
         expect(catalogItem.isEditable).toBe(true);
         expect(catalogItem.definition).toEqual(parameter.definition);
+    });
+});
+
+describe("convertDocumentToCatalogItem", () => {
+    const document: IPublisherDocumentSummaryV2 = {
+        ref: idRef("doc.id", "document"),
+        title: "Monthly report",
+        description: "Sales by month",
+        tags: ["sales"],
+        version: "2",
+        isLocked: true,
+        created: "2024-01-01 10:00",
+        updated: "2024-01-03 11:00",
+        createdBy: {
+            ref: { identifier: "user1" },
+            login: "user1",
+            firstName: "Jane",
+            lastName: "Doe",
+        },
+        updatedBy: {
+            ref: { identifier: "user2" },
+            login: "user2",
+            fullName: "John Smith",
+        },
+    };
+
+    it("should convert document metadata as a read-only item", () => {
+        const catalogItem = convertDocumentToCatalogItem(document);
+
+        expect(catalogItem).toEqual({
+            identifier: "doc.id",
+            type: "document",
+            title: "Monthly report",
+            description: "Sales by month",
+            tags: ["sales"],
+            createdBy: "Jane Doe",
+            createdAt: expect.any(Date),
+            updatedBy: "John Smith",
+            updatedAt: expect.any(Date),
+            isLocked: true,
+            isEditable: false,
+        });
+    });
+
+    it("should default missing description, tags and dates", () => {
+        const catalogItem = convertDocumentToCatalogItem({
+            ref: idRef("doc.id", "document"),
+            title: "Untitled",
+            version: "2",
+        });
+
+        expect(catalogItem).toMatchObject({
+            description: "",
+            tags: [],
+            createdBy: "",
+            createdAt: null,
+            updatedBy: "",
+            updatedAt: null,
+            isLocked: false,
+        });
+    });
+
+    it("should be picked by the generic entity converter", () => {
+        expect(convertEntityToCatalogItem(document).type).toBe("document");
     });
 });
 

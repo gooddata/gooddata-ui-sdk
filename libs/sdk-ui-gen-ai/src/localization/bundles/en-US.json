@@ -119,6 +119,10 @@
         "text": "Visualization could not be displayed.",
         "crowdinContext": "Message shown in place of a chart when the requested visualization is not available to display"
     },
+    "gd.gen-ai.visualization.unsupported": {
+        "text": "This chart type isn't supported in chat previews.",
+        "crowdinContext": "Message shown in place of a chat chart preview when the backend identifies its chart type as unsupported in chat. Does not imply that a dashboard was changed or saved."
+    },
     "gd.gen-ai.permission-error": {
         "text": "Insufficient permissions",
         "crowdinContext": "Error message when user does not have sufficient permissions to access the chatbot"

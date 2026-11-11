@@ -39,6 +39,10 @@
         "text": "Attribute: {count}",
         "crowdinContext": "ARIA label for the Attribute object type"
     },
+    "analyticsCatalog.objectType.document.button.ariaLabel": {
+        "text": "Document: {count}",
+        "crowdinContext": "ARIA label for the Document object type filter button, showing the number of matching Reports documents. Example: 'Document: 4'."
+    },
     "analyticsCatalog.objectType.dateDataset.button.ariaLabel": {
         "text": "Date dataset: {count}",
         "crowdinContext": "ARIA label for the Date dataset object type filter button, showing the number of matching date datasets. Example: 'Date dataset: 6'."
@@ -70,6 +74,10 @@
     "analyticsCatalog.objectType.parameter.name": {
         "text": "Parameter",
         "crowdinContext": "Canonical display name for the Parameter object type, used in tooltips, menus, and labels."
+    },
+    "analyticsCatalog.objectType.document.name": {
+        "text": "Document",
+        "crowdinContext": "Canonical display name for the Document object type (a document created in the Reports app), used in tooltips, menus, and labels."
     },
     "analyticsCatalog.objectType.computedAttribute.name": {
         "text": "Computed attribute",

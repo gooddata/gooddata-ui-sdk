@@ -75,6 +75,8 @@ const lodashEsBans: Record<string, string> = {
     partition: "_partition from @gooddata/util",
     memoize: "_memoize from @gooddata/util",
     uniq: "_uniq from @gooddata/util",
+    merge: "_merge from @gooddata/util",
+    sortBy: "_sortBy from @gooddata/util",
 };
 
 const lodashEsPatterns = Object.entries(lodashEsBans).map(([importNames, alternative]) => ({

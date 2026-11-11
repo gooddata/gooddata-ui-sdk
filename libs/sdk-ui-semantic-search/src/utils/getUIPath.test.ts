@@ -47,4 +47,10 @@ describe("getUIPath", () => {
             "/workspace/workspace-id/modeler",
         );
     });
+
+    it("returns the Reports path for documents", () => {
+        expect(getUIPath("document", "doc id", "workspace-id")).toBe(
+            "/workspace/workspace-id/reports/document/doc%20id",
+        );
+    });
 });

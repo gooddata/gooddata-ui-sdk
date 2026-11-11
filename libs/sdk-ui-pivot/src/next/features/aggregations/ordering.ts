@@ -1,8 +1,7 @@
-// (C) 2025 GoodData Corporation
-
-import { sortBy } from "lodash-es";
+// (C) 2025-2026 GoodData Corporation
 
 import { type ITotal } from "@gooddata/sdk-model";
+import { _sortBy } from "@gooddata/util";
 
 import { DEFAULT_TOTAL_FUNCTIONS } from "../../constants/internal.js";
 
@@ -21,7 +20,7 @@ import { DEFAULT_TOTAL_FUNCTIONS } from "../../constants/internal.js";
  * @internal
  */
 export function orderTotals(totals: ITotal[]): ITotal[] {
-    return sortBy(totals, (total) =>
+    return _sortBy(totals, (total) =>
         DEFAULT_TOTAL_FUNCTIONS.findIndex((rankedItem) => rankedItem === total.type),
     );
 }

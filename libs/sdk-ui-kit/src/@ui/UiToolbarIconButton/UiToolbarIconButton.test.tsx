@@ -48,4 +48,17 @@ describe("UiToolbarIconButton", () => {
         rerender(<UiToolbarIconButton icon="plus" label="Add" hideTooltip />);
         expect(screen.getByRole("button", { name: "Add" }).closest(".gd-ui-kit-tooltip__anchor")).toBeNull();
     });
+
+    it.each([
+        ["its label", undefined, "Add"],
+        ["the tooltip it is given", "Nothing to add yet", "Nothing to add yet"],
+    ])("shows %s as the tooltip on hover", async (_, tooltip, expected) => {
+        const { user } = render(<UiToolbarIconButton icon="plus" label="Add" tooltip={tooltip} />);
+        const button = screen.getByRole("button", { name: "Add" });
+
+        await user.hover(button);
+
+        expect(await screen.findByText(expected)).toBeInTheDocument();
+        expect(button).toHaveAccessibleName("Add");
+    });
 });

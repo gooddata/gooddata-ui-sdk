@@ -71,11 +71,9 @@ Crowdin.
 Which form to **write** depends on how the bundle is consumed. A loader that
 calls `removeMetadata` unwraps the object into a plain message map, so the
 object form is required there — that is every bundle registered in
-`crowdin.yml`. `libs/gdc-datasource-management` is the exception: its
-`src/with-intl.tsx` passes the imported JSON straight to `IntlProvider` as
-`messages`, with no `removeMetadata`, so its entries must be bare strings or
-React Intl cannot read them. Match the bundle you are editing; do not
-introduce the bare-string form into a bundle whose loader unwraps metadata.
+`crowdin.yml`. A bundle whose JSON reached `IntlProvider` unmodified would need
+bare strings, but no such bundle remains. Do not introduce the bare-string form
+into a bundle whose loader unwraps metadata.
 
 ### Property `crowdinContext`
 

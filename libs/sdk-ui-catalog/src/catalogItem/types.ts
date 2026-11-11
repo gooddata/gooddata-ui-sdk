@@ -65,7 +65,8 @@ export type ICatalogItem =
     | ICatalogItemComputedAttribute
     | ICatalogItemAttribute
     | ICatalogItemFact
-    | ICatalogItemDataSet;
+    | ICatalogItemDataSet
+    | ICatalogItemDocument;
 
 /**
  * Catalog item for analytical dashboards.
@@ -186,6 +187,14 @@ export interface ICatalogItemDataSet extends ICatalogItemBase {
 }
 
 /**
+ * Catalog item for Reports documents. Read-only in the catalog.
+ * @public
+ */
+export interface ICatalogItemDocument extends ICatalogItemBase {
+    type: "document";
+}
+
+/**
  * Catalog items that support the `isHidden` flag.
  * @internal
  */
@@ -229,6 +238,8 @@ export interface ICatalogItemQueryOptions {
     loadPermissions?: boolean;
     /** Ask for each visualization's object-level permissions, kept on ICatalogItemInsight.permissions. */
     loadVisualizationPermissions?: boolean;
+    /** The quality filter: objects with these issue ids, or with `isInverted` objects without them. */
+    qualityIds?: { values: string[]; isInverted: boolean };
 }
 
 export interface ICatalogItemSemanticSearchOptions {

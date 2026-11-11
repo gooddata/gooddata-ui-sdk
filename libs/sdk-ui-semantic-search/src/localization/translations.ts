@@ -1,13 +1,11 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { merge } from "lodash-es";
-
 import {
     DEFAULT_MESSAGES as DEFAULT_MESSAGES_SDK_UI,
     type ITranslations,
     resolveMessages as resolveMessagesSdkUi,
 } from "@gooddata/sdk-ui";
-import { _memoize, removeMetadata } from "@gooddata/util";
+import { _memoize, _merge, removeMetadata } from "@gooddata/util";
 
 import { en_US } from "./bundles/en-US.localization-bundle.js";
 
@@ -61,7 +59,7 @@ const resolveMessagesInternal = async (locale: string): Promise<ITranslations> =
         resolveMessagesSdkUi(locale),
     ]);
     // sdk-ui already falls back to English for its own keys.
-    return merge({}, DEFAULT_OWN_MESSAGES, sdkUiTranslations, semanticSearchTranslations);
+    return _merge({}, DEFAULT_OWN_MESSAGES, sdkUiTranslations, semanticSearchTranslations);
 };
 
 /**

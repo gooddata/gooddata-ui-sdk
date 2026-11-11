@@ -9,11 +9,10 @@ import {
     render as testingLibraryRender,
 } from "@testing-library/react";
 import { type UserEvent, userEvent } from "@testing-library/user-event";
-import { merge } from "lodash-es";
 import { Provider } from "react-redux";
 
 import { dummyBackend } from "@gooddata/sdk-backend-base";
-import { _cloneDeep, _omit } from "@gooddata/util";
+import { _cloneDeep, _merge, _omit } from "@gooddata/util";
 
 import { type DashboardState, ReactDashboardContext } from "../../../index.js";
 import { createDashboardRootReducer, createDashboardStore } from "../../../model/store/dashboardStore.js";
@@ -36,7 +35,7 @@ interface ISetupOptions extends RenderOptions {
 export function render(jsx: ReactNode, options: ISetupOptions = {}): RenderResult & { user: UserEvent } {
     const { state = {} } = options;
 
-    const preloadedState = merge(
+    const preloadedState = _merge(
         _cloneDeep(configureStore({ reducer: createDashboardRootReducer() }).getState()),
         /**
          * Setting empty config and permissions is needed here because otherwise an invariant violation error

@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { merge } from "lodash-es";
+import { _merge } from "@gooddata/util";
 
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type HighchartsOptions } from "../../lib/index.js";
@@ -9,7 +9,7 @@ import { highlightChartPoints } from "../_chartHighlighting/highlightPoints.js";
 import { getPieConfiguration } from "../pieChart/pieConfiguration.js";
 
 export function getDonutConfiguration(config: IChartConfig): HighchartsOptions {
-    return merge({}, getPieConfiguration(config), {
+    return _merge({}, getPieConfiguration(config), {
         chart: {
             events: {
                 load(this: Highcharts.Chart) {

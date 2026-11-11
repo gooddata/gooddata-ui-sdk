@@ -3,10 +3,10 @@
 import { useState } from "react";
 
 import * as jsYaml from "js-yaml";
-import { merge } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { Button, Hyperlink, type IAlignPoint, Overlay } from "@gooddata/sdk-ui-kit";
+import { _merge } from "@gooddata/util";
 
 import { messages } from "../../../../locales.js";
 
@@ -40,7 +40,7 @@ export function ConfigEditor({ value, onSubmit, onCancel }: IConfigEditorProps) 
         }
         try {
             const currentYamlValueAsJson = jsYaml.load(currentYamlValue);
-            const mergedJson = merge(currentYamlValueAsJson, snippet.value);
+            const mergedJson = _merge(currentYamlValueAsJson, snippet.value);
             setCurrentYamlValue(jsYaml.dump(mergedJson));
         } catch (e) {
             console.error("Merging of snippet with current value failed. Current value has a lint error.", e);

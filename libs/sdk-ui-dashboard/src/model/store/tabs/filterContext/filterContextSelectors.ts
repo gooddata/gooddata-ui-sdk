@@ -1,7 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
-import { keyBy, sortBy } from "lodash-es";
+import { keyBy } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import { type IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
@@ -33,7 +33,7 @@ import {
     isObjRef,
     uriRef,
 } from "@gooddata/sdk-model";
-import { _compact, _isEmpty, _isEqual } from "@gooddata/util";
+import { _compact, _isEmpty, _isEqual, _sortBy } from "@gooddata/util";
 
 import { type ObjRefMap, newDisplayFormMap } from "../../../../_staging/metadata/objRefMap.js";
 import { createMemoizedSelector } from "../../_infra/selectors.js";
@@ -306,8 +306,8 @@ export const selectIsWorkingFilterContextChanged: DashboardSelector<boolean | un
                     return (
                         _isEqual(partialAppliedFilter, partialWorkingFilter) &&
                         _isEqual(
-                            sortBy(getAttributeElementsItems(appliedElements)),
-                            sortBy(getAttributeElementsItems(workingElements)),
+                            _sortBy(getAttributeElementsItems(appliedElements)),
+                            _sortBy(getAttributeElementsItems(workingElements)),
                         )
                     );
                 }

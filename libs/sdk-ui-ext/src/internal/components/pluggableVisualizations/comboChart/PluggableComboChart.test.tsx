@@ -1,11 +1,10 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { merge } from "lodash-es";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { OverTimeComparisonTypes, VisualizationTypes } from "@gooddata/sdk-ui";
-import { _cloneDeep } from "@gooddata/util";
+import { _cloneDeep, _merge } from "@gooddata/util";
 
 import { AXIS } from "../../../constants/axis.js";
 import { COMBO_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
@@ -501,7 +500,7 @@ describe("PluggableComboChart", () => {
         });
 
         it("should return chart type in bucket", async () => {
-            const refPointMock = merge({}, multipleMetricBucketsAndCategoryReferencePoint, {
+            const refPointMock = _merge({}, multipleMetricBucketsAndCategoryReferencePoint, {
                 buckets: [
                     {
                         chartType: VisualizationTypes.LINE,
@@ -525,7 +524,7 @@ describe("PluggableComboChart", () => {
         });
 
         it("should return chart type in properties.controls", async () => {
-            const refPointMock = merge({}, multipleMetricBucketsAndCategoryReferencePoint, {
+            const refPointMock = _merge({}, multipleMetricBucketsAndCategoryReferencePoint, {
                 properties: {
                     controls: {
                         primaryChartType: VisualizationTypes.LINE,
@@ -548,7 +547,7 @@ describe("PluggableComboChart", () => {
         ];
 
         it("should keep line styles only for measures shown as line or area series", async () => {
-            const refPointMock = merge({}, multipleMetricBucketsAndCategoryReferencePoint, {
+            const refPointMock = _merge({}, multipleMetricBucketsAndCategoryReferencePoint, {
                 properties: { controls: { lineStyleMapping } },
             });
             const extRefPoint: IExtendedReferencePoint = await getExtendedReferencePoint(refPointMock);
@@ -559,7 +558,7 @@ describe("PluggableComboChart", () => {
         });
 
         it("should drop all line styles when every series is a column", async () => {
-            const refPointMock = merge({}, multipleMetricBucketsAndCategoryReferencePoint, {
+            const refPointMock = _merge({}, multipleMetricBucketsAndCategoryReferencePoint, {
                 properties: {
                     controls: {
                         primaryChartType: VisualizationTypes.COLUMN,

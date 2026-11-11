@@ -46,6 +46,12 @@ function createWrapper(flags: Record<string, boolean>) {
 }
 
 const smartSearchOn = createWrapper({ enableCatalogSmartSearchResults: true });
+const smartSearchWithDocuments = createWrapper({
+    enableCatalogSmartSearchResults: true,
+    enableBusinessBriefingReportsApp: true,
+    enablePublisherV2: true,
+    enableCatalogDocuments: true,
+});
 const smartSearchOff = createWrapper({ enableCatalogSmartSearchResults: false });
 
 const neverSettles = () => new Promise<never>(() => {});
@@ -166,6 +172,114 @@ describe("useCatalogItemSemanticSearch", () => {
         expect(stub.semanticSearchBuilder.withQuestion).toHaveBeenCalledWith(SEARCH);
         // "insight" maps to "visualization" in the genAI types.
         expect(stub.semanticSearchBuilder.withObjectTypes).toHaveBeenCalledWith(["visualization"]);
+    });
+
+    it("should not search documents when no type is selected and documents are not enabled", () => {
+        const stub = createCatalogBackendStub();
+        stub.setSemanticSearchResponse(neverSettles);
+
+        renderSemanticSearch(
+            {
+                queryOptions: makeQueryOptions(stub),
+                items: NO_ITEMS,
+                status: "success",
+                types: [],
+                search: SEARCH,
+            },
+            smartSearchOn,
+        );
+
+        expect(stub.semanticSearchBuilder.withObjectTypes).toHaveBeenCalledWith(
+            expect.not.arrayContaining(["document"]),
+        );
+    });
+
+    it("should search documents too when no type is selected and documents are enabled", () => {
+        const stub = createCatalogBackendStub();
+        stub.setSemanticSearchResponse(neverSettles);
+
+        renderSemanticSearch(
+            {
+                queryOptions: makeQueryOptions(stub),
+                items: NO_ITEMS,
+                status: "success",
+                types: [],
+                search: SEARCH,
+            },
+            smartSearchWithDocuments,
+        );
+
+        expect(stub.semanticSearchBuilder.withObjectTypes).toHaveBeenCalledWith(
+            expect.arrayContaining(["dashboard", "document"]),
+        );
+    });
+
+    it("should not search documents when the document type is selected but documents are not enabled", () => {
+        const stub = createCatalogBackendStub();
+        stub.setSemanticSearchResponse(neverSettles);
+
+        renderSemanticSearch(
+            {
+                queryOptions: makeQueryOptions(stub),
+                items: NO_ITEMS,
+                status: "success",
+                types: [ObjectTypes.DOCUMENT, ObjectTypes.VISUALIZATION],
+                search: SEARCH,
+            },
+            smartSearchOn,
+        );
+
+        expect(stub.semanticSearchBuilder.withObjectTypes).toHaveBeenCalledWith(["visualization"]);
+    });
+
+    it("should resolve document results to document catalog items", async () => {
+        const stub = createCatalogBackendStub();
+        stub.setSemanticSearchResponse(() =>
+            Promise.resolve({ results: [{ id: "doc1" }], relationships: [] }),
+        );
+        stub.setPages(ObjectTypes.DOCUMENT, pageOf(ObjectTypes.DOCUMENT, ["doc1"]));
+
+        const { result } = renderSemanticSearch(
+            {
+                queryOptions: makeQueryOptions(stub),
+                items: NO_ITEMS,
+                status: "success",
+                types: [ObjectTypes.DOCUMENT],
+                search: SEARCH,
+            },
+            smartSearchWithDocuments,
+        );
+
+        await waitFor(() => {
+            expect(result.current.relatedItemsStatus).toBe("success");
+        });
+
+        expect(stub.semanticSearchBuilder.withObjectTypes).toHaveBeenCalledWith(["document"]);
+        // the default test user may not create documents, so only their own native ones come back
+        expect(stub.builders[ObjectTypes.DOCUMENT].withOrigin).toHaveBeenCalledWith("NATIVE");
+        expect(stub.builders[ObjectTypes.DOCUMENT].withFilter).toHaveBeenCalledWith(
+            expect.objectContaining({ id: ["doc1"], search: undefined, createdBy: ["test"] }),
+        );
+        expect(result.current.relatedItems).toEqual([
+            expect.objectContaining({ identifier: "doc1", type: ObjectTypes.DOCUMENT }),
+        ]);
+    });
+
+    it("should not search under the quality filter for objects with issues", () => {
+        const stub = createCatalogBackendStub();
+
+        renderSemanticSearch(
+            {
+                queryOptions: makeQueryOptions(stub, { qualityIds: { values: ["q1"], isInverted: false } }),
+                items: NO_ITEMS,
+                status: "success",
+                types: VISUALIZATION_TYPES,
+                search: SEARCH,
+            },
+            smartSearchOn,
+        );
+
+        expect(stub.semanticSearchQuery).not.toHaveBeenCalled();
     });
 
     it("should query endpoints with IDs from semantic search results", async () => {

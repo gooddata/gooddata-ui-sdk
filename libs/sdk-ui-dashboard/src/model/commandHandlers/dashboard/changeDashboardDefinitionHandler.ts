@@ -28,7 +28,7 @@ import {
     selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
     selectSettings,
 } from "../../store/config/configSelectors.js";
-import { selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
+import { selectDashboardDescriptor, selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
 import { selectPreloadedAttributesWithReferences } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectActiveTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 import { DEFAULT_TAB_ID } from "../../store/tabs/tabsState.js";
@@ -86,7 +86,23 @@ export function* changeDashboardDefinitionHandler(
     ctx: DashboardContext,
     cmd: IChangeDashboardDefinition,
 ): SagaIterator<IDashboardDefinitionChanged> {
-    const { dashboard, references: providedReferences, insights: payloadInsights } = cmd.payload;
+    const { references: providedReferences, insights: payloadInsights } = cmd.payload;
+
+    const persistedDashboard: ReturnType<typeof selectPersistedDashboard> =
+        yield select(selectPersistedDashboard);
+    const currentDescriptor: ReturnType<typeof selectDashboardDescriptor> =
+        yield select(selectDashboardDescriptor);
+
+    // For new feature persistent filters across tabs - a definition that does not state the
+    // setting must not drop the new-dashboard default. The persisted slice cannot tell an unsaved
+    // dashboard apart: a previous definition change fills it, only ctx.dashboardRef marks a saved one.
+    const dashboard =
+        !ctx.dashboardRef && cmd.payload.dashboard.enablePersistentFiltersAcrossTabs === undefined
+            ? {
+                  ...cmd.payload.dashboard,
+                  enablePersistentFiltersAcrossTabs: currentDescriptor.enablePersistentFiltersAcrossTabs,
+              }
+            : cmd.payload.dashboard;
 
     const effectiveReferences: Partial<IDashboardReferences> =
         providedReferences ?? (payloadInsights ? { insights: [...payloadInsights] } : {});
@@ -94,8 +110,6 @@ export function* changeDashboardDefinitionHandler(
     const providedInsights = effectiveReferences.insights ?? [];
 
     const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
-    const persistedDashboard: ReturnType<typeof selectPersistedDashboard> =
-        yield select(selectPersistedDashboard);
 
     const unavailableReferences: SagaReturnType<typeof loadUnavailableReferences> = yield call(
         loadUnavailableReferences,

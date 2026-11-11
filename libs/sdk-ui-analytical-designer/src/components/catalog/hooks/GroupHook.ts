@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { omitBy, sortBy } from "lodash-es";
+import { omitBy } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import {
@@ -24,7 +24,7 @@ import {
     isCatalogMeasure,
     objRefToString,
 } from "@gooddata/sdk-model";
-import { _isEmpty } from "@gooddata/util";
+import { _isEmpty, _sortBy } from "@gooddata/util";
 
 import { type GeoLabelType } from "../../../constants/geo.js";
 import { type IOrganizedCatalogGroup, type IOrganizedCatalogItem } from "../../../typings/catalog.js";
@@ -323,7 +323,7 @@ const createItemGroupsBase = (
                         identifier: UNGROUPED,
                     },
                 },
-                sortBy(items, (item) => {
+                _sortBy(items, (item) => {
                     return createOrganizedCatalogItemData(item).title.toUpperCase();
                 }),
                 availableItems,

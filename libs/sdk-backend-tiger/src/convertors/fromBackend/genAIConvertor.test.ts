@@ -425,6 +425,54 @@ describe("genAIConvertor", () => {
         });
     });
 
+    describe.each(["history", "live"])("%s visualization part without a body", (source) => {
+        it.each([
+            ["keeps a named unsupported type", { visualization: null, unsupportedChartType: "combo_chart" }],
+            ["keeps the type when the body is omitted", { unsupportedChartType: "treemap_chart" }],
+            ["leaves an omitted type undefined", { visualization: null }],
+            ["keeps a null type", { visualization: null, unsupportedChartType: null }],
+            ["keeps an empty type", { visualization: null, unsupportedChartType: "" }],
+            ["keeps a type it does not know", { visualization: null, unsupportedChartType: "future_chart" }],
+        ] as const)("%s", (_description, rawPart) => {
+            const history: (IChatConversationItem | IChatConversationError)[] = [];
+            const item = {
+                conversationId: "conv-1",
+                itemIndex: 0,
+                itemId: "item-1",
+                role: "assistant",
+                createdAt: "2024-01-01T00:00:00Z",
+                content: {
+                    type: "multipart",
+                    parts: [
+                        { type: "text", text: "Before" },
+                        { type: "visualization", ...rawPart },
+                        { type: "text", text: "After" },
+                    ],
+                },
+            } as unknown as AiConversationItemResponse;
+
+            const converted =
+                source === "history"
+                    ? convertChatConversationItemsFromBackend([item], [], dateNormalizer)
+                    : [convertChatConversationItemFromBackend(item, undefined, history, dateNormalizer)];
+
+            expect(converted).toHaveLength(1);
+            assert(converted[0]?.type === "item");
+            const parts = (converted[0].content as IChatConversationMultipartContent).parts;
+            expect(parts).toEqual([
+                { type: "text", text: "Before" },
+                {
+                    type: "visualization",
+                    visualization: null,
+                    unsupportedChartType:
+                        "unsupportedChartType" in rawPart ? rawPart.unsupportedChartType : undefined,
+                },
+                { type: "text", text: "After" },
+            ]);
+            expect(history).toEqual([]);
+        });
+    });
+
     describe("compose answer detail", () => {
         it.each(["dashboard", "report"] as const)("keeps %s as the output the turn produced", (output) => {
             expect(

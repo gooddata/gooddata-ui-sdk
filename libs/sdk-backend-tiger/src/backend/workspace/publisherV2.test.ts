@@ -153,6 +153,10 @@ const methodCases: Record<keyof IWorkspacePublisherServiceV2, IMethodCase> = {
         endpoints: ["EntitiesApi_GetAllEntitiesDocuments"],
         call: (service) => service.getDocuments(),
     },
+    getDocumentsQuery: {
+        endpoints: ["EntitiesApi_GetAllEntitiesDocuments"],
+        call: (service) => service.getDocumentsQuery().query(),
+    },
     getDocument: {
         endpoints: ["EntitiesApi_GetEntityDocuments"],
         call: (service) => service.getDocument(documentRef),
@@ -348,6 +352,96 @@ describe("TigerWorkspacePublisherServiceV2 requests", () => {
         }
         expect(item.document.createdBy?.login).toBe("alice");
         expect(item.document.isLocked).toBe(true);
+    });
+});
+
+describe("TigerWorkspacePublisherServiceV2 documents query", () => {
+    it("asks for one filtered page with the users and the origin", async () => {
+        endpoint("EntitiesApi_GetAllEntitiesDocuments").mockResolvedValue({
+            data: { data: [], meta: { page: { totalElements: 0 } } },
+        });
+
+        await newService()
+            .getDocumentsQuery()
+            .withSize(20)
+            .withPage(1)
+            .withOrigin("NATIVE")
+            .withSorting(["title,asc"])
+            .withFilter({ id: ["doc1"], tags: ["finance"] })
+            .query();
+
+        expect(endpoint("EntitiesApi_GetAllEntitiesDocuments")).toHaveBeenCalledWith(
+            expect.anything(),
+            expect.anything(),
+            {
+                workspaceId: "ws1",
+                origin: "NATIVE",
+                filter: 'id=in=("doc1");tags=in=("finance")',
+                include: ["createdBy", "modifiedBy"],
+                metaInclude: ["origin", "page"],
+                sort: ["title,asc"],
+                page: 1,
+                size: 20,
+            },
+        );
+    });
+
+    it("lists the summary of every document, readable or not, with the total count", async () => {
+        endpoint("EntitiesApi_GetAllEntitiesDocuments").mockResolvedValue({
+            data: {
+                data: [
+                    {
+                        ...documentOutV2("doc1", { tags: ["finance"], description: "Monthly" }),
+                        meta: parentOriginMetaV2,
+                        relationships: auditRelationshipsV2,
+                    },
+                    documentOutV2("doc2", { version: "999" }),
+                ],
+                included: auditUsersV2,
+                meta: { page: { totalElements: 2 } },
+            },
+        });
+
+        const page = await newService().getDocumentsQuery().query();
+
+        expect(page.totalCount).toBe(2);
+        expect(page.items.map((item) => item.ref)).toEqual([
+            idRef("doc1", "document"),
+            idRef("doc2", "document"),
+        ]);
+        expect(page.items[0]).toMatchObject({
+            description: "Monthly",
+            tags: ["finance"],
+            isLocked: true,
+            createdBy: { login: "alice" },
+            updatedBy: { login: "bob" },
+        });
+        expect(page.items[0]).not.toHaveProperty("content");
+    });
+
+    it.each<[string, { isHidden?: boolean; certification?: boolean }]>([
+        ["hidden", { isHidden: true }],
+        ["certified", { certification: true }],
+    ])("returns no %s documents without asking the backend", async (_, filter) => {
+        const page = await newService().getDocumentsQuery().withFilter(filter).query();
+
+        expect(page.items).toEqual([]);
+        expect(page.totalCount).toBe(0);
+        expect(endpoint("EntitiesApi_GetAllEntitiesDocuments")).not.toHaveBeenCalled();
+    });
+
+    it("drops the visibility and certification filters that keep every document", async () => {
+        endpoint("EntitiesApi_GetAllEntitiesDocuments").mockResolvedValue({
+            data: { data: [], meta: { page: { totalElements: 0 } } },
+        });
+
+        await newService().getDocumentsQuery().withFilter({ isHidden: false, certification: false }).query();
+
+        expect(endpoint("EntitiesApi_GetAllEntitiesDocuments")).toHaveBeenCalledWith(
+            expect.anything(),
+            expect.anything(),
+            expect.objectContaining({ filter: undefined }),
+        );
     });
 });
 

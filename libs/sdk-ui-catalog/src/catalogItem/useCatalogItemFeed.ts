@@ -4,6 +4,7 @@ import { useCallback, useMemo } from "react";
 
 import { areObjRefsEqual } from "@gooddata/sdk-model";
 
+import { useDocumentOwner } from "../document/scope.js";
 import { useFilterState, useQualityFilter } from "../filter/FilterContext.js";
 import { ObjectTypes } from "../objectType/constants.js";
 import { type ObjectType } from "../objectType/types.js";
@@ -31,7 +32,8 @@ export function useCatalogItemFeed(feedOptions: ICatalogItemFeedOptions) {
         isHidden,
         certification,
     });
-    const endpoints = useCatalogEndpoints(types, queryOptions, flags);
+    const documentOwner = useDocumentOwner();
+    const endpoints = useCatalogEndpoints(types, queryOptions, flags, documentOwner);
 
     const paginator = useEndpointPaginator(endpoints, convertEntityToCatalogItem);
     const {
@@ -106,6 +108,7 @@ function getTotalCountByType(endpoints: FeedEndpoint[], totalCounts: number[]) {
         [ObjectTypes.DATASET]: 0,
         [ObjectTypes.PARAMETER]: 0,
         [ObjectTypes.COMPUTED_ATTRIBUTE]: 0,
+        [ObjectTypes.DOCUMENT]: 0,
     };
 
     endpoints.forEach((endpoint, idx) => {

@@ -21,6 +21,7 @@ import {
     selectDashboardDescription,
     selectDashboardDescriptor,
     selectDashboardTitle,
+    selectEnablePersistentFiltersAcrossTabs,
     selectPersistedDashboard,
 } from "../../store/meta/metaSelectors.js";
 import { selectEffectiveDateFilterConfig } from "../../store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
@@ -462,6 +463,59 @@ describe("change dashboard definition handler", () => {
 
             const newState = Tester.state();
             expect(selectUnavailableObjects(newState)).toEqual(references.unavailable);
+        });
+    });
+
+    describe("for a new dashboard", () => {
+        let Tester: DashboardTester;
+
+        beforeEach(async () => {
+            await preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
+                },
+                undefined,
+                {
+                    backendConfig: {
+                        useRefType: "id",
+                        globalSettings: { enableDashboardPersistentFiltersAcrossTabs: true },
+                    },
+                },
+            );
+        });
+
+        it("should keep persistent filters across tabs enabled when the definition does not set it", async () => {
+            await Tester.dispatchAndWaitFor(
+                changeDashboardDefinition(UpdatedDashboardDefinition),
+                "GDC.DASH/EVT.DEFINITION_CHANGED",
+            );
+
+            expect(selectEnablePersistentFiltersAcrossTabs(Tester.state())).toBe(true);
+        });
+
+        it("should keep persistent filters across tabs enabled across repeated definition changes before saving", async () => {
+            await Tester.dispatchAndWaitFor(
+                changeDashboardDefinition(UpdatedDashboardDefinition),
+                "GDC.DASH/EVT.DEFINITION_CHANGED",
+            );
+            await Tester.dispatchAndWaitFor(
+                changeDashboardDefinition({ ...UpdatedDashboardDefinition, title: "Refined" }),
+                "GDC.DASH/EVT.DEFINITION_CHANGED",
+            );
+
+            expect(selectEnablePersistentFiltersAcrossTabs(Tester.state())).toBe(true);
+        });
+
+        it("should apply persistent filters across tabs from the definition when it is set", async () => {
+            await Tester.dispatchAndWaitFor(
+                changeDashboardDefinition({
+                    ...UpdatedDashboardDefinition,
+                    enablePersistentFiltersAcrossTabs: false,
+                }),
+                "GDC.DASH/EVT.DEFINITION_CHANGED",
+            );
+
+            expect(selectEnablePersistentFiltersAcrossTabs(Tester.state())).toBe(false);
         });
     });
 });

@@ -1,6 +1,5 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { sortBy } from "lodash-es";
 import { action } from "storybook/actions";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -30,7 +29,7 @@ import "@gooddata/sdk-ui-charts/styles/css/main.css";
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
-import { _groupBy } from "@gooddata/util";
+import { _groupBy, _sortBy } from "@gooddata/util";
 
 import { StorybookBackend } from "../../_infra/backend.js";
 import { ConfigurationPanelWrapper } from "../../_infra/ConfigurationPanelWrapper.js";
@@ -200,7 +199,7 @@ export function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
     };
 }
 
-const ScenarioGroupsByVis = sortBy(
+const ScenarioGroupsByVis = _sortBy(
     Object.values(_groupBy<ScenarioGroup<any>>(allScenarios, (g) => g.vis)),
     (groups) => groups[0].vis,
 );
@@ -212,7 +211,7 @@ export function getScenariosGroupByIndexes(
 ): IScenario<any> {
     const groups = ScenarioGroupsByVis[groupsIndex];
 
-    const sortedGroups = sortBy(groups, (g) => g.groupNames.join("/"));
+    const sortedGroups = _sortBy(groups, (g) => g.groupNames.join("/"));
 
     const group = sortedGroups[groupIndex];
 

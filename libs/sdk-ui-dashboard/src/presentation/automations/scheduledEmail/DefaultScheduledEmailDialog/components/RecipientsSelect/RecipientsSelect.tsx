@@ -2,14 +2,13 @@
 
 import { type KeyboardEvent, useMemo } from "react";
 
-import { sortBy } from "lodash-es";
-
 import {
     type IAutomationRecipient,
     type INotificationChannelIdentifier,
     type INotificationChannelMetadataObject,
 } from "@gooddata/sdk-model";
 import { DETAILED_ANNOUNCEMENT_THRESHOLD, UiSearchResultsAnnouncement } from "@gooddata/sdk-ui-kit";
+import { _sortBy } from "@gooddata/util";
 
 import { useWorkspaceUsersSearch } from "../../../../shared/hooks/useWorkspaceUsersSearch.js";
 import { convertUserToAutomationRecipient } from "../../../../shared/utils/automationUtils.js";
@@ -121,7 +120,7 @@ export function RecipientsSelect({
             ? loggedUser && matchRecipient(loggedUser, search)
                 ? [loggedUser]
                 : []
-            : sortBy((users ?? []).map(convertUserToAutomationRecipient), "email");
+            : _sortBy((users ?? []).map(convertUserToAutomationRecipient), "email");
 
         // If there is no user found and the search is an email, add it as an external recipient
         if (search && mappedUsers.length === 0 && isEmail(search) && allowExternalRecipients) {

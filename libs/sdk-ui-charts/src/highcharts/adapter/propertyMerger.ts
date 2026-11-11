@@ -1,6 +1,6 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
-import { merge } from "lodash-es";
+import { _merge } from "@gooddata/util";
 
 import { type HighchartsOptions } from "../lib/index.js";
 
@@ -11,5 +11,5 @@ export const mergePropertiesWithOverride = (
     if (override === undefined) {
         return base;
     }
-    return merge(base, override);
+    return _merge(base, override);
 };

@@ -52,6 +52,11 @@ function buildItem(
 }
 
 describe("canEditCatalogItem", () => {
+    it("returns false for a document even for a workspace manager", () => {
+        const item = buildItem({ type: "document", isEditable: false });
+        expect(canEditCatalogItem(buildPermissions({ canManageProject: true }), item)).toBe(false);
+    });
+
     it("returns false when workspace permissions are missing", () => {
         const item = buildItem();
         expect(canEditCatalogItem(undefined, item)).toBe(false);
@@ -176,6 +181,13 @@ describe("canEditCatalogItem", () => {
 });
 
 describe("canShareCatalogItem", () => {
+    it("returns false for a document", () => {
+        const item = buildItem({ type: "document", isEditable: false });
+        expect(canShareCatalogItem(buildPermissions({ canManageProject: true }), item, bothFlags)).toBe(
+            false,
+        );
+    });
+
     it("returns false when workspace permissions or the item are missing", () => {
         expect(canShareCatalogItem(undefined, buildItem({ type: "measure" }), metricFlag)).toBe(false);
         expect(canShareCatalogItem(buildPermissions(), undefined, metricFlag)).toBe(false);

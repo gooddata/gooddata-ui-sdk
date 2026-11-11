@@ -1434,6 +1434,11 @@ export function isChatConversationToolResultContent(
 export type IChatConversationVisualisationContent = {
     type: "visualization";
     visualization: IInsight | null;
+    /**
+     * Chart type the backend found but cannot preview in chat. Set only when visualization is null for that
+     * reason; absent or null when the chart is missing for any other reason.
+     */
+    unsupportedChartType?: string | null;
 };
 
 /**

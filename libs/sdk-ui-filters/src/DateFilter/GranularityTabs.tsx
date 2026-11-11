@@ -1,10 +1,10 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { sortBy } from "lodash-es";
 import { FormattedMessage } from "react-intl";
 
 import { type DateFilterGranularity, getGranularityDescriptor } from "@gooddata/sdk-model";
 import { type IAccessibilityConfigBase } from "@gooddata/sdk-ui-kit";
+import { _sortBy } from "@gooddata/util";
 
 import { messages } from "../locales.js";
 
@@ -13,7 +13,7 @@ import { Tab, TabsWrapper } from "./Tabs/Tabs.js";
 
 // Canonical coarse→fine order from the registry (fiscal ranked next to its standard sibling).
 const sortGranularities = (granularities: DateFilterGranularity[]): DateFilterGranularity[] =>
-    sortBy(
+    _sortBy(
         granularities,
         (granularity) => getGranularityDescriptor(granularity)?.order ?? Number.MAX_SAFE_INTEGER,
     );

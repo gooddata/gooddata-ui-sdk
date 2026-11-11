@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { intersection, sortBy } from "lodash-es";
+import { intersection } from "lodash-es";
 
 import {
     type IAttributeDescriptor,
@@ -8,7 +8,7 @@ import {
     type TotalType,
     attributeDescriptorLocalId,
 } from "@gooddata/sdk-model";
-import { _isEqual, _uniq } from "@gooddata/util";
+import { _isEqual, _sortBy, _uniq } from "@gooddata/util";
 
 import { AVAILABLE_TOTALS } from "../../base/constants.js";
 import { type IMenuAggregationClickConfig } from "../../privateTypes.js";
@@ -140,7 +140,7 @@ export function getUpdatedColumnOrRowTotals(
         ? includeTotals(totals, totalsChanged)
         : excludeTotals(totals, totalsChanged);
 
-    return sortBy(updatedTotals, (total) =>
+    return _sortBy(updatedTotals, (total) =>
         AVAILABLE_TOTALS.findIndex((rankedItem) => rankedItem === total.type),
     );
 }

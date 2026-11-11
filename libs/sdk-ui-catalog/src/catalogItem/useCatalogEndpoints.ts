@@ -11,6 +11,7 @@ import type {
     IInsightsQueryResult,
     IMeasuresQueryResult,
     IParametersQueryResult,
+    IPublisherDocumentsQueryResultV2,
 } from "@gooddata/sdk-backend-spi";
 import type { IFeatureFlags, Identifier, ObjectOrigin } from "@gooddata/sdk-model";
 
@@ -18,6 +19,7 @@ import { COMPUTED_ATTRIBUTE_FEATURE_FLAG } from "../computedAttribute/gate.js";
 import { ObjectTypes } from "../objectType/constants.js";
 import { type ObjectType } from "../objectType/types.js";
 import { useFeatureFlag, useFeatureFlags } from "../permission/PermissionsContext.js";
+import { isQualityReported } from "../quality/gate.js";
 
 import {
     getAttributesQuery,
@@ -28,6 +30,7 @@ import {
     getInsightsQuery,
     getMetricsQuery,
     getParametersQuery,
+    queryDocuments,
 } from "./query.js";
 import type { ICatalogItemFeedOptions, ICatalogItemQueryOptions } from "./types.js";
 
@@ -39,7 +42,8 @@ export type EndpointResult =
     | IAttributesQueryResult
     | IDatasetsQueryResult
     | IParametersQueryResult
-    | IComputedAttributesQueryResult;
+    | IComputedAttributesQueryResult
+    | IPublisherDocumentsQueryResultV2;
 
 export type FeedEndpoint = {
     type: ObjectType;
@@ -72,24 +76,13 @@ export function useCatalogQueryOptions(
     const loadVisualizationPermissions = useFeatureFlag("enableVisualizationPermissions");
 
     return useMemo<ICatalogItemQueryOptions>(() => {
-        let includeIds: string[] | undefined = id;
-        let excludeIds: string[] | undefined = undefined;
-
-        if (qualityIds) {
-            if (qualityIds.isInverted) {
-                excludeIds = qualityIds.values;
-            } else {
-                includeIds = [...new Set([...qualityIds.values, ...(id ?? [])])];
-            }
-        }
-
         return {
             backend,
             workspace,
             search,
             origin,
-            id: includeIds,
-            excludeId: excludeIds,
+            id,
+            qualityIds,
             createdBy: createdBy.isInverted ? undefined : createdBy.values,
             excludeCreatedBy: createdBy.isInverted ? createdBy.values : undefined,
             tags: tags.isInverted ? undefined : tags.values,
@@ -119,9 +112,17 @@ export function useCatalogQueryOptions(
 
 export interface ICatalogEndpoint {
     type: ObjectType;
-    query: (opts: ICatalogItemQueryOptions) => Promise<EndpointResult>;
+    query: (opts: ICatalogItemQueryOptions, context: ICatalogEndpointContext) => Promise<EndpointResult>;
     gatedBy?: readonly (keyof IFeatureFlags)[];
     cannotFilterBy?: readonly FilterSlot[];
+}
+
+/**
+ * What the endpoints need to know about the user.
+ */
+export interface ICatalogEndpointContext {
+    /** Whose documents the user sees; undefined means all. */
+    documentOwner?: string;
 }
 
 type FilterSlot = "createdBy" | "excludeCreatedBy" | "certification";
@@ -130,6 +131,12 @@ const ENDPOINTS: readonly ICatalogEndpoint[] = [
     {
         type: ObjectTypes.DASHBOARD,
         query: (opts) => getDashboardsQuery(opts).query(),
+    },
+    {
+        type: ObjectTypes.DOCUMENT,
+        query: (opts, { documentOwner }) => queryDocuments(opts, documentOwner),
+        gatedBy: ["enableBusinessBriefingReportsApp", "enablePublisherV2", "enableCatalogDocuments"],
+        cannotFilterBy: ["certification"],
     },
     {
         type: ObjectTypes.VISUALIZATION,
@@ -170,9 +177,15 @@ export function useCatalogEndpoints(
     types: ObjectType[],
     queryOptions: ICatalogItemQueryOptions,
     flags: IFeatureFlags | undefined,
+    documentOwner?: string,
 ): FeedEndpoint[] {
-    return useMemo(() => selectCatalogEndpoints(types, queryOptions, flags), [flags, queryOptions, types]);
+    return useMemo(
+        () => selectCatalogEndpoints(types, queryOptions, flags, ENDPOINTS, { documentOwner }),
+        [flags, queryOptions, types, documentOwner],
+    );
 }
+
+const NO_CONTEXT: ICatalogEndpointContext = {};
 
 export function useEnabledObjectTypes(): ObjectType[] {
     const flags = useFeatureFlags();
@@ -187,10 +200,8 @@ export function selectCatalogEndpoints(
     options: ICatalogItemQueryOptions,
     flags: IFeatureFlags | undefined,
     endpoints: readonly ICatalogEndpoint[] = ENDPOINTS,
+    context: ICatalogEndpointContext = NO_CONTEXT,
 ): FeedEndpoint[] {
-    if (options.id?.length === 0) {
-        return [];
-    }
     const result: FeedEndpoint[] = [];
     for (const endpoint of endpoints) {
         // types rule: empty = all
@@ -205,7 +216,12 @@ export function selectCatalogEndpoints(
         if (endpoint.cannotFilterBy?.some((slot) => isSlotActive[slot](options))) {
             continue;
         }
-        result.push({ type: endpoint.type, query: () => endpoint.query(options) });
+        // quality rule: the quality filter narrows the ids, and an empty id list matches nothing
+        const endpointOptions = applyQualityIds(options, endpoint.type);
+        if (!endpointOptions || endpointOptions.id?.length === 0) {
+            continue;
+        }
+        result.push({ type: endpoint.type, query: () => endpoint.query(endpointOptions, context) });
     }
     return result;
 }
@@ -219,3 +235,24 @@ const isSlotActive: Record<FilterSlot, (opts: ICatalogItemQueryOptions) => boole
     excludeCreatedBy: (options) => (options.excludeCreatedBy?.length ?? 0) > 0,
     certification: (options) => Boolean(options.certification),
 };
+
+/**
+ * The options with the quality filter folded into the ids, or undefined when no object of the type can match.
+ * Objects outside the quality report have no issues: "with issues" matches none, "without issues" all.
+ */
+function applyQualityIds(
+    options: ICatalogItemQueryOptions,
+    type: ObjectType,
+): ICatalogItemQueryOptions | undefined {
+    const { qualityIds } = options;
+    if (!qualityIds) {
+        return options;
+    }
+    if (!isQualityReported(type)) {
+        return qualityIds.isInverted ? options : undefined;
+    }
+    if (qualityIds.isInverted) {
+        return { ...options, excludeId: qualityIds.values };
+    }
+    return { ...options, id: [...new Set([...qualityIds.values, ...(options.id ?? [])])] };
+}

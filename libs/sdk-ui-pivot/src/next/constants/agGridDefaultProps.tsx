@@ -1,9 +1,9 @@
 // (C) 2025-2026 GoodData Corporation
 
 import { type SuppressHeaderKeyboardEventParams, type SuppressKeyboardEventParams } from "ag-grid-enterprise";
-import { merge } from "lodash-es";
 
 import { LoadingComponent } from "@gooddata/sdk-ui";
+import { _merge } from "@gooddata/util";
 
 import { HEADER_CELL_CLASSNAME } from "../features/styling/bem.js";
 import { type AgGridProps } from "../types/agGrid.js";
@@ -161,7 +161,7 @@ const ACCESSIBILITY_PROPS: AgGridProps = {
 /**
  * @internal
  */
-export const AG_GRID_DEFAULT_PROPS: AgGridProps = merge(
+export const AG_GRID_DEFAULT_PROPS: AgGridProps = _merge(
     {},
     ROW_GROUPING_PROPS,
     COLUMN_PROPS,

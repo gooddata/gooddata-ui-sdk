@@ -33,6 +33,8 @@ import {
     type IOrganizationStylingService,
     type IOrganizationUserService,
     type IOrganizations,
+    type IPublisherDocumentsQueryResultV2,
+    type IPublisherDocumentsQueryV2,
     type IReferencesService,
     type ISecuritySettingsService,
     type IUserService,
@@ -676,6 +678,7 @@ function recordedWorkspace(
                 updateDocumentTemplate: (template) => Promise.resolve(template),
                 deleteDocumentTemplate: () => Promise.resolve(),
                 getDocuments: () => Promise.resolve([]),
+                getDocumentsQuery: () => new RecordedPublisherDocumentsQuery(),
                 getDocument: () => Promise.reject(new UnexpectedResponseError("Document not found", 404, {})),
                 createDocument: (publisherDocument) =>
                     Promise.resolve({ ...publisherDocument, ref: idRef("recordedDocument", "document") }),
@@ -725,6 +728,32 @@ class RecordedLlmProvidersQuery implements ILlmProvidersQuery {
 
     public queryAll(): Promise<ILlmProvider[]> {
         return Promise.resolve([]);
+    }
+}
+
+class RecordedPublisherDocumentsQuery implements IPublisherDocumentsQueryV2 {
+    public withSize(_size: number): IPublisherDocumentsQueryV2 {
+        return this;
+    }
+
+    public withPage(_page: number): IPublisherDocumentsQueryV2 {
+        return this;
+    }
+
+    public withFilter(_filter: unknown): IPublisherDocumentsQueryV2 {
+        return this;
+    }
+
+    public withSorting(_sort: string[]): IPublisherDocumentsQueryV2 {
+        return this;
+    }
+
+    public withOrigin(_origin: string): IPublisherDocumentsQueryV2 {
+        return this;
+    }
+
+    public query(): Promise<IPublisherDocumentsQueryResultV2> {
+        return Promise.resolve(new InMemoryPaging([]));
     }
 }
 

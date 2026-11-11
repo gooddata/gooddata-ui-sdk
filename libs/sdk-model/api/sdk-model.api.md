@@ -1029,7 +1029,7 @@ export type GenAINegativeAttributeFilter = {
 export type GenAIObjectReferenceType = "WIDGET" | "METRIC" | "ATTRIBUTE" | "DASHBOARD";
 
 // @beta
-export type GenAIObjectType = "dataset" | "attribute" | "label" | "fact" | "date" | "metric" | "visualization" | "dashboard";
+export type GenAIObjectType = "dataset" | "attribute" | "label" | "fact" | "date" | "metric" | "visualization" | "dashboard" | "document";
 
 // @internal
 export type GenAIPositiveAttributeFilter = {
@@ -3978,6 +3978,7 @@ export interface IFeatureFlags {
     enableAutomationTrigger?: boolean;
     enableBusinessBriefingReportsApp?: boolean;
     enableCacheRetentionPolicy?: boolean;
+    enableCatalogDocuments?: boolean;
     enableCatalogSmartSearchResults?: boolean;
     enableCatalogTrendingObjects?: boolean;
     enableCertification?: boolean;

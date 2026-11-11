@@ -2,14 +2,14 @@
 
 import cx from "classnames";
 import { type OptionsLandmarkVerbosityValue, type Point } from "highcharts";
-import { merge, partial, pickBy } from "lodash-es";
+import { partial, pickBy } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { type ITheme, isMeasureFormatInPercent } from "@gooddata/sdk-model";
 import { type ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 import { buildTooltipLocalizedStrings, getLighterColor, isPatternObject } from "@gooddata/sdk-ui-vis-commons";
-import { _compact, _isEmpty } from "@gooddata/util";
+import { _compact, _isEmpty, _merge } from "@gooddata/util";
 
 import { type IAxisConfig, type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { getBlackLabelStyle } from "../../constants/label.js";
@@ -1866,7 +1866,7 @@ export function getCustomizedConfiguration({
     ];
     const commonData = configurators.reduce(
         (highchartsOptions: HighchartsOptions, configurator: Configurator) => {
-            return merge(
+            return _merge(
                 highchartsOptions,
                 configurator({ chartOptions, highchartsOptions, chartConfig, drillConfig, intl, theme }),
             );
@@ -1874,7 +1874,7 @@ export function getCustomizedConfiguration({
         {},
     );
 
-    return merge({}, commonData);
+    return _merge({}, commonData);
 }
 
 type Configurator = (ctx: IConfiguratorContext) => HighchartsOptions;

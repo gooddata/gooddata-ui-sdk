@@ -16,6 +16,7 @@ export const ObjectTypes = {
     ATTRIBUTE: "attribute",
     FACT: "fact",
     DATASET: "dataSet",
+    DOCUMENT: "document",
 } as const satisfies Record<string, ObjectType>;
 
 const catalogObjectTypes: ReadonlySet<ModelObjectType> = new Set(Object.values(ObjectTypes));
@@ -29,11 +30,12 @@ export function isCatalogObjectType(type: ModelObjectType | undefined): type is 
  */
 export const FILTER_GROUPS = [
     { id: ObjectTypes.DASHBOARD, types: [ObjectTypes.DASHBOARD] },
+    { id: ObjectTypes.DOCUMENT, types: [ObjectTypes.DOCUMENT] },
     { id: ObjectTypes.VISUALIZATION, types: [ObjectTypes.VISUALIZATION] },
     { id: ObjectTypes.METRIC, types: [ObjectTypes.METRIC] },
     { id: ObjectTypes.PARAMETER, types: [ObjectTypes.PARAMETER] },
-    { id: ObjectTypes.ATTRIBUTE, types: [ObjectTypes.ATTRIBUTE, ObjectTypes.COMPUTED_ATTRIBUTE] },
     { id: ObjectTypes.FACT, types: [ObjectTypes.FACT] },
+    { id: ObjectTypes.ATTRIBUTE, types: [ObjectTypes.ATTRIBUTE, ObjectTypes.COMPUTED_ATTRIBUTE] },
     { id: ObjectTypes.DATASET, types: [ObjectTypes.DATASET] },
 ] as const satisfies readonly { id: ObjectType; types: readonly ObjectType[] }[];
 

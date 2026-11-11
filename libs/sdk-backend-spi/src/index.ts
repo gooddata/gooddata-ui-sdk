@@ -106,6 +106,8 @@ export type {
     IWorkspacePublisherService,
     IWorkspacePublisherServiceV2,
     IPublisherDocumentSummaryV2,
+    IPublisherDocumentsQueryV2,
+    IPublisherDocumentsQueryResultV2,
     PublisherDocumentListItemV2,
 } from "./workspace/publisher/index.js";
 

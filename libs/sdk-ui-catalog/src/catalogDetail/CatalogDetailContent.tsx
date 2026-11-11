@@ -15,7 +15,7 @@ import { useIsCertificationAllowed } from "../certification/gate.js";
 import { useIsLineageEnabled } from "../lineage/gate.js";
 import { type ObjectType } from "../objectType/types.js";
 import { usePermissionsState } from "../permission/PermissionsContext.js";
-import { useIsCatalogDescriptionGenerationEnabled, useIsCatalogQualityEnabled } from "../quality/gate.js";
+import { useIsCatalogDescriptionGenerationEnabled, useIsCatalogQualityAllowed } from "../quality/gate.js";
 import { useQualityIssuesById, useQualityReportState } from "../quality/QualityContext.js";
 
 import { CatalogDetailActions } from "./CatalogDetailActions.js";
@@ -154,8 +154,7 @@ export function CatalogDetailContent({
     // Quality
     const { status: qualityStatus } = useQualityReportState();
 
-    const isQualityEnabled = useIsCatalogQualityEnabled();
-    const isQualityVisible = isQualityEnabled && qualityStatus !== "error";
+    const isQualityVisible = useIsCatalogQualityAllowed(item?.type) && qualityStatus !== "error";
     const isQualityLoading = qualityStatus === "loading" || qualityStatus === "pending";
 
     const issues = useQualityIssuesById(item?.identifier ?? "") ?? [];

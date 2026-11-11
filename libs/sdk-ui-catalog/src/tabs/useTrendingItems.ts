@@ -17,7 +17,7 @@ async function fetchTrendingItems(backend: IAnalyticalBackend, workspace: string
     const response = await backend.workspace(workspace).genAI().getAnalyticsCatalog().getTrendingObjects();
 
     return response.objects
-        .filter((obj) => Boolean(obj.id))
+        .filter((obj) => Boolean(obj.id) && obj.type !== "document")
         .slice(0, TRENDING_PAGE_SIZE)
         .map(convertTrendingObjectToCatalogItem);
 }

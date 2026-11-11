@@ -2,7 +2,6 @@
 
 import { type ComponentType } from "react";
 
-import { sortBy } from "lodash-es";
 import { action } from "storybook/actions";
 
 import { withCustomWorkspaceSettings } from "@gooddata/sdk-backend-base";
@@ -12,7 +11,7 @@ import { type ScenarioGroup, allScenarios, isScenarioAction } from "@gooddata/sd
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
-import { _groupBy } from "@gooddata/util";
+import { _groupBy, _sortBy } from "@gooddata/util";
 
 import { StorybookBackend } from "../../_infra/backend.js";
 import { ScreenshotReadyWrapper, createElementCountResolver } from "../../_infra/ScreenshotReadyWrapper.js";
@@ -94,7 +93,7 @@ const ScenarioGroupsByVis = Object.values(_groupBy<ScenarioGroup<any>>(allScenar
 export function getScenariosGroupByIndexes(groupsIndex: number, groupIndex: number): ScenarioGroup<any> {
     const groups = ScenarioGroupsByVis[groupsIndex];
 
-    const sortedGroups = sortBy(groups, (g) => g.groupNames.join("/"));
+    const sortedGroups = _sortBy(groups, (g) => g.groupNames.join("/"));
 
     const group = sortedGroups[groupIndex];
 

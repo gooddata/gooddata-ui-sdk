@@ -17,6 +17,7 @@ import {
 import { AsCodeCreateDialog } from "../asCode/AsCodeCreateDialog.js";
 import { getAsCodeDescriptor, useCreatableObjectTypes } from "../asCodeRegistry.js";
 import { useCatalogFeedActions } from "../catalogItem/CatalogFeedContext.js";
+import { useCanCreateDocument } from "../document/gate.js";
 import { useCanCreateVisualization } from "../insight/gate.js";
 import { useCanCreateMetric } from "../metric/gate.js";
 import { ObjectTypes } from "../objectType/constants.js";
@@ -29,6 +30,7 @@ type CreateItemData = {
 
 const icons: Record<CatalogCreateObjectType, IconType> = {
     [ObjectTypes.DASHBOARD]: "dashboard",
+    [ObjectTypes.DOCUMENT]: "filePptx",
     [ObjectTypes.VISUALIZATION]: "visualization",
     [ObjectTypes.METRIC]: "metric",
     [ObjectTypes.PARAMETER]: "parameter",
@@ -48,6 +50,7 @@ export function CreateObjectButton({ onCreateObject }: Props) {
     const inCatalogTypes: ReadonlySet<CatalogCreateObjectType> = useCreatableObjectTypes();
     const canCreateMetric = useCanCreateMetric();
     const canCreateVisualization = useCanCreateVisualization();
+    const canCreateDocument = useCanCreateDocument();
 
     const items = useMemo<IUiMenuItem<CreateItemData>[]>(() => {
         const externalLinkIcon = <MenuItemIcon type="externalLink" />;
@@ -66,6 +69,7 @@ export function CreateObjectButton({ onCreateObject }: Props) {
         // Metric and visualization redirect to a standalone editor unless their in-catalog editor is on.
         return [
             interactiveItem(ObjectTypes.DASHBOARD, true),
+            ...(canCreateDocument ? [interactiveItem(ObjectTypes.DOCUMENT, true)] : []),
             ...(!inCatalogTypes.has(ObjectTypes.VISUALIZATION) && canCreateVisualization
                 ? [interactiveItem(ObjectTypes.VISUALIZATION, true)]
                 : []),
@@ -75,7 +79,7 @@ export function CreateObjectButton({ onCreateObject }: Props) {
             { type: "separator" },
             ...[...inCatalogTypes].map((type) => interactiveItem(type, false)),
         ];
-    }, [intl, inCatalogTypes, canCreateMetric, canCreateVisualization]);
+    }, [intl, inCatalogTypes, canCreateMetric, canCreateVisualization, canCreateDocument]);
 
     const handleSelect = useCallback(
         (item: IUiMenuInteractiveItem<CreateItemData>, _event: MouseEvent | KeyboardEvent) => {

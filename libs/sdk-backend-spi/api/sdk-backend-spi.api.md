@@ -1115,6 +1115,7 @@ export type IChatConversationToolResultContent = {
 export type IChatConversationVisualisationContent = {
     type: "visualization";
     visualization: IInsight | null;
+    unsupportedChartType?: string | null;
 };
 
 // @internal
@@ -2965,6 +2966,19 @@ export interface IPublisherDocumentExportPdfOptions {
 }
 
 // @alpha
+export type IPublisherDocumentsQueryResultV2 = IPagedResource<IPublisherDocumentSummaryV2>;
+
+// @alpha
+export interface IPublisherDocumentsQueryV2 {
+    query(): Promise<IPublisherDocumentsQueryResultV2>;
+    withFilter(filter: IFilterBaseOptions): IPublisherDocumentsQueryV2;
+    withOrigin(origin: ObjectOrigin | (string & {})): IPublisherDocumentsQueryV2;
+    withPage(page: number): IPublisherDocumentsQueryV2;
+    withSize(size: number): IPublisherDocumentsQueryV2;
+    withSorting(sort: string[]): IPublisherDocumentsQueryV2;
+}
+
+// @alpha
 export interface IPublisherDocumentSummaryV2 extends IAuditableDates, IAuditableUsers {
     // (undocumented)
     description?: string;
@@ -3745,6 +3759,7 @@ export interface IWorkspacePublisherServiceV2 {
     getDocument(ref: ObjRef): Promise<IPublisherDocumentV2>;
     // (undocumented)
     getDocuments(): Promise<PublisherDocumentListItemV2[]>;
+    getDocumentsQuery(): IPublisherDocumentsQueryV2;
     // (undocumented)
     getDocumentTemplate(ref: ObjRef): Promise<IPublisherDocumentTemplateV2>;
     // (undocumented)

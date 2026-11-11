@@ -344,6 +344,7 @@ function convertMultipartPart(
                           ),
                       )
                     : null,
+                unsupportedChartType: part.unsupportedChartType,
             };
         case "dashboard": {
             return {

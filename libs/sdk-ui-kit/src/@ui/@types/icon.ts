@@ -207,4 +207,17 @@ export type IconType =
     | "lineWidth4"
     | "linear"
     | "spline"
-    | "stepped";
+    | "stepped"
+    | "heading1"
+    | "heading2"
+    | "heading3"
+    | "heading4"
+    | "heading5"
+    | "heading6"
+    | "paragraphLarge"
+    | "paragraphMedium"
+    | "paragraphSmall"
+    | "regenerateWithAi"
+    | "directionHorizontal"
+    | "directionVertical"
+    | "levelUpArrow";

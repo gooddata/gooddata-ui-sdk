@@ -19,6 +19,7 @@ const icons: Record<FilterableObjectType, IconType> = {
     [ObjectTypes.FACT]: "fact",
     [ObjectTypes.DATASET]: "date",
     [ObjectTypes.PARAMETER]: "parameter",
+    [ObjectTypes.DOCUMENT]: "filePptx",
 };
 
 const messages: Record<FilterableObjectType, MessageDescriptor> = defineMessages({
@@ -29,6 +30,7 @@ const messages: Record<FilterableObjectType, MessageDescriptor> = defineMessages
     [ObjectTypes.FACT]: { id: "analyticsCatalog.objectType.fact.button.ariaLabel" },
     [ObjectTypes.ATTRIBUTE]: { id: "analyticsCatalog.objectType.attribute.button.ariaLabel" },
     [ObjectTypes.DATASET]: { id: "analyticsCatalog.objectType.dateDataset.button.ariaLabel" },
+    [ObjectTypes.DOCUMENT]: { id: "analyticsCatalog.objectType.document.button.ariaLabel" },
 });
 
 type Props = {

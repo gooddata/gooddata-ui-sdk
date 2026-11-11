@@ -17,6 +17,7 @@ export type ObjectType = Extract<
     | "fact"
     | "attribute"
     | "dataSet"
+    | "document"
 >;
 
 /**
@@ -26,5 +27,5 @@ export type ObjectType = Extract<
  */
 export type CatalogCreateObjectType = Extract<
     ObjectType,
-    "analyticalDashboard" | "insight" | "measure" | "parameter" | "computedAttribute"
+    "analyticalDashboard" | "document" | "insight" | "measure" | "parameter" | "computedAttribute"
 >;

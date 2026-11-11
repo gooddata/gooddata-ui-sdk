@@ -3,11 +3,10 @@
 import { Fragment, type ReactNode, useMemo, useState } from "react";
 
 import cx from "classnames";
-import { sortBy } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { Typography, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
-import { _compact } from "@gooddata/util";
+import { _compact, _sortBy } from "@gooddata/util";
 
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectSupportsRichTextWidgets } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
@@ -85,7 +84,7 @@ export function CreationPanel(props: ICreationPanelProps) {
             supportsRichText && RichTextWidgetComponentSet.creating,
         ]);
 
-        return sortBy(items, (item) => item.priority ?? 0).map(({ CreatePanelListItemComponent, type }) => {
+        return _sortBy(items, (item) => item.priority ?? 0).map(({ CreatePanelListItemComponent, type }) => {
             const listItem = (
                 <CreatePanelListItemComponent
                     WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDragComponent}

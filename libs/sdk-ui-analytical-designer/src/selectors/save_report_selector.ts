@@ -1,10 +1,10 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { has, sortBy } from "lodash-es";
+import { has } from "lodash-es";
 import { createSelector } from "reselect";
 
 import { type IInsightDefinition, type VisualizationProperties } from "@gooddata/sdk-model";
-import { _isEqual, _omit } from "@gooddata/util";
+import { _isEqual, _omit, _sortBy } from "@gooddata/util";
 
 import { CHOROPLETH, LOCAL_CHOROPLETH, LOCAL_PUSHPIN, PUSHPIN } from "../constants/visualization_types.js";
 import { BackendToBearConvertors } from "../convertors/index.js";
@@ -121,7 +121,7 @@ function deleteCondition(
 function reorderBuckets(reportContent: IComparableReportContent): IComparableReportContent {
     return {
         ...reportContent,
-        buckets: sortBy(reportContent.buckets ?? [], (b) => b.localIdentifier),
+        buckets: _sortBy(reportContent.buckets ?? [], (b) => b.localIdentifier),
     };
 }
 

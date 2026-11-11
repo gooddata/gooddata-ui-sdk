@@ -3,6 +3,7 @@
 import {
     type IExportResult,
     type IPublisherDocumentExportPdfOptions,
+    type IPublisherDocumentsQueryV2,
     type IWorkspacePublisherServiceV2,
     type PublisherDocumentListItemV2,
 } from "@gooddata/sdk-backend-spi";
@@ -73,6 +74,10 @@ export abstract class DecoratedWorkspacePublisherServiceV2 implements IWorkspace
 
     public getDocuments(): Promise<PublisherDocumentListItemV2[]> {
         return this.decorated.getDocuments();
+    }
+
+    public getDocumentsQuery(): IPublisherDocumentsQueryV2 {
+        return this.decorated.getDocumentsQuery();
     }
 
     public getDocument(ref: ObjRef): Promise<IPublisherDocumentV2> {

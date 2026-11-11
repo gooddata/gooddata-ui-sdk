@@ -12,4 +12,5 @@ export type GenAIObjectType =
     | "date"
     | "metric"
     | "visualization"
-    | "dashboard";
+    | "dashboard"
+    | "document";

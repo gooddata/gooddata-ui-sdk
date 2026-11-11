@@ -8,6 +8,10 @@
         --catalog-object-type-icon-color: var(--gd-palette-complementary-8);
     }
 
+    &[data-object-type="document"] {
+        --catalog-object-type-icon-color: var(--gd-palette-complementary-6);
+    }
+
     &[data-object-type="insight"] {
         --catalog-object-type-icon-color: #14b2e2;
     }

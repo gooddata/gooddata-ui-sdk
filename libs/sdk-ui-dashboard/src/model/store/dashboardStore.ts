@@ -8,13 +8,14 @@ import {
     configureStore,
 } from "@reduxjs/toolkit";
 import { defaultImport } from "default-import";
-import { keyBy, merge } from "lodash-es";
+import { keyBy } from "lodash-es";
 import { enableBatching } from "redux-batched-actions";
 import defaultReduxSaga, { type Saga, type SagaIterator, type Task } from "redux-saga";
 import { call, fork } from "redux-saga/effects";
 import { v4 as uuidv4 } from "uuid";
 
 import { objRefToString } from "@gooddata/sdk-model";
+import { _merge } from "@gooddata/util";
 
 import { type RenderMode } from "../../types.js";
 import { type DashboardCommandType } from "../commands/base.js";
@@ -294,7 +295,7 @@ function mergeQueryServices(
     extras: IDashboardQueryService<any, any>[] = [],
 ): IDashboardQueryService<any, any>[] {
     return Object.values(
-        merge(
+        _merge(
             {},
             keyBy(original, (service) => service.name),
             keyBy(extras, (service) => service.name),

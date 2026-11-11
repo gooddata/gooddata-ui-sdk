@@ -62,6 +62,14 @@ export function SearchItemIcon({ item, icon }: Props) {
                         return <IconMetric {...props} />;
                     case "date":
                         return <IconDate {...props} />;
+                    case "document":
+                        return (
+                            <UiIcon
+                                type="filePptx"
+                                color="complementary-5"
+                                accessibilityConfig={{ ariaHidden: true }}
+                            />
+                        );
                     default:
                         return exhaustiveCheck(type);
                 }
