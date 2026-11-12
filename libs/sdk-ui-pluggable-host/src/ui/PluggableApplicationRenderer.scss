@@ -2,6 +2,8 @@
 
 .gd-pluggable-application-renderer {
     height: 100%;
+    // Keep the application's z-indexes below the chrome of any host UI module, not only the default one.
+    isolation: isolate;
 
     &__loading {
         min-height: 240px;

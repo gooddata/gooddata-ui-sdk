@@ -249,6 +249,19 @@ export interface IPlatformContextV1 {
     availableApplications?: PluggableApplicationRegistryItem[];
 
     embeddingMode: EmbeddingMode;
+
+    /**
+     * Origin of the parent window that embeds the application, when the host has validated it.
+     *
+     * @remarks
+     * The host sets it only with token embedding and `enableEmbeddingOriginValidation` on, after the
+     * backend confirmed that the origin of the first `setApiToken` is in the embedding origins of the
+     * organization, and only when the parent window sent that message. So it is always a validated
+     * origin of the parent, and the application can post its events to it with no second check. It is
+     * not set in all other cases.
+     */
+    embeddingParentOrigin?: string;
+
     isExportMode?: boolean;
 }
 

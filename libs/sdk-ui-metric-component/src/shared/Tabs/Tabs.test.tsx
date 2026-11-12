@@ -1,9 +1,13 @@
 // (C) 2007-2026 GoodData Corporation
 
+import { useState } from "react";
+
 import { act, fireEvent, render, renderHook, waitFor } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { _omit, suppressConsole } from "@gooddata/util";
+
+import { FocusHandoffContext, type IFocusHandoff, createFocusHandoff } from "../focusHandoff.js";
 
 import { useTabs } from "./hooks/useTabs.js";
 import { type ITab, TabSpace, TabState } from "./Tab.js";
@@ -985,5 +989,232 @@ describe("Tabs", () => {
                 });
             });
         });
+    });
+});
+
+describe("Tabs keyboard focus", () => {
+    const tabs: ITab[] = [1, 2].map((i) => ({ id: `id-${i}`, title: `Tab ${i}`, data: undefined }));
+    const tabElements = (container: HTMLElement) => container.querySelectorAll<HTMLElement>('[role="tab"]');
+
+    it("follows a key's activation to the new active tab", () => {
+        // the caller activates the tab (a later render with the new active index)
+        const { container, rerender } = render(<Tabs active={0} tabs={tabs} />);
+
+        tabElements(container)[0].focus();
+        fireEvent.keyDown(tabElements(container)[0], { key: "ArrowRight" });
+        rerender(<Tabs active={1} tabs={tabs} />);
+
+        expect(document.activeElement).toBe(tabElements(container)[1]);
+    });
+
+    it("does not pull the focus back from a field when a held-back activation completes later", () => {
+        // the caller holds the activation back (does not change the active tab on the key)
+        const { container, rerender } = render(<Tabs active={0} tabs={tabs} onTabActivate={() => {}} />);
+        const field = document.createElement("input");
+        document.body.appendChild(field);
+
+        tabElements(container)[0].focus();
+        fireEvent.keyDown(tabElements(container)[0], { key: "ArrowRight" });
+        field.focus();
+        rerender(<Tabs active={1} tabs={tabs} onTabActivate={() => {}} />);
+
+        expect(document.activeElement).toBe(field);
+        field.remove();
+    });
+});
+
+describe("Tabs accessible names", () => {
+    const tabs: ITab[] = [{ id: "id-1", title: "Revenue", options: { closeable: true }, data: undefined }];
+
+    it("names every control with the default messages when no locales are given", () => {
+        // no IntlProvider and no locales: a bare render still names every control
+        const { container } = render(
+            <Tabs active={0} tabs={tabs} creatable minimizable maximizable closeable />,
+        );
+
+        expect(container.querySelector('[role="tablist"]')).toHaveAttribute("aria-label", "Open metrics");
+        expect(container.querySelector(`.${TabsClasses.ButtonMinimize}`)).toHaveAttribute(
+            "aria-label",
+            "Minimize editor",
+        );
+        expect(container.querySelector(`.${TabsClasses.ButtonCloseTabs}`)).toHaveAttribute(
+            "aria-label",
+            "Close editor",
+        );
+        expect(container.querySelector(`.${TabsClasses.ButtonCloseTab}`)).toHaveAttribute(
+            "aria-label",
+            "Close Revenue",
+        );
+        container.querySelectorAll("button").forEach((button) => {
+            expect(button.getAttribute("aria-label")).toBeTruthy();
+        });
+    });
+
+    it("names the full-screen toggle by its state", () => {
+        const { container, rerender } = render(<Tabs active={0} tabs={tabs} maximizable />);
+        const toggle = () => container.querySelector(`.${TabsClasses.ButtonMaximize}`);
+
+        expect(toggle()).toHaveAttribute("aria-label", "Full screen");
+
+        rerender(<Tabs active={0} tabs={tabs} maximizable maximized />);
+
+        expect(toggle()).toHaveAttribute("aria-label", "Exit full screen");
+    });
+
+    it("lets locales override a default name", () => {
+        const { container } = render(
+            <Tabs active={0} tabs={tabs} minimizable locales={{ minimize: "Collapse" }} />,
+        );
+
+        expect(container.querySelector(`.${TabsClasses.ButtonMinimize}`)).toHaveAttribute(
+            "aria-label",
+            "Collapse",
+        );
+    });
+});
+
+describe("Tabs scroll buttons", () => {
+    const tabs: ITab[] = [1, 2, 3].map((i) => ({ id: `id-${i}`, title: `Tab ${i}`, data: undefined }));
+
+    afterEach(() => {
+        vi.restoreAllMocks();
+    });
+
+    // The buttons show only when the tab strip overflows, which needs layout the test DOM lacks.
+    async function renderOverflowingTabs() {
+        vi.spyOn(HTMLElement.prototype, "offsetWidth", "get").mockReturnValue(100);
+        vi.spyOn(Element.prototype, "scrollWidth", "get").mockReturnValue(1000);
+
+        const { container } = render(<Tabs active={0} tabs={tabs} />);
+        const rightButton = await waitFor(() => {
+            const button = container.querySelector<HTMLButtonElement>(`.${TabsClasses.ButtonRight}`);
+            expect(button).not.toBeNull();
+            return button!;
+        });
+        const scrollBy = vi.fn();
+        container.querySelector<HTMLElement>('[role="tablist"]')!.scrollBy = scrollBy;
+
+        return { rightButton, scrollBy };
+    }
+
+    it("scrolls one step on a click with no pointer behind it (keyboard, assistive technology)", async () => {
+        const { rightButton, scrollBy } = await renderOverflowingTabs();
+
+        fireEvent.click(rightButton, { detail: 0 });
+
+        expect(scrollBy).toHaveBeenCalledTimes(1);
+        expect(scrollBy).toHaveBeenCalledWith({ left: 100, behavior: "smooth" });
+    });
+
+    it("scrolls once for a mouse click, not again for its click event", async () => {
+        const { rightButton, scrollBy } = await renderOverflowingTabs();
+
+        fireEvent.mouseDown(rightButton);
+        fireEvent.click(rightButton, { detail: 1 });
+        fireEvent.mouseUp(document);
+
+        expect(scrollBy).toHaveBeenCalledTimes(1);
+    });
+});
+
+// The handoff expires in a timeout. Only timeouts are faked: Tabs polls its size in an endless
+// requestAnimationFrame loop, which faked timers would run until they give up.
+const fakeTimeoutsOnly = () => vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout"] });
+
+describe("Tabs minimize focus handoff", () => {
+    const tabs: ITab[] = [{ id: "id-1", title: "Tab", data: undefined }];
+
+    afterEach(() => {
+        vi.useRealTimers();
+    });
+
+    function renderInEditor(handoff: IFocusHandoff, onTabsMinimize?: () => void) {
+        return render(
+            <FocusHandoffContext.Provider value={handoff}>
+                <Tabs active={0} tabs={tabs} minimizable onTabsMinimize={onTabsMinimize} />
+            </FocusHandoffContext.Provider>,
+        );
+    }
+
+    const minimizeButton = (container: HTMLElement) =>
+        container.querySelector<HTMLButtonElement>(`.${TabsClasses.ButtonMinimize}`)!;
+
+    it("hands the focus off to the chip when the editor held it", () => {
+        const handoff = createFocusHandoff();
+        const { container } = renderInEditor(handoff);
+
+        minimizeButton(container).focus();
+        fireEvent.click(minimizeButton(container));
+
+        expect(handoff.take("chip")).toBe(true);
+    });
+
+    it("does not hand the focus off when the editor did not hold it", () => {
+        const handoff = createFocusHandoff();
+        const { container } = renderInEditor(handoff);
+
+        fireEvent.click(minimizeButton(container));
+
+        expect(handoff.take("chip")).toBe(false);
+    });
+
+    it("cancels the handoff when minimizing leaves the editor mounted", () => {
+        fakeTimeoutsOnly();
+        const handoff = createFocusHandoff();
+        // no onTabsMinimize: nothing unmounts the editor, and no chip comes to take the record
+        const { container } = renderInEditor(handoff);
+
+        minimizeButton(container).focus();
+        fireEvent.click(minimizeButton(container));
+        vi.runAllTimers();
+
+        expect(handoff.take("chip")).toBe(false);
+    });
+
+    it("keeps the handoff when minimizing unmounts the editor", () => {
+        fakeTimeoutsOnly();
+        const handoff = createFocusHandoff();
+
+        // minimizing hides the editor, as the apps do when they show the chip instead
+        function MinimizableEditor() {
+            const [isMinimized, setMinimized] = useState(false);
+
+            return isMinimized ? null : (
+                <FocusHandoffContext.Provider value={handoff}>
+                    <Tabs active={0} tabs={tabs} minimizable onTabsMinimize={() => setMinimized(true)} />
+                </FocusHandoffContext.Provider>
+            );
+        }
+
+        const { container } = render(<MinimizableEditor />);
+
+        minimizeButton(container).focus();
+        fireEvent.click(minimizeButton(container));
+        vi.runAllTimers();
+
+        expect(minimizeButton(container)).toBeNull();
+        expect(handoff.take("chip")).toBe(true);
+    });
+
+    it("focuses the minimize button on mount only after the chip handed the focus off", () => {
+        const handoff = createFocusHandoff();
+        handoff.handOff("editor");
+        const restored = renderInEditor(handoff);
+
+        expect(document.activeElement).toBe(minimizeButton(restored.container));
+        restored.unmount();
+
+        const opened = renderInEditor(handoff);
+
+        expect(document.activeElement).not.toBe(minimizeButton(opened.container));
+        opened.unmount();
+    });
+
+    it("ignores a handoff of another editor instance", () => {
+        createFocusHandoff().handOff("editor");
+        const { container, unmount } = renderInEditor(createFocusHandoff());
+
+        expect(document.activeElement).not.toBe(minimizeButton(container));
+        unmount();
     });
 });

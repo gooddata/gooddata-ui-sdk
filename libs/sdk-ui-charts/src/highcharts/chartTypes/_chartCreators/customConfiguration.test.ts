@@ -924,7 +924,7 @@ describe("getCustomizedConfiguration", () => {
                             type: chartType,
                             stacking: "normal",
                         },
-                        chartConfig: { stacking: true, dataLabels },
+                        chartConfig: { dataLabels },
                     }),
                 );
 

@@ -1,6 +1,16 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { type ComponentClass, type FunctionComponent, type ReactElement, useState } from "react";
+import {
+    type ComponentClass,
+    type FunctionComponent,
+    type KeyboardEvent,
+    type MouseEvent,
+    type ReactElement,
+    type RefObject,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 
 import {
     Bubble,
@@ -12,6 +22,7 @@ import {
     IconMinimize,
 } from "@gooddata/sdk-ui-kit";
 
+import { handOffFocusDuring, useFocusHandoff } from "../focusHandoff.js";
 import { makeStyles } from "../theme/index.js";
 
 import { useChangeScroll } from "./hooks/useChangeScroll.js";
@@ -19,7 +30,8 @@ import { useScrollByButtons } from "./hooks/useScrollByButtons.js";
 import { useScrollToActive } from "./hooks/useScrollToActive.js";
 import { useTabCallbacks } from "./hooks/useTabCallbacks.js";
 import { useTabsCallbacks } from "./hooks/useTabsCallbacks.js";
-import { NameButton, Tab, TabActive, TitleText } from "./Tab.js";
+import { type ITabsLabels, useTabsLabels } from "./hooks/useTabsLabels.js";
+import { NameButton, Tab, TabActive, TabRoot, TitleText } from "./Tab.js";
 import { TabsClasses } from "./Tabs.classes.js";
 import { type ITabContentProps, type ITabsProps, TabMaxWidth, TabsIconSize } from "./Tabs.data.js";
 
@@ -216,9 +228,11 @@ export function Tabs({
 
     const { classes, cx } = useStyles();
     const { scrollToTabSpace = 3, scrollByArrowsRepeat = 150, scrollByArrowsStep = 100 } = options;
+    const labels = useTabsLabels(locales);
 
     const [tabsElement, setTabsElement] = useState<HTMLDivElement | null>(null);
-    const { enabled, canLeft, canRight, onLeft, onRight } = useScrollByButtons(
+    const editorRoot = useRef<HTMLDivElement>(null);
+    const { enabled, canLeft, canRight, onLeft, onRight, stepLeft, stepRight } = useScrollByButtons(
         tabsElement,
         scrollByArrowsRepeat,
         scrollByArrowsStep,
@@ -235,25 +249,35 @@ export function Tabs({
         onTabsClose,
     );
 
+    const onTabListKeyDown = useTabListKeyboard(tabsElement, tabs, active, onTabActiveHandler);
+
     const Content: ComponentClass<ITabContentProps> | FunctionComponent<ITabContentProps> | undefined =
         content;
 
     return (
-        <div className={cx(classes.root, className)}>
+        <div ref={editorRoot} className={cx(classes.root, className)}>
             <div className={cx(classes.tabs)}>
+                {/* The mouse scrolls while the arrow is held; Enter and Space scroll one step. */}
                 {enabled && (
                     <button
+                        type="button"
+                        aria-label={labels.scrollLeft}
+                        aria-disabled={!canLeft}
                         className={cx(
                             classes.leftButton,
                             !canLeft && classes.disabled,
                             TabsClasses.ButtonLeft,
                         )}
                         onMouseDown={onLeft}
+                        onClick={(event) => onScrollButtonClick(event, stepLeft)}
                     >
-                        <span className="gd-icon-navigateleft" />
+                        <span className="gd-icon-navigateleft" aria-hidden="true" />
                     </button>
                 )}
                 <div
+                    role="tablist"
+                    aria-label={labels.tabList}
+                    onKeyDown={onTabListKeyDown}
                     className={cx(classes.tabsList, {
                         minimizable: minimizable,
                         closeable: closeable,
@@ -271,6 +295,7 @@ export function Tabs({
                             last={i === tabs.length - 1}
                             beforeActive={active - 1 === i}
                             afterActive={active + 1 === i}
+                            closeLabel={labels.closeTab}
                             onActive={onTabActiveHandler}
                             onClose={onTabCloseHandler}
                         />
@@ -278,14 +303,18 @@ export function Tabs({
                 </div>
                 {enabled && (
                     <button
+                        type="button"
+                        aria-label={labels.scrollRight}
+                        aria-disabled={!canRight}
                         className={cx(
                             classes.rightButton,
                             !canRight && classes.disabled,
                             TabsClasses.ButtonRight,
                         )}
                         onMouseDown={onRight}
+                        onClick={(event) => onScrollButtonClick(event, stepRight)}
                     >
-                        <span className="gd-icon-navigateright" />
+                        <span className="gd-icon-navigateright" aria-hidden="true" />
                     </button>
                 )}
                 {creatable && (
@@ -300,6 +329,8 @@ export function Tabs({
                                 iconLeft="gd-icon-add"
                                 onClick={onTabCreateHandler}
                                 className={cx(classes.create, "gd-button-action", TabsClasses.ButtonNewTab)}
+                                // the same text as the hover tooltip, so the name matches what is seen
+                                accessibilityConfig={{ ariaLabel: labels.create }}
                             />
                         </div>
                         {locales.createTooltip && (
@@ -319,8 +350,12 @@ export function Tabs({
                         minimizable={minimizable}
                         maximizable={maximizable}
                         closeable={closeable}
+                        // closing asks first only when a metric has unsaved changes
+                        closeOpensDialog={tabs.some((tab) => tab.states?.dirty)}
+                        labels={labels}
                         onTabsClose={onTabsCloseHandler}
                         onTabsMinimize={onTabsMinimizeHandler}
+                        editorRoot={editorRoot}
                         onTabsMaximize={onTabsMaximizeHandler}
                     />
                 </div>
@@ -331,14 +366,86 @@ export function Tabs({
     );
 }
 
+/**
+ * A click with no pointer behind it (`detail` 0) comes from Enter, Space or assistive technology, and
+ * scrolls one step. A mouse click (`detail` 1 and up) was already handled by its mousedown, which
+ * keeps scrolling while the button is held, so it does not scroll a second time.
+ */
+function onScrollButtonClick(event: MouseEvent<HTMLButtonElement>, step: () => void) {
+    if (event.detail === 0) {
+        step();
+    }
+}
+
+/**
+ * The arrow keys, Home and End of the tab list, the way the ARIA tabs pattern has them: they select
+ * the tab (selection follows the focus) and move the focus to it once it is active, and the active
+ * tab scrolls into view as it does for a mouse selection.
+ */
+function useTabListKeyboard<T>(
+    tabsElement: HTMLElement | null,
+    tabs: ITabsProps<T>["tabs"],
+    active: number,
+    onActivate: (tab: ITabsProps<T>["tabs"][number]) => void,
+) {
+    const isFocusPending = useRef(false);
+
+    useEffect(() => {
+        if (!isFocusPending.current) {
+            return;
+        }
+        isFocusPending.current = false;
+
+        // The key's activation may never have completed (a caller can hold it back), and the change
+        // of the active tab then comes from elsewhere; follow it only while the keyboard is still in
+        // the tab list, never pull the focus back from a field the user went to in the meantime.
+        if (!tabsElement?.contains(document.activeElement)) {
+            return;
+        }
+
+        // the scroll to the active tab is smooth, a focus scroll would jump ahead of it
+        tabsElement.querySelector<HTMLElement>(`.${TabRoot}.${TabActive}`)?.focus({ preventScroll: true });
+    }, [active, tabsElement]);
+
+    return (event: KeyboardEvent<HTMLDivElement>) => {
+        // the keys of the close button inside a tab are its own
+        if (!(event.target instanceof HTMLElement) || event.target.getAttribute("role") !== "tab") {
+            return;
+        }
+
+        const last = tabs.length - 1;
+        const targets: Record<string, number> = {
+            ArrowLeft: active > 0 ? active - 1 : last,
+            ArrowRight: active < last ? active + 1 : 0,
+            Home: 0,
+            End: last,
+        };
+        const target = targets[event.key];
+
+        if (target === undefined) {
+            return;
+        }
+
+        event.preventDefault();
+        if (target !== active && tabs[target]) {
+            isFocusPending.current = true;
+            onActivate(tabs[target]);
+        }
+    };
+}
+
 type ITabsControlsProps = {
     minimizable: boolean;
     maximizable: boolean;
     closeable: boolean;
+    closeOpensDialog: boolean;
     maximized: boolean;
+    labels: ITabsLabels;
     onTabsClose?: () => void;
     onTabsMinimize?: () => void;
     onTabsMaximize?: (state: boolean) => void;
+    // the whole editor (tabs and content), which minimizing unmounts
+    editorRoot: RefObject<HTMLDivElement | null>;
 };
 
 function TabsControls({
@@ -346,42 +453,79 @@ function TabsControls({
     maximizable,
     maximized,
     closeable,
+    closeOpensDialog,
+    labels,
     onTabsMinimize,
     onTabsMaximize,
     onTabsClose,
+    editorRoot,
 }: ITabsControlsProps) {
     const { classes, cx } = useStyles();
+    const minimizeButton = useRef<HTMLButtonElement>(null);
+    const focusHandoff = useFocusHandoff();
+
+    // Restoring from the chip drops the focus to the page (see focusHandoff). Put it back on the
+    // minimize button, where it was before minimizing, only when this editor's chip handed it off,
+    // and only if nothing inside the editor has taken it in the meantime.
+    useEffect(() => {
+        const isHandedOff = focusHandoff?.take("editor") ?? false;
+        const isFocusDropped = !document.activeElement || document.activeElement === document.body;
+
+        if (isHandedOff && isFocusDropped) {
+            minimizeButton.current?.focus();
+        }
+        // only on mount, which is when the chip has just handed off
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // minimizing unmounts the editor, so the chip catches the focus if the editor held it
+    const minimizeHandler = () =>
+        handOffFocusDuring(
+            focusHandoff,
+            "chip",
+            !!editorRoot.current?.contains(document.activeElement),
+            onTabsMinimize,
+            () => editorRoot.current !== null,
+        );
 
     const controls = [
         minimizable && (
             <button
                 key="minimize"
+                ref={minimizeButton}
+                type="button"
                 className={cx(classes.button, TabsClasses.ButtonMinimize)}
-                onClick={onTabsMinimize}
+                aria-label={labels.minimize}
+                onClick={minimizeHandler}
             >
-                <IconMinimize width={TabsIconSize} height={TabsIconSize} />
+                <IconMinimize width={TabsIconSize} height={TabsIconSize} ariaHidden />
             </button>
         ),
         maximizable && (
             <button
                 key="maximize"
+                type="button"
                 className={cx(classes.button, TabsClasses.ButtonMaximize)}
+                aria-label={maximized ? labels.exitMaximize : labels.maximize}
                 onClick={() => onTabsMaximize?.(!maximized)}
             >
                 {maximized ? (
-                    <IconContract width={TabsIconSize} height={TabsIconSize} />
+                    <IconContract width={TabsIconSize} height={TabsIconSize} ariaHidden />
                 ) : (
-                    <IconExpand width={TabsIconSize} height={TabsIconSize} />
+                    <IconExpand width={TabsIconSize} height={TabsIconSize} ariaHidden />
                 )}
             </button>
         ),
         closeable && (
             <button
                 key="close"
+                type="button"
                 className={cx(classes.button, TabsClasses.ButtonCloseTabs)}
+                aria-label={labels.close}
+                aria-haspopup={closeOpensDialog ? "dialog" : undefined}
                 onClick={onTabsClose}
             >
-                <IconClose width={TabsIconSize} height={TabsIconSize} />
+                <IconClose width={TabsIconSize} height={TabsIconSize} ariaHidden />
             </button>
         ),
     ];

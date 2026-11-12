@@ -154,8 +154,9 @@ async function updateLabelElements(
 }
 
 /**
- * Titles to display for the elements: the raw titles, with the values of a numeric computed attribute
- * formatted by the number format of the elements query result.
+ * Titles to display for the elements: the formatted title of an element that carries one (a date computed
+ * attribute), otherwise the raw title, with the values of a numeric computed attribute formatted by the
+ * number format of the elements query result.
  *
  * @internal exported for tests
  */
@@ -164,11 +165,15 @@ export function elementsDisplayTitles(
     numberFormat: string | undefined,
     separators: ISeparators | undefined,
 ): Array<string | null> {
-    if (!numberFormat) {
-        return elements.map((element) => element.title);
-    }
+    const formatter = numberFormat ? createNumberFormatter(separators) : undefined;
 
-    const formatter = createNumberFormatter(separators);
+    return elements.map((element) => {
+        if (element.formattedTitle) {
+            return element.formattedTitle;
+        }
 
-    return elements.map((element) => formatAttributeValue(element.title, numberFormat, formatter));
+        return numberFormat && formatter
+            ? formatAttributeValue(element.title, numberFormat, formatter)
+            : element.title;
+    });
 }

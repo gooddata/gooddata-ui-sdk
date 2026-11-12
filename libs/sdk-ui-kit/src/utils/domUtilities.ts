@@ -184,7 +184,50 @@ export const focusableElementsSelector = [
     '[contenteditable]:not([contenteditable="false"])',
 ].join(",");
 
-const isNotNegativeTabIndex = (element: HTMLElement) => !element.tabIndex || element.tabIndex >= 0;
+const EDITABLE_KEYWORDS = ["", "true", "plaintext-only"];
+
+/**
+ * The state the element's own contenteditable attribute sets, the way the HTML spec reads it: the
+ * keywords are case-insensitive, and a missing or unknown value inherits the parent's state.
+ */
+const getOwnEditableState = (element: Element): "editable" | "notEditable" | "inherit" => {
+    const value = element.getAttribute("contenteditable")?.toLowerCase();
+
+    if (value === undefined) {
+        return "inherit";
+    }
+    if (EDITABLE_KEYWORDS.includes(value)) {
+        return "editable";
+    }
+    return value === "false" ? "notEditable" : "inherit";
+};
+
+const isEffectivelyEditable = (element: Element | null): boolean => {
+    for (let current = element; current; current = current.parentElement) {
+        const state = getOwnEditableState(current);
+
+        if (state !== "inherit") {
+            return state === "editable";
+        }
+    }
+    return false;
+};
+
+/**
+ * The outermost editable element: it makes itself editable, inside content that is not. An editable
+ * element nested in another one is part of its host's content, not a Tab stop of its own.
+ */
+const isEditingHost = (element: HTMLElement) =>
+    getOwnEditableState(element) === "editable" && !isEffectivelyEditable(element.parentElement);
+
+// Browsers report tabIndex -1 for an editing host without a tabindex attribute, although Tab
+// reaches it like an input. Without this, a rich text editor (CodeMirror, for one) drops out of
+// every focus trap.
+const getTabIndex = (element: HTMLElement) => {
+    return isEditingHost(element) && !element.hasAttribute("tabindex") ? 0 : element.tabIndex;
+};
+
+const isNotNegativeTabIndex = (element: HTMLElement) => getTabIndex(element) >= 0;
 
 const isVisible = (element: HTMLElement, includeHidden: boolean = false) => {
     // checkVisibility if available (modern browsers)
@@ -208,8 +251,37 @@ const isVisible = (element: HTMLElement, includeHidden: boolean = false) => {
     return (element as any).offsetParent !== null;
 };
 
+const isModalDialog = (element: Element) => {
+    if (element.tagName !== "DIALOG") {
+        return false;
+    }
+    try {
+        return element.matches(":modal");
+    } catch {
+        // an engine that does not know the selector has no modal dialogs either
+        return false;
+    }
+};
+
+/**
+ * An element in an inert subtree cannot take the focus, whatever its tab index says. A modal dialog
+ * (opened with showModal) escapes the inertness of its ancestors, so the search stops there; an
+ * inert attribute on the dialog itself or inside it still counts.
+ */
+const isInert = (element: HTMLElement) => {
+    for (let current: Element | null = element; current; current = current.parentElement) {
+        if (current.hasAttribute("inert")) {
+            return true;
+        }
+        if (isModalDialog(current)) {
+            return false;
+        }
+    }
+    return false;
+};
+
 const isFocusable = (element: HTMLElement, includeHidden: boolean = false) => {
-    return isNotNegativeTabIndex(element) && isVisible(element, includeHidden);
+    return isNotNegativeTabIndex(element) && !isInert(element) && isVisible(element, includeHidden);
 };
 /**
  * @internal

@@ -29,30 +29,35 @@ function pressTab(view: EditorView, shift = false): boolean {
 }
 
 describe("Tab", () => {
-    it("inserts the indentation at the cursor", () => {
+    it("leaves Tab and Shift-Tab to the browser, so the focus moves on", () => {
         const view = createView("SELECT 1", { anchor: 6 });
 
-        expect(pressTab(view)).toBe(true);
-        expect(view.state.doc.toString()).toBe("SELECT   1");
-        expect(view.state.selection.main.head).toBe(8);
+        expect(pressTab(view)).toBe(false);
+        expect(pressTab(view, true)).toBe(false);
+        expect(view.state.doc.toString()).toBe("SELECT 1");
 
         view.destroy();
     });
 
-    it("indents the selected lines", () => {
+    it("indents the selected lines on Mod-] and unindents them on Mod-[", () => {
         const view = createView("SELECT 1\nWHERE TRUE", { anchor: 0, head: 12 });
+        const press = (key: string) =>
+            runScopeHandlers(view, new KeyboardEvent("keydown", { key, ctrlKey: true }), "editor");
 
-        expect(pressTab(view)).toBe(true);
+        expect(press("]")).toBe(true);
         expect(view.state.doc.toString()).toBe("  SELECT 1\n  WHERE TRUE");
 
+        expect(press("[")).toBe(true);
+        expect(view.state.doc.toString()).toBe("SELECT 1\nWHERE TRUE");
+
         view.destroy();
     });
 
-    it("unindents the line on Shift-Tab", () => {
-        const view = createView("  SELECT 1", { anchor: 5 });
+    it("keeps an editable editor in the keyboard focus order", () => {
+        const view = createView("SELECT 1", { anchor: 0 });
 
-        expect(pressTab(view, true)).toBe(true);
-        expect(view.state.doc.toString()).toBe("SELECT 1");
+        expect(view.contentDOM.getAttribute("contenteditable")).toBe("true");
+        expect(view.contentDOM.getAttribute("tabindex")).toBe("0");
 
         view.destroy();
     });

@@ -26,7 +26,6 @@ export function generateChartOptions(
     dv: DataViewFacade = defaultDv,
     config: any = {
         type: "column",
-        stacking: false,
     },
     drillableItems: IHeaderPredicate[] = [],
 ): IChartOptions {
