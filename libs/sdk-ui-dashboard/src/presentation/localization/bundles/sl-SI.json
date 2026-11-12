@@ -237,6 +237,7 @@
     "dialogs.schedule.email.save.executionTimestampMode": "Če želite ustvariti ali urediti načrtovane izvoze, ponastavite datum nadzorne plošče na danes.",
     "dialogs.alert.save.executionTimestampMode": "Če želite ustvariti ali urediti opozorila, ponastavite datum nadzorne plošče na danes.",
     "dialogs.schedule.email.widgetError": "Napaka: Načrta ni mogoče poslati — izvorni gradnik je bil izbrisan. Izbrišite načrt ali se obrnite na administratorja.",
+    "dialogs.schedule.email.visualizationUnavailable": "Napaka: prilog ni mogoče dodati, ker je bila ta vizualizacija izbrisana ali pa nimate dostopa do nje.",
     "dialogs.schedule.email.destinationWarning": "Izbrani cilj podpira le pošiljanje izvoza sebi.",
     "dialogs.automation.filters.showAll": "Prikaži vse",
     "dialogs.automation.filters.showAll.ariaDescription": "Uporabi za prikaz vseh filtrov.",

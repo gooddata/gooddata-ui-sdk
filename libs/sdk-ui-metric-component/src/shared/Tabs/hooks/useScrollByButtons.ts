@@ -14,6 +14,9 @@ export function useScrollByButtons(
     canRight: boolean;
     onLeft: (e: MouseEvent) => void;
     onRight: (e: MouseEvent) => void;
+    // one step, for the keyboard; the mouse handlers above repeat while the button is held
+    stepLeft: () => void;
+    stepRight: () => void;
 } {
     const { enabled, canLeft, canRight } = useChanged(element);
     const changed = useScroll(element);
@@ -31,9 +34,11 @@ export function useScrollByButtons(
             canRight,
             onLeft,
             onRight,
+            stepLeft: onLeftHandler,
+            stepRight: onRightHandler,
         }),
         // oxlint-disable-next-line react-hooks/exhaustive-deps
-        [enabled, canLeft, canRight, onLeft, onRight, changed],
+        [enabled, canLeft, canRight, onLeft, onRight, onLeftHandler, onRightHandler, changed],
     );
 }
 

@@ -2275,6 +2275,10 @@
         "text": "Metric filters cannot be passed to the target dashboard.",
         "crowdinContext": "Tooltip shown for disabled metric value filters in drill-to-dashboard configuration because metric filters are not supported on the target dashboard"
     },
+    "configurationPanel.drillConfig.filterSelection.drillParameter.tooltip": {
+        "text": "This parameter is always passed to the drill target.",
+        "crowdinContext": "Tooltip shown for a disabled, always checked dashboard parameter row in the drill filters configuration. The drill always passes this parameter value to the target visualization or dashboard"
+    },
     "configurationPanel.drillConfig.filterSelection.drillToDashboardDuplicateMetricFilter.tooltip": {
         "text": "Another filter for this metric is already being passed.",
         "crowdinContext": "Tooltip shown for a disabled dashboard or visualization metric filter in drill-to-dashboard configuration when another filter for the same metric is already selected"

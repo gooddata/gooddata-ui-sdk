@@ -3,11 +3,11 @@ Copyright (c) 2017-2026 GoodData Corporation
 This product includes a number of subcomponents with separate copyright notices and license terms below. Your use of these subcomponents is subject to the terms and conditions of the subcomponent's license. This GoodData project does not necessarily use all the open source software referred to below and may also only use portions of a given package. With respect to the open source software listed in this document, if you (i) have any questions, (ii) wish to receive source code for packages under licenses that require their source code to be made available (such as the GNU Lesser Public License), or (iii) discover any errors or omissions in the licensing information provided, please contact us at legal@gooddata.com. Please identify in source code requests: (i) the packages for which you are requesting corresponding source, (ii) the GoodData product (including any available version) with which the package was provided; and (iii) an email address (if available) or postal address at which GoodData may contact you.
 
 --------------------------------------------------------------------------------
-Attribution Notice for @gooddata/sdk-ui-all (11.68.0-alpha.11)
+Attribution Notice for @gooddata/sdk-ui-all (11.68.0)
 Package License: LicenseRef-LICENSE
 Own License File: LICENSE
-Date generated: 2026-11-11
-Revision ID: dcb0869bf079d57a743488c12b4ca59e52b9dc57
+Date generated: 2026-11-12
+Revision ID: c56f4e258b22c698a7b4595c97b12a469452f25a
 
 This notice lists the components that @gooddata/sdk-ui-all depends on, directly or through other
 packages, with the license and copyright information reported for each of them.
@@ -19,22 +19,22 @@ change those terms.
 Dependencies
 
 Local GoodData SDK components
-- @gooddata/sdk-backend-base (11.68.0-alpha.11) [MIT] — Transitive
-- @gooddata/sdk-backend-spi (11.68.0-alpha.11) [MIT] — Direct
-- @gooddata/sdk-code-schemas (11.68.0-alpha.11) [MIT] — Transitive
-- @gooddata/sdk-embedding (11.68.0-alpha.11) [MIT] — Transitive
-- @gooddata/sdk-model (11.68.0-alpha.11) [MIT] — Direct
-- @gooddata/sdk-ui (11.68.0-alpha.11) [MIT] — Direct
-- @gooddata/sdk-ui-charts (11.68.0-alpha.11) [LicenseRef-LICENSE] — Direct
-- @gooddata/sdk-ui-ext (11.68.0-alpha.11) [LicenseRef-LICENSE] — Direct
-- @gooddata/sdk-ui-filters (11.68.0-alpha.11) [MIT] — Direct
-- @gooddata/sdk-ui-geo (11.68.0-alpha.11) [LicenseRef-LICENSE] — Direct
-- @gooddata/sdk-ui-kit (11.68.0-alpha.11) [MIT] — Transitive
-- @gooddata/sdk-ui-pivot (11.68.0-alpha.11) [LicenseRef-LICENSE] — Direct
-- @gooddata/sdk-ui-semantic-search (11.68.0-alpha.11) [MIT] — Transitive
-- @gooddata/sdk-ui-theme-provider (11.68.0-alpha.11) [MIT] — Transitive
-- @gooddata/sdk-ui-vis-commons (11.68.0-alpha.11) [MIT] — Transitive
-- @gooddata/util (11.68.0-alpha.11) [MIT] — Transitive
+- @gooddata/sdk-backend-base (11.68.0) [MIT] — Transitive
+- @gooddata/sdk-backend-spi (11.68.0) [MIT] — Direct
+- @gooddata/sdk-code-schemas (11.68.0) [MIT] — Transitive
+- @gooddata/sdk-embedding (11.68.0) [MIT] — Transitive
+- @gooddata/sdk-model (11.68.0) [MIT] — Direct
+- @gooddata/sdk-ui (11.68.0) [MIT] — Direct
+- @gooddata/sdk-ui-charts (11.68.0) [LicenseRef-LICENSE] — Direct
+- @gooddata/sdk-ui-ext (11.68.0) [LicenseRef-LICENSE] — Direct
+- @gooddata/sdk-ui-filters (11.68.0) [MIT] — Direct
+- @gooddata/sdk-ui-geo (11.68.0) [LicenseRef-LICENSE] — Direct
+- @gooddata/sdk-ui-kit (11.68.0) [MIT] — Transitive
+- @gooddata/sdk-ui-pivot (11.68.0) [LicenseRef-LICENSE] — Direct
+- @gooddata/sdk-ui-semantic-search (11.68.0) [MIT] — Transitive
+- @gooddata/sdk-ui-theme-provider (11.68.0) [MIT] — Transitive
+- @gooddata/sdk-ui-vis-commons (11.68.0) [MIT] — Transitive
+- @gooddata/util (11.68.0) [MIT] — Transitive
 
 External components
 - @aaronhayes/react-use-hubspot-form (2.1.2) [MIT] — Transitive
@@ -212,7 +212,7 @@ External components
 - hasown (2.0.4) [MIT] — Transitive
 - hast-util-to-jsx-runtime (2.3.6) [MIT] — Transitive
 - hast-util-whitespace (3.0.0) [MIT] — Transitive
-- highcharts (12.6.2) [MIT, BSD-3-Clause] — Transitive
+- highcharts (12.6.2) [Commercial] — Transitive
 - highcharts-react-official (3.2.2) [MIT] — Transitive
 - hoist-non-react-statics (3.3.2) [BSD-3-Clause] — Transitive
 - html-url-attributes (3.0.1) [MIT] — Transitive
@@ -397,7 +397,7 @@ Local GoodData SDK components
 ================================================================================
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-backend-base (11.68.0-alpha.11)
+Package Title: @gooddata/sdk-backend-base (11.68.0)
 Package Source: Local workspace
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -415,7 +415,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-backend-spi (11.68.0-alpha.11)
+Package Title: @gooddata/sdk-backend-spi (11.68.0)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -433,7 +433,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-code-schemas (11.68.0-alpha.11)
+Package Title: @gooddata/sdk-code-schemas (11.68.0)
 Package Source: Local workspace
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -463,7 +463,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-embedding (11.68.0-alpha.11)
+Package Title: @gooddata/sdk-embedding (11.68.0)
 Package Source: Local workspace
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -481,7 +481,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-model (11.68.0-alpha.11)
+Package Title: @gooddata/sdk-model (11.68.0)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -499,7 +499,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui (11.68.0-alpha.11)
+Package Title: @gooddata/sdk-ui (11.68.0)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -517,7 +517,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui-charts (11.68.0-alpha.11)
+Package Title: @gooddata/sdk-ui-charts (11.68.0)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -557,7 +557,7 @@ THE FOREGOING LIMITATIONS SHALL APPLY TO THE MAXIMUM EXTENT PERMITTED BY APPLICA
 10. Governing Law These terms are governed by the laws of the State of California and the United States of America without regard to conflict of laws principles. You may not assign any part of this Agreement without the prior written consent of GoodData. Any attempted assignment without consent shall be void. These terms constitute the entire agreement between you and GoodData with respect to the Library and supersede all prior written or oral communications, understandings and agreements. Any waiver of these terms must be in writing to be effective. If any provision of these terms is found to be invalid or unenforceable, the remaining terms will continue to be valid and enforceable to the fullest extent permitted by law.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui-ext (11.68.0-alpha.11)
+Package Title: @gooddata/sdk-ui-ext (11.68.0)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -597,7 +597,7 @@ THE FOREGOING LIMITATIONS SHALL APPLY TO THE MAXIMUM EXTENT PERMITTED BY APPLICA
 10. Governing Law These terms are governed by the laws of the State of California and the United States of America without regard to conflict of laws principles. You may not assign any part of this Agreement without the prior written consent of GoodData. Any attempted assignment without consent shall be void. These terms constitute the entire agreement between you and GoodData with respect to the Library and supersede all prior written or oral communications, understandings and agreements. Any waiver of these terms must be in writing to be effective. If any provision of these terms is found to be invalid or unenforceable, the remaining terms will continue to be valid and enforceable to the fullest extent permitted by law.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui-filters (11.68.0-alpha.11)
+Package Title: @gooddata/sdk-ui-filters (11.68.0)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -615,65 +615,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui-geo (11.68.0-alpha.11)
-Package Source: Local workspace
-Package Depth: Direct
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-LicenseRef-LICENSE
-
-* License Text *
-GOODDATA GOODDATA.UI LIBRARY END USER LICENSE AGREEMENT
-
-GoodData Corporation ("GoodData") provides this "GoodData.UI Library", hereafter referred to as the "Library", to you subject to the following terms and conditions.  By using the Library you agree to the terms and conditions of this Agreement. If you do not agree with any of the following terms, then do not use the Library.
-
-1. Use Rights. Subject to the restrictions below, you may download and modify the Library contents for your use solely for the purpose of creating applications related to Your use of the GoodData subscription services platform (“Application(s)”). Open source software components provided with or used by the Library are licensed to you under the terms of the applicable license agreements included with such open source software components, which accompany this GoodData.UI Library.
-
-2. No Duty to Support; Reservation of Rights. You expressly acknowledge that GoodData has no duty or obligation to support the Library, or to provide updates or bug fixes to the Library and that GoodData otherwise reserves all rights not expressly granted to you hereunder in connection with Library.
-
-3. Restrictions You agree that you will not (i) use the Library to create, design or develop any functionality other than as set forth above in Section 1; (ii) allow third parties other than those performing work solely on your behalf within the scope of the license herein to modify, create derivative works of, reverse engineer, reverse compile, or disassemble the Library; (iii) distribute, sell, lease, rent, lend, or sublicense any part of the Library to any third party except as incorporated into your Application; or (iv) upload or otherwise transmit any material containing software viruses or other computer code, files or programs designed to interrupt, destroy, or limit the functionality of any software or hardware.
-
-The restrictions in this Section 3 shall not apply if and to the extent they contradict mandatory local law (including, but not limited to, law implementing the EC Software Directive) provided that, before you exercise any rights that you believe to be entitled to based on mandatory law, you provide GoodData with 30 days prior written notice and provide all reasonably requested information to allow GoodData to assess your claim and, at GoodData's sole discretion, to provide alternatives that reduce any adverse impact on GoodData's intellectual property or other rights.
-
-4. GoodData Ownership. Except for those portions licensed to GoodData by third parties, GoodData retains ownership of the Library, including without limitation all copyrights and other intellectual property rights therein. You may not remove, delete or modify any of the GoodData copyright statements in the Library.
-
-
-5. Trademarks. Your use of GoodData product names and trademarks shall comply with the branding guidelines that may be distributed by GoodData from time to time.  You may not use GoodData product names and trademarks, however, except where GoodData provides you express, prior written permission to use such product names and trademarks.  All other marks are the property of third parties subject to applicable use terms such entities may provide.
-6. Term, Termination, and Changes. This Agreement shall continue as long as you are in compliance with the terms specified herein or until otherwise terminated. You and or GoodData each may terminate this Agreement for any reason at any time. This Agreement shall automatically terminate upon the expiration or termination of the agreement that governs your use of the GoodData subscription services. You agree, upon termination, to destroy all copies of the Library within your possession or control. The Limitations of Warranties, Liability and Indemnification sections set out in this Agreement shall survive any termination or expiration of this Agreement.
-7. Limitations of Warranties and Liability
-THE LIBRARY AND ITS SOURCE CODE IS PROVIDED "AS IS" WITHOUT ANY WARRANTIES OF ANY KIND. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, GOODDATA DISCLAIMS ANY IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT OF INTELLECTUAL PROPERTY RIGHTS.  YOU MAY BE ABLE TO EXERCISE ADDITIONAL WARRANTY RIGHTS OFFERED BY THIRD PARTY COMMERCIAL SOFTWARE VENDORS WHOSE COMPONENTS ARE USED BY THE LIBRARY.  IN THOSE INSTANCES, YOUR SOLE REMEDY AND RECOURSE SHALL BE AGAINST THE LICENSORS OF SUCH COMMERCIAL SOFTWARE, AND NOT AGAINST GOODDATA.
-
-TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT WILL GOODDATA BE LIABLE FOR ANY LOST PROFITS OR BUSINESS OPPORTUNITIES, LOSS OF USE, BUSINESS INTERRUPTION, LOSS OF DATA, OR ANY OTHER INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR FROM LIBRARY OR YOUR USE OF THE LIBRARY, UNDER ANY THEORY OF LIABILITY, WHETHER BASED IN CONTRACT, TORT, NEGLIGENCE, PRODUCT LIABILITY, OR OTHERWISE. BECAUSE SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OR LIMITATION OF LIABILITY FOR CONSEQUENTIAL OR INCIDENTAL DAMAGES, THE PRECEDING LIMITATION MAY NOT APPLY TO YOU. GOODDATA'S LIABILITY ARISING OUT OF LIBRARY PROVIDED HEREUNDER WILL NOT, IN ANY EVENT, EXCEED US$100.00.
-
-THE FOREGOING LIMITATIONS SHALL APPLY TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, REGARDLESS OF WHETHER GOODDATA HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES AND REGARDLESS OF WHETHER ANY REMEDY FAILS OF ITS ESSENTIAL PURPOSE.
-
-8. Export Control. The Library is provided subject to the U.S. Export Administration Regulations and the regulations of other jurisdictions (e.g., the European Union). Diversion contrary to applicable law is prohibited. Without limiting the foregoing, you agree that (i) you are not acting on behalf of any person who is a citizen, national, or resident of, or who is controlled by the government of any country to which the United States or other applicable government body has prohibited export transactions (e.g., Iran, North Korea, etc.); (ii) you are not acting on behalf of, any person or entity listed on a relevant list of persons to whom export is prohibited (e.g., the U.S. Treasury Department list of Specially Designated Nationals and Blocked Persons, the U.S. Commerce Department Denied Persons List or Entity List, etc.); and (iii) you will not use the Library for any purpose prohibited by applicable law.
-
-9. Indemnification You agree to defend, indemnify and hold harmless GoodData, and any of its directors, officers, employees, affiliates, subsidiaries or agents, from and against any and all claims, losses, damages, liabilities and other expenses (including reasonable attorneys' fees), arising from or related to: i) your use of the Library; ii) any derivative works you create using Library source code, and iii) your breach of this Agreement.
-
-10. Governing Law These terms are governed by the laws of the State of California and the United States of America without regard to conflict of laws principles. You may not assign any part of this Agreement without the prior written consent of GoodData. Any attempted assignment without consent shall be void. These terms constitute the entire agreement between you and GoodData with respect to the Library and supersede all prior written or oral communications, understandings and agreements. Any waiver of these terms must be in writing to be effective. If any provision of these terms is found to be invalid or unenforceable, the remaining terms will continue to be valid and enforceable to the fullest extent permitted by law.
-
---------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui-kit (11.68.0-alpha.11)
-Package Source: Local workspace
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-* License Text *
-Copyright (c) 2020-2026 GoodData Corporation
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
---------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui-pivot (11.68.0-alpha.11)
+Package Title: @gooddata/sdk-ui-geo (11.68.0)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -713,7 +655,7 @@ THE FOREGOING LIMITATIONS SHALL APPLY TO THE MAXIMUM EXTENT PERMITTED BY APPLICA
 10. Governing Law These terms are governed by the laws of the State of California and the United States of America without regard to conflict of laws principles. You may not assign any part of this Agreement without the prior written consent of GoodData. Any attempted assignment without consent shall be void. These terms constitute the entire agreement between you and GoodData with respect to the Library and supersede all prior written or oral communications, understandings and agreements. Any waiver of these terms must be in writing to be effective. If any provision of these terms is found to be invalid or unenforceable, the remaining terms will continue to be valid and enforceable to the fullest extent permitted by law.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui-semantic-search (11.68.0-alpha.11)
+Package Title: @gooddata/sdk-ui-kit (11.68.0)
 Package Source: Local workspace
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -731,7 +673,47 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui-theme-provider (11.68.0-alpha.11)
+Package Title: @gooddata/sdk-ui-pivot (11.68.0)
+Package Source: Local workspace
+Package Depth: Direct
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+LicenseRef-LICENSE
+
+* License Text *
+GOODDATA GOODDATA.UI LIBRARY END USER LICENSE AGREEMENT
+
+GoodData Corporation ("GoodData") provides this "GoodData.UI Library", hereafter referred to as the "Library", to you subject to the following terms and conditions.  By using the Library you agree to the terms and conditions of this Agreement. If you do not agree with any of the following terms, then do not use the Library.
+
+1. Use Rights. Subject to the restrictions below, you may download and modify the Library contents for your use solely for the purpose of creating applications related to Your use of the GoodData subscription services platform (“Application(s)”). Open source software components provided with or used by the Library are licensed to you under the terms of the applicable license agreements included with such open source software components, which accompany this GoodData.UI Library.
+
+2. No Duty to Support; Reservation of Rights. You expressly acknowledge that GoodData has no duty or obligation to support the Library, or to provide updates or bug fixes to the Library and that GoodData otherwise reserves all rights not expressly granted to you hereunder in connection with Library.
+
+3. Restrictions You agree that you will not (i) use the Library to create, design or develop any functionality other than as set forth above in Section 1; (ii) allow third parties other than those performing work solely on your behalf within the scope of the license herein to modify, create derivative works of, reverse engineer, reverse compile, or disassemble the Library; (iii) distribute, sell, lease, rent, lend, or sublicense any part of the Library to any third party except as incorporated into your Application; or (iv) upload or otherwise transmit any material containing software viruses or other computer code, files or programs designed to interrupt, destroy, or limit the functionality of any software or hardware.
+
+The restrictions in this Section 3 shall not apply if and to the extent they contradict mandatory local law (including, but not limited to, law implementing the EC Software Directive) provided that, before you exercise any rights that you believe to be entitled to based on mandatory law, you provide GoodData with 30 days prior written notice and provide all reasonably requested information to allow GoodData to assess your claim and, at GoodData's sole discretion, to provide alternatives that reduce any adverse impact on GoodData's intellectual property or other rights.
+
+4. GoodData Ownership. Except for those portions licensed to GoodData by third parties, GoodData retains ownership of the Library, including without limitation all copyrights and other intellectual property rights therein. You may not remove, delete or modify any of the GoodData copyright statements in the Library.
+
+
+5. Trademarks. Your use of GoodData product names and trademarks shall comply with the branding guidelines that may be distributed by GoodData from time to time.  You may not use GoodData product names and trademarks, however, except where GoodData provides you express, prior written permission to use such product names and trademarks.  All other marks are the property of third parties subject to applicable use terms such entities may provide.
+6. Term, Termination, and Changes. This Agreement shall continue as long as you are in compliance with the terms specified herein or until otherwise terminated. You and or GoodData each may terminate this Agreement for any reason at any time. This Agreement shall automatically terminate upon the expiration or termination of the agreement that governs your use of the GoodData subscription services. You agree, upon termination, to destroy all copies of the Library within your possession or control. The Limitations of Warranties, Liability and Indemnification sections set out in this Agreement shall survive any termination or expiration of this Agreement.
+7. Limitations of Warranties and Liability
+THE LIBRARY AND ITS SOURCE CODE IS PROVIDED "AS IS" WITHOUT ANY WARRANTIES OF ANY KIND. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, GOODDATA DISCLAIMS ANY IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT OF INTELLECTUAL PROPERTY RIGHTS.  YOU MAY BE ABLE TO EXERCISE ADDITIONAL WARRANTY RIGHTS OFFERED BY THIRD PARTY COMMERCIAL SOFTWARE VENDORS WHOSE COMPONENTS ARE USED BY THE LIBRARY.  IN THOSE INSTANCES, YOUR SOLE REMEDY AND RECOURSE SHALL BE AGAINST THE LICENSORS OF SUCH COMMERCIAL SOFTWARE, AND NOT AGAINST GOODDATA.
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT WILL GOODDATA BE LIABLE FOR ANY LOST PROFITS OR BUSINESS OPPORTUNITIES, LOSS OF USE, BUSINESS INTERRUPTION, LOSS OF DATA, OR ANY OTHER INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR FROM LIBRARY OR YOUR USE OF THE LIBRARY, UNDER ANY THEORY OF LIABILITY, WHETHER BASED IN CONTRACT, TORT, NEGLIGENCE, PRODUCT LIABILITY, OR OTHERWISE. BECAUSE SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OR LIMITATION OF LIABILITY FOR CONSEQUENTIAL OR INCIDENTAL DAMAGES, THE PRECEDING LIMITATION MAY NOT APPLY TO YOU. GOODDATA'S LIABILITY ARISING OUT OF LIBRARY PROVIDED HEREUNDER WILL NOT, IN ANY EVENT, EXCEED US$100.00.
+
+THE FOREGOING LIMITATIONS SHALL APPLY TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, REGARDLESS OF WHETHER GOODDATA HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES AND REGARDLESS OF WHETHER ANY REMEDY FAILS OF ITS ESSENTIAL PURPOSE.
+
+8. Export Control. The Library is provided subject to the U.S. Export Administration Regulations and the regulations of other jurisdictions (e.g., the European Union). Diversion contrary to applicable law is prohibited. Without limiting the foregoing, you agree that (i) you are not acting on behalf of any person who is a citizen, national, or resident of, or who is controlled by the government of any country to which the United States or other applicable government body has prohibited export transactions (e.g., Iran, North Korea, etc.); (ii) you are not acting on behalf of, any person or entity listed on a relevant list of persons to whom export is prohibited (e.g., the U.S. Treasury Department list of Specially Designated Nationals and Blocked Persons, the U.S. Commerce Department Denied Persons List or Entity List, etc.); and (iii) you will not use the Library for any purpose prohibited by applicable law.
+
+9. Indemnification You agree to defend, indemnify and hold harmless GoodData, and any of its directors, officers, employees, affiliates, subsidiaries or agents, from and against any and all claims, losses, damages, liabilities and other expenses (including reasonable attorneys' fees), arising from or related to: i) your use of the Library; ii) any derivative works you create using Library source code, and iii) your breach of this Agreement.
+
+10. Governing Law These terms are governed by the laws of the State of California and the United States of America without regard to conflict of laws principles. You may not assign any part of this Agreement without the prior written consent of GoodData. Any attempted assignment without consent shall be void. These terms constitute the entire agreement between you and GoodData with respect to the Library and supersede all prior written or oral communications, understandings and agreements. Any waiver of these terms must be in writing to be effective. If any provision of these terms is found to be invalid or unenforceable, the remaining terms will continue to be valid and enforceable to the fullest extent permitted by law.
+
+--------------------------------------------------------------------------------
+Package Title: @gooddata/sdk-ui-semantic-search (11.68.0)
 Package Source: Local workspace
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -749,7 +731,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui-vis-commons (11.68.0-alpha.11)
+Package Title: @gooddata/sdk-ui-theme-provider (11.68.0)
 Package Source: Local workspace
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -767,7 +749,25 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/util (11.68.0-alpha.11)
+Package Title: @gooddata/sdk-ui-vis-commons (11.68.0)
+Package Source: Local workspace
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+* License Text *
+Copyright (c) 2020-2026 GoodData Corporation
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+--------------------------------------------------------------------------------
+Package Title: @gooddata/util (11.68.0)
 Package Source: Local workspace
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -7572,355 +7572,24 @@ Package Depth: Transitive
 --------------------------------------------------------------------------------
 
 * Declared Licenses *
-MIT, BSD-3-Clause
-
-* MIT *
+Commercial
 
 * License Header *
-The MIT License (MIT)
+Commercial use of this software is governed by the Highsoft Standard License Agreement
+found at:
 
-Copyright (c) 2015-2017 yWorks GmbH
+https://www.highcharts.com/license
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Non-commercial use of this software is governed by the Highsoft End-User License Agreement (EULA)
+found at:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+https://www.highcharts.com/license-eula
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-------------------------------------
+By installing or using this software, you agree to these terms.
 
-
-/** @license
-   * jsPDF - PDF Document creation from JavaScript
-   * Version 2.0.0 Built on 2019-01-22T15:32:38.220Z
-   *                           CommitID 0110a2202b
-   *
-   * Copyright (c) 2015-2018 yWorks GmbH, http://www.yworks.com
-   *               2015-2018 Lukas Holländer <lukas.hollaender@yworks.com>, https://github.com/HackbrettXXX
-   *               2010-2016 James Hall <james@parall.ax>, https://github.com/MrRio/jsPDF
-   *               2010 Aaron Spike, https://github.com/acspike
-   *               2012 Willow Systems Corporation, willow-systems.com
-   *               2012 Pablo Hess, https://github.com/pablohess
-   *               2012 Florian Jenett, https://github.com/fjenett
-   *               2013 Warren Weckesser, https://github.com/warrenweckesser
-   *               2013 Youssef Beddad, https://github.com/lifof
-   *               2013 Lee Driscoll, https://github.com/lsdriscoll
-   *               2013 Stefan Slonevskiy, https://github.com/stefslon
-   *               2013 Jeremy Morel, https://github.com/jmorel
-   *               2013 Christoph Hartmann, https://github.com/chris-rock
-   *               2014 Juan Pablo Gaviria, https://github.com/juanpgaviria
-   *               2014 James Makes, https://github.com/dollaruw
-   *               2014 Diego Casorran, https://github.com/diegocr
-   *               2014 Steven Spungin, https://github.com/Flamenco
-   *               2014 Kenneth Glassey, https://github.com/Gavvers
-   *
-   * Licensed under the MIT License
-   *
-   * Contributor(s):
-   *    siefkenj, ahwolf, rickygu, Midnith, saintclair, eaparango,
-   *    kim3er, mfo, alnorth, Flamenco
-------------------------------
-/**
-   * @license
-   * Copyright (c) 2016 Alexander Weidt,
-   * https://github.com/BiggA94
-   *
-   * Licensed under the MIT License. http://opensource.org/licenses/mit-license
-   */
-/**
-   * @license
-   * Copyright (c) 2016 Alexander Weidt,
-   * https://github.com/BiggA94
-   *
-   * Licensed under the MIT License. http://opensource.org/licenses/mit-license
-   */
--------------------
-/** @license
-   * jsPDF addImage plugin
-   * Copyright (c) 2012 Jason Siefken, https://github.com/siefkenj/
-   *               2013 Chris Dowling, https://github.com/gingerchris
-   *               2013 Trinh Ho, https://github.com/ineedfat
-   *               2013 Edwin Alejandro Perez, https://github.com/eaparango
-   *               2013 Norah Smith, https://github.com/burnburnrocket
-   *               2014 Diego Casorran, https://github.com/diegocr
-   *               2014 James Robb, https://github.com/jamesbrobb
-   *
-   * 
-   */
-----------------------------
-/**
-   * @license
-   * Copyright (c) 2014 Steven Spungin (TwelveTone LLC)  steven@twelvetone.tv
-   *
-   * Licensed under the MIT License.
-   * http://opensource.org/licenses/mit-license
-   */
----------------------
-/**
-   * @license
-   * Copyright (c) 2017 Aras Abbasi
-   *
-   * Licensed under the MIT License.
-   * http://opensource.org/licenses/mit-license
-   */
---------------------------
-   * @license
-   * Copyright (c) 2014 Steven Spungin (TwelveTone LLC)  steven@twelvetone.tv
-   *
-   * Licensed under the MIT License.
-   * http://opensource.org/licenses/mit-license
-   */
------------------------------
-   * @license
-   * 
-   * Copyright (c) 2013 Youssef Beddad, youssef.beddad@gmail.com
-   *               2013 Eduardo Menezes de Morais, eduardo.morais@usp.br
-   *               2013 Lee Driscoll, https://github.com/lsdriscoll
-   *               2014 Juan Pablo Gaviria, https://github.com/juanpgaviria
-   *               2014 James Hall, james@parall.ax
-   *               2014 Diego Casorran, https://github.com/diegocr
-   *
-   * 
- --------------------------------
-
-   * jsPDF Context2D PlugIn Copyright (c) 2014 Steven Spungin (TwelveTone LLC) steven@twelvetone.tv
-   *
-   * Licensed under the MIT License. http://opensource.org/licenses/mit-license
-   */
------------------------
-/**
-   * Copyright (c) 2018 Erik Koopmans
-   * Released under the MIT License.
-   *
-   * Licensed under the MIT License.
-   * http://opensource.org/licenses/mit-license
--------------------------------
-   * @license
-   * Copyright (c) 2014 Steven Spungin (TwelveTone LLC)  steven@twelvetone.tv
-   *
-   * Licensed under the MIT License.
-   * http://opensource.org/licenses/mit-license
---------------
-
-/**
-   * @license
-   *
-   * Copyright (c) 2014 James Robb, https://github.com/jamesbrobb
---------------
-
-------------------
-   * @license
-   * Copyright (c) 2017 Aras Abbasi
-   *
-   * Licensed under the MIT License.
-   * http://opensource.org/licenses/mit-license
-   */
-
-------------------
-   * Copyright (c) 2018 Aras Abbasi
-   *
-   * Licensed under the MIT License.
-   * http://opensource.org/licenses/mit-license
-------------------
-/** @license
-   * MIT license.
-   * Copyright (c) 2012 Willow Systems Corporation, willow-systems.com
-   *               2014 Diego Casorran, https://github.com/diegocr
-   *
------------------
-/** @license
-   jsPDF standard_fonts_metrics plugin
-   * Copyright (c) 2012 Willow Systems Corporation, willow-systems.com
-   * MIT license.
-   * 
-   * ====================================================================
-   */
-/**
-   * This file adds the standard font metrics to jsPDF.
-   *
-   * Font metrics data is reprocessed derivative of contents of
-   * "Font Metrics for PDF Core 14 Fonts" package, which exhibits the following copyright and license:
-   *
-   * Copyright (c) 1989, 1990, 1991, 1992, 1993, 1997 Adobe Systems Incorporated. All Rights Reserved.
-   *
-   * This file and the 14 PostScript(R) AFM files it accompanies may be used,
-   * copied, and distributed for any purpose and without charge, with or without
-   * modification, provided that all copyright notices are retained; that the AFM
-   * files are not distributed without this file; that all modifications to this
-   * file or any of the AFM files are prominently noted in the modified file(s);
-   * and that this paragraph is not modified. Adobe Systems has no responsibility
-   * or obligation to support the use of the AFM files.
-   *
-   * @name standard_fonts_metrics
-   * @module
--------------
-   * @license
-   * Licensed under the MIT License.
-   * http://opensource.org/licenses/mit-license
-   */
-
-/** @license
-   * Copyright (c) 2012 Willow Systems Corporation, willow-systems.com
-   *
-
-   */
-
-/** ====================================================================
-   * jsPDF XMP metadata plugin
-   * Copyright (c) 2016 Jussi Utunen, u-jussi@suomi24.fi
-   *
-   * 
-   * ====================================================================
-
-/*
-    Copyright (c) 2008, Adobe Systems Incorporated
-    All rights reserved.
-
-    Redistribution and use in source and binary forms, with or without 
-    modification, are permitted provided that the following conditions are
-    met:
-
-    * Redistributions of source code must retain the above copyright notice, 
-      this list of conditions and the following disclaimer.
-    
-    * Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the 
-      documentation and/or other materials provided with the distribution.
-    
-    * Neither the name of Adobe Systems Incorporated nor the names of its 
-      contributors may be used to endorse or promote products derived from 
-      this software without specific prior written permission.
-
-    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
-    IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
-    THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-    PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR 
-    CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-    EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-    PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-    PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-    LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-    NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-  */
-/*
-   Copyright (c) 2013 Gildas Lormeau. All rights reserved.
-
-   Redistribution and use in source and binary forms, with or without
-   modification, are permitted provided that the following conditions are met:
-
-   1. Redistributions of source code must retain the above copyright notice,
-   this list of conditions and the following disclaimer.
-
-   2. Redistributions in binary form must reproduce the above copyright 
-   notice, this list of conditions and the following disclaimer in 
-   the documentation and/or other materials provided with the distribution.
-
-   3. The names of the authors may not be used to endorse or promote products
-   derived from this software without specific prior written permission.
-
-   THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES,
-   INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
-   FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL JCRAFT,
-   INC. OR ANY CONTRIBUTORS TO THIS SOFTWARE BE LIABLE FOR ANY DIRECT, INDIRECT,
-   INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-   LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
-   OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-   LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-   NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-   EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-   */
-
-  # PNG.js
-  # Copyright (c) 2011 Devon Govett
-  # MIT LICENSE
-  # 
-  # 
-  */
-
-/*
-   * Extracted from pdf.js
-   * https://github.com/andreasgal/pdf.js
-   *
-   * Copyright (c) 2011 Mozilla Foundation
-   *
-   * Contributors: Andreas Gal <gal@mozilla.com>
-   *               Chris G Jones <cjones@mozilla.com>
-   *               Shaon Barman <shaon.barman@gmail.com>
-   *               Vivien Nicolas <21@vingtetun.org>
-   *               Justin D'Arcangelo <justindarc@gmail.com>
-   *               Yury Delendik
--------------------
-/**
- * Modules in this bundle
- * @license
- *
- * svg2pdf.js:
- *   license: MIT (http://opensource.org/licenses/MIT)
- *   author: yFiles for HTML Support Team <yfileshtml@yworks.com>
- *   homepage: https://github.com/yWorks/svg2pdf.js#readme
- *   version: 1.3.1
- *
- * cssesc:
- *   license: MIT (http://opensource.org/licenses/MIT)
- *   author: Mathias Bynens
- *   homepage: https://mths.be/cssesc
- *   version: 2.0.0
- *
- * font-family:
- *   license: MIT (http://opensource.org/licenses/MIT)
- *   author: Taro Hanamura <m@hanamurataro.com>
- *   homepage: https://github.com/hanamura/font-family
- *   version: 0.2.0
- *
- * svgpath:
- *   license: MIT (http://opensource.org/licenses/MIT)
- *   homepage: https://github.com/fontello/svgpath#readme
- *   version: 2.2.1
- *
- * This header is generated by licensify (https://github.com/twada/licensify)
-
-* BSD-3-Clause *
-
-* License Header *
-Copyright (c) <year> <owner>
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
-   1. Redistributions of source code must retain the above copyright notice,
-      this list of conditions and the following disclaimer.
-
-   2. Redistributions in binary form must reproduce the above copyright notice,
-      this list of conditions and the following disclaimer in the documentation
-      and/or other materials provided with the distribution.
-
-   3. Neither the name of the copyright holder nor the names of its
-      contributors may be used to endorse or promote products derived from
-      this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+* Copyrights *
+Commercial
+- Copyright (c) 2009-2026 Highsoft AS
 
 --------------------------------------------------------------------------------
 Package Title: highcharts-react-official (3.2.2)

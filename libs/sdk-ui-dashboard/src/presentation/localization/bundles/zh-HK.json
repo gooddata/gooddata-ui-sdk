@@ -237,6 +237,7 @@
     "dialogs.schedule.email.save.executionTimestampMode": "要創建或編輯預定的匯出，請將儀表板日期重置為今日。",
     "dialogs.alert.save.executionTimestampMode": "要創建或編輯警報，請將儀表板日期重置為今日。",
     "dialogs.schedule.email.widgetError": "錯誤：無法發送時間表 — 源小部件已被刪除。 刪除時間表或聯絡您的管理員。",
+    "dialogs.schedule.email.visualizationUnavailable": "錯誤：您無法新增附件，因為此可視化已被刪除，或您無權存取。",
     "dialogs.schedule.email.destinationWarning": "所選目標僅支援將匯出傳送給自己。",
     "dialogs.automation.filters.showAll": "顯示全部",
     "dialogs.automation.filters.showAll.ariaDescription": "用於顯示所有篩選器。",

@@ -105,8 +105,14 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
 
     const [focusedId, setFocusedId_internal] = useState<string | undefined>(() => {
         const flatItems = unwrapGroupItems(items);
+        // A menu opens on its selected choice; a checked checkbox is no choice to start from, so a
+        // menu of options opens on its first item, as the menu button pattern has it.
         const selectedItem = flatItems.find(
-            (item) => isItemFocusable(item) && item.type === "interactive" && item.isSelected,
+            (item) =>
+                isItemFocusable(item) &&
+                item.type === "interactive" &&
+                item.isSelected &&
+                item.selectionRole !== "checkbox",
         );
         return selectedItem?.id ?? flatItems.find(isItemFocusable)?.id;
     });

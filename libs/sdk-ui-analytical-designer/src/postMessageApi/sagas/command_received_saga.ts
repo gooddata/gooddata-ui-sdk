@@ -24,6 +24,7 @@ import {
     isAdSetTimezoneCommandData,
     isAdUndoCommandData,
 } from "@gooddata/sdk-embedding";
+import { notifyValidatedCommandOrigin } from "@gooddata/sdk-embedding/internal";
 import { isValidIanaTimezoneId } from "@gooddata/sdk-model";
 
 import { conversionInit } from "../../actions/drillable_items_actions.js";
@@ -76,6 +77,10 @@ function* isCommandOriginValid(origin: string) {
             organizationId,
             origin,
         );
+        if (result) {
+            // The outgoing events may wait for the first command with a valid origin.
+            yield call(notifyValidatedCommandOrigin, origin);
+        }
         return result;
     } catch (e) {
         // oxlint-disable-next-line eslint-js/no-console

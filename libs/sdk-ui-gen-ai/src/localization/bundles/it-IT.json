@@ -150,6 +150,7 @@
     "gd.gen-ai.publisherDocument.open": "Apri",
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, one {# pagina} other {# pagine}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, one {# pagina} other {# pagine}}",
+    "gd.gen-ai.publisherDocument.previewOnly": "Impossibile aprire i documenti dall'anteprima dell'agente. Salva l'agente e aprili in AI Assistant.",
     "gd.gen-ai.publisherDocument.unavailable": "Il documento non è disponibile.",
     "gd.gen-ai.publisherDocument.previousVersion": "Questo documento è stato creato nella versione precedente di Reports e non può essere aperto qui.",
     "gd.gen-ai.publisherDocument.newerVersion": "Questo documento è stato creato in una versione più recente di Reports e non può essere aperto qui.",

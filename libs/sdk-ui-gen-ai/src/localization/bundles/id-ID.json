@@ -150,6 +150,7 @@
     "gd.gen-ai.publisherDocument.open": "Buka",
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, other {# halaman}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, other {# halaman}}",
+    "gd.gen-ai.publisherDocument.previewOnly": "Dokumen tidak dapat dibuka dari pratinjau agen. Simpan agen dan buka dokumen tersebut dari AI Assistant.",
     "gd.gen-ai.publisherDocument.unavailable": "Dokumen tidak tersedia.",
     "gd.gen-ai.publisherDocument.previousVersion": "Dokumen ini dibuat di Reports versi sebelumnya dan tidak dapat dibuka di sini.",
     "gd.gen-ai.publisherDocument.newerVersion": "Dokumen ini dibuat di Reports versi yang lebih baru dan tidak dapat dibuka di sini.",

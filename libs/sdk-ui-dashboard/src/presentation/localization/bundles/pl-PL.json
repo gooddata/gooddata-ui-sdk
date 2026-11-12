@@ -237,6 +237,7 @@
     "dialogs.schedule.email.save.executionTimestampMode": "Aby utworzyć lub edytować zaplanowane eksporty, zresetuj datę pulpitu nawigacyjnego na dzisiejszą.",
     "dialogs.alert.save.executionTimestampMode": "Aby utworzyć lub edytować alerty, zresetuj datę na pulpicie nawigacyjnym na dziś.",
     "dialogs.schedule.email.widgetError": "Błąd: Harmonogram nie może zostać wysłany — źródłowy widżet został usunięty. Usuń harmonogram lub skontaktuj się z administratorem.",
+    "dialogs.schedule.email.visualizationUnavailable": "Błąd: Nie można dodać załączników, ponieważ ta wizualizacja została usunięta lub nie masz do niej dostępu.",
     "dialogs.schedule.email.destinationWarning": "Wybrane miejsce docelowe obsługuje tylko wysyłanie eksportu do siebie.",
     "dialogs.automation.filters.showAll": "Pokaż wszystko",
     "dialogs.automation.filters.showAll.ariaDescription": "Użyj, aby wyświetlić wszystkie filtry.",

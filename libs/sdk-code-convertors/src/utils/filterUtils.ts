@@ -8,11 +8,11 @@ import { type ExportEntities, type FromEntities } from "../types.js";
 import { convertGranularityToId, parseGranularityValue } from "./granularityUtils.js";
 import type { TextFilterCondition } from "./typeGuards.js";
 
-export function parseDateValues(
-    entities: FromEntities | ExportEntities,
-    label: string,
-    values: (string | number | boolean)[],
-) {
+/**
+ * Returns the granularity id when `label` is a label of a date dataset known to `entities` (and the dataset
+ * offers that granularity), otherwise undefined.
+ */
+function findDateLabelGranularity(entities: FromEntities | ExportEntities, label: string) {
     const [type, objId] = label.split("/");
     const id = objId || type;
     const [dateDatasetId, gran] = id.split(".");
@@ -20,15 +20,42 @@ export function parseDateValues(
     const dateDatasetEntity = entities.find((e) => e.type === "date" && e.id === dateDatasetId);
     if (dateDatasetEntity?.data) {
         const dateDataset = dateDatasetEntity.data as DateDataset;
-        const exists = dateDataset.granularities
-            ?.map((g) => convertGranularityToId(g))
-            .find((g) => g === gran);
-
-        if (exists) {
-            return convertDateValues(gran, values);
-        }
+        return dateDataset.granularities?.map((g) => convertGranularityToId(g)).find((g) => g === gran);
     }
-    return values;
+    return undefined;
+}
+
+export function parseDateValues(
+    entities: FromEntities | ExportEntities,
+    label: string,
+    values: (string | number | boolean)[],
+) {
+    const gran = findDateLabelGranularity(entities, label);
+    return gran ? convertDateValues(gran, values) : values;
+}
+
+/**
+ * Parses the values of an attribute filter in the YAML to declarative direction like
+ * {@link parseDateValues}, but an empty string `""` in the values of a date label is turned into `null`, the
+ * way the UI represents the "(empty value)" element. A date label never holds `""`, while the backend
+ * treats `""` and `null` alike on it, so this is lossless there. Labels of ordinary attributes keep their
+ * values untouched, as `""` and `null` are distinct values for them.
+ *
+ * It has to run after the legacy `""` marker filter is folded into `empty_values`
+ * ({@link foldLegacyEmptyValuesWithFilter}), so that marker never reaches it.
+ */
+export function parseDateValuesToDeclarative(
+    entities: FromEntities | ExportEntities,
+    label: string,
+    values: (string | number | boolean)[],
+) {
+    const gran = findDateLabelGranularity(entities, label);
+    if (!gran) {
+        return values;
+    }
+
+    // value by value, as a granularity specific parsing would drop the "" which is to be kept
+    return values.flatMap((value) => (value === "" ? [null] : convertDateValues(gran, [value])));
 }
 
 export function matchConditionToYaml(operator: MatchFilterOperator, negativeSelection?: boolean): string {

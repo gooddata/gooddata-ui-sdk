@@ -237,6 +237,7 @@
     "dialogs.schedule.email.save.executionTimestampMode": "Para criar ou editar exportações programadas, redefina a data do painel para hoje.",
     "dialogs.alert.save.executionTimestampMode": "Para criar ou editar alertas, redefina a data do painel para hoje.",
     "dialogs.schedule.email.widgetError": "Erro: o agendamento não pode ser enviado — o widget de origem foi excluído. Exclua a programação ou entre em contato com o administrador.",
+    "dialogs.schedule.email.visualizationUnavailable": "Erro: Não é possível adicionar anexos porque esta visualização foi eliminada ou não tem acesso a ela.",
     "dialogs.schedule.email.destinationWarning": "O destino selecionado apenas permite o envio da exportação para si próprio.",
     "dialogs.automation.filters.showAll": "Mostrar tudo",
     "dialogs.automation.filters.showAll.ariaDescription": "Use para mostrar todos os filtros.",

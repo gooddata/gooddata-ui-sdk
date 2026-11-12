@@ -12,60 +12,6 @@ export default {
     title: "01 Stories From Test Scenarios/AreaChart/stacking",
 };
 
-export const TwoMeasuresWithViewbyAndDisabledStacking = () =>
-    (() => {
-        const scenarios = getScenariosGroupByIndexes(0, 16).asScenarioDescAndScenario();
-        const scenarioAndDescriptions = scenarios.filter(
-            ([name]) => name === "two measures with viewBy and disabled stacking",
-        );
-        if (scenarioAndDescriptions.length === 0)
-            throw new Error("Failed to find scenario 'two measures with viewBy and disabled stacking'");
-        if (scenarioAndDescriptions.length > 1)
-            throw new Error("Multiple 'two measures with viewBy and disabled stacking' scenarios found");
-        const scenarioAndDescription = scenarioAndDescriptions[0];
-
-        const scenario = scenarioAndDescription[1];
-
-        const { propsFactory, workspaceType, component: Component } = scenario;
-        const props = propsFactory(withCustomSetting(backend, scenario.backendSettings), workspaceType);
-
-        return buildStory(Component, props, { width: 800, height: 400 }, scenario.tags)();
-    })();
-TwoMeasuresWithViewbyAndDisabledStacking.parameters = {
-    kind: "two measures with viewBy and disabled stacking",
-    screenshot: {
-        readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
-        viewports: [{ label: "desktop", width: 1464, height: 768 }],
-    },
-} satisfies IStoryParameters;
-
-export const TwoMeasuresWithViewbyAndEnabledStacking = () =>
-    (() => {
-        const scenarios = getScenariosGroupByIndexes(0, 16).asScenarioDescAndScenario();
-        const scenarioAndDescriptions = scenarios.filter(
-            ([name]) => name === "two measures with viewBy and enabled stacking",
-        );
-        if (scenarioAndDescriptions.length === 0)
-            throw new Error("Failed to find scenario 'two measures with viewBy and enabled stacking'");
-        if (scenarioAndDescriptions.length > 1)
-            throw new Error("Multiple 'two measures with viewBy and enabled stacking' scenarios found");
-        const scenarioAndDescription = scenarioAndDescriptions[0];
-
-        const scenario = scenarioAndDescription[1];
-
-        const { propsFactory, workspaceType, component: Component } = scenario;
-        const props = propsFactory(withCustomSetting(backend, scenario.backendSettings), workspaceType);
-
-        return buildStory(Component, props, { width: 800, height: 400 }, scenario.tags)();
-    })();
-TwoMeasuresWithViewbyAndEnabledStacking.parameters = {
-    kind: "two measures with viewBy and enabled stacking",
-    screenshot: {
-        readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
-        viewports: [{ label: "desktop", width: 1464, height: 768 }],
-    },
-} satisfies IStoryParameters;
-
 export const TwoMeasuresWithViewbyAndDisabledStackMeasures = () =>
     (() => {
         const scenarios = getScenariosGroupByIndexes(0, 16).asScenarioDescAndScenario();

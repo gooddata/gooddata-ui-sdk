@@ -32,7 +32,7 @@
         "crowdinContext": "Text on a button to automatically apply formatting rules on a MAQL metric"
     },
     "metricComponent.editMetric.autoFormatBubble": {
-        "text": "Format metric expression (Shift+CTRL+I)",
+        "text": "Format metric expression (Shift+Alt+F)",
         "crowdinContext": "Tooltip for auto-format button with keyboard shortcut"
     },
     "metricComponent.editMetric.autoFormatBubbleMac": {
@@ -69,11 +69,7 @@
     },
     "metricComponent.editMetric.decoratorsShow": {
         "text": "Show names",
-        "crowdinContext": "Button to show element names in metric editor"
-    },
-    "metricComponent.editMetric.decoratorsHide": {
-        "text": "Hide names",
-        "crowdinContext": "Button to hide element names in metric editor"
+        "crowdinContext": "Menu item with a check mark that turns the display of element names in the metric editor on and off"
     },
     "metricComponent.editMetric.descriptionPlaceholder": {
         "text": "Add description here...",
@@ -222,6 +218,14 @@
     "metricComponent.editMetric.metric.definition.tooltip": {
         "text": "Create a MAQL statement to query your data.",
         "crowdinContext": "Tooltip explaining metric definition functionality"
+    },
+    "metricComponent.editMetric.metric.definition.moreActions": {
+        "text": "More actions for the metric definition",
+        "crowdinContext": "Accessible name of the '...' button that opens the menu of the metric definition section (auto format, show or hide titles)"
+    },
+    "metricComponent.partHeader.moreActions": {
+        "text": "More actions",
+        "crowdinContext": "Accessible name of a '...' button that opens a menu of more actions for a section of the metric editor"
     },
     "metricComponent.editMetric.metric.result.context": {
         "text": "View by",
@@ -494,6 +498,42 @@
     "metricComponent.unsavedChangesConfirmDialog.submitAll": {
         "text": "Save all",
         "crowdinContext": "Button to save all unsaved changes"
+    },
+    "metricComponent.minimize.restore": {
+        "text": "Restore editor",
+        "crowdinContext": "Accessible name of the icon button that reopens the minimized metric editor"
+    },
+    "metricComponent.tabs.minimize": {
+        "text": "Minimize editor",
+        "crowdinContext": "Accessible name of the icon button that minimizes the metric editor into a small bar"
+    },
+    "metricComponent.tabs.maximize": {
+        "text": "Full screen",
+        "crowdinContext": "Accessible name of the icon button that expands the metric editor to full screen"
+    },
+    "metricComponent.tabs.exitMaximize": {
+        "text": "Exit full screen",
+        "crowdinContext": "Accessible name of the icon button that returns the full-screen metric editor to its normal size"
+    },
+    "metricComponent.tabs.close": {
+        "text": "Close editor",
+        "crowdinContext": "Accessible name of the icon button that closes the metric editor with all its open metrics"
+    },
+    "metricComponent.tabs.tabList": {
+        "text": "Open metrics",
+        "crowdinContext": "Accessible name of the row of tabs in the metric editor, one tab per metric being edited"
+    },
+    "metricComponent.tabs.scrollLeft": {
+        "text": "Scroll tabs left",
+        "crowdinContext": "Accessible name of the arrow button that scrolls the metric editor tabs to the left"
+    },
+    "metricComponent.tabs.scrollRight": {
+        "text": "Scroll tabs right",
+        "crowdinContext": "Accessible name of the arrow button that scrolls the metric editor tabs to the right"
+    },
+    "metricComponent.tabs.closeTab": {
+        "text": "Close {title}",
+        "crowdinContext": "Accessible name of the icon button that closes one metric tab in the metric editor. {title} is the metric name"
     },
     "metricComponent.minimize.editing": {
         "text": "Editing:",

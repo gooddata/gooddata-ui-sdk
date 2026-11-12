@@ -150,6 +150,7 @@
     "gd.gen-ai.publisherDocument.open": "Abrir",
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, one {# página} other {# páginas}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, one {# página} other {# páginas}}",
+    "gd.gen-ai.publisherDocument.previewOnly": "Los documentos no se pueden abrir desde la vista previa del agente. Guarde el agente y ábralos desde el Asistente de IA.",
     "gd.gen-ai.publisherDocument.unavailable": "El documento no está disponible.",
     "gd.gen-ai.publisherDocument.previousVersion": "Este documento se creó en la versión anterior de Reports y no se puede abrir aquí.",
     "gd.gen-ai.publisherDocument.newerVersion": "Este documento se creó en una versión más reciente de Reports y no se puede abrir aquí.",

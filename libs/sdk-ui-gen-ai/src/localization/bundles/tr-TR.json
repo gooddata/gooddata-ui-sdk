@@ -150,6 +150,7 @@
     "gd.gen-ai.publisherDocument.open": "Aç",
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, one {# sayfa} other {# sayfa}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, one {# sayfa} other {# sayfa}}",
+    "gd.gen-ai.publisherDocument.previewOnly": "Belgeler ajan önizlemesinden açılamaz. Ajanı kaydedin ve belgeleri AI Asistanı'ndan açın.",
     "gd.gen-ai.publisherDocument.unavailable": "Belge kullanılamıyor.",
     "gd.gen-ai.publisherDocument.previousVersion": "Bu belge Reports'un önceki sürümünde oluşturulduğu için burada açılamıyor.",
     "gd.gen-ai.publisherDocument.newerVersion": "Bu belge Reports'un daha yeni bir sürümünde oluşturulduğu için burada açılamıyor.",

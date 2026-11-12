@@ -237,6 +237,7 @@
     "dialogs.schedule.email.save.executionTimestampMode": "Чтобы создать или изменить запланированные экспорты, сбросьте дату дашборда на сегодня.",
     "dialogs.alert.save.executionTimestampMode": "Чтобы создать или изменить оповещения, сбросьте дату дашборда на сегодня.",
     "dialogs.schedule.email.widgetError": "Ошибка: Невозможно отправить расписание — исходный виджет был удален. Удалите расписание или свяжитесь с вашим администратором.",
+    "dialogs.schedule.email.visualizationUnavailable": "Ошибка: невозможно добавить вложения, так как эта визуализация была удалена или у вас нет доступа к ней.",
     "dialogs.schedule.email.destinationWarning": "Выбранное направление поддерживает отправку экспорта только вам.",
     "dialogs.automation.filters.showAll": "Показать все",
     "dialogs.automation.filters.showAll.ariaDescription": "Используйте для отображения всех фильтров.",
