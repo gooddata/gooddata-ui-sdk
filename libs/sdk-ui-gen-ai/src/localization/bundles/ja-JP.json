@@ -150,6 +150,7 @@
     "gd.gen-ai.publisherDocument.open": "開く",
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, other {# ページ}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, other {# ページ}}",
+    "gd.gen-ai.publisherDocument.previewOnly": "エージェントのプレビューからドキュメントを開くことはできません。エージェントを保存してから、AI Assistant でドキュメントを開いてください。",
     "gd.gen-ai.publisherDocument.unavailable": "ドキュメントは利用できません。",
     "gd.gen-ai.publisherDocument.previousVersion": "このドキュメントは以前のバージョンのレポートで作成されたため、ここでは開けません。",
     "gd.gen-ai.publisherDocument.newerVersion": "このドキュメントはより新しいバージョンのレポートで作成されたため、ここでは開けません。",

@@ -237,6 +237,7 @@
     "dialogs.schedule.email.save.executionTimestampMode": "Als je geplande exports wilt maken of bewerken, stel je de dashboarddatum in op vandaag.",
     "dialogs.alert.save.executionTimestampMode": "Als je waarschuwingen wilt maken of bewerken, stel je de dashboarddatum in op vandaag.",
     "dialogs.schedule.email.widgetError": "Fout: Agenda kan niet worden verzonden - de bronwidget is verwijderd. Verwijder de planning of neem contact op met je beheerder.",
+    "dialogs.schedule.email.visualizationUnavailable": "Fout: u kunt geen bijlagen toevoegen omdat deze visualisatie is verwijderd of omdat u er geen toegang toe hebt.",
     "dialogs.schedule.email.destinationWarning": "De geselecteerde bestemming ondersteunt alleen het verzenden van de export naar jezelf.",
     "dialogs.automation.filters.showAll": "Alle tonen",
     "dialogs.automation.filters.showAll.ariaDescription": "Gebruik om alle filters weer te geven.",

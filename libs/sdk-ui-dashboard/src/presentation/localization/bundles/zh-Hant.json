@@ -237,6 +237,7 @@
     "dialogs.schedule.email.save.executionTimestampMode": "若要建立或編輯計劃匯出，請將儀表板日期重設為今天。",
     "dialogs.alert.save.executionTimestampMode": "若要建立或編輯警報，請將儀表板日期重設為今天。",
     "dialogs.schedule.email.widgetError": "錯誤：無法傳送日程安排 - 來源視窗小工具已被刪除。請刪除該日程安排或聯絡您的管理員。",
+    "dialogs.schedule.email.visualizationUnavailable": "錯誤：您無法新增附件，因為此視覺化已遭刪除，或您沒有存取權限。",
     "dialogs.schedule.email.destinationWarning": "所選目的地僅支援將導出發送給自己。",
     "dialogs.automation.filters.showAll": "顯示所有",
     "dialogs.automation.filters.showAll.ariaDescription": "用於顯示所有過濾器。",

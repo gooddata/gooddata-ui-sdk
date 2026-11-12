@@ -237,6 +237,7 @@
     "dialogs.schedule.email.save.executionTimestampMode": "Zamanlanmış dışa aktarımlar oluşturmak veya düzenlemek için, gösterge tablosu tarihini bugüne sıfırlayın.",
     "dialogs.alert.save.executionTimestampMode": "Uyarılar oluşturmak veya düzenlemek için, gösterge tablosu tarihini bugüne sıfırlayın.",
     "dialogs.schedule.email.widgetError": "Hata: Zamanlama gönderilemiyor — kaynak widget silindi. Zamanlamayı silin veya yöneticinizle iletişime geçin.",
+    "dialogs.schedule.email.visualizationUnavailable": "Hata: Bu görselleştirme silindiği veya görselleştirmeye erişiminiz olmadığı için ek ekleyemezsiniz.",
     "dialogs.schedule.email.destinationWarning": "Seçilen hedef yalnızca dışa aktarmayı kendinize göndermeyi destekler.",
     "dialogs.automation.filters.showAll": "Tümünü göster",
     "dialogs.automation.filters.showAll.ariaDescription": "Tüm filtreleri göstermek için kullanın.",

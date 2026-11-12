@@ -237,6 +237,7 @@
     "dialogs.schedule.email.save.executionTimestampMode": "To create or edit scheduled exports, reset the dashboard date to today.",
     "dialogs.alert.save.executionTimestampMode": "To create or edit alerts, reset the dashboard date to today.",
     "dialogs.schedule.email.widgetError": "Error: Schedule cannot be sent — the source widget has been deleted. Please delete the schedule or contact your administrator.",
+    "dialogs.schedule.email.visualizationUnavailable": "Error: You can't add attachments because this visualisation was deleted or you don't have access to it.",
     "dialogs.schedule.email.destinationWarning": "The selected destination only supports sending the export to yourself.",
     "dialogs.automation.filters.showAll": "Show all",
     "dialogs.automation.filters.showAll.ariaDescription": "Use to display all filters.",

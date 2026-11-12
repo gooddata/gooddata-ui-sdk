@@ -237,6 +237,7 @@
     "dialogs.schedule.email.save.executionTimestampMode": "Para crear o editar exportaciones programadas, restablezca la fecha del panel al día de hoy.",
     "dialogs.alert.save.executionTimestampMode": "Para crear o editar alertas, restablezca la fecha del panel al día de hoy.",
     "dialogs.schedule.email.widgetError": "Error: El horario no puede ser enviado - el widget de origen fue borrado. Elimine el horario o póngase en contacto con su administrador.",
+    "dialogs.schedule.email.visualizationUnavailable": "Error: No puede agregar archivos adjuntos porque esta visualización se eliminó o usted no tiene acceso a ella.",
     "dialogs.schedule.email.destinationWarning": "El destino seleccionado solo admite el envío de la exportación a uno mismo.",
     "dialogs.automation.filters.showAll": "Mostrar todo",
     "dialogs.automation.filters.showAll.ariaDescription": "Sirve para mostrar todos los filtros.",

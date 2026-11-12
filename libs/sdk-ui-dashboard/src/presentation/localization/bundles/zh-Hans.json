@@ -237,6 +237,7 @@
     "dialogs.schedule.email.save.executionTimestampMode": "要创建或编辑计划导出，请将仪表板日期重置为今天。",
     "dialogs.alert.save.executionTimestampMode": "要创建或编辑警报，请将仪表板日期重置为今天。",
     "dialogs.schedule.email.widgetError": "错误：无法发送日程安排 - 源窗口小部件已被删除。请删除该日程安排或联系您的管理员。",
+    "dialogs.schedule.email.visualizationUnavailable": "错误：无法添加附件，因为此可视化已被删除，或您无权访问。",
     "dialogs.schedule.email.destinationWarning": "所选目的地仅支持将导出发送给您自己。",
     "dialogs.automation.filters.showAll": "显示全部",
     "dialogs.automation.filters.showAll.ariaDescription": "用于显示所有过滤器。",

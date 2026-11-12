@@ -150,6 +150,7 @@
     "gd.gen-ai.publisherDocument.open": "열기",
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, other {#페이지}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, other {#페이지}}",
+    "gd.gen-ai.publisherDocument.previewOnly": "에이전트 미리 보기에서는 문서를 열 수 없습니다. 에이전트를 저장한 후 AI Assistant에서 문서를 여세요.",
     "gd.gen-ai.publisherDocument.unavailable": "문서를 사용할 수 없습니다.",
     "gd.gen-ai.publisherDocument.previousVersion": "이 문서는 이전 버전의 보고서에서 만들어졌으므로 여기에서 열 수 없습니다.",
     "gd.gen-ai.publisherDocument.newerVersion": "이 문서는 현재보다 최신 버전의 보고서에서 만들어졌으므로 여기에서 열 수 없습니다.",

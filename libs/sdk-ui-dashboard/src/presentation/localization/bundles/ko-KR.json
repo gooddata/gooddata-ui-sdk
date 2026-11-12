@@ -237,6 +237,7 @@
     "dialogs.schedule.email.save.executionTimestampMode": "예약된 내보내기를 생성하거나 편집하려면 대시보드 날짜를 오늘로 재설정하세요.",
     "dialogs.alert.save.executionTimestampMode": "경고를 생성하거나 편집하려면 대시보드 날짜를 오늘로 재설정하세요.",
     "dialogs.schedule.email.widgetError": "오류: 일정 전송 불가 — 소스 위젯이 삭제되었습니다. 일정을 삭제하거나 관리자에게 문의하십시오.",
+    "dialogs.schedule.email.visualizationUnavailable": "오류: 이 시각화가 삭제되었거나 이 시각화에 대한 액세스 권한이 없으므로 첨부 파일을 추가할 수 없습니다.",
     "dialogs.schedule.email.destinationWarning": "선택한 대상은 내보내기를 본인에게만 보낼 수 있습니다.",
     "dialogs.automation.filters.showAll": "모두 보기",
     "dialogs.automation.filters.showAll.ariaDescription": "모든 필터 표시용으로 사용.",

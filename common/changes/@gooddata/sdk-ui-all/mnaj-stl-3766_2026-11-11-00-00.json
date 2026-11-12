@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-metric-component: Name the icon buttons of the metric editor (minimize, full screen, close, close tab, create) and of the minimized editor bar, and keep the focus on them when the editor is minimized and restored. The editor tabs can be switched with the arrow keys, Home and End, and the tab scroll buttons are named and work with Enter and Space. sdk-ui-kit: `IconMinimize` supports `ariaHidden`.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

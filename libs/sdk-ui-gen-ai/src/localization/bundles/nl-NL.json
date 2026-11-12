@@ -150,6 +150,7 @@
     "gd.gen-ai.publisherDocument.open": "Openen",
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, one {# pagina} other {# pagina's}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, one {# pagina} other {# pagina's}}",
+    "gd.gen-ai.publisherDocument.previewOnly": "Documenten kunnen niet worden geopend vanuit de voorbeeldweergave van de agent. Sla de agent op en open de documenten in de AI Assistant.",
     "gd.gen-ai.publisherDocument.unavailable": "Het document is niet beschikbaar.",
     "gd.gen-ai.publisherDocument.previousVersion": "Dit document is gemaakt in de vorige versie van Reports en kan hier niet worden geopend.",
     "gd.gen-ai.publisherDocument.newerVersion": "Dit document is gemaakt in een nieuwere versie van Reports en kan hier niet worden geopend.",

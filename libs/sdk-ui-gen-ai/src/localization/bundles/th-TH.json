@@ -150,6 +150,7 @@
     "gd.gen-ai.publisherDocument.open": "เปิด",
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, other {# หน้า}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, other {# หน้า}}",
+    "gd.gen-ai.publisherDocument.previewOnly": "ไม่สามารถเปิดเอกสารจากหน้าตัวอย่างเอเจนต์ได้ โปรดบันทึกเอเจนต์แล้วเปิดเอกสารจาก AI Assistant",
     "gd.gen-ai.publisherDocument.unavailable": "เอกสารไม่พร้อมใช้งาน",
     "gd.gen-ai.publisherDocument.previousVersion": "เอกสารนี้สร้างขึ้นใน Reports เวอร์ชันก่อนหน้าและไม่สามารถเปิดที่นี่ได้",
     "gd.gen-ai.publisherDocument.newerVersion": "เอกสารนี้สร้างขึ้นใน Reports เวอร์ชันที่ใหม่กว่าและไม่สามารถเปิดที่นี่ได้",
