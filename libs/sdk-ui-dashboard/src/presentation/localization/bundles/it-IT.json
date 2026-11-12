@@ -237,6 +237,7 @@
     "dialogs.schedule.email.save.executionTimestampMode": "Per creare o modificare le esportazioni programmate, reimpostare la data del dashboard su oggi.",
     "dialogs.alert.save.executionTimestampMode": "Per creare o modificare gli avvisi, reimpostare la data del dashboard su oggi.",
     "dialogs.schedule.email.widgetError": "Errore: Impossibile inviare la pianificazione: il widget di origine è stato cancellato. Cancellare la pianificazione o contattare l'amministratore.",
+    "dialogs.schedule.email.visualizationUnavailable": "Errore: impossibile aggiungere allegati perché questa visualizzazione è stata eliminata o non è possibile accedervi.",
     "dialogs.schedule.email.destinationWarning": "La destinazione selezionata supporta solo l'invio dell'esportazione a se stessi.",
     "dialogs.automation.filters.showAll": "Mostra tutto",
     "dialogs.automation.filters.showAll.ariaDescription": "Utilizzare per mostrare tutti i filtri.",

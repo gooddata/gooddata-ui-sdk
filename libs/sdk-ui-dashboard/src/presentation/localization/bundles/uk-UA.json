@@ -237,6 +237,7 @@
     "dialogs.schedule.email.save.executionTimestampMode": "Щоб створити або змінити заплановані експорти, скиньте дату dashboard на сьогодні.",
     "dialogs.alert.save.executionTimestampMode": "Щоб створити або змінити оповіщення, скиньте дату dashboard на сьогодні.",
     "dialogs.schedule.email.widgetError": "Помилка: Запланований експорт не можна надіслати — вихідний widget було видалено. Видаліть розклад або зверніться до адміністратора.",
+    "dialogs.schedule.email.visualizationUnavailable": "Помилка: не можна додати вкладення, оскільки цю візуалізацію видалено або у вас немає доступу до неї.",
     "dialogs.schedule.email.destinationWarning": "Вибране призначення підтримує надсилання експорту лише собі.",
     "dialogs.automation.filters.showAll": "Показати все",
     "dialogs.automation.filters.showAll.ariaDescription": "Використовуйте, щоб показати всі фільтри.",

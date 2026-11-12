@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-kit: Focus traps (dialogs, dropdowns) now let Tab reach `contenteditable` elements without an explicit `tabindex`, such as the MAQL editor in the metric editor dialog, and skip elements inside an `inert` subtree.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

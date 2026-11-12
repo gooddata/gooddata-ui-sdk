@@ -55,6 +55,7 @@ import { mapSourceInsightFilterToOption } from "./optionMappings/mapSourceInsigh
 import { mapSourceMeasureFilterToOption } from "./optionMappings/mapSourceMeasureFilterToOption.js";
 import { type IDrillFiltersConfigOption, isDrillFiltersConfigOptionSelected } from "./types.js";
 import { type IDrillFiltersConfigSelection } from "./useDrillFiltersConfigInner.js";
+import { useDrillParameterOptions } from "./useDrillParameterOptions.js";
 import { useFetchTargetDashboardFilters } from "./useFetchTargetDashboardFilters.js";
 
 interface IUseDrillFiltersConfigParams {
@@ -96,8 +97,14 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
         targetDashboardTextAttributeFilters,
         targetDashboardAttributeFilterConfigs,
         targetDashboardMeasureValueFilters,
-        isLoading,
+        isLoading: isTargetDashboardFiltersLoading,
     } = useFetchTargetDashboardFilters(item);
+    // A drill-down executes the source insight with a different attribute.
+    const executedInsight = isDrillDown ? insight : targetInsight;
+    const { options: parameterOptions, isLoading: isParameterOptionsLoading } = useDrillParameterOptions(
+        item,
+        executedInsight,
+    );
 
     const sourceInsightAttributes = useMemo(
         () => bucketsAttributes(insight ? insightBuckets(insight) : []),
@@ -336,6 +343,10 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
             duplicateMetricFilterMessage,
         ],
     );
+    const dashboardSectionOptions = useMemo(
+        () => [...dashboardFiltersOptionsWithDuplicateMetricState, ...parameterOptions],
+        [dashboardFiltersOptionsWithDuplicateMetricState, parameterOptions],
+    );
     const sourceInsightFiltersOptionsWithDuplicateMetricState = useMemo(
         () =>
             applyDuplicateMetricFilterState(
@@ -439,12 +450,12 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
     );
 
     return {
-        isLoading,
+        isLoading: isTargetDashboardFiltersLoading || isParameterOptionsLoading,
         supportsExtendedFiltersConfig,
         intersectionAttributesOptions,
         sourceInsightFiltersOptions: sourceInsightFiltersOptionsWithDuplicateMetricState,
         sourceMeasureFiltersOptions,
-        dashboardFiltersOptions: dashboardFiltersOptionsWithDuplicateMetricState,
+        dashboardFiltersOptions: dashboardSectionOptions,
         drillIntersectionIgnoredAttributes: currentSelection.drillIntersectionIgnoredAttributes ?? [],
         includedSourceInsightFiltersObjRefs: currentSelection.includedSourceInsightFiltersObjRefs ?? [],
         ignoredDashboardFilters: currentSelection.ignoredDashboardFilters ?? [],

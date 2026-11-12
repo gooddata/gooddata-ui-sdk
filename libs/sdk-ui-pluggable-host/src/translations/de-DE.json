@@ -5,7 +5,7 @@
     "gs.header.menu": "Menü",
     "gs.header.accessibility.label": "Globale Anwendungskopfzeile",
     "gs.header.href.accessibility": "Zur Startseite",
-    "gs.header.logo.title.accessibility": "{organizationName} logo",
+    "gs.header.logo.title.accessibility": "{organizationName} Logo",
     "gs.header.mainMenu.ariaLabel": "Hauptmenü",
     "gs.header.menu.accessibility.label": "Globale Navigation",
     "gs.header.account.title": "Konto",

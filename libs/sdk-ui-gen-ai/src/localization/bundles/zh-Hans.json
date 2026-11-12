@@ -150,6 +150,7 @@
     "gd.gen-ai.publisherDocument.open": "打开",
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, other {# 页}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, other {# 页}}",
+    "gd.gen-ai.publisherDocument.previewOnly": "无法从智能体预览中打开文档。请保存智能体，然后从 AI Assistant 中打开文档。",
     "gd.gen-ai.publisherDocument.unavailable": "文档不可用。",
     "gd.gen-ai.publisherDocument.previousVersion": "此文档使用旧版报告创建，无法在此处打开。",
     "gd.gen-ai.publisherDocument.newerVersion": "此文档使用较新版报告创建，无法在此处打开。",

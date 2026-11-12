@@ -150,6 +150,7 @@
     "gd.gen-ai.publisherDocument.open": "Открыть",
     "gd.gen-ai.publisherDocument.details": "{period} · {count, plural, one {# страница} few {# страницы} many {# страниц} other {# страницы}}",
     "gd.gen-ai.publisherDocument.page-count": "{count, plural, one {# страница} few {# страницы} many {# страниц} other {# страницы}}",
+    "gd.gen-ai.publisherDocument.previewOnly": "Документы нельзя открывать в режиме предварительного просмотра агента. Сохраните агента и откройте документы в AI Assistant.",
     "gd.gen-ai.publisherDocument.unavailable": "Документ недоступен.",
     "gd.gen-ai.publisherDocument.previousVersion": "Этот документ создан в предыдущей версии Reports, и его нельзя открыть здесь.",
     "gd.gen-ai.publisherDocument.newerVersion": "Этот документ создан в более новой версии Reports, и его нельзя открыть здесь.",

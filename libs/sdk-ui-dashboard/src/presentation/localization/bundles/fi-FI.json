@@ -237,6 +237,7 @@
     "dialogs.schedule.email.save.executionTimestampMode": "Jos haluat luoda tai muokata ajoitettuja vientejä, nollaa ohjauspaneelin päivämäärä tähän päivään.",
     "dialogs.alert.save.executionTimestampMode": "Jos haluat luoda tai muokata ilmoituksia, nollaa ohjauspaneelin päivämäärä tähän päivään.",
     "dialogs.schedule.email.widgetError": "Virhe: Aikataulua ei voida lähettää — lähde-widget poistettiin. Poista aikataulu tai ota yhteyttä järjestelmänvalvojaan.",
+    "dialogs.schedule.email.visualizationUnavailable": "Virhe: Et voi lisätä liitteitä, koska tämä visualisointi on poistettu tai sinulla ei ole siihen käyttöoikeutta.",
     "dialogs.schedule.email.destinationWarning": "Valittu kohde tukee viennin lähettämistä vain itsellesi.",
     "dialogs.automation.filters.showAll": "Näytä kaikki",
     "dialogs.automation.filters.showAll.ariaDescription": "Käytä näyttääksesi kaikki suodattimet.",

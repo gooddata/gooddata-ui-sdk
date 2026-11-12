@@ -237,6 +237,7 @@
     "dialogs.schedule.email.save.executionTimestampMode": "หากต้องการสร้างหรือแก้ไขการส่งออกตามกำหนดการ ให้รีเซ็ตวันที่ของแดชบอร์ดเป็นวันนี้",
     "dialogs.alert.save.executionTimestampMode": "หากต้องการสร้างหรือแก้ไขการแจ้งเตือน ให้รีเซ็ตวันที่ของแดชบอร์ดเป็นวันนี้",
     "dialogs.schedule.email.widgetError": "ข้อผิดพลาด: ไม่สามารถส่งกำหนดการได้ — วิดเจ็ตต้นทางถูกลบแล้ว ลบกำหนดการหรือติดต่อผู้ดูแลระบบของคุณ",
+    "dialogs.schedule.email.visualizationUnavailable": "ข้อผิดพลาด: คุณไม่สามารถเพิ่มไฟล์แนบได้ เนื่องจากการแสดงภาพข้อมูลนี้ถูกลบ หรือคุณไม่มีสิทธิ์เข้าถึง",
     "dialogs.schedule.email.destinationWarning": "ปลายทางที่เลือกรองรับการส่งออกให้เฉพาะตัวคุณเท่านั้น",
     "dialogs.automation.filters.showAll": "แสดงทั้งหมด",
     "dialogs.automation.filters.showAll.ariaDescription": "ใช้เพื่อแสดงตัวกรองทั้งหมด",

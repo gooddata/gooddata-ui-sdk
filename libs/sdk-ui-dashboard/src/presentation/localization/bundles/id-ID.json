@@ -237,6 +237,7 @@
     "dialogs.schedule.email.save.executionTimestampMode": "Untuk membuat atau mengedit ekspor terjadwal, reset tanggal dasbor ke hari ini.",
     "dialogs.alert.save.executionTimestampMode": "Untuk membuat atau mengedit peringatan, reset tanggal dasbor ke hari ini.",
     "dialogs.schedule.email.widgetError": "Kesalahan: Jadwal tidak dapat dikirim — widget sumber telah dihapus. Hapus jadwal atau hubungi administrator Anda.",
+    "dialogs.schedule.email.visualizationUnavailable": "Kesalahan: Anda tidak dapat menambahkan lampiran karena visualisasi ini telah dihapus atau Anda tidak memiliki akses ke visualisasi tersebut.",
     "dialogs.schedule.email.destinationWarning": "Tujuan yang dipilih hanya mendukung pengiriman ekspor kepada diri Anda sendiri.",
     "dialogs.automation.filters.showAll": "Tampilkan semua",
     "dialogs.automation.filters.showAll.ariaDescription": "Gunakan untuk menampilkan semua filter.",
