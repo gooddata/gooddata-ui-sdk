@@ -41,5 +41,14 @@ export interface ITabsProps<T = undefined> {
     locales?: {
         createTooltip?: string;
         titlePlaceholder?: string;
+        // accessible names of the icon-only controls; each has a localized default (useTabsLabels)
+        minimize?: string;
+        maximize?: string;
+        exitMaximize?: string;
+        close?: string;
+        closeTab?: (title: string) => string;
+        tabList?: string;
+        scrollLeft?: string;
+        scrollRight?: string;
     };
 }

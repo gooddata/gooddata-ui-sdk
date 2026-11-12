@@ -179,11 +179,24 @@ export interface ITabProps<T = undefined> {
     beforeActive?: boolean;
     afterActive?: boolean;
     last?: boolean;
+    /**
+     * Accessible name of the tab's close button; gets the tab title (or the placeholder) as `title`.
+     */
+    closeLabel?: (title: string) => string;
     onActive: (tab: ITab<T>) => void;
     onClose: (tab: ITab<T>) => void;
 }
 
-export function Tab({ tab, placeholder, last, active, afterActive, onActive, onClose }: ITabProps) {
+export function Tab({
+    tab,
+    placeholder,
+    last,
+    active,
+    afterActive,
+    closeLabel,
+    onActive,
+    onClose,
+}: ITabProps) {
     const { states, options, title } = tab;
     const { classes, cx } = useStyles();
 
@@ -197,8 +210,12 @@ export function Tab({ tab, placeholder, last, active, afterActive, onActive, onC
                     TabSpace,
                 )}
             />
+            {/* Roving tab index: only the active tab is a Tab stop; the arrow keys of the tab list
+                move between the tabs. */}
             <div
                 role="tab"
+                tabIndex={active ? 0 : -1}
+                aria-selected={active}
                 className={cx(
                     classes.root,
                     TabRoot,
@@ -224,13 +241,15 @@ export function Tab({ tab, placeholder, last, active, afterActive, onActive, onC
                 </div>
                 {options && options.closeable && (
                     <button
+                        type="button"
                         className={cx(classes.close, NameButton, TabsClasses.ButtonCloseTab)}
+                        aria-label={closeLabel?.(title || placeholder || "")}
                         onClick={(e) => {
                             e.stopPropagation();
                             onClose(tab);
                         }}
                     >
-                        <IconClose width={9} height={9} />
+                        <IconClose width={9} height={9} ariaHidden />
                     </button>
                 )}
             </div>

@@ -3,11 +3,11 @@ Copyright (c) 2017-2026 GoodData Corporation
 This product includes a number of subcomponents with separate copyright notices and license terms below. Your use of these subcomponents is subject to the terms and conditions of the subcomponent's license. This GoodData project does not necessarily use all the open source software referred to below and may also only use portions of a given package. With respect to the open source software listed in this document, if you (i) have any questions, (ii) wish to receive source code for packages under licenses that require their source code to be made available (such as the GNU Lesser Public License), or (iii) discover any errors or omissions in the licensing information provided, please contact us at legal@gooddata.com. Please identify in source code requests: (i) the packages for which you are requesting corresponding source, (ii) the GoodData product (including any available version) with which the package was provided; and (iii) an email address (if available) or postal address at which GoodData may contact you.
 
 --------------------------------------------------------------------------------
-Attribution Notice for @gooddata/sdk-pluggable-application-model (11.68.0-alpha.11)
+Attribution Notice for @gooddata/sdk-pluggable-application-model (11.69.0-alpha.0)
 Package License: MIT
 Own License File: LICENSE
-Date generated: 2026-11-11
-Revision ID: dcb0869bf079d57a743488c12b4ca59e52b9dc57
+Date generated: 2026-11-12
+Revision ID: c56f4e258b22c698a7b4595c97b12a469452f25a
 
 This notice lists the components that @gooddata/sdk-pluggable-application-model depends on, directly or through other
 packages, with the license and copyright information reported for each of them.
@@ -19,8 +19,8 @@ change those terms.
 Dependencies
 
 Local GoodData SDK components
-- @gooddata/sdk-model (11.68.0-alpha.11) [MIT] — Direct
-- @gooddata/util (11.68.0-alpha.11) [MIT] — Transitive
+- @gooddata/sdk-model (11.69.0-alpha.0) [MIT] — Direct
+- @gooddata/util (11.69.0-alpha.0) [MIT] — Transitive
 
 External components
 - @types/geojson (7946.0.16) [MIT] — Transitive
@@ -59,7 +59,7 @@ Local GoodData SDK components
 ================================================================================
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-model (11.68.0-alpha.11)
+Package Title: @gooddata/sdk-model (11.69.0-alpha.0)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -77,7 +77,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/util (11.68.0-alpha.11)
+Package Title: @gooddata/util (11.69.0-alpha.0)
 Package Source: Local workspace
 Package Depth: Transitive
 --------------------------------------------------------------------------------

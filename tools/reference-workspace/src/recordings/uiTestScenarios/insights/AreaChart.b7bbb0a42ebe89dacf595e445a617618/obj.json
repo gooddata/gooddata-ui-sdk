@@ -50,7 +50,7 @@
         ],
         "filters": [],
         "identifier": "AreaChart.b7bbb0a42ebe89dacf595e445a617618",
-        "properties": { "controls": { "stacking": false } },
+        "properties": { "controls": { "stackMeasures": false } },
         "sorts": [],
         "title": "AreaChart - undefined values and disabled stacking",
         "uri": "AreaChart.b7bbb0a42ebe89dacf595e445a617618",

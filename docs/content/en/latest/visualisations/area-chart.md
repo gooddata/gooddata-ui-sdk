@@ -60,7 +60,7 @@ Pass these options in the `config` prop. See [Chart configuration](../../visuali
 | `legend` | Whether the legend shows and where. |
 | `xaxis`, `yaxis` | Axis visibility, labels, label rotation, and axis name. `yaxis.min` and `yaxis.max` set the Y axis range. |
 | `secondary_yaxis` | `measures` takes the local identifiers of the measures to show on a second Y axis on the right. The other options work as in `yaxis`. |
-| `stackMeasuresToPercent` | `true` stacks the areas on the primary Y axis to 100%, so each area shows its share of the total. Takes precedence over `stackMeasures`. Ignored with two `viewBy` attributes. |
+| `stackMeasuresToPercent` | `true` stacks the areas on the primary Y axis to 100%, so each area shows its share of the total. If set to `true`, it takes precedence over `stackMeasures`. Ignored with two `viewBy` attributes. |
 | `dataLabels` | `visible` shows or hides the labels. `style: "backplate"` adds a background behind them. |
 | `dataPoints` | `visible` shows or hides the dot at each data point. |
 | `grid` | `enabled` shows or hides the horizontal grid lines. |

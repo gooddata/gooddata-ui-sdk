@@ -841,6 +841,52 @@ describe("visualisation conversion", () => {
             expect(filters[1]).toHaveProperty("positiveAttributeFilter.in.values", ["", "2025"]);
         });
 
+        describe('"" in the values of a date label', () => {
+            const dateEntities = [
+                {
+                    id: "created",
+                    type: "date",
+                    path: "created.yaml",
+                    data: { type: "date", id: "created", granularities: ["YEAR", "MONTH", "DAY_OF_WEEK"] },
+                },
+            ] as unknown as ExportEntities;
+            const convert = (filter: Record<string, unknown>) =>
+                yamlFiltersToDeclarative(dateEntities, { d1: filter } as never, {}, true).filters;
+
+            it('converts "" to null next to other values, keeping the order', () => {
+                const filters = convert({ ...period, with: withFilter({ include: ["", "2025"] }) });
+                expect(filters).toHaveLength(2);
+                expect(filters[1]).toHaveProperty("positiveAttributeFilter.in.values", [null, "2025"]);
+            });
+
+            it('converts "" to null in a negative filter', () => {
+                const filters = convert({ ...period, with: withFilter({ exclude: ["2025", ""] }) });
+                expect(filters[1]).toHaveProperty("negativeAttributeFilter.notIn.values", ["2025", null]);
+            });
+
+            it('converts "" to null on a granularity with parsed values', () => {
+                const filters = convert({
+                    ...period,
+                    with: withFilter({ include: ["", "Monday"] }, "label/created.dayOfWeek"),
+                });
+                expect(filters[1]).toHaveProperty("positiveAttributeFilter.in.values", [null, "01"]);
+            });
+
+            it('does not convert "" of an ordinary attribute, even next to a date filter', () => {
+                const filters = convert({
+                    ...period,
+                    with: withFilter({ include: ["", "EU"] }, "label/region"),
+                });
+                expect(filters[1]).toHaveProperty("positiveAttributeFilter.in.values", ["", "EU"]);
+            });
+
+            it('still folds a lone legacy "" marker into emptyValueHandling instead of converting it', () => {
+                expect(convert({ ...period, with: withFilter({ include: [""] }) })).toEqual([
+                    { relativeDateFilter: { ...relative, emptyValueHandling: "only" } },
+                ]);
+            });
+        });
+
         it('keeps a "" filter on a label of another dataset', () => {
             const filters = insightFilters({
                 ...period,

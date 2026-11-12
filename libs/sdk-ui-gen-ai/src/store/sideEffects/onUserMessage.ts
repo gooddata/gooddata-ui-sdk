@@ -236,6 +236,9 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
             !conversationState.id,
         );
         lastAssistantMessage = result.lastAssistantMessage;
+        if (result.error) {
+            throw result.error;
+        }
         responseCompleted = true;
     } catch (e) {
         const wasCanceled: boolean = yield cancelled();
@@ -293,6 +296,7 @@ type EvaluateUserConversationMessageResult = {
      * This is the message that needs to be marked as complete by the caller.
      */
     lastAssistantMessage: IChatConversationLocalItem;
+    error?: unknown;
 };
 
 function* evaluateUserConversationMessage(
@@ -604,6 +608,8 @@ function* evaluateUserConversationMessage(
         }
 
         return { lastAssistantMessage: currentAssistantMessage };
+    } catch (error) {
+        return { lastAssistantMessage: currentAssistantMessage, error };
     } finally {
         if (reader) {
             const wasCancelled: boolean = yield cancelled();

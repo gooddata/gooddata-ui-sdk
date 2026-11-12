@@ -193,7 +193,8 @@ export interface IChartConfig {
      * @remarks
      * Applicable for Area, Bar, Column and Combo charts which have more than one measure.
      *
-     * This option has preference over the `stackMeasures` option.
+     * When `true`, this option takes precedence over the `stackMeasures` option. `false` doesn't turn off
+     * stacking from `stackMeasures` or a `stackBy` attribute.
      */
     stackMeasuresToPercent?: boolean;
 
@@ -303,12 +304,6 @@ export interface IChartConfig {
     //
     //
     //
-
-    /**
-     * Do not use this. Instead use stackMeasures and/or stackMeasuresToPercent
-     * @internal
-     */
-    stacking?: boolean;
 
     /**
      * Options passed directly to Highcharts constructor (ChartOptions type)

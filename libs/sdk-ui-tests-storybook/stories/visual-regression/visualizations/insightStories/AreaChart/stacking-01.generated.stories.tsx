@@ -17,186 +17,6 @@ export default {
     title: "04 Stories For Pluggable Vis/AreaChart/stacking",
 };
 
-export const TwoMeasuresWithViewbyAndDisabledStacking = () =>
-    plugVizStory(
-        {
-            insight: {
-                buckets: [
-                    {
-                        items: [
-                            {
-                                measure: {
-                                    definition: {
-                                        measureDefinition: {
-                                            item: {
-                                                identifier: "87a053b0-3947-49f3-b0c5-de53fd01f050",
-                                                type: "measure",
-                                            },
-                                        },
-                                    },
-                                    localIdentifier: "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
-                                },
-                            },
-                            {
-                                measure: {
-                                    definition: {
-                                        measureDefinition: {
-                                            item: {
-                                                identifier: "e519fa2a-86c3-4e32-8313-0c03062348j3",
-                                                type: "measure",
-                                            },
-                                        },
-                                    },
-                                    localIdentifier: "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
-                                },
-                            },
-                        ],
-                        localIdentifier: "measures",
-                    },
-                    {
-                        items: [
-                            {
-                                attribute: {
-                                    displayForm: {
-                                        identifier: "label.f_product.product.name",
-                                        type: "displayForm",
-                                    },
-                                    localIdentifier: "a_label.f_product.product.name",
-                                },
-                            },
-                        ],
-                        localIdentifier: "view",
-                    },
-                    {
-                        items: [],
-                        localIdentifier: "stack",
-                    },
-                ],
-                filters: [],
-                identifier: "AreaChart.2dbe5ddfb4f994a9bc2294199b35372a",
-                properties: {
-                    controls: {
-                        stacking: false,
-                    },
-                },
-                sorts: [],
-                title: "AreaChart - two measures with viewBy and disabled stacking",
-                uri: "AreaChart.2dbe5ddfb4f994a9bc2294199b35372a",
-                visualizationUrl: "local:area",
-            },
-        } as unknown as IInsight,
-        getScenariosGroupByIndexes(0, 16, 0),
-    )();
-TwoMeasuresWithViewbyAndDisabledStacking.parameters = {
-    kind: "two measures with viewBy and disabled stacking",
-    screenshot: {
-        readySelector: {
-            selector: ".screenshot-ready-wrapper-done",
-            state: State.Attached,
-        },
-        postInteractionWait: {
-            delay: 200,
-        },
-        viewports: [
-            {
-                label: "desktop",
-                width: 1464,
-                height: 768,
-            },
-        ],
-    },
-} satisfies IStoryParameters;
-
-export const TwoMeasuresWithViewbyAndEnabledStacking = () =>
-    plugVizStory(
-        {
-            insight: {
-                buckets: [
-                    {
-                        items: [
-                            {
-                                measure: {
-                                    definition: {
-                                        measureDefinition: {
-                                            item: {
-                                                identifier: "87a053b0-3947-49f3-b0c5-de53fd01f050",
-                                                type: "measure",
-                                            },
-                                        },
-                                    },
-                                    localIdentifier: "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
-                                },
-                            },
-                            {
-                                measure: {
-                                    definition: {
-                                        measureDefinition: {
-                                            item: {
-                                                identifier: "e519fa2a-86c3-4e32-8313-0c03062348j3",
-                                                type: "measure",
-                                            },
-                                        },
-                                    },
-                                    localIdentifier: "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
-                                },
-                            },
-                        ],
-                        localIdentifier: "measures",
-                    },
-                    {
-                        items: [
-                            {
-                                attribute: {
-                                    displayForm: {
-                                        identifier: "label.f_product.product.name",
-                                        type: "displayForm",
-                                    },
-                                    localIdentifier: "a_label.f_product.product.name",
-                                },
-                            },
-                        ],
-                        localIdentifier: "view",
-                    },
-                    {
-                        items: [],
-                        localIdentifier: "stack",
-                    },
-                ],
-                filters: [],
-                identifier: "AreaChart.568952b51f0ab0669506969d70cd3bf6",
-                properties: {
-                    controls: {
-                        stacking: true,
-                    },
-                },
-                sorts: [],
-                title: "AreaChart - two measures with viewBy and enabled stacking",
-                uri: "AreaChart.568952b51f0ab0669506969d70cd3bf6",
-                visualizationUrl: "local:area",
-            },
-        } as unknown as IInsight,
-        getScenariosGroupByIndexes(0, 16, 1),
-    )();
-TwoMeasuresWithViewbyAndEnabledStacking.parameters = {
-    kind: "two measures with viewBy and enabled stacking",
-    screenshot: {
-        readySelector: {
-            selector: ".screenshot-ready-wrapper-done",
-            state: State.Attached,
-        },
-        postInteractionWait: {
-            delay: 200,
-        },
-        viewports: [
-            {
-                label: "desktop",
-                width: 1464,
-                height: 768,
-            },
-        ],
-    },
-} satisfies IStoryParameters;
-
 export const TwoMeasuresWithViewbyAndDisabledStackMeasures = () =>
     plugVizStory(
         {
@@ -265,7 +85,7 @@ export const TwoMeasuresWithViewbyAndDisabledStackMeasures = () =>
                 visualizationUrl: "local:area",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(0, 16, 2),
+        getScenariosGroupByIndexes(0, 16, 0),
     )();
 TwoMeasuresWithViewbyAndDisabledStackMeasures.parameters = {
     kind: "two measures with viewBy and disabled stack measures",
@@ -355,7 +175,7 @@ export const TwoMeasuresWithViewbyAndEnabledStackMeasures = () =>
                 visualizationUrl: "local:area",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(0, 16, 3),
+        getScenariosGroupByIndexes(0, 16, 1),
     )();
 TwoMeasuresWithViewbyAndEnabledStackMeasures.parameters = {
     kind: "two measures with viewBy and enabled stack measures",
@@ -445,7 +265,7 @@ export const TwoMeasuresWithViewbyAndStackMeasuresToPercent = () =>
                 visualizationUrl: "local:area",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(0, 16, 4),
+        getScenariosGroupByIndexes(0, 16, 2),
     )();
 TwoMeasuresWithViewbyAndStackMeasuresToPercent.parameters = {
     kind: "two measures with viewBy and stack measures to percent",
@@ -532,7 +352,7 @@ export const SingleMeasureWithViewbyAndStackbyAndStackToPercent = () =>
                 visualizationUrl: "local:area",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(0, 16, 5),
+        getScenariosGroupByIndexes(0, 16, 3),
     )();
 SingleMeasureWithViewbyAndStackbyAndStackToPercent.parameters = {
     kind: "single measure with viewBy and stackBy and stack to percent",
@@ -622,7 +442,7 @@ export const SingleMeasureWithViewbyAndStackbyAndStackToPercentWithLabels = () =
                 visualizationUrl: "local:area",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(0, 16, 6),
+        getScenariosGroupByIndexes(0, 16, 4),
     )();
 SingleMeasureWithViewbyAndStackbyAndStackToPercentWithLabels.parameters = {
     kind: "single measure with viewBy and stackBy and stack to percent with labels",
@@ -700,7 +520,7 @@ export const SingleMeasureWithViewbyAndStackbyAndDisabledStacking = () =>
                 identifier: "AreaChart.9d2908f6b71d80aca6157eb1c8d6d413",
                 properties: {
                     controls: {
-                        stacking: false,
+                        stackMeasures: false,
                     },
                 },
                 sorts: [],
@@ -709,7 +529,7 @@ export const SingleMeasureWithViewbyAndStackbyAndDisabledStacking = () =>
                 visualizationUrl: "local:area",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(0, 16, 7),
+        getScenariosGroupByIndexes(0, 16, 5),
     )();
 SingleMeasureWithViewbyAndStackbyAndDisabledStacking.parameters = {
     kind: "single measure with viewBy and stackBy and disabled stacking",
@@ -786,7 +606,7 @@ export const SingleMeasureWithViewbyAndStackToPercent = () =>
                 visualizationUrl: "local:area",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(0, 16, 8),
+        getScenariosGroupByIndexes(0, 16, 6),
     )();
 SingleMeasureWithViewbyAndStackToPercent.parameters = {
     kind: "single measure with viewBy and stack to percent",
@@ -867,7 +687,7 @@ export const UndefinedValuesAndDisabledStacking = () =>
                 identifier: "AreaChart.b7bbb0a42ebe89dacf595e445a617618",
                 properties: {
                     controls: {
-                        stacking: false,
+                        stackMeasures: false,
                     },
                 },
                 sorts: [],
@@ -876,7 +696,7 @@ export const UndefinedValuesAndDisabledStacking = () =>
                 visualizationUrl: "local:area",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(0, 16, 9),
+        getScenariosGroupByIndexes(0, 16, 7),
     )();
 UndefinedValuesAndDisabledStacking.parameters = {
     kind: "undefined values and disabled stacking",
@@ -960,7 +780,7 @@ export const UndefinedValuesDisabledStackingAndTheContinuousLineEnabled = () =>
                         continuousLine: {
                             enabled: true,
                         },
-                        stacking: false,
+                        stackMeasures: false,
                     },
                 },
                 sorts: [],
@@ -969,7 +789,7 @@ export const UndefinedValuesDisabledStackingAndTheContinuousLineEnabled = () =>
                 visualizationUrl: "local:area",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(0, 16, 10),
+        getScenariosGroupByIndexes(0, 16, 8),
     )();
 UndefinedValuesDisabledStackingAndTheContinuousLineEnabled.parameters = {
     kind: "undefined values, disabled stacking and the continuous line enabled",

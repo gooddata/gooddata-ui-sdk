@@ -409,8 +409,6 @@ export interface IChartConfig {
     selectedPoints?: IDrillEventIntersectionElement[][];
     separators?: ISeparators;
     sortBy?: ISortItem[];
-    // @internal
-    stacking?: boolean;
     stackMeasures?: boolean;
     stackMeasuresToPercent?: boolean;
     supportsChartFill?: boolean;
