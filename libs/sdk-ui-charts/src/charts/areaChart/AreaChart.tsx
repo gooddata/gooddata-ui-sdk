@@ -69,20 +69,6 @@ const areaChartDefinition: IChartDefinition<IAreaChartBucketProps, IAreaChartPro
     onBeforePropsConversion: verifyBuckets,
 };
 
-function getStackConfiguration(config: IChartConfig = {}): IChartConfig {
-    const { stackMeasures, stackMeasuresToPercent } = config;
-    if (
-        (stackMeasures === null || stackMeasures === undefined) &&
-        (stackMeasuresToPercent === null || stackMeasuresToPercent === undefined)
-    ) {
-        return config;
-    }
-    return {
-        ...config,
-        stacking: Boolean(stackMeasuresToPercent) || Boolean(stackMeasures),
-    };
-}
-
 export function getBucketsProps(props: IAreaChartBucketProps): {
     measures: IAttributeOrMeasure[];
     viewBy: IAttribute[];
@@ -113,13 +99,12 @@ export function getBucketsProps(props: IAreaChartBucketProps): {
 export function getConfigProps(props: IAreaChartProps): IChartConfig {
     const viewBy = truncate(props.viewBy, ViewByAttributesLimit);
     if (viewBy.length <= 1) {
-        return getStackConfiguration(props.config);
+        return props.config ?? {};
     }
 
     return {
         ...props.config,
-        stacking: false, // area sections are always overlapped with two attributes
-        stackMeasures: false,
+        stackMeasures: false, // area sections are always overlapped with two attributes
         stackMeasuresToPercent: false,
     };
 }

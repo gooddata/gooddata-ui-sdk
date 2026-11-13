@@ -76,7 +76,7 @@ import { mapDateAttribute, mapDateDataset } from "../utils/dateUtils.js";
 import { CoreErrorCode, newError } from "../utils/errors.js";
 import {
     foldLegacyEmptyValuesWithFilter,
-    parseDateValues,
+    parseDateValuesToDeclarative,
     yamlConditionToMatch,
 } from "../utils/filterUtils.js";
 import { convertGranularity } from "../utils/granularityUtils.js";
@@ -830,7 +830,11 @@ function yamlPositiveAttributeFilterToDeclarative(
                     ...(assignFilterLocalId && filter.display_as ? { localIdentifier: key } : {}),
                     displayForm: createIdentifier<any>(filter.using),
                     in: {
-                        values: parseDateValues(entities, filter.using, filter.state?.include ?? []),
+                        values: parseDateValuesToDeclarative(
+                            entities,
+                            filter.using,
+                            filter.state?.include ?? [],
+                        ),
                     },
                 },
             },
@@ -864,7 +868,11 @@ function yamlNegativeAttributeFilterToDeclarative(
                     ...(assignFilterLocalId && filter.display_as ? { localIdentifier: key } : {}),
                     displayForm: createIdentifier<any>(filter.using),
                     notIn: {
-                        values: parseDateValues(entities, filter.using, filter.state?.exclude ?? []),
+                        values: parseDateValuesToDeclarative(
+                            entities,
+                            filter.using,
+                            filter.state?.exclude ?? [],
+                        ),
                     },
                 },
             },

@@ -471,6 +471,7 @@ export interface IPlatformContextV1 {
     currentWorkspaceId?: string;
     // (undocumented)
     embeddingMode: EmbeddingMode;
+    embeddingParentOrigin?: string;
     // (undocumented)
     entitlements?: IEntitlementDescriptor[];
     // (undocumented)

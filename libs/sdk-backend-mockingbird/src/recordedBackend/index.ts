@@ -71,6 +71,7 @@ import {
     type IWorkspaceUsersQuery,
     type IWorkspacesQueryFactory,
     NotSupported,
+    type QueryMethod,
     UnexpectedResponseError,
     type ValidationContext,
 } from "@gooddata/sdk-backend-spi";
@@ -749,6 +750,10 @@ class RecordedPublisherDocumentsQuery implements IPublisherDocumentsQueryV2 {
     }
 
     public withOrigin(_origin: string): IPublisherDocumentsQueryV2 {
+        return this;
+    }
+
+    public withMethod(_method: QueryMethod): IPublisherDocumentsQueryV2 {
         return this;
     }
 

@@ -17,6 +17,7 @@ import {
     type ObjRef,
     insightVisualizationUrl,
     isAttributeElementsByRef,
+    isComputedAttributeRef,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
     isInsightWidget,
@@ -66,6 +67,14 @@ export function buildWidgetContext(
     };
 }
 
+// A bare identifier is read as a label by the backend, which would lose the fact that the filter
+// targets a computed attribute, so that type is kept in the typed `computed_attribute/<id>` form.
+function attributeFilterUsing(displayForm: ObjRef): string {
+    return isComputedAttributeRef(displayForm)
+        ? `computed_attribute/${objRefToString(displayForm)}`
+        : objRefToString(displayForm); // TODO INE: remove this once all consumers are updated to expect id prefixed by type even for labels
+}
+
 /**
  * @internal
  */
@@ -86,7 +95,7 @@ export function buildFiltersContext(
             if (values.length > 0) {
                 converted.push({
                     type: "attribute_filter",
-                    using: objRefToString(displayForm),
+                    using: attributeFilterUsing(displayForm),
                     state: negativeSelection ? { exclude: values } : { include: values },
                     title: title ?? displayForms?.get(displayForm)?.title,
                 });

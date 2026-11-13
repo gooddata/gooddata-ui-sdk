@@ -191,6 +191,7 @@ export function MetricsState({
             titlePlaceholder: intl.formatMessage({
                 id: "metricComponent.editMetricForm.namePlaceholder",
             }),
+            // the accessible names of the controls are the tabs' own localized defaults
         }),
         [intl],
     );

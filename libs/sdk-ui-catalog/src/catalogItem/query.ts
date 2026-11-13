@@ -235,6 +235,7 @@ export function queryDocuments(
             isHidden,
             certification,
         })
+        .withMethod("POST")
         .query();
 }
 

@@ -8,9 +8,13 @@
 #                 on every patch release of respective branch
 
 [[versions]]
-    version = "11.67"
+    version = "11.68"
     dirpath = "latest"
     url = "/latest/"
+[[versions]]
+    dirpath = "11.67"
+    url = "/11.67/"
+    version = "11.67"
 [[versions]]
     dirpath = "11.66"
     url = "/11.66/"
@@ -99,7 +103,3 @@
     dirpath = "11.45"
     url = "/11.45/"
     version = "11.45"
-[[versions]]
-    dirpath = "11.44"
-    url = "/11.44/"
-    version = "11.44"

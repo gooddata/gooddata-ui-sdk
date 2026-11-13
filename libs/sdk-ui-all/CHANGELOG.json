@@ -2,6 +2,279 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.68.0",
+            "tag": "@gooddata/sdk-ui-all_v11.68.0",
+            "date": "Thu, 12 Nov 2026 12:16:54 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-ui-kit: Add an optional `secondaryTitle` to `UiSearchableSelectItem`, shown muted after the title in the list and on the button, and a `UiSearchableSelectFooter` for a note under the list"
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Keep hour, minute and second date attribute values as the backend computed them around daylight saving transitions; `normalizedValue` now carries the value in UTC in every browser timezone; custom `dateFormatter` and `dateStringifier` implementations of `TigerBackendConfig` receive a Date carrying the value in its UTC fields, and custom `dateNormalizer` implementations must return an ISO string carrying it in UTC"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Show and shift the key driver analysis period in UTC so the browser timezone does not change it"
+                    },
+                    {
+                        "comment": "sdk-ui-filters: AttributeFilter and AttributeFilterButton now apply the `separators` prop to number-formatted element values"
+                    },
+                    {
+                        "comment": "sdk-ui-filters: Show values of numeric computed attributes formatted in the attribute filter details bubble"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Replace the `UiConfigEditor` `warnings` prop with `diagnostics` that carry a severity and may mark the key of their path"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Open completions and indent the new line on Enter in `UiConfigEditor`"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Mark the invalid YAML field inline while typing in the as-code dialogs"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Improve YAML key completion in the as-code dialogs"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Open the completion list after accepting a mapping key such as `definition` in the parameter YAML editor"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Support dashboard parameters in Drill to URL via `{parameter(id)}` placeholder"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Wrap long object names in the delete dialog usage list"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Show dashboard parameters in the drill filters config panel"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Reject drill to URL that resolves to an empty URL or to a script URL such as `javascript:`"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Show an unknown parameter reference in rich text in the error color"
+                    },
+                    {
+                        "comment": "sdk-ui-charts: Removed the internal `stacking` option of `IChartConfig`, deprecated since GoodData.UI 7.1. Use `stackMeasures` and `stackMeasuresToPercent` instead. An area chart with only `stackMeasuresToPercent: false` now keeps its default stacking instead of overlapping the areas."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: Fixed continuous line doesn't work on area and combo area charts if multiple metrics.  "
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Fixed incorrect font-weight mapping of (local) Avenir font on macOS in Chrome and Safari."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Added full screen mode to `<UiModalDialog />`."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Added full screen mode to `<UiSearchableSelect />`."
+                    },
+                    {
+                        "comment": "sdk-ui-pluggable-host: Added full figma mobile view for user language change."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: The clarifying questions and the summary of their answers now carry data-testid attributes for automated tests."
+                    },
+                    {
+                        "comment": "gdc-publisher: Edit one element or page as code from its toolbar."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: A dropdown inside a floating element gives focus back to its trigger when it closes. Added new icons. Added a leading icon and max width on `UiToolbarSelect`, and a tooltip on `UiToolbarIconButton`."
+                    },
+                    {
+                        "comment": "sdk-model, sdk-backend-tiger: Remove the `enableReportsPostGA` feature flag."
+                    },
+                    {
+                        "comment": "sdk-ui-analytical-designer: Scoped the visualization picker styles to Analytical Designer so they no longer affect the dashboard visualization pickers."
+                    },
+                    {
+                        "comment": "Align sdk-ui-application-header, sdk-ui-catalog, sdk-ui-gen-ai and sdk-ui-pluggable-host with the GoodData commercial license and include their NOTICE files. Add missing MIT license files to sdk-code-schemas and create-pluggable-module."
+                    },
+                    {
+                        "comment": "Add GoodData AI LLM provider type behind the enableAiLlmGooddataProvider feature flag."
+                    },
+                    {
+                        "comment": "sdk-ui-dshboard: Format values of formatted CAs in filters during exports."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Date computed attribute values sent as ISO date-times, such as 2026-08-24T00:00:00, are now formatted by the format of the attribute instead of being shown raw."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Null date attribute values no longer get an empty formatted value, so they show as \"(empty value)\" everywhere"
+                    },
+                    {
+                        "comment": "Convert an empty string in the values of a date label attribute filter to null when converting YAML to declarative"
+                    },
+                    {
+                        "comment": "sdk-ui-analytical-designer: An insight with an All time date filter stored with the include empty values mode, e.g. from YAML or the API, no longer opens with unsaved changes"
+                    },
+                    {
+                        "comment": "Analytical Designer: an insight whose metric has a date filter stored with the include empty values mode no longer opens with unsaved changes."
+                    },
+                    {
+                        "comment": "sdk-code-convertors: Line, column and bar charts keep their secondary axis in analytics-as-code. Metrics marked `axis: secondary` map to the right axis (top axis for bar charts), and the new `xaxis_secondary_*` config keys hold the bar chart top axis settings."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Editing an alert whose metric the widget insight does not provide keeps the alert's metric, and changing filters keeps an alert's attribute at All."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: An AI chat chart preview the backend cannot render because of its chart type now says \"This chart type isn't supported in chat previews.\" instead of the generic \"Visualization could not be displayed.\""
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard, sdk-ui-gen-ai: Outside edit mode the AI assistant edits the dashboard with its saved filters, not the filters on screen."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger, sdk-ui-gen-ai: The AI user context names the dashboard filters whose values on screen differ from the saved ones, so the assistant can offer to apply them."
+                    },
+                    {
+                        "comment": "sdk-code-convertors: Dashboard parameter filters survive the conversion to and from Analytics as Code, so AI Assistant dashboard edits and AAC clone and deploy keep them. The AAC dashboard and its tabs get an optional `parameters` list."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: A finished builder edit turn releases the dashboard lock unless a clarifying questions form is still open. An answer that offers a chart or asks a question in text no longer keeps the dashboard waiting."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Focus traps (dialogs, dropdowns) now let Tab reach `contenteditable` elements without an explicit `tabindex`, such as the MAQL editor in the metric editor dialog, and skip elements inside an `inert` subtree."
+                    },
+                    {
+                        "comment": "sdk-ui-metric-component: Name the icon buttons of the metric editor (minimize, full screen, close, close tab, create) and of the minimized editor bar, and keep the focus on them when the editor is minimized and restored. The editor tabs can be switched with the arrow keys, Home and End, and the tab scroll buttons are named and work with Enter and Space. sdk-ui-kit: `IconMinimize` supports `ariaHidden`."
+                    },
+                    {
+                        "comment": "sdk-ui-metric-component: Tab and Shift+Tab move the focus out of the `MaqlEditor` and `SqlEditor` instead of indenting (indentation stays on Mod-] and Mod-[), also right after a function was inserted and while the suggestion list is open; Enter accepts a suggestion, Escape closes the list. Function completions go in as plain text with the cursor at the first argument instead of as an active snippet, and the controls of the suggestion popup (the documentation toggle, its close button and links) are out of the Tab order, so Tab with the list open goes straight to the next control."
+                    },
+                    {
+                        "comment": "sdk-ui-metric-component: The \"⋯\" button of the metric definition header has an accessible name and opens an accessible menu (menu button semantics, arrow-key navigation, one Escape closes it and returns the focus, Tab and Shift+Tab close it and continue from the button). \"Show names\" is a menu checkbox with its state, and \"Auto-format\" carries its shortcut in aria-keyshortcuts and its description in aria-describedby. sdk-ui-kit: `UiMenu` opens on its first item when the only selected items are checked checkboxes (it still opens on the selected choice otherwise)."
+                    },
+                    {
+                        "comment": "sdk-model, sdk-backend-tiger: Add the enableEmbeddingOriginValidation feature flag (temporary, disabled by default)."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger, sdk-ui-analytical-designer: Validate the origin of embedding commands through the backend when enableEmbeddingOriginValidation is on."
+                    },
+                    {
+                        "comment": "sdk-embedding: Add an internal origin gate for outgoing embedding events. Events go to * until a runtime turns the gate on. sdk-pluggable-application-model: Add IPlatformContextV1.embeddingParentOrigin. sdk-ui-pluggable-host: Check the origin of the first injected token when enableEmbeddingOriginValidation is on. sdk-ui-analytical-designer: Post embedding events only to the validated parent origin when enableEmbeddingOriginValidation is on."
+                    },
+                    {
+                        "comment": "sdk-backend-spi, sdk-backend-tiger: Add the alpha getEmbeddingOrigins and setEmbeddingOrigins methods to the organization settings service."
+                    },
+                    {
+                        "comment": "sdk-backend-spi: Removed the alpha setDeclarativeLayout() logical model method and the IDeclarativeWorkspaceLayout type. Use analyticsAsCode().deploy() instead."
+                    },
+                    {
+                        "comment": "sdk-ui-pluggable-host: The host mounts headless modules from the pluggable applications registry and connects their telemetry providers. sdk-model and sdk-pluggable-application-model add the headless module contract. create-pluggable-module can scaffold a headless module."
+                    },
+                    {
+                        "comment": "sdk-ui-pluggable-host: Applications rendered by a custom host UI no longer paint over the host's menus."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Enable the localization overview by default; `enableLocalizationOverview` now defaults to `true`"
+                    },
+                    {
+                        "comment": "sdk-ui-pluggable-host: The host publishes the height of its header as the --host-header-height CSS variable, set to 0px when the header is hidden."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Remove the internal isCommunityEdition and getDeploymentVersion Tiger-specific functions. Community Edition deployments no longer exist, and nothing reads the deployment version."
+                    },
+                    {
+                        "comment": "sdk-ui-analytical-designer: Deprecate whiteLabeling.logoUrl. Analytical Designer renders no header logo; the host header shows it."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Remove the .is-sticky styles of the filter bar and the configuration panel. Nothing sets the class."
+                    },
+                    {
+                        "comment": "sdk-ui-pluggable-host: mapLegacyUrlToHost moves a workspace named in a KPI Dashboards hash (/workspace/<A>/dashboards/#/workspace/<B>/...) into the path."
+                    },
+                    {
+                        "comment": "Remove dead standalone-app code from the Analytical Designer runtime."
+                    },
+                    {
+                        "comment": "sdk-pluggable-application-model, sdk-ui-pluggable-host: Add module messaging between pluggable applications and headless modules (`moduleMessaging`, `registerChannel`, `postToActiveApplication`, `onModuleMessage`)"
+                    },
+                    {
+                        "comment": "sdk-model: `evaluateCondition` treats malformed requirement conditions, such as arrays, nulls, empty `$or`/`$and` operands, operators mixed with other keys or unknown `$` keys, as not met instead of met."
+                    },
+                    {
+                        "comment": "sdk-ui-pluggable-host: registerLocalHostUiModuleLoader registers a local host UI module, which takes precedence over the uiModule of the registry. A remote host UI module from a secured remote must pass the allowed-organizations and build-age checks, at load and on every context change, or the host uses its default UI. Host UI module failures reach onLoadFailed with the new host-ui module kind. create-pluggable-module can scaffold a host UI module."
+                    },
+                    {
+                        "comment": "sdk-pluggable-application-model, sdk-ui-gen-ai: A definition-received chat event names the AI Hub agent selected for the turn that drafted the object, in the new optional `agentId` of `IAiAssistantDefinitionReceivedPayload`."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Show a failed stream's error on the loading step."
+                    },
+                    {
+                        "comment": "sdk-ui-semantic-search: Keep the search result tooltip open after Show less."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: The user message bubble keeps line breaks entered with Shift+Enter."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: The response feedback form no longer closes right after it opens when the cursor is in the chat input."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Keep keyboard focus in the KDA dialog after deleting a filter chip."
+                    },
+                    {
+                        "comment": "sdk-backend-spi, sdk-backend-tiger, api-client-tiger: Add the localization issues of a workspace (`getIssues`) and read the translated texts of a workspace and its parents from the backend."
+                    },
+                    {
+                        "comment": "sdk-backend-spi, sdk-backend-tiger, api-client-tiger: Read the localization issues of the organization and the workspaces behind them from the backend. `IOrganizationLocalizationService` no longer has `getTranslationUsage` and `getStatisticsWorkspaces`."
+                    },
+                    {
+                        "comment": "api-client-tiger: Regenerate the API clients against automation staging. The generator renumbers the duplicate type names of the AI API (for example `AiType51`), so some numbered names are removed or stand for other values."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: `UiAutofocus`, used by `UiDrawer`, no longer takes focus back from a modal dialog that was opened over it and already holds focus, for example a dialog opened from inside a drawer right after the drawer opens"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Align the action-required dot of `UiResizableSidebarNavigation` with the center of the chevron in the expanded sidebar"
+                    },
+                    {
+                        "comment": "sdk-model, sdk-backend-tiger, sdk-ui-semantic-search: Add the enableCatalogDocuments feature flag and the document type to GenAIObjectType. sdk-backend-spi, sdk-backend-tiger: paged documents query. sdk-backend-base, sdk-backend-mockingbird: implement it in the dummy, decorated and recorded backends. sdk-ui-catalog: Document type in the Analytics Catalog list, search and Create menu."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Add customizable conversation action dialogs."
+                    },
+                    {
+                        "comment": "sdk-ui-pluggable-host: Buffer AI chat events during pluggable app startup."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Preserve Markdown formatting in assistant links."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Dashboard links use persistent backend conversation IDs in their URLs so they reopen the originating conversation after reload. LinkHandlerEvent.conversationId remains the local conversation ID; dashboard and Publisher link events provide the backend ID separately in the new optional threadId field, also forwarded by web components. Publisher URLs continue to use the backend ID."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Preserve local conversation IDs and cached conversation data when chat refresh selects the latest conversation."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Preserve backend thread IDs in streaming and completion events when conversation metadata is refreshed."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Remove feeature flag related to change analysis."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Dropdowns no longer close when Enter or Space on a button inside them removes or replaces that button, for example Back in the date filter period forms."
+                    },
+                    {
+                        "comment": "sdk-ui-analytical-designer: Fixed duplicated XLSX and raw CSV icons in the dashboard widget export menu after opening a visualization in Analytical Designer."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: The share dialog asks for confirmation before removing access and says what access the grantee keeps."
+                    },
+                    {
+                        "comment": "sdk-ui-all: The saved visualizations list in dashboard edit mode no longer shows a scrollbar when its few items fit."
+                    },
+                    {
+                        "comment": "sdk-ui-analytical-designer: The Open list offers Delete only on visualizations you can edit, and a delete refused for missing permission says so. Other delete errors no longer claim the visualization is used on KPI dashboards."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Editing a schedule of a visualization you can't access shows an error message instead of failing silently."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: In the alert dialog, a long Trigger interval or Group by label that wraps keeps its help icon right after the last word instead of dropping it between the lines."
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.67.0",
             "tag": "@gooddata/sdk-ui-all_v11.67.0",
             "date": "Thu, 05 Nov 2026 08:04:50 GMT",

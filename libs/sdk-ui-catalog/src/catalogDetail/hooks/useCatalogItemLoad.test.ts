@@ -187,6 +187,7 @@ function createDocumentWrapper(
         withSorting: vi.fn(() => documentsQuery),
         withOrigin: vi.fn(() => documentsQuery),
         withFilter: vi.fn(() => documentsQuery),
+        withMethod: vi.fn(() => documentsQuery),
         query: vi.fn().mockResolvedValue({ items, offset: 0, limit: 1, totalCount: items.length }),
     };
     const { user = { login: "me" } as IUser, permissions = { canCreateDocument: true } } = access;
@@ -235,6 +236,7 @@ describe("useCatalogItemLoad – document", () => {
         expect(documentsQuery.withFilter).toHaveBeenCalledWith(
             expect.objectContaining({ id: ["doc.id"], createdBy: undefined }),
         );
+        expect(documentsQuery.withMethod).toHaveBeenCalledWith("POST");
         expect(result.current.item).toMatchObject({
             identifier: "doc.id",
             type: "document",

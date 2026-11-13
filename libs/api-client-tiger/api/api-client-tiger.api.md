@@ -18337,6 +18337,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     searchEntitiesCustomApplicationSettings(requestParameters: EntitiesApiSearchEntitiesCustomApplicationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCustomApplicationSettingOutList>;
     searchEntitiesDashboardPlugins(requestParameters: EntitiesApiSearchEntitiesDashboardPluginsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDashboardPluginOutList>;
     searchEntitiesDatasets(requestParameters: EntitiesApiSearchEntitiesDatasetsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDatasetOutList>;
+    searchEntitiesDocuments(requestParameters: EntitiesApiSearchEntitiesDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutList>;
     searchEntitiesExportDefinitions(requestParameters: EntitiesApiSearchEntitiesExportDefinitionsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportDefinitionOutList>;
     searchEntitiesFacts(requestParameters: EntitiesApiSearchEntitiesFactsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFactOutList>;
     searchEntitiesFilterContexts(requestParameters: EntitiesApiSearchEntitiesFilterContextsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFilterContextOutList>;
@@ -22051,6 +22052,7 @@ export interface EntitiesApiInterface {
     searchEntitiesCustomApplicationSettings(requestParameters: EntitiesApiSearchEntitiesCustomApplicationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCustomApplicationSettingOutList>;
     searchEntitiesDashboardPlugins(requestParameters: EntitiesApiSearchEntitiesDashboardPluginsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDashboardPluginOutList>;
     searchEntitiesDatasets(requestParameters: EntitiesApiSearchEntitiesDatasetsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDatasetOutList>;
+    searchEntitiesDocuments(requestParameters: EntitiesApiSearchEntitiesDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutList>;
     searchEntitiesExportDefinitions(requestParameters: EntitiesApiSearchEntitiesExportDefinitionsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportDefinitionOutList>;
     searchEntitiesFacts(requestParameters: EntitiesApiSearchEntitiesFactsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFactOutList>;
     searchEntitiesFilterContexts(requestParameters: EntitiesApiSearchEntitiesFilterContextsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFilterContextOutList>;
@@ -22602,6 +22604,14 @@ export interface EntitiesApiSearchEntitiesDashboardPluginsRequest {
 
 // @public
 export interface EntitiesApiSearchEntitiesDatasetsRequest {
+    readonly entitySearchBody: EntitySearchBody;
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
+    readonly workspaceId: string;
+    readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface EntitiesApiSearchEntitiesDocumentsRequest {
     readonly entitySearchBody: EntitySearchBody;
     readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
     readonly workspaceId: string;

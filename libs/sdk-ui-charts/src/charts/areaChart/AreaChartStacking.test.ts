@@ -8,7 +8,9 @@ import { ReferenceMd } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { type IAttribute, type IAttributeOrMeasure } from "@gooddata/sdk-model";
 
+import { generateChartOptions } from "../../highcharts/chartTypes/_util/helper.js";
 import { type IChartConfig } from "../../interfaces/chartConfig.js";
+import { areaChartWithTwoMeasuresAndViewBy } from "../../testUtils/charts.fixtures.js";
 
 import { type IAreaChartProps, getBucketsProps, getConfigProps } from "./AreaChart.js";
 
@@ -57,81 +59,10 @@ describe("getPropsForArea", () => {
                 config: {},
             });
         });
-
-        it("should return props with stacking config", () => {
-            const props: IAreaChartProps = {
-                workspace: "myProjectId",
-                backend: dummyBackend(),
-                measures: [ReferenceMd.Amount],
-                viewBy: [ReferenceMd.Product.Name],
-                stackBy: ReferenceMd.Region.Default,
-                config: { stacking: false },
-            };
-            expect(getPropsForArea(props)).toEqual({
-                measures: [ReferenceMd.Amount],
-                viewBy: [ReferenceMd.Product.Name],
-                stackBy: [ReferenceMd.Region.Default],
-                config: { stacking: false },
-            });
-        });
-
-        it.each([
-            [true, false],
-            [false, true],
-        ])(
-            'should return props with "%s" stackMeasures overwrites "%s" stacking config',
-            (stackMeasures: boolean, stacking: boolean) => {
-                const props: IAreaChartProps = {
-                    workspace: "myProjectId",
-                    backend: dummyBackend(),
-                    measures: [ReferenceMd.Amount],
-                    viewBy: [ReferenceMd.Product.Name],
-                    stackBy: ReferenceMd.Region.Default,
-                    config: { stacking, stackMeasures },
-                };
-                expect(getPropsForArea(props)).toEqual({
-                    measures: [ReferenceMd.Amount],
-                    viewBy: [ReferenceMd.Product.Name],
-                    stackBy: [ReferenceMd.Region.Default],
-                    config: {
-                        stacking: stackMeasures,
-                        stackMeasures,
-                    },
-                });
-            },
-        );
-
-        it.each([
-            [true, false],
-            [false, true],
-        ])(
-            'should return props with "%s" stackMeasuresToPercent overwrites "%s" stacking config',
-            (stackMeasuresToPercent: boolean, stacking: boolean) => {
-                const props: IAreaChartProps = {
-                    workspace: "myProjectId",
-                    backend: dummyBackend(),
-                    measures: [ReferenceMd.Amount],
-                    viewBy: [ReferenceMd.Product.Name],
-                    stackBy: ReferenceMd.Region.Default,
-                    config: { stacking, stackMeasuresToPercent },
-                };
-                const result = getPropsForArea(props);
-                expect(result).toEqual({
-                    measures: [ReferenceMd.Amount],
-                    viewBy: [ReferenceMd.Product.Name],
-                    stackBy: [ReferenceMd.Region.Default],
-                    config: {
-                        stacking: stackMeasuresToPercent,
-                        stackMeasuresToPercent,
-                    },
-                });
-            },
-        );
     });
 
     describe("view by two attributes", () => {
         const configWithViewByTwoAttrs = {
-            stacking: false,
             stackMeasures: false,
             stackMeasuresToPercent: false,
         };
@@ -183,5 +114,22 @@ describe("getPropsForArea", () => {
                 config: configWithViewByTwoAttrs,
             });
         });
+    });
+});
+
+describe("area chart stacking", () => {
+    it("should keep the default stacking when only `stackMeasuresToPercent` is false", () => {
+        const config = getConfigProps({
+            measures: [ReferenceMd.Amount, ReferenceMd.Won],
+            viewBy: [ReferenceMd.Product.Name],
+            config: { stackMeasuresToPercent: false },
+        });
+
+        const { stacking } = generateChartOptions(areaChartWithTwoMeasuresAndViewBy, {
+            ...config,
+            type: "area",
+        });
+
+        expect(stacking).toBe("normal");
     });
 });

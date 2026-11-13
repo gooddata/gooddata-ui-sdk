@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import { closeBrackets, closeBracketsKeymap } from "@codemirror/autocomplete";
-import { defaultKeymap, history, historyKeymap, indentLess, indentMore } from "@codemirror/commands";
+import { defaultKeymap, history, historyKeymap } from "@codemirror/commands";
 import { bracketMatching, indentUnit } from "@codemirror/language";
 import { highlightSelectionMatches, search, searchKeymap } from "@codemirror/search";
 import { EditorState, type Extension } from "@codemirror/state";
@@ -46,27 +46,13 @@ function windowSpace() {
 }
 
 /**
- * Tab the way Monaco handled it: it inserts the indentation at the cursor, and indents the lines
- * of a selection. It does nothing in a read-only editor, nor while an input method composes text
- * (the Vietnamese keyboard, for one): an edit of the text the input method still owns ends up with
- * the typed letters twice.
+ * Tab and Shift-Tab move the focus out of the editor, as in any other text field, so the editor is
+ * no keyboard trap (WCAG 2.1.2); indentation is on Mod-] and Mod-[ of the standard bindings, and an
+ * open suggestion list takes Tab to accept a suggestion. The one thing kept is the input method:
+ * while it composes text (the Vietnamese keyboard, for one), Tab is held, because leaving the text it
+ * still owns ends up with the typed letters twice.
  */
-export const insertIndent: Command = (view) => {
-    if (view.state.readOnly) {
-        return false;
-    }
-    if (view.compositionStarted) {
-        return true;
-    }
-    if (view.state.selection.ranges.some((range) => !range.empty)) {
-        return indentMore(view);
-    }
-    view.dispatch(view.state.replaceSelection(view.state.facet(indentUnit)), {
-        scrollIntoView: true,
-        userEvent: "input",
-    });
-    return true;
-};
+const holdTabWhileComposing: Command = (view) => view.compositionStarted;
 
 /**
  * The editing behaviour every editor of this package shares: undo history, bracket pairing and
@@ -88,7 +74,7 @@ export function baseExtensions(): Extension {
             ...defaultKeymap,
             ...historyKeymap,
             ...searchKeymap,
-            { key: "Tab", run: insertIndent, shift: indentLess },
+            { key: "Tab", run: holdTabWhileComposing, shift: holdTabWhileComposing },
             { key: "Mod-F2", run: changeAllOccurrences },
         ]),
         indentUnit.of(" ".repeat(TAB_SIZE)),
@@ -106,8 +92,10 @@ export function readOnlyExtension(readOnly: boolean): Extension {
     return [
         EditorState.readOnly.of(readOnly),
         EditorView.editable.of(!readOnly),
-        // The content of a read-only editor is not editable, so the browser does not let the
-        // keyboard reach it on its own; the tab index keeps it in the focus order of the dialog.
-        readOnly ? EditorView.contentAttributes.of({ tabindex: "0" }) : [],
+        // A read-only content is not editable, so the browser does not let the keyboard reach it on
+        // its own. An editable one is, but reports tabIndex -1, and a focus trap that reads the
+        // tabIndex (the dialog's) skips it. The explicit tab index keeps either in the focus order,
+        // at its place, so Tab moves into the editor and out of it to the next control.
+        EditorView.contentAttributes.of({ tabindex: "0" }),
     ];
 }

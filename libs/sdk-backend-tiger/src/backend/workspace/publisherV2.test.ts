@@ -13,6 +13,7 @@ import type * as ExportModule from "@gooddata/api-client-tiger/endpoints/export"
 import {
     type IWorkspacePublisherServiceV2,
     PublisherContentNotSupportedError,
+    type QueryMethod,
 } from "@gooddata/sdk-backend-spi";
 import {
     type IPublisherDocumentDefinitionV2,
@@ -386,6 +387,39 @@ describe("TigerWorkspacePublisherServiceV2 documents query", () => {
         );
     });
 
+    it("sends the same page as a search body when asked to use POST", async () => {
+        endpoint("EntitiesApi_SearchEntitiesDocuments").mockResolvedValue({
+            data: { data: [], meta: { page: { totalElements: 0 } } },
+        });
+
+        await newService()
+            .getDocumentsQuery()
+            .withMethod("POST")
+            .withSize(20)
+            .withPage(1)
+            .withOrigin("NATIVE")
+            .withSorting(["title,asc"])
+            .withFilter({ id: ["doc1"], tags: ["finance"] })
+            .query();
+
+        expect(endpoint("EntitiesApi_GetAllEntitiesDocuments")).not.toHaveBeenCalled();
+        expect(endpoint("EntitiesApi_SearchEntitiesDocuments")).toHaveBeenCalledWith(
+            expect.anything(),
+            expect.anything(),
+            {
+                workspaceId: "ws1",
+                origin: "NATIVE",
+                entitySearchBody: {
+                    filter: 'id=in=("doc1");tags=in=("finance")',
+                    include: ["createdBy", "modifiedBy"],
+                    metaInclude: ["origin", "page"],
+                    sort: [{ property: "title", direction: "ASC" }],
+                    page: { index: 1, size: 20 },
+                },
+            },
+        );
+    });
+
     it("lists the summary of every document, readable or not, with the total count", async () => {
         endpoint("EntitiesApi_GetAllEntitiesDocuments").mockResolvedValue({
             data: {
@@ -419,15 +453,18 @@ describe("TigerWorkspacePublisherServiceV2 documents query", () => {
         expect(page.items[0]).not.toHaveProperty("content");
     });
 
-    it.each<[string, { isHidden?: boolean; certification?: boolean }]>([
-        ["hidden", { isHidden: true }],
-        ["certified", { certification: true }],
-    ])("returns no %s documents without asking the backend", async (_, filter) => {
-        const page = await newService().getDocumentsQuery().withFilter(filter).query();
+    it.each<[string, { isHidden?: boolean; certification?: boolean }, QueryMethod]>([
+        ["hidden", { isHidden: true }, "GET"],
+        ["certified", { certification: true }, "GET"],
+        ["hidden", { isHidden: true }, "POST"],
+        ["certified", { certification: true }, "POST"],
+    ])("returns no %s documents over %s without asking the backend", async (_, filter, method) => {
+        const page = await newService().getDocumentsQuery().withMethod(method).withFilter(filter).query();
 
         expect(page.items).toEqual([]);
         expect(page.totalCount).toBe(0);
         expect(endpoint("EntitiesApi_GetAllEntitiesDocuments")).not.toHaveBeenCalled();
+        expect(endpoint("EntitiesApi_SearchEntitiesDocuments")).not.toHaveBeenCalled();
     });
 
     it("drops the visibility and certification filters that keep every document", async () => {

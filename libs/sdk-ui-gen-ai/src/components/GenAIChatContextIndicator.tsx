@@ -5,7 +5,7 @@ import { type ReactNode, useCallback, useMemo } from "react";
 import { type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Dropdown, UiChip, UiSkeleton, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import { Dropdown, UiChip, UiSkeleton, isActionKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { collectContextReferences } from "../context/collectContextReferences.js";
 import {
@@ -96,9 +96,8 @@ export function GenAIChatContextIndicator({ onUpdate }: GenAIChatContextIndicato
                     activated: !selectedContext?.activated,
                 }),
             );
-            onUpdate?.();
         };
-    }, [dispatch, onUpdate, selectedContext]);
+    }, [dispatch, selectedContext]);
 
     const onDeleteHandler = useCallback(
         (reference: IGenAIContextObject) => {
@@ -115,9 +114,10 @@ export function GenAIChatContextIndicator({ onUpdate }: GenAIChatContextIndicato
     }, [setSearch]);
 
     const isSelected = Boolean(selectedContext || references.length > 0);
-    const ambientToggleLabel = intl.formatMessage(
-        selectedContext?.activated ? msgs.stopUsingContext : msgs.startUsingContext,
-    );
+    const getAmbientToggleLabel = (title: string) =>
+        intl.formatMessage(selectedContext?.activated ? msgs.stopUsingContext : msgs.startUsingContext, {
+            title,
+        });
     const announcement = useContextChangeAnnouncement(selectedContext, references, ambientLoading);
 
     if (!isContextSetupEnabled || !isSelected) {
@@ -153,19 +153,27 @@ export function GenAIChatContextIndicator({ onUpdate }: GenAIChatContextIndicato
                                 return null;
                             }
 
+                            const label = getSelectedTitle(selectedContext, emptyReferenceLabel);
+                            const ambientToggleLabel = getAmbientToggleLabel(label);
+
                             return (
                                 <UiChip
                                     isActionable
                                     isExpandable
                                     isActive={isOpen}
                                     {...getIconByObject(item)}
-                                    label={getSelectedTitle(selectedContext, emptyReferenceLabel)}
+                                    label={label}
                                     iconAction={selectedContext.activated ? "visible" : "invisible"}
                                     actionIconTooltip={ambientToggleLabel}
                                     tooltip={intl.formatMessage(msgs.context)}
                                     variant={selectedContext.activated ? "normal" : "inactive"}
                                     onClick={toggleDropdown}
                                     onAction={onAmbientToggleHandler()}
+                                    onActionKeyDown={(event) => {
+                                        if (isActionKey(event)) {
+                                            event.stopPropagation();
+                                        }
+                                    }}
                                     accessibilityConfig={{
                                         ...accessibilityConfig,
                                         iconBeforeAriaLabel: getTypeLabel(item.type, intl),
@@ -214,14 +222,18 @@ export function GenAIChatContextIndicator({ onUpdate }: GenAIChatContextIndicato
                         {...getIconByObject(selectedContext.publisherDocument)}
                         label={selectedContext.publisherDocument.title || emptyReferenceLabel}
                         iconAction={selectedContext.activated ? "visible" : "invisible"}
-                        actionIconTooltip={ambientToggleLabel}
+                        actionIconTooltip={getAmbientToggleLabel(
+                            selectedContext.publisherDocument.title || emptyReferenceLabel,
+                        )}
                         tooltip={intl.formatMessage(msgs.context)}
                         variant={selectedContext.activated ? "normal" : "inactive"}
                         onClick={onAmbientToggleHandler()}
                         onAction={onAmbientToggleHandler()}
                         accessibilityConfig={{
                             iconBeforeAriaLabel: getTypeLabel(selectedContext.publisherDocument.type, intl),
-                            actionAriaLabel: ambientToggleLabel,
+                            actionAriaLabel: getAmbientToggleLabel(
+                                selectedContext.publisherDocument.title || emptyReferenceLabel,
+                            ),
                         }}
                     />
                 ) : null}

@@ -24,6 +24,7 @@ import { type ITabState } from "../tabsState.js";
 
 import {
     classifyParameterReconciliation,
+    collectAppliedParameterEntriesForRoots,
     collectFilterParameterRoots,
     collectParameterReconciliations,
     collectRootParameterRefs,
@@ -721,6 +722,54 @@ describe("dashboard filter parameter dependencies", () => {
         it("returns nothing for a root the map does not know", () => {
             expect(collectRootParameterRefs(dependenciesByRoot, [otherComputedAttributeRef])).toEqual([]);
         });
+    });
+});
+
+describe("collectAppliedParameterEntriesForRoots", () => {
+    const insightRef = idRef("insight-1", "insight");
+    const computedAttributeRef = idRef("ca1", "computedAttribute");
+
+    const appliedEntry = (ref: IdentifierRef, runtimeOverride?: number): IDashboardParameterEntry => ({
+        parameter: { ref, parameterType: "NUMBER", mode: "active" },
+        runtimeOverride,
+    });
+    const contextWith = (entries: IDashboardParameterEntry[], filterRoots: IdentifierRef[] = []) => ({
+        entries,
+        dependenciesByRoot: {
+            [serializeObjRef(insightRef)]: [topNRef],
+            [serializeObjRef(computedAttributeRef)]: [sampleSizeRef],
+        },
+        filterRoots,
+        workspaceParameterByRef: new Map<string, IParameterMetadataObject>(),
+        isStringEnabled: true,
+    });
+
+    it("includes an applied entry that a given root depends on", () => {
+        const topN = appliedEntry(topNRef, 5);
+        expect(collectAppliedParameterEntriesForRoots(contextWith([topN]), [insightRef])).toEqual([topN]);
+    });
+
+    it("includes an applied entry that only a dashboard filter root depends on", () => {
+        const sampleSize = appliedEntry(sampleSizeRef, 50);
+        expect(
+            collectAppliedParameterEntriesForRoots(contextWith([sampleSize], [computedAttributeRef]), [
+                insightRef,
+            ]),
+        ).toEqual([sampleSize]);
+    });
+
+    it("leaves out an entry without an applied value", () => {
+        expect(
+            collectAppliedParameterEntriesForRoots(contextWith([appliedEntry(topNRef)]), [insightRef]),
+        ).toEqual([]);
+    });
+
+    it("leaves out an applied entry that no root depends on", () => {
+        expect(
+            collectAppliedParameterEntriesForRoots(contextWith([appliedEntry(sampleSizeRef, 50)]), [
+                insightRef,
+            ]),
+        ).toEqual([]);
     });
 });
 

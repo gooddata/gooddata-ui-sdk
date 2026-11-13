@@ -1,10 +1,10 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { type IRegion } from "../typings/domUtilities.js";
 
-import { isElementTextInput, region, removeFromDom } from "./domUtilities.js";
+import { getFocusableElements, isElementTextInput, region, removeFromDom } from "./domUtilities.js";
 
 interface IConfig {
     height: number;
@@ -234,5 +234,130 @@ describe("isElementTextInput", () => {
         expect(isElementTextInput(null)).toBe(false);
         expect(isElementTextInput(undefined)).toBe(false);
         expect(isElementTextInput({} as EventTarget)).toBe(false);
+    });
+});
+
+describe("getFocusableElements", () => {
+    // The suite runs with `isolate: false`, so anything left in the document leaks into later files.
+    const mounted: HTMLElement[] = [];
+
+    afterEach(() => {
+        mounted.splice(0).forEach((host) => host.remove());
+    });
+
+    function focusableIds(html: string): string[] {
+        const host = document.createElement("div");
+        host.innerHTML = html;
+        document.body.appendChild(host);
+        mounted.push(host);
+
+        return getFocusableElements(host).focusableElements.map((element) => element.id);
+    }
+
+    it("includes an editing host without tabindex although it reports a negative tabIndex", () => {
+        const host = document.createElement("div");
+        host.setAttribute("contenteditable", "true");
+
+        // the browser value the fallback exists for
+        expect(host.tabIndex).toBe(-1);
+        expect(focusableIds('<div id="editor" contenteditable="true"></div>')).toEqual(["editor"]);
+    });
+
+    it.each([
+        ["an empty value", '<div id="editor" contenteditable=""></div>'],
+        ["plaintext-only", '<div id="editor" contenteditable="plaintext-only"></div>'],
+        ["an uppercase keyword", '<div id="editor" contenteditable="TRUE"></div>'],
+    ])("includes an editing host set with %s", (_name, html) => {
+        expect(focusableIds(html)).toEqual(["editor"]);
+    });
+
+    it.each([
+        ["an explicit negative tabindex", '<div id="editor" contenteditable="true" tabindex="-1"></div>'],
+        ['contenteditable="false"', '<div id="editor" contenteditable="false"></div>'],
+        ['contenteditable="FALSE"', '<div id="editor" contenteditable="FALSE"></div>'],
+        ["an unknown value, which inherits", '<div id="editor" contenteditable="inherit"></div>'],
+        ["an inert ancestor", '<div inert><div id="editor" contenteditable="true"></div></div>'],
+    ])("excludes an editable element with %s", (_name, html) => {
+        expect(focusableIds(html)).toEqual([]);
+    });
+
+    it("includes only the outer host, not an editable element nested in it", () => {
+        expect(
+            focusableIds(
+                '<div id="editor" contenteditable="true"><p id="inner" contenteditable="true"></p></div>',
+            ),
+        ).toEqual(["editor"]);
+    });
+
+    it("includes an editable island inside a non-editable widget as a host of its own", () => {
+        expect(
+            focusableIds(
+                '<div id="editor" contenteditable="true"><div contenteditable="false">' +
+                    '<span id="island" contenteditable="true"></span></div></div>',
+            ),
+        ).toEqual(["editor", "island"]);
+    });
+
+    it("excludes other controls in an inert subtree", () => {
+        expect(
+            focusableIds('<button id="first"></button><div inert><button id="second"></button></div>'),
+        ).toEqual(["first"]);
+    });
+
+    describe("inside a dialog under an inert ancestor", () => {
+        afterEach(() => {
+            vi.restoreAllMocks();
+        });
+
+        /**
+         * Mounts `<div inert><dialog>{content}</dialog></div>`, opens the dialog and returns the ids
+         * getFocusableElements finds in it.
+         */
+        function focusableIdsInDialog(content: string, open: "modal" | "nonModal", dialogAttributes = "") {
+            const host = document.createElement("div");
+            host.innerHTML = `<div inert><dialog ${dialogAttributes}>${content}</dialog></div>`;
+            document.body.appendChild(host);
+            mounted.push(host);
+
+            const dialog = host.querySelector("dialog")!;
+            if (open === "modal") {
+                dialog.showModal();
+                // The test DOM opens the dialog modally but does not match :modal, as browsers do.
+                const matches = dialog.matches.bind(dialog);
+                vi.spyOn(dialog, "matches").mockImplementation(
+                    (selector) => selector === ":modal" || matches(selector),
+                );
+            } else {
+                dialog.show();
+            }
+
+            return getFocusableElements(dialog).focusableElements.map((element) => element.id);
+        }
+
+        it("includes the controls of a modal dialog, which escapes the inert ancestor", () => {
+            expect(
+                focusableIdsInDialog(
+                    '<button id="button"></button><div id="editor" contenteditable="true"></div>',
+                    "modal",
+                ),
+            ).toEqual(["button", "editor"]);
+        });
+
+        it("excludes the controls of a non-modal dialog, which stays inert", () => {
+            expect(focusableIdsInDialog('<button id="button"></button>', "nonModal")).toEqual([]);
+        });
+
+        it("excludes the controls of a modal dialog that is inert itself", () => {
+            expect(focusableIdsInDialog('<button id="button"></button>', "modal", "inert")).toEqual([]);
+        });
+
+        it("excludes the controls of an inert subtree inside a modal dialog", () => {
+            expect(
+                focusableIdsInDialog(
+                    '<button id="outside"></button><div inert><button id="inside"></button></div>',
+                    "modal",
+                ),
+            ).toEqual(["outside"]);
+        });
     });
 });
