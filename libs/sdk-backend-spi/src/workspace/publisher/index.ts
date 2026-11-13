@@ -21,6 +21,7 @@ import {
 
 import type { IFilterBaseOptions } from "../../common/filtering.js";
 import type { IPagedResource } from "../../common/paging.js";
+import type { QueryMethod } from "../../common/query.js";
 import { type PublisherContentNotSupportedError } from "../../errors/index.js";
 import { type IExportResult } from "../execution/index.js";
 
@@ -228,6 +229,14 @@ export interface IPublisherDocumentsQueryV2 {
      * @param origin - origin to apply
      */
     withOrigin(origin: ObjectOrigin | (string & {})): IPublisherDocumentsQueryV2;
+
+    /**
+     * Selects which backend endpoint flavor to use when listing documents.
+     * Default method: "GET"
+     *
+     * @param method - endpoint flavor to use ("GET" or "POST")
+     */
+    withMethod(method: QueryMethod): IPublisherDocumentsQueryV2;
 
     /**
      * Starts the query.

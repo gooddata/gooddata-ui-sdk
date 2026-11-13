@@ -106,12 +106,12 @@ import { setMeasuresToSecondaryAxis } from "./dualAxis.js";
 import { getCategoriesForTwoAttributes } from "./extendedStackingChartOptions.js";
 
 const isAreaChartStackingEnabled = (options: IChartConfig) => {
-    const { type, stacking, stackMeasures } = options;
+    const { type, stackMeasures } = options;
     if (!isAreaChart(type)) {
         return false;
     }
     if (stackMeasures === undefined) {
-        return stacking || stacking === undefined;
+        return true;
     }
     return stackMeasures;
 };

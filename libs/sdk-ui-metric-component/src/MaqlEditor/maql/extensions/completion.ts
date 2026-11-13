@@ -5,11 +5,9 @@ import {
     type CompletionContext,
     type CompletionInfo,
     type CompletionResult,
-    acceptCompletion,
     autocompletion,
     completionStatus,
     pickedCompletion,
-    snippet,
     startCompletion,
 } from "@codemirror/autocomplete";
 import { type ChangeSpec, type Extension, Prec, StateEffect, StateField } from "@codemirror/state";
@@ -92,11 +90,39 @@ export function completionType(kind: CompletionItemKind | undefined): string {
 }
 
 /**
- * The protocol writes tab stops as `$1` and the final cursor as `$0`; CodeMirror wants them in braces,
- * with the final cursor as an unnamed field.
+ * A snippet of the protocol (`SUM($1)$0`, `BY ${1:attribute}`) as plain text, with the selection to
+ * leave: the placeholder of the first tab stop (or the cursor there), else the final cursor (`$0`),
+ * else the end.
+ *
+ * @remarks
+ * The text goes in without an active snippet on purpose. A snippet's fields take Tab and Shift-Tab
+ * to move between them, so right after a function went in, Tab would only jump past its closing
+ * parenthesis instead of moving the focus out of the editor (WCAG 2.1.2).
  */
-export function toCodeMirrorSnippet(text: string): string {
-    return text.replace(/\$(\d+)/g, (_match, index: string) => (index === "0" ? "${}" : `\${${index}}`));
+export function expandSnippet(snippetText: string): { text: string; from: number; to: number } {
+    const fields: Array<{ index: number; from: number; to: number }> = [];
+    let text = "";
+    let last = 0;
+
+    for (const match of snippetText.matchAll(/\$\{(\d+)(?::([^}]*))?\}|\$(\d+)/g)) {
+        text += snippetText.slice(last, match.index);
+        const placeholder = match[2] ?? "";
+        fields.push({
+            index: Number(match[1] ?? match[3]),
+            from: text.length,
+            to: text.length + placeholder.length,
+        });
+        text += placeholder;
+        last = match.index + match[0].length;
+    }
+    text += snippetText.slice(last);
+
+    // the first tab stop, else the final cursor ($0), else the end
+    const target =
+        fields.filter((field) => field.index > 0).sort((a, b) => a.index - b.index)[0] ??
+        fields.find((field) => field.index === 0);
+
+    return target ? { text, from: target.from, to: target.to } : { text, from: text.length, to: text.length };
 }
 
 /**
@@ -242,31 +268,29 @@ function applyCompletion(
     const doc = view.state.doc;
     const edit = TextEdit.is(item.textEdit) ? item.textEdit : undefined;
     const span = completionSpan(edit ? rangeToSpan(doc, edit.range) : undefined, from, to);
-    const text = edit?.newText ?? item.insertText ?? item.label;
+    const rawText = edit?.newText ?? item.insertText ?? item.label;
     const additional = item.additionalTextEdits ? textEditsToChanges(doc, item.additionalTextEdits) : [];
 
-    if (item.insertTextFormat === InsertTextFormat.Snippet) {
-        // The snippet is placed after the additional edits moved the text, so its span is mapped
-        // through them.
-        let snippetFrom = span.from;
-        let snippetTo = span.to;
-        if (additional.length) {
-            const changes = view.state.changes(additional);
-            view.dispatch({ changes });
-            snippetFrom = changes.mapPos(span.from, 1);
-            snippetTo = Math.max(snippetFrom, changes.mapPos(span.to, -1));
-        }
-        snippet(toCodeMirrorSnippet(text))(view, completion, snippetFrom, snippetTo);
-    } else {
-        const specs: ChangeSpec[] = [{ from: span.from, to: span.to, insert: text }, ...additional];
-        const changes = view.state.changes(specs);
-        view.dispatch({
-            changes,
-            // The cursor goes after the inserted text, wherever the additional edits moved it.
-            selection: { anchor: changes.mapPos(span.to, 1) },
-            annotations: pickedCompletion.of(completion),
-        });
-    }
+    // A snippet goes in as plain text with the selection at its first tab stop (see expandSnippet);
+    // any other text with the cursor after it.
+    const {
+        text,
+        from: selectFrom,
+        to: selectTo,
+    } = item.insertTextFormat === InsertTextFormat.Snippet
+        ? expandSnippet(rawText)
+        : { text: rawText, from: rawText.length, to: rawText.length };
+
+    const specs: ChangeSpec[] = [{ from: span.from, to: span.to, insert: text }, ...additional];
+    const changes = view.state.changes(specs);
+    // where the inserted text starts, wherever the additional edits moved it
+    const start = changes.mapPos(span.from, -1);
+
+    view.dispatch({
+        changes,
+        selection: { anchor: start + selectFrom, head: start + selectTo },
+        annotations: pickedCompletion.of(completion),
+    });
 
     // An accepted reference may open a longer one, so the suggestions reopen right away.
     startCompletion(view);
@@ -412,9 +436,29 @@ function viewOf(element: HTMLElement): EditorView | null {
  * The `?` on the selected row: it opens and closes the documentation. The row itself accepts the
  * completion on mousedown, so the event stops here.
  */
+const FOCUSABLE_SELECTOR = 'a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
+/**
+ * Takes the element and its focusable content out of the Tab order. The suggestion popup is
+ * rendered inside the editor, so the next Tab from the editor would otherwise land on its controls
+ * instead of the next control of the page; the popup is used through the editor (the arrow keys,
+ * Enter and Escape) and with the mouse, which a tab index of -1 keeps working.
+ */
+function removeFromTabOrder<T extends HTMLElement>(element: T): T {
+    if (element.matches(FOCUSABLE_SELECTOR)) {
+        element.tabIndex = -1;
+    }
+    element.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR).forEach((focusable) => {
+        focusable.tabIndex = -1;
+    });
+    return element;
+}
+
 function renderDocsToggle(view: EditorView): HTMLElement {
     const button = document.createElement("button");
     button.type = "button";
+    // out of the Tab order, see removeFromTabOrder
+    button.tabIndex = -1;
     button.className = DOCS_TOGGLE_CLASS;
     button.setAttribute("aria-label", view.state.phrase("Documentation"));
     button.textContent = "?";
@@ -463,7 +507,8 @@ function renderDocsPane(detail: string | undefined, markdown: string, phrase: Ph
         pane.appendChild(rendered.dom);
     }
 
-    return { dom: pane, destroy: () => rendered?.destroy() };
+    // the close button and the links of the documentation (rendered synchronously, so all there)
+    return { dom: removeFromTabOrder(pane), destroy: () => rendered?.destroy() };
 }
 
 async function resolveInfo(
@@ -572,14 +617,11 @@ export function maqlCompletion({
                 { render: (_completion, _state, view) => renderDocsToggle(view), position: 90 },
             ],
         }),
-        // Above the standard bindings: Mod-i selects the enclosing syntax there, and Tab indents.
-        // While an input method composes text, Tab is left to the base binding, which ignores it.
-        Prec.high(
-            keymap.of([
-                { key: "Mod-i", run: startCompletion },
-                { key: "Tab", run: (view) => (view.compositionStarted ? false : acceptCompletion(view)) },
-            ]),
-        ),
+        // Above the standard bindings: Mod-i selects the enclosing syntax there. Tab does not accept a
+        // suggestion: Enter does, Escape closes the list, and Tab and Shift-Tab leave the editor
+        // with the text as typed (the list closes as the editor loses the focus), so leaving never
+        // changes the formula unasked.
+        Prec.high(keymap.of([{ key: "Mod-i", run: startCompletion }])),
         listener,
     ];
 }

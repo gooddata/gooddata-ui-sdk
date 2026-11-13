@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-application-header",
-    "version": "11.68.0-alpha.11",
+    "version": "11.69.0-alpha.1",
     "description": "GoodData SDK application header components — workspace picker, notifications dropdown",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",

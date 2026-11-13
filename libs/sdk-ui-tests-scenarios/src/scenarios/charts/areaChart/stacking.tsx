@@ -18,14 +18,6 @@ export const stacking = scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
     })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .addScenario("two measures with viewBy and disabled stacking", {
-        ...AreaChartWithTwoMeasuresAndViewBy,
-        config: { stacking: false },
-    })
-    .addScenario("two measures with viewBy and enabled stacking", {
-        ...AreaChartWithTwoMeasuresAndViewBy,
-        config: { stacking: true },
-    })
     .addScenario("two measures with viewBy and disabled stack measures", {
         ...AreaChartWithTwoMeasuresAndViewBy,
         config: { stackMeasures: false },
@@ -48,7 +40,7 @@ export const stacking = scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
     })
     .addScenario("single measure with viewBy and stackBy and disabled stacking", {
         ...AreaChartWithViewAndStackBy,
-        config: { stacking: false },
+        config: { stackMeasures: false },
     })
     .addScenario("single measure with viewBy and stack to percent", {
         ...AreaChartWithViewBy,
@@ -56,9 +48,9 @@ export const stacking = scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
     })
     .addScenario("undefined values and disabled stacking", {
         ...AreaChartViewByDate,
-        config: { stacking: false },
+        config: { stackMeasures: false },
     })
     .addScenario("undefined values, disabled stacking and the continuous line enabled", {
         ...AreaChartViewByDate,
-        config: { stacking: false, continuousLine: { enabled: true } },
+        config: { stackMeasures: false, continuousLine: { enabled: true } },
     });

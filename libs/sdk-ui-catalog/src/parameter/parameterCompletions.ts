@@ -6,6 +6,7 @@ import {
     type CompletionResult,
     snippet,
     snippetCompletion,
+    startCompletion,
 } from "@codemirror/autocomplete";
 import type { Text } from "@codemirror/state";
 
@@ -112,9 +113,22 @@ function toKeyOption(label: string, schemaKeys: SchemaKeys): Completion {
         });
     }
     if (child?.kind === "mapping") {
-        return snippetCompletion(`${label}:\n\t\${}`, { label, type: "property" });
+        return toMappingKeyOption(label);
     }
     return { label, type: "property", apply: `${label}: ` };
+}
+
+// Completions activate only on typed input, and an accepted option is not one.
+function toMappingKeyOption(label: string): Completion {
+    const insertBlock = snippet(`${label}:\n\t\${}`);
+    return {
+        label,
+        type: "property",
+        apply(view, completion, from, to) {
+            insertBlock(view, completion, from, to);
+            startCompletion(view);
+        },
+    };
 }
 
 function toNewItemOption(firstKey: string, itemFrom: number): Completion {

@@ -24,9 +24,14 @@
       {{- /* The archive page lists every version with changelog and API links;
              it used to be a top-level tab, now it heads this menu. It is found
              by its `versions_archive: true` front matter, so it can live
-             wherever the sidebar makes most sense (today: API Reference). */ -}}
+             wherever the sidebar makes most sense (today: API Reference).
+             It always points at the newest version's copy (the first entry's url),
+             so an archived build such as /11.64/ does not send readers to its own
+             frozen list. */ -}}
       {{- with index (where site.Pages "Params.versions_archive" true) 0 -}}
-      <a href="{{ .RelPermalink }}" class="mb-1 block border-b border-gd-border px-3 py-2.5 text-sm font-medium text-gd-text hover:bg-gd-surface hover:no-underline">All versions</a>
+      {{- $rest := replaceRE (printf `^.*?/%s/` .Section) "" .RelPermalink -}}
+      {{- $archiveHref := printf "%s/%s" (strings.TrimSuffix "/" (index $versions 0).url) $rest -}}
+      <a href="{{ if findRE "^https?://" $archiveHref }}{{ $archiveHref }}{{ else }}{{ $archiveHref | relURL }}{{ end }}" class="mb-1 block border-b border-gd-border px-3 py-2.5 text-sm font-medium text-gd-text hover:bg-gd-surface hover:no-underline">All versions</a>
       {{- end -}}
       {{- range first 4 $versions -}}
       {{- $href := .url -}}
