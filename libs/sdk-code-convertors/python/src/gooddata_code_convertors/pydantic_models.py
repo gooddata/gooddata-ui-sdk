@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 31c82b64cd50bc5c4dda79fd3411c77bdbc2f4f60e84879cf91073757073d77f
+# schema-hash: 998f9b6cb47e0f5d3af34ef888344c22d09b497e74dce2081c991dcf85a2efba
 
 from __future__ import annotations
 
@@ -298,6 +298,8 @@ __all__ = [
     "QueryMetricValueFilter2",
     "QueryMetricValueFilter3",
     "QueryMetricValueFilter4",
+    "QueryParameter",
+    "QueryParameters",
     "QueryRankingFilter",
     "QueryRankingFilter1",
     "QueryRankingFilter2",
@@ -1761,6 +1763,17 @@ class Function(Enum):
     MAX = 'MAX'
     MED = 'MED'
     NAT = 'NAT'
+
+
+class QueryParameter(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    id: str = Field(..., description='An identifier of the parameter.')
+    value: str | float = Field(
+        ...,
+        description="The value this query uses instead of the parameter's default value.",
+    )
 
 
 class Type50(Enum):
@@ -3694,6 +3707,10 @@ class Plugin1(BaseModel):
     ) = Field(..., description='URL of the plugin.')
 
 
+class QueryParameters(RootModel[list[QueryParameter]]):
+    root: list[QueryParameter] = Field(..., title='Query Parameters')
+
+
 class QueryField1(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
@@ -5365,6 +5382,9 @@ class Query(BaseModel):
     )
     sort_by: QuerySorts | None = Field(
         None, description='A list of sorting in this query.'
+    )
+    parameters: QueryParameters | None = Field(
+        None, description='A list of parameter values in this query.'
     )
 
 

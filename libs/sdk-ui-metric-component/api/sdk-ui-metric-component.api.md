@@ -1059,6 +1059,8 @@ export interface ISqlEditorProps {
 
 // @internal (undocumented)
 export interface IUseMetricList {
+    isFailed: boolean;
+    isLoaded: boolean;
     // (undocumented)
     items: IMeasureMetadataObject[];
     // (undocumented)

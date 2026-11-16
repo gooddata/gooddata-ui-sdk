@@ -6701,6 +6701,10 @@ export const metadata_v1: {
                         $ref: string;
                         description: string;
                     };
+                    parameters: {
+                        $ref: string;
+                        description: string;
+                    };
                 };
                 required: string[];
                 $defs: {};
@@ -12324,6 +12328,13 @@ export const metadata_v1: {
                 $ref: string;
             };
         };
+        queryParameters: {
+            title: string;
+            type: string;
+            items: {
+                $ref: string;
+            };
+        };
         queryField: {
             title: string;
             oneOf: ({
@@ -13011,6 +13022,26 @@ export const metadata_v1: {
                         })[];
                     };
                     minItems: number;
+                };
+            };
+            required: string[];
+        };
+        queryParameter: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                id: {
+                    type: string;
+                    description: string;
+                    $semantic: {
+                        type: string;
+                        source: string;
+                    };
+                };
+                value: {
+                    type: string[];
+                    description: string;
                 };
             };
             required: string[];
@@ -15323,6 +15354,8 @@ interface Query {
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
+    parameters?: QueryParameters;
+    // (undocumented)
     sort_by?: Sorts;
 }
 
@@ -15334,6 +15367,8 @@ interface Query1 {
     fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
+    // (undocumented)
+    parameters?: QueryParameters;
     // (undocumented)
     sort_by?: Sorts;
 }
@@ -15347,6 +15382,8 @@ interface Query10 {
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
+    parameters?: QueryParameters;
+    // (undocumented)
     sort_by?: Sorts;
 }
 
@@ -15358,6 +15395,8 @@ interface Query11 {
     fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
+    // (undocumented)
+    parameters?: QueryParameters;
     // (undocumented)
     sort_by?: Sorts;
 }
@@ -15371,6 +15410,8 @@ interface Query12 {
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
+    parameters?: QueryParameters;
+    // (undocumented)
     sort_by?: Sorts;
 }
 
@@ -15382,6 +15423,8 @@ interface Query13 {
     fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
+    // (undocumented)
+    parameters?: QueryParameters;
     // (undocumented)
     sort_by?: Sorts;
 }
@@ -15395,6 +15438,8 @@ interface Query14 {
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
+    parameters?: QueryParameters;
+    // (undocumented)
     sort_by?: Sorts;
 }
 
@@ -15406,6 +15451,8 @@ interface Query15 {
     fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
+    // (undocumented)
+    parameters?: QueryParameters;
     // (undocumented)
     sort_by?: Sorts;
 }
@@ -15419,6 +15466,8 @@ interface Query16 {
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
+    parameters?: QueryParameters;
+    // (undocumented)
     sort_by?: Sorts;
 }
 
@@ -15430,6 +15479,8 @@ interface Query17 {
     fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
+    // (undocumented)
+    parameters?: QueryParameters;
     // (undocumented)
     sort_by?: Sorts;
 }
@@ -15443,6 +15494,8 @@ interface Query18 {
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
+    parameters?: QueryParameters;
+    // (undocumented)
     sort_by?: Sorts;
 }
 
@@ -15454,6 +15507,8 @@ interface Query19 {
     fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
+    // (undocumented)
+    parameters?: QueryParameters;
     // (undocumented)
     sort_by?: Sorts;
 }
@@ -15467,6 +15522,8 @@ interface Query2 {
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
+    parameters?: QueryParameters;
+    // (undocumented)
     sort_by?: Sorts;
 }
 
@@ -15478,6 +15535,8 @@ interface Query20 {
     fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
+    // (undocumented)
+    parameters?: QueryParameters;
     // (undocumented)
     sort_by?: Sorts;
 }
@@ -15491,6 +15550,8 @@ interface Query21 {
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
+    parameters?: QueryParameters;
+    // (undocumented)
     sort_by?: Sorts;
 }
 
@@ -15502,6 +15563,8 @@ interface Query22 {
     fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
+    // (undocumented)
+    parameters?: QueryParameters;
     // (undocumented)
     sort_by?: Sorts;
 }
@@ -15515,6 +15578,8 @@ interface Query3 {
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
+    parameters?: QueryParameters;
+    // (undocumented)
     sort_by?: Sorts;
 }
 
@@ -15526,6 +15591,8 @@ interface Query4 {
     fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
+    // (undocumented)
+    parameters?: QueryParameters;
     // (undocumented)
     sort_by?: Sorts;
 }
@@ -15539,6 +15606,8 @@ interface Query5 {
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
+    parameters?: QueryParameters;
+    // (undocumented)
     sort_by?: Sorts;
 }
 
@@ -15550,6 +15619,8 @@ interface Query6 {
     fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
+    // (undocumented)
+    parameters?: QueryParameters;
     // (undocumented)
     sort_by?: Sorts;
 }
@@ -15563,6 +15634,8 @@ interface Query7 {
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
+    parameters?: QueryParameters;
+    // (undocumented)
     sort_by?: Sorts;
 }
 
@@ -15575,6 +15648,8 @@ interface Query8 {
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
+    parameters?: QueryParameters;
+    // (undocumented)
     sort_by?: Sorts;
 }
 
@@ -15586,6 +15661,8 @@ interface Query9 {
     fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
+    // (undocumented)
+    parameters?: QueryParameters;
     // (undocumented)
     sort_by?: Sorts;
 }
@@ -15613,6 +15690,19 @@ interface QueryFilters2 {
     // (undocumented)
     [k: string]: Filter;
 }
+
+// Warning: (ae-missing-release-tag) "QueryParameter" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface QueryParameter {
+    id: string;
+    value: string | number;
+}
+
+// Warning: (ae-missing-release-tag) "QueryParameters" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type QueryParameters = QueryParameter[];
 
 // Warning: (ae-missing-release-tag) "RadarChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -16940,6 +17030,7 @@ declare namespace v1 {
         ComputedAttributeIdentifier14,
         Sort3,
         Sorts,
+        QueryParameters,
         WidthValueOrAuto,
         WidthValueOrAuto1,
         WidthValueOrAuto2,
@@ -17236,6 +17327,7 @@ declare namespace v1 {
         QueryFilters2,
         AttributeSort,
         MetricSort,
+        QueryParameter,
         VisualisationConfig,
         Width,
         AttributeWithElementValue,

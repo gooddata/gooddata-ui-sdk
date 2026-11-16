@@ -53,6 +53,20 @@ export function shouldWaitForInjectedApiToken(): boolean {
     );
 }
 
+/**
+ * The token that the parent sent, with the origin that the browser stamped on the message.
+ */
+export interface IInjectedApiToken {
+    token: string;
+    type: "gooddata" | "jwt";
+    origin: string;
+    /**
+     * True when the parent window sent the message. Another window, for example the top page of a
+     * nested frame, can also send the token, but its origin is not the origin of the parent.
+     */
+    isFromParent: boolean;
+}
+
 type SetApiTokenPayload = (AdSetApiTokenCommandData | KdSetApiTokenCommandData)["gdc"]["event"]["data"];
 
 // Accepts the SetApiToken command from either embedded product — the parent page speaks
@@ -80,10 +94,14 @@ function getSetApiTokenPayload(data: unknown): SetApiTokenPayload | undefined {
  *   3. Await the parent's `SetApiToken`, apply it to the host backend, then tear the
  *      listener down so the mounted app can register its full command set.
  *
- * Resolves once a valid token has been applied. Rejects if `signal` aborts.
+ * Resolves with the token and the origin of its message once a valid token has been applied.
+ * Rejects if `signal` aborts.
+ *
+ * `listeningForApiToken` is posted around the origin gate of `sdk-embedding`: the parent origin is
+ * not known yet, and the parent needs this event to send the token.
  */
-export async function waitForInjectedApiToken(signal?: AbortSignal): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
+export async function waitForInjectedApiToken(signal?: AbortSignal): Promise<IInjectedApiToken> {
+    return new Promise<IInjectedApiToken>((resolve, reject) => {
         let listener: ((e: MessageEvent) => void) | undefined;
 
         const cleanup = () => {
@@ -132,11 +150,24 @@ export async function waitForInjectedApiToken(signal?: AbortSignal): Promise<voi
                 return;
             }
             cleanup();
-            resolve();
+            resolve({ token, type: tokenType, origin: e.origin, isFromParent: e.source === window.parent });
         };
 
         window.addEventListener("message", listener, false);
-        messagingUtils.postEvent(GdcProductName.ANALYTICAL_DESIGNER, GdcAdEventType.ListeningForApiToken, {});
-        messagingUtils.postEvent(GdcProductName.KPI_DASHBOARD, GdcKdEventType.ListeningForApiToken, {});
+        const exempt = { exempt: true };
+        messagingUtils.postEvent(
+            GdcProductName.ANALYTICAL_DESIGNER,
+            GdcAdEventType.ListeningForApiToken,
+            {},
+            undefined,
+            exempt,
+        );
+        messagingUtils.postEvent(
+            GdcProductName.KPI_DASHBOARD,
+            GdcKdEventType.ListeningForApiToken,
+            {},
+            undefined,
+            exempt,
+        );
     });
 }

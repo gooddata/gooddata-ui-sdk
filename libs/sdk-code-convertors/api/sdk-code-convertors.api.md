@@ -6,6 +6,7 @@
 
 import { AfmExecution } from '@gooddata/api-client-tiger';
 import { AfmObjectIdentifier } from '@gooddata/api-client-tiger';
+import { AfmObjectIdentifierParameter } from '@gooddata/api-client-tiger';
 import type { ArithmeticMetricField } from '@gooddata/sdk-code-schemas/v1';
 import type { Attribute } from '@gooddata/sdk-code-schemas/v1';
 import type { AttributeField } from '@gooddata/sdk-code-schemas/v1';
@@ -117,6 +118,7 @@ import type { PublisherDocumentV2 } from '@gooddata/sdk-code-schemas/v1';
 import type { PublisherPageTemplateV2 } from '@gooddata/sdk-code-schemas/v1';
 import type { Query } from '@gooddata/sdk-code-schemas/v1';
 import type { QueryFilters } from '@gooddata/sdk-code-schemas/v1';
+import type { QueryParameter } from '@gooddata/sdk-code-schemas/v1';
 import type { Report as Report_2 } from '@gooddata/sdk-code-schemas/v1';
 import type { ReportPageBody } from '@gooddata/sdk-code-schemas/v1';
 import type { ReportPageLayout } from '@gooddata/sdk-code-schemas/v1';
@@ -1225,6 +1227,8 @@ export enum CoreErrorCode {
     DuplicateFilterName = "core.duplicateFilterName",
     // (undocumented)
     DuplicateLayerIdentifier = "core.duplicateLayerIdentifier",
+    // (undocumented)
+    DuplicateParameterIdentifier = "core.duplicateParameterIdentifier",
     // (undocumented)
     DuplicateTabIdentifier = "core.duplicateTabIdentifier",
     // (undocumented)
@@ -4133,6 +4137,10 @@ export type VisualisationConfig<T> = {
 // @internal (undocumented)
 export type VisualisationDefinition = Pick<IInsight["insight"], "visualizationUrl" | "properties" | "filters" | "buckets" | "sorts" | "attributeFilterConfigs" | "layers"> & {
     version: string;
+    parameters?: Array<{
+        ref: AfmObjectIdentifierParameter;
+        value: QueryParameter["value"];
+    }>;
 };
 
 // @internal (undocumented)
@@ -4465,6 +4473,7 @@ export function yamlReportToDeclarative(entities: ExportEntities, input: Visuali
     buckets: VisualisationDefinition["buckets"];
     sorts: VisualisationDefinition["sorts"];
     filters: VisualisationDefinition["filters"];
+    parameters: NonNullable<VisualisationDefinition["parameters"]>;
     positions: Array<{
         longitude: string;
         latitude: string;

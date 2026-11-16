@@ -10,6 +10,11 @@ export { store, startSagas, subscribeControls } from "./reduxStore.js";
 export { getHelpMenuItems, getTranslatedHelpMenuItemsForLocale } from "./utils/appHeader.js";
 export { type IAdHostBackend, type IApiToken, adoptHostBackend, resetBackend } from "./backend.js";
 export { emitApiTokenIsAboutToExpire } from "./postMessageApi/outgoing/set_api_token_events.js";
+export {
+    type IStartParentOriginValidationOptions,
+    startParentOriginValidation,
+    stopParentOriginValidation,
+} from "./postMessageApi/outgoing/parent_origin_validation.js";
 export { workspacePermissionsSuccess } from "./actions/permissions_actions.js";
 export { setEmbedded } from "./actions/embedded_actions.js";
 export { resetForPluggableMount } from "./actions/reset_for_pluggable_mount_actions.js";

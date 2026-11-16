@@ -2972,6 +2972,7 @@ export type IPublisherDocumentsQueryResultV2 = IPagedResource<IPublisherDocument
 export interface IPublisherDocumentsQueryV2 {
     query(): Promise<IPublisherDocumentsQueryResultV2>;
     withFilter(filter: IFilterBaseOptions): IPublisherDocumentsQueryV2;
+    withMethod(method: QueryMethod): IPublisherDocumentsQueryV2;
     withOrigin(origin: ObjectOrigin | (string & {})): IPublisherDocumentsQueryV2;
     withPage(page: number): IPublisherDocumentsQueryV2;
     withSize(size: number): IPublisherDocumentsQueryV2;

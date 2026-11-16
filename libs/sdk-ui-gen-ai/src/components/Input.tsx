@@ -188,6 +188,7 @@ function InputComponent({ autofocus = false, canManage, canAnalyze, targetRef }:
                         disabled={buttonDisabled}
                         isConversationsLoading={!conversationsLoaded}
                         isAssistantLoading={isAssistantLoading}
+                        isInProgress={isEvaluating}
                         agentDropdownDisabled={agentDropdownDisabled}
                         handleSubmit={handleSubmit}
                         handleOnFocus={handleOnFocus}

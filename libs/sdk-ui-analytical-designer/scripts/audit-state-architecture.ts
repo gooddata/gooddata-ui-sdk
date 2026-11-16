@@ -188,7 +188,7 @@ function walk(dir: string, out: string[] = []) {
 
 const rel = (file: string) => relative(LIB_ROOT, file).split("\\").join("/");
 const isTest = (r: string) =>
-    r.includes("/test/") || /\.test\.tsx?$/.test(r) || /(^|\/)test_helpers\.tsx?$/.test(r);
+    r.includes("/test/") || /\.test\.tsx?$/.test(r) || /(?:^|\/)test_helpers\.tsx?$/.test(r);
 
 type Finding = { rule: string; file: string; line: number; note: string };
 
@@ -215,7 +215,7 @@ const files = walk(SRC_ROOT);
 // [R4] path modules must not exist, anywhere
 for (const file of files) {
     const r = rel(file);
-    if (/(^|\/)state_paths\.ts$/.test(r) || r.endsWith("_paths.ts")) {
+    if (/(?:^|\/)state_paths\.ts$/.test(r) || r.endsWith("_paths.ts")) {
         report(
             "R4",
             r,
@@ -329,7 +329,7 @@ for (const file of files) {
             if (DEEP_ACCESS_FNS.has(fn) && node.arguments.length >= 2) {
                 const receiver = node.arguments[0].getText(sourceFile);
                 // the root is `state`/`root`/`appState`, or anything whose text ends there
-                if (/^(state|root|appState|rootState|liveState|snapshot)$/.test(receiver.trim())) {
+                if (/^(?:state|root|appState|rootState|liveState|snapshot)$/.test(receiver.trim())) {
                     report(
                         "R3",
                         r,
@@ -348,7 +348,7 @@ for (const file of files) {
 
     const isValueLevel =
         VALUE_LEVEL_SUFFIXES.some((s) => r.endsWith(s)) && !VALUE_LEVEL_EXCEPTIONS.has(r) && !isTest(r);
-    const isReducerModule = /_(reducer|slice|slices)\.ts$/.test(r);
+    const isReducerModule = /_(?:reducer|slice|slices)\.ts$/.test(r);
 
     for (const { spec, node } of imports) {
         // [R2] a value-level module naming the root state

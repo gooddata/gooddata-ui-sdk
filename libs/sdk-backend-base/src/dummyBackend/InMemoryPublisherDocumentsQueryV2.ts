@@ -5,6 +5,7 @@ import {
     type IPublisherDocumentSummaryV2,
     type IPublisherDocumentsQueryResultV2,
     type IPublisherDocumentsQueryV2,
+    type QueryMethod,
 } from "@gooddata/sdk-backend-spi";
 import { type IPublisherDocumentV2, isIdentifierRef } from "@gooddata/sdk-model";
 
@@ -75,6 +76,10 @@ export class InMemoryPublisherDocumentsQueryV2 implements IPublisherDocumentsQue
     }
 
     public withOrigin(_origin: string): IPublisherDocumentsQueryV2 {
+        return this;
+    }
+
+    public withMethod(_method: QueryMethod): IPublisherDocumentsQueryV2 {
         return this;
     }
 

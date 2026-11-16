@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-e2e-utils",
-    "version": "11.68.0-alpha.11",
+    "version": "11.69.0-alpha.2",
     "description": "GoodData utility functions for Playwright E2E tests",
     "license": "MIT",
     "author": "GoodData",
@@ -57,7 +57,7 @@
         "eslint-plugin-no-barrel-files": "1.2.2",
         "eslint-plugin-no-only-tests": "3.3.0",
         "eslint-plugin-playwright": "2.10.1",
-        "eslint-plugin-regexp": "1.15.0",
+        "eslint-plugin-regexp": "3.3.3",
         "eslint-plugin-sonarjs": "4.2.2",
         "eslint-plugin-tsdoc": "0.5.4",
         "jiti": "2.6.1",

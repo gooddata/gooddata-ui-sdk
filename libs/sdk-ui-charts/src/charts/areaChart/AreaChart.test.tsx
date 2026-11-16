@@ -55,7 +55,6 @@ describe("AreaChart", () => {
             expect(CoreAreaChart).toHaveBeenCalledWith(
                 expect.objectContaining({
                     config: {
-                        stacking: true,
                         stackMeasures: true,
                         stackMeasuresToPercent: true,
                     },
@@ -69,7 +68,6 @@ describe("AreaChart", () => {
             expect(CoreAreaChart).toHaveBeenCalledWith(
                 expect.objectContaining({
                     config: {
-                        stacking: true,
                         stackMeasures: false,
                         stackMeasuresToPercent: false,
                     },

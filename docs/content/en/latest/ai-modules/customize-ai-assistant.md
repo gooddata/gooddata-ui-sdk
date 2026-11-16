@@ -5,8 +5,11 @@ diataxis_type: howto
 api_symbols:
   - "@gooddata/sdk-ui-gen-ai:IGenAIAssistantSlots"
   - "@gooddata/sdk-ui-gen-ai:GenAIAssistant"
+  - "@gooddata/sdk-ui-gen-ai:IGenAIAssistantSendButtonProps"
+  - "@gooddata/sdk-ui-gen-ai:DefaultSendButton"
 source_files:
   - src/components/customized/types.ts
+  - src/components/customized/SendButton.tsx
   - src/components/GenAIChat.tsx
   - src/components/GenAIStandaloneInput.tsx
 related_pages:
@@ -14,7 +17,7 @@ related_pages:
   - /docs/ai-modules/ai-assistant-layout
   - /docs/ai-modules/control-ai-assistant
   - /docs/integrations/embedding/apply-theming
-description: Customize the AI Assistant input placeholder, or replace and wrap parts of its UI through slots.
+description: Customize the AI Assistant input placeholder and send button, or replace and wrap parts of its UI through slots.
 ai_generated_body: true
 type: docs
 weight: 53
@@ -53,8 +56,9 @@ export const StandaloneInput = () => (
 `GenAIStandaloneInput` is an internal API and may change without notice. Its existing `placeholder` prop remains supported. When both props are supplied, `inputPlaceholder` takes precedence, including when it is an empty string. When neither is supplied, the input uses the bundled localized placeholder.
 
 {{% alert color="warning" title="Alpha API" %}}
-Only the `LandingScreen`, `Disclaimer`, and `AgentItem` slots are public. All other slots, their props types, and every
-`Default*` building block are `@alpha` and may change or be removed without a major version bump.
+The `LandingScreen`, `Disclaimer`, `AgentItem`, and `SendButton` slots are public, as is `DefaultSendButton`.
+All other slots, their props types, and all other `Default*` building blocks are `@alpha` and may change or be removed
+without a major version bump.
 {{% /alert %}}
 
 ## Replace the landing screen
@@ -205,6 +209,46 @@ export const App = () => (
     />
 );
 ```
+
+## Customize the send button
+
+Pass a component through `slots.SendButton` to replace the chat input's send button without targeting the SDK's internal markup with CSS:
+
+```tsx
+import { GenAIAssistant, type IGenAIAssistantSlots } from "@gooddata/sdk-ui-gen-ai";
+import "@gooddata/sdk-ui-gen-ai/styles/css/main.css";
+
+const CustomSendButton: NonNullable<IGenAIAssistantSlots["SendButton"]> = ({ defaultProps }) => (
+    <button type="button" disabled={defaultProps.isDisabled} onClick={defaultProps.onClick}>
+        {defaultProps.isInProgress ? "Generating…" : "Send message"}
+    </button>
+);
+
+export const App = () => <GenAIAssistant slots={{ SendButton: CustomSendButton }} />;
+```
+
+The slot receives `Default` and `defaultProps`. The public `IGenAIAssistantSendButtonProps` type describes `defaultProps`:
+
+- `onClick`: sends the current input. It does nothing while sending is disabled or agent selection is loading.
+- `isDisabled`: whether sending is unavailable, including when the input is empty or the assistant is busy. Use this for the button's disabled state.
+- `isInProgress`: whether the assistant is generating a response in the current conversation. Use this to show a progress label or indicator, not to decide whether sending is enabled.
+
+Give your button an accessible name and translate custom labels in your application. For an icon-only button, provide an `aria-label`.
+
+To wrap the built-in button instead of replacing it, render `Default` with `defaultProps`:
+
+```tsx
+const WrappedSendButton: NonNullable<IGenAIAssistantSlots["SendButton"]> = ({ Default, defaultProps }) => (
+    <div className="my-company-send-button">
+        <Default {...defaultProps} />
+    </div>
+);
+```
+
+You can also import the public `DefaultSendButton` component from `@gooddata/sdk-ui-gen-ai` for reuse inside a slot.
+Without `slots.SendButton`, the assistant keeps its localized send button and tooltip, disabled while a response is generating. Enter-to-send is unchanged.
+
+The internal `GenAIStandaloneInput` component accepts the same slot. Its `isInProgress` is always `false` because it starts a conversation rather than generating a response itself.
 
 ## Replace the agent chooser
 

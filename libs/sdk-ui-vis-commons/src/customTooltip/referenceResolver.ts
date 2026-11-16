@@ -17,7 +17,7 @@ import {
 // parser treats them as literal text. The set covers every char that can start
 // or end a markdown construct supported by our parser: emphasis, link/image
 // brackets, parens, headings, lists, and horizontal rules.
-const MARKDOWN_METACHARS = /[\\*_`\[\]()!#~+\-]/g;
+const MARKDOWN_METACHARS = /[\\*_`[\]()!#~+\-]/g;
 
 function escapeMarkdownMetachars(value: string): string {
     return value.replace(MARKDOWN_METACHARS, "\\$&");

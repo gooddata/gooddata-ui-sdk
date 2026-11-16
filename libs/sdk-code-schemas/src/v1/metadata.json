@@ -4152,6 +4152,10 @@
                     "sort_by": {
                         "$ref": "#/$defs/querySorts",
                         "description": "A list of sorting in this query."
+                    },
+                    "parameters": {
+                        "$ref": "#/$defs/queryParameters",
+                        "description": "A list of parameter values in this query."
                     }
                 },
                 "required": ["fields"],
@@ -8796,6 +8800,11 @@
             "patternProperties": { "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": { "$ref": "#/$defs/queryField" } }
         },
         "querySorts": { "title": "Sorts", "type": "array", "items": { "$ref": "#/$defs/querySort" } },
+        "queryParameters": {
+            "title": "Query Parameters",
+            "type": "array",
+            "items": { "$ref": "#/$defs/queryParameter" }
+        },
         "queryField": {
             "title": "Field",
             "oneOf": [
@@ -9281,6 +9290,23 @@
                 }
             },
             "required": ["type", "metrics", "direction"]
+        },
+        "queryParameter": {
+            "title": "Query Parameter",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "An identifier of the parameter.",
+                    "$semantic": { "type": "reference", "source": "parameter.id" }
+                },
+                "value": {
+                    "type": ["string", "number"],
+                    "description": "The value this query uses instead of the parameter's default value."
+                }
+            },
+            "required": ["id", "value"]
         },
         "report": {
             "title": "Report",

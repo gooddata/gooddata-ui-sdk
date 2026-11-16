@@ -8,7 +8,7 @@ import { addPrefixToId, hasDefinedPrefix, removePrefixFromId, replacePrefixInId 
 export const sanitizeWhitespaces = /^\s+|\s+$/g;
 export const sanitizeTitleSuffix = /\([0-9]+\)$/g;
 export const sanitizeUnderscores = /^_+|_+$/g;
-export const sanitizeSpecialCharacters = /[^.A-Za-z0-9_-]+/g;
+export const sanitizeSpecialCharacters = /[^.A-Z0-9_-]+/gi;
 export const sanitizeStart = /^\.+/g;
 export const sanitizeDiacritic = /[\u0300-\u036f]/g;
 

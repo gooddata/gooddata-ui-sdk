@@ -11,7 +11,8 @@ import { type IEffectiveSettings, type IPlatformContext } from "@gooddata/sdk-pl
 import { getApplicationScopeFromPath, getWorkspaceIdFromPath } from "../loader/routing.js";
 import { resolveAvailableWorkspaceApplications } from "../registry/pluggableApplicationsRegistry.js";
 
-import { getBackend } from "./backend.js";
+import { getBackend, reinitializeBackend } from "./backend.js";
+import { EmbeddingOriginRejectedError, checkInjectedTokenOrigin } from "./checkInjectedTokenOrigin.js";
 import { type ILoadPlatformContextCallbacks, loadPlatformContext } from "./loadPlatformContext.js";
 import { waitForNotAuthenticatedGrace } from "./notAuthenticatedGrace.js";
 import {
@@ -23,7 +24,11 @@ import { useWorkspaceColorPalette } from "./useWorkspaceColorPalette.js";
 import { useWorkspacePermissions } from "./useWorkspacePermissions.js";
 import { useWorkspaceSettings } from "./useWorkspaceSettings.js";
 import { useWorkspaceTheme } from "./useWorkspaceTheme.js";
-import { shouldWaitForInjectedApiToken, waitForInjectedApiToken } from "./waitForInjectedApiToken.js";
+import {
+    type IInjectedApiToken,
+    shouldWaitForInjectedApiToken,
+    waitForInjectedApiToken,
+} from "./waitForInjectedApiToken.js";
 
 /**
  * Builds the platform context inside the host application.
@@ -212,6 +217,10 @@ class BackendPlatformContextProviderClass implements IBackendPlatformContextProv
     private _listeners = new Set<() => void>();
     private _loadStarted = false;
     private _callbacks: ILoadPlatformContextCallbacks | undefined;
+    // Set when the origin of the first token was rejected. The frame stays in the error state until
+    // a reload, and does not post listeningForApiToken again: a parent that answers each such event
+    // would make a request loop.
+    private _rejectedEmbeddingOrigin: string | undefined;
 
     public setCallbacks(callbacks: ILoadPlatformContextCallbacks): void {
         this._callbacks = callbacks;
@@ -230,6 +239,9 @@ class BackendPlatformContextProviderClass implements IBackendPlatformContextProv
     public load = async () => {
         this._loadStarted = true;
         this._abortController.abort();
+        if (this._rejectedEmbeddingOrigin !== undefined) {
+            return;
+        }
         const keepCurrentContextMounted = this._result.state === "ready";
         if (!keepCurrentContextMounted) {
             this._setResult(this._loadingStateMemo);
@@ -238,18 +250,36 @@ class BackendPlatformContextProviderClass implements IBackendPlatformContextProv
         const signal = this._abortController.signal;
 
         try {
+            let injectedToken: IInjectedApiToken | undefined;
             if (shouldWaitForInjectedApiToken()) {
-                await waitForInjectedApiToken(signal);
+                injectedToken = await waitForInjectedApiToken(signal);
             }
             const ctx = await loadPlatformContext({
                 signal,
                 callbacks: this._callbacks,
             });
-            if (!this._abortController.signal.aborted) {
-                this._setResult({ state: "ready", ctx });
+            // The flag is known only after the bootstrap, so the bootstrap runs with the token before
+            // the check. It only reads data into the frame; nothing goes to the parent before it.
+            const validatedOrigin = injectedToken
+                ? await checkInjectedTokenOrigin(injectedToken, ctx.userSettings)
+                : undefined;
+            // The events go to the parent window, so only the origin of the parent can be their
+            // target. For a token from another window, the module finds the parent origin itself.
+            const embeddingParentOrigin = injectedToken?.isFromParent ? validatedOrigin : undefined;
+            if (!signal.aborted) {
+                this._setResult({
+                    state: "ready",
+                    ctx: embeddingParentOrigin ? { ...ctx, embeddingParentOrigin } : ctx,
+                });
             }
         } catch (e) {
             if (e instanceof DOMException && e.name === "AbortError") {
+                return;
+            }
+            if (e instanceof EmbeddingOriginRejectedError) {
+                if (!signal.aborted) {
+                    this._rejectEmbeddingOrigin(e);
+                }
                 return;
             }
             // The backend redirects to login on a 401. Keep the loader up so the error does not
@@ -262,11 +292,22 @@ class BackendPlatformContextProviderClass implements IBackendPlatformContextProv
             }
             console.error("[host-runtime/platform-context] Failed to load platform context.", e);
             const message = e instanceof Error ? e.message : "Unknown platform context error.";
-            if (!this._abortController.signal.aborted) {
+            if (!signal.aborted) {
                 this._setResult({ state: "error", error: message });
             }
         }
     };
+
+    private _rejectEmbeddingOrigin(error: EmbeddingOriginRejectedError): void {
+        this._rejectedEmbeddingOrigin = error.origin;
+        // Discard the token: the backend goes back to no credentials.
+        reinitializeBackend();
+        console.warn(
+            `[host-runtime/platform-context] The token from "${error.origin}" was not applied: the origin is not in the embedding origins of the organization, or the check failed.`,
+            error.cause,
+        );
+        this._setResult({ state: "error", error: error.message });
+    }
 
     private _setResult(value: IPlatformContextLoadResult<IBackendPlatformContext>): void {
         this._result = value;

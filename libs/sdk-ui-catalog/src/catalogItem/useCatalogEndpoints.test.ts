@@ -149,6 +149,18 @@ describe("useCatalogEndpoints", () => {
         );
     });
 
+    it("loads documents through the search endpoint", async () => {
+        const stub = createCatalogBackendStub();
+        const options = makeQueryOptions({ backend: stub.backend });
+        const { result } = renderHook(() =>
+            useCatalogEndpoints([ObjectTypes.DOCUMENT], options, DOCUMENT_FLAGS),
+        );
+
+        await result.current[0].query();
+
+        expect(stub.builders[ObjectTypes.DOCUMENT].withMethod).toHaveBeenCalledWith("POST");
+    });
+
     it.each<[string, Partial<ICatalogItemQueryOptions>]>([
         ["only someone else's documents are asked for", { createdBy: ["other"] }],
         ["the user's own documents are left out", { excludeCreatedBy: ["me"] }],

@@ -66276,6 +66276,78 @@ export async function DocumentControllerApiAxiosParamCreator_PatchEntityDocument
 // DocumentControllerApi FP - DocumentControllerApiAxiosParamCreator
 /**
  * 
+ * @summary The search endpoint
+ * @param {string} workspaceId 
+ * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
+ * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DocumentControllerApiAxiosParamCreator_SearchEntitiesDocuments(
+    workspaceId: string, entitySearchBody: EntitySearchBody, origin?: 'ALL' | 'PARENTS' | 'NATIVE', xGDCVALIDATERELATIONS?: boolean, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('searchEntitiesDocuments', 'workspaceId', workspaceId)
+    // verify required parameter 'entitySearchBody' is not null or undefined
+    assertParamExists('searchEntitiesDocuments', 'entitySearchBody', entitySearchBody)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documents/search`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (origin !== undefined) {
+        localVarQueryParameter['origin'] = origin;
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof entitySearchBody !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(entitySearchBody !== undefined ? entitySearchBody : {})
+        : entitySearchBody || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// DocumentControllerApi FP - DocumentControllerApiAxiosParamCreator
+/**
+ * 
  * @summary Put a Document
  * @param {string} workspaceId 
  * @param {string} objectId 
@@ -66484,6 +66556,32 @@ export async function DocumentControllerApi_PatchEntityDocuments(
 // DocumentControllerApi Api FP
 /**
  * 
+ * @summary The search endpoint
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {DocumentControllerApiSearchEntitiesDocumentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DocumentControllerApi_SearchEntitiesDocuments(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: DocumentControllerApiSearchEntitiesDocumentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentOutList> {
+    const localVarAxiosArgs = await DocumentControllerApiAxiosParamCreator_SearchEntitiesDocuments(
+        requestParameters.workspaceId, requestParameters.entitySearchBody, requestParameters.origin, requestParameters.xGDCVALIDATERELATIONS, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// DocumentControllerApi Api FP
+/**
+ * 
  * @summary Put a Document
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -66562,6 +66660,16 @@ export interface DocumentControllerApiInterface {
      * @memberof DocumentControllerApiInterface
      */
     patchEntityDocuments(requestParameters: DocumentControllerApiPatchEntityDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutDocument>;
+
+    /**
+     * 
+     * @summary The search endpoint
+     * @param {DocumentControllerApiSearchEntitiesDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DocumentControllerApiInterface
+     */
+    searchEntitiesDocuments(requestParameters: DocumentControllerApiSearchEntitiesDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutList>;
 
     /**
      * 
@@ -66793,6 +66901,41 @@ export interface DocumentControllerApiPatchEntityDocumentsRequest {
 }
 
 /**
+ * Request parameters for searchEntitiesDocuments operation in DocumentControllerApi.
+ * @export
+ * @interface DocumentControllerApiSearchEntitiesDocumentsRequest
+ */
+export interface DocumentControllerApiSearchEntitiesDocumentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof DocumentControllerApiSearchEntitiesDocuments
+     */
+    readonly workspaceId: string
+
+    /**
+     * Search request body with filter, pagination, and sorting options
+     * @type {EntitySearchBody}
+     * @memberof DocumentControllerApiSearchEntitiesDocuments
+     */
+    readonly entitySearchBody: EntitySearchBody
+
+    /**
+     * 
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof DocumentControllerApiSearchEntitiesDocuments
+     */
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DocumentControllerApiSearchEntitiesDocuments
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+}
+
+/**
  * Request parameters for updateEntityDocuments operation in DocumentControllerApi.
  * @export
  * @interface DocumentControllerApiUpdateEntityDocumentsRequest
@@ -66899,6 +67042,18 @@ export class DocumentControllerApi extends BaseAPI implements DocumentController
      */
     public patchEntityDocuments(requestParameters: DocumentControllerApiPatchEntityDocumentsRequest, options?: AxiosRequestConfig) {
         return DocumentControllerApi_PatchEntityDocuments(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary The search endpoint
+     * @param {DocumentControllerApiSearchEntitiesDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DocumentControllerApi
+     */
+    public searchEntitiesDocuments(requestParameters: DocumentControllerApiSearchEntitiesDocumentsRequest, options?: AxiosRequestConfig) {
+        return DocumentControllerApi_SearchEntitiesDocuments(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -86078,6 +86233,78 @@ export async function EntitiesApiAxiosParamCreator_SearchEntitiesDatasets(
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
+ * @summary The search endpoint
+ * @param {string} workspaceId 
+ * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
+ * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApiAxiosParamCreator_SearchEntitiesDocuments(
+    workspaceId: string, entitySearchBody: EntitySearchBody, origin?: 'ALL' | 'PARENTS' | 'NATIVE', xGDCVALIDATERELATIONS?: boolean, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('searchEntitiesDocuments', 'workspaceId', workspaceId)
+    // verify required parameter 'entitySearchBody' is not null or undefined
+    assertParamExists('searchEntitiesDocuments', 'entitySearchBody', entitySearchBody)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documents/search`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (origin !== undefined) {
+        localVarQueryParameter['origin'] = origin;
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof entitySearchBody !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(entitySearchBody !== undefined ? entitySearchBody : {})
+        : entitySearchBody || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// EntitiesApi FP - EntitiesApiAxiosParamCreator
+/**
+ * 
  * @summary The search endpoint (beta)
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
@@ -97881,6 +98108,32 @@ export async function EntitiesApi_SearchEntitiesDatasets(
 // EntitiesApi Api FP
 /**
  * 
+ * @summary The search endpoint
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {EntitiesApiSearchEntitiesDocumentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function EntitiesApi_SearchEntitiesDocuments(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: EntitiesApiSearchEntitiesDocumentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentOutList> {
+    const localVarAxiosArgs = await EntitiesApiAxiosParamCreator_SearchEntitiesDocuments(
+        requestParameters.workspaceId, requestParameters.entitySearchBody, requestParameters.origin, requestParameters.xGDCVALIDATERELATIONS, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// EntitiesApi Api FP
+/**
+ * 
  * @summary The search endpoint (beta)
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -102302,6 +102555,16 @@ export interface EntitiesApiInterface {
      * @memberof EntitiesApiInterface
      */
     searchEntitiesDatasets(requestParameters: EntitiesApiSearchEntitiesDatasetsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDatasetOutList>;
+
+    /**
+     * 
+     * @summary The search endpoint
+     * @param {EntitiesApiSearchEntitiesDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    searchEntitiesDocuments(requestParameters: EntitiesApiSearchEntitiesDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutList>;
 
     /**
      * 
@@ -112877,6 +113140,41 @@ export interface EntitiesApiSearchEntitiesDatasetsRequest {
 }
 
 /**
+ * Request parameters for searchEntitiesDocuments operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiSearchEntitiesDocumentsRequest
+ */
+export interface EntitiesApiSearchEntitiesDocumentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof EntitiesApiSearchEntitiesDocuments
+     */
+    readonly workspaceId: string
+
+    /**
+     * Search request body with filter, pagination, and sorting options
+     * @type {EntitySearchBody}
+     * @memberof EntitiesApiSearchEntitiesDocuments
+     */
+    readonly entitySearchBody: EntitySearchBody
+
+    /**
+     * 
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof EntitiesApiSearchEntitiesDocuments
+     */
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof EntitiesApiSearchEntitiesDocuments
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+}
+
+/**
  * Request parameters for searchEntitiesExportDefinitions operation in EntitiesApi.
  * @export
  * @interface EntitiesApiSearchEntitiesExportDefinitionsRequest
@@ -118472,6 +118770,18 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
      */
     public searchEntitiesDatasets(requestParameters: EntitiesApiSearchEntitiesDatasetsRequest, options?: AxiosRequestConfig) {
         return EntitiesApi_SearchEntitiesDatasets(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary The search endpoint
+     * @param {EntitiesApiSearchEntitiesDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public searchEntitiesDocuments(requestParameters: EntitiesApiSearchEntitiesDocumentsRequest, options?: AxiosRequestConfig) {
+        return EntitiesApi_SearchEntitiesDocuments(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -173959,6 +174269,78 @@ export async function PublisherDocumentsApiAxiosParamCreator_PatchEntityPageTemp
 // PublisherDocumentsApi FP - PublisherDocumentsApiAxiosParamCreator
 /**
  * 
+ * @summary The search endpoint
+ * @param {string} workspaceId 
+ * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
+ * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
+ * @param {boolean} [xGDCVALIDATERELATIONS] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApiAxiosParamCreator_SearchEntitiesDocuments(
+    workspaceId: string, entitySearchBody: EntitySearchBody, origin?: 'ALL' | 'PARENTS' | 'NATIVE', xGDCVALIDATERELATIONS?: boolean, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('searchEntitiesDocuments', 'workspaceId', workspaceId)
+    // verify required parameter 'entitySearchBody' is not null or undefined
+    assertParamExists('searchEntitiesDocuments', 'entitySearchBody', entitySearchBody)
+    const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/documents/search`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (origin !== undefined) {
+        localVarQueryParameter['origin'] = origin;
+    }
+
+    if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
+        localVarHeaderParameter['X-GDC-VALIDATE-RELATIONS'] = String(JSON.stringify(xGDCVALIDATERELATIONS));
+    }
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof entitySearchBody !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(entitySearchBody !== undefined ? entitySearchBody : {})
+        : entitySearchBody || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// PublisherDocumentsApi FP - PublisherDocumentsApiAxiosParamCreator
+/**
+ * 
  * @summary Put a Document Template
  * @param {string} workspaceId 
  * @param {string} objectId 
@@ -174581,6 +174963,32 @@ export async function PublisherDocumentsApi_PatchEntityPageTemplates(
 // PublisherDocumentsApi Api FP
 /**
  * 
+ * @summary The search endpoint
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {PublisherDocumentsApiSearchEntitiesDocumentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function PublisherDocumentsApi_SearchEntitiesDocuments(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: PublisherDocumentsApiSearchEntitiesDocumentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<JsonApiPublisherDocumentOutList> {
+    const localVarAxiosArgs = await PublisherDocumentsApiAxiosParamCreator_SearchEntitiesDocuments(
+        requestParameters.workspaceId, requestParameters.entitySearchBody, requestParameters.origin, requestParameters.xGDCVALIDATERELATIONS, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// PublisherDocumentsApi Api FP
+/**
+ * 
  * @summary Put a Document Template
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -174811,6 +175219,16 @@ export interface PublisherDocumentsApiInterface {
      * @memberof PublisherDocumentsApiInterface
      */
     patchEntityPageTemplates(requestParameters: PublisherDocumentsApiPatchEntityPageTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentPageTemplateOutDocument>;
+
+    /**
+     * 
+     * @summary The search endpoint
+     * @param {PublisherDocumentsApiSearchEntitiesDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApiInterface
+     */
+    searchEntitiesDocuments(requestParameters: PublisherDocumentsApiSearchEntitiesDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiPublisherDocumentOutList>;
 
     /**
      * 
@@ -175496,6 +175914,41 @@ export interface PublisherDocumentsApiPatchEntityPageTemplatesRequest {
 }
 
 /**
+ * Request parameters for searchEntitiesDocuments operation in PublisherDocumentsApi.
+ * @export
+ * @interface PublisherDocumentsApiSearchEntitiesDocumentsRequest
+ */
+export interface PublisherDocumentsApiSearchEntitiesDocumentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublisherDocumentsApiSearchEntitiesDocuments
+     */
+    readonly workspaceId: string
+
+    /**
+     * Search request body with filter, pagination, and sorting options
+     * @type {EntitySearchBody}
+     * @memberof PublisherDocumentsApiSearchEntitiesDocuments
+     */
+    readonly entitySearchBody: EntitySearchBody
+
+    /**
+     * 
+     * @type {'ALL' | 'PARENTS' | 'NATIVE'}
+     * @memberof PublisherDocumentsApiSearchEntitiesDocuments
+     */
+    readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE'
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PublisherDocumentsApiSearchEntitiesDocuments
+     */
+    readonly xGDCVALIDATERELATIONS?: boolean
+}
+
+/**
  * Request parameters for updateEntityDocumentTemplates operation in PublisherDocumentsApi.
  * @export
  * @interface PublisherDocumentsApiUpdateEntityDocumentTemplatesRequest
@@ -175806,6 +176259,18 @@ export class PublisherDocumentsApi extends BaseAPI implements PublisherDocuments
      */
     public patchEntityPageTemplates(requestParameters: PublisherDocumentsApiPatchEntityPageTemplatesRequest, options?: AxiosRequestConfig) {
         return PublisherDocumentsApi_PatchEntityPageTemplates(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary The search endpoint
+     * @param {PublisherDocumentsApiSearchEntitiesDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublisherDocumentsApi
+     */
+    public searchEntitiesDocuments(requestParameters: PublisherDocumentsApiSearchEntitiesDocumentsRequest, options?: AxiosRequestConfig) {
+        return PublisherDocumentsApi_SearchEntitiesDocuments(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**

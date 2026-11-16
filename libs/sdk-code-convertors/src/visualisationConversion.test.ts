@@ -1,6 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
+import { parse } from "yaml";
 
 import type { Visualisation } from "@gooddata/sdk-code-schemas/v1";
 import type { IRankingFilterBody } from "@gooddata/sdk-model";
@@ -839,6 +840,52 @@ describe("visualisation conversion", () => {
             expect(filters).toHaveLength(2);
             expect(filters[0]).toEqual({ relativeDateFilter: relative });
             expect(filters[1]).toHaveProperty("positiveAttributeFilter.in.values", ["", "2025"]);
+        });
+
+        describe('"" in the values of a date label', () => {
+            const dateEntities = [
+                {
+                    id: "created",
+                    type: "date",
+                    path: "created.yaml",
+                    data: { type: "date", id: "created", granularities: ["YEAR", "MONTH", "DAY_OF_WEEK"] },
+                },
+            ] as unknown as ExportEntities;
+            const convert = (filter: Record<string, unknown>) =>
+                yamlFiltersToDeclarative(dateEntities, { d1: filter } as never, {}, true).filters;
+
+            it('converts "" to null next to other values, keeping the order', () => {
+                const filters = convert({ ...period, with: withFilter({ include: ["", "2025"] }) });
+                expect(filters).toHaveLength(2);
+                expect(filters[1]).toHaveProperty("positiveAttributeFilter.in.values", [null, "2025"]);
+            });
+
+            it('converts "" to null in a negative filter', () => {
+                const filters = convert({ ...period, with: withFilter({ exclude: ["2025", ""] }) });
+                expect(filters[1]).toHaveProperty("negativeAttributeFilter.notIn.values", ["2025", null]);
+            });
+
+            it('converts "" to null on a granularity with parsed values', () => {
+                const filters = convert({
+                    ...period,
+                    with: withFilter({ include: ["", "Monday"] }, "label/created.dayOfWeek"),
+                });
+                expect(filters[1]).toHaveProperty("positiveAttributeFilter.in.values", [null, "01"]);
+            });
+
+            it('does not convert "" of an ordinary attribute, even next to a date filter', () => {
+                const filters = convert({
+                    ...period,
+                    with: withFilter({ include: ["", "EU"] }, "label/region"),
+                });
+                expect(filters[1]).toHaveProperty("positiveAttributeFilter.in.values", ["", "EU"]);
+            });
+
+            it('still folds a lone legacy "" marker into emptyValueHandling instead of converting it', () => {
+                expect(convert({ ...period, with: withFilter({ include: [""] }) })).toEqual([
+                    { relativeDateFilter: { ...relative, emptyValueHandling: "only" } },
+                ]);
+            });
         });
 
         it('keeps a "" filter on a label of another dataset', () => {
@@ -2122,6 +2169,127 @@ describe("visualisation conversion", () => {
                 value: "North",
                 case_sensitive: true,
             });
+        });
+    });
+
+    describe("query parameters", () => {
+        function storedInsight(parameters?: Array<{ id: string; value: string | number }>) {
+            return declarative({
+                id: "with_parameters",
+                title: "With parameters",
+                content: {
+                    visualizationUrl: "local:bar",
+                    buckets: [],
+                    sorts: [],
+                    filters: [],
+                    properties: {},
+                    ...(parameters
+                        ? {
+                              parameters: parameters.map(({ id, value }) => ({
+                                  ref: { identifier: { id, type: "parameter" } },
+                                  value,
+                              })),
+                          }
+                        : {}),
+                },
+            });
+        }
+
+        it("writes the stored parameter values to query.parameters", () => {
+            const { json } = declarativeVisualisationToYaml(
+                emptyFromEntities,
+                storedInsight([{ id: "parameter_number", value: 5 }]),
+            );
+
+            expect(json?.query.parameters).toEqual([{ id: "parameter_number", value: 5 }]);
+        });
+
+        it("stores query.parameters as parameter values referencing the parameter", () => {
+            const { content } = yamlVisualisationToDeclarative(
+                emptyEntities,
+                makeVisualization({
+                    type: "bar_chart",
+                    query: { fields: {}, parameters: [{ id: "parameter_number", value: 5 }] },
+                }),
+            );
+
+            expect(content).toMatchObject({
+                parameters: [
+                    { ref: { identifier: { id: "parameter_number", type: "parameter" } }, value: 5 },
+                ],
+            });
+        });
+
+        function roundTrip(parameters: Array<{ id: string; value: string | number }>) {
+            const deployed = yamlVisualisationToDeclarative(
+                emptyEntities,
+                makeVisualization({ type: "bar_chart", query: { fields: {}, parameters } }),
+            );
+            const { content } = declarativeVisualisationToYaml(emptyFromEntities, deployed);
+            return parse(content).query.parameters;
+        }
+
+        it("round-trips a NUMBER value of 0", () => {
+            expect(roundTrip([{ id: "parameter_number", value: 0 }])).toEqual([
+                { id: "parameter_number", value: 0 },
+            ]);
+        });
+
+        it("round-trips an empty STRING value", () => {
+            expect(roundTrip([{ id: "parameter_string", value: "" }])).toEqual([
+                { id: "parameter_string", value: "" },
+            ]);
+        });
+
+        it('keeps a STRING value of "10" a string', () => {
+            expect(roundTrip([{ id: "parameter_string", value: "10" }])).toEqual([
+                { id: "parameter_string", value: "10" },
+            ]);
+        });
+
+        it("keeps the order of the parameter values", () => {
+            const parameters = [
+                { id: "parameter_string", value: "Europe" },
+                { id: "parameter_number", value: 5 },
+                { id: "parameter_other", value: 1 },
+            ];
+
+            expect(roundTrip(parameters)).toEqual(parameters);
+        });
+
+        it("refuses one parameter listed twice, which renderers resolve differently", () => {
+            let error: ICoreError | undefined;
+            try {
+                yamlVisualisationToDeclarative(
+                    emptyEntities,
+                    makeVisualization({
+                        type: "bar_chart",
+                        query: {
+                            fields: {},
+                            parameters: [
+                                { id: "parameter_number", value: 1 },
+                                { id: "parameter_number", value: 2 },
+                            ],
+                        },
+                    }),
+                );
+            } catch (err: unknown) {
+                error = err as ICoreError;
+            }
+            expect(error).toBeDefined();
+            expect(error?.code).toBe(CoreErrorCode.DuplicateParameterIdentifier);
+            expect(error?.message).toContain('"parameter_number"');
+        });
+
+        it("writes and stores no parameters when there are none", () => {
+            const deployed = yamlVisualisationToDeclarative(
+                emptyEntities,
+                makeVisualization({ type: "bar_chart", query: { fields: {} } }),
+            );
+            const { json } = declarativeVisualisationToYaml(emptyFromEntities, storedInsight());
+
+            expect(deployed.content).not.toHaveProperty("parameters");
+            expect(json?.query).not.toHaveProperty("parameters");
         });
     });
 });

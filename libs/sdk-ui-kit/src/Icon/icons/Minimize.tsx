@@ -6,9 +6,10 @@ import { combineIconClasses } from "../utils.js";
 /**
  * @internal
  */
-export function Minimize({ color, className, width = 18, height = 18 }: IIconProps) {
+export function Minimize({ color, className, width = 18, height = 18, ariaHidden }: IIconProps) {
     return (
         <svg
+            aria-hidden={ariaHidden}
             className={combineIconClasses(className)}
             width={width}
             height={height}

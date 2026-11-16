@@ -1,25 +1,27 @@
 // (C) 2026 GoodData Corporation
 
-import { startCompletion } from "@codemirror/autocomplete";
+import { completionStatus, startCompletion } from "@codemirror/autocomplete";
 import { Compartment, EditorState } from "@codemirror/state";
-import { EditorView } from "@codemirror/view";
+import { EditorView, runScopeHandlers } from "@codemirror/view";
+import { waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { type CompletionItem, CompletionItemKind } from "vscode-languageserver-types";
+import { type CompletionItem, CompletionItemKind, InsertTextFormat } from "vscode-languageserver-types";
 
 import { type MaqlLanguageService } from "@gooddata/sdk-maql-language-server";
 
+import { baseExtensions } from "../../codemirror/baseExtensions.js";
 import { DOCS_OPEN_CLASS, TYPE_LABEL_CLASS } from "../../codemirror/CodeEditor.styles.js";
 import { shimMaqlEditor } from "../../mock/editor-shim.js";
 
 import {
     completionSpan,
     completionType,
+    expandSnippet,
     filterItems,
     fuzzyMatch,
     maqlCompletion,
     matchInDisplayLabel,
     setDocsVisible,
-    toCodeMirrorSnippet,
 } from "./completion.js";
 
 shimMaqlEditor();
@@ -46,14 +48,27 @@ describe("completionType", () => {
     });
 });
 
-describe("toCodeMirrorSnippet", () => {
-    it("braces the tab stops and makes the final cursor an unnamed field", () => {
-        expect(toCodeMirrorSnippet("WITHIN($1)$0")).toBe("WITHIN(${1})${}");
-        expect(toCodeMirrorSnippet("IF $1 THEN $2 ELSE $3 END")).toBe("IF ${1} THEN ${2} ELSE ${3} END");
+describe("expandSnippet", () => {
+    it("drops the tab stops and puts the cursor at the first one", () => {
+        expect(expandSnippet("SUM ( $1 )$0")).toEqual({ text: "SUM (  )", from: 6, to: 6 });
+        expect(expandSnippet("IF $2 THEN $1 ELSE $3 END")).toEqual({
+            text: "IF  THEN  ELSE  END",
+            from: 9,
+            to: 9,
+        });
     });
 
-    it("keeps placeholders with defaults", () => {
-        expect(toCodeMirrorSnippet("BY ${1:attribute} ALL OTHER $0")).toBe("BY ${1:attribute} ALL OTHER ${}");
+    it("keeps a placeholder's text and selects it", () => {
+        expect(expandSnippet("BY ${1:attribute} ALL OTHER $0")).toEqual({
+            text: "BY attribute ALL OTHER ",
+            from: 3,
+            to: 12,
+        });
+    });
+
+    it("falls back to the final cursor, then to the end", () => {
+        expect(expandSnippet("ALL OTHER$0 END")).toEqual({ text: "ALL OTHER END", from: 9, to: 9 });
+        expect(expandSnippet("ALL OTHER")).toEqual({ text: "ALL OTHER", from: 9, to: 9 });
     });
 });
 
@@ -365,6 +380,104 @@ describe("maqlCompletion phrases", () => {
         expect(view.dom.querySelector(".cm-completionInfo button.close")?.getAttribute("aria-label")).toBe(
             "Zavřít",
         );
+
+        view.destroy();
+    });
+});
+
+describe("Tab with suggestions and inserted functions", () => {
+    const sumFunction: CompletionItem = {
+        label: "SUM",
+        kind: CompletionItemKind.Function,
+        insertText: "SUM ( $1 )$0",
+        insertTextFormat: InsertTextFormat.Snippet,
+    };
+    const suggestingService = {
+        doCompletion: async () => ({ isIncomplete: false, items: [sumFunction] }),
+        doCompletionResolve: async (item: unknown) => item,
+    } as unknown as MaqlLanguageService;
+
+    // the editor's real key handling: the shared bindings and the completion's own
+    function createEditor(doc: string): EditorView {
+        const parent = document.createElement("div");
+        document.body.appendChild(parent);
+
+        return new EditorView({
+            state: EditorState.create({
+                doc,
+                selection: { anchor: doc.length },
+                extensions: [
+                    baseExtensions(),
+                    maqlCompletion({
+                        languageService: suggestingService,
+                        triggerCharacters: [],
+                        onList: () => undefined,
+                    }),
+                ],
+            }),
+            parent,
+        });
+    }
+
+    // false: the editor leaves the key alone, so the browser (or the dialog's focus trap) moves the
+    // focus on, which baseExtensions.focus.test.tsx covers
+    const press = (view: EditorView, key: string, shiftKey = false) =>
+        runScopeHandlers(view, new KeyboardEvent("keydown", { key, shiftKey }), "editor");
+
+    async function openSuggestions(view: EditorView) {
+        startCompletion(view);
+        await waitFor(() => expect(completionStatus(view.state)).toBe("active"));
+    }
+
+    it("leaves Tab and Shift+Tab to the focus right after a function went in", () => {
+        const view = createEditor("SUM");
+        const [completion] = filterItems([sumFunction], "SUM", suggestingService);
+
+        (completion.apply as (view: EditorView, completion: unknown, from: number, to: number) => void)(
+            view,
+            completion,
+            0,
+            3,
+        );
+        expect(view.state.doc.toString()).toBe("SUM (  )");
+        // the cursor is inside the parentheses, with no snippet fields to step through
+        expect(view.state.selection.main.head).toBe(6);
+
+        expect(press(view, "Tab")).toBe(false);
+        expect(press(view, "Tab", true)).toBe(false);
+        expect(view.state.doc.toString()).toBe("SUM (  )");
+
+        view.destroy();
+    });
+
+    it("leaves Tab and Shift+Tab to the focus while the list is open, without accepting", async () => {
+        const view = createEditor("SU");
+        await openSuggestions(view);
+
+        expect(press(view, "Tab")).toBe(false);
+        expect(press(view, "Tab", true)).toBe(false);
+        expect(view.state.doc.toString()).toBe("SU");
+
+        view.destroy();
+    });
+
+    it("accepts the highlighted suggestion with Enter", async () => {
+        const view = createEditor("SU");
+        await openSuggestions(view);
+
+        expect(press(view, "Enter")).toBe(true);
+        expect(view.state.doc.toString()).toBe("SUM (  )");
+
+        view.destroy();
+    });
+
+    it("closes the list with Escape, keeping the text", async () => {
+        const view = createEditor("SU");
+        await openSuggestions(view);
+
+        expect(press(view, "Escape")).toBe(true);
+        expect(completionStatus(view.state)).toBeNull();
+        expect(view.state.doc.toString()).toBe("SU");
 
         view.destroy();
     });

@@ -110,6 +110,7 @@ export function ErrorComponent({
                 {icon ? (
                     <div
                         className={`info-label-icon ${icon}`}
+                        aria-hidden="true"
                         style={
                             clientHeight && clientHeight < LARGEST_CLIENT_HEIGHT
                                 ? undefined

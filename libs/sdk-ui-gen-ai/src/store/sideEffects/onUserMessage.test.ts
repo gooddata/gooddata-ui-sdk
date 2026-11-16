@@ -424,6 +424,18 @@ describe("onUserMessage reasoning titles", () => {
         ).toBe(undefined);
     });
 
+    it("puts a stream failure on the message being streamed, not the first one", async () => {
+        const run = setup();
+        await run.send(reasoning("# Plan"));
+        await run.send(reasoning("# Collecting data", "reasoning-2"));
+        await run.fail();
+
+        const [, first, last] = conversationMessagesByIdSelector(run.store.getState(), conversation.localId);
+        expect(first.content).toEqual({ type: "reasoning", summary: "# Plan" });
+        expect(last.content.type).toBe("error");
+        expect(last.streaming).toBe(false);
+    });
+
     it("clears after an error chunk ends the stream", async () => {
         const run = setup();
         await run.send(reasoning("# Plan"));

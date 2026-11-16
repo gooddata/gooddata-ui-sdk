@@ -35,7 +35,7 @@ function camelCase(title: string): string {
 
 function boxStyleKeys(properties: object): string[] {
     return Object.keys(properties)
-        .filter((key) => /^(background|padding|border|shadow)(_|$)/.test(key) || key === "opacity")
+        .filter((key) => /^(?:background|padding|border|shadow)(?:_|$)/.test(key) || key === "opacity")
         .sort();
 }
 

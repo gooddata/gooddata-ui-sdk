@@ -14,17 +14,18 @@ const NUMBER = /^[+-]?(\d+(\.\d+)?|\.\d+)$/;
 const NUMBER_START = /^[+-]?\.?\d/;
 
 // Keys and color ids become parts of variable names; the grammar is the v2 validator's theme name.
-const NAME = /^[A-Za-z0-9_-]+$/;
+const NAME = /^[A-Z0-9_-]+$/i;
 
 // Only values of these shapes are emitted: anything else could end the declaration, or the rule holding
 // every theme variable. Theme references and font families are checked on their own.
-const HEX_COLOR = /^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/;
+const HEX_COLOR = /^#(?:[0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})$/i;
 const RGB_COLOR = /^rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*(?:,\s*(?:\d+(?:\.\d+)?|\.\d+)\s*)?\)$/;
-const KEYWORD = /^[a-zA-Z][a-zA-Z0-9-]*$/;
+const KEYWORD = /^[a-z][a-z0-9-]*$/i;
 const PLAIN_VALUES = [NUMBER, HEX_COLOR, RGB_COLOR, KEYWORD];
 
-// A quoted name holds no backslash or line break, so each quote closes where it appears to.
-const FONT_FAMILY_NAME = String.raw`(?:"[^"\\\n\r\f]*"|'[^'\\\n\r\f]*'|[\p{L}\p{N}_ -]+)`;
+// A quoted name holds no backslash or line break, so each quote closes where it appears to. An unquoted
+// name starts and ends with a non-space, so the spaces around a comma belong to the separator alone.
+const FONT_FAMILY_NAME = String.raw`(?:"[^"\\\n\r\f]*"|'[^'\\\n\r\f]*'|[\p{L}\p{N}_-]+(?: +[\p{L}\p{N}_-]+)*)`;
 const FONT_FAMILY = new RegExp(String.raw`^${FONT_FAMILY_NAME}(?:\s*,\s*${FONT_FAMILY_NAME})*$`, "u");
 
 const COLOR_LISTS = ["backgrounds", "texts", "lines"] as const;

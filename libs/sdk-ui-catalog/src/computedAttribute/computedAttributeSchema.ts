@@ -49,7 +49,7 @@ export type MetricTypesCoverModel = Assert<Covers<typeof METRIC_TYPES, MetricTyp
  * subtags (for example `en-US` or `cs-CZ-u-kn-true`). The same pattern the analytics-as-code schema
  * applies to label and computed attribute locales; the backend performs the authoritative check.
  */
-export const LOCALE_PATTERN = /^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{1,8})*$/;
+export const LOCALE_PATTERN = /^[a-z]{2,3}(-[a-z0-9]{1,8})*$/i;
 
 /**
  * Zod schema for the analytics-as-code (AAC) computed attribute YAML shape.

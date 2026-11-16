@@ -1,6 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
 import {
+    type AfmObjectIdentifierParameter,
     type DeclarativeVisualizationObject,
     type JsonApiVisualizationObjectOut,
 } from "@gooddata/api-client-tiger";
@@ -20,6 +21,8 @@ import type {
     MultipleConditions,
     Query,
     QueryFilters,
+    QueryParameter,
+    QueryParameters,
     Range,
     RangeCondition,
     RankingFilter,
@@ -76,7 +79,7 @@ import { mapDateAttribute, mapDateDataset } from "../utils/dateUtils.js";
 import { CoreErrorCode, newError } from "../utils/errors.js";
 import {
     foldLegacyEmptyValuesWithFilter,
-    parseDateValues,
+    parseDateValuesToDeclarative,
     yamlConditionToMatch,
 } from "../utils/filterUtils.js";
 import { convertGranularity } from "../utils/granularityUtils.js";
@@ -115,6 +118,7 @@ export type VisualisationDefinition = Pick<
     "visualizationUrl" | "properties" | "filters" | "buckets" | "sorts" | "attributeFilterConfigs" | "layers"
 > & {
     version: string;
+    parameters?: Array<{ ref: AfmObjectIdentifierParameter; value: QueryParameter["value"] }>;
 };
 type VisBucket = Omit<IBucket, "items" | "totals"> & { items: Array<Bucket> };
 
@@ -123,10 +127,8 @@ export function yamlVisualisationToDeclarative(
     entities: ExportEntities,
     input: Visualisation,
 ): DeclarativeVisualizationObject {
-    const { buckets, sorts, filters, positions, attributeFilterConfigs } = yamlReportToDeclarative(
-        entities,
-        input,
-    );
+    const { buckets, sorts, filters, parameters, positions, attributeFilterConfigs } =
+        yamlReportToDeclarative(entities, input);
     const properties = yamlConfigToDeclarative(input, positions);
 
     const layers = yamlLayersToDeclarative(entities, input, positions);
@@ -140,6 +142,7 @@ export function yamlVisualisationToDeclarative(
         properties,
         ...(attributeFilterConfigs ? { attributeFilterConfigs: attributeFilterConfigs } : {}),
         ...(layers.length ? { layers } : {}),
+        ...(parameters.length ? { parameters } : {}),
     };
 
     const output: DeclarativeVisualizationObject = {
@@ -277,6 +280,7 @@ export function yamlReportToDeclarative(
     buckets: VisualisationDefinition["buckets"];
     sorts: VisualisationDefinition["sorts"];
     filters: VisualisationDefinition["filters"];
+    parameters: NonNullable<VisualisationDefinition["parameters"]>;
     positions: Array<{ longitude: string; latitude: string }>;
     attributeFilterConfigs?: IAttributeFilterConfigs;
 } {
@@ -290,11 +294,13 @@ export function yamlReportToDeclarative(
         attrFilterConfig,
         true,
     );
+    const parameters = yamlQueryParametersToDeclarative(query.parameters ?? []);
 
     return {
         buckets,
         sorts,
         filters,
+        parameters,
         positions,
         attributeFilterConfigs,
     };
@@ -830,7 +836,11 @@ function yamlPositiveAttributeFilterToDeclarative(
                     ...(assignFilterLocalId && filter.display_as ? { localIdentifier: key } : {}),
                     displayForm: createIdentifier<any>(filter.using),
                     in: {
-                        values: parseDateValues(entities, filter.using, filter.state?.include ?? []),
+                        values: parseDateValuesToDeclarative(
+                            entities,
+                            filter.using,
+                            filter.state?.include ?? [],
+                        ),
                     },
                 },
             },
@@ -864,7 +874,11 @@ function yamlNegativeAttributeFilterToDeclarative(
                     ...(assignFilterLocalId && filter.display_as ? { localIdentifier: key } : {}),
                     displayForm: createIdentifier<any>(filter.using),
                     notIn: {
-                        values: parseDateValues(entities, filter.using, filter.state?.exclude ?? []),
+                        values: parseDateValuesToDeclarative(
+                            entities,
+                            filter.using,
+                            filter.state?.exclude ?? [],
+                        ),
                     },
                 },
             },
@@ -1506,4 +1520,20 @@ function yamlLayersToDeclarative(
                 layerProperties && Object.keys(layerProperties).length > 0 ? layerProperties : undefined,
         };
     });
+}
+
+function yamlQueryParametersToDeclarative(
+    parameters: QueryParameters,
+): NonNullable<VisualisationDefinition["parameters"]> {
+    // Execution applies the last entry of a repeated parameter and a dashboard the first.
+    const claimed = new Set<string>();
+    const stored: NonNullable<VisualisationDefinition["parameters"]> = [];
+    for (const { id, value } of parameters) {
+        if (claimed.has(id)) {
+            throw newError(CoreErrorCode.DuplicateParameterIdentifier, [id]);
+        }
+        claimed.add(id);
+        stored.push({ ref: { identifier: { id, type: "parameter" } }, value });
+    }
+    return stored;
 }

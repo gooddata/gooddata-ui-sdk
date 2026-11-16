@@ -156,6 +156,13 @@ $content-font-size: 14px;
         }
     }
 
+    // Live region wrapper of the error state; keeps the error component layout as if unwrapped.
+    &__table-error {
+        flex: 1 0 auto;
+        display: flex;
+        flex-direction: column;
+    }
+
     &__table {
         flex-grow: 1;
         overflow: hidden;

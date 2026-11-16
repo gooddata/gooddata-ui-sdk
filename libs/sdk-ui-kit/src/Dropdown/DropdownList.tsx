@@ -14,6 +14,8 @@ import {
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
+import { SELECT_ITEM_ACTION } from "../@ui/hooks/useListWithActionsKeyboardNavigation.js";
+import { ScopedIdStore, useScopedIdStoreValue } from "../@ui/hooks/useScopedId.js";
 import {
     type IUiPagedVirtualListSkeletonItemProps,
     UiPagedVirtualList,
@@ -29,6 +31,7 @@ import { NoData } from "../NoData/NoData.js";
 import { type ITab } from "../Tabs/Tabs.js";
 import { type IAccessibilityConfigBase } from "../typings/accessibility.js";
 import { isTypingKey } from "../utils/events.js";
+import { useIdPrefixed } from "../utils/useId.js";
 
 import { DropdownTabs } from "./DropdownTabs.js";
 
@@ -112,6 +115,17 @@ export interface IDropdownListProps<T> {
      * `aria-selected` and the `isSelected` render prop.
      */
     getIsItemSelected?: (item: T) => boolean;
+    /**
+     * Returns a key that is unique for each item. When it is provided together with the `listbox` role,
+     * the options get unique ids, so that the active option can be exposed by `aria-activedescendant`.
+     *
+     * @remarks
+     * If the search is shown as well, the search input becomes a combobox that drives the listbox:
+     * ArrowDown and ArrowUp move the active option and Enter confirms it. Escape clears a typed filter
+     * first and closes the dropdown when the filter is empty, as in the other dropdowns.
+     * The listbox is then taken out of the Tab order.
+     */
+    getItemKey?: (item: T) => string;
 
     accessibilityConfig?: Pick<IAccessibilityConfigBase, "ariaLabel" | "ariaLabelledBy" | "role">;
 
@@ -216,6 +230,7 @@ export function DropdownList<T>({
     itemHeightGetter,
     itemTitleGetter,
     getIsItemSelected,
+    getItemKey,
     loadNextPage,
     hasNextPage,
     skeletonItemsCount = 0,
@@ -259,13 +274,75 @@ export function DropdownList<T>({
         return body;
     };
 
+    const hasOptionIds = accessibilityConfig?.role === "listbox" && !!getItemKey;
+    const isCombobox = !!showSearch && hasOptionIds;
+    const isListShown = !isLoading && itemsCount > 0;
+    const listboxId = useIdPrefixed("dropdown-listbox");
+    const scopedIdStoreValue = useScopedIdStoreValue<T>(getItemKey ?? String);
+
+    const [activeItemKey, setActiveItemKey] = useState<string | undefined>(undefined);
+    const activeIndex =
+        isCombobox && isListShown && activeItemKey !== undefined
+            ? items.findIndex(
+                  (item) => item !== undefined && item !== null && getItemKey!(item) === activeItemKey,
+              )
+            : -1;
+    // items may be falsy (e.g. 0), so the presence of the active item is checked by its index
+    const hasActiveItem = activeIndex >= 0;
+    const activeItem = hasActiveItem ? items[activeIndex] : undefined;
+
     const onChange = useCallback(
         (search: string | number) => {
             onSearch?.(search.toString());
             setCurrentSearchString(search.toString());
+            setActiveItemKey(undefined);
         },
         [onSearch],
     );
+
+    const moveActiveItem = (direction: "next" | "previous") => {
+        const loadedCount = items.length;
+        if (!isListShown || loadedCount === 0) {
+            return;
+        }
+
+        let nextIndex: number;
+        if (direction === "next") {
+            const isLast = activeIndex >= loadedCount - 1;
+            // when more items can be loaded, stay on the last one; showing it loads the next page
+            nextIndex = isLast ? (hasNextPage ? activeIndex : 0) : activeIndex + 1;
+        } else {
+            nextIndex = activeIndex <= 0 ? loadedCount - 1 : activeIndex - 1;
+        }
+
+        const nextItem = items[nextIndex];
+        if (nextItem !== undefined && nextItem !== null) {
+            setActiveItemKey(getItemKey!(nextItem));
+        }
+    };
+
+    const onSearchKeyDown = (e: KeyboardEvent) => {
+        if (isCombobox && !e.nativeEvent.isComposing) {
+            if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+                e.preventDefault();
+                e.stopPropagation();
+                moveActiveItem(e.key === "ArrowDown" ? "next" : "previous");
+                return;
+            }
+
+            // only Enter in the input itself; Enter on the clear button must still clear the filter
+            if (e.key === "Enter" && hasActiveItem && e.target instanceof HTMLInputElement) {
+                e.preventDefault();
+                e.stopPropagation();
+                (onKeyDownConfirm ?? onKeyDownSelect)?.(activeItem as T);
+                return;
+            }
+        }
+
+        if (isTypingKey(e)) {
+            e.stopPropagation();
+        }
+    };
 
     const searchFilled = (currentSearchString ?? "").length > 0;
     const onEscKeyPress = useCallback(
@@ -289,14 +366,7 @@ export function DropdownList<T>({
             {title ? <div className="gd-list-title">{title}</div> : null}
             {showSearch ? (
                 <>
-                    <div
-                        style={searchWrapperStyle}
-                        onKeyDown={(e) => {
-                            if (isTypingKey(e)) {
-                                e.stopPropagation();
-                            }
-                        }}
-                    >
+                    <div style={searchWrapperStyle} onKeyDown={onSearchKeyDown}>
                         <Input
                             className={searchFieldClassNames}
                             value={currentSearchString}
@@ -307,9 +377,25 @@ export function DropdownList<T>({
                             onEscKeyPress={onEscKeyPress}
                             isSearch
                             autofocus={!disableAutofocus}
-                            accessibilityConfig={{
-                                ariaLabel: searchLabel,
-                            }}
+                            accessibilityConfig={
+                                isCombobox
+                                    ? {
+                                          ariaLabel: searchLabel,
+                                          role: "combobox",
+                                          ariaExpanded: isListShown,
+                                          ariaControls: isListShown ? listboxId : undefined,
+                                          ariaAutocomplete: "list",
+                                          ariaActiveDescendant: hasActiveItem
+                                              ? scopedIdStoreValue.makeId({
+                                                    item: activeItem as T,
+                                                    specifier: SELECT_ITEM_ACTION,
+                                                })
+                                              : undefined,
+                                      }
+                                    : {
+                                          ariaLabel: searchLabel,
+                                      }
+                            }
                         />
                     </div>
                     <UiSearchResultsAnnouncement
@@ -345,6 +431,69 @@ export function DropdownList<T>({
                             : itemHeight;
                         const effectiveMaxHeight = maxHeight || listHeight || 300;
 
+                        const list = (
+                            <UiPagedVirtualList<T>
+                                maxHeight={effectiveMaxHeight}
+                                items={items}
+                                itemHeight={effectiveItemHeight}
+                                itemsGap={0}
+                                itemPadding={0}
+                                containerPadding={containerPadding}
+                                listPadding={listPadding}
+                                onKeyDownSelect={onKeyDownSelect}
+                                onKeyDownConfirm={onKeyDownConfirm}
+                                closeDropdown={closeDropdown}
+                                itemHeightGetter={itemHeightGetter}
+                                getIsItemSelected={getIsItemSelected}
+                                hasNextPage={hasNextPage}
+                                loadNextPage={loadNextPage}
+                                skeletonItemsCount={skeletonItemsCount}
+                                SkeletonItem={SkeletonItem}
+                                shouldLoadNextPage={shouldLoadNextPage}
+                                isLoading={isNextPageLoading}
+                                onScroll={onScroll}
+                                scrollToItem={hasActiveItem ? activeItem : scrollToItem}
+                                scrollToItemKeyExtractor={
+                                    hasActiveItem ? getItemKey : scrollToItemKeyExtractor
+                                }
+                                // the combobox drives the listbox, so the listbox is out of the Tab order
+                                tabIndex={isCombobox ? -1 : undefined}
+                                focusedItem={activeItem}
+                                representAs={
+                                    accessibilityConfig?.role === "listbox"
+                                        ? "listbox"
+                                        : accessibilityConfig?.role === "list"
+                                          ? "list"
+                                          : undefined
+                                }
+                                listboxProps={
+                                    accessibilityConfig?.role === "listbox" ||
+                                    accessibilityConfig?.role === "list"
+                                        ? {
+                                              id: isCombobox ? listboxId : undefined,
+                                              "aria-label": accessibilityConfig?.ariaLabel,
+                                              "aria-labelledby": accessibilityConfig?.ariaLabelledBy,
+                                          }
+                                        : undefined
+                                }
+                            >
+                                {(item) => {
+                                    const rowIndex = items.indexOf(item);
+                                    const rowHeight = itemHeightGetter?.(rowIndex) ?? effectiveItemHeight;
+                                    return renderItem({
+                                        rowIndex,
+                                        item,
+                                        width: listWidth,
+                                        height: rowHeight,
+                                        isFirst: rowIndex === 0,
+                                        isLast: rowIndex === itemsCount - 1,
+                                        focused: isCombobox ? rowIndex === activeIndex : undefined,
+                                        isSelected: getIsItemSelected?.(item),
+                                    });
+                                }}
+                            </UiPagedVirtualList>
+                        );
+
                         return (
                             <div
                                 data-testid="gd-dropdown-list"
@@ -370,62 +519,11 @@ export function DropdownList<T>({
                                         : accessibilityConfig?.ariaLabelledBy
                                 }
                             >
-                                <UiPagedVirtualList<T>
-                                    maxHeight={effectiveMaxHeight}
-                                    items={items}
-                                    itemHeight={effectiveItemHeight}
-                                    itemsGap={0}
-                                    itemPadding={0}
-                                    containerPadding={containerPadding}
-                                    listPadding={listPadding}
-                                    onKeyDownSelect={onKeyDownSelect}
-                                    onKeyDownConfirm={onKeyDownConfirm}
-                                    closeDropdown={closeDropdown}
-                                    itemHeightGetter={itemHeightGetter}
-                                    getIsItemSelected={getIsItemSelected}
-                                    hasNextPage={hasNextPage}
-                                    loadNextPage={loadNextPage}
-                                    skeletonItemsCount={skeletonItemsCount}
-                                    SkeletonItem={SkeletonItem}
-                                    shouldLoadNextPage={shouldLoadNextPage}
-                                    isLoading={isNextPageLoading}
-                                    onScroll={onScroll}
-                                    scrollToItem={scrollToItem}
-                                    scrollToItemKeyExtractor={scrollToItemKeyExtractor}
-                                    representAs={
-                                        accessibilityConfig?.role === "listbox"
-                                            ? "listbox"
-                                            : accessibilityConfig?.role === "list"
-                                              ? "list"
-                                              : undefined
-                                    }
-                                    listboxProps={
-                                        accessibilityConfig?.role === "listbox" ||
-                                        accessibilityConfig?.role === "list"
-                                            ? {
-                                                  "aria-label": accessibilityConfig?.ariaLabel,
-                                                  "aria-labelledby": accessibilityConfig?.ariaLabelledBy,
-                                              }
-                                            : undefined
-                                    }
-                                >
-                                    {(item) => {
-                                        const rowIndex = items.indexOf(item);
-                                        const rowHeight = itemHeightGetter?.(rowIndex) ?? effectiveItemHeight;
-                                        const listWidth = isMobile
-                                            ? autoSize.width
-                                            : (width ?? (autoSize.width || 200));
-                                        return renderItem({
-                                            rowIndex,
-                                            item,
-                                            width: listWidth,
-                                            height: rowHeight,
-                                            isFirst: rowIndex === 0,
-                                            isLast: rowIndex === itemsCount - 1,
-                                            isSelected: getIsItemSelected?.(item),
-                                        });
-                                    }}
-                                </UiPagedVirtualList>
+                                {hasOptionIds ? (
+                                    <ScopedIdStore value={scopedIdStoreValue}>{list}</ScopedIdStore>
+                                ) : (
+                                    list
+                                )}
                             </div>
                         );
                     }}

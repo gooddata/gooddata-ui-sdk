@@ -9,6 +9,7 @@ import { type IconType, UiButtonSegmentedControl, UiIconButton, UiTooltip } from
 import { objectType } from "../automation/testIds.js";
 
 import { FILTER_GROUPS, type FilterableObjectType, ObjectTypes } from "./constants.js";
+import { getObjectTypeLabel } from "./labels.js";
 import type { ObjectType } from "./types.js";
 
 const icons: Record<FilterableObjectType, IconType> = {
@@ -39,6 +40,10 @@ type Props = {
     enabledObjectTypes: readonly ObjectType[];
     onSelect: (selectedTypes: ObjectType[]) => void;
     ariaLabelledBy?: string;
+    /**
+     * When true (e.g. the catalog failed to load), the counts are not shown in labels and tooltips.
+     */
+    isCountUnavailable?: boolean;
 };
 
 export function ObjectTypeSelect({
@@ -47,6 +52,7 @@ export function ObjectTypeSelect({
     onSelect,
     counter,
     ariaLabelledBy,
+    isCountUnavailable = false,
 }: Props) {
     const intl = useIntl();
     const visibleGroups = FILTER_GROUPS.filter(({ types }) =>
@@ -66,7 +72,10 @@ export function ObjectTypeSelect({
             {visibleGroups.map(({ id, types }) => {
                 const isSelected = types.every((type) => selectedTypes.includes(type));
                 const count = types.reduce((sum, type) => sum + counter[type], 0);
-                const ariaLabel = intl.formatMessage(messages[id], { count });
+                // When counts could not be loaded, do not claim there are 0 objects.
+                const ariaLabel = isCountUnavailable
+                    ? getObjectTypeLabel(intl, id)
+                    : intl.formatMessage(messages[id], { count });
                 return (
                     <div
                         key={id}

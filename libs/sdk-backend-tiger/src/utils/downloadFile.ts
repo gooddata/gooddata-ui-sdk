@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type AxiosResponse } from "axios";
 
@@ -17,8 +17,8 @@ export function downloadFile(fileName: string, data: any) {
 
 export const parseNameFromContentDisposition = (response: Pick<AxiosResponse, "headers">) => {
     const contentDispositionHeader = response.headers["content-disposition"];
-    const matches = /filename\*?=(?:UTF-8''([^;]+)|"([^"]+)")/.exec(contentDispositionHeader);
-    const urlEncodedFileName = matches ? matches[2] : undefined;
+    const matches = /filename\*?=(?:UTF-8''[^;]+|"([^"]+)")/.exec(contentDispositionHeader);
+    const urlEncodedFileName = matches ? matches[1] : undefined;
     if (!urlEncodedFileName) {
         return undefined;
     }

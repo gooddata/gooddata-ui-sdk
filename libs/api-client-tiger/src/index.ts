@@ -6437,6 +6437,7 @@ export {
     type EntitiesApiPatchEntityDocumentTemplatesRequest,
     type EntitiesApiPatchEntityDocumentsRequest,
     type EntitiesApiPatchEntityPageTemplatesRequest,
+    type EntitiesApiSearchEntitiesDocumentsRequest,
     type EntitiesApiUpdateEntityDocumentTemplatesRequest,
     type EntitiesApiUpdateEntityDocumentsRequest,
     type EntitiesApiUpdateEntityPageTemplatesRequest,

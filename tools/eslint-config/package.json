@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/eslint-config",
-    "version": "11.68.0-alpha.11",
+    "version": "11.69.0-alpha.2",
     "license": "MIT",
     "author": "GoodData",
     "repository": {
@@ -246,6 +246,7 @@
         "eslint-plugin-no-only-tests": "3.3.0",
         "eslint-plugin-playwright": "2.10.1",
         "eslint-plugin-react-hooks": "7.1.1",
+        "eslint-plugin-regexp": "3.3.3",
         "eslint-plugin-sonarjs": "4.2.2",
         "eslint-plugin-storybook": "10.6.5",
         "eslint-plugin-testing-library": "7.16.2",
@@ -264,6 +265,7 @@
         "@typescript-eslint/parser": "8.58.0",
         "eslint": "^8.57.1 || ^9.39.2 || ^10.0.1",
         "eslint-plugin-jsdoc": "65.4.2",
+        "eslint-plugin-regexp": "2.10.0 || 3.3.3",
         "eslint-plugin-tsdoc": "0.5.4"
     }
 }

@@ -43,7 +43,7 @@ export const PublisherTextVariablesV2: readonly PublisherTextVariableV2[] = [
     "totalPages",
 ];
 
-const placeholderRegex = /\{([a-zA-Z][a-zA-Z0-9_]*)\}/g;
+const placeholderRegex = /\{([a-z][a-z0-9_]*)\}/gi;
 
 /**
  * The marker referencing the variable from document text.

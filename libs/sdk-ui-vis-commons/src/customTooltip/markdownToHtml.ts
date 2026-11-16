@@ -53,7 +53,7 @@ const LINK_REGEX = new RegExp(`\\[([^\\]]+)\\]\\((${URL_PATTERN})?\\)`, "g");
 // Italic content must have non-whitespace at both inner boundaries. This keeps
 // arithmetic-style text (e.g. `5 * 3 * 2`) from being misread as italics.
 const ITALIC_ASTERISK_REGEX = /\*([^\s*][^*]*[^\s*]|[^\s*])\*/g;
-const ITALIC_UNDERSCORE_REGEX = /(?<!\w)_([^\s_][^_]*[^\s_]|[^\s_])_(?!\w)/g;
+const ITALIC_UNDERSCORE_REGEX = /\b_([^\s_][^_]*[^\s_]|[^\s_])_\b/g;
 
 function processInlineMarkdown(text: string): string {
     let result = escapeHtml(text);
@@ -96,7 +96,7 @@ function processInlineMarkdown(text: string): string {
 // char at the end. The generated prefix is chosen so it does not already appear
 // in the input, which prevents user-supplied sentinel-shaped text from being
 // restored into raw HTML after escaping.
-const ESCAPABLE_METACHARS = /\\([\\*_`\[\]()!#~+\-])/g;
+const ESCAPABLE_METACHARS = /\\([\\*_`[\]()!#~+\-])/g;
 const SENTINEL_PREFIX = "\u0001E";
 
 function escapeRegExp(value: string): string {
@@ -190,14 +190,14 @@ function parseMarkdown(markdown: string): string {
         }
 
         // Horizontal rule: --- or *** or ___
-        if (/^(-{3,}|\*{3,}|_{3,})$/.test(trimmed)) {
+        if (/^(?:-{3,}|\*{3,}|_{3,})$/.test(trimmed)) {
             closeList();
             htmlParts.push("<hr/>");
             continue;
         }
 
         // Headings: # through ####
-        const headingMatch = trimmed.match(/^(#{1,4})\s+(.+)$/);
+        const headingMatch = trimmed.match(/^(#{1,4})\s+(\S.*)$/);
         if (headingMatch) {
             closeList();
             const level = headingMatch[1].length;
@@ -207,7 +207,7 @@ function parseMarkdown(markdown: string): string {
         }
 
         // Unordered list: - item or * item
-        const ulMatch = trimmed.match(/^[-*]\s+(.+)$/);
+        const ulMatch = trimmed.match(/^[-*]\s+(\S.*)$/);
         if (ulMatch) {
             if (inOrderedList) {
                 closeList();
@@ -221,7 +221,7 @@ function parseMarkdown(markdown: string): string {
         }
 
         // Ordered list: 1. item
-        const olMatch = trimmed.match(/^\d+\.\s+(.+)$/);
+        const olMatch = trimmed.match(/^\d+\.\s+(\S.*)$/);
         if (olMatch) {
             if (inUnorderedList) {
                 closeList();

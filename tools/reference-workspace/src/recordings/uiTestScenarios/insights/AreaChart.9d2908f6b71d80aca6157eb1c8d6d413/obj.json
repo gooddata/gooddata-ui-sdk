@@ -47,7 +47,7 @@
         ],
         "filters": [],
         "identifier": "AreaChart.9d2908f6b71d80aca6157eb1c8d6d413",
-        "properties": { "controls": { "stacking": false } },
+        "properties": { "controls": { "stackMeasures": false } },
         "sorts": [],
         "title": "AreaChart - single measure with viewBy and stackBy and disabled stacking",
         "uri": "AreaChart.9d2908f6b71d80aca6157eb1c8d6d413",

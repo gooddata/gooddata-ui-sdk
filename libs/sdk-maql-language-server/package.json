@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-maql-language-server",
-    "version": "11.68.0-alpha.11",
+    "version": "11.69.0-alpha.2",
     "license": "MIT",
     "author": {
         "name": "Stellar",
@@ -71,7 +71,7 @@
         "eslint-plugin-jsdoc": "65.4.2",
         "eslint-plugin-no-barrel-files": "1.2.2",
         "eslint-plugin-no-only-tests": "3.3.0",
-        "eslint-plugin-regexp": "1.15.0",
+        "eslint-plugin-regexp": "3.3.3",
         "eslint-plugin-sonarjs": "4.2.2",
         "eslint-plugin-tsdoc": "0.5.4",
         "glob": "14.0.3",

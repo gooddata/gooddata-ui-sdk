@@ -147,7 +147,7 @@ export async function visitCopyOf(page: Page, scenarioName: string): Promise<voi
  * Build a test-class CSS selector from a human-readable title.
  */
 export function simplifyText(text: string): string {
-    return text.replace(/[^a-zA-Z0-9]/g, "_").toLowerCase();
+    return text.replace(/[^a-z0-9]/gi, "_").toLowerCase();
 }
 
 export function getTestClassByTitle(title: string, prefix = ""): string {

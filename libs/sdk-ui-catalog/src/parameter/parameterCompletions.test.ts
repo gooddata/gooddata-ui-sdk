@@ -1,7 +1,13 @@
 // (C) 2026 GoodData Corporation
 
-import { type Completion, CompletionContext, insertCompletionText } from "@codemirror/autocomplete";
-import { EditorState, type Transaction } from "@codemirror/state";
+import {
+    type Completion,
+    CompletionContext,
+    autocompletion,
+    completionStatus,
+    insertCompletionText,
+} from "@codemirror/autocomplete";
+import { EditorState, Transaction, type TransactionSpec } from "@codemirror/state";
 import { describe, expect, it } from "vitest";
 
 import type { ParameterType } from "@gooddata/sdk-model";
@@ -23,7 +29,7 @@ function labelsOf(result: ReturnType<typeof completeAt>) {
     return result?.options.map((option) => option.label);
 }
 
-type ApplyView = { state: EditorState; dispatch: (transaction: Transaction) => void };
+type ApplyView = { state: EditorState; dispatch: (transaction: Transaction | TransactionSpec) => void };
 type SnippetApply = (view: ApplyView, completion: Completion, from: number, to: number) => void;
 
 function applyAt(docWithCursor: string, label: string) {
@@ -38,12 +44,13 @@ function applyAt(docWithCursor: string, label: string) {
 }
 
 function applyCompletion(option: Completion, doc: string, from: number, to: number) {
-    const view: ApplyView = {
-        state: EditorState.create({ doc, selection: { anchor: to } }),
-        dispatch(transaction) {
-            view.state = transaction.state;
-        },
-    };
+    const view = createApplyView(
+        EditorState.create({
+            doc,
+            selection: { anchor: to },
+            extensions: autocompletion({ override: [createParameterCompletions(ALL_TYPES)] }),
+        }),
+    );
     if (typeof option.apply === "function") {
         (option.apply as SnippetApply)(view, option, from, to);
     } else {
@@ -51,7 +58,22 @@ function applyCompletion(option: Completion, doc: string, from: number, to: numb
             view.state.update(insertCompletionText(view.state, option.apply ?? option.label, from, to)),
         );
     }
-    return { doc: view.state.doc.toString(), cursor: view.state.selection.main.head };
+    return {
+        doc: view.state.doc.toString(),
+        cursor: view.state.selection.main.head,
+        status: completionStatus(view.state),
+    };
+}
+
+function createApplyView(state: EditorState): ApplyView {
+    const view: ApplyView = {
+        state,
+        dispatch(transaction) {
+            view.state =
+                transaction instanceof Transaction ? transaction.state : view.state.update(transaction).state;
+        },
+    };
+    return view;
 }
 
 describe("createParameterCompletions", () => {
@@ -547,7 +569,7 @@ id: threshold`,
         ["a block list", "ta|:\n  - existing", "tags:\n  - existing"],
         ["an empty value", "ta|:", "tags:"],
     ])("preserves %s when completing a sequence key", (_, docWithCursor, expected) =>
-        expect(applyAt(docWithCursor, "tags")).toEqual({ doc: expected, cursor: "tags".length }),
+        expect(applyAt(docWithCursor, "tags")).toMatchObject({ doc: expected, cursor: "tags".length }),
     );
 
     it("inserts a new entry at the item indent when applying the new-entry completion", () => {
@@ -648,6 +670,19 @@ id: threshold`,
 
         expect(applied.doc.endsWith("\n  constraints:\n    ")).toBe(true);
         expect(applied.cursor).toBe(applied.doc.length);
+    });
+
+    it.each([
+        ["definition", "id: threshold\n|"],
+        ["constraints", "definition:\n  type: NUMBER\n  |"],
+    ])("requests completions after accepting the mapping key %s", (label, docWithCursor) => {
+        expect(applyAt(docWithCursor, label).status).not.toBeNull();
+    });
+
+    it("does not request completions after accepting a sequence key", () => {
+        const applied = applyAt("definition:\n  type: STRING\n  constraints:\n    |", "allowedValues");
+
+        expect(applied.status).toBeNull();
     });
 
     it("produces valid YAML after entering a unique value into a new entry", () => {

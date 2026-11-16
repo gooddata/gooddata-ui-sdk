@@ -56,12 +56,23 @@ export function ToastsCenter({
  */
 export function ScreenReaderToast() {
     const latestMessage = ToastsCenterContext.useContextStoreOptional((ctx) => ctx.latestMessage);
-    const messageForScreenReader = useMessageForScreenReader(latestMessage);
+    // the text with the type it was shown for, so a region never gets the text of the previous message
+    const { text, type } = useMessageForScreenReader(latestMessage);
+    // an error interrupts the reading, the other messages wait for it to pause
+    const isError = type === "error";
 
     return (
-        <div className={"sr-only"} role={"status"} aria-live={"polite"} aria-atomic={"true"}>
-            {messageForScreenReader}
-        </div>
+        <>
+            <div className={"sr-only"} role={"status"} aria-live={"polite"} aria-atomic={"true"}>
+                {isError ? null : text}
+            </div>
+            {/* only while there is one: an empty alert in every dialog is noise to its users and tests */}
+            {isError && text ? (
+                <div className={"sr-only"} role={"alert"} aria-live={"assertive"} aria-atomic={"true"}>
+                    {text}
+                </div>
+            ) : null}
+        </>
     );
 }
 
@@ -75,13 +86,18 @@ function augmentWithSilentCharacter(text: string) {
 
 const MESSAGE_FRESH_TIME = 1000; // ms
 
+interface IScreenReaderMessage {
+    text: string;
+    type?: IMessage["type"];
+}
+
 /**
  * There is a problem with screen readers when multiple toasts are fired in a row with the same message.
  * To get the screen reader to read the repeated message, we need to add a silent character to the end of the message.
  * We cycle through the silent characters to make sure each new message is unique to the one before it.
  */
-function useMessageForScreenReader(message: IMessage | null | undefined) {
-    const [displayedMessage, setDisplayedMessage] = useState("");
+function useMessageForScreenReader(message: IMessage | null | undefined): IScreenReaderMessage {
+    const [displayedMessage, setDisplayedMessage] = useState<IScreenReaderMessage>({ text: "" });
     // Do not read the old existing message on the first render.
     // There is an exception to this, if the message is fresh, we still want to read it.
     // This can happen when a new message is added and a new dialog is opened immediately.
@@ -102,7 +118,7 @@ function useMessageForScreenReader(message: IMessage | null | undefined) {
         // Support both text and node content for screen readers
         // when we pass parameters (like count), the toast system stores the formatted content in message.node instead.
         const messageContent = message.text || (typeof message.node === "string" ? message.node : "");
-        setDisplayedMessage(augmentWithSilentCharacter(messageContent));
+        setDisplayedMessage({ text: augmentWithSilentCharacter(messageContent), type: message.type });
     }, [message]);
 
     return displayedMessage;

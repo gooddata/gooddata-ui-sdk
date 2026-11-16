@@ -2,10 +2,12 @@
 
 import { type Action } from "redux";
 import { runSaga, stdChannel } from "redux-saga";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type AdOpenInsightCommandData, GdcAdCommandType, GdcProductName } from "@gooddata/sdk-embedding";
 
+import { adoptHostBackend, resetBackend } from "../../backend.js";
 import { initialState } from "../../reducers/initial_state.js";
 import { withRoot } from "../../tests/state_builder.test.helpers.js";
 import { commandReceived } from "../actions/command_received_actions.js";
@@ -13,14 +15,17 @@ import { openInsightRequested } from "../actions/open_insight_actions.js";
 
 import { watchCommandReceived } from "./command_received_saga.js";
 
-const { isUrlValid } = vi.hoisted(() => ({ isUrlValid: vi.fn() }));
+const isUrlValid = vi.fn();
 
-vi.mock("../../backend.js", async (importOriginal) => ({
-    ...(await importOriginal<object>()),
-    backend: {
-        organization: () => ({ securitySettings: () => ({ isUrlValid }) }),
-    },
-}));
+// The tests run with `isolate: false`: another test file can load backend.js before this one, so a
+// `vi.mock` of it does not apply. Adopt a fake backend instead.
+function adoptFakeBackend() {
+    adoptHostBackend({
+        instance: {
+            organization: () => ({ securitySettings: () => ({ isUrlValid }) }),
+        } as unknown as IAnalyticalBackend,
+    });
+}
 
 const ORIGIN = "https://embedder.example.com";
 
@@ -46,7 +51,12 @@ const flushPromises = () => new Promise((resolve) => setTimeout(resolve, 0));
  * saga takes it and so cannot show the order in which the saga handles the commands.
  */
 describe("watchCommandReceived command queue", () => {
+    beforeEach(() => {
+        adoptFakeBackend();
+    });
+
     afterEach(() => {
+        resetBackend();
         vi.clearAllMocks();
     });
 

@@ -12,6 +12,10 @@ export interface IHeaderWorkspacePickerItemProps {
     workspaceId: string;
     isDemo?: boolean;
     isSelected?: boolean;
+    /**
+     * The item is the active option of the workspace search combobox.
+     */
+    isFocused?: boolean;
     isLoading?: boolean;
     onClick: (e: MouseEvent<HTMLButtonElement>) => void;
 }
@@ -21,6 +25,7 @@ export function HeaderWorkspacePickerItem({
     title,
     isLoading,
     isSelected,
+    isFocused,
     isDemo,
     onClick,
 }: IHeaderWorkspacePickerItemProps) {
@@ -41,6 +46,7 @@ export function HeaderWorkspacePickerItem({
         "gd-project-list-item": true,
         [`s-${simplifyText(title)}`]: true,
         "gd-is-selected": isSelected,
+        "is-focused": isFocused,
         "gd-is-demo": isDemo,
     });
 

@@ -48,6 +48,21 @@ describe("buildWidgetContext", () => {
 });
 
 describe("buildFiltersContext", () => {
+    it("should keep the computed attribute type in the using identifier", () => {
+        const filters = [
+            {
+                attributeFilter: {
+                    displayForm: idRef("ca1", "computedAttribute"),
+                    negativeSelection: false,
+                    attributeElements: { uris: ["/uri1"] },
+                },
+            },
+        ] as any;
+        expect(buildFiltersContext(filters)).toEqual([
+            expect.objectContaining({ using: "computed_attribute/ca1" }),
+        ]);
+    });
+
     it("should convert attribute filters", () => {
         const filters = [
             {

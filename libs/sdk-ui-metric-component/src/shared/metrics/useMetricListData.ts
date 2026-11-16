@@ -34,6 +34,14 @@ export interface IMetricListSort {
  */
 export interface IUseMetricList {
     items: IMeasureMetadataObject[];
+    /**
+     * The items are those of the current search, sort and metric reload, not still loading.
+     */
+    isLoaded: boolean;
+    /**
+     * Loading the items of the current search, sort and metric reload failed; the items are empty.
+     */
+    isFailed: boolean;
     search: string;
     setSearch: (value: string) => void;
     sort: IMetricListSort;
@@ -106,7 +114,7 @@ export const useMetricListData = ({
         // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [backend, workspaceId, loadPermissions]);
 
-    const { result = { items: [] } } = useCancelablePromise<ILoadListData>(
+    const { result = { items: [] }, status } = useCancelablePromise<ILoadListData>(
         {
             promise: () => listLoader(search, sort),
         },
@@ -115,6 +123,8 @@ export const useMetricListData = ({
 
     return {
         items: result.items,
+        isLoaded: status === "success",
+        isFailed: status === "error",
         totalCount: result.items.length,
         search,
         setSearch,

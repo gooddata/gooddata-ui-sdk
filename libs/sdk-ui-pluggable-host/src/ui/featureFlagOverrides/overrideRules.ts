@@ -269,7 +269,7 @@ export function formatDraftText(value: unknown): string {
     return typeof value === "object" && value !== null ? JSON.stringify(value, null, 2) : "";
 }
 
-const DECIMAL_NUMBER = /^-?\d+(\.\d+)?$/;
+const DECIMAL_NUMBER = /^-?\d+(?:\.\d+)?$/;
 
 export function parseDraftText(flag: OverridableFeatureFlag, text: string): unknown {
     const trimmed = text.trim();

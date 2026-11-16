@@ -20,7 +20,7 @@ export type YamlCompletionSource = (
 
 // Sequence-item markers count as indentation: group 1 must capture every dash with the leading whitespace,
 // or a key after them compares at the wrong depth.
-const KEY_LINE = /^(\s*(?:-\s+)*)("[^"]*"|'[^']*'|[^\s:#][^:]*?)\s*:/;
+const KEY_LINE = /^(\s*(?:-\s+)*)("[^"]*"|'[^']*'|[^\s:#](?:[^:]*[^\s:])?)\s*:/;
 
 /** @internal */
 export function yamlPositionAt(state: EditorState, pos: number): IYamlPosition {
@@ -76,5 +76,5 @@ function indentationAncestors(state: EditorState, pos: number): string[] {
 }
 
 function unquote(key: string): string {
-    return /^(".*"|'.*')$/.test(key) ? key.slice(1, -1) : key;
+    return /^(?:".*"|'.*')$/.test(key) ? key.slice(1, -1) : key;
 }

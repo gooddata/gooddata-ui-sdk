@@ -183,6 +183,7 @@ function StandaloneInputContent({
                         agentDropdownDisabled={false}
                         isAssistantLoading={false}
                         isConversationsLoading={false}
+                        isInProgress={false}
                         handleSubmit={handleSubmit}
                     />
                 </div>

@@ -48,6 +48,11 @@ export const areaChartWith3MetricsAndViewByAttribute = localFixtureDataFacade(
     AreaChartWith3MetricsAndViewByAttribute,
 );
 
+export const areaChartWithTwoMeasuresAndViewBy = recordedDataFacade(
+    // The casting is a code smell - should be investigated and fixed
+    ReferenceRecordings.Scenarios.AreaChart.TwoMeasuresWithViewBy as ScenarioRecording,
+);
+
 export const areaChartWithMeasureViewByAndStackBy = recordedDataFacade(
     ReferenceRecordings.Scenarios.AreaChart.SingleMeasureWithViewByAndStackBy as unknown as ScenarioRecording,
 );

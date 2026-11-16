@@ -227,7 +227,6 @@ describe("chartOptionsBuilder", () => {
                 );
                 const sankeyChartOptions = generateChartOptions(dv, {
                     type: "sankey",
-                    stacking: false,
                 });
                 const validationResult = validateData({ nodes: 1 }, sankeyChartOptions);
                 expect(validationResult).toEqual({
@@ -303,7 +302,6 @@ describe("chartOptionsBuilder", () => {
                 );
                 const sankeyChartOptions = generateChartOptions(dv, {
                     type: "sankey",
-                    stacking: false,
                 });
 
                 sankeyChartOptions.data!.series![0].nodes = _range(SANKEY_CHART_NODE_LIMIT + 1).map(
@@ -1618,7 +1616,6 @@ describe("chartOptionsBuilder", () => {
                         const { viewByAttribute } = getMVS(dv);
                         const chartOptions = generateChartOptions(dv, {
                             type: "heatmap",
-                            stacking: false,
                         });
                         const pointDescription = chartOptions.actions?.pointDescription;
                         expect(pointDescription).toBeDefined();
@@ -1647,7 +1644,6 @@ describe("chartOptionsBuilder", () => {
 
                         const chartOptions = generateChartOptions(dvWithDivergingTitles, {
                             type: "heatmap",
-                            stacking: false,
                         });
                         const pointDescription = chartOptions.actions?.pointDescription;
                         expect(pointDescription).toBeDefined();
@@ -3103,7 +3099,7 @@ describe("chartOptionsBuilder", () => {
                     it("should disable stacking by config", () => {
                         const chartOptions = generateChartOptions(areaChartWith3MetricsAndViewByAttribute, {
                             type: "area",
-                            stacking: false,
+                            stackMeasures: false,
                         });
 
                         expect(chartOptions.stacking).toBeNull();
@@ -3112,7 +3108,7 @@ describe("chartOptionsBuilder", () => {
                     it("should enable stacking by config", () => {
                         const chartOptions = generateChartOptions(areaChartWith3MetricsAndViewByAttribute, {
                             type: "area",
-                            stacking: true,
+                            stackMeasures: true,
                         });
 
                         expect(chartOptions.stacking).toBe("normal");
@@ -3121,7 +3117,7 @@ describe("chartOptionsBuilder", () => {
                     it("should disable stacking by config even with stack by attribute", () => {
                         const chartOptions = generateChartOptions(areaChartWithMeasureViewByAndStackBy, {
                             type: "area",
-                            stacking: false,
+                            stackMeasures: false,
                         });
 
                         expect(chartOptions.stacking).toBeNull();
@@ -3474,7 +3470,6 @@ describe("chartOptionsBuilder", () => {
                                 barChartWithStackByAndViewByAttributes,
                                 {
                                     type: "heatmap",
-                                    stacking: false,
                                 },
                             );
                             const expectedSeries = [
@@ -3513,7 +3508,6 @@ describe("chartOptionsBuilder", () => {
                                 barChartWithStackByAndViewByAttributes,
                                 {
                                     type: "heatmap",
-                                    stacking: false,
                                 },
                             );
 
@@ -3537,7 +3531,6 @@ describe("chartOptionsBuilder", () => {
                                 barChartWithSingleMeasureAndNoAttributes,
                                 {
                                     type: "heatmap",
-                                    stacking: false,
                                 },
                             );
                             const expectedCategories = [[""], [""]];

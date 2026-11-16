@@ -77,6 +77,10 @@ const RS_EMOJI = `(?:${[RS_DINGBAT, RS_REGIONAL, RS_SURR_PAIR].join("|")})${RS_S
 const RS_NON_ASTRAL_COMBO = `${RS_NON_ASTRAL}${RS_COMBO}?`;
 const RS_SYMBOL = `(?:${[RS_NON_ASTRAL_COMBO, RS_COMBO, RS_REGIONAL, RS_SURR_PAIR, RS_ASTRAL].join("|")})`;
 
+// Lodash's unicode tables are kept verbatim so the regexes stay provably equal to lodash's; their overlaps
+// (duplicate characters, subset alternatives, combining marks in classes) are harmless.
+/* eslint-disable no-misleading-character-class, regexp/no-dupe-disjunctions, regexp/prefer-character-class, regexp/no-dupe-characters-character-class, regexp/control-character-escape */
+
 /** Used to detect strings with zero-width joiners or code points from the astral planes. */
 const RE_HAS_UNICODE = new RegExp(`[${RS_ZWJ}${RS_ASTRAL_RANGE}${RS_COMBO_RANGE}${RS_VAR_RANGE}]`);
 
@@ -97,6 +101,7 @@ const RE_UNICODE_WORD = new RegExp(
     ].join("|"),
     "g",
 );
+/* eslint-enable no-misleading-character-class, regexp/no-dupe-disjunctions, regexp/prefer-character-class, regexp/no-dupe-characters-character-class, regexp/control-character-escape */
 
 /**
  * Checks if `string` contains Unicode symbols: zero-width joiners, combining marks, variation selectors or

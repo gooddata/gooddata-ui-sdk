@@ -432,6 +432,9 @@ export function DefaultMessageReasoningContent(props: IGenAIAssistantMessageReas
 // @alpha
 export function DefaultMessageTextContent(props: IGenAIAssistantMessageTextContentProps): JSX.Element;
 
+// @public
+export function DefaultSendButton(input: IGenAIAssistantSendButtonProps): JSX.Element;
+
 // @alpha
 export function DefaultUserMessage(props: IGenAIAssistantUserMessageProps): JSX.Element;
 
@@ -882,6 +885,13 @@ export type IGenAIAssistantMessageTextContentProps = {
 };
 
 // @public
+export type IGenAIAssistantSendButtonProps = {
+    isDisabled: boolean;
+    isInProgress: boolean;
+    onClick: () => void;
+};
+
+// @public
 export interface IGenAIAssistantSlots {
     // @alpha
     AgentChooser?: ComponentType<ISlotProps<IGenAIAssistantAgentChooserProps>>;
@@ -922,6 +932,7 @@ export interface IGenAIAssistantSlots {
     MessageReasoningContent?: ComponentType<ISlotProps<IGenAIAssistantMessageReasoningContentProps>>;
     // @alpha
     MessageTextContent?: ComponentType<ISlotProps<IGenAIAssistantMessageTextContentProps>>;
+    SendButton?: ComponentType<ISlotProps<IGenAIAssistantSendButtonProps>>;
     // @alpha
     UserMessage?: ComponentType<ISlotProps<IGenAIAssistantUserMessageProps>>;
     // @alpha

@@ -1,11 +1,12 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { IconClose, IconExpand } from "@gooddata/sdk-ui-kit";
 
+import { handOffFocusDuring, useFocusHandoff } from "../../shared/focusHandoff.js";
 import { makeStyles } from "../../shared/theme/index.js";
 
 const useStyles = makeStyles()((theme) => {
@@ -130,17 +131,48 @@ export function MinimizedMetricComponent({
     invalid = false,
 }: IMinimizedMetricComponentProps) {
     const { classes, cx } = useStyles();
+    const intl = useIntl();
     const [over, setOver] = useState(false);
+    const chip = useRef<HTMLDivElement>(null);
+    const expandButton = useRef<HTMLButtonElement>(null);
+    const isShown = edited > 0 && visible;
+    const focusHandoff = useFocusHandoff();
 
-    if (edited === 0 || !visible) {
+    // Catch the focus only when minimizing this chip's editor dropped it (see focusHandoff). The
+    // record is taken in any case, so it cannot move the focus later; and should something have taken
+    // the focus in the meantime, it keeps it.
+    useEffect(() => {
+        if (!isShown) {
+            return;
+        }
+
+        const isHandedOff = focusHandoff?.take("chip") ?? false;
+        const isFocusDropped = !document.activeElement || document.activeElement === document.body;
+
+        if (isHandedOff && isFocusDropped) {
+            expandButton.current?.focus();
+        }
+    }, [isShown, focusHandoff]);
+
+    // restoring unmounts the chip, so the editor catches the focus if the chip held it
+    const expandHandler = () =>
+        handOffFocusDuring(
+            focusHandoff,
+            "editor",
+            !!chip.current?.contains(document.activeElement),
+            onExpand,
+            () => chip.current !== null,
+        );
+
+    if (!isShown) {
         return null;
     }
 
     return (
-        <div className={cx(classes.root, where, "s-edit_dialog-minimized")}>
+        <div ref={chip} className={cx(classes.root, where, "s-edit_dialog-minimized")}>
             <div
                 className={cx(classes.info)}
-                onClick={onExpand}
+                onClick={expandHandler}
                 onMouseEnter={() => setOver(true)}
                 onMouseLeave={() => setOver(false)}
             >
@@ -159,14 +191,22 @@ export function MinimizedMetricComponent({
             </div>
             <div className={cx(classes.controls)}>
                 <button
+                    ref={expandButton}
+                    type="button"
                     className={cx(classes.button, over && "hover", "s-edit_dialog-minimized-expand")}
-                    onClick={onExpand}
+                    aria-label={intl.formatMessage({ id: "metricComponent.minimize.restore" })}
+                    onClick={expandHandler}
                 >
-                    <IconExpand />
+                    <IconExpand ariaHidden />
                 </button>
                 <div className={cx(classes.divider)} />
-                <button className={cx(classes.button, "s-edit_dialog-minimized-close")} onClick={onClose}>
-                    <IconClose />
+                <button
+                    type="button"
+                    className={cx(classes.button, "s-edit_dialog-minimized-close")}
+                    aria-label={intl.formatMessage({ id: "metricComponent.tabs.close" })}
+                    onClick={onClose}
+                >
+                    <IconClose ariaHidden />
                 </button>
             </div>
         </div>

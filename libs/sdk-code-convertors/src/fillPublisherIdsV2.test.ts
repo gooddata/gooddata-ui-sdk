@@ -44,7 +44,7 @@ content:
     pages: []
 `;
 
-const idPattern = /^[A-Za-z0-9_.-]{1,64}$/;
+const idPattern = /^[A-Z0-9_.-]{1,64}$/i;
 
 describe("fillPublisherIdsV2", () => {
     it("gives every section, page and widget an id, and keeps comments, indent and quoting", () => {

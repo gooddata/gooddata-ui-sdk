@@ -17,7 +17,7 @@ import {
 
 import { getCatalogItemId, getCatalogItemTitle, getCatalogItemType } from "./utils.js";
 
-export const REFERENCE_REGEX_PART = "[^{}\\/]+\\/[^{}]+";
+export const REFERENCE_REGEX_PART = "[^{}/]+\\/[^{}]+";
 export const REFERENCE_REGEX = new RegExp(`\\{${REFERENCE_REGEX_PART}\\}`, "g");
 
 export function collectReferences(

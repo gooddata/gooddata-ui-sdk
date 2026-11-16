@@ -964,6 +964,11 @@ a.gd-list-help-menu-item.gd-list-item {
         font-weight: bold;
     }
 
+    // active option of the workspace search combobox
+    &.is-focused {
+        @include mixins.focus-ring;
+    }
+
     &:focus-visible {
         outline: revert;
     }

@@ -65,7 +65,7 @@ export function randomString(len: number): string {
  */
 export function simplifyText(value: string | number | null): string {
     const s = value?.toString?.() ?? "";
-    return s.replace(/[^a-zA-Z0-9]/g, "_").toLowerCase();
+    return s.replace(/[^a-z0-9]/gi, "_").toLowerCase();
 }
 
 /**
@@ -83,7 +83,7 @@ export function parseStringToArray(str: string): string[] | null {
             return [];
         }
 
-        if (str.match(/^\[[a-zA-Z0-9 ]+(,(?=[^ ])[a-zA-Z0-9 ]+)*\]$/)) {
+        if (str.match(/^\[[a-z0-9 ]+(,(?=[^ ])[a-z0-9 ]+)*\]$/i)) {
             // [foo], [foo,bar]
             return str.slice(1, -1).split(",");
         }

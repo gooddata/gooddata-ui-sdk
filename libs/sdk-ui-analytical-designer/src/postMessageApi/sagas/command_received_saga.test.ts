@@ -17,6 +17,7 @@ import {
     GdcProductName,
     type IGdcAdMessageEnvelope,
 } from "@gooddata/sdk-embedding";
+import { notifyValidatedCommandOrigin } from "@gooddata/sdk-embedding/internal";
 
 import { displayConfirmUnsavedChangesDialogWithPostMessageAction } from "../../actions/confirm_unsaved_changes_actions.js";
 import { conversionInit } from "../../actions/drillable_items_actions.js";
@@ -502,6 +503,7 @@ describe("command received saga", () => {
                 .silentRun();
 
             expect(saga.effects.call ?? []).not.toContainEqual(call(validateHostDomain, "default", "origin"));
+            expect(saga.effects.call ?? []).not.toContainEqual(call(notifyValidatedCommandOrigin, "origin"));
             expect(saga.effects.put).toEqual([put(saveInsightRequested(command))]);
         });
 
@@ -517,6 +519,8 @@ describe("command received saga", () => {
                 .silentRun();
 
             expect(saga.effects.call).toContainEqual(call(validateHostDomain, "default", "origin"));
+            // the outgoing events may wait for the first command with a valid origin
+            expect(saga.effects.call).toContainEqual(call(notifyValidatedCommandOrigin, "origin"));
             expect(saga.effects.put).toEqual([put(saveInsightRequested(command))]);
         });
 

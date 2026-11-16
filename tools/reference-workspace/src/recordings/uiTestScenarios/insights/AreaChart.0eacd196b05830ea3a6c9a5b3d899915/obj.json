@@ -50,7 +50,7 @@
         ],
         "filters": [],
         "identifier": "AreaChart.0eacd196b05830ea3a6c9a5b3d899915",
-        "properties": { "controls": { "continuousLine": { "enabled": true }, "stacking": false } },
+        "properties": { "controls": { "continuousLine": { "enabled": true }, "stackMeasures": false } },
         "sorts": [],
         "title": "AreaChart - undefined values, disabled stacking and the continuous line enabled",
         "uri": "AreaChart.0eacd196b05830ea3a6c9a5b3d899915",

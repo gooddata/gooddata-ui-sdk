@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-kit: The workspace picker search is a combobox that drives the workspaces listbox: ArrowDown and ArrowUp move the active option, Enter opens the highlighted workspace, and Escape clears the filter, then closes the picker. `DropdownList` accepts `getItemKey` to enable this pattern.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

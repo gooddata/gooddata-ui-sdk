@@ -77,12 +77,15 @@ export function Table({
     const announcedTotalResults = isSearching && status === "success" ? totalCount : undefined;
 
     if (status === "error") {
+        // The alert is mounted anew each time a (re)load fails, so screen readers announce it every time.
         return (
-            <ErrorComponent
-                message={intl.formatMessage({ id: "analyticsCatalog.error.unknown.message" })}
-                description={intl.formatMessage({ id: "analyticsCatalog.error.unknown.description" })}
-                width="100%"
-            />
+            <div className="gd-analytics-catalog__table-error" role="alert">
+                <ErrorComponent
+                    message={intl.formatMessage({ id: "analyticsCatalog.error.unknown.message" })}
+                    description={intl.formatMessage({ id: "analyticsCatalog.error.unknown.description" })}
+                    width="100%"
+                />
+            </div>
         );
     }
 

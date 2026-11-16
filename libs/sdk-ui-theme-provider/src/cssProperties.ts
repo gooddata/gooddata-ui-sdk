@@ -104,7 +104,7 @@ export type ParserFunction = {
 // cqw. The units are the ones that follow it — `cqh` and `cqb` are left out although they parse,
 // because a page contains its inline axis only and a block unit silently resolves against the
 // viewport instead; `px` and `rem` are left out because they hold their size while the page changes.
-const REPORT_LENGTH = /^\d+(\.\d+)?(cqw|cqi|em|%)$/;
+const REPORT_LENGTH = /^\d+(?:\.\d+)?(?:cqw|cqi|em|%)$/;
 
 function reportLength(value: unknown, bare: (n: number) => string): string {
     if (typeof value === "number") {
