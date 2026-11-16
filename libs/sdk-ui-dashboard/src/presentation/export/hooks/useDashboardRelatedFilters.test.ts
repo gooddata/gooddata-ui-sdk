@@ -26,4 +26,28 @@ describe("elementsDisplayTitles", () => {
             null,
         ]);
     });
+
+    it("uses the formatted title of an element that carries one, as the filter does", () => {
+        const dateElements = [
+            { title: "2024-01-15", formattedTitle: "Jan 15, 2024", uri: "2024-01-15" },
+            { title: "2024-02-01", uri: "2024-02-01" },
+        ];
+
+        expect(elementsDisplayTitles(dateElements, undefined, undefined)).toEqual([
+            "Jan 15, 2024",
+            "2024-02-01",
+        ]);
+    });
+
+    it("prefers the formatted title over the number format", () => {
+        const mixedElements = [
+            { title: "1234.5", formattedTitle: "Custom 1234.5", uri: "1234.5" },
+            { title: "5678.5", uri: "5678.5" },
+        ];
+
+        expect(elementsDisplayTitles(mixedElements, "#,##0.0", { decimal: ",", thousand: " " })).toEqual([
+            "Custom 1234.5",
+            "5 678,5",
+        ]);
+    });
 });

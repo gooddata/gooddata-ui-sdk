@@ -68,6 +68,26 @@ describe("ObjectTypeSelect", () => {
         expect(screen.getByRole("button", { name: "Document: 8" })).toBeInTheDocument();
     });
 
+    it("leaves the counts out of the accessible labels when counts are unavailable", () => {
+        render(
+            <ObjectTypeSelect
+                {...commonProps}
+                isCountUnavailable
+                enabledObjectTypes={[...commonProps.enabledObjectTypes, "parameter", "document"]}
+            />,
+            { wrapper },
+        );
+
+        expect(screen.getByRole("button", { name: "Dashboard" })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Visualization" })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Metric" })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Parameter" })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Fact" })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Attribute" })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Date dataset" })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Document" })).toBeInTheDocument();
+    });
+
     it("has no document button when documents are not enabled", () => {
         render(<ObjectTypeSelect {...commonProps} />, { wrapper });
 

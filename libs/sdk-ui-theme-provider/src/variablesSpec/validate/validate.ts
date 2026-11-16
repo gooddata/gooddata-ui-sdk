@@ -309,7 +309,7 @@ function normalizeColorsInValue(value: string): string {
 
     // Convert 8-digit hex colors to rgba
     result = result.replace(
-        /#([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})\b/g,
+        /#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})\b/gi,
         (_match, r: string, g: string, b: string, a: string) => {
             const red = parseInt(r, 16);
             const green = parseInt(g, 16);
@@ -352,7 +352,7 @@ function normalizeColorsInValue(value: string): string {
 
     // Convert 6-digit hex to rgba (fully opaque)
     result = result.replace(
-        /#([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})\b/g,
+        /#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})\b/gi,
         (_match, r: string, g: string, b: string) => {
             const red = parseInt(r, 16);
             const green = parseInt(g, 16);

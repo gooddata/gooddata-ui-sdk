@@ -248,16 +248,41 @@ export function resolveEffectiveParameterValuesForRoots(
     if (!context) {
         return EMPTY_PARAMETER_VALUES;
     }
-    const referencedRefs = collectRootParameterRefs(context.dependenciesByRoot, [
-        ...roots,
-        ...context.filterRoots,
-    ]);
     return resolveEffectiveParameterValuesForRefs(
         context.entries,
-        referencedRefs,
+        collectReferencedParameterRefs(context, roots),
         insight ? ungatedInsightParameterValues(insight, context.isStringEnabled) : [],
         context.workspaceParameterByRef,
     );
+}
+
+/**
+ * The entries whose applied value {@link resolveEffectiveParameterValuesForRoots} sends for `roots`.
+ *
+ * @internal
+ */
+export function collectAppliedParameterEntriesForRoots(
+    context: IParameterResolutionContext,
+    roots: ObjRef[],
+): IDashboardParameterEntry[] {
+    const referencedKeys = new Set(collectReferencedParameterRefs(context, roots).map(objRefToString));
+    return context.entries.filter(
+        (entry) => hasAppliedParameterValue(entry) && referencedKeys.has(objRefToString(entry.parameter.ref)),
+    );
+}
+
+function collectReferencedParameterRefs(
+    context: IParameterResolutionContext,
+    roots: ObjRef[],
+): IdentifierRef[] {
+    return collectRootParameterRefs(context.dependenciesByRoot, [...roots, ...context.filterRoots]);
+}
+
+/**
+ * @internal
+ */
+export function hasAppliedParameterValue(entry: IDashboardParameterEntry): boolean {
+    return entry.runtimeOverride !== undefined;
 }
 
 /**

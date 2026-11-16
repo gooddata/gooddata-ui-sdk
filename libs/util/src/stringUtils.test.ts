@@ -12,7 +12,7 @@ import {
 
 describe("randomString", () => {
     it("should generate alphanumeric string with correct length", () => {
-        expect(randomString(10)).toEqual(expect.stringMatching(/^[0-9a-zA-Z]{10}$/));
+        expect(randomString(10)).toEqual(expect.stringMatching(/^[0-9a-z]{10}$/i));
     });
 });
 

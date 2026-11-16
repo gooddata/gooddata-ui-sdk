@@ -548,15 +548,17 @@ without it, they are disabled. To turn them on or off explicitly, set `enableKey
 Customize parts of the assistant UI by passing components in the `slots` prop of `GenAIAssistant` or `GenAIConversations`. Each slot component receives the `Default` component and its `defaultProps`, so you can wrap the default rendering or replace it. [Customize the AI Assistant](../customize-ai-assistant/) shows an example for every slot.
 
 {{% alert color="warning" title="Alpha API" %}}
-Only the `LandingScreen`, `Disclaimer`, and `AgentItem` slots are public. All other slots, their props types, and every
-`Default*` building block (including `DefaultLandingScreen`, `DefaultDisclaimer`, and `DefaultAgentItem`) are `@alpha`
-in `@gooddata/sdk-ui-gen-ai` and may change or be removed without a major version bump.
+The `LandingScreen`, `Disclaimer`, `AgentItem`, and `SendButton` slots are public, as is `DefaultSendButton`.
+All other slots, their props types, and all other `Default*` building blocks (including `DefaultLandingScreen`,
+`DefaultDisclaimer`, and `DefaultAgentItem`) are `@alpha` in `@gooddata/sdk-ui-gen-ai` and may change or be removed
+without a major version bump.
 {{% /alert %}}
 
 | Slot name | Stability | Description |
 | --- | --- | --- |
 | `LandingScreen` | Public | Custom screen rendered before any messages are sent. |
 | `Disclaimer` | Public | Custom content rendered below the chat input. |
+| `SendButton` | Public | Custom send button with `onClick`, `isDisabled`, and `isInProgress` in `defaultProps`. See [Customize the send button](../customize-ai-assistant/#customize-the-send-button). |
 | `AgentItem` | Public | Custom rendering for each agent in the agent chooser. |
 | `AgentChooser` | Alpha | Custom rendering for the whole agent chooser component. |
 | `ConversationDrawerHeader` | Alpha | Custom rendering for the conversations drawer header. |

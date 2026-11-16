@@ -179,7 +179,7 @@ export function HeaderWorkspacePicker({
                                 hasNoMatchingData={hasNoMatchingData}
                             />
                         )}
-                        renderItem={({ item }) => {
+                        renderItem={({ item, focused }) => {
                             const title = item?.title;
                             const isDemo = item?.isDemo;
                             const workspaceId = item?.id;
@@ -190,6 +190,7 @@ export function HeaderWorkspacePicker({
                                     title={title}
                                     isDemo={isDemo}
                                     isSelected={isSelected}
+                                    isFocused={focused}
                                     isLoading={!item}
                                     onClick={() => {
                                         if (item && onSelect) {
@@ -222,6 +223,8 @@ export function HeaderWorkspacePicker({
                             }
                         }}
                         itemTitleGetter={(item) => item?.title || item?.id || ""}
+                        getItemKey={(item) => item.id}
+                        getIsItemSelected={(item) => !!item && selectedWorkspace?.id === item.id}
                         accessibilityConfig={{
                             role: "listbox",
                             ariaLabel: intl.formatMessage({ id: "gs.header.projectPicker.workspaces" }),

@@ -32251,6 +32251,85 @@
                     }
                 }
             }
+        },
+        "/api/v1/entities/workspaces/{workspaceId}/documents/search": {
+            "post": {
+                "operationId": "searchEntities@Documents",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "workspaceId",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "origin",
+                        "required": false,
+                        "schema": {
+                            "default": "ALL",
+                            "description": "Defines scope of origin of objects. All by default.",
+                            "enum": [
+                                "ALL",
+                                "PARENTS",
+                                "NATIVE"
+                            ],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "header",
+                        "name": "X-GDC-VALIDATE-RELATIONS",
+                        "required": false,
+                        "schema": {
+                            "default": false,
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EntitySearchBody"
+                            }
+                        }
+                    },
+                    "description": "Search request body with filter, pagination, and sorting options",
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentOutList"
+                                }
+                            },
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentOutList"
+                                }
+                            }
+                        },
+                        "description": "Request successfully processed"
+                    }
+                },
+                "summary": "The search endpoint",
+                "tags": [
+                    "Publisher Documents",
+                    "entities",
+                    "document-controller"
+                ],
+                "x-gdc-security-info": {
+                    "description": "Contains minimal permission level required to view this object type.",
+                    "permissions": [
+                        "VIEW"
+                    ]
+                }
+            }
         }
     },
     "components": {

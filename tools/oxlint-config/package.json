@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/oxlint-config",
-    "version": "11.68.0-alpha.11",
+    "version": "11.69.0-alpha.2",
     "license": "MIT",
     "author": "GoodData",
     "repository": {
@@ -60,6 +60,7 @@
         "eslint-plugin-no-barrel-files": "1.2.2",
         "eslint-plugin-no-only-tests": "3.3.0",
         "eslint-plugin-playwright": "2.10.1",
+        "eslint-plugin-regexp": "3.3.3",
         "eslint-plugin-sonarjs": "4.2.2",
         "eslint-plugin-storybook": "10.6.5",
         "eslint-plugin-testing-library": "7.16.2",
@@ -78,6 +79,7 @@
     "peerDependencies": {
         "eslint-plugin-headers": "1.3.3",
         "eslint-plugin-no-barrel-files": "1.2.2",
+        "eslint-plugin-regexp": "3.3.3",
         "eslint-plugin-sonarjs": "4.2.2",
         "oxlint": "^1.83.0",
         "oxlint-plugin-eslint": "1.82.0",

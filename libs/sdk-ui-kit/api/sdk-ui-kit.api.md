@@ -2498,6 +2498,7 @@ export interface IDropdownListProps<T> {
     // (undocumented)
     footer?: ReactNode | ((closeDropdown: () => void) => ReactNode);
     getIsItemSelected?: (item: T) => boolean;
+    getItemKey?: (item: T) => string;
     // (undocumented)
     hasNextPage?: boolean;
     // (undocumented)

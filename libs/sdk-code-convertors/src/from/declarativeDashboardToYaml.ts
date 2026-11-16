@@ -1646,7 +1646,7 @@ function getFilterGroupIdBase({ title, localIdentifier }: IDashboardFilterGroup)
     }
     return title
         .normalize()
-        .replace(/[^a-zA-Z0-9]/g, "_")
+        .replace(/[^a-z0-9]/gi, "_")
         .toLowerCase();
 }
 

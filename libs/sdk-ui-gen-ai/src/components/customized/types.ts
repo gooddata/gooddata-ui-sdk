@@ -59,6 +59,25 @@ export type IGenAIAssistantLandingScreenProps = {
 export type IGenAIAssistantDisclaimerProps = Record<string, never>;
 
 /**
+ * Properties for the SendButton slot.
+ * @public
+ */
+export type IGenAIAssistantSendButtonProps = {
+    /**
+     * Whether sending is disabled, including when the input is empty or the assistant is busy.
+     */
+    isDisabled: boolean;
+    /**
+     * Whether the assistant is generating a response in the current conversation.
+     */
+    isInProgress: boolean;
+    /**
+     * Sends the current input. Does nothing while sending is disabled or agent selection is loading.
+     */
+    onClick: () => void;
+};
+
+/**
  * Properties for the AgentItem slot.
  * @public
  */
@@ -614,6 +633,11 @@ export interface IGenAIAssistantSlots {
      * Custom React component rendered below the input as a disclaimer.
      */
     Disclaimer?: ComponentType<ISlotProps<IGenAIAssistantDisclaimerProps>>;
+
+    /**
+     * Custom React component rendered in place of the chat input's send button.
+     */
+    SendButton?: ComponentType<ISlotProps<IGenAIAssistantSendButtonProps>>;
 
     /**
      * Custom React component rendered for each agent in the agent chooser dropdown.

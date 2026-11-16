@@ -6,8 +6,6 @@ import cx from "classnames";
 import { defineMessages, useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 
-import { UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
-
 import { type GenAIAgent } from "../model.js";
 import {
     agentSwitchingActiveSelector,
@@ -29,9 +27,6 @@ import { GenAIChatEffortDropdown } from "./GenAIChatEffortDropdown.js";
 import { getAgentSelectionStatus, getEffectiveSelectedAgentId } from "./utils/agentSelection.js";
 
 const msgs = defineMessages({
-    send: {
-        id: "gd.gen-ai.button.send",
-    },
     noAgentAvailable: {
         id: "gd.gen-ai.agent.unavailable",
     },
@@ -42,6 +37,7 @@ type GenAiChatAgentSwitchingOwnProps = {
     agentDropdownDisabled: boolean;
     isAssistantLoading: boolean;
     isConversationsLoading: boolean;
+    isInProgress: boolean;
     handleSubmit: () => void;
     onMouseDown?: (event: MouseEvent<HTMLDivElement>) => void;
     setBusy?: (busy: boolean) => void;
@@ -70,6 +66,7 @@ type IGenAiChatAgentSwitchingDispatchProps = {
 function GenAiChatAgentSwitchingCore({
     isAssistantLoading,
     isConversationsLoading,
+    isInProgress,
     handleSubmit,
     conversations,
     conversation,
@@ -91,9 +88,8 @@ function GenAiChatAgentSwitchingCore({
     GenAiChatAgentSwitchingStateProps &
     IGenAiChatAgentSwitchingDispatchProps) {
     const intl = useIntl();
-    const { AgentChooserComponent } = useCustomization();
+    const { AgentChooserComponent, SendButtonComponent } = useCustomization();
 
-    const sendLabel = intl.formatMessage(msgs.send);
     const noAgentAvailableLabel = intl.formatMessage(msgs.noAgentAvailable);
 
     const { availableAgents, hasNoAgents, isSelectionLoading } = getAgentSelectionStatus({
@@ -114,15 +110,12 @@ function GenAiChatAgentSwitchingCore({
     const isBusy = agentSwitchingActive && (hasNoAgents || isSelectionLoading);
 
     const handleSubmitHandler = useCallback(() => {
-        if (agentSwitchingActive && hasNoAgents) {
-            return;
-        }
-        if (isBusy) {
+        if (buttonDisabled || isBusy) {
             return;
         }
 
         handleSubmit();
-    }, [agentSwitchingActive, handleSubmit, hasNoAgents, isBusy]);
+    }, [buttonDisabled, handleSubmit, isBusy]);
 
     const handleSelectAgent = useCallback(
         (agentId: string | undefined, options?: { showChangeEvent?: boolean }) => {
@@ -187,23 +180,10 @@ function GenAiChatAgentSwitchingCore({
                             onSelectEffort={handleSelectEffort}
                         />
                     ) : null}
-                    <UiTooltip
-                        triggerBy={["focus", "hover"]}
-                        arrowPlacement="bottom"
-                        anchor={
-                            <UiIconButton
-                                icon="arrowUp"
-                                variant="primary"
-                                size="small"
-                                dataTestId="send_message"
-                                isDisabled={buttonDisabled}
-                                onClick={buttonDisabled ? undefined : handleSubmitHandler}
-                                accessibilityConfig={{
-                                    ariaLabel: sendLabel,
-                                }}
-                            />
-                        }
-                        content={sendLabel}
+                    <SendButtonComponent
+                        isDisabled={buttonDisabled}
+                        isInProgress={isInProgress}
+                        onClick={handleSubmitHandler}
                     />
                 </>
             )}

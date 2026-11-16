@@ -26,7 +26,7 @@ export const DEFAULT_CSV_DELIMITER_PRESET_ID = "comma";
  */
 export const DEFAULT_CSV_DELIMITER = CSV_DELIMITER_PRESETS[DEFAULT_CSV_DELIMITER_PRESET_ID].delimiter;
 
-const SUPPORTED_CSV_DELIMITER_REGEXP = /^[\t !#$%&()*+\-.,/:;<=>?@\[\]\\^_{|}~]$/;
+const SUPPORTED_CSV_DELIMITER_REGEXP = /^[\t !#$%&()*+\-.,/:;<=>?@[\]\\^_{|}~]$/;
 
 /**
  * Identifier of a built-in CSV delimiter preset.

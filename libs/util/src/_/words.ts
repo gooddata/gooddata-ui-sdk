@@ -34,8 +34,8 @@
 import { _unicodeWords } from "./_unicode.js";
 
 /** Used to match words composed of alphanumeric characters. */
-// oxlint-disable-next-line no-control-regex -- the word class deliberately excludes the control characters
-const RE_ASCII_WORD = /[^\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]+/g;
+// The complement of lodash's `[^\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]`, written without control characters.
+const RE_ASCII_WORD = /[0-9A-Z\x80-\uffff]+/gi;
 
 /** Used to detect strings that need a more robust regexp to match words. */
 const RE_HAS_UNICODE_WORD = /[a-z][A-Z]|[A-Z]{2}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/;

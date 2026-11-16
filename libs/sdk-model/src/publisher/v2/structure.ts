@@ -115,7 +115,7 @@ import {
 } from "./widget.js";
 
 const themeName = "[A-Za-z0-9_-]+";
-const hexColor = /^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/;
+const hexColor = /^#(?:[0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})$/i;
 const rgbColor = /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*(?:,\s*(\d+(?:\.\d+)?|\.\d+)\s*)?\)$/;
 const paletteColor = `(?:${PUBLISHER_PALETTE_FAMILIES_V2.join("|")}|complementary\\.(?:${PUBLISHER_COMPLEMENTARY_STEPS_V2.join("|")}))`;
 const themeColor = new RegExp(

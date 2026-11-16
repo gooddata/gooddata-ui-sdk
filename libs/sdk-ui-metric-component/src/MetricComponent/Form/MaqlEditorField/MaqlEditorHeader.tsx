@@ -67,8 +67,9 @@ const messages = defineMessages({
     decoratorsShow: {
         id: "metricComponent.editMetric.decoratorsShow",
     },
-    decoratorsHide: {
-        id: "metricComponent.editMetric.decoratorsHide",
+
+    moreActions: {
+        id: "metricComponent.editMetric.metric.definition.moreActions",
     },
 });
 
@@ -82,6 +83,7 @@ export function MaqlEditorHeader({ areTitles, isMaqlDefined, isSQL, onAction }: 
             className="s-maql_definition_header"
             TitleContent={<FormattedMessage id="metricComponent.editMetric.metric.definition" />}
             TitleTooltip={<FormattedMessage id="metricComponent.editMetric.metric.definition.tooltip" />}
+            dropdownLabel={intl.formatMessage(messages.moreActions)}
             buttons={[
                 canShowResults && (
                     <PartHeaderButton
@@ -114,14 +116,16 @@ export function MaqlEditorHeader({ areTitles, isMaqlDefined, isSQL, onAction }: 
                     title: intl.formatMessage(messages.autoFormat),
                     tooltip: intl.formatMessage(messages.autoFormatBubble),
                     tooltipMac: intl.formatMessage(messages.autoFormatBubbleMac),
+                    // the formatting keymap's Shift-Alt-f, on every platform
+                    keyShortcuts: "Shift+Alt+F",
                     onClick: () => onAction?.(HeaderAction.Format),
                 },
                 { type: "separator" },
                 {
+                    // a toggle, read with its state ("Show names, checked")
                     type: "link",
-                    title: areTitles
-                        ? intl.formatMessage(messages.decoratorsHide)
-                        : intl.formatMessage(messages.decoratorsShow),
+                    title: intl.formatMessage(messages.decoratorsShow),
+                    checked: areTitles,
                     onClick: () => onAction?.(HeaderAction.Titles),
                 },
             ]}

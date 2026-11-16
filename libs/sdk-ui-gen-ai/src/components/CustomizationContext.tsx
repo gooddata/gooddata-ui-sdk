@@ -22,6 +22,7 @@ import {
     type IGenAIAssistantMessageMultipartContentProps,
     type IGenAIAssistantMessageReasoningContentProps,
     type IGenAIAssistantMessageTextContentProps,
+    type IGenAIAssistantSendButtonProps,
     type IGenAIAssistantSlots,
     type IGenAIAssistantUserMessageProps,
     type IGenAIAssistantVisualizationMenuProps,
@@ -33,6 +34,7 @@ import {
 export interface IGenAIAssistantComponents {
     LandingScreenComponent: ComponentType;
     DisclaimerComponent: ComponentType;
+    SendButtonComponent: ComponentType<IGenAIAssistantSendButtonProps>;
     AgentItemComponent: ComponentType<IGenAIAssistantAgentItemProps>;
     ConversationItemComponent: ComponentType<IGenAIAssistantConversationItemProps>;
     ConversationDrawerHeaderComponent: ComponentType<IGenAIAssistantConversationDrawerHeaderProps>;

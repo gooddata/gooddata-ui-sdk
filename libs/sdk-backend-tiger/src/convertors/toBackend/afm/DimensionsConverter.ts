@@ -71,11 +71,12 @@ function convertAttributeSortType(sortItem: ISortItem): SortKeyAttributeAttribut
  * user who specified primaryLabelValue directly, it has logic to fall back to using the uri as-is.
  */
 function extractItemValueFromElement(elementUri: string | null): string | null {
-    // no reasonable way to avoid the super-linear backtracking right now
-    const parsedUri = elementUri?.match(/obj\/([^/]*)(\/elements\?id=)?(.*)$/);
+    // The object segment ends at the next slash, so the rest of the URI is either empty or starts with one.
+    const rest = elementUri?.match(/obj\/[^/]*(\/.*)?$/)?.[1];
+    const itemValue = rest?.replace(/^\/elements\?id=/, "");
 
-    if (parsedUri?.[3]) {
-        return parsedUri[3];
+    if (itemValue) {
+        return itemValue;
     }
 
     return elementUri;

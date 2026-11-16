@@ -268,7 +268,8 @@ export interface IGenAIDashboardLiveFilters {
 export interface IGenAIUserContextAttributeFilter {
     type: "attribute_filter";
     /**
-     * Identifier of the label (display form) the filter uses.
+     * Identifier of the label (display form) the filter uses. A computed attribute is sent as
+     * `computed_attribute/<id>`; a bare identifier is read as a label.
      */
     using: string;
     state: {

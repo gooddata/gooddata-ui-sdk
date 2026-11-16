@@ -1,30 +1,100 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type { IConfiguration } from "../types.js";
+import { type IPackage, type Rules } from "@gooddata/lint-config";
 
-// const regexpPlugin: IPackage = {
-//     name: "eslint-plugin-regexp",
-//     version: "2.7.0",
-// };
+import type { IConfiguration, IConfigurationFlat } from "../types.js";
 
-// const rules = {
-//     // these rules can make some regexes much less readable
-//     "regexp/prefer-d": "off",
-//     "regexp/prefer-w": "off",
-// };
+const regexpPluginName = "eslint-plugin-regexp";
 
-const common = {
-    // TODO: eslint-plugin-regexp rules crash on TS files due to missing type services
-    // Re-enable when the plugin handles this gracefully or we add parser support
-    // packages: [regexpPlugin],
+const regexpPlugin: IPackage = {
+    name: regexpPluginName,
+    version: "3.3.3",
 };
 
-export const regexp: IConfiguration<"regexp"> = {
+const rules: Rules = {
+    "no-control-regex": "error",
+    "no-misleading-character-class": "error",
+    "no-regex-spaces": "error",
+    "prefer-regex-literals": "error",
+    "no-invalid-regexp": "off",
+    "no-useless-backreference": "off",
+    "no-empty-character-class": "off",
+    "regexp/confusing-quantifier": "warn",
+    "regexp/control-character-escape": "error",
+    "regexp/match-any": "error",
+    "regexp/negation": "error",
+    "regexp/no-contradiction-with-assertion": "error",
+    "regexp/no-dupe-characters-character-class": "error",
+    "regexp/no-dupe-disjunctions": "error",
+    "regexp/no-empty-alternative": "warn",
+    "regexp/no-empty-capturing-group": "error",
+    "regexp/no-empty-character-class": "error",
+    "regexp/no-empty-group": "error",
+    "regexp/no-empty-lookarounds-assertion": "error",
+    "regexp/no-empty-string-literal": "error",
+    "regexp/no-escape-backspace": "error",
+    "regexp/no-extra-lookaround-assertions": "error",
+    "regexp/no-invalid-regexp": "error",
+    "regexp/no-invisible-character": "error",
+    "regexp/no-lazy-ends": "warn",
+    "regexp/no-legacy-features": "error",
+    "regexp/no-misleading-capturing-group": "error",
+    "regexp/no-misleading-unicode-character": "error",
+    "regexp/no-missing-g-flag": "error",
+    "regexp/no-non-standard-flag": "error",
+    "regexp/no-obscure-range": "error",
+    "regexp/no-optional-assertion": "error",
+    "regexp/no-potentially-useless-backreference": "warn",
+    "regexp/no-super-linear-backtracking": "error",
+    "regexp/no-trivially-nested-assertion": "error",
+    "regexp/no-trivially-nested-quantifier": "error",
+    "regexp/no-unused-capturing-group": "error",
+    "regexp/no-useless-assertions": "error",
+    "regexp/no-useless-backreference": "error",
+    "regexp/no-useless-character-class": "error",
+    "regexp/no-useless-dollar-replacements": "error",
+    "regexp/no-useless-escape": "error",
+    "regexp/no-useless-flag": "warn",
+    "regexp/no-useless-lazy": "error",
+    "regexp/no-useless-non-capturing-group": "error",
+    "regexp/no-useless-quantifier": "error",
+    "regexp/no-useless-range": "error",
+    "regexp/no-useless-set-operand": "error",
+    "regexp/no-useless-string-literal": "error",
+    "regexp/no-useless-two-nums-quantifier": "error",
+    "regexp/no-zero-quantifier": "error",
+    "regexp/optimal-lookaround-quantifier": "warn",
+    "regexp/optimal-quantifier-concatenation": "error",
+    "regexp/prefer-character-class": "error",
+    "regexp/prefer-plus-quantifier": "error",
+    "regexp/prefer-predefined-assertion": "error",
+    "regexp/prefer-question-quantifier": "error",
+    "regexp/prefer-range": "error",
+    "regexp/prefer-set-operation": "error",
+    "regexp/prefer-star-quantifier": "error",
+    "regexp/prefer-unicode-codepoint-escapes": "error",
+    "regexp/simplify-set-operations": "error",
+    "regexp/sort-flags": "error",
+    "regexp/strict": "error",
+    "regexp/use-ignore-case": "error",
+};
+
+const common: IConfigurationFlat = {
+    packages: [regexpPlugin],
+    plugins: { regexp: regexpPlugin },
+    rules,
+};
+
+export const regexp: IConfiguration = {
     legacy: {
-        // TODO: Fix this
-        // packages: [regexpPlugin],
-        // extends: ["plugin:regexp/recommended"],
-        // rules,
+        packages: [
+            {
+                name: regexpPluginName,
+                version: "2.10.0",
+            },
+        ],
+        plugins: ["regexp"],
+        rules,
     },
     flat: { v9: common, v9ox: common, v10: common, v10ox: common },
 };

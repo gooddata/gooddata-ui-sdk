@@ -6,6 +6,8 @@ import {
     type IGdcMessageEventListenerConfig,
 } from "../iframe/common.js";
 
+import { type EventSender, routeEvent } from "./originGate.js";
+
 /**
  * @internal
  */
@@ -88,21 +90,49 @@ export function removeListener(listener: GdcMessageEventListener, target = windo
 }
 
 /**
+ * Options of {@link postEvent}.
+ *
  * @internal
  */
-export function postEvent(product: string, name: string, data: object, contextId?: string): void {
+export interface IPostEventOptions {
+    /**
+     * Posts the event to `*` at once, around the origin gate. Only for an event that must reach a
+     * parent before its origin is known, such as `listeningForApiToken`.
+     */
+    exempt?: boolean;
+}
+
+const sendToHost: EventSender = (message, targetOrigin) => {
+    host.postMessage?.(message, targetOrigin);
+};
+
+/**
+ * Posts an event to the parent window. The event goes through the origin gate (see `originGate.ts`),
+ * which by default posts it to `*` at once.
+ *
+ * @internal
+ */
+export function postEvent(
+    product: string,
+    name: string,
+    data: object,
+    contextId?: string,
+    options?: IPostEventOptions,
+): void {
     if (!host.postMessage) {
         return;
     }
-    host.postMessage(
-        {
-            gdc: {
-                product,
-                event: { name, data, contextId },
-            },
+    const message = {
+        gdc: {
+            product,
+            event: { name, data, contextId },
         },
-        "*",
-    );
+    };
+    if (options?.exempt) {
+        sendToHost(message, "*");
+        return;
+    }
+    routeEvent(message, sendToHost);
 }
 
 export const messagingUtils = {

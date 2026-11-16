@@ -34,6 +34,34 @@ Omitting the prop keeps the bundled localized placeholder ("Ask here…" in Engl
 An empty string hides the placeholder. The standalone input's existing `placeholder` prop remains
 supported, with `inputPlaceholder` taking precedence when both are supplied.
 
+## Custom send button
+
+Pass a `SendButton` component through `GenAIAssistant`'s `slots` to replace the send button:
+
+```tsx
+import { GenAIAssistant, type IGenAIAssistantSlots } from "@gooddata/sdk-ui-gen-ai";
+
+const CustomSendButton: NonNullable<IGenAIAssistantSlots["SendButton"]> = ({ defaultProps }) => (
+    <button type="button" disabled={defaultProps.isDisabled} onClick={defaultProps.onClick}>
+        {defaultProps.isInProgress ? "Generating…" : "Send message"}
+    </button>
+);
+
+<GenAIAssistant backend={backend} workspace="your-workspace-id" slots={{ SendButton: CustomSendButton }} />;
+```
+
+The slot follows the standard `Default` / `defaultProps` contract. `defaultProps` contains
+`isDisabled`, `isInProgress` (response generation in the current conversation), and `onClick`,
+which sends the current input and does nothing while sending is unavailable. Use `isDisabled`
+for the button's disabled state; it also covers empty input and other busy states.
+Custom labels must be accessible and translated by the embedding application.
+To wrap the SDK button instead, render `<Default {...defaultProps} />` inside the slot.
+`DefaultSendButton` and `IGenAIAssistantSendButtonProps` are also exported for reuse.
+Without the slot, the localized SDK button and its tooltip are unchanged. Enter-to-send is unaffected.
+
+`GenAIStandaloneInput` accepts the same slot; its `isInProgress` is always `false` because it
+starts a conversation rather than generating a response itself.
+
 ## Links in assistant answers
 
 External HTTP(S) links in assistant answers are displayed as non-clickable text; enabling external

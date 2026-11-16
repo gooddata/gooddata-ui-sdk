@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/toolchain-config",
-    "version": "11.68.0-alpha.11",
+    "version": "11.69.0-alpha.2",
     "description": "Shared build and test toolchain configuration (rolldown, vite, vitest, playwright) for gdc-ui packages",
     "license": "MIT",
     "author": "GoodData",
@@ -56,7 +56,7 @@
         "eslint-plugin-import-esm": "3.0.1",
         "eslint-plugin-jsdoc": "65.4.2",
         "eslint-plugin-no-barrel-files": "1.2.2",
-        "eslint-plugin-regexp": "1.15.0",
+        "eslint-plugin-regexp": "3.3.3",
         "eslint-plugin-sonarjs": "4.2.2",
         "eslint-plugin-tsdoc": "0.5.4",
         "jiti": "2.6.1",

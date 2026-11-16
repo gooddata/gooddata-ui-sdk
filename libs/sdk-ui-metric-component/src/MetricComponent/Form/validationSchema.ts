@@ -67,7 +67,7 @@ export function getMetricValidationSchema(
         }
 
         idValidationObject = idValidationObject.matches(
-            /^(?!\.)[.A-Za-z0-9_-]{0,255}$/,
+            /^(?!\.)[.A-Z0-9_-]{0,255}$/i,
             intl.formatMessage({ id: "metricComponent.editMetricForm.idInvalid" }),
         );
     }

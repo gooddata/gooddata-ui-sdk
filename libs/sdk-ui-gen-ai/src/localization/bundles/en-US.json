@@ -156,12 +156,12 @@
         "crowdinContext": "Label for popover that shows current view context"
     },
     "gd.gen-ai.context.stop_using_context": {
-        "text": "Stop using this context",
-        "crowdinContext": "Tooltip for toggle button to stop using context"
+        "text": "Stop using {title} as context",
+        "crowdinContext": "Tooltip and accessibility label of the eye button that stops the AI chatbot from using the open dashboard or document as context. {title} is the dashboard or document title."
     },
     "gd.gen-ai.context.start_using_context": {
-        "text": "Use this context",
-        "crowdinContext": "Tooltip for toggle button to start using context"
+        "text": "Use {title} as context",
+        "crowdinContext": "Tooltip and accessibility label of the eye button that makes the AI chatbot use the open dashboard or document as context again. {title} is the dashboard or document title."
     },
     "gd.gen-ai.context.context": {
         "text": "Context helps focus AI responses without limiting other workspace data. Select to focus on it or turn it off.",

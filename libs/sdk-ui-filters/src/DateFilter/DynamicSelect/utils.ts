@@ -84,7 +84,7 @@ const isOffsetReasonablyBig = (offset: number) => Math.abs(offset) <= offsetMaxV
  * Only groups of exactly three digits are treated as grouping, so locale
  * decimals like "1,5" / "1.5" stay non-numeric.
  */
-const NUMERIC_INPUT_REGEX = /^[^-\d]*(-?\d{1,3}(?:[,.\s\u00a0\u202f'\u2019]\d{3})+|-?\d+)(?:\s|$)/;
+const NUMERIC_INPUT_REGEX = /^[^-\d]*(-?\d{1,3}(?:[,.\s'\u2019]\d{3})+|-?\d+)(?:\s|$)/;
 
 const parseGroupedInteger = (numericText: string): number =>
     Number.parseInt(numericText.replace(/[^\d-]/g, ""), 10);

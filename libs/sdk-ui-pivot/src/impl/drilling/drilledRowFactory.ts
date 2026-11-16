@@ -12,10 +12,10 @@ import { type TableDescriptor } from "../structure/tableDescriptor.js";
  * @deprecated this is linked to deprecated API
  */
 function extractIdsFromAttributeElementUri(uri: string): (string | null)[] {
-    // no reasonable way to avoid the super-linear backtracking right now
-    const [, attributeId, , attributeValueId = null] = uri.match(/obj\/([^/]*)(\/elements\?id=)?(.*)$/)!;
+    // The object segment ends at the next slash, so the rest of the URI is either empty or starts with one.
+    const [, attributeId, rest = ""] = uri.match(/obj\/([^/]*)(\/.*)?$/)!;
 
-    return [attributeId, attributeValueId];
+    return [attributeId, rest.replace(/^\/elements\?id=/, "")];
 }
 
 export type DrilledSliceDetail = {

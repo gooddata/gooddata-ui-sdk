@@ -7,7 +7,7 @@
 export function renderKey(key: string): string {
     const needsQuotes =
         /^\d/.test(key) ||
-        /[^a-zA-Z0-9_$]/.test(key) ||
+        /[^a-z0-9_$]/i.test(key) ||
         [
             "class",
             "function",

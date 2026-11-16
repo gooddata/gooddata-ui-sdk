@@ -19,7 +19,7 @@ describe("ReactGuid", () => {
         const obj: any = {};
         guidFor(obj);
 
-        expect(obj.__infID).toMatch(/[a-zA-Z]+/);
+        expect(obj.__infID).toMatch(/[a-z]+/i);
     });
 
     it("should get new guid for new object", () => {

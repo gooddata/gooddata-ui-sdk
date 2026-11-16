@@ -51,6 +51,9 @@ export const messages = defineMessages({
     drillToInsightMeasureValueFilterTooltip: {
         id: "configurationPanel.drillConfig.filterSelection.drillToInsightMeasureValueFilter.tooltip",
     },
+    drillParameterTooltip: {
+        id: "configurationPanel.drillConfig.filterSelection.drillParameter.tooltip",
+    },
     drillToDashboardRankingFilterTooltip: {
         id: "configurationPanel.drillConfig.filterSelection.drillToDashboardRankingFilter.tooltip",
     },

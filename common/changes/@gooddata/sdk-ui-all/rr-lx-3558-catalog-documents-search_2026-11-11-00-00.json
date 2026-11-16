@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-backend-spi: IPublisherDocumentsQueryV2 gets withMethod, so documents can be listed through the POST search endpoint. sdk-ui-catalog: the Analytics Catalog loads documents through POST search, so long filters no longer go into the URL.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

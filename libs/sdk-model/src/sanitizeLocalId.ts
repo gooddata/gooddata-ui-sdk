@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 /**
  * Removes all non MAQL compatible characters from an identifier by replacing them with an underscore.
@@ -6,5 +6,5 @@
  * @returns sanitized identifier
  */
 export function sanitizeLocalId(identifier: string): string {
-    return identifier.replace(/[^a-zA-Z0-9_.]/g, "_");
+    return identifier.replace(/[^a-z0-9_.]/gi, "_");
 }

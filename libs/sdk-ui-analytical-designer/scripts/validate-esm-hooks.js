@@ -16,7 +16,7 @@ const STUB_MARKER = "?validate-esm-stub";
 // append `.js` to the query instead of the file name.
 const URL_IMPORT_QUERY = /\?(?:worker&)?url$/;
 const URL_MARKER = "?validate-esm-url";
-const ASSET_EXTENSION = /\.(svg|png|gif|jpe?g|webp|ico|woff2?|ttf|eot)$/;
+const ASSET_EXTENSION = /\.(?:svg|png|gif|jpe?g|webp|ico|woff2?|ttf|eot)$/;
 
 function isStubbed(specifier, url) {
     return (

@@ -85,7 +85,7 @@ export function getPlaywrightInternals(testInstance: PlaywrightTestInstance): IP
 
 // Matches the location at the end of a stack line: "at fn (/path/file.ts:12:3)", "at /path/file.ts:12:3",
 // "at fn (file:///path/file.ts:12:3)".
-const STACK_FRAME_LOCATION = /\(?((?:file:\/\/)?[^\s()]+):(\d+):(\d+)\)?$/;
+const STACK_FRAME_LOCATION = /\(?([^\s()]+):(\d+):(\d+)\)?$/;
 
 /**
  * Location of whoever called `wrapper` (the spec file, or a consumer helper): the same frame

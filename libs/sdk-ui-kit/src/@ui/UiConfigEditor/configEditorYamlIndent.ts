@@ -32,7 +32,7 @@ function indentAfterOpenBlock(context: IndentContext, pos: number): number | und
 }
 
 function opensBlock(text: string): boolean {
-    return /^\s*-$/.test(text) || /^\s*(?:-\s+)*("[^"]*"|'[^']*'|[^\s:]+):$/.test(text);
+    return /^\s*-$/.test(text) || /^\s*(?:-\s+)*(?:"[^"]*"|'[^']*'|[^\s:]+):$/.test(text);
 }
 
 function blockColumn(text: string): number {

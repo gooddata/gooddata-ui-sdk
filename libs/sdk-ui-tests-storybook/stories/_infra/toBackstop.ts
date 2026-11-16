@@ -29,7 +29,7 @@ function isMultipleScreenshotConfig(obj: unknown): obj is IMultipleScreenshotCon
 type IParameters = { kind: string } & (ISingleScreenshotConfig | IMultipleScreenshotConfig);
 
 function sanitize(str: string) {
-    return str.replace(/[^a-zA-Z0-9\s@_-]/g, "").replace(/@/g, "-");
+    return str.replace(/[^a-z0-9\s@_-]/gi, "").replace(/@/g, "-");
 }
 
 function toKebabCase(str: string) {
@@ -42,9 +42,9 @@ function toKebabCase(str: string) {
             // Insert hyphens: ABc → A-Bc
             .replace(/([A-Z])([A-Z][a-z])/g, "$1-$2")
             // Insert hyphens: a1 → a-1
-            .replace(/([a-zA-Z])([0-9])/g, "$1-$2")
+            .replace(/([a-z])([0-9])/gi, "$1-$2")
             // Insert hyphens: 1a → 1-a
-            .replace(/([0-9])([a-zA-Z])/g, "$1-$2")
+            .replace(/([0-9])([a-z])/gi, "$1-$2")
             // Replace spaces and underscores with dash
             .replace(/[\s_]+/g, "-")
             .toLowerCase()

@@ -13,6 +13,7 @@ import {
     type IInlineMeasureDefinition,
     type IInsightDefinition,
     type IInsightLayerDefinition,
+    type IInsightParameterValue,
     type IMeasureBody,
     type IMeasureDefinition,
     type IMeasureSortItem,
@@ -252,6 +253,16 @@ function declarativeReportToYaml(
     );
     if (sortsArray.length > 0) {
         report.add(entryWithSpace("sort_by", sortsArray));
+    }
+
+    const parametersArray = declarativeQueryParametersToYaml(
+        def.parameters ?? [],
+        updateErrorContext(errorContext, {
+            path: ["parameters"],
+        }),
+    );
+    if (parametersArray.items.length > 0) {
+        report.add(entryWithSpace("parameters", parametersArray));
     }
 
     postProcessors.filters?.forEach(({ filters, item }, i) => {
@@ -927,6 +938,24 @@ export function declarativeMeasureSortToYaml(sort: IMeasureSortItem): YAMLMap {
     map.add(new Pair("metrics", items.filter(Boolean)));
 
     return map;
+}
+
+function declarativeQueryParametersToYaml(
+    parameters: IInsightParameterValue[],
+    errorContext?: IErrorContext,
+): YAMLSeq {
+    const parametersArray = new YAMLSeq();
+    for (const [i, parameter] of parameters.entries()) {
+        parametersArray.add({
+            id: getIdentifier(
+                parameter.ref,
+                true,
+                updateErrorContext(errorContext, { path: [i.toString()] }),
+            ),
+            value: parameter.value,
+        });
+    }
+    return parametersArray;
 }
 
 //visualisations

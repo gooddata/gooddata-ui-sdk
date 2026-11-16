@@ -16,6 +16,10 @@
         "sort_by": {
             "$ref": "#/$defs/querySorts",
             "description": "A list of sorting in this query."
+        },
+        "parameters": {
+            "$ref": "#/$defs/queryParameters",
+            "description": "A list of parameter values in this query."
         }
     },
     "required": ["fields"],
@@ -706,6 +710,33 @@
                 }
             },
             "required": ["type", "metrics", "direction"]
+        },
+        "queryParameters": {
+            "title": "Query Parameters",
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/queryParameter"
+            }
+        },
+        "queryParameter": {
+            "title": "Query Parameter",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "An identifier of the parameter.",
+                    "$semantic": {
+                        "type": "reference",
+                        "source": "parameter.id"
+                    }
+                },
+                "value": {
+                    "type": ["string", "number"],
+                    "description": "The value this query uses instead of the parameter's default value."
+                }
+            },
+            "required": ["id", "value"]
         }
     }
 }

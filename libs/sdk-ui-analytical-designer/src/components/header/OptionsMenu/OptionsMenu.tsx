@@ -41,7 +41,7 @@ const BUILT_IN_ACTIONS: Record<string, { className: string; bubbleId: string }> 
 };
 
 function getActionClasses(action: IAnalyticalDesignerOptionsAction) {
-    const simplifiedId = action.id.replace(/[^a-zA-Z0-9-]/g, "-");
+    const simplifiedId = action.id.replace(/[^a-z0-9-]/gi, "-");
     return (
         BUILT_IN_ACTIONS[action.id] ?? {
             className: `s-options-menu-item-${simplifiedId}`,

@@ -234,4 +234,4 @@ export const entityRef = satisfying(
     (value) => isIdentifierRef(value) && isPublisherEntityIdV2(value.identifier),
     "an identifier reference whose id has 1 to 255 letters, digits, dots, underscores or hyphens and does not start with a dot",
 );
-export const id = matching(/^[A-Za-z0-9_.-]{1,64}$/, "an id matching [A-Za-z0-9_.-]{1,64}");
+export const id = matching(/^[A-Z0-9_.-]{1,64}$/i, "an id matching [A-Za-z0-9_.-]{1,64}");

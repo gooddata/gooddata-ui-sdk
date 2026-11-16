@@ -19,6 +19,7 @@ export enum CoreErrorCode {
     DuplicateFieldName = "core.duplicateFieldName",
     DuplicateFilterName = "core.duplicateFilterName",
     DuplicateLayerIdentifier = "core.duplicateLayerIdentifier",
+    DuplicateParameterIdentifier = "core.duplicateParameterIdentifier",
     DuplicateTabIdentifier = "core.duplicateTabIdentifier",
     TabsAndRootContentMutuallyExclusive = "core.tabsAndRootContentMutuallyExclusive",
     InvalidIanaTimezoneId = "core.invalidIanaTimezoneId",
@@ -49,6 +50,7 @@ export const CoreErrorMessages: Record<CoreErrorCode, string> = {
     [CoreErrorCode.DuplicateFieldName]: `Duplicate field name "{0}". Each field a query declares must have a unique name.`,
     [CoreErrorCode.DuplicateFilterName]: `Duplicate filter name "{0}". Each filter in a query must have a unique name, including the filters a date filter carries.`,
     [CoreErrorCode.DuplicateLayerIdentifier]: `Duplicate layer id "{0}". Each layer of a visualisation must have a unique id.`,
+    [CoreErrorCode.DuplicateParameterIdentifier]: `Duplicate parameter id "{0}". A query must list each parameter only once.`,
     [CoreErrorCode.DuplicateTabIdentifier]: `Duplicate tab identifier "{0}". Each tab must have a unique identifier within the dashboard.`,
     [CoreErrorCode.TabsAndRootContentMutuallyExclusive]: `Dashboard "{0}" defines both "tabs" and root-level "sections", "filters" or "parameters". These are mutually exclusive — keep all content inside tabs or at the root, not both.`,
     [CoreErrorCode.InvalidIanaTimezoneId]: `"{0}" is not a valid IANA timezone ID. Use a real timezone such as Europe/Prague or $browserDetected.`,
@@ -79,6 +81,7 @@ export const CoreErrorTypes: Record<CoreErrorCode, string> = {
     [CoreErrorCode.DuplicateFieldName]: "DuplicateFieldName",
     [CoreErrorCode.DuplicateFilterName]: "DuplicateFilterName",
     [CoreErrorCode.DuplicateLayerIdentifier]: "DuplicateLayerIdentifier",
+    [CoreErrorCode.DuplicateParameterIdentifier]: "DuplicateParameterIdentifier",
     [CoreErrorCode.DuplicateTabIdentifier]: "DuplicateTabIdentifier",
     [CoreErrorCode.TabsAndRootContentMutuallyExclusive]: "TabsAndRootContentMutuallyExclusive",
     [CoreErrorCode.InvalidIanaTimezoneId]: "InvalidIanaTimezoneId",
@@ -140,7 +143,7 @@ export function newError(code: CoreErrorCode, params: Array<string> = [], contex
 }
 
 export function buildMessage(message: string, params: Array<string>, context?: IErrorContext) {
-    const m = message.replace(/\{(\d+)}/g, (match, index: string) => params[Number(index)] ?? match);
+    const m = message.replace(/\{(\d+)\}/g, (match, index: string) => params[Number(index)] ?? match);
 
     if (context?.path) {
         return `${m} in: ${context.path.join("/")}`;

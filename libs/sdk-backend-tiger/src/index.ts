@@ -172,6 +172,10 @@ export {
     convertVisualizationContentToInsight,
 } from "./convertors/fromBackend/visualizationObjects/VisualizationObjectConverter.js";
 export { convertInsightToVisualizationContent } from "./convertors/toBackend/InsightConverter.js";
+export {
+    type IValidateEmbeddingOriginWithTokenParams,
+    validateEmbeddingOriginWithToken,
+} from "./backend/organization/validateEmbeddingOriginWithToken.js";
 
 /**
  * @deprecated This will be removed in the next major release, please use the named export "tigerFactory" instead

@@ -443,8 +443,9 @@ function useVirtualList<T>({
 
     // Add scroll into view effect
     useEffect(() => {
-        // Reset the ref when scrollToItem becomes undefined so future scrolls work
-        if (!scrollToItem) {
+        // Reset the ref when scrollToItem becomes undefined so future scrolls work.
+        // Items may be falsy (e.g. 0), so only undefined and null mean that no target is set.
+        if (scrollToItem === undefined || scrollToItem === null) {
             prevScrollToItemRef.current = undefined;
             return;
         }

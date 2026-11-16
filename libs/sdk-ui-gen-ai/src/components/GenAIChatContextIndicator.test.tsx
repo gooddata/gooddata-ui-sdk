@@ -217,7 +217,7 @@ describe("GenAIChatContextIndicator", () => {
             </IntlProvider>,
         );
 
-        fireEvent.click(screen.getByRole("button", { name: "Stop using this context" }));
+        fireEvent.click(screen.getByRole("button", { name: "Stop using Q1 Report as context" }));
 
         expect(dispatch).toHaveBeenCalledWith(
             selectedContextReferencesAction({ activated: false, publisherDocument }),
@@ -241,11 +241,41 @@ describe("GenAIChatContextIndicator", () => {
             </IntlProvider>,
         );
 
-        fireEvent.click(screen.getByRole("button", { name: "Stop using this context" }));
+        fireEvent.click(screen.getByRole("button", { name: "Stop using Revenue Dashboard as context" }));
 
         expect(dispatch).toHaveBeenCalledWith(
             selectedContextReferencesAction({ activated: false, dashboard }),
         );
+    });
+
+    it("toggles the dashboard on Enter without opening the chooser or moving focus to the input", () => {
+        const dashboard: IGenAIContextObject = {
+            id: "dashboard-1",
+            ref: idRef("dashboard-1", "analyticalDashboard"),
+            title: "Revenue Dashboard",
+            nesting: 0,
+            type: "dashboard",
+            where: "view.dashboard",
+        };
+        state = makeState(undefined, { activated: true, dashboard });
+        const onUpdate = vi.fn();
+
+        render(
+            <IntlProvider locale="en" messages={messages}>
+                <GenAIChatContextIndicator onUpdate={onUpdate} />
+            </IntlProvider>,
+        );
+
+        const toggle = screen.getByRole("button", { name: "Stop using Revenue Dashboard as context" });
+        const notPrevented = fireEvent.keyDown(toggle, { key: "Enter", code: "Enter" });
+        fireEvent.click(toggle);
+
+        expect(notPrevented).toBe(true);
+        expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+        expect(dispatch).toHaveBeenCalledWith(
+            selectedContextReferencesAction({ activated: false, dashboard }),
+        );
+        expect(onUpdate).not.toHaveBeenCalled();
     });
 
     it("removes a document other than the open one through its chip", () => {

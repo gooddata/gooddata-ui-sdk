@@ -69,7 +69,9 @@ async function isReachableSameOriginScript(url: string): Promise<boolean> {
 
         return (
             response.ok &&
-            /^(text|application)\/(javascript|ecmascript)\b/.test(response.headers.get("content-type") ?? "")
+            /^(?:text|application)\/(?:javascript|ecmascript)\b/.test(
+                response.headers.get("content-type") ?? "",
+            )
         );
     } catch {
         return false;

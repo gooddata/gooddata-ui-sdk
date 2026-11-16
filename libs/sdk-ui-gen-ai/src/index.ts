@@ -185,10 +185,12 @@ export {
 } from "./components/customized/LandingContainer.js";
 export { DefaultAgentItem } from "./components/customized/AgentItem.js";
 export { DefaultDisclaimer } from "./components/customized/Disclaimer.js";
+export { DefaultSendButton } from "./components/customized/SendButton.js";
 export {
     type IGenAIAssistantSlots,
     type IGenAIAssistantLandingScreenProps,
     type IGenAIAssistantDisclaimerProps,
+    type IGenAIAssistantSendButtonProps,
     type IGenAIAssistantAgentItemProps,
     type IGenAIAssistantConversationItemProps,
     type IGenAIAssistantConversationDrawerHeaderProps,

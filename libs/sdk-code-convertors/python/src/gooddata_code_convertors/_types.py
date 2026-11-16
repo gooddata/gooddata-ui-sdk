@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 31c82b64cd50bc5c4dda79fd3411c77bdbc2f4f60e84879cf91073757073d77f
+# schema-hash: 998f9b6cb47e0f5d3af34ef888344c22d09b497e74dce2081c991dcf85a2efba
 
 from __future__ import annotations
 
@@ -206,6 +206,8 @@ __all__ = [
     "QueryMetricValueFilter2",
     "QueryMetricValueFilter3",
     "QueryMetricValueFilter4",
+    "QueryParameter",
+    "QueryParameters",
     "QueryRankingFilter",
     "QueryRankingFilter1",
     "QueryRankingFilter2",
@@ -693,6 +695,11 @@ class NumberParameterDefinition(TypedDict):
 class ParameterAllowedValue(TypedDict):
     value: str
     title: NotRequired[str]
+
+
+class QueryParameter(TypedDict):
+    id: str
+    value: str | float
 
 
 BucketEmptyItem: TypeAlias = None
@@ -1371,6 +1378,9 @@ class Plugin(TypedDict):
     description: NotRequired[Description]
     tags: NotRequired[Tags]
     url: str
+
+
+QueryParameters: TypeAlias = list[QueryParameter]
 
 
 class QueryField1(TypedDict):
@@ -2261,6 +2271,7 @@ class Query(TypedDict):
     fields: QueryFields
     filter_by: NotRequired[QueryFilters]
     sort_by: NotRequired[QuerySorts]
+    parameters: NotRequired[QueryParameters]
 
 
 class Dataset2(TypedDict):

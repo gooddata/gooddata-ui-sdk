@@ -111,4 +111,51 @@ describe("ToastsCenter", () => {
             expect(srOnly?.textContent).toContain("Beta");
         });
     });
+
+    it("never puts the previous message in the region of the next one's type", async () => {
+        let api!: ReturnType<typeof useToastsCenterValue>;
+        function Capture() {
+            api = ToastsCenterContext.useContextStore((c) => c);
+            return null;
+        }
+
+        const { container } = render(
+            <IntlProvider locale="en-US" messages={intlMessages}>
+                <ProviderHarness>
+                    <ToastsCenter />
+                    <Capture />
+                </ProviderHarness>
+            </IntlProvider>,
+        );
+        const alertText = () => container.querySelector(".sr-only[role='alert']")?.textContent ?? "";
+        const statusText = () => container.querySelector(".sr-only[role='status']")?.textContent ?? "";
+
+        // every state the regions go through, not only the last one
+        const alerts: string[] = [];
+        const statuses: string[] = [];
+        const observer = new MutationObserver(() => {
+            alerts.push(alertText());
+            statuses.push(statusText());
+        });
+        observer.observe(container, { childList: true, subtree: true, characterData: true });
+
+        // the first message is not read (see useMessageForScreenReader)
+        api.addExistingMessage({ id: "a", text: "Alpha", type: "success", createdAt: 1, duration: 0 });
+        await new Promise((resolve) => setTimeout(resolve, 0));
+
+        api.addExistingMessage({ id: "b", text: "Saved", type: "success", createdAt: 2, duration: 0 });
+        await waitFor(() => expect(statusText()).toContain("Saved"));
+
+        // success, then an error
+        api.addExistingMessage({ id: "c", text: "Failed", type: "error", createdAt: 3, duration: 0 });
+        await waitFor(() => expect(alertText()).toContain("Failed"));
+        expect(alerts.some((text) => text.includes("Saved"))).toBe(false);
+
+        // an error, then success
+        api.addExistingMessage({ id: "d", text: "Saved again", type: "success", createdAt: 4, duration: 0 });
+        await waitFor(() => expect(statusText()).toContain("Saved again"));
+        expect(statuses.some((text) => text.includes("Failed"))).toBe(false);
+
+        observer.disconnect();
+    });
 });

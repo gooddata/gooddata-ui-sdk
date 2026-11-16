@@ -45,7 +45,7 @@ function sanitizeTsDoc(source) {
             .replace(/(?<!\\)\}/g, "\\}")
             .replace(/^\s*\*\s*@(?:minItems|maxItems).*$/gm, "");
         // Remove empty comment lines left after stripping tags.
-        return sanitized.replace(/(\n\s*\*\s*\n)+/g, "\n");
+        return sanitized.replace(/(?:\n[^\S\n]*(?:\*[^\S\n]*)?)+(?=\n)/g, "");
     });
 }
 

@@ -16,18 +16,18 @@ export function removeMarkdown(text: string): string {
         .replace(/(?<!\\)(\*|_)(.*?)(?<!\\)\1/g, "$2") // italic
         .replace(/\[([^\]]+)\]\(([^)]+)\)/g, "$1") // links
         .replace(/`([^`]+)`/g, "$1") // code
-        .replace(/#{1,6}\s+(.*)/gm, "$1") // headers
-        .replace(/>\s+(.*)/gm, "$1") // blockquotes
+        .replace(/#{1,6}\s+(.*)/g, "$1") // headers
+        .replace(/>\s+(.*)/g, "$1") // blockquotes
         .replace(/^\s*[-*+]\s+(.*)/gm, "$1") // unordered lists
         .replace(/^\s*\d+\.\s+(.*)/gm, "$1") // ordered lists
         .replace(MARKDOWN_UNESCAPE_PATTERN, "$1") // unescape markdown escaped characters
-        .replace(/(\r\n|\n|\r)/gm, " ") // replace newlines with space
+        .replace(/(\r\n|\n|\r)/g, " ") // replace newlines with space
         .replace(/ {2,}/g, " ") // remove double spaces
         .trim();
 }
 
 export function extractHeading(text: string) {
-    const headingMatch = text.match(/^(#+)\s+(.*)$/m);
+    const headingMatch = text.match(/^(#+)\s+((?:\S.*)?)$/m);
     if (headingMatch) {
         return removeMarkdown(headingMatch[2]);
     }

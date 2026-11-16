@@ -487,6 +487,13 @@ export interface ITigerSpecificFunctionsProxyResult {
 }
 
 // @internal
+export interface IValidateEmbeddingOriginWithTokenParams {
+    hostname?: string;
+    origin: string;
+    token: string;
+}
+
+// @internal
 export interface IVisualizationObjectMetadata {
     // (undocumented)
     description: string;
@@ -1223,6 +1230,9 @@ export class TigerTokenAuthProvider extends TigerAuthProviderBase {
 export function toAfmExecution(def: IExecutionDefinition): AfmExecution;
 
 export { UploadFileResponse }
+
+// @internal
+export function validateEmbeddingOriginWithToken(input: IValidateEmbeddingOriginWithTokenParams): Promise<boolean>;
 
 // @internal @deprecated (undocumented)
 export type WorkspaceDataFilter = JsonApiWorkspaceDataFilterInDocument;

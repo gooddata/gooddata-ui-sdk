@@ -24,6 +24,7 @@ import { DefaultMessageErrorContent } from "./customized/MessageErrorContent.js"
 import { DefaultMessageMultipartContent } from "./customized/MessageMultipartContent.js";
 import { DefaultMessageReasoningContent } from "./customized/MessageReasoningContent.js";
 import { DefaultMessageTextContent } from "./customized/MessageTextContent.js";
+import { DefaultSendButton } from "./customized/SendButton.js";
 import {
     type IGenAIAssistantAgentChooserProps,
     type IGenAIAssistantAgentItemProps,
@@ -44,6 +45,7 @@ import {
     type IGenAIAssistantMessageMultipartContentProps,
     type IGenAIAssistantMessageReasoningContentProps,
     type IGenAIAssistantMessageTextContentProps,
+    type IGenAIAssistantSendButtonProps,
     type IGenAIAssistantSlots,
     type IGenAIAssistantUserMessageProps,
     type IGenAIAssistantVisualizationMenuProps,
@@ -78,6 +80,16 @@ function DisclaimerSlotRenderer() {
         return <DisclaimerSlot Default={DefaultDisclaimer} defaultProps={defaultProps} />;
     }
     return <DefaultDisclaimer />;
+}
+
+function SendButtonSlotRenderer(props: IGenAIAssistantSendButtonProps) {
+    const { slots } = useContext(customizationContext);
+    const SendButtonSlot = slots?.SendButton;
+
+    if (SendButtonSlot) {
+        return <SendButtonSlot Default={DefaultSendButton} defaultProps={props} />;
+    }
+    return <DefaultSendButton {...props} />;
 }
 
 function AgentItemSlotRenderer(props: IGenAIAssistantAgentItemProps) {
@@ -312,6 +324,7 @@ export function CustomizationProvider({ children, slots }: PropsWithChildren<Cus
         () => ({
             LandingScreenComponent: LandingScreenSlotRenderer,
             DisclaimerComponent: DisclaimerSlotRenderer,
+            SendButtonComponent: SendButtonSlotRenderer,
             AgentItemComponent: AgentItemSlotRenderer,
             ConversationItemComponent: ConversationItemSlotRenderer,
             ConversationDrawerHeaderComponent: ConversationDrawerHeaderSlotRenderer,

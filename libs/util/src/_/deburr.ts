@@ -34,10 +34,10 @@
 import { _toString } from "./toString.js";
 
 /** Used to match Latin Unicode letters (excluding mathematical operators). */
-const RE_LATIN = /[\xc0-\xd6\xd8-\xf6\xf8-\xffĀ-ſ]/g;
+const RE_LATIN = /[\xd8-\xf6\u0100-\u017f]/gi;
 
 /** Used to match combining diacritical marks and combining diacritical marks for symbols. */
-const RE_COMBO_MARK = /[̀-ͯ︠-︯⃐-⃿]/g;
+const RE_COMBO_MARK = /[\u0300-\u036f\ufe20-\ufe2f\u20d0-\u20ff]/g;
 
 /** Used to map Latin Unicode letters to basic Latin letters. */
 const DEBURRED_LETTERS: Record<string, string> = {

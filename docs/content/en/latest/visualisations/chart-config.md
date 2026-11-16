@@ -426,7 +426,7 @@ import { InsightView } from "@gooddata/sdk-ui-ext";
     * For area charts, `config.stackMeasures` is set to `true` by default.
     * For bar charts, column charts, and charts with the secondary axis, `config.stackMeasures` is ignored when the chart has only one measure.
 * To display the percentage contribution of each measure, set `config.stackMeasuresToPercent` to `true`.
-    * If both `config.stackMeasuresToPercent` and `config.stackMeasures` are present, `config.stackMeasuresToPercent` overwrites `config.stackMeasures`.
+    * If `config.stackMeasuresToPercent` is `true`, it takes precedence over `config.stackMeasures`.
     * For charts with the secondary axis, `config.stackMeasuresToPercent` is applied only to the left axis.
 
 ```tsx

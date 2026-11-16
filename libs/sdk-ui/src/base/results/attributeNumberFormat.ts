@@ -27,7 +27,7 @@ import { type ValueFormatter } from "./dataAccessConfig.js";
 /**
  * A whole string in plain decimal or exponent notation, the way the backend sends numeric values.
  */
-const NUMBER_PATTERN = /^[-+]?(\d+\.?\d*|\.\d+)([eE][-+]?\d+)?$/;
+const NUMBER_PATTERN = /^[-+]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[-+]?\d+)?$/i;
 
 /**
  * Formats the raw element value if the whole value is a number; empty values and values that are not

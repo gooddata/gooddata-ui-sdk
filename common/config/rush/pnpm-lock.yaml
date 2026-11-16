@@ -114,6 +114,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -262,6 +265,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -389,6 +395,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -516,6 +525,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -643,6 +655,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -770,6 +785,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -897,6 +915,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -1024,6 +1045,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -1151,6 +1175,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -1287,6 +1314,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -1414,6 +1444,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -1541,6 +1574,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -1668,6 +1704,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -1795,6 +1834,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -1922,6 +1964,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -2028,6 +2073,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -2143,6 +2191,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -2240,6 +2291,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -2328,6 +2382,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -2473,6 +2530,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -2552,6 +2612,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -2618,6 +2681,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -2710,8 +2776,8 @@ importers:
         specifier: 2.10.1
         version: 2.10.1(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-regexp:
-        specifier: 1.15.0
-        version: 1.15.0(eslint@10.14.0(jiti@2.6.1))
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -2797,6 +2863,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -2913,8 +2982,8 @@ importers:
         specifier: 3.3.0
         version: 3.3.0
       eslint-plugin-regexp:
-        specifier: 1.15.0
-        version: 1.15.0(eslint@10.14.0(jiti@2.6.1))
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -3024,6 +3093,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -3103,6 +3175,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -3254,6 +3329,9 @@ importers:
       eslint-plugin-no-only-tests:
         specifier: 3.3.0
         version: 3.3.0
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -3372,6 +3450,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -3589,6 +3670,9 @@ importers:
       eslint-plugin-no-only-tests:
         specifier: 3.3.0
         version: 3.3.0
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -3729,8 +3813,8 @@ importers:
         specifier: 3.3.0
         version: 3.3.0
       eslint-plugin-regexp:
-        specifier: 1.15.0
-        version: 1.15.0(eslint@10.14.0(jiti@2.6.1))
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -3906,6 +3990,9 @@ importers:
       eslint-plugin-no-only-tests:
         specifier: 3.3.0
         version: 3.3.0
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -4114,6 +4201,9 @@ importers:
       eslint-plugin-no-only-tests:
         specifier: 3.3.0
         version: 3.3.0
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -4385,6 +4475,9 @@ importers:
       eslint-plugin-no-only-tests:
         specifier: 3.3.0
         version: 3.3.0
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -4650,6 +4743,9 @@ importers:
       eslint-plugin-no-only-tests:
         specifier: 3.3.0
         version: 3.3.0
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -4843,6 +4939,9 @@ importers:
       eslint-plugin-no-only-tests:
         specifier: 3.3.0
         version: 3.3.0
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -5087,6 +5186,9 @@ importers:
       eslint-plugin-no-only-tests:
         specifier: 3.3.0
         version: 3.3.0
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -5268,6 +5370,9 @@ importers:
       eslint-plugin-no-only-tests:
         specifier: 3.3.0
         version: 3.3.0
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -5554,6 +5659,9 @@ importers:
       eslint-plugin-no-only-tests:
         specifier: 3.3.0
         version: 3.3.0
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -5699,6 +5807,9 @@ importers:
       eslint-plugin-no-only-tests:
         specifier: 3.3.0
         version: 3.3.0
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -5893,8 +6004,8 @@ importers:
         specifier: 3.3.0
         version: 3.3.0
       eslint-plugin-regexp:
-        specifier: 1.15.0
-        version: 1.15.0(eslint@10.14.0(jiti@2.6.1))
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -6064,6 +6175,9 @@ importers:
       eslint-plugin-no-only-tests:
         specifier: 3.3.0
         version: 3.3.0
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -6191,6 +6305,9 @@ importers:
       eslint-plugin-no-only-tests:
         specifier: 3.3.0
         version: 3.3.0
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -6339,6 +6456,9 @@ importers:
       eslint-plugin-no-only-tests:
         specifier: 3.3.0
         version: 3.3.0
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -6493,6 +6613,9 @@ importers:
       eslint-plugin-no-only-tests:
         specifier: 3.3.0
         version: 3.3.0
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -6628,6 +6751,9 @@ importers:
       eslint-plugin-no-only-tests:
         specifier: 3.3.0
         version: 3.3.0
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -6805,6 +6931,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -6922,6 +7051,9 @@ importers:
       eslint-plugin-no-only-tests:
         specifier: 3.3.0
         version: 3.3.0
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -7108,6 +7240,9 @@ importers:
       eslint-plugin-no-only-tests:
         specifier: 3.3.0
         version: 3.3.0
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -7295,6 +7430,9 @@ importers:
       eslint-plugin-no-only-tests:
         specifier: 3.3.0
         version: 3.3.0
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -7449,6 +7587,9 @@ importers:
       eslint-plugin-no-only-tests:
         specifier: 3.3.0
         version: 3.3.0
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -7612,6 +7753,9 @@ importers:
       eslint-plugin-no-only-tests:
         specifier: 3.3.0
         version: 3.3.0
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -7712,6 +7856,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -7803,6 +7950,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -7882,6 +8032,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -7955,6 +8108,9 @@ importers:
       eslint-plugin-no-only-tests:
         specifier: 3.3.0
         version: 3.3.0
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -8055,6 +8211,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -8149,6 +8308,9 @@ importers:
       eslint-plugin-no-only-tests:
         specifier: 3.3.0
         version: 3.3.0
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -8270,6 +8432,9 @@ importers:
       eslint-plugin-no-only-tests:
         specifier: 3.3.0
         version: 3.3.0
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -8397,6 +8562,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -8509,6 +8677,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -8569,6 +8740,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -8723,6 +8897,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -8834,6 +9011,9 @@ importers:
       eslint-plugin-react-hooks:
         specifier: 7.1.1
         version: 7.1.1(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -8943,6 +9123,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -9067,6 +9250,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -9136,6 +9322,9 @@ importers:
       eslint-plugin-playwright:
         specifier: 2.10.1
         version: 2.10.1(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -9281,6 +9470,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -9408,6 +9600,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -9484,6 +9679,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -9560,6 +9758,9 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
+      eslint-plugin-regexp:
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -9651,8 +9852,8 @@ importers:
         specifier: 1.2.2
         version: 1.2.2(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-regexp:
-        specifier: 1.15.0
-        version: 1.15.0(eslint@10.14.0(jiti@2.6.1))
+        specifier: 3.3.3
+        version: 3.3.3(eslint@10.14.0(jiti@2.6.1))
       eslint-plugin-sonarjs:
         specifier: 4.2.2
         version: 4.2.2(eslint@10.14.0(jiti@2.6.1))
@@ -14263,11 +14464,11 @@ packages:
     peerDependencies:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0 || ^10.0.0
 
-  eslint-plugin-regexp@1.15.0:
-    resolution: {integrity: sha512-YEtQPfdudafU7RBIFci81R/Q1yErm0mVh3BkGnXD2Dk8DLwTFdc2ITYH1wCnHKim2gnHfPFgrkh+b2ozyyU7ag==}
-    engines: {node: ^12 || >=14}
+  eslint-plugin-regexp@3.3.3:
+    resolution: {integrity: sha512-bIpFf1uL9AB6MY5cDUXL2lrfuBA+/WLc1AwC+56OsHWo93zoKQ4EcAQ+wsOxq5ozLC9xfTYAb4Si+0w0Ll1hYA==}
+    engines: {node: ^20.19.0 || ^22.13.0 || >=24}
     peerDependencies:
-      eslint: '>=6.0.0'
+      eslint: '>=9.38.0'
 
   eslint-plugin-sonarjs@4.2.2:
     resolution: {integrity: sha512-usNF9GfP89ibwhfxpZaCMW40sC7UEOusDgDCk7lyqAhh4AYdbBaAgLVL5Y/QS0jSed8eJ2ACGH6zzE8ezd/yZQ==}
@@ -14704,9 +14905,6 @@ packages:
 
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
-
-  grapheme-splitter@1.0.4:
-    resolution: {integrity: sha512-bzh50DW9kTPM00T8y4o8vQg89Di9oLJVLW/KaOGIXJWP/iqCN6WKYkbNOF04vFLJhwcpYUh9ydh/+5vpOqV4YQ==}
 
   grid-index@1.1.0:
     resolution: {integrity: sha512-HZRwumpOGUrHyxO5bqKZL0B0GlUpwtCAzZ42sgxUPniu33R1LSFH5yrIcBCHjkctCAh3mtWKcKd9J4vDDdeVHA==}
@@ -15286,11 +15484,6 @@ packages:
   jsdoc-type-pratt-parser@9.4.0:
     resolution: {integrity: sha512-orXhi2Y06rag47r4SW4JPII6WlUJbp0xe9cIcqLaSbb/8tREcEZSq99Lu3AFfra6PAlMqTYIxV+ZHxl1dFUrWw==}
     engines: {node: ^22.22.2 || >=24.15.0}
-
-  jsdoctypeparser@9.0.0:
-    resolution: {integrity: sha512-jrTA2jJIL6/DAEILBEh2/w9QxCuwmvNXIry39Ay/HVfhE3o2yVV0U44blYkqdHA/OKloJEqvJy0xU+GSdE2SIw==}
-    engines: {node: '>=10'}
-    hasBin: true
 
   jsesc@3.1.0:
     resolution: {integrity: sha512-/sM3dO2FOzXjKQhJuo0Q173wf2KOo8t4I8vHy6lF9poUp7bKT0/NHE8fPX23PwfhnykfqnC2xRxOnVw5XuGIaA==}
@@ -16793,10 +16986,6 @@ packages:
   redux@5.0.1:
     resolution: {integrity: sha512-M9/ELqF6fy8FwmkpnF0S3YKOqMyoWJ4+CS5Efg2ct3oY9daQvd/Pc71FpGZsVsbl3Cpb+IIcjBDUnnyBdQbq4w==}
 
-  refa@0.11.0:
-    resolution: {integrity: sha512-486O8/pQXwj9jV0mVvUnTsxq0uknpBnNJ0eCUhkZqJRQ8KutrT1PhzmumdCeM1hSBF2eMlFPmwECRER4IbKXlQ==}
-    engines: {node: ^12.0.0 || ^14.0.0 || >=16.0.0}
-
   refa@0.12.1:
     resolution: {integrity: sha512-J8rn6v4DBb2nnFqkqwy6/NnTYMcgLA+sLr0iIO41qpv0n+ngb7ksag2tMRl0inb1bbO/esUwzW1vbJi7K0sI0g==}
     engines: {node: ^12.0.0 || ^14.0.0 || >=16.0.0}
@@ -16807,10 +16996,6 @@ packages:
   reflect.getprototypeof@1.0.10:
     resolution: {integrity: sha512-00o4I+DVrefhv+nX0ulyi3biSHCPDe+yLv5o/p6d/UVlirijB8E16FtfwSAi4g3tcqrQ4lRAqQSoFEZJehYEcw==}
     engines: {node: '>= 0.4'}
-
-  regexp-ast-analysis@0.6.0:
-    resolution: {integrity: sha512-OLxjyjPkVH+rQlBLb1I/P/VTmamSjGkvN5PTV5BXP432k3uVz727J7H29GA5IFiY0m7e1xBN7049Wn59FY3DEQ==}
-    engines: {node: ^12.0.0 || ^14.0.0 || >=16.0.0}
 
   regexp-ast-analysis@0.7.1:
     resolution: {integrity: sha512-sZuz1dYW/ZsfG17WSAG7eS85r5a0dDsvg+7BiiYR5o6lKCAtUrEwdmRmaGF6rwVj3LcmAeYkOWKEPlbPzN3Y3A==}
@@ -16976,9 +17161,6 @@ packages:
     peerDependenciesMeta:
       webpack:
         optional: true
-
-  scslre@0.2.0:
-    resolution: {integrity: sha512-4hc49fUMmX3jM0XdFUAPBrs1xwEcdHa0KyjEsjFs+Zfc66mpFpq5YmRgDtl+Ffo6AtJIilfei+yKw8fUn3N88w==}
 
   scslre@0.3.0:
     resolution: {integrity: sha512-3A6sD0WYP7+QrjbfNA2FN3FsOaGGFoekCVgTyypy53gPxhbkCIjtO6YWgdrfM+n/8sI8JeXZOIxsHjMTNxQ4nQ==}
@@ -22749,17 +22931,16 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-regexp@1.15.0(eslint@10.14.0(jiti@2.6.1)):
+  eslint-plugin-regexp@3.3.3(eslint@10.14.0(jiti@2.6.1)):
     dependencies:
       '@eslint-community/eslint-utils': 4.10.1(eslint@10.14.0(jiti@2.6.1))
       '@eslint-community/regexpp': 4.12.2
       comment-parser: 1.4.9
       eslint: 10.14.0(jiti@2.6.1)
-      grapheme-splitter: 1.0.4
-      jsdoctypeparser: 9.0.0
-      refa: 0.11.0
-      regexp-ast-analysis: 0.6.0
-      scslre: 0.2.0
+      jsdoc-type-pratt-parser: 9.4.0
+      refa: 0.12.1
+      regexp-ast-analysis: 0.7.1
+      scslre: 0.3.0
 
   eslint-plugin-sonarjs@4.2.2(eslint@10.14.0(jiti@2.6.1)):
     dependencies:
@@ -23267,8 +23448,6 @@ snapshots:
   gopd@1.2.0: {}
 
   graceful-fs@4.2.11: {}
-
-  grapheme-splitter@1.0.4: {}
 
   grid-index@1.1.0: {}
 
@@ -23831,8 +24010,6 @@ snapshots:
   jsdoc-type-pratt-parser@9.4.0:
     dependencies:
       '@types/estree': 1.0.9
-
-  jsdoctypeparser@9.0.0: {}
 
   jsesc@3.1.0: {}
 
@@ -25644,10 +25821,6 @@ snapshots:
 
   redux@5.0.1: {}
 
-  refa@0.11.0:
-    dependencies:
-      '@eslint-community/regexpp': 4.12.2
-
   refa@0.12.1:
     dependencies:
       '@eslint-community/regexpp': 4.12.2
@@ -25664,11 +25837,6 @@ snapshots:
       get-intrinsic: 1.3.0
       get-proto: 1.0.1
       which-builtin-type: 1.2.1
-
-  regexp-ast-analysis@0.6.0:
-    dependencies:
-      '@eslint-community/regexpp': 4.12.2
-      refa: 0.11.0
 
   regexp-ast-analysis@0.7.1:
     dependencies:
@@ -25903,12 +26071,6 @@ snapshots:
       ajv-keywords: 5.1.0(ajv@8.20.0)
     optionalDependencies:
       webpack: 5.112.2(esbuild@0.28.2)(webpack-cli@7.3.1)
-
-  scslre@0.2.0:
-    dependencies:
-      '@eslint-community/regexpp': 4.12.2
-      refa: 0.11.0
-      regexp-ast-analysis: 0.6.0
 
   scslre@0.3.0:
     dependencies:

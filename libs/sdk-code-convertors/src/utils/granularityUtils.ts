@@ -1528,7 +1528,7 @@ const VALID_GRANULARITY_SUFFIXES = [
 /**
  * Regular expression to detect granularity suffixes at the end of an ID
  */
-const GRANULARITY_SUFFIX_REGEX = new RegExp(`\\.(${VALID_GRANULARITY_SUFFIXES.join("|")})$`);
+const GRANULARITY_SUFFIX_REGEX = new RegExp(`\\.(?:${VALID_GRANULARITY_SUFFIXES.join("|")})$`);
 
 /**
  * Check if an ID has a valid granularity suffix

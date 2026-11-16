@@ -437,7 +437,7 @@ const insertPlaceholderAtCursor = (text: string, placeholder: string, cursor: IC
     `${text.substring(0, cursor.from)}${placeholder}${text.substring(cursor.to)}`;
 
 const URL_START_RULES = [
-    /^[A-Za-z0-9.\-+]+:/,
+    /^[A-Z0-9.\-+]+:/i,
     /^\{attribute_title\(/,
     /^\{attribute_filter_selection\(/,
     /^\{dash_attribute_filter_selection\(/,

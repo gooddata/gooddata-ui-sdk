@@ -1,9 +1,9 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { GD_COLOR_HIGHLIGHT } from "../utils/constants.js";
 
 const HEX3_REGEX = /^#([\da-f])([\da-f])([\da-f])/i;
-const HEX6_REGEX = /^#([\da-fA-F]{2})([\da-fA-F]{2})([\da-fA-F]{2})/;
+const HEX6_REGEX = /^#([\da-f]{2})([\da-f]{2})([\da-f]{2})/i;
 
 interface IRgbaColor {
     r: number;

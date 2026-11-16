@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { type ReactNode, type Ref, createContext } from "react";
+import { type ReactNode, type Ref, createContext, useState } from "react";
 
 import {
     type IInsight,
@@ -9,6 +9,7 @@ import {
     type IWorkspacePermissions,
 } from "@gooddata/sdk-model";
 
+import { FocusHandoffContext, createFocusHandoff } from "../shared/focusHandoff.js";
 import { type IUseTabsProps } from "../shared/Tabs/hooks/useTabs.js";
 import { type ITab } from "../shared/Tabs/Tab.js";
 
@@ -156,8 +157,12 @@ export function MultipleMetricsState({
         onClose,
         onCancel,
     });
+    // one per editor instance: it wraps both the editor and its minimized chip
+    const [focusHandoff] = useState(createFocusHandoff);
 
     return (
-        <MultipleMetricsContext.Provider value={metricStateProps}>{children}</MultipleMetricsContext.Provider>
+        <MultipleMetricsContext.Provider value={metricStateProps}>
+            <FocusHandoffContext.Provider value={focusHandoff}>{children}</FocusHandoffContext.Provider>
+        </MultipleMetricsContext.Provider>
     );
 }

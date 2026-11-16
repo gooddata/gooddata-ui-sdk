@@ -20,7 +20,7 @@ export type PublisherEntityIdV2 = string & { readonly __publisherEntityIdV2: uni
  * @alpha
  */
 export function isPublisherEntityIdV2(value: unknown): value is PublisherEntityIdV2 {
-    return typeof value === "string" && /^(?!\.)[.A-Za-z0-9_-]{1,255}$/.test(value);
+    return typeof value === "string" && /^(?!\.)[.A-Z0-9_-]{1,255}$/i.test(value);
 }
 
 export const reservedPublisherEntityIdPrefixV2 = "default.";
@@ -109,7 +109,7 @@ export function newPublisherDocumentFilterIdV2({
     usedIds,
 }: INewPublisherDocumentFilterIdOptionsV2): string {
     invariant(isIdentifierRef(target), "A document filter id needs an identifier ref as its target.");
-    const base = `document_filter_${target.identifier.replace(/[^A-Za-z0-9_]/g, "_")}`;
+    const base = `document_filter_${target.identifier.replace(/[^A-Z0-9_]/gi, "_")}`;
     for (let attempt = 1; ; attempt++) {
         const suffix = attempt === 1 ? "" : `_${attempt}`;
         const id = base.slice(0, maxIdLength - suffix.length) + suffix;

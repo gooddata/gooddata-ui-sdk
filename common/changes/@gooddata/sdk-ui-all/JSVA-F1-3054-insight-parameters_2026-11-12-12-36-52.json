@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-code-convertors: Insight parameter values survive the conversion to and from Analytics as Code, so AAC clone and deploy keep them. The AAC visualisation `query` gets an optional `parameters` list.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

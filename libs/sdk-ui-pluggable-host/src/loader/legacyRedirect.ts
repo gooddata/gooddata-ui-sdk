@@ -57,7 +57,7 @@ function liftAiBuilderToSearch(remainder: string, search: string): { remainder: 
 
 // The report and the literal edit action must follow <product>:<client>, so a `client` workspace
 // with a colon in an insight id (#/client/<id>/edit[/reload]) does not match.
-const CLIENT_HASH = /^#\/client\/[-\w]+:[-\w]+\/[^/?]+\/edit(?:\/reload)?(?:[?]|$)/;
+const CLIENT_HASH = /^#\/client\/[-\w]+:[-\w]+\/[^/?]+\/edit(?:\/reload)?(?:\?|$)/;
 
 // AD legacy hash: #/<ws>/<rest> — workspace is the bare first segment.
 function mapLegacyAnalyzeUrl(pathname: string, hash: string, search: string): string | null {
@@ -77,7 +77,7 @@ function mapLegacyAnalyzeUrl(pathname: string, hash: string, search: string): st
         return embedded ? toEmbeddedNotFoundUrl("analyze", search, hash) : `/analyze${search}`;
     }
 
-    const match = /^#\/([^/?]+)(.*)$/.exec(hash);
+    const match = /^#\/([^/?]+)((?:[/?].*)?)$/.exec(hash);
     if (!match) {
         return null;
     }
@@ -131,7 +131,7 @@ const LEGACY_HOME_PATHS = [
 // A host KD URL whose hash still names a workspace: [/embedded]/workspace/<A>/dashboards/#/workspace/<B>/<rest>.
 // The hash workspace is the link target, so it replaces the path workspace.
 const HOST_DASHBOARDS_PATH = /^(\/embedded)?\/workspace\/[^/]+\/dashboards\/?$/;
-const KD_WORKSPACE_HASH = /^#\/(?:workspace|project|p)\/([^/?]+)(.*)$/;
+const KD_WORKSPACE_HASH = /^#\/(?:workspace|project|p)\/([^/?]+)((?:[/?].*)?)$/;
 
 function mapHostDashboardsWorkspaceHash(pathname: string, hash: string, search: string): string | null {
     const path = HOST_DASHBOARDS_PATH.exec(pathname);
@@ -175,7 +175,7 @@ export function mapLegacyUrlToHost(location: ILegacyLocation): string | null {
 
     // Metric editor (standalone only): hash #/<ws>[/rest] becomes the path /workspace/<ws>/metrics[/rest].
     if (isUnder(pathname, "/metrics")) {
-        const match = /^#\/([^/?]+)(.*)$/.exec(hash);
+        const match = /^#\/([^/?]+)((?:[/?].*)?)$/.exec(hash);
         return match ? `/workspace/${match[1]}/metrics${match[2]}` : null;
     }
 

@@ -682,7 +682,7 @@ export function measureFormat(measure: IMeasure): string | undefined {
 export function isMeasureFormatInPercent(measureOrFormat: IMeasure | string | undefined): boolean {
     const format = isMeasure(measureOrFormat) ? measureFormat(measureOrFormat) : measureOrFormat;
     // no reasonable way to avoid the super-linear backtracking right now
-    return !!format && /^[^;]*%[^;]*;*$/.test(format.trim().replace(/\\%/g, ""));
+    return !!format && /^[^%;]*%[^;]*;*$/.test(format.trim().replace(/\\%/g, ""));
 }
 
 /**

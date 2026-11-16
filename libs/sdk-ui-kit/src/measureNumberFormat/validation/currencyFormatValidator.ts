@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { ClientFormatterFacade, type ISeparators } from "@gooddata/number-formatter";
 
@@ -9,7 +9,7 @@ const NUMBER_PLACEHOLDER_PATTERN = /[0#?]/;
 const DECIMAL_TOKEN_PATTERN = /\.(0+)/;
 const CURRENCY_SYMBOL_PATTERN = /\p{Sc}/u;
 const CURRENCY_BRACKET_PATTERN = /\[\$[^\]]+\]/;
-const QUOTED_CURRENCY_PATTERN = /(["'])[ \t]*[A-Za-z]{2,6}[ \t]*\1/;
+const QUOTED_CURRENCY_PATTERN = /(["'])[ \t]*[A-Z]{2,6}[ \t]*\1/i;
 
 /**
  * @alpha

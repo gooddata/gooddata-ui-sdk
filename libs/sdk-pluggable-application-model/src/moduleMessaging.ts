@@ -136,7 +136,7 @@ export function isModuleMessage(obj: unknown): obj is IModuleMessage {
     );
 }
 
-const CHANNEL_NAME_CONVENTION = /^[a-z][a-zA-Z0-9-]*(\.[a-zA-Z0-9-]+)+\.v[0-9]+$/;
+const CHANNEL_NAME_CONVENTION = /^[a-z][a-zA-Z0-9-]*(?:\.[a-zA-Z0-9-]+)+\.v[0-9]+$/;
 
 /**
  * Checks whether a channel name follows the convention `"<owner>.<protocol>.v<major>"`.

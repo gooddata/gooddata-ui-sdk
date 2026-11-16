@@ -922,6 +922,10 @@ export type Sort3 = {
  * A list of sorting in this query.
  */
 export type Sorts = Sort[];
+/**
+ * A list of parameter values in this query.
+ */
+export type QueryParameters = QueryParameter[];
 export type WidthValueOrAuto = WidthValueOrAuto1 | WidthValueOrAuto2;
 export type WidthValueOrAuto1 = number;
 export type WidthValueOrAuto2 = "auto";
@@ -2886,8 +2890,7 @@ export interface DashboardRelativeDateFilter {
  */
 export interface DashboardStateSelect {
     /**
-
-   */
+     */
     include: [] | [string];
     [k: string]: unknown;
 }
@@ -3441,6 +3444,7 @@ export interface Query {
     fields: Fields3;
     filter_by?: QueryFilters2;
     sort_by?: Sorts;
+    parameters?: QueryParameters;
 }
 /**
  * A list of fields in this query.
@@ -3569,8 +3573,7 @@ export interface MultipleConditions1 {
      */
     using: MetricIdentifier;
     /**
-
-   */
+     */
     conditions: [MetricValueFilterCondition, ...MetricValueFilterCondition[]];
     /**
      * Null values will be treated as zero.
@@ -3843,9 +3846,7 @@ export interface ArithmeticMetricField {
      */
     operator: "SUM" | "DIFFERENCE" | "MULTIPLICATION" | "RATIO" | "CHANGE";
     /**
-
-
-   */
+     */
     using: [string, string];
 }
 export interface ArithmeticMetricFieldGuard1 {
@@ -3988,8 +3989,7 @@ export interface MetricSort {
      */
     direction: "ASC" | "DESC";
     /**
-
-   */
+     */
     metrics: [
         (
             | string
@@ -4026,6 +4026,16 @@ export interface MetricSort {
               }
         )[],
     ];
+}
+export interface QueryParameter {
+    /**
+     * An identifier of the parameter.
+     */
+    id: string;
+    /**
+     * The value this query uses instead of the parameter's default value.
+     */
+    value: string | number;
 }
 /**
  * Configuration of visualisation of defined type.
@@ -4513,6 +4523,7 @@ export interface Query1 {
     fields: Fields3;
     filter_by?: QueryFilters2;
     sort_by?: Sorts;
+    parameters?: QueryParameters;
 }
 /**
  * Configuration of visualisation of defined type.
@@ -4921,6 +4932,7 @@ export interface Query2 {
     fields: Fields3;
     filter_by?: QueryFilters2;
     sort_by?: Sorts;
+    parameters?: QueryParameters;
 }
 /**
  * Configuration of visualisation of defined type.
@@ -5329,6 +5341,7 @@ export interface Query3 {
     fields: Fields3;
     filter_by?: QueryFilters2;
     sort_by?: Sorts;
+    parameters?: QueryParameters;
 }
 /**
  * Configuration of visualisation of defined type.
@@ -5737,6 +5750,7 @@ export interface Query4 {
     fields: Fields3;
     filter_by?: QueryFilters2;
     sort_by?: Sorts;
+    parameters?: QueryParameters;
 }
 /**
  * Configuration of visualisation of defined type.
@@ -6145,6 +6159,7 @@ export interface Query5 {
     fields: Fields3;
     filter_by?: QueryFilters2;
     sort_by?: Sorts;
+    parameters?: QueryParameters;
 }
 /**
  * Configuration of visualisation of defined type.
@@ -6553,6 +6568,7 @@ export interface Query6 {
     fields: Fields3;
     filter_by?: QueryFilters2;
     sort_by?: Sorts;
+    parameters?: QueryParameters;
 }
 /**
  * Configuration of visualisation of defined type.
@@ -6957,6 +6973,7 @@ export interface Query7 {
     fields: Fields3;
     filter_by?: QueryFilters2;
     sort_by?: Sorts;
+    parameters?: QueryParameters;
 }
 /**
  * Configuration of visualisation of defined type.
@@ -7361,6 +7378,7 @@ export interface Query8 {
     fields: Fields3;
     filter_by?: QueryFilters2;
     sort_by?: Sorts;
+    parameters?: QueryParameters;
 }
 /**
  * Configuration of visualisation of defined type.
@@ -7765,6 +7783,7 @@ export interface Query9 {
     fields: Fields3;
     filter_by?: QueryFilters2;
     sort_by?: Sorts;
+    parameters?: QueryParameters;
 }
 /**
  * Configuration of visualisation of defined type.
@@ -8169,6 +8188,7 @@ export interface Query10 {
     fields: Fields3;
     filter_by?: QueryFilters2;
     sort_by?: Sorts;
+    parameters?: QueryParameters;
 }
 /**
  * Configuration of visualisation of defined type.
@@ -8573,6 +8593,7 @@ export interface Query11 {
     fields: Fields3;
     filter_by?: QueryFilters2;
     sort_by?: Sorts;
+    parameters?: QueryParameters;
 }
 /**
  * Configuration of visualisation of defined type.
@@ -8985,6 +9006,7 @@ export interface Query12 {
     fields: Fields3;
     filter_by?: QueryFilters2;
     sort_by?: Sorts;
+    parameters?: QueryParameters;
 }
 /**
  * Configuration of visualisation of defined type.
@@ -9389,6 +9411,7 @@ export interface Query13 {
     fields: Fields3;
     filter_by?: QueryFilters2;
     sort_by?: Sorts;
+    parameters?: QueryParameters;
 }
 /**
  * Configuration of visualisation of defined type.
@@ -9793,6 +9816,7 @@ export interface Query14 {
     fields: Fields3;
     filter_by?: QueryFilters2;
     sort_by?: Sorts;
+    parameters?: QueryParameters;
 }
 /**
  * Configuration of visualisation of defined type.
@@ -10199,6 +10223,7 @@ export interface Query15 {
     fields: Fields3;
     filter_by?: QueryFilters2;
     sort_by?: Sorts;
+    parameters?: QueryParameters;
 }
 /**
  * Configuration of visualisation of defined type.
@@ -10605,6 +10630,7 @@ export interface Query16 {
     fields: Fields3;
     filter_by?: QueryFilters2;
     sort_by?: Sorts;
+    parameters?: QueryParameters;
 }
 /**
  * Configuration of visualisation of defined type.
@@ -11009,6 +11035,7 @@ export interface Query17 {
     fields: Fields3;
     filter_by?: QueryFilters2;
     sort_by?: Sorts;
+    parameters?: QueryParameters;
 }
 /**
  * Configuration of visualisation of defined type.
@@ -11413,6 +11440,7 @@ export interface Query18 {
     fields: Fields3;
     filter_by?: QueryFilters2;
     sort_by?: Sorts;
+    parameters?: QueryParameters;
 }
 /**
  * Configuration of visualisation of defined type.
@@ -11821,6 +11849,7 @@ export interface Query19 {
     fields: Fields3;
     filter_by?: QueryFilters2;
     sort_by?: Sorts;
+    parameters?: QueryParameters;
 }
 /**
  * Configuration of visualisation of defined type.
@@ -12610,6 +12639,7 @@ export interface Query20 {
     fields: Fields3;
     filter_by?: QueryFilters2;
     sort_by?: Sorts;
+    parameters?: QueryParameters;
 }
 /**
  * Configuration of visualisation of defined type.
@@ -13022,6 +13052,7 @@ export interface Query21 {
     fields: Fields3;
     filter_by?: QueryFilters2;
     sort_by?: Sorts;
+    parameters?: QueryParameters;
 }
 /**
  * Configuration of visualisation of defined type.
@@ -13426,6 +13457,7 @@ export interface Query22 {
     fields: Fields3;
     filter_by?: QueryFilters2;
     sort_by?: Sorts;
+    parameters?: QueryParameters;
 }
 /**
  * Configuration of visualisation of defined type.
