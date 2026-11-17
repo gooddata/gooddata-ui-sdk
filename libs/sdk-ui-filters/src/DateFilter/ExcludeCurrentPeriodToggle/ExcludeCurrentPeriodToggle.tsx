@@ -6,7 +6,9 @@ import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
 import { type DateFilterGranularity } from "@gooddata/sdk-model";
-import { Bubble, BubbleHoverTrigger, isSpaceKey } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, isSpaceKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+
+import { CheckboxDescription } from "../CheckboxSection/CheckboxDescription.js";
 
 import { ExcludeCurrentPeriodToggleLabel } from "./ExcludeCurrentPeriodToggleLabel.js";
 
@@ -25,6 +27,9 @@ export function ExcludeCurrentPeriodToggle({
     disabled,
     granularity,
 }: IExcludeCurrentPeriodToggleProps) {
+    const labelId = useIdPrefixed("exclude-current-period-label");
+    const descriptionId = useIdPrefixed("exclude-current-period-description");
+
     const handleKeyDown = (e: KeyboardEvent) => {
         if (disabled) {
             return;
@@ -51,9 +56,15 @@ export function ExcludeCurrentPeriodToggle({
                         onChange={(e) => onChange(e.target.checked)}
                         disabled={disabled}
                         onKeyDown={handleKeyDown}
+                        aria-labelledby={labelId}
+                        aria-describedby={disabled ? descriptionId : undefined}
                     />
                     &ensp;
-                    <ExcludeCurrentPeriodToggleLabel granularity={granularity} disabled={disabled} />
+                    <ExcludeCurrentPeriodToggleLabel
+                        granularity={granularity}
+                        disabled={disabled}
+                        id={labelId}
+                    />
                 </label>
                 {disabled ? (
                     <Bubble alignPoints={alignPoints}>
@@ -61,6 +72,11 @@ export function ExcludeCurrentPeriodToggle({
                     </Bubble>
                 ) : null}
             </BubbleHoverTrigger>
+            {disabled ? (
+                <CheckboxDescription id={descriptionId}>
+                    <FormattedMessage id="filters.excludeCurrentPeriod.unavailable" />
+                </CheckboxDescription>
+            ) : null}
         </div>
     );
 }

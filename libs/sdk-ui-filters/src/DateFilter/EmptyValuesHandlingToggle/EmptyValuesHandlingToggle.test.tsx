@@ -41,5 +41,6 @@ describe("EmptyValuesHandlingToggle", () => {
         );
 
         expect(screen.getByText("Exclude empty values")).toBeInTheDocument();
+        expect(screen.getByRole("checkbox", { name: "Exclude empty values" })).toBeInTheDocument();
     });
 });

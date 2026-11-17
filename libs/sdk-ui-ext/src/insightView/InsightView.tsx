@@ -39,6 +39,7 @@ import { type IInsightViewProps } from "../internal/index.js";
 import { InsightError } from "./InsightError.js";
 import { InsightRenderer } from "./InsightRenderer.js";
 import { InsightTitle } from "./InsightTitle.js";
+import { withStoredParameterValues } from "./withStoredParameterValues.js";
 
 interface IInsightViewCoreState {
     isVisualizationLoading: boolean;
@@ -274,6 +275,11 @@ export const IntlInsightView = withAgGridToken(
                 [config, workspaceSettingsResult],
             );
 
+            const effectiveExecConfig = useMemo(
+                () => withStoredParameterValues(execConfig, insightResult, workspaceSettingsResult),
+                [execConfig, insightResult, workspaceSettingsResult],
+            );
+
             return (
                 <div className="insight-view-container">
                     {resolvedTitle ? <TitleComponent title={resolvedTitle} /> : null}
@@ -293,7 +299,7 @@ export const IntlInsightView = withAgGridToken(
                                 backend={backendWithTelemetry}
                                 colorPalette={colorPalette ?? colorPaletteResult}
                                 config={resolvedConfig}
-                                execConfig={execConfig}
+                                execConfig={effectiveExecConfig}
                                 drillableItems={drillableItems}
                                 executeByReference={executeByReference}
                                 filters={filters}

@@ -2,6 +2,8 @@
 
 import { describe, expect, it, vi } from "vitest";
 
+import { EMPTY_INSIGHT_USAGE_IN_DOCUMENTS } from "../store/insight_usage/insight_usage_helpers.js";
+
 import {
     dashboardItemSelector,
     saveReportFromKDDialogSelector,
@@ -43,7 +45,7 @@ describe("save_report_from_kd_dialog_selector", () => {
                     false,
                     false,
                     canCreate,
-                    [],
+                    EMPTY_INSIGHT_USAGE_IN_DOCUMENTS,
                 ).canCreateCopy,
         );
         expect(withCreate).toBe(true);

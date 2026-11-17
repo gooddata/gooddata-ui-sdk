@@ -130,6 +130,7 @@ export function expandSnippet(snippetText: string): { text: string; from: number
  * asked about; the list stays open while the user types on, so the typed characters are taken in
  * as well, or they would stay behind the inserted text.
  *
+ * @param edit - the edit computed by the language service, if any
  * @param from - start of the word the editor is completing
  * @param to - the cursor
  */
@@ -215,6 +216,8 @@ export function fuzzyMatch(pattern: string, text: string): IFuzzyMatch | null {
  * the filter text of an item, which carries the identifier besides the title; the highlight goes
  * on the label the user sees. A run of the typed text wins over scattered characters.
  *
+ * @param label - the filter text of the item
+ * @param displayLabel - the label shown to the user
  * @param matched - the offsets matched in the filter text
  */
 export function matchInDisplayLabel(

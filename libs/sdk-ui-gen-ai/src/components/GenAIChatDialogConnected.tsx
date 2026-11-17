@@ -271,7 +271,10 @@ export interface IGenAIChatDialogConnectedProps {
     /** Object-search tag scope reflecting the caller's current view. */
     includeTags?: string[];
     excludeTags?: string[];
-    /** Override the derived object types (default: dashboard, visualization, + metric when `canManage`). */
+    /**
+     * Override the derived object types (default: dashboard, visualization, + metric when `canManage`,
+     * + document when the Reports app, Publisher v2 and catalog documents are on).
+     */
     objectTypes?: GenAIObjectType[];
 
     /** Normalized chat events for telemetry/toasts; mapped per-consumer. */
@@ -288,6 +291,41 @@ export interface IGenAIChatDialogConnectedProps {
     onLinkClick?: (linkClickEvent: LinkHandlerEvent) => string | undefined;
     /** Element (or id) focus returns to on close. */
     returnFocusTo?: RefObject<HTMLElement | null> | string;
+}
+
+/**
+ * Object types the chat searches when the host gives none. Saved documents are searched only
+ * while the Reports app, Publisher v2 and catalog documents are all on, the same as the catalog.
+ *
+ * @internal
+ */
+export function getChatObjectTypes({
+    override,
+    canManage,
+    settings,
+}: {
+    override?: GenAIObjectType[];
+    canManage?: boolean;
+    settings?: Pick<
+        IUserWorkspaceSettings,
+        "enableBusinessBriefingReportsApp" | "enablePublisherV2" | "enableCatalogDocuments"
+    >;
+}): GenAIObjectType[] {
+    if (override) {
+        return override;
+    }
+    const types: GenAIObjectType[] = ["dashboard", "visualization"];
+    if (canManage) {
+        types.push("metric");
+    }
+    if (
+        settings?.enableBusinessBriefingReportsApp &&
+        settings.enablePublisherV2 &&
+        settings.enableCatalogDocuments
+    ) {
+        types.push("document");
+    }
+    return types;
 }
 
 /**
@@ -380,16 +418,22 @@ export function GenAIChatDialogConnected({
         [onEvent, onAnyEvent],
     );
 
-    const objectTypes = useMemo<GenAIObjectType[]>(() => {
-        if (objectTypesOverride) {
-            return objectTypesOverride;
-        }
-        const types: GenAIObjectType[] = ["dashboard", "visualization"];
-        if (canManage) {
-            types.push("metric");
-        }
-        return types;
-    }, [objectTypesOverride, canManage]);
+    const enableReportsApp = settings?.enableBusinessBriefingReportsApp;
+    const enablePublisherV2 = settings?.enablePublisherV2;
+    const enableCatalogDocuments = settings?.enableCatalogDocuments;
+    const objectTypes = useMemo<GenAIObjectType[]>(
+        () =>
+            getChatObjectTypes({
+                override: objectTypesOverride,
+                canManage,
+                settings: {
+                    enableBusinessBriefingReportsApp: enableReportsApp,
+                    enablePublisherV2,
+                    enableCatalogDocuments,
+                },
+            }),
+        [objectTypesOverride, canManage, enableReportsApp, enablePublisherV2, enableCatalogDocuments],
+    );
 
     const [chatDispatcher, setDispatcher] = useState<Dispatch | null>(null);
     const onDispatcher = useCallback((dispatcher: Dispatch) => {

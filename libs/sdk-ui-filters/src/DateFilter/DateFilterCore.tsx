@@ -87,6 +87,7 @@ export interface IDateFilterCoreProps {
 
     onApplyClick: () => void;
     onCancelClick: () => void;
+    onSelectionRestore: (selectedFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => void;
     onDropdownOpenChanged: (isOpen: boolean) => void;
 
     errors?: IExtendedDateFilterErrors;

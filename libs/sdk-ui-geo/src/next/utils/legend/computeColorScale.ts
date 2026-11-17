@@ -25,6 +25,8 @@ export interface IComputeColorScaleOptions {
  * @param colorData - Array of numeric values for the color measure
  * @param format - Number format string for labels
  * @param numericSymbols - Numeric symbols used for compact formatting (k, M, G, ...)
+ * @param baseColor - Optional base color of the scale
+ * @param options - Optional color scale options
  * @returns Color scale item with min/max values, or null if data is insufficient
  *
  * @internal

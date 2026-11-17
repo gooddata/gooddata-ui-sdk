@@ -21,6 +21,8 @@ export interface IInsightUsage {
     referencedDashboards: IMetadataObject[];
     /** Publisher documents that show the insight. */
     referencedDocuments: IMetadataObject[];
+    /** Ids of the referenced documents the user may open. */
+    accessibleDocumentIds: string[];
 }
 
 /**
@@ -43,4 +45,11 @@ export interface IInsightUsageOnDashboardItem {
 export interface IInsightUsageInDocumentItem {
     title: string;
     id: string;
+}
+
+/** Derived like {@link IInsightUsageOnDashboard}: the documents the user may open, and how many they may not. */
+export interface IInsightUsageInDocuments {
+    accessibleDocuments: IInsightUsageInDocumentItem[];
+    inaccessibleDocumentsCount: number;
+    allDocumentsCount: number;
 }

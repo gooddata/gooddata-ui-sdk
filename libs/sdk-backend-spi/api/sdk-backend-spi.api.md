@@ -1964,6 +1964,8 @@ export interface IGetExportDefinitionOptions {
 
 // @public
 export interface IGetInsightOptions {
+    // @alpha
+    loadParameters?: boolean;
     loadPermissions?: boolean;
     loadUserData?: boolean;
 }

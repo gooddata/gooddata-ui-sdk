@@ -91,7 +91,7 @@ export function matchDateFilterToDateFilterOptionWithPreference(
 
 /**
  * Tries to match a preset or a form with the provided value. Prioritizes presets over forms.
- * @param dateFilterValue - value to match against
+ * @param dateFilter - value to match against
  * @param availableOptions - date options available
  * @alpha
  */

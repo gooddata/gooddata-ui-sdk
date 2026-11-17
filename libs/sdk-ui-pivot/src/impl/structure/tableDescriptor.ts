@@ -104,6 +104,7 @@ export class TableDescriptor {
      * @param dv - data view facade
      * @param emptyHeaderTitle - what to show for title of headers with empty title
      * @param config - optional pivot configuration
+     * @param intl - optional intl
      */
     public static for(
         dv: DataViewFacade,
@@ -402,7 +403,7 @@ export class TableDescriptor {
      * Attempts to match the provided slice measure width item to a transposed measure data col. The locators in the item
      * will be used to traverse the column structure.
      *
-     * @param measureWidthItem - item to match
+     * @param sliceMeasureWidthItem - item to match
      */
     public matchSliceMeasureWidthItem(
         sliceMeasureWidthItem: ISliceMeasureColumnWidthItem,
@@ -417,7 +418,7 @@ export class TableDescriptor {
      * Attempts to match the provided mixed values measure width item to a tranposed measure data col. The locators in the item
      * will be used to traverse the column structure.
      *
-     * @param measureWidthItem - item to match
+     * @param mixedValuesWidhItem - item to match
      */
     public matchMixedValuesWidthItem(
         mixedValuesWidhItem: IMixedValuesColumnWidthItem,

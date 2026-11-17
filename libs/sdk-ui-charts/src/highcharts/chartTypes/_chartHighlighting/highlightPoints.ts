@@ -10,7 +10,7 @@ import { type IChartConfig } from "../../../interfaces/chartConfig.js";
  * Adds highlighting class to chart points based on provided drill intersections.
  *
  * @param series - chart series
- * @param selectedPoints - selected points defined by drill intersections
+ * @param config - chart config with selected points defined by drill intersections and chart type
  */
 export const highlightChartPoints = (series: Highcharts.Series[], config?: IChartConfig) => {
     const { selectedPoints, type } = config ?? {};

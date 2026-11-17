@@ -5,7 +5,6 @@ import { type ComponentProps, useCallback, useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { type GenAIObjectType } from "@gooddata/sdk-model";
 import {
     FooterButtonAiAssistant,
     type ISearchMetrics,
@@ -13,6 +12,8 @@ import {
     SearchOverlay,
     useSearchMetrics,
 } from "@gooddata/sdk-ui-semantic-search/internal";
+
+import { getSearchObjectTypes } from "./searchObjectTypes.js";
 
 const RESULTS_LIMIT = 10;
 
@@ -27,6 +28,8 @@ export interface ISemanticSearchProps {
     canManage?: boolean;
     canAnalyze?: boolean;
     canFullControl?: boolean;
+    /** Whether the search also returns Reports documents. */
+    includeDocuments?: boolean;
     metadataTimeZone?: string;
     isTrial?: boolean;
     enableUseGenAIChat?: boolean;
@@ -41,6 +44,7 @@ export function SemanticSearch({
     canManage = false,
     canAnalyze = false,
     canFullControl = false,
+    includeDocuments = false,
     isTrial = false,
     enableUseGenAIChat = false,
     onAskAiAssistant,
@@ -48,15 +52,10 @@ export function SemanticSearch({
 }: ISemanticSearchProps) {
     const intl = useIntl();
 
-    const objectTypes = useMemo<GenAIObjectType[]>(() => {
-        const types: GenAIObjectType[] = ["dashboard", "visualization"];
-
-        if (canManage) {
-            types.push("metric");
-        }
-
-        return types;
-    }, [canManage]);
+    const objectTypes = useMemo(
+        () => getSearchObjectTypes({ canManage, includeDocuments }),
+        [canManage, includeDocuments],
+    );
 
     const reportSearchMetrics = useCallback(
         (metrics: ISearchMetrics) => {

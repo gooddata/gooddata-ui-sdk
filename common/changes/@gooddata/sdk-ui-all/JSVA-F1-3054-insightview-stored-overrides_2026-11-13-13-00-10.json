@@ -1,0 +1,20 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-ext: `InsightView` applies the stored parameter overrides of the insight. A value in `execConfig.parameterValues` wins over the stored override of the same parameter. A stored override is not sent when its parameter does not exist or when the value is not valid for its parameter.",
+            "type": "none"
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-backend-spi: Add the `loadParameters` option to `IGetInsightOptions`. With it, `getInsight` returns the parameters that the insight references in `referencedParameters` of the insight.",
+            "type": "none"
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-model: Add `insightValidParameters`.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

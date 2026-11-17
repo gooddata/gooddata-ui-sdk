@@ -222,6 +222,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
      *
      * @param options - visualization options
      * @param insight - insight that is about to be rendered
+     * @param insightPropertiesMeta - properties meta of the insight
      */
     protected updateInstanceProperties(
         options: IVisProps,

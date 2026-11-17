@@ -7,12 +7,14 @@ import { eslint } from "./configurations/eslint.js";
 import { headers } from "./configurations/headers.js";
 import { importEsm } from "./configurations/import-esm.js";
 import { importX } from "./configurations/import-x.js";
+import { jsdoc } from "./configurations/jsdoc.js";
 import { noBarrelFiles } from "./configurations/no-barrel-files.js";
 import { noOnlyTests } from "./configurations/no-only-tests.js";
 import { oxc } from "./configurations/oxc.js";
 import { playwright } from "./configurations/playwright.js";
 import { reactHooks } from "./configurations/react-hooks.js";
 import { react } from "./configurations/react.js";
+import { regexp } from "./configurations/regexp.js";
 import { sonarjs } from "./configurations/sonarjs.js";
 import { storybook } from "./configurations/storybook.js";
 import { testingLibraryDom, testingLibraryReact } from "./configurations/testing-library.js";
@@ -28,6 +30,8 @@ export const common: IConfiguration[] = [
     typescript,
     noBarrelFiles,
     importX,
+    jsdoc,
+    regexp,
     sonarjs,
 ];
 

@@ -287,6 +287,7 @@ const isFocusable = (element: HTMLElement, includeHidden: boolean = false) => {
  * @internal
  * Returns the focusable elements of the given element
  * @param element - the element to get the focusable elements from
+ * @param includeHidden - whether to include hidden elements
  * @returns an object containing the focusable elements, the first focusable element, and the last focusable element
  */
 export const getFocusableElements = (element?: HTMLElement | null, includeHidden: boolean = false) => {
@@ -303,6 +304,7 @@ export const getFocusableElements = (element?: HTMLElement | null, includeHidden
 /**
  * @internal
  * @param element - the element to test for focusability
+ * @param includeHidden - whether to treat hidden elements as focusable
  * @returns whether or not the supplied element is focusable
  */
 export const isElementFocusable = (element?: HTMLElement | null, includeHidden: boolean = false) => {

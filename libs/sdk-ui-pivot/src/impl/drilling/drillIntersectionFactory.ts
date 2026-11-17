@@ -33,6 +33,7 @@ import {
  *
  * @param cellEvent - cell event from ag-grid
  * @param tableDescriptor - table descriptor
+ * @param rowNodes - grid rows
  */
 export function createDrillIntersection(
     cellEvent: CellEvent<AgEventType>,

@@ -72,10 +72,9 @@ export type IIncludedWithUserIdentifier =
     | JsonApiWorkspaceAutomationOut;
 
 /**
- * Convert user identifier link from relationships.[createdBy/modifiedBy] to {@link IUser} object.
- * @param userIdentifierLinkage - information about user link from relationships data attribute.
- * @param included - included objects to the entity query
- * @returns converted user or undefined if link is empty or does not link to anything in included array
+ * Convert included user group to {@link IUserGroup} object.
+ * @param group - included user group
+ * @returns converted user group
  */
 export const convertIncludedUserGroup = (group: JsonApiUserGroupOutWithLinks): IUserGroup => ({
     ref: idRef(group.id),

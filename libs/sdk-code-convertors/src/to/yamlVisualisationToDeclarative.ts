@@ -76,7 +76,7 @@ import { waterfallChart } from "../configs/waterfallChart.js";
 import { BucketsType, type ExportEntities } from "../types.js";
 import { convertBucketToTitle } from "../utils/convertBucketToTitle.js";
 import { mapDateAttribute, mapDateDataset } from "../utils/dateUtils.js";
-import { CoreErrorCode, newError } from "../utils/errors.js";
+import { CoreErrorCode, newError, updateErrorContext } from "../utils/errors.js";
 import {
     foldLegacyEmptyValuesWithFilter,
     parseDateValuesToDeclarative,
@@ -1531,6 +1531,13 @@ function yamlQueryParametersToDeclarative(
     for (const { id, value } of parameters) {
         if (claimed.has(id)) {
             throw newError(CoreErrorCode.DuplicateParameterIdentifier, [id]);
+        }
+        if (value === undefined || value === null) {
+            throw newError(
+                CoreErrorCode.MissingRequiredKey,
+                ["value"],
+                updateErrorContext(undefined, { path: ["query", "parameters", id] }),
+            );
         }
         claimed.add(id);
         stored.push({ ref: { identifier: { id, type: "parameter" } }, value });

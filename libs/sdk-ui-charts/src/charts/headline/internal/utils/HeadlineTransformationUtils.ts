@@ -160,6 +160,7 @@ export function applyDrillableItems(
  *
  * @param itemContext - data received from the click on the {@link Headline} component.
  * @param dataView - data visualized by the headline
+ * @param elementTarget - optional DOM element that was clicked
  * @param chartCoordinates - optional click coordinates for drill popover positioning
  */
 export function buildDrillEventData(

@@ -4,6 +4,7 @@
 import type {} from "remark-parse";
 import { type Processor } from "unified";
 
+import { typedWhitespace } from "./mdast-typed-whitespace.js";
 import { highlight, strikethrough } from "./micromark-paired-marks.js";
 
 // `blankLine` and `content` are missing because they carry no name, which is what `disable` matches
@@ -49,11 +50,12 @@ export type RichTextFeature =
     | "entities"
     | "backslashBreaks"
     | "strikethrough"
-    | "highlight";
+    | "highlight"
+    | "typedWhitespace";
 
-// Syntax CommonMark does not have, added on top of it only when asked for: `~~strike~~` and
-// `==highlight==`.
-type ExtensionFeature = Extract<RichTextFeature, "strikethrough" | "highlight">;
+// What CommonMark does not have, added on top of it only when asked for: `~~strike~~`,
+// `==highlight==`, and keeping the blank lines and indentation CommonMark drops.
+type ExtensionFeature = Extract<RichTextFeature, "strikethrough" | "highlight" | "typedWhitespace">;
 
 type CommonMarkFeature = Exclude<RichTextFeature, ExtensionFeature>;
 
@@ -117,6 +119,9 @@ export function remarkMarkdownFeatures(features: readonly RichTextFeature[]) {
         for (const mark of marks) {
             extensions.push(mark.syntax);
             fromMarkdown.push(mark.fromMarkdown);
+        }
+        if (features.includes("typedWhitespace")) {
+            fromMarkdown.push(typedWhitespace());
         }
     };
 }

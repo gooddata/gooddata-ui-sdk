@@ -78,6 +78,7 @@ function separateFiltersByType(filters: IFilter[]): FilterByType {
  *
  * @param originalFilters - original filters to merge with
  * @param addedFilters - new filters to add on top of original
+ * @param commonDateFilterId - optional local identifier of the common date filter
  * @internal
  */
 export function mergeFilters(

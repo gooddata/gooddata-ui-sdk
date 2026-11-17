@@ -90,6 +90,7 @@ function buildAreaTooltipHtml(
  *   `(No data)` fallback string)
  * @param layerIds - MapLibre layer IDs to monitor
  * @param referenceMaps - Per-layer maps used by the custom-tooltip resolver
+ * @param tooltipLookup - Per-layer tooltip lookup
  * @returns Tooltip configuration for unified handling
  *
  * @internal

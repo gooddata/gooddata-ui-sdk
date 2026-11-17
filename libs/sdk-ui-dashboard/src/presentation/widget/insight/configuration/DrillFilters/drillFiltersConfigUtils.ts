@@ -303,6 +303,7 @@ export function canTransferTextAttributeFilter(
  * @param targetDashboardAttributeFilters - list filters on the target dashboard
  * @param targetDashboardAttributeFilterConfigs - attribute filter configs on the target dashboard
  * @param targetDashboardTextAttributeFilters - text filters on the target dashboard
+ * @param allCatalogDisplayFormsMap - all catalog display forms
  */
 export function canTransferAttributeFilterByDisplayForm(
     displayFormRef: ObjRef,

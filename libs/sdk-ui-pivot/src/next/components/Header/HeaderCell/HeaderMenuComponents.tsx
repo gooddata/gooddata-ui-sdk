@@ -103,6 +103,7 @@ export function HeaderInteractiveItem(props: IUiMenuInteractiveItemProps<Aggrega
  * Builds UI menu items for aggregation functionality.
  *
  * @param aggregationsItems - The aggregation menu items to build from
+ * @param intl - Intl used for the menu item titles
  * @returns Array of UI menu items for aggregations
  */
 function buildUiAggregationMenuItems(
@@ -190,6 +191,7 @@ function buildUiAggregationMenuItems(
  * Builds UI menu items for text wrapping functionality.
  *
  * @param textWrappingItems - The text wrapping menu items to build from
+ * @param intl - Intl used for the section header
  * @returns Array of UI menu items for text wrapping
  */
 function buildUiTextWrappingMenuItems(
@@ -229,6 +231,7 @@ function buildUiTextWrappingMenuItems(
  * Builds UI menu items for sorting functionality.
  *
  * @param sortingItems - The sorting menu items to build from
+ * @param intl - Intl used for the section header
  * @returns Array of UI menu items for sorting
  */
 function buildUiSortingMenuItems(
@@ -270,6 +273,7 @@ function buildUiSortingMenuItems(
  * @param aggregationsItems - The aggregation menu items
  * @param textWrappingItems - The text wrapping menu items
  * @param sortingItems - The sorting menu items
+ * @param intl - Intl used for the menu item titles
  * @returns Complete array of UI menu items
  */
 export function buildUiMenuItems(

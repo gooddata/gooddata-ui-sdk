@@ -160,6 +160,7 @@ function getInteractionMessage(drillableItems?: IHeaderPredicate[], intl?: IntlS
  * @param referenceMaps - Optional per-layer maps used by the custom-tooltip
  *   resolver to translate `localIdentifier` / `attrId` into the LDM ids
  *   referenced as `{metric/<id>}` and `{label/<id>}`.
+ * @param tooltipLookup - Optional per-layer tooltip lookup
  * @returns HTML string for tooltip
  *
  * @internal
@@ -241,6 +242,8 @@ function resolveTooltipCoordinatesFromGeometry(
  * @param drillableItems - Drillable items predicates
  * @param intl - Internationalization instance
  * @param layerIds - MapLibre layer IDs to monitor
+ * @param referenceMaps - Per-layer maps used by the custom-tooltip resolver
+ * @param tooltipLookup - Per-layer tooltip lookup
  * @returns Tooltip configuration for unified handling
  *
  * @internal

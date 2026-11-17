@@ -113,6 +113,8 @@ function createDataColGroupHeaders(col: IScopeCol): IMappingHeader[] {
  *
  * @param col - column to get mapping headers for
  * @param row - row
+ * @param columnHeadersPosition - position of the column headers
+ * @param isTransposed - whether the table is transposed
  */
 export function createDrillHeaders(
     col: AnyCol,

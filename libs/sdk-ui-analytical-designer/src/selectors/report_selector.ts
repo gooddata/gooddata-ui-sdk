@@ -85,7 +85,7 @@ export const lastSavedReportSelector = (state: IAppState) => getLastSavedObject(
 export const isEnabledInsightUsageOnDashboards = (state: IAppState): boolean => {
     const usages = getInsightUsageOnDashboardsSelector(state);
     const documents = getInsightUsageInDocumentsSelector(state);
-    const hasUsages = (usages && !!usages.allDashboardsCount) || documents.length > 0;
+    const hasUsages = (usages && !!usages.allDashboardsCount) || documents.allDocumentsCount > 0;
 
     return !isReportOpening(state) && hasUsages;
 };

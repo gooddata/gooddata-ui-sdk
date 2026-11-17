@@ -30,6 +30,7 @@ import { type IBrokenAlertFilterBasicInfo } from "../types/alertTypes.js";
  * @param kpi - the KPI widget that the alert is relevant to
  * @param appliedFilters - all the currently applied filters (including All Time date filters)
  * @param displayFormsMap - map of all resolved related display forms
+ * @param displayAsLabelMap - map of display-as labels
  *
  * @internal
  */

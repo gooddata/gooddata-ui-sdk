@@ -230,7 +230,7 @@ describe("clone", () => {
             expect(regexpClone.source).toBe("ab");
             expect(regexpClone.flags).toBe("gi");
             expect(regexpClone.lastIndex).toBe(1);
-            // eslint-disable-next-line regexp/no-useless-flag -- the clone must keep every flag, used or not
+            // oxlint-disable-next-line regexp/no-useless-flag -- the clone must keep every flag, used or not
             expect(_clone(/x/dimsu).flags).toBe("dimsu");
         });
 

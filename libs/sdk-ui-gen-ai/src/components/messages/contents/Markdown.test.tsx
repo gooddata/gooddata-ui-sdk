@@ -158,6 +158,24 @@ describe("MarkdownComponent", () => {
         expect(Array.from(chips).map((chip) => chip.textContent)).toEqual(["Total Returns", "Total Sales"]);
     });
 
+    it("renders a document reference as a chip with its title", () => {
+        render(
+            withStoreAndIntl(
+                <MarkdownComponent
+                    allowMarkdown
+                    references={[{ id: "harvest_brief", type: "document", title: "Harvest Brief" }]}
+                >
+                    {"See {document/harvest_brief} for details."}
+                </MarkdownComponent>,
+            ),
+        );
+
+        const chip = document.querySelector(".gd-gen-ai-chat__message__object.document");
+        expect(chip).toHaveTextContent("Harvest Brief");
+        expect(document.body).not.toHaveTextContent("{document/harvest_brief}");
+        expect(screen.queryByRole("link")).not.toBeInTheDocument();
+    });
+
     it("renders a reference chip wrapped in a tooltip anchor", () => {
         render(
             withStoreAndIntl(

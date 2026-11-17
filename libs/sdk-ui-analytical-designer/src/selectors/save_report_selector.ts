@@ -365,7 +365,7 @@ export const isUsedOutsideSourceDashboard = createSelector(
     (usages, documents, sourceDashboardId) => {
         const isUsedOnOtherDashboard =
             usages.allDashboards.filter((usage) => usage.id != sourceDashboardId).length > 0;
-        return isUsedOnOtherDashboard || documents.length > 0;
+        return isUsedOnOtherDashboard || documents.allDocumentsCount > 0;
     },
 );
 

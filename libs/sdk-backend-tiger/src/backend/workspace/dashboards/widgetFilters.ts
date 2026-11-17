@@ -27,9 +27,11 @@ type NormalizeIds = (refs: ObjRef[]) => string[];
  *   - if it is all time, removes all date filters
  *   - otherwise returns the last date filter specified
  *
- * @param widget - widget to resolve filters for
  * @param filters - filters to try
+ * @param ignoreDashboardFilters - filters ignored by the widget
+ * @param dateDataSet - date data set of the widget
  * @param normalizeIds - function providing normalization of any ObjRef to identifier
+ * @param attributeFilterConfigs - configs of the dashboard attribute filters
  * @internal
  */
 export function resolveWidgetFilters(
@@ -71,9 +73,12 @@ export function resolveWidgetFilters(
  *   - if it is all time, removes all date filters
  *   - otherwise returns the last date filter specified
  *
- * @param widget - widget to resolve filters for
- * @param filters - filters to try
+ * @param commonDateFilters - common date filters of the dashboard
+ * @param otherFilters - other filters to try
+ * @param ignoreDashboardFilters - filters ignored by the widget
+ * @param dateDataSet - date data set of the widget
  * @param normalizeIds - function providing normalization of any ObjRef to identifier
+ * @param attributeFilterConfigs - configs of the dashboard attribute filters
  * @internal
  */
 export function resolveWidgetFiltersWithMultipleDateFilters(

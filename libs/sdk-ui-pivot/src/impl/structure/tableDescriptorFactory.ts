@@ -456,7 +456,9 @@ function createTableHeaders(
  *
  * @param dv - data view facade
  * @param emptyHeaderTitle - what to show for title of headers with empty title
+ * @param isTransposed - whether the table is transposed
  * @param config - optional pivot configuration
+ * @param intl - optional intl
  * @internal
  */
 export function createHeadersAndColDefs(

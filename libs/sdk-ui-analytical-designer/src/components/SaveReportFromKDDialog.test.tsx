@@ -12,8 +12,9 @@ import {
     analyticalDashboardUriFactorySelector,
     documentUriFactorySelector,
 } from "../selectors/uri_selector.js";
+import { EMPTY_INSIGHT_USAGE_IN_DOCUMENTS } from "../store/insight_usage/insight_usage_helpers.js";
 import {
-    type IInsightUsageInDocumentItem,
+    type IInsightUsageInDocuments,
     type IInsightUsageOnDashboard,
 } from "../store/insight_usage/insight_usage_state.js";
 import { createAnalyticalDashboard } from "../tests/constants.test.helpers.js";
@@ -54,7 +55,7 @@ const EMPTY_INSIGHT_USAGE: IInsightUsageOnDashboard = {
 describe("Test SaveReportFromKDDialog", () => {
     interface ISelectorValues {
         insightUsedOnDashboards?: IInsightUsageOnDashboard;
-        insightUsedInDocuments?: IInsightUsageInDocumentItem[];
+        insightUsedInDocuments?: IInsightUsageInDocuments;
         openSaveReportFromKD?: boolean;
         editingReportTitle?: string;
         isSaveAsNewReportOnly?: boolean;
@@ -63,7 +64,7 @@ describe("Test SaveReportFromKDDialog", () => {
 
     function renderComponent({
         insightUsedOnDashboards = EMPTY_INSIGHT_USAGE,
-        insightUsedInDocuments = [],
+        insightUsedInDocuments = EMPTY_INSIGHT_USAGE_IN_DOCUMENTS,
         openSaveReportFromKD = true,
         editingReportTitle = "Insight Title",
         isSaveAsNewReportOnly = false,
@@ -281,7 +282,11 @@ describe("Test SaveReportFromKDDialog", () => {
         it("should mention documents and list them when a document uses the visualization", () => {
             renderComponent({
                 insightUsedOnDashboards: dashboards,
-                insightUsedInDocuments: [{ id: "doc1", title: "Board pack" }],
+                insightUsedInDocuments: {
+                    accessibleDocuments: [{ id: "doc1", title: "Board pack" }],
+                    inaccessibleDocumentsCount: 0,
+                    allDocumentsCount: 1,
+                },
             });
 
             expect(screen.getByText("Visualization is used in other places")).toBeInTheDocument();
@@ -292,6 +297,24 @@ describe("Test SaveReportFromKDDialog", () => {
             expect(document.querySelector(".s-insight-usage-document-item").textContent).toEqual(
                 "Board pack",
             );
+        });
+
+        it("should mention reports the user may not open without naming them", () => {
+            renderComponent({
+                insightUsedOnDashboards: dashboards,
+                insightUsedInDocuments: {
+                    accessibleDocuments: [],
+                    inaccessibleDocumentsCount: 2,
+                    allDocumentsCount: 2,
+                },
+            });
+
+            expect(screen.getByText("Visualization is used in other places")).toBeInTheDocument();
+            expect(
+                Array.from(document.querySelectorAll(".s-view-usage summary")).map((s) => s.textContent),
+            ).toEqual(["Dashboards (1)", "Reports (2)"]);
+            expect(document.querySelector(".s-insight-usage-document-item")).toBeNull();
+            expect(screen.getByText("Reports are not shared with you.")).toBeInTheDocument();
         });
     });
 });

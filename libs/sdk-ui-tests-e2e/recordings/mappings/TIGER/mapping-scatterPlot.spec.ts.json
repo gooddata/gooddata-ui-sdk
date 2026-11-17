@@ -1383,6 +1383,137 @@
                     "X-XSS-Protection": "1; mode=block"
                 }
             }
+        },
+        {
+            "name": "api_v1_entities_workspaces_c76e0537d0614abb0027f7c992656b964922506f_visualizationobjects_3fb464aa-4a2c-4412-8811-609e5d6e06a5_include_parameters",
+            "request": {
+                "url": "/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/visualizationObjects/3fb464aa-4a2c-4412-8811-609e5d6e06a5?include=parameters",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "jsonBody": {
+                    "data": {
+                        "attributes": {
+                            "content": {
+                                "buckets": [
+                                    {
+                                        "items": [
+                                            {
+                                                "measure": {
+                                                    "definition": {
+                                                        "measureDefinition": {
+                                                            "filters": [],
+                                                            "item": {
+                                                                "identifier": {
+                                                                    "id": "amount_bop",
+                                                                    "type": "metric"
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "localIdentifier": "e2443104dc0442dcadf04eb8a45996fe",
+                                                    "title": "Amount [BOP]"
+                                                }
+                                            }
+                                        ],
+                                        "localIdentifier": "measures"
+                                    },
+                                    {
+                                        "items": [
+                                            {
+                                                "measure": {
+                                                    "definition": {
+                                                        "measureDefinition": {
+                                                            "filters": [],
+                                                            "item": {
+                                                                "identifier": {
+                                                                    "id": "avg._amount",
+                                                                    "type": "metric"
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "localIdentifier": "218a741d464f47c1bd6e7607ba3ca1c3",
+                                                    "title": "Avg. Amount"
+                                                }
+                                            }
+                                        ],
+                                        "localIdentifier": "secondary_measures"
+                                    },
+                                    {
+                                        "items": [
+                                            {
+                                                "attribute": {
+                                                    "displayForm": {
+                                                        "identifier": {
+                                                            "id": "dt_closedate_timestamp.year",
+                                                            "type": "label"
+                                                        }
+                                                    },
+                                                    "localIdentifier": "073f360b71214bbcab4002517983dc1f"
+                                                }
+                                            }
+                                        ],
+                                        "localIdentifier": "attribute"
+                                    },
+                                    {
+                                        "items": [
+                                            {
+                                                "attribute": {
+                                                    "displayForm": {
+                                                        "identifier": {
+                                                            "id": "f_owner.department_id",
+                                                            "type": "label"
+                                                        }
+                                                    },
+                                                    "localIdentifier": "88027b1059024979a33227cfebad0638"
+                                                }
+                                            }
+                                        ],
+                                        "localIdentifier": "segment"
+                                    }
+                                ],
+                                "filters": [],
+                                "properties": {},
+                                "sorts": [],
+                                "version": "2",
+                                "visualizationUrl": "local:scatter"
+                            },
+                            "createdAt": "2024-05-27 09:56",
+                            "description": "",
+                            "title": "Scatter plot segment by attribute"
+                        },
+                        "id": "3fb464aa-4a2c-4412-8811-609e5d6e06a5",
+                        "meta": {
+                            "origin": {
+                                "originId": "c76e0537d0614abb0027f7c992656b964922506f",
+                                "originType": "NATIVE"
+                            }
+                        },
+                        "type": "visualizationObject"
+                    },
+                    "links": {
+                        "self": "https://automation.staging-ui.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/visualizationObjects/3fb464aa-4a2c-4412-8811-609e5d6e06a5"
+                    }
+                },
+                "headers": {
+                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+                    "Content-Type": "application/json",
+                    "Expires": "0",
+                    "Pragma": "no-cache",
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
+                    "X-Content-Type-Options": "nosniff",
+                    "X-XSS-Protection": "1; mode=block"
+                }
+            }
         }
     ]
 }

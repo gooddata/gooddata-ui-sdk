@@ -2239,6 +2239,14 @@
         "text": "{count, plural, one {Dashboard is} other {Dashboards are}} not shared with you.",
         "crowdinContext": "Message when all dashboards are inaccessible. Example: 'Dashboard is not shared with you' or 'Dashboards are not shared with you'"
     },
+    "dialogs.deleteReportConfirmation.usage.inaccessibleDocuments": {
+        "text": "and <b>{count} more</b> not shared with you.",
+        "crowdinContext": "Follows the list of Publisher reports using the visualization, counting the reports the user may not open. Example: 'and 2 more not shared with you.'"
+    },
+    "dialogs.deleteReportConfirmation.usage.inaccessibleDocumentsOnly": {
+        "text": "{count, plural, one {Report is} other {Reports are}} not shared with you.",
+        "crowdinContext": "Shown instead of the list when the user may open none of the Publisher reports using the visualization. Example: 'Report is not shared with you.' or 'Reports are not shared with you.'"
+    },
     "dialogs.usage.inaccessibleDashboards": {
         "text": "and <b>{count} more</b> not shared with you",
         "crowdinContext": "Message about additional dashboards user cannot access. Example: 'and 2 more not shared with you'"
@@ -2246,6 +2254,14 @@
     "dialogs.usage.inaccessibleDashboardsOnly": {
         "text": "{count} {count, plural, one {dashboard} other {dashboards}} not shared with you",
         "crowdinContext": "Message when user has no access to any dashboards. Example: '1 dashboard not shared with you' or '42 dashboards not shared with you'"
+    },
+    "dialogs.usage.inaccessibleDocuments": {
+        "text": "and <b>{count} more</b> not shared with you",
+        "crowdinContext": "Follows the list of Publisher reports using the visualization, counting the reports the user may not open. Example: 'and 2 more not shared with you'"
+    },
+    "dialogs.usage.inaccessibleDocumentsOnly": {
+        "text": "{count, plural, one {# report} other {# reports}} not shared with you",
+        "crowdinContext": "Shown instead of the list when the user may open none of the Publisher reports using the visualization. Example: '1 report not shared with you' or '3 reports not shared with you'"
     },
     "dialogs.deleteReportConfirmation.deleteProhibited": {
         "text": "The visualization <strong>{deletedReportTitle}</strong> cannot be deleted because it is used on some dashboards. To delete this visualization, remove it from all dashboards first.",

@@ -86,6 +86,7 @@ describe("Report title selector test", () => {
                 referencedDashboards: [createAnalyticalDashboard("title", "id", 1)],
                 allUserDashboards: [createListedDashboard("title", "id", 1)],
                 referencedDocuments: [],
+                accessibleDocumentIds: [],
             },
         });
         const selector = reportTitleSelector(state);

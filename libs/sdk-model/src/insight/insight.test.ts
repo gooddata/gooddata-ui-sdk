@@ -16,6 +16,8 @@ import { type IInsightParameterValue } from "../execution/parameter/index.js";
 import {
     type IAttributeOrMeasure,
     type IFilter,
+    type IParameterDefinition,
+    type IParameterMetadataObject,
     type ISortItem,
     type ITotal,
     attributeDisplayFormRef,
@@ -58,6 +60,7 @@ import {
     insightTotals,
     insightUpdated,
     insightUri,
+    insightValidParameters,
 } from "./index.js";
 
 const MixedBucket = newBucket("bucket1", Account.Name, Won);
@@ -507,6 +510,80 @@ describe("insightSetParameters", () => {
     it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
         expect(() => insightSetParameters(input)).toThrow();
     });
+});
+
+describe("insightValidParameters", () => {
+    const Discount: IInsightParameterValue = { ref: idRef("discount", "parameter"), value: 10 };
+    const Region: IInsightParameterValue = { ref: idRef("region", "parameter"), value: "EU" };
+
+    it("should return all values when the referenced parameters are not loaded", () => {
+        const insight = insightSetParameters(EmptyInsight, [Discount, Region]);
+
+        expect(insightValidParameters(insight)).toEqual([Discount, Region]);
+    });
+
+    it("should return no values when the loaded referenced parameters are empty", () => {
+        const insight = insightWithReferencedParameters([Discount, Region], []);
+
+        expect(insightValidParameters(insight)).toEqual([]);
+    });
+
+    it("should omit a value outside the constraints of its parameter", () => {
+        const insight = insightWithReferencedParameters(
+            [Discount, Region],
+            [
+                parameter("discount", { type: "NUMBER", defaultValue: 1, constraints: { max: 5 } }),
+                parameter("region", { type: "STRING", defaultValue: "US" }),
+            ],
+        );
+
+        expect(insightValidParameters(insight)).toEqual([Region]);
+    });
+
+    it("should omit a value of the wrong type for its parameter", () => {
+        const insight = insightWithReferencedParameters(
+            [Region],
+            [parameter("region", { type: "NUMBER", defaultValue: 1 })],
+        );
+
+        expect(insightValidParameters(insight)).toEqual([]);
+    });
+
+    it("should omit a value whose parameter is not among the referenced parameters", () => {
+        const insight = insightWithReferencedParameters(
+            [Discount, Region],
+            [parameter("discount", { type: "NUMBER", defaultValue: 1 })],
+        );
+
+        expect(insightValidParameters(insight)).toEqual([Discount]);
+    });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => insightValidParameters(input)).toThrow();
+    });
+
+    function insightWithReferencedParameters(
+        values: IInsightParameterValue[],
+        referencedParameters: IParameterMetadataObject[],
+    ): IInsight {
+        const insight = insightSetParameters(EmptyInsight, values);
+        return { insight: { ...insight.insight, referencedParameters } };
+    }
+
+    function parameter(id: string, definition: IParameterDefinition): IParameterMetadataObject {
+        return {
+            id,
+            uri: id,
+            ref: idRef(id, "parameter"),
+            type: "parameter",
+            title: id,
+            description: "",
+            production: true,
+            deprecated: false,
+            unlisted: false,
+            definition,
+        };
+    }
 });
 
 describe("insightSetProperties", () => {

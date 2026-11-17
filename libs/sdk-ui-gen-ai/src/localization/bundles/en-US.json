@@ -181,7 +181,7 @@
     },
     "gd.gen-ai.context.type.publisherDocument": {
         "text": "Document",
-        "crowdinContext": "Accessibility label for the icon marking an AI chatbot context item as a document. Read before the item title."
+        "crowdinContext": "Accessibility label for the icon marking an AI chatbot context item as a document, read before the item title. Also the object type shown in the tooltip of a document mentioned in an AI answer."
     },
     "gd.gen-ai.context.type.visualization": {
         "text": "Visualization",

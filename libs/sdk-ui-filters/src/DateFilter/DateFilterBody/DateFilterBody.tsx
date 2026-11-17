@@ -86,6 +86,7 @@ export interface IDateFilterBodyProps {
 
     onApplyClick: () => void;
     onCancelClick: () => void;
+    onSelectionRestore: (selectedFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => void;
     closeDropdown: () => void;
 
     errors?: IExtendedDateFilterErrors;
@@ -131,6 +132,11 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
     const rootRef = useRef<HTMLDivElement>(null);
     const didResetMobileScroll = useRef(false);
     const didSyncInitialMobileRoute = useRef(false);
+    // Initial value covers the form mobile opens on mount
+    const selectionBeforeForm = useRef({
+        selectedFilterOption: props.selectedFilterOption,
+        excludeCurrentPeriod: props.excludeCurrentPeriod,
+    });
 
     // Gates Apply independently of `errors`: a garbled/emptied PeriodRangePicker field never reaches
     // `onSelectedFilterOptionChange`, so `errors` alone would stay stale and leave Apply enabled - see
@@ -177,6 +183,7 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
         setRoute(newForm);
 
         if (newForm === "absoluteForm" && filterOptions.absoluteForm) {
+            selectionBeforeForm.current = { selectedFilterOption, excludeCurrentPeriod };
             const baseOption =
                 selectedFilterOption.localIdentifier === filterOptions.absoluteForm.localIdentifier
                     ? (selectedFilterOption as IUiAbsoluteDateFilterForm)
@@ -200,6 +207,7 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
         setRoute(newForm);
 
         if (newForm === "relativeForm" && filterOptions.relativeForm) {
+            selectionBeforeForm.current = { selectedFilterOption, excludeCurrentPeriod };
             const isFiscal = fiscalTabsConfig.showTabs && selectedTab === "fiscal";
 
             // Determine which filter option to use as base
@@ -279,6 +287,7 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
         availableGranularities,
         onApplyClick,
         onCancelClick,
+        onSelectionRestore,
         closeDropdown,
         onConfigurationClick,
         onExcludeCurrentPeriodChange,
@@ -361,6 +370,19 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
             e.stopPropagation();
             handleBackNavigation();
         }
+    };
+
+    const handleCancelClick = () => {
+        if (route && !withoutApply) {
+            onSelectionRestore(
+                selectionBeforeForm.current.selectedFilterOption,
+                selectionBeforeForm.current.excludeCurrentPeriod,
+            );
+            handleBackNavigation();
+            return;
+        }
+        onCancelClick();
+        closeDropdown();
     };
 
     const handleFocus = () => {
@@ -554,10 +576,7 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
                             isMobile ? "gd-button-medium" : "gd-button-small",
                             withoutApply ? "s-date-filter-close" : "s-date-filter-cancel",
                         )}
-                        onClick={() => {
-                            onCancelClick();
-                            closeDropdown();
-                        }}
+                        onClick={handleCancelClick}
                     />
                     {!withoutApply && (
                         <DateFilterBodyButton

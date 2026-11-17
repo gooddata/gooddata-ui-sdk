@@ -63,6 +63,7 @@ export function generateLocalId(prefix: string, objRef: ObjRef, inObject: IAttri
  * @param attributeOrRef - either instance of attribute to create filter for or ref or identifier of attribute's display form
  * @param inValues - values to filter for; these can be either specified as AttributeElements object or as an array
  *  of attribute element _values_; if you specify empty array, then the filter will be noop and will be ignored
+ * @param localIdentifier - optional local identifier for the filter
  * @public
  */
 export function newPositiveAttributeFilter(
@@ -100,6 +101,7 @@ export function newPositiveAttributeFilter(
  * @param attributeOrRef - either instance of attribute to create filter for or ref or identifier of attribute's display form
  * @param notInValues - values to filter out; these can be either specified as AttributeElements object or as an array
  *  of attribute element _values_; if you specify empty array, then the filter will be noop and will be ignored
+ * @param localIdentifier - optional local identifier for the filter
  * @public
  */
 export function newNegativeAttributeFilter(
@@ -295,6 +297,7 @@ export function newAbsoluteDateFilter(
  * @param to - end of the interval – negative numbers mean the past, zero means today, positive numbers mean the future
  * @param boundedFilter - optional bounded filter to use in the filter
  * @param localIdentifier - filter local identifier
+ * @param emptyValueHandling - optional handling of empty date values
  *
  * See also {@link DateAttributeGranularity} and {@link DateGranularity}
  * @public
@@ -326,6 +329,8 @@ export function newRelativeDateFilter(
  * Creates a new all time date filter. This filter is used to indicate that there should be no filtering on the given date data set.
  *
  * @param dateDataSet - ref or identifier of the date data set to filter on
+ * @param localIdentifier - optional local identifier for the filter
+ * @param emptyValueHandling - optional handling of empty date values
  * @public
  */
 export function newAllTimeFilter(

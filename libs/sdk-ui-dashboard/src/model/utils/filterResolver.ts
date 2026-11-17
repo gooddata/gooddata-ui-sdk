@@ -26,6 +26,7 @@ import { resolveDisplayFormMetadata } from "./displayFormResolver.js";
  *
  * @param ctx - dashboard context where the resolution is being done
  * @param filters - list of dashboard filters; resolver will extract just the attribute filters from here
+ * @param displayAsLabels - display-as labels to resolve as well
  * @param displayForms - in-memory mapping of known display forms to use during the initial lookup; if not specified, the
  *  code will obtain all catalog display forms; note: this parameter is really only useful during the dashboard initialization
  *  where the catalog is not yet set. once the dashboard is initialized, the parameter is not needed

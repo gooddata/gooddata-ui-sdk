@@ -3,7 +3,13 @@
 import { type ReactNode, useId, useState } from "react";
 
 import classNames from "classnames";
-import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
+import {
+    FormattedMessage,
+    type IntlShape,
+    type MessageDescriptor,
+    defineMessages,
+    useIntl,
+} from "react-intl";
 import { useSelector } from "react-redux";
 
 import { Overlay, UiButton, UiFocusManager, UiIcon, UiSubmenuHeader } from "@gooddata/sdk-ui-kit";
@@ -22,6 +28,7 @@ import {
 } from "../store/insight_usage/insight_usage_selectors.js";
 import {
     type IInsightUsageInDocumentItem,
+    type IInsightUsageInDocuments,
     type IInsightUsageOnDashboard,
     type IInsightUsageOnDashboardItem,
 } from "../store/insight_usage/insight_usage_state.js";
@@ -136,28 +143,38 @@ function UsageGroup({ title, className, children }: IUsageGroupProps) {
     );
 }
 
-function InaccessibleDashboardsMessage({ count }: { count: number }) {
+const inaccessibleMessages = defineMessages({
+    dashboards: { id: "dialogs.usage.inaccessibleDashboards" },
+    dashboardsOnly: { id: "dialogs.usage.inaccessibleDashboardsOnly" },
+    documents: { id: "dialogs.usage.inaccessibleDocuments" },
+    documentsOnly: { id: "dialogs.usage.inaccessibleDocumentsOnly" },
+});
+
+interface IInaccessibleMessageProps {
+    message: MessageDescriptor;
+    count: number;
+    className: string;
+}
+
+function InaccessibleMessage({ message, count, className }: IInaccessibleMessageProps) {
     return (
-        <div className="gd-usages-inaccessible-dashboards s-usages-inaccessible-dashboards">
-            <FormattedMessage
-                id="dialogs.usage.inaccessibleDashboards"
-                values={{ count, b: (chunks) => <b>{chunks}</b> }}
-            />
+        <div className={classNames("gd-usages-inaccessible-dashboards", className)}>
+            <FormattedMessage {...message} values={{ count, b: (chunks) => <b>{chunks}</b> }} />
         </div>
     );
 }
 
-function OnlyInaccessibleDashboardsMessage({ count }: { count: number }) {
+function OnlyInaccessibleMessage({ message, count, className }: IInaccessibleMessageProps) {
     return (
-        <div className="gd-usages-inaccessible-dashboards-only s-usages-inaccessible-dashboards-only">
-            <FormattedMessage id="dialogs.usage.inaccessibleDashboardsOnly" values={{ count }} />
+        <div className={classNames("gd-usages-inaccessible-dashboards-only", className)}>
+            <FormattedMessage {...message} values={{ count }} />
         </div>
     );
 }
 
 interface IDashboardItemsDialog {
     insightUsageOnDashboard: IInsightUsageOnDashboard;
-    documents: IInsightUsageInDocumentItem[];
+    documents: IInsightUsageInDocuments;
     isEmbedded: boolean;
     sourceDashboardIdentifier: string;
     onClose: () => void;
@@ -230,33 +247,58 @@ function DashboardItemsDialog({
                                     </ul>
                                 ) : null}
                                 {renderAlsoInaccessible ? (
-                                    <InaccessibleDashboardsMessage count={inaccessibleDashboardsCount} />
+                                    <InaccessibleMessage
+                                        message={inaccessibleMessages.dashboards}
+                                        count={inaccessibleDashboardsCount}
+                                        className="s-usages-inaccessible-dashboards"
+                                    />
                                 ) : null}
                                 {renderInaccessibleOnly ? (
-                                    <OnlyInaccessibleDashboardsMessage count={inaccessibleDashboardsCount} />
+                                    <OnlyInaccessibleMessage
+                                        message={inaccessibleMessages.dashboardsOnly}
+                                        count={inaccessibleDashboardsCount}
+                                        className="s-usages-inaccessible-dashboards-only"
+                                    />
                                 ) : null}
                             </UsageGroup>
                         ) : null}
-                        {documents.length > 0 ? (
+                        {documents.allDocumentsCount > 0 ? (
                             <UsageGroup
                                 className="s-usages-group-documents"
                                 title={
                                     <FormattedMessage
                                         id="insight.usages.overlay.group.documents"
-                                        values={{ count: documents.length }}
+                                        values={{ count: documents.allDocumentsCount }}
                                     />
                                 }
                             >
-                                <ul className="gd-usages-group-items" role="list">
-                                    {documents.map((item) => (
-                                        <DocumentItem
-                                            key={item.id}
-                                            item={item}
-                                            isEmbedded={isEmbedded}
-                                            documentUriFactory={documentUriFactory}
-                                        />
-                                    ))}
-                                </ul>
+                                {documents.accessibleDocuments.length > 0 ? (
+                                    <ul className="gd-usages-group-items" role="list">
+                                        {documents.accessibleDocuments.map((item) => (
+                                            <DocumentItem
+                                                key={item.id}
+                                                item={item}
+                                                isEmbedded={isEmbedded}
+                                                documentUriFactory={documentUriFactory}
+                                            />
+                                        ))}
+                                    </ul>
+                                ) : null}
+                                {documents.accessibleDocuments.length > 0 &&
+                                documents.inaccessibleDocumentsCount > 0 ? (
+                                    <InaccessibleMessage
+                                        message={inaccessibleMessages.documents}
+                                        count={documents.inaccessibleDocumentsCount}
+                                        className="s-usages-inaccessible-documents"
+                                    />
+                                ) : null}
+                                {documents.accessibleDocuments.length === 0 ? (
+                                    <OnlyInaccessibleMessage
+                                        message={inaccessibleMessages.documentsOnly}
+                                        count={documents.inaccessibleDocumentsCount}
+                                        className="s-usages-inaccessible-documents-only"
+                                    />
+                                ) : null}
                             </UsageGroup>
                         ) : null}
                     </div>
@@ -293,11 +335,12 @@ export function InsightUsageOnDashboards() {
     const toggleOpen = () => setOpen((state) => !state);
 
     const dashboardsCount = insightUsageOnDashboard.allDashboardsCount;
-    const usageLabel = getUsageLabel(intl, dashboardsCount, documents.length);
+    const documentsCount = documents.allDocumentsCount;
+    const usageLabel = getUsageLabel(intl, dashboardsCount, documentsCount);
     return (
         <div className="gd-insight-usage-on-dashboards s-gd-insight-usage-on-dashboards">
             <UiButton
-                label={String(dashboardsCount + documents.length)}
+                label={String(dashboardsCount + documentsCount)}
                 variant="tertiary"
                 size="medium"
                 iconBefore="lineage"

@@ -14,6 +14,7 @@ export {
 export { headersPlugin, headersRules } from "./configurations/headers.js";
 export { importEsmPlugin, importEsmRules } from "./configurations/import-esm.js";
 export { importXOverrides, importXRules } from "./configurations/import-x.js";
+export { jsDocOverrideFiles, jsdocRules } from "./configurations/jsdoc.js";
 export {
     noBarrelFilesOverrides,
     noBarrelFilesPlugin,
@@ -27,6 +28,7 @@ export {
     reactRulesNativeSupported,
 } from "./configurations/react.js";
 export { reactHooksRules } from "./configurations/react-hooks.js";
+export { regexpPlugin, regexpRules } from "./configurations/regexp.js";
 export { sonarjsOverrides, sonarjsPlugin, sonarjsRules } from "./configurations/sonarjs.js";
 export { storybookOverrides, storybookPackages, storybookPlugin } from "./configurations/storybook.js";
 export {

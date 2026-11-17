@@ -474,6 +474,10 @@ export function isAbsoluteDashboardDateFilter(dateFilter: IDashboardDateFilter):
  * @param granularity - granularity of the filters (month, year, etc.)
  * @param from - start of the interval – negative numbers mean the past, zero means today, positive numbers mean the future
  * @param to - end of the interval – negative numbers mean the past, zero means today, positive numbers mean the future
+ * @param dataSet - optional ref of the date data set to filter on
+ * @param localIdentifier - optional local identifier of the filter
+ * @param boundedFilter - optional bounded filter to use in the filter
+ * @param emptyValueHandling - optional handling of empty date values
  * @alpha
  */
 export function newRelativeDashboardDateFilter(
@@ -504,6 +508,10 @@ export function newRelativeDashboardDateFilter(
  *
  * @param from - start of the interval in ISO-8601 calendar date format
  * @param to - end of the interval in ISO-8601 calendar date format
+ * @param dataSet - optional ref of the date data set to filter on
+ * @param localIdentifier - optional local identifier of the filter
+ * @param emptyValueHandling - optional handling of empty date values
+ * @param granularity - optional granularity of the filter; defaults to GDC.time.date
  * @alpha
  */
 export function newAbsoluteDashboardDateFilter(

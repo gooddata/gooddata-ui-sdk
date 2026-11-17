@@ -54,6 +54,9 @@ export function InfoComponent({
                     {item.type === "analyticalDashboard"
                         ? intl.formatMessage({ id: "gd.gen-ai.autocomplete.analyticalDashboard" })
                         : null}
+                    {item.type === "document"
+                        ? intl.formatMessage({ id: "gd.gen-ai.context.type.publisherDocument" })
+                        : null}
                     {item.type === "displayForm"
                         ? intl.formatMessage({ id: "gd.gen-ai.autocomplete.displayForm" })
                         : null}

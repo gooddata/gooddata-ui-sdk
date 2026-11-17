@@ -360,6 +360,7 @@ export interface IRequestCorrelationMetadata {
  *
  * @param definition - execution definition to prepare execution for
  * @param backend - backend to use
+ * @param options - optional prepared execution options
  * @returns new prepared execution
  * @public
  */

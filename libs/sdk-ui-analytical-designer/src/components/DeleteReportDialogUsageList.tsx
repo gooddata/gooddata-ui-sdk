@@ -2,13 +2,15 @@
 
 import { type ReactNode, useState } from "react";
 
-import { FormattedMessage, defineMessages, useIntl } from "react-intl";
+import { FormattedMessage, type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 
-import { type IMetadataObject } from "@gooddata/sdk-model";
 import { Message, UiButton } from "@gooddata/sdk-ui-kit";
 
 import { type AnalyticalDashboardUriFactory, type DocumentUriFactory } from "../selectors/uri_selector.js";
-import { type IInsightUsageOnDashboard } from "../store/insight_usage/insight_usage_state.js";
+import {
+    type IInsightUsageInDocuments,
+    type IInsightUsageOnDashboard,
+} from "../store/insight_usage/insight_usage_state.js";
 
 import { Spinner } from "./catalog/blocks/Spinner.js";
 import { DeleteReportDialogUsageListItem } from "./DeleteReportDialogUsageListItem.js";
@@ -25,9 +27,9 @@ const messages = defineMessages({
     showLess: { id: "dialogs.deleteReportConfirmation.usage.showLess" },
     inaccessibleDashboards: { id: "dialogs.deleteReportConfirmation.usage.inaccessibleDashboards" },
     inaccessibleDashboardsOnly: { id: "dialogs.deleteReportConfirmation.usage.inaccessibleDashboardsOnly" },
+    inaccessibleDocuments: { id: "dialogs.deleteReportConfirmation.usage.inaccessibleDocuments" },
+    inaccessibleDocumentsOnly: { id: "dialogs.deleteReportConfirmation.usage.inaccessibleDocumentsOnly" },
 });
-
-type ReferencingDocument = Pick<IMetadataObject, "id" | "title">;
 
 const strong = (chunks: ReactNode) => <strong>{chunks}</strong>;
 
@@ -35,7 +37,7 @@ interface IDeleteReportDialogUsageListProps {
     isLoading: boolean;
     isEmbedded: boolean;
     referencingDashboards: IInsightUsageOnDashboard;
-    referencingDocuments: ReferencingDocument[];
+    referencingDocuments: IInsightUsageInDocuments;
     analyticalDashboardUriFactory: AnalyticalDashboardUriFactory;
     documentUriFactory: DocumentUriFactory;
 }
@@ -117,37 +119,45 @@ function ReferencedDashboardsList({
                 </ul>
             ) : null}
             {renderAlsoInaccessible ? (
-                <InaccessibleDashboardsMessage count={inaccessibleDashboardsCount} />
+                <InaccessibleMessage
+                    message={messages.inaccessibleDashboards}
+                    count={inaccessibleDashboardsCount}
+                />
             ) : null}
             {renderInaccessibleOnly ? (
-                <OnlyInaccessibleDashboardsMessage count={inaccessibleDashboardsCount} />
+                <OnlyInaccessibleMessage
+                    message={messages.inaccessibleDashboardsOnly}
+                    count={inaccessibleDashboardsCount}
+                />
             ) : null}
         </>
     );
 }
 
-function InaccessibleDashboardsMessage({ count }: { count: number }) {
+interface IInaccessibleMessageProps {
+    message: MessageDescriptor;
+    count: number;
+}
+
+function InaccessibleMessage({ message, count }: IInaccessibleMessageProps) {
     return (
         <div className="gd-delete-report-dialog-usage-inaccessible s-delete-report-dialog-usage-inaccessible">
-            <FormattedMessage
-                {...messages.inaccessibleDashboards}
-                values={{ count, b: (chunks) => <b>{chunks}</b> }}
-            />
+            <FormattedMessage {...message} values={{ count, b: (chunks) => <b>{chunks}</b> }} />
         </div>
     );
 }
 
-function OnlyInaccessibleDashboardsMessage({ count }: { count: number }) {
+function OnlyInaccessibleMessage({ message, count }: IInaccessibleMessageProps) {
     return (
         <div className="gd-delete-report-dialog-usage-inaccessible s-delete-report-dialog-usage-inaccessible">
-            <FormattedMessage {...messages.inaccessibleDashboardsOnly} values={{ count }} />
+            <FormattedMessage {...message} values={{ count }} />
         </div>
     );
 }
 
 interface IReferencedDocumentsListProps {
     isEmbedded: boolean;
-    referencingDocuments: ReferencingDocument[];
+    referencingDocuments: IInsightUsageInDocuments;
     documentUriFactory: DocumentUriFactory;
 }
 
@@ -156,18 +166,36 @@ function ReferencedDocumentsList({
     referencingDocuments,
     documentUriFactory,
 }: IReferencedDocumentsListProps) {
+    const { accessibleDocuments, inaccessibleDocumentsCount } = referencingDocuments;
+
     return (
-        <ul className="gd-delete-report-dialog-usage-list">
-            {referencingDocuments.map(({ id, title }) => (
-                <DeleteReportDialogUsageListItem
-                    key={id}
-                    id={id}
-                    title={title}
-                    isEmbedded={isEmbedded}
-                    uriFactory={documentUriFactory}
+        <>
+            {accessibleDocuments.length > 0 ? (
+                <ul className="gd-delete-report-dialog-usage-list">
+                    {accessibleDocuments.map(({ id, title }) => (
+                        <DeleteReportDialogUsageListItem
+                            key={id}
+                            id={id}
+                            title={title}
+                            isEmbedded={isEmbedded}
+                            uriFactory={documentUriFactory}
+                        />
+                    ))}
+                </ul>
+            ) : null}
+            {accessibleDocuments.length > 0 && inaccessibleDocumentsCount > 0 ? (
+                <InaccessibleMessage
+                    message={messages.inaccessibleDocuments}
+                    count={inaccessibleDocumentsCount}
                 />
-            ))}
-        </ul>
+            ) : null}
+            {accessibleDocuments.length === 0 ? (
+                <OnlyInaccessibleMessage
+                    message={messages.inaccessibleDocumentsOnly}
+                    count={inaccessibleDocumentsCount}
+                />
+            ) : null}
+        </>
     );
 }
 
@@ -191,7 +219,7 @@ export function DeleteReportDialogUsageList({
     }
 
     const dashboardsCount = referencingDashboards.allDashboardsCount;
-    const documentsCount = referencingDocuments.length;
+    const documentsCount = referencingDocuments.allDocumentsCount;
 
     const dashboardsList = (
         <ReferencedDashboardsList

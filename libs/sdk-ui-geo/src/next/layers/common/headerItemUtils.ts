@@ -44,6 +44,10 @@ export function getSegmentDataAndUris(
  * Unlike `getSegmentDataAndUris`, this preserves raw URI values without
  * substituting `EMPTY_SEGMENT_VALUE` for nulls.
  *
+ * @param attributeHeaderItems - attribute header items per attribute
+ * @param dataIndex - index of the attribute to read
+ * @param emptyHeaderString - string to use for empty header values
+ * @param nullHeaderString - string to use for null header values
  * @param useFormattedName - read the formatted element value (for values shown to the user); pass false
  *  for values used to identify something, e.g. area identifiers matched against map features
  */

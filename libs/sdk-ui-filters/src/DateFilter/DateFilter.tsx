@@ -531,6 +531,17 @@ export const DateFilter: NamedExoticComponent<IDateFilterProps> = memo(function 
         pendingSelectRef.current = {};
     };
 
+    const handleSelectionRestore = (
+        selectedFilterOption: DateFilterOption,
+        excludeCurrentPeriod: boolean,
+    ) => {
+        setState((prevState) => ({
+            ...prevState,
+            ...getStateFromSelectedOption(selectedFilterOption, excludeCurrentPeriod),
+        }));
+        pendingSelectRef.current = {};
+    };
+
     const handleSelectedFilterOptionChange = (selectedFilterOption: DateFilterOption) => {
         setState((prevState) => {
             // Merging against `prevState` rather than the render snapshot mirrors the former
@@ -573,6 +584,7 @@ export const DateFilter: NamedExoticComponent<IDateFilterProps> = memo(function 
             locale={locale}
             onApplyClick={handleApplyClick}
             onCancelClick={onCancelClicked}
+            onSelectionRestore={handleSelectionRestore}
             onDropdownOpenChanged={onDropdownOpenChanged}
             onExcludeCurrentPeriodChange={handleExcludeCurrentPeriodChange}
             onSelectedFilterOptionChange={handleSelectedFilterOptionChange}

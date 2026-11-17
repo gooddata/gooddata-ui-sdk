@@ -29,6 +29,7 @@ import { ALL_TIME_FILTER_OPTION, RELATIVE_PERIOD_FILTER_OPTION } from "../defaul
  * @param allRelativeDateFilterPresets -
  * @param selectedDateDataset -
  * @param dateDatasetRefsWithGranularities -
+ * @param isSecondsGranularityEnabled - whether the seconds granularity is supported
  */
 export const useSupportedDateFilterPresets = (
     allRelativeDateFilterPresets: DateFilterRelativeOptionGroup,

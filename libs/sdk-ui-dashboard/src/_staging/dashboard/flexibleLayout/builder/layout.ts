@@ -42,6 +42,7 @@ export class DashboardLayoutBuilder<TWidget> implements IDashboardLayoutBuilder<
      * Creates an instance of DashboardLayoutBuilder for particular layout.
      *
      * @param layout - layout to modify
+     * @param layoutPath - layout path in case of nested layout
      */
     public static for<TWidget>(
         layout: IDashboardLayout<TWidget>,

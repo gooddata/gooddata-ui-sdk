@@ -157,6 +157,7 @@ export type ChangeDateFilterSelection = IDashboardCommand & {
  * @param dataSet -
  * @param isWorkingSelectionChange -
  * @param boundedFilter -
+ * @param emptyValueHandling - how the filter treats empty date values
  * @see {@link ChangeDateFilterSelection} for a more complete description of the different parameters
  *
  * @public
@@ -280,6 +281,7 @@ export function applyDateFilter(filter: IDateFilter, correlationId?: string): Ch
  * @param dataSet -
  * @param isWorkingSelectionChange -
  * @param localIdentifier -
+ * @param emptyValueHandling - how the filter treats empty date values
  *
  * @public
  */
@@ -1029,6 +1031,7 @@ export type ReplaceAttributeFilterItemSelection = IDashboardCommand & {
  * @param filterLocalId - dashboard attribute filter's local id
  * @param filter - the replacement filter item
  * @param correlationId - specify correlation id to use for this command
+ * @param isSelectionInvalid - whether the selection is invalid
  *
  * @internal
  */
@@ -1081,6 +1084,7 @@ export function replaceAttributeFilterItemSelectionForSelectionTypeChange(
  * @param filterLocalId - dashboard attribute filter's local id
  * @param filter - the replacement filter item
  * @param correlationId - specify correlation id to use for this command
+ * @param isSelectionInvalid - whether the selection is invalid
  *
  * @internal
  */

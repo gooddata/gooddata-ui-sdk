@@ -265,7 +265,7 @@ export function createClusterLabels(dataSourceName: string, layerId?: string): S
  *
  * @param dataSourceName - Name of the GeoJSON data source
  * @param config - Geo chart configuration
- * @param geoData - Geographic data for metric-based sizing
+ * @param _geoData - Geographic data for metric-based sizing (unused)
  * @param layerId - Optional custom layer ID (defaults to DEFAULT_LAYER_NAME)
  * @returns MapLibre symbol layer specification
  *

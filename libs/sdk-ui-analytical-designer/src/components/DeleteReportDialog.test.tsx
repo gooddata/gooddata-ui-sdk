@@ -5,10 +5,20 @@ import { Provider } from "react-redux";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { type IAnalyticalWorkspace, type IInsightReferencing } from "@gooddata/sdk-backend-spi";
-import { type IListedDashboard, type IMetadataObject, idRef } from "@gooddata/sdk-model";
+import {
+    type IAnalyticalWorkspace,
+    type IInsightReferencing,
+    type IPublisherDocumentSummaryV2,
+} from "@gooddata/sdk-backend-spi";
+import {
+    type IListedDashboard,
+    type IMetadataObject,
+    type IWorkspacePermissions,
+    idRef,
+} from "@gooddata/sdk-model";
 
 import { deleteReportConfirmation } from "../actions/delete_actions.js";
+import { workspacePermissionsSuccess } from "../actions/permissions_actions.js";
 import { adoptHostBackend, resetBackend } from "../backend.js";
 import { createStore } from "../create_store.js";
 import { withIntl } from "../utils/with_intl.js";
@@ -33,17 +43,30 @@ function metadataObject(
     };
 }
 
-function useBackend(referencing: IInsightReferencing, userDashboards: IListedDashboard[] = []) {
+function useBackend(
+    referencing: IInsightReferencing,
+    userDashboards: IListedDashboard[] = [],
+    documentSummaries: Promise<IPublisherDocumentSummaryV2[]> = Promise.resolve([]),
+) {
     const instance = dummyBackend();
+    const documentsQuery = {
+        withFilter: () => documentsQuery,
+        withSize: () => documentsQuery,
+        query: () => documentSummaries.then((items) => ({ items })),
+    };
     vi.spyOn(instance, "workspace").mockReturnValue({
         insights: () => ({ getInsightReferencingObjects: () => Promise.resolve(referencing) }),
         dashboards: () => ({ getDashboards: () => Promise.resolve(userDashboards) }),
+        publisherV2: () => ({ getDocumentsQuery: () => documentsQuery }),
     } as unknown as IAnalyticalWorkspace);
     adoptHostBackend({ instance });
 }
 
-function renderDialog() {
+function renderDialog(permissions?: Partial<IWorkspacePermissions>) {
     const { store } = createStore();
+    if (permissions) {
+        store.dispatch(workspacePermissionsSuccess("workspace", permissions as IWorkspacePermissions));
+    }
     store.dispatch(deleteReportConfirmation(idRef("chart", "insight"), { title: "Revenue by region" }));
     const Wrapped = withIntl(DeleteReportDialog);
     return render(
@@ -118,6 +141,43 @@ describe("DeleteReportDialog", () => {
         expect(await screen.findByText(/used on some dashboards/)).toBeTruthy();
         expect(screen.queryByText(/The visualization is used in/)).toBeNull();
         expect(isDeleteDisabled()).toBe(true);
+    });
+
+    it("counts a report the user may not open without naming or linking it", async () => {
+        useBackend(
+            { analyticalDashboards: [], documents: [metadataObject("document", "pack", "Q3 board pack")] },
+            [],
+            Promise.resolve([
+                {
+                    ref: idRef("pack", "document"),
+                    createdBy: { login: "someone" },
+                } as IPublisherDocumentSummaryV2,
+            ]),
+        );
+        renderDialog({ canCreateDocument: false, canManageProject: false });
+
+        expect(await screen.findByText(/used in some reports\. To delete/)).toBeTruthy();
+        expect(screen.getByText(/The visualization is used in/).textContent).toContain("1 report");
+        expect(isDeleteDisabled()).toBe(true);
+
+        fireEvent.click(document.querySelector(".s-delete-report-dialog-usage-more button")!);
+        expect(screen.getByText("Report is not shared with you.")).toBeTruthy();
+        expect(screen.queryByText("Q3 board pack")).toBeNull();
+    });
+
+    it("counts the reports as not shared when their creators cannot be loaded", async () => {
+        useBackend(
+            { analyticalDashboards: [], documents: [metadataObject("document", "pack", "Q3 board pack")] },
+            [],
+            Promise.reject(new Error("unavailable")),
+        );
+        renderDialog({ canCreateDocument: false, canManageProject: false });
+
+        expect(await screen.findByText(/used in some reports\. To delete/)).toBeTruthy();
+        expect(isDeleteDisabled()).toBe(true);
+
+        fireEvent.click(document.querySelector(".s-delete-report-dialog-usage-more button")!);
+        expect(screen.queryByText("Q3 board pack")).toBeNull();
     });
 
     it("allows the delete of a visualization nothing uses", async () => {

@@ -99,6 +99,8 @@ function createDashboard(ctx: DashboardContext, saveAsCtx: DashboardSaveAsContex
  * Removes widget identities from all tab layouts to ensure new widgets are created.
  *
  * @param tabs - Array of TabState objects from the dashboard state
+ * @param parametersByTab - Smart-persisted parameters keyed by tab localIdentifier
+ * @param useOriginalFilterContext - Whether to save the original filter context instead of the current one
  * @returns Array of IDashboardTab objects ready for saving to backend
  */
 function processExistingTabsForSaveAs(

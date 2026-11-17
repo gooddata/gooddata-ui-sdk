@@ -44,7 +44,8 @@ import {
     measureLocalId,
 } from "../execution/measure/index.js";
 import { type IInsightParameterValue } from "../execution/parameter/index.js";
-import { type ObjRef, serializeObjRef } from "../objRef/index.js";
+import { type IParameterMetadataObject, isValidParameterValue } from "../ldm/metadata/parameter/index.js";
+import { type ObjRef, areObjRefsEqual, serializeObjRef } from "../objRef/index.js";
 import { type IUser } from "../user/index.js";
 
 /**
@@ -75,6 +76,13 @@ export type IInsight = IInsightDefinition &
              * @alpha
              */
             permissions?: AccessGranularPermission[];
+
+            /**
+             * The parameters that the insight references.
+             * Only populated when the backend was asked for them, undefined otherwise.
+             * @alpha
+             */
+            referencedParameters?: IParameterMetadataObject[];
 
             /**
              * Certification metadata.
@@ -991,6 +999,35 @@ export function insightParameters(insight: IInsightDefinition): IInsightParamete
     invariant(insight, "insight must be specified");
 
     return insight.insight.parameters ?? [];
+}
+
+/**
+ * Gets the parameter values of an insight that are valid for their parameter.
+ *
+ * @remarks
+ * When the referenced parameters of the insight are not loaded, all values are returned. When they
+ * are loaded, a value is returned only when its parameter is there and the value is valid for it.
+ *
+ * @returns empty array when insight has no valid parameter values
+ * @alpha
+ */
+export function insightValidParameters(insight: IInsight): IInsightParameterValue[] {
+    const { referencedParameters } = insight.insight;
+    if (!referencedParameters) {
+        return insightParameters(insight);
+    }
+
+    const validValues: IInsightParameterValue[] = [];
+    for (const stored of insightParameters(insight)) {
+        const parameter = referencedParameters.find((candidate) =>
+            areObjRefsEqual(candidate.ref, stored.ref),
+        );
+        if (parameter && isValidParameterValue(parameter.definition, stored.value)) {
+            validValues.push(stored);
+        }
+    }
+
+    return validValues;
 }
 
 /**

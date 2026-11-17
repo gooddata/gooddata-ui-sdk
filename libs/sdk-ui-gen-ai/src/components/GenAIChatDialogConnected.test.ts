@@ -18,7 +18,12 @@ import {
     setSelectedEffortAction,
 } from "../store/messages/messagesSlice.js";
 
-import { type SeedInput, buildSeedActions, toGenAIChatConnectedEvent } from "./GenAIChatDialogConnected.js";
+import {
+    type SeedInput,
+    buildSeedActions,
+    getChatObjectTypes,
+    toGenAIChatConnectedEvent,
+} from "./GenAIChatDialogConnected.js";
 
 describe("toGenAIChatConnectedEvent", () => {
     it("forwards clarification answers once with the original correlated payload", () => {
@@ -137,5 +142,43 @@ describe("buildSeedActions", () => {
         expect(actions.map((action) => action.type)).toEqual(expectedTypes);
         const effortAction = actions.find(setSelectedEffortAction.match);
         expect(effortAction?.payload.effort).toBe(expectedEffort);
+    });
+});
+
+const ALL_DOCUMENT_FLAGS = {
+    enableBusinessBriefingReportsApp: true,
+    enablePublisherV2: true,
+    enableCatalogDocuments: true,
+};
+
+describe("getChatObjectTypes", () => {
+    it.each([
+        [false, ["dashboard", "visualization", "document"]],
+        [true, ["dashboard", "visualization", "metric", "document"]],
+    ])("with all document flags on and canManage=%s searches %j", (canManage, expected) => {
+        expect(getChatObjectTypes({ canManage, settings: ALL_DOCUMENT_FLAGS })).toEqual(expected);
+    });
+
+    it.each(["enableBusinessBriefingReportsApp", "enablePublisherV2", "enableCatalogDocuments"] as const)(
+        "does not search documents while %s is off",
+        (flag) => {
+            expect(
+                getChatObjectTypes({ canManage: true, settings: { ...ALL_DOCUMENT_FLAGS, [flag]: false } }),
+            ).toEqual(["dashboard", "visualization", "metric"]);
+        },
+    );
+
+    it("does not search documents before the settings are loaded", () => {
+        expect(getChatObjectTypes({ canManage: true, settings: undefined })).toEqual([
+            "dashboard",
+            "visualization",
+            "metric",
+        ]);
+    });
+
+    it("returns the host override as is", () => {
+        expect(
+            getChatObjectTypes({ override: ["metric"], canManage: true, settings: ALL_DOCUMENT_FLAGS }),
+        ).toEqual(["metric"]);
     });
 });

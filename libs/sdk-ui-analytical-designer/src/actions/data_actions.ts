@@ -66,8 +66,13 @@ export const setDateDatasetsDropdownLoaded = createAction(
 
 export const updateInsightUsageOnDashboards = createAction(
     ActionTypeKeys.STORE_UPDATE_INSIGHT_USAGE_ON_DASHBOARDS,
-    (usages: IMetadataObject[], dashboards: IListedDashboard[], documents: IMetadataObject[] = []) => ({
-        payload: { usages, dashboards, documents },
+    (
+        usages: IMetadataObject[],
+        dashboards: IListedDashboard[],
+        documents: IMetadataObject[] = [],
+        accessibleDocumentIds: string[] = [],
+    ) => ({
+        payload: { usages, dashboards, documents, accessibleDocumentIds },
     }),
 );
 

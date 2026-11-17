@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { type MessageDescriptor } from "react-intl";
 
 import { messages } from "../../locales.js";
@@ -19,6 +20,7 @@ export class DerivedMeasureTitleSuffixFactory {
     /**
      * Create a new instance of the class.
      * @param locale - The locale used for translation.
+     * @param messages - The localized messages for the locale.
      */
     constructor(locale: ILocale, messages: Record<string, string>) {
         this.locale = locale;

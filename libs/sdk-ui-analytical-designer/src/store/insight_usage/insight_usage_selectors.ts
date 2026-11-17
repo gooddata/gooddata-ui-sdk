@@ -8,12 +8,12 @@ import { getSourceDashboardId } from "../../selectors/route_selector.js";
 import { type IAppState } from "../types.js";
 
 import {
+    EMPTY_INSIGHT_USAGE_IN_DOCUMENTS,
     EMPTY_INSIGHT_USAGE_ON_DASHBOARDS,
     getInsightUsageInDocuments,
     getInsightUsageOnDashboards,
     sortDashboards,
 } from "./insight_usage_helpers.js";
-import { type IInsightUsageInDocumentItem } from "./insight_usage_state.js";
 
 /** The domain's single input selector. */
 export const getInsightUsageState = (state: IAppState) => state.data.insightUsagesOnDashboards;
@@ -42,9 +42,9 @@ export const getInsightUsageOnDashboardsSelector = createSelector(
     },
 );
 
-const NO_DOCUMENTS: IInsightUsageInDocumentItem[] = [];
-
-/** The Publisher documents that show the insight, sorted by title. */
+/** The Publisher documents that show the insight: the ones the user may open, sorted by title, and a count of the rest. */
 export const getInsightUsageInDocumentsSelector = createSelector(getInsightUsageState, (usage) =>
-    usage ? getInsightUsageInDocuments(usage.referencedDocuments) : NO_DOCUMENTS,
+    usage
+        ? getInsightUsageInDocuments(usage.referencedDocuments, usage.accessibleDocumentIds)
+        : EMPTY_INSIGHT_USAGE_IN_DOCUMENTS,
 );

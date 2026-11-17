@@ -67,7 +67,10 @@ function getConditionsProblem(conditions: unknown): string | undefined {
  * Throw if `testConditions.required` is set and a test ends up without conditions, neither its own
  * nor inherited from an enclosing describe.
  *
+ * @param testConditions - the test conditions configuration
+ * @param conditions - the test's own or inherited conditions
  * @param where - call description used in the error message, e.g. `test("title")`
+ * @param file - the spec file, used in the error message
  */
 export function assertRequiredConditions<TestConditionsValue extends TestConditionsValueConstraint>(
     testConditions: ITestConditions<TestConditionsValue> | undefined,

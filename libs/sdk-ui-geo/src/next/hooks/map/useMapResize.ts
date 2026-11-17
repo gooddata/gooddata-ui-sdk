@@ -26,6 +26,8 @@ import { type IMapViewport } from "../../types/map/provider.js";
  * @param isMapReady - Whether map is ready for updates
  * @param chartContainerRect - Container dimensions from react-measure
  * @param viewport - Viewport configuration to reapply after resize
+ * @param dataViewport - Viewport computed from the data
+ * @param config - Chart configuration
  *
  * @internal
  */

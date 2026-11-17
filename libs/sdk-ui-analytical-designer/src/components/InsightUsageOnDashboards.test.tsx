@@ -5,7 +5,7 @@ import { afterAll, describe, expect, it, vi } from "vitest";
 
 import { type AnalyticalDashboardUriFactory, type DocumentUriFactory } from "../selectors/uri_selector.js";
 import {
-    type IInsightUsageInDocumentItem,
+    type IInsightUsageInDocuments,
     type IInsightUsageOnDashboard,
 } from "../store/insight_usage/insight_usage_state.js";
 import { createAnalyticalDashboard } from "../tests/constants.test.helpers.js";
@@ -102,9 +102,15 @@ interface IInsightUsageOnDashboardsStateValues {
     sourceDashboardIdentifier?: string;
     isAllowedDashboardLinks: boolean;
     analyticalDashboardUriFactory: AnalyticalDashboardUriFactory;
-    documents: IInsightUsageInDocumentItem[];
+    documents: IInsightUsageInDocuments;
     documentUriFactory: DocumentUriFactory;
 }
+
+const NO_DOCUMENTS: IInsightUsageInDocuments = {
+    accessibleDocuments: [],
+    inaccessibleDocumentsCount: 0,
+    allDocumentsCount: 0,
+};
 
 const NO_DASHBOARDS: IInsightUsageOnDashboard = {
     accessibleDashboards: [],
@@ -125,7 +131,7 @@ describe("InsightUsageOnDashboards", () => {
             isEmbedded: false,
             isAllowedDashboardLinks: true,
             analyticalDashboardUriFactory: (id: string) => `/${id}`,
-            documents: [],
+            documents: NO_DOCUMENTS,
             documentUriFactory: (id: string) => `/document/${id}`,
             ...userValues,
         };
@@ -334,10 +340,14 @@ describe("InsightUsageOnDashboards", () => {
     });
 
     describe("documents", () => {
-        const documents: IInsightUsageInDocumentItem[] = [
-            { id: "doc1", title: "Board pack" },
-            { id: "doc2", title: "Weekly review" },
-        ];
+        const documents: IInsightUsageInDocuments = {
+            accessibleDocuments: [
+                { id: "doc1", title: "Board pack" },
+                { id: "doc2", title: "Weekly review" },
+            ],
+            inaccessibleDocumentsCount: 0,
+            allDocumentsCount: 2,
+        };
 
         it("should count and describe documents when no dashboard uses the visualization", () => {
             renderComponent({ insightUsageOnDashboard: NO_DASHBOARDS, documents });
@@ -404,6 +414,38 @@ describe("InsightUsageOnDashboards", () => {
             fireEvent.click(screen.getByRole("button", { name: "Used in 2 reports" }));
 
             expect(document.querySelector(".s-usage-document-item a")).toBeNull();
+        });
+
+        it("should count reports the user may not open without naming them", () => {
+            renderComponent({
+                insightUsageOnDashboard: NO_DASHBOARDS,
+                documents: {
+                    accessibleDocuments: [{ id: "doc1", title: "Board pack" }],
+                    inaccessibleDocumentsCount: 2,
+                    allDocumentsCount: 3,
+                },
+            });
+            fireEvent.click(screen.getByRole("button", { name: "Used in 3 reports" }));
+
+            const overlay = within(document.querySelector<HTMLElement>(".s-usages-overlay-body"));
+            expect(overlay.getByText("Reports (3)")).toBeInTheDocument();
+            expect(document.querySelectorAll(".s-usage-document-item")).toHaveLength(1);
+            expect(document.querySelector(".s-usages-inaccessible-documents").textContent).toEqual(
+                "and 2 more not shared with you",
+            );
+        });
+
+        it("should only count the reports when the user may open none of them", () => {
+            renderComponent({
+                insightUsageOnDashboard: NO_DASHBOARDS,
+                documents: { accessibleDocuments: [], inaccessibleDocumentsCount: 1, allDocumentsCount: 1 },
+            });
+            fireEvent.click(screen.getByRole("button", { name: "Used in 1 report" }));
+
+            expect(document.querySelectorAll(".s-usage-document-item")).toHaveLength(0);
+            expect(document.querySelector(".s-usages-inaccessible-documents-only").textContent).toEqual(
+                "1 report not shared with you",
+            );
         });
     });
 });

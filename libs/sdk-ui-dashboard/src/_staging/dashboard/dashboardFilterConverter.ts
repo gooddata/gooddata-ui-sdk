@@ -18,6 +18,8 @@ import { DateFilterHelpers, type DateFilterOption } from "@gooddata/sdk-ui-filte
  *
  * @param dateFilterOption - date filter option to convert
  * @param excludeCurrentPeriod - whether or not to exclude the current period
+ * @param dataSet - optional date dataset of the filter
+ * @param localIdentifier - optional local identifier of the filter
  * @returns converted filter
  */
 export function dateFilterOptionToDashboardDateFilter(

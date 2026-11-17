@@ -133,6 +133,7 @@ function getSankeyDimensions(insight: IInsightDefinition): IDimension[] {
  *
  * @param insight - insight being visualized
  * @param type - visualization type string
+ * @param customVisualizationConfig - optional custom visualization config
  * @internal
  */
 export function generateDimensions(

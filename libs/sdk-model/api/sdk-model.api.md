@@ -4689,6 +4689,7 @@ export type IInsight = IInsightDefinition & IInsightIdentity & {
         isLocked?: boolean;
         isDraft?: boolean;
         permissions?: AccessGranularPermission[];
+        referencedParameters?: IParameterMetadataObject[];
         certification?: IObjectCertification;
     };
 };
@@ -5540,6 +5541,9 @@ export const insightUpdatedComparator: (direction: ComparatorDirection) => IComp
 
 // @public
 export function insightUri(insight: IInsight): string;
+
+// @alpha
+export function insightValidParameters(insight: IInsight): IInsightParameterValue[];
 
 // @alpha (undocumented)
 export function insightVisualizationType(insight: IInsightDefinition): string;

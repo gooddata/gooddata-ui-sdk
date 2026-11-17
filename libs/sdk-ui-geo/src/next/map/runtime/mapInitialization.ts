@@ -53,6 +53,7 @@ interface IMapInitializationOptions extends IMapOptions {
  *
  * @param options - Map initialization options including container, center, zoom, bounds, etc.
  * @param locale - Optional MapLibre locale configuration for cooperative gestures
+ * @param backend - Optional analytical backend
  * @returns Promise resolving to map instance, tooltip, and maplibre-gl module
  *
  * @internal
