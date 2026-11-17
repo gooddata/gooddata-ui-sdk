@@ -62,6 +62,7 @@ export { clearInsightViewCaches, clearInsightViewCacheForInsight } from "./dataL
 export { InsightView } from "./insightView/InsightView.js";
 export { InsightError, type IInsightErrorProps } from "./insightView/InsightError.js";
 export { InsightRenderer, type IInsightRendererProps } from "./insightView/InsightRenderer.js";
+export { withStoredParameterValues } from "./insightView/withStoredParameterValues.js";
 export { type IInsightViewProps, type IInsightTitleProps };
 export { Automations } from "./automations/Automations.js";
 export { InsightPicker } from "./insightPicker/InsightPicker.js";

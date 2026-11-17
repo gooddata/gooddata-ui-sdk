@@ -12,6 +12,7 @@ import {
     isFactItem,
     isLabelItem,
     isMetricItem,
+    isParameterItem,
 } from "@gooddata/api-client-tiger";
 import {
     ActionsApi_GetDependentEntitiesGraphFromEntryPoints,
@@ -49,6 +50,7 @@ import {
     type IMetadataObjectBase,
     type IMetadataObjectIdentity,
     type IObjectCertificationWrite,
+    type IParameterMetadataObject,
     type IVisualizationClass,
     type ObjRef,
     insightFilters,
@@ -77,6 +79,7 @@ import {
     visualizationObjectDocumentToInsight,
 } from "../../../convertors/fromBackend/InsightConverter.js";
 import { isInheritedObject } from "../../../convertors/fromBackend/ObjectInheritance.js";
+import { convertParameter } from "../../../convertors/fromBackend/ParameterConverter.js";
 import { convertUserIdentifier } from "../../../convertors/fromBackend/UsersConverter.js";
 import { convertConditionalFormatting } from "../../../convertors/toBackend/ConditionalFormattingConverter.js";
 import { convertInsight } from "../../../convertors/toBackend/InsightConverter.js";
@@ -215,14 +218,8 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     }> => {
         const { insight, included } = await this.getInsightWithReferences(
             ref,
-            [
-                "metrics" as const,
-                "attributes" as const,
-                "facts" as const,
-                "labels" as const,
-                ...(options.loadUserData ? (["createdBy", "modifiedBy"] as const) : []),
-            ],
-            options.loadPermissions,
+            ["metrics" as const, "attributes" as const, "facts" as const, "labels" as const],
+            options,
         );
 
         // get attributes by labels.id and individual id's, include labels to fully reconstruct catalogue
@@ -241,14 +238,19 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
 
     private getInsightWithReferences = async (
         ref: ObjRef,
-        references: EntitiesApiGetEntityVisualizationObjectsRequest["include"] = [],
-        loadPermissions?: boolean,
+        references: NonNullable<EntitiesApiGetEntityVisualizationObjectsRequest["include"]>,
+        { loadUserData, loadPermissions, loadParameters }: IGetInsightOptions,
     ): Promise<{
         insight: IInsight;
         included: JsonApiComputedAttributeOutIncludes[] | undefined;
     }> => {
         const id = objRefToIdentifier(ref, this.authCall);
-        const includeObj = references.length ? { include: references } : {};
+        const include = [
+            ...references,
+            ...(loadUserData ? (["createdBy", "modifiedBy"] as const) : []),
+            ...(loadParameters ? (["parameters"] as const) : []),
+        ];
+        const includeObj = include.length ? { include } : {};
         const response = await this.authCall((client) =>
             EntitiesApi_GetEntityVisualizationObjects(client.axios, client.basePath, {
                 objectId: id,
@@ -257,13 +259,15 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                 ...(loadPermissions ? { metaInclude: ["permissions" as const] } : {}),
             }),
         );
-        return createInsightFromBackend(response.data);
+        const { insight, included } = createInsightFromBackend(response.data);
+        return {
+            insight: loadParameters ? withReferencedParameters(insight, included) : insight,
+            included,
+        };
     };
 
     public getInsight = async (ref: ObjRef, options: IGetInsightOptions = {}): Promise<IInsight> => {
-        const references = options?.loadUserData ? ["createdBy" as const, "modifiedBy" as const] : [];
-
-        const { insight } = await this.getInsightWithReferences(ref, references, options.loadPermissions);
+        const { insight } = await this.getInsightWithReferences(ref, [], options);
         return insight;
     };
 
@@ -445,4 +449,17 @@ function createInsightFromBackend(data: JsonApiVisualizationObjectOutDocument) {
         insight: visualizationObjectDocumentToInsight(data),
         included: data.included,
     };
+}
+
+function withReferencedParameters(
+    insight: IInsight,
+    included: JsonApiComputedAttributeOutIncludes[] = [],
+): IInsight {
+    const referencedParameters: IParameterMetadataObject[] = [];
+    for (const item of included) {
+        if (isParameterItem(item)) {
+            referencedParameters.push(convertParameter(item));
+        }
+    }
+    return { insight: { ...insight.insight, referencedParameters } };
 }

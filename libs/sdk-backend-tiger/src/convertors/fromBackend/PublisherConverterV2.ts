@@ -146,6 +146,8 @@ function unavailableVisualizations(
 }
 
 /**
+ * @param entity - the publisher document entity
+ * @param included - included objects of the response
  * @param restricted - the response's `meta.restricted`; without it the document lists no unavailable
  *  references.
  */

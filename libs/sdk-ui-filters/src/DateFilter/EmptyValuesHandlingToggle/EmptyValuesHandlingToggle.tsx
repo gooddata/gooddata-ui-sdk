@@ -5,7 +5,7 @@ import { type KeyboardEvent } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
-import { isSpaceKey } from "@gooddata/sdk-ui-kit";
+import { isSpaceKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 export type EmptyValuesHandlingToggleMode = "exclude" | "include";
 
@@ -38,6 +38,7 @@ export function EmptyValuesHandlingToggle({
     };
 
     const labelMessageId = LABEL_MESSAGE_ID_BY_MODE[mode];
+    const labelId = useIdPrefixed("date-filter-empty-values-handling-label");
 
     return (
         <div className={cx(className)} data-testid={DATA_TESTID}>
@@ -49,9 +50,10 @@ export function EmptyValuesHandlingToggle({
                     onChange={(e) => onChange(e.target.checked)}
                     onKeyDown={handleKeyDown}
                     data-testid={DATA_TESTID_CHECKBOX}
+                    aria-labelledby={labelId}
                 />
                 &ensp;
-                <span className="input-label-text">
+                <span className="input-label-text" id={labelId}>
                     <FormattedMessage id={labelMessageId} />
                 </span>
             </label>

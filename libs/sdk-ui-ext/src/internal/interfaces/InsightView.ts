@@ -74,6 +74,9 @@ export interface IInsightViewProps extends Partial<IVisualizationCallbacks> {
 
     /**
      * execConfig will provide the execution with necessary settings before initiating execution.
+     * The stored parameter overrides of the insight are added to it. A value in `parameterValues`
+     * wins over the stored override of the same parameter. A stored override is not sent when its
+     * parameter does not exist or when the value is not valid for its parameter.
      */
     execConfig?: IExecutionConfig;
 

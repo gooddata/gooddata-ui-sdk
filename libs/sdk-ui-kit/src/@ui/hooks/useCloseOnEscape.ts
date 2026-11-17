@@ -5,6 +5,8 @@ import { useEffect } from "react";
 /**
  * Hook to trigger a callback when pressing the Escape key.
  *
+ * @param isOpen - Whether the listener is active.
+ * @param onClose - Called when Escape is pressed.
  * @param capture - When true, listens in the capture phase and stops propagation, so a nested
  * overlay can dismiss on Escape without an ancestor (e.g. a Dropdown) also closing.
  *

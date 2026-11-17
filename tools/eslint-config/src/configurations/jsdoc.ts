@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type IPackage } from "@gooddata/lint-config";
+import { type IPackage, jsDocOverrideFiles, jsdocRules } from "@gooddata/lint-config";
 
 import type { IConfiguration } from "../types.js";
 
@@ -15,18 +15,14 @@ const settings = {
     },
 };
 
-const rules = {
-    "jsdoc/require-param": "error", // require @param for all params
-};
-
 const common = {
     packages: [jsdocPlugin],
     overrides: [
         {
-            files: ["**/*.{js,cjs,mjs,jsx}"],
+            files: jsDocOverrideFiles,
             plugins: { jsdoc: jsdocPlugin },
             settings,
-            rules,
+            rules: jsdocRules,
         },
     ],
 };
@@ -36,12 +32,12 @@ export const jsdoc: IConfiguration<"jsdoc"> = {
         packages: [jsdocPlugin],
         overrides: [
             {
-                files: ["**/*.{js,cjs,mjs,jsx}"],
+                files: jsDocOverrideFiles,
                 plugins: ["jsdoc"],
                 settings,
-                rules,
+                rules: jsdocRules,
             },
         ],
     },
-    flat: { v9: common, v9ox: common, v10: common, v10ox: common },
+    flat: { v9: common, v9ox: {}, v10: common, v10ox: {} },
 };

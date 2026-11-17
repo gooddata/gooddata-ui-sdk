@@ -7,6 +7,7 @@ import {
     type IExportResult,
     type IInsightReferencing,
     type IMeasureOverride,
+    type IPublisherDocumentSummaryV2,
     type IRawExportCustomOverrides,
     type IUserSettings,
     type IUserWorkspaceSettings,
@@ -25,7 +26,9 @@ import {
     type IInsight,
     type IInsightDefinition,
     type IListedDashboard,
+    type IMetadataObject,
     type IVisualizationClass,
+    type IWorkspacePermissions,
     type ObjRef,
     areObjRefsEqual,
     attributeDisplayFormRef,
@@ -54,6 +57,10 @@ import { type Granularity } from "../models/granularity.js";
 import { isElementUrisSupported } from "../selectors/backend_capabilities_selector.js";
 import { getProjectId } from "../selectors/bootstrap_selector.js";
 import { indexValidElements } from "../services/report_service.js";
+import {
+    canSeeAllDocuments,
+    getAccessibleDocumentIds,
+} from "../store/insight_usage/insight_usage_helpers.js";
 import { getItemCacheState } from "../store/item_cache/item_cache_selectors.js";
 import { type IAppState } from "../store/types.js";
 import { type IAttributeValidElementsData } from "../typings/attribute_filters.js";
@@ -848,4 +855,40 @@ export async function getInsightReferences(
 
 export async function getAnalyticalDashboards(projectId: string): Promise<IListedDashboard[]> {
     return backend.workspace(projectId).dashboards().getDashboards();
+}
+
+async function getDocumentSummaries(
+    projectId: string,
+    documentIds: string[],
+): Promise<IPublisherDocumentSummaryV2[]> {
+    const result = await backend
+        .workspace(projectId)
+        .publisherV2()
+        .getDocumentsQuery()
+        .withFilter({ id: documentIds })
+        .withSize(documentIds.length)
+        .query();
+    return result.items;
+}
+
+/**
+ * The ids of the documents the user may open. When their creators cannot be loaded, none of them count as
+ * open, so no document the user may not see is named.
+ */
+export async function loadAccessibleDocumentIds(
+    projectId: string,
+    documents: IMetadataObject[],
+    userLogin: string | undefined,
+    permissions: IWorkspacePermissions | null,
+): Promise<string[]> {
+    const documentIds = documents.map(({ id }) => id);
+    if (documentIds.length === 0 || canSeeAllDocuments(permissions)) {
+        return documentIds;
+    }
+    try {
+        const summaries = await getDocumentSummaries(projectId, documentIds);
+        return getAccessibleDocumentIds(summaries, userLogin, permissions);
+    } catch {
+        return [];
+    }
 }

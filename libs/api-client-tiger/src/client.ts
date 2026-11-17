@@ -137,6 +137,7 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
  * Creates a base tiger client that can be used to create a tiger client. This factory is used than in
  * SDK-Backend-Tiger using this factory allow tree shaking of the client.
  * @param axios - axios instance
+ * @param basePath - base path for API requests
  * @returns ITigerClientBase
  */
 export const tigerClientBaseFactory = (axios: AxiosInstance, basePath: string = ""): ITigerClientBase => {

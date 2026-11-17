@@ -48,6 +48,7 @@ export function useHostChromeSearch({
                 canManage={features.canManageProject}
                 canAnalyze={features.canAnalyzeWorkspace}
                 canFullControl={features.canFullControl}
+                includeDocuments={features.canSearchDocuments}
                 metadataTimeZone={features.settings.metadataTimeZone}
                 isTrial={isTrial}
                 enableUseGenAIChat={features.showChat}

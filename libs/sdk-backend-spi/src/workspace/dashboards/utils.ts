@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type IDashboardLayout,
@@ -35,6 +35,7 @@ export type LayoutPath = Array<string | number>;
  * @alpha
  * @param layout - dashboard layout
  * @param callbacks - walk callbacks
+ * @param path - path of the layout sections, defaults to ["sections"]
  * @returns void
  */
 export function walkLayout<TWidget extends IDashboardWidget>(

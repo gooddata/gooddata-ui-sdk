@@ -33,11 +33,13 @@ import {
 import { ATTRIBUTE } from "../constants/bucket.js";
 import { combinedRootReducer } from "../reducers/combined_root_reducer.js";
 import { buildInitialState } from "../reducers/initial_state.js";
+import { getUserLoginMD5 } from "../selectors/bootstrap_selector.js";
 import {
     enableAnalyticalDesignerCatalogSideload,
     enableParameters,
     enableStringParameters,
 } from "../selectors/feature_flag_selector.js";
+import { workspacePermissions } from "../selectors/permissions_selector.js";
 import { getTagsConfiguration } from "../selectors/route_selector.js";
 import { isSaveDisabledSelector, isSavedReportCurrentReport } from "../selectors/save_report_selector.js";
 import { logVisualizationOpen } from "../services/telemetry/tracking_events.js";
@@ -66,7 +68,7 @@ import { getInitializedState } from "../tests/state.test.helpers.js";
 import { withData } from "../tests/state_builder.test.helpers.js";
 import { type IApplicationResetCarrier } from "../typings/application_reset.js";
 import { type ILoadedReportItems } from "../typings/report.js";
-import { getItemCacheItems } from "../utils/api.js";
+import { getItemCacheItems, loadAccessibleDocumentIds } from "../utils/api.js";
 import { dispatchAction } from "../utils/dispatch_action.js";
 import { getInsightRef } from "../utils/insight_ref.js";
 import { getRouteParams, getRouteUri, setLocation } from "../utils/location.js";
@@ -394,6 +396,9 @@ describe("Open report sagas", () => {
                         ],
                         [call(getDuration, startTime), duration],
                         [call(fetchDashboards, projectId), publicDashboards],
+                        [select(workspacePermissions), null],
+                        [select(getUserLoginMD5), "me"],
+                        [call(loadAccessibleDocumentIds, projectId, documents, "me", null), ["doc1"]],
                         [call(logVisualizationOpen, { time: duration, state }), {}],
                         [
                             call(
@@ -417,7 +422,11 @@ describe("Open report sagas", () => {
 
                 expect(saga.effects.put).toEqual([
                     put(openReportStarted(projectId, reportId)),
-                    put(updateInsightUsageOnDashboards(analyticalDashboards, publicDashboards, documents)),
+                    put(
+                        updateInsightUsageOnDashboards(analyticalDashboards, publicDashboards, documents, [
+                            "doc1",
+                        ]),
+                    ),
                     put(storeAppliedChartSort(dummySorts)),
                     put(
                         openReportFinished(
@@ -461,6 +470,9 @@ describe("Open report sagas", () => {
                     [call(restoreInsightParameterFilters, dummyInsight), { filters: [], warnings: [] }],
                     [call(getDuration, startTime), duration],
                     [call(fetchDashboards, projectId), publicDashboards],
+                    [select(workspacePermissions), null],
+                    [select(getUserLoginMD5), "me"],
+                    [call(loadAccessibleDocumentIds, projectId, documents, "me", null), ["doc1"]],
                     [call(logVisualizationOpen, { time: duration, state }), {}],
                     [
                         call(
@@ -479,7 +491,11 @@ describe("Open report sagas", () => {
 
             expect(saga.effects.put).toEqual([
                 put(openReportStarted(projectId, reportId)),
-                put(updateInsightUsageOnDashboards(analyticalDashboards, publicDashboards, documents)),
+                put(
+                    updateInsightUsageOnDashboards(analyticalDashboards, publicDashboards, documents, [
+                        "doc1",
+                    ]),
+                ),
                 put(storeAppliedChartSort(dummySorts)),
                 put(
                     openReportFinished(

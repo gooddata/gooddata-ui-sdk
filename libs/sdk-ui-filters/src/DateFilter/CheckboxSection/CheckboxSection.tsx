@@ -6,9 +6,11 @@ import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
 import { type DateFilterGranularity } from "@gooddata/sdk-model";
-import { Bubble, BubbleHoverTrigger, isSpaceKey } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, isSpaceKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { ExcludeCurrentPeriodToggleLabel } from "../ExcludeCurrentPeriodToggle/ExcludeCurrentPeriodToggleLabel.js";
+
+import { CheckboxDescription } from "./CheckboxDescription.js";
 
 export type EmptyValuesHandlingMode = "exclude" | "include";
 
@@ -52,11 +54,15 @@ function CheckboxItem({
     checked: boolean;
     onChange: (checked: boolean) => void;
     disabled?: boolean;
-    label: ReactNode;
+    label: (labelId: string) => ReactNode;
     tooltip?: ReactNode;
     testId?: string;
     className?: string;
 }) {
+    const labelId = useIdPrefixed("date-filter-checkbox-label");
+    const descriptionId = useIdPrefixed("date-filter-checkbox-description");
+    const hasDescription = !!disabled && !!tooltip;
+
     const handleKeyDown = (e: KeyboardEvent) => {
         if (disabled) {
             return;
@@ -69,22 +75,27 @@ function CheckboxItem({
     };
 
     return (
-        <BubbleHoverTrigger>
-            <label className={cx("input-checkbox-label", className, { "is-disabled": disabled })}>
-                <input
-                    type="checkbox"
-                    className="input-checkbox"
-                    checked={checked}
-                    onChange={(e) => onChange(e.target.checked)}
-                    disabled={disabled}
-                    onKeyDown={handleKeyDown}
-                    {...(testId ? { "data-testid": testId } : {})}
-                />
-                &ensp;
-                {label}
-            </label>
-            {disabled && tooltip ? <Bubble alignPoints={alignPoints}>{tooltip}</Bubble> : null}
-        </BubbleHoverTrigger>
+        <>
+            <BubbleHoverTrigger>
+                <label className={cx("input-checkbox-label", className, { "is-disabled": disabled })}>
+                    <input
+                        type="checkbox"
+                        className="input-checkbox"
+                        checked={checked}
+                        onChange={(e) => onChange(e.target.checked)}
+                        disabled={disabled}
+                        onKeyDown={handleKeyDown}
+                        aria-labelledby={labelId}
+                        aria-describedby={hasDescription ? descriptionId : undefined}
+                        {...(testId ? { "data-testid": testId } : {})}
+                    />
+                    &ensp;
+                    {label(labelId)}
+                </label>
+                {hasDescription ? <Bubble alignPoints={alignPoints}>{tooltip}</Bubble> : null}
+            </BubbleHoverTrigger>
+            {hasDescription ? <CheckboxDescription id={descriptionId}>{tooltip}</CheckboxDescription> : null}
+        </>
     );
 }
 
@@ -114,13 +125,17 @@ export function CheckboxSection({
                         <CheckboxItem
                             checked={emptyValuesHandling.checked}
                             onChange={emptyValuesHandling.onChange}
-                            label={
+                            label={(labelId) => (
                                 <FormattedMessage
                                     id={EMPTY_VALUES_LABEL_ID_BY_MODE[emptyValuesHandling.mode]}
                                 >
-                                    {(...children) => <span className="input-label-text">{children}</span>}
+                                    {(...children) => (
+                                        <span className="input-label-text" id={labelId}>
+                                            {children}
+                                        </span>
+                                    )}
                                 </FormattedMessage>
-                            }
+                            )}
                             testId={emptyValuesHandling.testId}
                         />
                     </div>
@@ -133,12 +148,13 @@ export function CheckboxSection({
                             onChange={excludeCurrentPeriod.onChange}
                             disabled={excludeCurrentPeriod.disabled}
                             className="s-exclude-current-period"
-                            label={
+                            label={(labelId) => (
                                 <ExcludeCurrentPeriodToggleLabel
                                     granularity={excludeCurrentPeriod.granularity}
                                     disabled={excludeCurrentPeriod.disabled}
+                                    id={labelId}
                                 />
-                            }
+                            )}
                             tooltip={
                                 excludeCurrentPeriod.disabled ? (
                                     <FormattedMessage id="filters.excludeCurrentPeriod.unavailable" />

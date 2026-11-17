@@ -83,7 +83,9 @@ function createContext(elementTitle: string) {
 }
 
 /**
+ * @param saga - the saga to run
  * @param catalogHit - whether the catalog carries the computed attribute's display form
+ * @param args - arguments passed to the saga
  */
 function run(saga: any, catalogHit: boolean, ...args: any[]) {
     const displayFormsMap = {

@@ -5,7 +5,7 @@ import type { IPackage, Rules } from "@gooddata/lint-config";
 import type { IConfiguration, IConfigurationFlat } from "../types.js";
 
 import { jsdocPlugin } from "./jsdoc.js";
-import { tsParser } from "./typescript.js";
+import { typescriptEslintParser } from "./typescript.js";
 
 const tsdocPlugin: IPackage = {
     name: "eslint-plugin-tsdoc",
@@ -18,25 +18,27 @@ const rules: Rules<RulePrefix> = {
     "tsdoc/syntax": "error",
 
     // Completeness: if there's a docblock, all params must be documented
+    // Nested (dotted) param names are invalid TSDoc, so destructured props are not required
     "jsdoc/require-param": [
         "error",
         {
+            checkDestructured: false,
             contexts: [
                 {
                     context: "FunctionDeclaration",
-                    comment: 'JsdocBlock > JsdocTag[tag="param"]',
+                    comment: 'JsdocBlock:has(JsdocTag[tag="param"])',
                 },
                 {
                     context: "FunctionExpression",
-                    comment: 'JsdocBlock > JsdocTag[tag="param"]',
+                    comment: 'JsdocBlock:has(JsdocTag[tag="param"])',
                 },
                 {
                     context: "ArrowFunctionExpression",
-                    comment: 'JsdocBlock > JsdocTag[tag="param"]',
+                    comment: 'JsdocBlock:has(JsdocTag[tag="param"])',
                 },
                 {
                     context: "MethodDefinition",
-                    comment: 'JsdocBlock > JsdocTag[tag="param"]',
+                    comment: 'JsdocBlock:has(JsdocTag[tag="param"])',
                 },
             ],
         },
@@ -47,11 +49,11 @@ const rules: Rules<RulePrefix> = {
 };
 
 const flat: IConfigurationFlat<RulePrefix> = {
-    packages: [tsdocPlugin, jsdocPlugin],
+    packages: [typescriptEslintParser, tsdocPlugin, jsdocPlugin],
     overrides: [
         {
             files: ["**/*.ts", "**/*.tsx"],
-            parser: tsParser,
+            parser: typescriptEslintParser.name,
             plugins: {
                 tsdoc: tsdocPlugin,
                 jsdoc: jsdocPlugin,
@@ -68,11 +70,11 @@ const flat: IConfigurationFlat<RulePrefix> = {
 
 export const tsdoc: IConfiguration<RulePrefix> = {
     legacy: {
-        packages: [tsdocPlugin, jsdocPlugin],
+        packages: [typescriptEslintParser, tsdocPlugin, jsdocPlugin],
         overrides: [
             {
                 files: ["**/*.ts", "**/*.tsx"],
-                parser: tsParser,
+                parser: typescriptEslintParser.name,
                 plugins: ["tsdoc", "jsdoc"],
                 settings: {
                     jsdoc: {

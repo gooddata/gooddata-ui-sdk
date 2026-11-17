@@ -32,7 +32,11 @@ describe("InsightUsageOnDashboards", () => {
             inaccessibleDashboardsCount: 0,
             allDashboardsCount: 3,
         },
-        insightUsedInDocuments: [],
+        insightUsedInDocuments: {
+            accessibleDocuments: [],
+            inaccessibleDocumentsCount: 0,
+            allDocumentsCount: 0,
+        },
     };
 
     function renderComponent(customProps: Partial<InsightUsageOnDashboardsProps> = {}) {
@@ -62,7 +66,11 @@ describe("InsightUsageOnDashboards", () => {
 
     it("should render the document items after the dashboards", () => {
         const { container } = renderComponent({
-            insightUsedInDocuments: [{ id: "doc1", title: "Board pack" }],
+            insightUsedInDocuments: {
+                accessibleDocuments: [{ id: "doc1", title: "Board pack" }],
+                inaccessibleDocumentsCount: 0,
+                allDocumentsCount: 1,
+            },
         });
         expect(container.querySelectorAll(".s-insight-usage-dashboard-item")).toHaveLength(3);
         expect(container.querySelector(".s-insight-usage-document-item").textContent).toEqual("Board pack");
@@ -79,13 +87,34 @@ describe("InsightUsageOnDashboards", () => {
                 inaccessibleDashboardsCount: 0,
                 allDashboardsCount: 0,
             },
-            insightUsedInDocuments: [
-                { id: "doc1", title: "Board pack" },
-                { id: "doc2", title: "Weekly review" },
-            ],
+            insightUsedInDocuments: {
+                accessibleDocuments: [
+                    { id: "doc1", title: "Board pack" },
+                    { id: "doc2", title: "Weekly review" },
+                ],
+                inaccessibleDocumentsCount: 0,
+                allDocumentsCount: 2,
+            },
         });
         expect(
             Array.from(container.querySelectorAll("summary")).map((summary) => summary.textContent),
         ).toEqual(["Reports (2)"]);
+    });
+
+    it("should count the reports the user may not open without naming them", () => {
+        const { container } = renderComponent({
+            insightUsedInDocuments: {
+                accessibleDocuments: [{ id: "doc1", title: "Board pack" }],
+                inaccessibleDocumentsCount: 2,
+                allDocumentsCount: 3,
+            },
+        });
+        expect(
+            Array.from(container.querySelectorAll("summary")).map((summary) => summary.textContent),
+        ).toEqual(["Dashboards (3)", "Reports (3)"]);
+        expect(container.querySelectorAll(".s-insight-usage-document-item")).toHaveLength(1);
+        expect(container.querySelector(".s-kd-save-dialog-usage-inaccessible").textContent).toEqual(
+            "and 2 more not shared with you.",
+        );
     });
 });

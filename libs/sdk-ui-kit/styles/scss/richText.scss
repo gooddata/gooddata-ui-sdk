@@ -106,7 +106,8 @@
 
     p,
     ul,
-    ol {
+    ol,
+    .gd-rich-text-blank-line {
         font-size: 14px;
         font-weight: 400;
         line-height: 19px;
@@ -116,6 +117,17 @@
     }
 
     p + p {
+        margin-top: 0.625rem;
+    }
+
+    .gd-rich-text-blank-line {
+        height: 1lh;
+    }
+
+    // A paragraph after blank lines keeps the gap it has after a block, the lines adding to it. Above the
+    // first block there is no block to keep a gap from. `:where` keeps that guard out of the specificity,
+    // so the rule weighs no more than it did without it and a host's own block spacing still wins.
+    :where(:not(.gd-rich-text-blank-line)) ~ .gd-rich-text-blank-line + p {
         margin-top: 0.625rem;
     }
 

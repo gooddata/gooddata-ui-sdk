@@ -200,7 +200,8 @@ $dataset_color: #952f8e;
             }
         }
 
-        &.visualization {
+        &.visualization,
+        &.document {
             font-weight: bold;
             @if $type == "user" {
                 color: kit-variables.$gd-color-white;
@@ -254,6 +255,10 @@ $dataset_color: #952f8e;
 
         &.visualization .gd-gen-ai-chat__message-icon {
             @include variables.gd-svg-mask("visualization");
+        }
+
+        &.document .gd-gen-ai-chat__message-icon {
+            @include variables.gd-svg-mask("file");
         }
     }
 

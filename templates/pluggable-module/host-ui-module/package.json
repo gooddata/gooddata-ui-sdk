@@ -1,6 +1,6 @@
 {
     "name": "gdc-host-ui-template-name-module",
-    "version": "11.69.0-alpha.2",
+    "version": "11.69.0-alpha.3",
     "private": true,
     "description": "{applicationTemplateTitle} host UI module",
     "license": "UNLICENSED",

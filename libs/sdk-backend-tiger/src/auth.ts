@@ -361,6 +361,7 @@ export function createTigerAuthenticationUrl(
  *
  * @param backend - an instance of analytical backend
  * @param location - current location
+ * @param returnTo - optional URL to return to after logout
  * @public
  */
 export function createTigerDeauthenticationUrl(

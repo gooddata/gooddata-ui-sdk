@@ -296,6 +296,17 @@ export interface IGetInsightOptions {
      * Defaults to false.
      */
     loadPermissions?: boolean;
+
+    /**
+     * Ask the backend to return the parameters that the insight references.
+     *
+     * @remarks
+     * Defaults to false. Without them, `insightValidParameters` cannot validate the stored
+     * parameter values against their definitions and returns all of them.
+     *
+     * @alpha
+     */
+    loadParameters?: boolean;
 }
 
 /**

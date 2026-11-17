@@ -1,4 +1,5 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { type IntlShape, type MessageDescriptor, createIntl } from "react-intl";
 
 import { DefaultLocale, type ILocale } from "./Locale.js";
@@ -30,6 +31,7 @@ export function getIntl(locale: ILocale = DefaultLocale, messages: Record<string
  *
  * @param translationId - id of the localized string
  * @param locale - target locale
+ * @param messages - localized messages for the locale
  * @param values - parameters, optional
  *
  * @internal

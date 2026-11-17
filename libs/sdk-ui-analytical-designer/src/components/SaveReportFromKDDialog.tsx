@@ -77,7 +77,7 @@ export function SaveReportFromKDDialog() {
         return null;
     }
 
-    const isUsedInDocuments = insightUsedInDocuments.length > 0;
+    const isUsedInDocuments = insightUsedInDocuments.allDocumentsCount > 0;
 
     const isUpdateMode = () => state.saveOption === DIALOG_UPDATE_MODE;
 

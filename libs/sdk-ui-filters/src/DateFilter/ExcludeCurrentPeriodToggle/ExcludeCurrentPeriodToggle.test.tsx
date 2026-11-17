@@ -39,7 +39,8 @@ describe("ExcludeCurrentPeriodToggle", () => {
         fireEvent.mouseOver(document.querySelector(".gd-bubble-trigger")!);
 
         await waitFor(() => {
-            expect(screen.queryByText("Not available for the selected date range")).toBeInTheDocument();
+            const bubble = document.querySelector(".gd-bubble");
+            expect(bubble).toHaveTextContent("Not available for the selected date range");
         });
     });
 
@@ -50,5 +51,23 @@ describe("ExcludeCurrentPeriodToggle", () => {
         await waitFor(() => {
             expect(screen.queryByText("Not available for the selected date range")).not.toBeInTheDocument();
         });
+    });
+
+    it("should have an accessible name matching the visible label", () => {
+        const Wrapped = withIntlForTest(ExcludeCurrentPeriodToggle);
+        render(<Wrapped value={false} onChange={vi.fn()} granularity="GDC.time.month" />);
+        expect(screen.getByRole("checkbox", { name: "Exclude this month" })).toBeInTheDocument();
+    });
+
+    it("should describe the disabled checkbox with the unavailability reason", () => {
+        renderWithDisabledValue(true);
+        expect(screen.getByRole("checkbox")).toHaveAccessibleDescription(
+            "Not available for the selected date range",
+        );
+    });
+
+    it("should not have a description when enabled", () => {
+        renderWithDisabledValue(false);
+        expect(screen.getByRole("checkbox")).not.toHaveAttribute("aria-describedby");
     });
 });

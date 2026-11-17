@@ -14,16 +14,11 @@ import { useHeaderMenuTextWrapping } from "./useHeaderMenuTextWrapping.js";
 /**
  * Hook for header cell components that handles menu item filtering.
  *
- * @param allowAggregations - Whether aggregation menu items should be included
- * @param allowTextWrapping - Whether text wrapping menu items should be included
- * @param allowSorting - Whether sorting menu items should be included
- * @param allowDrilling - Whether drilling menu items should be included
- * @param includeHeaderWrapping - Whether header wrapping menu items should be included
- * @param includeCellWrapping - Whether cell wrapping menu items should be included
- * @param measureIdentifiers - Array of measure identifiers for the cell
- * @param pivotAttributeDescriptors - Array of pivot attribute descriptors
- * @param ariaLabelDisplayNameOverride - Overrides the name used to build the header's ARIA label
- * @param gridApi - Optional ag-grid API for checking current state
+ * @param options - Which menu items are included: aggregations, text wrapping, sorting, drilling,
+ *  header wrapping and cell wrapping
+ * @param additionalContext - Measure identifiers for the cell, pivot attribute descriptors, and an
+ *  optional override of the name used to build the header's ARIA label
+ * @param agGridHeaderParams - ag-grid header params, used for checking current state
  * @returns Filtered menu items and handlers based on permissions
  */
 export function useHeaderMenu(

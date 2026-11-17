@@ -228,6 +228,7 @@ export {
     isAttributeItem,
     isMetricItem,
     isFactItem,
+    isParameterItem,
 } from "./gd-tiger-model/typeGuards.js";
 
 // -----------------------------------------------------------------------------

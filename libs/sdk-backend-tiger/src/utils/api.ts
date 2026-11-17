@@ -27,7 +27,7 @@ export const objRefToUri = async (
  * Converts ObjRef instance to identifier. For IdentifierRef returns the identifier as is,
  * otherwise converts the UriRef to the identifier.
  * @param ref - ref to convert
- * @param authCall - call guard to perform API calls through
+ * @param _authCall - call guard to perform API calls through (unused)
  *
  * @internal
  */

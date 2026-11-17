@@ -40,22 +40,33 @@ describe("insightUsage store", () => {
             referencedDashboards: REFERENCED,
             allUserDashboards: USER_DASHBOARDS,
             referencedDocuments: [],
+            accessibleDocumentIds: [],
         });
     });
 
-    it("serves the referencing documents sorted by title", () => {
+    it("serves the referencing documents the user may open sorted by title, and counts the rest", () => {
         const state = combinedRootReducer(
             getInitializedState(),
-            updateInsightUsageOnDashboards(REFERENCED, USER_DASHBOARDS, [
-                createAnalyticalDashboard("zeta report", "doc2", 2),
-                createAnalyticalDashboard("Alpha report", "doc1", 1),
-            ]),
+            updateInsightUsageOnDashboards(
+                REFERENCED,
+                USER_DASHBOARDS,
+                [
+                    createAnalyticalDashboard("zeta report", "doc2", 2),
+                    createAnalyticalDashboard("Alpha report", "doc1", 1),
+                    createAnalyticalDashboard("Hidden report", "doc3", 3),
+                ],
+                ["doc1", "doc2"],
+            ),
         );
 
-        expect(getInsightUsageInDocumentsSelector(state)).toEqual([
-            { id: "doc1", title: "Alpha report" },
-            { id: "doc2", title: "zeta report" },
-        ]);
+        expect(getInsightUsageInDocumentsSelector(state)).toEqual({
+            accessibleDocuments: [
+                { id: "doc1", title: "Alpha report" },
+                { id: "doc2", title: "zeta report" },
+            ],
+            inaccessibleDocumentsCount: 1,
+            allDocumentsCount: 3,
+        });
     });
 
     it("resets to null, which the derived selector reads as the empty usage", () => {

@@ -270,7 +270,9 @@ function createAndAddDataColDefs(table: TableCols, state: TransformState, intl?:
  * @param table - table col descriptors
  * @param initialSorts - initial table sorting definition
  * @param emptyHeaderTitle - what to show for title of headers with empty title
+ * @param isTransposed - whether the table is transposed
  * @param config - optional pivot config
+ * @param intl - optional intl
  */
 export function createColDefsFromTableDescriptor(
     table: TableCols,

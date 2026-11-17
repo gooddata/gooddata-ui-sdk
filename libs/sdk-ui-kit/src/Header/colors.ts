@@ -56,7 +56,7 @@ export function luminanceOf(color: IRgbaColor): number {
  * Function that chooses from two colors based on luminance
  * of control color. This luminance is compared to specified threshold value.
  *
- * @param color - color as a String
+ * @param hexColor - color as a hex String
  * @param threshold - Luminance threshold value in interval 1 - 255
  * @param dark - Dark color variant for when control color luminance is higher than threshold
  * @param light - Light color variant for when control color luminance is lower or equal than threshold

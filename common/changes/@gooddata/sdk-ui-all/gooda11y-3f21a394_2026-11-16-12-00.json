@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-filters: the date filter's \"Exclude current period\" and empty values checkboxes have an accessible name matching their visible label, and a disabled \"Exclude current period\" checkbox is described by the reason it is unavailable.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

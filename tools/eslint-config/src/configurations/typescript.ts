@@ -10,25 +10,22 @@ import {
 
 import type { IConfiguration } from "../types.js";
 
-export const tsParser = "@typescript-eslint/parser";
+export const typescriptEslintParser: IPackage = {
+    name: "@typescript-eslint/parser",
+    version: "8.58.0",
+};
 
 const typescriptEslintPlugin: IPackage = {
     name: "@typescript-eslint/eslint-plugin",
     version: "8.58.0",
 };
 
-const packages = [
-    {
-        name: tsParser,
-        version: "8.58.0",
-    },
-    typescriptEslintPlugin,
-];
+const packages = [typescriptEslintParser, typescriptEslintPlugin];
 
 const common = {
     packages,
     plugins: { "@typescript-eslint": typescriptEslintPlugin },
-    parser: tsParser,
+    parser: typescriptEslintParser.name,
     languageOptions: {
         sourceType: "module" as const,
     },
@@ -81,7 +78,7 @@ export const typescript: IConfiguration<"@typescript-eslint" | "no-restricted-sy
                     ...typescriptConflicts,
                     ...typescriptRules,
                 },
-                parser: tsParser,
+                parser: typescriptEslintParser.name,
                 parserOptions: {
                     ...commonParserOptions,
                     ecmaVersion: 2022,

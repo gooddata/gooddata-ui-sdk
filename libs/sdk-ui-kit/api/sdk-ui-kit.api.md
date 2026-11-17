@@ -9552,7 +9552,7 @@ export function ResponsiveText(input: IResponsiveTextProps): JSX.Element;
 export function RichText(props: IRichTextProps): JSX.Element;
 
 // @internal (undocumented)
-export type RichTextFeature = "emphasis" | "headings" | "lists" | "links" | "images" | "code" | "blockquotes" | "thematicBreaks" | "html" | "entities" | "backslashBreaks" | "strikethrough" | "highlight";
+export type RichTextFeature = "emphasis" | "headings" | "lists" | "links" | "images" | "code" | "blockquotes" | "thematicBreaks" | "html" | "entities" | "backslashBreaks" | "strikethrough" | "highlight" | "typedWhitespace";
 
 // @internal (undocumented)
 export function RichTextWithTooltip(props: IRichTextWithTooltipProps): JSX.Element;

@@ -70,8 +70,7 @@ function getCellDrillHeaders(
  * @param colDef - The column definition from ag-grid
  * @param data - The row data from ag-grid
  * @param drillableItems - Array of drillable items to check against
- * @param dv - Current data view facade for context
- * @param isTransposed - Whether the table is transposed
+ * @param dataViewFacade - Current data view facade for context
  * @returns True if the cell is drillable, false otherwise
  */
 export function isCellDrillable(

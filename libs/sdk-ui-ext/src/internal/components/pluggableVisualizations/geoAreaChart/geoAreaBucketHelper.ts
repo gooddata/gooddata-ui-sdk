@@ -198,8 +198,8 @@ export function getColorMeasures(buckets: IBucketOfFun[]): IBucketItem[] {
  * Creates configured buckets for geo area chart.
  * Distributes location, segment, and color measure items appropriately.
  *
- * @param buckets - All buckets from the reference point
- * @param locationItems - Location attribute items
+ * @param _buckets - All buckets from the reference point (unused)
+ * @param areaItems - Area attribute items
  * @param segmentItems - Segment attribute items
  * @param colorMeasures - Color measure items
  * @param uiConfig - UI configuration containing bucket item limits

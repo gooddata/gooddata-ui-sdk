@@ -880,6 +880,9 @@ function createEmptyDateValuesAttributeFilter(
 }
 
 /**
+ * @param filters - filters to convert
+ * @param attributeFilterConfigs - attribute filter configs
+ * @param dateDatasets - date datasets, used to find the date attribute
  * @param useEmptyValueHandling - whether the empty date values mode is written as the date filter's
  *  `emptyValueHandling` (the `enableImprovedMetricDateFilter` flag) or as the legacy `""` attribute filter,
  *  which needs `dateDatasets` to find the date attribute.

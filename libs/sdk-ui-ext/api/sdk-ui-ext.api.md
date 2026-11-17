@@ -1498,6 +1498,9 @@ export const VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualization
 // @internal (undocumented)
 export const WIDGET_DROPZONE_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;
 
+// @internal
+export function withStoredParameterValues(execConfig: IExecutionConfig | undefined, insight: IInsight | undefined, settings: IUserWorkspaceSettings | undefined): IExecutionConfig | undefined;
+
 // @internal (undocumented)
 export type WorkspacePermissionSubject = "user" | "userGroup";
 

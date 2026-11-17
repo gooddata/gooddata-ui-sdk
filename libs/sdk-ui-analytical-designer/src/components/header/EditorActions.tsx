@@ -35,6 +35,7 @@ import { DefaultUndoRedo, useUndoRedoProps } from "./UndoRedoButtons.js";
  * The EditorActions region with the slots of the controls AD shows resolved. A control AD does not show for its
  * permissions, configuration or mode is not in the items, so its slot does not render.
  *
+ * @param context - the header context
  * @param onChangeTimezone - opens the time zone dialog owned by the header
  */
 export function useEditorActions(

@@ -100,6 +100,8 @@ export function getDirection(primaryAxis: Axis, secondaryAxis: Axis): number {
 
 /**
  * Add new tick to first or last position
+ * @param tickPositions - current tick positions
+ * @param tickInterval - interval between ticks
  * @param isAddFirst - if true, add to first. Otherwise, add to last
  */
 function addTick(tickPositions: number[], tickInterval: number, isAddFirst: boolean): number[] {

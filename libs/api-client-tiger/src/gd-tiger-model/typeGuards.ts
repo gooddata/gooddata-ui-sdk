@@ -20,6 +20,7 @@ import {
     type JsonApiFilterContextIn,
     type JsonApiLabelOutWithLinks,
     type JsonApiMetricOutWithLinks,
+    type JsonApiParameterOutWithLinks,
     type JsonApiVisualizationObjectOutWithLinks,
 } from "../generated/metadata-json-api/index.js";
 
@@ -141,6 +142,13 @@ export function isFactItem(fact: unknown): fact is JsonApiFactOutWithLinks {
  */
 export function isMetricItem(metric: unknown): metric is JsonApiMetricOutWithLinks {
     return (metric as JsonApiMetricOutWithLinks).type === "metric";
+}
+
+/**
+ * @alpha
+ */
+export function isParameterItem(parameter: unknown): parameter is JsonApiParameterOutWithLinks {
+    return (parameter as JsonApiParameterOutWithLinks).type === "parameter";
 }
 
 /**

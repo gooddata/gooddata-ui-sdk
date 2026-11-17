@@ -32,6 +32,11 @@ export type HoverSettings = Omit<MaqlTooltipSettings, "elements" | "content"> & 
  * Opens the metric tooltip over the hovered reference.
  *
  * @param target - the element under the pointer, or at the cursor for the keyboard shortcut
+ * @param tooltip - ref holding the currently open tooltip root, if any
+ * @param editor - the editor view
+ * @param hover - the hover data of the reference
+ * @param settings - hover settings with the tooltip content
+ * @param onOpen - optional callback called when the tooltip opens
  */
 export function doHover(
     target: HTMLElement | null,

@@ -324,6 +324,7 @@ describe("app context reducers", () => {
                     referencedDashboards: [createAnalyticalDashboard("name", "identifier", 123)],
                     allUserDashboards: [],
                     referencedDocuments: [],
+                    accessibleDocumentIds: [],
                 },
             });
 

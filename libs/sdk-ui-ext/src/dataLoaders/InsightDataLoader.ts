@@ -40,7 +40,7 @@ class InsightDataLoader implements IInsightDataLoader {
             insight = backend
                 .workspace(this.workspace)
                 .insights()
-                .getInsight(ref)
+                .getInsight(ref, { loadParameters: true })
                 .catch((error) => {
                     this.insightCache.delete(cacheKey);
                     throw error;

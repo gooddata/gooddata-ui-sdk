@@ -49,6 +49,7 @@ const NodeBuffer = (
  * A Node `Buffer` is copied through `Buffer.from`, since constructing one directly is deprecated.
  *
  * @param typedArray - The typed array to clone.
+ * @param deep - Specify a deep clone.
  * @returns Returns the cloned typed array.
  * @internal
  */

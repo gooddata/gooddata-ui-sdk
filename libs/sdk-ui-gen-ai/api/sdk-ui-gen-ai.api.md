@@ -1200,7 +1200,7 @@ export const startNewConversationAction: ActionCreatorWithoutPayload<"messages/s
 // @public (undocumented)
 export type TextContentObject = {
     id: string;
-    type: "metric" | "attribute" | "fact" | "date" | "label" | "dashboard" | "visualization" | "dataset";
+    type: "metric" | "attribute" | "fact" | "date" | "label" | "dashboard" | "visualization" | "dataset" | "document";
     title: string;
 };
 

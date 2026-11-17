@@ -9,6 +9,7 @@ import { LOCAL_COLUMN, LOCAL_PUSHPIN, LOCAL_TABLE } from "../constants/visualiza
 import { metadataToBuckets } from "../models/metadata.js";
 import { itemCache as catalogEntries } from "../models/metadata.test.helpers.js";
 import { getVisualizationObjectForSave } from "../services/report_service.js";
+import { EMPTY_INSIGHT_USAGE_IN_DOCUMENTS } from "../store/insight_usage/insight_usage_helpers.js";
 import { type IInsightUsageOnDashboard } from "../store/insight_usage/insight_usage_state.js";
 import { type IAppState } from "../store/types.js";
 import { withBucketItems } from "../tests/buckets_builder.test.helpers.js";
@@ -611,7 +612,7 @@ describe("Save selectors", () => {
                 expect(
                     isUsedOutsideSourceDashboard.resultFunc(
                         usages as IInsightUsageOnDashboard,
-                        [],
+                        EMPTY_INSIGHT_USAGE_IN_DOCUMENTS,
                         sourceDashboardId,
                     ),
                 ).toBe(expectedResult);
@@ -624,7 +625,23 @@ describe("Save selectors", () => {
                     {
                         allDashboards: [{ title: "dashboard 1", id: "dashboardId1" }],
                     } as IInsightUsageOnDashboard,
-                    [{ title: "Board pack", id: "doc1" }],
+                    {
+                        accessibleDocuments: [{ title: "Board pack", id: "doc1" }],
+                        inaccessibleDocumentsCount: 0,
+                        allDocumentsCount: 1,
+                    },
+                    "dashboardId1",
+                ),
+            ).toBe(true);
+        });
+
+        it("should return true when only a document the user may not open uses the visualization", () => {
+            expect(
+                isUsedOutsideSourceDashboard.resultFunc(
+                    {
+                        allDashboards: [{ title: "dashboard 1", id: "dashboardId1" }],
+                    } as IInsightUsageOnDashboard,
+                    { accessibleDocuments: [], inaccessibleDocumentsCount: 1, allDocumentsCount: 1 },
                     "dashboardId1",
                 ),
             ).toBe(true);

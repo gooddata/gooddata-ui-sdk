@@ -51,6 +51,36 @@ describe("RichText", () => {
         expect(container.querySelector("strong")).toBeNull();
     });
 
+    it("draws each blank line kept for typed whitespace", async () => {
+        const { container } = renderRichText({
+            value: "a\n\n\n\nb",
+            allowedMarkdown: ["typedWhitespace"],
+        });
+
+        expect(await screen.findByText("b")).toBeInTheDocument();
+        expect(container.querySelectorAll(".gd-rich-text-blank-line")).toHaveLength(2);
+    });
+
+    it("draws the blank lines kept above the first block for typed whitespace", async () => {
+        const { container } = renderRichText({
+            value: "\n\nb",
+            allowedMarkdown: ["typedWhitespace"],
+        });
+
+        expect(await screen.findByText("b")).toBeInTheDocument();
+        expect(container.querySelectorAll(".gd-rich-text-blank-line")).toHaveLength(2);
+    });
+
+    it("keeps the indentation of every line for typed whitespace", async () => {
+        const { container } = renderRichText({
+            value: "  first\n    second",
+            allowedMarkdown: ["typedWhitespace"],
+        });
+
+        await screen.findByText(/second/);
+        expect(container.querySelector("p")?.textContent).toBe("  first\n    second");
+    });
+
     it("narrowed to no features at all, renders the whole value as text", async () => {
         const { container } = renderRichText({ value: "# Heading", allowedMarkdown: [] });
 

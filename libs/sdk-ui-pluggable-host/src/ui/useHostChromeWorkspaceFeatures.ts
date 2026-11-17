@@ -7,6 +7,8 @@ import { type IEffectiveSettings, type IPlatformContext } from "@gooddata/sdk-pl
 
 import { getActiveInternalApplication, getWorkspaceIdFromPath } from "../loader/routing.js";
 
+import { canSearchDocuments } from "./searchObjectTypes.js";
+
 export interface IHostChromeWorkspaceFeatures {
     isWorkspaceApp: boolean;
     workspaceId: string | undefined;
@@ -17,6 +19,7 @@ export interface IHostChromeWorkspaceFeatures {
     canAccessWorkbench: boolean;
     canFullControl: boolean;
     canCreateDocument: boolean;
+    canSearchDocuments: boolean;
     showSearch: boolean;
     showChat: boolean;
 }
@@ -61,6 +64,7 @@ export function useHostChromeWorkspaceFeatures(
             canAccessWorkbench,
             canFullControl,
             canCreateDocument,
+            canSearchDocuments: canSearchDocuments(settings),
             showSearch,
             showChat,
         };

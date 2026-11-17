@@ -577,6 +577,7 @@ export {
     insightSetProperties,
     insightSetSorts,
     insightParameters,
+    insightValidParameters,
     insightSetParameters,
     insightModifyItems,
     insightReduceItems,

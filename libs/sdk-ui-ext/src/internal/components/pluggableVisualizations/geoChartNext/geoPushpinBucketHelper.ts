@@ -205,6 +205,7 @@ export function getLocationItems(buckets: IBucketOfFun[], uiConfig: IUiConfig): 
  * Excludes location attributes and date attributes when location is present.
  *
  * @param buckets - All buckets from the reference point
+ * @param hasLocation - Whether a valid location is selected
  * @returns Filtered segment items (max 1)
  * @internal
  */

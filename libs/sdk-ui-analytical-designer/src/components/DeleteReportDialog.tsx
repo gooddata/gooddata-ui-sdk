@@ -8,17 +8,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { type ObjRef } from "@gooddata/sdk-model";
 import { useCancelablePromise } from "@gooddata/sdk-ui";
 import { ConfirmDialog as ConfirmDialogComponent } from "@gooddata/sdk-ui-kit";
-import { _sortBy } from "@gooddata/util";
 
 import { deleteReport } from "../actions/delete_actions.js";
 import { hideDialog } from "../actions/dialogs_actions.js";
+import { getUserLoginMD5 } from "../selectors/bootstrap_selector.js";
 import { deleteReportDialogSelector } from "../selectors/dialogs_selector.js";
+import { workspacePermissions } from "../selectors/permissions_selector.js";
 import {
+    EMPTY_INSIGHT_USAGE_IN_DOCUMENTS,
     EMPTY_INSIGHT_USAGE_ON_DASHBOARDS,
+    getInsightUsageInDocuments,
     getInsightUsageOnDashboards,
 } from "../store/insight_usage/insight_usage_helpers.js";
 import { type AppDispatch } from "../store/types.js";
-import { getAnalyticalDashboards, getInsightReferences } from "../utils/api.js";
+import { getAnalyticalDashboards, getInsightReferences, loadAccessibleDocumentIds } from "../utils/api.js";
 import { shortenText } from "../utils/base.js";
 
 import { DeleteReportDialogUsageList } from "./DeleteReportDialogUsageList.js";
@@ -49,6 +52,9 @@ export interface IDeleteReportDialogProps {
 }
 
 const useReferencingObjects = (projectId: string, insightRef: ObjRef, isActive: boolean) => {
+    const permissions = useSelector(workspacePermissions);
+    const userLogin = useSelector(getUserLoginMD5);
+
     return useCancelablePromise(
         {
             promise: async () => {
@@ -56,16 +62,25 @@ const useReferencingObjects = (projectId: string, insightRef: ObjRef, isActive: 
                     return null;
                 }
 
-                const { analyticalDashboards, documents } = await getInsightReferences(projectId, insightRef);
+                const { analyticalDashboards, documents = [] } = await getInsightReferences(
+                    projectId,
+                    insightRef,
+                );
                 const userDashboards = await getAnalyticalDashboards(projectId);
+                const accessibleDocumentIds = await loadAccessibleDocumentIds(
+                    projectId,
+                    documents,
+                    userLogin,
+                    permissions,
+                );
 
                 return {
                     dashboards: getInsightUsageOnDashboards(analyticalDashboards || [], userDashboards),
-                    documents: _sortBy(documents ?? [], (document) => document.title.trim().toLowerCase()),
+                    documents: getInsightUsageInDocuments(documents, accessibleDocumentIds),
                 };
             },
         },
-        [projectId, insightRef, isActive],
+        [projectId, insightRef, isActive, userLogin, permissions],
     );
 };
 
@@ -106,7 +121,7 @@ export function DeleteReportDialog({ ConfirmDialog = ConfirmDialogComponent }: I
     // TODO it might make sense to unify this and use the tiger way also on bear
     // on tiger we enable the delete once we are sure the insight is not used on any dashboard or in any document
     const isUsedOnDashboards = (referencing?.dashboards.allDashboardsCount ?? 0) > 0;
-    const isUsedInDocuments = (referencing?.documents.length ?? 0) > 0;
+    const isUsedInDocuments = (referencing?.documents.allDocumentsCount ?? 0) > 0;
     const canDelete = !isLoadingUsages && !isUsedOnDashboards && !isUsedInDocuments;
 
     const shouldDisableDelete = isDeleting || !canDelete;
@@ -154,7 +169,7 @@ export function DeleteReportDialog({ ConfirmDialog = ConfirmDialogComponent }: I
                     isLoading={isLoadingUsages}
                     isEmbedded={isEmbedded}
                     referencingDashboards={referencing?.dashboards ?? EMPTY_INSIGHT_USAGE_ON_DASHBOARDS}
-                    referencingDocuments={referencing?.documents ?? []}
+                    referencingDocuments={referencing?.documents ?? EMPTY_INSIGHT_USAGE_IN_DOCUMENTS}
                     analyticalDashboardUriFactory={analyticalDashboardUriFactory}
                     documentUriFactory={documentUriFactory}
                 />

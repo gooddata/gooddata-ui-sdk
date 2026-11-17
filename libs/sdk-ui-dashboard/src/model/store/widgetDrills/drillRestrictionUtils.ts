@@ -27,6 +27,8 @@ export function isLabelRestricted(ref: ObjRef, unavailable: IUnavailableDashboar
 /**
  * Identifies positively reported restrictions; missing metadata alone is not a permission signal.
  *
+ * @param drill - the drill definition to check
+ * @param unavailable - the unavailable dashboard references
  * @param insight - the drilled widget's insight; custom URL placeholders that depend on it are then
  *  resolved from the insight as it is now rather than from the references stored on the drill
  */

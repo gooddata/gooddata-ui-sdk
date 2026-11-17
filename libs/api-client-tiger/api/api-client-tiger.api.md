@@ -27376,6 +27376,9 @@ export function isLiveFeatures(features: ILiveFeatures | IStaticFeatures | undef
 // @public (undocumented)
 export function isMetricItem(metric: unknown): metric is JsonApiMetricOutWithLinks;
 
+// @alpha (undocumented)
+export function isParameterItem(parameter: unknown): parameter is JsonApiParameterOutWithLinks;
+
 // @public (undocumented)
 export function isResultAttributeHeader(header: ExecutionResultHeader): header is AttributeExecutionResultHeader;
 

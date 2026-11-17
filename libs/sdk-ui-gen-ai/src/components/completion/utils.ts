@@ -89,6 +89,7 @@ const SupportedReferenceTypes = [
     "dashboard",
     "visualization",
     "dataset",
+    "document",
 ] as const;
 
 // Utility: Get regex for references

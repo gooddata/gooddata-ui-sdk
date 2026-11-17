@@ -214,7 +214,7 @@ module.exports = (_env, argv) => {
                     use: ["style-loader", "css-loader"],
                 },
                 {
-                    test: /\.(eot|woff|woff2|ttf|svg|jpg|jpeg|gif)/,
+                    test: /\.(eot|woff|ttf|svg|jpg|jpeg|gif)/,
                     type: "asset/resource",
                 },
                 // webpack rewrites maplibre's `new URL(<variable>, import.meta.url)` worker shim into an

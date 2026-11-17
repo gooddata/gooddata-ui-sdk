@@ -74741,6 +74741,112 @@
                     "X-XSS-Protection": "1; mode=block"
                 }
             }
+        },
+        {
+            "name": "api_v1_entities_workspaces_c76e0537d0614abb0027f7c992656b964922506f_visualizationobjects_dcce2234-9097-47e7-a165-36cdbaa2e134_include_parameters",
+            "request": {
+                "url": "/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/visualizationObjects/dcce2234-9097-47e7-a165-36cdbaa2e134?include=parameters",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "jsonBody": {
+                    "data": {
+                        "attributes": {
+                            "content": {
+                                "buckets": [
+                                    {
+                                        "items": [
+                                            {
+                                                "measure": {
+                                                    "definition": {
+                                                        "measureDefinition": {
+                                                            "aggregation": "sum",
+                                                            "filters": [],
+                                                            "item": {
+                                                                "identifier": {
+                                                                    "id": "fact.f_activity.activitydate",
+                                                                    "type": "fact"
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "format": "#,##0.00",
+                                                    "localIdentifier": "8e79bc72230b460487232e0c67f4e2c9",
+                                                    "title": "Sum of Activity (Date)"
+                                                }
+                                            }
+                                        ],
+                                        "localIdentifier": "measures"
+                                    },
+                                    {
+                                        "items": [
+                                            {
+                                                "attribute": {
+                                                    "displayForm": {
+                                                        "identifier": {
+                                                            "id": "f_opportunity.id",
+                                                            "type": "label"
+                                                        }
+                                                    },
+                                                    "localIdentifier": "434ea45fa89e4a56ba2a827572a93852"
+                                                }
+                                            },
+                                            {
+                                                "attribute": {
+                                                    "displayForm": {
+                                                        "identifier": {
+                                                            "id": "label.f_account.account.name",
+                                                            "type": "label"
+                                                        }
+                                                    },
+                                                    "localIdentifier": "cfc7199c9e8c4f829bb803cc28197d27"
+                                                }
+                                            }
+                                        ],
+                                        "localIdentifier": "view"
+                                    }
+                                ],
+                                "filters": [],
+                                "properties": {},
+                                "sorts": [],
+                                "version": "2",
+                                "visualizationUrl": "local:column"
+                            },
+                            "createdAt": "2026-03-27 22:34",
+                            "description": "",
+                            "title": "many data"
+                        },
+                        "id": "dcce2234-9097-47e7-a165-36cdbaa2e134",
+                        "meta": {
+                            "origin": {
+                                "originId": "c76e0537d0614abb0027f7c992656b964922506f",
+                                "originType": "NATIVE"
+                            }
+                        },
+                        "type": "visualizationObject"
+                    },
+                    "links": {
+                        "self": "https://automation.staging-ui.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/visualizationObjects/dcce2234-9097-47e7-a165-36cdbaa2e134"
+                    }
+                },
+                "headers": {
+                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+                    "Content-Type": "application/json",
+                    "Expires": "0",
+                    "Pragma": "no-cache",
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
+                    "X-Content-Type-Options": "nosniff",
+                    "X-XSS-Protection": "1; mode=block"
+                }
+            }
         }
     ]
 }

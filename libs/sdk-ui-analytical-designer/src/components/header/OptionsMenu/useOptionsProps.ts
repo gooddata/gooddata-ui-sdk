@@ -83,6 +83,7 @@ const noBubbleText = (_intl: IntlShape) => "";
 /**
  * Props of the Options slot.
  *
+ * @param context - the header context
  * @param onChangeTimezone - opens the time zone dialog, which the editor actions own so that it opens for a
  *  host's own Options menu too
  */

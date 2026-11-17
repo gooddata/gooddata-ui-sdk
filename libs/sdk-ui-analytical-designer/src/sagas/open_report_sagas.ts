@@ -35,6 +35,7 @@ import {
 import { backend } from "../backend.js";
 import { ActionTypeKeys } from "../constants/actions.js";
 import { generateBucketItemIdentifier } from "../models/bucket_item_identifier.js";
+import { getUserLoginMD5 } from "../selectors/bootstrap_selector.js";
 import {
     enableAnalyticalDesignerCatalogSideload,
     enableImprovedMetricDateFilter,
@@ -42,6 +43,7 @@ import {
     enableStringParameters,
     enableVisualizationPermissions,
 } from "../selectors/feature_flag_selector.js";
+import { workspacePermissions } from "../selectors/permissions_selector.js";
 import { getTagsConfiguration } from "../selectors/route_selector.js";
 import { isSaveDisabledSelector } from "../selectors/save_report_selector.js";
 import { getBucketsMeta } from "../services/buckets_service.js";
@@ -79,7 +81,7 @@ import {
 } from "../store/visualization_classes/visualization_classes_selectors.js";
 import { type IApplicationResetCarrier } from "../typings/application_reset.js";
 import { type ILoadedReportItems, type IMissingDateFilterItem } from "../typings/report.js";
-import { getItemCacheItems, getObjectIdFromUri } from "../utils/api.js";
+import { getItemCacheItems, getObjectIdFromUri, loadAccessibleDocumentIds } from "../utils/api.js";
 import { getInsightRef } from "../utils/insight_ref.js";
 import { getRouteParams, getRouteUri, setLocation } from "../utils/location.js";
 import { logError } from "../utils/logging/error_logging.js";
@@ -432,12 +434,22 @@ export function* fetchReport(projectId: string, reportId: string) {
         yield call(failOnMissingDateFilterItems, insight);
 
         const userDashboards: SagaReturnType<typeof fetchDashboards> = yield call(fetchDashboards, projectId);
+        const permissions: ReturnType<typeof workspacePermissions> = yield select(workspacePermissions);
+        const userLogin: ReturnType<typeof getUserLoginMD5> = yield select(getUserLoginMD5);
+        const accessibleDocumentIds: SagaReturnType<typeof loadAccessibleDocumentIds> = yield call(
+            loadAccessibleDocumentIds,
+            projectId,
+            insightReferencing.documents,
+            userLogin,
+            permissions,
+        );
 
         yield put(
             updateInsightUsageOnDashboards(
                 insightReferencing.dashboards,
                 userDashboards,
                 insightReferencing.documents,
+                accessibleDocumentIds,
             ),
         );
         yield put(storeAppliedChartSort(insightSorts(insight)));

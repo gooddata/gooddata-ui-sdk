@@ -19,6 +19,7 @@ import { type IExecutionConfig, type IFilter, type ISeparators, type ObjRef } fr
 import { IntlWrapper, LoadingComponent, type OnError, type OnLoadingChanged } from "@gooddata/sdk-ui";
 
 import { useEvaluatedReferences } from "./hooks/useEvaluatedReferences.js";
+import { TYPED_WHITESPACE_TO_HAST } from "./plugins/mdast-typed-whitespace.js";
 import { rehypeReferences } from "./plugins/rehype-references.js";
 import { type RichTextFeature, remarkMarkdownFeatures } from "./plugins/remark-markdown-features.js";
 import { remarkReferences } from "./plugins/remark-references.js";
@@ -69,6 +70,16 @@ export interface IRichTextProps {
      *
      * `html` only governs whether HTML syntax is *recognised*, which affects block structure.
      * A tag is rendered as the characters that were typed either way — there is no `rehype-raw`.
+     *
+     * `typedWhitespace` keeps the whitespace CommonMark drops. Blank lines at the start and the end
+     * of the text, every blank line beyond the first between two blocks, and every line of text
+     * that holds only blank lines or spaces become `.gd-rich-text-blank-line` elements one line
+     * tall, which this component's stylesheet lays out. Spaces and newlines inside paragraphs and
+     * headings, and the indentation of a paragraph's lines, stay in the text, but only show where
+     * the host lays that text out with `white-space: pre-wrap`: in paragraphs, headings and list
+     * items that hold only inline text, not in a list item that holds blocks, whose newlines sit
+     * between the blocks. The host must also hide `<br>`, which arrives followed by a newline of
+     * its own and would break the line twice. Blank lines between list items are not kept.
      *
      * Applies to `renderMode="view"`; the editor takes whatever is typed either way.
      */
@@ -339,6 +350,9 @@ function RichTextView({
     return (
         <Markdown
             components={components}
+            remarkRehypeOptions={
+                allowedMarkdown?.includes("typedWhitespace") ? TYPED_WHITESPACE_TO_HAST : undefined
+            }
             remarkPlugins={[
                 ...(allowedMarkdown === undefined ? [] : [remarkMarkdownFeatures(allowedMarkdown)]),
                 ...(referencesEnabled ? [remarkReferences()] : []),

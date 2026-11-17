@@ -580,6 +580,7 @@ export function convertInsightToLayerTables(
  * For table, repeater, or xirr insights, returns the original insight.
  *
  * @param insight - The input insight to convert.
+ * @param options - Options of the geo insight conversion.
  * @returns IInsight with table visualization or the original insight if conversion is not supported.
  * @internal
  */

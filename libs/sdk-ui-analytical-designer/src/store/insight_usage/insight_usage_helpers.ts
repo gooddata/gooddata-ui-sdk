@@ -1,10 +1,16 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { type IListedDashboard, type IMetadataObject } from "@gooddata/sdk-model";
+import { type IPublisherDocumentSummaryV2 } from "@gooddata/sdk-backend-spi";
+import {
+    type IListedDashboard,
+    type IMetadataObject,
+    type IWorkspacePermissions,
+    objRefToString,
+} from "@gooddata/sdk-model";
 import { _sortBy } from "@gooddata/util";
 
 import {
-    type IInsightUsageInDocumentItem,
+    type IInsightUsageInDocuments,
     type IInsightUsageOnDashboard,
     type IInsightUsageOnDashboardItem,
 } from "./insight_usage_state.js";
@@ -44,17 +50,63 @@ export const getInsightUsageOnDashboards = (
     };
 };
 
+export const canSeeAllDocuments = (permissions: IWorkspacePermissions | null): boolean =>
+    !permissions || permissions.canCreateDocument;
+
+/**
+ * Whether Publisher shows the user a document. A user who may create documents sees all of them. Anyone
+ * else sees only the ones they can still edit: their own, unless inherited from a parent workspace.
+ * Unknown permissions show the document, as Publisher does.
+ */
+export const isDocumentShown = (
+    document: Pick<IPublisherDocumentSummaryV2, "isLocked" | "createdBy">,
+    userLogin: string | undefined,
+    permissions: IWorkspacePermissions | null,
+): boolean => {
+    if (canSeeAllDocuments(permissions)) {
+        return true;
+    }
+    if (document.isLocked) {
+        return false;
+    }
+    if (permissions.canManageProject) {
+        return true;
+    }
+    return userLogin !== undefined && document.createdBy?.login === userLogin;
+};
+
+export const getAccessibleDocumentIds = (
+    documents: IPublisherDocumentSummaryV2[],
+    userLogin: string | undefined,
+    permissions: IWorkspacePermissions | null,
+): string[] =>
+    documents
+        .filter((document) => isDocumentShown(document, userLogin, permissions))
+        .map((document) => objRefToString(document.ref));
+
 export const getInsightUsageInDocuments = (
     referencedDocuments: IMetadataObject[],
-): IInsightUsageInDocumentItem[] =>
-    _sortBy(
-        referencedDocuments.map(({ id, title }) => ({ id, title })),
-        (item) => item.title.trim().toLowerCase(),
-    );
+    accessibleDocumentIds: string[],
+): IInsightUsageInDocuments => {
+    const accessibleDocuments = referencedDocuments
+        .filter(({ id }) => accessibleDocumentIds.includes(id))
+        .map(({ id, title }) => ({ id, title }));
+    return {
+        accessibleDocuments: _sortBy(accessibleDocuments, (item) => item.title.trim().toLowerCase()),
+        inaccessibleDocumentsCount: referencedDocuments.length - accessibleDocuments.length,
+        allDocumentsCount: referencedDocuments.length,
+    };
+};
 
 export const EMPTY_INSIGHT_USAGE_ON_DASHBOARDS: IInsightUsageOnDashboard = {
     accessibleDashboards: [],
     allDashboards: [],
     inaccessibleDashboardsCount: 0,
     allDashboardsCount: 0,
+};
+
+export const EMPTY_INSIGHT_USAGE_IN_DOCUMENTS: IInsightUsageInDocuments = {
+    accessibleDocuments: [],
+    inaccessibleDocumentsCount: 0,
+    allDocumentsCount: 0,
 };

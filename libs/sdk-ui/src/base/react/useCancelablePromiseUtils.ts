@@ -22,7 +22,7 @@ import { type UseCancelablePromiseState, type UseCancelablePromiseStatus } from 
  *     - ["error", "success"] will be resolved to "error"
  *     - ["success", "success"] will be resolved to "success"
  *
- * @param states - cancelable promise states (useCancelablePromise return values)
+ * @param cancelablePromisesStates - cancelable promise states (useCancelablePromise return values)
  * @param options - specify options for resolving the status
  * @returns resolved status
  * @public

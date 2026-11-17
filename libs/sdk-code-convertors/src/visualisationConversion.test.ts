@@ -2281,6 +2281,25 @@ describe("visualisation conversion", () => {
             expect(error?.message).toContain('"parameter_number"');
         });
 
+        it.each([
+            ["an absent", "- id: parameter_number"],
+            ["a null", "- id: parameter_number\n    value:"],
+        ])("refuses a parameter with %s value, which the schema requires", (_, entry) => {
+            const visualisation: Visualisation = parse(
+                `id: visualization-id\ntype: bar_chart\nquery:\n  fields: {}\n  parameters:\n  ${entry}\n`,
+            );
+            let error: ICoreError | undefined;
+            try {
+                yamlVisualisationToDeclarative(emptyEntities, visualisation);
+            } catch (err: unknown) {
+                error = err as ICoreError;
+            }
+            expect(error).toBeDefined();
+            expect(error?.code).toBe(CoreErrorCode.MissingRequiredKey);
+            expect(error?.message).toContain('"value"');
+            expect(error?.message).toContain("parameter_number");
+        });
+
         it("writes and stores no parameters when there are none", () => {
             const deployed = yamlVisualisationToDeclarative(
                 emptyEntities,

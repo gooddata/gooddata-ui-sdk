@@ -303,6 +303,7 @@ export function getDashboardWithSharing(
  *
  * @param tabs - Array of TabState objects from the dashboard state
  * @param parametersByTab - Smart-persisted parameters keyed by tab localIdentifier
+ * @param defaultTabNewLocalIdentifier - New local identifier for the default tab
  * @returns Array of IDashboardTab objects ready for saving to backend
  */
 function processExistingTabs(

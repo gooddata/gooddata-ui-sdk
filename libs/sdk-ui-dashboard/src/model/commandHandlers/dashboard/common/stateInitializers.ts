@@ -637,11 +637,14 @@ function getDisplayAsLabels(attributeFilterConfigs: IDashboardAttributeFilterCon
  * @param effectiveDateFilterConfigMap - effective date filter config to use; note that this function will not store
  *  the date filter config anywhere; it uses the config during filter context sanitization & determining
  *  which date option is selected
- * @param dateDataSets - all catalog date datasets used to validate date filters. May not be given when
- *  catalog load is being deferred
+ * @param tabsDateFilterConfigSource - per tab, whether the date filter config comes from the dashboard or
+ *  the workspace
  * @param displayForms - specify display forms that should be used for in-memory resolution of
  *  attribute filter display forms to metadata objects
  * @param persistedDashboard - dashboard to use for the persisted dashboard state slice in case it needs to be different from the dashboard param
+ * @param activeTabLocalIdentifier - local identifier of the active tab; defaults to the first tab
+ * @param workspaceParameters - workspace parameters
+ * @param unavailableObjectsOverride - unavailable dashboard references to use instead of the dashboard's own
  * @param attributesWithReferences - attributes of the attribute filters, used to match an override filter
  *  to the same filter on another tab when filters persist across tabs
  */
