@@ -130,6 +130,7 @@ export const TigerFeatureDefinitions = {
     enableGenAiReportTakeaways: booleanFeature(false),
     enableEmbeddingWriteCommands: booleanFeature(false),
     enableEmbeddingOriginValidation: booleanFeature(false),
+    enableExecutionProgress: booleanFeature(false),
     enableLocalizationOverview: booleanFeature(true),
     enableAiAssistantChartsV2: booleanFeature(false),
     enableUserLanguageChange: booleanFeature(true),

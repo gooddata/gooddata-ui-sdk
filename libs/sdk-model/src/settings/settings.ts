@@ -1271,6 +1271,17 @@ export interface IFeatureFlags {
     enableEmbeddingOriginValidation?: boolean;
 
     /**
+     * Enable the live execution progress in Analytical Designer.
+     *
+     * @remarks
+     * When enabled, Analytical Designer follows the backend progress of the visualization's computation,
+     * shows it in place of the loading spinner and keeps the stats of the last load.
+     *
+     * Disabled by default.
+     */
+    enableExecutionProgress?: boolean;
+
+    /**
      * Enable the localization overview in organization settings: settings split into subpages under an
      * expandable Settings group in the navigation, and the per-language usage overview.
      *

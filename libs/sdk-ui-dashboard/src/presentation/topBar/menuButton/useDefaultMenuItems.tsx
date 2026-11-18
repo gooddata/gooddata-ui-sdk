@@ -6,6 +6,7 @@ import { useIntl } from "react-intl";
 
 import { type IconType, UiIcon, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
+import { DEFAULT_MENU_BUTTON_ID } from "../../../_staging/accessibility/elementId.js";
 import { requestOpenDensityDialog } from "../../../model/commands/density.js";
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useDashboardScheduledEmails } from "../../../model/react/useDasboardScheduledEmails/useDashboardScheduledEmails.js";
@@ -150,25 +151,31 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         if (isNewDashboard) {
             return;
         }
-        openDialog({
-            onSubmit: (data) => {
-                closeDialog();
-                exportToTabular(
-                    data.mergeHeaders ?? true,
-                    data.includeFilterContext ?? true,
-                    undefined,
-                    dashboardTitle,
-                    "XLSX",
-                );
+        openDialog(
+            {
+                onSubmit: (data) => {
+                    closeDialog();
+                    exportToTabular(
+                        data.mergeHeaders ?? true,
+                        data.includeFilterContext ?? true,
+                        undefined,
+                        dashboardTitle,
+                        "XLSX",
+                    );
+                },
+                headline: intl.formatMessage({ id: "options.menu.export.dialog.EXCEL" }),
+                mergeHeaders: Boolean(settings?.["cellMergedByDefault"] ?? true),
+                mergeHeadersTitle: null,
+                includeFilterContext: Boolean(settings?.["activeFiltersByDefault"] ?? true),
+                filterContextVisible: true,
+                filterContextTitle: null,
+                filterContextText: intl.formatMessage({
+                    id: "options.menu.export.dialog.includeExportInfo",
+                }),
             },
-            headline: intl.formatMessage({ id: "options.menu.export.dialog.EXCEL" }),
-            mergeHeaders: Boolean(settings?.["cellMergedByDefault"] ?? true),
-            mergeHeadersTitle: null,
-            includeFilterContext: Boolean(settings?.["activeFiltersByDefault"] ?? true),
-            filterContextVisible: true,
-            filterContextTitle: null,
-            filterContextText: intl.formatMessage({ id: "options.menu.export.dialog.includeExportInfo" }),
-        });
+            // return focus to the dashboard menu button once the dialog closes
+            DEFAULT_MENU_BUTTON_ID,
+        );
         // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [
         isNewDashboard,
@@ -187,7 +194,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         useExportDashboardToPdfPresentation();
     const { exportDashboardToPptPresentation, exportDashboardToPptPresentationStatus } =
         useExportDashboardToPowerPointPresentation();
-    const resolveTemplateAndExport = useExportWithTemplateSelection();
+    const resolveTemplateAndExport = useExportWithTemplateSelection(DEFAULT_MENU_BUTTON_ID);
 
     const defaultOnExportToPdfPresentation = useCallback(() => {
         if (isNewDashboard) {

@@ -8,6 +8,8 @@ export {
     type ActionsApiComputeReportRequest as ExecutionAPIComputeReportRequest,
     ActionsApi_ChangeAnalysis as ExecutionAPI_ChangeAnalysis,
     type ActionsApiChangeAnalysisRequest as ExecutionAPIChangeAnalysisRequest,
+    ActionsApi_StreamExecutionProgress as ExecutionAPI_StreamExecutionProgress,
+    type ActionsApiStreamExecutionProgressRequest as ExecutionAPIStreamExecutionProgressRequest,
     // Execution Result API
     ActionsApi_RetrieveResult as ExecutionResultAPI_RetrieveResult,
     ActionsApi_RetrieveResultBinary as ExecutionResultAPI_RetrieveResultBinary,
@@ -15,6 +17,8 @@ export {
     type ActionsApiChangeAnalysisResultRequest as ExecutionResultAPIChangeAnalysisResultRequest,
     type ActionsApiRetrieveResultBinaryRequest as ExecutionResultAPIRetrieveResultBinaryRequest,
     type ActionsApiRetrieveResultRequest as ExecutionResultAPIRetrieveResultRequest,
+    ActionsApi_RetrieveExecutionMetadata as ExecutionResultAPI_RetrieveExecutionMetadata,
+    type ActionsApiRetrieveExecutionMetadataRequest as ExecutionResultAPIRetrieveExecutionMetadataRequest,
     ActionsApi_CancelExecutions as ExecutionResultAPI_CancelExecutions,
     type ActionsApiCancelExecutionsRequest as ExecutionResultAPICancelExecutionsRequest,
 } from "../../generated/afm-rest-api/index.js";

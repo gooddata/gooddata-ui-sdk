@@ -11,6 +11,14 @@ import { messages } from "../../../locales.js";
 import { useResetFiltersButton } from "./hooks/useResetFiltersButton.js";
 
 /**
+ * Class name of the reset button; the filter bar keyboard navigation uses it to tell the button
+ * apart from the filters.
+ *
+ * @internal
+ */
+export const RESET_FILTERS_BUTTON_CLASS_NAME = "button-filter-bar-reset";
+
+/**
  * @internal
  */
 export function ResetFiltersButton() {
@@ -67,7 +75,10 @@ export function ResetFiltersButton() {
                 disabled={!isOpenInternal}
                 anchor={
                     <button
-                        className="gd-button-link button-filter-bar-reset"
+                        type="button"
+                        // The filter bar toolbar is a single Tab stop; the button is reached with arrow keys.
+                        tabIndex={-1}
+                        className={`gd-button-link ${RESET_FILTERS_BUTTON_CLASS_NAME}`}
                         onClick={resetFilters}
                         aria-label={bubbleText}
                         onMouseEnter={() => setIsOpen(true)}

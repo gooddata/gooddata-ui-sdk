@@ -1888,7 +1888,7 @@
                     "permissions": [
                         "MANAGE"
                     ],
-                    "description": "Permissions required to get details of a Long Running Operation."
+                    "description": "Permissions required to get details of a Long Running Operation. MANAGE on the organization gives access to all operations. MANAGE on a data source gives access to the refresh operations of that data source."
                 }
             }
         },
@@ -2929,131 +2929,6 @@
                 }
             }
         },
-        "/api/v1/actions/workspaces/{workspaceId}/ai/workflow/{runId}/cancel": {
-            "post": {
-                "tags": [
-                    "actions"
-                ],
-                "operationId": "cancelWorkflow",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "description": "Workspace identifier",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "runId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "additionalProperties": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/actions/workspaces/{workspaceId}/ai/workflow/dashboardSummary": {
-            "post": {
-                "tags": [
-                    "actions"
-                ],
-                "operationId": "generateDashboardSummary",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "description": "Workspace identifier",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/WorkflowDashboardSummaryRequestDto"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/WorkflowDashboardSummaryResponseDto"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/actions/workspaces/{workspaceId}/ai/workflow/{runId}/status": {
-            "get": {
-                "tags": [
-                    "actions"
-                ],
-                "operationId": "getWorkflowStatus",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "description": "Workspace identifier",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "runId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/WorkflowStatusResponseDto"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/api/v1/actions/workspaces/{workspaceId}/execution/flow/cancel": {
             "post": {
                 "tags": [
@@ -3445,6 +3320,125 @@
                     "description": "Permissions required to list the operations of flows."
                 }
             }
+        },
+        "/api/v1/ailake/database/instances/{instanceId}/dataSources/{dataSourceId}/refresh": {
+            "post": {
+                "tags": [
+                    "AI Lake - Databases",
+                    "AI Lake"
+                ],
+                "summary": "(BETA) Refresh an AI Lake data source",
+                "description": "(BETA) Brings the data source up to date after a load and drops its cached results. The request starts an operation. Poll the operation to see its progress. When the operation succeeds, queries return the new data after the usual cache propagation. A failed operation carries the reason in its error.",
+                "operationId": "refreshAiLakeDataSource",
+                "parameters": [
+                    {
+                        "name": "instanceId",
+                        "in": "path",
+                        "description": "Database instance identifier. Accepts the database name (preferred) or UUID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Database instance identifier. Accepts the database name (preferred) or UUID."
+                        }
+                    },
+                    {
+                        "name": "dataSourceId",
+                        "in": "path",
+                        "description": "Data source identifier.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Data source identifier."
+                        }
+                    },
+                    {
+                        "name": "operation-id",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Refresh scheduled.",
+                        "headers": {
+                            "operation-location": {
+                                "description": "Operation location URL that can be used for polling.",
+                                "required": true,
+                                "style": "simple",
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "/api/v1/ailake/operations/e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
+                            },
+                            "operation-id": {
+                                "description": "Operation ID to use for polling.",
+                                "required": true,
+                                "style": "simple",
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
+                            }
+                        },
+                        "content": {}
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Permissions required to refresh a data source."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute/progress/{executionId}": {
+            "get": {
+                "tags": [
+                    "Computation",
+                    "actions"
+                ],
+                "summary": "(EXPERIMENTAL) Stream the live progress of an AFM execution",
+                "description": "Server-Sent Events with the computation steps of the execution identified by the X-GDC-CANCEL-TOKEN of the execute request. Ends with a `done` event.",
+                "operationId": "streamExecutionProgress",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "executionId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "text/event-stream": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ServerSentEventString"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -3644,7 +3638,7 @@
                         }
                     }
                 },
-                "description": "An absolute date range filter defined at a specific granularity. The 'from'/'to' literals must match the format of the chosen granularity (e.g. '2020' for YEAR, '2012-05' for MONTH, '2012-3' for QUARTER, '1996-01' for WEEK, '2010-10-30' for DAY, '2010-10-30 13' for HOUR, '2010-10-30 13:30' for MINUTE, '2010-10-30 13:30:45' for SECOND, or a plain ordinal like '6' for periodical granularities such as MONTH_OF_YEAR). At least one of 'from'/'to' must be provided; specifying only one yields an open-ended range."
+                "description": "An absolute date range filter defined at a specific granularity. The 'from'/'to' literals must match the format of the chosen granularity (e.g. '2020' for YEAR, '2012-05' for MONTH, '2012-3' for QUARTER, '1996-01' for WEEK, '2010-10-30' for DAY, '2010-10-30 13' for HOUR, '2010-10-30 13:30' for MINUTE, '2010-10-30 13:30:45' for SECOND, or a plain ordinal like '6' for periodical granularities such as MONTH_OF_YEAR). At least one of 'from'/'to' must be provided; specifying only one yields an open-ended range. When both are provided, 'from' must not be after 'to'."
             },
             "AbstractMeasureValueFilter": {
                 "type": "object",
@@ -5047,6 +5041,96 @@
                     }
                 },
                 "description": "Filter the result by applying multiple comparison and/or range conditions combined with OR logic. If conditions list is empty, no filtering is applied (all rows are returned)."
+            },
+            "ComputationProfile": {
+                "required": [
+                    "computedAt",
+                    "sources",
+                    "v"
+                ],
+                "type": "object",
+                "properties": {
+                    "computedAt": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "finishedAt": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "finishedAtApprox": {
+                        "type": "string"
+                    },
+                    "sources": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ComputationProfileSource"
+                        }
+                    },
+                    "startedAt": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "totalDurationMs": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "v": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                },
+                "description": "(EXPERIMENTAL) How the result was originally computed. Missing when unknown."
+            },
+            "ComputationProfileSource": {
+                "type": "object",
+                "properties": {
+                    "dataSourceId": {
+                        "type": "string"
+                    },
+                    "dataSourceName": {
+                        "type": "string"
+                    },
+                    "dbDurationMs": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "finishedAt": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "queryDurationMs": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "queryFinishedAt": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "queryRequestedAt": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "queryStartedAt": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "resultId": {
+                        "type": "string"
+                    },
+                    "rows": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "streamingStartedAt": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "totalDurationMs": {
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                }
             },
             "DataColumnLocator": {
                 "required": [
@@ -7534,12 +7618,13 @@
                     },
                     "kind": {
                         "type": "string",
-                        "description": "Type of the long-running operation.\n* `provision-database` — Provisioning of an AI Lake database.\n* `deprovision-database` — Deprovisioning (deletion) of an AI Lake database.\n* `run-service-command` — Running a command in a particular AI Lake service.\n* `analyze-statistics` — Running ANALYZE TABLE for CBO statistics collection.\n",
+                        "description": "Type of the long-running operation.\n* `provision-database` — Provisioning of an AI Lake database.\n* `deprovision-database` — Deprovisioning (deletion) of an AI Lake database.\n* `run-service-command` — Running a command in a particular AI Lake service.\n* `analyze-statistics` — Running ANALYZE TABLE for CBO statistics collection.\n* `refresh-data-source` — Refresh of an AI Lake data source after a data load.\n",
                         "enum": [
                             "provision-database",
                             "deprovision-database",
                             "run-service-command",
-                            "analyze-statistics"
+                            "analyze-statistics",
+                            "refresh-data-source"
                         ]
                     },
                     "status": {
@@ -8330,6 +8415,9 @@
                     "afm": {
                         "$ref": "#/components/schemas/AFM"
                     },
+                    "computationProfile": {
+                        "$ref": "#/components/schemas/ComputationProfile"
+                    },
                     "executionResponse": {
                         "$ref": "#/components/schemas/ExecutionResponse"
                     },
@@ -8414,6 +8502,9 @@
                     }
                 },
                 "description": "Request to run an AI Lake Service Command"
+            },
+            "ServerSentEventString": {
+                "type": "object"
             },
             "ServiceInfo": {
                 "required": [
@@ -9019,79 +9110,6 @@
                     },
                     "settings": {
                         "$ref": "#/components/schemas/ExecutionSettings"
-                    }
-                }
-            },
-            "WorkflowDashboardSummaryRequestDto": {
-                "required": [
-                    "dashboardId"
-                ],
-                "type": "object",
-                "properties": {
-                    "customUserPrompt": {
-                        "type": "string"
-                    },
-                    "dashboardId": {
-                        "type": "string"
-                    },
-                    "keyMetricIds": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "referenceQuarter": {
-                        "type": "string"
-                    }
-                }
-            },
-            "WorkflowDashboardSummaryResponseDto": {
-                "required": [
-                    "message",
-                    "runId",
-                    "status"
-                ],
-                "type": "object",
-                "properties": {
-                    "message": {
-                        "type": "string"
-                    },
-                    "runId": {
-                        "type": "string"
-                    },
-                    "status": {
-                        "type": "string"
-                    }
-                }
-            },
-            "WorkflowStatusResponseDto": {
-                "required": [
-                    "message",
-                    "runId",
-                    "status"
-                ],
-                "type": "object",
-                "properties": {
-                    "currentPhase": {
-                        "type": "string"
-                    },
-                    "error": {
-                        "type": "string"
-                    },
-                    "message": {
-                        "type": "string"
-                    },
-                    "result": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "object"
-                        }
-                    },
-                    "runId": {
-                        "type": "string"
-                    },
-                    "status": {
-                        "type": "string"
                     }
                 }
             }

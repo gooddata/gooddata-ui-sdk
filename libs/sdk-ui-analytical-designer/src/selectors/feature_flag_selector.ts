@@ -21,6 +21,7 @@ type FeatureFlag =
     | "portalLogoPage"
     | "enableEmbeddingWriteCommands"
     | "enableEmbeddingOriginValidation"
+    | "enableExecutionProgress"
     | "adFormattingDocumentationLink"
     | "approximateCountAvailable"
     | "responsiveUiDateFormat"
@@ -72,6 +73,7 @@ type FeatureFlagKey =
     | "PLATFORM_EDITION"
     | "ENABLE_EMBEDDING_WRITE_COMMANDS"
     | "ENABLE_EMBEDDING_ORIGIN_VALIDATION"
+    | "ENABLE_EXECUTION_PROGRESS"
     | "AD_FORMATTING_DOCUMENTATION_LINK"
     | "ENABLE_APPROX_COUNT"
     | "ENABLE_DATA_SAMPLING"
@@ -120,6 +122,7 @@ export const FEATURE_FLAGS: {
     PLATFORM_EDITION: "platformEdition",
     ENABLE_EMBEDDING_WRITE_COMMANDS: "enableEmbeddingWriteCommands",
     ENABLE_EMBEDDING_ORIGIN_VALIDATION: "enableEmbeddingOriginValidation",
+    ENABLE_EXECUTION_PROGRESS: "enableExecutionProgress",
     AD_FORMATTING_DOCUMENTATION_LINK: "adFormattingDocumentationLink",
     ENABLE_APPROX_COUNT: "approximateCountAvailable",
     ENABLE_DATA_SAMPLING: "dataSamplingAvailable",
@@ -198,6 +201,11 @@ export const isEmbeddingWriteCommandsEnabled = createSelector(
 export const isEmbeddingOriginValidationEnabled = createSelector(
     [getFeatureFlags],
     (flags) => (flags?.[FEATURE_FLAGS.ENABLE_EMBEDDING_ORIGIN_VALIDATION] ?? false) as boolean,
+);
+
+export const isExecutionProgressEnabled = createSelector(
+    [getFeatureFlags],
+    (flags) => (flags?.[FEATURE_FLAGS.ENABLE_EXECUTION_PROGRESS] ?? false) as boolean,
 );
 
 export const getCatalogGroupsExpanded = createSelector(

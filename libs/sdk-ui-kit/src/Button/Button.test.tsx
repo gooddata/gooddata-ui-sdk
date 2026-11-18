@@ -139,4 +139,18 @@ describe("ReactButton", () => {
             expect(button).toHaveAttribute("aria-controls", "description");
         });
     });
+
+    describe("aria-current", () => {
+        it("should render aria-current from accessibilityConfig", () => {
+            renderButton({ accessibilityConfig: { ariaCurrent: "page" } });
+
+            expect(screen.getByRole("button")).toHaveAttribute("aria-current", "page");
+        });
+
+        it("should not render aria-current when not set", () => {
+            renderButton({});
+
+            expect(screen.getByRole("button")).not.toHaveAttribute("aria-current");
+        });
+    });
 });

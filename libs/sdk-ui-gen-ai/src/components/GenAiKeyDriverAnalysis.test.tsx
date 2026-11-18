@@ -52,6 +52,13 @@ describe("KeyDriverAnalysis", () => {
                 [chatWindowSliceName]: chatWindowSliceReducer,
                 [messagesSliceName]: messagesSliceReducer,
             },
+            // the dev checks print a warning when one takes longer than warnAfter (32ms by default),
+            // and a warning fails the CI build; on a busy runner the first dispatches here take ~70ms
+            middleware: (getDefaultMiddleware) =>
+                getDefaultMiddleware({
+                    immutableCheck: { warnAfter: 250 },
+                    serializableCheck: { warnAfter: 250 },
+                }),
         });
 
         expect(isKeyDriverAnalysisMountedSelector(store.getState())).toBe(false);

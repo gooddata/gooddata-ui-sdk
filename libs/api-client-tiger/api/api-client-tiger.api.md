@@ -508,12 +508,6 @@ export interface ActionsApiCancelFlowsRequest {
 }
 
 // @public
-export interface ActionsApiCancelWorkflowRequest {
-    readonly runId: string;
-    readonly workspaceId: string;
-}
-
-// @public
 export interface ActionsApiChangeAnalysisRequest {
     readonly changeAnalysisRequest: AfmChangeAnalysisRequest;
     readonly workspaceId: string;
@@ -678,12 +672,6 @@ export interface ActionsApiForecastResultRequest {
 }
 
 // @public
-export interface ActionsApiGenerateDashboardSummaryRequest {
-    readonly workflowDashboardSummaryRequestDto: WorkflowDashboardSummaryRequestDto;
-    readonly workspaceId: string;
-}
-
-// @public
 export interface ActionsApiGenerateDescriptionRequest {
     readonly generateDescriptionRequest: GenerateDescriptionRequest;
     readonly workspaceId: string;
@@ -726,12 +714,6 @@ export { ActionsApiGetQualityIssuesRequest as GenAiApiGetQualityIssuesRequest }
 
 // @public
 export interface ActionsApiGetTranslationTagsRequest {
-    readonly workspaceId: string;
-}
-
-// @public
-export interface ActionsApiGetWorkflowStatusRequest {
-    readonly runId: string;
     readonly workspaceId: string;
 }
 
@@ -1180,6 +1162,12 @@ export interface ActionsApiSetTranslationsRequest {
 // @public
 export interface ActionsApiStagingUploadRequest {
     readonly file: File;
+}
+
+// @public
+export interface ActionsApiStreamExecutionProgressRequest {
+    readonly executionId: string;
+    readonly workspaceId: string;
 }
 
 // @public
@@ -1773,10 +1761,6 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     anomalyDetectionResult(requestParameters: ActionsApiAnomalyDetectionResultRequest, options?: AxiosRequestConfig): AxiosPromise<AnomalyDetectionResult>;
     cancelExecutions(requestParameters: ActionsApiCancelExecutionsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmCancelTokens>;
     cancelFlows(requestParameters: ActionsApiCancelFlowsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmCancelTokens>;
-    // (undocumented)
-    cancelWorkflow(requestParameters: ActionsApiCancelWorkflowRequest, options?: AxiosRequestConfig): AxiosPromise<{
-        [key: string]: string;
-    }>;
     changeAnalysis(requestParameters: ActionsApiChangeAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<ChangeAnalysisResponse>;
     changeAnalysisResult(requestParameters: ActionsApiChangeAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<ChangeAnalysisResult>;
     clustering(requestParameters: ActionsApiClusteringRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
@@ -1790,14 +1774,10 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     explainAFM(requestParameters: ActionsApiExplainAFMRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     forecast(requestParameters: ActionsApiForecastRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
     forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<ForecastResult>;
-    // (undocumented)
-    generateDashboardSummary(requestParameters: ActionsApiGenerateDashboardSummaryRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowDashboardSummaryResponseDto>;
     generateDescription(requestParameters: ActionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateDescriptionResponse>;
     generateTitle(requestParameters: ActionsApiGenerateTitleRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateTitleResponse>;
     getQualityIssues(requestParameters: ActionsApiGetQualityIssuesRequest, options?: AxiosRequestConfig): AxiosPromise<AfmGetQualityIssuesResponse>;
     getQualityIssuesCalculationStatus(requestParameters: AfmActionsApiGetQualityIssuesCalculationStatusRequest, options?: AxiosRequestConfig): AxiosPromise<AfmQualityIssuesCalculationStatusResponse>;
-    // (undocumented)
-    getWorkflowStatus(requestParameters: ActionsApiGetWorkflowStatusRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
     keyDriverAnalysis(requestParameters: ActionsApiKeyDriverAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResponse>;
     keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResult>;
     listFlowOperations(requestParameters: ActionsApiListFlowOperationsRequest, options?: AxiosRequestConfig): AxiosPromise<FlowOperations>;
@@ -1814,6 +1794,7 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     retrieveFlowResultTable(requestParameters: ActionsApiRetrieveFlowResultTableRequest, options?: AxiosRequestConfig): AxiosPromise<FlowTableResult>;
     retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): AxiosPromise<ExecutionResult>;
     retrieveResultBinary(requestParameters: ActionsApiRetrieveResultBinaryRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
+    streamExecutionProgress(requestParameters: ActionsApiStreamExecutionProgressRequest, options?: AxiosRequestConfig): AxiosPromise<object[]>;
     testLlmProvider(requestParameters: ActionsApiTestLlmProviderRequest, options?: AxiosRequestConfig): AxiosPromise<TestLlmProviderResponse>;
     testLlmProviderById(requestParameters: ActionsApiTestLlmProviderByIdRequest, options?: AxiosRequestConfig): AxiosPromise<TestLlmProviderResponse>;
     trendingObjects(requestParameters: ActionsApiTrendingObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<TrendingObjectsResult>;
@@ -1846,10 +1827,6 @@ export interface AfmActionsApiInterface {
     anomalyDetectionResult(requestParameters: ActionsApiAnomalyDetectionResultRequest, options?: AxiosRequestConfig): AxiosPromise<AnomalyDetectionResult>;
     cancelExecutions(requestParameters: ActionsApiCancelExecutionsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmCancelTokens>;
     cancelFlows(requestParameters: ActionsApiCancelFlowsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmCancelTokens>;
-    // (undocumented)
-    cancelWorkflow(requestParameters: ActionsApiCancelWorkflowRequest, options?: AxiosRequestConfig): AxiosPromise<{
-        [key: string]: string;
-    }>;
     changeAnalysis(requestParameters: ActionsApiChangeAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<ChangeAnalysisResponse>;
     changeAnalysisResult(requestParameters: ActionsApiChangeAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<ChangeAnalysisResult>;
     clustering(requestParameters: ActionsApiClusteringRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
@@ -1863,14 +1840,10 @@ export interface AfmActionsApiInterface {
     explainAFM(requestParameters: ActionsApiExplainAFMRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     forecast(requestParameters: ActionsApiForecastRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
     forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<ForecastResult>;
-    // (undocumented)
-    generateDashboardSummary(requestParameters: ActionsApiGenerateDashboardSummaryRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowDashboardSummaryResponseDto>;
     generateDescription(requestParameters: ActionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateDescriptionResponse>;
     generateTitle(requestParameters: ActionsApiGenerateTitleRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateTitleResponse>;
     getQualityIssues(requestParameters: ActionsApiGetQualityIssuesRequest, options?: AxiosRequestConfig): AxiosPromise<AfmGetQualityIssuesResponse>;
     getQualityIssuesCalculationStatus(requestParameters: AfmActionsApiGetQualityIssuesCalculationStatusRequest, options?: AxiosRequestConfig): AxiosPromise<AfmQualityIssuesCalculationStatusResponse>;
-    // (undocumented)
-    getWorkflowStatus(requestParameters: ActionsApiGetWorkflowStatusRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
     keyDriverAnalysis(requestParameters: ActionsApiKeyDriverAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResponse>;
     keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResult>;
     listFlowOperations(requestParameters: ActionsApiListFlowOperationsRequest, options?: AxiosRequestConfig): AxiosPromise<FlowOperations>;
@@ -1887,6 +1860,7 @@ export interface AfmActionsApiInterface {
     retrieveFlowResultTable(requestParameters: ActionsApiRetrieveFlowResultTableRequest, options?: AxiosRequestConfig): AxiosPromise<FlowTableResult>;
     retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): AxiosPromise<ExecutionResult>;
     retrieveResultBinary(requestParameters: ActionsApiRetrieveResultBinaryRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
+    streamExecutionProgress(requestParameters: ActionsApiStreamExecutionProgressRequest, options?: AxiosRequestConfig): AxiosPromise<Array<object>>;
     testLlmProvider(requestParameters: ActionsApiTestLlmProviderRequest, options?: AxiosRequestConfig): AxiosPromise<TestLlmProviderResponse>;
     testLlmProviderById(requestParameters: ActionsApiTestLlmProviderByIdRequest, options?: AxiosRequestConfig): AxiosPromise<TestLlmProviderResponse>;
     trendingObjects(requestParameters: ActionsApiTrendingObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<TrendingObjectsResult>;
@@ -13802,6 +13776,52 @@ export interface CompoundMeasureValueFilterCompoundMeasureValueFilter {
     // (undocumented)
     'measure': AfmIdentifier;
     'treatNullValuesAs'?: number;
+}
+
+// @public
+export interface ComputationProfile {
+    // (undocumented)
+    'computedAt': number;
+    // (undocumented)
+    'finishedAt'?: number;
+    // (undocumented)
+    'finishedAtApprox'?: string;
+    // (undocumented)
+    'sources': Array<ComputationProfileSource>;
+    // (undocumented)
+    'startedAt'?: number;
+    // (undocumented)
+    'totalDurationMs'?: number;
+    // (undocumented)
+    'v': number;
+}
+
+// @public (undocumented)
+export interface ComputationProfileSource {
+    // (undocumented)
+    'dataSourceId'?: string;
+    // (undocumented)
+    'dataSourceName'?: string;
+    // (undocumented)
+    'dbDurationMs'?: number;
+    // (undocumented)
+    'finishedAt'?: number;
+    // (undocumented)
+    'queryDurationMs'?: number;
+    // (undocumented)
+    'queryFinishedAt'?: number;
+    // (undocumented)
+    'queryRequestedAt'?: number;
+    // (undocumented)
+    'queryStartedAt'?: number;
+    // (undocumented)
+    'resultId'?: string;
+    // (undocumented)
+    'rows'?: number;
+    // (undocumented)
+    'streamingStartedAt'?: number;
+    // (undocumented)
+    'totalDurationMs'?: number;
 }
 
 // @public (undocumented)
@@ -43678,7 +43698,7 @@ export interface Operation {
 }
 
 // @public (undocumented)
-export type OperationKindEnum = 'provision-database' | 'deprovision-database' | 'run-service-command' | 'analyze-statistics';
+export type OperationKindEnum = 'provision-database' | 'deprovision-database' | 'run-service-command' | 'analyze-statistics' | 'refresh-data-source';
 
 // @public
 export class OptionsApi extends MetadataBaseApi implements OptionsApiInterface {
@@ -47287,6 +47307,8 @@ export interface ResultCacheMetadata {
     // (undocumented)
     'afm': AfmModel;
     // (undocumented)
+    'computationProfile'?: ComputationProfile;
+    // (undocumented)
     'executionResponse': ExecutionResponse;
     // (undocumented)
     'resultSize': number;
@@ -50206,46 +50228,6 @@ export interface WidgetSlidesTemplate {
 
 // @public (undocumented)
 export type WidgetSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
-
-// @public (undocumented)
-export interface WorkflowDashboardSummaryRequestDto {
-    // (undocumented)
-    'customUserPrompt'?: string;
-    // (undocumented)
-    'dashboardId': string;
-    // (undocumented)
-    'keyMetricIds'?: Array<string>;
-    // (undocumented)
-    'referenceQuarter'?: string;
-}
-
-// @public (undocumented)
-export interface WorkflowDashboardSummaryResponseDto {
-    // (undocumented)
-    'message': string;
-    // (undocumented)
-    'runId': string;
-    // (undocumented)
-    'status': string;
-}
-
-// @public (undocumented)
-export interface WorkflowStatusResponseDto {
-    // (undocumented)
-    'currentPhase'?: string;
-    // (undocumented)
-    'error'?: string;
-    // (undocumented)
-    'message': string;
-    // (undocumented)
-    'result'?: {
-        [key: string]: object;
-    };
-    // (undocumented)
-    'runId': string;
-    // (undocumented)
-    'status': string;
-}
 
 // @public (undocumented)
 export interface WorkspaceAutomationIdentifier {

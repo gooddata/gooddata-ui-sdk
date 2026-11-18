@@ -5,10 +5,13 @@ import { memo } from "react";
 import classNames from "classnames";
 import { useSelector } from "react-redux";
 
+import { isExecutionProgressEnabled } from "../selectors/feature_flag_selector.js";
 import { reportSelector } from "../selectors/report_selector.js";
 import { type IExtendedRefPointCustomError } from "../store/reference_point/extended_reference_point_state.js";
 import { type IMissingDateFilterItem } from "../typings/report.js";
 
+import { ExecutionProgressPanel } from "./report/executionProgress/ExecutionProgressPanel.js";
+import { ExecutionStats } from "./report/executionProgress/ExecutionStats.js";
 import { ReportBlank } from "./report/ReportBlank.js";
 import { ReportComputing } from "./report/ReportComputing.js";
 import { ReportCustomError } from "./report/ReportCustomError.js";
@@ -53,6 +56,8 @@ export interface IReportProps {
     hasReportLoadingError?: boolean;
     customError?: IExtendedRefPointCustomError | null;
     messages?: Record<string, string>;
+    /** replaces the computing spinner with the live execution progress */
+    isExecutionProgressEnabled?: boolean;
 }
 
 export const ReportBase = memo(function Report({
@@ -81,6 +86,7 @@ export const ReportBase = memo(function Report({
     unsupportedConfiguration = false,
     hasReportLoadingError = false,
     customError = null,
+    isExecutionProgressEnabled = false,
 }: IReportProps) {
     const getReportErrorComponent = () => {
         if (hasReportLoadingError) {
@@ -124,10 +130,23 @@ export const ReportBase = memo(function Report({
     const ErrorComponent = getReportErrorComponent();
     const className = classNames({
         "invisible-report-visualization": ErrorComponent !== null,
+        "adi-execution-stats-enabled": isExecutionProgressEnabled,
     });
+    // The progress panel takes the spinner's place while the report executes. It stays mounted
+    // whatever the outcome is (visualization, empty or error state), and overlays it for a moment
+    // after the execution settled so the final progress is readable; it renders nothing otherwise.
+    const replacesSpinner =
+        isExecutionProgressEnabled && ErrorComponent === ReportComputing && isExecutionRunning;
+
     return (
         <div className={className}>
-            {ErrorComponent === ReportNotFound ? (
+            {isExecutionProgressEnabled ? (
+                <>
+                    <ExecutionProgressPanel isExecutionRunning={isExecutionRunning} />
+                    {isExecutable ? <ExecutionStats isExecutionRunning={isExecutionRunning} /> : null}
+                </>
+            ) : null}
+            {replacesSpinner ? null : ErrorComponent === ReportNotFound ? (
                 <ReportNotFound missingItems={reportNotFoundMissingItems} />
             ) : ErrorComponent === null ? null : (
                 <ErrorComponent isSmallScreen={isSmallScreen} />
@@ -144,6 +163,13 @@ export const ReportBase = memo(function Report({
 
 export function Report({ isSmallScreen }: { isSmallScreen: boolean }) {
     const reportProps = useSelector(reportSelector);
+    const executionProgressEnabled = useSelector(isExecutionProgressEnabled);
 
-    return <ReportBase {...reportProps} isSmallScreen={isSmallScreen} />;
+    return (
+        <ReportBase
+            {...reportProps}
+            isSmallScreen={isSmallScreen}
+            isExecutionProgressEnabled={executionProgressEnabled}
+        />
+    );
 }

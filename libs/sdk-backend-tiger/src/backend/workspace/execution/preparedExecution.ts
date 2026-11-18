@@ -39,6 +39,7 @@ import { toAfmExecution } from "../../../convertors/toBackend/afm/toAfmResultSpe
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { downloadFile, parseNameFromContentDisposition } from "../../../utils/downloadFile.js";
 
+import { registerExecution } from "./executionProgress.js";
 import { TigerExecutionResult } from "./executionResult.js";
 
 export class TigerPreparedExecution implements IPreparedExecution {
@@ -73,9 +74,13 @@ export class TigerPreparedExecution implements IPreparedExecution {
                 { ...new TigerCancellationConverter(this.signal ?? null).forAxios() },
             ),
         ).then((response) => {
-            let resultCancelToken: string | undefined = undefined;
-            if (this.signal) {
-                resultCancelToken = response?.headers["x-gdc-cancel-token"];
+            // the cancel token identifies the server execution: always kept as the execution id,
+            // but sent back to cancel the result only when the caller can abort (unchanged behavior)
+            const executionId: string | undefined = response?.headers?.["x-gdc-cancel-token"] || undefined;
+            const resultCancelToken = this.signal ? executionId : undefined;
+            const resultId = response.data.executionResponse.links.executionResult;
+            if (executionId) {
+                registerExecution(this.definition.workspace, resultId, executionId, this.authCall);
             }
             return new TigerExecutionResult(
                 this.authCall,

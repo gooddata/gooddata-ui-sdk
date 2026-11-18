@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { useState } from "react";
+
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
@@ -71,6 +73,38 @@ describe("HeaderWorkspacePicker", () => {
 
         await userEvent.keyboard("{Enter}");
         expect(onSelect).toHaveBeenCalledWith(workspaces[2]);
+    });
+
+    it("announces and describes the empty state when no workspace matches the search", async () => {
+        function FilteringPicker() {
+            const [search, setSearch] = useState("");
+            const filtered = workspaces.filter((ws) => ws.title.includes(search));
+            return (
+                <Wrapped
+                    workspaces={filtered}
+                    totalWorkspacesCount={filtered.length}
+                    selectedWorkspace={workspaces[2]}
+                    showSearch
+                    onSearch={setSearch}
+                />
+            );
+        }
+        render(<FilteringPicker />);
+        const combobox = await openPicker();
+        const status = screen.getByRole("status");
+
+        await userEvent.keyboard("xyz");
+
+        await waitFor(() => expect(status).toHaveTextContent("No matching workspaces."), { timeout: 2000 });
+        expect(screen.getByRole("status")).toBe(status);
+        expect(combobox).toHaveFocus();
+        expect(combobox).toHaveAccessibleDescription("No matching workspaces.");
+        expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
+
+        await userEvent.clear(combobox);
+        await userEvent.keyboard("{ArrowDown}");
+        expect(combobox).not.toHaveAttribute("aria-describedby");
+        expect(combobox).toHaveAttribute("aria-activedescendant", screen.getAllByRole("option")[0].id);
     });
 
     it("clears a typed filter on the first Escape and closes the picker on the next one", async () => {

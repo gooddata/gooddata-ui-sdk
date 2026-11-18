@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode, createContext, useContext, useState } from "react";
 
@@ -9,7 +9,11 @@ export type IExportTabularPdfDialogConfig = Omit<IExportTabularPdfDialogProps, "
 interface IExportTabularPdfDialogContextValue {
     isOpen: boolean;
     config: IExportTabularPdfDialogConfig;
-    openDialog: (config: IExportTabularPdfDialogConfig) => void;
+    /**
+     * Id of the element that receives focus when the dialog closes (typically the trigger of the export flow).
+     */
+    returnFocusTo?: string;
+    openDialog: (config: IExportTabularPdfDialogConfig, returnFocusTo?: string) => void;
     closeDialog: () => void;
 }
 
@@ -23,9 +27,11 @@ const ExportTabularPdfDialogContext = createContext<IExportTabularPdfDialogConte
 export function ExportTabularPdfDialogContextProvider({ children }: { children: ReactNode }) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [config, setConfig] = useState<IExportTabularPdfDialogConfig>({});
+    const [returnFocusTo, setReturnFocusTo] = useState<string>();
 
-    const openDialog = (newConfig: IExportTabularPdfDialogConfig) => {
+    const openDialog = (newConfig: IExportTabularPdfDialogConfig, focusTarget?: string) => {
         setConfig(newConfig);
+        setReturnFocusTo(focusTarget);
         setIsOpen(true);
     };
 
@@ -37,6 +43,7 @@ export function ExportTabularPdfDialogContextProvider({ children }: { children: 
     const value: IExportTabularPdfDialogContextValue = {
         isOpen,
         config,
+        returnFocusTo,
         openDialog,
         closeDialog,
     };

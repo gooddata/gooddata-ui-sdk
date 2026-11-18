@@ -1,7 +1,7 @@
 // (C) 2020-2026 GoodData Corporation
 
 import { withEventing } from "@gooddata/sdk-backend-base";
-import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend, type IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { tigerFactory } from "@gooddata/sdk-backend-tiger";
 import { type IExecutionDefinition } from "@gooddata/sdk-model";
 
@@ -42,10 +42,46 @@ export let clearCache: () => void = noop;
 export let resetCatalogs: () => void = noop;
 export let explainExecDef: IExecutionDefinition;
 
-const withExplainEventing = (backend: IAnalyticalBackend): IAnalyticalBackend =>
+/**
+ * A successful execute call of AD's backend: the execution result plus the client time it
+ * resolved. Feeds the live execution progress (store/execution_progress).
+ */
+export interface IExecutedResult {
+    result: IExecutionResult;
+    executedAt: number;
+}
+
+type ExecutedResultListener = (executed: IExecutedResult) => void;
+
+const executedResultListeners = new Set<ExecutedResultListener>();
+let lastExecutedResult: IExecutedResult | undefined;
+
+/** Subscribes to the execute calls of AD's backend; returns the unsubscribe function. */
+export const subscribeToExecutedResults = (listener: ExecutedResultListener): (() => void) => {
+    executedResultListeners.add(listener);
+    return () => {
+        executedResultListeners.delete(listener);
+    };
+};
+
+/** The latest execute call, for a subscriber that may have subscribed just after it resolved. */
+export const getLastExecutedResult = (): IExecutedResult | undefined => lastExecutedResult;
+
+/** bumped on every adoption and reset, so a late execute of a previous backend is not reported */
+let backendGeneration = 0;
+
+const withExplainEventing = (backend: IAnalyticalBackend, generation: number): IAnalyticalBackend =>
     withEventing(backend, {
         beforeExecute: (execDefinition) => {
             explainExecDef = execDefinition;
+        },
+        successfulExecute: (result) => {
+            if (generation !== backendGeneration) {
+                return;
+            }
+            const executed = { result, executedAt: Date.now() };
+            lastExecutedResult = executed;
+            executedResultListeners.forEach((listener) => listener(executed));
         },
     });
 
@@ -99,7 +135,8 @@ export interface IAdHostBackend {
  * instance. The token renewals AD receives (SetApiToken) go to the host's setters when given.
  */
 export const adoptHostBackend = (host: IAdHostBackend): void => {
-    backend = withExplainEventing(wrapWithSemanticCfSimulation(host.instance));
+    backendGeneration += 1;
+    backend = withExplainEventing(wrapWithSemanticCfSimulation(host.instance), backendGeneration);
     clearCache = host.resetAllCaches ?? noop;
     resetCatalogs = host.resetCatalogs ?? noop;
     setApiTokenHandler = host.setApiToken;
@@ -108,7 +145,9 @@ export const adoptHostBackend = (host: IAdHostBackend): void => {
 
 /** Drops the adopted host backend; the backend is uninitialized again until the next adoption. */
 export const resetBackend = (): void => {
+    backendGeneration += 1;
     backend = createUninitializedBackend();
+    lastExecutedResult = undefined;
     clearCache = noop;
     resetCatalogs = noop;
     setApiTokenHandler = undefined;

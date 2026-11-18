@@ -552,10 +552,15 @@ $attribute-filter-drag-handle-left: 10px;
         fill: kit-variables.$gd-color-state-blank;
     }
 
-    &:hover .gd-icon-reset {
+    &:hover .gd-icon-reset,
+    &:focus-visible .gd-icon-reset {
         path {
             fill: kit-variables.$gd-palette-primary-base;
         }
+    }
+
+    &:focus-visible {
+        @include mixins.focus-ring;
     }
 }
 

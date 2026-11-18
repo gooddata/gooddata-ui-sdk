@@ -49,6 +49,7 @@ import { FilterViews } from "./filterViews/FilterViews.js";
 import { useFilterBarState } from "./hooks/useFilterBarState.js";
 import { useFilterExpansionByDragAndDrop } from "./hooks/useFilterExpansionByDragAndDrop.js";
 import { type CalculatedRows, useRowsCalculator } from "./hooks/useRowsCalculator.js";
+import { RESET_FILTERS_BUTTON_CLASS_NAME } from "./ResetFiltersButton.js";
 import { ShowAllFiltersButton } from "./ShowAllFiltersButton.js";
 import { useExecutionTimestampMessage } from "./useExecutionTimestampMessage.js";
 
@@ -322,7 +323,7 @@ function MeasuredDiv({
 
     const { registerHandler, unregisterHandler } = useDashboardEventsContext();
 
-    // Focus management: Move focus to filter region when reset/apply event occurs
+    // Focus management: Move focus to filter region when apply event occurs
     const moveToFilterRegion = useCallback(() => {
         const filterRegion = containerRef.current;
         if (filterRegion) {
@@ -330,30 +331,45 @@ function MeasuredDiv({
         }
     }, []);
 
+    // Focus management: after reset the reset button disappears, so move focus to the first filter
+    // (falling back to the filter region) to not lose it to the document body.
+    const moveToFirstFilter = useCallback(() => {
+        const firstFilter = getFilterElements(containerRef.current).find(
+            (element) => !isResetFiltersButton(element),
+        );
+        if (firstFilter) {
+            firstFilter.focus();
+        } else {
+            moveToFilterRegion();
+        }
+    }, [moveToFilterRegion]);
+
     // Listen for filter context working selection reset/apply events
     useEffect(() => {
-        const handler = {
-            eval: (event: any) =>
-                isDashboardFilterContextSelectionReset(event) ||
-                isDashboardFilterContextWorkingSelectionApplied(event) ||
-                isDashboardParametersSelectionReset(event),
+        const applyHandler = {
+            eval: (event: any) => isDashboardFilterContextWorkingSelectionApplied(event),
             handler: () => {
                 moveToFilterRegion();
             },
         };
+        const resetHandler = {
+            eval: (event: any) =>
+                isDashboardFilterContextSelectionReset(event) || isDashboardParametersSelectionReset(event),
+            handler: () => {
+                moveToFirstFilter();
+            },
+        };
 
-        registerHandler(handler);
-        return () => unregisterHandler(handler);
-    }, [registerHandler, unregisterHandler, moveToFilterRegion]);
+        registerHandler(applyHandler);
+        registerHandler(resetHandler);
+        return () => {
+            unregisterHandler(applyHandler);
+            unregisterHandler(resetHandler);
+        };
+    }, [registerHandler, unregisterHandler, moveToFilterRegion, moveToFirstFilter]);
 
     const getActiveIndexAndFilterElements = () => {
-        const filterElements = containerRef.current
-            ? Array.from(
-                  containerRef.current.querySelectorAll<HTMLElement>(
-                      'button, [tabindex]:not([tabindex="-1"])',
-                  ),
-              )
-            : [];
+        const filterElements = getFilterElements(containerRef.current);
         const activeIndex = filterElements.findIndex((el) => el === document.activeElement);
         return { activeIndex, filterElements };
     };
@@ -386,6 +402,18 @@ function MeasuredDiv({
         onUnhandledKeyDown(e) {
             if (e.key === "Tab") {
                 const { filterElements } = getActiveIndexAndFilterElements();
+                // The region itself holds focus after apply: Tab enters the bar at the first filter,
+                // so the filters are not skipped in favour of the reset button.
+                if (document.activeElement === containerRef.current && !e.shiftKey) {
+                    const firstFilter = filterElements.find((el) => !isResetFiltersButton(el));
+                    if (firstFilter) {
+                        e.preventDefault();
+                        firstFilter.focus();
+                        return;
+                    }
+                }
+                // The bar is a toolbar: one Tab stop, items (including the reset button) are reached
+                // with the arrow keys, so the reset button does not add an extra Tab stop.
                 if (activeFilterIndex === -1) {
                     // First tab into bar: focus first filter
                     e.preventDefault();
@@ -453,6 +481,16 @@ function MeasuredDiv({
             </div>
         </div>
     );
+}
+
+function getFilterElements(container: HTMLElement | null): HTMLElement[] {
+    return container
+        ? Array.from(container.querySelectorAll<HTMLElement>('button, [tabindex]:not([tabindex="-1"])'))
+        : [];
+}
+
+function isResetFiltersButton(element: HTMLElement): boolean {
+    return element.classList.contains(RESET_FILTERS_BUTTON_CLASS_NAME);
 }
 
 function FiltersRows({ rows }: { rows: number[] }) {

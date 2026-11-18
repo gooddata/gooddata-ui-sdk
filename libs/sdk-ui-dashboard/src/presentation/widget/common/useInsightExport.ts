@@ -50,9 +50,18 @@ import {
     selectIsExportableToXLSX,
 } from "../../../model/store/widgetExports/widgetExportsSelectors.js";
 import { getDefaultPdfPageSize } from "../../automations/scheduledEmail/utils/pdfPageSize.js";
-import { useExportCsvDialogContext } from "../../dashboardContexts/ExportCsvDialogContext.js";
-import { useExportTabularPdfDialogContext } from "../../dashboardContexts/ExportTabularPdfDialogContext.js";
-import { useExportXlsxDialogContext } from "../../dashboardContexts/ExportXlsxDialogContext.js";
+import {
+    type IExportCsvDialogConfig,
+    useExportCsvDialogContext,
+} from "../../dashboardContexts/ExportCsvDialogContext.js";
+import {
+    type IExportTabularPdfDialogConfig,
+    useExportTabularPdfDialogContext,
+} from "../../dashboardContexts/ExportTabularPdfDialogContext.js";
+import {
+    type ExportXlsxDialogConfig,
+    useExportXlsxDialogContext,
+} from "../../dashboardContexts/ExportXlsxDialogContext.js";
 import { useExportToTabular } from "../../topBar/menuButton/useExportToTabular.js";
 import { useExportWithTemplateSelection } from "../../topBar/menuButton/useExportWithTemplateSelection.js";
 
@@ -67,8 +76,12 @@ export const useInsightExport = (config: {
     insight?: IInsight;
     widget?: IInsightWidget;
     enableNewTabularExport?: boolean;
+    /**
+     * Id of the element that receives focus when an export dialog closes (typically the trigger of the export flow).
+     */
+    returnFocusTo?: string;
 }) => {
-    const { title, widgetRef, insight, widget, enableNewTabularExport = true } = config;
+    const { title, widgetRef, insight, widget, enableNewTabularExport = true, returnFocusTo } = config;
     const grandTotalsPosition = insight
         ? insightProperties(insight)?.["controls"]?.["grandTotalsPosition"]
         : undefined;
@@ -158,10 +171,26 @@ export const useInsightExport = (config: {
     const exportRawHandler = useRawExportHandler();
     const exportSlidesHandler = useSlidesExportHandler();
     const exportImageHandler = useImageExportHandler();
-    const resolveTemplateAndExport = useExportWithTemplateSelection();
-    const { openDialog: openXlsxDialog, closeDialog: closeXlsxDialog } = useExportXlsxDialogContext();
-    const { openDialog: openCsvDialog } = useExportCsvDialogContext();
-    const { openDialog: openPdfDialog, closeDialog: closePdfDialog } = useExportTabularPdfDialogContext();
+    const resolveTemplateAndExport = useExportWithTemplateSelection(returnFocusTo);
+    const { openDialog: openXlsxDialogInContext, closeDialog: closeXlsxDialog } =
+        useExportXlsxDialogContext();
+    const { openDialog: openCsvDialogInContext } = useExportCsvDialogContext();
+    const { openDialog: openPdfDialogInContext, closeDialog: closePdfDialog } =
+        useExportTabularPdfDialogContext();
+
+    // export dialogs return focus to the trigger of the export flow once they close
+    const openXlsxDialog = useCallback(
+        (dialogConfig: ExportXlsxDialogConfig) => openXlsxDialogInContext(dialogConfig, returnFocusTo),
+        [openXlsxDialogInContext, returnFocusTo],
+    );
+    const openCsvDialog = useCallback(
+        (dialogConfig: IExportCsvDialogConfig) => openCsvDialogInContext(dialogConfig, returnFocusTo),
+        [openCsvDialogInContext, returnFocusTo],
+    );
+    const openPdfDialog = useCallback(
+        (dialogConfig: IExportTabularPdfDialogConfig) => openPdfDialogInContext(dialogConfig, returnFocusTo),
+        [openPdfDialogInContext, returnFocusTo],
+    );
 
     const onExportCSV = useCallback(() => {
         // if this bombs there is an issue with the logic enabling the buttons

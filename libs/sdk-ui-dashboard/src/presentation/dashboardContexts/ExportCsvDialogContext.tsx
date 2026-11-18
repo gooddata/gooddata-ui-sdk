@@ -16,13 +16,18 @@ export interface IExportCsvDialogConfig {
 export interface IExportCsvDialogContext {
     isOpen: boolean;
     dialogConfig?: IExportCsvDialogConfig;
-    openDialog: (config: IExportCsvDialogConfig) => void;
+    /**
+     * Id of the element that receives focus when the dialog closes (typically the trigger of the export flow).
+     */
+    returnFocusTo?: string;
+    openDialog: (config: IExportCsvDialogConfig, returnFocusTo?: string) => void;
     closeDialog: () => void;
 }
 
 const ExportCsvDialogContext = createContext<IExportCsvDialogContext>({
     isOpen: false,
     dialogConfig: undefined,
+    returnFocusTo: undefined,
     closeDialog: () => {},
     openDialog: () => {},
 });
@@ -40,9 +45,11 @@ export const useExportCsvDialogContext = (): IExportCsvDialogContext => {
 export function ExportCsvDialogContextProvider({ children }: { children?: ReactNode }) {
     const [isOpen, setIsOpen] = useState(false);
     const [dialogConfig, setDialogConfig] = useState<IExportCsvDialogConfig>();
+    const [returnFocusTo, setReturnFocusTo] = useState<string>();
 
-    const openDialog = useCallback((config: IExportCsvDialogConfig) => {
+    const openDialog = useCallback((config: IExportCsvDialogConfig, focusTarget?: string) => {
         setDialogConfig(config);
+        setReturnFocusTo(focusTarget);
         setIsOpen(true);
     }, []);
 
@@ -51,8 +58,8 @@ export function ExportCsvDialogContextProvider({ children }: { children?: ReactN
     }, []);
 
     const contextValue = useMemo(
-        () => ({ isOpen, dialogConfig, openDialog, closeDialog }),
-        [isOpen, dialogConfig, openDialog, closeDialog],
+        () => ({ isOpen, dialogConfig, returnFocusTo, openDialog, closeDialog }),
+        [isOpen, dialogConfig, returnFocusTo, openDialog, closeDialog],
     );
 
     return <ExportCsvDialogContext.Provider value={contextValue}>{children}</ExportCsvDialogContext.Provider>;

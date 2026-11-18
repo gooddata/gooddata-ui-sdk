@@ -35,6 +35,7 @@ import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { IdentifierDuplications } from '@gooddata/api-client-tiger';
 import { IEarlyAccessFeaturesConfig } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
+import { IExecutionResult } from '@gooddata/sdk-backend-spi';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { ImportCsvRequest } from '@gooddata/api-client-tiger';
 import { ImportCsvResponse } from '@gooddata/api-client-tiger';
@@ -133,6 +134,9 @@ export type DependentEntitiesGraphRequest = DependentEntitiesRequest;
 // @internal @deprecated (undocumented)
 export type DependentEntitiesGraphResponse = DependentEntitiesResponse;
 
+// @alpha
+export type ExecutionProgressEventType = "STARTED" | "PREPROCESSING_STARTED" | "SQL_GENERATION_STARTED" | "SQL_GENERATION_FINISHED" | "CHILDREN_REQUESTED" | "FEATURES_DETERMINED" | "DATABASE_QUERY_REQUESTED" | "DATABASE_QUERY_STARTED" | "DATABASE_QUERY_RESULT_STREAMING_STARTED" | "POSTPROCESSING_STARTED" | "CACHE_HIT" | "FINISHED";
+
 // @internal (undocumented)
 export const FEATURE_FLAG_OVERRIDES_GATE_FLAG = "enableFeatureFlagOverrides";
 
@@ -155,6 +159,9 @@ export { GenerateLdmRequest }
 // @internal @deprecated (undocumented)
 export type GenerateLogicalModelRequest = GenerateLdmRequest;
 
+// @alpha
+export function getExecutionProgress(result: IExecutionResult): ITigerExecutionProgressHandle | undefined;
+
 // @internal
 export function getIdOrigin(id: string): IOriginInfoWithId;
 
@@ -171,6 +178,42 @@ export interface IApiToken {
 export interface IApiTokenExtended extends IApiToken {
     // (undocumented)
     bearerToken: string | undefined;
+}
+
+// @alpha
+export interface IComputationProfile {
+    computedAt?: number | null;
+    finishedAt?: number | null;
+    finishedAtApprox?: string | null;
+    // (undocumented)
+    sources?: IComputationProfileSource[] | null;
+    startedAt?: number | null;
+    totalDurationMs?: number | null;
+    // (undocumented)
+    v?: number;
+}
+
+// @alpha
+export interface IComputationProfileSource {
+    // (undocumented)
+    dataSourceId?: string | null;
+    dataSourceName?: string | null;
+    dbDurationMs?: number | null;
+    // (undocumented)
+    finishedAt?: number | null;
+    queryDurationMs?: number | null;
+    queryFinishedAt?: number | null;
+    // (undocumented)
+    queryRequestedAt?: number | null;
+    // (undocumented)
+    queryStartedAt?: number | null;
+    // (undocumented)
+    resultId?: string | null;
+    // (undocumented)
+    rows?: number | null;
+    // (undocumented)
+    streamingStartedAt?: number | null;
+    totalDurationMs?: number | null;
 }
 
 // @internal @deprecated (undocumented)
@@ -376,6 +419,55 @@ export interface IEntitlement {
     value?: string;
 }
 
+// @alpha
+export interface IExecutionProgressChild {
+    // (undocumented)
+    dataSourceId?: string | null;
+    dataSourceName?: string | null;
+    // (undocumented)
+    resultId: string;
+    // (undocumented)
+    role?: string | null;
+}
+
+// @alpha
+export interface IExecutionProgressEvent {
+    // (undocumented)
+    cacheHit?: boolean | null;
+    // (undocumented)
+    children?: IExecutionProgressChild[] | null;
+    // (undocumented)
+    columns?: number | null;
+    // (undocumented)
+    dataSourceId?: string | null;
+    dataSourceName?: string | null;
+    // (undocumented)
+    errorType?: string | null;
+    // (undocumented)
+    executionId: string;
+    // (undocumented)
+    parentResultId?: string | null;
+    // (undocumented)
+    postprocessingType?: string | null;
+    profile?: IComputationProfile | null;
+    // (undocumented)
+    resultId: string;
+    // (undocumented)
+    role?: string | null;
+    // (undocumented)
+    rows?: number | null;
+    // (undocumented)
+    seq: number;
+    // (undocumented)
+    status?: "success" | "partialSuccess" | "failure" | null;
+    // (undocumented)
+    timestamp: number;
+    // (undocumented)
+    timing?: Record<string, unknown> | null;
+    // (undocumented)
+    type: ExecutionProgressEventType;
+}
+
 // @internal (undocumented)
 export interface IFeatureFlagOverrideContext {
     // (undocumented)
@@ -474,6 +566,13 @@ export interface IStoredFeatureFlagOverrides extends IFeatureFlagOverrides {
 
 // @internal
 export function isValidFeatureFlagValue<K extends OverridableFeatureFlag>(flag: K, value: unknown): value is FeatureFlagOverrideRule<K>["value"];
+
+// @alpha
+export interface ITigerExecutionProgressHandle {
+    executionId: string;
+    loadComputationProfile: (signal?: AbortSignal) => Promise<IComputationProfile | null>;
+    stream: (signal?: AbortSignal) => ReadableStream<IExecutionProgressEvent>;
+}
 
 // @internal (undocumented)
 export type ITigerFeatureFlags = {
@@ -1058,6 +1157,10 @@ export const TigerFeatureDefinitions: {
         defaultValue: boolean;
     };
     readonly enableEmbeddingOriginValidation: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableExecutionProgress: {
         type: "BOOLEAN";
         defaultValue: boolean;
     };

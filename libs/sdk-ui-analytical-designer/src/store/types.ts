@@ -28,6 +28,7 @@ import { type IDragAndDropState } from "./drag_and_drop/dnd_types.js";
 import { type IDrillableItemsState } from "./drillable_items/drillable_items_state.js";
 import { type IDeviceState, type IThemeState } from "./embedding/embedding_state.js";
 import { type IExecutionState } from "./execution/execution_state.js";
+import { type IExecutionProgressState } from "./execution_progress/execution_progress_state.js";
 import { type IFeatureFlagsState } from "./feature_flags/feature_flags_state.js";
 import { type IFilterBarState } from "./filter_bar/filter_bar_state.js";
 import { type IFilterBarAutoOpenState } from "./filter_bar_auto_open/filter_bar_auto_open_state.js";
@@ -156,6 +157,8 @@ export interface IAppState {
     };
     report: {
         execution: IExecutionState;
+        /** the live progress of the current report execution (store/execution_progress) */
+        executionProgress: IExecutionProgressState;
         /** the report domain's mini-branch leaves (store/report) */
         saving: IReportSavingState;
         savingAsNew: IReportSavingAsNewState;

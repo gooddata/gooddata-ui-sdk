@@ -5,7 +5,7 @@ import { useCallback, useMemo } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { type IInsight, insightVisualizationType, widgetTitle } from "@gooddata/sdk-model";
+import { type IInsight, insightVisualizationType, objRefToString, widgetTitle } from "@gooddata/sdk-model";
 import { type VisType } from "@gooddata/sdk-ui";
 import {
     canConvertToTable,
@@ -15,6 +15,7 @@ import {
 } from "@gooddata/sdk-ui-ext";
 import { useId } from "@gooddata/sdk-ui-kit";
 
+import { getDashboardInsightMenuButtonId } from "../../../../_staging/accessibility/elementId.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { useDashboardScheduledEmails } from "../../../../model/react/useDasboardScheduledEmails/useDashboardScheduledEmails.js";
 import { useDashboardAlerts } from "../../../../model/react/useDashboardAlerting/useDashboardAlerts.js";
@@ -104,6 +105,7 @@ function DefaultDashboardInsightWidgetCore({
         title: widgetTitle(widget) || intl.formatMessage({ id: "export.defaultTitle" }),
         insight,
         widget,
+        returnFocusTo: getDashboardInsightMenuButtonId(objRefToString(widgetRef)),
     });
 
     const onScheduleExport = useCallback(() => {

@@ -10,10 +10,12 @@ import {
     adoptHostBackend,
     backend,
     clearCache,
+    getLastExecutedResult,
     resetBackend,
     resetCatalogs,
     setApiTokenHandler,
     setJwtHandler,
+    subscribeToExecutedResults,
 } from "../backend.js";
 import { handleReceivedApiToken } from "../postMessageApi/sagas/api_token_received_saga.js";
 import { backendInitialized } from "../sagas/application_context/application_context_actions.js";
@@ -43,6 +45,32 @@ describe("adoptHostBackend", () => {
         backend.workspace("host-workspace");
 
         expect(workspaceSpy).toHaveBeenCalledWith("host-workspace");
+    });
+
+    it("should report the execute calls of the adopted backend", async () => {
+        adoptHostBackend({ instance: dummyBackend() });
+        const listener = vi.fn();
+        const unsubscribe = subscribeToExecutedResults(listener);
+
+        await backend.workspace("ws").execution().forItems([]).execute();
+        unsubscribe();
+
+        expect(listener).toHaveBeenCalledTimes(1);
+        expect(getLastExecutedResult()).toBeDefined();
+    });
+
+    it("should not report an execute call that resolves after the backend was reset", async () => {
+        adoptHostBackend({ instance: dummyBackend() });
+        const listener = vi.fn();
+        const unsubscribe = subscribeToExecutedResults(listener);
+
+        const pending = backend.workspace("ws").execution().forItems([]).execute();
+        resetBackend();
+        await pending;
+        unsubscribe();
+
+        expect(listener).not.toHaveBeenCalled();
+        expect(getLastExecutedResult()).toBeUndefined();
     });
 
     it("should wire cache invalidation refs to the host callbacks", () => {

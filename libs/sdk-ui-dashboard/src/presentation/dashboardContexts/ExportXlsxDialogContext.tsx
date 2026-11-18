@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ReactNode, createContext, useCallback, useContext, useMemo, useState } from "react";
 
@@ -12,13 +12,18 @@ export type ExportXlsxDialogConfig = Omit<IExportDialogBaseProps, "children">;
 export interface IExportXlsxDialogContext {
     isOpen: boolean;
     dialogConfig: ExportXlsxDialogConfig;
-    openDialog: (config?: ExportXlsxDialogConfig) => void;
+    /**
+     * Id of the element that receives focus when the dialog closes (typically the trigger of the export flow).
+     */
+    returnFocusTo?: string;
+    openDialog: (config?: ExportXlsxDialogConfig, returnFocusTo?: string) => void;
     closeDialog: () => void;
 }
 
 const ExportXlsxDialogContext = createContext<IExportXlsxDialogContext>({
     isOpen: false,
     dialogConfig: {},
+    returnFocusTo: undefined,
     closeDialog: () => {},
     openDialog: () => {},
 });
@@ -36,10 +41,12 @@ export const useExportXlsxDialogContext = (): IExportXlsxDialogContext => {
 export function ExportXlsxDialogContextProvider({ children }: { children?: ReactNode }) {
     const [isOpen, setIsOpen] = useState(false);
     const [dialogConfig, setDialogConfig] = useState<ExportXlsxDialogConfig>({});
+    const [returnFocusTo, setReturnFocusTo] = useState<string>();
 
-    const openDialog = useCallback((config: ExportXlsxDialogConfig = {}) => {
+    const openDialog = useCallback((config: ExportXlsxDialogConfig = {}, focusTarget?: string) => {
         setIsOpen(true);
         setDialogConfig(config);
+        setReturnFocusTo(focusTarget);
     }, []);
 
     const closeDialog = useCallback(() => {
@@ -47,8 +54,8 @@ export function ExportXlsxDialogContextProvider({ children }: { children?: React
     }, []);
 
     const contextValue = useMemo(
-        () => ({ isOpen, dialogConfig, openDialog, closeDialog }),
-        [isOpen, dialogConfig, openDialog, closeDialog],
+        () => ({ isOpen, dialogConfig, returnFocusTo, openDialog, closeDialog }),
+        [isOpen, dialogConfig, returnFocusTo, openDialog, closeDialog],
     );
 
     return (

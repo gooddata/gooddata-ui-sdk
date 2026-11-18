@@ -72,7 +72,7 @@ export interface AbsoluteDateFilterAbsoluteDateFilter {
 export type AbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
 
 /**
- * An absolute date range filter defined at a specific granularity. The \'from\'/\'to\' literals must match the format of the chosen granularity (e.g. \'2020\' for YEAR, \'2012-05\' for MONTH, \'2012-3\' for QUARTER, \'1996-01\' for WEEK, \'2010-10-30\' for DAY, \'2010-10-30 13\' for HOUR, \'2010-10-30 13:30\' for MINUTE, \'2010-10-30 13:30:45\' for SECOND, or a plain ordinal like \'6\' for periodical granularities such as MONTH_OF_YEAR). At least one of \'from\'/\'to\' must be provided; specifying only one yields an open-ended range.
+ * An absolute date range filter defined at a specific granularity. The \'from\'/\'to\' literals must match the format of the chosen granularity (e.g. \'2020\' for YEAR, \'2012-05\' for MONTH, \'2012-3\' for QUARTER, \'1996-01\' for WEEK, \'2010-10-30\' for DAY, \'2010-10-30 13\' for HOUR, \'2010-10-30 13:30\' for MINUTE, \'2010-10-30 13:30:45\' for SECOND, or a plain ordinal like \'6\' for periodical granularities such as MONTH_OF_YEAR). At least one of \'from\'/\'to\' must be provided; specifying only one yields an open-ended range. When both are provided, \'from\' must not be after \'to\'.
  */
 export interface AbsoluteGranularityDateFilter {
     'absoluteGranularityDateFilter': AbsoluteGranularityDateFilterAbsoluteGranularityDateFilter;
@@ -728,6 +728,34 @@ export interface CompoundMeasureValueFilterCompoundMeasureValueFilter {
      * A value that will be substituted for null values in the metric for the comparisons.
      */
     'treatNullValuesAs'?: number;
+}
+
+/**
+ * (EXPERIMENTAL) How the result was originally computed. Missing when unknown.
+ */
+export interface ComputationProfile {
+    'computedAt': number;
+    'finishedAt'?: number;
+    'finishedAtApprox'?: string;
+    'sources': Array<ComputationProfileSource>;
+    'startedAt'?: number;
+    'totalDurationMs'?: number;
+    'v': number;
+}
+
+export interface ComputationProfileSource {
+    'dataSourceId'?: string;
+    'dataSourceName'?: string;
+    'dbDurationMs'?: number;
+    'finishedAt'?: number;
+    'queryDurationMs'?: number;
+    'queryFinishedAt'?: number;
+    'queryRequestedAt'?: number;
+    'queryStartedAt'?: number;
+    'resultId'?: string;
+    'rows'?: number;
+    'streamingStartedAt'?: number;
+    'totalDurationMs'?: number;
 }
 
 /**
@@ -2077,13 +2105,13 @@ export interface Operation {
      */
     'id': string;
     /**
-     * Type of the long-running operation. * `provision-database` — Provisioning of an AI Lake database. * `deprovision-database` — Deprovisioning (deletion) of an AI Lake database. * `run-service-command` — Running a command in a particular AI Lake service. * `analyze-statistics` — Running ANALYZE TABLE for CBO statistics collection. 
+     * Type of the long-running operation. * `provision-database` — Provisioning of an AI Lake database. * `deprovision-database` — Deprovisioning (deletion) of an AI Lake database. * `run-service-command` — Running a command in a particular AI Lake service. * `analyze-statistics` — Running ANALYZE TABLE for CBO statistics collection. * `refresh-data-source` — Refresh of an AI Lake data source after a data load. 
      */
     'kind': OperationKindEnum;
     'status': string;
 }
 
-export type OperationKindEnum = 'provision-database' | 'deprovision-database' | 'run-service-command' | 'analyze-statistics';
+export type OperationKindEnum = 'provision-database' | 'deprovision-database' | 'run-service-command' | 'analyze-statistics' | 'refresh-data-source';
 
 /**
  * Error information for a failed operation
@@ -2484,6 +2512,7 @@ export interface RestApiIdentifier {
  */
 export interface ResultCacheMetadata {
     'afm': AFM;
+    'computationProfile'?: ComputationProfile;
     'executionResponse': ExecutionResponse;
     'resultSize': number;
     'resultSpec': ResultSpec;
@@ -2890,28 +2919,6 @@ export interface VisualizationObjectExecution {
      */
     'filters'?: Array<FilterDefinition>;
     'settings'?: ExecutionSettings;
-}
-
-export interface WorkflowDashboardSummaryRequestDto {
-    'customUserPrompt'?: string;
-    'dashboardId': string;
-    'keyMetricIds'?: Array<string>;
-    'referenceQuarter'?: string;
-}
-
-export interface WorkflowDashboardSummaryResponseDto {
-    'message': string;
-    'runId': string;
-    'status': string;
-}
-
-export interface WorkflowStatusResponseDto {
-    'currentPhase'?: string;
-    'error'?: string;
-    'message': string;
-    'result'?: { [key: string]: object; };
-    'runId': string;
-    'status': string;
 }
 
 
@@ -3528,6 +3535,60 @@ export async function AILakeApiAxiosParamCreator_ProvisionAiLakeDatabaseInstance
 
 // AILakeApi FP - AILakeApiAxiosParamCreator
 /**
+ * (BETA) Brings the data source up to date after a load and drops its cached results. The request starts an operation. Poll the operation to see its progress. When the operation succeeds, queries return the new data after the usual cache propagation. A failed operation carries the reason in its error.
+ * @summary (BETA) Refresh an AI Lake data source
+ * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {string} dataSourceId Data source identifier.
+ * @param {string} [operationId] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApiAxiosParamCreator_RefreshAiLakeDataSource(
+    instanceId: string, dataSourceId: string, operationId?: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'instanceId' is not null or undefined
+    assertParamExists('refreshAiLakeDataSource', 'instanceId', instanceId)
+    // verify required parameter 'dataSourceId' is not null or undefined
+    assertParamExists('refreshAiLakeDataSource', 'dataSourceId', dataSourceId)
+    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/dataSources/{dataSourceId}/refresh`
+        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)))
+        .replace(`{${"dataSourceId"}}`, encodeURIComponent(String(dataSourceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (operationId !== undefined && operationId !== null) {
+        localVarHeaderParameter['operation-id'] = String(operationId);
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AILakeApi FP - AILakeApiAxiosParamCreator
+/**
  * (BETA) Removes a data source association from an AI Lake database instance and deletes the corresponding data source from metadata-api. Fails if removing the data source would leave the instance with no data sources.
  * @summary (BETA) Remove a data source from an AILake Database instance
  * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
@@ -3997,6 +4058,32 @@ export async function AILakeApi_ProvisionAiLakeDatabaseInstance(
 
 // AILakeApi Api FP
 /**
+ * (BETA) Brings the data source up to date after a load and drops its cached results. The request starts an operation. Poll the operation to see its progress. When the operation succeeds, queries return the new data after the usual cache propagation. A failed operation carries the reason in its error.
+ * @summary (BETA) Refresh an AI Lake data source
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakeApiRefreshAiLakeDataSourceRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApi_RefreshAiLakeDataSource(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakeApiRefreshAiLakeDataSourceRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await AILakeApiAxiosParamCreator_RefreshAiLakeDataSource(
+        requestParameters.instanceId, requestParameters.dataSourceId, requestParameters.operationId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakeApi Api FP
+/**
  * (BETA) Removes a data source association from an AI Lake database instance and deletes the corresponding data source from metadata-api. Fails if removing the data source would leave the instance with no data sources.
  * @summary (BETA) Remove a data source from an AILake Database instance
  * @param {AxiosInstance} axios Axios instance.
@@ -4188,6 +4275,16 @@ export interface AILakeApiInterface {
      * @memberof AILakeApiInterface
      */
     provisionAiLakeDatabaseInstance(requestParameters: AILakeApiProvisionAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * (BETA) Brings the data source up to date after a load and drops its cached results. The request starts an operation. Poll the operation to see its progress. When the operation succeeds, queries return the new data after the usual cache propagation. A failed operation carries the reason in its error.
+     * @summary (BETA) Refresh an AI Lake data source
+     * @param {AILakeApiRefreshAiLakeDataSourceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApiInterface
+     */
+    refreshAiLakeDataSource(requestParameters: AILakeApiRefreshAiLakeDataSourceRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
      * (BETA) Removes a data source association from an AI Lake database instance and deletes the corresponding data source from metadata-api. Fails if removing the data source would leave the instance with no data sources.
@@ -4481,6 +4578,34 @@ export interface AILakeApiProvisionAiLakeDatabaseInstanceRequest {
 }
 
 /**
+ * Request parameters for refreshAiLakeDataSource operation in AILakeApi.
+ * @export
+ * @interface AILakeApiRefreshAiLakeDataSourceRequest
+ */
+export interface AILakeApiRefreshAiLakeDataSourceRequest {
+    /**
+     * Database instance identifier. Accepts the database name (preferred) or UUID.
+     * @type {string}
+     * @memberof AILakeApiRefreshAiLakeDataSource
+     */
+    readonly instanceId: string
+
+    /**
+     * Data source identifier.
+     * @type {string}
+     * @memberof AILakeApiRefreshAiLakeDataSource
+     */
+    readonly dataSourceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AILakeApiRefreshAiLakeDataSource
+     */
+    readonly operationId?: string
+}
+
+/**
  * Request parameters for removeAiLakeDatabaseDataSource operation in AILakeApi.
  * @export
  * @interface AILakeApiRemoveAiLakeDatabaseDataSourceRequest
@@ -4694,6 +4819,18 @@ export class AILakeApi extends BaseAPI implements AILakeApiInterface {
      */
     public provisionAiLakeDatabaseInstance(requestParameters: AILakeApiProvisionAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig) {
         return AILakeApi_ProvisionAiLakeDatabaseInstance(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Brings the data source up to date after a load and drops its cached results. The request starts an operation. Poll the operation to see its progress. When the operation succeeds, queries return the new data after the usual cache propagation. A failed operation carries the reason in its error.
+     * @summary (BETA) Refresh an AI Lake data source
+     * @param {AILakeApiRefreshAiLakeDataSourceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApi
+     */
+    public refreshAiLakeDataSource(requestParameters: AILakeApiRefreshAiLakeDataSourceRequest, options?: AxiosRequestConfig) {
+        return AILakeApi_RefreshAiLakeDataSource(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -5200,6 +5337,60 @@ export async function AILakeDatabasesApiAxiosParamCreator_ProvisionAiLakeDatabas
 
 // AILakeDatabasesApi FP - AILakeDatabasesApiAxiosParamCreator
 /**
+ * (BETA) Brings the data source up to date after a load and drops its cached results. The request starts an operation. Poll the operation to see its progress. When the operation succeeds, queries return the new data after the usual cache propagation. A failed operation carries the reason in its error.
+ * @summary (BETA) Refresh an AI Lake data source
+ * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {string} dataSourceId Data source identifier.
+ * @param {string} [operationId] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeDatabasesApiAxiosParamCreator_RefreshAiLakeDataSource(
+    instanceId: string, dataSourceId: string, operationId?: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'instanceId' is not null or undefined
+    assertParamExists('refreshAiLakeDataSource', 'instanceId', instanceId)
+    // verify required parameter 'dataSourceId' is not null or undefined
+    assertParamExists('refreshAiLakeDataSource', 'dataSourceId', dataSourceId)
+    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/dataSources/{dataSourceId}/refresh`
+        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)))
+        .replace(`{${"dataSourceId"}}`, encodeURIComponent(String(dataSourceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (operationId !== undefined && operationId !== null) {
+        localVarHeaderParameter['operation-id'] = String(operationId);
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AILakeDatabasesApi FP - AILakeDatabasesApiAxiosParamCreator
+/**
  * (BETA) Removes a data source association from an AI Lake database instance and deletes the corresponding data source from metadata-api. Fails if removing the data source would leave the instance with no data sources.
  * @summary (BETA) Remove a data source from an AILake Database instance
  * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
@@ -5520,6 +5711,32 @@ export async function AILakeDatabasesApi_ProvisionAiLakeDatabaseInstance(
 
 // AILakeDatabasesApi Api FP
 /**
+ * (BETA) Brings the data source up to date after a load and drops its cached results. The request starts an operation. Poll the operation to see its progress. When the operation succeeds, queries return the new data after the usual cache propagation. A failed operation carries the reason in its error.
+ * @summary (BETA) Refresh an AI Lake data source
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakeDatabasesApiRefreshAiLakeDataSourceRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeDatabasesApi_RefreshAiLakeDataSource(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakeDatabasesApiRefreshAiLakeDataSourceRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await AILakeDatabasesApiAxiosParamCreator_RefreshAiLakeDataSource(
+        requestParameters.instanceId, requestParameters.dataSourceId, requestParameters.operationId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakeDatabasesApi Api FP
+/**
  * (BETA) Removes a data source association from an AI Lake database instance and deletes the corresponding data source from metadata-api. Fails if removing the data source would leave the instance with no data sources.
  * @summary (BETA) Remove a data source from an AILake Database instance
  * @param {AxiosInstance} axios Axios instance.
@@ -5655,6 +5872,16 @@ export interface AILakeDatabasesApiInterface {
      * @memberof AILakeDatabasesApiInterface
      */
     provisionAiLakeDatabaseInstance(requestParameters: AILakeDatabasesApiProvisionAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * (BETA) Brings the data source up to date after a load and drops its cached results. The request starts an operation. Poll the operation to see its progress. When the operation succeeds, queries return the new data after the usual cache propagation. A failed operation carries the reason in its error.
+     * @summary (BETA) Refresh an AI Lake data source
+     * @param {AILakeDatabasesApiRefreshAiLakeDataSourceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeDatabasesApiInterface
+     */
+    refreshAiLakeDataSource(requestParameters: AILakeDatabasesApiRefreshAiLakeDataSourceRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
      * (BETA) Removes a data source association from an AI Lake database instance and deletes the corresponding data source from metadata-api. Fails if removing the data source would leave the instance with no data sources.
@@ -5882,6 +6109,34 @@ export interface AILakeDatabasesApiProvisionAiLakeDatabaseInstanceRequest {
 }
 
 /**
+ * Request parameters for refreshAiLakeDataSource operation in AILakeDatabasesApi.
+ * @export
+ * @interface AILakeDatabasesApiRefreshAiLakeDataSourceRequest
+ */
+export interface AILakeDatabasesApiRefreshAiLakeDataSourceRequest {
+    /**
+     * Database instance identifier. Accepts the database name (preferred) or UUID.
+     * @type {string}
+     * @memberof AILakeDatabasesApiRefreshAiLakeDataSource
+     */
+    readonly instanceId: string
+
+    /**
+     * Data source identifier.
+     * @type {string}
+     * @memberof AILakeDatabasesApiRefreshAiLakeDataSource
+     */
+    readonly dataSourceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AILakeDatabasesApiRefreshAiLakeDataSource
+     */
+    readonly operationId?: string
+}
+
+/**
  * Request parameters for removeAiLakeDatabaseDataSource operation in AILakeDatabasesApi.
  * @export
  * @interface AILakeDatabasesApiRemoveAiLakeDatabaseDataSourceRequest
@@ -6024,6 +6279,18 @@ export class AILakeDatabasesApi extends BaseAPI implements AILakeDatabasesApiInt
      */
     public provisionAiLakeDatabaseInstance(requestParameters: AILakeDatabasesApiProvisionAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig) {
         return AILakeDatabasesApi_ProvisionAiLakeDatabaseInstance(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Brings the data source up to date after a load and drops its cached results. The request starts an operation. Poll the operation to see its progress. When the operation succeeds, queries return the new data after the usual cache propagation. A failed operation carries the reason in its error.
+     * @summary (BETA) Refresh an AI Lake data source
+     * @param {AILakeDatabasesApiRefreshAiLakeDataSourceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeDatabasesApi
+     */
+    public refreshAiLakeDataSource(requestParameters: AILakeDatabasesApiRefreshAiLakeDataSourceRequest, options?: AxiosRequestConfig) {
+        return AILakeDatabasesApi_RefreshAiLakeDataSource(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -7006,54 +7273,6 @@ export async function ActionsApiAxiosParamCreator_CancelFlows(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * 
- * @param {string} workspaceId Workspace identifier
- * @param {string} runId 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function ActionsApiAxiosParamCreator_CancelWorkflow(
-    workspaceId: string, runId: string, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('cancelWorkflow', 'workspaceId', workspaceId)
-    // verify required parameter 'runId' is not null or undefined
-    assertParamExists('cancelWorkflow', 'runId', runId)
-    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/workflow/{runId}/cancel`
-        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-        .replace(`{${"runId"}}`, encodeURIComponent(String(runId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-
-    
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// ActionsApi FP - ActionsApiAxiosParamCreator
-/**
  * Computes change analysis for the provided execution definition.
  * @summary Compute change analysis
  * @param {string} workspaceId Workspace identifier
@@ -7896,67 +8115,6 @@ export async function ActionsApiAxiosParamCreator_ForecastResult(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * 
- * @param {string} workspaceId Workspace identifier
- * @param {WorkflowDashboardSummaryRequestDto} workflowDashboardSummaryRequestDto 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function ActionsApiAxiosParamCreator_GenerateDashboardSummary(
-    workspaceId: string, workflowDashboardSummaryRequestDto: WorkflowDashboardSummaryRequestDto, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('generateDashboardSummary', 'workspaceId', workspaceId)
-    // verify required parameter 'workflowDashboardSummaryRequestDto' is not null or undefined
-    assertParamExists('generateDashboardSummary', 'workflowDashboardSummaryRequestDto', workflowDashboardSummaryRequestDto)
-    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/workflow/dashboardSummary`
-        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-
-    
-    const consumes = [
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-    const needsSerialization =
-        typeof workflowDashboardSummaryRequestDto !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(workflowDashboardSummaryRequestDto !== undefined ? workflowDashboardSummaryRequestDto : {})
-        : workflowDashboardSummaryRequestDto || "";
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// ActionsApi FP - ActionsApiAxiosParamCreator
-/**
  * Generates a description for the specified analytics object. Returns description and a note with details if generation was not performed.
  * @summary Generate Description for Analytics Object
  * @param {string} workspaceId Workspace identifier
@@ -8146,54 +8304,6 @@ export async function ActionsApiAxiosParamCreator_GetQualityIssuesCalculationSta
     const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/issues/status/{processId}`
         .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
         .replace(`{${"processId"}}`, encodeURIComponent(String(processId)));
-    // use dummy base URL string because the URL constructor only accepts absolute URLs.
-    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-    let baseOptions;
-    if (configuration) {
-        baseOptions = configuration.baseOptions;
-    }
-    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-    const localVarHeaderParameter = {} as any;
-    const localVarQueryParameter = {} as any;
-
-
-    
-    setSearchParams(localVarUrlObj, localVarQueryParameter);
-    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
-    localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-    };
-
-    return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-    };
-}
-
-
-// ActionsApi FP - ActionsApiAxiosParamCreator
-/**
- * 
- * @param {string} workspaceId Workspace identifier
- * @param {string} runId 
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function ActionsApiAxiosParamCreator_GetWorkflowStatus(
-    workspaceId: string, runId: string, 
-    options: AxiosRequestConfig = {},
-    configuration?: Configuration,
-): Promise<RequestArgs> {
-    // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('getWorkflowStatus', 'workspaceId', workspaceId)
-    // verify required parameter 'runId' is not null or undefined
-    assertParamExists('getWorkflowStatus', 'runId', runId)
-    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/workflow/{runId}/status`
-        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-        .replace(`{${"runId"}}`, encodeURIComponent(String(runId)));
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
     const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
     let baseOptions;
@@ -9072,6 +9182,55 @@ export async function ActionsApiAxiosParamCreator_RetrieveResultBinary(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
+ * Server-Sent Events with the computation steps of the execution identified by the X-GDC-CANCEL-TOKEN of the execute request. Ends with a `done` event.
+ * @summary (EXPERIMENTAL) Stream the live progress of an AFM execution
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} executionId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_StreamExecutionProgress(
+    workspaceId: string, executionId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('streamExecutionProgress', 'workspaceId', workspaceId)
+    // verify required parameter 'executionId' is not null or undefined
+    assertParamExists('streamExecutionProgress', 'executionId', executionId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute/progress/{executionId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"executionId"}}`, encodeURIComponent(String(executionId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
  * Tests LLM provider connectivity with a full definition.
  * @summary Test LLM Provider
  * @param {TestLlmProviderDefinitionRequest} testLlmProviderDefinitionRequest 
@@ -9575,31 +9734,6 @@ export async function ActionsApi_CancelFlows(
 
 // ActionsApi Api FP
 /**
- * 
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {ActionsApiCancelWorkflowRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function ActionsApi_CancelWorkflow(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: ActionsApiCancelWorkflowRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<{ [key: string]: string; }> {
-    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_CancelWorkflow(
-        requestParameters.workspaceId, requestParameters.runId, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// ActionsApi Api FP
-/**
  * Computes change analysis for the provided execution definition.
  * @summary Compute change analysis
  * @param {AxiosInstance} axios Axios instance.
@@ -9938,31 +10072,6 @@ export async function ActionsApi_ForecastResult(
 
 // ActionsApi Api FP
 /**
- * 
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {ActionsApiGenerateDashboardSummaryRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function ActionsApi_GenerateDashboardSummary(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: ActionsApiGenerateDashboardSummaryRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<WorkflowDashboardSummaryResponseDto> {
-    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_GenerateDashboardSummary(
-        requestParameters.workspaceId, requestParameters.workflowDashboardSummaryRequestDto, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// ActionsApi Api FP
-/**
  * Generates a description for the specified analytics object. Returns description and a note with details if generation was not performed.
  * @summary Generate Description for Analytics Object
  * @param {AxiosInstance} axios Axios instance.
@@ -10058,31 +10167,6 @@ export async function ActionsApi_GetQualityIssuesCalculationStatus(
 ): AxiosPromise<QualityIssuesCalculationStatusResponse> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_GetQualityIssuesCalculationStatus(
         requestParameters.workspaceId, requestParameters.processId, 
-        options || {},
-        configuration,
-    );
-    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
-}
-
-
-// ActionsApi Api FP
-/**
- * 
- * @param {AxiosInstance} axios Axios instance.
- * @param {string} basePath Base path.
- * @param {ActionsApiGetWorkflowStatusRequest} requestParameters Request parameters.
- * @param {*} [options] Override http request option.
- * @param {Configuration} [configuration] Optional configuration.
- * @throws {RequiredError}
- */
-export async function ActionsApi_GetWorkflowStatus(
-    axios: AxiosInstance, basePath: string,
-    requestParameters: ActionsApiGetWorkflowStatusRequest, 
-    options?: AxiosRequestConfig,
-    configuration?: Configuration,
-): AxiosPromise<WorkflowStatusResponseDto> {
-    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_GetWorkflowStatus(
-        requestParameters.workspaceId, requestParameters.runId, 
         options || {},
         configuration,
     );
@@ -10482,6 +10566,32 @@ export async function ActionsApi_RetrieveResultBinary(
 
 // ActionsApi Api FP
 /**
+ * Server-Sent Events with the computation steps of the execution identified by the X-GDC-CANCEL-TOKEN of the execute request. Ends with a `done` event.
+ * @summary (EXPERIMENTAL) Stream the live progress of an AFM execution
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiStreamExecutionProgressRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_StreamExecutionProgress(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiStreamExecutionProgressRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<Array<object>> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_StreamExecutionProgress(
+        requestParameters.workspaceId, requestParameters.executionId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
  * Tests LLM provider connectivity with a full definition.
  * @summary Test LLM Provider
  * @param {AxiosInstance} axios Axios instance.
@@ -10728,15 +10838,6 @@ export interface ActionsApiInterface {
     cancelFlows(requestParameters: ActionsApiCancelFlowsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmCancelTokens>;
 
     /**
-     * 
-     * @param {ActionsApiCancelWorkflowRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ActionsApiInterface
-     */
-    cancelWorkflow(requestParameters: ActionsApiCancelWorkflowRequest, options?: AxiosRequestConfig): AxiosPromise<{ [key: string]: string; }>;
-
-    /**
      * Computes change analysis for the provided execution definition.
      * @summary Compute change analysis
      * @param {ActionsApiChangeAnalysisRequest} requestParameters Request parameters.
@@ -10867,15 +10968,6 @@ export interface ActionsApiInterface {
     forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<ForecastResult>;
 
     /**
-     * 
-     * @param {ActionsApiGenerateDashboardSummaryRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ActionsApiInterface
-     */
-    generateDashboardSummary(requestParameters: ActionsApiGenerateDashboardSummaryRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowDashboardSummaryResponseDto>;
-
-    /**
      * Generates a description for the specified analytics object. Returns description and a note with details if generation was not performed.
      * @summary Generate Description for Analytics Object
      * @param {ActionsApiGenerateDescriptionRequest} requestParameters Request parameters.
@@ -10914,15 +11006,6 @@ export interface ActionsApiInterface {
      * @memberof ActionsApiInterface
      */
     getQualityIssuesCalculationStatus(requestParameters: ActionsApiGetQualityIssuesCalculationStatusRequest, options?: AxiosRequestConfig): AxiosPromise<QualityIssuesCalculationStatusResponse>;
-
-    /**
-     * 
-     * @param {ActionsApiGetWorkflowStatusRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ActionsApiInterface
-     */
-    getWorkflowStatus(requestParameters: ActionsApiGetWorkflowStatusRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
 
     /**
      * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
@@ -11074,6 +11157,16 @@ export interface ActionsApiInterface {
      * @memberof ActionsApiInterface
      */
     retrieveResultBinary(requestParameters: ActionsApiRetrieveResultBinaryRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
+
+    /**
+     * Server-Sent Events with the computation steps of the execution identified by the X-GDC-CANCEL-TOKEN of the execute request. Ends with a `done` event.
+     * @summary (EXPERIMENTAL) Stream the live progress of an AFM execution
+     * @param {ActionsApiStreamExecutionProgressRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    streamExecutionProgress(requestParameters: ActionsApiStreamExecutionProgressRequest, options?: AxiosRequestConfig): AxiosPromise<Array<object>>;
 
     /**
      * Tests LLM provider connectivity with a full definition.
@@ -11304,27 +11397,6 @@ export interface ActionsApiCancelFlowsRequest {
      * @memberof ActionsApiCancelFlows
      */
     readonly afmCancelTokens: AfmCancelTokens
-}
-
-/**
- * Request parameters for cancelWorkflow operation in ActionsApi.
- * @export
- * @interface ActionsApiCancelWorkflowRequest
- */
-export interface ActionsApiCancelWorkflowRequest {
-    /**
-     * Workspace identifier
-     * @type {string}
-     * @memberof ActionsApiCancelWorkflow
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionsApiCancelWorkflow
-     */
-    readonly runId: string
 }
 
 /**
@@ -11713,27 +11785,6 @@ export interface ActionsApiForecastResultRequest {
 }
 
 /**
- * Request parameters for generateDashboardSummary operation in ActionsApi.
- * @export
- * @interface ActionsApiGenerateDashboardSummaryRequest
- */
-export interface ActionsApiGenerateDashboardSummaryRequest {
-    /**
-     * Workspace identifier
-     * @type {string}
-     * @memberof ActionsApiGenerateDashboardSummary
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {WorkflowDashboardSummaryRequestDto}
-     * @memberof ActionsApiGenerateDashboardSummary
-     */
-    readonly workflowDashboardSummaryRequestDto: WorkflowDashboardSummaryRequestDto
-}
-
-/**
  * Request parameters for generateDescription operation in ActionsApi.
  * @export
  * @interface ActionsApiGenerateDescriptionRequest
@@ -11808,27 +11859,6 @@ export interface ActionsApiGetQualityIssuesCalculationStatusRequest {
      * @memberof ActionsApiGetQualityIssuesCalculationStatus
      */
     readonly processId: string
-}
-
-/**
- * Request parameters for getWorkflowStatus operation in ActionsApi.
- * @export
- * @interface ActionsApiGetWorkflowStatusRequest
- */
-export interface ActionsApiGetWorkflowStatusRequest {
-    /**
-     * Workspace identifier
-     * @type {string}
-     * @memberof ActionsApiGetWorkflowStatus
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionsApiGetWorkflowStatus
-     */
-    readonly runId: string
 }
 
 /**
@@ -12245,6 +12275,27 @@ export interface ActionsApiRetrieveResultBinaryRequest {
 }
 
 /**
+ * Request parameters for streamExecutionProgress operation in ActionsApi.
+ * @export
+ * @interface ActionsApiStreamExecutionProgressRequest
+ */
+export interface ActionsApiStreamExecutionProgressRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiStreamExecutionProgress
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiStreamExecutionProgress
+     */
+    readonly executionId: string
+}
+
+/**
  * Request parameters for testLlmProvider operation in ActionsApi.
  * @export
  * @interface ActionsApiTestLlmProviderRequest
@@ -12431,17 +12482,6 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * 
-     * @param {ActionsApiCancelWorkflowRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ActionsApi
-     */
-    public cancelWorkflow(requestParameters: ActionsApiCancelWorkflowRequest, options?: AxiosRequestConfig) {
-        return ActionsApi_CancelWorkflow(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
      * Computes change analysis for the provided execution definition.
      * @summary Compute change analysis
      * @param {ActionsApiChangeAnalysisRequest} requestParameters Request parameters.
@@ -12598,17 +12638,6 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * 
-     * @param {ActionsApiGenerateDashboardSummaryRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ActionsApi
-     */
-    public generateDashboardSummary(requestParameters: ActionsApiGenerateDashboardSummaryRequest, options?: AxiosRequestConfig) {
-        return ActionsApi_GenerateDashboardSummary(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
      * Generates a description for the specified analytics object. Returns description and a note with details if generation was not performed.
      * @summary Generate Description for Analytics Object
      * @param {ActionsApiGenerateDescriptionRequest} requestParameters Request parameters.
@@ -12654,17 +12683,6 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public getQualityIssuesCalculationStatus(requestParameters: ActionsApiGetQualityIssuesCalculationStatusRequest, options?: AxiosRequestConfig) {
         return ActionsApi_GetQualityIssuesCalculationStatus(this.axios, this.basePath, requestParameters, options, this.configuration);
-    }
-
-    /**
-     * 
-     * @param {ActionsApiGetWorkflowStatusRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ActionsApi
-     */
-    public getWorkflowStatus(requestParameters: ActionsApiGetWorkflowStatusRequest, options?: AxiosRequestConfig) {
-        return ActionsApi_GetWorkflowStatus(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -12846,6 +12864,18 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public retrieveResultBinary(requestParameters: ActionsApiRetrieveResultBinaryRequest, options?: AxiosRequestConfig) {
         return ActionsApi_RetrieveResultBinary(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Server-Sent Events with the computation steps of the execution identified by the X-GDC-CANCEL-TOKEN of the execute request. Ends with a `done` event.
+     * @summary (EXPERIMENTAL) Stream the live progress of an AFM execution
+     * @param {ActionsApiStreamExecutionProgressRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public streamExecutionProgress(requestParameters: ActionsApiStreamExecutionProgressRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_StreamExecutionProgress(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -13929,6 +13959,55 @@ export async function ComputationApiAxiosParamCreator_RetrieveResultBinary(
 }
 
 
+// ComputationApi FP - ComputationApiAxiosParamCreator
+/**
+ * Server-Sent Events with the computation steps of the execution identified by the X-GDC-CANCEL-TOKEN of the execute request. Ends with a `done` event.
+ * @summary (EXPERIMENTAL) Stream the live progress of an AFM execution
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} executionId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApiAxiosParamCreator_StreamExecutionProgress(
+    workspaceId: string, executionId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('streamExecutionProgress', 'workspaceId', workspaceId)
+    // verify required parameter 'executionId' is not null or undefined
+    assertParamExists('streamExecutionProgress', 'executionId', executionId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute/progress/{executionId}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"executionId"}}`, encodeURIComponent(String(executionId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
 
 // ComputationApi Api FP
 /**
@@ -14346,6 +14425,32 @@ export async function ComputationApi_RetrieveResultBinary(
 }
 
 
+// ComputationApi Api FP
+/**
+ * Server-Sent Events with the computation steps of the execution identified by the X-GDC-CANCEL-TOKEN of the execute request. Ends with a `done` event.
+ * @summary (EXPERIMENTAL) Stream the live progress of an AFM execution
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputationApiStreamExecutionProgressRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApi_StreamExecutionProgress(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ComputationApiStreamExecutionProgressRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<Array<object>> {
+    const localVarAxiosArgs = await ComputationApiAxiosParamCreator_StreamExecutionProgress(
+        requestParameters.workspaceId, requestParameters.executionId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
 /**
  * ComputationApi - interface
  * @export
@@ -14511,6 +14616,16 @@ export interface ComputationApiInterface {
      * @memberof ComputationApiInterface
      */
     retrieveResultBinary(requestParameters: ComputationApiRetrieveResultBinaryRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
+
+    /**
+     * Server-Sent Events with the computation steps of the execution identified by the X-GDC-CANCEL-TOKEN of the execute request. Ends with a `done` event.
+     * @summary (EXPERIMENTAL) Stream the live progress of an AFM execution
+     * @param {ComputationApiStreamExecutionProgressRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    streamExecutionProgress(requestParameters: ComputationApiStreamExecutionProgressRequest, options?: AxiosRequestConfig): AxiosPromise<Array<object>>;
 
 }
 
@@ -14984,6 +15099,27 @@ export interface ComputationApiRetrieveResultBinaryRequest {
 }
 
 /**
+ * Request parameters for streamExecutionProgress operation in ComputationApi.
+ * @export
+ * @interface ComputationApiStreamExecutionProgressRequest
+ */
+export interface ComputationApiStreamExecutionProgressRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ComputationApiStreamExecutionProgress
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ComputationApiStreamExecutionProgress
+     */
+    readonly executionId: string
+}
+
+/**
  * ComputationApi - object-oriented interface
  * @export
  * @class ComputationApi
@@ -15180,6 +15316,18 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
      */
     public retrieveResultBinary(requestParameters: ComputationApiRetrieveResultBinaryRequest, options?: AxiosRequestConfig) {
         return ComputationApi_RetrieveResultBinary(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Server-Sent Events with the computation steps of the execution identified by the X-GDC-CANCEL-TOKEN of the execute request. Ends with a `done` event.
+     * @summary (EXPERIMENTAL) Stream the live progress of an AFM execution
+     * @param {ComputationApiStreamExecutionProgressRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public streamExecutionProgress(requestParameters: ComputationApiStreamExecutionProgressRequest, options?: AxiosRequestConfig) {
+        return ComputationApi_StreamExecutionProgress(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 

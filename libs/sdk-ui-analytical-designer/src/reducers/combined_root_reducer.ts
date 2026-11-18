@@ -41,6 +41,7 @@ import {
     themeSliceReducer,
 } from "../store/embedding/embedding_slices.js";
 import { executionSliceReducer } from "../store/execution/execution_slice.js";
+import { executionProgressSliceReducer } from "../store/execution_progress/execution_progress_slice.js";
 import { featureFlagsSliceReducer } from "../store/feature_flags/feature_flags_slice.js";
 import { filterBarReducer } from "../store/filter_bar/filter_bar_reducer.js";
 import { filterBarAutoOpenSliceReducer } from "../store/filter_bar_auto_open/filter_bar_auto_open_slice.js";
@@ -192,6 +193,7 @@ const reportReducer = combineReducers({
     loadingError: reportLoadingErrorSliceReducer,
     lastSavedObject: reportLastSavedObjectSliceReducer,
     execution: executionSliceReducer,
+    executionProgress: executionProgressSliceReducer,
 });
 
 const strictRootReducer = combineReducers({

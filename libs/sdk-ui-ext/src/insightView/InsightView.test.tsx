@@ -5,7 +5,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { DecoratedWorkspaceInsightsService, decoratedBackend } from "@gooddata/sdk-backend-base";
-import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
+import { type RecordingIndex, recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { type IGetInsightOptions, type IWorkspaceInsightsService } from "@gooddata/sdk-backend-spi";
 import {
     type IExecutionConfig,
@@ -215,7 +215,7 @@ async function renderedExecConfig(
     definitions?: IParameterMetadataObject[],
 ): Promise<IExecutionConfig | undefined> {
     const backend = decoratedBackend(
-        recordedBackend(ReferenceRecordings.Recordings, { globalSettings: settings }),
+        recordedBackend(recordingsWithOwnInsights(), { globalSettings: settings }),
         {
             insights: (insights, workspace) =>
                 new InsightsWithParameterDefinitions(insights, workspace, definitions),
@@ -238,6 +238,20 @@ async function renderedExecConfig(
 
     await waitFor(() => expect(rendererProps.mock.lastCall?.[0].insight).toBeDefined());
     return rendererProps.mock.lastCall?.[0].execConfig;
+}
+
+/**
+ * The reference recordings with an insight index of their own. The recorded backend's createInsight adds
+ * the insight to the index it was given, and test files sharing the worker (isolate: false) read the
+ * shared reference recordings: VisualizationCatalog.test.ts snapshots every insight in them.
+ */
+function recordingsWithOwnInsights(): RecordingIndex {
+    const { metadata } = ReferenceRecordings.Recordings;
+
+    return {
+        ...ReferenceRecordings.Recordings,
+        metadata: { ...metadata, insights: { ...metadata?.insights } },
+    };
 }
 
 class InsightsWithParameterDefinitions extends DecoratedWorkspaceInsightsService {

@@ -13,6 +13,11 @@ import { watchBucketFilters } from "../store/bucket_filters/bucket_filters_sagas
 import { watchBucketFiltersTelemetry } from "../store/bucket_filters/bucket_filters_telemetry_sagas.js";
 import { watchBucketsOperations } from "../store/buckets/buckets_operations_saga.js";
 import { watchExecutionCoordination } from "../store/execution/execution_coordination_saga.js";
+import {
+    watchExecutionProgress,
+    watchExecutionProgressReset,
+    watchExecutionStats,
+} from "../store/execution_progress/execution_progress_saga.js";
 import { watchMetricEditor } from "../store/metric_editor/metric_editor_sagas.js";
 import { watchPropertiesOperations } from "../store/properties/properties_operations_saga.js";
 import { watchRecommendationOperations } from "../store/recommendations/recommendations_operations_saga.js";
@@ -91,6 +96,9 @@ export function* root() {
             watchDateDatasets(),
             watchReset(),
             watchExecuteReport(),
+            watchExecutionProgress(),
+            watchExecutionStats(),
+            watchExecutionProgressReset(),
             watchExportReport(),
             watchShortcuts(),
             watchOpenReport(),
