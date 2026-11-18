@@ -4016,6 +4016,7 @@ export interface IFeatureFlags {
     enableEmbeddingWriteCommands?: boolean;
     enableEnhancedInsightPicker?: boolean;
     enableExecutionCancelling?: boolean;
+    enableExecutionProgress?: boolean;
     enableExportTemplateSelection?: boolean;
     enableExportTemplatesSettingUi?: boolean;
     enableExportTimeoutFix?: boolean;

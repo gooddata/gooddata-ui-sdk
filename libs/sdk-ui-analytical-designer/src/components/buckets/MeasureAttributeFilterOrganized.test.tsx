@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { fireEvent, render, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import {
@@ -123,7 +123,13 @@ describe("MeasureAttributeFilterOrganized", () => {
 
     async function renderAndOpenBase(customProps: Partial<IMeasureAttributeFilterOrganizedProps> = {}) {
         renderComponent(customProps);
-        fireEvent.click(document.querySelector(".s-metric-attribute-filter-button"));
+
+        // Opened inside an async act, the load settles along with the effects of its render: the
+        // picker clears its search for every new list in an effect, and one still pending when a
+        // test types a search phrase would run after the keystroke and wipe the phrase.
+        await act(async () => {
+            fireEvent.click(document.querySelector(".s-metric-attribute-filter-button"));
+        });
 
         // the items are loaded asynchronously, the dropdown shows a loading placeholder until the
         // itemsLoader promise resolves; the search input (and the items) only render afterwards

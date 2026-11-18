@@ -1791,6 +1791,10 @@
         "text": "More actions",
         "crowdinContext": "Tooltip shown when hovering over the options menu button"
     },
+    "controlButtons.options.widgetLabel": {
+        "text": "More actions for {title}",
+        "crowdinContext": "Accessible name (screen reader label) of the options menu button of a dashboard widget. {title} is the title of the widget, e.g. 'Revenue by region'."
+    },
     "controlButtons.options.back": {
         "text": "Back to previous step",
         "crowdinContext": "Button text for returning to the previous screen or action"

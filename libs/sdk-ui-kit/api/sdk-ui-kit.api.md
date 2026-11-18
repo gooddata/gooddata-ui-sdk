@@ -2529,6 +2529,7 @@ export interface IDropdownListProps<T> {
     maxHeight?: number;
     // (undocumented)
     mobileItemHeight?: number;
+    noMatchingDataText?: string;
     // (undocumented)
     onKeyDownConfirm?: (item: T) => void;
     // (undocumented)
@@ -5921,6 +5922,12 @@ export interface IUiAddGranteeDialogCardProps {
 // @internal (undocumented)
 export interface IUiAddGranteeDialogProps extends IUiAddGranteeDialogCardProps {
     isOpen: boolean;
+}
+
+// @internal (undocumented)
+export interface IUiAiThinkingIconProps {
+    color?: string;
+    size?: number;
 }
 
 // @internal (undocumented)
@@ -9833,6 +9840,9 @@ export function UiAddGranteeDialog(input: IUiAddGranteeDialogProps): JSX.Element
 
 // @internal
 export function UiAddGranteeDialogCard(input: IUiAddGranteeDialogCardProps): JSX.Element;
+
+// @internal
+export function UiAiThinkingIcon(input: IUiAiThinkingIconProps): JSX.Element;
 
 // @internal (undocumented)
 export function UiAsyncTable<T extends {

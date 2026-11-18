@@ -34,6 +34,20 @@ describe("ExcludeCurrentPeriodToggle", () => {
         expect(screen.getByRole("checkbox")).not.toBeDisabled();
     });
 
+    it("should expose the visible label as the checkbox accessible name", () => {
+        renderWithDisabledValue(false);
+        const checkbox = screen.getByRole("checkbox", { name: "Exclude open period" });
+        const labelledBy = checkbox.getAttribute("aria-labelledby");
+        expect(document.getElementById(labelledBy!)).toHaveTextContent("Exclude open period");
+    });
+
+    it("should keep the accessible name when disabled", () => {
+        renderWithDisabledValue(true);
+        expect(screen.getByRole("checkbox", { name: "Exclude open period" })).toHaveAttribute(
+            "aria-labelledby",
+        );
+    });
+
     it("should render a tooltip if disabled", async () => {
         renderWithDisabledValue(true);
         fireEvent.mouseOver(document.querySelector(".gd-bubble-trigger")!);

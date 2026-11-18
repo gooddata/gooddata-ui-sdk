@@ -5,7 +5,7 @@ import { type KeyboardEvent, type ReactElement, useCallback } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { objRefToString, widgetRef } from "@gooddata/sdk-model";
+import { objRefToString, widgetRef, widgetTitle } from "@gooddata/sdk-model";
 import { UiTooltip, isActionKey } from "@gooddata/sdk-ui-kit";
 import { simplifyText } from "@gooddata/util";
 
@@ -54,6 +54,11 @@ export function DashboardInsightMenuButton({
     );
 
     const dashboardInsightMenuId = getDashboardInsightMenuButtonId(widgetRefAsString);
+    // name the widget the menu belongs to, so the buttons of different widgets can be told apart
+    const title = widgetTitle(widget)?.trim();
+    const ariaLabel = title
+        ? intl.formatMessage({ id: "controlButtons.options.widgetLabel" }, { title })
+        : intl.formatMessage({ id: "controlButtons.options.tooltip" });
 
     return (
         <UiTooltip
@@ -68,9 +73,9 @@ export function DashboardInsightMenuButton({
                     onKeyDown={onKeyDown}
                     role="button"
                     tabIndex={0}
-                    aria-label={intl.formatMessage({ id: "controlButtons.options.tooltip" })}
+                    aria-label={ariaLabel}
                     aria-expanded={isOpen}
-                    aria-haspopup="dialog"
+                    aria-haspopup="menu"
                     aria-controls={isOpen ? menuId : undefined}
                 >
                     <div className={optionsIconClasses} />

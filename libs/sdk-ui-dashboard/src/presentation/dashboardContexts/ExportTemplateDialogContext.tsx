@@ -11,6 +11,10 @@ export interface IExportTemplateDialogConfig {
     templates: IExportTemplate[];
     onConfirm: (templateId: string) => void;
     onCancel?: () => void;
+    /**
+     * Id of the element that receives focus when the dialog closes (typically the trigger of the export flow).
+     */
+    returnFocusTo?: string;
 }
 
 /**

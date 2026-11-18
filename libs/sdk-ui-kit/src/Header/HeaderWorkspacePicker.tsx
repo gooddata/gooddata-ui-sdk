@@ -111,6 +111,9 @@ export function HeaderWorkspacePicker({
     });
 
     const selectedWorkspaceTitle = selectedWorkspace?.title || selectedWorkspace?.id || "";
+    const noMatchingWorkspacesText = intl.formatMessage({
+        id: "gs.header.projectPicker.noMatchingWorkspaces",
+    });
 
     return (
         <Dropdown
@@ -173,12 +176,11 @@ export function HeaderWorkspacePicker({
                             <NoData
                                 className="s-noMatchingProjects"
                                 noDataLabel={intl.formatMessage({ id: "gs.noData.noDataAvailable" })}
-                                notFoundLabel={intl.formatMessage({
-                                    id: "gs.header.projectPicker.noMatchingWorkspaces",
-                                })}
+                                notFoundLabel={noMatchingWorkspacesText}
                                 hasNoMatchingData={hasNoMatchingData}
                             />
                         )}
+                        noMatchingDataText={noMatchingWorkspacesText}
                         renderItem={({ item, focused }) => {
                             const title = item?.title;
                             const isDemo = item?.isDemo;

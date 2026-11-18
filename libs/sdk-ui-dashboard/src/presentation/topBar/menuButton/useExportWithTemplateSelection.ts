@@ -12,9 +12,11 @@ import { useExportTemplateDialogContext } from "../../dashboardContexts/ExportTe
  * Templates are prefetched by the useExportTemplates hook. The backend caching layer
  * ensures repeated calls don't hit the API again.
  *
+ * @param returnFocusTo - id of the element that receives focus when the selection dialog closes
+ *
  * @internal
  */
-export const useExportWithTemplateSelection = () => {
+export const useExportWithTemplateSelection = (returnFocusTo?: string) => {
     const templates = useExportTemplates();
     const { openDialog } = useExportTemplateDialogContext();
 
@@ -23,7 +25,7 @@ export const useExportWithTemplateSelection = () => {
             // 0-1 templates: export immediately, let backend use default
             exportFn(undefined);
         } else {
-            openDialog({ templates, onConfirm: exportFn, onCancel });
+            openDialog({ templates, onConfirm: exportFn, onCancel, returnFocusTo });
         }
     };
 };

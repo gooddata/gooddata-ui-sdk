@@ -1,0 +1,547 @@
+// (C) 2026 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+// The loading view of the report execution, in place of the .adi-computing spinner
+// (components/report/executionProgress/ExecutionProgressPanel.tsx): one line, or the steps newest
+// first. The detailed step list below (.adi-execution-progress-steps …) is the stats popover's.
+.adi-execution-progress {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: auto;
+    overscroll-behavior: contain;
+    padding: 80px 16px 0;
+    // Figma: Avenir Roman 14 px, complementary-7
+    font-family: kit-variables.$gd-font-primary;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 19px;
+    color: kit-variables.$gd-medium-gray;
+    background-color: kit-variables.$gd-color-white;
+
+    // Figma frames 2305:1888 / 2336:2201: one fixed 280 px box, centred, its text left-aligned — the
+    // block keeps its place while the sub-steps are appended
+    .adi-execution-progress-box {
+        flex: 0 0 auto;
+        box-sizing: border-box;
+        width: 280px;
+        max-width: 100%;
+        text-align: left;
+    }
+
+    // the persistent "Rendering visualisation" header: sparkle, label, collapse toggle (27 px)
+    .adi-execution-progress-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-height: 27px;
+        padding: 5px 0 10px;
+    }
+
+    .adi-execution-progress-header-label {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .adi-execution-progress-toggle {
+        display: inline-flex;
+        flex: 0 0 auto;
+    }
+
+    // the sub-steps, appended below the header; a dot each on one vertical line (frame 2336:2209)
+    .adi-execution-progress-list {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 8.5px;
+            width: 1px;
+            background-color: kit-variables.$gd-border-color;
+        }
+    }
+
+    .adi-execution-progress-step {
+        position: relative;
+        animation: adi-execution-progress-reveal 180ms ease-out;
+
+        @media (prefers-reduced-motion: reduce) {
+            animation: none;
+        }
+
+        &.is-failed {
+            color: kit-variables.$gd-palette-error-base;
+        }
+    }
+
+    .adi-execution-progress-step-row {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .adi-execution-progress-step-marker {
+        position: relative;
+        z-index: 1;
+        display: inline-flex;
+        flex: 0 0 auto;
+        justify-content: center;
+        align-items: center;
+        width: 18px;
+        height: 19px;
+    }
+
+    .adi-execution-progress-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: kit-variables.$gd-color-state-blank;
+    }
+
+    .is-failed .adi-execution-progress-dot {
+        background-color: kit-variables.$gd-palette-error-base;
+    }
+
+    .adi-execution-progress-step-label {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    // the durations, an experiment kept quiet: Figma "Copy Small" 12/17 px, complementary-5, in a
+    // reserved right-aligned column (text nodes 2336:2713 / 2336:2716 / 2336:2711)
+    .adi-execution-progress-step-duration,
+    .adi-execution-progress-source-duration {
+        flex: 0 0 36px;
+        margin-left: 5px;
+        font-size: 12px;
+        line-height: 17px;
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+        color: kit-variables.$gd-color-disabled;
+    }
+
+    // the federated data sources: secondary rows under "Querying data"
+    .adi-execution-progress-federation {
+        margin: 6px 0 0 23px;
+        font-size: 12px;
+        line-height: 18px;
+    }
+
+    .adi-execution-progress-waiting {
+        margin-bottom: 2px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .adi-execution-progress-sources {
+        margin: 0;
+    }
+
+    .adi-execution-progress-source {
+        grid-template-columns: minmax(0, 1fr) 80px 36px;
+        color: inherit;
+    }
+}
+
+.adi-execution-progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 12px;
+}
+
+.adi-execution-progress-title {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.adi-execution-progress-total,
+.adi-execution-progress-step-duration,
+.adi-execution-progress-source-duration {
+    font-variant-numeric: tabular-nums;
+    color: kit-variables.$gd-color-label;
+    white-space: nowrap;
+}
+
+.adi-execution-progress-timeline {
+    display: flex;
+    gap: 1px;
+    height: 6px;
+    margin-bottom: 12px;
+    border-radius: 3px;
+    overflow: hidden;
+    background-color: kit-variables.$gd-color-light;
+}
+
+.adi-execution-progress-timeline-segment {
+    flex: 0 0 auto;
+    background-color: kit-variables.$gd-palette-primary-dimmed;
+    transition: width 0.1s linear;
+
+    &.is-running {
+        background-color: kit-variables.$gd-palette-primary-base;
+    }
+
+    &.is-failed {
+        background-color: kit-variables.$gd-palette-error-base;
+    }
+}
+
+.adi-execution-progress-steps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.adi-execution-progress-step {
+    padding: 4px 0;
+
+    &.is-pending {
+        color: kit-variables.$gd-color-disabled;
+    }
+
+    &.is-failed {
+        color: kit-variables.$gd-palette-error-base;
+    }
+}
+
+.adi-execution-progress-step-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.adi-execution-progress-step-label {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.adi-execution-progress-step-indicator {
+    flex: 0 0 auto;
+    box-sizing: border-box;
+    width: 10px;
+    height: 10px;
+    border: 2px solid kit-variables.$gd-color-disabled;
+    border-radius: 50%;
+
+    .is-running > .adi-execution-progress-step-row > & {
+        border-color: kit-variables.$gd-palette-primary-base;
+        border-right-color: transparent;
+        animation: adi-execution-progress-spin 0.8s linear infinite;
+    }
+
+    .is-done > .adi-execution-progress-step-row > & {
+        border-color: kit-variables.$gd-palette-success-base;
+        background-color: kit-variables.$gd-palette-success-base;
+    }
+
+    .is-failed > .adi-execution-progress-step-row > & {
+        border-color: kit-variables.$gd-palette-error-base;
+        background-color: kit-variables.$gd-palette-error-base;
+    }
+}
+
+.adi-execution-progress-waiting {
+    flex: 0 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+    color: kit-variables.$gd-palette-warning-base-text;
+}
+
+.adi-execution-progress-sources {
+    margin: 6px 0 2px 18px;
+    padding: 0;
+    list-style: none;
+}
+
+.adi-execution-progress-source {
+    display: grid;
+    grid-template-columns: minmax(0, 120px) 1fr auto;
+    align-items: center;
+    gap: 8px;
+    padding: 2px 0;
+    font-size: 12px;
+    color: kit-variables.$gd-color-text;
+}
+
+.adi-execution-progress-source-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.adi-execution-progress-source-track {
+    position: relative;
+    height: 8px;
+    border-radius: 4px;
+    background-color: kit-variables.$gd-color-light;
+}
+
+.adi-execution-progress-source-bar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    border-radius: 4px;
+    background-color: kit-variables.$gd-palette-primary-dimmed;
+
+    .is-running > .adi-execution-progress-source-track > & {
+        background-color: kit-variables.$gd-palette-primary-base;
+    }
+
+    .is-failed > .adi-execution-progress-source-track > & {
+        background-color: kit-variables.$gd-palette-error-base;
+    }
+
+    .is-slowest > .adi-execution-progress-source-track > & {
+        background-color: kit-variables.$gd-palette-warning-base;
+    }
+}
+
+// the parts of a finished query, laid out one after another (they add up to the query)
+.adi-execution-progress-query-breakdown .adi-execution-progress-query-part {
+    color: kit-variables.$gd-color-label;
+
+    &.is-waiting .adi-execution-progress-source-bar {
+        background-color: kit-variables.$gd-palette-primary-dimmed;
+    }
+
+    &.is-database .adi-execution-progress-source-bar {
+        background-color: kit-variables.$gd-palette-primary-base;
+    }
+
+    &.is-transfer .adi-execution-progress-source-bar {
+        background-color: kit-variables.$gd-palette-success-base;
+    }
+}
+
+// the time the query waited for the data source: the pale head of the bar
+.adi-execution-progress-source-bar-queued {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 4px 0 0 4px;
+    background-color: kit-variables.$gd-color-white;
+    opacity: 0.6;
+}
+
+.adi-execution-progress-source.is-slowest .adi-execution-progress-source-name {
+    font-weight: 700;
+}
+
+.adi-execution-progress-cache {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    border-radius: 4px;
+    font-weight: 700;
+    color: kit-variables.$gd-color-text;
+    background-color: kit-variables.$gd-palette-success-dimmed;
+}
+
+.adi-execution-progress-cache-icon {
+    flex: 0 0 auto;
+    color: kit-variables.$gd-palette-success-base;
+}
+
+// on a cache hit: how the cached result was originally computed
+.adi-execution-progress-original {
+    margin-top: 8px;
+    padding: 0 12px;
+    font-size: 12px;
+    color: kit-variables.$gd-color-label;
+}
+
+.adi-execution-progress-original-total strong {
+    color: kit-variables.$gd-color-text;
+}
+
+.adi-execution-progress-original-sources {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.adi-execution-progress-original-source {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    strong {
+        color: kit-variables.$gd-color-text;
+    }
+}
+
+.adi-execution-progress-original-saved {
+    margin-top: 4px;
+    font-weight: 700;
+    color: kit-variables.$gd-palette-success-base;
+}
+
+.adi-execution-progress-failed {
+    margin-top: 10px;
+    color: kit-variables.$gd-palette-error-base;
+}
+
+// a newly revealed step fades and slides in
+@keyframes adi-execution-progress-reveal {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes adi-execution-progress-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+// The stats of the last report execution (components/report/executionProgress/ExecutionStats.tsx).
+// the link sits in a strip below the visualization, which leaves the strip free
+.adi-execution-stats-enabled .adi-chart-container {
+    bottom: 22px;
+}
+
+.adi-execution-stats-anchor {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+}
+
+.adi-execution-stats-tooltip-anchor {
+    display: inline-flex;
+}
+
+.adi-execution-stats-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    height: 20px;
+    padding: 0 2px;
+    border: 0;
+    background-color: transparent;
+    font-size: 11px;
+    color: kit-variables.$gd-color-state-blank;
+    cursor: pointer;
+
+    &:hover,
+    &:focus-visible,
+    &[aria-expanded="true"] {
+        color: kit-variables.$gd-color-link;
+
+        .adi-execution-stats-trigger-text {
+            text-decoration: underline;
+        }
+    }
+}
+
+.adi-execution-stats-trigger-icon {
+    flex: 0 0 auto;
+}
+
+.adi-execution-stats {
+    font-size: 12px;
+    line-height: 18px;
+    color: kit-variables.$gd-color-text;
+
+    .adi-execution-progress-timeline {
+        margin-bottom: 6px;
+    }
+
+    .adi-execution-progress-step {
+        padding: 2px 0;
+    }
+}
+
+.adi-execution-stats-section + .adi-execution-stats-section {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid kit-variables.$gd-border-color;
+}
+
+.adi-execution-stats-heading {
+    margin: 0 0 6px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: kit-variables.$gd-color-label;
+}
+
+.adi-execution-stats-summary {
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.adi-execution-stats-note,
+.adi-execution-stats-computed-at {
+    color: kit-variables.$gd-color-label;
+}
+
+.adi-execution-stats-computed-at {
+    margin-bottom: 6px;
+}
+
+.adi-execution-stats-sources {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-variant-numeric: tabular-nums;
+
+    th,
+    td {
+        padding: 2px 4px 2px 0;
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    th:first-child,
+    td:first-child {
+        width: 34%;
+        text-align: left;
+    }
+
+    th {
+        font-weight: 400;
+        color: kit-variables.$gd-color-label;
+    }
+}
+
+.adi-execution-stats-source-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

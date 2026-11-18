@@ -54,6 +54,10 @@ function CheckboxItem({
     checked: boolean;
     onChange: (checked: boolean) => void;
     disabled?: boolean;
+    /**
+     * Renders the visible label text; the given id must be set on its element so the checkbox
+     * can reference it via aria-labelledby.
+     */
     label: (labelId: string) => ReactNode;
     tooltip?: ReactNode;
     testId?: string;

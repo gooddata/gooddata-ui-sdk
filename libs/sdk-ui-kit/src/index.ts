@@ -1137,6 +1137,7 @@ export {
     type IUiDropdownIconButtonProps,
 } from "./@ui/UiDropdownIconButton/UiDropdownIconButton.js";
 export { UiBadge, type IUiBadgeProps } from "./@ui/UiBadge/UiBadge.js";
+export { UiAiThinkingIcon, type IUiAiThinkingIconProps } from "./@ui/UiAiThinkingIcon/UiAiThinkingIcon.js";
 
 export {
     makeMenuKeyboardNavigation,

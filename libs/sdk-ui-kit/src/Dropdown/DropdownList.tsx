@@ -97,6 +97,12 @@ export interface IDropdownListProps<T> {
     isMobile?: boolean;
 
     renderNoData?: (props: IDropdownListNoDataRenderProps) => ReactNode;
+    /**
+     * Text announced to screen readers when the search matches no items.
+     * Provide the same text that the rendered "no matching data" state shows.
+     * Defaults to a translated "No results match.".
+     */
+    noMatchingDataText?: string;
     footer?: ReactNode | ((closeDropdown: () => void) => ReactNode);
     closeDropdown?: () => void;
 
@@ -222,6 +228,7 @@ export function DropdownList<T>({
     onTabSelect,
 
     renderNoData = defaultNoData,
+    noMatchingDataText,
     footer,
     closeDropdown,
     accessibilityConfig,
@@ -278,6 +285,9 @@ export function DropdownList<T>({
     const isCombobox = !!showSearch && hasOptionIds;
     const isListShown = !isLoading && itemsCount > 0;
     const listboxId = useIdPrefixed("dropdown-listbox");
+    const noDataId = useIdPrefixed("dropdown-no-data");
+    // the combobox is described by the visible empty state while the search matches nothing
+    const isNoMatchingDataDescribed = isCombobox && hasNoMatchingData;
     const scopedIdStoreValue = useScopedIdStoreValue<T>(getItemKey ?? String);
 
     const [activeItemKey, setActiveItemKey] = useState<string | undefined>(undefined);
@@ -385,6 +395,7 @@ export function DropdownList<T>({
                                           ariaExpanded: isListShown,
                                           ariaControls: isListShown ? listboxId : undefined,
                                           ariaAutocomplete: "list",
+                                          ariaDescribedBy: isNoMatchingDataDescribed ? noDataId : undefined,
                                           ariaActiveDescendant: hasActiveItem
                                               ? scopedIdStoreValue.makeId({
                                                     item: activeItem as T,
@@ -399,7 +410,9 @@ export function DropdownList<T>({
                         />
                     </div>
                     <UiSearchResultsAnnouncement
-                        totalResults={currentSearchString ? itemsCount : undefined}
+                        // do not announce the stale count while the filtered items are loading
+                        totalResults={currentSearchString && !isLoading ? itemsCount : undefined}
+                        noResultsText={noMatchingDataText}
                         resultValues={
                             itemsCount <= DETAILED_ANNOUNCEMENT_THRESHOLD && itemTitleGetter
                                 ? items.map(itemTitleGetter)
@@ -418,7 +431,12 @@ export function DropdownList<T>({
             ) : null}
             {renderBody()}
             {hasNoData ? (
-                <div style={{ width: isMobile ? "auto" : width }}>{renderNoData({ hasNoMatchingData })}</div>
+                <div
+                    id={isNoMatchingDataDescribed ? noDataId : undefined}
+                    style={{ width: isMobile ? "auto" : width }}
+                >
+                    {renderNoData({ hasNoMatchingData })}
+                </div>
             ) : null}
             {isLoading ? <LoadingMask width={isMobile ? "100%" : width} height={LOADING_HEIGHT} /> : null}
             {!isLoading && itemsCount > 0 ? (

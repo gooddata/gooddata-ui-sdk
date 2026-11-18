@@ -1,6 +1,6 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import cx from "classnames";
 import { defineMessage, useIntl } from "react-intl";
@@ -106,6 +106,25 @@ export function DefaultScheduledEmailManagementDialogContent({
         [customDashboardUrlBuilder, isEmbedded, externalRecipientOverride],
     );
 
+    const createButtonId = useId();
+    // When the create dialog closes, focus goes back to the "Create new" button that opened it.
+    const [focusCreateButton, setFocusCreateButton] = useState(false);
+
+    // Do not forward the click event: `onAdd` accepts an optional target widget, and the event
+    // object would be mistaken for it.
+    const handleAdd = useCallback(() => {
+        setFocusCreateButton(true);
+        onAdd?.();
+    }, [onAdd]);
+
+    const handleEdit = useCallback(
+        (scheduledEmail: IAutomationMetadataObject) => {
+            setFocusCreateButton(false);
+            onEdit(scheduledEmail);
+        },
+        [onEdit],
+    );
+
     const titleElementId = useId();
 
     return (
@@ -118,10 +137,13 @@ export function DefaultScheduledEmailManagementDialogContent({
                 "gd-dialog--wide gd-notifications-channels-management-dialog--wide",
                 "gd-dialog--no-padding",
             )}
-            accessibilityConfig={{ titleElementId, isModal: true }}
+            // While the create/edit dialog is open on top of this one, this dialog must not stay
+            // the active modal: otherwise the create/edit dialog cannot take focus from it.
+            accessibilityConfig={{ titleElementId, isModal: !isEditDialogOpen }}
             returnFocusAfterClose
             returnFocusTo={returnFocusTo}
             refocusKey={isEditDialogOpen}
+            initialFocus={focusCreateButton && !isEditDialogOpen ? createButtonId : undefined}
         >
             <OverlayControllerProvider overlayController={overlayController}>
                 <div className="gd-notifications-channels-management-dialog-title">
@@ -140,7 +162,7 @@ export function DefaultScheduledEmailManagementDialogContent({
                         maxHeight={AUTOMATIONS_MAX_HEIGHT}
                         isMobileView={isMobile}
                         tableVariant="small"
-                        editAutomation={onEdit}
+                        editAutomation={handleEdit}
                         preselectedFilters={{
                             dashboard: dashboardId
                                 ? [{ value: dashboardId, label: dashboardTitle }]
@@ -156,7 +178,8 @@ export function DefaultScheduledEmailManagementDialogContent({
                         renderToolbarCustomElement={() =>
                             canCreateAutomation ? (
                                 <CreateButton
-                                    onClick={onAdd}
+                                    id={createButtonId}
+                                    onClick={handleAdd}
                                     isDisabled={isAddButtonDisabled}
                                     label={intl.formatMessage({
                                         id: messages.scheduleManagementCreateNew.id,
@@ -207,6 +230,7 @@ export function DefaultScheduledEmailManagementDialogContent({
 }
 
 interface ICreateButtonProps {
+    id: string;
     onClick?: () => void;
     isDisabled: boolean;
     label: string;
@@ -216,6 +240,7 @@ interface ICreateButtonProps {
 }
 
 function CreateButton({
+    id,
     onClick,
     isDisabled,
     label,
@@ -223,22 +248,38 @@ function CreateButton({
     isTooltipDisabled,
     accessibilityConfig,
 }: ICreateButtonProps) {
+    const disabledReasonId = useId();
+    const disabledReason = isDisabled && tooltipContent ? tooltipContent : undefined;
+
     return (
-        <UiTooltip
-            optimalPlacement
-            anchor={
-                <Button
-                    onClick={onClick}
-                    disabled={isDisabled}
-                    value={label}
-                    size="small"
-                    className="gd-button-action"
-                    accessibilityConfig={accessibilityConfig}
-                />
-            }
-            disabled={isTooltipDisabled}
-            triggerBy={["hover"]}
-            content={tooltipContent}
-        />
+        <>
+            <UiTooltip
+                optimalPlacement
+                anchor={
+                    <Button
+                        id={id}
+                        onClick={onClick}
+                        disabled={isDisabled}
+                        value={label}
+                        size="small"
+                        className="gd-button-action"
+                        accessibilityConfig={{
+                            ...accessibilityConfig,
+                            // a disabled button does not open the dialog, so it must not claim to control it
+                            ...(isDisabled ? { ariaHaspopup: undefined, ariaControls: undefined } : {}),
+                            ...(disabledReason ? { ariaDescribedBy: disabledReasonId } : {}),
+                        }}
+                    />
+                }
+                disabled={isTooltipDisabled}
+                triggerBy={["hover"]}
+                content={tooltipContent}
+            />
+            {disabledReason ? (
+                <span id={disabledReasonId} className="sr-only">
+                    {disabledReason}
+                </span>
+            ) : null}
+        </>
     );
 }

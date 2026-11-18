@@ -258,6 +258,28 @@ describe("Report", () => {
         });
     });
 
+    describe("execution progress", () => {
+        it("should show the classic spinner and no progress or stats when the flag is off", () => {
+            const { container } = createComponent({ isExecutionRunning: true });
+
+            expect(container.querySelectorAll(".s-report-computing")).toHaveLength(1);
+            expect(container.querySelector(".s-execution-progress")).toBeNull();
+            expect(container.querySelector(".s-execution-stats-trigger")).toBeNull();
+            expect(container.querySelector(".adi-execution-stats-enabled")).toBeNull();
+        });
+
+        it("should hand the spinner over to the progress panel when the flag is on", () => {
+            const { container } = createComponent({
+                isExecutionRunning: true,
+                isExecutionProgressEnabled: true,
+            });
+
+            expect(container.querySelector(".adi-execution-stats-enabled")).not.toBeNull();
+            expect(container.querySelector(".s-execution-progress")).not.toBeNull();
+            expect(container.querySelector(".s-report-computing")).toBeNull();
+        });
+    });
+
     it("should be able to render custom error message", () => {
         const { container } = createComponent({
             customError: {

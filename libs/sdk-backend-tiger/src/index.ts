@@ -168,6 +168,15 @@ export { type IOriginInfoWithId, getIdOrigin } from "./convertors/fromBackend/Ob
 export { dateAttributeIdToSdkGranularity } from "./convertors/fromBackend/dateGranularityConversions.js";
 export { toAfmExecution } from "./convertors/toBackend/afm/toAfmResultSpec.js";
 export {
+    type ExecutionProgressEventType,
+    type IComputationProfile,
+    type IComputationProfileSource,
+    type IExecutionProgressChild,
+    type IExecutionProgressEvent,
+    type ITigerExecutionProgressHandle,
+    getExecutionProgress,
+} from "./backend/workspace/execution/executionProgress.js";
+export {
     type IVisualizationObjectMetadata,
     convertVisualizationContentToInsight,
 } from "./convertors/fromBackend/visualizationObjects/VisualizationObjectConverter.js";

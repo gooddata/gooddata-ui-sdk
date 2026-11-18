@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-dashboard: the filter bar \"Reset filters\" button is reachable with Tab after the last filter, has a visible focus indicator, and after a reset focus moves to the first filter instead of being lost.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

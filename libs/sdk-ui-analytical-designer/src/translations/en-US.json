@@ -1435,6 +1435,186 @@
         "text": "Computing…",
         "crowdinContext": "Use '…' as one character, not 3 dots ('...')."
     },
+    "executionProgress.step.preparing": {
+        "text": "Preparing",
+        "crowdinContext": "Execution progress step: the backend prepares the computation."
+    },
+    "executionProgress.step.sqlGeneration": {
+        "text": "Generating SQL",
+        "crowdinContext": "Execution progress step: the backend translates the visualization into SQL queries."
+    },
+    "executionProgress.step.federation": {
+        "text": "Data federation ({count, plural, one {# data source} other {# data sources}})",
+        "crowdinContext": "Execution progress step: the data is queried from several data sources at once and combined. {count} is the number of data sources."
+    },
+    "executionProgress.step.query": {
+        "text": "Querying {dataSource}",
+        "crowdinContext": "Execution progress step: the SQL query runs in the data source. {dataSource} is the data source ID."
+    },
+    "executionProgress.step.query.unknown": {
+        "text": "Querying the data source",
+        "crowdinContext": "Execution progress step: the SQL query runs in the data source, its name is not known."
+    },
+    "executionProgress.step.query.rawCache": {
+        "text": "Data loaded from cache",
+        "crowdinContext": "Execution progress step: the data was found in the cache, the data source was not queried."
+    },
+    "executionProgress.step.postprocessing": {
+        "text": "Post-processing",
+        "crowdinContext": "Execution progress step: the backend processes the queried data into the visualization's result."
+    },
+    "executionProgress.step.postprocessing.types": {
+        "text": "Post-processing ({types})",
+        "crowdinContext": "Execution progress step: the backend processes the queried data. {types} is a list of technical processing names, e.g. XTAB, DATA_BLENDING."
+    },
+    "executionProgress.waitingOn": {
+        "text": "Waiting on {dataSource}",
+        "crowdinContext": "Shown next to the data federation step while it runs. {dataSource} is the ID of the slowest data source."
+    },
+    "executionProgress.source.cacheHit": {
+        "text": "cached",
+        "crowdinContext": "Shown instead of a duration when a data source's data came from the cache."
+    },
+    "executionProgress.source.queued": {
+        "text": "queued {duration}",
+        "crowdinContext": "How long a data source query waited before the data source started it. {duration} is e.g. '1.2 s'."
+    },
+    "executionProgress.original.unknownDataSource": {
+        "text": "a data source",
+        "crowdinContext": "Used as {dataSource} in 'Originally queried {dataSource} in {duration}' when the data source is not known."
+    },
+    "executionProgress.original.saved": {
+        "text": "Saved {duration}",
+        "crowdinContext": "On a cache hit: how much time serving the result from the cache saved. {duration} is e.g. '3.2 s', or '~3.2 s' when approximate."
+    },
+    "executionStats.title": {
+        "text": "Execution stats",
+        "crowdinContext": "Title of the popover with the statistics of how the visualization's data was loaded."
+    },
+    "executionStats.thisLoad": {
+        "text": "This load",
+        "crowdinContext": "Popover section about the last load of the visualization's data."
+    },
+    "executionStats.original": {
+        "text": "Original computation",
+        "crowdinContext": "Popover section about how the cached result was originally computed by querying the data sources."
+    },
+    "executionStats.summary.fresh": {
+        "text": "Computed in {duration}",
+        "crowdinContext": "The data was computed by querying the data sources. {duration} is e.g. '3.4 s'."
+    },
+    "executionStats.summary.cacheHit": {
+        "text": "Loaded from cache in {duration}",
+        "crowdinContext": "The data came from the backend cache. {duration} is e.g. '93 ms'."
+    },
+    "executionStats.summary.browserCache": {
+        "text": "Loaded from browser cache in {duration}",
+        "crowdinContext": "The data was already loaded in the browser. {duration} is e.g. '5 ms'."
+    },
+    "executionStats.summary.failed": {
+        "text": "Failed after {duration}",
+        "crowdinContext": "The computation of the data failed. {duration} is e.g. '2.1 s'."
+    },
+    "executionStats.original.loading": {
+        "text": "Loading statistics…",
+        "crowdinContext": "Shown while the stored statistics of the result load."
+    },
+    "executionStats.original.missing": {
+        "text": "No stored statistics for this result",
+        "crowdinContext": "The backend has no statistics stored for the result, e.g. it was cached before they were collected."
+    },
+    "executionStats.original.unavailable": {
+        "text": "Statistics are not available",
+        "crowdinContext": "The stored statistics of the result could not be loaded."
+    },
+    "executionStats.original.computedAt": {
+        "text": "Computed {ago}",
+        "crowdinContext": "When the result was originally computed. {ago} is a relative time, e.g. '2 hours ago'."
+    },
+    "executionStats.original.dataSource": {
+        "text": "Data source",
+        "crowdinContext": "Table column header: the data source queried."
+    },
+    "executionStats.original.computedIn": {
+        "text": "Computed in {duration}",
+        "crowdinContext": "How long the original computation of the result took end to end. {duration} is e.g. '0.7 s'."
+    },
+    "executionStats.original.computedInAgo": {
+        "text": "Computed in {duration}, {ago}",
+        "crowdinContext": "How long the original computation of the result took end to end and when. {duration} is e.g. '0.7 s', {ago} a relative time, e.g. '2 hours ago'."
+    },
+    "executionProgress.query.waiting": {
+        "text": "Waiting for database",
+        "crowdinContext": "Part of a data source query: dispatching the query and getting a database connection."
+    },
+    "executionProgress.query.database": {
+        "text": "Database",
+        "crowdinContext": "Part of a data source query: the database running the query."
+    },
+    "executionProgress.query.transfer": {
+        "text": "Transfer",
+        "crowdinContext": "Part of a data source query: reading the result rows and storing them in the cache."
+    },
+    "executionProgress.original.approximate": {
+        "text": "Post-processing is not included",
+        "crowdinContext": "Tooltip of an approximate end-to-end computation time ('~1.2 s'), which ends before the post-processing."
+    },
+    "executionStats.original.querying": {
+        "text": "Querying",
+        "crowdinContext": "Table column header: how long querying the data source took overall, from the request to the finished result."
+    },
+    "executionStats.original.queryingSource": {
+        "text": "Querying {dataSource} {duration}",
+        "crowdinContext": "How long querying the only data source took overall when the result was computed. {dataSource} is a data source name, {duration} e.g. '196 ms'."
+    },
+    "executionStats.original.queryingSource.noDuration": {
+        "text": "Querying {dataSource}",
+        "crowdinContext": "The only data source queried when the result was computed. {dataSource} is a data source name."
+    },
+    "executionStats.original.breakdown": {
+        "text": "Database {database} \u00b7 query + upload {upload}",
+        "crowdinContext": "Tooltip: the parts of a data source query. {database} is the time the database ran the query, {upload} the query including reading and storing the result, e.g. '31 ms'."
+    },
+    "executionProgress.original.savedQueries": {
+        "text": "{count, plural, one {Saved a database query} other {Saved # database queries}}",
+        "crowdinContext": "On a cache hit, when the saved time is not meaningful: the result came from the cache, so {count} data source queries were not run."
+    },
+    "executionProgress.toggle.collapse": {
+        "text": "Hide the steps",
+        "crowdinContext": "Button label (tooltip) collapsing the steps of the visualization loading."
+    },
+    "executionProgress.toggle.expand": {
+        "text": "Show the steps",
+        "crowdinContext": "Button label (tooltip) expanding the steps of the visualization loading."
+    },
+    "executionProgress.loading.cache": {
+        "text": "Checking local cache",
+        "crowdinContext": "Loading step: checking whether the result is already cached."
+    },
+    "executionProgress.loading.prepare": {
+        "text": "Preparing the query",
+        "crowdinContext": "Loading step: preparing the data source query (generating the SQL)."
+    },
+    "executionProgress.loading.query": {
+        "text": "Querying data",
+        "crowdinContext": "Loading step: querying the data sources."
+    },
+    "executionProgress.loading.query.dataSource": {
+        "text": "Querying data {dataSource}",
+        "crowdinContext": "Loading step: querying the data source. {dataSource} is a data source name."
+    },
+    "executionProgress.loading.render": {
+        "text": "Rendering visualisation",
+        "crowdinContext": "Loading step: processing the result and drawing the visualization."
+    },
+    "executionStats.link.live": {
+        "text": "Live data",
+        "crowdinContext": "Link below the visualization: its data was computed from the data source now. Opens the execution stats."
+    },
+    "executionStats.link.saved": {
+        "text": "Saved result",
+        "crowdinContext": "Link below the visualization: its data came from a saved (cached) result. Opens the execution stats."
+    },
     "dashboard.bucket.metric.fact.attribute.add_placeholder": {
         "text": "Drag {factIcon} , {metricIcon} or {attrIcon} here",
         "crowdinContext": "Drag and drop placeholder text. {factIcon}, {metricIcon}, and {attrIcon} are replaced with visual icons."

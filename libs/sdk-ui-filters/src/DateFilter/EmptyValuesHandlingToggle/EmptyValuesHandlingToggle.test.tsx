@@ -41,6 +41,10 @@ describe("EmptyValuesHandlingToggle", () => {
         );
 
         expect(screen.getByText("Exclude empty values")).toBeInTheDocument();
-        expect(screen.getByRole("checkbox", { name: "Exclude empty values" })).toBeInTheDocument();
+        const checkbox = screen.getByRole("checkbox", { name: "Exclude empty values" });
+        expect(checkbox).toBeChecked();
+        expect(document.getElementById(checkbox.getAttribute("aria-labelledby")!)).toHaveTextContent(
+            "Exclude empty values",
+        );
     });
 });

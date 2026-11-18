@@ -9,12 +9,14 @@ import {
     type IInsight,
     type IInsightWidget,
     insightVisualizationType,
+    objRefToString,
     widgetTitle,
 } from "@gooddata/sdk-model";
 import { type VisType } from "@gooddata/sdk-ui";
 import { supportsShowAsTable } from "@gooddata/sdk-ui-ext";
 import { useId } from "@gooddata/sdk-ui-kit";
 
+import { getDashboardInsightMenuButtonId } from "../../../_staging/accessibility/elementId.js";
 import { changeVisualizationSwitcherActiveVisualization } from "../../../model/commands/visualizationSwitcher.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useDashboardScheduledEmails } from "../../../model/react/useDasboardScheduledEmails/useDashboardScheduledEmails.js";
@@ -163,6 +165,7 @@ export function ViewModeDashboardVisualizationSwitcherContent({
         title: widgetTitle(activeVisualization) || intl.formatMessage({ id: "export.defaultTitle" }),
         insight,
         widget: activeVisualization,
+        returnFocusTo: getDashboardInsightMenuButtonId(objRefToString(widgetRef)),
     });
 
     const {
