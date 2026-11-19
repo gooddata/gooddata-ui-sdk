@@ -1068,6 +1068,10 @@ export const TigerFeatureDefinitions: {
         type: "BOOLEAN";
         defaultValue: boolean;
     };
+    readonly enableDateRangeParameters: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
     readonly enableEnhancedInsightPicker: {
         type: "BOOLEAN";
         defaultValue: boolean;
@@ -1109,6 +1113,10 @@ export const TigerFeatureDefinitions: {
         defaultValue: boolean;
     };
     readonly enableDashboardSidebarResize: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableDashboardCanvasScroll: {
         type: "BOOLEAN";
         defaultValue: boolean;
     };

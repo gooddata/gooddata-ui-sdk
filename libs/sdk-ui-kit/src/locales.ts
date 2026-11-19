@@ -65,6 +65,11 @@ export const uiToastMessages = defineMessages({
     regionLabel: { id: "uiKit.toast.regionLabel" },
 });
 
+export const uiMessageMessages = defineMessages({
+    showMore: { id: "uiKit.message.showMore" },
+    showLess: { id: "uiKit.message.showLess" },
+});
+
 export const olpGranteeAvatarMessages = defineMessages({
     user: { id: "shareDialog.olp.granteeAvatar.user" },
     group: { id: "shareDialog.olp.granteeAvatar.group" },

@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-charts: Fix scatter plot cluster labels and legend toggles when coordinates contain NULL values.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

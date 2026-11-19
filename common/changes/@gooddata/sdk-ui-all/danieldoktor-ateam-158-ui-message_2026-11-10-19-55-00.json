@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-kit: Add `<UiMessage />`, an inline info, success, warning or error message with an optional icon, expandable detail and close button. The message close button now uses the message text color by default, and the new `separatorLineColor` theme property colors the line above the expanded detail.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

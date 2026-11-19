@@ -125,6 +125,50 @@ describe("dashboard conversion", () => {
                 }),
             ]);
         });
+
+        describe("filter display form", () => {
+            it.each([
+                [
+                    "an attribute filter on an attribute",
+                    { type: "attribute_filter", using: "attribute/region" },
+                    "attributeFilter",
+                    { identifier: { id: "region", type: "label" } },
+                ],
+                [
+                    "an attribute filter on a label",
+                    { type: "attribute_filter", using: "label/region" },
+                    "attributeFilter",
+                    { identifier: { id: "region", type: "label" } },
+                ],
+                [
+                    "an attribute filter on a computed attribute",
+                    { type: "attribute_filter", using: "computed_attribute/tier" },
+                    "attributeFilter",
+                    { identifier: { id: "tier", type: "computedAttribute" } },
+                ],
+                [
+                    "a text list filter on an attribute",
+                    { type: "text_filter", using: "attribute/region", condition: "is", values: ["West"] },
+                    "arbitraryAttributeFilter",
+                    { identifier: { id: "region", type: "label" } },
+                ],
+                [
+                    "a text match filter on an attribute",
+                    { type: "text_filter", using: "attribute/region", condition: "contains", value: "We" },
+                    "matchAttributeFilter",
+                    { identifier: { id: "region", type: "label" } },
+                ],
+            ])("names a label or computed attribute for %s", (_, filter, kind, displayForm) => {
+                const result = yamlFilterContextToDeclarative("dash1", {
+                    region: filter,
+                } as Dashboard["filters"]);
+
+                const filters = (result.filterContext.content as any).filters as Record<string, any>[];
+                const converted = filters.find((item) => item[kind]?.localIdentifier === "region");
+
+                expect(converted?.[kind].displayForm).toEqual(displayForm);
+            });
+        });
     });
 
     describe("yamlInsightWidgetToDeclarative", () => {

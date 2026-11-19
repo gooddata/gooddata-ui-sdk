@@ -2,7 +2,7 @@
 
 import * as z from "zod/mini";
 
-import type { ParameterType } from "@gooddata/sdk-model";
+import type { ScalarParameterType } from "@gooddata/sdk-model";
 
 import type { AacSchemaParity, AssertAacParity } from "../asCode/aacParity.js";
 import { type SchemaKeys, deriveSchemaKeys } from "../asCode/schemaKeys.js";
@@ -34,12 +34,12 @@ export type ParameterAacParity = AssertAacParity<
 >;
 
 /** Parent key → child-key entry for the schema restricted to `enabledTypes`; powers YAML editor autocompletion. */
-export function parameterSchemaKeys(enabledTypes: ParameterType[]): SchemaKeys {
+export function parameterSchemaKeys(enabledTypes: ScalarParameterType[]): SchemaKeys {
     return deriveSchemaKeys(buildParameterSchema(enabledTypes));
 }
 
 /** Runtime validation schema restricted to the enabled types; the static types stay the full union. */
-export function buildParameterSchema(enabledTypes: ParameterType[]) {
+export function buildParameterSchema(enabledTypes: ScalarParameterType[]) {
     // Re-spread to a non-empty tuple: `discriminatedUnion` requires it and it preserves the inferred union.
     const [first, ...rest] = enabledTypes.map((type) => definitionSchemas[type]);
     return z.extend(parameterSchema, {
@@ -103,7 +103,7 @@ const stringConstraintsSchema = z
         ),
     );
 
-/** One arm per model type; `satisfies` breaks the build if the model gains a type without an arm. */
+/** One arm per scalar model type; `satisfies` breaks the build if the model gains one without an arm. */
 const definitionSchemas = {
     NUMBER: z.strictObject({
         type: z.literal("NUMBER"),
@@ -130,7 +130,7 @@ const definitionSchemas = {
             ),
         z.transform(({ cardinality: _cardinality, ...definition }) => definition),
     ),
-} satisfies Record<ParameterType, z.core.$ZodType>;
+} satisfies Record<ScalarParameterType, z.core.$ZodType>;
 
 /** Full-union schema: single source for the editor vocabulary and the exported types, independent of the flag. */
 const parameterSchema = z.strictObject({

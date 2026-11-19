@@ -5,7 +5,7 @@ import { select } from "redux-saga/effects";
 import { describe, expect, it } from "vitest";
 
 import { type DateFilterItem } from "@gooddata/sdk-embedding";
-import { type IParameterMetadataObject, idRef } from "@gooddata/sdk-model";
+import { type IScalarParameterMetadataObject, idRef } from "@gooddata/sdk-model";
 import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 
 import { DATE_DATASET_ATTRIBUTE } from "../../models/date_item.js";
@@ -166,7 +166,7 @@ describe("UI_DATE_FILTER_CLOSED", () => {
 });
 
 describe("addParameterFilters", () => {
-    const parameter = (id: string, title: string, defaultValue: number): IParameterMetadataObject =>
+    const parameter = (id: string, title: string, defaultValue: number): IScalarParameterMetadataObject =>
         ({
             type: "parameter",
             id,
@@ -179,7 +179,7 @@ describe("addParameterFilters", () => {
             deprecated: false,
             unlisted: false,
             definition: { type: "NUMBER", defaultValue },
-        }) as unknown as IParameterMetadataObject;
+        }) as unknown as IScalarParameterMetadataObject;
 
     it("should map metadata to parameter filters and put STORE_ADD_PARAMETER_FILTERS", async () => {
         const p1 = parameter("p1", "Param 1", 10);

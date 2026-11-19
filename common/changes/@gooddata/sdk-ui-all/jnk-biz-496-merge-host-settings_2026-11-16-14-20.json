@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-dashboard: settings passed in the Dashboard config are merged over the backend settings instead of replacing them. A config that also specifies locale and separators still skips the backend settings call and replaces them.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

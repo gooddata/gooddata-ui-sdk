@@ -1,12 +1,22 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { type FocusEvent, memo, useCallback, useState } from "react";
+import {
+    type FocusEvent,
+    type RefObject,
+    memo,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 
 import { defineMessage, useIntl } from "react-intl";
 
 import { ConfirmDialog, Input, Message, Typography } from "@gooddata/sdk-ui-kit";
 import { _compact } from "@gooddata/util";
 
+import { DEFAULT_MENU_BUTTON_ID } from "../../../_staging/accessibility/elementId.js";
 import {
     DASHBOARD_TITLE_MAX_LENGTH,
     truncateDashboardTitle,
@@ -16,12 +26,39 @@ import { IntlWrapper } from "../../localization/IntlWrapper.js";
 
 const defaultTitleMessage = defineMessage({ id: "dialogs.save.as.new.default.title" });
 
+/**
+ * The dialog is usually opened from a menu item that is gone once the dialog closes.
+ * Return the focus to the element that opened the dialog while it is still on the page,
+ * otherwise to the dashboard "More actions" menu button, so the focus is never lost.
+ */
+function useReturnFocusTo(): RefObject<HTMLElement | null> {
+    const [opener] = useState(() =>
+        typeof document === "undefined" ? null : (document.activeElement as HTMLElement | null),
+    );
+
+    return useMemo(
+        () => ({
+            get current(): HTMLElement | null {
+                if (opener && opener !== document.body && opener.isConnected) {
+                    return opener;
+                }
+                return document.getElementById(DEFAULT_MENU_BUTTON_ID);
+            },
+        }),
+        [opener],
+    );
+}
+
 export interface ISaveAsDialogRendererOwnProps {
     dashboardTitle: string;
     isDashboardSaving: boolean;
     isDashboardLoaded: boolean;
     isKpiWidgetEnabled: boolean;
     isInEditMode: boolean;
+    /**
+     * The last save failed. The dialog stays open, shows the error and keeps the focus.
+     */
+    hasSaveError?: boolean;
     locale?: string;
 
     onSubmit: (title: string, switchToCopy?: boolean, useOriginalFilterContext?: boolean) => void;
@@ -39,8 +76,18 @@ export const SaveAsNewDashboardDialog = memo(function SaveAsNewDashboardDialog({
     onSubmit,
     isInEditMode,
     isKpiWidgetEnabled,
+    hasSaveError = false,
 }: ISaveAsDialogRendererOwnProps) {
     const intl = useIntl();
+    const returnFocusTo = useReturnFocusTo();
+    const titleContainerRef = useRef<HTMLDivElement>(null);
+
+    // keep the user in the dialog after a failed save, on the field to fix
+    useEffect(() => {
+        if (hasSaveError) {
+            titleContainerRef.current?.querySelector("input")?.focus();
+        }
+    }, [hasSaveError]);
 
     const getDefaultDashboardTitle = useCallback(() => {
         // shorten only the original title so the localized "Copy of" text stays whole
@@ -103,11 +150,18 @@ export const SaveAsNewDashboardDialog = memo(function SaveAsNewDashboardDialog({
             cancelButtonText={intl.formatMessage({ id: "cancel" })}
             submitButtonText={intl.formatMessage({ id: "create.dashboard" })}
             isSubmitDisabled={isDashboardSaving || dashboardTitle.trim() === ""}
+            returnFocusTo={returnFocusTo}
         >
             <Typography tagName="p" className="dashboard-note">
                 {intl.formatMessage({ id: "dialogs.save.as.new.desc" })}
             </Typography>
-            <div className="dashboard-title">
+            {/* the error is announced by the toast; this is the visible text that stays in the dialog */}
+            {hasSaveError ? (
+                <Message type="error" className="s-save-as-new-error">
+                    {intl.formatMessage(messages.messagesDashboardSaveFailed)}
+                </Message>
+            ) : null}
+            <div className="dashboard-title" ref={titleContainerRef}>
                 <Input
                     autofocus
                     maxlength={DASHBOARD_TITLE_MAX_LENGTH}

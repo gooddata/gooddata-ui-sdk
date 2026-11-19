@@ -9,7 +9,7 @@ import {
     type IAutomationMetadataObjectDefinition,
     type IDashboardParameter,
     type IInsightParameterValue,
-    type IParameterMetadataObject,
+    type IScalarParameterMetadataObject,
     idRef,
 } from "@gooddata/sdk-model";
 
@@ -25,7 +25,7 @@ interface IMockContextState {
     enableParameters: boolean;
     enableStringParameters: boolean;
     catalogParametersIsLoaded: boolean;
-    catalog: IParameterMetadataObject[];
+    catalog: IScalarParameterMetadataObject[];
 }
 
 let mockState: IMockContextState;

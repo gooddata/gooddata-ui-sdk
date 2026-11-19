@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-code-convertors: Write null of a date label attribute filter back as an empty string when converting declarative to YAML",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

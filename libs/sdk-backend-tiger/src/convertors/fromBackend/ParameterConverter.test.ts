@@ -3,6 +3,7 @@
 import { describe, expect, it } from "vitest";
 
 import type {
+    DateRangeParameterValue,
     JsonApiParameterOutWithLinks,
     JsonApiUserIdentifierOutWithLinks,
 } from "@gooddata/api-client-tiger";
@@ -194,6 +195,64 @@ describe("convertParameter", () => {
             defaultValue: "Actual",
             constraints: { minLength: 1 },
         });
-        expect(result.definition.constraints).not.toHaveProperty("allowedValues");
+        expect(result.definition).not.toHaveProperty("constraints.allowedValues");
+    });
+
+    function dateRangeParameter(defaultValue: DateRangeParameterValue): JsonApiParameterOutWithLinks {
+        return {
+            id: "lastHoldingMonth",
+            type: "parameter",
+            attributes: {
+                title: "Last holding month",
+                definition: { type: "DATE_RANGE", defaultValue },
+            },
+            links: {
+                self: "/api/v1/entities/workspaces/demo/parameters/lastHoldingMonth",
+            },
+        };
+    }
+
+    it("should convert a DATE_RANGE parameter definition", () => {
+        const result = convertParameter(
+            dateRangeParameter({ granularity: "MONTH", from: "2025-08", to: "2026-08" }),
+        );
+
+        expect(result.definition).toEqual({
+            type: "DATE_RANGE",
+            defaultValue: { granularity: "GDC.time.month", from: "2025-08", to: "2026-08" },
+        });
+    });
+
+    it.each([
+        ["YEAR", "GDC.time.year"],
+        ["QUARTER", "GDC.time.quarter"],
+        ["MONTH", "GDC.time.month"],
+        ["WEEK", "GDC.time.week"],
+        ["DAY", "GDC.time.date"],
+        ["HOUR", "GDC.time.hour"],
+        ["MINUTE", "GDC.time.minute"],
+        ["SECOND", "GDC.time.second"],
+    ] as const)("should convert the %s period granularity to %s", (granularity, expected) => {
+        expect(convertParameter(dateRangeParameter({ granularity })).definition).toEqual({
+            type: "DATE_RANGE",
+            defaultValue: { granularity: expected },
+        });
+    });
+
+    it("should keep an open end of a DATE_RANGE period absent", () => {
+        const result = convertParameter(dateRangeParameter({ granularity: "HOUR", to: "2026-08-14 09" }));
+
+        expect(result.definition).toEqual({
+            type: "DATE_RANGE",
+            defaultValue: { granularity: "GDC.time.hour", to: "2026-08-14 09" },
+        });
+        expect(result.definition).not.toHaveProperty("defaultValue.from");
+    });
+
+    it("should keep a DATE_RANGE period without either end", () => {
+        expect(convertParameter(dateRangeParameter({ granularity: "DAY" })).definition).toEqual({
+            type: "DATE_RANGE",
+            defaultValue: { granularity: "GDC.time.date" },
+        });
     });
 });

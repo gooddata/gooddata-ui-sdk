@@ -8,7 +8,6 @@ import {
     type Ref,
     useCallback,
     useEffect,
-    useId,
     useMemo,
     useRef,
     useState,
@@ -27,6 +26,8 @@ import { useSkeletonItem } from "./SkeletonItemFactory.js";
 import { getCellId, getItemKey, getRowId } from "./utils.js";
 
 export function UiAsyncTableBody<T extends { id: string } | { ref: ObjRef }>({
+    tableId,
+    hasDefaultRows,
     items,
     maxHeight,
     itemHeight,
@@ -55,23 +56,30 @@ export function UiAsyncTableBody<T extends { id: string } | { ref: ObjRef }>({
     const SkeletonItem = useSkeletonItem(columns, bulkActions, isLargeRow ?? false);
 
     const gridRef = useRef<HTMLDivElement>(null);
-    const tableId = useId();
+    const [isGridFocused, setIsGridFocused] = useState(false);
     const hasHeader = !!header;
     const getHeaderId = useCallback((index: number) => `${tableId}-header-${index}`, [tableId]);
 
-    const { handleKeyDown, handleFocus, focusRow, focusedRowIndex, focusedColumnIndex, focusedItemRef } =
-        useAsyncTableBodyKeyboardNavigation(
-            items.length,
-            columns.length,
-            !!bulkActions,
-            scrollToIndex,
-            isHeaderNavigable,
-            Math.max(1, Math.floor(maxHeight / itemHeight)),
-        );
+    const {
+        handleKeyDown,
+        handleFocus,
+        focusRow,
+        focusedRowIndex,
+        focusedColumnIndex,
+        focusedItemRef,
+        listScrollToIndex,
+    } = useAsyncTableBodyKeyboardNavigation(
+        items.length,
+        columns.length,
+        !!bulkActions,
+        scrollToIndex,
+        isHeaderNavigable,
+        Math.max(1, Math.floor(maxHeight / itemHeight)),
+        isGridFocused,
+    );
 
     // The grid keeps DOM focus and marks the active row virtually, so the active row's tooltip is opened
     // from here: while the grid has focus, until Escape dismisses it for that row.
-    const [isGridFocused, setIsGridFocused] = useState(false);
     const [isTooltipDismissed, setIsTooltipDismissed] = useState(false);
     const [prevFocusedRowIndex, setPrevFocusedRowIndex] = useState(focusedRowIndex);
     const [prevFocusedColumnIndex, setPrevFocusedColumnIndex] = useState(focusedColumnIndex);
@@ -174,15 +182,20 @@ export function UiAsyncTableBody<T extends { id: string } | { ref: ObjRef }>({
         if (focusedRowIndex === -1 && isHeaderNavigable) {
             return getHeaderId(focusedColumnIndex ?? 0);
         }
-        if (focusedRowIndex === undefined || focusedRowIndex < 0 || focusedRowIndex >= items.length) {
+        if (
+            !hasDefaultRows ||
+            focusedRowIndex === undefined ||
+            focusedRowIndex < 0 ||
+            focusedRowIndex >= items.length
+        ) {
             return undefined;
         }
         const itemId = getItemKey(items[focusedRowIndex]);
         if (focusedColumnIndex !== undefined) {
-            return getCellId(itemId, focusedColumnIndex);
+            return getCellId(tableId, itemId, focusedColumnIndex);
         }
-        return getRowId(itemId);
-    }, [focusedRowIndex, focusedColumnIndex, items, isHeaderNavigable, getHeaderId]);
+        return getRowId(tableId, itemId);
+    }, [focusedRowIndex, focusedColumnIndex, items, isHeaderNavigable, getHeaderId, hasDefaultRows, tableId]);
 
     return (
         <AsyncTableGridRefProvider value={gridRef}>
@@ -224,7 +237,7 @@ export function UiAsyncTableBody<T extends { id: string } | { ref: ObjRef }>({
                         loadNextPage={loadNextPage}
                         SkeletonItem={SkeletonItem}
                         scrollbarHoverEffect
-                        scrollToIndex={focusedRowIndex === -1 ? 0 : (focusedRowIndex ?? scrollToIndex)}
+                        scrollToIndex={listScrollToIndex}
                         shouldLoadNextPage={shouldLoadNextPage}
                         tabIndex={-1}
                         focusedItem={focusedItem}
@@ -255,54 +268,87 @@ const useAsyncTableBodyKeyboardNavigation = (
     scrollToIndex: number | undefined,
     isHeaderNavigable: boolean,
     pageSize: number,
+    isGridFocused: boolean,
 ) => {
-    const [focusedRowIndex, setFocusedRowIndex] = useState<number | undefined>(undefined);
-    const [focusedColumnIndex, setFocusedColumnIndex] = useState<number | undefined>(undefined);
+    // Pending restores an active target after data changes without requesting a scroll.
+    const [requestedRowIndex, setRequestedRowIndex] = useState<number | "pending" | undefined>(undefined);
+    const [requestedColumnIndex, setFocusedColumnIndex] = useState<number | undefined>(undefined);
+    const [previousScrollToIndex, setPreviousScrollToIndex] = useState(scrollToIndex);
     const focusedItemRef = useRef<HTMLElement | null>(null);
     const firstRow = isHeaderNavigable ? -1 : 0;
     const columnsLength = definedColumnsLength + (hasBulkActions ? 1 : 0);
+    const focusedColumnIndex =
+        requestedColumnIndex === undefined || columnsLength === 0
+            ? undefined
+            : Math.max(0, Math.min(requestedColumnIndex, columnsLength - 1));
 
-    // A new scroll target means new data rows. The header stays, as sorting from it resets the target too.
-    useEffect(() => {
-        setFocusedRowIndex((index) => (index === -1 ? index : undefined));
-    }, [scrollToIndex]);
+    const lostHeader = requestedRowIndex === -1 && !isHeaderNavigable;
+    const recoveryTarget = isGridFocused && requestedRowIndex !== undefined ? "pending" : undefined;
+    let nextRequestedRowIndex = requestedRowIndex;
+    if (previousScrollToIndex !== scrollToIndex) {
+        setPreviousScrollToIndex(scrollToIndex);
+        if (requestedRowIndex !== -1) nextRequestedRowIndex = recoveryTarget;
+    }
+    if (lostHeader) {
+        nextRequestedRowIndex = recoveryTarget;
+        setFocusedColumnIndex(undefined);
+    } else if (typeof nextRequestedRowIndex === "number" && nextRequestedRowIndex >= rowsLength) {
+        nextRequestedRowIndex = rowsLength > 0 ? rowsLength - 1 : recoveryTarget;
+    }
+    if (nextRequestedRowIndex === "pending" && !isGridFocused) {
+        nextRequestedRowIndex = undefined;
+    }
+    if (nextRequestedRowIndex !== requestedRowIndex) {
+        setRequestedRowIndex(nextRequestedRowIndex);
+    }
+    if (!lostHeader && requestedColumnIndex !== focusedColumnIndex) {
+        setFocusedColumnIndex(focusedColumnIndex);
+    }
 
-    useEffect(() => {
-        setFocusedRowIndex((index) =>
-            index !== undefined && index >= rowsLength
-                ? rowsLength > 0
-                    ? rowsLength - 1
-                    : undefined
-                : index,
-        );
-    }, [rowsLength]);
+    const focusedRowIndex =
+        requestedRowIndex === "pending"
+            ? isGridFocused && rowsLength > 0
+                ? 0
+                : undefined
+            : requestedRowIndex;
+    const listScrollToIndex =
+        typeof requestedRowIndex === "number" ? Math.max(0, requestedRowIndex) : scrollToIndex;
+    const horizontalRowIndex = focusedRowIndex ?? (rowsLength > 0 ? 0 : isHeaderNavigable ? -1 : "pending");
 
     const handleKeyDown = useMemo(
         () =>
             makeGridKeyboardNavigation({
-                onFocusDown: () => setFocusedRowIndex(Math.min(rowsLength - 1, (focusedRowIndex ?? 0) + 1)),
+                onFocusDown: () => {
+                    const row = Math.min(rowsLength - 1, (focusedRowIndex ?? 0) + 1);
+                    setRequestedRowIndex(row);
+                    if (row === -1) setFocusedColumnIndex(focusedColumnIndex ?? 0);
+                },
                 onFocusUp: () => {
                     const row = Math.max(firstRow, (focusedRowIndex ?? 0) - 1);
-                    setFocusedRowIndex(row);
+                    setRequestedRowIndex(row);
                     if (row === -1) setFocusedColumnIndex(focusedColumnIndex ?? 0);
                 },
                 onFocusFirst: (event) => {
-                    if (event.ctrlKey) setFocusedRowIndex(firstRow);
+                    setRequestedRowIndex(event.ctrlKey ? firstRow : horizontalRowIndex);
                     setFocusedColumnIndex(0);
                 },
                 onFocusLast: (event) => {
-                    if (event.ctrlKey) setFocusedRowIndex(rowsLength - 1);
+                    setRequestedRowIndex(event.ctrlKey ? rowsLength - 1 : horizontalRowIndex);
                     setFocusedColumnIndex(columnsLength - 1);
                 },
-                onFocusLeft: () =>
+                onFocusLeft: () => {
+                    setRequestedRowIndex(horizontalRowIndex);
                     // the first cell of a data row steps back to the whole row, which Enter opens
                     setFocusedColumnIndex(
-                        focusedRowIndex !== -1 && !focusedColumnIndex
+                        horizontalRowIndex !== -1 && !focusedColumnIndex
                             ? undefined
                             : Math.max(0, (focusedColumnIndex ?? 0) - 1),
-                    ),
-                onFocusRight: () =>
-                    setFocusedColumnIndex(Math.min(columnsLength - 1, (focusedColumnIndex ?? -1) + 1)),
+                    );
+                },
+                onFocusRight: () => {
+                    setRequestedRowIndex(horizontalRowIndex);
+                    setFocusedColumnIndex(Math.min(columnsLength - 1, (focusedColumnIndex ?? -1) + 1));
+                },
                 onSelect: (event) => {
                     if (
                         isEnterKey(event) &&
@@ -319,18 +365,27 @@ const useAsyncTableBodyKeyboardNavigation = (
                     event.stopPropagation();
                     const step = event.key === "PageDown" ? pageSize : -pageSize;
                     const row = Math.max(firstRow, Math.min(rowsLength - 1, (focusedRowIndex ?? 0) + step));
-                    setFocusedRowIndex(row);
+                    setRequestedRowIndex(row);
                     if (row === -1) setFocusedColumnIndex(focusedColumnIndex ?? 0);
                 },
             }),
-        [rowsLength, columnsLength, focusedRowIndex, focusedColumnIndex, hasBulkActions, firstRow, pageSize],
+        [
+            rowsLength,
+            columnsLength,
+            focusedRowIndex,
+            focusedColumnIndex,
+            hasBulkActions,
+            firstRow,
+            pageSize,
+            horizontalRowIndex,
+        ],
     );
 
     const handleFocus = useCallback(
         (event: FocusEvent) => {
             if (focusedRowIndex === undefined && event.target.matches(":focus-visible")) {
                 const row = rowsLength ? 0 : firstRow;
-                setFocusedRowIndex(row);
+                setRequestedRowIndex(row);
                 if (row === -1) setFocusedColumnIndex(focusedColumnIndex ?? 0);
             }
         },
@@ -338,9 +393,17 @@ const useAsyncTableBodyKeyboardNavigation = (
     );
 
     const focusRow = useCallback((rowIndex: number, columnIndex?: number) => {
-        setFocusedRowIndex(rowIndex);
+        setRequestedRowIndex(rowIndex);
         setFocusedColumnIndex(columnIndex);
     }, []);
 
-    return { handleKeyDown, handleFocus, focusRow, focusedRowIndex, focusedColumnIndex, focusedItemRef };
+    return {
+        handleKeyDown,
+        handleFocus,
+        focusRow,
+        focusedRowIndex,
+        focusedColumnIndex,
+        focusedItemRef,
+        listScrollToIndex,
+    };
 };

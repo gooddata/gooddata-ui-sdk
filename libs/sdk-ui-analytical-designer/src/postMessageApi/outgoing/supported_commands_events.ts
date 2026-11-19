@@ -28,7 +28,6 @@ export const SUPPORTED_COMMANDS: GdcAdCommandType[] = [
     GdcAdCommandType.RemoveFilterContext,
     GdcAdCommandType.RequestCancellation,
     GdcAdCommandType.SetApiToken,
-    GdcAdCommandType.AttributeHierarchyModified,
     GdcAdCommandType.SetTimezone,
 ];
 
@@ -106,10 +105,6 @@ export function getAvailableCommands({
 
             case GdcAdCommandType.SetApiToken:
                 isCommandAvailable = isSetApiTokenAvailable;
-                break;
-
-            case GdcAdCommandType.AttributeHierarchyModified:
-                isCommandAvailable = true;
                 break;
 
             case GdcAdCommandType.SetTimezone:

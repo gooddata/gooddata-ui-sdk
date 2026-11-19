@@ -14,7 +14,7 @@ import { type IParametersPanelSectionsCommonProps } from "../types.js";
 import { Parameter } from "./Parameter.js";
 
 export interface IParameterParametersSectionProps extends IParametersPanelSectionsCommonProps {
-    dashboardParameters: IWidgetParameterValue[];
+    widgetParameters: IWidgetParameterValue[];
 }
 
 const parameterTypeMessages = defineMessages({
@@ -23,7 +23,7 @@ const parameterTypeMessages = defineMessages({
 });
 
 export function ParameterParametersSection({
-    dashboardParameters,
+    widgetParameters,
     onAdd,
     intl,
 }: IParameterParametersSectionProps) {
@@ -38,12 +38,12 @@ export function ParameterParametersSection({
             <DropdownSectionHeader>
                 <FormattedMessage id="configurationPanel.drillIntoUrl.editor.parameterParametersSectionLabel" />
             </DropdownSectionHeader>
-            {dashboardParameters.length === 0 ? (
+            {widgetParameters.length === 0 ? (
                 <div className="gd-drill-to-url-section-empty s-drill-to-url-parameters-empty">
                     <FormattedMessage id="configurationPanel.drillIntoUrl.editor.parameterParametersSectionEmpty" />
                 </div>
             ) : (
-                dashboardParameters.map(({ identifier, parameterType, title, value }) => (
+                widgetParameters.map(({ identifier, parameterType, title, value }) => (
                     <Parameter
                         key={identifier}
                         name={title}

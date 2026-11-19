@@ -198,6 +198,24 @@ export const ldmObjects: LdmObjects = new LdmObjects(
                 identifier: "freetext",
             },
         },
+        {
+            type: "parameter",
+            id: "lastHoldingMonth",
+            title: "Last holding month",
+            description: "Date range parameter",
+            definition: {
+                type: "DATE_RANGE",
+                defaultValue: { granularity: "GDC.time.month", from: "2025-08", to: "2026-08" },
+            },
+            production: false,
+            deprecated: false,
+            unlisted: false,
+            uri: "",
+            ref: {
+                type: "parameter",
+                identifier: "lastHoldingMonth",
+            },
+        },
     ],
     [
         {

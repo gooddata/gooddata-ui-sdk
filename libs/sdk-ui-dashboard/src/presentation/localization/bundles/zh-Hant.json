@@ -447,6 +447,7 @@
     "layout.header.add.title.placeholder": "在此新增標題...",
     "layout.header.add.description.placeholder": "在此新增說明...",
     "controlButtons.options.tooltip": "更多操作",
+    "controlButtons.options.widgetLabel": "{title} 的更多操作",
     "controlButtons.options.back": "返回上一步",
     "controlButtons.options.closeMenu": "關閉選單",
     "controlButtons.edit.value": "編輯",

@@ -19,3 +19,11 @@ export function hostDomainVerificationFailedEvent(contextId?: string): void {
     };
     adPostEvent(GdcEventType.AppCommandFailed, commandError, contextId);
 }
+
+export function hostDomainVerificationErroredEvent(contextId?: string): void {
+    const commandError: ICommandFailedBody = {
+        errorCode: GdcErrorType.RuntimeError,
+        errorMessage: `Could not check if the host domain is allowed to control embedded ${GdcProductName.ANALYTICAL_DESIGNER}. Try the command again.`,
+    };
+    adPostEvent(GdcEventType.AppCommandFailed, commandError, contextId);
+}

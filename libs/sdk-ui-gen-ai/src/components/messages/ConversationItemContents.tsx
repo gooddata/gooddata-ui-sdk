@@ -30,6 +30,7 @@ export function ConversationItemContents({
     message,
     groups,
     references,
+    role,
     isLoading,
     isLast,
 }: ConversationItemContentsProps) {
@@ -50,6 +51,7 @@ export function ConversationItemContents({
         return (
             <MessageTextContentComponent
                 text={content.text}
+                useMarkdown={role !== "user"}
                 objects={[...(content.objects ?? []), ...references]}
                 isLoading={isLoading}
             />

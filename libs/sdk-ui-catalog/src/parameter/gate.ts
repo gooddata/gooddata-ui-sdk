@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 
-import type { ParameterType } from "@gooddata/sdk-model";
+import type { ScalarParameterType } from "@gooddata/sdk-model";
 
 import { useFeatureFlag } from "../permission/PermissionsContext.js";
 
@@ -20,9 +20,9 @@ export function useIsParametersEnabled(): boolean {
 /**
  * Parameter types authorable in the catalog, gated by `enableStringParameters`.
  */
-export function useEnabledParameterTypes(): ParameterType[] {
+export function useEnabledParameterTypes(): ScalarParameterType[] {
     const enableStringParameters = useFeatureFlag("enableStringParameters");
-    return useMemo<ParameterType[]>(
+    return useMemo<ScalarParameterType[]>(
         () => (enableStringParameters ? ["NUMBER", "STRING"] : ["NUMBER"]),
         [enableStringParameters],
     );

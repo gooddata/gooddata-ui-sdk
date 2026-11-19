@@ -38,6 +38,7 @@ import {
     getSecuredRemoteAppValidUntil,
     validateAppSecurity,
 } from "../loader/appSecurityValidation.js";
+import { getHostBasePath } from "../loader/hostBasePath.js";
 import {
     getAppLifecycleCallbacks,
     getHostTelemetryServices,
@@ -171,7 +172,8 @@ export function PluggableApplicationRenderer({
     >(undefined);
     const [viewState, setViewState] = useState<RendererViewState>({ state: "loading" });
     const baseHref = getApplicationHref(app, ctx, pathname);
-    const appBasePath = ctx.embeddingMode === "iframe" ? `/embedded${baseHref}` : baseHref;
+    // Applications route against the browser URL, so their base path includes the proxy prefix.
+    const appBasePath = `${getHostBasePath()}${ctx.embeddingMode === "iframe" ? "/embedded" : ""}${baseHref}`;
 
     const lifecycle = getAppLifecycleCallbacks();
     const telemetryServices = getHostTelemetryServices();

@@ -9,7 +9,7 @@ import {
     type ICatalogAttribute,
     type ICatalogAttributeHierarchy,
     type ICatalogComputedAttribute,
-    type IParameterMetadataObject,
+    type IScalarParameterMetadataObject,
     idRef,
 } from "@gooddata/sdk-model";
 
@@ -61,7 +61,7 @@ describe("catalogSelectors", () => {
     });
 
     describe("catalog parameters selectors", () => {
-        const topN: IParameterMetadataObject = {
+        const topN: IScalarParameterMetadataObject = {
             type: "parameter",
             id: "topN",
             uri: "/topN",

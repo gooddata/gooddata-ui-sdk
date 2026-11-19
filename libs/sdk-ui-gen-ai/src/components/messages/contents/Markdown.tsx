@@ -93,20 +93,38 @@ export function MarkdownComponent({ children, references, allowMarkdown = false 
         [intl, references, catalogItems],
     );
 
-    if (allowMarkdown) {
-        return (
-            <Markdown
-                remarkPlugins={[remarkEmoji, remarkGfm, remarkReferences()]}
-                rehypePlugins={[rehypeReferences(references ?? [], tokens)]}
-                components={componentMap}
-                urlTransform={customUrlTransform}
-            >
-                {text}
-            </Markdown>
-        );
-    }
+    return (
+        <Markdown
+            remarkPlugins={allowMarkdown ? [remarkEmoji, remarkGfm, remarkReferences()] : []}
+            rehypePlugins={[
+                ...(allowMarkdown ? [] : [rehypePlainText(text)]),
+                rehypeReferences(references ?? [], tokens),
+            ]}
+            components={componentMap}
+            urlTransform={customUrlTransform}
+        >
+            {text}
+        </Markdown>
+    );
+}
 
-    return <Typography tagName="p">{children}</Typography>;
+function rehypePlainText(text: string) {
+    return function () {
+        return function () {
+            // Replace parsed markup after conversion to HTML nodes to preserve whitespace as well as text.
+            return {
+                type: "root",
+                children: [
+                    {
+                        type: "element",
+                        tagName: "p",
+                        properties: {},
+                        children: [{ type: "text", value: text }],
+                    },
+                ],
+            };
+        };
+    };
 }
 
 const OBJECT_CLASS_NAME = "gd-gen-ai-chat__message__object";

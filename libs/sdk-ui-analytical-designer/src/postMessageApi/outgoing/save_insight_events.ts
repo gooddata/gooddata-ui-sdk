@@ -23,6 +23,14 @@ export function insightSavingInvalidState(postMessageContextId?: string): void {
     adPostEvent(GdcEventType.AppCommandFailed, error, postMessageContextId);
 }
 
+export function insightSavingInvalidArgument(postMessageContextId?: string): void {
+    const error: ICommandFailedBody = {
+        errorCode: GdcErrorType.InvalidArgument,
+        errorMessage: "The insight title must not be empty",
+    };
+    adPostEvent(GdcEventType.AppCommandFailed, error, postMessageContextId);
+}
+
 export function insightSavingFailed(postMessageContextId?: string): void {
     const error: ICommandFailedBody = {
         errorCode: GdcErrorType.RuntimeError,

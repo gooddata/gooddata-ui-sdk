@@ -6,7 +6,7 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Dialog, HEADER_CHAT_PANEL_ID } from "@gooddata/sdk-ui-kit";
+import { Dialog, HEADER_CHAT_PANEL_ID, type IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 import { type IChatConversationLocal } from "../model.js";
 import {
@@ -74,14 +74,14 @@ export function GenAIChatOverlay({
         [dispatch],
     );
 
-    const position = useMemo(() => {
+    const position = useMemo((): IAlignPoint => {
         if (isFullscreen) {
-            return "cc cc";
+            return { align: "cc cc" };
         }
         if (dialogPosition === "left") {
-            return "bl bl";
+            return { align: "bl bl", offset: { x: 20, y: -20 } };
         }
-        return "br br";
+        return { align: "br br", offset: { x: -20, y: -20 } };
     }, [dialogPosition, isFullscreen]);
 
     const closeOnEscape = closeOnEscapeProp && (!keyDriverAnalysis || keyDriverAnalysisMinimized);
@@ -112,7 +112,7 @@ export function GenAIChatOverlay({
                         isModal={isFullscreen}
                         returnFocusTo={returnFocusTo}
                         returnFocusAfterClose={!!returnFocusTo}
-                        alignPoints={[{ align: position }]}
+                        alignPoints={[position]}
                         closeOnEscape={false}
                         submitOnEnterKey={false}
                         closeOnParentScroll={false}

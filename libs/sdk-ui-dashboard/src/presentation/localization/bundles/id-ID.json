@@ -447,6 +447,7 @@
     "layout.header.add.title.placeholder": "Tambahkan Judul di sini...",
     "layout.header.add.description.placeholder": "Tambahkan Deskripsi di sini...",
     "controlButtons.options.tooltip": "Tindakan lainnya",
+    "controlButtons.options.widgetLabel": "Tindakan lainnya untuk {title}",
     "controlButtons.options.back": "Kembali ke langkah sebelumnya",
     "controlButtons.options.closeMenu": "Tutup menu",
     "controlButtons.edit.value": "Edit",

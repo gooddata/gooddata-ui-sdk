@@ -27,6 +27,9 @@ export function dispatchHostNotification(notification: IHostUiNotification): voi
 // @alpha (undocumented)
 export function getBackend(): IAnalyticalBackend;
 
+// @alpha
+export function getHostBasePath(): string;
+
 // @internal (undocumented)
 export function HostChromeProviders(input: IHostChromeProvidersProps): JSX.Element;
 

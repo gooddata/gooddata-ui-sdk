@@ -286,6 +286,11 @@ export type IGenAIAssistantMessageTextContentProps = {
      */
     text: string;
     /**
+     * Whether to render Markdown formatting. False for user messages, true for assistant messages.
+     * Reference chips are rendered in both modes. Defaults to true.
+     */
+    useMarkdown?: boolean;
+    /**
      * The objects to render as links in the text.
      */
     objects: TextContentObject[];

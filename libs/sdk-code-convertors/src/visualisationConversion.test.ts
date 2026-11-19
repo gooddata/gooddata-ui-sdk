@@ -8,7 +8,7 @@ import type { IRankingFilterBody } from "@gooddata/sdk-model";
 
 import { type TableConfigProperties } from "./configs/table.js";
 import { declarativeVisualisationToYaml } from "./from/declarativeVisualisationToYaml.js";
-import { declarativeRankingFilterToYaml } from "./from/filtersToYaml.js";
+import { declarativeFiltersToYaml, declarativeRankingFilterToYaml } from "./from/filtersToYaml.js";
 import {
     type VisualisationDefinition,
     yamlBucketsToDeclarative,
@@ -885,6 +885,159 @@ describe("visualisation conversion", () => {
                 expect(convert({ ...period, with: withFilter({ include: [""] }) })).toEqual([
                     { relativeDateFilter: { ...relative, emptyValueHandling: "only" } },
                 ]);
+            });
+
+            describe("round trip through pull", () => {
+                const pulledWith = (filter: Record<string, unknown>) => {
+                    const deployed = yamlVisualisationToDeclarative(
+                        dateEntities,
+                        visualisation({
+                            type: "table",
+                            id: "v",
+                            title: "t",
+                            query: {
+                                fields: { m1: { aggregation: "COUNT", using: "attribute/order_item_id" } },
+                                filter_by: { f: filter },
+                            },
+                            metrics: ["m1"],
+                        } as never),
+                    );
+                    const { json } = declarativeVisualisationToYaml(
+                        dateEntities as unknown as FromEntities,
+                        deployed as never,
+                    );
+                    const filterBy = (
+                        json as { query: { filter_by: Record<string, { with?: Record<string, unknown> }> } }
+                    ).query.filter_by;
+                    return Object.values(Object.values(filterBy)[0].with ?? {});
+                };
+
+                it('writes null of an include back as ""', () => {
+                    expect(
+                        pulledWith({ ...period, with: withFilter({ include: ["", "2025", "2026"] }) }),
+                    ).toEqual([
+                        {
+                            type: "attribute_filter",
+                            using: "label/created.year",
+                            state: { include: ["", "2025", "2026"] },
+                        },
+                    ]);
+                });
+
+                it('writes null of an exclude back as ""', () => {
+                    expect(pulledWith({ ...period, with: withFilter({ exclude: ["2025", ""] }) })).toEqual([
+                        {
+                            type: "attribute_filter",
+                            using: "label/created.year",
+                            state: { exclude: ["2025", ""] },
+                        },
+                    ]);
+                });
+
+                it('writes null back as "" on a granularity with parsed values', () => {
+                    expect(
+                        pulledWith({
+                            ...period,
+                            with: withFilter({ include: ["", "Monday"] }, "label/created.dayOfWeek"),
+                        }),
+                    ).toMatchObject([{ state: { include: ["", "Monday"] } }]);
+                });
+            });
+        });
+
+        describe("null in the values of a stored filter, pulled to YAML", () => {
+            const fromEntities = [
+                {
+                    id: "created",
+                    type: "date",
+                    path: "created.yaml",
+                    data: { type: "date", id: "created", granularities: ["YEAR", "DAY_OF_WEEK"] },
+                },
+            ] as unknown as FromEntities;
+            const pulled = (filter: Record<string, unknown>) => {
+                const { filtersArray } = declarativeFiltersToYaml(fromEntities, [filter as never]);
+                return Object.values(filtersArray.toJSON() as Record<string, unknown>)[0];
+            };
+            const label = (id: string) => ({ identifier: { id, type: "label" } });
+
+            it('writes null of a date label as ""', () => {
+                expect(
+                    pulled({
+                        positiveAttributeFilter: {
+                            displayForm: label("created.year"),
+                            in: { values: ["2025", null] },
+                        },
+                    }),
+                ).toMatchObject({ state: { include: ["2025", ""] } });
+            });
+
+            it('writes a stored "" of a date label with mapped values as "" instead of dropping it', () => {
+                expect(
+                    pulled({
+                        positiveAttributeFilter: {
+                            displayForm: label("created.dayOfWeek"),
+                            in: { values: ["", "01"] },
+                        },
+                    }),
+                ).toMatchObject({ state: { include: ["", "Monday"] } });
+            });
+
+            it("recognises a label of a date dataset whose id contains a dot, in both directions", () => {
+                const dottedEntities = [
+                    {
+                        id: "orders.created",
+                        type: "date",
+                        path: "orders.created.yaml",
+                        data: { type: "date", id: "orders.created", granularities: ["YEAR"] },
+                    },
+                ];
+                const { filtersArray } = declarativeFiltersToYaml(dottedEntities as unknown as FromEntities, [
+                    {
+                        positiveAttributeFilter: {
+                            displayForm: label("orders.created.year"),
+                            in: { values: [null, "2025"] },
+                        },
+                    } as never,
+                ]);
+                expect(Object.values(filtersArray.toJSON() as Record<string, unknown>)[0]).toMatchObject({
+                    state: { include: ["", "2025"] },
+                });
+
+                const { filters } = yamlFiltersToDeclarative(
+                    dottedEntities as unknown as ExportEntities,
+                    {
+                        y: {
+                            type: "attribute_filter",
+                            using: "label/orders.created.year",
+                            state: { include: ["", "2025"] },
+                        },
+                    } as never,
+                    {},
+                    true,
+                );
+                expect(filters[0]).toHaveProperty("positiveAttributeFilter.in.values", [null, "2025"]);
+            });
+
+            it("keeps dropping null of an ordinary attribute, as it differs from its empty string", () => {
+                expect(
+                    pulled({
+                        positiveAttributeFilter: {
+                            displayForm: label("region"),
+                            in: { values: ["", null, "EU"] },
+                        },
+                    }),
+                ).toMatchObject({ state: { include: ["", "EU"] } });
+            });
+
+            it("writes no exclude for an ordinary attribute excluding only null", () => {
+                expect(
+                    pulled({
+                        negativeAttributeFilter: {
+                            displayForm: label("region"),
+                            notIn: { values: [null] },
+                        },
+                    }),
+                ).not.toHaveProperty("state");
             });
         });
 

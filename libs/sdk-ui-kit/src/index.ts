@@ -1452,6 +1452,14 @@ export {
     UiGranteeRowControls,
     type IUiGranteeRowControlsProps,
 } from "./@ui/UiGranteeRowControls/UiGranteeRowControls.js";
+export {
+    UiMessage,
+    type IUiMessageProps,
+    type IUiMessageAccessibilityConfig,
+    type UiMessageSize,
+    type UiMessageVariant,
+    type UiMessageWidth,
+} from "./@ui/UiMessage/UiMessage.js";
 export { UiToastProvider, useUiToast } from "./@ui/UiToast/UiToastProvider.js";
 export {
     UiToastItem,

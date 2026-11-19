@@ -4,6 +4,7 @@ import { type RefObject } from "react";
 
 import { type IHostNavigationRequest } from "@gooddata/sdk-pluggable-application-model";
 
+import { withHostBasePath } from "../loader/hostBasePath.js";
 import { normalizePath, stripEmbedPrefix } from "../loader/routing.js";
 
 // Pathname is the most the host can compare: it cannot see the module's in-app route.
@@ -15,12 +16,16 @@ export function isSameDestination(targetUrl: string, currentPathname: string): b
 }
 
 export function runGuardedNavigation(options: {
+    /** Host route to navigate to. */
     url: string;
+    /** Current host route, without the proxy prefix. */
     currentPathname: string;
+    /** Proxy prefix; the guard gets the target as a browser URL to match against its base path. */
+    basePath: string;
     guardRef: RefObject<((request: IHostNavigationRequest) => boolean) | undefined>;
     navigate: (url: string) => void;
 }): void {
-    const { url, currentPathname, guardRef, navigate } = options;
+    const { url, currentPathname, basePath, guardRef, navigate } = options;
     const guard = guardRef.current;
 
     let consumed = false;
@@ -34,7 +39,10 @@ export function runGuardedNavigation(options: {
         navigate(url);
     };
 
-    if (!isSameDestination(url, currentPathname) && guard?.({ url, proceed })) {
+    if (
+        !isSameDestination(url, currentPathname) &&
+        guard?.({ url: withHostBasePath(url, basePath), proceed })
+    ) {
         return;
     }
     proceed();

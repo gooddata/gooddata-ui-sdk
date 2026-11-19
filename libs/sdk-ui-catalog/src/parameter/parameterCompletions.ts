@@ -10,7 +10,7 @@ import {
 } from "@codemirror/autocomplete";
 import type { Text } from "@codemirror/state";
 
-import type { ParameterType } from "@gooddata/sdk-model";
+import type { ScalarParameterType } from "@gooddata/sdk-model";
 
 import { replacingKey } from "../asCode/keyCompletions.js";
 import type { SchemaKeys, SchemaKeysEntry } from "../asCode/schemaKeys.js";
@@ -26,7 +26,7 @@ import { parameterSchemaKeys } from "./parameterSchema.js";
  * (falling back to the union of the enabled types); `type:` value suggestions
  * always offer every enabled type.
  */
-export function createParameterCompletions(enabledTypes: ParameterType[]) {
+export function createParameterCompletions(enabledTypes: ScalarParameterType[]) {
     const vocabularyByType = new Map<string, CompletionVocabulary>(
         enabledTypes.map((type) => [type, toVocabulary(parameterSchemaKeys([type]))]),
     );

@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-ext: The tooltip trigger in the list of scheduled exports and alerts is now a button with an accessible name that opens its details on keyboard focus as well as on hover",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

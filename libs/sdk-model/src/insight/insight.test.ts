@@ -540,6 +540,20 @@ describe("insightValidParameters", () => {
         expect(insightValidParameters(insight)).toEqual([Region]);
     });
 
+    it("should omit a value stored for a date range parameter", () => {
+        const insight = insightWithReferencedParameters(
+            [Region],
+            [
+                parameter("region", {
+                    type: "DATE_RANGE",
+                    defaultValue: { granularity: "GDC.time.month", from: "2025-08" },
+                }),
+            ],
+        );
+
+        expect(insightValidParameters(insight)).toEqual([]);
+    });
+
     it("should omit a value of the wrong type for its parameter", () => {
         const insight = insightWithReferencedParameters(
             [Region],

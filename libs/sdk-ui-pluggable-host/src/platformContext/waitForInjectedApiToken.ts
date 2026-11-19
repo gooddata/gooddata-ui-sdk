@@ -11,10 +11,11 @@ import {
 } from "@gooddata/sdk-embedding";
 import { messagingUtils } from "@gooddata/sdk-embedding/internal";
 
+import { isEmbeddedHostPage } from "../loader/hostBasePath.js";
+
 import { setApiToken, setJwt } from "./backend.js";
 
 const API_TOKEN_AUTHENTICATION_PARAM = "apitokenauthentication";
-const EMBEDDED_PATH_PREFIX = "/embedded/";
 
 // The flag arrives in customer-authored URLs with inconsistent casing (the embedded apps
 // parse their hash queries case-insensitively), so match the param name lowercased.
@@ -44,7 +45,7 @@ function getHashQuery(hash: string): string {
  * pluggable URLs) or in the hash query (legacy iframe URLs).
  */
 export function shouldWaitForInjectedApiToken(): boolean {
-    if (!window.location.pathname.startsWith(EMBEDDED_PATH_PREFIX)) {
+    if (!isEmbeddedHostPage()) {
         return false;
     }
     return (

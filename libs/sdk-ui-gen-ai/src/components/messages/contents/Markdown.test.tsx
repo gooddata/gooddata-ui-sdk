@@ -30,6 +30,23 @@ const withStoreAndIntl = (component: ReactElement) => {
 };
 
 describe("MarkdownComponent", () => {
+    it("renders literal text with reference chips when Markdown is disabled", () => {
+        const { container } = render(
+            withStoreAndIntl(
+                <MarkdownComponent references={[{ id: "revenue_total", type: "metric", title: "Revenue" }]}>
+                    {"**bold** :rocket: &amp;\n    > {metric/revenue_total} and {metric/missing}"}
+                </MarkdownComponent>,
+            ),
+        );
+
+        expect(container.textContent).toBe("**bold** :rocket: &amp;\n    > Revenue and {metric/missing}");
+        expect(container.querySelector("strong, blockquote")).toBeNull();
+        expect(container.querySelector(".gd-gen-ai-chat__message__object.metric")).toHaveTextContent(
+            "Revenue",
+        );
+        expect(container.querySelector(".gd-ui-kit-tooltip__anchor")).toHaveTextContent("Revenue");
+    });
+
     it.each([
         "https://example.com/diagnose_stage_rc/diagnose/issuersai/help-center",
         "http://example.com/_training_/**course**?stage=_rc_#help_center",

@@ -122,6 +122,59 @@ describe("Test SaveAsNewDashboardDialog:", () => {
         });
     });
 
+    describe("focus and errors", () => {
+        it("Should show the error and focus the title input when the save failed", async () => {
+            const { rerender } = renderComponent();
+
+            expect(screen.queryByText(/Dashboard save failed/)).not.toBeInTheDocument();
+
+            screen.getByText("Cancel").focus();
+            rerender(<SaveAsDialogRenderer {...defaultProps} hasSaveError />);
+
+            expect(screen.getByText(/Dashboard save failed/)).toBeInTheDocument();
+            await waitFor(() => {
+                expect(screen.getByDisplayValue(`Copy of ${defaultProps.dashboardTitle}`)).toHaveFocus();
+            });
+        });
+
+        it("Should return the focus to the More actions button when the opener is gone", async () => {
+            const menuButton = document.createElement("button");
+            menuButton.id = "default-menu-button-id";
+            document.body.appendChild(menuButton);
+            // the menu item that opened the dialog, removed once the menu closes
+            const menuItem = document.createElement("button");
+            document.body.appendChild(menuItem);
+            menuItem.focus();
+
+            const { unmount } = renderComponent();
+            menuItem.remove();
+            unmount();
+
+            await waitFor(() => {
+                expect(menuButton).toHaveFocus();
+            });
+            menuButton.remove();
+        });
+
+        it("Should return the focus to the opener when it is still on the page", async () => {
+            const menuButton = document.createElement("button");
+            menuButton.id = "default-menu-button-id";
+            document.body.appendChild(menuButton);
+            const opener = document.createElement("button");
+            document.body.appendChild(opener);
+            opener.focus();
+
+            const { unmount } = renderComponent();
+            unmount();
+
+            await waitFor(() => {
+                expect(opener).toHaveFocus();
+            });
+            menuButton.remove();
+            opener.remove();
+        });
+    });
+
     it("Should not render note if isKpiWidgetEnabled is not true", () => {
         renderComponent({
             ...defaultProps,

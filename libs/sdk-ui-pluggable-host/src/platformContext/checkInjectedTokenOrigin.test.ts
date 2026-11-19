@@ -58,20 +58,26 @@ describe("checkInjectedTokenOrigin", () => {
         });
     });
 
-    it("rejects when the origin is not valid", async () => {
+    it("rejects as a denial when the origin is not valid", async () => {
         validateEmbeddingOriginWithToken.mockResolvedValue(false);
 
-        await expect(checkInjectedTokenOrigin(injected, settings(true))).rejects.toBeInstanceOf(
-            EmbeddingOriginRejectedError,
-        );
+        const rejection = checkInjectedTokenOrigin(injected, settings(true));
+        await expect(rejection).rejects.toBeInstanceOf(EmbeddingOriginRejectedError);
+        await expect(rejection).rejects.toMatchObject({
+            isCheckFailed: false,
+            message: `The embedding parent origin "${injected.origin}" is not allowed.`,
+        });
     });
 
-    it("rejects when the check fails", async () => {
-        validateEmbeddingOriginWithToken.mockRejectedValue(new Error("401"));
+    it("rejects as a failed check, not as a denial, when the check fails", async () => {
+        validateEmbeddingOriginWithToken.mockRejectedValue(new Error("Network Error"));
 
-        await expect(checkInjectedTokenOrigin(injected, settings(true))).rejects.toBeInstanceOf(
-            EmbeddingOriginRejectedError,
-        );
+        const rejection = checkInjectedTokenOrigin(injected, settings(true));
+        await expect(rejection).rejects.toBeInstanceOf(EmbeddingOriginRejectedError);
+        await expect(rejection).rejects.toMatchObject({
+            isCheckFailed: true,
+            message: `Could not check if the embedding parent origin "${injected.origin}" is allowed (Network Error). Load the page again to try again.`,
+        });
     });
 
     it("keeps only the status of a failed request, not the request with the token", async () => {

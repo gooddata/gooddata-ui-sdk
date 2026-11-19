@@ -8,8 +8,13 @@ import { describe, expect, it } from "vitest";
 
 import { GdcAdCommandType } from "@gooddata/sdk-embedding";
 
-import { hostVerificationFailed, insecureCommandFailed } from "../actions/command_error_actions.js";
 import {
+    hostVerificationErrored,
+    hostVerificationFailed,
+    insecureCommandFailed,
+} from "../actions/command_error_actions.js";
+import {
+    hostDomainVerificationErroredEvent,
     hostDomainVerificationFailedEvent,
     insecureCommandFailedEvent,
 } from "../outgoing/command_error_events.js";
@@ -33,5 +38,13 @@ describe("command error saga", () => {
             .dispatch(hostVerificationFailed(contextId))
             .silentRun();
         expect(saga.effects.call).toEqual([call(hostDomainVerificationFailedEvent, contextId)]);
+    });
+
+    it("should call hostDomainVerificationErroredEvent", async () => {
+        const contextId = "contextId";
+        const saga: RunResult = await expectSaga(watchInsecureCommand)
+            .dispatch(hostVerificationErrored(contextId))
+            .silentRun();
+        expect(saga.effects.call).toEqual([call(hostDomainVerificationErroredEvent, contextId)]);
     });
 });

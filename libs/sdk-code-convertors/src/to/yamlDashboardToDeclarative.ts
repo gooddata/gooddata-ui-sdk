@@ -1033,6 +1033,17 @@ function flattenFilters(
     return result;
 }
 
+/**
+ * The display form a dashboard filter's `using` names. An attribute stands for its primary label,
+ * which has the attribute's id. Every other reference converts as written.
+ */
+function filterDisplayForm(using: string | undefined) {
+    const reference = using ?? "";
+    return parseReferenceObject(reference)?.type === "attribute"
+        ? createIdentifier(reference, { forceType: "label" })
+        : createIdentifier(reference);
+}
+
 /** @internal */
 export function yamlFilterContextToDeclarative(
     baseId: string,
@@ -1125,7 +1136,7 @@ export function yamlFilterContextToDeclarative(
 
                 return {
                     arbitraryAttributeFilter: {
-                        displayForm: createIdentifier(filter.using ?? ""),
+                        displayForm: filterDisplayForm(filter.using),
                         values: filter.values ?? [],
                         negativeSelection: filter.condition === "isNot",
                         localIdentifier: key,
@@ -1179,7 +1190,7 @@ export function yamlFilterContextToDeclarative(
 
                 return {
                     matchAttributeFilter: {
-                        displayForm: createIdentifier(filter.using ?? ""),
+                        displayForm: filterDisplayForm(filter.using),
                         operator,
                         literal: filter.value,
                         caseSensitive: filter.case_sensitive,
@@ -1329,7 +1340,7 @@ export function yamlFilterContextToDeclarative(
                 const { attributeParents, dateParents } = resolveFilterParents(filter.parents);
                 return {
                     attributeFilter: {
-                        displayForm: createIdentifier(filter.using ?? ""),
+                        displayForm: filterDisplayForm(filter.using),
                         negativeSelection: !state?.include,
                         attributeElements: {
                             uris: (state && (state.exclude ?? state.include)) ?? [],

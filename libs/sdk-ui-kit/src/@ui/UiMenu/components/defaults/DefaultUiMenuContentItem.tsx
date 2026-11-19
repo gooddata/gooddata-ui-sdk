@@ -93,6 +93,7 @@ export const DefaultUiMenuContentItemWrapper = memo<IUiMenuContentItemWrapperPro
         return (
             <li
                 ref={scrollToItem}
+                {...item.ariaAttributes}
                 role="menuitem"
                 aria-haspopup="dialog"
                 className={classNames}

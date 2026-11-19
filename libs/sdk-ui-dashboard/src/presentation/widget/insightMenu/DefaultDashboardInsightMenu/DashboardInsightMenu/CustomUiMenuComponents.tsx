@@ -26,6 +26,10 @@ export type FocusableItemData = {
     icon?: ReactElement | string;
     className?: string;
     tooltip?: string | ReactNode;
+    /**
+     * Id of the element holding the disabled reason, referenced by the item's aria-describedby.
+     */
+    descriptionId?: string;
     onClick?: (event: MouseEvent) => void;
     subMenu?: boolean;
     renderSubmenuComponentOnly?: boolean;
@@ -46,7 +50,7 @@ function FocusableItemComponent({
     isFocused: boolean;
 }) {
     const { id, isDisabled, stringTitle } = item;
-    const { icon, className, subMenu, tooltip } = item.data ?? {};
+    const { icon, className, subMenu, tooltip, descriptionId } = item.data ?? {};
 
     const itemClassName = cx("gd-menu-item", className, {
         "gd-ui-kit-menu__item--isFocused": isFocused,
@@ -63,6 +67,7 @@ function FocusableItemComponent({
             icon={icon}
             className={itemClassName}
             tooltip={tooltip}
+            descriptionId={descriptionId}
             isFocused={isFocused}
         />
     );

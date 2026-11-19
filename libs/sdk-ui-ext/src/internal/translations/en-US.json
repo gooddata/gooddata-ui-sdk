@@ -2067,6 +2067,14 @@
         "text": "Repeats",
         "crowdinContext": "Label for automation icon tooltip section: Repeats"
     },
+    "automations.icon.tooltip.trigger.failed": {
+        "text": "Show failure details",
+        "crowdinContext": "Accessible name of the icon button that opens the details of a failed run in the automations list"
+    },
+    "automations.icon.tooltip.trigger.details": {
+        "text": "Show details",
+        "crowdinContext": "Accessible name of the question mark icon button that opens the details of an automation in the automations list"
+    },
     "automations.menu.trigger": {
         "text": "Send now",
         "crowdinContext": "Menu item for triggering an automation to run immediately"

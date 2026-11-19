@@ -2,6 +2,8 @@
 
 import { type ReactElement, useCallback, useMemo, useState } from "react";
 
+import { useIntl } from "react-intl";
+
 import { isIdentifierRef } from "@gooddata/sdk-model";
 import { type IDrillEventContext, createFocusHighchartsDatapointEvent } from "@gooddata/sdk-ui";
 
@@ -40,6 +42,7 @@ export function DashboardInsightWithDrillDialog(props: IDashboardInsightProps): 
     const activeDrillStep = drillSteps.at(-1);
     const insight = activeDrillStep?.insight;
     const widget = props.widget;
+    const intl = useIntl();
     const separators = useDashboardSelector(selectSeparators);
     const attributeDisplayForms = useDashboardSelector(selectCatalogAttributeDisplayFormsById);
 
@@ -58,9 +61,9 @@ export function DashboardInsightWithDrillDialog(props: IDashboardInsightProps): 
                                     ? s.drillDefinition.target.identifier
                                     : s.drillDefinition.target.uri
                             ],
-                        ) ?? "NULL", // TODO localize this? drilldown is currently only on bear and that does not support nulls anyway
+                        ) || `(${intl.formatMessage({ id: "empty_value" })})`, // null (empty) attribute values carry no name
                 ),
-        [drillSteps, attributeDisplayForms, widget.drillDownIntersectionIgnoredAttributes],
+        [drillSteps, attributeDisplayForms, widget.drillDownIntersectionIgnoredAttributes, intl],
     );
 
     const locale = useDashboardSelector(selectLocale);

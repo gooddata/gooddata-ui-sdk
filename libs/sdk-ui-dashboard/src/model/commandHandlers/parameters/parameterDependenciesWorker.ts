@@ -1,13 +1,14 @@
 // (C) 2026 GoodData Corporation
 
 import { type Action, createAction } from "@reduxjs/toolkit";
-import { type BatchAction, batchActions } from "redux-batched-actions";
+import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
 import { call, put, select, takeEvery } from "redux-saga/effects";
 
 import { type IInsight, type IdentifierRef, serializeObjRef } from "@gooddata/sdk-model";
 import { _uniqBy } from "@gooddata/util";
 
+import { unbatched } from "../../store/_infra/unbatched.js";
 import {
     selectCatalogParameterDependencies,
     selectCatalogParameterDependenciesStatus,
@@ -144,18 +145,4 @@ function entityPayloadInsights(payload: readonly IInsight[] | Record<string, IIn
 
 function writesTabs(action: Action): boolean {
     return action.type.startsWith(TABS_ACTION_PREFIX);
-}
-
-function unbatched(action: Action): Action[] {
-    return isBatchAction(action) ? action.payload.flatMap(unbatched) : [action];
-}
-
-function isBatchAction(action: Action): action is BatchAction {
-    return (
-        "meta" in action &&
-        typeof action.meta === "object" &&
-        action.meta !== null &&
-        "batch" in action.meta &&
-        action.meta.batch === true
-    );
 }

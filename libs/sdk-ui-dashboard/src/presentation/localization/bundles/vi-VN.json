@@ -447,6 +447,7 @@
     "layout.header.add.title.placeholder": "Thêm Tiêu đề tại đây...",
     "layout.header.add.description.placeholder": "Thêm Mô tả tại đây...",
     "controlButtons.options.tooltip": "Thêm hành động",
+    "controlButtons.options.widgetLabel": "Thao tác khác cho {title}",
     "controlButtons.options.back": "Quay lại bước trước",
     "controlButtons.options.closeMenu": "Đóng menu",
     "controlButtons.edit.value": "Chỉnh sửa",

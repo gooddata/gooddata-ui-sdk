@@ -24,6 +24,7 @@ import { supportedDualAxesChartTypes } from "../_chartOptions/chartCapabilities.
 import { formatValueForTooltip } from "../_chartOptions/tooltip.js";
 import { decodeHtmlEntities, isOneOfTypes } from "../_util/common.js";
 
+import { processDrillablePointAccessibility } from "./drillablePointAccessibility.js";
 import { chartClick } from "./drilldownEventing.js";
 import { setupDrilldown } from "./setupDrilldownToParentAttribute.js";
 import { styleVariables } from "./styles/variables.js";
@@ -550,6 +551,7 @@ function getThemedConfiguration(
                     // Stack on top of any existing render handlers (addEvent does not replace).
                     (Highcharts as any).addEvent(this, "render", () => {
                         processStackLabelAccessibility(this, chartOptions, config, intl);
+                        processDrillablePointAccessibility(this);
                     });
                 },
             },

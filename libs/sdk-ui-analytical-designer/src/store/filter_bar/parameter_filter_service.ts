@@ -2,7 +2,7 @@
 
 import {
     type IInsightParameterValue,
-    type IParameterMetadataObject,
+    type IScalarParameterMetadataObject,
     type ObjRef,
     areObjRefsEqual,
     isValidParameterValue,
@@ -31,7 +31,7 @@ type ParameterRestore =
 
 export function restoreParameterFilters(
     values: ReadonlyArray<IInsightParameterValue>,
-    parameterMetadata: ReadonlyArray<IParameterMetadataObject>,
+    parameterMetadata: ReadonlyArray<IScalarParameterMetadataObject>,
 ): IParameterRestoreResult {
     const filters: IParameterFilter[] = [];
     const warnings: IParameterWarning[] = [];
@@ -47,7 +47,7 @@ export function restoreParameterFilters(
     return { filters, warnings };
 }
 
-export function parameterFilterFromMetadata(parameter: IParameterMetadataObject): IParameterFilter {
+export function parameterFilterFromMetadata(parameter: IScalarParameterMetadataObject): IParameterFilter {
     const { definition } = parameter;
     return {
         type: "parameter",
@@ -61,7 +61,7 @@ export function parameterFilterFromMetadata(parameter: IParameterMetadataObject)
 
 function restoreParameter(
     { ref, value }: IInsightParameterValue,
-    parameterMetadata: ReadonlyArray<IParameterMetadataObject>,
+    parameterMetadata: ReadonlyArray<IScalarParameterMetadataObject>,
 ): ParameterRestore {
     const metadata = parameterMetadata.find((param) => areObjRefsEqual(param.ref, ref));
     if (!metadata) {

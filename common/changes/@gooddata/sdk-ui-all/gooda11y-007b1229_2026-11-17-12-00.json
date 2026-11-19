@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-filters: the static period calendar of the date filter can be opened and used with the keyboard through the \"Choose start date\" and \"Choose end date\" buttons or Alt+ArrowDown in the date inputs, and exposes its month, the selected day and today to screen readers.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { type ReactElement, useCallback, useMemo, useRef, useState } from "react";
+import { type ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
 import { v4 as uuid } from "uuid";
@@ -17,6 +17,7 @@ import {
     isKeyDriveAnalysis,
 } from "@gooddata/sdk-model";
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
+import { DRILL_MENU_HOST_ATTRIBUTE, notifyDrillMenuExpandedChange } from "@gooddata/sdk-ui-charts";
 import { OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 
 import { getDrillSourceLocalIdentifierFromEvent } from "../../../_staging/drills/drillingUtils.js";
@@ -186,6 +187,16 @@ export function WithDrillSelect({
         handleClose();
     }, [handleClose, returnFocusToInsight]);
 
+    const openDrillEvent = isOpen ? dropdownProps?.drillEvent : undefined;
+    useEffect(() => {
+        const target = openDrillEvent?.target;
+        if (!target) {
+            return undefined;
+        }
+        notifyDrillMenuExpandedChange(target, true);
+        return () => notifyDrillMenuExpandedChange(target, false);
+    }, [openDrillEvent]);
+
     const onSelectDepsRef = useAutoupdateRef({
         drills,
         dropdownProps: { correlationId: dropdownProps?.correlationId, drillEvent: dropdownProps?.drillEvent },
@@ -303,7 +314,10 @@ export function WithDrillSelect({
     ) : null;
 
     return (
-        <div className={cx("gd-drill-modal-wrapper-mask", dropDownAnchorClass)}>
+        <div
+            className={cx("gd-drill-modal-wrapper-mask", dropDownAnchorClass)}
+            {...{ [DRILL_MENU_HOST_ATTRIBUTE]: "true" }}
+        >
             {children({ onDrill: drills.drill.run })}
             {drillDownDropdown}
         </div>

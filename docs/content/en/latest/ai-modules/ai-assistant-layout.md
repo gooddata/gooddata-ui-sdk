@@ -6,10 +6,14 @@ api_symbols:
   - "@gooddata/sdk-ui-gen-ai:GenAIAssistant"
   - "@gooddata/sdk-ui-gen-ai:GenAIConversations"
   - "@gooddata/sdk-ui-gen-ai:GenAiStore"
+  - "@gooddata/sdk-ui-gen-ai:useDashboardCopilot"
+  - "@gooddata/sdk-ui-gen-ai:CopilotInteractionComposingWithHandler"
 source_files:
   - src/components/GenAIChat.tsx
   - src/components/GenAiConversations.tsx
   - src/components/GenAiStore.tsx
+  - src/copilot/useDashboardCopilot.ts
+  - src/copilot/CopilotInteractionComposingWithHandler.tsx
 related_pages:
   - /docs/ai-modules/ai-assistant
   - /docs/ai-modules/control-ai-assistant
@@ -236,7 +240,139 @@ const App = () => (
 
 ## Connect the assistant to a dashboard
 
-`GenAIAssistant` can be integrated with the [`Dashboard`](../../dashboard-plugins/dashboard/) component through the `dashboardSelector` prop. This allows the AI Assistant to react to the dashboard state (filters, widgets, etc.) and build ambient context automatically.
+Use `useDashboardCopilot` to connect one [`Dashboard`](../../dashboard-plugins/dashboard/) and one
+`GenAIAssistant` through a shared `GenAiStore`. The hook keeps dashboard context current, applies dashboard
+definitions from the assistant in edit mode, tracks progress and clarification questions, and synchronizes
+saved dashboard and visualization identifiers with the originating conversation when you save the dashboard.
+
+{{% alert color="warning" title="Alpha API" %}}
+`useDashboardCopilot` and `CopilotInteractionComposingWithHandler` are `@alpha` and may change or be removed
+without a major version bump.
+{{% /alert %}}
+
+Call the hook once per dashboard and assistant pair. Put both components inside the same `GenAiStore`, but wrap
+only the dashboard in `CopilotInteractionComposingWithHandler`. This keeps the chat available while the dashboard
+shows progress or waits for clarification answers.
+
+The example assumes an authenticated backend and workspace from `BackendProvider` and `WorkspaceProvider`.
+Use an agent with the dashboard editing skill enabled and replace `<dashboard-id>` with a dashboard you can edit.
+Supply your application's dashboard navigation handler through `onLinkClick`; the hook doesn't handle opening
+dashboard results from chat. See [Link clicks](../ai-assistant/#link-clicks) for the required handling.
+
+```tsx
+import { Dashboard, isDashboardSaved } from "@gooddata/sdk-ui-dashboard";
+import {
+    CopilotInteractionComposingWithHandler,
+    GenAIAssistant,
+    GenAiStore,
+    type ChatUserMessageEvent,
+    type GenAiStoreProps,
+    isChatUserMessageEvent,
+    useDashboardCopilot,
+} from "@gooddata/sdk-ui-gen-ai";
+
+import "@gooddata/sdk-ui-dashboard/styles/css/main.css";
+import "@gooddata/sdk-ui-gen-ai/styles/css/main.css";
+import "@gooddata/sdk-ui-gen-ai/styles/css/copilotInteractionComposing.css";
+
+type DashboardWithAssistantProps = {
+    onLinkClick: NonNullable<GenAiStoreProps["onLinkClick"]>;
+};
+
+const chatEventHandlers = [
+    {
+        eval: isChatUserMessageEvent,
+        handler: (event: ChatUserMessageEvent) => console.log(event.question),
+    },
+];
+
+const dashboardEventHandlers = [
+    {
+        eval: isDashboardSaved,
+        handler: () => console.log("Dashboard saved"),
+    },
+];
+
+export function DashboardWithAssistant({ onLinkClick }: DashboardWithAssistantProps) {
+    const { genAiStoreProps, dashboardProps, assistantProps, composingProps } = useDashboardCopilot();
+
+    return (
+        <GenAiStore
+            {...genAiStoreProps({
+                onLinkClick,
+                eventHandlers: chatEventHandlers,
+                onDispatcher: (dispatch) => console.log("AI Assistant dispatcher:", dispatch),
+            })}
+        >
+            <div style={{ display: "flex", height: "100vh" }}>
+                <div style={{ flex: 1, minWidth: 0, overflow: "auto" }}>
+                    <CopilotInteractionComposingWithHandler {...composingProps}>
+                        <Dashboard
+                            {...dashboardProps({
+                                dashboard: "<dashboard-id>",
+                                config: { initialRenderMode: "edit", enableInsightEditing: true },
+                                eventHandlers: dashboardEventHandlers,
+                                onStateChange: (state) => console.log("Dashboard state:", state),
+                            })}
+                        />
+                    </CopilotInteractionComposingWithHandler>
+                </div>
+                <div style={{ width: 400, flexShrink: 0 }}>
+                    <GenAIAssistant
+                        {...assistantProps({
+                            className: "my-assistant",
+                            inputPlaceholder: "Ask about this dashboard",
+                        })}
+                    />
+                </div>
+            </div>
+        </GenAiStore>
+    );
+}
+```
+
+### Customize the connected components
+
+`genAiStoreProps`, `dashboardProps`, and `assistantProps` are functions, not prop objects. Pass your
+customizations into them and spread the returned props onto the matching component. Call them without arguments
+for the default connection, for example `assistantProps()`. Spread `composingProps` directly.
+
+- `genAiStoreProps({ eventHandlers, onDispatcher })` retains the internal chat handlers and appends yours in the
+  supplied order. Its `onDispatcher` calls the internal callback first, then yours with the same dispatcher.
+- `dashboardProps({ eventHandlers, onStateChange, config })` retains the internal dashboard handlers and appends
+  yours in the supplied order. Its `onStateChange` calls the internal callback first, then yours with the same
+  state and dispatch. It preserves your configuration except for `config.aiMode`, which the copilot controls.
+- `assistantProps({ className, inputPlaceholder, slots })` passes assistant customizations through while keeping
+  `dashboardSelector` controlled by the hook, even if you supply your own selector or `null`.
+
+Other props pass through unchanged. Attach chat `eventHandlers` and `onDispatcher` to the outer store through
+`genAiStoreProps`, not the nested assistant. Don't override the returned connection props with later JSX props;
+doing so replaces the internal handlers or context instead of composing them.
+
+Keep your `eventHandlers` arrays stable between renders. The getters cache each combined array by the supplied
+array's reference; a new dashboard handler array reinitializes the dashboard store. Declare static handlers
+outside the component, as in the example, or use `useMemo` with the appropriate dependencies for handlers that
+read props or state. Replace the array when handlers change instead of mutating it.
+
+### Generate a new dashboard
+
+For a new dashboard, omit the `dashboard` prop and mount an empty `Dashboard` in edit mode. After the dashboard
+has initialized and the shared chat store is ready, call `generateDashboard(message)` from the hook. It starts
+a new conversation and sends the generation request. Use an agent with the dashboard building skill enabled.
+
+`generateDashboard` doesn't navigate, replace a saved dashboard, or save the generated result. It ignores calls
+when the dashboard is still loading, isn't in edit mode, or has a saved dashboard identifier. Use
+`sendMessage(message)` for follow-up requests in the current conversation. `cancelGeneration()` clears creation
+intent; it doesn't stop an assistant response that is already streaming.
+
+The hook owns one `CopilotHandler` for the pair and manages its lifecycle. Remount the pair when changing the
+backend or workspace. See the [hook return values](../ai-assistant/#usedashboardcopilot-hook) for the other helpers.
+
+### Provide dashboard context without copilot editing
+
+If you only need the assistant to read dashboard context, pass `dashboardSelector` directly instead of using
+`useDashboardCopilot`. This keeps the AI Assistant informed about filters and widgets but doesn't apply generated
+dashboard definitions or show composing progress.
 
 To do this, you need to capture the `DashboardSelectorEvaluator` from the `onStateChange` callback of the `Dashboard` component and pass it to the `GenAIAssistant`.
 If the dashboard is closed or unmounted, pass `null` to clear the previously derived ambient dashboard context.

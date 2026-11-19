@@ -161,6 +161,8 @@ function UiPagedVirtualListNotWrapped<T>(
     );
     const ListElement = representAs === "grid" ? "div" : "ul";
     const ItemElement = representAs === "grid" ? "div" : "li";
+    const isParentManagedGrid = representAs === "grid" && tabIndex < 0;
+    const isListFocusable = representAs !== "list" && !isParentManagedGrid;
     const makeId = ScopedIdStore.useContextStoreOptional((ctx) => ctx.makeId);
     const focusedItemIndex = focusedItem ? items?.indexOf(focusedItem) : 0;
     const finalFocusedIndex = focusedItem ? focusedItemIndex : focusedIndex;
@@ -205,11 +207,14 @@ function UiPagedVirtualListNotWrapped<T>(
             })}
         >
             <div
+                {...(isParentManagedGrid ? listboxProps : undefined)}
                 ref={scrollContainerRef}
                 className={e("scroll-container", { hover: scrollbarHoverEffect ?? false })}
                 style={{ height, paddingTop: itemsGap + containerPadding }}
                 onScroll={onScroll}
-                tabIndex={representAs === "grid" && tabIndex < 0 ? -1 : undefined}
+                role={isParentManagedGrid ? "rowgroup" : undefined}
+                tabIndex={isParentManagedGrid ? -1 : undefined}
+                aria-activedescendant={undefined}
             >
                 <ListElement
                     className={e("list")}
@@ -218,24 +223,22 @@ function UiPagedVirtualListNotWrapped<T>(
                         width: "100%",
                         position: "relative",
                     }}
-                    tabIndex={representAs === "list" ? undefined : tabIndex}
-                    onFocus={representAs === "list" ? undefined : onFocus}
+                    tabIndex={isListFocusable ? tabIndex : undefined}
+                    onFocus={isListFocusable ? onFocus : undefined}
                     onKeyDown={
-                        representAs === "list" || tabIndex < 0
-                            ? undefined
-                            : (customKeyboardNavigationHandler ?? onKeyboardNavigation)
+                        isListFocusable && tabIndex >= 0
+                            ? (customKeyboardNavigationHandler ?? onKeyboardNavigation)
+                            : undefined
                     }
                     role={
-                        representAs === "grid"
-                            ? "rowgroup"
-                            : representAs === "listbox"
-                              ? "listbox"
-                              : representAs === "list"
-                                ? "list"
-                                : undefined
+                        isParentManagedGrid
+                            ? "presentation"
+                            : representAs === "grid"
+                              ? "rowgroup"
+                              : representAs
                     }
                     aria-activedescendant={activeDescendantId}
-                    {...listboxProps}
+                    {...(isParentManagedGrid ? undefined : listboxProps)}
                 >
                     {virtualItems.map((virtualRow) => {
                         const item = items?.[virtualRow.index];

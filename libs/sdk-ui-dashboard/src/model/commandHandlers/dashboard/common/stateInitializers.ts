@@ -25,7 +25,7 @@ import {
     type IFilterContext,
     type IFilterContextDefinition,
     type IInsight,
-    type IParameterMetadataObject,
+    type IScalarParameterMetadataObject,
     type ISettings,
     type ITempFilterContext,
     type IWidget,
@@ -205,6 +205,9 @@ function* processExistingTabFilterContext(
 /**
  * Helper function to extract effective layout, filter context, and filter configs from a dashboard.
  * If the dashboard has tabs, it uses the active tab (or first tab) instead of root-level properties.
+ *
+ * @param dashboard - dashboard to extract the effective properties from
+ * @param activeTabLocalIdentifier - local identifier of the active tab; falls back to the first tab
  */
 function getEffectiveDashboardProperties<TWidget>(
     dashboard: IDashboard<TWidget>,
@@ -239,7 +242,7 @@ export function* actionsToInitializeNewDashboard(
     dateFilterConfig: IDateFilterConfig,
     displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
     initialTabId?: string,
-    workspaceParameters: IParameterMetadataObject[] = [],
+    workspaceParameters: IScalarParameterMetadataObject[] = [],
 ): SagaIterator<{
     initActions: Array<PayloadAction<any>>;
     dashboard: IDashboard | undefined;
@@ -663,7 +666,7 @@ export function* actionsToInitializeExistingDashboard(
     displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
     persistedDashboard?: IDashboard,
     activeTabLocalIdentifier?: string,
-    workspaceParameters: IParameterMetadataObject[] = [],
+    workspaceParameters: IScalarParameterMetadataObject[] = [],
     unavailableObjectsOverride?: ReadonlyArray<IUnavailableDashboardReference>,
     attributesWithReferences?: IAttributeWithReferences[],
 ): SagaIterator<Array<PayloadAction<any>>> {

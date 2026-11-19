@@ -9,7 +9,14 @@ import { Item, UiTooltip } from "@gooddata/sdk-ui-kit";
 import { type IInsightMenuItemButton } from "../../types.js";
 
 export const DashboardInsightMenuItemButton = (
-    props: Omit<IInsightMenuItemButton, "type"> & { submenu?: boolean },
+    props: Omit<IInsightMenuItemButton, "type"> & {
+        submenu?: boolean;
+        /**
+         * Id for the element holding the disabled reason. When set, the menu item references it with
+         * aria-describedby, so the reason is rendered once as the description and kept out of the name.
+         */
+        descriptionId?: string;
+    },
 ) => {
     const {
         itemName,
@@ -21,6 +28,7 @@ export const DashboardInsightMenuItemButton = (
         isFocused,
         className,
         submenu = false,
+        descriptionId,
     } = props;
 
     // for JSX icons we need an extra gd-icon-wrapper class to align the icon and the text vertically
@@ -40,6 +48,7 @@ export const DashboardInsightMenuItemButton = (
         disabled,
         tooltip,
         isFocused,
+        descriptionId,
     );
 };
 
@@ -48,6 +57,7 @@ function renderButtonWithTooltip(
     disabled?: boolean,
     tooltip?: string | ReactNode,
     isFocused?: boolean,
+    descriptionId?: string,
 ) {
     if (tooltip && disabled) {
         return (
@@ -58,11 +68,15 @@ function renderButtonWithTooltip(
                     optimalPlacement
                     content={tooltip}
                     anchor={button}
+                    accessibilityHidden
                 />
-                {/* Screen reader announcement area */}
-                <div className="sr-only" aria-live="polite">
+                {/* The only accessible copy of the disabled reason. With descriptionId it is the target
+                    of the item's aria-describedby and hidden from the item's name content (a directly
+                    referenced hidden element still provides the description); without it, it is
+                    plain screen-reader text next to the item. */}
+                <span id={descriptionId} className="sr-only" aria-hidden={descriptionId ? true : undefined}>
                     {tooltip}
-                </div>
+                </span>
             </>
         );
     } else {

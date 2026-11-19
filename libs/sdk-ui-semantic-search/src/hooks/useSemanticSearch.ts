@@ -14,7 +14,7 @@ import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 /**
  * The result of the semantic search hook.
- * @beta
+ * @public
  */
 export type SemanticSearchInputResult = {
     /**
@@ -60,7 +60,7 @@ const DEFAULT_STATE: SemanticSearchInputResult = {
 
 /**
  * Input parameters for the semantic search hook.
- * @beta
+ * @public
  */
 export type SemanticSearchHookInput = {
     /**
@@ -112,7 +112,7 @@ const DEFAULT_OBJECT_TYPES: GenAIObjectType[] = [];
  * Hook to perform semantic search.
  * Makes the request to server and returns the search results.
  * The request is cancellable and auto-updates when the search term changes.
- * @beta
+ * @public
  */
 export const useSemanticSearch = ({
     searchTerm,

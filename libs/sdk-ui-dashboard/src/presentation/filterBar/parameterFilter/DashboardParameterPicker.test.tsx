@@ -3,7 +3,7 @@
 import { render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { type IParameterMetadataObject, type IdentifierRef, idRef } from "@gooddata/sdk-model";
+import { type IScalarParameterMetadataObject, type IdentifierRef, idRef } from "@gooddata/sdk-model";
 
 import { tabsActions } from "../../../model/store/tabs/index.js";
 
@@ -12,7 +12,7 @@ import { DashboardParameterPicker } from "./DashboardParameterPicker.js";
 const topNRef: IdentifierRef = idRef("topN", "parameter");
 const scenarioRef: IdentifierRef = idRef("scenario", "parameter");
 
-const numberParameter: IParameterMetadataObject = {
+const numberParameter: IScalarParameterMetadataObject = {
     type: "parameter",
     id: "topN",
     uri: "/topN",
@@ -25,7 +25,7 @@ const numberParameter: IParameterMetadataObject = {
     definition: { type: "NUMBER", defaultValue: 10 },
 };
 
-const stringParameter: IParameterMetadataObject = {
+const stringParameter: IScalarParameterMetadataObject = {
     ...numberParameter,
     id: "scenario",
     uri: "/scenario",
@@ -35,7 +35,7 @@ const stringParameter: IParameterMetadataObject = {
 };
 
 const mockDispatch = vi.fn();
-const pickerCaptured: { onAdd?: (selected: ReadonlyArray<IParameterMetadataObject>) => void } = {};
+const pickerCaptured: { onAdd?: (selected: ReadonlyArray<IScalarParameterMetadataObject>) => void } = {};
 
 // `isolate: false` shares one module graph per worker, so the modules mocked below may already have
 // been evaluated — against their real dependencies — by a test file that ran earlier in the same
@@ -55,7 +55,9 @@ vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
     const actual = (await importOriginal()) as Record<string, unknown>;
     return {
         ...actual,
-        ParameterPicker: (props: { onAdd: (selected: ReadonlyArray<IParameterMetadataObject>) => void }) => {
+        ParameterPicker: (props: {
+            onAdd: (selected: ReadonlyArray<IScalarParameterMetadataObject>) => void;
+        }) => {
             pickerCaptured.onAdd = props.onAdd;
             return null;
         },

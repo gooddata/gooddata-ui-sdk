@@ -13,6 +13,7 @@ export interface IDateTimePickerAccessibilityConfig {
     timeAriaLabel?: AriaAttributes["aria-label"];
     dateInputHintId?: string;
     timeInputHintId?: string;
+    calendarButtonAriaLabel?: AriaAttributes["aria-label"];
 }
 
 interface IDateTimePickerProps {
@@ -24,7 +25,7 @@ interface IDateTimePickerProps {
     onDateChange: (date: Date | undefined, shouldSubmitForm?: boolean) => void;
     onTimeChange: (time: ITime | undefined, shouldSubmitForm?: boolean) => void;
     onDayClick: () => void;
-    onDateInputKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
+    onDateInputKeyDown: (e: KeyboardEvent<HTMLElement>) => void;
     dateFormat?: string;
     isMobile: boolean;
     isTimeEnabled: boolean;
@@ -35,6 +36,9 @@ interface IDateTimePickerProps {
     inputErrorMessageTexts: IInputErrorMessageTexts;
     errors?: IDateTimePickerErrors;
     withoutApply?: boolean;
+    onCalendarOpen?: (moveFocus: boolean) => void;
+    isCalendarOpen?: boolean;
+    calendarId?: string;
 }
 
 export const DateTimePicker = forwardRef<HTMLInputElement, IDateTimePickerProps>(
@@ -58,17 +62,22 @@ export const DateTimePicker = forwardRef<HTMLInputElement, IDateTimePickerProps>
             inputErrorMessageTexts,
             errors,
             withoutApply,
+            onCalendarOpen,
+            isCalendarOpen,
+            calendarId,
         }: IDateTimePickerProps,
         ref,
     ) => {
-        const { dateAriaLabel, timeAriaLabel, dateInputHintId, timeInputHintId } = accessibilityConfig;
+        const { dateAriaLabel, timeAriaLabel, dateInputHintId, timeInputHintId, calendarButtonAriaLabel } =
+            accessibilityConfig;
 
         const dateInputAccessibilityConfig = useMemo(
             () => ({
                 ariaLabel: dateAriaLabel,
                 inputHintId: dateInputHintId,
+                calendarButtonAriaLabel,
             }),
-            [dateAriaLabel, dateInputHintId],
+            [dateAriaLabel, dateInputHintId, calendarButtonAriaLabel],
         );
         const timeInputAccessibilityConfig = useMemo(
             () => ({
@@ -100,6 +109,9 @@ export const DateTimePicker = forwardRef<HTMLInputElement, IDateTimePickerProps>
                         isMobile={isMobile}
                         isTimeEnabled={isTimeEnabled}
                         withoutApply={withoutApply}
+                        onCalendarOpen={onCalendarOpen}
+                        isCalendarOpen={isCalendarOpen}
+                        calendarId={calendarId}
                     />
                     {isTimeEnabled ? (
                         <TimeInput

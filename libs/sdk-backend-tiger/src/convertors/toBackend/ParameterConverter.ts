@@ -1,17 +1,21 @@
 // (C) 2026 GoodData Corporation
 
 import type {
+    DateRangeParameterValue,
     JsonApiParameterInAttributes,
     JsonApiParameterInAttributesDefinition,
     JsonApiParameterPatchAttributes,
     StringConstraints,
 } from "@gooddata/api-client-tiger";
 import {
+    type IDateRangeParameterPeriod,
     type IParameterDefinition,
     type IParameterMetadataObjectDefinition,
     type IStringParameterConstraints,
     throwUnexpected,
 } from "@gooddata/sdk-model";
+
+import { toTigerDateRangeParameterGranularity } from "../shared/dateRangeParameterGranularity.js";
 
 function convertParameterDefinitionToBackend(
     definition: IParameterDefinition,
@@ -32,9 +36,21 @@ function convertParameterDefinitionToBackend(
                     ? {}
                     : { constraints: convertStringConstraintsToBackend(definition.constraints) }),
             };
+        case "DATE_RANGE":
+            return {
+                type: "DATE_RANGE",
+                defaultValue: convertDateRangePeriodToBackend(definition.defaultValue),
+            };
         default:
             return throwUnexpected(type);
     }
+}
+
+function convertDateRangePeriodToBackend({
+    granularity,
+    ...ends
+}: IDateRangeParameterPeriod): DateRangeParameterValue {
+    return { granularity: toTigerDateRangeParameterGranularity(granularity), ...ends };
 }
 
 function convertStringConstraintsToBackend(constraints: IStringParameterConstraints): StringConstraints {

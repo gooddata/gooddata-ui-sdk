@@ -163,12 +163,31 @@ function isFocusInModalItDoesNotBelongTo(
         return false;
     }
     if (isOwnershipAwareModal(modal)) {
-        return !owners.includes(modal);
+        // Opened from inside the modal (e.g. a menu portaled out of it) — take focus.
+        if (owners.includes(modal)) {
+            return false;
+        }
+        // Not opened from it — only another dialog stacked on top of it may take focus,
+        // never unrelated content outside any dialog, such as a background panel. The autofocus
+        // area can sit inside that dialog or wrap it (DialogBase puts its focus manager around it).
+        if (!isInOrWrapsDialog(element)) {
+            return true;
+        }
     }
+    // Otherwise take focus only when stacked on top of a modal that was already open, such as
+    // a dialog opened from another dialog; never from a modal opened later or one stacked above.
     return (
         !modalsBeforeMount.has(modal) ||
         !!(element.compareDocumentPosition(modal) & Node.DOCUMENT_POSITION_FOLLOWING)
     );
+}
+
+// Any dialog counts, not only `aria-modal` ones: some dialogs opened from a modal (e.g. the
+// scheduled export form) are plain `role="dialog"` elements with their own focus trap.
+const DIALOG_SELECTOR = `${MODAL_SELECTOR}, [role="dialog"], [role="alertdialog"]`;
+
+function isInOrWrapsDialog(element: HTMLElement): boolean {
+    return !!element.closest(DIALOG_SELECTOR) || !!element.querySelector(DIALOG_SELECTOR);
 }
 
 function getElementToFocus(

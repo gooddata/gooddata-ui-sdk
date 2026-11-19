@@ -6,7 +6,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
     type IAutomationMetadataObject,
     type IInsightParameterValue,
-    type IParameterMetadataObject,
+    type IScalarParameterMetadataObject,
     idRef,
 } from "@gooddata/sdk-model";
 
@@ -17,7 +17,7 @@ import { useValidateExistingAutomationFilters } from "./useValidateExistingAutom
 interface IMockContextState {
     enableParameters: boolean;
     catalogParametersIsLoaded: boolean;
-    catalog: IParameterMetadataObject[];
+    catalog: IScalarParameterMetadataObject[];
 }
 
 let mockState: IMockContextState;

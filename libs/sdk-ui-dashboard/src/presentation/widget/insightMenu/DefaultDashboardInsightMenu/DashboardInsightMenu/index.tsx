@@ -83,6 +83,15 @@ function getWrappedSubmenuComponent(
     return WrappedSubmenuComponent;
 }
 
+/**
+ * Custom item ids may contain whitespace, which aria-describedby would split into several IDREFs.
+ * Escapes whitespace (and the escape character itself) so the result has no whitespace and distinct
+ * inputs stay distinct ids.
+ */
+function toIdref(value: string): string {
+    return value.replace(/[\s%]/g, (char) => `%${char.charCodeAt(0).toString(16).padStart(4, "0")}`);
+}
+
 const convertToUiMenuItems = (
     items: IInsightMenuItem[],
     latestWidgetRef: IInsightWidgetRef,
@@ -93,6 +102,7 @@ const convertToUiMenuItems = (
             WrappedComponent: IWrappedSubmenuComponent;
         }
     >,
+    menuId: string,
 ): Array<IUiMenuItem<IMenuItemData>> => {
     return items.map((item): IUiMenuItem<IMenuItemData> => {
         if (item.type === "separator") {
@@ -106,18 +116,23 @@ const convertToUiMenuItems = (
                 data: null,
                 stringTitle: item.itemName,
                 subItems: item.items
-                    ? convertToUiMenuItems(item.items, latestWidgetRef, submenuComponentCache)
+                    ? convertToUiMenuItems(item.items, latestWidgetRef, submenuComponentCache, menuId)
                     : [],
             };
         }
+        // The disabled reason is the item's description, not part of its name.
+        const descriptionId =
+            item.disabled && item.tooltip ? toIdref(`${menuId}-${item.itemId}-description`) : undefined;
         const baseFocusableItem = {
             id: item.itemId,
             stringTitle: item.itemName,
             isDisabled: item.disabled,
+            ariaAttributes: descriptionId ? { "aria-describedby": descriptionId } : undefined,
             data: {
                 icon: item.icon,
                 className: item.className,
                 tooltip: item.tooltip,
+                descriptionId,
                 onClick: item.onClick,
             },
         };
@@ -127,7 +142,12 @@ const convertToUiMenuItems = (
                 return {
                     ...baseFocusableItem,
                     type: "interactive" as const,
-                    subItems: convertToUiMenuItems(item.items, latestWidgetRef, submenuComponentCache),
+                    subItems: convertToUiMenuItems(
+                        item.items,
+                        latestWidgetRef,
+                        submenuComponentCache,
+                        menuId,
+                    ),
                     data: {
                         ...baseFocusableItem.data,
                         subMenu: true,
@@ -187,9 +207,10 @@ export function DashboardInsightMenuBody({
         >
     >(new Map());
 
+    const menuId = `insight-menu-${widgetRefAsString}`;
     const uiMenuItems = useMemo(
-        () => convertToUiMenuItems(items, latestWidgetRef, submenuComponentCache.current),
-        [items],
+        () => convertToUiMenuItems(items, latestWidgetRef, submenuComponentCache.current, menuId),
+        [items, menuId],
     );
 
     const handleSelect = (item: IUiMenuItem<IMenuItemData>) => {
@@ -210,7 +231,6 @@ export function DashboardInsightMenuBody({
         }
     };
 
-    const menuId = `insight-menu-${widgetRefAsString}`;
     const menuLabelId = `${menuId}-label`;
     // without the title there is no element carrying menuLabelId, so the name goes on the menu itself
     const menuLabel = showTitle

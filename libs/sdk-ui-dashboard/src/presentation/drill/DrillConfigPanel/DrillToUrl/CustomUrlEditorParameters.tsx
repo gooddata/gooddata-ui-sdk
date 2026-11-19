@@ -36,7 +36,7 @@ export function ParametersPanel({
     dashboardMeasureValueFilters,
     insightMeasureValueFilters,
     attributeFilterConfigs,
-    dashboardParameters,
+    widgetParameters,
     insightFilters,
     widgetRef,
 }: IParametersPanelProps) {
@@ -68,11 +68,7 @@ export function ParametersPanel({
                     dashboardMeasureValueFilters={dashboardMeasureValueFilters}
                     attributeFilterConfigs={attributeFilterConfigs}
                 />
-                <ParameterParametersSection
-                    dashboardParameters={dashboardParameters}
-                    onAdd={onAdd}
-                    intl={intl}
-                />
+                <ParameterParametersSection widgetParameters={widgetParameters} onAdd={onAdd} intl={intl} />
                 <IdentifierParametersSection
                     enableClientIdParameter={enableClientIdParameter}
                     enableDataProductIdParameter={enableDataProductIdParameter}

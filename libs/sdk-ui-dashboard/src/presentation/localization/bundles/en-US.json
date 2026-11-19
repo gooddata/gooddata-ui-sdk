@@ -23,6 +23,10 @@
         "text": "Loading…",
         "crowdinContext": "Text shown during content loading operations"
     },
+    "dashboard.content.horizontalScroll": {
+        "text": "Scroll dashboard content horizontally",
+        "crowdinContext": "Accessible label for the horizontal scrollbar pinned to the bottom of the dashboard canvas in edit mode on narrow screens."
+    },
     "untitled": {
         "text": "Untitled",
         "crowdinContext": "Default title for untitled dashboards or widgets"

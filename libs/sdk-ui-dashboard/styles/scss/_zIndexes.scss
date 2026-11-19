@@ -37,6 +37,9 @@ $scheduled-email-mask-small: $scheduled-email-mask + 1;
 
 //toolbar need to be on top of resize and draggable wrapper and plugin overlay
 $toolbar-basic: $layout-fluidlayout-item-changed + 1;
+// Same level as changed layout items; the scrollbar follows the canvas in DOM order, so it paints over them
+// while staying under the toolbar.
+$dashboard-content-scrollbar: $layout-fluidlayout-item-changed;
 
 $dashboard-canvas-tooltip: $filterbar-sdk-8-12 + 1;
 

@@ -5,7 +5,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import {
     type IInsight,
-    type IParameterMetadataObject,
+    type IScalarParameterMetadataObject,
     type IdentifierRef,
     idRef,
     objRefToString,
@@ -41,7 +41,7 @@ const sampleSizeRef = idRef("sampleSize", "parameter");
 const revenueRef = idRef("revenue", "measure");
 const tierRef = idRef("tier", "computedAttribute");
 
-const workspaceParameter = (ref: typeof topNRef, defaultValue: number): IParameterMetadataObject => ({
+const workspaceParameter = (ref: typeof topNRef, defaultValue: number): IScalarParameterMetadataObject => ({
     type: "parameter",
     id: ref.identifier,
     uri: `/${ref.identifier}`,

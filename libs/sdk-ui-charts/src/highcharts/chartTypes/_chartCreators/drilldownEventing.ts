@@ -21,6 +21,7 @@ import { _cloneDeep, _debounce } from "@gooddata/util";
 import { type DrilldownEventObject } from "../../lib/index.js";
 import { convertToChartType, isBulletChart, isComboChart, isHeatmap, isTreemap } from "../_util/common.js";
 
+import { rememberActivatedDrillPoint } from "./drillablePointAccessibility.js";
 import { type IHighchartsPointObject, isGroupHighchartsDrillEvent } from "./isGroupHighchartsDrillEvent.js";
 
 export function getClickableElementNameByChartType(type: VisType): ChartElementType {
@@ -184,6 +185,7 @@ const chartClickDebounced = _debounce(
         } else {
             const point: IHighchartsPointObject = event.point as IHighchartsPointObject;
             drillContext = composeDrillContextPoint(point, type);
+            rememberActivatedDrillPoint(event.target?.container, point?.graphic?.element);
             // Reset point state to remove focus border
             if (point && typeof point.setState === "function") {
                 point.setState("");

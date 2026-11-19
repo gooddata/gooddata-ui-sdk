@@ -84,6 +84,8 @@ Loads the dashboard through the same loader as the [`useDashboardLoader`](../../
 | `extraPlugins` | `IEmbeddedPlugin \| IEmbeddedPlugin[]` | Plugins bundled with your application. |
 | `moduleFederationIntegration` | `ModuleFederationIntegration` | Module Federation runtime needed to load plugins linked to the dashboard on the server. |
 
+`config.settings` is merged over the settings loaded from the server: a key you set overrides the server value, and every other setting and feature flag keeps the server value. The exception is a `config` that also sets both `locale` and `separators`. The dashboard then doesn't load the server settings, and `config.settings` replaces them entirely.
+
 ### Dashboard plugins
 
 Unlike `gd-dashboard`, the embed element loads [dashboard plugins](../../../dashboard-plugins/dashboard-plugins/). `pluginMode` selects which ones:

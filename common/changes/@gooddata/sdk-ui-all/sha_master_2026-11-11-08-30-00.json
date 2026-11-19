@@ -1,0 +1,16 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-dashboard: Scroll only dashboard canvas horizontally in edit mode.",
+            "type": "none"
+        },
+
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-dashboard: Add the enableDashboardCanvasScroll feature flag to enable horizontal scrolling of only the dashboard canvas in edit mode.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

@@ -7,8 +7,8 @@ import {
     type IDashboardExportParameter,
     type IDashboardParameter,
     type IInsightParameterValue,
-    type IParameterDefinition,
-    type IParameterMetadataObject,
+    type IScalarParameterDefinition,
+    type IScalarParameterMetadataObject,
     type IdentifierRef,
     type ParameterValue,
     isIdentifierRef,
@@ -54,7 +54,7 @@ export interface IAutomationParameter {
     /**
      * Resolved definition of the parameter; determines which editing control the chip renders.
      */
-    definition: IParameterDefinition;
+    definition: IScalarParameterDefinition;
 }
 
 /**
@@ -71,7 +71,7 @@ export interface IAutomationParameter {
 export function reconstructAutomationParametersFromValues(
     stored: IInsightParameterValue[],
     dashboardParameters: IDashboardParameter[],
-    catalog: IParameterMetadataObject[],
+    catalog: IScalarParameterMetadataObject[],
     isStringParametersEnabled: boolean,
     valuesAreUntypedWire = false,
 ): IAutomationParameter[] {
@@ -117,7 +117,7 @@ export function reconstructAutomationParametersFromValues(
 export function reconstructAutomationParametersFromExportParameters(
     stored: IDashboardExportParameter[],
     dashboardParameters: IDashboardParameter[],
-    catalog: IParameterMetadataObject[],
+    catalog: IScalarParameterMetadataObject[],
     isStringParametersEnabled: boolean,
 ): IAutomationParameter[] {
     return reconstructAutomationParametersFromValues(
@@ -147,7 +147,7 @@ export interface IAvailableAutomationParameter extends IAutomationParameter {
  * @internal
  */
 export function availableAutomationParameters(
-    catalog: IParameterMetadataObject[],
+    catalog: IScalarParameterMetadataObject[],
     selected: IAutomationParameter[],
     dashboardParameters: IDashboardParameter[] = [],
     widgetParameterValues: IInsightParameterValue[] = [],
@@ -225,7 +225,7 @@ export function setAlertExecutionParameters(
  */
 export function hasStaleAlertParameters(
     stored: IInsightParameterValue[] | undefined,
-    catalog: IParameterMetadataObject[],
+    catalog: IScalarParameterMetadataObject[],
 ): boolean {
     if (!stored?.length) {
         return false;
@@ -241,7 +241,7 @@ export function hasStaleAlertParameters(
  */
 export function dropStaleAlertParameters(
     stored: IInsightParameterValue[],
-    catalog: IParameterMetadataObject[],
+    catalog: IScalarParameterMetadataObject[],
 ): IInsightParameterValue[] {
     const catalogById = new Map(catalog.map((parameter) => [parameter.id, parameter]));
     return stored.filter((parameter) => alertParameterMatchesCatalog(parameter, catalogById));
@@ -298,7 +298,7 @@ export function shouldStoreExportParameters(isWidgetSchedule: boolean, storeFilt
 
 function alertParameterMatchesCatalog(
     parameter: IInsightParameterValue,
-    catalogById: Map<string, IParameterMetadataObject>,
+    catalogById: Map<string, IScalarParameterMetadataObject>,
 ): boolean {
     const workspaceParameter = catalogById.get(parameter.ref.identifier);
     return (
@@ -313,11 +313,11 @@ function alertParameterMatchesCatalog(
  * caller's check ({@link reconstructAutomationParametersFromValues} drops undecodable rows).
  */
 function resolveParameterDefinition(
-    workspaceParameter: IParameterMetadataObject | undefined,
+    workspaceParameter: IScalarParameterMetadataObject | undefined,
     value: ParameterValue,
     isStringParametersEnabled: boolean,
     valueIsUntypedWire: boolean,
-): IParameterDefinition | undefined {
+): IScalarParameterDefinition | undefined {
     const definition = workspaceParameter?.definition;
     if (definition) {
         if (definition.type === "STRING" && !isStringParametersEnabled) {

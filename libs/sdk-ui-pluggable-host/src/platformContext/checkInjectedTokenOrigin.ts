@@ -10,12 +10,29 @@ import { type IInjectedApiToken } from "./waitForInjectedApiToken.js";
  * origins of the organization, or the check failed.
  */
 export class EmbeddingOriginRejectedError extends Error {
+    /**
+     * `true` when the check did not give an answer, for example because of a network error. The
+     * origin can be in the embedding origins.
+     */
+    public readonly isCheckFailed: boolean;
+
+    /**
+     * @param origin - origin of the parent window.
+     * @param checkFailure - safe description of a failed check. Leave it out when the backend answered
+     *  that the origin is not valid.
+     */
     constructor(
         public readonly origin: string,
-        cause?: unknown,
+        checkFailure?: string,
     ) {
-        super(`The embedding parent origin "${origin}" is not allowed.`, { cause });
+        super(
+            checkFailure === undefined
+                ? `The embedding parent origin "${origin}" is not allowed.`
+                : `Could not check if the embedding parent origin "${origin}" is allowed (${checkFailure}). Load the page again to try again.`,
+            { cause: checkFailure },
+        );
         this.name = "EmbeddingOriginRejectedError";
+        this.isCheckFailed = checkFailure !== undefined;
     }
 }
 

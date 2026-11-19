@@ -37,6 +37,7 @@ export {
     testingLibraryReactRules,
     testingLibraryVueRules,
 } from "./configurations/testing-library.js";
+export { tsdocOverrideFiles, tsdocPlugin, tsdocRules } from "./configurations/tsdoc.js";
 export {
     typescriptConflicts,
     typescriptConflictsNativeSupported,

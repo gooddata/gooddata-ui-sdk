@@ -5,7 +5,7 @@ import {
     type ICatalogAttributeHierarchy,
     type ICatalogDateAttributeHierarchy,
     type ICatalogGroup,
-    type IParameterMetadataObject,
+    type IScalarParameterMetadataObject,
 } from "@gooddata/sdk-model";
 import { _isEqual } from "@gooddata/util";
 
@@ -45,7 +45,7 @@ export const catalogDateHierarchies = (state: ICatalogState): readonly ICatalogD
     state.dateHierarchies;
 export const catalogAttributeHierarchies = (state: ICatalogState): readonly ICatalogAttributeHierarchy[] =>
     state.attributeHierarchies;
-export const catalogStateParameters = (state: ICatalogState): readonly IParameterMetadataObject[] =>
+export const catalogStateParameters = (state: ICatalogState): readonly IScalarParameterMetadataObject[] =>
     state.parameters;
 
 const catalogFlagsReducer = (

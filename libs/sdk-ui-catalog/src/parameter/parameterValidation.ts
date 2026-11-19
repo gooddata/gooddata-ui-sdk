@@ -2,7 +2,7 @@
 
 import type * as z from "zod/mini";
 
-import type { ParameterType } from "@gooddata/sdk-model";
+import type { ScalarParameterType } from "@gooddata/sdk-model";
 
 import { type YamlValidationFailure, validateYaml } from "../asCode/validateYaml.js";
 
@@ -20,7 +20,7 @@ export type ParameterValidationResult =
       }
     | YamlValidationFailure<ParameterFailure>;
 
-type ParameterFailure = { errorCode: ParameterValidationErrorCode; type?: ParameterType };
+type ParameterFailure = { errorCode: ParameterValidationErrorCode; type?: ScalarParameterType };
 
 export type ParameterValidationErrorCode =
     | "empty"
@@ -35,7 +35,7 @@ export type ParameterValidationErrorCode =
     | SchemaErrorCode;
 
 type ValidateParameterYamlOptions = {
-    enabledTypes: ParameterType[];
+    enabledTypes: ScalarParameterType[];
     fixedIdentifier?: string;
 };
 
@@ -91,7 +91,7 @@ function isSchemaErrorCode(message: string): message is SchemaErrorCode {
     return schemaErrorCodeSet.has(message);
 }
 
-function readDeclaredType(parsed: unknown): ParameterType | undefined {
+function readDeclaredType(parsed: unknown): ScalarParameterType | undefined {
     if (!parsed || typeof parsed !== "object") {
         return undefined;
     }

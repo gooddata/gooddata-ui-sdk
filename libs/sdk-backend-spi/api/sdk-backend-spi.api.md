@@ -3156,7 +3156,7 @@ export interface ISemanticQualityService {
     triggerQualityIssuesCalculation(): Promise<ISemanticQualityIssuesCalculation>;
 }
 
-// @beta
+// @public
 export interface ISemanticSearchQuery {
     query(options?: {
         signal?: AbortSignal;

@@ -16483,6 +16483,26 @@ export type DataSourceTableIdentifierTypeEnum = 'dataSource';
 export type DateFilter = AbsoluteDateFilter | AbsoluteGranularityDateFilter | AllTimeDateFilter | RelativeDateFilter;
 
 // @public (undocumented)
+export interface DateRangeParameterDefinition {
+    // (undocumented)
+    'defaultValue': DateRangeParameterValue;
+    'type': DateRangeParameterDefinitionTypeEnum;
+}
+
+// @public (undocumented)
+export type DateRangeParameterDefinitionTypeEnum = 'DATE_RANGE';
+
+// @public (undocumented)
+export interface DateRangeParameterValue {
+    'from'?: string;
+    'granularity': DateRangeParameterValueGranularityEnum;
+    'to'?: string;
+}
+
+// @public (undocumented)
+export type DateRangeParameterValueGranularityEnum = 'YEAR' | 'QUARTER' | 'MONTH' | 'WEEK' | 'DAY' | 'HOUR' | 'MINUTE' | 'SECOND';
+
+// @public (undocumented)
 export interface DateValue {
     // (undocumented)
     'value': string;
@@ -35813,6 +35833,8 @@ export interface JsonApiParameterInAttributes {
 
 // @public
 export type JsonApiParameterInAttributesDefinition = ({
+    type: 'DATE_RANGE';
+} & DateRangeParameterDefinition) | ({
     type: 'NUMBER';
 } & NumberParameterDefinition) | ({
     type: 'STRING';
@@ -35868,6 +35890,8 @@ export interface JsonApiParameterOutAttributes {
 
 // @public
 export type JsonApiParameterOutAttributesDefinition = ({
+    type: 'DATE_RANGE';
+} & DateRangeParameterDefinition) | ({
     type: 'NUMBER';
 } & NumberParameterDefinition) | ({
     type: 'STRING';
@@ -35986,6 +36010,8 @@ export interface JsonApiParameterPatchAttributes {
 
 // @public
 export type JsonApiParameterPatchAttributesDefinition = ({
+    type: 'DATE_RANGE';
+} & DateRangeParameterDefinition) | ({
     type: 'NUMBER';
 } & NumberParameterDefinition) | ({
     type: 'STRING';
@@ -36024,6 +36050,8 @@ export interface JsonApiParameterPostOptionalIdAttributes {
 
 // @public
 export type JsonApiParameterPostOptionalIdAttributesDefinition = ({
+    type: 'DATE_RANGE';
+} & DateRangeParameterDefinition) | ({
     type: 'NUMBER';
 } & NumberParameterDefinition) | ({
     type: 'STRING';
@@ -44419,6 +44447,8 @@ export interface ParameterControllerApiUpdateEntityParametersRequest {
 
 // @public
 export type ParameterDefinition = ({
+    type: 'DATE_RANGE';
+} & DateRangeParameterDefinition) | ({
     type: 'NUMBER';
 } & NumberParameterDefinition) | ({
     type: 'STRING';

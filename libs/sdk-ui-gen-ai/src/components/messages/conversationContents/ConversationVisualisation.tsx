@@ -47,6 +47,7 @@ import {
     FunnelChart,
     Headline,
     Heatmap,
+    type IAxisConfig,
     type ITotalConfig,
     LineChart,
     PieChart,
@@ -307,6 +308,7 @@ export function ConversationVisualisation({
             case "local:bar":
                 return renderBarChart(
                     intl.locale,
+                    visualization,
                     bucketsData,
                     filters,
                     sorts,
@@ -324,6 +326,7 @@ export function ConversationVisualisation({
             case "local:column":
                 return renderColumnChart(
                     intl.locale,
+                    visualization,
                     bucketsData,
                     filters,
                     sorts,
@@ -699,6 +702,7 @@ const renderAreaChart = (
 
 const renderBarChart = (
     locale: string,
+    visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>,
     buckets: ReturnType<typeof useBucketData>,
     filters: IFilter[],
     sortBy: ISortItem[],
@@ -716,6 +720,10 @@ const renderBarChart = (
 ) => {
     const { metrics, view, stack } = buckets;
     const measures = stack[0] ? metrics.slice(0, 1) : metrics;
+    const secondaryAxis = getSecondaryAxisConfig(
+        visualization.insight.properties["controls"]?.secondary_xaxis?.measures,
+        measures,
+    );
 
     return (
         <BarChart
@@ -734,6 +742,7 @@ const renderBarChart = (
                 // Better visibility with stacked bars if there are multiple metrics and dimensions
                 stackMeasures: stack.length >= 1,
                 enableAccessibleTooltip: props.enableAccessibleChartTooltip,
+                ...(secondaryAxis ? { secondary_xaxis: secondaryAxis } : {}),
             }}
             drillableItems={props.drillableItems}
             onDrill={onDrill}
@@ -747,6 +756,7 @@ const renderBarChart = (
 
 const renderColumnChart = (
     locale: string,
+    visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>,
     buckets: ReturnType<typeof useBucketData>,
     filters: IFilter[],
     sortBy: ISortItem[],
@@ -764,6 +774,10 @@ const renderColumnChart = (
 ) => {
     const { metrics, view, stack } = buckets;
     const measures = stack[0] ? metrics.slice(0, 1) : metrics;
+    const secondaryAxis = getSecondaryAxisConfig(
+        visualization.insight.properties["controls"]?.secondary_yaxis?.measures,
+        measures,
+    );
 
     return (
         <ColumnChart
@@ -782,6 +796,7 @@ const renderColumnChart = (
                 // Better visibility with stacked bars if there are multiple metrics and dimensions
                 stackMeasures: stack.length >= 1,
                 enableAccessibleTooltip: props.enableAccessibleChartTooltip,
+                ...(secondaryAxis ? { secondary_yaxis: secondaryAxis } : {}),
             }}
             drillableItems={props.drillableItems}
             onDrill={onDrill}
@@ -824,6 +839,10 @@ const renderLineChart = (
     );
 
     const { metrics, trend, segment } = buckets;
+    const secondaryAxis = getSecondaryAxisConfig(
+        visualization.insight.properties["controls"]?.secondary_yaxis?.measures,
+        metrics,
+    );
 
     return (
         <LineChart
@@ -843,6 +862,7 @@ const renderLineChart = (
                 enableAccessibleTooltip: props.enableAccessibleChartTooltip,
                 ...(forecastConfig && forecast ? { forecast } : {}),
                 ...(outliersConfig && anomalies ? { anomalies } : {}),
+                ...(secondaryAxis ? { secondary_yaxis: secondaryAxis } : {}),
             }}
             forecastConfig={forecastConfig}
             outliersConfig={outliersConfig}
@@ -1581,6 +1601,21 @@ function sortsOver(sortBy: ISortItem[], attributes: IAttribute[], measures: IMea
             measureIdentifiers.every((id) => measureIds.includes(id))
         );
     });
+}
+
+// The chart matches axis membership by exact measure local ID. Saved IDs of measures the chart does
+// not receive (e.g. the extra measures a stacked bar drops) are left out; with none left, it keeps one axis.
+function getSecondaryAxisConfig(
+    secondaryMeasureIds: unknown,
+    renderedMeasures: IMeasure[],
+): IAxisConfig | undefined {
+    if (!Array.isArray(secondaryMeasureIds)) {
+        return undefined;
+    }
+
+    const measures = renderedMeasures.map(measureLocalId).filter((id) => secondaryMeasureIds.includes(id));
+
+    return measures.length > 0 ? { measures } : undefined;
 }
 
 function useBucketData(buckets: IBucket[]) {

@@ -3,6 +3,7 @@
 import { type IAuthCredentials } from "@gooddata/sdk-pluggable-application-model";
 
 import { now } from "../debug.js";
+import { isEmbeddedHostPage } from "../loader/hostBasePath.js";
 
 import { getAuthCredentials, getBackend, reinitializeBackend } from "./backend.js";
 import { PLATFORM_CONTEXT_VERSION, bootstrapApplication } from "./bootstrap.js";
@@ -100,7 +101,7 @@ export async function loadPlatformContext(
         whiteLabeling: bootstrap.whiteLabeling,
         pantherTier: bootstrap.pantherTier,
         theme: bootstrap.theme,
-        embeddingMode: window.location.pathname.startsWith("/embedded/") ? "iframe" : "none",
+        embeddingMode: isEmbeddedHostPage() ? "iframe" : "none",
         isExportMode: detectExportMode(),
     };
 }

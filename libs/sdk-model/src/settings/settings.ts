@@ -1132,6 +1132,11 @@ export interface IFeatureFlags {
     enableStringParameters?: boolean;
 
     /**
+     * Enable date range parameters, which hold a named period that date filters can reference.
+     */
+    enableDateRangeParameters?: boolean;
+
+    /**
      * Enable enhanced insight picker.
      */
     enableEnhancedInsightPicker?: boolean;
@@ -1186,6 +1191,15 @@ export interface IFeatureFlags {
      * Enables Resizable Dashboard sidebar in edit mode.
      */
     enableDashboardSidebarResize?: boolean;
+
+    /**
+     * Enables horizontal scrolling confined to the dashboard canvas, with a synchronized ruler and
+     * scrollbar in edit mode.
+     *
+     * @remarks
+     * Disabled by default.
+     */
+    enableDashboardCanvasScroll?: boolean;
 
     /**
      * Enables collapsing the left sidebar on the workspace screens. Resizing it by drag is controlled

@@ -16,7 +16,7 @@ import type {
     IDashboardDateFilterConfigItem,
     IDashboardMeasureValueFilterConfig,
     IDashboardParameter,
-    IParameterMetadataObject,
+    IScalarParameterMetadataObject,
     ISeparators,
     ISettings,
     IUser,
@@ -67,7 +67,7 @@ export interface IAutomationsParameters {
     /** Whether STRING-typed parameters are enabled; from selectEnableStringParameters. */
     stringParametersEnabled: boolean;
     /** The workspace parameter catalog; from selectCatalogParameters. */
-    catalog: IParameterMetadataObject[];
+    catalog: IScalarParameterMetadataObject[];
     /**
      * Whether the parameter catalog has finished loading. Before it has, every stored parameter
      * ref looks removed, so staleness checks must treat loading as not-stale.

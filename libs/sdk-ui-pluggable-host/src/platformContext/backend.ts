@@ -18,6 +18,8 @@ import {
 import { type ISettings } from "@gooddata/sdk-model";
 import { type IAuthCredentials } from "@gooddata/sdk-pluggable-application-model";
 
+import { isEmbeddedHostPage } from "../loader/hostBasePath.js";
+
 import { notifyContractExpired } from "./contractExpired.js";
 import { createNotAuthenticatedHandler } from "./tigerNotAuthenticatedHandler.js";
 
@@ -89,11 +91,10 @@ export const wrapWithCustomWorkspaceSettings = (backend: IAnalyticalBackend): IA
     });
 };
 
-const EMBEDDED_PATH_PREFIX = "/embedded/";
 const EXTERNAL_PROVIDER_ID_PARAM = "externalproviderid";
 
 function readExternalProviderIdFromUrl(): string | undefined {
-    if (typeof window === "undefined" || !window.location.pathname.startsWith(EMBEDDED_PATH_PREFIX)) {
+    if (typeof window === "undefined" || !isEmbeddedHostPage()) {
         return undefined;
     }
     const fromQuery = (query: string): string | undefined => {

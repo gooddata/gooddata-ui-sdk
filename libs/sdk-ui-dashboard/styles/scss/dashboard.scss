@@ -60,8 +60,8 @@ $headline-compact-margin-bottom: 5px;
     flex-flow: row nowrap;
 }
 
-// Edit mode keeps the desktop grid on narrow windows and scrolls horizontally instead.
-.sdk-edit-mode-on > .gd-dashboards-root {
+// Preserve the original edit-mode layout while canvas scrolling is disabled.
+.sdk-edit-mode-on > .gd-dashboards-root:not(.gd-dashboards-root--canvas-scroll) {
     min-width: kit-variables.$large-breakpoint;
 
     .dash-header,
@@ -69,6 +69,54 @@ $headline-compact-margin-bottom: 5px;
     .dash-section-kpis {
         max-width: none;
     }
+}
+
+// Keep the desktop grid scrollable without widening the header, tabs or filters.
+.sdk-edit-mode-on > .gd-dashboards-root--canvas-scroll {
+    .gd-dash-content {
+        min-width: 0;
+    }
+
+    // Only a canvas that is wider than its column becomes a scroll container (see
+    // DashboardContentScrollContainer). `overflow-x: auto` forces the vertical axis to clip too, so a
+    // fitting canvas stays `visible` and keeps hotspots, resize overlays and sticky children unclipped.
+    .gd-dash-content-scroll-container--scrollable {
+        overflow-x: auto;
+        overscroll-behavior: contain auto;
+        // Leave vertical scrolling to the page, including drag auto-scroll.
+        overflow-y: hidden;
+        // The synchronized sticky scrollbar stays accessible on tall dashboards.
+        scrollbar-width: none;
+
+        // Safari < 18.2 does not support `scrollbar-width`.
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    .dash-section-kpis {
+        min-width: kit-variables.$large-breakpoint;
+        max-width: none;
+    }
+}
+
+.gd-dash-content-resize-layer {
+    position: relative;
+    height: 0;
+    overflow-x: clip;
+    overflow-y: visible;
+}
+
+.gd-dash-content-scrollbar {
+    position: sticky;
+    bottom: 0;
+    margin-bottom: -1px;
+    z-index: zIndexes.$dashboard-content-scrollbar;
+    min-height: variables.$scrollbar-width;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    overscroll-behavior: contain auto;
+    background: variables.$gd-dashboards-content-backgroundColor;
 }
 
 .gd-dashboard-contract-expired {

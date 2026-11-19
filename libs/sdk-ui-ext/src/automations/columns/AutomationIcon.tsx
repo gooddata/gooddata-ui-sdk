@@ -51,7 +51,8 @@ export function AutomationIcon({ type, automation, state, timezone }: IAutomatio
         return (
             <AutomationIconTooltip
                 header={failedHeaderText}
-                align="bc tc"
+                arrowPlacement="bottom"
+                triggerAriaLabel={intl.formatMessage(messages.automationIconTooltipTriggerFailed)}
                 sections={[
                     {
                         header: intl.formatMessage(messages.automationIconTooltipStatus),
@@ -75,7 +76,8 @@ export function AutomationIcon({ type, automation, state, timezone }: IAutomatio
         return (
             <AutomationIconTooltip
                 header={formatCellValue(automation.title)}
-                align="cr cl"
+                arrowPlacement="right"
+                triggerAriaLabel={intl.formatMessage(messages.automationIconTooltipTriggerDetails)}
                 sections={[
                     ...(automation.created
                         ? [

@@ -12,11 +12,16 @@ api_symbols:
   - "@gooddata/sdk-ui-gen-ai:GenAiInteractionIntelligence"
   - "@gooddata/sdk-ui-gen-ai:ChatReasoningEvent"
   - "@gooddata/sdk-ui-gen-ai:isChatReasoningEvent"
+  - "@gooddata/sdk-ui-gen-ai:useDashboardCopilot"
+  - "@gooddata/sdk-ui-gen-ai:IUseDashboardCopilotResult"
+  - "@gooddata/sdk-ui-gen-ai:CopilotInteractionComposingWithHandler"
 source_files:
   - src/components/GenAIChat.tsx
   - src/components/GenAiConversations.tsx
   - src/components/GenAiStore.tsx
   - src/hooks/useGenAiDispatcher.ts
+  - src/copilot/useDashboardCopilot.ts
+  - src/copilot/CopilotInteractionComposingWithHandler.tsx
 related_pages:
   - /docs/ai-modules/ai-assistant-layout
   - /docs/ai-modules/customize-ai-assistant
@@ -24,7 +29,8 @@ related_pages:
   - /docs/integrations/web-components/ai-assistant-custom-element
   - /docs/ai-modules/key-driver-analysis
 type: docs
-description: Components, events, slots, and actions of the AI Assistant chat in @gooddata/sdk-ui-gen-ai.
+description: Components, events, slots, actions, and dashboard copilot integration of the AI Assistant chat in @gooddata/sdk-ui-gen-ai.
+ai_generated_body: true
 weight: 51
 section: AI & Modules
 aliases:
@@ -58,6 +64,7 @@ check the GoodData.CN documentation for your version.
 | `GenAiStore` | No UI. Shares one state and dispatcher between the AI Assistant components inside it. |
 | `GenAiKeyDriverAnalysis` | The Key Driver Analysis dialog for charts in the chat. See [Key Driver Analysis component](#key-driver-analysis-component). |
 | `GenAiInteractionIntelligence` | The Interaction Intelligence panel, for custom layouts inside `GenAiStore`. See [Interaction Intelligence](#interaction-intelligence). |
+| `CopilotInteractionComposingWithHandler` | Alpha. Wraps a connected dashboard with progress and clarification UI driven by a `CopilotHandler`. See [useDashboardCopilot hook](#usedashboardcopilot-hook). |
 
 The components support theming through the [Theme Provider](../../integrations/embedding/apply-theming/).
 
@@ -625,6 +632,34 @@ These hooks read the conversations of the current `GenAiStore`. They're `@alpha`
 - `useGenAiCurrentConversation()`: returns the active conversation, if any.
 
 See [Build your own conversation list](../ai-assistant-layout/#build-your-own-conversation-list) for an example.
+
+## useDashboardCopilot hook
+
+`useDashboardCopilot()` connects one dashboard and assistant through a shared `GenAiStore`. It takes no
+parameters and returns `IUseDashboardCopilotResult`. See [Connect the assistant to a dashboard](../ai-assistant-layout/#connect-the-assistant-to-a-dashboard)
+for the layout, styles, and customization example.
+
+{{% alert color="warning" title="Alpha API" %}}
+The hook, its result interface, and `CopilotInteractionComposingWithHandler` are `@alpha` and may change or be
+removed without a major version bump.
+{{% /alert %}}
+
+| Return value | Description |
+| --- | --- |
+| `genAiStoreProps(props?)` | Returns props for the outer `GenAiStore`. Retains internal event handlers, appends application handlers, and calls the internal `onDispatcher` before the application callback. Does not accept `children`; supply them in JSX. |
+| `dashboardProps(props?)` | Returns props for `Dashboard`. Retains internal event handlers, appends application handlers, and calls the internal `onStateChange` before the application callback. Preserves application `config` except for copilot-controlled `aiMode`. |
+| `assistantProps(props?)` | Returns props for `GenAIAssistant` inside the shared store. Keeps `dashboardSelector` controlled by the hook; other props pass through unchanged. Put chat event handlers and dispatcher callbacks on the outer store instead. |
+| `composingProps` | Prop object to spread directly onto `CopilotInteractionComposingWithHandler` around the dashboard only. Includes the handler, dashboard scope, and reply-in-chat callback. |
+| `sendMessage(message)` | Sends a non-blank message in the current conversation. Ignored until the shared store is ready. |
+| `generateDashboard(message)` | Starts a new conversation and sends a non-blank generation request. Requires a ready shared store and an initialized, empty dashboard in edit mode, without a saved identifier. Does not navigate or save the result. |
+| `cancelGeneration()` | Clears creation intent. Does not cancel a response already streaming. |
+| `replyInChat()` | Selects the conversation that originated the waiting workflow so you can answer clarification questions. |
+| `copilot` | Hook-owned `CopilotHandler`, available for custom progress presentations. The hook manages its lifecycle. |
+
+The three prop getters accept optional application props; call them without arguments for defaults. Pass
+customizations into the getters rather than overriding the returned connection props in JSX. Definitions are
+applied only to an initialized dashboard in edit mode. Remount the dashboard and assistant pair when changing
+the backend or workspace.
 
 ## Props
 

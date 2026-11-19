@@ -41,16 +41,16 @@ export const getColumnHeaderId = (key: string) => {
     return `${ASYNC_TABLE_ID_PREFIX}column-header-${key}`;
 };
 
-export const getRowLabelId = (key: number) => {
-    return `${ASYNC_TABLE_ID_PREFIX}label-cell-row-${key}`;
+export const getRowLabelId = (tableId: string, key: number) => {
+    return `${ASYNC_TABLE_ID_PREFIX}${tableId}-label-cell-row-${key}`;
 };
 
-export const getRowId = (itemId: string) => {
-    return `${ASYNC_TABLE_ID_PREFIX}row-${itemId}`;
+export const getRowId = (tableId: string, itemId: string) => {
+    return `${ASYNC_TABLE_ID_PREFIX}${tableId}-row-${itemId}`;
 };
 
-export const getCellId = (itemId: string, columnIndex: number) => {
-    return `${ASYNC_TABLE_ID_PREFIX}cell-${itemId}-${columnIndex}`;
+export const getCellId = (tableId: string, itemId: string, columnIndex: number) => {
+    return `${ASYNC_TABLE_ID_PREFIX}${tableId}-cell-${itemId}-${columnIndex}`;
 };
 
 export const getFilterDropdownId = (label: string) => {

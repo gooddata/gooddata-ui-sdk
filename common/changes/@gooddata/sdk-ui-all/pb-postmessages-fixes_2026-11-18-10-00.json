@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-analytical-designer, sdk-ui-pluggable-host: Behind enableEmbeddingOriginValidation, a failed embedding origin check (for example a network error) now gives appCommandFailed with error:runtime instead of being reported as a denied origin, and the next command checks again.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

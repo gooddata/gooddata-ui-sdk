@@ -4,7 +4,7 @@ import { useMemo } from "react";
 
 import { defineMessages, useIntl } from "react-intl";
 
-import type { IParameterMetadataObjectDefinition } from "@gooddata/sdk-model";
+import { type IParameterMetadataObjectDefinition, isScalarParameterDefinition } from "@gooddata/sdk-model";
 
 import {
     type IAsCodeEditing,
@@ -104,6 +104,11 @@ function useParameterEditing(): IAsCodeEditing<IParameterMetadataObjectDefinitio
     );
 }
 
+// The editor accepts only scalar definitions, so a date range parameter stays read-only.
+function useIsParameterItemEditable(item: ICatalogItemParameter): boolean {
+    return isScalarParameterDefinition(item.definition);
+}
+
 /**
  * @internal
  */
@@ -116,6 +121,7 @@ export const parameterDescriptor = defineAsCodeDescriptor<
     featureFlag: PARAMETER_FEATURE_FLAG,
     messages,
     useEditing: useParameterEditing,
+    useIsItemEditable: useIsParameterItemEditable,
     createMutationPort: createParameterMutationAdapter,
     emptyDefinition: (defaultTitle) => ({
         type: "parameter",

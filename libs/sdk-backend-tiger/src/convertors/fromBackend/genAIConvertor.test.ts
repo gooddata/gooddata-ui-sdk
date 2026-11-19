@@ -13,7 +13,7 @@ import {
     isChatConversationSearchContent,
 } from "@gooddata/sdk-backend-spi";
 import { publisherDocumentDefinitionToYamlV2 } from "@gooddata/sdk-code-convertors";
-import { type IInsightWidget, type IdentifierRef } from "@gooddata/sdk-model";
+import { type IInsightWidget, type IdentifierRef, isDashboardAttributeFilter } from "@gooddata/sdk-model";
 
 import {
     convertChatConversationErrorFromBackend,
@@ -1170,6 +1170,54 @@ describe("genAIConvertor", () => {
                 "whatIf",
                 expect.any(Error),
             );
+        });
+    });
+
+    describe("dashboard filters", () => {
+        it("loads a filter on an attribute as that attribute's primary label", () => {
+            const item = {
+                conversationId: "conv-1",
+                itemIndex: 0,
+                itemId: "item-0",
+                role: "assistant",
+                createdAt: "2024-01-01T00:00:00Z",
+                content: {
+                    type: "multipart",
+                    parts: [
+                        {
+                            type: "dashboard",
+                            dashboard: {
+                                type: "dashboard",
+                                id: "top_10_products",
+                                title: "Top 10 Products",
+                                sections: [],
+                                filters: {
+                                    customer_name: {
+                                        type: "attribute_filter",
+                                        title: "Customer",
+                                        using: "attribute/customer_name",
+                                    },
+                                },
+                            },
+                            references: null,
+                        },
+                    ],
+                },
+            } as unknown as AiConversationItemResponse;
+
+            const converted = convertChatConversationItemFromBackend(item, [], [], dateNormalizer)!;
+
+            assert(converted.type === "item");
+            const [part] = (converted.content as IChatConversationMultipartContent).parts;
+            assert(part?.type === "dashboard");
+            const filter = part.dashboard?.filterContext?.filters.find(
+                (item) =>
+                    isDashboardAttributeFilter(item) &&
+                    item.attributeFilter.localIdentifier === "customer_name",
+            );
+            expect(filter).toMatchObject({
+                attributeFilter: { displayForm: { identifier: "customer_name", type: "displayForm" } },
+            });
         });
     });
 

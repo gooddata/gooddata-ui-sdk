@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { type IColorDescriptor, type IResultAttributeHeader } from "@gooddata/sdk-model";
+import { type IResultAttributeHeader, isColorDescriptor } from "@gooddata/sdk-model";
 import {
     BucketNames,
     type DataViewFacade,
@@ -75,10 +75,16 @@ export function getScatterPlotSeries(
     const secondaryMeasuresBucketEmpty = dv.def().isBucketEmpty(BucketNames.SECONDARY_MEASURES);
     const colorAssignments = colorStrategy.getColorAssignment();
 
-    const isClustering = (dv?.dataView?.clusteringConfig?.numberOfClusters ?? 0) > 0;
-    const isClusteringLoading = isClustering && !dv?.dataView?.clusteringResult;
-    const isClusteringError = isClustering && dv?.dataView?.clusteringResult?.clusters?.length === 0;
-    const isClusteringLoaded = isClustering && !!dv?.dataView?.clusteringResult && !isClusteringError;
+    const { clusteringConfig, clusteringResult } = dv.dataView;
+    const isClustering = (clusteringConfig?.numberOfClusters ?? 0) > 0;
+    const isClusteringLoading = isClustering && !clusteringResult;
+    const isClusteringLoaded = isClustering && !!clusteringResult?.clusters.length;
+    const clusterIdByAttributeUri =
+        isClusteringLoaded && viewByAttribute
+            ? new Map<string, number | null>(
+                  clusteringResult.attribute.map((uri, index) => [uri, clusteringResult.clusters[index]]),
+              )
+            : undefined;
 
     const data = dv
         .rawData()
@@ -87,6 +93,7 @@ export function getScatterPlotSeries(
             const values = seriesItem.map((value) => {
                 return parseValue(value);
             });
+            const viewByHeader = viewByAttribute?.items[seriesIndex];
 
             let colorAssignment: IColorAssignment | undefined = colorAssignments[0];
             if (stackByAttribute) {
@@ -96,9 +103,12 @@ export function getScatterPlotSeries(
                         (a.headerItem as IResultAttributeHeader).attributeHeaderItem.uri,
                 );
             } else if (isClusteringLoaded) {
-                const clusterIndex = dv?.dataView?.clusteringResult?.clusters?.[seriesIndex];
+                const clusterId = clusterIdByAttributeUri
+                    ? viewByHeader && clusterIdByAttributeUri.get(viewByHeader.attributeHeaderItem.uri)
+                    : clusteringResult.clusters[seriesIndex];
                 colorAssignment = colorAssignments.find(
-                    (a) => (a.headerItem as IColorDescriptor).colorHeaderItem.id === `${clusterIndex}`,
+                    ({ headerItem }) =>
+                        isColorDescriptor(headerItem) && headerItem.colorHeaderItem.id === `${clusterId}`,
                 );
             }
 
@@ -111,10 +121,7 @@ export function getScatterPlotSeries(
                 x: primaryMeasuresBucketEmpty ? 0 : values[0],
                 y: secondaryMeasuresBucketEmpty ? 0 : primaryMeasuresBucketEmpty ? values[0] : values[1],
                 name: viewByAttribute
-                    ? valueWithEmptyHandling(
-                          getMappingHeaderFormattedName(viewByAttribute.items[seriesIndex]),
-                          emptyHeaderTitle,
-                      )
+                    ? valueWithEmptyHandling(getMappingHeaderFormattedName(viewByHeader), emptyHeaderTitle)
                     : "",
                 segmentName: stackByAttribute
                     ? valueWithEmptyHandling(

@@ -652,6 +652,9 @@ export const DateGranularity: {
     [short: string]: DateAttributeGranularity;
 };
 
+// @public
+export type DateRangeParameterGranularity = Extract<DateAttributeGranularity, "GDC.time.year" | "GDC.time.quarter" | "GDC.time.month" | "GDC.time.week" | "GDC.time.date" | "GDC.time.hour" | "GDC.time.minute" | "GDC.time.second">;
+
 // @beta
 export type DateString = string;
 
@@ -1028,7 +1031,7 @@ export type GenAINegativeAttributeFilter = {
 // @internal
 export type GenAIObjectReferenceType = "WIDGET" | "METRIC" | "ATTRIBUTE" | "DASHBOARD";
 
-// @beta
+// @public
 export type GenAIObjectType = "dataset" | "attribute" | "label" | "fact" | "date" | "metric" | "visualization" | "dashboard" | "document";
 
 // @internal
@@ -1382,7 +1385,7 @@ export type IAlertTriggerMode = "ALWAYS" | "ONCE" | "ONCE_PER_INTERVAL";
 // @alpha (undocumented)
 export type IAlertTriggerState = "ACTIVE" | "PAUSED";
 
-// @beta
+// @public
 export interface IAllowedRelationshipType {
     allowOrphans?: boolean;
     sourceType: GenAIObjectType;
@@ -2487,7 +2490,7 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashb
 // @alpha
 export interface IDashboardExportParameter {
     id: string;
-    parameterType?: ParameterType;
+    parameterType?: ScalarParameterType;
     title: string;
     value: string;
 }
@@ -2676,7 +2679,7 @@ export interface IDashboardObjectIdentity {
 export interface IDashboardParameter {
     readonly label?: string;
     readonly mode: DashboardParameterMode;
-    readonly parameterType: ParameterType;
+    readonly parameterType: ScalarParameterType;
     readonly ref: IdentifierRef;
     readonly value?: ParameterValue;
 }
@@ -3110,6 +3113,24 @@ export interface IDateHierarchyTemplate extends IMetadataObjectIdentity, IMetada
     granularities: DateAttributeGranularity[];
     // (undocumented)
     type: "dateHierarchyTemplate";
+}
+
+// @public
+export interface IDateRangeParameterDefinition {
+    // (undocumented)
+    defaultValue: IDateRangeParameterPeriod;
+    // (undocumented)
+    type: "DATE_RANGE";
+}
+
+// @public
+export interface IDateRangeParameterPeriod {
+    // (undocumented)
+    from?: string;
+    // (undocumented)
+    granularity: DateRangeParameterGranularity;
+    // (undocumented)
+    to?: string;
 }
 
 // @alpha
@@ -3990,6 +4011,7 @@ export interface IFeatureFlags {
     enableCustomGeoCollection?: boolean;
     // @alpha
     enableCustomTooltip?: boolean;
+    enableDashboardCanvasScroll?: boolean;
     enableDashboardDensitySetting?: boolean;
     enableDashboardDescriptionDynamicHeight?: boolean;
     enableDashboardFilterGroups?: boolean;
@@ -4005,6 +4027,7 @@ export interface IFeatureFlags {
     enableDashboardVisualizationDelete?: boolean;
     // (undocumented)
     enableDataSection?: boolean;
+    enableDateRangeParameters?: boolean;
     enableDefaultSmtp?: boolean;
     // (undocumented)
     enableDenodoDataSource?: boolean;
@@ -5736,7 +5759,7 @@ export interface IParameterAllowedValue {
 }
 
 // @public
-export type IParameterDefinition = INumberParameterDefinition | IStringParameterDefinition;
+export type IParameterDefinition = INumberParameterDefinition | IStringParameterDefinition | IDateRangeParameterDefinition;
 
 // @public
 export interface IParameterMetadataObject extends IMetadataObject, IAuditable {
@@ -7356,6 +7379,15 @@ export function isBrowserDetectedTimezone(timezoneId: DashboardTimezoneId | unde
 // @public
 export function isBucket(obj: unknown): obj is IBucket;
 
+// @alpha
+export type IScalarParameterDefinition = INumberParameterDefinition | IStringParameterDefinition;
+
+// @alpha
+export interface IScalarParameterMetadataObject extends IParameterMetadataObject {
+    // (undocumented)
+    definition: IScalarParameterDefinition;
+}
+
 // @public
 export function isCatalogAttribute(obj: unknown): obj is ICatalogAttribute;
 
@@ -7549,6 +7581,9 @@ export function isDateFilterWithEmptyValueHandling(obj: unknown): obj is (IAbsol
 // @alpha
 export function isDateHierarchyReference(obj: unknown): obj is IDateHierarchyReference;
 
+// @alpha
+export function isDateRangeParameterDefinition(def: IParameterDefinition): def is IDateRangeParameterDefinition;
+
 // @public
 export function isDimension(obj: unknown): obj is IDimension;
 
@@ -7621,19 +7656,19 @@ export interface ISemanticQualityReport {
     updatedAt: string | undefined;
 }
 
-// @beta
+// @public
 export interface ISemanticSearchCertification {
     certificationMessage?: string;
     status: "CERTIFIED";
 }
 
-// @beta
+// @public
 export interface ISemanticSearchError {
     reason: (string & {}) | "METADATA_SYNC_IN_PROGRESS" | "METADATA_SYNC_REQUEST_ERROR";
     statusCode: number;
 }
 
-// @beta
+// @public
 export interface ISemanticSearchRelationship {
     sourceObjectId: string;
     sourceObjectTitle: string;
@@ -7645,7 +7680,7 @@ export interface ISemanticSearchRelationship {
     targetWorkspaceId: string;
 }
 
-// @beta
+// @public
 export interface ISemanticSearchResult {
     error?: ISemanticSearchError;
     reasoning?: string;
@@ -7653,7 +7688,7 @@ export interface ISemanticSearchResult {
     results: ISemanticSearchResultItem[];
 }
 
-// @beta
+// @public
 export interface ISemanticSearchResultItem {
     certification?: ISemanticSearchCertification;
     createdAt?: string;
@@ -8264,16 +8299,22 @@ export function isRichTextWidget(obj: unknown): obj is IRichTextWidget;
 // @alpha
 export function isRichTextWidgetDefinition(obj: unknown): obj is IRichTextWidgetDefinition;
 
+// @alpha
+export function isScalarParameterDefinition(def: IParameterDefinition): def is IScalarParameterDefinition;
+
+// @alpha
+export function isScalarParameterMetadataObject(parameter: IParameterMetadataObject): parameter is IScalarParameterMetadataObject;
+
 // @public
 export function isScheduleNotification(notification: unknown): notification is IScheduleNotification;
 
 // @alpha
 export function isSemanticConditionalFormattingEnabled(conditionalFormatting: ISemanticConditionalFormatting): boolean;
 
-// @beta
+// @public
 export function isSemanticSearchRelationship(item: object): item is ISemanticSearchRelationship;
 
-// @beta
+// @public
 export function isSemanticSearchResultItem(item: object): item is ISemanticSearchResultItem;
 
 // @public
@@ -8381,7 +8422,7 @@ export function isValidIanaTimezoneId(timezoneId: string): boolean;
 export function isValidNumberParameterValue(value: number, constraints?: INumberParameterConstraints): boolean;
 
 // @alpha
-export function isValidParameterValue(definition: IParameterDefinition, value: ParameterValue): boolean;
+export function isValidParameterValue(definition: IScalarParameterDefinition, value: ParameterValue): boolean;
 
 // @alpha
 export function isValidStringParameterValue(value: string, constraints?: IStringParameterConstraints): boolean;
@@ -8944,6 +8985,7 @@ export interface IThemeMessageVariant {
     closeButtonColor?: ThemeColor;
     dropShadow?: boolean;
     linkButtonColor?: ThemeColor;
+    separatorLineColor?: ThemeColor;
     textColor?: ThemeColor;
 }
 
@@ -9100,9 +9142,7 @@ export interface IThemeToastMessage {
 }
 
 // @beta
-export interface IThemeToastMessageVariant extends IThemeMessageVariant {
-    separatorLineColor?: ThemeColor;
-}
+export type IThemeToastMessageVariant = IThemeMessageVariant;
 
 // @alpha
 export interface IThemeToolbar {
@@ -10059,11 +10099,11 @@ export const OrganizationPermissionAssignmentValue: {
 // @alpha (undocumented)
 export type ParameterType = IParameterDefinition["type"];
 
-// @alpha (undocumented)
-export type ParameterValue = IParameterDefinition["defaultValue"];
+// @alpha
+export type ParameterValue = IScalarParameterDefinition["defaultValue"];
 
 // @alpha
-export function parameterValueMatchesType(definition: IParameterDefinition, value: ParameterValue): boolean;
+export function parameterValueMatchesType(definition: IScalarParameterDefinition, value: ParameterValue): boolean;
 
 // @alpha
 export type PermissionSource = "direct" | "indirect";
@@ -10515,7 +10555,10 @@ export type RgbType = "rgb";
 export function sanitizeBucketTotals(bucket: IBucket, sortItems: ISortItem[], totals?: ITotal[]): ITotal[];
 
 // @alpha
-export function sanitizeParameterValue(definition: IParameterDefinition, value: ParameterValue): ParameterValue;
+export function sanitizeParameterValue(definition: IScalarParameterDefinition, value: ParameterValue): ParameterValue;
+
+// @alpha
+export type ScalarParameterType = IScalarParameterDefinition["type"];
 
 // @alpha @deprecated
 export type ScheduledMailAttachment = IDashboardAttachment | IWidgetAttachment;

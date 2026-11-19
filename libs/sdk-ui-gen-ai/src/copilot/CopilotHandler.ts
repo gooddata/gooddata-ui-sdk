@@ -99,10 +99,8 @@ export class CopilotHandler<TBuild extends string = CopilotBuildType> {
             event.type === "chatClarificationQuestions" &&
             event.responses === undefined &&
             event.questions.length > 0 &&
-            !previous.interaction.pendingClarificationIds.includes(event.interactionId) &&
-            !previous.requests.some((request) =>
-                request.pendingClarificationIds?.includes(event.interactionId),
-            ) &&
+            !this.hasPendingClarification(previous, event.interactionId) &&
+            this.hasPendingClarification(this.state, event.interactionId) &&
             this.configuration.registrations.some(
                 ({ type }) =>
                     this.getStatus({
@@ -204,6 +202,26 @@ export class CopilotHandler<TBuild extends string = CopilotBuildType> {
         this.disposed = true;
         this.listeners.clear();
     };
+
+    private hasPendingClarification(snapshot: ICopilotSnapshot<TBuild>, interactionId: string): boolean {
+        return this.configuration.registrations.some(
+            ({ type }) =>
+                snapshot.requests.some(
+                    (request) =>
+                        !request.superseded &&
+                        (request.type ?? request.generation) === type &&
+                        request.pendingClarificationIds?.includes(interactionId),
+                ) ||
+                ((snapshot.interaction.build?.type === type ||
+                    (snapshot.generation === type &&
+                        !snapshot.requests.some(
+                            (request) =>
+                                request.generation === type &&
+                                request.revision > (snapshot.generationRevision ?? 0),
+                        ))) &&
+                    snapshot.interaction.pendingClarificationIds.includes(interactionId)),
+        );
+    }
 
     private shouldApplyDefinition(
         event: ChatDefinitionReceivedEvent,

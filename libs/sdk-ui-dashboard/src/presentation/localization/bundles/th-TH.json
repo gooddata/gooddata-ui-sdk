@@ -447,6 +447,7 @@
     "layout.header.add.title.placeholder": "เพิ่มชื่อที่นี่...",
     "layout.header.add.description.placeholder": "เพิ่มคำอธิบายที่นี่...",
     "controlButtons.options.tooltip": "การดำเนินการเพิ่มเติม",
+    "controlButtons.options.widgetLabel": "การดำเนินการเพิ่มเติมสำหรับ {title}",
     "controlButtons.options.back": "กลับไปขั้นตอนก่อนหน้า",
     "controlButtons.options.closeMenu": "ปิดเมนู",
     "controlButtons.edit.value": "แก้ไข",

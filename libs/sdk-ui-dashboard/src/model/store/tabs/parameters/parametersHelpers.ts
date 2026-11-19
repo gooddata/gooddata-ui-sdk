@@ -10,11 +10,12 @@ import {
     type IInsight,
     type IInsightDefinition,
     type IInsightParameterValue,
-    type IParameterDefinition,
-    type IParameterMetadataObject,
+    type IScalarParameterDefinition,
+    type IScalarParameterMetadataObject,
     type IdentifierRef,
     type ObjRef,
     type ParameterValue,
+    type ScalarParameterType,
     areObjRefsEqual,
     dashboardAttributeFilterItemDisplayForm,
     getParameterValueTitle,
@@ -184,7 +185,7 @@ export function resolveEffectiveParameterValuesForRefs(
     entries: IDashboardParameterEntry[],
     referencedRefs: IdentifierRef[],
     insightParameterValues: IInsightParameterValue[],
-    workspaceParameterByRef: Map<string, IParameterMetadataObject>,
+    workspaceParameterByRef: Map<string, IScalarParameterMetadataObject>,
 ): IInsightParameterValue[] {
     const referencedKeys = new Set(referencedRefs.map(objRefToString));
     const result: IInsightParameterValue[] = [];
@@ -227,7 +228,7 @@ interface IParameterResolutionContext {
     // Roots of the widget's non-ignored dashboard filters; they apply to whatever insight the widget
     // executes (its own or a drill target), so they are collected per widget, not per insight.
     filterRoots: IdentifierRef[];
-    workspaceParameterByRef: Map<string, IParameterMetadataObject>;
+    workspaceParameterByRef: Map<string, IScalarParameterMetadataObject>;
     isStringEnabled: boolean;
 }
 
@@ -347,6 +348,52 @@ export function resolveParameterValues(
     return values;
 }
 
+interface IWidgetParameter {
+    ref: IdentifierRef;
+    parameterType: ScalarParameterType;
+    title: string;
+}
+
+/**
+ * The parameters of the widget's tab, then the parameters that `insight` saves, the tab does not have
+ * and the workspace catalog has.
+ *
+ * @internal
+ */
+export function collectWidgetParameters(
+    context: IParameterResolutionContext,
+    insight?: IInsight,
+): IWidgetParameter[] {
+    const { entries, workspaceParameterByRef, isStringEnabled } = context;
+    const parameters: IWidgetParameter[] = [];
+    const identifiers = new Set<string>();
+    for (const { parameter } of entries) {
+        identifiers.add(parameter.ref.identifier);
+        parameters.push({
+            ref: parameter.ref,
+            parameterType: parameter.parameterType,
+            title: resolveParameterTitle(parameter, workspaceParameterByRef.get(parameter.ref.identifier)),
+        });
+    }
+    const insightParameterValues = insight ? insightParameters(insight) : [];
+    for (const { ref } of insightParameterValues) {
+        const workspaceParameter = workspaceParameterByRef.get(ref.identifier);
+        if (
+            workspaceParameter &&
+            !identifiers.has(ref.identifier) &&
+            (isStringEnabled || workspaceParameter.definition.type !== "STRING")
+        ) {
+            identifiers.add(ref.identifier);
+            parameters.push({
+                ref,
+                parameterType: workspaceParameter.definition.type,
+                title: workspaceParameter.title,
+            });
+        }
+    }
+    return parameters;
+}
+
 /**
  * The value hydration seeds into `runtimeOverride`: the dashboard parameter's `value`, else the
  * workspace default when the workspace parameter is of the matching type, else `undefined`.
@@ -355,7 +402,7 @@ export function resolveParameterValues(
  */
 export function computeHydratedRuntimeOverride(
     parameter: IDashboardParameter,
-    workspaceParameter: IParameterMetadataObject | undefined,
+    workspaceParameter: IScalarParameterMetadataObject | undefined,
 ): ParameterValue | undefined {
     if (parameter.value !== undefined) {
         return parameter.value;
@@ -371,7 +418,7 @@ export function computeHydratedRuntimeOverride(
  */
 export function hydrateParameterEntry(
     parameter: IDashboardParameter,
-    workspaceParameterByRef: Map<string, IParameterMetadataObject>,
+    workspaceParameterByRef: Map<string, IScalarParameterMetadataObject>,
 ): IDashboardParameterEntry {
     return {
         parameter,
@@ -392,8 +439,8 @@ export function hydrateParameterEntry(
  */
 export function matchingWorkspaceDefinition(
     parameter: IDashboardParameter,
-    workspaceParameter: IParameterMetadataObject | undefined,
-): IParameterDefinition | undefined {
+    workspaceParameter: IScalarParameterMetadataObject | undefined,
+): IScalarParameterDefinition | undefined {
     const definition = workspaceParameter?.definition;
     return definition?.type === parameter.parameterType ? definition : undefined;
 }
@@ -409,7 +456,7 @@ export function matchingWorkspaceDefinition(
  */
 function sanitizeParameterExecutionValue(
     runtimeOverride: ParameterValue,
-    workspaceParameter: IParameterMetadataObject | undefined,
+    workspaceParameter: IScalarParameterMetadataObject | undefined,
 ): ParameterValue {
     const definition = workspaceParameter?.definition;
     return definition ? sanitizeParameterValue(definition, runtimeOverride) : runtimeOverride;
@@ -449,7 +496,7 @@ export interface IParameterReconciliationEntry {
  */
 export function classifyParameterReconciliation(
     dashboardParameter: IDashboardParameter,
-    workspaceParameter: IParameterMetadataObject | undefined,
+    workspaceParameter: IScalarParameterMetadataObject | undefined,
 ): ParameterReconciliation | undefined {
     if (!workspaceParameter) {
         return "removed";
@@ -475,7 +522,7 @@ export function classifyParameterReconciliation(
  */
 export function collectParameterReconciliations(
     entries: IDashboardParameterEntry[],
-    workspaceParameters: IParameterMetadataObject[],
+    workspaceParameters: IScalarParameterMetadataObject[],
 ): IParameterReconciliationEntry[] {
     const workspaceParameterByRef = buildWorkspaceParametersByRef(workspaceParameters);
     const result: IParameterReconciliationEntry[] = [];
@@ -572,7 +619,7 @@ export function ungatedInsightParameterValues(
  */
 export function resolveParameterTitle(
     parameter: IDashboardParameter,
-    workspaceParameter: IParameterMetadataObject | undefined,
+    workspaceParameter: IScalarParameterMetadataObject | undefined,
 ): string {
     return parameter.label || workspaceParameter?.title || parameter.ref.identifier;
 }
@@ -583,8 +630,8 @@ export function resolveParameterTitle(
  * @internal
  */
 export function buildWorkspaceParametersByRef(
-    workspaceParameters: IParameterMetadataObject[],
-): Map<string, IParameterMetadataObject> {
+    workspaceParameters: IScalarParameterMetadataObject[],
+): Map<string, IScalarParameterMetadataObject> {
     return new Map(workspaceParameters.map((parameter) => [objRefToString(parameter.ref), parameter]));
 }
 
@@ -643,7 +690,7 @@ function foldOverride(
  */
 export function formatDashboardParameter(
     entry: IDashboardParameterEntry,
-    workspaceParameter: IParameterMetadataObject | undefined,
+    workspaceParameter: IScalarParameterMetadataObject | undefined,
 ): IDashboardExportParameter | undefined {
     const { runtimeOverride } = entry;
     if (runtimeOverride === undefined) {
@@ -665,7 +712,7 @@ export function formatDashboardParameter(
  */
 export function smartPersistResolvedEntry(
     entry: IDashboardParameterEntry,
-    workspaceParameter: IParameterMetadataObject,
+    workspaceParameter: IScalarParameterMetadataObject,
 ): IDashboardParameter {
     const workspaceDefault = workspaceParameter.definition.defaultValue;
     const result: IDashboardParameter = {
@@ -682,7 +729,7 @@ export function smartPersistResolvedEntry(
 
 function labelOverride(
     entry: IDashboardParameterEntry,
-    workspaceParameter: IParameterMetadataObject,
+    workspaceParameter: IScalarParameterMetadataObject,
 ): { label?: string } {
     if (entry.parameter.label && entry.parameter.label !== workspaceParameter.title) {
         return { label: entry.parameter.label };
@@ -721,7 +768,7 @@ export function buildPersistedByTabAndRef(
  */
 export function computeParameterResetValue(
     entry: IDashboardParameterEntry,
-    workspaceParameter: IParameterMetadataObject | undefined,
+    workspaceParameter: IScalarParameterMetadataObject | undefined,
     isInEditMode: boolean,
 ): ParameterValue | undefined {
     const definition = matchingWorkspaceDefinition(entry.parameter, workspaceParameter);
@@ -749,7 +796,7 @@ export function computeParameterResetValue(
  */
 export function computeParameterResetTargets(
     entries: IDashboardParameterEntry[],
-    workspaceParameters: IParameterMetadataObject[],
+    workspaceParameters: IScalarParameterMetadataObject[],
     isInEditMode: boolean,
 ): IInsightParameterValue[] {
     const workspaceParameterByRef = buildWorkspaceParametersByRef(workspaceParameters);
@@ -782,7 +829,7 @@ export function computeParameterResetTargets(
  */
 export function collectExportOverrides(
     tabs: ReadonlyArray<ITabState>,
-    workspaceParameterByRef: Map<string, IParameterMetadataObject>,
+    workspaceParameterByRef: Map<string, IScalarParameterMetadataObject>,
     isStringEnabled: boolean,
 ): Record<string, IDashboardExportParameter[]> {
     const result: Record<string, IDashboardExportParameter[]> = {};
@@ -797,7 +844,7 @@ export function collectExportOverrides(
 
 function formatEntries(
     entries: IDashboardParameterEntry[],
-    workspaceParameterByRef: Map<string, IParameterMetadataObject>,
+    workspaceParameterByRef: Map<string, IScalarParameterMetadataObject>,
 ): IDashboardExportParameter[] {
     const rows: IDashboardExportParameter[] = [];
     for (const entry of entries) {

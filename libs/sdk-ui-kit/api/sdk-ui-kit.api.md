@@ -56,8 +56,8 @@ import { ILocale } from '@gooddata/sdk-ui';
 import { IMeasureSortTarget } from '@gooddata/sdk-model';
 import { IMetadataObjectBase } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
-import { IParameterDefinition } from '@gooddata/sdk-model';
 import { IParameterMetadataObject } from '@gooddata/sdk-model';
+import { IScalarParameterDefinition } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-ui';
 import { ISeparators as ISeparators_2 } from '@gooddata/number-formatter';
 import { ISeparators as ISeparators_3 } from '@gooddata/sdk-model';
@@ -1935,7 +1935,7 @@ export function IconTrash(input: IIconProps): JSX.Element;
 export function IconTreeMap(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "infoCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "globe" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderSmall" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "levelUp" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "building" | "printer" | "picture" | "visualization" | "columnGroup" | "visualizationStack" | "richText" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "ldmKey" | "ldmLabel" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "alignLeft" | "alignCenter" | "alignRight" | "alignTop" | "alignMiddle" | "alignBottom" | "bold" | "italic" | "imageContain" | "imageCover" | "imageFill" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "lineage" | "report" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin" | "speechBubble" | "pieChart" | "timezone" | "sidePanelCollapse" | "sidePanel" | "sidePanelExpand" | "lineStyle" | "lineStyleSolid" | "lineStyleDashed" | "lineStyleDotted" | "lineWidth1" | "lineWidth2" | "lineWidth3" | "lineWidth4" | "linear" | "spline" | "stepped" | "heading1" | "heading2" | "heading3" | "heading4" | "heading5" | "heading6" | "paragraphLarge" | "paragraphMedium" | "paragraphSmall" | "regenerateWithAi" | "directionHorizontal" | "directionVertical" | "levelUpArrow";
+export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "infoCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "duplicate" | "rain" | "earth" | "globe" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderSmall" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "levelUp" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "building" | "printer" | "picture" | "visualization" | "columnGroup" | "visualizationStack" | "richText" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "ldmKey" | "ldmLabel" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "alignLeft" | "alignCenter" | "alignRight" | "alignTop" | "alignMiddle" | "alignBottom" | "bold" | "italic" | "imageContain" | "imageCover" | "imageFill" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "lineage" | "report" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin" | "speechBubble" | "pieChart" | "timezone" | "sidePanelCollapse" | "sidePanel" | "sidePanelExpand" | "lineStyle" | "lineStyleSolid" | "lineStyleDashed" | "lineStyleDotted" | "lineWidth1" | "lineWidth2" | "lineWidth3" | "lineWidth4" | "linear" | "spline" | "stepped" | "heading1" | "heading2" | "heading3" | "heading4" | "heading5" | "heading6" | "paragraphLarge" | "paragraphMedium" | "paragraphSmall" | "regenerateWithAi" | "directionHorizontal" | "directionVertical" | "levelUpArrow" | "plusThin";
 
 // @internal (undocumented)
 export function IconUndo(input: IIconProps): JSX.Element;
@@ -4677,7 +4677,7 @@ export interface IParameterControlButtonProps {
     // (undocumented)
     className?: string;
     // (undocumented)
-    definition: IParameterDefinition;
+    definition: IScalarParameterDefinition;
     // (undocumented)
     dropdownId?: string;
     // (undocumented)
@@ -4699,7 +4699,7 @@ export interface IParameterControlButtonProps {
 // @internal (undocumented)
 export type IParameterControlProps = {
     name: string;
-    definition: IParameterDefinition;
+    definition: IScalarParameterDefinition;
     value: ParameterValue;
     resetValue?: ParameterValue;
     inputId?: string;
@@ -4716,18 +4716,18 @@ export interface IParameterGroup<T extends ITaggedParameter> {
 }
 
 // @internal (undocumented)
-export interface IParameterPickerProps {
+export interface IParameterPickerProps<T extends IParameterMetadataObject = IParameterMetadataObject> {
     excludedKeys: ReadonlySet<string>;
     // (undocumented)
     isLoading: boolean;
     // (undocumented)
     maxListHeight: number;
     // (undocumented)
-    onAdd: (parameters: ReadonlyArray<IParameterMetadataObject>) => void;
+    onAdd: (parameters: ReadonlyArray<T>) => void;
     // (undocumented)
     onCancel: () => void;
     // (undocumented)
-    parameters: ReadonlyArray<IParameterMetadataObject>;
+    parameters: ReadonlyArray<T>;
 }
 
 // @internal (undocumented)
@@ -7418,6 +7418,7 @@ export type IUiMenuContentItem<T extends IUiMenuItemData = object> = {
     isDisabled?: boolean;
     showComponentOnly?: boolean;
     iconLeft?: ReactNode;
+    ariaAttributes?: AriaAttributes;
     data: T["content"];
     Component: ComponentType<{
         onBack: () => void;
@@ -7665,6 +7666,29 @@ export interface IUiMenuSubview {
     title: string;
     // (undocumented)
     tooltipText?: string;
+}
+
+// @internal
+export interface IUiMessageAccessibilityConfig extends Pick<IAccessibilityConfigBase, "ariaLabel" | "ariaLabelledBy" | "ariaDescribedBy" | "role"> {
+    closeButtonLabel?: string;
+}
+
+// @internal (undocumented)
+export interface IUiMessageProps {
+    // (undocumented)
+    accessibilityConfig?: IUiMessageAccessibilityConfig;
+    children: ReactNode;
+    // (undocumented)
+    dataTestId?: string;
+    detail?: ReactNode;
+    icon?: IconType;
+    isExpanded?: boolean;
+    onClose?: () => void;
+    onExpandedChange?: (isExpanded: boolean) => void;
+    showIcon?: boolean;
+    size?: UiMessageSize;
+    variant?: UiMessageVariant;
+    width?: UiMessageWidth;
 }
 
 // @internal (undocumented)
@@ -9459,7 +9483,7 @@ export function ParameterControl(props: IParameterControlProps): JSX.Element;
 export function ParameterControlButton(input: IParameterControlButtonProps): JSX.Element;
 
 // @internal
-export function ParameterPicker(input: IParameterPickerProps): JSX.Element;
+export function ParameterPicker<T extends IParameterMetadataObject>(input: IParameterPickerProps<T>): JSX.Element;
 
 // @internal
 export type ParameterSubmitModeProps<TValue> = {
@@ -10087,6 +10111,18 @@ export type UiListboxView = "mobile" | "desktop";
 
 // @internal
 export function UiMenu<T extends IUiMenuItemData = object, M extends object = object>(props: IUiMenuProps<T, M>): ReactNode;
+
+// @internal
+export function UiMessage(input: IUiMessageProps): JSX.Element;
+
+// @internal (undocumented)
+export type UiMessageSize = "small" | "medium";
+
+// @internal
+export type UiMessageVariant = "info" | "success" | "warning" | "error";
+
+// @internal
+export type UiMessageWidth = "hug" | "fill";
 
 // @internal
 export function UiModalDialog(input: IUiModalDialogProps): JSX.Element | null;

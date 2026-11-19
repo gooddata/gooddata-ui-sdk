@@ -2,6 +2,8 @@
 
 import { type LinkHandlerEvent } from "@gooddata/sdk-ui-gen-ai";
 
+import { getHostBasePath, getHostPathname, withHostBasePath } from "../loader/hostBasePath.js";
+
 interface IChatLinkOptions {
     embedded: boolean | undefined;
     onAppLinkClick: ((link: LinkHandlerEvent) => boolean) | undefined;
@@ -15,11 +17,12 @@ export function handleChatLinkClick(
     // dropping unsaved work. A new tab leaves the app loaded, so it opens whatever the app did.
     const isHandledByApp = onAppLinkClick?.(link) ?? false;
     if (!embedded && link.action === "open") {
-        const currentUrl = window.location.pathname + window.location.hash;
+        const currentUrl = getHostPathname() + window.location.hash;
+        const browserUrl = withHostBasePath(link.itemUrl, getHostBasePath());
         if (link.newTab) {
-            window.open(link.itemUrl, "_blank");
+            window.open(browserUrl, "_blank");
         } else if (!isHandledByApp && currentUrl !== link.itemUrl) {
-            window.location.assign(link.itemUrl);
+            window.location.assign(browserUrl);
         }
     }
 

@@ -5,18 +5,18 @@ import { type ComponentProps } from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { type IParameterDefinition } from "@gooddata/sdk-model";
+import { type IScalarParameterDefinition } from "@gooddata/sdk-model";
 import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { ParameterControlButton } from "./ParameterControlButton.js";
 
 const WrappedParameterControlButton = withIntlForTest(ParameterControlButton);
 
-const numberDefinition: IParameterDefinition = { type: "NUMBER", defaultValue: 10 };
+const numberDefinition: IScalarParameterDefinition = { type: "NUMBER", defaultValue: 10 };
 
-const freeTextDefinition: IParameterDefinition = { type: "STRING", defaultValue: "Actual" };
+const freeTextDefinition: IScalarParameterDefinition = { type: "STRING", defaultValue: "Actual" };
 
-const constrainedDefinition: IParameterDefinition = {
+const constrainedDefinition: IScalarParameterDefinition = {
     type: "STRING",
     defaultValue: "actual",
     constraints: {

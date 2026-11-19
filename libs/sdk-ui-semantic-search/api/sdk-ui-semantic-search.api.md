@@ -119,10 +119,10 @@ export type SearchResults<I extends SearchItem, G extends SearchItemGroup<I>> = 
     searchKeywords: ReadonlyArray<string>;
 };
 
-// @beta
+// @public
 export function SemanticSearch(input: SemanticSearchProps): JSX.Element;
 
-// @beta
+// @public
 export type SemanticSearchHookInput = {
     searchTerm: string;
     objectTypes?: GenAIObjectType[];
@@ -135,7 +135,7 @@ export type SemanticSearchHookInput = {
     excludeTags?: string[];
 };
 
-// @beta
+// @public
 export type SemanticSearchInputResult = {
     searchStatus: "idle" | "loading" | "error" | "success";
     searchError?: {
@@ -146,7 +146,7 @@ export type SemanticSearchInputResult = {
     relationships: ISemanticSearchRelationship[];
 };
 
-// @beta
+// @public
 export type SemanticSearchProps = {
     backend?: IAnalyticalBackend;
     workspace?: string;
@@ -172,7 +172,7 @@ export type SemanticSearchProps = {
 // @alpha
 export function useHybridSearch<I extends SearchItem, G extends SearchItemGroup<I>>(input: IUseHybridSearchOptions<I>): IHybridSearchResult<I, G>;
 
-// @beta
+// @public
 export const useSemanticSearch: (input: SemanticSearchHookInput) => SemanticSearchInputResult;
 
 ```

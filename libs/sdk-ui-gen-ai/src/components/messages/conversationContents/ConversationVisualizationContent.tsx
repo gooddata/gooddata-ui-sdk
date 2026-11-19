@@ -6,6 +6,7 @@ import {
     type ReactNode,
     type RefObject,
     useCallback,
+    useEffect,
     useId,
     useMemo,
     useRef,
@@ -29,6 +30,7 @@ import {
     isNoDataSdkError,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
+import { DRILL_MENU_HOST_ATTRIBUTE, notifyDrillMenuExpandedChange } from "@gooddata/sdk-ui-charts";
 import { type IDashboardKeyDriverCombinationItem } from "@gooddata/sdk-ui-dashboard";
 import { canConvertToTable } from "@gooddata/sdk-ui-ext";
 import {
@@ -593,6 +595,16 @@ function DrillState({ containerRef, filters, children, drillState, setDrillState
     const dispatch = useDispatch();
     const catalogItems = useSelector(catalogItemsSelector);
 
+    const openDrillEvent = drillState?.event;
+    useEffect(() => {
+        const target = openDrillEvent?.target;
+        if (!target) {
+            return undefined;
+        }
+        notifyDrillMenuExpandedChange(target, true);
+        return () => notifyDrillMenuExpandedChange(target, false);
+    }, [openDrillEvent]);
+
     return (
         <Dropdown
             enableAutoToggle={false}
@@ -649,7 +661,9 @@ function DrillState({ containerRef, filters, children, drillState, setDrillState
             }}
             renderButton={() => (
                 <>
-                    {children}
+                    <div style={{ display: "contents" }} {...{ [DRILL_MENU_HOST_ATTRIBUTE]: "true" }}>
+                        {children}
+                    </div>
                     <>
                         {drillState ? (
                             <div className="gd-gen-ai-chat__conversation__visualization__drill_overlay" />

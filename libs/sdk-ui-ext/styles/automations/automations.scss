@@ -10,6 +10,22 @@
     width: 220px;
     $root: &;
     -webkit-font-smoothing: antialiased;
+    border-radius: 3px;
+    border: 1px solid var(--gd-palette-complementary-3);
+    box-shadow: 0 1px 20px var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.2));
+
+    &__trigger {
+        display: flex;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        background: none;
+        color: inherit;
+        font: inherit;
+        cursor: pointer;
+        border-radius: 3px;
+    }
 
     &__header {
         font-size: 14px;

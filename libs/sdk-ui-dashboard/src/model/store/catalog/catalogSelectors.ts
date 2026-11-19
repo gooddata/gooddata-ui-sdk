@@ -14,7 +14,7 @@ import {
     type ICatalogFact,
     type ICatalogMeasure,
     type IDateHierarchyTemplate,
-    type IParameterMetadataObject,
+    type IScalarParameterMetadataObject,
     type IdentifierRef,
     type ObjRef,
     areObjRefsEqual,
@@ -98,7 +98,7 @@ export const selectCatalogAttributesWithComputed: DashboardSelector<ICatalogAttr
  *
  * @alpha
  */
-export const selectCatalogParameters: DashboardSelector<IParameterMetadataObject[]> = createSelector(
+export const selectCatalogParameters: DashboardSelector<IScalarParameterMetadataObject[]> = createSelector(
     selectSelf,
     (state) => state.parameters.parameters,
 );
@@ -111,7 +111,7 @@ export const selectCatalogParameters: DashboardSelector<IParameterMetadataObject
  */
 export const selectCatalogParameterByRef: (
     ref: ObjRef,
-) => DashboardSelector<IParameterMetadataObject | undefined> = createMemoizedSelector((ref: ObjRef) =>
+) => DashboardSelector<IScalarParameterMetadataObject | undefined> = createMemoizedSelector((ref: ObjRef) =>
     createSelector(selectCatalogParameters, (parameters) =>
         parameters.find((parameter) => areObjRefsEqual(parameter.ref, ref)),
     ),

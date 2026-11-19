@@ -5,7 +5,7 @@ import {
     type ICatalogAttributeHierarchy,
     type ICatalogDateAttributeHierarchy,
     type ICatalogGroup,
-    type IParameterMetadataObject,
+    type IScalarParameterMetadataObject,
 } from "@gooddata/sdk-model";
 
 import { type IOrganizedCatalogTooltipDetails } from "../../typings/catalog.js";
@@ -31,5 +31,5 @@ export interface ICatalogState {
     showUnavailableItems: boolean;
     readonly dateHierarchies: ReadonlyArray<ICatalogDateAttributeHierarchy>;
     readonly attributeHierarchies: ReadonlyArray<ICatalogAttributeHierarchy>;
-    readonly parameters: ReadonlyArray<IParameterMetadataObject>;
+    readonly parameters: ReadonlyArray<IScalarParameterMetadataObject>;
 }

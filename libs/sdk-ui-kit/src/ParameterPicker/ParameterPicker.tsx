@@ -29,15 +29,15 @@ const messages = defineMessages({
 /**
  * @internal
  */
-export interface IParameterPickerProps {
-    parameters: ReadonlyArray<IParameterMetadataObject>;
+export interface IParameterPickerProps<T extends IParameterMetadataObject = IParameterMetadataObject> {
+    parameters: ReadonlyArray<T>;
     /**
      * Already-added parameter ref keys; matching items are omitted from the rendered list.
      */
     excludedKeys: ReadonlySet<string>;
     isLoading: boolean;
     maxListHeight: number;
-    onAdd: (parameters: ReadonlyArray<IParameterMetadataObject>) => void;
+    onAdd: (parameters: ReadonlyArray<T>) => void;
     onCancel: () => void;
 }
 
@@ -47,14 +47,14 @@ export interface IParameterPickerProps {
  *
  * @internal
  */
-export function ParameterPicker({
+export function ParameterPicker<T extends IParameterMetadataObject>({
     parameters,
     excludedKeys,
     isLoading,
     maxListHeight,
     onAdd,
     onCancel,
-}: IParameterPickerProps) {
+}: IParameterPickerProps<T>) {
     const intl = useIntl();
 
     const [search, setSearch] = useState("");

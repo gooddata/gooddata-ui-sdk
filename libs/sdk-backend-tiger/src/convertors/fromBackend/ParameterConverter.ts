@@ -1,18 +1,22 @@
 // (C) 2026 GoodData Corporation
 
 import {
+    type DateRangeParameterValue,
     type JsonApiParameterOut,
     type JsonApiParameterOutWithLinks,
     type JsonApiUserIdentifierOutWithLinks,
     type StringConstraints,
 } from "@gooddata/api-client-tiger";
 import {
+    type IDateRangeParameterPeriod,
     type IParameterDefinition,
     type IParameterMetadataObject,
     type IStringParameterConstraints,
     idRef,
     throwUnexpected,
 } from "@gooddata/sdk-model";
+
+import { toSdkDateRangeParameterGranularity } from "../shared/dateRangeParameterGranularity.js";
 
 import { isInheritedObject } from "./ObjectInheritance.js";
 import { convertUserIdentifier } from "./UsersConverter.js";
@@ -62,9 +66,18 @@ function convertParameterDefinition(
                     ? { constraints: convertStringConstraints(definition.constraints) }
                     : {}),
             };
+        case "DATE_RANGE":
+            return { type: "DATE_RANGE", defaultValue: convertDateRangePeriod(definition.defaultValue) };
         default:
             return throwUnexpected(type);
     }
+}
+
+function convertDateRangePeriod({
+    granularity,
+    ...ends
+}: DateRangeParameterValue): IDateRangeParameterPeriod {
+    return { granularity: toSdkDateRangeParameterGranularity(granularity), ...ends };
 }
 
 function convertStringConstraints(constraints: StringConstraints): IStringParameterConstraints {

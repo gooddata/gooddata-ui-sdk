@@ -447,6 +447,7 @@
     "layout.header.add.title.placeholder": "Buraya Başlık Ekleyin...",
     "layout.header.add.description.placeholder": "Buraya Açıklama Ekleyin...",
     "controlButtons.options.tooltip": "Daha fazla işlem",
+    "controlButtons.options.widgetLabel": "{title} için daha fazla eylem",
     "controlButtons.options.back": "Önceki adıma geri dön",
     "controlButtons.options.closeMenu": "Menüyü kapat",
     "controlButtons.edit.value": "Düzenle",

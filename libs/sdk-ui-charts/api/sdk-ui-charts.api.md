@@ -172,6 +172,12 @@ export function DependencyWheelChart(props: IDependencyWheelChartProps): JSX.Ele
 // @public
 export function DonutChart(props: IDonutChartProps): JSX.Element;
 
+// @internal
+export const DRILL_MENU_EXPANDED_CHANGE_EVENT = "gdc-drill-menu-expanded-change";
+
+// @internal
+export const DRILL_MENU_HOST_ATTRIBUTE = "data-gd-drill-menu-host";
+
 // @public
 export function FunnelChart(props: IFunnelChartProps): JSX.Element;
 
@@ -619,6 +625,11 @@ export interface IDonutChartBucketProps {
 
 // @public (undocumented)
 export interface IDonutChartProps extends IBucketChartProps, IDonutChartBucketProps {
+}
+
+// @internal
+export interface IDrillMenuExpandedChangeDetail {
+    expanded: boolean;
 }
 
 // @beta
@@ -1077,6 +1088,9 @@ export function Mekko(props: IMekkoProps): JSX.Element;
 
 // @internal (undocumented)
 export const MIDDLE = "middle";
+
+// @internal
+export function notifyDrillMenuExpandedChange(chartContainer: EventTarget | undefined, expanded: boolean): void;
 
 // @public
 export type OnLegendReady = (data: ILegendData) => void;

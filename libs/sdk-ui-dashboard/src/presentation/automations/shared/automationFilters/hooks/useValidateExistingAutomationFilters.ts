@@ -14,8 +14,8 @@ import {
     type IFilter,
     type IFilterableWidget,
     type IInsight,
-    type IParameterMetadataObject,
     type IRelativeDateFilter,
+    type IScalarParameterMetadataObject,
     dashboardFilterLocalIdentifier,
     filterContextItemsToDashboardFiltersByWidget,
     filterLocalIdentifier,
@@ -343,7 +343,7 @@ export function validateExistingAutomationParameters({
     widgetTabId,
 }: {
     storedParametersByTab: Record<string, IDashboardExportParameter[]> | undefined;
-    catalog: IParameterMetadataObject[];
+    catalog: IScalarParameterMetadataObject[];
     dashboardParametersByTab: Record<string, IDashboardParameter[]>;
     existingTabIds: Set<string>;
     /**
@@ -406,7 +406,7 @@ export function validateExistingAutomationParameters({
  */
 function validateExistingAutomationAlertParameters(
     automationToEdit: IAutomationMetadataObject | undefined,
-    catalog: IParameterMetadataObject[],
+    catalog: IScalarParameterMetadataObject[],
 ): boolean {
     return hasStaleAlertParameters(getAutomationAlertParameters(automationToEdit), catalog);
 }

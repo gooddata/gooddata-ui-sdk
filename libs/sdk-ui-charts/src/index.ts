@@ -67,6 +67,12 @@ export {
     ComparisonPositionValues,
 } from "./interfaces/comparison.js";
 export { ViewByAttributesLimit } from "./interfaces/limits.js";
+export {
+    type IDrillMenuExpandedChangeDetail,
+    DRILL_MENU_EXPANDED_CHANGE_EVENT,
+    DRILL_MENU_HOST_ATTRIBUTE,
+    notifyDrillMenuExpandedChange,
+} from "./highcharts/chartTypes/_chartCreators/drillablePointAccessibility.js";
 export { type IBaseChartProps, BaseChart } from "./charts/_base/BaseChart.js";
 export { type IAreaChartProps, type IAreaChartBucketProps, AreaChart } from "./charts/areaChart/AreaChart.js";
 export { type IBarChartProps, type IBarChartBucketProps, BarChart } from "./charts/barChart/BarChart.js";

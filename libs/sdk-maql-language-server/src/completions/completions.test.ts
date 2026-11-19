@@ -59,6 +59,13 @@ describe("completion resolve tests", () => {
         expect(parameter?.insertText).toBe("{parameter/topN}");
     });
 
+    it("never offers a date range parameter", async () => {
+        const list = await complete("SELECT {parameter/", undefined, ldmObjects);
+        const items: CompletionItem[] = list.items;
+
+        expect(items.find((item) => item.label === "Last holding month")).toBe(undefined);
+    });
+
     it("excludes non-numeric parameters from a numeric context", async () => {
         const list = await complete("SELECT POWER({parameter/", undefined, ldmObjects);
         const items: CompletionItem[] = list.items;

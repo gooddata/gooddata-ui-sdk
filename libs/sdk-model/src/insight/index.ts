@@ -44,7 +44,11 @@ import {
     measureLocalId,
 } from "../execution/measure/index.js";
 import { type IInsightParameterValue } from "../execution/parameter/index.js";
-import { type IParameterMetadataObject, isValidParameterValue } from "../ldm/metadata/parameter/index.js";
+import {
+    type IParameterMetadataObject,
+    isScalarParameterDefinition,
+    isValidParameterValue,
+} from "../ldm/metadata/parameter/index.js";
 import { type ObjRef, areObjRefsEqual, serializeObjRef } from "../objRef/index.js";
 import { type IUser } from "../user/index.js";
 
@@ -1022,7 +1026,11 @@ export function insightValidParameters(insight: IInsight): IInsightParameterValu
         const parameter = referencedParameters.find((candidate) =>
             areObjRefsEqual(candidate.ref, stored.ref),
         );
-        if (parameter && isValidParameterValue(parameter.definition, stored.value)) {
+        if (
+            parameter &&
+            isScalarParameterDefinition(parameter.definition) &&
+            isValidParameterValue(parameter.definition, stored.value)
+        ) {
             validValues.push(stored);
         }
     }

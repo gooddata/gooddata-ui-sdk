@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-dashboard: the \"Save as new\" dialog returns focus to its opener or the \"More actions\" button when it closes, and stays open with a visible error and focus on the title input when the save fails.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

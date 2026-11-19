@@ -1,6 +1,8 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { Bubble, BubbleHoverTrigger, UiIconButton } from "@gooddata/sdk-ui-kit";
+import { useId } from "react";
+
+import { UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { bem } from "../../notificationsPanel/bem.js";
 import { type IAutomationIconTooltipProps } from "../types.js";
@@ -11,7 +13,8 @@ function AutomationIconTooltipCore({
     header,
     content,
     sections,
-}: Omit<IAutomationIconTooltipProps, "children">) {
+    isInteractive,
+}: Pick<IAutomationIconTooltipProps, "header" | "content" | "sections"> & { isInteractive: boolean }) {
     return (
         <div className={b()}>
             <div>
@@ -22,7 +25,7 @@ function AutomationIconTooltipCore({
                 <div key={index}>
                     <div className={e("sub-header")}>{section.header.toUpperCase()}</div>
                     {section.content ? (
-                        section.icon ? (
+                        section.icon && isInteractive ? (
                             <div className={e("content")}>
                                 <div className={e("content-inner-truncated")}>{section.content}</div>
                                 <div className={e("icon-button")}>
@@ -49,15 +52,39 @@ export function AutomationIconTooltip({
     content,
     sections,
     children,
-    align,
+    arrowPlacement,
+    triggerAriaLabel,
 }: IAutomationIconTooltipProps) {
-    const alignPoints = align ? [{ align }] : undefined;
+    const tooltipId = useId();
     return (
-        <BubbleHoverTrigger hideDelay={300} eventsOnBubble>
-            {children}
-            <Bubble className="bubble-light" alignPoints={alignPoints} arrowStyle={{ display: "none" }}>
-                <AutomationIconTooltipCore header={header} content={content} sections={sections} />
-            </Bubble>
-        </BubbleHoverTrigger>
+        <UiTooltip
+            id={tooltipId}
+            behaviour="popover"
+            variant="none"
+            showArrow={false}
+            arrowPlacement={arrowPlacement}
+            optimalPlacement
+            triggerBy={["hover", "focus"]}
+            hoverCloseDelay={300}
+            inlineAnchor
+            anchor={
+                <button
+                    type="button"
+                    className={e("trigger")}
+                    aria-label={triggerAriaLabel}
+                    aria-describedby={tooltipId}
+                >
+                    {children}
+                </button>
+            }
+            content={({ type }) => (
+                <AutomationIconTooltipCore
+                    header={header}
+                    content={content}
+                    sections={sections}
+                    isInteractive={type === "live"}
+                />
+            )}
+        />
     );
 }

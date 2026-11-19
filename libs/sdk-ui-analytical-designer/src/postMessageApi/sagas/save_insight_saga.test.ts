@@ -89,6 +89,21 @@ describe("Save Insight saga", () => {
             .run();
     });
 
+    it("should dispatch a saveInsightFailed action with invalid argument when title is blank", () => {
+        const commandBody: IAdSaveCommandBody = { title: "   " };
+        return expectSaga(
+            handleSaveInsightRequested,
+            saveInsightRequested(getSaveInsightCommandData(commandBody, contextId)),
+        )
+            .provide([
+                [select(isSaveAsNewDisabledSelector), false],
+                [select(isReportSavedSelector), false],
+            ])
+            .put(saveInsightFailed(false, undefined, contextId, GdcErrorType.InvalidArgument))
+            .not.put.actionType(saveReportRequested.type)
+            .run();
+    });
+
     it("should save as a new insight with config title", () => {
         const commandBody: IAdSaveAsInsightCommandBody = { title };
 

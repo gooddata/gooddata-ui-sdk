@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { type IParameterMetadataObject } from "@gooddata/sdk-model";
+import { type IScalarParameterMetadataObject } from "@gooddata/sdk-model";
 
 import { AddFilterDropdownShell } from "./AddFilterDropdownShell.js";
 import { AddFilterMenu } from "./AddFilterMenu.js";
@@ -18,7 +18,7 @@ export interface IFilterBarDropdownBodyOwnProps {
     onAddDateFilter: () => void;
     onAddRankingFilter: () => void;
     onAddRankingFilterFromMetric: (items: IAddFilterItem[]) => void;
-    onAddParameters: (parameters: ReadonlyArray<IParameterMetadataObject>) => void;
+    onAddParameters: (parameters: ReadonlyArray<IScalarParameterMetadataObject>) => void;
     rankingDisabledReason: RankingFilterDisabledReason | undefined;
     isDateItemAvailable: boolean;
     enableImprovedRankingFilter: boolean;

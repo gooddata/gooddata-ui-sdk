@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { ScopedIdStore, useScopedIdStoreValue } from "../hooks/useScopedId.js";
 
@@ -126,23 +126,65 @@ describe("UiPagedVirtualList", () => {
 
 it("keeps a parent-managed active row mounted outside the virtual window", () => {
     render(
+        <div role="grid" tabIndex={0} aria-activedescendant="row-49">
+            <UiPagedVirtualList
+                maxHeight={100}
+                items={manyItems}
+                itemHeight={20}
+                itemsGap={0}
+                itemPadding={0}
+                skeletonItemsCount={0}
+                tabIndex={-1}
+                focusedItem={manyItems[49]}
+                representAs="grid"
+                listboxProps={{ "aria-activedescendant": "row-49", "aria-busy": false }}
+            >
+                {(item, index) => (
+                    <div role="row" id={`row-${index}`}>
+                        {item}
+                    </div>
+                )}
+            </UiPagedVirtualList>
+        </div>,
+    );
+    const grid = screen.getByRole("grid");
+    const rowgroup = screen.getByRole("rowgroup");
+    const activeRow = document.getElementById(grid.getAttribute("aria-activedescendant") ?? "");
+    expect(activeRow).toBe(screen.getByText("Row 49"));
+    expect(grid.contains(activeRow)).toBe(true);
+    expect([...grid.querySelectorAll("[tabindex]")].map((element) => element.getAttribute("role"))).toEqual([
+        "rowgroup",
+    ]);
+    expect(rowgroup).toHaveAttribute("tabindex", "-1");
+    expect(rowgroup).toHaveAttribute("aria-busy", "false");
+    expect(rowgroup).not.toHaveAttribute("aria-activedescendant");
+});
+
+it("loads the next grid page when scrolling near the end, even with the last row already pinned", () => {
+    const loadNextPage = vi.fn();
+
+    render(
         <UiPagedVirtualList
             maxHeight={100}
             items={manyItems}
+            focusedItem={manyItems.at(-1)}
             itemHeight={20}
             itemsGap={0}
             itemPadding={0}
             skeletonItemsCount={0}
             tabIndex={-1}
-            focusedItem={manyItems[49]}
             representAs="grid"
+            hasNextPage
+            loadNextPage={loadNextPage}
         >
             {(item) => <div role="row">{item}</div>}
         </UiPagedVirtualList>,
     );
-    const rowgroup = screen.getByRole("rowgroup");
+
     expect(screen.getByText("Row 49")).toBeInTheDocument();
-    expect(rowgroup).toHaveAttribute("tabindex", "-1");
-    expect(rowgroup).not.toHaveAttribute("aria-activedescendant");
-    expect(rowgroup.parentElement).toHaveAttribute("tabindex", "-1");
+    expect(loadNextPage).not.toHaveBeenCalled();
+
+    fireEvent.scroll(screen.getByRole("rowgroup"), { target: { scrollTop: 900 } });
+
+    expect(loadNextPage).toHaveBeenCalledOnce();
 });

@@ -122,6 +122,8 @@ export enum GdcAdCommandType {
     /**
      * The command to force reset of catalog after attribute hierarchy has been modified.
      * @beta
+     * @deprecated Analytical Designer does not handle this command and does not list it in
+     * `availableCommands`. It is the name of the {@link GdcAdEventType.AttributeHierarchyModified} event.
      */
     AttributeHierarchyModified = "attributeHierarchyModified",
 
@@ -1467,6 +1469,8 @@ export function isAdSetApiTokenCommandData(obj: unknown): obj is AdSetApiTokenCo
  * Triggers the attributeHierarchyModified action to reset catalogs.
  *
  * @beta
+ * @deprecated Analytical Designer does not handle this command. Listen to the
+ * {@link GdcAdEventType.AttributeHierarchyModified} event instead.
  */
 export type AdAttributeHierarchyModifiedCommand = IGdcAdMessageEvent<
     GdcAdCommandType.AttributeHierarchyModified,
@@ -1479,6 +1483,8 @@ export type AdAttributeHierarchyModifiedCommand = IGdcAdMessageEvent<
  * Note: it has empty content and just wrapped to application and product data structure
  *
  * @beta
+ * @deprecated Analytical Designer does not handle this command. Listen to the
+ * {@link GdcAdEventType.AttributeHierarchyModified} event instead.
  */
 export type AdAttributeHierarchyModifiedCommandData = IGdcAdMessageEnvelope<
     GdcAdCommandType.AttributeHierarchyModified,
@@ -1491,6 +1497,8 @@ export type AdAttributeHierarchyModifiedCommandData = IGdcAdMessageEnvelope<
  * @param obj - object to test
  *
  * @beta
+ * @deprecated Analytical Designer does not handle this command. Listen to the
+ * {@link GdcAdEventType.AttributeHierarchyModified} event instead.
  */
 export function isAttributeHierarchyModifiedCommandData(
     obj: unknown,

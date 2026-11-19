@@ -3,31 +3,31 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { type IParameterDefinition } from "@gooddata/sdk-model";
+import { type IScalarParameterDefinition } from "@gooddata/sdk-model";
 import { withIntlForTest } from "@gooddata/sdk-ui";
 
 import { ParameterControl } from "./ParameterControl.js";
 
 const WrappedParameterControl = withIntlForTest(ParameterControl);
 
-const numberDefinition: IParameterDefinition = {
+const numberDefinition: IScalarParameterDefinition = {
     type: "NUMBER",
     defaultValue: 10,
     constraints: { min: 0, max: 100 },
 };
 
-const stringDefinition: IParameterDefinition = {
+const stringDefinition: IScalarParameterDefinition = {
     type: "STRING",
     defaultValue: "Actual",
 };
 
-const constrainedStringDefinition: IParameterDefinition = {
+const constrainedStringDefinition: IScalarParameterDefinition = {
     type: "STRING",
     defaultValue: "Actual",
     constraints: { minLength: 3 },
 };
 
-const enumDefinition: IParameterDefinition = {
+const enumDefinition: IScalarParameterDefinition = {
     type: "STRING",
     defaultValue: "Actual",
     constraints: { allowedValues: [{ value: "Actual", title: "Actual results" }, { value: "Plan" }] },

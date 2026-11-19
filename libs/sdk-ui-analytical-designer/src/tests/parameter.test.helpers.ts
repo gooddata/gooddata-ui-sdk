@@ -1,8 +1,8 @@
 // (C) 2026 GoodData Corporation
 
 import {
-    type IParameterDefinition,
-    type IParameterMetadataObject,
+    type IScalarParameterDefinition,
+    type IScalarParameterMetadataObject,
     type IdentifierRef,
     idRef,
 } from "@gooddata/sdk-model";
@@ -10,8 +10,8 @@ import {
 export function buildParameter(
     id: string,
     title: string,
-    definition: IParameterDefinition,
-): IParameterMetadataObject & { ref: IdentifierRef } {
+    definition: IScalarParameterDefinition,
+): IScalarParameterMetadataObject & { ref: IdentifierRef } {
     return {
         ref: idRef(id, "parameter"),
         id,

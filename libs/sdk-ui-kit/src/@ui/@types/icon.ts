@@ -66,6 +66,7 @@ export type IconType =
     | "mail"
     | "envelope"
     | "copy"
+    | "duplicate"
     | "rain"
     | "earth"
     | "globe"
@@ -220,4 +221,5 @@ export type IconType =
     | "regenerateWithAi"
     | "directionHorizontal"
     | "directionVertical"
-    | "levelUpArrow";
+    | "levelUpArrow"
+    | "plusThin";

@@ -7,7 +7,7 @@ import {
     type ICatalogAttributeHierarchy,
     type ICatalogDateAttributeHierarchy,
     type ICatalogGroup,
-    type IParameterMetadataObject,
+    type IScalarParameterMetadataObject,
 } from "@gooddata/sdk-model";
 
 import { type IOrganizedCatalogTooltipDetails } from "../../typings/catalog.js";
@@ -164,7 +164,7 @@ export type ISetAttributeHierarchies = ReturnType<typeof setAttributeHierarchies
 
 export const setCatalogParameters = createAction(
     CatalogActionTypeKeys.STORE_SET_CATALOG_PARAMETERS,
-    (parameters: ReadonlyArray<IParameterMetadataObject>) => ({ payload: { parameters } }),
+    (parameters: ReadonlyArray<IScalarParameterMetadataObject>) => ({ payload: { parameters } }),
 );
 
 export type ISetCatalogParameters = ReturnType<typeof setCatalogParameters>;
